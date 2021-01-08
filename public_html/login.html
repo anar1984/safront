@@ -1,0 +1,172 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    <link rel="icon" href="api/get/filed/favicon.png">
+
+
+        <title>Signin for Sourced Agile User Story Management System</title>
+
+        <!--<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">-->
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css" type="text/css">
+            <link rel="stylesheet" href="resource/css/bs4/login.css" type="text/css">
+                <link rel="icon" href="api/get/filed/favicon.png">
+                    <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+                        <link rel="stylesheet" href="resource/css/bs4/font-awesome.min.css">
+                            <link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">
+                                <script src="resource/js/bs4/jquery.min.js"></script>
+                                <script src="resource/js/bs4/popper.min.js"></script>
+                                <script src="resource/js/bs4/bootstrap.min.js"></script>
+                                <script src="resource/js/bs4/sourced-common.js"></script>
+                                <script src="resource/js/bs4/general.js"></script>
+                                <!-- Custom styles for this template -->
+                                <!--<link href="signin.css" rel="stylesheet">-->
+                                </head>
+
+                                <body class="text-center">
+                                <div class="form-signin">
+                                    <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
+                                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+                                        <div class="col-md-12" >
+                                            <div class="alert" style="background-color:red; display : none;" id="login-alert">
+                                                <span id="incorrentPwd"> Username or password is incorrect.</span>
+                                                <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12" >
+                                            <div class="alert" style="background-color:red; display : none;" id="login-alert-login">
+                                                <span id="incorrentPwd"> Please enter values!</span>
+                                                <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <label for="domain" class="sr-only">Domain</label>
+                                        <input type="text" id="domain" class="form-control" placeholder="Domain" required autofocus><br>
+                                            <label for="cUsername" class="sr-only">Username</label>
+                                            <input type="text" id="cUsername" class="form-control" placeholder="Username" required autofocus><br>
+                                                <label for="cPassword" class="sr-only">Password</label>
+                                                <input type="password" id="cPassword" class="form-control"  placeholder="Password" required><br>
+                                                    <button class="btn btn-lg btn-primary btn-block" onclick="check()" id="btnSignInCompany" >Sign in</button>
+                                                    <br>
+                                                    <span id="lblHaveAccount1"> Forget Password? </span>
+                                                    <a href="frgtpwd.html" id="lblCreateAccount1">Click Here</a>
+
+                                                    <br>
+                                                    <span id="lblHaveAccount1">Don't have an account yet? </span>
+                                                    <a href="register.html" id="lblCreateAccount1">Register Now</a>
+
+                                                    <p class="mt-5 mb-3 text-muted">&copy; Sourced Agile 2019</p>
+
+                                                    </div>
+
+                                                    <script>
+                                                        var myParam = location.search.split('domain=')[1] ? location.search.split('domain=')[1] : '';
+                                                        $('#cPassword').on("keyup", function (event) {
+                                                            if (event.keyCode === 13) {
+                                                                event.preventDefault();
+                                                                check();
+                                                            }
+                                                        });
+                                                        $('#cUsername').on("keyup", function (event) {
+                                                            if (event.keyCode === 13) {
+                                                                event.preventDefault();
+                                                                check();
+                                                            }
+                                                        });
+                                                        $('#domain').on("keyup", function (event) {
+                                                            if (event.keyCode === 13) {
+                                                                event.preventDefault();
+                                                                check();
+                                                            }
+                                                        });
+
+                                                        $('#domain').val(myParam.replace("/", ""));
+
+                                                        //            var lng = getUrlParameter('lang');
+                                                        //            if (lng === 'undefined' || !lng) {
+                                                        //                lng = getDefaultLang();
+                                                        //            }
+                                                        //            //            setLoginLabels();
+                                                        //            setLangCombo4($('#lang'), lng);
+                                                        //            $('#lang').change();
+
+                                                        //            $(document).foundation();
+
+                                                        function check() {
+                                                            hideAlert();
+                                                            hideAlertLogin();
+                                                            //                progresBarStart();
+                                                            var domain = $('#domain').val();
+                                                            var username = $('#cUsername').val();
+                                                            var password = $('#cPassword').val();
+                                                            if (!domain || !username || !password) {
+                                                                showAlertLogin();
+                                                                return;
+                                                            }
+                                                            var lang = $('#lang').find(":selected").val();
+                                                            var json = {kv: {}};
+                                                            json.kv.username = username;
+                                                            json.kv.password = password;
+                                                            json.kv.domain = domain;
+                                                            json.kv.lang = lang;
+                                                            var data = JSON.stringify(json);
+                                                            //console.log(data);
+
+                                                            $.ajax({
+                                                                url: "api/post/login",
+                                                                type: "POST",
+                                                                data: data,
+                                                                contentType: "application/json",
+                                                                crossDomain: true,
+                                                                success: function () {
+                                                                    //                        progresBarStop();
+                                                                    document.location = "app.html";
+                                                                },
+                                                                error: function (res, status) {
+                                                                    //                        progresBarStop();
+                                                                    showAlert();
+                                                                }
+                                                            });
+                                                            return false;
+                                                        }
+
+
+                                                        function showAlert() {
+                                                            document.getElementById('login-alert').style.display = 'block';
+                                                        }
+
+                                                        function showAlertLogin() {
+                                                            document.getElementById('login-alert-login').style.display = 'block';
+                                                        }
+
+                                                        function hideAlert() {
+                                                            $('#login-alert').hide();
+                                                        }
+
+                                                        function hideAlertLogin() {
+                                                            $('#login-alert-login').hide();
+                                                        }
+
+                                                        function enterEvent(arg, event) {
+                                                            $('#login-alert-login').hide();
+                                                        }
+
+
+
+                                                    </script>
+                                                    </body>
+                                                    </html>
+
+

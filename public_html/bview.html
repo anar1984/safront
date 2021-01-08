@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Sourced Agile Training and Simulation Framework</title>
+        <link rel="icon" href="api/get/filed/favicon.png">
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="resource/css/bs4/font-awesome.min.css"></link>
+        <link rel="stylesheet" href="resource/css/bs4/bs4-custom.css"></link>
+        <script src="resource/js/bs4/jquery.min.js"></script>
+        <script src="resource/js/bs4/popper.min.js"></script>
+        <script src="resource/js/bs4/bootstrap.min.js"></script>
+        <script src="resource/js/bs4/sourced-common_vw.js"></script>
+        <script src="resource/js/bs4/general_vw.js"></script>
+        <script src="resource/js/bs4/component.js"></script>
+        <script src="resource/js/bs4/sourced-objects.js"></script>
+    </head>
+
+    <body id="body_of_nature">    
+
+        <nav class="navbar navbar-expand-sm bg-light navbar-light s-nav-bar fixed-top onlygui ">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link s-logo-label" onclick="Analytics.hide()" href="#">
+                        <img style="height:5vh;" src="api/get/filed/sa-logo.png">
+                    </a>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav ml-auto   text-right">
+            </ul>
+
+
+
+        </nav>
+
+
+        <div class="row  text-center onlygui" style="margin-top: 10vh;" >
+            <div class="col-12 text-center">
+                <h2> Sourced Agile<sup>®</sup> Story Card </h2>
+            </div>
+        </div>
+
+        <div class="row1  us-sub-menu-body us-sm-detail sm-genralview-main " style="margin-top: 5vh;margin:10px 100px;" id="smb-details-generalview">
+
+            <div class="row onlygui">
+                <div class="col-12 text-right">
+                    <!--                    <span style="font-size:10px;">
+                                            <a href="#" onclick="new UserStory().copyGeneralView()">Copy URL</a>
+                                        </span> | 
+                                        <span style="font-size:10px;">
+                                            <a href="#" id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralView(this)">Share</a>
+                                        </span> | -->
+                    <span style="font-size:10px;">
+                        <a href="#" onclick="new UserStory().printGeneralView()">Print</a>
+                    </span>
+                </div>
+            </div>
+
+
+
+            <div class="row onlygui">
+                <div class="col-12 text-center">
+                    <span style="font-size:18px;" id="generalview-us-header-name">Task Name</span>
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="row onlygui">
+                <div class="col-12"><span><b>Project:</b></span><span id="generalview_projectname"></span></div>
+            </div>
+            <div class="row onlygui">
+                <div class="col"><span><b>Status</b>: </span><span id="generalview_status" class="us-item-status-new"></span></div>
+                <div class="col"><span><b>Priority</b>: </span><span id="generalview_priority" class="us-priority"></span></div>
+                <!--<div class="col-6"><span><b>Sprint(s)</b>: </span> <span id="generalview_sprint" class="us-priority"></span></div>-->
+
+            </div>
+
+            <div class="row onlygui" >
+                <div class="col"><span><b>Estimated hour(s)</b>: </span><span id="generalview_esthours" class="us-priority"></span></div>
+                <div class="col"><span><b>Hour(s) Spent</b>: </span> <span id="generalview_spenthours" class="us-priority"></span></div>
+                <!--<div class="col-6"><span><b>Label(s)</b>: </span> <span id="generalview_label" class="us-priority"></span></div>-->
+            </div>
+
+            <div class="row onlygui">
+                <div class="col-12" id="storycard_because"><span><b>Because</b>:</span><span id="generalview_because"></span></div>
+                <div class="col-12" id="storycard_description"><span><b>Description</b>: </span><span id="generalview_description"></span></div>
+                <div class="col-12" id="storycard_childbound"><span><b>Child Bound User Story</b>: </span> <span id="generalview_childbound" class="us-priority"></span></div>
+                <div class="col-12" id="storycard_bound"><span><b>Bound Sourced User Story</b>: </span> <span id="generalview_bound" class="us-priority"></span></div>
+                <div class="col-12" id="storycard_dependency"><span><b>Parent Dependency</b>: </span> <span id="bview_generalview_dependency" class="us-priority"></span></div>
+                <div class="col-12" id="storycard_childdependency"><span><b>Child Dependency</b>: </span> <span id="bview_generalview_childdependency" class="us-priority"></span></div>
+                <div class="col-12" id="storycard_filelis1t">
+                    <br>
+                    <div class="row" id="storycard_filelist_4_share">
+
+                    </div>
+                </div>
+
+                <div class="col-12 onlygui">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="col-12 text-center"         >
+                <br><br>
+            </div>
+
+            <div class='row gv-gui-design-api_4share onlygui'>
+                <div class="col-12 text-center">
+                    <br>
+                    <b style="font-size:14px">Live Prototype</b>
+                </div>
+            </div>
+            <div class="row gv-gui-design gv-gui-design-api_4share redirectClass4CSS" id="gv_gui_component_main_view">
+                <div class="col-12" id="general-view-task-gui1">
+                    <div class="row redirectClass" id="general-view-task-gui"></div>
+
+                </div>
+            </div>
+
+            <div class="col-12 text-center"         >
+                <br><br>
+            </div>
+
+            <div class="col-12 text-center" id="pinnedImages">
+
+            </div>
+
+            <div class="col-12 text-center"         >
+                <br><br>
+            </div>
+            <div class="col-12 text-center"         >
+                <br><br>
+            </div>
+
+            <div class="col-12 onlygui change-mgmt-gui-design text-center storycard_ipo" style=" ">
+                <select id="change-mgmt-gui-design-start-date" style="width:auto;padding: 0px;                                                                    
+                        border-radius: 4px;
+                        min-width:65px;
+                        max-width:70px;
+                        border: 1px solid gray;" onchange="new UserStory().changeRequestForStartDate(this, 'start')">
+
+                </select>
+                <select id="change-mgmt-gui-design-start-time" style="width:auto;padding: 0px;                                                                    
+                        border-radius: 4px;
+                        min-width:65px;
+                        max-width:70px;
+                        border: 1px solid gray;" onchange="new UserStory().changeRequestForStartDate(this)">
+
+                </select>
+                -
+                <select id="change-mgmt-gui-design-end-date" style="width:auto;padding: 0px;                                                                    
+                        border-radius: 4px;
+                        min-width:65px;
+                        max-width:70px;
+                        border: 1px solid gray;" onchange="new UserStory().changeRequestForStartDate(this, 'end')">
+                </select>
+                <select id="change-mgmt-gui-design-end-time" style="width:auto;padding: 0px;                                                                    
+                        border-radius: 4px;
+                        min-width:65px;
+                        max-width:70px;
+                        border: 1px solid gray;" onchange="new UserStory().changeRequestForStartDate(this)">
+                </select>
+
+
+                Assigned Labels:
+                <select id="change-mgmt-gui-design-label-list" style="width:auto;padding: 0px;                                                                    
+                        border-radius: 4px;
+                        min-width:65px;
+                        max-width:70px;
+                        border: 1px solid gray;" 
+                        onchange="new UserStory().changeRequest_setDatesByAssignedLabel(this)">                            
+                </select>
+                &nbsp; 
+                <!--                <a href="#" style=" " onclick="new UserStory().changeRequest_loadLabel4ChangeRequest()">Add </a>   &nbsp;  
+                                <a href="#" style=" " id="changerequest_notify" onclick="new UserStory().changeRequest_notifyLabelAsTask()"> Notify</a>-->
+                &nbsp;
+                <input type="checkbox" id="changerequest_showlastchange" 
+                       onclick="new UserStory().changeRequest_showLastChanges()"
+                       >Last Changes
+                &nbsp;  
+                <input type="checkbox" id="changerequest_hidedates" 
+                       onclick="new UserStory().changeRequest_hideDates()"
+                       >Hide Dates
+                &nbsp;  
+
+                <!--                <a href="#" style=" " 
+                                   onclick="new UserStory().toggleSubmenu($('#us-submenu' + global_var.current_us_submenu)
+                                                   , global_var.current_us_submenu);">Back </a>   &nbsp;  -->
+
+            </div>
+            <div class="col-12 onlygui"><br></div>
+
+            <!--bu hisseden asagi update edilecek-->
+            <div class="col-12 text-center"         >
+                <br><br>
+            </div>
+
+
+            <div class="row text-center storycard_ipo onlygui">
+                <div class="col-1  "></div>
+                <div class="col-10  ">
+                    <label style="font-size:14px"><b>Inputs and Descriptions</b></label>
+                    <div class="col-12" id='generalview_input_list'></div>
+                </div>
+                <div class="col-1"></div>
+
+            </div>
+
+
+
+
+
+            <!--            <div class="row text-center onlygui">
+                            <div class="col-12 text-center">
+                                <label style="font-size:14px"><b>Tasks</b></label>
+            
+                                <table id="generalview_tasklist_table_list" class="table" border="1" style="border: 2px solid #5181B8">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-color:#5181B8;text-align: center"></th>
+                                            <th style="border-color:#5181B8;text-align: center">Status</th>
+                                            <th style="border-color:#5181B8;text-align: center">Task Type</th>
+                                            <th style="border-color:#5181B8;text-align: center">Assignee</th>
+                                            <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
+                                                <br> Spent Hour(s)</th>
+                                            <th style="border-color:#5181B8;text-align: center">Created by</th>
+                                            <th style="border-color:#5181B8;text-align: center">Created Date/
+                                                <br> Last Update</th>
+                                            <th style="border-color:#5181B8;text-align: center">Waiting For Tasks</th>
+            
+                                        </tr>
+                                    </thead>
+                                    <tbody style="cursor:pointer1">
+            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>-->
+
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <!--bu hissede update bitecek-->
+        </div>
+    </body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        Utility.setParamOnLoad();
+        global_var.current_backlog_id = Utility.getParamFromUrl('bid');
+        global_var.current_project_id = Utility.getParamFromUrl('pid');
+        global_var.current_domain = Utility.getParamFromUrl('d');
+        new UserStory().toggleSubmenuStoryCard4Share();
+        if (Utility.getParamFromUrl('lid')) {
+            $('#change-mgmt-gui-design-label-list').val(Utility.getParamFromUrl('lid'));
+            $('#change-mgmt-gui-design-label-list').change();
+        }
+        if (Utility.getParamFromUrl('h') === '1') {
+            $('.onlygui').hide();
+            $('#smb-details-generalview').removeClass('sm-genralview-main');
+        }
+
+    });
+</script>

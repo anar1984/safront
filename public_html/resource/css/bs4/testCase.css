@@ -1,0 +1,251 @@
+
+
+/* ****************************
+    Bug List 30.08.2020
+ **************************** */
+
+ .bugListTable{
+    border:1px solid #cccccc;
+    text-align: left;
+    color: #172b4d;
+ }
+
+.bugListContent{
+    margin-top: 15px;
+}
+
+.addBugBtn{
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.addBugBtn a span,
+.addBugBtn i{
+    color:#000000;
+    font-size: 14px;
+}
+.addBugBtnPoints{
+    margin: 5px 5px;
+    height: 38px;
+}
+.addBugModalList label{
+    font-size: 12px;
+}
+
+.updatebtns{
+   padding-right: 0px;
+}
+.updatebtns button{
+    margin: 10px 2px;
+ }
+ .arrow-right{
+    margin: 10px;
+    cursor: pointer;
+    background-color: #dbe0e5;
+    padding: 7px;
+    border-radius: 5px;
+   
+}
+.arrow-right:hover{
+    background-color: #eeeeee;
+}
+.bug-tr.active:hover{
+    color: #ffffff;
+}
+.bug-tr.active:hover .bug-icon{ 
+    color: rgb(66, 82, 110);
+}
+.bug-tr.active .bug-icon{ 
+    color:rgb(66,82, 110);
+}
+.bug-tr:hover .bug-icon{
+    color: rgb(66, 82, 110);
+}
+
+.testcase-tr.active:hover{
+    color: #ffffff;
+}
+.testcase-tr.active:hover .bug-icon{ 
+    color: rgb(66, 82, 110);
+}
+.testcase-tr.active .bug-icon{ 
+    color:rgb(66,82, 110);
+}
+.testcase-tr:hover .bug-icon{
+    color: rgb(66, 82, 110);
+}
+
+.bugListTable td:nth-child(1),
+.bugListTable td:nth-child(2),
+.bugListTable td:nth-child(3),
+.bugListTable td:nth-child(4),
+.bugListTable td:nth-child(5),
+.bugListTable td:nth-child(6),
+.bugListTable td:nth-child(7){
+   border-right: 1px solid #eeeeee;
+}
+.bugListTable th:nth-child(1),
+.bugListTable th:nth-child(2),
+.bugListTable th:nth-child(3),
+.bugListTable th:nth-child(4),
+.bugListTable th:nth-child(5),
+.bugListTable th:nth-child(6),
+.bugListTable th:nth-child(7){
+   border-right: 1px solid #eeeeee;
+}
+.bug-icon{
+    color:transparent;
+}
+.addBugModalListUpdate{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+.png{
+    background-image: url();
+}
+.bug-tr.active{
+    background-color: #deebff;
+}
+
+.testcase-tr.active{
+    background-color: #deebff;
+}
+
+.viewBtn{
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 1px 5px;
+    border: 2px;
+    background-color: transparent !important;
+    margin: 4px 8px;
+    cursor: pointer;
+ 
+}
+
+
+
+.col-bug-list{
+    padding-right: 0px;
+}
+.col-bug-status{
+    padding-left: 0px;
+}
+.fa-check-square:before{
+    font-size: 18px;
+}
+.accordian-table{
+    background-color: #ffffff;
+}
+
+.trSelect{
+    background-color: transparent !important;
+    border:none !important;
+}
+.bug-tr.active .trSelect{
+    background-color: #ffffff !important;
+}
+
+.testcase-tr.active .trSelect{
+    background-color: #ffffff !important;
+}
+/* 
+------------------------------------------- */
+.prerActionTableGeneralCls{
+    border:none !important;
+}
+.textareaStyle{
+    background-color: transparent;
+}
+
+/*
+#testCaseViewPageListTable .table{
+  border:1px solid #cccccc;
+}*/
+/*.testCaseListborder td:nth-child(1),
+.testCaseListborder td:nth-child(2),
+.testCaseListborder td:nth-child(3){
+    border-right:1px solid #eeeeee;
+}*/
+.opentestCaseViewPage{
+    cursor: pointer;
+}
+
+.opentestCaseTrialViewPage{
+    cursor: pointer;
+}
+
+.paginationStyle{
+    padding-right: -1px;
+}
+
+.updateBugList{
+    width: 100%;
+    right: -9px;
+    position: absolute;
+    background-color: #ffffff;
+    visibility: hidden;
+}
+
+.tableFixHead tbody th:nth-child(-n+20) { position: sticky; top: 0; background-color: #eeeeee; }
+
+.sticky2 {
+    position: fixed !important;
+    top: 0;
+    width: 54%;
+    animation: header .5s ease; 
+    background-color: #ffffff;
+  }
+.card-Userstory-body{
+    height: 550px;
+    overflow: scroll;
+}
+.pagination{
+    flex-wrap: wrap;
+/*    width: 500px;*/
+}
+
+/* ********************************
+ 24.09.2020 testCase Menegment 
+ ***************************** */
+
+.tableFixHead thead th:nth-child(-n+20){ 
+    position: sticky; 
+    top: 0; 
+    background-color: #eeeeee; 
+}
+.top-fixed-menu{ 
+    position: sticky; 
+    top: 0; 
+    background-color: #ffffff; 
+}
+
+#testCaseTrialViewPage{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    position: absolute;
+    right: 0px;
+    z-index: 1000;
+    max-height: 600px;
+    overflow: scroll;
+}
+
+#testCaseViewPage{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    position: absolute;
+    right: 0px;
+    z-index: 1000;
+    max-height: 600px;
+    overflow: scroll;
+}
+/* bug-a aid css */
+.testDesc2{
+    margin-bottom: 10px;
+    width: 400px;
+}
+
+
+/* 
+.testcase-tr.active .viewBtn{
+    background-color: #ffffff !important;        bu css-varsa  silin zehmet
+} */
+
+/* .bug-tr.active .viewBtn{
+    background-color: #ffffff !important;         bu css-varsa  silin zehmet
+} */

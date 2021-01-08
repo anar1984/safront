@@ -1,0 +1,129 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="api/get/filed/favicon.png">
+
+
+        <title>Recover Your Password for Sourced Agile Training and Simulation Framework</title>
+
+        <!--<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">-->
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/bs4/login.css" type="text/css">
+        <script src="resource/js/bs4/jquery.min.js" type="text/javascript"></script>
+        <script src="resource/js/bs4/sourced-common_1.js" type="text/javascript"></script>
+        <!-- Custom styles for this template -->
+        <!--<link href="signin.css" rel="stylesheet">-->
+    </head>
+
+    <body class="text-center">
+        <div class="form-signin">
+            <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
+            <h1 class="h3 mb-3 font-weight-normal">Recover Your Password</h1>
+
+
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:red; display : none;" id="login-alert-login">
+                    <span id="incorrentPwd"> Please enter values!</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                </div>
+
+            </div>
+            <div class="col-12 text-center">
+                <input type="hidden" id="password_message" style="width: 500px">
+            </div>
+
+
+
+            <label for="domain" class="sr-only">Domain</label>
+            <input type="text" id="domainName" class="form-control" placeholder="Domain" required autofocus><br>
+            <label for="cUsername" class="sr-only">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Username" required autofocus><br>
+
+            <button class="btn btn-lg btn-primary btn-block" onclick="new User().forgetPwd(this)" id="btnSignInCompany" >Send mail</button>
+            <br>
+            <a href="login.html" id="lblCreateAccount1" >Login</a>
+            <p class="mt-5 mb-3 text-muted">&copy; Sourced Agile 2019</p>
+
+        </div>
+
+        <script>
+//            var lng = getUrlParameter('lang');
+//            if (lng === 'undefined' || !lng) {
+//                lng = getDefaultLang();
+//            }
+//            //            setLoginLabels();
+//            setLangCombo4($('#lang'), lng);
+//            $('#lang').change();
+
+            //            $(document).foundation();
+
+            function check() {
+                hideAlert();
+                hideAlertLogin();
+//                progresBarStart();
+                var domain = $('#domain').val();
+                var username = $('#cUsername').val();
+                var password = $('#cPassword').val();
+                if (!domain || !username || !password) {
+                    showAlertLogin();
+                    return;
+                }
+                var lang = $('#lang').find(":selected").val();
+                var json = {kv: {}};
+                json.kv.username = username;
+                json.kv.password = password;
+                json.kv.domain = domain;
+                json.kv.lang = lang;
+                var data = JSON.stringify(json);
+                //console.log(data);
+
+                $.ajax({
+                    url: "api/post/login",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    success: function () {
+//                        progresBarStop();
+                        document.location = "app1.html";
+                    },
+                    error: function (res, status) {
+//                        progresBarStop();
+                        showAlert();
+                    }
+                });
+                return false;
+            }
+
+
+            function showAlert() {
+                document.getElementById('login-alert').style.display = 'block';
+            }
+
+            function showAlertLogin() {
+                document.getElementById('login-alert-login').style.display = 'block';
+            }
+
+            function hideAlert() {
+                $('#login-alert').hide();
+            }
+
+            function hideAlertLogin() {
+                $('#login-alert-login').hide();
+            }
+
+
+
+        </script>
+    </body>
+</html>
+
+
