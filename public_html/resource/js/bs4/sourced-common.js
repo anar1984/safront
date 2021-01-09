@@ -3353,6 +3353,7 @@ UserStory.prototype = {
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
         conf['kv'] = d;
+        conf.kv.cookie = getToken();
         var dat = JSON.stringify(conf);
         var finalname = "";
         $.ajax({
@@ -9312,6 +9313,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         d.file_type = "general";
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
+        conf.kv.cookie = getToken();
         conf['kv'] = d;
         var data = JSON.stringify(conf);
         var finalname = "";

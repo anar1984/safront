@@ -6,11 +6,7 @@
 
 /*global global_var, SAInput*/
 
-function getToken() {
-//    return 'apdtok=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.30BdayoXwd3FfjrN-Y-T2I2JpXe_2FPQh4wrmGMyuM8T98VpAK1kYg.dIgbUipguAPiNB3CAdFxBg.WQNf0LewDRxq_KtdIi_G8LHf-WMSRU1TkBhkvFRJfO9HqxNpdKswtvD09xtOccQRxS-pNZmvezjN2Ka-ShnkuPg6iNRBtTSLymul8Y1pVZsW2PyWwtjbWTR7M8Xsf6FPn1tw0tdJV3zITxoOqC8jH7jPew-3sArb00zQDVC-AUU.HqbyFNKzltauM7TqUjZlGg';
-    return '';
-}
-
+ 
 
 
 function check() {
@@ -3526,6 +3522,7 @@ UserStory.prototype = {
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
         conf['kv'] = d;
+        conf.kv.cookie = getToken();
         var dat = JSON.stringify(conf);
         var finalname = "";
         $.ajax({
@@ -11439,7 +11436,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         d.file_type = "general";
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
-        conf['kv'] = d;
+        conf['kv'] = d
+        conf.kv.cookie = getToken();
         var data = JSON.stringify(conf);
         var finalname = "";
         $.ajax({
@@ -15126,6 +15124,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
         conf['kv'] = d;
+        conf.kv.cookie = getToken();
         var dat = JSON.stringify(conf);
         var finalname = "";
         $.ajax({
@@ -15177,6 +15176,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         d.file_name = file_name;
         conf = JSON.parse('{"kv":{}}');
         conf['kv'] = d;
+        conf.kv.cookie = getToken();
         var dat = JSON.stringify(conf);
         var finalname = "";
         $.ajax({
@@ -22955,6 +22955,7 @@ User.prototype = {
         d.scaleHeight = 288;
         conf = JSON.parse('{"kv":{}}');
         conf['kv'] = d;
+        conf.kv.cookie = getToken();
         var dat = JSON.stringify(conf);
         var finalname = "";
         $.ajax({

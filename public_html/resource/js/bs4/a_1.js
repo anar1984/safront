@@ -268,7 +268,7 @@ function p() {
     hideProgressAlternative();
 }
 
-$(document).on('change', ".saTypeFilePicherUploadFile1", function (e) {
+$(document).on('change', ".saTypeFilePicherUploadFile", function (e) {
     if ($(this).val().trim().length > 0) {
         uploadFile4Ipo($(this).attr('id'));
     }
@@ -343,6 +343,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     d.file_name = file_name;
     conf = JSON.parse('{"kv":{}}');
     conf['kv'] = d;
+    conf.kv.cookie = getToken();
     var dat = JSON.stringify(conf);
     var finalname = "";
     $.ajax({

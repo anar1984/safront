@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 
-//var urlGl = "https://app.sourcedagile.com/";
-//var urlGl = "http://localhost:8080/tsn1/";
-var urlGl = ""
-
+ 
 var gui_component = {
     "defaultCSS": {
         "InputTable": "",
