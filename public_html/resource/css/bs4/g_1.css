@@ -105,17 +105,18 @@ select span img{
 
 
 .main-logo{
-    background-image: url(../../img/logo1.png);
+    background-image: url(../../img/logo.png);
     background-repeat: no-repeat;
-    background-size: 50px;
+    background-size: 100%;
     background-position-y: center;
-    height: 43px;
-    margin-left: 15px;
-    margin-bottom: -13px;
-    position: sticky;
-    top: 0px;
+    height: 45px;
+    width: 90%;
+    /* margin-left: 10px; */
+    /* margin-bottom: -13px; */
+    /* position: fixed; */
+    /* top: 0px; */
+    /* left: 0px; */
     z-index: 1000;
-    background-color: #05367f;
 }
 
 #general{
@@ -824,38 +825,38 @@ b{
     height: 39px;
 }
 
-.first-side:hover {
-    width: 210px;
+/* .first-side:hover {
+    width: auto;
     transition: width 1.0s ease;
     transition-delay:2s;
-}
+} */
 
-.first-side:hover .description-main{
+/* .first-side:hover .description-main{
     visibility: visible;
     opacity: 1;
     transition: visibility 0s, opacity 3s linear;
-}
+} */
 
 .description-main{
-    visibility: hidden;
-    opacity: 0;
-
-    color: white;
     font-size: 12px;
     cursor: pointer;
-    position: absolute;
-    width: 130px;
+    /* position: absolute; */
+    /* width: 130px; */
     text-align: left;
 
 
 }
 .description-main:hover{
-    background-color: #032d6b;
+   /* background-color: #032d6b; */
     padding: 4px 4px;
     border-radius: 9px;
+    color: #032d6b;
     width: 140px;
 
 
+}
+.sub-menu-lists .left-menu-load{
+    padding-top: 7px;
 }
 
 
@@ -1036,19 +1037,18 @@ button.dropdown-item:hover{
 }
 /* drag div- modal  */
 .first-side {
-    display: block;
+    display: flex;
     position: fixed;
     left: 0;
-    box-shadow: 1px 0px 1px 1px #082d5aa3;
+    box-shadow: 1px 1px 5px 3px #ccc;
     top: 0;
-    width: 67px;
+    width: 22.3%;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 1001;
-    background-color: rgb(5, 54, 127);
-    height: 90vh;
-    overflow-y: auto;
-    overflow-x:hidden;
-    transition: width 1s ease;
+    background-color: #ffffff; 
+    height: auto;
+    
+    transition: all 1s ease;
 
 
 }
@@ -1057,7 +1057,7 @@ button.dropdown-item:hover{
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
 }
-.first-side::-webkit-scrollbar-track {
+/* .first-side::-webkit-scrollbar-track {
     background: rgb(11, 66, 148) !important; 
 }
 
@@ -1065,7 +1065,7 @@ button.dropdown-item:hover{
     background-color: rgb(4, 43, 102) !important;
     outline: 1px solid;
 
-} 
+}  */
 
 .filterpages{
     font-size:12px;
@@ -1319,35 +1319,35 @@ START PROJECT SECTION
     background-color: red;
 }
 .bottombtn2{
-    position: fixed;
-    top: 90vh;
-    background-color: #d8d8d8;
-    width: 80px;
-    height: 10vh;
+   
+   /*  background-color: #d8d8d8; */
+    width: 20%;
+   /*  height: 10vh; */
     transition: width 0.99s ease;
     z-index: 10000;
+    position: relative;
 
 }
 
-.first-side:hover ~ .bottombtn2 {
+/* .first-side:hover ~ .bottombtn2 {
     width: 224px;
     transition: width 1s ease;
     transition-delay:2s;
 
-}
-.bottombtn2:hover > .first-side {
+} */
+/* .bottombtn2:hover > .first-side {
     width: 217px;
     transition: width 1s ease;
     transition-delay:2s;
 
 
-}
-.first-side:hover ~ .bottombtn2 .myaccountName {
+} */
+/* .first-side:hover ~ .bottombtn2 .myaccountName {
     color: #032d6b;
     transition-delay: 2s;
     transition-property: color;
 
-}
+} */
 .bottombtn2:hover {
     width: 217px;
     transition: width 1s ease;
@@ -1358,17 +1358,17 @@ START PROJECT SECTION
 
 }
 .bottombtn2 .btnplus{
-    margin-left: 30px;
+   /*  margin-left: 30px; */
 }
 
 .myaccountName{
     color: transparent;
-    position: fixed;
+    position: absolute;
     left: 75px;
     font-size: 14px;
     cursor: pointer;
-    transition: width 0.9s ease;
-    top: 91vh;
+    transition: all 0.9s ease;
+   /*  top: 91vh; */
 
 
 }
@@ -2072,14 +2072,11 @@ label h6{
 1.0 - TOOLBAR
 --------------------------------------------------------------*/
 .toolbar {
-    left: 6%;
+    left: 2%;
     /* margin: -51px 0 0 -136px; */
     position: fixed;
-    top: 10%;
-
-
+    top: 22%;
     z-index: 5;
-
     display: flex;
 }
 .toolbar ul{
@@ -2477,3 +2474,281 @@ label h6{
     width: 0;
     text-align: center;
 }
+
+
+
+
+ul.main-nav {
+    list-style-type: none;
+    display: block;
+    padding: 0px;
+    font-size: 0px;
+    /* max-width: 1275px; */
+    width: 80%;
+   
+}
+ul.main-nav h2 {
+    font-size: 1em;
+    font-weight: 300;
+}
+ul.main-nav > li {
+  
+    padding: auto;
+}
+ul.main-nav > li > a {
+    display: flex;
+    
+    position: relative;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+ul.main-nav > li:hover {
+    background-color: #f9f9f9;
+}
+ul.main-nav > li:hover > a {
+    color: #333;
+    font-weight: 400;
+}
+ul.main-nav > li ul.sub-menu-lists {
+    margin: auto 0;
+    padding: 1px 0;
+    list-style-type: none;
+    display: block;
+}
+ul.main-nav > li ul.sub-menu-lists > li {
+    padding: auto;
+  width: 100%;
+    margin-top: 2px;
+}
+ul.main-nav > li ul.sub-menu-lists > li > a {
+    font-size: 1em;
+    font-weight: 500;
+  
+}
+.sub-menu-head {
+    margin: 10px 0;
+    border-bottom: 1px solid #4F96BA;
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  
+  
+    .sub-menu-head {
+        color:#fff;
+    }
+
+    
+    ul.main-nav {
+        z-index: 2;
+        padding: 50px 0;
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        width: 0px;
+        background-color: rgba(0, 0, 0, 1);
+        height: 100%;
+        overflow: auto;
+        /*CSS animation applied : Slide from Right*/
+        
+        -webkit-transition-property: background, width;
+        -moz-transition-property: background, width;
+        -o-transition-property: background, width;
+        transition-property: background, width;
+        -webkit-transition-duration: 0.6s;
+        -moz-transition-duration: 0.6s;
+        -o-transition-duration: 0.6s;
+        transition-duration: 0.6s;
+    }
+ 
+    ul.main-nav > * {
+        -webkit-transition-property: opacity;
+        -moz-transition-property: opacity;
+        -o-transition-property: opacity;
+        transition-property: opacity;
+        -webkit-transition-duration: 0.4s;
+        -moz-transition-duration: 0.4s;
+        -o-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        opacity: 0;
+    }
+    .ic.menu:focus ~ .main-nav > * {
+        opacity: 1;
+    }
+    ul.main-nav > li > a:after {
+        display: none;
+    }
+    ul.main-nav > li:first-child {
+        border-radius: 0px;
+    }
+    ul.main-nav > li {
+        display: block;
+        border-bottom: 1px solid #444;
+    }
+    ul.main-nav > li > a {
+        font-weight: 600;
+    }
+    ul.main-nav > li ul.sub-menu-lists > li a {
+        color: #4F96BA;;
+        font-size: 14px;
+    }
+    .sub-menu-head {
+        font-size: 16px;
+    }
+    ul.main-nav > li:hover {
+        background-color: transparent;
+    }
+    ul.main-nav > li:hover > a {
+        color: blue;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .sub-menu-block {
+        padding: 0 30px;
+    }
+   
+}
+@media only screen and (min-width: 769px) {
+    
+    /* Main Menu for Desktop Devices  */
+    
+    ul.main-nav {
+        display: block;
+        position: relative;
+    }
+    .sub-menu-block {
+        padding: 15px;  
+     
+    }
+    /* Sub Menu */
+    
+    ul.main-nav > li > div.sub-menu-block {
+      
+      visibility: hidden;
+      
+        background-color: #fff;
+        position: absolute;
+        margin-top: 0px;
+      
+        color: #333;
+      left:0px; /*--controls sub block starting location --*/
+      box-shadow:  1px 1px rgba(0,0,0,0.5);
+        box-sizing: border-box;
+        z-index: 3;
+        font-size: 16px;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        opacity: 0;
+      
+        /*CSS animation applied for sub menu : Slide from Top */
+        
+        -webkit-transition: all 0.4s ease 0s;
+        -o-transition: all 0.4s ease 0s;
+        transition: all 0.4s ease 0s;
+        -webkit-transform: rotateX(90deg);
+        -moz-transform: rotateX(90deg);
+        -ms-transform: rotateX(90deg);
+        transform: rotateX(90deg);
+        -webkit-transform-origin: top center;
+        -ms-transform-origin: top center;
+        transform-origin: top center;
+    }
+   #five-block {width: 200%;}
+    ul.main-nav > li:hover > div.sub-menu-block {
+        background-color: #f9f9f9;
+        
+        visibility: visible;
+        opacity: 1;
+        -webkit-transform: rotateX(0deg);
+        -moz-transform: rotateX(0deg);
+        -ms-transform: rotateX(0deg);
+        transform: rotateX(0deg);
+    }
+    ul.main-nav > li > div.sub-menu-block > * {
+        -webkit-transition-property: opacity;
+        -moz-transition-property: opacity;
+        -o-transition-property: opacity;
+        transition-property: opacity;
+        -webkit-transition-duration: 0.4s;
+        -moz-transition-duration: 0.4s;
+        -o-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        opacity: 0;
+      
+    }
+    ul.main-nav > li:hover > div.sub-menu-block > * {
+        opacity: 1; 
+    }
+    .sub-menu-head {
+        font-size: 20px;
+      
+    }
+    /* List Separator: Outer Border */
+    
+    header.dark ul.main-nav > li > a {
+        border-right: 1px solid #bbb;
+    }
+    header.mega ul.main-nav > li > a {
+        border-right: 1px solid #666;
+    }
+    /* List Separator: Inner Border */
+    
+    ul.main-nav > li > a:after {
+        content: '';
+        width: 1px;
+        height: 60x;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        z-index: 2;
+    }
+    header.dark ul.main-nav > li > a:after {
+        background-color: #777;
+    }
+    header.mega ul.main-nav > li > a:after {
+        background-color: #999;
+    }
+    /* Drop Down/Up Arrow for Mega Menu */
+    
+   
+    ul.main-nav > li > a.mega-menu > span:after {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid grey;
+        content: '';
+        background-color: transparent;
+        display: inline-block;
+        margin-top: 10px;
+        vertical-align: middle;
+    }
+    ul.main-nav > li:hover > a.mega-menu span:after {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 0px solid transparent;
+        border-bottom: 5px solid #666;
+    }
+    
+}
+
+/* Hover dropdown */
+.dropdown ul.dropdown-menu {
+    margin-top: 0;
+}
+
+/*To avoid unwanted close*/
+.hover_drop_down:hover ul.dropdown-menu {
+   margin-top: 2px;
+    display: inline-block;
+    position: absolute;
+    top: auto;
+    left: auto;
+    z-index: 1;
+}
+
+.sub-menu-head{color:000;}

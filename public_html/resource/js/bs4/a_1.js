@@ -6337,11 +6337,11 @@ function setMainBodyCSS() {
 }
 
 function commmonOnloadAction(el) {
-    $('.new-wrapper').css("left", "77px");
+  //  $('.new-wrapper').css("left", "77px");
     $('#mainBodyDivForAll').css("padding-left", "0px");
     setMainBodyCSS();
     if (global_var.current_modal === 'loadSourceActivity') {
-        $('.new-wrapper').css("left", "-10px");
+      //  $('.new-wrapper').css("left", "-10px");
         $('#mainBodyDivForAll').css("padding-left", "0px");
 
         $('#sad-diagram-projectlist').html($('#projectList').html());
@@ -6355,7 +6355,7 @@ function commmonOnloadAction(el) {
     }
 
     if (global_var.current_modal === 'loadEntityDiagram') {
-        $('.new-wrapper').css("left", "-20px");
+     //   $('.new-wrapper').css("left", "-20px");
         $('#mainBodyDivForAll').css("padding-left", "10px");
     }
 
