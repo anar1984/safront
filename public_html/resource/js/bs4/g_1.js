@@ -132,6 +132,7 @@ var dY = 0;
 var dX = 0;
 
 function dragResize() {
+    return;
     try {
         $(".draggable").draggable({
             t: 0,

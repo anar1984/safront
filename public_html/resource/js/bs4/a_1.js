@@ -48,8 +48,89 @@ var moduleList = {
     "loadOldVersion": "Old Version",
 };
 var dgui = {};
+
+
+
+
+
+function generateFileLine(name, cell) {
+
+        try {
+           
+            cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
+
+            var div = $('<div></div>');
+
+            if (name.trim().length === 0) {
+                return;
+            }
+
+            var ind = name.lastIndexOf(".") + 1;
+            var fileFormat = name.substr(ind);
+            var fileUrlVar = fileUrl(name);
+
+            
+            var div2 = $('<div></div>').addClass(cell);
+            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+            if (global_var.image_formats.includes(fileFormat)) {
+                div12lik.append($('<img></img>')
+                        .attr('src', fileUrl(name))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFileImageViewer")
+                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                        .attr('alt', name));
+//                    
+            } else if (global_var.video_formats.includes(fileFormat)) {
+                fileUrlVar = videoFileURL(name);
+
+                div12lik.append($('<a target="_blank"></a>')
+                        .attr("href", videoFileURL(name))
+                        .append($('<img></img>')
+                                .attr('src', fileUrlPrivate('video_player_logo.jpg'))
+                                .addClass('comment_img')
+                                .attr('alt', name)));
+//                    
+            } else if (fileFormat === 'pdf') {
+                fileUrlVar = pdfFileURL(name);
+
+                div12lik.append(
+                        $('<a target="_blank"></a>')
+                        .attr("href", pdfFileURL(name))
+                        .append($('<img></img>')
+                                .attr('src', fileUrlPrivate('pdf-logo.png'))
+                                .addClass('comment_img')
+                                .attr('alt', name)));
+            }
+            div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
+
+
+
+            div12lik.append($('<a target="_blank"></a>')
+                    .attr("href", fileUrlVar)
+                    .append($('<i class="fa fa-download"></i>'))
+                    .append('  '))
+                     
+                    
+                    ;
+            div2.append(div12lik);
+            div.append(div2);
+
+            var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
+            div_col.append(div);
+            return div.html();
+        } catch (err) {
+        }
+    }
+
+
 var jsCodeIsLoaded = [];
 var jsGlobalCodeIsLoaded = [];
+
+
+
+
+
 
 var queue4ManulProject = {
     getAllGuiClassList: false,
@@ -372,7 +453,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
                     .after($('<i class="fa fa-times">')
-                    .attr('pid',idx)
+                            .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
 
@@ -401,7 +482,7 @@ function removeFilenameFromZad(el, filename) {
     $(el).closest('div.component-class')
             .find('.saTypeFilePicherUploadFile')
             .attr('fname', st);
-    
+
     var id = $(el).attr("pid");
     $('#pro_zad_span' + id).remove();
     $(el).remove();
@@ -1743,14 +1824,17 @@ function getUserList4Permission() {
                 select.append(option);
             }
 
-            select.selectpicker('refresh');
-            select.change();
+
 
         },
         error: function () {
             Toaster.showError(('somethingww'));
         }
     });
+}
+
+function initSelectpickerComponent() {
+    $('.sa-selectpicker').selectpicker('refresh');
 }
 
 
@@ -2672,17 +2756,25 @@ function setValueOnCompAfterTriggerApi(el, data) {
         var val = "";
         var selectedFields = $(this).attr('sa-selectedfield').split(',');
         for (var i in selectedFields) {
-            var field = selectedFields[i].trim();
-            if (field.length > 0) {
-                if ($(this).attr('sa-type') === 'select'
-                        && $(this).attr('sa-load-ontrigger') === '1'
-                        && data.selectedField.split(',').includes(field)) {
+            try {
+                var field = selectedFields[i].trim();
+                if (field.length > 0) {
+                    if ($(this).attr('sa-type') === 'select'
+                            && $(this).attr('sa-load-ontrigger') === '1'
+                            && data.selectedField.split(',').includes(field)) {
 
-                    fillSelectBoxAfterSyncApiCall(this, data, field);
-                } else if (data[field]) {
-                    val = data[field];
-                    getComponentValueAfterTriggerApi(this, val);
+                        fillSelectBoxAfterSyncApiCall(this, data, field);
+                    } else if ($(this).attr('sa-type') === 'multiselect'
+                            && $(this).attr('sa-load-ontrigger') === '1'
+                            && data.selectedField.split(',').includes(field)) {
+
+                        fillSelectBoxAfterSyncApiCall(this, data, field);
+                    } else if (data[field]) {
+                        val = data[field];
+                        getComponentValueAfterTriggerApi(this, val);
+                    }
                 }
+            } catch (err) {
             }
         }
     })
@@ -2690,14 +2782,35 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
 function getComponentValueAfterTriggerApi(el, val) {
     if ($(el).attr('sa-type') === 'date') {
-        SetConvertedDateByElement(el, val)
+        SetConvertedDateByElement(el, val);
     } else if ($(el).attr('sa-type') === 'time') {
-        SetConvertedTimeByElement(el, val)
+        SetConvertedTimeByElement(el, val);
+    } else if ($(el).attr('sa-type') === 'image') {
+        $(el).attr('src', fileUrl(val));
+        $(el).closest('div').find('.biyzad').remove();
     } else if ($(el).attr('sa-type') === 'checkbox') {
         if (val === '1')
             $(el).prop('checked', true);
         else
             $(el).prop('checked', false);
+
+    } else if ($(el).attr('sa-type') === 'filelist') {
+        var res = val.split(global_var.vertical_seperator);
+        for (var i = 0; i < res.length; i++) {
+            try {
+                $(el).append(generateFileLine(res[i].trim(), "col-3"));
+            } catch (e) {
+            }
+        }
+     
+     
+    } else if ($(el).attr('sa-type') === 'multiselect') {
+
+        $.each(val.split(","), function (i, e) {
+            var id = $(el).attr('id');
+            $("#" + id + " option[value='" + e + "']").prop("selected", true);
+        });
+        $(el).selectpicker('refresh');
 
     } else {
         $(el).val(val);
@@ -2711,6 +2824,24 @@ function getComponentValueAfterTriggerApi(el, val) {
     }
 }
 
+function getMultiSelectpickerValueById(elementId) {
+    return getMultiSelectpickerValue(document.getElementById(elementId))
+}
+
+function getMultiSelectpickerValue(el) {
+    var id = $(el).val();
+    var st = "";
+    for (var i = 0; i < id.length; i++) {
+        if (!id[i])
+            continue;
+        st += id[i]
+        if (i < id.length - 1) {
+            st += ','
+        }
+    }
+    return st;
+}
+
 function getGUIDataByStoryCard(el) {
     var res = {};
 
@@ -2722,7 +2853,11 @@ function getGUIDataByStoryCard(el) {
             val = $(this).is(":checked") ? "1" : "0";
         } else if ($(this).attr('sa-type') === 'filepicker') {
             val = ($(this).attr("fname")) ? $(this).attr("fname") : "";
+        } else if ($(this).attr('sa-type') === 'multiselect') {
+            val = getMultiSelectpickerValue(this);
         }
+
+
 
 
 

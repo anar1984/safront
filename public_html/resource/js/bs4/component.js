@@ -1166,7 +1166,7 @@ var Component = {
     Image: function (comp) {
         var div = Component.ContainerDiv(comp);
 
-        var emptyMsg = $('<div class="col-lg-12 text-center">')
+        var emptyMsg = $('<div class="col-lg-12 biyzad text-center">')
                 .css("border", "1px solid gray")
                 .append($('<h5>').append("No Image"))
                 .append((comp.showProperties) ? $("<i class='fa fa-plus'>")
@@ -1174,14 +1174,20 @@ var Component = {
                         .attr('onclick', 'new UserStory().setGUIComponentUploadImage()')
                         : "");
 
-        var el = (comp.content)
-                ? $('<img></img>')
+        var el =  $('<img></img>')
+                .attr("sa-type", 'image')
                 .attr('style', gui_component.defaultCSS.Image + Component.ReplaceCSS(comp.css))
-                .attr('src', comp.content)
-                : emptyMsg;
+                .attr('src', comp.content);
+        
+        
+         
 
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
+        
+        if (!comp.content)
+             div.append(emptyMsg);
+        
         return  $('<div></div>').append(div).html();
     },
     Youtube: function (comp) {
@@ -1197,11 +1203,11 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
                 .addClass("form-control")
-                .attr("sa-type","filepicker")
+                .attr("sa-type", "filepicker")
                 .attr('style', gui_component.defaultCSS.FilePicker + Component.ReplaceCSS(comp.css))
                 .attr('type', 'file')
                 .attr('value', comp.content);
-         
+
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
@@ -1320,19 +1326,16 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var select = $('<select></select>')
                 .addClass("form-control")
-                .attr('multiple', 'true')
+                .attr('sa-type', 'multiselect')
+                .addClass('sa-selectpicker')
+                .attr('multiple', true)
+                .attr('data-actions-box', "true")
+                .attr('data-live-search', "true")
+
+//                .attr('multiple', 'true')
                 .attr('row', '4')
                 .attr('style', gui_component.defaultCSS.MultiSelectBox + Component.ReplaceCSS(comp.css));
-        if (comp.content) {
-            var r = comp.content.split(/\r*\n/);
-            for (var i = 0; i < r.length; i++) {
-                select.append($('<option></option>').append(r[i]));
-            }
-        } else {
-            for (var i = 1; i <= 4; i++) {
-                select.append($('<option></option>').append('Value ' + (i)));
-            }
-        }
+
         Component.ComponentEvent.Init(select, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
@@ -1341,6 +1344,28 @@ var Component = {
                     .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
+
+
+        //fill auto fill by select from API
+        var inputId = comp.id;
+        var selectFromBacmkogId = SAInput.getInputDetails(inputId, "selectFromBacklogId");
+        var selectFromInputId = SAInput.getInputDetails(inputId, "selectFromInputId");
+        if (selectFromBacmkogId) {
+            var selectedField = SAInput.GetInputName(selectFromInputId)
+            triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+        } else {
+            if (comp.content) {
+                var r = comp.content.split(/\r*\n/);
+                for (var i = 0; i < r.length; i++) {
+                    select.append($('<option></option>').append(r[i]));
+                }
+            } else {
+                for (var i = 1; i < 4; i++) {
+                    select.append($('<option></option>').append('Value ' + (i)));
+                }
+            }
+        }
+
         div.append(select);
         return  $('<div></div>').append(div).html();
     },

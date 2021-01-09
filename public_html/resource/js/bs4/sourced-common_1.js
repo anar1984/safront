@@ -8228,6 +8228,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#gui_all_' + global_var.current_backlog_id).find('.redirectClass').html(designHTML);
         var hdiv = $('#gui_all_' + global_var.current_backlog_id).find('.redirectClass').height();
         $('#gui_all_' + global_var.current_backlog_id).height(hdiv + 50);
+        initSelectpickerComponent();
 
 
 
@@ -18404,6 +18405,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
         initOnloadActionOnGUIDesign();
+        initSelectpickerComponent();
 
         //set is API
         try {

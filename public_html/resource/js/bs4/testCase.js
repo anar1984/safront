@@ -399,6 +399,10 @@ function getBugFilterMultiSelect(el) {
     return st;
 }
 
+function getBugFilterMultiSelectById(elementId) {
+   return getBugFilterMultiSelect(document.getElementById(elementId));
+}
+
 function setBugFilterValues() {
     $('.bug-filter').each(function () {
         var data_type = $(this).attr('data-type');
