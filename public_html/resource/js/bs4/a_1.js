@@ -50,78 +50,153 @@ var moduleList = {
 var dgui = {};
 
 
+function shiftTaskInfoOnTaskInfoModal(el) {
+    var taskId = $(el).attr('pid');
+    callTaskCard4BugTask(el, global_var.current_project_id, taskId);
+}
 
+function changeParentTaskModal() {
+    $('#change-parent-task-modal').modal('show');
+    var select = $('#change-parent-task-modal-parent-task-list');
+    select.html('');
+    select.append($('<option>').val('').text(''))
+
+    var json = initJSON();
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var obj = res.tbl[0].r;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info
+
+
+                    var fkProjectId4 = SATask.GetDetails(o.id, 'fkProjectId');
+                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                    var nameFull = o.taskName + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    select.append($('<option>').val(o.id).text(nameFull))
+                }
+                sortSelectBoxByElement(select);
+            } catch (err) {
+            }
+        }
+    });
+}
+
+function addParentTaskToTask() {
+    updateTask4ShortChangeDetails($('#change-parent-task-modal-parent-task-list').val(), 'fkParentTaskId');
+    $('#change-parent-task-modal').modal('hide');
+    $('#task-mgmt-modal-parent-task').text($('#change-parent-task-modal-parent-task-list option:selected').text())
+    $('#task-mgmt-modal-parent-task').attr("pid", $('#change-parent-task-modal-parent-task-list').val());
+}
+
+function createChildTask() {
+
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmCreateChildTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            Toaster.showMessage("Child task is created.");
+
+            var id = res.kv.fkTaskId;
+            callTaskCard4BugTask(this, global_var.current_project_id, id);
+            $('#taskMgmtModal').find('.card-UserStory-header-text').dblclick();
+            $('#taskMgmtModal').find('.card-UserStory-header-input form-control').focus();
+
+        }
+    });
+
+}
 
 
 function generateFileLine(name, cell) {
 
-        try {
-           
-            cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
+    try {
 
-            var div = $('<div></div>');
+        cell = (cell === 'undefined' || !cell) ? 'col-6' : cell;
 
-            if (name.trim().length === 0) {
-                return;
-            }
+        var div = $('<div></div>');
 
-            var ind = name.lastIndexOf(".") + 1;
-            var fileFormat = name.substr(ind);
-            var fileUrlVar = fileUrl(name);
+        if (name.trim().length === 0) {
+            return;
+        }
 
-            
-            var div2 = $('<div></div>').addClass(cell);
-            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
-            if (global_var.image_formats.includes(fileFormat)) {
-                div12lik.append($('<img></img>')
-                        .attr('src', fileUrl(name))
-                        .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFileImageViewer")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
-                        .attr('alt', name));
+        var ind = name.lastIndexOf(".") + 1;
+        var fileFormat = name.substr(ind);
+        var fileUrlVar = fileUrl(name);
+
+
+        var div2 = $('<div></div>').addClass(cell);
+        var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+        if (global_var.image_formats.includes(fileFormat)) {
+            div12lik.append($('<img></img>')
+                    .attr('src', fileUrl(name))
+                    .addClass('comment_img')
+                    .attr('data-toggle', "modal")
+                    .attr('data-target', "#commentFileImageViewer")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                    .attr('alt', name));
 //                    
-            } else if (global_var.video_formats.includes(fileFormat)) {
-                fileUrlVar = videoFileURL(name);
-
-                div12lik.append($('<a target="_blank"></a>')
-                        .attr("href", videoFileURL(name))
-                        .append($('<img></img>')
-                                .attr('src', fileUrlPrivate('video_player_logo.jpg'))
-                                .addClass('comment_img')
-                                .attr('alt', name)));
-//                    
-            } else if (fileFormat === 'pdf') {
-                fileUrlVar = pdfFileURL(name);
-
-                div12lik.append(
-                        $('<a target="_blank"></a>')
-                        .attr("href", pdfFileURL(name))
-                        .append($('<img></img>')
-                                .attr('src', fileUrlPrivate('pdf-logo.png'))
-                                .addClass('comment_img')
-                                .attr('alt', name)));
-            }
-            div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
-
-
+        } else if (global_var.video_formats.includes(fileFormat)) {
+            fileUrlVar = videoFileURL(name);
 
             div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrlVar)
-                    .append($('<i class="fa fa-download"></i>'))
-                    .append('  '))
-                     
-                    
-                    ;
-            div2.append(div12lik);
-            div.append(div2);
+                    .attr("href", videoFileURL(name))
+                    .append($('<img></img>')
+                            .attr('src', fileUrlPrivate('video_player_logo.jpg'))
+                            .addClass('comment_img')
+                            .attr('alt', name)));
+//                    
+        } else if (fileFormat === 'pdf') {
+            fileUrlVar = pdfFileURL(name);
 
-            var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
-            div_col.append(div);
-            return div.html();
-        } catch (err) {
+            div12lik.append(
+                    $('<a target="_blank"></a>')
+                    .attr("href", pdfFileURL(name))
+                    .append($('<img></img>')
+                            .attr('src', fileUrlPrivate('pdf-logo.png'))
+                            .addClass('comment_img')
+                            .attr('alt', name)));
         }
+        div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
+
+
+
+        div12lik.append($('<a target="_blank"></a>')
+                .attr("href", fileUrlVar)
+                .append($('<i class="fa fa-download"></i>'))
+                .append('  '))
+
+
+                ;
+        div2.append(div12lik);
+        div.append(div2);
+
+        var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
+        div_col.append(div);
+        return div.html();
+    } catch (err) {
     }
+}
 
 
 var jsCodeIsLoaded = [];
@@ -1504,7 +1579,7 @@ function getModuleList4Permission() {
 }
 
 
-$(document).on("change", "#permission_userlist", function (e) {
+$(document).on("click", "#permission_userlist", function (e) {
     var id = $(this).val();
     getBodyOfPermissionByUser(id);
     getBodyOfModulePermissionByUser(id);
@@ -2802,8 +2877,8 @@ function getComponentValueAfterTriggerApi(el, val) {
             } catch (e) {
             }
         }
-     
-     
+
+
     } else if ($(el).attr('sa-type') === 'multiselect') {
 
         $.each(val.split(","), function (i, e) {
@@ -6473,11 +6548,11 @@ function setMainBodyCSS() {
 }
 
 function commmonOnloadAction(el) {
-    $('.new-wrapper').css("left", "77px");
+    //  $('.new-wrapper').css("left", "77px");
     $('#mainBodyDivForAll').css("padding-left", "0px");
     setMainBodyCSS();
     if (global_var.current_modal === 'loadSourceActivity') {
-        $('.new-wrapper').css("left", "-10px");
+        //  $('.new-wrapper').css("left", "-10px");
         $('#mainBodyDivForAll').css("padding-left", "0px");
 
         $('#sad-diagram-projectlist').html($('#projectList').html());
@@ -6491,7 +6566,7 @@ function commmonOnloadAction(el) {
     }
 
     if (global_var.current_modal === 'loadEntityDiagram') {
-        $('.new-wrapper').css("left", "-20px");
+        //   $('.new-wrapper').css("left", "-20px");
         $('#mainBodyDivForAll').css("padding-left", "10px");
     }
 
@@ -9349,6 +9424,8 @@ function cloneTaskModal() {
     $('#cloneTaskModal').modal("show");
     SACore.FillInCombo('cloneTask_backlog_id');
 }
+
+
 
 function changeUserStoryOfTaskModal() {
     $('#change-user-story-task-modal').modal('show');

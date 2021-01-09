@@ -1363,8 +1363,8 @@ body {
     padding: 0px 0;
     width: 30px;
     height: 30px;
-    left: 124px;
-    top: 21px;
+    left: 62px;
+    top: 70px;
     outline: none!important;
     z-index: 1000;
 }
@@ -1445,7 +1445,7 @@ ul.menu-dropdown i {
 .menu {
     position: absolute;
     display: block;
-    left: -214px;
+    left: -286px;
     box-shadow: 4px 0px 1px rgb(183, 184, 188);
     background-color: rgb(255, 255, 255);
     top: 0;
@@ -1491,8 +1491,8 @@ div#container-us-body-main tbody td{
 
 .new-wrapper {
     position: absolute;
-    left: 77px;  
-    width: calc(100% - 77px);
+    /* left: 77px; */
+    width: 100%;
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
@@ -1512,8 +1512,8 @@ div#container-us-body-main tbody td{
 /* gulbahar 13.08.2020  width: calc(100% - 300px) idi*/
 .openNav .new-wrapper {
     position: absolute;
-    transform: translate3d(275px, 0, 0);
-    width: calc(100% - 355px);
+    transform: translate3d(30%, 0, 0);
+    width: calc(100% - 310px);
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
@@ -1575,8 +1575,8 @@ div#container-us-body-main tbody td{
 /*}*/
 
 .openNav .menu {
-    left: -120px;
-    /*top :73px;*/
+    left: -185px;
+    top: 45px;
     transform: translate3d(200px, 0, 0);
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
     background: #f4f5f7;
@@ -1678,11 +1678,11 @@ div#container-us-body-main tbody td{
 .btnplus{
     -webkit-box-align: center;
     align-items: center;
-    color: rgb(222, 235, 255);
+    
     cursor: pointer;
-    display: flex;
+    
     font-size: inherit;
-    margin:15px;
+    margin: 5px;
     -webkit-box-pack: center;
     justify-content: center;
     line-height: 1;
@@ -1695,10 +1695,10 @@ div#container-us-body-main tbody td{
     border-color: initial;
     border-image: initial;
     border-radius: 50%;
-    outline: none;
-    padding: 0px;
-
-
+     outline: none;
+    padding: 8px;
+  
+    text-align: center;
 }
 .bottombtn {
     /* position: absolute; */
@@ -1708,8 +1708,10 @@ div#container-us-body-main tbody td{
 }
 .topbtn {
     /* position: absolute; */
-    width: 109%;
+    width: 40%;
     top: 5%;
+    display: flex;
+    padding-left: 54px;
 }
 .proje-img {
     width: 40px;

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
         <link rel="stylesheet" href="resource/css/bs4/g_1.css">
         <link rel="stylesheet" href="resource/css/bs4/style-kanban.css">
-        <link rel="stylesheet"  href="resource/css/bs4/style-storytask-Manager.css">
+        <link rel="stylesheet" href="resource/css/bs4/style-storytask-Manager.css">
         <link rel="stylesheet" href="resource/css/bs4/jquery-ui.css">
         <link rel="stylesheet" href="resource/css/bs4/dragtable.css">
         <link rel="stylesheet" href="resource/css/bs4/print.css">
@@ -547,9 +547,9 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <input type="checkbox"
-                                                                               onchange="Analytics.Main.getReport(this)"
-                                                                               class="analytics_filter_checkbox_priority" value="4">4
+                                                                        <input  type="checkbox"
+                                                                                onchange="Analytics.Main.getReport(this)"
+                                                                                class="analytics_filter_checkbox_priority" value="4">4
                                                                     </td>
 
                                                                     <td>
@@ -613,246 +613,248 @@
 
         <div class="row main_body_class " style="margin-top:0vh;">
 
-            <div class="sp" style="z-index:40000;">
+            <div class="sp" style="z-index:400;">
 
 
                 <div class="first-side">
-                    <div class="topbtn">
-                        <div class="main-logo">
-                            <a href="#"></a>
-                        </div>
 
-                        <!--                <a class="nav-link s-logo-label" onclick="Analytics.hide()" href="#">-->
-                        <!--                    <img style="height:5vh;" src="api/get/files/favicon.png">-->
-                        <!--                </a><br>-->
-
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadDashboard left-menu-load openNavhide" title="Dashboard"  data-link="dashaboard" >
-                                <i class="fa fa-tachometer" aria-hidden="true"></i>
-                            </a>
-                            <a  class="loadDashboard openNavhide  left-menu-load " title="Dashboard"  data-link="dashboard"  >
-                                <span class="description-main" style="margin-top: 19px;" >Dashboard</span></a>
-                            </a>
-                        </div>
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadStoryCard left-menu-load openNavshow" title="Story Card"  data-link="storycard" onclick="new UserStory().toggleSubmenu(this, 'generalview')">
-                                <i class="fa fa-id-card-o" aria-hidden="true"></i>
-                            </a>
-                            <a  class="loadStoryCard openNavshow  left-menu-load " title="Story Card"  data-link="storycard"  onclick="new UserStory().toggleSubmenu(this, 'generalview')">
-                                <span class="description-main" style="margin-top: 19px;" >Story Card</span></a>
-                            </a>
-                        </div>
-
-
-                        <div class="row row-style project-item-zad">
-                            <a class="btnplus loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="Live Prototype" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
-                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="UserStory" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
-                                <span class="description-main" style="margin-top: 19px;">Live Prototype</span>
-                            </a>
-                        </div>
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="Story Card Management"  >
-                                <i class="fa fa-file-code-o" aria-hidden="true"></i>
-
-                            </a>
-                            <a  class="loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="User Story Management" >
-                                <span class="description-main" style="margin-top: 19px;">User Story Management</span>
-                            </a>
-                        </div>
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadTaskManagement openNavshow left-menu-load " data-link="taskmgmt" title="Task Management"  >
-                                <i class="fa fa-tasks" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadTaskManagement openNavshow left-menu-load " data-link="taskmgmt" title="Task Management">
-                                <span class="description-main" style="margin-top: 19px;">Task Management</span>
-                            </a>
-                        </div>
-
-
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadBugChange openNavhide left-menu-load " data-link="bugchange" title="Issue Management"  >
-                                <i class="fa fa-bug" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadBugChange openNavhide left-menu-load " data-link="bugchange" title="Issue Management">
-                                <span class="description-main" style="margin-top: 19px;">Issue Management</span>
-                            </a>
-                        </div>
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadTestCase openNavhide left-menu-load " data-link="testcase" title="Test Case Management"  >
-                                <i class="fa fa-podcast" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadTestCase openNavhide left-menu-load " data-link="testcase" title="Test Case Management">
-                                <span class="description-main" style="margin-top: 19px;">Test Case Management</span>
-                            </a>
-                        </div>
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadDocEditor   openNavshow left-menu-load "   title="Document Editor"  >
-                                <i class="fa fa-file-text" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadDocEditor   openNavshow left-menu-load " data-link="taskmgmt" title="Document Editor">
-                                <span class="description-main" style="margin-top: 19px;">Document Editor</span>
-                            </a>
-                        </div>
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadBusinessCase  openNavhide"   title="Business Case"  >
-                                <i class="fa fa-briefcase" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadBusinessCase  openNavhide left-menu-load " data-link="bcase" title="Business Case">
-                                <span class="description-main" style="margin-top: 19px;">Business Case</span>
-                            </a>
-                        </div>
-
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadBusinessService  openNavhide"   title="Business Services"  >
-                                <i class="fa fa-cube" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadBusinessService  openNavhide left-menu-load " data-link="stat" title="Business Services">
-                                <span class="description-main" style="margin-top: 19px;">Business Services</span>
-                            </a>
-                        </div>
-                        <!--                        <div class="row row-style  project-item-zad">
-                                                    <a class="btnplus loadStatistics openNavhide left-menu-load "   title="Statistics"  >
-                                                        <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                    <ul class="main-nav">
+                        <li class="top-level-link">
+                            <a class="mega-menu"><div class="main-logo"></div><span> </span></a>
+                            <div class="sub-menu-block" id="five-block">
+                                <div class="row">
+                                    <div class="col-md-15 col-sm-6">
+                                        <h2 class="sub-menu-head">Sourced </h2>
+                                        <ul class="sub-menu-lists">
+                                            <li >
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadDashboard left-menu-load openNavhide" title="Dashboard"  data-link="dashaboard" >
+                                                        <i class="fa fa-tachometer" aria-hidden="true"></i>
                                                     </a>
-                                                    <a class="loadStatistics openNavhide left-menu-load " data-link="stat" title="Statistics">
-                                                        <span class="description-main" style="margin-top: 19px;">Statistics</span>
+                                                    <a  class="loadDashboard openNavhide  left-menu-load " title="Dashboard"  data-link="dashboard"  >
+                                                        <span class="description-main" style="margin-top: 19px;" >Dashboard</span></a>
                                                     </a>
-                                                </div>-->
+                                                </div>
 
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadSourceActivity openNavhide left-menu-load   "   title="Sourced-Activity Diagram"  >
-                                <i class="fa fa-random" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadSourceActivity openNavhide  left-menu-load " data-link="stat" title="Sourced-Activity Diagram">
-                                <span class="description-main" style="margin-top: 19px;">Sourced-Activity Diagram</span>
-                            </a>
-                        </div>
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadEntityDiagram openNavhide left-menu-load   "   title="Entity Diagram"  >
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadEntityDiagram openNavhide  left-menu-load " data-link="stat" title="Entity Diagram">
-                                <span class="description-main" style="margin-top: 19px;">Entity Diagram</span>
-                            </a>
-                        </div>
-                        <!--                        <div class="row row-style  project-item-zad">
-                                                    <a class="btnplus loadActivityDiagram openNavhide left-menu-load" data-link="activitydiagram"   title="Activity Diagram"  >
+                                            </li>
+                                            <li >
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadStoryCard left-menu-load openNavshow" title="Story Card"  data-link="storycard" onclick="new UserStory().toggleSubmenu(this, 'generalview')">
+                                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a  class="loadStoryCard openNavshow  left-menu-load " title="Story Card"  data-link="storycard"  onclick="new UserStory().toggleSubmenu(this, 'generalview')">
+                                                        <span class="description-main"  >Story Card</span></a>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li >
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="Live Prototype" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
+                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="UserStory" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
+                                                        <span class="description-main" style="margin-top: 19px;">Live Prototype</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li >
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="Story Card Management"  >
+                                                        <i class="fa fa-file-code-o" aria-hidden="true"></i>
+
+                                                    </a>
+                                                    <a  class="loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="User Story Management" >
+                                                        <span class="description-main" style="margin-top: 19px;">User Story Management</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadTaskManagement openNavshow left-menu-load " data-link="taskmgmt" title="Task Management"  >
+                                                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadTaskManagement openNavshow left-menu-load " data-link="taskmgmt" title="Task Management">
+                                                        <span class="description-main" style="margin-top: 19px;">Task Management</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadBugChange openNavhide left-menu-load " data-link="bugchange" title="Issue Management"  >
+                                                        <i class="fa fa-bug" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadBugChange openNavhide left-menu-load " data-link="bugchange" title="Issue Management">
+                                                        <span class="description-main" style="margin-top: 19px;">Issue Management</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+
+                                            <li>  
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadTestCase openNavhide left-menu-load " data-link="testcase" title="Test Case Management"  >
+                                                        <i class="fa fa-podcast" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadTestCase openNavhide left-menu-load " data-link="testcase" title="Test Case Management">
+                                                        <span class="description-main" style="margin-top: 19px;">Test Case Management</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadDocEditor   openNavshow left-menu-load "   title="Document Editor"  >
+                                                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadDocEditor   openNavshow left-menu-load " data-link="taskmgmt" title="Document Editor">
+                                                        <span class="description-main" style="margin-top: 19px;">Document Editor</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-15 col-sm-6">
+                                        <h2 class="sub-menu-head">Agile</h2>
+                                        <ul class="sub-menu-lists">
+
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadBusinessCase  openNavhide"   title="Business Case"  >
+                                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadBusinessCase  openNavhide left-menu-load " data-link="bcase" title="Business Case">
+                                                        <span class="description-main" style="margin-top: 19px;">Business Case</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadBusinessService  openNavhide"   title="Business Services"  >
+                                                        <i class="fa fa-cube" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadBusinessService  openNavhide left-menu-load " data-link="stat" title="Business Services">
+                                                        <span class="description-main" style="margin-top: 19px;">Business Services</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadSourceActivity openNavhide left-menu-load   "   title="Sourced-Activity Diagram"  >
+                                                        <i class="fa fa-random" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadSourceActivity openNavhide  left-menu-load " data-link="stat" title="Sourced-Activity Diagram">
+                                                        <span class="description-main" style="margin-top: 19px;">Sourced-Activity Diagram</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadEntityDiagram openNavhide left-menu-load   "   title="Entity Diagram"  >
                                                         <i class="fa fa-building" aria-hidden="true"></i>
                                                     </a>
-                                                    <a class="loadActivityDiagram openNavhide  left-menu-load " data-link="activitydiagram" title="Activity Diagram">
-                                                        <span class="description-main" style="margin-top: 19px;">Activity Diagram</span>
+                                                    <a class="loadEntityDiagram openNavhide  left-menu-load " data-link="stat" title="Entity Diagram">
+                                                        <span class="description-main" style="margin-top: 19px;">Entity Diagram</span>
                                                     </a>
-                                                </div>-->
-                        <!--                    
-                                            <div class="row row-style  project-item-zad">
-                                                <a class="btnplus neefdiagram-call" data-link="neefdiagram" title="NEEF Diagram"  >
-                                                    <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                                                </a>
-                                                <a class="neefdiagram-call" data-link="neefdiagram" title="NEEF Diagram" >
-                                                    <span class="description-main" style="margin-top: 19px;">NEEF Diagram</span>
-                                                </a>
-                                             
-                                            </div>-->
+                                                </div>
 
-                        <!--                    <div class="row row-style  project-item-zad">
-                                                <a class="btnplus storydiagram" data-link="neefdiagram" title="Story Diagram"  >
-                                                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                                                </a>
-                                                <a class="storydiagram" data-link="neefdiagram" title="Story Diagram">
-                                                    <span class="description-main" style="margin-top: 19px;">Story Diagram</span>
-                                                </a>
-                                            </div>-->
+                                            </li>
+                                            <li>
 
-                        <!--                    <div class="row row-style  project-item-zad">
-                                                <a class="btnplus inputdiagram" data-link="neefdiagram" title="Input Diagram"  >
-                                                    <i class="fa fa-area-chart" aria-hidden="true"></i>
-                                                </a>
-                                                <a class="inputdiagram" data-link="neefdiagram" title="Input Diagram" >
-                                                    <span class="description-main" style="margin-top: 19px;">Input Diagram</span>
-                                                </a>
-                                            </div>-->
+                                                <div class="row row-style  project-item-zad">
+                                                    <a class="btnplus loadProject openNavhide left-menu-load " data-link="project" title="Project"  
+                                                       data-toggle="modal">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadProject openNavhide left-menu-load " data-link="project" title="Project"  data-toggle="modal">
+                                                        <span class="description-main" style="margin-top: 19px;">Project</span>
+                                                    </a>
+                                                </div>
 
-                        <!--                    <div class="row row-style  project-item-zad">
-                                                <a class="btnplus loadSubmenu" data-link="rolemap" title="Role Map Diagram"  >
-                                                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                                                </a>
-                                                <a class="loadSubmenu" data-link="rolemap" title="Role Map Diagram" >
-                                                    <span class="description-main" style="margin-top: 19px;">Role Map Diagram</span>
-                                                </a>
-                                    
-                                            </div>-->
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad perm4 openNavhide left-menu-load " data-perm="admin">
+                                                    <a class="btnplus loadUser perm4" data-link="user" data-perm="admin" title="User" >
+                                                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadUser perm4 openNavhid left-menu-load e" data-link="user" data-perm="admin" title="User" >
+                                                        <span class="description-main" style="margin-top: 19px;">User</span>
+                                                    </a>
+
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad perm4 openNavhide left-menu-load " data-perm="admin">
+                                                    <a class="btnplus loadTaskType perm4" data-link="tasktype" data-perm="admin" title="Task type" >
+                                                        <i class="fa fa-server"> </i>
+                                                    </a>
+                                                    <a class=" loadTaskType perm4 openNavhide left-menu-load " data-link="tasktype" data-perm="admin" title="Task type">
+                                                        <span class="description-main" style="margin-top: 19px;">Task type</span>
+                                                    </a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad perm4 " data-perm="admin">
+                                                    <a class="btnplus loadPermission openNavshow left-menu-load " data-link="permission" title="Permission"  >
+                                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="loadPermission openNavshow left-menu-load " data-link="permission" title="Permission">
+                                                        <span class="description-main" style="margin-top: 19px;">Permission</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="row row-style  project-item-zad">
+                                                    <a href="app1.html" class="btnplus loadOldVersion"    target="_blank" title="Old Version" >
+                                                        <i class="fa fa-angle-double-left"> </i>
+                                                    </a>
+                                                    <a href="app1.html" class="" target="_blank" title="Old Version">
+                                                        <span class="description-main" style="margin-top: 19px;">Old Version</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
 
 
-                        <div class="row row-style  project-item-zad">
-                            <a class="btnplus loadProject openNavhide left-menu-load " data-link="project" title="Project"  
-                               data-toggle="modal">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                    <div class="row row-style bottombtn2">
+
+                        <span class="myaccountName" id="userprofile_main_id" style="margin-top: 5px;" data-toggle="dropdown" href="#" aria-expanded="false"></span>
+                        <div class="dropdown ">
+                            <a class="dropdown-toggle navbar-menu-profile  " data-toggle="dropdown" href="#" aria-expanded="false">
+                                <!--                            <i class="fa fa-user-o" aria-hidden="true"></i>-->
+                                <img src="api/get/files/6_71C2E936DA6DE.jpg" class="rounded-circle" style=" margin-top:0px;" width="40px" id="userprofile_main_userimg">
                             </a>
-                            <a class="loadProject openNavhide left-menu-load " data-link="project" title="Project"  data-toggle="modal">
-                                <span class="description-main" style="margin-top: 19px;">Project</span>
-                            </a>
+
+                            <span class="caret" hidden="" id="userprofile_main_domain"></span>
+                            <ul class="dropdown-menu navbar-submenu-conf myaccount">
+                                <li style="padding:5px 0px;"><a href="#" class="navbar-submenu-line-conf" data-target="#myAccountModal" data-toggle="modal" onclick="new User().loadPersonalUser()"><i class="fa fa-inbox">&nbsp;</i>My Account</a></li>
+                                <li style="padding:5px 0px;"> <a href="#" class="navbar-submenu-line-conf" data-target="#changeMyPasswordModal" data-toggle="modal" onclick="new User().changeMyPasswordModal()"><i class="fa fa-edit">&nbsp;</i>Change Password</a></li>
+                                <li style="padding:5px 0px;"> <a href="#" class="navbar-submenu-line-conf" data-target="#getPaymentHistory"  data-toggle="modal" title="Payment history" data-perm="admin" onclick="new UserStory().loadPaymentHistory()"><i class="fa fa-credit-card">&nbsp;</i>Payment history</a></li>
+                                <li style="padding:5px 0px;"><a href="#" class="navbar-submenu-line-conf" onclick="javascript:logout()"><i class="fa fa-sign-out">&nbsp;</i>Log Out</a></li>
+                            </ul>
                         </div>
 
-                        <div class="row row-style  project-item-zad perm4 openNavhide left-menu-load " data-perm="admin">
-                            <a class="btnplus loadUser perm4" data-link="user" data-perm="admin" title="User" >
-                                <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadUser perm4 openNavhid left-menu-load e" data-link="user" data-perm="admin" title="User" >
-                                <span class="description-main" style="margin-top: 19px;">User</span>
-                            </a>
-
-                        </div>
-
-                        <div class="row row-style  project-item-zad perm4 openNavhide left-menu-load " data-perm="admin">
-                            <a class="btnplus loadTaskType perm4" data-link="tasktype" data-perm="admin" title="Task type" >
-                                <i class="fa fa-server"> </i>
-                            </a>
-                            <a class=" loadTaskType perm4 openNavhide left-menu-load " data-link="tasktype" data-perm="admin" title="Task type">
-                                <span class="description-main" style="margin-top: 19px;">Task type</span>
-                            </a>
-                        </div>
-
-
-                        <div class="row row-style  project-item-zad perm4 " data-perm="admin">
-                            <a class="btnplus loadPermission openNavshow left-menu-load " data-link="permission" title="Permission"  >
-                                <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                            </a>
-                            <a class="loadPermission openNavshow left-menu-load " data-link="permission" title="Permission">
-                                <span class="description-main" style="margin-top: 19px;">Permission</span>
-                            </a>
-                        </div>
-
-                        <div class="  project-item-zad   "  >
-
-                        </div>
-
-
-                        <div class="row row-style  project-item-zad">
-                            <a href="app1.html" class="btnplus loadOldVersion"    target="_blank" title="Old Version" >
-                                <i class="fa fa-angle-double-left"> </i>
-                            </a>
-                            <a href="app1.html" class="" target="_blank" title="Old Version">
-                                <span class="description-main" style="margin-top: 19px;">Old Version</span>
-                            </a>
-                        </div>
 
                     </div>
-                    <div class=" bottombtn">
+                    <div style="display: none;" class=" bottombtn">
                         <!--                        <div class="row row-style ">
                                                     <a class="btnplus" title="Sync with JIRA" onclick="new UserStory().syncWithJira(this)">
                                                         <i class="fa fa-refresh" data-toggle="tooltip"
@@ -921,28 +923,8 @@
 
 
                     </div>
-
                 </div>
-                <div class="row row-style bottombtn2">
 
-                    <span class="myaccountName" id="userprofile_main_id" style="margin-top: 15px;" data-toggle="dropdown" href="#" aria-expanded="false"></span>
-                    <div class="dropdown ">
-                        <a class="dropdown-toggle navbar-menu-profile btnplus " data-toggle="dropdown" href="#" aria-expanded="false">
-                            <!--                            <i class="fa fa-user-o" aria-hidden="true"></i>-->
-                            <img src="api/get/files/6_71C2E936DA6DE.jpg" class="rounded-circle" style=" margin-top:0px;" width="40px" id="userprofile_main_userimg">
-                        </a>
-
-                        <span class="caret" hidden="" id="userprofile_main_domain"></span>
-                        <ul class="dropdown-menu navbar-submenu-conf myaccount">
-                            <li style="padding:5px 0px;"><a href="#" class="navbar-submenu-line-conf" data-target="#myAccountModal" data-toggle="modal" onclick="new User().loadPersonalUser()"><i class="fa fa-inbox">&nbsp;</i>My Account</a></li>
-                            <li style="padding:5px 0px;"> <a href="#" class="navbar-submenu-line-conf" data-target="#changeMyPasswordModal" data-toggle="modal" onclick="new User().changeMyPasswordModal()"><i class="fa fa-edit">&nbsp;</i>Change Password</a></li>
-                            <li style="padding:5px 0px;"> <a href="#" class="navbar-submenu-line-conf" data-target="#getPaymentHistory"  data-toggle="modal" title="Payment history" data-perm="admin" onclick="new UserStory().loadPaymentHistory()"><i class="fa fa-credit-card">&nbsp;</i>Payment history</a></li>
-                            <li style="padding:5px 0px;"><a href="#" class="navbar-submenu-line-conf" onclick="javascript:logout()"><i class="fa fa-sign-out">&nbsp;</i>Log Out</a></li>
-                        </ul>
-                    </div>
-
-
-                </div>
 
                 <div class="primary-nav">
 
@@ -6142,7 +6124,8 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Move To</a>
+                            <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">Create Child Task</a>
+                            <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward To</a>
                             <a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>
                             <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
                             <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
@@ -6261,7 +6244,7 @@
                     </div>
                 </div>
 
-                <div   class="addEpicTask" style="padding-bottom: 20px;">
+                <div   class="addEpicTask"  >
                     <div class="dropdown-task show">
                         <span href="#" class="comment-content-header-history" 
                               onclick="changeUserStoryOfTaskModal()">
@@ -6270,7 +6253,23 @@
 
                         <span class="comment-content-header-history" 
                               onclick="showUserStoryOfTaskCardModal(this)"
+                              style="color:black;"
                               id='task-mgmt-modal-user-story'>
+                        </span>
+                    </div>
+                </div>
+
+                <div   class="addEpicTask" style="padding-bottom: 20px;">
+                    <div class="dropdown-task show">
+                        <span href="#" class="comment-content-header-history" 
+                              onclick="changeParentTaskModal()">
+                            Parent Task<br>
+                        </span> 
+
+                        <span class="comment-content-header-history" 
+                              onclick="shiftTaskInfoOnTaskInfoModal(this)"
+                              style="color:black;"
+                              id='task-mgmt-modal-parent-task'>
                         </span>
                     </div>
                 </div>
@@ -7572,6 +7571,34 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="change-parent-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Parent Task List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="row" >
+                    <div class='col'>
+                        <select class='form-control' 
+                                id="change-parent-task-modal-parent-task-list"></select>    
+                            
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addParentTaskToTask()"> Add </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="backlogInputPermissionModal" tabindex="-1" role="dialog" aria-labelledby=""
      aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
@@ -7592,6 +7619,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 
 
@@ -7635,7 +7665,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Assign User Story to Task</h5>
+                <h5 class="modal-title" id="">Change User Story</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
