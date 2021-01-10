@@ -22646,7 +22646,7 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
-
+                
                 var img = (res.tbl[0].r[0].userImage)
                         ? fileUrl(res.tbl[0].r[0].userImage)
                         : fileUrl(that.getDefaultUserprofileName());
@@ -22660,7 +22660,9 @@ User.prototype = {
                 that.removeTagsByPermission();
             },
             error: function () {
-                document.location = "login.html";
+                //bu hisse de error atmalidir. lakin atmir
+                
+                //document.location = "login.html";
 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });

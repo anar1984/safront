@@ -826,11 +826,12 @@ b{
 }
 
  .first-side:hover {
-    width: 20.3%;
-    transition: all 0.5s ease;
+    width: 29%;
+    transition: all 0.3s ease;
     opacity: 1;
     border-radius: 0px;
     padding: 0px;
+    overflow: visible;
     
 } 
  .first-side:hover .main-logo{
@@ -1049,14 +1050,14 @@ button.dropdown-item:hover{
     left: 0;
     box-shadow: 0 0 1px rgb(145, 144, 144);
     top: 0;
-    border-radius: 50%;
-    width: 4.3%;
-    opacity: 0.6;
+  
+    width: 3.5%;
+    opacity: 0.9;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 1001;
     background-color: #ffffff; 
-    height: auto;
-    padding: 10px 0px 5px 11px;
+   overflow: hidden;
+   height: 38px;
     transition: all 1s ease;
 
 
@@ -1376,10 +1377,10 @@ START PROJECT SECTION
 }
 
 .myaccountName{
-    color: transparent;
-    position: absolute;
-    left: 75px;
-    font-size: 14px;
+    color: black;
+    /* position: absolute; */
+    /* left: 75px; */
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.9s ease;
    /*  top: 91vh; */
@@ -2498,7 +2499,7 @@ ul.main-nav {
     padding: 0px;
     font-size: 0px;
     /* max-width: 1275px; */
-    width: 95%;
+    width: 100%;
     margin-bottom: 0;
    
 }
@@ -2530,7 +2531,8 @@ ul.main-nav > li ul.sub-menu-lists {
     margin: auto 0;
     padding: 1px 0;
     list-style-type: none;
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
 }
 ul.main-nav > li ul.sub-menu-lists > li {
     padding: auto;
@@ -2631,7 +2633,7 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     /* Main Menu for Desktop Devices  */
     
     ul.main-nav {
-        display: block;
+        display: flex;
         position: relative;
     }
     .sub-menu-block {
@@ -2733,9 +2735,9 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     ul.main-nav > li > a.mega-menu > span:after {
         width: 0;
         height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 5px solid grey;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 7px solid grey;
         content: '';
         background-color: transparent;
         display: inline-block;
@@ -2743,10 +2745,11 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
         vertical-align: middle;
     }
     ul.main-nav > li:hover > a.mega-menu span:after {
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
         border-top: 0px solid transparent;
-        border-bottom: 5px solid #666;
+        border-bottom: 7px solid #666;
+        margin-top: 10px;
     }
     
 }
