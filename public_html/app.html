@@ -39,7 +39,7 @@
 
 
 
-        <!--<script src="resource/js/bs4/link.js"></script>-->
+        <script src="resource/js/bs4/link.js"></script>
         <script src="resource/js/bs4/jquery.min.js"></script>
         <!--<script src="resource/js/bs4/jquery-1.9.1.js"></script>-->
         <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
@@ -673,30 +673,6 @@
                                            </li>
                                            <li>
                                             <div class="row row-style  project-item-zad">
-                                                <a class="btnplus loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="Story Card Management"  >
-                                                    <i class="fa fa-file-code-o" aria-hidden="true"></i>
-                    
-                                                </a>
-                                                <a  class="loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="User Story Management" >
-                                                    <span class="description-main" style="margin-top: 19px;">User Story Management</span>
-                                                </a>
-                                            </div>
-                                         
-                                           </li>
-                                           <li>
-                                            <div class="row row-style  project-item-zad">
-                                                <a class="btnplus loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="Story Card Management"  >
-                                                    <i class="fa fa-file-code-o" aria-hidden="true"></i>
-                    
-                                                </a>
-                                                <a  class="loadStoryCardMgmt openNavshow left-menu-load " data-link="storycardmgmt" title="User Story Management" >
-                                                    <span class="description-main" style="margin-top: 19px;">User Story Management</span>
-                                                </a>
-                                            </div>
-                                           
-                                           </li>
-                                           <li>
-                                            <div class="row row-style  project-item-zad">
                                                 <a class="btnplus loadTaskManagement openNavshow left-menu-load " data-link="taskmgmt" title="Task Management"  >
                                                     <i class="fa fa-tasks" aria-hidden="true"></i>
                                                 </a>
@@ -717,6 +693,7 @@
                                             </div>
                                             
                                            </li>
+
                                            <li>  
                                             <div class="row row-style  project-item-zad">
                                                 <a class="btnplus loadTestCase openNavhide left-menu-load " data-link="testcase" title="Test Case Management"  >
@@ -6147,7 +6124,8 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Move To</a>
+                            <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">Create Child Task</a>
+                            <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward To</a>
                             <a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>
                             <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
                             <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
@@ -6266,7 +6244,7 @@
                     </div>
                 </div>
 
-                <div   class="addEpicTask" style="padding-bottom: 20px;">
+                <div   class="addEpicTask"  >
                     <div class="dropdown-task show">
                         <span href="#" class="comment-content-header-history" 
                               onclick="changeUserStoryOfTaskModal()">
@@ -6275,7 +6253,39 @@
 
                         <span class="comment-content-header-history" 
                               onclick="showUserStoryOfTaskCardModal(this)"
+                              style="color:black;"
                               id='task-mgmt-modal-user-story'>
+                        </span>
+                    </div>
+                </div>
+
+
+
+                 <div   class="addEpicTask" >
+                    <div class="dropdown-task show">
+                        <span href="#" class="comment-content-header-history" 
+                              onclick="changeParentTaskModal()">
+                            Parent Task<br>
+                        </span> 
+
+                        <span class="comment-content-header-history task-mgmt-modal-parent-task" 
+                              onclick="shiftTaskInfoOnTaskInfoModal(this)"
+                              style="color:black;"
+                              id='task-mgmt-modal-parent-task'>
+                        </span>
+                    </div>
+                </div>
+                
+                
+                <div   class="addEpicTask" style="padding-bottom: 20px;">
+                    <div class="dropdown-task show">
+                        <span href="#" class="comment-content-header-history" >
+                            Child Task<br>
+                        </span> 
+
+                        <span class="comment-content-header-history task-mgmt-modal-child-task" 
+                              style="color:black;"
+                              id='task-mgmt-modal-child-task'>
                         </span>
                     </div>
                 </div>
@@ -6342,7 +6352,7 @@
                 </div>
 
 
-                <div class="statusCardStory">
+<!--                <div class="statusCardStory">
                     <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
                     <div class="form-group statusSelectSelect">
 
@@ -6355,7 +6365,7 @@
                         </select>
                     </div>
 
-                </div>
+                </div>-->
 
                 <div class="Assigne-card-story">
                     <br>
@@ -7577,6 +7587,34 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="change-parent-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Parent Task List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="row" >
+                    <div class='col'>
+                        <select class='form-control' 
+                                id="change-parent-task-modal-parent-task-list"></select>    
+                            
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addParentTaskToTask()"> Add </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="backlogInputPermissionModal" tabindex="-1" role="dialog" aria-labelledby=""
      aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
@@ -7597,6 +7635,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 
 
@@ -7640,7 +7681,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Assign User Story to Task</h5>
+                <h5 class="modal-title" id="">Change User Story</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

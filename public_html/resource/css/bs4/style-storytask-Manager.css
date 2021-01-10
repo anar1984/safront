@@ -558,7 +558,7 @@ color: white;
     cursor: pointer;
     color:rgb(166, 166, 166);
     font-size: 14px;
-    margin-left: 10px;
+/*    margin-left: 10px;*/
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 .comment-content-header-status{
@@ -662,7 +662,7 @@ color: white;
 }
 
 .statusCardStory{
-    margin: 10px;
+/*    margin: 10px;*/
     
 }
 .filterCounter{

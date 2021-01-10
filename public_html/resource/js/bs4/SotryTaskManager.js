@@ -733,16 +733,9 @@ function loadTaskCardDetails(taskId) {
     loadAssignedLabel(SATask.GetDetails(id, 'fkBacklogId'), SATask.GetDetails(id, 'taskVersion'));
 
     //set parent task info
-    $('#task-mgmt-modal-parent-task').text("");
-    var fkParentTaskId = SATask.GetDetails(id, 'fkParentTaskId');
-    if (fkParentTaskId) {
-        var fkProjectId4 = SATask.GetDetails(id, 'fkProjectId');
-        var parentTaskName = SATask.GetDetails(fkParentTaskId, 'taskName');
-        var orderNoSeq = SATask.GetDetails(fkParentTaskId, 'orderNoSeq');
-        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-        var parentNameFull = projectCode.toUpperCase() + "-" + orderNoSeq + " : " + parentTaskName
-        $('#task-mgmt-modal-parent-task').text(parentNameFull);
-        $('#task-mgmt-modal-parent-task').attr('pid', fkParentTaskId);
-    }
+   getParentTask();
+    
+    //set child task list
+     getChildTasks();
 
 }

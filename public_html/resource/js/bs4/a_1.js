@@ -55,6 +55,95 @@ function shiftTaskInfoOnTaskInfoModal(el) {
     callTaskCard4BugTask(el, global_var.current_project_id, taskId);
 }
 
+
+function getParentTask() {
+    $('.task-mgmt-modal-parent-task').text("");
+
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_us_task_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetParentTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var fkParentTaskId = res.kv.id;
+                if (fkParentTaskId) {
+                    var fkProjectId4 = res.kv.fkProjectId;
+                    var parentTaskName = res.kv.taskName;
+                    var orderNoSeq = res.kv.orderNoSeq;
+                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                    var nameFull = add3Dots2String(parentTaskName, 30) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") "
+                    $('.task-mgmt-modal-parent-task').each(function () {
+                        $(this).text(nameFull)
+                                .append(" ")
+                                .append($('<span>')
+                                        .addClass('us-item-status-' + res.kv.taskStatus)
+                                        .text(res.kv.taskStatus))
+                                .attr('pid', fkParentTaskId);
+                    })
+
+                }
+
+            } catch (err) {
+            }
+        }
+    });
+}
+
+function getChildTasks() {
+    var select = $('.task-mgmt-modal-child-task');
+    select.html('');
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_us_task_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetChildTaskList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var obj = res.tbl[0].r;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info
+
+
+                    var fkProjectId4 = o.fkProjectId;
+                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                    var nameFull = add3Dots2String(o.taskName, 30) + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    select.each(function () {
+                        $(this).append($('<a>')
+                                .attr('pid', o.id)
+                                .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
+                                .text(nameFull))
+                                .append(" ")
+                                .append($('<span>')
+                                        .addClass('us-item-status-' + o.taskStatus)
+                                        .text(o.taskStatus))
+                                .append("<br>")
+                    })
+
+                }
+
+            } catch (err) {
+            }
+        }
+    });
+}
+
 function changeParentTaskModal() {
     $('#change-parent-task-modal').modal('show');
     var select = $('#change-parent-task-modal-parent-task-list');
@@ -117,10 +206,7 @@ function createChildTask() {
         success: function (res) {
             Toaster.showMessage("Child task is created.");
 
-            var id = res.kv.fkTaskId;
-            callTaskCard4BugTask(this, global_var.current_project_id, id);
-            $('#taskMgmtModal').find('.card-UserStory-header-text').dblclick();
-            $('#taskMgmtModal').find('.card-UserStory-header-input form-control').focus();
+             
 
         }
     });
@@ -9445,6 +9531,7 @@ function showUserStoryOfTaskCardModal(el) {
         return;
     }
 
+    $('.task-card-UserStory-edit-exit').click();
     var backlogId = $(el).attr("pid");
     if (!backlogId) {
         return;
