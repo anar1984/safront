@@ -105,11 +105,11 @@ select span img{
 
 
 .main-logo{
-    background-image: url(../../img/logo.png);
+    background-image: url(../../img/logo1.png);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position-y: center;
-    height: 45px;
+    height: 40px;
     width: 90%;
     /* margin-left: 10px; */
     /* margin-bottom: -13px; */
@@ -825,10 +825,17 @@ b{
     height: 39px;
 }
 
-.first-side:hover {
-    width: 22/3%;
-    transition: width 1.0s ease;
-    transition-delay:2s;
+ .first-side:hover {
+    width: 20.3%;
+    transition: all 0.5s ease;
+    opacity: 1;
+    border-radius: 0px;
+    padding: 0px;
+    
+} 
+ .first-side:hover .main-logo{
+    background-image: url(../../img/logo.png);
+    
 } 
 
 /* .first-side:hover .description-main{
@@ -1040,14 +1047,16 @@ button.dropdown-item:hover{
     display: flex;
     position: fixed;
     left: 0;
-    box-shadow: 1px 1px 5px 3px #ccc;
+    box-shadow: 0 0 1px rgb(145, 144, 144);
     top: 0;
+    border-radius: 50%;
     width: 4.3%;
+    opacity: 0.6;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 1001;
     background-color: #ffffff; 
     height: auto;
-    
+    padding: 10px 0px 5px 11px;
     transition: all 1s ease;
 
 
@@ -1321,11 +1330,14 @@ START PROJECT SECTION
 .bottombtn2{
    
    /*  background-color: #d8d8d8; */
-    width: 20%;
-   /*  height: 10vh; */
-    transition: width 0.99s ease;
-    z-index: 10000;
-    position: relative;
+   width: 4.5%;
+   height: 8vh;
+   transition: width 0.99s ease;
+   z-index: 10000;
+   position: absolute;
+   right: 0px;
+   /* padding: 5px; */
+   padding-left: 10px;
 
 }
 
@@ -1349,8 +1361,10 @@ START PROJECT SECTION
 
 } */
 .bottombtn2:hover {
-    width: 217px;
+    width: 200px;
     transition: width 1s ease;
+    box-shadow: 1px 1px 5px 1px #ccc;
+    background-color: #ffffff;
 
 }
 .bottombtn2:hover .myaccountName {
@@ -1789,7 +1803,7 @@ END PROJECT SECTION
     background-color: #F9F9F9;
     /* line-height: 2; */
     position: fixed;
-    top: 0;
+    top: 8vh;
     right: 0;
     border: 1px solid #D1D1D1;
 
@@ -2484,7 +2498,8 @@ ul.main-nav {
     padding: 0px;
     font-size: 0px;
     /* max-width: 1275px; */
-    width: 80%;
+    width: 95%;
+    margin-bottom: 0;
    
 }
 ul.main-nav h2 {
