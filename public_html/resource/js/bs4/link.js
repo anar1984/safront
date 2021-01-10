@@ -5,8 +5,8 @@
  */
 
 
-//var urlGl = "https://app.sourcedagile.com/";
-var urlGl = "http://localhost:8080/tsn1/";
+var urlGl = "https://app.sourcedagile.com/";
+//var urlGl = "http://localhost:8080/tsn1/";
 //var urlGl = ""
 
 function getToken() {
