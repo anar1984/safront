@@ -3,6 +3,7 @@
     background-color:#D3E0E5 ;  
     position: relative;
     width: 5000px;  
+    background-attachment: fixed;
 
 
 
@@ -14,12 +15,12 @@
     border: 1px solid black;
 }
 .topMenuDataBAseSection{
-    margin-bottom: 20px;
+   
     position: fixed;
     width: 100%;
     background-color: #ffffff;
     z-index: 3000;
-    padding: 10px 90px;
+    padding: 10px 50px;
     display: flex;
 }
 .databaseNameeditbtn{
@@ -45,7 +46,7 @@
     color: #005bac;
     padding-top: 1px ;
     top:90vh;
-    left: 110px;
+    left: 40px;
     position: fixed;
     text-align: center;
     -ms-user-select: none;

@@ -6635,11 +6635,11 @@ function setMainBodyCSS() {
 
 function commmonOnloadAction(el) {
     //  $('.new-wrapper').css("left", "77px");
-    $('#mainBodyDivForAll').css("padding-left", "0px");
+  //  $('#mainBodyDivForAll').css("padding-left", "0px");
     setMainBodyCSS();
     if (global_var.current_modal === 'loadSourceActivity') {
         //  $('.new-wrapper').css("left", "-10px");
-        $('#mainBodyDivForAll').css("padding-left", "0px");
+      //  $('#mainBodyDivForAll').css("padding-left", "0px");
 
         $('#sad-diagram-projectlist').html($('#projectList').html());
         $('#sad-diagram-projectlist').val(global_var.current_project_id);
@@ -6653,7 +6653,7 @@ function commmonOnloadAction(el) {
 
     if (global_var.current_modal === 'loadEntityDiagram') {
         //   $('.new-wrapper').css("left", "-20px");
-        $('#mainBodyDivForAll').css("padding-left", "10px");
+       // $('#mainBodyDivForAll').css("padding-left", "10px");
     }
 
     if (global_var.current_modal === 'loadDashboard') {
@@ -7319,6 +7319,7 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {
         var id = global_var.current_backlog_id;
         callStoryCard(id);
+        
     }
 });
 
@@ -7339,6 +7340,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
+    
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string)
     {

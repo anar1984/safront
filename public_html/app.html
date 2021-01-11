@@ -941,12 +941,23 @@
 
                 </div> -->
 
+              
+
+                </nav>
+
+            </div>
+        </div>
+
+
+        <div class="panel-container">
+
+            <div class="panel-left" id="panelFirst1">
                 <div class="primary-nav">
 
-                    <button href="#" class="hamburger open-panel nav-toggle">
+                   <!--  <button href="#" class="hamburger open-panel nav-toggle">
 
                         <span class="screen-reader-text">Menu</span>
-                    </button>
+                    </button> -->
 
                     <nav role="navigation" class="menu">
 
@@ -1199,7 +1210,7 @@
 
                                         </div> -->
 
-                                        <div class="col-4 " style="padding:0px 2px 0px 0px;">
+                                        <div class="col-11" style="padding:0px 2px 0px 0px;">
                                             <input type="input" id="add-bkl-line"
                                                    onchange="new UserStory().filterByUserStoryName(this)"                                    
                                                    class="add-bkl-line add-btn2 btn-placeholder2" placeholder="Search"> 
@@ -1486,439 +1497,442 @@
                             <!--                    </div>-->
                         </div>
                 </div>
-
-                </nav>
-
             </div>
-        </div>
 
+            <div class="splitter11" id="panelSplit1" >
+            </div>
 
-        <div class="new-wrapper">
+            <div class="panel-right col-12" id="panelSecond1">
+                <div class="new-wrapper">
 
-            <div id="main">
-
-                <!--height:95vh;overflow-y: auto;-->
-                <div class="col-12 us-half-div" id="main_div_of_backlog_info_pivot_view"
-                     style="display: none;">
-                    <div class="row us-half-div-row">
-                        <div class="col-1 text-left toggleUSPanel" style="padding:4px;;">
-                            <a href="#" class="add-userstory-button1 toggleUSPanel"
-                               style="display: none;"
-                               onclick="new UserStory().showUserStoryPanelMain(this)">
-                                <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
-                            </a>
-                        </div>
-                        <div class="col-7 text-center" style="padding:4px;">
-                            <h4>Sourced Matrix View</h4>
-                        </div>
-                        <div class="col-4 text-right" style="padding:4px;">
-                            <br>
-                            <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_groupby('tasktype')"><a href="#">
-                                    By Task Type</a></div>
-                            <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_groupby('assignee')"><a href="#">
-                                    By Assignee </a></div>
-
-
-                            <div class="us-list-item   us-item-status-new" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('new')"><span
-                                    id='sourcedmatrixview_new'>0</span> new
-                            </div>
-                            <div class="us-list-item   us-item-status-ongoing" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('ongoing')"><span
-                                    id='sourcedmatrixview_ongoing'>0</span> ongoing
-                            </div>
-                            <div class="us-list-item   us-item-status-closed" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('closed')"><span
-                                    id='sourcedmatrixview_closed'>0</span> closed
-                            </div>
-                            <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
-                                 onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('all')"> All
-                            </div>
-                        </div>
-                        <div class="col-12 text-center" style="padding:10px 10px;">
-                            <table class="table table-hover" border="0" id="list_view_table_pivot_list">
-                                <thead>
-
-                                </thead>
-                                <tbody style="cursor:pointer1">
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 us-half-div" id="main_div_of_backlog_info_list_view"
-                     style="display: none;">
-                    <div class="row us-half-div-row">
-                        <div class="col-1 text-left toggleUSPanel" style="padding:4px;display: none;">
-                            <a href="#" class="add-userstory-button1"
-                               onclick="new UserStory().showUserStoryPanelMain(this)">
-                                <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
-                            </a>
-                        </div>
-                        <div class="col-11 text-center" style="padding:4px;">
-                            <h4>List View</h4></div>
-                        <div class="col-12 text-center" style="padding:10px 10px;">
-                            <span style="float:right"><a href="#" onclick="new UserStory().setUSLists4ListViewDirect(this)">by User Story</a></span>
-                            <span style="float:right"> &nbsp;&nbsp;&nbsp;</span>
-                            <span style="float:right"><a href="#" onclick="new UserStory().loadBacklogWithTask()">by Assignee(s)</a></span>
-
-                            <table class="table table-hover " border='1' style="border: 2px solid #5181B8;display:none;"
-                                   id="list_view_table_list">
-                                <thead>
-                                    <tr>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center">Counts</th>
-                                        <th style="border-color:#5181B8;text-align: center">Status</th>
-                                        <th style="border-color:#5181B8;text-align: center">User Story</th>
-                                        <th style="border-color:#5181B8;text-align: center">Create By</th>
-                                        <th style="border-color:#5181B8;text-align: center">Create Date</th>
-                                        <th style="border-color:#5181B8;text-align: center">Priority</th>
-                                        <th style="border-color:#5181B8;text-align: center">Assignee(s)</th>
-                                        <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
-                                            <br> Spent Hour(s)
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody style="cursor:pointer1">
-                                    <tr class="">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="#"><i class="fa fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table class="table table-hover spilited"  style="border: 2px solid #5181B8"
-                                   id="list_view_table_list_4_assignee">
-                                <thead>
-                                    <tr>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center">Assignee(s)</th>
-                                        <th style="border-color:#5181B8;text-align: center">Sprint</th>
-                                        <th style="border-color:#5181B8;text-align: center">User Story</th>
-                                        <th style="border-color:#5181B8;text-align: center">Task Type</th>
-                                        <th style="border-color:#5181B8;text-align: center">Status</th>
-                                        <th style="border-color:#5181B8;text-align: center">Create By</th>
-                                        <th style="border-color:#5181B8;text-align: center">Create Date</th>
-                                        <th style="border-color:#5181B8;text-align: center">Priority</th>
-                                        <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
-                                            <br> Spent Hour(s)
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody style="cursor:pointer1">
-                                    <tr class="">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
-                                        <td>
-                                            <a href="#"><i class="fa fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 us-half-div" id="main_div_of_backlog_info" style="display: block;">
-                    <div class="row">
-                        <div class="col-1 text-left toggleUSPanel" style="padding:4px;display: none;">
-                            <a href="#" class="add-userstory-button1"
-                               onclick="new UserStory().showUserStoryPanelMain(this)">
-                                <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
-                            </a>
-                        </div>
-
-                        <!--                            <div class="col-7 us-half-div-row1" style=" padding: 15px 0px 35px 55px;">
-                                                                <div class="row">
-                                                                    <div id="us-submenu-ipo" class="col-2 sub-menu pr-sub-menu text-center us-sm-active" onclick="new UserStory().toggleSubmenu(this, 'ipo')">Inputs</div>
-    
-                                                                    <div id="us-submenu-generalview" class="col-3 sub-menu pr-sub-menu  text-center" onclick="new UserStory().toggleSubmenu(this, 'generalview')">Story Card</div>
-    
-                                                                </div>
-                                                            </div>-->
-                    </div>
-
-
-                    <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-comments">
-                        <div class="col-12">
-                            <div class="row" id="smb-details-comments1">
-                                <div class="col-10">
-                                    <textarea class="form-control addUS" id="backlogComment" rows="3"></textarea>
+                    <div id="main">
+        
+                        <!--height:95vh;overflow-y: auto;-->
+                        <div class="col-12 us-half-div" id="main_div_of_backlog_info_pivot_view"
+                             style="display: none;">
+                            <div class="row us-half-div-row">
+                                <div class="col-1 text-left toggleUSPanel" style="padding:4px;;">
+                                    <a href="#" class="add-userstory-button1 toggleUSPanel"
+                                       style="display: none;"
+                                       onclick="new UserStory().showUserStoryPanelMain(this)">
+                                        <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
+                                    </a>
                                 </div>
-                                <div class="col-2">
-                                    <button type="button" class="btn btn-primary" onclick="new UserStory().addComment()">
-                                        Post
-                                    </button>
+                                <div class="col-7 text-center" style="padding:4px;">
+                                    <h4>Sourced Matrix View</h4>
                                 </div>
-
-                                <div class="col-12">
-                                    <input id="file1" class="us-file-upload" multiple type="file" file_type="general"
-                                           value="" onchange="new UserStory().addFileForComment()">
-                                    <output id="list"></output>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="row" id="comment_line">
+                                <div class="col-4 text-right" style="padding:4px;">
+                                    <br>
+                                    <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_groupby('tasktype')"><a href="#">
+                                            By Task Type</a></div>
+                                    <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_groupby('assignee')"><a href="#">
+                                            By Assignee </a></div>
+        
+        
+                                    <div class="us-list-item   us-item-status-new" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('new')"><span
+                                            id='sourcedmatrixview_new'>0</span> new
+                                    </div>
+                                    <div class="us-list-item   us-item-status-ongoing" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('ongoing')"><span
+                                            id='sourcedmatrixview_ongoing'>0</span> ongoing
+                                    </div>
+                                    <div class="us-list-item   us-item-status-closed" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('closed')"><span
+                                            id='sourcedmatrixview_closed'>0</span> closed
+                                    </div>
+                                    <div class="us-list-item   us-item-status-all" style='font-size: 12px;cursor:pointer;'
+                                         onclick="new UserStory().loadBacklogWithTaskDetails4Pivot_filterbystatus('all')"> All
                                     </div>
                                 </div>
-
+                                <div class="col-12 text-center" style="padding:10px 10px;">
+                                    <table class="table table-hover" border="0" id="list_view_table_pivot_list">
+                                        <thead>
+        
+                                        </thead>
+                                        <tbody style="cursor:pointer1">
+        
+        
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row us-sub-menu-body us-sm-detail" style="display: block;" id="smb-details-ipo"> 
-                    </div>
-
-                    <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-testscenario">
-                        <div class="col-4">
-                            <button class='add-task-type-button' data-toggle="modal" data-target="#addScenario"
-                                    onclick="new UserStory().addScenarioModal(this)"><span>Add Test Case</span></button>
-                        </div>
-
-                        <!-- -->
-
-                        <div class="col-8 text-right text-bottom">
-                            <br>
-                            <input id="userstory_scenario_name_toogle" type="checkbox"
-                                   onclick="new UserStory().toogleScenarioName()">
-                            <span> Scenario</span> &nbsp;&nbsp;
-                            <input id="userstory_scenario_data_toogle" type="checkbox"
-                                   onclick="new UserStory().toogleScenarioData()">
-                            <span> Data</span> &nbsp;&nbsp;
-                            <input id="userstory_scenario_expectedresult_toogle" type="checkbox"
-                                   onclick="new UserStory().toogleScenarioExpectedResult()">
-                            <span> Expected Result</span> &nbsp;&nbsp;
-                            <input id="userstory_scenario_trial_toogle" type="checkbox"
-                                   onclick="new UserStory().toogleScenarioTrial()">
-                            <span> Trial(s)</span> &nbsp;&nbsp;
-                            <a class="task-trial-show-hide" href="#" onclick="new UserStory().showBugs4Scenario(this)">
-                                Show Bugs </a> &nbsp;&nbsp;
-                            <a class="task-trial-show-hide" href="#" onclick="new UserStory().showNotified4Scenario(this)">
-                                Show Notified </a> &nbsp;&nbsp;
-                            <a class="task-trial-show-hide" href="#" onclick="new UserStory().showAll4Scenario(this)">
-                                Show All </a>
-
-                            <!-- &nbsp;&nbsp;
-                                     <a class="task-trial-show-hide" href="#" onclick="new UserStory().notifyAllAsBug(this)">
-                                     <span>Notify All as Bug</span> </a>-->
-
-                        </div>
-
-                        <div class="col-12"
-                             style="padding:0px 0px 0px 0px;height: 70vh;overflow-y: auto;overflow-x: hidden;">
-                            <table class="table table-hover1" border='0' style="border: 0px solid #5181B8"
-                                   id="tblTestScenarioList">
-                                <thead>
-                                    <tr>
-                                        <!--<th style="border-color:#5181B8;text-align: center"></th>-->
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center">Test Case</th>
-                                        <th class="test-case-scenario" style="border-color:#5181B8;text-align: center">
-                                            Scenario
-                                        </th>
-                                        <th class="test-case-data" style="border-color:#5181B8;text-align: center">Data</th>
-                                        <th class="test-case-expectedresult" style="border-color:#5181B8;text-align: center">
-                                            Expected Result
-                                        </th>
-                                        <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
-                                        <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
-                                        <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody style="cursor:pointer1">
-                                    <tr class="">
-                                        <!--<td></td>-->
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="#"><i class="fa fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <!--TASK SUBMENU START HERE-->
-                    <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-tasks">
-                        <div class="col-4">
-                            <button class='add-task-type-button' data-toggle="modal" data-target="#addTaskType"
-                                    onclick="new UserStory().addTaskTypeModal(this)"><span>Add Task</span></button>
-                        </div>
-
-                        <!-- -->
-
-                        <div class="col-8 text-right text-bottom">
-                            <br>
-                            <input checked id="userstory_task_comment_toogle" type="checkbox"
-                                   onclick="new UserStory().toogleTaskComment()">
-                            <span>Show Comments</span> &nbsp;&nbsp;
-                            <!--                        <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskSubtask(this)">
-                                                                Subtasks </a> &nbsp;&nbsp;-->
-                            <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskBug(this)">
-                                <span>Bugs</span> </a>
-                            &nbsp;&nbsp;
-                            <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskRequest(this)">
-                                <span>Change Requests</span> </a>
-                            &nbsp;&nbsp;
-                            <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskAll(this)">
-                                <span>All</span> </a>
-
-                        </div>
-
-
-                        <div class="col-12"
-                             style="padding:0px 0px 0px 0px;height: 70vh;overflow-y: auto;overflow-x: hidden;">
-                            <table class="table table-hover1" border='0' style="border: 0px solid #5181B8"
-                                   id="tblBacklogTaskList">
-                                <thead>
-                                    <tr>
-                                        <!--<th style="border-color:#5181B8;text-align: center"></th>-->
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center">Status</th>
-                                        <th style="border-color:#5181B8;text-align: center">Task Type</th>
-                                        <th style="border-color:#5181B8;text-align: center">Assignee</th>
-
-                                        <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
-                                            <br> Spent Hour(s)
-                                        </th>
-                                        <th style="border-color:#5181B8;text-align: center; white-space:nowrap;"></th>
-                                        <th style="border-color:#5181B8;text-align: center">Created Date/
-                                            <br> Last Update
-                                        </th>
-                                        <th style="border-color:#5181B8;text-align: center">Waiting For Tasks</th>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                        <th style="border-color:#5181B8;text-align: center"></th>
-                                    </tr>
-                                </thead>
-                                <tbody style="cursor:pointer1">
-                                    <tr class="">
-                                        <!--<td></td>-->
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="#"><i class="fa fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                    <!--END TASK SUBMENU-->
-
-                    <div class="us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-history">
-                        <div class="row">
-                            <div class="col-3">
-                                History Type
-                                <br>
-                                <select onchange="BacklogHistory.setFilterHistoryType(this)"
-                                        id="us_history_filter_history_type" style="width:100%;padding:4px 0px 4px 0px">
-                                </select>
-                            </div>
-                            <div class="col-3">
-                                Executor
-                                <br>
-                                <select onchange="BacklogHistory.setFilterUsers(this)" id="us_history_filter_users"
-                                        style="width:100%;padding:4px 0px 4px 0px">
-                                </select>
-                            </div>
-                            <div class="col-2">
-                                From
-                                <br>
-                                <input type="date" onchange="BacklogHistory.setFilterDate(this)"
-                                       id="us_history_filter_fromdate" style="width:100%;font-size: 10px;">
-                            </div>
-                            <div class="col-2">
-                                To
-                                <br>
-                                <input type="date" onchange="BacklogHistory.setFilterDate(this)"
-                                       id="us_history_filter_todate" style="width:100%;font-size: 10px;">
-                            </div>
-                            <div class="col-2 text-center" style="padding:0 0 0 0;">
-                                <a href="#" onclick="BacklogHistory.setFilterPreviousPaging()"> <i
-                                        class="fa fa-angle-double-left"></i> </a>
-                                <span style1="font-size: 8px">
-                                    <span id="usfilter_paginationResult"></span>
-                                </span>/ <span id="usfilter_paginationresult_rowcount"></span>
-                                <a href="#" onclick="BacklogHistory.setFilterNextPaging()"> <i
-                                        class="fa fa-angle-double-right"></i> </a>
-                                <br>
-
-                                <select onchange="BacklogHistory.setFilterPaging(this)"
-                                        id="us_history_filter_history_perpage" style1="padding:4px 0px 4px 0px">
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                    <option value="150">150</option>
-                                    <option value="200">200</option>
-                                </select>
+        
+                        <div class="col-12 us-half-div" id="main_div_of_backlog_info_list_view"
+                             style="display: none;">
+                            <div class="row us-half-div-row">
+                                <div class="col-1 text-left toggleUSPanel" style="padding:4px;display: none;">
+                                    <a href="#" class="add-userstory-button1"
+                                       onclick="new UserStory().showUserStoryPanelMain(this)">
+                                        <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
+                                    </a>
+                                </div>
+                                <div class="col-11 text-center" style="padding:4px;">
+                                    <h4>List View</h4></div>
+                                <div class="col-12 text-center" style="padding:10px 10px;">
+                                    <span style="float:right"><a href="#" onclick="new UserStory().setUSLists4ListViewDirect(this)">by User Story</a></span>
+                                    <span style="float:right"> &nbsp;&nbsp;&nbsp;</span>
+                                    <span style="float:right"><a href="#" onclick="new UserStory().loadBacklogWithTask()">by Assignee(s)</a></span>
+        
+                                    <table class="table table-hover " border='1' style="border: 2px solid #5181B8;display:none;"
+                                           id="list_view_table_list">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center">Counts</th>
+                                                <th style="border-color:#5181B8;text-align: center">Status</th>
+                                                <th style="border-color:#5181B8;text-align: center">User Story</th>
+                                                <th style="border-color:#5181B8;text-align: center">Create By</th>
+                                                <th style="border-color:#5181B8;text-align: center">Create Date</th>
+                                                <th style="border-color:#5181B8;text-align: center">Priority</th>
+                                                <th style="border-color:#5181B8;text-align: center">Assignee(s)</th>
+                                                <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
+                                                    <br> Spent Hour(s)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="cursor:pointer1">
+                                            <tr class="">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        
+                                    <table class="table table-hover spilited"  style="border: 2px solid #5181B8"
+                                           id="list_view_table_list_4_assignee">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center">Assignee(s)</th>
+                                                <th style="border-color:#5181B8;text-align: center">Sprint</th>
+                                                <th style="border-color:#5181B8;text-align: center">User Story</th>
+                                                <th style="border-color:#5181B8;text-align: center">Task Type</th>
+                                                <th style="border-color:#5181B8;text-align: center">Status</th>
+                                                <th style="border-color:#5181B8;text-align: center">Create By</th>
+                                                <th style="border-color:#5181B8;text-align: center">Create Date</th>
+                                                <th style="border-color:#5181B8;text-align: center">Priority</th>
+                                                <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
+                                                    <br> Spent Hour(s)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="cursor:pointer1">
+                                            <tr class="">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+        
+                                                <td>
+                                                    <a href="#"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        <div class="row smb-details-history-body" style="height: 70vh;overflow-y: auto;overflow-x: hidden;">
-
+        
+                        <div class="us-half-div" id="main_div_of_backlog_info" style="display: block;">
+                            <div class="row">
+                                <div class="col-1 text-left toggleUSPanel" style="padding:4px;display: none;">
+                                    <a href="#" class="add-userstory-button1"
+                                       onclick="new UserStory().showUserStoryPanelMain(this)">
+                                        <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
+                                    </a>
+                                </div>
+        
+                                <!--                            <div class="col-7 us-half-div-row1" style=" padding: 15px 0px 35px 55px;">
+                                                                        <div class="row">
+                                                                            <div id="us-submenu-ipo" class="col-2 sub-menu pr-sub-menu text-center us-sm-active" onclick="new UserStory().toggleSubmenu(this, 'ipo')">Inputs</div>
+            
+                                                                            <div id="us-submenu-generalview" class="col-3 sub-menu pr-sub-menu  text-center" onclick="new UserStory().toggleSubmenu(this, 'generalview')">Story Card</div>
+            
+                                                                        </div>
+                                                                    </div>-->
+                            </div>
+        
+        
+                            <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-comments">
+                                <div class="col-12">
+                                    <div class="row" id="smb-details-comments1">
+                                        <div class="col-10">
+                                            <textarea class="form-control addUS" id="backlogComment" rows="3"></textarea>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" class="btn btn-primary" onclick="new UserStory().addComment()">
+                                                Post
+                                            </button>
+                                        </div>
+        
+                                        <div class="col-12">
+                                            <input id="file1" class="us-file-upload" multiple type="file" file_type="general"
+                                                   value="" onchange="new UserStory().addFileForComment()">
+                                            <output id="list"></output>
+                                        </div>
+        
+                                        <div class="col-12">
+                                            <div class="row" id="comment_line">
+                                            </div>
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row us-sub-menu-body us-sm-detail" style="display: block;" id="smb-details-ipo"> 
+                            </div>
+        
+                            <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-testscenario">
+                                <div class="col-4">
+                                    <button class='add-task-type-button' data-toggle="modal" data-target="#addScenario"
+                                            onclick="new UserStory().addScenarioModal(this)"><span>Add Test Case</span></button>
+                                </div>
+        
+                                <!-- -->
+        
+                                <div class="col-8 text-right text-bottom">
+                                    <br>
+                                    <input id="userstory_scenario_name_toogle" type="checkbox"
+                                           onclick="new UserStory().toogleScenarioName()">
+                                    <span> Scenario</span> &nbsp;&nbsp;
+                                    <input id="userstory_scenario_data_toogle" type="checkbox"
+                                           onclick="new UserStory().toogleScenarioData()">
+                                    <span> Data</span> &nbsp;&nbsp;
+                                    <input id="userstory_scenario_expectedresult_toogle" type="checkbox"
+                                           onclick="new UserStory().toogleScenarioExpectedResult()">
+                                    <span> Expected Result</span> &nbsp;&nbsp;
+                                    <input id="userstory_scenario_trial_toogle" type="checkbox"
+                                           onclick="new UserStory().toogleScenarioTrial()">
+                                    <span> Trial(s)</span> &nbsp;&nbsp;
+                                    <a class="task-trial-show-hide" href="#" onclick="new UserStory().showBugs4Scenario(this)">
+                                        Show Bugs </a> &nbsp;&nbsp;
+                                    <a class="task-trial-show-hide" href="#" onclick="new UserStory().showNotified4Scenario(this)">
+                                        Show Notified </a> &nbsp;&nbsp;
+                                    <a class="task-trial-show-hide" href="#" onclick="new UserStory().showAll4Scenario(this)">
+                                        Show All </a>
+        
+                                    <!-- &nbsp;&nbsp;
+                                             <a class="task-trial-show-hide" href="#" onclick="new UserStory().notifyAllAsBug(this)">
+                                             <span>Notify All as Bug</span> </a>-->
+        
+                                </div>
+        
+                                <div class="col-12"
+                                     style="padding:0px 0px 0px 0px;height: 70vh;overflow-y: auto;overflow-x: hidden;">
+                                    <table class="table table-hover1" border='0' style="border: 0px solid #5181B8"
+                                           id="tblTestScenarioList">
+                                        <thead>
+                                            <tr>
+                                                <!--<th style="border-color:#5181B8;text-align: center"></th>-->
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center">Test Case</th>
+                                                <th class="test-case-scenario" style="border-color:#5181B8;text-align: center">
+                                                    Scenario
+                                                </th>
+                                                <th class="test-case-data" style="border-color:#5181B8;text-align: center">Data</th>
+                                                <th class="test-case-expectedresult" style="border-color:#5181B8;text-align: center">
+                                                    Expected Result
+                                                </th>
+                                                <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
+                                                <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
+                                                <th style="border-color:#5181B8;text-align: center;width:1%;white-space:nowrap;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="cursor:pointer1">
+                                            <tr class="">
+                                                <!--<td></td>-->
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        
+                                </div>
+                            </div>
+        
+                            <!--TASK SUBMENU START HERE-->
+                            <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-tasks">
+                                <div class="col-4">
+                                    <button class='add-task-type-button' data-toggle="modal" data-target="#addTaskType"
+                                            onclick="new UserStory().addTaskTypeModal(this)"><span>Add Task</span></button>
+                                </div>
+        
+                                <!-- -->
+        
+                                <div class="col-8 text-right text-bottom">
+                                    <br>
+                                    <input checked id="userstory_task_comment_toogle" type="checkbox"
+                                           onclick="new UserStory().toogleTaskComment()">
+                                    <span>Show Comments</span> &nbsp;&nbsp;
+                                    <!--                        <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskSubtask(this)">
+                                                                        Subtasks </a> &nbsp;&nbsp;-->
+                                    <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskBug(this)">
+                                        <span>Bugs</span> </a>
+                                    &nbsp;&nbsp;
+                                    <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskRequest(this)">
+                                        <span>Change Requests</span> </a>
+                                    &nbsp;&nbsp;
+                                    <a class="task-comment-show-hide" href="#" onclick="new UserStory().toogleTaskAll(this)">
+                                        <span>All</span> </a>
+        
+                                </div>
+        
+        
+                                <div class="col-12"
+                                     style="padding:0px 0px 0px 0px;height: 70vh;overflow-y: auto;overflow-x: hidden;">
+                                    <table class="table table-hover1" border='0' style="border: 0px solid #5181B8"
+                                           id="tblBacklogTaskList">
+                                        <thead>
+                                            <tr>
+                                                <!--<th style="border-color:#5181B8;text-align: center"></th>-->
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center">Status</th>
+                                                <th style="border-color:#5181B8;text-align: center">Task Type</th>
+                                                <th style="border-color:#5181B8;text-align: center">Assignee</th>
+        
+                                                <th style="border-color:#5181B8;text-align: center">Est. Hour(s)/
+                                                    <br> Spent Hour(s)
+                                                </th>
+                                                <th style="border-color:#5181B8;text-align: center; white-space:nowrap;"></th>
+                                                <th style="border-color:#5181B8;text-align: center">Created Date/
+                                                    <br> Last Update
+                                                </th>
+                                                <th style="border-color:#5181B8;text-align: center">Waiting For Tasks</th>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                                <th style="border-color:#5181B8;text-align: center"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="cursor:pointer1">
+                                            <tr class="">
+                                                <!--<td></td>-->
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#"><i class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        
+                                </div>
+                            </div>
+                            <!--END TASK SUBMENU-->
+        
+                            <div class="us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-history">
+                                <div class="row">
+                                    <div class="col-3">
+                                        History Type
+                                        <br>
+                                        <select onchange="BacklogHistory.setFilterHistoryType(this)"
+                                                id="us_history_filter_history_type" style="width:100%;padding:4px 0px 4px 0px">
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        Executor
+                                        <br>
+                                        <select onchange="BacklogHistory.setFilterUsers(this)" id="us_history_filter_users"
+                                                style="width:100%;padding:4px 0px 4px 0px">
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        From
+                                        <br>
+                                        <input type="date" onchange="BacklogHistory.setFilterDate(this)"
+                                               id="us_history_filter_fromdate" style="width:100%;font-size: 10px;">
+                                    </div>
+                                    <div class="col-2">
+                                        To
+                                        <br>
+                                        <input type="date" onchange="BacklogHistory.setFilterDate(this)"
+                                               id="us_history_filter_todate" style="width:100%;font-size: 10px;">
+                                    </div>
+                                    <div class="col-2 text-center" style="padding:0 0 0 0;">
+                                        <a href="#" onclick="BacklogHistory.setFilterPreviousPaging()"> <i
+                                                class="fa fa-angle-double-left"></i> </a>
+                                        <span style1="font-size: 8px">
+                                            <span id="usfilter_paginationResult"></span>
+                                        </span>/ <span id="usfilter_paginationresult_rowcount"></span>
+                                        <a href="#" onclick="BacklogHistory.setFilterNextPaging()"> <i
+                                                class="fa fa-angle-double-right"></i> </a>
+                                        <br>
+        
+                                        <select onchange="BacklogHistory.setFilterPaging(this)"
+                                                id="us_history_filter_history_perpage" style1="padding:4px 0px 4px 0px">
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="150">150</option>
+                                            <option value="200">200</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row smb-details-history-body" style="height: 70vh;overflow-y: auto;overflow-x: hidden;">
+        
+                                </div>
+        
+                            </div>
+        
+        
+                            <div class="redirectClass" id="mainBodyDivForAll"     onwheel="documentOnwhile(event)">
+        
+                            </div>
+        
+                            <!--sub menu general view-->
+                            <div class="col-12 us-sub-menu-body us-sm-detail sm-genralview-main"
+                                 style="display: none;height:100vh;"                 
+                                 id="smb-details-generalview_">
+                            </div>
+        
+                            <!--end sub menu general view-->
+        
+                            <!--sub menu general view-->
+                            <!-- <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-analytics">
+                                     Analytics
+                                     </div>-->
+        
+                            <!--end sub menu general view-->
                         </div>
-
                     </div>
-
-
-                    <div class="col-12 redirectClass" id="mainBodyDivForAll"    style="padding-left:90px;" onwheel="documentOnwhile(event)">
-
-                    </div>
-
-                    <!--sub menu general view-->
-                    <div class="col-12 us-sub-menu-body us-sm-detail sm-genralview-main"
-                         style="display: none;height:100vh;"                 
-                         id="smb-details-generalview_">
-                    </div>
-
-                    <!--end sub menu general view-->
-
-                    <!--sub menu general view-->
-                    <!-- <div class="row us-sub-menu-body us-sm-detail" style="display: none;" id="smb-details-analytics">
-                             Analytics
-                             </div>-->
-
-                    <!--end sub menu general view-->
                 </div>
             </div>
         </div>
+
+      
     </div>
 
     <!--modal pages-->

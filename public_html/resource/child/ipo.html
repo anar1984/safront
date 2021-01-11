@@ -2,143 +2,24 @@
     <div class="porjectNameProto">
         <div class="col-7 ">
             <p id="smb-general-main-info">Current User Story</p>
-
+            <span style="font-size: 12px;"> 
+                <a href="#" id="smb-general-main-previous-us" 
+                   onclick="new UserStory().redirectUserStoryCore('20072217020507941241')"></a>
+            </span>
         </div>
         <div class="col-5 ">
             <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
             <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-eye" style="font-size: 10px;cursor: pointer;"></i></button>  
 
         </div>
-        <div class="col-12 ">
-            <span style="font-size: 12px;"> 
-                <a href="#" id="smb-general-main-previous-us" 
-                   onclick="new UserStory().redirectUserStoryCore('20072217020507941241')"></a>
-            </span>
-        </div>
+        
     </div>
-    <div class="toolbar">
-        <ul class=" cf">
-            <li value="cbox" title="checkbox"><a  class="inptadd"  href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
-            <li value="txt" title="input"><a class="inptadd"  href="#"><img src="resource/img/input.png" alt=""></a></li>
-            <li value="date" title="date"><a  class="inptadd" href="#"><img src="resource/img/calendar.png" alt=""></a></li>
-            <li value="file" title="file picker"><a  class="inptadd" href="#"><img src="resource/img/attachment-clip.png" alt=""></a></li>
-            <li value="rbtn" title="Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-on-button.png" alt=""></a></li>
-            <li value="cmb" title="Select Box"><a  class="inptadd" href="#"><img src="resource/img/select.png" alt=""></a></li>
-            <li value="ytube" title="Youtube"><a  class="inptadd" href="#"><img src="resource/img/youtube.png" alt=""></a></li>
-            <li value="img" title="Image"><a  class="inptadd" href="#"><img src="resource/img/upload.png" alt=""></a></li>
-            <li value="lbl" title="Label"><a  class="inptadd" href="#"><img src="resource/img/price-tag.png" alt=""></a></li>
-            <li value="txa" title="TextArea"><a  class="inptadd" href="#"><img src="resource/img/text.png" alt=""></a></li>
-            <li value="mcmb" title="Multi Select Box"><a  class="inptadd" href="#"><img src="resource/img/favourites-selection.png" alt=""></a></li>
-            <li value="irbtn" title="Inner Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-button-selection.png" alt=""></a></li>
-            <li value="icbox" title="Inner CheckBox select"><a  class="inptadd" href="#"><img src="resource/img/checkbox-selected.png" alt=""></a></li>
-            <!--  <li><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
-             <li ><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li> -->
-            <li value="hr" title="Inner Line"><a class="inptadd"  href="#"><img src="resource/img/substract.png" alt=""></a></li>
-            <li value="btn" title="Button"><a class="inptadd"  href="#"><img src="resource/img/push.png" alt=""></a></li>
-            <li value="icon" title="Icons"><a  class="inptadd" href="#"><img src="resource/img/plugin.png" alt=""></a></li>
-            <li value="iedit" title="Inner edit"><a  class="inptadd" href="#"><img src="resource/img/edit.png" alt=""></a></li>
-            <li value="hlink" title="Hiperlink"><a  class="inptadd" href="#"><img src="resource/img/link.png" alt=""></a></li>
-            <li value="hdn" title="Hidden"><a class="inptadd"  href="#"><img src="resource/img/visibility.png" alt=""></a></li>
-            <li value="fhtml" title="Free Html"><a  class="inptadd" href="#"><img src="resource/img/html5.png" alt=""></a></li>
-            <li value="fcomp" title="Free Component"><a class="inptadd"  href="#"><img src="resource/img/web.png" alt=""></a></li>
+  
 
-            <li value="sctn" title="Section"><a onclick="addSectionAsInput()" href="#"><img src="resource/img/sections.png" alt=""></a></li>
-            <li value="tab" title="Tabs"><a onclick="addTabAsInput()" href="#"><img src="resource/img/tabs.png" alt=""></a></li>
-            <li value="Tbl" title="Table"><a href="#" onclick="addTableAsInput()"><img src="resource/img/table.png" alt=""></a></li>
-
-
-        </ul>
-        <div class="editsect" >
-            <!--  <button class="btn dragToolbar"><i class="fas fa-arrows-alt"></i></button> -->
-            <button class="btn verticalBtn"><i class="fas fa-grip-vertical"></i></button>
-            <button class="btn horizontalBtn"><i class="fas fa-grip-horizontal"></i></button>
-            <button class="btn minimzeBtn"><i class="fas fa-window-minimize"></i></button>
-
-        </div>
-        <div role="button" class=" btn btn-secondary maximizeBtn"><i class="fas fa-plus"></i></div>
-    </div>
-
-    <!-- start 10.08.2020 -->
-
-    <!-- <div class="row zoom-section"> -->
-    <!-- input on off -->
-
-    <!-- <div class="col-3 inputonoffDiv">
-        <label class="switch input-on-off ">
-            <input type="checkbox" id="show_ipo_toggle">
-            <span class="slider round"></span>
-            <p >Inputs</p>
-        </label>
-    </div>  -->
-    <!-- <div class="col-8  text-left" > -->
-
-    <!-- <select id="ipo_zoom" onchange="new UserStory().setZoom4IPO()" style="border:0px;">
-        <option value="2">2%</option>
-        <option value="5">5%</option>
-        <option value="8">8%</option>
-        <option value="10">10%</option>
-        <option value="15">15%</option>
-        <option value="20">20%</option>
-        <option value="25">25%</option>
-        <option value="40">40%</option>
-        <option value="50">50%</option>
-        <option value="75">75%</option>
-        <option value="80">80%</option>
-        <option value="90">90%</option>
-        <option value="100" selected="">100%</option>
-        <option value="125">125%</option>
-        <option value="150">150%</option>
-        <option value="200">200%</option>
-    </select>
-    <i class="fa fa-search-plus" style="font-size:14px;cursor:pointer;" onclick="new UserStory().zoomIn()" aria-hidden="true"></i>
-    <i class="fa fa-search-minus" style="font-size:14px;cursor:pointer;" onclick="new UserStory().zoomOut()" aria-hidden="true"></i>
-    &nbsp; &nbsp; Actual Zoom: <b><span id="actual_zoom_id">100</span>%</b>
-    &nbsp; &nbsp;&nbsp; &nbsp; -->
-
-    <!-- <a href="#" onclick="new UserStory().showAllGUI()">All </a>
-    &nbsp; &nbsp;
-    <a href="#" onclick="new UserStory().showCurrentGUI()"> Current</a> -->
-
-    <!-- &nbsp; &nbsp; &nbsp; &nbsp;
-    <input type="checkbox" id="lp-draggable-mode"> Draggable Mode  -->
-
-    <!-- </div>
-    <div class="col-1  text-right" > -->
-
-    <!-- <input type="checkbox" id="gui_component_show_properties"
-              onchange="new UserStory().guiComponentShowProperties()">  -->
-    <!-- <label class="switch proporty">
-
-        <input type="checkbox" id="gui_component_show_properties" onchange="new UserStory().guiComponentShowProperties()">
-        <span class="slider round"></span>
-        <p>Properties</p>
-    </label> -->
-
-
-
-    <!-- </div>
-  </div> -->
+    
     <div class="row" >
 
-        <!-- <div class="" id="ipo-1-hisse-input" >  -->
-
-        <!-- <div class=" input-add-table table-hide-show col-12 ipo-divider ipo-1-hisse only-gui-design "> -->
-        <!-- <div class="col-12 input-add-alt-menu "> 
-             <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" 
-                     href="#" role="button" id="dropdownMenuLink" 
-                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             </button>
-             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                 <button class="dropdown-item firstbut " data-toggle="modal" data-target="#createTableForm" onclick="new UserStory().createTableFormModal()" style="font-size: 12px;">Create Table Form</button>
-                 <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModal" onclick="new UserStory().copyMoveInputsModal()" style="font-size: 12px;">Copy/Move</button>
-                 <button class="dropdown-item firstbut "   onclick="new UserStory().deleteInputs()" style="font-size: 12px;">Delete</button>
-             </div>
-         </div>     -->
-
-
-
-        <!-- </div> -->
-
+       
 
         <!-- end 10.08.2020 -->
 
@@ -181,7 +62,54 @@
             </div>
 
         </div>
+        <div class="toolbar">
+            <ul class=" cf">
+                <li value="cbox" title="checkbox"><a  class="inptadd"  href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
+                <li value="txt" title="input"><a class="inptadd"  href="#"><img src="resource/img/input.png" alt=""></a></li>
+                <li value="date" title="date"><a  class="inptadd" href="#"><img src="resource/img/calendar.png" alt=""></a></li>
+                <li value="file" title="file picker"><a  class="inptadd" href="#"><img src="resource/img/attachment-clip.png" alt=""></a></li>
+                <li value="rbtn" title="Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-on-button.png" alt=""></a></li>
+                <li value="cmb" title="Select Box"><a  class="inptadd" href="#"><img src="resource/img/select.png" alt=""></a></li>
+                <li value="ytube" title="Youtube"><a  class="inptadd" href="#"><img src="resource/img/youtube.png" alt=""></a></li>
+                <li value="img" title="Image"><a  class="inptadd" href="#"><img src="resource/img/upload.png" alt=""></a></li>
+                <li value="lbl" title="Label"><a  class="inptadd" href="#"><img src="resource/img/price-tag.png" alt=""></a></li>
+                <li value="txa" title="TextArea"><a  class="inptadd" href="#"><img src="resource/img/text.png" alt=""></a></li>
+                <li value="mcmb" title="Multi Select Box"><a  class="inptadd" href="#"><img src="resource/img/favourites-selection.png" alt=""></a></li>
+                <li value="irbtn" title="Inner Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-button-selection.png" alt=""></a></li>
+                <li value="icbox" title="Inner CheckBox select"><a  class="inptadd" href="#"><img src="resource/img/checkbox-selected.png" alt=""></a></li>
+                <!--  <li><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
+                 <li ><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li> -->
+                <li value="hr" title="Inner Line"><a class="inptadd"  href="#"><img src="resource/img/substract.png" alt=""></a></li>
+                <li value="btn" title="Button"><a class="inptadd"  href="#"><img src="resource/img/push.png" alt=""></a></li>
+                <li value="icon" title="Icons"><a  class="inptadd" href="#"><img src="resource/img/plugin.png" alt=""></a></li>
+                <li value="iedit" title="Inner edit"><a  class="inptadd" href="#"><img src="resource/img/edit.png" alt=""></a></li>
+                <li value="hlink" title="Hiperlink"><a  class="inptadd" href="#"><img src="resource/img/link.png" alt=""></a></li>
+                <li value="hdn" title="Hidden"><a class="inptadd"  href="#"><img src="resource/img/visibility.png" alt=""></a></li>
+                <li value="fhtml" title="Free Html"><a  class="inptadd" href="#"><img src="resource/img/html5.png" alt=""></a></li>
+                <li value="fcomp" title="Free Component"><a class="inptadd"  href="#"><img src="resource/img/web.png" alt=""></a></li>
+    
+                <li value="sctn" title="Section"><a onclick="addSectionAsInput()" href="#"><img src="resource/img/sections.png" alt=""></a></li>
+                <li value="tab" title="Tabs"><a onclick="addTabAsInput()" href="#"><img src="resource/img/tabs.png" alt=""></a></li>
+                <li value="Tbl" title="Table"><a href="#" onclick="addTableAsInput()"><img src="resource/img/table.png" alt=""></a></li>
+    
+    
+            </ul>
+            <div class="editsect" >
+                <!--  <button class="btn dragToolbar"><i class="fas fa-arrows-alt"></i></button> -->
+                <button class="btn verticalBtn"><i class="fas fa-grip-vertical"></i></button>
+                <button class="btn horizontalBtn"><i class="fas fa-grip-horizontal"></i></button>
+                <button class="btn minimzeBtn"><i class="fas fa-window-minimize"></i></button>
+    
+            </div>
+            <div role="button" class=" btn btn-secondary maximizeBtn"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="row zoom-main-new" >
+            <a class="btnZoom zoom" onclick="new UserStory().zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-out" onclick="new UserStory().zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-refresh " onclick="new UserStory().zoomInit()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-init " onclick="new UserStory().showAllGUI()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
 
+        </div>
         <!-- </div> -->
 
         <!--diger 2-ci hisse-->
@@ -190,7 +118,7 @@
 
             <!--start 10.08.2020   -->
             <div class='row dragsection'>
-                <div class="col-11 gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)">
+                <div class="col-12 gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)">
 
                     <div class="row">
                         <br><br><br><br><br><br>
@@ -272,13 +200,7 @@
                             </div>
                             <!-- end    15.08.2020 -->
 
-                            <div class="row zoom-main-new" >
-                                <a class="btnZoom zoom" onclick="new UserStory().zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                                <a class="btnZoom zoom-out" onclick="new UserStory().zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                                <a class="btnZoom zoom-refresh " onclick="new UserStory().zoomInit()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
-                                <a class="btnZoom zoom-init " onclick="new UserStory().showAllGUI()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-
-                            </div>
+                           
 
                         </div>
 

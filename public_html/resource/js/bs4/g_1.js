@@ -9,6 +9,7 @@ $(function () {
     //         that.css('color','#032d6b');
     //      }, 3000);
     //   });
+   
 
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
@@ -559,15 +560,15 @@ $(document).ready(function () {
 });
 
 $(document).on("click", ".openNavshow", function () {
-    $('.overflow-container').css('display', 'block')
-    $('.hamburger').css('display', 'block')
+    $('#panelFirst1').css('display', 'block')
+    $('#panelSplit1').css('display', 'block')
 });
 
 $(document).on("click", ".openNavhide", function () {
     $("html").removeClass("openNav");
     $(".nav-toggle").removeClass("active");
-    $('.overflow-container').css('display', 'none')
-    $('.hamburger').css('display', 'none')
+    $('#panelFirst1').css('display', 'none')
+    $('#panelSplit1').css('display', 'none')
 
 })
 
@@ -697,6 +698,5 @@ function addNewBug(el) {
         }
     });
 }
-
 
 

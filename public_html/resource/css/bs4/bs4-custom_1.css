@@ -10,7 +10,7 @@ and open the template in the editor.
 body{
     /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
-    width:98%;
+    width:100%;
     /*padding-left:10px;*/
 
 }
@@ -1322,7 +1322,7 @@ body {
 /* Menu Styles */
 
 .primary-nav {
-    position: fixed;
+    
     z-index: 999;
 }
 
@@ -1443,13 +1443,13 @@ ul.menu-dropdown i {
 }
 
 .menu {
-    position: absolute;
+    
     display: block;
-    left: -286px;
-    box-shadow: 4px 0px 1px rgb(183, 184, 188);
+  
+    
     background-color: rgb(255, 255, 255);
     top: 0;
-    width: 300px;
+    width: 100%;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 999;
 }
@@ -1490,7 +1490,7 @@ div#container-us-body-main tbody td{
 }
 
 .new-wrapper {
-    position: absolute;
+    position: relative;
     /* left: 77px; */
     width: 100%;
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
@@ -1510,13 +1510,13 @@ div#container-us-body-main tbody td{
 }
 
 /* gulbahar 13.08.2020  width: calc(100% - 300px) idi*/
-.openNav .new-wrapper {
+/* .openNav .new-wrapper {
     position: absolute;
     transform: translate3d(30%, 0, 0);
     width: calc(100% - 310px);
     transition: transform .45s cubic-bezier(0.77, 0, 0.175, 1);
 }
-
+ */
 
 .downarrow {
     background: transparent;
@@ -1574,14 +1574,14 @@ div#container-us-body-main tbody td{
 /*    top 73px;*/
 /*}*/
 
-.openNav .menu {
+/* .openNav .menu {
     left: -185px;
-   /*  top: 45px; */
-    transform: translate3d(200px, 0, 0);
+   top: 45px; 
+     transform: translate3d(200px, 0, 0); 
     transition: transform .25s cubic-bezier(0.77, 0, 0.175, 1);
     background: #f4f5f7;
 }
-
+ */
 /* label.hamburger {
     display: none;
 } */
