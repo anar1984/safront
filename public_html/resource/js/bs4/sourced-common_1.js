@@ -6,9 +6,9 @@
 
 /*global global_var, SAInput*/
 
- 
 
- 
+
+
 
 function check() {
 //    zoomOut
@@ -10203,6 +10203,11 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
             $(tempEl).attr('sa-triggersetvalue', '1');
             triggerAPI(tempEl, $(el).attr("onclick_trigger_id"), data);
+        } else {
+            var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+            if (!$(tempEl).hasClass('sa-onloadclick')) {
+                initOnloadActionOnGUIDesign4OnClick();
+            }
         }
 //       
     },
@@ -11156,7 +11161,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
 //                queue4ProLoad.loadSUS4Relation4Section = true;
 //                executeCoreOfManualProSelection();
-		 
+
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -11945,11 +11950,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         return json;
     },
     load: function () {
-        
-        if (!ifQueue4ProLoadDone()){
+
+        if (!ifQueue4ProLoadDone()) {
             return;
         }
-        
+
         $('#container-us-body').html('');
         $('.us-checkbox-list').first().prop("checked", false);
         $('.assignSprintAndLabel').attr("style", "pointer-events:none;color:gray;");
@@ -12085,7 +12090,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 queue4ProLoad.loadDetailsOnProjectSelect = true;
                 executeCoreOfManualProSelection();
-		
+
 
                 hideProgress();
             },
@@ -12103,7 +12108,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $('.project-item-zad')
                         .last()
                         .after($('<div>')
-                                .addClass("row row-style")
+                                .addClass("row row-style project-item-zad")
                                 .append($('<a>')
                                         .addClass('btnplus manualProject openNavhide left-menu-load')
                                         .attr("title", o.projectName)
@@ -12171,7 +12176,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 queue4ProLoad.loadInputDetailsOnProjectSelect = true;
                 executeCoreOfManualProSelection();
-		
+
             }
         });
     },
@@ -12195,7 +12200,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 queue4ProLoad.loadInputDescDetailsOnProjectSelect = true;
                 executeCoreOfManualProSelection();
-		
+
 
             }
         });
@@ -12220,7 +12225,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 queue4ProLoad.loadDependencyOnProjectSelect = true;
                 executeCoreOfManualProSelection();
-		
+
             }
         });
     },
@@ -12246,7 +12251,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 queue4ProLoad.loadBacklogLabelOnProjectSelect = true;
                 executeCoreOfManualProSelection();
-		
+
             }
         });
     },
@@ -21748,6 +21753,7 @@ Project.prototype = {
             success: function (res) {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
+                $('.left-menu-load').first().click();
                 hideProgress();
             },
             error: function () {
@@ -21930,8 +21936,6 @@ Project.prototype = {
         getUsers();
         getDBStructure4Select();
     },
-
-   
 
     showProjectDetailsMain4Permission: function (projectId) {
         if (!projectId) {
@@ -22646,7 +22650,7 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
-                
+
                 var img = (res.tbl[0].r[0].userImage)
                         ? fileUrl(res.tbl[0].r[0].userImage)
                         : fileUrl(that.getDefaultUserprofileName());
@@ -22661,8 +22665,8 @@ User.prototype = {
             },
             error: function () {
                 //bu hisse de error atmalidir. lakin atmir
-                
-                //document.location = "login.html";
+
+                document.location = "login.html";
 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });

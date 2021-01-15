@@ -1746,7 +1746,7 @@ $(document).on('hide.bs.modal', '#exampleModal', function () {
 
 
 $(document).on('dblclick', '.component-class', function (evt) {
-    openComponentPropertiesModal();
+    openComponentPropertiesModal(this);
     $(this).click();
 });
 
@@ -1760,6 +1760,7 @@ function openComponentPropertiesModal(el) {
             $('#ipo-tab-setting-general').html()
     var rs = global_var.input_general_content_tab;
     $('#component-info-popup').html(rs);
+    $('#exampleModal-input-componentid').val('comp_id_'+$(el).attr('id'));
     $('#exampleModal-input-name').val(SAInput.GetInputName(global_var.current_us_input_id));
     $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
     $('#ipo-tab-setting-general').html('')

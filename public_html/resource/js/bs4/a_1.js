@@ -31,7 +31,7 @@ var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
     "loadLivePrototype": "Live Prototype",
-    "loadUserStoryMgmt": "User Story Management",
+    "loadStoryCardMgmt ": "Story Card Management",
     "loadDashboard": "Dashboard",
     "loadTaskManagement": "Task Management",
     "loadBugChange": "Issue Management",
@@ -206,7 +206,7 @@ function createChildTask() {
         success: function (res) {
             Toaster.showMessage("Child task is created.");
 
-             
+
 
         }
     });
@@ -547,6 +547,8 @@ function uploadFile4Ipo(id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
     pbDiv.html('');
 
+    $('#' + id).attr('fname', '');
+
     for (var i = 0, f; f = files[i]; i++) {
 //            var file = files[0];
         var file = f;
@@ -624,8 +626,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
             st += (st) ? global_var.vertical_seperator + finalname
                     : finalname;
 
-            $('#' + id)
-                    .attr('fname', st);
+            $('#' + id).attr('fname', st);
 
         },
         error: function () {
@@ -2949,11 +2950,19 @@ function getComponentValueAfterTriggerApi(el, val) {
     } else if ($(el).attr('sa-type') === 'image') {
         $(el).attr('src', fileUrl(val));
         $(el).closest('div').find('.biyzad').remove();
+    } else if ($(el).attr('sa-type') === 'filepicker') {
+        $(el).attr('fname', val);
+
     } else if ($(el).attr('sa-type') === 'checkbox') {
         if (val === '1')
             $(el).prop('checked', true);
         else
             $(el).prop('checked', false);
+
+    } else if ($(el).attr('sa-type') === 'htmleditor') {
+
+        initHtmlFroalaEditor($(el).attr('id'), val);
+
 
     } else if ($(el).attr('sa-type') === 'filelist') {
         var res = val.split(global_var.vertical_seperator);
@@ -2973,6 +2982,9 @@ function getComponentValueAfterTriggerApi(el, val) {
         });
         $(el).selectpicker('refresh');
 
+    } else if ($(el).attr('sa-type') === 'htmlviewer') {
+        $(el).html(val);
+
     } else {
         $(el).val(val);
         $(el).attr('sa-data-value', val);
@@ -2983,6 +2995,49 @@ function getComponentValueAfterTriggerApi(el, val) {
             $(el).text(val);
         }
     }
+}
+
+function initHtmlFroalaEditorByClass(className) {
+    $('.' + className).each(function () {
+        var id = $(this).attr('id');
+        initHtmlFroalaEditor(id);
+    })
+}
+
+function initHtmlFroalaEditor(elementId, val) {
+    var editor = new FroalaEditor('#' + elementId, {
+        tableStyles: {
+            class1: 'Dashed',
+            class2: 'None',
+        },
+
+        quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
+        toolbarInline: true,
+        charCounterCount: false,
+        fileUpload: false,
+        pastePlain: false,
+        toolbarButtons: {
+            'moreText': {
+                'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+            },
+            'moreParagraph': {
+                'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+            },
+            'moreRich': {
+                'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
+            },
+            'moreMisc': {
+                'buttons': ['undo', 'redo', 'selectAll', 'html', ],
+                'align': 'right',
+                'buttonsVisible': 2
+            }
+        }
+    },
+            function () {
+
+                editor.html.set(val);
+            }
+    )
 }
 
 function getMultiSelectpickerValueById(elementId) {
@@ -3016,6 +3071,9 @@ function getGUIDataByStoryCard(el) {
             val = ($(this).attr("fname")) ? $(this).attr("fname") : "";
         } else if ($(this).attr('sa-type') === 'multiselect') {
             val = getMultiSelectpickerValue(this);
+        } else if ($(this).attr('sa-type') === 'htmleditor') {
+            val = $(this).closest('div').find('.fr-element').html();
+            ;
         }
 
 
@@ -6635,11 +6693,11 @@ function setMainBodyCSS() {
 
 function commmonOnloadAction(el) {
     //  $('.new-wrapper').css("left", "77px");
-  //  $('#mainBodyDivForAll').css("padding-left", "0px");
+    //  $('#mainBodyDivForAll').css("padding-left", "0px");
     setMainBodyCSS();
     if (global_var.current_modal === 'loadSourceActivity') {
         //  $('.new-wrapper').css("left", "-10px");
-      //  $('#mainBodyDivForAll').css("padding-left", "0px");
+        //  $('#mainBodyDivForAll').css("padding-left", "0px");
 
         $('#sad-diagram-projectlist').html($('#projectList').html());
         $('#sad-diagram-projectlist').val(global_var.current_project_id);
@@ -6653,7 +6711,7 @@ function commmonOnloadAction(el) {
 
     if (global_var.current_modal === 'loadEntityDiagram') {
         //   $('.new-wrapper').css("left", "-20px");
-       // $('#mainBodyDivForAll').css("padding-left", "10px");
+        // $('#mainBodyDivForAll').css("padding-left", "10px");
     }
 
     if (global_var.current_modal === 'loadDashboard') {
@@ -7319,7 +7377,7 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {
         var id = global_var.current_backlog_id;
         callStoryCard(id);
-        
+
     }
 });
 
@@ -7340,7 +7398,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
-    
+
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8537,7 +8595,7 @@ function showInputTableColumnComponent(el, tableId, inputId) {
 
 function readInputTableProperties(el, inputId) {
     global_var.current_us_input_id = inputId;
-    openComponentPropertiesModal();
+    openComponentPropertiesModal(el);
     $("#ipo_tr_" + inputId).click();
 }
 
