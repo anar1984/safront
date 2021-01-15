@@ -2795,7 +2795,7 @@ ul.main-nav > li > div.sub-menu-block {
   
     position: relative;
     /* avoid browser level touch actions */
-    xtouch-action: none;
+    width: 100%;
   }
   
   .panel-left {
@@ -2807,6 +2807,7 @@ ul.main-nav > li > div.sub-menu-block {
     white-space: nowrap;
     
     color: white;
+    padding: 10px;
   }
   
   .splitter11 {
@@ -2884,7 +2885,7 @@ ul.main-nav > li > div.sub-menu-block {
     z-index: 1004;
     width: 40px;
     height: 40px;
-    padding: 1rem;
+    padding: 0.5rem;
     background: var(--toggle-box);
     display: flex;
     align-items: center;
