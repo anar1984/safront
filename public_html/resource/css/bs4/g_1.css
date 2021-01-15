@@ -825,25 +825,16 @@ b{
     height: 39px;
 }
 
- .first-side:hover {
-    width: 29%;
-    transition: all 0.3s ease;
-    opacity: 1;
-    border-radius: 0px;
-    padding: 0px;
-    overflow: visible;
-    
-} 
+
  .first-side:hover .main-logo{
     background-image: url(../../img/logo.png);
     
 } 
 
-/* .first-side:hover .description-main{
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0s, opacity 3s linear;
-} */
+ .first-side:hover {
+    overflow: visible;
+    width: 30%;
+} 
 
 .description-main{
     font-size: 12px;
@@ -1052,13 +1043,13 @@ button.dropdown-item:hover{
     left: 0;
     box-shadow: 0 0 1px rgb(145, 144, 144);
     top: 0;
-  
-    width: 3.5%;
+    overflow: hidden;
+    width: 40px;
     opacity: 0.9;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 1001;
     background-color: #ffffff; 
-   overflow: hidden;
+  
    height: 40px;
     transition: all 1s ease;
 
@@ -2547,40 +2538,20 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     font-weight: 500;
   
 }
-.sub-menu-head {
-    margin: 10px 0;
-    border-bottom: 1px solid #4F96BA;
-    width: 100%;
-}
+
 
 @media only screen and (max-width: 768px) {
   
-  
-    .sub-menu-head {
-        color:#fff;
-    }
 
     
     ul.main-nav {
         z-index: 2;
-        padding: 50px 0;
-        position: fixed;
-        right: 0px;
-        top: 0px;
-        width: 0px;
-        background-color: rgba(0, 0, 0, 1);
+ 
         height: 100%;
-        overflow: auto;
+       display: flex;
         /*CSS animation applied : Slide from Right*/
         
-        -webkit-transition-property: background, width;
-        -moz-transition-property: background, width;
-        -o-transition-property: background, width;
-        transition-property: background, width;
-        -webkit-transition-duration: 0.6s;
-        -moz-transition-duration: 0.6s;
-        -o-transition-duration: 0.6s;
-        transition-duration: 0.6s;
+    
     }
  
     ul.main-nav > * {
@@ -2592,13 +2563,11 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
         -moz-transition-duration: 0.4s;
         -o-transition-duration: 0.4s;
         transition-duration: 0.4s;
-        opacity: 0;
+     
     }
-    .ic.menu:focus ~ .main-nav > * {
-        opacity: 1;
-    }
+
     ul.main-nav > li > a:after {
-        display: none;
+        /* display: none; */
     }
     ul.main-nav > li:first-child {
         border-radius: 0px;
@@ -2614,21 +2583,60 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
         color: #4F96BA;;
         font-size: 14px;
     }
-    .sub-menu-head {
-        font-size: 16px;
-    }
-    ul.main-nav > li:hover {
-        background-color: transparent;
-    }
-    ul.main-nav > li:hover > a {
-        color: blue;
-        text-decoration: none;
-        font-weight: 600;
-    }
+  
+   #five-block{
+       width: 200%;
+       background-color: #f9f9f9;
+   }
     
-    .sub-menu-block {
-        padding: 0 30px;
-    }
+   .first-side:hover{
+    width: 100%;
+}
+
+ul.main-nav > li > div.sub-menu-block {
+      
+    visibility: hidden;
+    
+      background-color: #fff;
+      position: absolute;
+      margin-top: 0px;
+    
+      color: #333;
+    left:0px; /*--controls sub block starting location --*/
+    box-shadow:  1px 1px rgba(0,0,0,0.5);
+      box-sizing: border-box;
+      z-index: 3;
+      font-size: 16px;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      opacity: 0;
+    
+      /*CSS animation applied for sub menu : Slide from Top */
+      
+      -webkit-transition: all 0.4s ease 0s;
+      -o-transition: all 0.4s ease 0s;
+      transition: all 0.4s ease 0s;
+      -webkit-transform: rotateX(90deg);
+      -moz-transform: rotateX(90deg);
+      -ms-transform: rotateX(90deg);
+      transform: rotateX(90deg);
+      -webkit-transform-origin: top center;
+      -ms-transform-origin: top center;
+      transform-origin: top center;
+  }
+ 
+  ul.main-nav > li:hover > div.sub-menu-block {
+      background-color: #f9f9f9;
+      
+      visibility: visible;
+      opacity: 1;
+      -webkit-transform: rotateX(0deg);
+      -moz-transform: rotateX(0deg);
+      -ms-transform: rotateX(0deg);
+      transform: rotateX(0deg);
+  }
+    
    
 }
 @media only screen and (min-width: 769px) {
@@ -2678,6 +2686,9 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
         transform-origin: top center;
     }
    #five-block {width: 200%;}
+      .first-side:hover{
+          width: 30%;
+      }
     ul.main-nav > li:hover > div.sub-menu-block {
         background-color: #f9f9f9;
         
@@ -2821,5 +2832,134 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
   }
   
   
+  :root {
+    --primary-color: rgba(13, 110, 139, 0.75);
+    --overlay-color: rgba(24, 39, 51 , 0.85);
+    --toggle-box: rgba(65, 75, 84 , .95);
+    --text-color: white;
+    font-family: 'Roboto', serif;
+    font-size:100%;
+    margin: 0; 
+    padding: 0;
+  }
+  
+
+  /* Animate overlay */
+@keyframes checked-overlay {
+    0% { transform: scale(0); }
+    90% { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+  @keyframes not-checked-overlay {
+    0% { transform: scale(1); }
+    100% { transform: scale(0); }
+  }
+  
+  /* Animate menu text */
+  @keyframes checked-menu {
+    0% { opacity:0;}
+    30% { opacity:0;}
+    100% { opacity:1; }
+  }
+  @keyframes not-checked-menu {
+    0% { opacity:1; }
+    100% { opacity:0; }
+  }
+  
+  .first-side .toggler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1005;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+  }
+  
+  .first-side .hamburger1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1004;
+    width: 40px;
+    height: 40px;
+    padding: 1rem;
+    background: var(--toggle-box);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .first-side .hamburger1 > div {
+    position: relative;
+    flex: none;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+  }
+  /* Hamburger Lines - Top & Bottom */
+  .first-side .hamburger1 > div::before,
+  .first-side .hamburger1 > div::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    width: 100%;
+    height: 2px;
+    background: inherit;
+  }
+  /* Moves Line Down */
+  .first-side .hamburger1 > div::after {
+    top: 10px;
+  }
+  /* Toggler Animation */
+  .first-side:hover .hamburger1 > div {
+    transform: rotate(135deg);
+  }
+  
+  /* Turns Lines Into X */
+  .first-side:hover .hamburger1 > div:before,
+  .first-side:hover .hamburger1 > div:after {
+    top: 0;
+    transform: rotate(90deg);
+  }
   
   
+  /* Turn on Overlay */
+  .first-side:hover ~ .mobile-container > div {
+    animation: checked-overlay 1s ease both;
+  }
+  
+  
+  /* MENU STYLES */
+  
+  /* Turn on Menu */
+  .first-side:hover .nav-mobile > div {
+    animation: checked-menu 1s ease both;
+  }
+  
+  .first-side .nav-mobile {
+    position: absolute;
+    width: 100%;
+  }
+  
+  /* Unchecked state of menu */
+  .first-side.nav-mobile > div{
+    animation: not-checked-menu .2s both;
+    transition: .2s;
+  }
+  
+  /* Add a black background color to the top navigation */
+  .first-side .mobile-menu {
+    
+    position: relative;
+    margin: 0px 0px 0px 40px;
+  }
+
+ 
+ 

@@ -21753,7 +21753,17 @@ Project.prototype = {
             success: function (res) {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
-                $('.left-menu-load').first().click();
+
+                var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
+               
+                if (current_modal) {
+                    $('.' + current_modal).first().click();
+                }else{
+                    $('.left-menu-load').first().click();
+                }
+                    
+                
+                
                 hideProgress();
             },
             error: function () {
