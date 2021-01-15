@@ -393,8 +393,14 @@ $(document).on("click", "#canvas-btn-icon", function () {
 //  5. tool panel-input-add
 //11.12.2020 Revan
 $(document).on("click", "#input-btn-icon", function () {
-    $('.draggablePopup').toggle('fast');
-    $('.draggablePopup').draggable({
+    $('#inp_popUp').toggle('fast');
+    $('#inp_popUp').draggable({
+        containment: "parent"
+    });
+    })
+$(document).on("click", "#History-btn-icon", function () {
+    $('#history_inp_popUp').toggle('fast');
+    $('#history_inp_popUp').draggable({
         containment: "parent"
     });
 })
