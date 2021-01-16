@@ -2963,4 +2963,62 @@ ul.main-nav > li > div.sub-menu-block {
   }
 
  
+ .apiListTd{
+    background: #0fa5ce17;
+    border-radius: 4px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 2;
+    margin-bottom: 10px;
+  
+ }
+ .apiListTd::before{
+    font-family: "FontAwesome";
+    content: '\f362';
+   
+    background: #0FA4CE;
+    border-radius: 4px;
+    color: #f7f7ef;
+    font-size: 10px;
+    margin: 0 5px 0 8px;
+    padding: 4px 7px;
+ }
+
+ .RemoveApiTD::before{
+    font-family: "FontAwesome";
+    content: '\f2ed';
+   
+    background: #f7f7ef;
+    border-radius: 4px;
+    color: #0FA4CE;
+    font-size: 13px;
+    margin: 0 5px 0 8px;
+    padding: 4px 7px;
+ }
+ .RemoveApiTD:hover:before{
  
+    background: rgba(173, 55, 55, 0.1);
+    color: red;
+    
+ }
+ .ApiOutTDspan{
+     display: inline-block;
+   background-color: #73C6B6;
+    padding: 5px;
+    border-radius:5px;
+    max-width: 120px !important ;
+ }
+ .ApiInTDspan{
+     display: inline-block;
+    margin:5px 0px;
+    background-color:#EBEDEF;
+    border-radius:5px;
+    padding:5px;
+    max-width: 120px  !important;
+    
+ }
+
+ .dropHereEvent{
+     border: 2px dashed rgba(18, 18, 18, .68);
+     background-color: #7FC8F8;
+
+ }
