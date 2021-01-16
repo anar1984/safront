@@ -10,16 +10,17 @@
         <div class="col-5 ">
             <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
             <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-eye" style="font-size: 10px;cursor: pointer;"></i></button>  
+            <button class="btn btn-outline-secondary live-prototype-show-inputrelation"><i class="live-prototype-show-inputrelation1 fa fa-box" style="font-size: 10px;cursor: pointer;"></i></button>  
 
         </div>
-        
-    </div>
-  
 
-    
+    </div>
+
+
+
     <div class="row" >
 
-       
+
 
         <!-- end 10.08.2020 -->
 
@@ -71,7 +72,7 @@
                 <div class="ipo-divider ipo-1-hisse only-gui-design">
 
                     <table class=" table-hover spilted input-name-add-table" id="tblIPOList">
-                     
+
                         <tbody style="cursor:pointer"><tr class="us-ipo-input-tr new-input-row active" id="ipo_tr_20111611165309125337" pid="20111611165309125337" iname="Name" itable=""><td>1</td><td><input type="checkbox" id="checkbox_20111611165309125337" onclick="makeClassActive( & quot; 20111611165309125337 & quot; )" class="us-input-list-item-check-box-class" value="20111611165309125337"></td><td ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn" pid="20111611165309125337" iname="Name" "="" itable="">Name</td><td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, '20111611165309125337')"><i class="fa fa-trash dust-bin" aria-hidden="true"></i></a></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
                     </table>
 
@@ -104,19 +105,19 @@
                 <li value="hdn" title="Hidden"><a class="inptadd"  href="#"><img src="resource/img/visibility.png" alt=""></a></li>
                 <li value="fhtml" title="Free Html"><a  class="inptadd" href="#"><img src="resource/img/html5.png" alt=""></a></li>
                 <li value="fcomp" title="Free Component"><a class="inptadd"  href="#"><img src="resource/img/web.png" alt=""></a></li>
-    
+
                 <li value="sctn" title="Section"><a onclick="addSectionAsInput()" href="#"><img src="resource/img/sections.png" alt=""></a></li>
                 <li value="tab" title="Tabs"><a onclick="addTabAsInput()" href="#"><img src="resource/img/tabs.png" alt=""></a></li>
                 <li value="Tbl" title="Table"><a href="#" onclick="addTableAsInput()"><img src="resource/img/table.png" alt=""></a></li>
-    
-    
+
+
             </ul>
             <div class="editsect" >
                 <!--  <button class="btn dragToolbar"><i class="fas fa-arrows-alt"></i></button> -->
                 <button class="btn verticalBtn"><i class="fas fa-grip-vertical"></i></button>
                 <button class="btn horizontalBtn"><i class="fas fa-grip-horizontal"></i></button>
                 <button class="btn minimzeBtn"><i class="fas fa-window-minimize"></i></button>
-    
+
             </div>
             <div role="button" class=" btn btn-secondary maximizeBtn"><i class="fas fa-plus"></i></div>
         </div>
@@ -217,7 +218,7 @@
                             </div>
                             <!-- end    15.08.2020 -->
 
-                           
+
 
                         </div>
 
@@ -2099,4 +2100,63 @@
     </div>
 
 </div>
+
+
+<div class="modal fade" id="storyCardInputRelationModal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top:10px;width: 60%;max-width: 60%" role="document">
+        <div class="modal-content" style="height:90vh;overflow-y: scroll;  overflow-x: hidden;">
+            <div class="modal-header">
+                <h5 class="modal-title" id=""> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="row">
+                    <div class="col-lg-7" id="storyCardInputRelationModal_maindivid">
+                    </div>
+
+                    <div class="col-lg-5"  >
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <select id='storyCardInputRelationModal_apilist' class="form-control"></select>
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="radio">Only Inputs
+                                <input type="radio">Only Outputs
+                                <input type="radio">Both
+                            </div>
+                            <div class="col-lg-12" id="storyCardInputRelationModal_apiinoutlist">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="storyCardFieldMgmtModal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top:0px;width: 100%;max-width: 100%" role="document">
+        <div class="modal-content" style="height:99vh;overflow-y: scroll;  overflow-x: hidden;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Story Card Source Management</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="col-lg-12" id="storyCardFieldMgmtModal_maindivid">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!--end 10.08.2020 -->  
