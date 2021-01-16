@@ -9,7 +9,7 @@ $(function () {
     //         that.css('color','#032d6b');
     //      }, 3000);
     //   });
-   
+
 
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
@@ -397,12 +397,13 @@ $(document).on("click", "#input-btn-icon", function () {
     $('#inp_popUp').draggable({
         containment: "parent"
     });
-    })
+})
 $(document).on("click", "#History-btn-icon", function () {
     $('#history_inp_popUp').toggle('fast');
     $('#history_inp_popUp').draggable({
         containment: "parent"
     });
+    setBacklogHistory4View();
 })
 
 var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#exampleModal" id="popup-btn" >
@@ -706,82 +707,88 @@ function addNewBug(el) {
 }
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 
-     
-     let dats
-     let dats2
-    $(document).on('dragstart',".apiListTd",function(ev){
-         
-        var datat=$(this).parent().attr('input-type');
-         dats=datat
-        if(datat==="OUT"){
-          $('.ApiOutTDspan').addClass('dropHereEvent');
-        }else{
-            $('.ApiInTDspan').addClass('dropHereEvent');  
+
+    let dats
+    let dats2
+    let draggedElementPid;
+    $(document).on('dragstart', ".apiListTd", function (ev) {
+        var datat = $(this).parent().attr('input-type');
+        dats = datat
+        if (datat === "OUT") {
+            $('.ApiOutTDspan').addClass('dropHereEvent');
+        } else {
+            $('.ApiInTDspan').addClass('dropHereEvent');
         }
-        dats2=$(this).text();
-    /*     ev.originalEvent.dataTransfer.setData("text", );
-        ev.originalEvent.dataTransfer.setData("dats", datat);
-        var data = ev.originalEvent.dataTransfer.getData("text"); */
-      
+        dats2 = $(this).text();
+        draggedElementPid = $(this).attr("pid");
     })
-    $(document).on('dragend',".apiListTd",function(ev){
-         
-        
-          var datat=$(this).parent().attr('input-type');
-        if(datat==="OUT"){
-          $('.ApiOutTDspan').removeClass('dropHereEvent');
-        }else{
-            $('.ApiInTDspan').removeClass('dropHereEvent'); 
+
+    $(document).on('dragend', ".apiListTd", function (ev) {
+        var datat = $(this).parent().attr('input-type');
+        if (datat === "OUT") {
+            $('.ApiOutTDspan').removeClass('dropHereEvent');
+        } else {
+            $('.ApiInTDspan').removeClass('dropHereEvent');
         }
-      
-        
     })
 
 
-    $(document).on('dragover',".ApiOutTDspan",function(ev){
-      
-        if(dats==="OUT"){
+    $(document).on('dragover', ".ApiOutTDspan", function (ev) {
+        if (dats === "OUT") {
             ev.preventDefault();
-         
-          }
-        
-    })
-    $(document).on('dragover',".ApiInTDspan",function(ev){
-        
-        if(dats==="IN"){
-            ev.preventDefault();
-        
-          }
-        
-    })
-    $(document).on('drop',".ApiOutTDspan",function(ev){
-      
-        if(dats==="OUT"){
-            $(this).text(dats2)
-          }
-        
-    })
-    $(document).on('drop',".ApiInTDspan",function(ev){
-        
-        if(dats==="IN"){
-            $(this).text(dats2)
-         }
-        
-    })
-    $(document).on('click',".DeleteOutAPi",function(ev){
-        
-         $(this).parent().find('.ApiOutTDspan').text('Select from API');
-        
-    })
-    $(document).on('click',".DeleteINAPi",function(ev){
-        
-         $(this).parent().find('.ApiInTDspan').text('Send to API');
-        
+        }
     })
 
-    
+    $(document).on('dragover', ".ApiInTDspan", function (ev) {
+        if (dats === "IN") {
+            ev.preventDefault();
+        }
+    })
+
+    $(document).on('drop', ".ApiOutTDspan", function (ev) {
+        if (dats === "OUT") {
+//            $(this).text(dats2)
+//            alert('out kelbetin')
+
+            var id = $(this).attr('pid'),
+                    action = 'select',
+                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                    selectFromInputId = draggedElementPid;
+
+            addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
+
+            setInputListToInputRelation();
+        }
+
+    })
+
+    $(document).on('drop', ".ApiInTDspan", function (ev) {
+        if (dats === "IN") {
+//            $(this).text(dats2);
+//            alert('in kelbetin')
+
+            var id = $(this).attr('pid'),
+                    action = 'send',
+                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                    selectFromInputId = draggedElementPid;
+
+            addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
+
+            setInputListToInputRelation();
+        }
+    })
+
+    $(document).on('click', ".DeleteOutAPi", function (ev) {
+        $(this).parent().find('.ApiOutTDspan').text('Select from API');
+    })
+
+    $(document).on('click', ".DeleteINAPi", function (ev) {
+        $(this).parent().find('.ApiInTDspan').text('Send to API');
+    })
+
+
 
 
 })

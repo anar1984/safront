@@ -14046,6 +14046,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!id) {
             return;
         }
+
+        fillBacklogHistory4View(id);
+        
+
+
         this.setPreviousUserstoryValues();
         this.setPreviousUserstory();
         $('.us-selected').each(function () {
@@ -14058,6 +14063,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.current_backlog_id = id;
         global_var.current_backlog_name = $(e).html();
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+        
+        if (saViewIsPressed) {
+            SCSourceManagement.Init(global_var.current_backlog_id);
+        }
+
+        if (saInputTagIsPressed)
+            setInputListToInputRelation();
+        
+        
 
         $('#container-us-body').find('.pointer').removeClass('us-selected');
 
@@ -19431,7 +19445,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: true,
+            async: false,
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 $('#addRelatedSourceModal').modal('hide');
@@ -19481,7 +19495,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: true,
+            async: false,
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 $('#addRelatedSourceModal').modal('hide');
@@ -21755,15 +21769,15 @@ Project.prototype = {
                 new UserStory().addProjectToMenu(res);
 
                 var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
-               
+
                 if (current_modal) {
                     $('.' + current_modal).first().click();
-                }else{
+                } else {
                     $('.left-menu-load').first().click();
                 }
-                    
-                
-                
+
+
+
                 hideProgress();
             },
             error: function () {

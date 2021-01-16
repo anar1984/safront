@@ -48,7 +48,86 @@ var moduleList = {
     "loadOldVersion": "Old Version",
 };
 var dgui = {};
+var bhistory = [];
+var bhistorylist = [];
 
+var saViewIsPressed = false;
+var saInputTagIsPressed = false;
+
+
+
+$(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () {
+    var val = $(this).val();
+    
+     $('#storyCardInputRelationModal_apiinoutlist').find('tr').hide()
+    
+    if (val==='input'){
+        $('#storyCardInputRelationModal_apiinoutlist').find('tr[input-type="IN"]').show();
+    }else if (val==='output'){
+        $('#storyCardInputRelationModal_apiinoutlist').find('tr[input-type="OUT"]').show();
+    }else if (val==='both'){
+        $('#storyCardInputRelationModal_apiinoutlist').find('tr').show();
+    }
+})
+
+function showBacklogHistoryClick(el) {
+    var bid = $(el).attr('bid');
+    var pid = $(el).attr('pid');
+
+    if (pid === global_var.current_project_id) {
+        new UserStory().refreshCurrentBacklogById(bid);
+    } else {
+        global_var.current_backlog_id = bid;
+        Utility.addParamToUrl('current_backlog_id', bid);
+        $('#projectList').val(pid);
+        $('#projectList').change();
+
+    }
+}
+
+function fillBacklogHistory4View(backlogId) {
+
+    var kv = {};
+    kv.fkBacklogId = backlogId;
+    kv.backlogName = SACore.GetBacklogname(backlogId)
+    kv.fkProjectId = global_var.current_project_id;
+    kv.projectName = SACore.Project[global_var.current_project_id];
+
+
+
+    bhistory.push(kv);
+    setBacklogHistory4View();
+}
+
+function setBacklogHistory4View() {
+
+    var div = $('#history_inp_popUp_zadsiyahisi');
+    div.html('');
+
+    var temp = [];
+
+    for (var i = bhistory.length - 1; i >= 0; i--) {
+        var o = bhistory[i];
+
+        if (temp.includes(o.fkBacklogId)) {
+            continue;
+        }
+
+        var d = $('<div>')
+                .addClass("col-lg-12")
+
+                .append($('<a>')
+                        .attr("href", "#")
+                        .attr("pid", o.fkProjectId)
+                        .attr('bid', o.fkBacklogId)
+                        .attr("onclick", "showBacklogHistoryClick(this)")
+                        .text(o.backlogName))
+
+        temp.push(o.fkBacklogId);
+
+        div.append(d);
+    }
+}
 
 $(document).on('change', '#addFieldsOfTableAsInputModal-checkall', function () {
     if ($(this).is(":checked")) {
@@ -3534,7 +3613,7 @@ function getProjectDescriptionByProject() {
 
 function getInputAttributeByProjectManual() {
     if (!global_var.current_project_id) {
-        
+
         return;
     }
 
@@ -3553,7 +3632,7 @@ function getInputAttributeByProjectManual() {
         success: function (res) {
             try {
                 cr_input_comp_attribute = {};
-               
+
                 var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
                 for (var i = 0; i < obj.length; i++) {
                     var o = obj[i];
@@ -3568,11 +3647,11 @@ function getInputAttributeByProjectManual() {
                         cr_input_comp_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
 
                     }
-                   
+
                 }
             } catch (err) {
             }
-           
+
 
         }
     });
@@ -3638,6 +3717,50 @@ function getInputAttributeByProject() {
     });
 }
 
+
+function getInputActionRelByProjectMAnual2() {
+    if (!global_var.current_project_id) {
+
+
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputActionRelListByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                cr_input_action_rel = {};
+                cr_input_action_rel_list = {};
+
+                var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    if (!cr_input_action_rel[o.fkInputId]) {
+                        cr_input_action_rel[o.fkInputId] = [];
+                    }
+
+                    cr_input_action_rel[o.fkInputId].push(o.id);
+                    cr_input_action_rel_list[o.id] = o;
+                }
+            } catch (err) {
+            }
+
+
+
+        }
+    });
+}
+
 function getInputActionRelByProject() {
     if (!global_var.current_project_id) {
         queue4ManulProject.getInputActionRelByProject = true;
@@ -3685,7 +3808,7 @@ function getInputActionRelByProject() {
 }
 function getInputClassRelByProjectManual() {
     if (!global_var.current_project_id) {
-        
+
 
         return;
     }
@@ -3706,7 +3829,7 @@ function getInputClassRelByProjectManual() {
 
             try {
                 cr_comp_input_classes = {};
-                
+
 
                 var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
                 for (var i = 0; i < obj.length; i++) {
@@ -3715,11 +3838,11 @@ function getInputClassRelByProjectManual() {
                         cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId])
                                 ? cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId
                                 : o.fkClassId;
-                    } 
+                    }
                 }
             } catch (err) {
             }
-            
+
 
         }
     });
@@ -7524,10 +7647,12 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     }
 });
 
+
+
 $(document).on('click', '.live-prototype-show-live', function (evt) {
 //    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
     $('#storyCardFieldMgmtModal').modal('show');
-
+    saViewIsPressed = true;
     SCSourceManagement.Init(global_var.current_backlog_id);
 });
 
@@ -7537,6 +7662,7 @@ $(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
     $('#storyCardInputRelationModal').modal('show');
     setInputListToInputRelation();
     setApiListToInputRelation();
+    saInputTagIsPressed = true;
 
 
 });
@@ -7561,41 +7687,77 @@ function setInputListToInputRelation() {
 
             var table = $('<table>')
                     .addClass('table table-hover');
-
             var obj = res.tbl[0].r;
             for (var i in obj) {
                 var o = obj[i];
+                var selectFromApi = SACore.GetBacklogname(o.selectFromBacklogId);
+                var selectFromInput = SAInput.GetInputName(o.selectFromInputId);
+                var selectFromZad = (selectFromInput)
+                        ? $('<a>')
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.selectFromBacklogId + "')")
+                        .append($('<span>')
+                                .text(selectFromApi + "." + selectFromInput))
+                        : $('<i>').css('color', "white").text("Select from API");
+
+                var sendToApi = SACore.GetBacklogname(o.sendToBacklogId);
+                var sendToInput = SAInput.GetInputName(o.sendToInputId);
+                var sendToZad = (sendToInput)
+                        ? $('<a>')
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.sendToBacklogId + "')")
+                        .append($('<span>')
+                                .text(sendToApi + "." + sendToInput))
+                        : $('<i>').css('color', "gray").text("Send to API");
+
+
+
                 var tr = $('<tr>')
-                        .append($('<td>').text(o.inputName))
                         .append($('<td>')
                                 .append($('<span>')
+                                        .attr('pid', o.id)
                                         .addClass('ApiOutTDspan')
-                                        .text('Select from API'))
+                                        .append(selectFromZad))
                                 .append($('<span>')
+                                        .attr('onclick', "deleteSelectFromApiOnInputRelation(this,'" + o.id + "')")
                                         .addClass('DeleteOutAPi')
                                         .addClass('RemoveApiTD'))
+                                )
 
-                                .append($('<span>')
-                                        .text('   '))
+                        .append($('<td>')
+                                .append($('<i class="fa fa-chevron-right">'))
+                                .append($('<span>').text(" " + o.inputName + " "))
+                                .append($('<i class="fa fa-chevron-right">')))
 
+                        .append($('<td>')
                                 .append($('<span>')
+                                        .attr('pid', o.id)
                                         .addClass('ApiInTDspan')
-
-                                        .text('Send to API'))
+                                        .append(sendToZad))
                                 .append($('<span>')
+                                        .attr('onclick', "deleteSendToApiOnInputRelation(this,'" + o.id + "')")
                                         .addClass('DeleteINAPi')
                                         .addClass('RemoveApiTD'))
                                 )
 
+
                 table.append(tr)
             }
             div.append(table);
-
-
-
         }
     });
 }
+
+function deleteSelectFromApiOnInputRelation(el, inputId) {
+    new UserStory().removeRelationSource(el, inputId);
+    setInputListToInputRelation();
+}
+
+function deleteSendToApiOnInputRelation(el, inputId) {
+    new UserStory().removeSendSaveTo(el, inputId);
+    setInputListToInputRelation();
+}
+
 
 function setApiListToInputRelation() {
     var select = $('#storyCardInputRelationModal_apilist');
@@ -7661,7 +7823,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         commmonOnloadAction(this);
         getGuiClassList();
         getJsCodeByProject();
-        getInputActionRelByProject();
+        getInputActionRelByProjectMAnual2();
 
 
     });

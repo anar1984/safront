@@ -2048,7 +2048,7 @@ label h6{
 .porjectNameProto{
     display: flex;
     flex-wrap: wrap;
-    max-width: 270px;
+    /*max-width: 600px;*/
     position: fixed;
     padding: 5px;
     top: 0;
@@ -3005,7 +3005,7 @@ ul.main-nav > li > div.sub-menu-block {
    background-color: #73C6B6;
     padding: 5px;
     border-radius:5px;
-    max-width: 120px !important ;
+    /*max-width: 120px !important ;*/
  }
  .ApiInTDspan{
      display: inline-block;
@@ -3013,7 +3013,7 @@ ul.main-nav > li > div.sub-menu-block {
     background-color:#EBEDEF;
     border-radius:5px;
     padding:5px;
-    max-width: 120px  !important;
+    /*max-width: 120px  !important;*/
     
  }
 
