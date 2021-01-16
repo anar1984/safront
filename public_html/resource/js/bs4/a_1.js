@@ -50,6 +50,23 @@ var moduleList = {
 var dgui = {};
 
 
+$(document).on('change', '#addFieldsOfTableAsInputModal-checkall', function () {
+    if ($(this).is(":checked")) {
+        $('#addFieldsOfTableAsInputModal').find('.fields-as-input').prop('checked', true)
+    } else {
+        $('#addFieldsOfTableAsInputModal').find('.fields-as-input').prop('checked', false)
+    }
+})
+
+
+$(document).on('change', '#addStoryCardInputsAsModal-checkall', function () {
+    if ($(this).is(":checked")) {
+        $('#addStoryCardInputsAsModal').find('.inputs-as-input').prop('checked', true)
+    } else {
+        $('#addStoryCardInputsAsModal').find('.inputs-as-input').prop('checked', false)
+    }
+})
+
 $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) {
 
 
@@ -78,7 +95,7 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) 
                         .append($('<td>')
                                 .addClass('apiListTd')
                                 .attr('pid', o.id)
-                                .attr('draggable','true')
+                                .attr('draggable', 'true')
                                 .text(o.inputName + ' (' + t + ')')))
 
             }
@@ -3515,6 +3532,53 @@ function getProjectDescriptionByProject() {
 }
 
 
+function getInputAttributeByProjectManual() {
+    if (!global_var.current_project_id) {
+        
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputAttributeListByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                cr_input_comp_attribute = {};
+               
+                var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    if (o.attrType === 'comp') {
+                        var kv = {};
+                        kv[o.attrName] = o.attrValue;
+                        if (!cr_input_comp_attribute[o.fkInputId]) {
+                            cr_input_comp_attribute[o.fkInputId] = [];
+                            cr_input_comp_attribute_kv[o.fkInputId] = {};
+                        }
+                        cr_input_comp_attribute[o.fkInputId].push(kv)
+                        cr_input_comp_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
+
+                    }
+                   
+                }
+            } catch (err) {
+            }
+           
+
+        }
+    });
+}
+
+
 function getInputAttributeByProject() {
     if (!global_var.current_project_id) {
         queue4ManulProject.getInputAttributeByProject = true;
@@ -3615,6 +3679,47 @@ function getInputActionRelByProject() {
             queue4ManulProject.getInputActionRelByProject = true;
             executeCoreOfManualProSelection();
 
+
+        }
+    });
+}
+function getInputClassRelByProjectManual() {
+    if (!global_var.current_project_id) {
+        
+
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputClassRelByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            try {
+                cr_comp_input_classes = {};
+                
+
+                var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    if (o.relType === 'comp') {
+                        cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId])
+                                ? cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId
+                                : o.fkClassId;
+                    } 
+                }
+            } catch (err) {
+            }
+            
 
         }
     });
@@ -4205,7 +4310,7 @@ function addGuiClassToInput(el) {
         async: true,
         success: function (res) {
             getInputCompClassList();
-            getInputClassRelByProject();
+            getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
         }
     });
@@ -4358,7 +4463,7 @@ function removeInputClassRel(el, relId) {
         success: function (res) {
             getInputCompClassList();
             getInputContaierClassList();
-            getInputClassRelByProject();
+            getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
         }
     });
@@ -4641,7 +4746,7 @@ function addInputAttributes(el) {
             $('#gui_prop_in_attr_name').val('');
             $('#gui_prop_in_attr_value').val('');
             getInputAttributeList(global_var.current_us_input_id);
-            getInputAttributeByProject();
+            getInputAttributeByProjectManual();
             new UserStory().genGUIDesign();
         }
     });
@@ -4741,7 +4846,7 @@ function removeInputAttribute(el, inputAttrId) {
         success: function (res) {
             getInputAttributeList(global_var.current_us_input_id);
             getInputAttributeList4Container(global_var.current_us_input_id);
-            getInputAttributeByProject();
+            getInputAttributeByProjectManual();
             new UserStory().genGUIDesign();
         },
         error: function () {
@@ -7464,10 +7569,10 @@ function setInputListToInputRelation() {
                         .append($('<td>').text(o.inputName))
                         .append($('<td>')
                                 .append($('<span>')
-                                         .addClass('ApiOutTDspan')
+                                        .addClass('ApiOutTDspan')
                                         .text('Select from API'))
                                 .append($('<span>')
-                                         .addClass('DeleteOutAPi') 
+                                        .addClass('DeleteOutAPi')
                                         .addClass('RemoveApiTD'))
 
                                 .append($('<span>')
@@ -7475,11 +7580,11 @@ function setInputListToInputRelation() {
 
                                 .append($('<span>')
                                         .addClass('ApiInTDspan')
-                                      
+
                                         .text('Send to API'))
                                 .append($('<span>')
-                                           .addClass('DeleteINAPi') 
-                                          .addClass('RemoveApiTD'))
+                                        .addClass('DeleteINAPi')
+                                        .addClass('RemoveApiTD'))
                                 )
 
                 table.append(tr)
@@ -13457,8 +13562,8 @@ var SCSourceManagement = {
 
         SCSourceManagement.FillLeftEntity();
         SCSourceManagement.FillRightEntity();
-        
-        
+
+
         SCSourceManagement.FillLeftApiTriggers();
 
     },
@@ -13519,7 +13624,7 @@ var SCSourceManagement = {
                             .attr('bid', fkSelectFromBacklogId)
                             .attr('pid', fkSelectFromInputId)
                             .attr('field', inputName)
-                             )
+                            )
 
                     ;
 
@@ -13551,7 +13656,7 @@ var SCSourceManagement = {
                             .attr('bid', fkSendToBacklogId)
                             .attr('pid', fkSendToInputId)
                             .attr('field', inputName)
-                             )
+                            )
 
                     ;
 
@@ -13573,8 +13678,8 @@ var SCSourceManagement = {
                 var dbName = SAEntity.GetDBDetails(o.selectFromDbId, 'dbName');
                 var tableName = SAEntity.GetTableDetails(o.selectFromTableId, 'tableName');
                 var fiedlName = SAEntity.GetFieldDetails(o.selectFromFieldId, 'fieldName');
-                
-                 var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName :"";
+
+                var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName : "";
 
                 $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-input-by-' + inputName)
                         .append($('<span>')
@@ -13604,7 +13709,7 @@ var SCSourceManagement = {
                 var dbName = SAEntity.GetDBDetails(o.sendToDbId, 'dbName');
                 var tableName = SAEntity.GetTableDetails(o.sendToTableId, 'tableName');
                 var fiedlName = SAEntity.GetFieldDetails(o.sendToFieldId, 'fieldName');
-                var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName :"";
+                var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName : "";
 
                 $(this).closest('div.row').find('.sc-source-mgmt-attr-right-list-div-4-api-input-by-' + inputName)
                         .append($('<span>')
