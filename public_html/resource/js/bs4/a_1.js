@@ -13451,8 +13451,14 @@ var SCSourceManagement = {
 
         SCSourceManagement.FillInput(storyCardId);
         SCSourceManagement.GetInputAttributes(storyCardId);
+
         SCSourceManagement.FillLeftApi();
+        SCSourceManagement.FillRightApi();
+
         SCSourceManagement.FillLeftEntity();
+        SCSourceManagement.FillRightEntity();
+        
+        
         SCSourceManagement.FillLeftApiTriggers();
 
     },
@@ -13513,7 +13519,39 @@ var SCSourceManagement = {
                             .attr('bid', fkSelectFromBacklogId)
                             .attr('pid', fkSelectFromInputId)
                             .attr('field', inputName)
-                            .append('Triggers:<br>'))
+                             )
+
+                    ;
+
+
+        })
+    },
+    FillRightApi: function () {
+        $('.sc-source-mgmt-input-list').each(function () {
+            var inputId = $(this).attr("pid");
+            var o = SAInput.getInputObject(inputId);
+            var fkSendToBacklogId = o.sendToBacklogId;
+            var fkSendToInputId = o.sendToInputId;
+            var backlogName = SACore.GetBacklogname(fkSendToBacklogId);
+            var inputName = SAInput.GetInputName(fkSendToInputId);
+
+
+            $(this).closest('div.row').find('.sc-source-mgmt-attr-right-list-div-4-api-by-' + inputName)
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-' + fkSendToInputId)
+                            .attr('bid', fkSendToBacklogId)
+                            .attr('pid', fkSendToInputId)
+                            .attr('field', inputName)
+                            .text(backlogName + "." + inputName + " (IN)"))
+                    .append('<br>')
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers-' + fkSendToInputId)
+                            .attr('bid', fkSendToBacklogId)
+                            .attr('pid', fkSendToInputId)
+                            .attr('field', inputName)
+                             )
 
                     ;
 
@@ -13532,12 +13570,11 @@ var SCSourceManagement = {
                 if (o.inputName !== inputName)
                     continue;
 
-
-
                 var dbName = SAEntity.GetDBDetails(o.selectFromDbId, 'dbName');
                 var tableName = SAEntity.GetTableDetails(o.selectFromTableId, 'tableName');
                 var fiedlName = SAEntity.GetFieldDetails(o.selectFromFieldId, 'fieldName');
-                var fieldZadi = dbName + "." + tableName + "." + fiedlName;
+                
+                 var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName :"";
 
                 $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-input-by-' + inputName)
                         .append($('<span>')
@@ -13546,6 +13583,36 @@ var SCSourceManagement = {
                                 .attr('dbid', o.selectFromDbId)
                                 .attr('tableid', o.selectFromTableId)
                                 .attr('fieldid', o.selectFromFieldId)
+                                .attr('pid', o.id)
+                                .attr('field', inputName)
+                                .text(fieldZadi))
+            }
+        })
+    },
+    FillRightEntity: function () {
+        $('.sc-source-mgmt-attr-right-list-div-4-api-item').each(function () {
+            var bid = $(this).attr('bid');
+            var inputName = $(this).attr('field');
+            var inputIds = SACore.GetInputList(bid);
+
+            for (var i in inputIds) {
+                var inputId = inputIds[i].trim();
+                var o = SAInput.getInputObject(inputId);
+                if (o.inputName !== inputName)
+                    continue;
+
+                var dbName = SAEntity.GetDBDetails(o.sendToDbId, 'dbName');
+                var tableName = SAEntity.GetTableDetails(o.sendToTableId, 'tableName');
+                var fiedlName = SAEntity.GetFieldDetails(o.sendToFieldId, 'fieldName');
+                var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName :"";
+
+                $(this).closest('div.row').find('.sc-source-mgmt-attr-right-list-div-4-api-input-by-' + inputName)
+                        .append($('<span>')
+                                .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item')
+                                .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item-' + o.id)
+                                .attr('dbid', o.sendToDbId)
+                                .attr('tableid', o.sendToTableId)
+                                .attr('fieldid', o.sendToFieldId)
                                 .attr('pid', o.id)
                                 .attr('field', inputName)
                                 .text(fieldZadi))
@@ -13611,21 +13678,31 @@ var SCSourceManagement = {
                                 .first()
                                 .closest('div.row')
                                 .find('div.sc-source-mgmt-div-4-field-right')
-                                .append($('<div class="row">').append($('<div>')
-                                        .addClass("col-lg-3")
-                                        .addClass("sc-source-mgmt-attr-right-list-div")
-                                        .append($('<span>')
-                                                .addClass('sc-source-mgmt-attr-right-list')
-                                                .addClass('sc-source-mgmt-attr-right-list_' + o.id)
-                                                .addClass('sc-source-mgmt-attr-right-list_field_' + sf)
-                                                .attr('pid', o.id)
-                                                .attr('field', sf)
-                                                .text(sf))
+                                .append($('<div class="row">')
+
                                         .append($('<div>')
-                                                .addClass("col-lg-9")
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-right-list-div")
+                                                .append($('<span>')
+                                                        .addClass('sc-source-mgmt-attr-right-list')
+                                                        .addClass('sc-source-mgmt-attr-right-list_' + o.id)
+                                                        .addClass('sc-source-mgmt-attr-right-list_field_' + sf)
+                                                        .attr('pid', o.id)
+                                                        .attr('field', sf)
+                                                        .text(sf)))
+
+                                        .append($('<div>')
+                                                .addClass("col-lg-5")
                                                 .addClass("sc-source-mgmt-attr-right-list-div-4-api")
-                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf)
-                                                )))
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf))
+
+                                        .append($('<div>')
+                                                .addClass("col-lg-4")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-input")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-input-by-" + sf)
+                                                )
+
+                                        )
 
                         $('.sc-source-mgmt-input-list_' + o.fkInputId)
                                 .first()
