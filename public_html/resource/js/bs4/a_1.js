@@ -50,9 +50,45 @@ var moduleList = {
 var dgui = {};
 
 
+$(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) {
+
+
+    var table = $('#storyCardInputRelationModal_apiinoutlist');
+    table.html('');
+
+    var json = initJSON();
+    json.kv.fkBacklogId = $(this).val();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputOutputListByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+
+                var t = o.inputType;
+                table.append($('<tr>')
+                        .attr('input-type', t)
+                        .append($('<td>')
+                                .attr('pid', o.id)
+                                .text(o.inputName + ' (' + t + ')')))
+
+            }
+        }
+    });
+});
+
 function shiftTaskInfoOnTaskInfoModal(el) {
     var taskId = $(el).attr('pid');
     callTaskCard4BugTask(el, global_var.current_project_id, taskId);
+
+
 }
 
 
@@ -7382,10 +7418,113 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
 });
 
 $(document).on('click', '.live-prototype-show-live', function (evt) {
-    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
+//    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
+    $('#storyCardFieldMgmtModal').modal('show');
+
+    SCSourceManagement.Init(global_var.current_backlog_id);
+});
+
+
+$(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
+//    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
+    $('#storyCardInputRelationModal').modal('show');
+    setInputListToInputRelation();
+    setApiListToInputRelation();
+
 
 });
 
+function setInputListToInputRelation() {
+    var div = $('#storyCardInputRelationModal_maindivid');
+    div.html('');
+
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputList4Relation",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+            var table = $('<table>')
+                    .addClass('table table-hover');
+
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+                var tr = $('<tr>')
+                        .append($('<td>').text(o.inputName))
+                        .append($('<td>')
+                                .append($('<span>')
+                                        .css('background-color', '#73C6B6')
+                                        .css('padding', '5px')
+                                        .css('border-radius', '5px')
+                                        .text('Select from API'))
+                                .append($('<span>')
+                                        .text('Remove'))
+
+                                .append($('<span>')
+                                        .text('   '))
+
+                                .append($('<span>')
+                                        .css('margin', '5px 0px')
+                                        .css('background-color', '#EBEDEF')
+                                        .css('border-radius', '5px')
+                                        .css('padding', '5px')
+                                        .text('Send to API'))
+                                .append($('<span>')
+                                        .text('Remove'))
+                                )
+
+                table.append(tr)
+            }
+            div.append(table);
+
+
+
+        }
+    });
+}
+
+function setApiListToInputRelation() {
+    var select = $('#storyCardInputRelationModal_apilist');
+    select.html('');
+
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetApiList4Zad",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+                select.append($('<option>').val(o.id).text(o.backlogName))
+            }
+
+            select.change();
+
+
+
+
+        }
+    });
+
+}
 
 $(document).on('click', '.redirectClass4CSS', function (evt) {
 //    var id = $(this).find('.redirectClass').attr('bid');
@@ -13296,4 +13435,232 @@ var SourcedActivityDiagram = {
             return div;
         }
     },
+}
+
+
+
+var SCSourceManagement = {
+
+    DivId: "storyCardFieldMgmtModal_maindivid",
+    GetMainElement: function () {
+        return $('#' + SCSourceManagement.DivId);
+
+    },
+    Init: function (storyCardId) {
+        SCSourceManagement.GetMainElement().html('');
+
+        SCSourceManagement.FillInput(storyCardId);
+        SCSourceManagement.GetInputAttributes(storyCardId);
+        SCSourceManagement.FillLeftApi();
+        SCSourceManagement.FillLeftEntity();
+        SCSourceManagement.FillLeftApiTriggers();
+
+    },
+    FillInput: function (storyCardId) {
+        var inputs = SACore.GetInputList(storyCardId);
+        var el = SCSourceManagement.GetMainElement();
+        for (var i in inputs) {
+            var inputId = inputs[i].trim();
+            var inputName = SAInput.GetInputName(inputId);
+            var div = $('<div>')
+                    .attr("pid", inputId)
+                    .addClass('sc-source-mgmt-input-div')
+                    .addClass("row")
+                    .addClass("text-center")
+                    .append($('<div>')
+                            .addClass('col-lg-5')
+                            .addClass('text-right')
+                            .addClass('sc-source-mgmt-div-4-field-left'))
+
+                    .append($('<div>')
+                            .addClass('col-lg-2')
+                            .addClass('sc-source-mgmt-div-4-input-list')
+                            .append($('<span>')
+                                    .addClass('sc-source-mgmt-input-list')
+                                    .addClass('sc-source-mgmt-input-list_' + inputId)
+                                    .attr('pid', inputId)
+                                    .text(inputName)))
+                    .append($('<div>')
+                            .addClass('col-lg-5')
+                            .addClass('text-left')
+                            .addClass('sc-source-mgmt-div-4-field-right'))
+
+            el.append(div);
+        }
+    },
+    FillLeftApi: function () {
+        $('.sc-source-mgmt-input-list').each(function () {
+            var inputId = $(this).attr("pid");
+            var o = SAInput.getInputObject(inputId);
+            var fkSelectFromBacklogId = o.selectFromBacklogId;
+            var fkSelectFromInputId = o.selectFromInputId;
+            var backlogName = SACore.GetBacklogname(fkSelectFromBacklogId);
+            var inputName = SAInput.GetInputName(fkSelectFromInputId);
+
+
+            $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-by-' + inputName)
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-' + fkSelectFromInputId)
+                            .attr('bid', fkSelectFromBacklogId)
+                            .attr('pid', fkSelectFromInputId)
+                            .attr('field', inputName)
+                            .text(backlogName + "." + inputName + " (OUT)"))
+                    .append('<br>')
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers-' + fkSelectFromInputId)
+                            .attr('bid', fkSelectFromBacklogId)
+                            .attr('pid', fkSelectFromInputId)
+                            .attr('field', inputName)
+                            .append('Triggers:<br>'))
+
+                    ;
+
+
+        })
+    },
+    FillLeftEntity: function () {
+        $('.sc-source-mgmt-attr-left-list-div-4-api-item').each(function () {
+            var bid = $(this).attr('bid');
+            var inputName = $(this).attr('field');
+            var inputIds = SACore.GetInputList(bid);
+
+            for (var i in inputIds) {
+                var inputId = inputIds[i].trim();
+                var o = SAInput.getInputObject(inputId);
+                if (o.inputName !== inputName)
+                    continue;
+
+
+
+                var dbName = SAEntity.GetDBDetails(o.selectFromDbId, 'dbName');
+                var tableName = SAEntity.GetTableDetails(o.selectFromTableId, 'tableName');
+                var fiedlName = SAEntity.GetFieldDetails(o.selectFromFieldId, 'fieldName');
+                var fieldZadi = dbName + "." + tableName + "." + fiedlName;
+
+                $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-input-by-' + inputName)
+                        .append($('<span>')
+                                .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item')
+                                .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item-' + o.id)
+                                .attr('dbid', o.selectFromDbId)
+                                .attr('tableid', o.selectFromTableId)
+                                .attr('fieldid', o.selectFromFieldId)
+                                .attr('pid', o.id)
+                                .attr('field', inputName)
+                                .text(fieldZadi))
+            }
+        })
+    },
+    FillLeftApiTriggers: function () {
+        $('.sc-source-mgmt-attr-left-list-div-4-api-item-triggers').each(function () {
+            var bid = $(this).attr('bid');
+            SCSourceManagement.GetBacklogListBySendToApi(this, bid);
+        })
+    },
+    GetBacklogListBySendToApi: function (el, apiId) {
+        var json = initJSON();
+        json.kv.fkBacklogId = apiId;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetBacklogListBySendToApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+
+                    var bid = SAInput.getInputDetails(o.fkInputId, "fkBacklogId");
+                    var backlogName = SACore.GetBacklogname(bid);
+                    var inputName = SAInput.GetInputName(o.fkInputId);
+                    var triggerLine = '"' + backlogName + '".' + inputName + '.' + o.actionType + "()"
+
+                    $(el).append($('<span>').text(triggerLine))
+                }
+            }
+        });
+    },
+    GetInputAttributes: function (storyCardId) {
+
+        var json = initJSON();
+        json.kv.fkBacklogId = storyCardId;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputAttributeListByBacklog",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+
+                    var selectedFields = o.attrValue.split(',');
+                    for (var j in selectedFields) {
+                        var sf = selectedFields[j];
+
+                        $('.sc-source-mgmt-input-list_' + o.fkInputId)
+                                .first()
+                                .closest('div.row')
+                                .find('div.sc-source-mgmt-div-4-field-right')
+                                .append($('<div class="row">').append($('<div>')
+                                        .addClass("col-lg-3")
+                                        .addClass("sc-source-mgmt-attr-right-list-div")
+                                        .append($('<span>')
+                                                .addClass('sc-source-mgmt-attr-right-list')
+                                                .addClass('sc-source-mgmt-attr-right-list_' + o.id)
+                                                .addClass('sc-source-mgmt-attr-right-list_field_' + sf)
+                                                .attr('pid', o.id)
+                                                .attr('field', sf)
+                                                .text(sf))
+                                        .append($('<div>')
+                                                .addClass("col-lg-9")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf)
+                                                )))
+
+                        $('.sc-source-mgmt-input-list_' + o.fkInputId)
+                                .first()
+                                .closest('div.row')
+                                .find('div.sc-source-mgmt-div-4-field-left')
+                                .append($('<div class="row">')
+
+                                        .append($('<div>')
+                                                .addClass("col-lg-4")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-input")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-input-by-" + sf)
+                                                )
+
+                                        .append($('<div>')
+                                                .addClass("col-lg-5")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-by-" + sf)
+                                                )
+
+
+                                        .append($('<div>')
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-left-list-div")
+                                                .append($('<span>')
+                                                        .addClass('sc-source-mgmt-attr-left-list')
+                                                        .addClass('sc-source-mgmt-attr-left-list_' + o.id)
+                                                        .addClass('sc-source-mgmt-attr-left-list_field_' + sf)
+                                                        .attr('pid', o.id)
+                                                        .attr('field', sf)
+                                                        .text(sf))))
+                    }
+
+                }
+            }
+        });
+    }
+
 }

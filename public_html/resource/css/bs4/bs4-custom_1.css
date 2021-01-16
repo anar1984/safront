@@ -2732,3 +2732,71 @@ img.sc-IbsAh.kqHqhS {
 .task-for-backlog-event{
     cursor:pointer;
 }
+
+.sc-source-mgmt-input-list{
+    padding:5px 5px;
+    background-color:gainsboro;
+    border-radius: 4px;
+}
+
+.sc-source-mgmt-input-div{
+    padding:10px 5px;
+    
+     
+}
+
+.sc-source-mgmt-attr-right-list{
+     padding:5px 5px;
+    background-color:yellowgreen;
+    border-radius: 4px;
+}
+
+.sc-source-mgmt-attr-right-list-div{
+     padding:10px 5px;
+}
+
+.sc-source-mgmt-div-4-input-list{
+    padding:10px 5px;
+/*       max-width: 33%;
+   min-width: 33%;*/
+}
+
+.sc-source-mgmt-attr-left-list-div{
+     padding:10px 5px;
+}
+
+.sc-source-mgmt-attr-left-list{
+     padding:5px 5px;
+    background-color:yellowgreen;
+    border-radius: 4px;
+}
+
+.sc-source-mgmt-div-4-field-left{
+    
+/*    max-width: 33%;
+   min-width: 33%;*/
+}
+
+.sc-source-mgmt-div-4-field-right{
+/*    max-width: 33%;
+   min-width: 33%;*/
+}
+ 
+.sc-source-mgmt-attr-left-list-div-4-api-item{
+    padding:5px 5px;
+    color:white; 
+    background-color:orange;
+    border-radius: 4px;
+}
+
+.sc-source-mgmt-attr-left-list-div-4-api{
+     padding:10px 5px;
+}
+
+.sc-source-mgmt-attr-left-list-div-4-api-entity-item{
+    padding:5px 5px;
+    color:white; 
+    background-color:blueviolet;
+    border-radius: 4px;
+}
+ 
