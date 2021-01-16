@@ -706,3 +706,86 @@ function addNewBug(el) {
 }
 
 
+$(document).ready(function(){
+
+     
+     let dats
+     let dats2
+    $(document).on('dragstart',".apiListTd",function(ev){
+         
+        var datat=$(this).parent().attr('input-type');
+         dats=datat
+        if(datat==="OUT"){
+          $('.ApiOutTDspan').addClass('dropHereEvent');
+        }else{
+            $('.ApiInTDspan').addClass('dropHereEvent');  
+        }
+        dats2=$(this).text();
+    /*     ev.originalEvent.dataTransfer.setData("text", );
+        ev.originalEvent.dataTransfer.setData("dats", datat);
+        var data = ev.originalEvent.dataTransfer.getData("text"); */
+      
+    })
+    $(document).on('dragend',".apiListTd",function(ev){
+         
+        
+          var datat=$(this).parent().attr('input-type');
+        if(datat==="OUT"){
+          $('.ApiOutTDspan').removeClass('dropHereEvent');
+        }else{
+            $('.ApiInTDspan').removeClass('dropHereEvent'); 
+        }
+      
+        
+    })
+
+
+    $(document).on('dragover',".ApiOutTDspan",function(ev){
+      
+        if(dats==="OUT"){
+            ev.preventDefault();
+         
+          }
+        
+    })
+    $(document).on('dragover',".ApiInTDspan",function(ev){
+        
+        if(dats==="IN"){
+            ev.preventDefault();
+        
+          }
+        
+    })
+    $(document).on('drop',".ApiOutTDspan",function(ev){
+      
+        if(dats==="OUT"){
+            $(this).text(dats2)
+          }
+        
+    })
+    $(document).on('drop',".ApiInTDspan",function(ev){
+        
+        if(dats==="IN"){
+            $(this).text(dats2)
+         }
+        
+    })
+    $(document).on('click',".DeleteOutAPi",function(ev){
+        
+         $(this).parent().find('.ApiOutTDspan').text('Select from API');
+        
+    })
+    $(document).on('click',".DeleteINAPi",function(ev){
+        
+         $(this).parent().find('.ApiInTDspan').text('Send to API');
+        
+    })
+
+    
+
+
+})
+
+
+
+
