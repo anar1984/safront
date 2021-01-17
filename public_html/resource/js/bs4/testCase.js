@@ -16,6 +16,7 @@ var bug_filter = {
     page_no: 1,
     sprint_id: '',
     label_id: '',
+    showChildTask:'1',
 }
 
 var sprintTaskIds = "";
@@ -409,6 +410,15 @@ function setBugFilterValues() {
         bug_filter[data_type] = $(this).val();
     })
 }
+
+function setBugFilterCheckBoxValues() {
+    $('.bug-filter-checkbox').each(function () {
+        var data_type = $(this).attr('data-type');
+        bug_filter[data_type] = $(this).is(":checked") ? "1" : "0";
+    })
+}
+
+
 function setBugFilterLabelValues() {
     var st = ' ';
     $('.bug-task-filter-checkbox-label').each(function () {
@@ -566,6 +576,7 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 
 function getBugList() {
+    setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
@@ -588,6 +599,7 @@ function getBugList() {
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
     json.kv.fkTaskId = global_var.current_issue_id;
+    json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -828,7 +840,8 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-task-name')
                         .css("max-width", '400px')
                         .append(taskName, ' ')
-
+                        .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                        .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                         )
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-task-nature').append(getBugListTaskNatureValue(o.taskNature)))
@@ -925,6 +938,7 @@ function getBugListDetails(res) {
 
         tbody.append(t);
     }
+
     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
             sumEstBudget, sumSpentBudget);
 
@@ -998,7 +1012,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
                 .html(coreBugKV[taskId].backlogName);
     }
 
-   
+
 
 //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
 

@@ -100,7 +100,7 @@
 <div class="row" ppp style="padding:20px 10px 0px 10px;">
 
     <div class="col-lg-2"  >
-        <select class="bug-filter bug-mgmt-filter-select" 
+        <select class="form-control  bug-filter bug-mgmt-filter-select" 
                 data-live-search="true"
                 data-actions-box="true"
                 style="text-overflow: ellipsis"
@@ -108,7 +108,7 @@
                 id='bug_filter_project_id' data-type="project_id" title="Project"></select>
     </div>
     <div class="col-lg-2"  >
-        <select class=" bug-filter-multi  bug-mgmt-filter-select"  
+        <select class="form-control  bug-filter-multi  bug-mgmt-filter-select"  
                 data-actions-box="true"
                 onchange='callBugFilterMulti(this)'
                 multiple data-live-search="true"
@@ -116,7 +116,7 @@
     </div>
 
     <div class="col-lg-2"  >
-        <select class="bug-filter-multi  bug-mgmt-filter-select selectpicker1" 
+        <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" 
                 data-actions-box="true"
                 onchange='callBugFilterMulti(this)'
                 multiple data-live-search="true"
@@ -125,8 +125,10 @@
         </select>
     </div>
     <div class="col-lg-2"  >
-        <select class="bug-filter-multi  bug-mgmt-filter-select" 
+        <select class="form-control bug-filter-multi  bug-mgmt-filter-select" 
                 onchange='callBugFilterMulti(this)'
+                data-live-search="true"
+                data-actions-box="true"
                 multiple  
                 id='bug_filter_status'  data-type="status"  title="Status">
             <option value='new' selected>New</option>
@@ -135,11 +137,12 @@
             <option value='waiting'>Waiting</option>
             <option value='canceled'>Canceled</option>
             <option value='rejected'>Rejected</option>
+            <option value='UAT'>UAT</option>
 
         </select>
     </div>
     <div class="col-lg-2"  >
-        <select class="bug-filter-multi  bug-mgmt-filter-select"  
+        <select class="form-control bug-filter-multi  bug-mgmt-filter-select"  
                 onchange='callBugFilterMulti(this)'
                 multiple  
                 id='bug_filter_nature' data-type="nature"  title="Task Nature">
@@ -149,7 +152,7 @@
         </select>
     </div>
     <div class="col-lg-2"  >
-        <select class=" bug-filter-multi  bug-mgmt-filter-select"  
+        <select class=" form-control bug-filter-multi  bug-mgmt-filter-select"  
                 data-actions-box="true"
                 onchange='callBugFilterMulti(this)'
                 multiple data-live-search="true"
@@ -160,7 +163,7 @@
 
 
 <div class="row">
-    <div class="col-6 flexbox">
+    <div class="col-4 flexbox">
         <div class="search">
             <div> <input data-type='search_text' type="text" class='bug-filter' onchange=""  id='bug_filter_search_text'  placeholder="Search . . ." required="">
             </div>
@@ -169,7 +172,18 @@
 
     <div class="col-2 text-right" style="padding-top: 7px;">
 
-        <select class="bug-filter-multi  bug-mgmt-filter-select"  
+        <input type="checkbox" class="form-control1 bug-filter-checkbox bug-mgmt-filter-select"  
+               data-type="showChildTask"
+               onchange="callBugFilterMulti(this)"
+               checked="true"
+               id='bug_filter_onlyparent' 
+               title="Show Child Tasks"> Show Child Tasks
+
+    </div>
+
+    <div class="col-2 text-right" style="padding-top: 7px;">
+
+        <select class="form-control bug-filter-multi  bug-mgmt-filter-select"  
                 data-actions-box="true"
                 multiple  
                 data-type="priority"
@@ -192,7 +206,7 @@
 
     <div class="col-2 text-right" style="padding-top: 7px;">
 
-        <select class=" bug-mgmt-filter-select"  
+        <select class="form-control  bug-mgmt-filter-select"  
                 data-actions-box="true"
                 multiple  
                 onchange="toggleColumns()"
@@ -219,12 +233,12 @@
         </select>
     </div>
 
-    <div class="col-2 text-right d-flex justify-content-end">
+    <div class="col-2  text-right d-flex justify-content-end">
 
         <!--        <div class="form-group">-->
         <label></label>
-        <select data-type='limit' class="bug-filter form-control" 
-                style="width : 80px;margin-top:10px;" id="bug_filter_limit">
+        <select   data-type='limit' class="bug-filter form-control" 
+                  style="width : 80px;margin-top:10px;" id="bug_filter_limit">
             <option value='10'>10</option>
             <option value='25'> 25</option>
             <option value='50' selected>50</option>
