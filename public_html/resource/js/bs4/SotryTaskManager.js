@@ -737,5 +737,8 @@ function loadTaskCardDetails(taskId) {
     
     //set child task list
      getChildTasks();
+     
+     //get sprint list;
+     getSprintNamesByTask()
 
 }

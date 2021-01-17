@@ -16,7 +16,7 @@ var bug_filter = {
     page_no: 1,
     sprint_id: '',
     label_id: '',
-    showChildTask:'1',
+    showChildTask: '1',
 }
 
 var sprintTaskIds = "";
@@ -25,6 +25,46 @@ var bugId = "";
 
 var coreBugList = {};
 var coreBugKV = {};
+
+function getSprintNamesByTask() {
+    var select = $('.task-mgmt-modal-sprintname');
+    select.html('');
+
+    var json = initJSON();
+    json.kv.fkBacklogTaskId = global_var.current_us_task_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetSprintNamesByTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+                var d = ((o.sprintStartDate) && (o.sprintEndDate))
+                        ? " (" + Utility.convertDate(o.sprintStartDate) + "-" + Utility.convertDate(o.sprintEndDate) + ")"
+                        : "";
+
+                var st = $('<span>')
+                        .text(o.sprintName)
+                        .append(d)
+                        .append("<br>")
+                        .attr("class", "lbl-item")
+                        .css("font-size", "12px")
+                        .attr("style", "font-size:12px;color:" + o.sprintColor)
+
+                select.append(st);
+            }
+
+//            new Label().load4Task()
+        }
+    });
+}
+
 $(document).on('click', '.bug-task-filter-checkbox-label', function (evt) {
 
     var rc = getLabelFilterCheckedCount();
@@ -130,12 +170,12 @@ $(document).on('click', '.assign-sprint-to-task-item', function (evt) {
     if ($(this).is(":checked")) {
         checked = '1';
     }
+    sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked);
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+});
+
+function sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked) {
+    var json = initJSON();
     json.kv['fkSprintId'] = sprintId;
     json.kv['fkProjectId'] = projectId;
     json.kv.fkBacklogId = backlogId;
@@ -152,12 +192,9 @@ $(document).on('click', '.assign-sprint-to-task-item', function (evt) {
         async: true,
         success: function (res) {
             new Sprint().load4Task()
-        },
-        error: function () {
-            Toaster.showError(('Something went wrong!!!'));
         }
     });
-});
+}
 
 function deleteBugFromTable(el) {
     if (!bugId) {

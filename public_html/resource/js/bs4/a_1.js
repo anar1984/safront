@@ -58,14 +58,14 @@ var saInputTagIsPressed = false;
 
 $(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () {
     var val = $(this).val();
-    
-     $('#storyCardInputRelationModal_apiinoutlist').find('tr').hide()
-    
-    if (val==='input'){
+
+    $('#storyCardInputRelationModal_apiinoutlist').find('tr').hide()
+
+    if (val === 'input') {
         $('#storyCardInputRelationModal_apiinoutlist').find('tr[input-type="IN"]').show();
-    }else if (val==='output'){
+    } else if (val === 'output') {
         $('#storyCardInputRelationModal_apiinoutlist').find('tr[input-type="OUT"]').show();
-    }else if (val==='both'){
+    } else if (val === 'both') {
         $('#storyCardInputRelationModal_apiinoutlist').find('tr').show();
     }
 })
@@ -6332,7 +6332,7 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
             new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
             new UserStory().setStoryCardOutput(res1);
             if (SACore.GetCurrentBaklogIsApi() !== '1') {
-                st = that.getGUIDesignHTMLPure(res1);
+                st = new UserStory().getGUIDesignHTMLPure(res1);
             }
             $('#general-view-task-gui').html(st);
             $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
@@ -6388,7 +6388,7 @@ function addSourceOfRelationAsAPI4SendDetails(id, sendToBacklogId, sendToInputId
             new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
             new UserStory().setStoryCardOutput(res1);
             if (SACore.GetCurrentBaklogIsApi() !== '1') {
-                st = that.getGUIDesignHTMLPure(res1);
+                st = new UserStory().getGUIDesignHTMLPure(res1);
             }
             $('#general-view-task-gui').html(st);
             $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
@@ -6443,7 +6443,7 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
             new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
             new UserStory().setStoryCardOutput(res1);
             if (SACore.GetCurrentBaklogIsApi() !== '1') {
-                st = that.getGUIDesignHTMLPure(res1);
+                st = new UserStory().getGUIDesignHTMLPure(res1);
             }
             $('#general-view-task-gui').html(st);
             $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
@@ -7684,7 +7684,7 @@ function setInputListToInputRelation() {
         async: true,
         success: function (res) {
 
-
+            div.html('');
             var table = $('<table>')
                     .addClass('table table-hover');
             var obj = res.tbl[0].r;
@@ -7764,7 +7764,7 @@ function setApiListToInputRelation() {
     select.html('');
 
     var json = initJSON();
-    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -7775,7 +7775,7 @@ function setApiListToInputRelation() {
         crossDomain: true,
         async: true,
         success: function (res) {
-
+            select.html('');
 
             var obj = res.tbl[0].r;
             for (var i in obj) {
