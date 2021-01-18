@@ -2760,9 +2760,9 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .sc-source-mgmt-input-div{
-    padding:10px 5px;
-
-
+    padding: 10px 5px;
+    position: relative;
+    margin-top: 60px;
 }
 
 .sc-source-mgmt-attr-right-list{
@@ -2776,23 +2776,18 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .sc-source-mgmt-div-4-input-list{
-    padding:10px 5px;
+    padding: 10px 5px;
     background-color: gainsboro;
     border-radius: 12px;
+    position: absolute;
+    top: -19px;
+    left: 0px;
+    height: calc(100% + 20px);
   
 }
-.sc-source-mgmt-div-4-input-list::after{
-    content: "";
-    position: absolute;
-    right: -18px;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-left: 20px solid gainsboro;
-    border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
-    top: 6px;
-    z-index: 5;
+.sc-source-mgmt-div-4-field-right .row{
+
+    margin-top: 10px;
 }
 
 .sc-source-mgmt-attr-left-list-div{
@@ -2876,8 +2871,7 @@ img.sc-IbsAh.kqHqhS {
 
 .sc-source-mgmt-div-4-field-left{
 
-    /*    max-width: 33%;
-       min-width: 33%;*/
+   display: none;
 }
 
 .sc-source-mgmt-div-4-field-right{
@@ -2964,6 +2958,7 @@ img.sc-IbsAh.kqHqhS {
 .sc-source-mgmt-attr-right-list-div-4-api-input{
     background-color:orange;
     border-radius: 12px;
+
 }
 
 .sc-source-mgmt-attr-left-list-div-4-api-input{
