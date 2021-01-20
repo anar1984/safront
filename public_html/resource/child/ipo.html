@@ -79,6 +79,135 @@
                 </div>
             </div>
         </div>
+        <div class="draggablePopup_v2 ui-draggable" id="edit_component_inp_popUp" >
+            <div class="closePopupIn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+            <div class="tab-content">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="#exampleModal-properties-tab2" data-toggle="tab" style="font-size: 14px;">Prop </a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exampleModal-properties-tab3" data-toggle="tab" style="font-size: 14px;">Class </a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="exampleModal-properties-tab2" class="tab-pane active"
+                         style=" max-height: 76vh;overflow: auto;">
+                        <div class="col-12"    style="font-size:11px;">
+                            <br>
+                            <input type="text" class="form-control" id="exampleModal-input-name" 
+                                   onchange="new UserStory().updateInputByAttr(this, 'name')"
+                                   pid="">
+                            <br>
+                        </div>
+                        <div class="col-12"    style="font-size:11px;">
+                            <label>Component Id</label>
+                            <input type="text" class="form-control" readonly disable id="exampleModal-input-componentid"              >
+                            <br>
+                        </div>
+
+                        <div class="col-12" id="component-info-popup" style="font-size:11px;">
+                        </div>
+                        <div class="col-12"    style="font-size:11px;">
+                            <br>
+                            <a href="#" onclick="new UserStory().deleteCurrentInputFromUSList(this)"
+                               pid="">Delete Current Input</a>
+                            <br>
+                        </div>
+                    </div>
+                    <div id="exampleModal-properties-tab3" class="tab-pane "
+                         style=" max-height: 76vh;overflow: auto;">
+
+                        <fieldset class="border p-2">
+                            <legend class="w-auto w-auto-man">
+                                Class
+                            </legend>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding:5px;">
+
+                                            <select   id="gui_prop_in_gui_class_list" 
+                                                      class="classListOnChange"
+                                                      style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                        </td>
+                                        <td style="width: 1%">
+                                            <i class="fa fa-plus" 
+                                               onclick="addGuiClassToInput(this)"
+                                               style="  font-size:16px;cursor:pointer;"></i>
+
+                                        </td>
+                                        <td style="width: 1%">
+                                            <i class="fa fa-bars" 
+                                               onclick="guiClassModal(this)"
+                                               style="  font-size:16px;cursor:pointer;"></i>
+
+                                        </td>
+                                    </tr>
+                                    <tr  class="input4NewClassAdding" style="display:none">
+                                        <td style="padding:5px;" colspan="2">
+
+                                            <input   id="gui_prop_in_gui_class_new" 
+                                                     style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                        </td>
+                                        <td style="width: 1%">
+                                            <button class="buttons" 
+                                                    onclick="insertNewClassDirect(this)"
+                                                    style="   cursor:pointer;">Add</button>
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="width:100%;font-size: 11px; ">
+                                <tbody id="input_class_list_in_component">
+
+                                </tbody>
+                            </table>
+
+                        </fieldset>
+                        <fieldset class="border p-2">
+                            <legend class="w-auto w-auto-man">
+                                Attributes
+                            </legend>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding:5px;">
+                                            <span class="col-form-label control-label">Name:</span>
+                                            <input type="text" id="gui_prop_in_attr_name" 
+                                                   style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                        </td>
+                                        <td style="padding:5px;">
+                                            <span class="col-form-label control-label">Value:</span>
+                                            <input type="text" id="gui_prop_in_attr_value" 
+                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-plus" 
+                                               onclick="addInputAttributes(this)"
+                                               style="padding-top:20px; font-size:16px;cursor:pointer;"></i>
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="width:100%;font-size: 11px; ">
+                                <tbody id="input_attributes_list_in_component">
+
+                                </tbody>
+                            </table>
+
+                        </fieldset>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
         <div class="toolbar">
             <ul class=" cf">
                 <li value="cbox" title="checkbox"><a  class="inptadd"  href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
