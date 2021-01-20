@@ -2638,6 +2638,24 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             : "0";
     setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit);
     updateAttributeBasedOnData(el, data);
+
+    var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
+            ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+            : 'sync';
+
+    if (async === 'async') {
+        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function(){
+            $(this).click();
+        })
+            
+        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function(){
+            $(this).change();
+        })
+            
+    }
+
+
+
 }
 
 
@@ -2780,6 +2798,8 @@ function triggerAPI2Fill(el, apiId, selectField, data) {
         var out = be.callApi(apiId, res);
         fillSelectBoxAfterSyncApiCall(el, out, selectField);
 
+
+
     } else if (async === 'async') {
         var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
         var asyncData = {};
@@ -2824,6 +2844,12 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
     if ($(el).attr('sa-data-nosort') !== '1') {
         sortSelectBoxByElement(el);
     }
+
+    if ($(el).attr('sa-data-value')) {
+        $(el).val($(el).attr('sa-data-value'));
+    }
+
+
 }
 
 function fillComboInAPICall(el, data, asyncData) {
@@ -2863,6 +2889,8 @@ function fillComboInAPICall(el, data, asyncData) {
     if (elem.attr('sa-data-value')) {
         elem.val(elem.attr('sa-data-value'));
     }
+
+
 
 }
 
@@ -3054,6 +3082,7 @@ function setValueOnCompAfterTriggerApi(el, data) {
         for (var i in selectedFields) {
             try {
                 var field = selectedFields[i].trim();
+
                 if (field.length > 0) {
                     if ($(this).attr('sa-type') === 'select'
                             && $(this).attr('sa-load-ontrigger') === '1'
@@ -3065,7 +3094,8 @@ function setValueOnCompAfterTriggerApi(el, data) {
                             && data.selectedField.split(',').includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
-                    } else if (data[field]) {
+                    }
+                    if (data[field]) {
                         val = data[field];
                         getComponentValueAfterTriggerApi(this, val);
                     }
@@ -3077,9 +3107,11 @@ function setValueOnCompAfterTriggerApi(el, data) {
 }
 
 function getComponentValueAfterTriggerApi(el, val) {
+
+
     if ($(el).attr('sa-type') === 'date') {
         SetConvertedDateByElement(el, val);
-    } else if ($(el).attr('sa-type') === 'time') {
+    } else if ($(el).attr('sa-type') === 'time1') {
         SetConvertedTimeByElement(el, val);
     } else if ($(el).attr('sa-type') === 'image') {
         $(el).attr('src', fileUrl(val));
@@ -3129,6 +3161,12 @@ function getComponentValueAfterTriggerApi(el, val) {
             $(el).text(val);
         }
     }
+
+    $(el).attr('sa-data-value', val);
+
+
+
+
 }
 
 function initHtmlFroalaEditorByClass(className) {
@@ -3199,12 +3237,19 @@ function getGUIDataByStoryCard(el) {
         var val = $(this).val();
         if ($(this).attr('sa-type') === 'date') {
             val = GetConvertedDateByElement(this);
-        } else if ($(this).attr('sa-type') === 'checkbox') {
+        } else if ($(this).attr('sa-type') === 'time1') {
+            val = GetConvertedTimeByElement(this);
+        }else if ($(this).attr('sa-type') === 'checkbox') {
             val = $(this).is(":checked") ? "1" : "0";
         } else if ($(this).attr('sa-type') === 'filepicker') {
             val = ($(this).attr("fname")) ? $(this).attr("fname") : "";
         } else if ($(this).attr('sa-type') === 'multiselect') {
             val = getMultiSelectpickerValue(this);
+        } else if ($(this).attr('sa-type') === 'select') {
+            if ($(this).attr("sa-value-linkedfield")) {
+                var text1 = $(this).find("option:selected").text();
+                res[$(this).attr("sa-value-linkedfield")] = text1;
+            }
         } else if ($(this).attr('sa-type') === 'htmleditor') {
             val = $(this).closest('div').find('.fr-element').html();
             ;
@@ -3285,7 +3330,9 @@ function getInputActionRelList() {
                             .append($('<td>')
                                     .append($('<a>')
                                             .attr('href', '#')
-                                            .attr('onclick', "new UserStory().redirectUserStoryCore('" + o.id + "')")
+                                            .attr("bid", o.fkApiId)
+                                            .attr('pid', global_var.current_project_id)
+                                            .attr('onclick', "showBacklogHistoryClick(this)")
                                             .text(SACore.GetBacklogname(o.fkApiId))))
                             .append($('<td>').append($("<i>")
                                     .addClass('fa fa-trash')
@@ -7638,6 +7685,10 @@ function saveDocument() {
         }
     });
 }
+
+$(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
+    $('#projectList').change();
+});
 
 $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {

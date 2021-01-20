@@ -5246,7 +5246,9 @@
 
                         <div class='col-12'>
                             <br>
-                            <span style="width: 100%;">Inputs/Outputs<span style="color:red">*</span></span><br>
+                            <span style="width: 100%;">Inputs/Outputs<span style="color:red">*</span></span>
+                            (<input checked='true' type='checkbox' id='addStoryCardInputsAsModal-checkall'> All)
+                            <br>
                         </div>
 
                         <div class='col-12'>
@@ -5327,7 +5329,10 @@
 
                         <div class='col-12'>
 
-                            <br>                           <span style="width: 100%;">Fields<span style="color:red">*</span></span><br>
+                            <br>               
+                            <span style="width: 100%;">Fields<span style="color:red">*</span></span>
+                            (<input type='checkbox' id='addFieldsOfTableAsInputModal-checkall' checked='true'> All)
+                            <br>
                         </div>
 
                         <div class='col-12'>
@@ -6371,7 +6376,7 @@
                         </div>
                     </div>
 
-                     <div class="addEpicTask" style="padding-bottom: 20px;">
+                    <div class="addEpicTask" style="padding-bottom: 20px;">
                         <div class="dropdown-task show">
                             <span href="#" class="comment-content-header-history">
                                 Sprint<br>
@@ -6379,7 +6384,7 @@
 
                             <span class="comment-content-header-history task-mgmt-modal-sprintname" 
                                   style="color:black;" id="task-mgmt-modal-sprintname">
-                                 
+
                             </span>
                         </div>
                     </div>
@@ -6547,6 +6552,8 @@
                                     <option value="fcomp">Free Component</option>
                                     <option value="sctn">Section</option>
                                     <option value="tab">Tab</option>
+                                    <option value="hcrr">Hidden Carrier</option>
+                                    
                                 </select>
                             </div>
                             <div class="col-12">
@@ -6832,13 +6839,32 @@
                                             <tr>
                                                 <td style="padding:5px;">
                                                     <span class="col-form-label control-label">Name:</span>
-                                                    <input type="text" id="gui_prop_in_attr_name" 
-                                                           style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+
+
+                                                    <input type="text" list="browsers"  id="gui_prop_in_attr_name" 
+                                                           style=" font-size:13px;border-radius:4px;border:1px solid gray;width:100%">
+                                                    <datalist id="browsers">
+                                                        <option value="sa-selectedfield">
+                                                        <option value="sa-data-selectbox-hassnull">
+                                                        <option value="sa-data-value">
+                                                        <option value="sa-type">
+                                                        <option value="sa-load-ontrigger">
+                                                        <option value="sa-item-key">
+                                                        <option value="sa-item-value">
+                                                        <option value="sa-data-nosort ">
+                                                        <option value="sa-data-hasreplace">
+                                                        <option value="sa-value-linkedfield">
+                                                        <option value="sa-selectbox-clickafterload">
+                                                        <option value="sa-selectbox-changeafterload">
+                                                        <option value="Edge">
+                                                    </datalist>
+
                                                 </td>
                                                 <td style="padding:5px;">
                                                     <span class="col-form-label control-label">Value:</span>
                                                     <input type="text" id="gui_prop_in_attr_value" 
                                                            style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+
                                                 </td>
                                                 <td>
                                                     <i class="fa fa-plus" 
@@ -7954,7 +7980,9 @@
                                                                             Utility.setParamOnLoad();
                                                                             init4Core();
                                                                             new Project().loadMainProjectList();
+                                                                            
                                                                             init();
+
 
                                                                             //                                                                        var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
                                                                             //                                                                        current_modal = (current_modal) ? current_modal : "loadStoryCard";

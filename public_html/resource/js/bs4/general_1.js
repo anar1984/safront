@@ -1087,7 +1087,7 @@ function init4Core() {
     new Project().loadUserList4Combo();
     new Notification().getNotificationCount();
     new Notification().setTime();
-    loadModulePermission();
+   
 }
 
 function init4ManualProjectLoad() {
@@ -1110,7 +1110,7 @@ function loadModulePermission() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
@@ -1624,6 +1624,17 @@ function GetTagLineVal(text, tag) {
     return st;
 }
 
+
+function GetConvertedTimeByElement(element) {
+    var date = new Date($(element).val());
+    var day = date.getHours();
+    day = day.toString(10).length === 1 ? '0' + day : day;
+    var month = date.getSeconds()  + 1;
+    month = month.toString(10).length === 1 ? '0' + month : month;
+    var year = date.getMilliseconds();
+    var d = day + "" + month + '' + year;
+    return d;
+}
 
 function GetConvertedDateByElement(element) {
     var date = new Date($(element).val());

@@ -10233,7 +10233,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
     setGUIComponentFillGUIModal: function (el, id, sectionId) {
         closeModal('userstory-gui-input-component-res-sus-analytic');
-        var html = this.genGUIDesignHtmlById(id);
+//        var html = this.genGUIDesignHtmlById(id);
+
+        var res = SAInput.toJSONByBacklog(id);
+        var html = this.getGUIDesignHTML(res);
         $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first().html(html);
 //        generatePopupModalNew(html, canvasCSS);
 //        $('[data-toggle="tooltip"]').tooltip({html: true});
@@ -14048,7 +14051,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         fillBacklogHistory4View(id);
-        
+
 
 
         this.setPreviousUserstoryValues();
@@ -14063,15 +14066,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.current_backlog_id = id;
         global_var.current_backlog_name = $(e).html();
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
-        
+
         if (saViewIsPressed) {
             SCSourceManagement.Init(global_var.current_backlog_id);
         }
 
         if (saInputTagIsPressed)
             setInputListToInputRelation();
-        
-        
+
+
 
         $('#container-us-body').find('.pointer').removeClass('us-selected');
 
@@ -21768,15 +21771,19 @@ Project.prototype = {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
 
+                loadModulePermission();
+
                 var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
 
-                if (current_modal) {
-                    $('.' + current_modal).first().click();
-                } else {
+                try {
+                    if (current_modal && $('.' + current_modal).first().html().length > 10) {
+                        $('.' + current_modal).first().click();
+                    } else {
+                        $('.left-menu-load').first().click();
+                    }
+                } catch (err) {
                     $('.left-menu-load').first().click();
                 }
-
-
 
                 hideProgress();
             },

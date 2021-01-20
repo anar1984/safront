@@ -140,6 +140,9 @@ var Component = {
             case "hdn":
                 st += Component.Hidden(comp);
                 break;
+            case "hcrr":
+                st += Component.HiddenCarrier(comp);
+                break;
             case "sctn":
                 st += Component.Section(comp);
                 break;
@@ -1138,6 +1141,33 @@ var Component = {
         div.append(el);
         return  $('<div></div>').append(div).html();
     },
+
+    HiddenCarrier: function (comp) {
+        comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
+        var star = Component.AddMandatoryStar(comp);
+        var el = $('<input></input>')
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
+                .attr('type', 'text')
+                .css('border', '2px #e2dfd0  dashed')
+                .attr('value', comp.content);
+        Component.ComponentEvent.Init(el, comp);
+        var div = Component.ContainerDiv(comp);
+        if (comp.withLabel === true) {
+            div.append($('<span></span>')
+                    .append(comp.label))
+                    .append(star);
+            div.append(comp.isLabelInTop ? "<br>" : "");
+        }
+
+        div.append(el);
+
+        if (global_var.current_modal !== 'loadLivePrototype') {
+            div.css("display", "none")
+        }
+
+        return  $('<div></div>').append(div).html();
+    },
     Hidden: function (comp) {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var star = Component.AddMandatoryStar(comp);
@@ -1152,6 +1182,7 @@ var Component = {
         div.append(el);
         return  $('<div></div>').append(div).html();
     },
+
     InnerEditBox: function (comp) {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var div = Component.ContainerDiv(comp);
@@ -1174,20 +1205,20 @@ var Component = {
                         .attr('onclick', 'new UserStory().setGUIComponentUploadImage()')
                         : "");
 
-        var el =  $('<img></img>')
+        var el = $('<img></img>')
                 .attr("sa-type", 'image')
                 .attr('style', gui_component.defaultCSS.Image + Component.ReplaceCSS(comp.css))
                 .attr('src', comp.content);
-        
-        
-         
+
+
+
 
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
-        
+
         if (!comp.content)
-             div.append(emptyMsg);
-        
+            div.append(emptyMsg);
+
         return  $('<div></div>').append(div).html();
     },
     Youtube: function (comp) {
@@ -1248,6 +1279,7 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
                 .addClass("form-control")
+                .attr('sa-type', "time")
                 .attr('style', gui_component.defaultCSS.Time + Component.ReplaceCSS(comp.css))
                 .attr('type', 'time')
                 .attr('value', comp.content);
@@ -1303,6 +1335,7 @@ var Component = {
         var inputId = comp.id;
         var selectFromBacmkogId = SAInput.getInputDetails(inputId, "selectFromBacklogId");
         var selectFromInputId = SAInput.getInputDetails(inputId, "selectFromInputId");
+
         if (selectFromBacmkogId) {
             var selectedField = SAInput.GetInputName(selectFromInputId)
             triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
@@ -1317,6 +1350,7 @@ var Component = {
                     select.append($('<option></option>').append('Value ' + (i)));
                 }
             }
+
         }
 
         div.append(select);
