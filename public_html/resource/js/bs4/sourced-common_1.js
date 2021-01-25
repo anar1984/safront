@@ -7957,6 +7957,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var currentInputId = "";
 
         var json = {"kv": {}, "tbl": [{"r": [], "tn": "inputDescTable"}]};
+        json.kv.cookie = getToken();
         $('.indesc_check:checked').each(function () {
             var ln = "";
 

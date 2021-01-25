@@ -55,6 +55,26 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+function getTaskInfo(taskId){
+    var rs  ='';
+    var json = initJSON();
+    json.kv.fkTaskId = taskId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetTaskInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+             rs = res.kv;
+           
+        }
+    });
+    return rs;
+}
 
 $(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () {
     var val = $(this).val();

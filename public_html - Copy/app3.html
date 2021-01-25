@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>SASDF</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+        <link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="resource/js/bs4/sourced-common.js"></script>
+        <script src="resource/js/bs4/general.js"></script>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-sm bg-light navbar-light s-nav-bar  ">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link s-logo-label" href="#">SASDF</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto text-center">
+                <li class="nav-item active">
+                    <select id="userList" class="navbar-user-list">
+                        <option>User 1</option>
+                        <option>User 2</option>
+                    </select>
+                </li>
+            </ul>
+
+
+
+            <ul class="navbar-nav ml-auto   text-right">
+
+            </ul>
+
+            <ul class="navbar-nav  text-right">
+
+
+                <li class="dropdown navbar-menu-conf-main">
+                    <a class="dropdown-toggle navbar-menu-profile" data-toggle="dropdown" href="#">
+                        <i class="fas fa-users-cog navbar-menu-conf"></i>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu navbar-submenu-conf">
+                        <li><a href="#" class="navbar-submenu-line-conf" data-target="#insertNewUser" data-toggle="modal"><i class="fas fa-user-diagram"> </i>&nbsp;User</a></li>
+                        <li><a href="#" class="navbar-submenu-line-conf"><i class="fas fa-users"> </i>&nbsp;User</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle navbar-menu-profile" data-toggle="dropdown" href="#">Anar Rustamov
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu navbar-submenu-conf">
+                        <li><a href="#" class="navbar-submenu-line-conf">Page 1-1</a></li>
+                        <li><a href="#" class="navbar-submenu-line-conf">Page 1-2</a></li>
+                        <li><a href="#" class="navbar-submenu-line-conf">Page 1-3</a></li>
+                    </ul>
+                </li>
+                <li><img src="http://lorempixel.com/40/40/people/1/" class="rounded-circle" width="25px" alt="Anar Rustamov"></li>
+
+            </ul>
+        </nav>
+
+        <nav class="navbar navbar-expand-sm    navbar-light s-nav-bar-child  " style="border-bottom: 0.5px solid #2C73B4;">
+            <div class="col-12 float-left" > 
+                <i class="fas fa-cube pointer s-bkl-sourced" data-toggle="tooltip"  title="List Sourced User Stories"></i>
+                <i class="fa fa-th-list s-bkl-icon" data-toggle="tooltip"  title="List View"></i>
+                <i class="fa fa-th s-bkl-icon" data-toggle="tooltip"   title="Grid View"></i> 
+                <i class="fa fa-clipboard-list s-bkl-icon"  data-toggle="tooltip"   title="Kanban View"></i>
+                <span class="s-bkl-label ">User Stories</span> 
+            </div>
+        </nav>
+        <br><br> 
+        <div class="row" style="font-size: 13px;">
+
+            <!--burdan bashlayir-->
+
+            <div class="col-4 " style="  border-right: 0.5px solid #2C73B4;"> 
+                <div class="col-12 text-right"  >
+                    <a href="#"  id="chbNewUser"  onclick="new User().toggleFields()"><i class="fas fa-plus-circle"></i><span style="font-size: 14px;">Add New User</span></a>
+                </div>
+
+                <div class="col-12" >
+                    <input type="text" class="form-control1 1 " onchange="new User().searchUser(this)" style='width:100%' id="newUserNameSearch"> 
+
+                </div>
+                <div class='col-12 table-responsive project-list'>
+                    <table class="table table-hover" id="tblUserList" >
+                        <thead>
+                            <tr>
+                                <th>N</th>
+                                <th>User name</th>
+                            </tr>
+                        </thead>
+                        <tbody style="cursor:pointer">
+                            <tr>
+                                <td></d>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-8"> 
+                <form>
+                    <div class="row">
+
+                         
+                        <div class="form-group col-3">
+                            <figure class="figure">
+                                <img id="imgUserProjectInsert" style="background-image: element" src="" 
+                                     height="94px"  width="94px" class="figure-img img-fluid rounded-circle">
+                                <figcaption class="figure-caption text-right">Optional size is 94x94</figcaption>
+                            </figure>
+                        </div>
+                        <div class="form-group col-3 text-left">
+                            <input id="userProfilePhoto4Insert"  class="us-file-upload" type="file" file_type="general" value=""  accept="image/*" file_type="image"  >
+                        </div>
+
+                        <div class="form-group col-12">
+                            <hr>
+                        </div>
+
+                         <div class="form-group col-8 hidden" hidden>
+                            <input type="text"  class="form-control1 1 " style="width:100%"    id="txtUserIdInInsertNewUser">
+                        </div>
+                        
+                        <div class="form-group col-8">
+                            <label for=" " class="col-form-label control-label">Username
+                                <span style="color:red">*</span>
+                                <a href="#" data-toggle="tooltip" data-html="true" data-trigger="focus" 
+                                   title="- Minimum 6 characters <br> - Maximum 25 characters <br> - 
+                                   Must start with alphabets <br> - May contains only alphabet and numbers" >  
+                                    <i class="fas fa-question-circle" style="color:green"></i>
+                                </a>
+                            </label>
+                            <input type="text" style="width:100%"   class="form-control1 1 required addUS" id="txtUsername">
+                        </div>
+                       
+                        <div class="form-group col-6">
+                            <label for=" " class="col-form-label control-label">Password
+                                <span style="color:red">*</span>
+                                <a href="#" data-toggle="tooltip" data-html="true" data-trigger="focus" 
+                                   title="- Minimum 6 characters <br> - Maximum 40 characters 
+                                   <br> - May contains only alphabet, numbers 
+                                   <br> !,@,#,$,^,&,*,(,),_" >  
+                                    <i class="fas fa-question-circle" style="color:green"></i>
+                                </a>
+                            </label>
+                            <input type="password" style="width:100%"   class="form-control1 1 required addUS" id="txtUsernamePasswd" disabled> 
+                        </div>
+                        <div class="form-group col-2">
+                            <br> 
+                            <input type="checkbox" id="txtUsernamePasswdCheckbox" onchange="new User().passwordChecked()">Change Password
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="backlogName" class="col-form-label control-label" >Fulname
+                                <span style="color:red">*</span>
+                            </label>
+                            <input type="text"  style="width:100%"   class="form-control1 1 required addUS" id="txtUserFulname">
+                        </div>
+                        <div class="form-group col-8">
+                            <label for="backlogName" class="col-form-label control-label" >Email
+                                <span style="color:red">*</span>
+                            </label>
+                            <input type="email"  style="width:100%"   class="form-control1 1 required addUS" id="txtUserEmail">
+                        </div>
+
+                        <div class="form-group col-8">
+                            <label for="backlogName" class="col-form-label control-label" >User Type
+                                <span style="color:red">*</span>
+                            </label>
+                            <select id="cbUserType"  style="width:100%;padding:4px 0px 4px 0px"  class="form-control1 ">
+                                <option value="S">User</option>
+                                <option value="A">Admin</option>
+                            </select>
+                        </div>
+
+
+
+
+                        <div class="form-group col-12">
+                            <br>
+                        </div>
+
+
+                        <div class="form-group col-3 text-left newUserInsert " style="display: none;" >
+                            <button type="button" class="btn btn-primary" onclick="new User().insert()" >Add</button>
+                        </div>
+                        <div class="form-group col-3 text-left setUserUpdateEditable newUserInsertAfter"  >
+                            <button type="button" class="btn btn-primary" onclick="new User().updateMain()">Save</button>
+                        </div>
+                        <div class="form-group col-2 text-right setUserUpdateEditable newUserInsertAfter" disabled="disabled" > 
+                             <input id="chbToogleDeleteUser" type="checkbox" onclick="new User().toogleDeleteUser()">
+                             <a href="#"  id="btnDeleteUser" onclick="new User().deleteUser()"   style=" pointer-events: none;">Delete User</a>
+                        </div>
+                        <div class="form-group col-12">
+                            <hr>
+                        </div>
+                        <div class="col-7"    >
+                            <label for="sbxProjectListByUser" class="col-form-label ">Projects</label>
+                            <select id="sbxProjectListByUser"  style="width:100%;padding:4px 0px 4px 0px"   class="form-control1 ">
+                            </select>
+                        </div>
+                        <div class="col-5"    >
+                            <br>
+                            <a href='#' onclick="new User().addProjectToUser()">Add</a>
+                        </div>
+
+                    </div>
+                    <div class="col-12"    >
+                        <br>
+                    </div>
+                    <div class="form-group col-7" style="padding:0px 0px 0px 0px">
+                        <table class="table table-bordered table-sm" id="tblUserInvolvedUser">
+                            <thead>
+                                <tr >
+                                    <th>Involved Project(s)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        new UserStory().load();
+        new Label().load();
+        new Sprint().load();
+        new User().loadUser();
+        new User().loadProjectList4Combo();
+
+
+
+    });
+
+    init();
+//    $(document).on("change", '.us-file-upload', function (evt) {
+//        new UserStory().addFile1ForComment(evt,'1');
+//        
+//    });
+</script>

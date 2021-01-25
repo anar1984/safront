@@ -1,0 +1,223 @@
+
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="api/get/filed/favicon.png">
+
+
+        <title>Register for Sourced Agile User Story Management System</title>
+
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="resource/css/bs4/login.css" type="text/css">
+        <link rel="icon" href="api/get/filed/favicon.png">
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+        <link rel="stylesheet" href="resource/css/bs4/font-awesome.min.css">
+        <link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">
+        <script src="resource/js/bs4/jquery.min.js"></script>
+        <script src="resource/js/bs4/popper.min.js"></script>
+        <script src="resource/js/bs4/bootstrap.min.js"></script>
+        <script src="resource/js/bs4/sourced-common.js"></script>
+        <script src="resource/js/bs4/general.js"></script>
+
+    </head>
+
+    <body class="text-center">
+
+        <div class="form-signin">
+            <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
+            <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:red; display : none;" id="generalMessageAlert">
+                    <span id="generalMessage"> </span>
+                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                </div>
+            </div>
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:greenyellow; display : none;" id="generalMessageActionAlert">
+                    <span id="generalMessageAction">Activation mail sent to your email address. Please check your email.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:red; display : none;" id="generalErrorActionAlert">
+                    <span id="generalErrorAction">There was a problem in sending activation link to your email address. Please try again.</span>
+                </div>
+            </div>
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:red; display : none;" id="login-alert">
+                    <span id="incorrentPwd"> Username or password is incorrect.</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                </div>
+            </div>
+
+            <div class="col-md-12" >
+                <div class="alert" style="background-color:red; display : none;" id="login-alert-login">
+                    <span id="incorrentPwd"> Please enter values!</span>
+                    <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
+                </div>
+
+            </div>
+
+
+
+            <div class="col-12" id="activationForm" >
+                <label for=" " class="sr- " style='float:left'>Company ID <span style="color:red">*</span>
+                    <a href="#" data-toggle="tooltip" data-html="true" data-trigger="focus" title="- Minimum 4 characters, - Maximum 25 characters, - Must start with alphabets, - May contains only alphabet and numbers">
+                        <i class="fa fa-question-circle" style="color:green"></i>
+                    </a></label>
+                <input type="text" id="domain" value="" class="form-control" placeholder=" " required autofocus>
+                <label for=" " class="sr- "style='float:left'>Username <span style="color:red">*</span>
+                    <a href="#" data-toggle="tooltip" data-html="true" data-trigger="focus" title="- Minimum 4 characters, - Maximum 25 characters, - Must start with alphabets, - May contains only alphabet and numbers">
+                        <i class="fa fa-question-circle" style="color:green"></i>
+                    </a>
+                </label>
+                <input type="text" id="cUsername"  value="" class="form-control" placeholder=" " required  >
+
+                <label for=" " class="sr- " style='float:left'>Password <span style="color:red">*</span>
+                    <a href="#" data-toggle="tooltip" style='float:right' data-html="true" data-trigger="focus" 
+                       title="- Minimum 6 characters,- Maximum 40 characters, - May contains only alphabet, numbers and !,@,#,$,^,&,*,(,),_"> &nbsp;<i class="fa fa-question-circle" style="color:green"></i></a>
+                </label>
+
+
+                <input type="password" id="cPassword"  value=""  class="form-control"  placeholder=" " required>
+                <label for=" " class="sr- "style='float:left'>Retype Password <span style="color:red">*</span></label>
+                <input type="password" id="cRePassword"  value=""  class="form-control"  placeholder="   " required>
+                <label for=" " class="sr- "style='float:left'>Fullname <span style="color:red">*</span></label>
+                <input type="text" id="cFulname"  value="" class="form-control"  placeholder=" " required>
+                <label for=" " class="sr- "style='float:left'>Email<span style="color:red">*</span></label>
+                <input type="email" id="cEmail"  value="" class="form-control"  placeholder=" " required>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" onclick="register()" id="btnSignInCompany" >Register</button>
+                <br>
+            </div>
+            <span id="lblHaveAccount1"> Forget Password? </span>
+            <a href="frgtpwd.html" id="lblCreateAccount1">Click Here</a>
+            <br>  
+            <span id="lblHaveAccount1">Already have an account!   </span>
+            <a href="login.html" id="lblLogin">Login</a>
+
+
+            <p class="mt-5 mb-3 text-muted">&copy; Sourced Agile 2019</p>
+
+        </div>
+
+        <script>
+
+
+
+            function register() {
+                hideAlert();
+                hideAlertLogin();
+                //                progresBarStart();
+                var domain = $('#domain').val();
+                var username = $('#cUsername').val();
+                var password = $('#cPassword').val();
+                var repassword = $('#cRePassword').val();
+                var fulname = $('#cFulname').val();
+                var email = $('#cEmail').val();
+
+                if (!domain || !username || !password || !repassword || !fulname || !email) {
+                    showAlertLogin();
+                    return;
+                }
+                var json = {kv: {}};
+                json.kv.username = username;
+                json.kv.password = password;
+                json.kv.domain = domain;
+                json.kv.repassword = repassword;
+                json.kv.fullname = fulname;
+                json.kv.email1 = email;
+                var data = JSON.stringify(json);
+                //console.log(data);
+
+                $.ajax({
+                    url: "api/post/register",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: false,
+                    success: function (res) {
+                        if (res.kv.err) {
+                            showGeneralAlert(res.kv.err);
+                        } else {
+                            $('#generalMessageAlert').hide();
+                            clearFields();
+                            showActivationMessage();
+                            hideAlert();
+                            hideAlertLogin();
+                        }
+                    },
+                    error: function (res) {
+                        showGeneralErrorActionAlert();
+                    }
+                });
+                return false;
+            }
+
+
+            function showAlert() {
+                document.getElementById('login-alert').style.display = 'block';
+            }
+
+            function clearFields() {
+                $('#domain').val("");
+                $('#cUsername').val('');
+                $('#cPassword').val('');
+                $('#cRePassword').val('');
+                $('#cFulname').val('');
+                $('#cEmail').val('');
+            }
+
+            function showAlertLogin() {
+                document.getElementById('login-alert-login').style.display = 'block';
+            }
+
+            function hideAlert() {
+                $('#generalErrorActionAlert').hide();
+                $('#login-alert').hide();
+                $('#login-alert-login').hide();
+            }
+
+            function hideAlertLogin() {
+                $('#login-alert-login').hide();
+            }
+
+            function enterEvent(arg, event) {
+                $('#login-alert-login').hide();
+            }
+
+            function showGeneralErrorActionAlert(arg, event) {
+                $('#generalErrorActionAlert').show();
+            }
+
+            function showGeneralAlert(msg) {
+                $('#generalMessageAlert').show();
+                $('#generalMessage').html(msg);
+            }
+
+            function showActivationMessage() {
+                $('#generalMessageActionAlert').show();
+                $('#activationForm').hide();
+
+            }
+
+            $('[data-toggle="tooltip"]').tooltip({html: true});
+
+        </script>
+    </body>
+</html>
+
+

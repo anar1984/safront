@@ -1,0 +1,115 @@
+
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    <link rel="icon" href="api/get/filed/favicon.png">
+
+
+        <title>Register for Sourced Agile User Story Management System</title>
+
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css" type="text/css">
+            <link rel="stylesheet" href="resource/css/bs4/login.css" type="text/css">
+                <link rel="icon" href="api/get/filed/favicon.png">
+                    <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+                        <link rel="stylesheet" href="resource/css/bs4/font-awesome.min.css">
+                            <link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">
+                                <script src="resource/js/bs4/jquery.min.js"></script>
+                                <script src="resource/js/bs4/popper.min.js"></script>
+                                <script src="resource/js/bs4/bootstrap.min.js"></script>
+                                <script src="resource/js/bs4/sourced-common.js"></script>
+                                <script src="resource/js/bs4/general.js"></script>
+
+                                </head>
+
+                                <body class="text-center">
+
+                                <div class="form-signin">
+                                    <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
+                                        <h1 class="h3 mb-3 font-weight-normal">Activation</h1>
+
+
+
+                                        <div class="col-md-12" >
+                                            <div class="alert" style="background-color:greenyellow; display : block;" id="activationDiv">
+                                                <span id="generalMessageAction">Activation is in progress. It will take some seconds. Please wait.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" >
+                                            <div class="alert" style="background-color:greenyellow; display : none;" id="activationDivResultSuccessful">
+                                                <span id="generalMessageAction">Your account is activated. Please login the system.</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" >
+                                            <div class="alert" style="background-color:red; display : none;" id="generalErrorActionAlert">
+                                                <span id="generalErrorAction">There was a problem in activation. Please try again.</span>
+                                            </div>
+                                        </div>
+
+
+                                        <a href="login.html" style="display : none;" id="lblLogin">Login</a>
+
+
+                                        <p class="mt-5 mb-3 text-muted">&copy; Sourced Agile 2019</p>
+
+                                </div>
+
+                                <script>
+
+                                    activate();
+
+
+                                    function activate() {
+                                        var url_string = window.location.href;
+                                        var url = new URL(url_string);
+                                        var id = url.searchParams.get("id");
+
+                                        if (!id) {
+                                            $('#activationDiv').hide();
+                                            $('#generalErrorActionAlert').show();
+                                            $('#activationDivResultSuccessful').hide();
+                                            $('#lblLogin').hide();
+                                            return;
+                                        }
+
+                                        var json = {kv: {}};
+                                        json.kv.id = id;
+                                        var data = JSON.stringify(json);
+                                        $.ajax({
+                                            url: "api/post/activation",
+                                            type: "POST",
+                                            data: data,
+                                            contentType: "application/json",
+                                            crossDomain: true,
+                                            async: false,
+                                            success: function (res) {
+//                                                console.log("res="+res);
+                                                $('#activationDiv').hide();
+                                                $('#generalErrorActionAlert').hide();
+                                                $('#activationDivResultSuccessful').show();
+                                                $('#lblLogin').show();
+                                            },
+                                            error: function (res) {
+                                                $('#activationDiv').hide();
+                                                $('#generalErrorActionAlert').show();
+                                                $('#activationDivResultSuccessful').hide();
+                                                $('#lblLogin').hide();
+                                            }
+                                        });
+                                        return false;
+                                    }
+                                </script>
+                                </body>
+                                </html>
+
+

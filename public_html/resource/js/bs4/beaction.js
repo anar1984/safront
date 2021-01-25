@@ -47,7 +47,7 @@ var be = {
         try {
             if (asyncData && asyncData.fn) {
                 var res = eval(asyncData.fn)(element, res, asyncData);
-            }  
+            }
         } catch (err) {
             console.log(err);
         }
@@ -129,17 +129,26 @@ var be = {
             var SELECT_OBJ_PAIR = {};
             var SELECT_OBJ_PAIR_GROUP = {};
 
+
             var outputList = SACore.GetBacklogDetails(storyCardId, "inputIds").split(',');
 
             //set Required Field From Descriptons
             var paramData = be.AddDbDescriptionField(storyCardId);
+            var paramData4In = be.AddDbDescriptionField4IN(storyCardId);
+
 
             for (var i in outputList) {
                 try {
                     var oid = outputList[i];
                     oid = oid.trim();
                     var inputObj = SAInput.getInputObject(oid);
-                    if (inputObj.inputType === 'OUT') {
+                    if (inputObj.inputType === 'IN') {
+
+
+
+
+
+                    } else if (inputObj.inputType === 'OUT') {
                         if (inputObj.selectFromDbId) {
                             var dbname = SAEntity.GetDBDetails(inputObj.selectFromDbId, "dbName");
                             var tableName = SAEntity.GetTableDetails(inputObj.selectFromTableId, "tableName");
@@ -205,6 +214,8 @@ var be = {
             innerData.SELECT_OBJ_PAIR = SELECT_OBJ_PAIR;
             innerData.SELECT_OBJ_PAIR_GROUP = SELECT_OBJ_PAIR_GROUP;
             innerData.PARAM_DATA = paramData;
+            innerData.PARAM_DATA_4_IN = paramData4In;
+
             return innerData;
         },
         SetInsertObjects: function (apiId) {
@@ -384,8 +395,12 @@ var be = {
             var SELECT_OBJ_PAIR = innerData.SELECT_OBJ_PAIR;
             var SELECT_OBJ_PAIR_GROUP = innerData.SELECT_OBJ_PAIR_GROUP;
 
+
 //set Required Field From Descriptons
             var paramData = innerData.PARAM_DATA;
+            var paramData4IN = innerData.PARAM_DATA_4_IN;
+
+            
 
             var inputList = be.ExecAPI.GetInputsByAPI(apiId);
             var inputKV = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
@@ -404,6 +419,13 @@ var be = {
 
 
             inputKV = $.extend(inputKV, paramData);
+            
+            try {
+                inputKV.currentUserField = (paramData4IN.currentUserField) ? paramData4IN.currentUserField : "";
+                inputKV.currentDateField = (paramData4IN.currentDateField) ? paramData4IN.currentDateField : "";
+                inputKV.currentTimeField = (paramData4IN.currentTimeField) ? paramData4IN.currentTimeField : "";
+            } catch (err) {
+            }
 
 
             //////////////////////
@@ -454,7 +476,7 @@ var be = {
                                     var kv2 = be.ExecAPI.SetKeysAsAlians4Select(kv1, SELECT_OBJ_PAIR);
                                     var kv3 = be.ExecAPI.SetKeysAsAlians4Select(kv1, SELECT_OBJ_PAIR_GROUP);
                                     kv2 = $.extend(kv2, kv3);
-                                    rsOut.push(kv2)
+                                    rsOut.push(kv2);
                                 }
                                 output.tbl[0].r = rsOut;
 
@@ -545,8 +567,39 @@ var be = {
             }
             return res;
         },
+        GetInputsOfExternalApiByCoreApi: function (apiId) {
+            var inputList = [];
+            var extApiList = (cr_project_desc_by_backlog[apiId])
+                    ? cr_project_desc_by_backlog[apiId]
+                    : [];
+            var f = true;
+            for (var i in  extApiList) {
+                try {
+
+                    var extId = extApiList[i];
+                    var o = cr_project_desc[extId];
+                    if (o.fkRelatedApiId) {
+                        var inputIds = SACore.GetBacklogDetails(o.fkRelatedApiId, "inputIds").split(",");
+                        inputList = $.merge(inputList, inputIds);
+                    }
+                } catch (err) {
+
+                }
+            }
+            return inputList;
+
+        },
         GetInputsByAPI: function (apiId) {
+            //Get inputIds of External APIs
+
+            //end Get inputIds of external APIs
+
+
             var inputIds = SACore.GetBacklogDetails(apiId, "inputIds").split(",");
+            var inputExternalIdList = be.ExecAPI.GetInputsOfExternalApiByCoreApi(apiId);
+            var outZad = $.merge(inputIds, inputExternalIdList);
+            inputIds = outZad;
+
             var res = [];
             for (var i in inputIds) {
                 var inputId = inputIds[i].trim();
@@ -603,6 +656,7 @@ var be = {
             var INSERT_OBJ_DEFAULT_VALUE = innerData.INSERT_OBJ_DEFAULT_VALUE;
 
 //            var inputList = be.ExecAPI.GetInputsByAPI(apiId);
+
 
             //create initial variable as output of the API for insert
             var outputList = Object.keys(INSERT_OBJ_PAIR);
@@ -1008,6 +1062,51 @@ var be = {
                         try {
                             var descId = inputDescIds[j].trim();
                             var descBody = SAInputDesc.GetDetails(descId);
+
+
+                            if (descBody.includes('fn_(iscurrentuser)')) {
+                                data['currentUserField'] = data['currentUserField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(iscurrentdate)')) {
+                                data['currentDateField'] = data['currentDateField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(iscurrenttime)')) {
+                                data['currentTimeField'] = data['currentTimeField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(ismaximumvalue)')) {
+                                data['isMaximumField'] = data['isMaximumField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(isminimumvalue)')) {
+                                data['isMinimumField'] = data['isMinimumField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(isrowcount)')) {
+                                data['isCountField'] = data['isCountField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(isaveragevalue)')) {
+                                data['isAverageField'] = data['isAverageField'] + ',' + inputObj.inputName;
+                            } else if (descBody.includes('fn_(issummary)')) {
+                                data['isSumField'] = data['isSumField'] + ',' + inputObj.inputName;
+                            }
+                        } catch (err1) {
+
+                        }
+                    }
+                }
+            } catch (err) {
+            }
+        }
+        return data;
+    },
+    AddDbDescriptionField4IN: function (apiId) {
+        var data = {};
+        var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
+        for (var i in outputList) {
+            try {
+                var oid = outputList[i];
+                oid = oid.trim();
+                var inputObj = SAInput.getInputObject(oid);
+                if (inputObj.inputType === 'IN') {
+                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    for (var j in inputDescIds) {
+                        try {
+                            var descId = inputDescIds[j].trim();
+                            var descBody = SAInputDesc.GetDetails(descId);
+
+
                             if (descBody.includes('fn_(iscurrentuser)')) {
                                 data['currentUserField'] = data['currentUserField'] + ',' + inputObj.inputName;
                             } else if (descBody.includes('fn_(iscurrentdate)')) {
@@ -1135,6 +1234,14 @@ var be = {
                                     err.push(kv);
                                 }
                             }
+
+                            if (descBody.includes('fn_(Defaultvalueis)')) {
+                                data[inputObj.inputName] = getParamFromFnline(descBody, 'fn_(Defaultvalueis)', 'defaultval')
+                            }
+
+
+
+
                         } catch (err1) {
 
                         }

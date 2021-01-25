@@ -1,0 +1,2089 @@
+<div class="row us-sub-menu-body us-sm-detail" style="display: block;" id="smb-details-ipo">
+    <div class="col-lg-12 porjectNameProto">
+        <div class="col-5 text-right ">
+            <button class="btn  btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
+            <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
+            <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-th-large" style="font-size: 10px;cursor: pointer;"></i></button>  
+            <button class="btn btn-outline-secondary live-prototype-show-inputrelation"><i class="live-prototype-show-inputrelation1 fa fa-box" style="font-size: 10px;cursor: pointer;"></i></button>  
+
+        </div>
+        <div class="col-7 text-left">
+            <p id="smb-general-main-info">Current User Story</p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="row" >
+
+
+
+        <!-- end 10.08.2020 -->
+
+        <div class="draggablePopup ui-draggable" id="inp_popUp" style="display: none;">
+            <div class="closePopupIn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+            <div id="ipo-tab-setting-inputAdd" class="tab-pane" style="max-height1: 81vh;">               
+
+                <div class="ipo-divider ipo-1-hisse only-gui-design">
+
+                    <table class=" table-hover spilted input-name-add-table" id="tblIPOList">
+                        <thead>
+                            <tr class="input-name-checkbox">
+                                <th></th>
+                                <th>
+                                    <input type="checkbox" id="us_input_list_check_all" onclick="new UserStory().toggleAllInput(this)">
+                                </th>
+                                <th>
+                                    <input type="text" style="height: 0px;" class="input-name" onchange="new UserStory().insertNewInput()" id="us-ipo-inputname" placeholder="Please Enter Input Name!">
+                                </th>
+
+                                <th>
+                                    <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:grey;width:10px;padding: 4px 17px 4px 5px;margin-bottom: 5px;" aria-hidden="true">
+                                    </button>
+                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#createTableForm" onclick="new UserStory().createTableFormModal()" style="font-size: 12px;">Create Table Form</button>
+                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModal" onclick="new UserStory().copyMoveInputsModal()" style="font-size: 12px;">Copy/Move</button>
+                                        <button class="dropdown-item firstbut " onclick="new UserStory().deleteInputs()" style="font-size: 12px;">Delete</button>
+                                    </div>
+                                </th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody style="cursor:pointer"><tr class="us-ipo-input-tr new-input-row active" id="ipo_tr_20111611165309125337" pid="20111611165309125337" iname="Name" itable=""><td>1</td><td><input type="checkbox" id="checkbox_20111611165309125337" onclick="makeClassActive( & quot; 20111611165309125337 & quot; )" class="us-input-list-item-check-box-class" value="20111611165309125337"></td><td ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn" pid="20111611165309125337" iname="Name" "="" itable="">Name</td><td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, '20111611165309125337')"><i class="fa fa-trash dust-bin" aria-hidden="true"></i></a></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="draggablePopup ui-draggable" id="history_inp_popUp" style="display: none;">
+            <div class="closePopupIn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+            <div  class="tab-pane" style="max-height: 280px;overflow-y: scroll;  overflow-x: hidden;" >               
+                <div class='row' id="history_inp_popUp_zadsiyahisi">
+
+                    <div class="ipo-divider ipo-1-hisse only-gui-design">
+
+                        <table class=" table-hover spilted input-name-add-table" id="tblIPOList">
+
+                            <tbody style="cursor:pointer"><tr class="us-ipo-input-tr new-input-row active" id="ipo_tr_20111611165309125337" pid="20111611165309125337" iname="Name" itable=""><td>1</td><td><input type="checkbox" id="checkbox_20111611165309125337" onclick="makeClassActive( & quot; 20111611165309125337 & quot; )" class="us-input-list-item-check-box-class" value="20111611165309125337"></td><td ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn" pid="20111611165309125337" iname="Name" "="" itable="">Name</td><td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, '20111611165309125337')"><i class="fa fa-trash dust-bin" aria-hidden="true"></i></a></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar">
+            <ul class=" cf">
+                <li value="cbox" title="checkbox"><a  class="inptadd"  href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
+                <li value="txt" title="input"><a class="inptadd"  href="#"><img src="resource/img/input.png" alt=""></a></li>
+                <li value="date" title="date"><a  class="inptadd" href="#"><img src="resource/img/calendar.png" alt=""></a></li>
+                <li value="file" title="file picker"><a  class="inptadd" href="#"><img src="resource/img/attachment-clip.png" alt=""></a></li>
+                <li value="rbtn" title="Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-on-button.png" alt=""></a></li>
+                <li value="cmb" title="Select Box"><a  class="inptadd" href="#"><img src="resource/img/select.png" alt=""></a></li>
+                <li value="ytube" title="Youtube"><a  class="inptadd" href="#"><img src="resource/img/youtube.png" alt=""></a></li>
+                <li value="img" title="Image"><a  class="inptadd" href="#"><img src="resource/img/upload.png" alt=""></a></li>
+                <li value="lbl" title="Label"><a  class="inptadd" href="#"><img src="resource/img/price-tag.png" alt=""></a></li>
+                <li value="txa" title="TextArea"><a  class="inptadd" href="#"><img src="resource/img/text.png" alt=""></a></li>
+                <li value="mcmb" title="Multi Select Box"><a  class="inptadd" href="#"><img src="resource/img/favourites-selection.png" alt=""></a></li>
+                <li value="irbtn" title="Inner Radio Button"><a  class="inptadd" href="#"><img src="resource/img/radio-button-selection.png" alt=""></a></li>
+                <li value="icbox" title="Inner CheckBox select"><a  class="inptadd" href="#"><img src="resource/img/checkbox-selected.png" alt=""></a></li>
+                <!--  <li><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
+                 <li ><a href="#"><img src="resource/img/checkbox.png" alt=""></a></li> -->
+                <li value="hr" title="Inner Line"><a class="inptadd"  href="#"><img src="resource/img/substract.png" alt=""></a></li>
+                <li value="btn" title="Button"><a class="inptadd"  href="#"><img src="resource/img/push.png" alt=""></a></li>
+                <li value="icon" title="Icons"><a  class="inptadd" href="#"><img src="resource/img/plugin.png" alt=""></a></li>
+                <li value="iedit" title="Inner edit"><a  class="inptadd" href="#"><img src="resource/img/edit.png" alt=""></a></li>
+                <li value="hlink" title="Hiperlink"><a  class="inptadd" href="#"><img src="resource/img/link.png" alt=""></a></li>
+                <li value="hdn" title="Hidden"><a class="inptadd"  href="#"><img src="resource/img/visibility.png" alt=""></a></li>
+                <li value="fhtml" title="Free Html"><a  class="inptadd" href="#"><img src="resource/img/html5.png" alt=""></a></li>
+                <li value="fcomp" title="Free Component"><a class="inptadd"  href="#"><img src="resource/img/web.png" alt=""></a></li>
+
+                <li value="sctn" title="Section"><a onclick="addSectionAsInput()" href="#"><img src="resource/img/sections.png" alt=""></a></li>
+                <li value="tab" title="Tabs"><a onclick="addTabAsInput()" href="#"><img src="resource/img/tabs.png" alt=""></a></li>
+                <li value="Tbl" title="Table"><a href="#" onclick="addTableAsInput()"><img src="resource/img/table.png" alt=""></a></li>
+
+
+            </ul>
+            <div class="editsect" >
+                <!--  <button class="btn dragToolbar"><i class="fas fa-arrows-alt"></i></button> -->
+                <button class="btn verticalBtn"><i class="fas fa-grip-vertical"></i></button>
+                <button class="btn horizontalBtn"><i class="fas fa-grip-horizontal"></i></button>
+                <button class="btn minimzeBtn"><i class="fas fa-window-minimize"></i></button>
+
+            </div>
+            <div role="button" class=" btn btn-secondary maximizeBtn"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="row zoom-main-new" >
+            <a class="btnZoom zoom" onclick="new UserStory().zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-out" onclick="new UserStory().zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-refresh " onclick="new UserStory().zoomInit()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+            <a class="btnZoom zoom-init " onclick="new UserStory().showAllGUI()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+
+        </div>
+        <!-- </div> -->
+
+        <!--diger 2-ci hisse-->
+
+        <div class="col ipo-2-hisse" style="padding:0px;">
+
+            <!--start 10.08.2020   -->
+            <div class='row dragsection'>
+                <div class="col-12 gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)">
+
+                    <div class="row">
+                        <br><br><br><br><br><br>
+
+                    </div>
+                    <div class="row gui-design1 gui-design-is-api1" style="display:none; " id="gui_component_main_view_all">
+
+                    </div>
+
+
+                    <!--                                        <div class="col-12  text-center  " tabindex="-1"  >
+                                                                            <h5><label id="SUS_GUI_header">Page name</label></h5>
+                                                                    </div>-->
+
+
+
+                    <div class="col-12 gui-design gui-design-is-api redirectClass4CSS target" tabindex="-1" id="gui_component_main_view" style="zoom:100%;display:block1">
+                        <div class="col-12 " id="SUS_IPO_GUI_Design1">
+                            <div class="row redirectClass " id="SUS_IPO_GUI_Design" bid="20060323462301154626" bcode="9pewt0y46B">
+                                <div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="12" style="" id="200706173015031210315" pid="200706173015031210315" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('200706173015031210315')">
+                                    <span class="tooltiptextMan">-asdfasdf<br>-jjjjj<br>-mmmm<br>-kkkf kkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkfkkkf<br>-ççvçvçv<br>
+                                    </span>
+                                    <span>jjjjcc</span><br>
+                                    <input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;font-size:undefinedpx;width:undefined%; text-align:left;" type="date" value="" id="comp_id_200706173015031210315"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="13" style="" id="20070817371101176613" pid="20070817371101176613" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20070817371101176613')"><span class="tooltiptextMan">-asdfasdff<br></span><span>name</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20070817371101176613"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="14" style="" id="20071111100407774901" pid="20071111100407774901" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071111100407774901')"><span>mmvmv</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071111100407774901"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="15" style="" id="200713084204005710681" pid="200713084204005710681" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('200713084204005710681')"><span>gggg</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_200713084204005710681"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="16" style="" id="20071311015204756754" pid="20071311015204756754" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071311015204756754')"><span>surname</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;font-size:undefinedpx;width:undefined%;;" type="text" value="" id="comp_id_20071311015204756754"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="17" style="left:390px;
+                                                                                                                                                                                                        top:240px;" id="20071311015207744813" pid="20071311015207744813" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071311015207744813')"><img style="width:100%;font-size:undefinedpx;width:undefined%;;" src="https://lp-cms-production.imgix.net/2019-06/b8c99d401b90bd06021c122b4346c8f7-maiden-s-tower.jpg?auto=format&amp;fit=crop&amp;ixlib=react-8.6.4&amp;h=72&amp;w=72&amp;q=40&amp;dpr=1" id="comp_id_20071311015207744813"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="18" style="" id="20071311015602091560" pid="20071311015602091560" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071311015602091560')"><span class="tooltiptextMan">-mmmmm<br></span><span>jfjfj</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071311015602091560"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="19" style="" id="20071320042401054148" pid="20071320042401054148" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071320042401054148')"><span>jjjj</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071320042401054148"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="20" style="" id="20071320055204566422" pid="20071320055204566422" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071320055204566422')"><span>hhhhfhf</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071320055204566422"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="21" style="" id="20071320074001006039" pid="20071320074001006039" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071320074001006039')"><span>ggg</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071320074001006039"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="22" style="" id="20071320092200927981" pid="20071320092200927981" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071320092200927981')"><span>jjjj</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071320092200927981"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="23" style="" id="20071320123207125049" pid="20071320123207125049" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071320123207125049')"><span>jjj</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071320123207125049">
+                                    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+                                    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+                                    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+                                </div>
+                                <div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="24" style="" id="20071409144607013424" pid="20071409144607013424" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071409144607013424')"><span class="tooltiptextMan">-ismandatory<br>-name asdfasdf<br></span><span>name</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071409144607013424">
+                                    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div >
+                                    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+                                    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;">
+                                    </div></div>
+                                <div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="25" style="" id="20071409144809799801" pid="20071409144809799801" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071409144809799801')"><span class="tooltiptextMan">-a<br>-asdfa asdfasdf asdasdfasdfasdfasdfasdf<br>-asdf<br>-asdfasdfasdfasdf<br>-faasdfasdfasdf<br>-asdfasdfasdfa<br>-asdfasdf<br></span><span>surname</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071409144809799801">
+                                    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+                                    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+                                    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+                                </div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="26" style="" id="20071409145205177818" pid="20071409145205177818" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-12 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071409145205177818')"><span class="tooltiptextMan">-asdfasdf<br></span><span>middlename</span><br><textarea style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" rows="3" id="comp_id_20071409145205177818"></textarea><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div><div ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)" draggable="true" data-toggle="tooltip" orderno="29" style="" id="20071517544200563416" pid="20071517544200563416" class="focus-div draggable resize ui-widget-content popup tooltipMan component-class component-container-dashed col-6 ui-draggable ui-draggable-handle ui-resizable" onclick="new UserStory().setInputByGUIComponent('20071517544200563416')"><span>sadfasdfasdf</span><br><input style="width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;;" type="text" value="" id="comp_id_20071517544200563416"><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;">
+                                    </div></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <br><br>
+
+                        <div class="col-12">
+                            <!-- start    15.08.2020 -->
+
+                            <!-- Animation button -->
+                            <div class="row gooeyMenu">
+                                <div class="row zoom-main-new">
+                                    <input type="checkbox" href="#" class="home_icon_menu-open" name="home_icon_menu-open" id="home_icon_menu-open">
+                                    <div class="home_icon_menu-open-button" for="home_icon_menu-open">
+                                        <div class="home_what_we_do_svg">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg>                                </div>
+                                    </div>
+
+                                    <a href="#" rel="iLightbox" class="home_icon_menu-item gooeyMenuDesc-1" onclick="addUserStoryNewModal()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add User Story</h6></a>
+
+                                    <a href="#" class="home_icon_menu-item gooeyMenuDesc-2" onclick="addInputAsInput()"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Input</h6> </a>
+
+                                    <a href="#" class="home_icon_menu-item gooeyMenuDesc-3" onclick="addTableAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Table</h6> </a>
+
+                                    <a href="#" class="home_icon_menu-item gooeyMenuDesc-4" onclick="addSectionAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Section</h6> </a>
+
+                                    <a href="#" class="home_icon_menu-item gooeyMenuDesc-5" onclick="addTabAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Tab</h6> </a>
+
+                                    <!-- /* start 17.08.2020 */ -->
+                                    <a href="#" class="home_icon_menu-item gooeyMenuDesc-6" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg></a>
+                                    <!-- /* end 17.08.2020 */ -->
+
+                                </div>
+                            </div>
+                            <!-- end    15.08.2020 -->
+
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <br><br><br><br> 
+                    </div>
+                </div>
+
+
+                <div class="col-1 order-2 tool-panel-col" style="height1: 81vh;">
+                    <ul class="nav nav-tabs tool-panel" role="tablist" style="display: inline-block;">
+                        <li class="nav-item gui-design-is-api" id="input-btn-icon" >
+                            <a class="nav-link nav-link-custom tool-item"   href="#ipo-tab-setting-inputAdd" >
+                                <i class="far fa-address-card"></i>
+                                <br>
+                                <span>Input</span>
+                            </a>
+                        </li>
+                        <li class="nav-item gui-design-is-api" id="History-btn-icon" >
+                            <a class="nav-link nav-link-custom tool-item"   href="#ipo-tab-setting-inputAdd" >
+                                <i class="fas fa-history"></i>
+                                <br>
+                                <span>History</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item gui-design-is-api" id="general-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#ipo-tab-setting-general" id="ipo-tab-setting-input-description-general" onclick="new UserStory().setCurrentIPOView('general')">
+
+                                <i class="fab fa-accusoft"></i>
+                                <br>
+                                <span>General</span>
+                            </a>
+                        </li>
+                        <li class="nav-item gui-design-is-api" id="animation-icon" >
+                            <a class="nav-link nav-link-custom tool-item" 
+                               onclick="fillRelatedApi4InputEvent()" 
+                               data-toggle="tab" href="#ipo-tab-setting-animation" >
+                                <i class="fab fa-asymmetrik"></i>
+                                <br>
+                                <span>Animation</span>
+                            </a>
+                        </li>
+                        <li class="nav-item gui-design-is-api" id="component-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#ipo-tab-setting-properties" id="ipo-tab-setting-input-description-properties" onclick="new UserStory().setCurrentIPOView('component')">
+                                <i class="fas fa-images"></i>
+                                <br>
+                                <span >Component</span>
+
+                            </a>
+                        </li>
+                        <!--                                                       <li class="nav-item">
+                                                                                            <a class="nav-link nav-link-custom" data-toggle="tab" href="#ipo-tab-setting-input-description"
+                                                                                            id='ipo-tab-setting-input-description-tab'
+                                                                                            onclick="new UserStory().setCurrentIPOView('desc')" >
+                                                                                                Input Descriptions
+                                                                                            </a>
+                                                                                        </li>-->
+                        <li class="nav-item gui-design-is-api" id="container-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#ipo-tab-setting-container" id="ipo-tab-setting-input-description-container" onclick="new UserStory().setCurrentIPOView('container')">
+
+                                <i class="fas fa-align-left"></i>
+                                <br>
+                                <span>Container</span>
+                            </a>
+                        </li>
+                        <li class="nav-item gui-design-is-api" id="canvas-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#ipo-tab-setting-canvas">
+
+                                <i  class="fas fa-cube"></i>
+                                <br>
+                                <span>Canvas</span>
+                            </a>
+                        </li>
+                        <br>
+                        <li class="nav-item gui-design-is-api" id="currentAll-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item all"  onclick="new UserStory().showAllGUI()"   >
+                                <i class="far fa-bookmark"></i>
+                                <br>
+                                <span >All </span>
+                            </a>
+
+                            <a class="nav-link nav-link-custom tool-item current"  onclick="new UserStory().showCurrentGUI()" style="display: none;" >
+                                <i class="fas fa-bookmark"></i>
+                                <br>
+                                <span >Current </span>
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item gui-design-is-api" id="drag-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  >
+                                <label class="containerA">
+                                    <input type="checkbox" id="lp-draggable-mode" class="dragCheckbox">
+                                    <span class="checkmark1"><i class="far fa-stop-circle"></i> <br> Draggable</span>
+                                    <span class="checkmark2"><i class="fas fa-stop-circle"></i><br> Undraggable</span>
+                                </label>
+
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item gui-design-is-api1" id="drag-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item" onclick="guiClassModal(this)" >
+                                <label class="containerA">
+                                    <input type="checkbox" id="lp-draggable-mode" class="classModalWizard">
+                                    <span class="checkmark1"><i class="far fa-stop-circle"></i> <br> Class</span>
+                                </label>
+
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item gui-design-is-api1" id="drag-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item" onclick='showJsCodeModal()'>
+                                <label class="containerA">
+                                    <input type="checkbox" id="lp-draggable-mode" class="jsModalWizard">
+                                    <span class="checkmark1"><i class="far fa-stop-circle"></i> <br> JS</span>
+                                </label>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </div> 
+
+                <div class="col-3 pro prototype-section" id="gui-desigin-component-view-main-div-id"  >
+                    <div class="tab-content">
+
+                        <div class="tab-content tab-content-style">
+
+                            <div id="ipo-tab-setting-animation" class="container tab-pane" style="max-height1: 81vh;">
+                                <div class="ipo-divider ipo-1-hisse only-gui-design">
+                                    <br><br>
+                                    <div class="col-12 event_details1">
+                                        <div class="row">
+                                            <div class="col-12  " style=" padding:0px;">
+                                                <a href="#"   style="color:#000000;font-size:14px;padding:0px;"
+                                                   data-toggle="modal" 
+                                                   data-target="#addExistingRelationModal" 
+                                                   onclick="new UserStory().addExistingRelationByCurrentInput(this)">
+                                                    + Add Related Columns</a><br>
+                                                <span id="relatedSUSOutputName"></span>
+                                                <span id="relatedUserStory">(<a href="#" onclick="new UserStory().redirectUserStoryCore('')"></a>)</span>
+                                                <span id="deleteRelatedSUSOutput" style="">
+                                                    <a href="#" onclick="new UserStory().deleteInputBySUSOutputId()"><i class="fa fa-remove"></i></a>
+                                                </span>
+                                                <br><br>
+                                            </div>
+                                            <div class="col-12  "
+                                                 id="us-gui-component-action-div"
+                                                 style=" padding:0px  1px">
+                                                <b><span
+                                                        style="width: 100%;padding:0px;">Action:</span><br></b>
+                                                <select id="us-gui-component-action"
+                                                        style="width:100%;padding: 0px;
+                                                        border-radius: 4px;
+                                                        border: 1px solid gray;"
+                                                        onchange="new UserStory().setGUIComponentAction(this)">
+                                                    <option value="-1"></option>
+                                                    <option value="popup">Show Popup</option>
+                                                    <option value="close">Close Popup</option>
+                                                    <option value="redirect">Redirect to</option>
+                                                    <option value="fill">Fill in Section</option>
+                                                    <option value="save">Save Form</option>
+                                                    <option value="delete">Delete From Table</option>
+                                                </select>
+                                                <br><br>
+                                            </div>
+
+                                            <div class="col-12  us-gui-component-rel-sus-div-class"
+                                                 id="us-gui-component-rel-sus-div"
+                                                 style="display: none;padding:0px;">
+
+                                                <b><span style="width1: 100%;">Related Sourced User Story</span><br></b>
+                                                <select type="number"
+                                                        id="us-gui-component-rel-sus-id"
+                                                        onchange="new UserStory().setGUIComponentRelSUS(this)"
+                                                        style="width:90%;
+                                                        border-radius: 4px;
+                                                        border: 1px solid gray;"></select>
+                                                <i class="fa fa-mail-forward"
+                                                   style="cursor:pointer;color:green;"
+                                                   id='us-gui-component-rel-sus-div-i'
+                                                   onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id")'></i>
+                                                <br><br>
+                                            </div>
+
+                                            <div class="col-12   us-gui-component-rel-sus-div-class"
+                                                 id="us-gui-component-in-section-div"
+                                                 style="display: none;padding:0px;">
+
+                                                <b><span
+                                                        style="width: 100%;">In Section (User Story)</span><br></b>
+                                                <select type="number"
+                                                        id="us-gui-component-rel-sus-id-section"
+                                                        onchange="new UserStory().setGUIComponentRelSUSInSection(this)"
+                                                        style="width:90%;
+                                                        border-radius: 4px;
+                                                        border: 1px solid gray;"></select>
+                                                <i class="fa fa-mail-forward"
+                                                   style="cursor:pointer;color:green;"
+                                                   id='us-gui-component-rel-sus-div-in-section'
+                                                   onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id-section")'></i>
+                                                <br> <br>
+
+                                                <b><span
+                                                        style="width: 100%;">Section</span><br></b>
+                                                <select type="number"
+                                                        id="us-gui-component-in-section"
+                                                        onchange="new UserStory().setGUIComponentSection(this)"
+                                                        style="margin-top:1px;width:100%;
+                                                        border-radius: 4px;
+                                                        border: 1px solid gray;"></select>
+                                                <br><br>
+                                            </div>
+
+
+
+
+                                            <div class="col-12">
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Event Relation
+                                                    </legend>
+
+                                                    Event<br>
+                                                    <select style="width:100%;padding: 0px;
+                                                            border-radius: 4px;
+                                                            border: 1px solid gray;"
+                                                            id="input_event_type">
+                                                        <option value="onclick">onclick</option>
+                                                        <option value="onchange">onchange</option>
+                                                        <option value="ondblclick">ondblclick</option>
+                                                    </select><br>
+
+                                                    Related API<br>
+                                                    <select style="width:80%;padding: 0px;
+                                                            border-radius: 4px;
+                                                            border: 1px solid gray;"
+                                                            id="input_event_related_api">                                                        
+                                                    </select>
+
+                                                    <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                                                    <br><br>
+                                                    <table style='border: 1px solid #dee2e6; width:100%;'>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Event</th>
+                                                                <th>API</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id='input_event_related_api_table_list_body'>
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ipo-tab-setting-general"  class="container tab-pane" style="max-height1: 81vh;padding-top: 20px;">
+
+                                <!-- gulbahar--ipo-1-hisse-setting -->
+                                <div class="col " id="ipo-1-hisse-setting">
+                                    <div class="row" >
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <i class="fa fa-crosshairs  input-css-opt" id="us-gui-component-content" style="cursor: pointer;font-size:15px;display: none;" onclick="new UserStory().setGUIComponentContentModal(this)" title="Show Input and Input Descriptions"></i>
+                                                </div>
+                                                <div class="form-group col-12" hidden>
+                                                    <input type="hidden" class="form-control required msg-clear"  id="u_userstory_input_id">
+                                                </div>
+                                                <div class="col-12" style=" padding:0px  1px">
+                                                    <b><span style="width: 100%;padding:0px;">Component Type:</span><br></b>
+                                                    <select id="us-gui-component-id"
+                                                            style="width:100%;padding: 0px;
+                                                            border-radius: 4px;
+                                                            border: 1px solid gray;"
+                                                            onchange="new UserStory().setGUIComponent(this)">
+                                                        <option value="txt">Edit Line</option>
+                                                        <option value="cmb">Select Box</option>
+                                                        <option value="mcmb">Multi Select Box
+                                                        </option>
+                                                        <option value="txa">Textarea</option>
+                                                        <option value="rbtn">Radio Button</option>
+                                                        <option value="cbox">Check Box</option>
+                                                        <option value="file">File Picker</option>
+                                                        <option value="date">Date</option>
+                                                        <option value="time">Time</option>
+                                                        <option value="lbl">Label</option>
+                                                        <option value="img">Image</option>
+                                                        <option value="ytube">Youtube</option>
+                                                        <option value="irbtn">Inner Radio Button</option>
+                                                        <option value="icbox">Inner Check Box</option>
+                                                        <option value="iedit">Inner Edit</option>
+                                                        <option value="hr">Inner Line</option>
+                                                        <option value="hlink">Hiperlink</option>
+                                                        <option value="icon">Icon</option>
+                                                        <option value="btn">Button</option>
+                                                        <option value="hdn">Hidden</option>
+                                                        <option value="fhtml">Free HTML</option>
+                                                        <option value="fcomp">Free Component</option>
+                                                        <option value="sctn">Section</option>
+                                                        <option value="tab">Tab</option>
+                                                        <option value="hcrr">Hidden Carrier</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-6" style=" padding:0px 1px">
+                                                    <b><span style="width: 100%;padding:0px">Order No</span><br></b>
+                                                    <input type="number"  id="us-gui-component-order-no"     style="width:100%;padding: 0px;
+                                                           border-radius: 4px; border: 1px solid gray;"
+                                                           onchange="new UserStory().setGUIComponentOrderNo(this)"
+                                                           step='0.1' min="0" value="">
+
+                                                </div>
+                                                <div class="col-6" style=" padding:0px 1px">
+                                                    <b><span style="width: 100%;padding:0px">Cell/Grid</span><br></b>
+                                                    <select 
+                                                        id="us-gui-component-cell-no"
+                                                        style="width:100%;padding: 0px;
+                                                        border-radius: 4px;
+                                                        border: 1px solid gray;"
+                                                        onchange="new UserStory().setGUIComponentCellNo(this)"
+                                                        step='0.1' min="0" value="">
+                                                        <option valF="1">1</option>
+                                                        <option val="2">2</option>
+                                                        <option val="3">3</option>
+                                                        <option val="4">4</option>
+                                                        <option val="5">5</option>
+                                                        <option val="6">6</option>
+                                                        <option val="7">7</option>
+                                                        <option val="8">8</option>
+                                                        <option val="9">9</option>
+                                                        <option val="10">10</option>
+                                                        <option val="11">11</option>
+                                                        <option val="12">12</option>
+                                                    </select>
+                                                </div>
+
+
+
+
+                                                <div class="form-group col-6"
+                                                     style=" padding:0px 1px">
+                                                    <label for="sprintname"
+                                                           class="col-form-label control-label">Content
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-6 text-right"
+                                                     id="addComponentImageUpload"
+                                                     style=" padding:4px 0px 0px 0px;display:none;">
+                                                    <a href="#"
+                                                       onclick="new UserStory().setGUIComponentUploadImage()"
+                                                       class="col-form-label control-label">Add
+                                                        Image </a>
+                                                </div>
+
+                                                <div class="form-group col-6 text-right"
+                                                     id="addComponentIconUpload"
+                                                     style=" padding:4px 0px 0px 0px; display:none;">
+                                                    <a href="#"
+                                                       onclick="new UserStory().setGUIComponentUploadIcon()"
+                                                       class="col-form-label control-label">Add
+                                                        Icon </a>
+                                                </div>
+
+                                                <div class="form-group col-12"
+                                                     style=" padding:0px 1px">
+                                                    <textarea rows="3"
+                                                              style="font-size:12px"
+                                                              class="form-control required msg-clear"
+                                                              onchange=" new UserStory().setGUIComponentContent()"
+                                                              id="gui_input_content"></textarea>
+                                                </div>
+
+
+                                                <div class="col" style=" padding:0px 1px"><br></div>
+
+                                                <div class="form-group col-12 text-left"
+                                                     id="gui_design_component_custom_style_4_general"
+                                                     style=" padding:0px 1px;font-size:11px;">
+                                                    <div class="row">
+                                                        <div class="form-group col-12">
+                                                            <div>
+                                                                <fieldset class="border p-2">
+                                                                    <legend class="w-auto w-auto-man">
+                                                                    </legend>
+
+                                                                    <table style="width:100%">
+                                                                        <tbody>
+
+
+                                                                            <tr id="dv_gui_prop_cn_generalwidth">
+                                                                                <td></td>
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Width </span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" step="0.1"
+                                                                                           min="0"
+                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
+                                                                                           id="gui_prop_cn_generalwidth">px
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr id="dv_gui_prop_cn_generalheight">
+                                                                                <td></td>
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Height</span>
+                                                                                </td>
+                                                                                <td><input type="number" step="0.1"
+                                                                                           min="0"
+                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
+                                                                                           id="gui_prop_cn_generalheight">px
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr id="dv_gui_prop_in_backgroundcolor">
+                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                                    <input type="checkbox"
+                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                           id="cb_gui_prop_in_backgroundcolor">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span class="col-form-label control-label">Background-Color</span>
+                                                                                </td>
+                                                                                <td><input type="color"
+                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                           onchange="new UserStory().setGUIComponentStyle()"
+                                                                                           class="cs_gui_prop_in cs_gui_prop_in_backgroundcolor"
+                                                                                           id="gui_prop_in_backgroundcolor">
+                                                                                </td>
+                                                                            </tr>
+
+
+
+                                                                            <tr id="dv_gui_prop_in_fontcolor">
+                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                                    <input type="checkbox"
+                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                           id="cb_gui_prop_in_fontcolor">
+                                                                                </td>
+                                                                                <td style="padding:0px;">
+                                                                                    <span class="col-form-label control-label">Font Color</span>
+                                                                                </td>
+                                                                                <td><input type="color"
+                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                           onchange="new UserStory().setGUIComponentStyle()"
+                                                                                           class="cs_gui_prop_in cs_gui_prop_in_fontcolor"
+                                                                                           id="gui_prop_in_fontcolor">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr id="dv_gui_prop_in_fontstylebold">
+
+                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                                    <input type="checkbox"
+                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                           id="cb_gui_prop_in_fontstylebold">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span class="col-form-label control-label"> Bold</span>
+                                                                                </td>
+
+
+                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                                    <input type="checkbox"
+                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                           id="cb_gui_prop_in_fontstyleitalic">
+
+                                                                                    <span class="col-form-label control-label"> Italic</span>
+                                                                                </td>
+                                                                                <td></td>
+
+                                                                            </tr>
+                                                                            <tr id="dv_gui_prop_in_horizontalposition">
+                                                                                <td></td>
+                                                                                <td style="padding:0px;">
+                                                                                    <span class="col-form-label control-label">Align </span>
+                                                                                </td>
+                                                                                <td><select type="color"
+                                                                                            style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                            onchange="new UserStory().setGUIComponentStyle()"
+                                                                                            class="cs_gui_prop_in cs_gui_prop_in_horizontalposition"
+                                                                                            id="gui_prop_in_horizontalposition">
+                                                                                        <option value="left">
+                                                                                            left
+                                                                                        </option>
+                                                                                        <option value="center" selected>
+                                                                                            center
+                                                                                        </option>
+                                                                                        <option value="right">
+                                                                                            right
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr id="dv_gui_prop_in_font">
+                                                                                <td></td>
+                                                                                <td style="padding:0px;">
+                                                                                    <span class="col-form-label control-label">Font </span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select type="color"
+                                                                                            style="width:51px; padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                            onchange="new UserStory().setGUIComponentStyle()"
+                                                                                            class="cs_gui_prop_in cs_gui_prop_in_font"
+                                                                                            id="gui_prop_in_font">
+                                                                                        <option></option>
+                                                                                        <option>
+                                                                                            Helvetica
+                                                                                        </option>
+                                                                                        <option>
+                                                                                            Verdana
+                                                                                        </option>
+                                                                                        <option>
+                                                                                            Calibri
+                                                                                        </option>
+                                                                                        <option>Noto
+                                                                                        </option>
+                                                                                        <option>Lucida
+                                                                                            Sans
+                                                                                        </option>
+                                                                                        <option>Century
+                                                                                            Gothic
+                                                                                        </option>
+                                                                                        <option>
+                                                                                            Candara
+                                                                                        </option>
+                                                                                        <option>Futara
+                                                                                        </option>
+                                                                                        <option>Franklin
+                                                                                            Gothic
+                                                                                            Medium
+                                                                                        </option>
+                                                                                        <option>Geneva
+                                                                                        </option>
+                                                                                        <option>Segoe
+                                                                                            UI
+                                                                                        </option>
+                                                                                        <option>Optima
+                                                                                        </option>
+                                                                                        <option>Avanta
+                                                                                            Garde
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr id="dv_gui_prop_in_fontsize">
+                                                                                <td></td>
+                                                                                <td>
+                                                                                    <span class="col-form-label control-label">Font Size </span>
+                                                                                </td>
+                                                                                <td><input type="number"
+                                                                                           step="1"
+                                                                                           min="0"
+                                                                                           style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                           onchange="new UserStory().setGUIComponentStyle()"
+                                                                                           class="cs_gui_prop_in cs_gui_prop_in_fontsize"
+                                                                                           id="gui_prop_in_fontsize">px
+                                                                                </td>
+                                                                            </tr>
+
+
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </fieldset>
+
+
+
+
+                                                                <fieldset class="border p-2">
+                                                                    <legend class="w-auto w-auto-man">Position
+                                                                    </legend>
+                                                                    <table style="width:100%">
+                                                                        <tbody>
+
+                                                                            <tr id="dv_gui_prop_cn_position">
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Type </span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select type="color"
+                                                                                            style=" padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                            onchange="new UserStory().setGUIContainerStyle()"
+                                                                                            class="cs_gui_prop_cn cs_gui_prop_cn_positiontype"
+                                                                                            id="gui_prop_cn_positiontype">
+                                                                                        <option value="">none</option>
+                                                                                        <option value="absolute">absolute</option>
+                                                                                        <option value="relative">relative</option>
+                                                                                        <option value="fixed">fixed</option>
+                                                                                        <option value="sticky">sticky</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr id="dv_gui_prop_cn_positiontop">
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Z-index</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" step="1"
+                                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_zindex"
+                                                                                           id="gui_prop_cn_zindex">
+                                                                                </td>
+
+                                                                            </tr>
+
+
+
+
+
+                                                                            <tr id="dv_gui_prop_cn_positiontop">
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Top</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" step="1"
+                                                                                           min="0"
+                                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_positiontop"
+                                                                                           id="gui_prop_cn_positiontop">px
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td style="padding:0px;"><span
+                                                                                        class="col-form-label control-label">Left</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" step="1"
+                                                                                           min="0"
+                                                                                           style="width: 50px;padding:0px;border:1px solid gray;border-radius:4px;"
+                                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_positionleft"
+                                                                                           id="gui_prop_cn_positionleft">px
+                                                                                </td>
+                                                                            </tr>
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="ipo-tab-setting-canvas"  class="container tab-pane"   style="padding:0px;height1: 81vh;overflow-y: scroll; overflow-x: hidden">
+                                <br>
+                                <div class="form-group col-12 text-left"
+                                     id="gui_design_canvas_style" style=';font-size: 11px;'>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <b>Canvas Style (CSS) </b>
+                                            <i class="fa fa-bars"
+                                               onclick="new UserStory().showCanvasCss()"
+                                               style="cursor: pointer;color:greenyellow;"></i>
+                                            <i class="fa fa-file-o"
+                                               onclick="new UserStory().showCanvasCssDD()"
+                                               style="cursor: pointer"></i>
+                                            <div>
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">General
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cnvs_backgroundcolor">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUICanvasStyleEnable(this)"
+                                                                           id="cb_gui_prop_cnvs_backgroundcolor">
+                                                                </td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label">Background-Color</span>
+                                                                </td>
+                                                                <td><input type="color"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUICanvasStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cnvs_backgroundcolor"
+                                                                           id="gui_prop_cnvs_backgroundcolor">
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cnvs_backgroundimage">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUICanvasStyleEnable(this)"
+                                                                           id="cb_gui_prop_cnvs_backgroundimage">
+                                                                </td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label">Background-Image</span>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button"
+                                                                            style="padding:0px 10px;border-radius:4px;border:1px solid gray;"
+                                                                            onclick="new UserStory().setGUICanvasUploadImage()"
+                                                                            fname=""
+                                                                            disabled
+                                                                            class="cs_gui_prop_cn cs_gui_prop_cnvs_backgroundimage"
+                                                                            id="gui_prop_cnvs_backgroundimage">
+                                                                        Add
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr id="dv_gui_prop_cnvsn_generalwidth">
+                                                                <td></td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Width </span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                           onchange="new UserStory().setGUICanvasStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cnvs_borderround"
+                                                                           id="gui_prop_cnvs_generalwidth">px
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cnvsn_generalheight">
+                                                                <td></td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Height</span>
+                                                                </td>
+                                                                <td><input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                           onchange="new UserStory().setGUICanvasStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cnvs_borderround"
+                                                                           id="gui_prop_cnvs_generalheight">px
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-12" id='gui_design_canvas_style_dd'
+                                     style='display: none;font-size: 11px;'>
+                                    <b>Canvas Style (CSS) </b>
+                                    <i class="fa fa-bars" onclick="new UserStory().showCanvasCss()"
+                                       style="cursor: pointer"></i>
+                                    <i class="fa fa-file-o"
+                                       onclick="new UserStory().showCanvasCssDD()"
+                                       style="cursor: pointer;color:greenyellow;"></i>
+
+
+                                    <textarea rows="5" style="height:90%;font-size:12px"
+                                              onchange=" new UserStory().setGUICanvasContent()"
+                                              class="form-control required msg-clear"
+                                              id="gui_input_css_style_canvas"></textarea>
+                                </div>
+                            </div>
+
+                            <div id="ipo-tab-setting-container"  class="container tab-pane" style="max-height1: 81vh;">
+                                <br>
+                                <div class="form-group col-12 text-left"
+                                     id="gui_design_container_custom_style"
+                                     style='font-size: 11px;'>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <b>Container Style (CSS) </b>
+                                            <i class="fa fa-bars"
+                                               onclick="new UserStory().showContainerCustomCss()"
+                                               style="cursor: pointer;color:greenyellow;"></i>
+                                            <i class="fa fa-file-o"
+                                               onclick="new UserStory().showContainerCustomCssDD()"
+                                               style="cursor: pointer"></i>
+                                            <div>
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">General
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cn_backgroundcolor">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUIContainerStyleEnable(this)"
+                                                                           id="cb_gui_prop_cn_backgroundcolor">
+                                                                </td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label">Background-Color</span>
+                                                                </td>
+                                                                <td><input type="color"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_backgroundcolor"
+                                                                           id="gui_prop_cn_backgroundcolor">
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_fontcolor">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUIContainerStyleEnable(this)"
+                                                                           id="cb_gui_prop_cn_fontcolor">
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Font Color</span>
+                                                                </td>
+                                                                <td><input type="color"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_fontcolor"
+                                                                           id="gui_prop_cn_fontcolor">
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_fontstylebold">
+
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUIContainerStyleEnable(this)"
+                                                                           id="cb_gui_prop_cn_fontstylebold">
+                                                                </td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label"> Bold</span>
+                                                                </td>
+
+
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUIContainerStyleEnable(this)"
+                                                                           id="cb_gui_prop_cn_fontstyleitalic">
+
+                                                                    <span class="col-form-label control-label"> Italic</span>
+                                                                </td>
+                                                                <td></td>
+
+                                                            </tr>
+
+
+
+
+
+                                                            <tr id="dv_gui_prop_cn_horizontalposition">
+                                                                <td></td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Align </span>
+                                                                </td>
+                                                                <td><select  style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                             onchange="new UserStory().setGUIContainerStyle()"
+                                                                             class="cs_gui_prop_cn cs_gui_prop_cn_horizontalposition"
+                                                                             id="gui_prop_cn_horizontalposition">
+                                                                        <option value="left">left</option>
+                                                                        <option value="center">center</option>
+                                                                        <option value="right">right</option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr id="dv_gui_prop_cn_font">
+                                                                <td></td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Font </span>
+                                                                </td>
+                                                                <td>
+                                                                    <select type="color"
+                                                                            style="padding:0px;width:80px; border-radius:4px;border:1px solid gray;"
+                                                                            onchange="new UserStory().setGUIContainerStyle()"
+                                                                            class="cs_gui_prop_cn cs_gui_prop_cn_font"
+                                                                            id="gui_prop_cn_font">
+                                                                        <option></option>
+                                                                        <option>Helvetica</option>
+                                                                        <option>Verdana</option>
+                                                                        <option>Calibri</option>
+                                                                        <option>Noto</option>
+                                                                        <option>Lucida Sans</option>
+                                                                        <option>Century Gothic</option>
+                                                                        <option>Candara</option>
+                                                                        <option>Futara</option>
+                                                                        <option>Franklin Gothic Medium
+                                                                        </option>
+                                                                        <option>Geneva</option>
+                                                                        <option>Segoe UI</option>
+                                                                        <option>Optima</option>
+                                                                        <option>Avanta Garde</option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr id="dv_gui_prop_cn_fontsize">
+                                                                <td></td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label">Font Size </span>
+                                                                </td>
+                                                                <td><input type="number" step="1"
+                                                                           min="0"
+                                                                           style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_fontsize"
+                                                                           id="gui_prop_cn_fontsize">px
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr id="dv_gui_prop_cn_opacity">
+                                                                <td></td>
+                                                                <td>
+                                                                    <span class="col-form-label control-label">Opacity </span>
+                                                                </td>
+                                                                <td><input type="number" step="0.1"
+                                                                           min="0" max="1"
+                                                                           style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_opacity"
+                                                                           id="gui_prop_cn_opacity">
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+
+
+
+
+
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">Border
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cn_bordercolor">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                    <input type="checkbox"
+                                                                           onchange="new UserStory().setGUIContainerStyleEnable(this)"
+                                                                           id="cb_gui_prop_cn_bordercolor">
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Color</span>
+                                                                </td>
+                                                                <td><input type="color"
+                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_bordercolor"
+                                                                           id="gui_prop_cn_bordercolor">
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_in_borderradius">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Radius </span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderradius"
+                                                                           id="gui_prop_cn_borderradius">px
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_borderstyle">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Style</span>
+                                                                </td>
+                                                                <td>
+                                                                    <select type="color"
+                                                                            style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                            onchange="new UserStory().setGUIContainerStyle()"
+                                                                            class="cs_gui_prop_cn cs_gui_prop_cn_borderstyle"
+                                                                            id="gui_prop_cn_borderstyle">
+                                                                        <option></option>
+                                                                        <option value="dotted">dotted
+                                                                        </option>
+                                                                        <option value="dashed">dashed
+                                                                        </option>
+                                                                        <option value="solid">solid
+                                                                        </option>
+                                                                        <option value="double">double
+                                                                        </option>
+                                                                        <option value="groove">groove
+                                                                        </option>
+                                                                        <option value="ridge">ridge
+                                                                        </option>
+                                                                        <option value="inset">inset
+                                                                        </option>
+                                                                        <option value="outset">outset
+                                                                        </option>
+                                                                        <option value="none">none
+                                                                        </option>
+                                                                        <option value="hidden">hidden
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_borderwidth">
+                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Width</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderwidth"
+                                                                           id="gui_prop_cn_borderwidth">px
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">Padding
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cn_paddingtop">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Top</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_paddingtop"
+                                                                           id="gui_prop_cn_paddingtop">px
+                                                                    </select>
+                                                                </td>
+
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Bottom</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border:1px solid gray;border-radius:4px;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_paddingbottom"
+                                                                           id="gui_prop_cn_paddingbottom">px
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_paddingleft">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Left</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_paddingleft"
+                                                                           id="gui_prop_cn_paddingleft">px
+                                                                </td>
+
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Right</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_paddingright"
+                                                                           id="gui_prop_cn_paddingright">px
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">Margin
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cn_margintop">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Top</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_margintop"
+                                                                           id="gui_prop_cn_margintop">px
+                                                                </td>
+
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Bottom</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_marginbottom"
+                                                                           id="gui_prop_cn_marginbottom">px
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_marginleft">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Left</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_marginleft"
+                                                                           id="gui_prop_cn_marginleft">px
+                                                                </td>
+
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label"> Right</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_marginright"
+                                                                           id="gui_prop_cn_marginright">px
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">Shadow
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr id="dv_gui_prop_cn_shadow">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">X:</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_shadow"
+                                                                           id="gui_prop_cn_shadowx">px
+
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Y:</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_shadow"
+                                                                           id="gui_prop_cn_shadowy">px
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="dv_gui_prop_cn_shadowcolor">
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">B:</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_shadow"
+                                                                           id="gui_prop_cn_shadowb">px
+                                                                </td>
+                                                                <td style="padding:0px;"><span
+                                                                        class="col-form-label control-label">Color:</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="color" step="0.1"
+                                                                           min="0"
+                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                           onchange="new UserStory().setGUIContainerStyle()"
+                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_shadowcolor"
+                                                                           id="gui_prop_cn_shadowcolor">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Attributes
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Name:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Value:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fa fa-plus" onclick="addInputAttributes4Container(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_attributes_list_cn_component"></tbody>
+                                                    </table>
+
+                                                </fieldset>
+
+
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Class
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+
+                                                                    <select   id="gui_prop_cn_gui_class_list" 
+                                                                              class="classListOnChange4Container"
+                                                                              style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <i class="fa fa-plus" 
+                                                                       onclick="addGuiClassToInput4Container(this)"
+                                                                       style="  font-size:16px;cursor:pointer;"></i>
+
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <i class="fa fa-bars" 
+                                                                       onclick="guiClassModal(this)"
+                                                                       style="  font-size:16px;cursor:pointer;"></i>
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr  class="input4NewClassAdding4Container" style="display:none">
+                                                                <td style="padding:5px;" colspan="2">
+
+                                                                    <input   id="gui_prop_cn_gui_class_new" 
+                                                                             style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button class="buttons" 
+                                                                            onclick="insertNewClassDirect4Container(this)"
+                                                                            style="   cursor:pointer;">Add</button>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_class_list_cn_component">
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </fieldset>
+
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-12"
+                                     id='gui_design_container_custom_style_dd'
+                                     style='display: none;font-size: 11px;'>
+                                    <b>Container Style (CSS) </b>
+                                    <i class="fa fa-bars"
+                                       onclick="new UserStory().showContainerCustomCss()"
+                                       style="cursor: pointer"></i>
+                                    <i class="fa fa-file-o"
+                                       onclick="new UserStory().showContainerCustomCssDD()"
+                                       style="cursor: pointer;color:greenyellow;"></i>
+
+
+                                    <textarea rows="5" style="height:90%;font-size:12px"
+                                              onchange=" new UserStory().setGUIComponentContent()"
+                                              class="form-control required msg-clear"
+                                              id="gui_input_css_style_container"></textarea>
+                                </div>
+
+                            </div>
+
+
+                            <div id="ipo-tab-setting-properties"  class="container tab-pane" style='height: 80vh; padding: 0px 0px 0px 0px;'>
+
+                                <!-- gulbahar--ipo-1-hisse-setting 2-->
+                                <div class="col " id='ipo-1-hisse-setting'
+                                     style='display: block;'>
+                                    <div class="row" >
+
+
+
+                                        <div class="col" style=" padding:0px 1px"><br></div>
+                                        <div class="form-group col-12 text-left"
+                                             id="gui_design_component_custom_style"
+                                             style=" padding:0px 20px;font-size:11px;">
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <b>Component Style (CSS) </b>
+                                                    <i class="fa fa-bars"
+                                                       onclick="new UserStory().showComponentCustomCss()"
+                                                       style="cursor: pointer;color:greenyellow;"></i>
+                                                    <i class="fa fa-file-o"
+                                                       onclick="new UserStory().showComponentCustomCssDD()"
+                                                       style="cursor: pointer"></i>
+                                                    <div>
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                General
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+
+
+                                                                    <tr id="dv_gui_prop_in_generalwidth">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Width </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_borderround"
+                                                                                   id="gui_prop_in_generalwidth">px
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr id="dv_gui_prop_in_generalheight">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Height</span>
+                                                                        </td>
+                                                                        <td><input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_borderround"
+                                                                                   id="gui_prop_in_generalheight">px
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr id="dv_gui_prop_in_opacity">
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <span class="col-form-label control-label">Opacity </span>
+                                                                        </td>
+                                                                        <td><input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   max="1"
+                                                                                   style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_opacity"
+                                                                                   id="gui_prop_in_opacity">
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!--                                                    <tr id="dv_gui_prop_in_verticalposition">
+                                                                                                                                        <td></td>
+                                                                                                                                        <td style="padding:0px;"><span class="col-form-label control-label">Vertical </span>
+                                                                                                                                        </td>
+                                                                                                                                        <td>
+                                                                                                                                            <select type="color" style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                                                                                    onchange="new UserStory().setGUIComponentStyle()"
+                                                                                                                                                    class="cs_gui_prop_in cs_gui_prop_in_verticalposition"
+                                                                                                                                                    id="gui_prop_in_verticalposition">
+                                                                                                                                                <option value="top">top</option>
+                                                                                                                                                <option value="center">center</option>
+                                                                                                                                                <option value="bottom">bottom</option>
+                                                                                                                                            </select>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>-->
+
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                Font
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                Border
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+                                                                    <tr id="dv_gui_prop_in_bordercolor">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                            <input type="checkbox"
+                                                                                   onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                   id="cb_gui_prop_in_bordercolor">
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Color</span>
+                                                                        </td>
+                                                                        <td><input type="color"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_bordercolor"
+                                                                                   id="gui_prop_in_bordercolor">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_borderstyle">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Style</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select type="color"
+                                                                                    style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                    onchange="new UserStory().setGUIComponentStyle()"
+                                                                                    class="cs_gui_prop_in cs_gui_prop_in_borderstyle"
+                                                                                    id="gui_prop_in_borderstyle">
+                                                                                <option></option>
+                                                                                <option value="dotted">
+                                                                                    dotted
+                                                                                </option>
+                                                                                <option value="dashed">
+                                                                                    dashed
+                                                                                </option>
+                                                                                <option value="solid">
+                                                                                    solid
+                                                                                </option>
+                                                                                <option value="double">
+                                                                                    double
+                                                                                </option>
+                                                                                <option value="groove">
+                                                                                    groove
+                                                                                </option>
+                                                                                <option value="ridge">
+                                                                                    ridge
+                                                                                </option>
+                                                                                <option value="inset">
+                                                                                    inset
+                                                                                </option>
+                                                                                <option value="outset">
+                                                                                    outset
+                                                                                </option>
+                                                                                <option value="none">
+                                                                                    none
+                                                                                </option>
+                                                                                <option value="hidden">
+                                                                                    hidden
+                                                                                </option>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_borderradius">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Radius </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_borderradius"
+                                                                                   id="gui_prop_in_borderradius">px
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_borderwidth">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Width</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_borderwidth"
+                                                                                   id="gui_prop_in_borderwidth">px
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                Padding
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+                                                                    <tr id="dv_gui_prop_in_paddingtop">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Top</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_paddingtop"
+                                                                                   id="gui_prop_in_paddingtop">px
+                                                                            </select>
+                                                                        </td>
+
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Bottom</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border:1px solid gray;border-radius:4px;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_paddingbottom"
+                                                                                   id="gui_prop_in_paddingbottom">px
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_paddingleft">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Left</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_paddingleft"
+                                                                                   id="gui_prop_in_paddingleft">px
+                                                                        </td>
+
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Right</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_paddingright"
+                                                                                   id="gui_prop_in_paddingright">px
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                Margin
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+                                                                    <tr id="dv_gui_prop_in_margintop">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Top</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_margintop"
+                                                                                   id="gui_prop_in_margintop">px
+
+                                                                        </td>
+
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Bottom</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_marginbottom"
+                                                                                   id="gui_prop_in_marginbottom">px
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_marginleft">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Left</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_marginleft"
+                                                                                   id="gui_prop_in_marginleft">
+
+                                                                        </td>
+
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label"> Right</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_marginright"
+                                                                                   id="gui_prop_in_marginright">px
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                                Shadow
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
+                                                                    <tr id="dv_gui_prop_in_shadow">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">X:</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_shadow"
+                                                                                   id="gui_prop_in_shadowx">px
+
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Y:</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_shadow"
+                                                                                   id="gui_prop_in_shadowy">px
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_shadowcolor">
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">B:</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_shadow"
+                                                                                   id="gui_prop_in_shadowb">px
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Color:</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="color"
+                                                                                   step="0.1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_shadowcolor"
+                                                                                   id="gui_prop_in_shadowcolor">
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
+
+
+
+
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12"
+                                             id='gui_design_component_custom_style_dd'
+                                             style='display: none;font-size: 11px;'>
+                                            <b>Component Style (CSS) </b>
+                                            <i class="fa fa-bars"
+                                               onclick="new UserStory().showComponentCustomCss()"
+                                               style="cursor: pointer"></i>
+                                            <i class="fa fa-file-o"
+                                               onclick="new UserStory().showComponentCustomCssDD()"
+                                               style="cursor: pointer;color:greenyellow;"></i>
+
+                                            <!--                                <label for="sprintname" class="col-form-label control-label">Custom Style (CSS)
+                                                                                    </label>-->
+                                            <textarea rows="5"
+                                                      style="height:90%;font-size:12px"
+                                                      class="form-control required msg-clear"
+                                                      onchange=" new UserStory().setGUIComponentContent()"
+                                                      id="gui_input_css_style"></textarea>
+                                        </div>
+
+
+                                    </div>
+                                </div> 
+
+                            </div>
+
+                        </div>
+                    </div>   
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="storyCardInputRelationModal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top:10px;width: 90%;max-width:90%" role="document">
+        <div class="modal-content" style="height:90vh;overflow-y: scroll;  overflow-x: hidden;">
+            <div class="modal-header">
+                <h5 class="modal-title" id=""> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="row">
+                    <div class="col-lg-9" id="storyCardInputRelationModal_maindivid" 
+                         style="height:70vh;overflow-y: scroll;  overflow-x: hidden;">
+                    </div>
+
+                    <div class="col-lg-3"  >
+                        <div class="row">
+                            <div class="col-lg-12" >
+                                <select id='storyCardInputRelationModal_apilist' class="form-control"></select>
+                            </div>
+                            <div class="col-lg-12">
+                                <select id='storyCardInputRelationModal_inpuntypes' class="form-control">
+                                    <option value="both">Both</option>
+                                    <option value="input">Only Inputs</option>
+                                    <option value="output">Only Outputs</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12" 
+                                 style="height:60vh;overflow-y: scroll;  overflow-x: hidden;">
+                                <table class="table table-hover" id="storyCardInputRelationModal_apiinoutlist">
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="storyCardFieldMgmtModal" tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="margin-top:0px;width: 100%;max-width: 100%" role="document">
+        <div class="modal-content" style="height:99vh;overflow-y: scroll;  overflow-x: hidden;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Story Card Source Management</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="col-lg-12" id="storyCardFieldMgmtModal_maindivid">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--end 10.08.2020 -->  
