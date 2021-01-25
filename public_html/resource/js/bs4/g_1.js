@@ -405,6 +405,13 @@ $(document).on("click", "#History-btn-icon", function () {
     });
     setBacklogHistory4View();
 })
+$(document).on("dblclick", ".component-container-dashed", function () {
+    $('#edit_component_inp_popUp').toggle('fast');
+    $('#edit_component_inp_popUp').draggable({
+        containment: "parent"
+    });
+  
+})
 
 var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#exampleModal" id="popup-btn" >
   <span class="editBtnLVSect deleteBTn" title="Delete Input"><i class="fas fa-trash-alt"></i></span>

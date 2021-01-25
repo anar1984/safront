@@ -13812,12 +13812,12 @@ var SCSourceManagement = {
                     .addClass("row")
                     .addClass("text-center")
                     .append($('<div>')
-                            .addClass('col-lg-5')
+                            
                             .addClass('text-right')
                             .addClass('sc-source-mgmt-div-4-field-left'))
 
                     .append($('<div>')
-                            .addClass('col-lg-2')
+                            .addClass('col-lg-3')
                             .addClass('sc-source-mgmt-div-4-input-list')
                             .append($('<span>')
                                     .addClass('sc-source-mgmt-input-list')
@@ -13825,7 +13825,7 @@ var SCSourceManagement = {
                                     .attr('pid', inputId)
                                     .text(inputName)))
                     .append($('<div>')
-                            .addClass('col-lg-5')
+                            .addClass('col-lg-12')
                             .addClass('text-left')
                             .addClass('sc-source-mgmt-div-4-field-right'))
 
@@ -14030,12 +14030,12 @@ var SCSourceManagement = {
                                                         .text(sf)))
 
                                         .append($('<div>')
-                                                .addClass("col-lg-5")
+                                                .addClass("col-lg-3")
                                                 .addClass("sc-source-mgmt-attr-right-list-div-4-api")
                                                 .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf))
 
                                         .append($('<div>')
-                                                .addClass("col-lg-4")
+                                                .addClass("col-lg-3")
                                                 .addClass("sc-source-mgmt-attr-right-list-div-4-api-input")
                                                 .addClass("sc-source-mgmt-attr-right-list-div-4-api-input-by-" + sf)
                                                 )
