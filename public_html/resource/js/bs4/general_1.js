@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- 
- 
+
+
 var gui_component = {
     "defaultCSS": {
         "InputTable": "",
@@ -1087,14 +1087,14 @@ function init4Core() {
     new Project().loadUserList4Combo();
     new Notification().getNotificationCount();
     new Notification().setTime();
-   
+
 }
 
 function init4ManualProjectLoad() {
 
 
     $('[data-toggle="tooltip"]').tooltip();
- 
+
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
     loadModulePermission();
@@ -1554,6 +1554,11 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
     $('#' + pageId).modal("show");
     $(document).on('hidden.bs.modal', '#' + pageId, function (evt) {
         $('#' + pageId).remove();
+
+        $('body').addClass('modal-open');
+
+
+
     });
     return pageId;
 }
@@ -1629,7 +1634,7 @@ function GetConvertedTimeByElement(element) {
     var date = new Date($(element).val());
     var day = date.getHours();
     day = day.toString(10).length === 1 ? '0' + day : day;
-    var month = date.getSeconds()  + 1;
+    var month = date.getSeconds() + 1;
     month = month.toString(10).length === 1 ? '0' + month : month;
     var year = date.getMilliseconds();
     var d = day + "" + month + '' + year;
@@ -1742,7 +1747,7 @@ function createNewInputComponent() {
     new UserStory().insertNewInput();
     $('#exampleModal-new-input-name').val('');
     $('#addNewComponentModal').modal('hide');
-    
+
 
 }
 
@@ -1771,7 +1776,7 @@ function openComponentPropertiesModal(el) {
             $('#ipo-tab-setting-general').html()
     var rs = global_var.input_general_content_tab;
     $('#component-info-popup').html(rs);
-    $('#exampleModal-input-componentid').val('comp_id_'+$(el).attr('id'));
+    $('#exampleModal-input-componentid').val('comp_id_' + $(el).attr('id'));
     $('#exampleModal-input-name').val(SAInput.GetInputName(global_var.current_us_input_id));
     $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
     $('#ipo-tab-setting-general').html('')

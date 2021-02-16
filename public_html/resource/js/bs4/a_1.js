@@ -55,8 +55,28 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
-function getTaskInfo(taskId){
-    var rs  ='';
+function testZad() {
+    var rs = '';
+    var json = initJSON();
+    json.kv.surname = 'Shey';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/zd/backlog/getPaymentInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            console.log(JSON.stringify(res));
+        }
+    });
+    return rs;
+}
+
+function getTaskInfo(taskId) {
+    var rs = '';
     var json = initJSON();
     json.kv.fkTaskId = taskId;
     var that = this;
@@ -69,8 +89,8 @@ function getTaskInfo(taskId){
         crossDomain: true,
         async: false,
         success: function (res) {
-             rs = res.kv;
-           
+            rs = res.kv;
+
         }
     });
     return rs;
@@ -2256,14 +2276,24 @@ function initOnloadActionOnGUIDesign() {
 
 function initOnloadActionOnGUIDesign4OnClick() {
     $('.sa-onloadclick').each(function () {
-        $(this).click();
+        if ($(this).attr("sa-isloaded") !== '1') {
+            if ($(this).attr("sa-loadonetime") === '1') {
+                $(this).attr("sa-isloaded", "1");
+            }
+            $(this).click();
+        }
     })
 
 }
 
 function initOnloadActionOnGUIDesign4Onchange() {
     $('.sa-onloadchange').each(function () {
-        $(this).change();
+        if ($(this).attr("sa-isloaded") !== '1') {
+            if ($(this).attr("sa-loadonetime") === '1') {
+                $(this).attr("sa-isloaded", "1");
+            }
+            $(this).change();
+        }
     })
 }
 
@@ -2645,6 +2675,11 @@ function triggerAPI(element, apiId, data) {
     if (!$(el).hasClass('sa-onloadclick')) {
         initOnloadActionOnGUIDesign4OnClick();
     }
+
+    //call oncload action
+    if (!$(el).hasClass('sa-onloadchange')) {
+        initOnloadActionOnGUIDesign4Onchange();
+    }
 //    }
 }
 
@@ -2664,15 +2699,31 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             : 'sync';
 
     if (async === 'async') {
-        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function(){
-            $(this).click();
+        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function () {
+            if ($(this).attr("sa-isloaded") !== '1') {
+                if ($(this).attr("sa-loadonetime") === '1') {
+                    $(this).attr("sa-isloaded", "1");
+                }
+                $(this).click();
+            }
         })
-            
-        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function(){
-            $(this).change();
+
+        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function () {
+
+            if ($(this).attr("sa-isloaded") !== '1') {
+                if ($(this).attr("sa-loadonetime") === '1') {
+                    $(this).attr("sa-isloaded", "1");
+                }
+                $(this).change();
+            }
+
         })
-            
+
     }
+
+    $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
+        $(this).selectpicker('refresh');
+    })
 
 
 
@@ -2866,7 +2917,9 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
     }
 
     if ($(el).attr('sa-data-value')) {
-        $(el).val($(el).attr('sa-data-value'));
+        var tmVal = $(el).attr('sa-data-value');
+        $(el).val(tmVal);
+        $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
     }
 
 
@@ -2910,6 +2963,9 @@ function fillComboInAPICall(el, data, asyncData) {
         elem.val(elem.attr('sa-data-value'));
     }
 
+    if (elem.hasClass('sa-selectpicker')) {
+        elem.selectpicker('refresh');
+    }
 
 
 }
@@ -3109,12 +3165,17 @@ function setValueOnCompAfterTriggerApi(el, data) {
                             && data.selectedField.split(',').includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
+                        
+                        //select table list-de 1 setr cavab qayinda selectbox.value deyerini
+                        //aldigi ucun bu field data-dan silinmelidir
+                        
                     } else if ($(this).attr('sa-type') === 'multiselect'
                             && $(this).attr('sa-load-ontrigger') === '1'
                             && data.selectedField.split(',').includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
-                    }
+                    }  
+                    
                     if (data[field]) {
                         val = data[field];
                         getComponentValueAfterTriggerApi(this, val);
@@ -3159,6 +3220,16 @@ function getComponentValueAfterTriggerApi(el, val) {
             }
         }
 
+
+    } else if ($(el).attr('sa-type') === 'select') {
+
+        $(el).val(val);
+        $(el).find('option[value="' + val + '"]').attr('selected', true);
+
+
+        if ($(el).attr("sa-isselectpicker") === '1') {
+            $(el).selectpicker('refresh');
+        }
 
     } else if ($(el).attr('sa-type') === 'multiselect') {
 
@@ -3259,7 +3330,7 @@ function getGUIDataByStoryCard(el) {
             val = GetConvertedDateByElement(this);
         } else if ($(this).attr('sa-type') === 'time1') {
             val = GetConvertedTimeByElement(this);
-        }else if ($(this).attr('sa-type') === 'checkbox') {
+        } else if ($(this).attr('sa-type') === 'checkbox') {
             val = $(this).is(":checked") ? "1" : "0";
         } else if ($(this).attr('sa-type') === 'filepicker') {
             val = ($(this).attr("fname")) ? $(this).attr("fname") : "";
@@ -4872,7 +4943,7 @@ function getInputAttributeList4Container(inputId) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             getInputAttributeListDetails4Container(res);
         }
@@ -4966,7 +5037,7 @@ function getInputAttributeList(inputId) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             getInputAttributeListDetails(res);
         }
@@ -13812,7 +13883,7 @@ var SCSourceManagement = {
                     .addClass("row")
                     .addClass("text-center")
                     .append($('<div>')
-                            
+
                             .addClass('text-right')
                             .addClass('sc-source-mgmt-div-4-field-left'))
 
@@ -14002,7 +14073,7 @@ var SCSourceManagement = {
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
                 var obj = res.tbl[0].r;
                 for (var i in obj) {

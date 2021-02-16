@@ -10207,7 +10207,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         } else {
             var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
             if (!$(tempEl).hasClass('sa-onloadclick')) {
-                initOnloadActionOnGUIDesign4OnClick();
+//                initOnloadActionOnGUIDesign4OnClick();
             }
         }
 //       
@@ -10239,6 +10239,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var res = SAInput.toJSONByBacklog(id);
         var html = this.getGUIDesignHTML(res);
         $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first().html(html);
+        
+        //initiate onclick action
+        initOnloadActionOnGUIDesign();    
+         
 //        generatePopupModalNew(html, canvasCSS);
 //        $('[data-toggle="tooltip"]').tooltip({html: true});
     },

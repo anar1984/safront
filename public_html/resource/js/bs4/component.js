@@ -1320,6 +1320,8 @@ var Component = {
         var select = $('<select></select>')
                 .addClass("form-control")
                 .attr("sa-type", 'select')
+                .attr('data-actions-box', "true")
+                .attr('data-live-search', "true")
                 .attr('style', gui_component.defaultCSS.SelectBox + Component.ReplaceCSS(comp.css));
 
         Component.ComponentEvent.Init(select, comp);
