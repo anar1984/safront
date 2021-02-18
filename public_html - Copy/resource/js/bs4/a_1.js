@@ -55,8 +55,8 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
-function getTaskInfo(taskId){
-    var rs  ='';
+function getTaskInfo(taskId) {
+    var rs = '';
     var json = initJSON();
     json.kv.fkTaskId = taskId;
     var that = this;
@@ -69,8 +69,8 @@ function getTaskInfo(taskId){
         crossDomain: true,
         async: false,
         success: function (res) {
-             rs = res.kv;
-           
+            rs = res.kv;
+
         }
     });
     return rs;
@@ -2664,14 +2664,14 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             : 'sync';
 
     if (async === 'async') {
-        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function(){
+        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function () {
             $(this).click();
         })
-            
-        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function(){
+
+        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function () {
             $(this).change();
         })
-            
+
     }
 
 
@@ -3259,7 +3259,7 @@ function getGUIDataByStoryCard(el) {
             val = GetConvertedDateByElement(this);
         } else if ($(this).attr('sa-type') === 'time1') {
             val = GetConvertedTimeByElement(this);
-        }else if ($(this).attr('sa-type') === 'checkbox') {
+        } else if ($(this).attr('sa-type') === 'checkbox') {
             val = $(this).is(":checked") ? "1" : "0";
         } else if ($(this).attr('sa-type') === 'filepicker') {
             val = ($(this).attr("fname")) ? $(this).attr("fname") : "";
@@ -4044,7 +4044,8 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
             $('#jsCodeModal_isactive').val(res.kv.isActive);
             $('#jsCodeModal_fntype').val(res.kv.fnType);
-
+            $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
+            
             jsCodeModal_checkbox_action();
 
         }

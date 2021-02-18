@@ -55,6 +55,33 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+function compileJava() {
+    var rs = '';
+    var json = initJSON();
+    json.kv.id = current_js_code_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCompileJava",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            if (res.kv.err.length > 0) {
+                Toaster.showError(JSON.stringify(res.kv.err));
+            } else {
+                Toaster.showMessage("Code Compiled!")
+            }
+            
+        },
+        error: function (res) {
+            Toaster.showError(JSON.stringify(res));
+        }
+    });
+}
+
 function testZad() {
     var rs = '';
     var json = initJSON();
@@ -3165,17 +3192,17 @@ function setValueOnCompAfterTriggerApi(el, data) {
                             && data.selectedField.split(',').includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
-                        
+
                         //select table list-de 1 setr cavab qayinda selectbox.value deyerini
                         //aldigi ucun bu field data-dan silinmelidir
-                        
+
                     } else if ($(this).attr('sa-type') === 'multiselect'
                             && $(this).attr('sa-load-ontrigger') === '1'
                             && data.selectedField.split(',').includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
-                    }  
-                    
+                    }
+
                     if (data[field]) {
                         val = data[field];
                         getComponentValueAfterTriggerApi(this, val);
@@ -4074,13 +4101,9 @@ $(document).on("change", ".jsCodeModal_checkbox", function (e) {
 })
 
 function jsCodeModal_checkbox_action() {
-    if ($('.jsCodeModal_checkbox').val() === 'core') {
-        $('.jscode-corepart').show();
-        $('.jscode-eventpart').hide();
-    } else {
-        $('.jscode-corepart').hide();
-        $('.jscode-eventpart').show();
-    }
+    $('.jscode-zad').hide();
+    var val = $('.jsCodeModal_checkbox').val();
+    $('.jscode-zad-' + val).show();
 }
 
 
@@ -4115,6 +4138,7 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
             $('#jsCodeModal_isactive').val(res.kv.isActive);
             $('#jsCodeModal_fntype').val(res.kv.fnType);
+            $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
 
             jsCodeModal_checkbox_action();
 
