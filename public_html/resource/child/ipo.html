@@ -209,7 +209,7 @@
 
             </div>
         </div>
-        <div class="toolbar">
+        <div class="toolbar ui-draggable" id="toolbar_cont_drag">
             <ul class=" cf">
                 <li value="cbox" title="checkbox"><a  class="inptadd"  href="#"><img src="resource/img/checkbox.png" alt=""></a></li>
                 <li value="txt" title="input"><a class="inptadd"  href="#"><img src="resource/img/input.png" alt=""></a></li>
@@ -2214,5 +2214,14 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function(){
+    $('#toolbar_cont_drag').draggable({
+        containment: "parent"
+    });
+  })
+</script>
 
 <!--end 10.08.2020 -->  
