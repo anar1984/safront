@@ -10,6 +10,6 @@ var urlGl = "http://localhost:8080/tsn1/";
 //var urlGl = ""
 
 function getToken() {
-    return 'apdtok=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.05eOJjllxbQlge6v2MCwIiSlu6joxdvw5aK9m2bjlCx4Y_GH6vMhyA.pdYzkcQZkZzt0bxUZ3smWw.-gbNwXEhor-EBetCcH6RKnRSlN54gZmmZeHrdK_BOLso5ZgPXPFziiDpM-bxFvsqJbJ7eyrz4ly92j8o_H7iGc5Zu4XwQ6sEYMSRZ5tlsZecDRkHaSJrhLSCCHvZkJydze9GCbLS94dk8rnktH9BlZKag3l1h4A7M0DsXRblYxA.7mr0qZrNeIHj7cDRf6dztw';
+    return 'apdtok=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.FiiAxw6JJjlFjcVC7P7Y6eNKQfcDAuBu4TQiN58GGPAEL1vLXDxUXQ.1g-rIhZ9vfkofn6BkzuxjQ.FQ1XLXZ_o2inQYU8Knk2DVyh7DqM4KJfyFt__Tl5XPN0orbluqib20247IpN1HjDWHlepJ10sQokk3NeER1hrpqRs_qeg2BUlU_oYO3HD78GxpwoU-iKKkT2sxbLNeIBEj4QRQgAOJ4cjSrtPi4BweMJFLt2CGvJ4MJu3WCZPQ4.4_IbzeZCMBLfDYUAOLyurw';
     //    return '';
 }
