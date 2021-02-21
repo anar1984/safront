@@ -400,7 +400,7 @@ var be = {
             var paramData = innerData.PARAM_DATA;
             var paramData4IN = innerData.PARAM_DATA_4_IN;
 
-            
+
 
             var inputList = be.ExecAPI.GetInputsByAPI(apiId);
             var inputKV = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
@@ -419,7 +419,7 @@ var be = {
 
 
             inputKV = $.extend(inputKV, paramData);
-            
+
             try {
                 inputKV.currentUserField = (paramData4IN.currentUserField) ? paramData4IN.currentUserField : "";
                 inputKV.currentDateField = (paramData4IN.currentDateField) ? paramData4IN.currentDateField : "";
@@ -819,14 +819,45 @@ var be = {
                     var o = cr_project_desc[extId];
 
                     if (o.fkRelatedScId) {
+                        var fnType = cr_js_list[o.fkRelatedScId].fnType;
+
                         var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
-                        var res = eval(fnName)(outData);
-                        if (res._table) {
-                            var mergeData = mergeTableData(res._table, outData._table);
-                            res._table = mergeData;
+
+                        if (fnType === 'core') {
+                            var res = eval(fnName)(outData);
+                            if (res._table) {
+                                var mergeData = mergeTableData(res._table, outData._table);
+                                res._table = mergeData;
+                            }
+                            var out = $.extend(outData, res);
+                            outData = out;
+                        } else if (fnType === 'java') {
+                            var dataCore = {kv: {}};
+                            dataCore.kv = outData;
+                            try {
+                                dataCore.kv.cookie = getToken();
+                            } catch (err) {
+                            }
+
+
+                            var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
+                            var res = resTemp.kv;
+
+                            try {
+                                if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
+                                    res._table = resTemp.tbl[0];
+                                }
+                            } catch (err) {
+                            }
+
+                            if (res._table) {
+                                var mergeData = mergeTableData(res._table, outData._table);
+                                res._table = mergeData;
+                            }
+                            var out = $.extend(outData, res);
+                            outData = out;
+
                         }
-                        var out = $.extend(outData, res);
-                        outData = out;
                     }
 
                     if (o.fkRelatedApiId) {
@@ -843,6 +874,25 @@ var be = {
                 }
             }
             return outData;
+        },
+
+        CallBackendApiService: function (fnName, data) {
+            var rs = "";
+            data.kv.fnName = fnName;
+            var that = this;
+            var dataCore = JSON.stringify(data);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceIoRunFunction",
+                type: "POST",
+                data: dataCore,
+                contentType: "application/json",
+                crossDomain: true,
+                async: false,
+                success: function (res) {
+                    rs = res;
+                }
+            });
+            return rs;
         },
 
         CallDeleteServices: function (apiId, data, innerData) {

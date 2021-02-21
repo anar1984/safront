@@ -69,12 +69,12 @@ function compileJava() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            if (res.kv.err.length > 0) {
+            if (res.kv && res.kv.err && res.kv.err.length > 0) {
                 Toaster.showError(JSON.stringify(res.kv.err));
             } else {
                 Toaster.showMessage("Code Compiled!")
             }
-            
+
         },
         error: function (res) {
             Toaster.showError(JSON.stringify(res));
@@ -4132,6 +4132,7 @@ $(document).on("click", ".jscode-row-tr", function (e) {
         success: function (res) {
             $('#jsCodeModal_fndescription').val(res.kv.fnDescription);
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
+            $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
