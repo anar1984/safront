@@ -653,16 +653,25 @@ $(document).on("click", ".toolbar .horizontalBtn", function () {
 
 $(document).on("click", ".toolbar .verticalBtn", function () {
 
-    $('.toolbar .cf').css('width', '60px');
+    $('.toolbar .cf').css('width', '80px');
     $('.toolbar .cf').css('height', 'auto');
     $('.toolbar .horizontalBtn').css('display', 'block');
     $('.toolbar .verticalBtn').css('display', 'none');
 
 });
 
-
+ function genIpoAPiBlock(apnm,){
+     return $('<div>')
+                 .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
+                 .append('<p>'+apnm+'</p>')
+                 .append('<p>'+apnm+'</p>');
+ }
+  
+   
 
 $(document).ready(function(){
+
+ 
     $(document).on('click','.btn-toggle1', function(e){
         
         var _this = $(this);
@@ -671,14 +680,31 @@ $(document).ready(function(){
         
         if(pnl.hasClass('is-close')) {
           _this.html('<i class="fas fa-chevron-right"></i>');
-          pnl.css('width','-1px');
+          pnl.css('width','0px');
+          pnl.css('display','none');
         } else {
           _this.html('<i class="fas fa-chevron-left"></i>');
           pnl.css('width','22%');
+          pnl.css('display','block');
         }    
         
         });
+    $(document).on('click','#api_block_opened', function(){
+
+        $('div[data-closed="apisect"]').toggle('fast');
+
+        $('div[data-toggle="apisect"]').toggleClass('col-12');
+        $('div[data-toggle="apisect"]').toggleClass('col-6');
         
+
+    })
+    $(document).on('dblclick','.feild_sect_opened', function(){
+
+      $(this).find('ul').toggle('fast')
+        
+
+    })
+
 })
 function addNewBug(el) {
     var bugDesc = $('#id').val();

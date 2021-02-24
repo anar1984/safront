@@ -805,13 +805,15 @@ table tr.active {
     max-width: 800px;
     /*margin: 10px 30px 10px 20px;*/
     border-radius: 4px;
-    background: white;
+    background: rgba(255, 255, 255, 0.596);
     /*background: #F4F5F7;*/
     padding: 20px 0px 20px 0px;
     border-style: solid;
-    border-color:white;
+    border-color:rgba(255, 255, 255, 0.596);
     /*border-color:#F4F5F7;*/
     margin: auto;
+    position: relative;
+    z-index: 555;
 }
 
 .gv-gui-design{

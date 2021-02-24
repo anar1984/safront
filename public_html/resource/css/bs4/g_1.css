@@ -2092,7 +2092,7 @@ label h6{
     padding: 0 !important;
     display: flex;
     flex-wrap: wrap;
-    width: 60px;
+    width: 80px;
     border-radius: 4px;
     box-shadow: 0 0 3px rgba(64,100,138,.3), 0 2px 4px #3b5c7f, 0 12px 18px rgba(64,100,138,.4);
 }
@@ -2131,9 +2131,17 @@ label h6{
 .toolbar li {
 
     list-style: none;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     text-align: center;
+}
+.toolbar li img {
+    width: 17px;
+    height: 15px;
+    display: block;
+    margin: auto;
+    align-items: center;
+   
 }
 .toolbar a{
     background: #f4f7f9;
@@ -2147,12 +2155,15 @@ label h6{
     border-left: 1px solid rgba(79,123,170,.4);
     border-right: 1px solid rgba(255,255,255,.3);
     color: #40648a;
-    display: block;
-    font-size: 20px;
-    height: 30px;
-    line-height: 30px;
+   
+    height: 40px;
     text-decoration: none;
+    line-height: 11px;
     text-shadow: 0 1px 0 #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 .toolbar li:first-child a {
     border-left: none;
@@ -2821,12 +2832,13 @@ ul.main-nav > li > div.sub-menu-block {
     max-width: 22%;
    
     white-space: nowrap;
-    
+    transition: display 0.5s ease;
     color: white;
     padding: 10px;
   }
 .is-close{
-    transition: all 0.5s ease;
+  display: none !important;
+  width: 0px;
 }
 .btn-toggle1{
     position: absolute;
@@ -3079,4 +3091,75 @@ ul.main-nav > li > div.sub-menu-block {
  }
 
 
- 
+  /*  ipo api section */
+
+  .ipo_api_card_new{
+    min-height: 40px;
+  
+    background-color: rgb(158,231,284);
+    font-size: 10px;
+    color: grey;
+    margin: 10px 5px;
+    margin-top: 80px;
+    border-radius: 2px;
+   
+    padding: 5px 0px;
+    box-shadow: grey 0.5px 0.5px 0.5px 0.5px;
+  }
+  .ipo_dtb_card_new{
+    min-height: 40px;
+  
+    background-color: rgb(249,220,190);
+    font-size: 10px;
+    color: grey;
+    margin: 10px 5px;
+    margin-top: 80px;
+    border-radius: 2px;
+   
+    padding: 5px 0px;
+    box-shadow: grey 0.5px 0.5px 0.5px 0.5px;
+  }
+  .ipo_api_card_new ul{
+      list-style: none;
+      padding: 0px !important;
+      display: none;
+      width: 50%;
+  }
+
+  .ipo_dtb_card_new ul{
+      list-style: none;
+      padding: 0px !important;
+      display: none;
+  }
+  .ipo_api_card_new p{
+    width: 100%;
+  }
+  
+  .ipo_api_card_new ul li{
+    background-color: rgb(249,220,190);
+    font-size: 10px;
+    color: grey;
+    border-radius: 2px;
+    margin: 5px 10px;
+    padding: 1px 5px;
+    line-break: anywhere;
+  }
+  .ipo_api_card_new .cst_ul li{
+    background-color: white;
+    font-size: 10px;
+    color: grey;
+    border-radius: 2px;
+    margin: 5px 10px;
+    padding: 1px 5px;
+    line-break: anywhere;
+  }
+
+  .ipo_dtb_card_new ul li{
+    background-color: white;
+    font-size: 10px;
+    color: grey;
+    border-radius: 2px;
+    margin: 5px 10px;
+    padding: 1px 5px;
+    line-break: anywhere;
+  }
