@@ -2825,7 +2825,46 @@ ul.main-nav > li > div.sub-menu-block {
     color: white;
     padding: 10px;
   }
-  
+.is-close{
+    transition: all 0.5s ease;
+}
+.btn-toggle1{
+    position: absolute;
+    top: 60px;
+    z-index: 1;
+    border-radius: 0 360px 360px 0;
+    opacity: .5;
+    margin-left: 0;
+    margin-right: 0;
+     padding: 0px;
+     border: none;
+    color: #000;
+    position: relative;
+    height: 20px;
+    margin: 0;
+    min-width: 38px;
+    padding: 0 0 0 10px;
+    display: inline-block;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    text-decoration: none;
+    text-align: center;
+    line-height: 22px;
+}
+
+.btn-toggle1:hover{
+    opacity: 1;
+    background-color: rgba(158,158,158,.2);
+}
+.btn-toggle1:focus{
+    outline: none;
+}
   .splitter11 {
     flex: 0 0 auto;
     width: 15px;  

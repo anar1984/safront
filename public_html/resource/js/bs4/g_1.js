@@ -589,10 +589,7 @@ $(document).on("click", ".openNavhide", function () {
 
 
 
-//setTimeout(function () {
-//    $(".toolbar").draggable({});
-//    console.log("QWqwdqwd");
-//}, 3200);
+
 
 $(document).on("click", ".cf li .inptadd", function () {
 
@@ -665,11 +662,24 @@ $(document).on("click", ".toolbar .verticalBtn", function () {
 
 
 
-
-
-
-
-
+$(document).ready(function(){
+    $(document).on('click','.btn-toggle1', function(e){
+        
+        var _this = $(this);
+        var pnl =$('#panelFirst1');
+        pnl.toggleClass('is-close');
+        
+        if(pnl.hasClass('is-close')) {
+          _this.html('<i class="fas fa-chevron-right"></i>');
+          pnl.css('width','-1px');
+        } else {
+          _this.html('<i class="fas fa-chevron-left"></i>');
+          pnl.css('width','22%');
+        }    
+        
+        });
+        
+})
 function addNewBug(el) {
     var bugDesc = $('#id').val();
     if (!(bugDesc))
