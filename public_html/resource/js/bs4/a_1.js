@@ -4491,6 +4491,32 @@ function insertNewGuiClassModal() {
         }
     });
 }
+function insertNewGuiClassModal2(val) {
+    var className = val;
+    if (!className)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.className = className;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewGuiClass",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            getAllGuiClassByProject();
+            $('#guiClassModal_newclass').val('');
+            $('.gui-class-row-tr[pid="' + res.kv.id + '"]').first().click();
+            addGuiClassToInput(global_var.current_project_id);
+        }
+    });
+    
+}
 
 
 
@@ -4999,6 +5025,46 @@ function getInputAttributeListDetails4Container(res) {
 function addInputAttributes(el) {
     var attrName = $('#gui_prop_in_attr_name').val();
     var attrVal = $('#gui_prop_in_attr_value').val();
+
+    if (!attrName || !attrVal) {
+        return;
+    }
+
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+
+    json.kv.attrName = attrName;
+    json.kv.attrValue = attrVal;
+    json.kv.fkInputId = global_var.current_us_input_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.attrType = "comp";
+
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewInputAttribute",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#gui_prop_in_attr_name').val('');
+            $('#gui_prop_in_attr_value').val('');
+            getInputAttributeList(global_var.current_us_input_id);
+            getInputAttributeByProjectManual();
+            new UserStory().genGUIDesign();
+        }
+    });
+}
+function addInputAttributes2(val,namval) {
+    var attrName = namval;
+    var attrVal = val;
 
     if (!attrName || !attrVal) {
         return;

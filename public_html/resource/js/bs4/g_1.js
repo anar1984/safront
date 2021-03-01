@@ -698,6 +698,20 @@ $(document).ready(function(){
         
 
     })
+    $(document).on('click','.addInputAttrPlus', function(){
+
+        var nmval =$(this).parents('tr').find('select').val();
+        var val =$(this).parents('tr').find('span').text();
+
+        addInputAttributes2(nmval,val)
+
+    })
+    $(document).on('click','.addInputClassPlus', function(){
+
+        var val =$(this).parents('tr').find('.clsLbVal').text();
+          insertNewGuiClassModal2(val);
+
+    })
     $(document).on('dblclick','.feild_sect_opened', function(){
 
       $(this).find('ul').toggle('fast')
