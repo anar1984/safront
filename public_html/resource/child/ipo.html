@@ -2716,7 +2716,7 @@
         </div>
     </div>
 </div>
-
+<script src="resource/js/bs4/loadmonaco.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -2767,7 +2767,31 @@ new LeaderLine(document.getElementById('test_id8569'), document.getElementById('
     });
 
 
+
   })
+  require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
+window.MonacoEnvironment = { getWorkerUrl: () => proxy };
+
+let proxy = URL.createObjectURL(new Blob([`
+	self.MonacoEnvironment = {
+		baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+	};
+	importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+`], { type: 'text/javascript' }));
+
+require(["vs/editor/editor.main"], function () {
+	let editor = monaco.editor.create(document.getElementById('test38748738'), {
+		value: [
+			'function x() {',
+			'\tconsole.log("Hello world!");',
+			'}'
+		].join('\n'),
+		language: 'javascript',
+		theme: 'vs-dark'
+	});
+});
+    
+
 </script>
 
 <!--end 10.08.2020 -->  
