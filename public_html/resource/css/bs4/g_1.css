@@ -2085,14 +2085,14 @@ label h6{
     /* margin: -51px 0 0 -136px; */
     position: absolute;
     top: 22%;
-    z-index: 5;
+    z-index: 1000;
     display: flex;
 }
 .toolbar ul{
     padding: 0 !important;
     display: flex;
     flex-wrap: wrap;
-    width: 80px;
+    width: 90px;
     border-radius: 4px;
     box-shadow: 0 0 3px rgba(64,100,138,.3), 0 2px 4px #3b5c7f, 0 12px 18px rgba(64,100,138,.4);
 }
@@ -2131,8 +2131,8 @@ label h6{
 .toolbar li {
 
     list-style: none;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     text-align: center;
 }
 .toolbar li img {
@@ -2155,12 +2155,12 @@ label h6{
     border-left: 1px solid rgba(79,123,170,.4);
     border-right: 1px solid rgba(255,255,255,.3);
     color: #40648a;
-   
-    height: 40px;
+    height: 100% ;
     text-decoration: none;
     line-height: 11px;
     text-shadow: 0 1px 0 #fff;
     display: flex;
+    padding: 5px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
