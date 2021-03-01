@@ -805,7 +805,7 @@ table tr.active {
     max-width: 800px;
     /*margin: 10px 30px 10px 20px;*/
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.596);
+    background: white;
     /*background: #F4F5F7;*/
     padding: 20px 0px 20px 0px;
     border-style: solid;
@@ -814,6 +814,15 @@ table tr.active {
     margin: auto;
     position: relative;
     z-index: 555;
+    
+/*    max-width: 800px;
+    border-radius: 4px;
+    background: white;
+    padding: 20px 0px;
+    border-style: solid;
+    border-color: white;
+    margin: auto;*/
+    
 }
 
 .gv-gui-design{
