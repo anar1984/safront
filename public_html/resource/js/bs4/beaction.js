@@ -1085,7 +1085,7 @@ var be = {
                         } else {
                             var id = $(element).attr('id');
                             var el1 = document.getElementById(id);
-                            triggerAPIAfter(el1, apiId, out);
+                            triggerAPIAfter(el1, apiId, out,dataJSON.kv);
                         }
                     } catch (err) {
                         console.log(err);

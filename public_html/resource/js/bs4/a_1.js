@@ -3030,6 +3030,7 @@ function clearTableBodyAfterApiCall(el, apiId) {
 
             if (f) {
                 $(this).find('tbody').html('');
+                f = false;
             }
         })
     }
