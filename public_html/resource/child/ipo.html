@@ -726,7 +726,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div  data-toggle="apisect" class="col-6">
+                    <div  data-toggle="apisect" class="col-12">
                         <div class="row">
                             <br><br><br><br><br><br>
     
@@ -2769,28 +2769,7 @@ new LeaderLine(document.getElementById('test_id8569'), document.getElementById('
 
 
   })
-  require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
-window.MonacoEnvironment = { getWorkerUrl: () => proxy };
 
-let proxy = URL.createObjectURL(new Blob([`
-	self.MonacoEnvironment = {
-		baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
-	};
-	importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-`], { type: 'text/javascript' }));
-
-require(["vs/editor/editor.main"], function () {
-	let editor = monaco.editor.create(document.getElementById('test38748738'), {
-		value: [
-			'function x() {',
-			'\tconsole.log("Hello world!");',
-			'}'
-		].join('\n'),
-		language: 'javascript',
-		theme: 'vs-dark'
-	});
-});
-    
 
 </script>
 

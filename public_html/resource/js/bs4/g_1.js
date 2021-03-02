@@ -653,7 +653,7 @@ $(document).on("click", ".toolbar .horizontalBtn", function () {
 
 $(document).on("click", ".toolbar .verticalBtn", function () {
 
-    $('.toolbar .cf').css('width', '80px');
+    $('.toolbar .cf').css('width', '90px');
     $('.toolbar .cf').css('height', 'auto');
     $('.toolbar .horizontalBtn').css('display', 'block');
     $('.toolbar .verticalBtn').css('display', 'none');
@@ -846,7 +846,7 @@ $(document).ready(function () {
     })
 
 
-
+    
 
 })
 

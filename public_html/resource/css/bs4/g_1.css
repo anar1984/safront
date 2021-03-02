@@ -2143,11 +2143,9 @@ label h6{
     align-items: center;
    
 }
-html, body, #test38748738 {
-	
-	
+#jsCodeModal_fnbody,#guiClassModal_classbody {
 	width: 100%;
-	height: 100%;
+	height: 200px;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
@@ -3101,7 +3099,9 @@ ul.main-nav > li > div.sub-menu-block {
 
 
   /*  ipo api section */
-
+  div[data-closed="apisect"]{
+      display: none;
+  }
   .ipo_api_card_new{
     min-height: 40px;
   
