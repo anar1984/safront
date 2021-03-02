@@ -4134,7 +4134,7 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fndescription').val(res.kv.fnDescription);
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
-            $('#jsCodeModal_fnbody').val(res.kv.fnBody);
+             window.editor1.setValue(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
@@ -4289,8 +4289,9 @@ function guiClassModal(el) {
 
 
 function jsEditorGenerate(){
+ 
     setTimeout(function(){ 
-        console.log('okeyjs');
+   
 
         require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
     window.MonacoEnvironment = { getWorkerUrl: () => proxy };
@@ -4304,23 +4305,23 @@ function jsEditorGenerate(){
     
     require(["vs/editor/editor.main"], function () {
         window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
-            value: [
-                'function x() {',
-                '\tconsole.log("Hello world!");',
-                '}'
-            ].join('\n'),
+            automaticLayout: true,
             language: 'javascript',
             theme: 'vs-dark'
         });
      
     });
-   
+
+    
     }, 200); 
+
+
+    
 }
 function cssEditorGenerate(){
     setTimeout(function(){ 
 
-        console.log('okeyclass');
+        
 
         require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
     window.MonacoEnvironment = { getWorkerUrl: () => proxy };
@@ -4334,11 +4335,7 @@ function cssEditorGenerate(){
     
     require(["vs/editor/editor.main"], function () {
          window.editor = monaco.editor.create(document.getElementById('guiClassModal_classbody'), {
-            value: [
-                'function x() {',
-                '\tconsole.log("Hello world!");',
-                '}'
-            ].join('\n'),
+           
             language: 'css',
             theme: 'vs-dark'
         });
@@ -4507,7 +4504,7 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
         async: true,
         success: function (res) {
             $('#guiClassModal_classname').val(res.kv.className);
-            $('#guiClassModal_classbody').val(res.kv.classBody);
+            window.editor.setValue(res.kv.classBody);
         }
     });
 })
