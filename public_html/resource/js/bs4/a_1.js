@@ -4260,19 +4260,105 @@ function showJSModal(jsId) {
 
 }
 
+let cdnh = true;
+let cdnh2 = true;
 
 function showJsCodeModal() {
     $('#jsCodeModal').modal('show');
     getAllJsCodeByProject();
     loadApisToComboOnJSCode();
+
+    if(cdnh){
+        jsEditorGenerate();
+
+        cdnh=false;
+    }
 }
 
 function guiClassModal(el) {
     $('#guiClassModal').modal('show');
     getAllGuiClassByProject();
+    if(cdnh2){
+        cssEditorGenerate();
+
+        cdnh2=false;
+    }
+ 
+ 
 }
 
 
+function jsEditorGenerate(){
+    setTimeout(function(){ 
+        console.log('okeyjs');
+
+        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
+    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
+    
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+    `], { type: 'text/javascript' }));
+    
+    require(["vs/editor/editor.main"], function () {
+        window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
+            value: [
+                'function x() {',
+                '\tconsole.log("Hello world!");',
+                '}'
+            ].join('\n'),
+            language: 'javascript',
+            theme: 'vs-dark'
+        });
+     
+    });
+   
+    }, 200); 
+}
+function cssEditorGenerate(){
+    setTimeout(function(){ 
+
+        console.log('okeyclass');
+
+        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
+    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
+    
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+    `], { type: 'text/javascript' }));
+    
+    require(["vs/editor/editor.main"], function () {
+         window.editor = monaco.editor.create(document.getElementById('guiClassModal_classbody'), {
+            value: [
+                'function x() {',
+                '\tconsole.log("Hello world!");',
+                '}'
+            ].join('\n'),
+            language: 'css',
+            theme: 'vs-dark'
+        });
+     
+    });
+ 
+    }, 200); 
+}
+$(document).on('focusout','#guiClassModal_classbody', function(){
+
+    var value =window.editor.getValue();
+    
+    updateGuiClassBody(value)
+})
+$(document).on('focusout','#jsCodeModal_fnbody', function(){
+
+    var value =window.editor1.getValue();
+    
+    updateJSChange(value, "fnBody")
+})
 function getAllGuiClassByProject() {
 
     if (!global_var.current_project_id)
@@ -4318,7 +4404,7 @@ function getAllGuiClassByProjectDetails(res) {
 
 
 function updateGuiClassBody(el) {
-    var classBody = $(el).val();
+    var classBody = el;
     if (!current_clicked_class_id || !classBody)
         return;
 
@@ -9840,13 +9926,13 @@ function updateJSChange4IsGlobal(el) {
 
 function updateJSChange(el, ustype) {
     try {
-        if (ustype.lentgh === 0 || $(el).val().lentgh === 0) {
+        if (ustype.lentgh === 0 || el.lentgh === 0) {
             return;
         }
     } catch (e) {
         return;
     }
-    updateJSChangeDetails($(el).val(), ustype);
+    updateJSChangeDetails(el, ustype);
 }
 
 function updateJSChangeDetails(val, ustype) {
