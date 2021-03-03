@@ -4318,6 +4318,36 @@ function jsEditorGenerate(){
 
     
 }
+function jsEditorFullGenerate(){
+ 
+    setTimeout(function(){ 
+   
+
+        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
+    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
+    
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+    `], { type: 'text/javascript' }));
+    
+    require(["vs/editor/editor.main"], function () {
+        window.editor3 = monaco.editor.create(document.getElementById('edit_full_screen'), {
+           
+            language: 'javascript',
+            theme: 'vs-dark'
+        });
+     
+    });
+
+    
+    }, 200); 
+
+
+    
+}
 function cssEditorGenerate(){
     setTimeout(function(){ 
 
@@ -4356,6 +4386,28 @@ $(document).on('focusout','#jsCodeModal_fnbody', function(){
     
     updateJSChange(value, "fnBody")
 })
+let FullSc= true;
+$(document).on('click','.editor_full_screenBt', function(){
+    $('#full_screen_editor_modal').modal('show');
+    if(FullSc){
+
+        jsEditorFullGenerate();
+        FullSc= false;
+    }
+    var val3 = window.editor1.getValue();
+    window.editor3.setValue(val3);
+    
+    
+})
+$(document).on('click','.close_full_scree_editor', function(){
+
+    $('#full_screen_editor_modal').modal('hide');
+    var val1 = window.editor3.getValue();
+    window.editor1.setValue(val1);
+  
+    updateJSChange(val1, "fnBody")
+})
+
 function getAllGuiClassByProject() {
 
     if (!global_var.current_project_id)
