@@ -4384,7 +4384,7 @@ $(document).on('focusout','#jsCodeModal_fnbody', function(){
 
     var value =window.editor1.getValue();
     
-    updateJSChange(value, "fnBody")
+    updateJSChangeDetails(value, "fnBody")
 })
 let FullSc= true;
 $(document).on('click','.editor_full_screenBt', function(){
@@ -4405,7 +4405,7 @@ $(document).on('click','.close_full_scree_editor', function(){
     var val1 = window.editor3.getValue();
     window.editor1.setValue(val1);
   
-    updateJSChange(val1, "fnBody")
+    updateJSChangeDetails(val1, "fnBody")
 })
 
 function getAllGuiClassByProject() {
@@ -4535,7 +4535,6 @@ var current_clicked_class_id = "";
 $(document).on("click", ".gui-class-row-tr", function (e) {
     $('.gui-class-row-tr').removeClass('gui-class-row-tr-active');
     $(this).addClass('gui-class-row-tr-active');
-
     var val = $(this).attr('pid');
     if (!val) {
         return;
@@ -4646,10 +4645,10 @@ function insertNewGuiClassModal2(val) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            
+            addGuiClassToInputCore(res.kv.id);
             getAllGuiClassByProject();
-            $('#guiClassModal_newclass').val('');
-            $('.gui-class-row-tr[pid="' + res.kv.id + '"]').first().click();
-            addGuiClassToInput(global_var.current_project_id);
+              
         }
     });
     
@@ -4739,6 +4738,12 @@ function addGuiClassToInput4Container(el) {
 
 function addGuiClassToInput(el) {
     var classId = $("#gui_prop_in_gui_class_list").val();
+    addGuiClassToInputCore(classId);
+   
+}
+
+function addGuiClassToInputCore(el) {
+    var classId =el;
     if (!classId)
         return;
 
@@ -4757,6 +4762,7 @@ function addGuiClassToInput(el) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
@@ -4803,7 +4809,7 @@ function showClassDetails(classId) {
 }
 
 function getInputCompClassListDetails(res) {
-    var table = $('#input_class_list_in_component');
+    var table = $('.input_class_list_in_component');
     table.html('');
     try {
         var obj = res.tbl[0].r;
@@ -5281,7 +5287,7 @@ function setInputAttributesReverse4Component(el) {
 
 function getInputAttributeListDetails(res) {
 
-    var table = $('#input_attributes_list_in_component');
+    var table = $('.input_attributes_list_in_component');
     table.html('');
 
     try {
@@ -9974,7 +9980,7 @@ function updateJSChange4IsGlobal(el) {
 
 
 function updateJSChange(el, ustype) {
-    var val  = $(el).val();
+    var val = $(el).val();
     try {
         if (ustype.lentgh === 0 || val.lentgh === 0) {
             return;
