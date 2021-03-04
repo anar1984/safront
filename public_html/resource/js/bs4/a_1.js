@@ -4535,7 +4535,6 @@ var current_clicked_class_id = "";
 $(document).on("click", ".gui-class-row-tr", function (e) {
     $('.gui-class-row-tr').removeClass('gui-class-row-tr-active');
     $(this).addClass('gui-class-row-tr-active');
-
     var val = $(this).attr('pid');
     if (!val) {
         return;
@@ -4646,10 +4645,10 @@ function insertNewGuiClassModal2(val) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            console.log('2 kecdi');
+            addGuiClassToInput2(global_var.current_project_id);
             getAllGuiClassByProject();
-            $('#guiClassModal_newclass').val('');
-            $('.gui-class-row-tr[pid="' + res.kv.id + '"]').first().click();
-            addGuiClassToInput(global_var.current_project_id);
+              
         }
     });
     
@@ -4739,6 +4738,33 @@ function addGuiClassToInput4Container(el) {
 
 function addGuiClassToInput(el) {
     var classId = $("#gui_prop_in_gui_class_list").val();
+    
+    if (!classId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkClassId = classId;
+    json.kv.fkInputId = global_var.current_us_input_id;
+    json.kv.relType = "comp";
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getInputCompClassList();
+            getInputClassRelByProjectManual();
+            new UserStory().genGUIDesign();
+        }
+    });
+}
+function addGuiClassToInput2(el) {
+    var classId =el;
     if (!classId)
         return;
 
@@ -4803,7 +4829,7 @@ function showClassDetails(classId) {
 }
 
 function getInputCompClassListDetails(res) {
-    var table = $('#input_class_list_in_component');
+    var table = $('.input_class_list_in_component');
     table.html('');
     try {
         var obj = res.tbl[0].r;

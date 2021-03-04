@@ -710,6 +710,7 @@ $(document).ready(function(){
 
         var val =$(this).parents('tr').find('.clsLbVal').text();
           insertNewGuiClassModal2(val);
+       
 
     })
     $(document).on('dblclick','.feild_sect_opened', function(){
