@@ -700,7 +700,7 @@ $(document).ready(function(){
     })
     $(document).on('click','.addInputAttrPlus', function(){
 
-        var nmval =$(this).parents('tr').find('select').val();
+        var nmval =$(this).parents('tr').find('.select_fell').val();
         var val =$(this).parents('tr').find('span').text();
 
         addInputAttributes2(nmval,val)

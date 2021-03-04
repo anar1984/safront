@@ -4384,7 +4384,7 @@ $(document).on('focusout','#jsCodeModal_fnbody', function(){
 
     var value =window.editor1.getValue();
     
-    updateJSChange(value, "fnBody")
+    updateJSChangeDetails(value, "fnBody")
 })
 let FullSc= true;
 $(document).on('click','.editor_full_screenBt', function(){
@@ -4405,7 +4405,7 @@ $(document).on('click','.close_full_scree_editor', function(){
     var val1 = window.editor3.getValue();
     window.editor1.setValue(val1);
   
-    updateJSChange(val1, "fnBody")
+    updateJSChangeDetails(val1, "fnBody")
 })
 
 function getAllGuiClassByProject() {
@@ -5281,7 +5281,7 @@ function setInputAttributesReverse4Component(el) {
 
 function getInputAttributeListDetails(res) {
 
-    var table = $('#input_attributes_list_in_component');
+    var table = $('.input_attributes_list_in_component');
     table.html('');
 
     try {
@@ -9974,14 +9974,15 @@ function updateJSChange4IsGlobal(el) {
 
 
 function updateJSChange(el, ustype) {
+    var val = $(el).val();
     try {
-        if (ustype.lentgh === 0 || el.lentgh === 0) {
+        if (ustype.lentgh === 0 || val.lentgh === 0) {
             return;
         }
     } catch (e) {
         return;
     }
-    updateJSChangeDetails(el, ustype);
+    updateJSChangeDetails(val, ustype);
 }
 
 function updateJSChangeDetails(val, ustype) {
