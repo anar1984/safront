@@ -9974,14 +9974,15 @@ function updateJSChange4IsGlobal(el) {
 
 
 function updateJSChange(el, ustype) {
+    var val  = $(el).val();
     try {
-        if (ustype.lentgh === 0 || el.lentgh === 0) {
+        if (ustype.lentgh === 0 || val.lentgh === 0) {
             return;
         }
     } catch (e) {
         return;
     }
-    updateJSChangeDetails(el, ustype);
+    updateJSChangeDetails(val, ustype);
 }
 
 function updateJSChangeDetails(val, ustype) {
@@ -9999,11 +10000,7 @@ function updateJSChangePure(val, ustype, jsCodeId) {
     }
 
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
     json.kv.id = jsCodeId;
     json.kv.type = ustype;
     json.kv.value = val;
