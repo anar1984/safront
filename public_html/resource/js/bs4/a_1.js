@@ -4645,8 +4645,8 @@ function insertNewGuiClassModal2(val) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log('2 kecdi');
-            addGuiClassToInput2(global_var.current_project_id);
+            
+            addGuiClassToInputCore(global_var.current_project_id);
             getAllGuiClassByProject();
               
         }
@@ -4738,32 +4738,11 @@ function addGuiClassToInput4Container(el) {
 
 function addGuiClassToInput(el) {
     var classId = $("#gui_prop_in_gui_class_list").val();
-    
-    if (!classId)
-        return;
-
-    var json = initJSON();
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.fkClassId = classId;
-    json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.relType = "comp";
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            getInputCompClassList();
-            getInputClassRelByProjectManual();
-            new UserStory().genGUIDesign();
-        }
-    });
+    addGuiClassToInputCore(classId);
+   
 }
-function addGuiClassToInput2(el) {
+
+function addGuiClassToInputCore(el) {
     var classId =el;
     if (!classId)
         return;
@@ -4783,6 +4762,7 @@ function addGuiClassToInput2(el) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
