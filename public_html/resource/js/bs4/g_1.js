@@ -703,13 +703,14 @@ $(document).ready(function(){
         var nmval =$(this).parents('tr').find('.select_fell').val();
         var val =$(this).parents('tr').find('span').text();
 
-        addInputAttributes2(nmval,val)
+        addInputAttributesCore(nmval,val);
+        $(this).parents('tr').find('.select_fell').val('');
 
     })
     $(document).on('click','.addInputClassPlus', function(){
 
         var val =$(this).parents('tr').find('.clsLbVal').text();
-          insertNewGuiClassModal2(val);
+        insertNewGuiClassModalCore(val);
        
 
     })
@@ -718,6 +719,22 @@ $(document).ready(function(){
       $(this).find('ul').toggle('fast')
         
 
+    })
+    $(document).on('click','.removeAttrSingle', function(){
+
+        $(this).parent().attr('data-rmvc','1')
+
+        var attrs= $(this).parents('td').find('[data-rmvc=0]');
+
+         var nmval=$(this).parents('tr').find('.attr-name').text();
+         $(this).parents('tr').find('.attr_rmv_sabtn').first().click();
+         for (let i = 0; i < attrs.length; i++) {
+            var val34=attrs[i].innerText;
+            addInputAttributesCore(val34,nmval);
+         }
+          
+        $('[data-rmvc=1]').remove();
+         
     })
 
 })

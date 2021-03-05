@@ -4605,29 +4605,9 @@ function insertNewClassDirect4Container(el) {
 
 function insertNewGuiClassModal() {
     var className = $('#guiClassModal_newclass').val();
-    if (!className)
-        return;
-
-    var json = initJSON();
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.className = className;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmInsertNewGuiClass",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            getAllGuiClassByProject();
-            $('#guiClassModal_newclass').val('');
-            $('.gui-class-row-tr[pid="' + res.kv.id + '"]').first().click();
-        }
-    });
+    insertNewGuiClassModalCore(className)
 }
-function insertNewGuiClassModal2(val) {
+function insertNewGuiClassModalCore(val) {
     var className = val;
     if (!className)
         return;
@@ -4646,7 +4626,7 @@ function insertNewGuiClassModal2(val) {
         async: false,
         success: function (res) {
             
-            addGuiClassToInputCore(global_var.current_project_id);
+            addGuiClassToInputCore(res.kv.id);
             getAllGuiClassByProject();
               
         }
@@ -5169,43 +5149,9 @@ function addInputAttributes(el) {
     var attrName = $('#gui_prop_in_attr_name').val();
     var attrVal = $('#gui_prop_in_attr_value').val();
 
-    if (!attrName || !attrVal) {
-        return;
-    }
-
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-
-    json.kv.attrName = attrName;
-    json.kv.attrValue = attrVal;
-    json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.fkBacklogId = global_var.current_backlog_id;
-    json.kv.attrType = "comp";
-
-
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmInsertNewInputAttribute",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            $('#gui_prop_in_attr_name').val('');
-            $('#gui_prop_in_attr_value').val('');
-            getInputAttributeList(global_var.current_us_input_id);
-            getInputAttributeByProjectManual();
-            new UserStory().genGUIDesign();
-        }
-    });
+    addInputAttributesCore(attrVal,attrName)
 }
-function addInputAttributes2(val,namval) {
+function addInputAttributesCore(val,namval) {
     var attrName = namval;
     var attrVal = val;
 
@@ -5289,22 +5235,31 @@ function getInputAttributeListDetails(res) {
 
     var table = $('.input_attributes_list_in_component');
     table.html('');
-
+      
     try {
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];
-            var tr = $("<tr>")
-                    .attr('onclick', 'setInputAttributesReverse4Component(this)')
-                    .append($('<td>').addClass('attr-name').text(o.attrName))
-                    .append($('<td>').addClass('attr-value').text(o.attrValue))
-                    .append($('<td>').append($('<i>')
-                            .css("cursor", "pointer")
-                            .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
-                            .addClass("fa fa-trash")));
+            var temsp = o.attrValue.split(",");
+            var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)');
 
-            table.append(tr);
-
+                tr.append($('<td>').addClass('attr-name').text(o.attrName));
+            var td =$('<td>').addClass('attr-value');
+                  for (var c = 0; c < temsp.length; c++) {
+                      
+                        td.append($('<span>')
+                                    .addClass('cstm_spn_attr')
+                                    .attr('data-rmvc','0')
+                                    .text(temsp[c])
+                                    .append('<i  class="removeAttrSingle fas fa-times"></i>'));
+                   }
+               tr.append(td);
+               tr.append($('<td>').append($('<i>')
+               .css("cursor", "pointer")
+               .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
+               .addClass("fa fa-trash attr_rmv_sabtn")));
+               table.append(tr);
+             
         }
     } catch (err) {
     }

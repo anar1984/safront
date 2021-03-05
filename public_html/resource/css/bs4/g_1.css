@@ -3219,7 +3219,7 @@ ul.main-nav > li > div.sub-menu-block {
     background-color: #4ecdc4;
 }
 .cst_table123 tr:nth-of-type(even) td {
-    background-color: #d9f4f2;
+    background-color: #D3E0E5;
 }
 .cst_table123 .total th {
     background-color: white;
@@ -3240,7 +3240,7 @@ ul.main-nav > li > div.sub-menu-block {
         display: none;
    }
     .cst_table123 tr:nth-of-type(even) td:first-child {
-        background-color: #d9f4f2;
+        background-color: #D3E0E5;
    }
     .cst_table123 tr:nth-of-type(odd) td:first-child {
         background-color: white;
@@ -3309,4 +3309,32 @@ ul.main-nav > li > div.sub-menu-block {
    flex-wrap: wrap;
 }
 
-
+.input_attributes_list_in_component .cstm_spn_attr{
+     
+    margin: 3px;
+    
+    border-radius: 2px;
+    border: 1px solid black;
+    position: relative;
+}
+.input_attributes_list_in_component .attr-value{
+     
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.input_attributes_list_in_component .cstm_spn_attr i{
+   
+    border-radius: 4px;
+    color: grey;
+    font-size: 13px;
+    margin: 0 0px 0 3px;
+    padding: 3px 7px;
+    
+}
+.input_attributes_list_in_component .cstm_spn_attr i:hover {
+    background: lightcoral; 
+    color: white;
+      
+}
