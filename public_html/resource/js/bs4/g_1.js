@@ -700,10 +700,33 @@ $(document).ready(function(){
     })
     $(document).on('click','.addInputAttrPlus', function(){
 
-        var nmval =$(this).parents('tr').find('.select_fell').val();
-        var val =$(this).parents('tr').find('span').text();
+        var val =$(this).parents('tr').find('.select_fell').val();
+        
+        console.log(val);
 
-        addInputAttributesCore(nmval,val);
+        var nmval =$(this).parents('tr').find('span').text();
+        
+        var checkt=$(this).parents('tr').find('.select_fell').attr('type');
+            
+
+         if(checkt==='checkbox'){
+
+          var check=$(this).parents('tr').find('.select_fell');
+            if(check.prop("checked") == true){
+                addInputAttributesCore(nmval,1);
+                return
+            }
+            else if(check.prop("checked") == false){
+                addInputAttributesCore(nmval,'0');
+                return
+            }
+         }else{
+
+            addInputAttributesCore(nmval,val);
+         }
+
+         
+        
         $(this).parents('tr').find('.select_fell').val('');
 
     })

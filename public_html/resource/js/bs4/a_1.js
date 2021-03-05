@@ -5149,9 +5149,9 @@ function addInputAttributes(el) {
     var attrName = $('#gui_prop_in_attr_name').val();
     var attrVal = $('#gui_prop_in_attr_value').val();
 
-    addInputAttributesCore(attrVal,attrName)
+    addInputAttributesCore(attrName,attrVal)
 }
-function addInputAttributesCore(val,namval) {
+function addInputAttributesCore(namval,val) {
     var attrName = namval;
     var attrVal = val;
 
