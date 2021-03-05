@@ -9961,11 +9961,7 @@ function updateJSChangePure(val, ustype, jsCodeId) {
     }
 
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
     json.kv.id = jsCodeId;
     json.kv.type = ustype;
     json.kv.value = val;
