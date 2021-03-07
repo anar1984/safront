@@ -645,7 +645,7 @@
             <!--start 10.08.2020   -->
             <div class='row dragsection'>
                
-                <div style="margin-left: 5px;" class="col-12 row gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
+                <div  class="col-12 row gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
 
                     <div data-closed="apisect" class="col-1 ipo_dtb_section ipo_dtb_sect_right">
                         <div class="ipo_dtb_card_new feild_sect_opened col-11 text-center">
@@ -889,8 +889,8 @@
                             <a class="nav-link nav-link-custom tool-item"  >
                                 <label class="containerA">
                                     <input type="checkbox" id="lp-draggable-mode" class="dragCheckbox">
-                                    <span class="checkmark1"><i class="far fa-stop-circle"></i> <br> Draggable</span>
-                                    <span class="checkmark2"><i class="fas fa-stop-circle"></i><br> Undraggable</span>
+                                    <span class="checkmark1 togglemark1 "><i class="far fa-stop-circle"></i> <br> Draggable</span>
+                                    <span class="checkmark2 togglemark2 "><i class="fas fa-stop-circle"></i><br> Undraggable</span>
                                 </label>
 
                             </a>
@@ -900,7 +900,7 @@
                         <li class="nav-item gui-design-is-api1" id="drag-btn-icon">
                             <a class="nav-link nav-link-custom tool-item" onclick="guiClassModal(this)" >
                                 <label class="containerA">
-                                    <input type="checkbox" id="lp-draggable-mode" class="classModalWizard">
+                                    <input type="checkbox"  class="classModalWizard">
                                     <span class="checkmark1"><i class="fab fa-css3-alt"></i> <br> Class</span>
                                 </label>
 
@@ -911,7 +911,7 @@
                         <li class="nav-item gui-design-is-api1" id="drag-btn-icon">
                             <a class="nav-link nav-link-custom tool-item" onclick='showJsCodeModal()'>
                                 <label class="containerA">
-                                    <input type="checkbox" id="lp-draggable-mode" class="jsModalWizard">
+                                    <input type="checkbox"  class="jsModalWizard">
                                     <span class="checkmark1"><i class="fab fa-js-square"></i> <br> JS</span>
                                 </label>
 
@@ -922,8 +922,16 @@
                             <a class="nav-link nav-link-custom tool-item" >
                                 <label class="containerA">
                                     <input type="checkbox" id="api_block_opened" >
-                                    <span class="checkmark1"><i class="fas fa-database"></i> <br> Api </span>
+                                    <span class="checkmark1"><i class="fas fa-database"></i> <br> Relation </span>
                                 </label>
+
+                            </a>
+                        </li>
+                        <li class="nav-item gui-design-is-api" id="apis-list-btn-icon">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#ipo-tab-setting-apis_list" id="ipo-tab-setting-input-description-properties" >
+                                <i class="fas fa-exchange-alt"></i>
+                                <br>
+                                <span >Api</span>
 
                             </a>
                         </li>
@@ -2585,6 +2593,26 @@
                                                       onchange=" new UserStory().setGUIComponentContent()"
                                                       id="gui_input_css_style"></textarea>
                                         </div>
+
+
+                                    </div>
+                                </div> 
+
+                            </div>
+                            <div id="ipo-tab-setting-apis_list"  class="container tab-pane">
+
+                                <!-- revan--ipo-1-hisse-setting 2-->
+                                <div class="col " id='ipo-1-hisse-setting'
+                                     style='display: block;'>
+                                    <div class="row"  >
+
+                                        <table class="table table-hover table-borderless table-odd-style" >
+                                            <tbody id="api_list_side_bar">
+
+                                            </tbody>
+
+
+                                        </table>
 
 
                                     </div>

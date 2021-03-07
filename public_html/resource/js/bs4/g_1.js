@@ -288,8 +288,8 @@ $(document).on("click", "#general-btn-icon", function () {
     ch5 = 0;
     ch6 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
-    $('#guid-desigin-main-div-id').removeClass('col-11');
-    $('#guid-desigin-main-div-id').addClass('col-8');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
     $('.home_icon_menu-item').css('right', '27%')
     $('.home_icon_menu-open-button').css('right', '27%')
 
@@ -298,8 +298,8 @@ $(document).on("click", "#general-btn-icon", function () {
         $('#gui-desigin-component-view-main-div-id').css('display', 'none');
         $('#ipo-tab-setting-properties').removeClass('active');
         $('.tool-item').removeClass('active');
-        $('#guid-desigin-main-div-id').removeClass('col-8');
-        $('#guid-desigin-main-div-id').addClass('col-11');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
         $('.home_icon_menu-item').css('right', '7%');
         $('.home_icon_menu-open-button').css('right', '7%');
     }
@@ -317,8 +317,8 @@ $(document).on("click", "#component-btn-icon", function () {
     ch5 = 0;
     ch6 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
-    $('#guid-desigin-main-div-id').removeClass('col-11');
-    $('#guid-desigin-main-div-id').addClass('col-8');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
     $('.home_icon_menu-item').css('right', '27%')
     $('.home_icon_menu-open-button').css('right', '27%')
     if (ch2 == 2) {
@@ -326,8 +326,35 @@ $(document).on("click", "#component-btn-icon", function () {
         $('#gui-desigin-component-view-main-div-id').css('display', 'none');
         $('#ipo-tab-setting-properties').removeClass('active');
         $('.tool-item').removeClass('active');
-        $('#guid-desigin-main-div-id').removeClass('col-8');
-        $('#guid-desigin-main-div-id').addClass('col-11');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
+        $('.home_icon_menu-item').css('right', '7%');
+        $('.home_icon_menu-open-button').css('right', '7%');
+
+    }
+
+})
+$(document).on("click", "#apis-list-btn-icon", function () {
+
+    $('#ipo-tab-setting-apis_list').addClass('active');
+    ch2++;
+    ch = 0;
+    ch3 = 0;
+    ch4 = 0;
+    ch5 = 0;
+    ch6 = 0;
+    $('#gui-desigin-component-view-main-div-id').css('display', 'block');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
+    $('.home_icon_menu-item').css('right', '27%')
+    $('.home_icon_menu-open-button').css('right', '27%')
+    if (ch2 == 2) {
+        ch2 = 0;
+        $('#gui-desigin-component-view-main-div-id').css('display', 'none');
+        $('#ipo-tab-setting-properties').removeClass('active');
+        $('.tool-item').removeClass('active');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
         $('.home_icon_menu-item').css('right', '7%');
         $('.home_icon_menu-open-button').css('right', '7%');
 
@@ -345,8 +372,8 @@ $(document).on("click", "#container-btn-icon", function () {
     ch5 = 0;
     ch6 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
-    $('#guid-desigin-main-div-id').removeClass('col-11');
-    $('#guid-desigin-main-div-id').addClass('col-8');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
     $('.home_icon_menu-item').css('right', '27%');
     $('.home_icon_menu-open-button').css('right', '27%');
     if (ch3 == 2) {
@@ -354,8 +381,8 @@ $(document).on("click", "#container-btn-icon", function () {
         $('#gui-desigin-component-view-main-div-id').css('display', 'none');
         $('#ipo-tab-setting-container').removeClass('active');
         $('.tool-item').removeClass('active');
-        $('#guid-desigin-main-div-id').removeClass('col-8');
-        $('#guid-desigin-main-div-id').addClass('col-11');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
         $('.home_icon_menu-item').css('right', '7%');
         $('.home_icon_menu-open-button').css('right', '7%');
     }
@@ -373,8 +400,8 @@ $(document).on("click", "#canvas-btn-icon", function () {
     ch5 = 0;
     ch6 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
-    $('#guid-desigin-main-div-id').removeClass('col-11');
-    $('#guid-desigin-main-div-id').addClass('col-8');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
     $('.home_icon_menu-item').css('right', '27%')
     $('.home_icon_menu-open-button').css('right', '27%')
     if (ch4 == 2) {
@@ -383,8 +410,8 @@ $(document).on("click", "#canvas-btn-icon", function () {
         $('#gui-desigin-component-view-main-div-id').css('display', 'none');
         $('#ipo-tab-setting-canvas').removeClass('active');
         $('.tool-item').removeClass('active');
-        $('#guid-desigin-main-div-id').removeClass('col-8');
-        $('#guid-desigin-main-div-id').addClass('col-11');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
         $('.home_icon_menu-item').css('right', '7%')
         $('.home_icon_menu-open-button').css('right', '7%')
     }
@@ -467,8 +494,8 @@ $(document).on("click", "#animation-icon", function () {
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('.home_icon_menu-item').css('right', '27%');
     $('.home_icon_menu-open-button').css('right', '27%');
-    $('#guid-desigin-main-div-id').removeClass('col-11');
-    $('#guid-desigin-main-div-id').addClass('col-8');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
     if (ch6 == 2) {
         ch6 = 0;
 
@@ -477,8 +504,8 @@ $(document).on("click", "#animation-icon", function () {
         $('.home_icon_menu-item').css('right', '7%');
         $('.home_icon_menu-open-button').css('right', '7%');
         $('.tool-item').removeClass('active');
-        $('#guid-desigin-main-div-id').removeClass('col-8');
-        $('#guid-desigin-main-div-id').addClass('col-11');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
     }
 
 })
@@ -491,8 +518,8 @@ $(document).on("click", "#currentAll-btn-icon", function () {
 
 // draggable checkbok
 $(document).on("click", ".dragCheckbox", function () {
-    $('.checkmark2').toggle();
-    $('.checkmark1').toggle();
+    $('.togglemark1').toggle();
+    $('.togglemark2').toggle();
 
 })
 

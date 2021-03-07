@@ -12590,11 +12590,26 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         return ln;
     },
-    getUSListBlock: function (res) {
+    getUSListBlockUserStory: function (res) {
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
-            tbody.append(this.genUSLine(obj[n]));
+            if(obj[n].isApi==""){
+                tbody.append(this.genUSLine(obj[n]));
+            }
+        }
+
+        return tbody.html();
+    },
+    getUSListBlockApi: function (res) {
+        var obj = res.tbl[0].r;
+        var tbody = $('<tbody></tbody>');
+        for (var n = obj.length - 1; n >= 0; n--) {
+            if(obj[n].isApi=="1"){
+                tbody.append(this.genUSLine(obj[n]));
+            }
+            
+           
         }
 
         return tbody.html();
@@ -12606,8 +12621,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 return;
             }
             $('#container-us-body').html('');
-
-            $('#container-us-body').html(this.getUSListBlock(res));
+            
+                    $('#api_list_side_bar').html(this.getUSListBlockApi(res));      
+                    $('#container-us-body').html(this.getUSListBlockUserStory(res));
+            
 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0
@@ -12616,6 +12633,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setUSListsDetailedView: function () {
         this.setUSLists(global_var.current_backlog_list);
+      
     },
     setUSLists4KanbanViewDirect: function () {
         this.setUSLists4KanbanView();
@@ -13191,7 +13209,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
 
     genUSLine: function (o) {
-
+       
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
                 .append($("<input type='checkbox'>")
@@ -13239,7 +13257,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 //        td2 += '<div class="us-list-item   us-item-status-' + o.backlogStatus + '">' + o.backlogStatus + '</div>';
         td2 += '</span>'
 
-        tr.append($('<td style="padding:13px 20px;" class="us-td-list pointer us-td-list-ozel ' + isSelected + " " + pointer_is_selected + '"></td>').html(td2));
+        tr.append($('<td style="padding:13px 20px;" class="us-td-list pointer  us-td-list-ozel ' + isSelected + " " + pointer_is_selected + '"></td>').html(td2));
 
 
         return tr;
@@ -25096,6 +25114,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             crossDomain: true,
             async: true,
             success: function (res) {
+                
                 Analytics.setUSLists(res);
             },
             error: function () {

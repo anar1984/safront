@@ -3338,3 +3338,9 @@ ul.main-nav > li > div.sub-menu-block {
     color: white;
       
 }
+
+#ipo-tab-setting-apis_list{
+    height: 100vh;
+    border: 10px solid #f1f3f4;
+    padding: 0px 0px 0px 0px;
+}
