@@ -5225,7 +5225,7 @@ function getInputAttributeList(inputId) {
 
 function setInputAttributesReverse4Component(el) {
     var attrName = $(el).closest('tr').find('.attr-name').html();
-    var attrValue = $(el).closest('tr').find('.attr-value').html();
+    var attrValue = $(el).closest('tr').find('.attr-value cstm_spn_attr').text();
     $('#gui_prop_in_attr_name').val(attrName);
     $('#gui_prop_in_attr_value').val(attrValue);
 
@@ -14334,4 +14334,38 @@ var SCSourceManagement = {
         });
     }
 
+}
+
+
+function setApiIpoBlock(){
+  
+    var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
+    console.log(keys);
+                for (var k in keys) {
+
+                    var from = keys[k];
+                    var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
+                    console.log(from,toKeys);
+                    for (var m in toKeys) {
+                        var to = toKeys[m];
+                        try {
+                            new LeaderLine(
+                                    document.getElementById(from),
+                                    document.getElementById(to),
+                                    {
+//                                    color: 'rgb(41,146,210)',
+                                        color: 'rgb(255,146,27)',
+                                        dash: true,
+                                        startPlug: 'square',
+                                        endPlug: 'arrow',
+                                        startSocket: 'right',
+                                        endSocket: 'left',
+                                    }
+                            );
+
+                        } catch (err) {
+                            console.log(err);
+                        }
+                    }
+                }
 }

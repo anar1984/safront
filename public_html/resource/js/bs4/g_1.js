@@ -121,8 +121,21 @@ $(function () {
     })
 
 
-
-
+  // search api list
+    $(document).on('keyup',"#search-api_list", function(){
+        var gsert = $(this).val();
+        console.log(gsert);
+        $("#api_list_side_bar tr .us-list-item").each( function() {
+            var sate = $(this).text();
+            console.log('okey 2');
+             if (sate.indexOf(gsert)!=-1) {
+                $(this).parents('tr').show();
+            }
+            else {
+                $(this).parents('tr').hide();
+            } 
+        })
+    })
 
 
 })
@@ -524,6 +537,8 @@ $(document).on("click", ".dragCheckbox", function () {
 })
 
 
+
+
 //  dragTable function
 function dragTable() {
     $('.defaultTable').dragtable();
@@ -722,37 +737,47 @@ $(document).ready(function(){
 
         $('div[data-toggle="apisect"]').toggleClass('col-12');
         $('div[data-toggle="apisect"]').toggleClass('col-6');
+        setApiIpoBlock();
         
 
     })
     $(document).on('click','.addInputAttrPlus', function(){
 
         var val =$(this).parents('tr').find('.select_fell').val();
-        
-        console.log(val);
-
+     
         var nmval =$(this).parents('tr').find('span').text();
         
-        var checkt=$(this).parents('tr').find('.select_fell').attr('type');
-            
+      
+            addInputAttributesCore(nmval,val);
 
-         if(checkt==='checkbox'){
+        $(this).parents('tr').find('.select_fell').val('');
 
-          var check=$(this).parents('tr').find('.select_fell');
+    })
+    $(document).on('click','.select_fell_check', function(){
+    
+
+        var nmval =$(this).parents('tr').find('span').text();
+        var addedVal =$('.input_attributes_list_in_component').find('tr').find('.attr-name');
+
+   
+        var check=$(this);
             if(check.prop("checked") == true){
                 addInputAttributesCore(nmval,1);
                 return
             }
             else if(check.prop("checked") == false){
-                addInputAttributesCore(nmval,'0');
+                for (let ind = 0; ind < addedVal.length; ind++) {
+            
+                    if(nmval===addedVal[ind].innerText){
+                       
+                        $(addedVal[ind]).parent().addClass('remv_second_attr');
+                      
+                   } 
+                }
+                $('.remv_second_attr').find('.attr_rmv_sabtn').first().click()
                 return
             }
-         }else{
-
-            addInputAttributesCore(nmval,val);
-         }
-
-         
+                  
         
         $(this).parents('tr').find('.select_fell').val('');
 
@@ -780,7 +805,7 @@ $(document).ready(function(){
          $(this).parents('tr').find('.attr_rmv_sabtn').first().click();
          for (let i = 0; i < attrs.length; i++) {
             var val34=attrs[i].innerText;
-            addInputAttributesCore(val34,nmval);
+            addInputAttributesCore(nmval,val34);
          }
           
         $('[data-rmvc=1]').remove();

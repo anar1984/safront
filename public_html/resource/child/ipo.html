@@ -353,14 +353,9 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td >
-                                            <i  class="addInputAttrPlus fa fa-plus" 
-                                              
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                      
 
                                     </tr>
                                     <tr>
@@ -370,14 +365,9 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-                                               
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                      
 
                                     </tr>
                                     <tr>
@@ -410,14 +400,9 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-                                             
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                        
 
                                     </tr>
                                     <tr>
@@ -426,14 +411,8 @@
                                             
                                         </td>
                                         <td style="padding:5px;">
-                                            
-                                     <select class="select_fell" style="width:100%;padding: 0px;
-                                            border-radius: 4px;
-                                            border: 1px solid gray;" >
-                                        <option value="fkUsersId">fkUsersId</option>
-                                      
-                                       
-                                    </select>
+                                            <input type="text" class="select_fell" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+
                                         </td>
                                         <td>
                                             <i class="addInputAttrPlus fa fa-plus" 
@@ -450,14 +429,9 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-                                               
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                        
 
                                     </tr>
                                     <tr>
@@ -467,7 +441,7 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
                                         <td>
                                             <i class="addInputAttrPlus fa fa-plus" 
@@ -484,14 +458,9 @@
                                         </td>
                                         <td style="padding:5px;">
                                             
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-                                               
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                       
 
                                     </tr>
                                     <tr>
@@ -500,14 +469,9 @@
                                             
                                         </td>
                                         <td style="padding:5px;">
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="fa addInputAttrPlus fa-plus" 
-                                             
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                       
 
                                     </tr>
                                     <tr>
@@ -516,14 +480,9 @@
                                             
                                         </td>
                                         <td style="padding:5px;">
-                                            <input class="select_fell" type="checkbox">
+                                            <input class="select_fell_check" type="checkbox">
                                         </td>
-                                        <td>
-                                            <i class="fa addInputAttrPlus fa-plus" 
-                                            
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
+                                       
 
                                     </tr>
                                 </tbody>
@@ -647,7 +606,7 @@
                
                 <div  class="col-12 row gui-design-is-api main-design-page" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
 
-                    <div data-closed="apisect" class="col-1 ipo_dtb_section ipo_dtb_sect_right">
+                    <div data-closed="apisect" class="col-1 ipo_dtb_section ipo_dtb_sect_left">
                         <div class="ipo_dtb_card_new feild_sect_opened col-11 text-center">
                             <span >DataBase</span>
                             <ul >
@@ -659,7 +618,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div data-closed="apisect" class="col-2 ipo_api_section ipo_api_sect_right">
+                    <div data-closed="apisect" class="col-2 ipo_api_section ipo_api_sect_left">
                         <div id="test_id8569" class="ipo_api_card_new row feild_sect_opened  text-center">
                             <p>Api</p>
                             <ul>
@@ -2605,8 +2564,13 @@
                                 <div class="col " id='ipo-1-hisse-setting'
                                      style='display: block;'>
                                     <div class="row"  >
-
-                                        <table class="table table-hover table-borderless table-odd-style" >
+                                        <div class="input-group mb-3 position-fixed" style="width: 22%;" >
+                                            <input type="text" id="search-api_list" class="form-control" placeholder="Search ......" aria-label="Recipient's username">
+                                            <div class="input-group-append">
+                                              <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                            </div>
+                                            </div>
+                                        <table class="table table-hover table-borderless table-odd-style" style="margin-top:10%" >
                                             <tbody id="api_list_side_bar">
 
                                             </tbody>
@@ -2745,6 +2709,7 @@ new LeaderLine(document.getElementById('test_id8569'), document.getElementById('
 //            addHeight()
         }
     });
+
 
 
 
