@@ -800,15 +800,16 @@ $(document).ready(function(){
         $(this).parent().attr('data-rmvc','1')
 
         var attrs= $(this).parents('td').find('[data-rmvc=0]');
-
+        var id = $(this).parents('tr').attr('data-rmv-id')
          var nmval=$(this).parents('tr').find('.attr-name').text();
-         $(this).parents('tr').find('.attr_rmv_sabtn').first().click();
-         for (let i = 0; i < attrs.length; i++) {
-            var val34=attrs[i].innerText;
-            addInputAttributesCore(nmval,val34);
-         }
-          
-        $('[data-rmvc=1]').remove();
+         if (confirm("Are you sure?")) {
+            removeInputAttributeCore(id);
+            for (let i = 0; i < attrs.length; i++) {
+                var val34=attrs[i].innerText;
+                addInputAttributesCore(nmval,val34);
+             }
+             $('[data-rmvc=1]').remove();
+        }
          
     })
 
