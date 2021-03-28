@@ -726,24 +726,27 @@ $(document).ready(function () {
 
     function loadStoryCardBody4Editor() {
         $('.test181').each(function () {
+            
             if ($(this).is(":checked")) {
                 var id = $(this).attr("id");
                 var bname = SACore.GetBacklogname(id);
-                if (id) {
-                    var inHTML = StoryCard.Get(id, "false");
-                    var div = $('<div>')
-                            .append($('<div>')
-                                    .css("padding", "5px 40px")
-                                    .append(inHTML));
-                    $(".fr-element").append(genusUserContainer(id, bname, div.html()));
-                    idgen++;
-                }
+                setTimeout(function(){
+                    if (id) {
+                        var inHTML = StoryCard.Get(id, "false");
+                        var div = $('<div>')
+                                .append($('<div>')
+                                        .css("padding", "5px 40px")
+                                        .append(inHTML));
+                        $(".fr-element").append(genusUserContainer(id, bname, div.html()));
+                        idgen++;
+                    }
+                }, 200);
+              
             }
         })
     }
 
 // choose user story closed
-
 
 
     $(document).on("click", ".Choose-userstory-popUpClosed", function () {
