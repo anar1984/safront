@@ -1691,7 +1691,7 @@ function SetConvertedDateByElement(element, date) {
         var day = date.substring(6, 8);
         var month = date.substring(4, 6);
         var year = date.substring(0, 4);
-        var d = year + "-" + month + "-" + day;
+        var d = day + "." + month + "." + year;
         $(element).val(d);
         $(element).text(d);
     } catch (e) {

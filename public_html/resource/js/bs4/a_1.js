@@ -2718,7 +2718,9 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
     var startLimit = (finalRes && finalRes.startLimit)
             ? finalRes.startLimit
             : "0";
+
     setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit);
+
     updateAttributeBasedOnData(el, data);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
@@ -3120,7 +3122,13 @@ function callTableRelationAPIs(el) {
                 var inputId = $(this).attr('rel_core_inputid');
                 var selectedfield = $(this).attr('rel_core_selected_field');
 
-                var id = $(this).find('.component-input-class').first().text();
+                var id = '';
+                var elem2 = $(this).find('.component-input-class').first();
+                if (elem2.attr('sa-type') === 'image') {
+                    id = elem2.attr('sa-data-value');
+                } else {
+                    id = elem2.text();
+                }
 //                var selectedfield = $(this).find('.component-input-class').first().attr('sa-selectedfield');
 
                 //add dependency for API Call classes and attributes
@@ -3171,9 +3179,14 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
         var o = obj[i];
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
                 .each(function () {
-                    $(this).find('.component-input-class').first().text(o[asyncData.selectedField]);
-                    $(this).find('.component-input-class').first().val(o[asyncData.selectedField]);
 
+                    var elem2 = $(this).find('.component-input-class').first();
+                    elem2.text(o[asyncData.selectedField]);
+                    elem2.val(o[asyncData.selectedField]);
+
+                    if (elem2.attr('sa-type') === 'image') {
+                        elem2.attr('src', fileUrl(o[asyncData.selectedField]))
+                    }
                     updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
                 });
     }
@@ -3240,6 +3253,8 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     } else if ($(el).attr('sa-type') === 'filelist') {
+         $(el).html('');
+     
         var res = val.split(global_var.vertical_seperator);
         for (var i = 0; i < res.length; i++) {
             try {
@@ -4134,7 +4149,7 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fndescription').val(res.kv.fnDescription);
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
-             window.editor1.setValue(res.kv.fnBody);
+            window.editor1.setValue(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
@@ -4268,143 +4283,143 @@ function showJsCodeModal() {
     getAllJsCodeByProject();
     loadApisToComboOnJSCode();
 
-    if(cdnh){
+    if (cdnh) {
         jsEditorGenerate();
 
-        cdnh=false;
+        cdnh = false;
     }
 }
 
 function guiClassModal(el) {
     $('#guiClassModal').modal('show');
     getAllGuiClassByProject();
-    if(cdnh2){
+    if (cdnh2) {
         cssEditorGenerate();
 
-        cdnh2=false;
+        cdnh2 = false;
     }
- 
- 
+
+
 }
 
 
-function jsEditorGenerate(){
- 
-    setTimeout(function(){ 
-   
+function jsEditorGenerate() {
 
-        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
-    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
-    
-    let proxy = URL.createObjectURL(new Blob([`
+    setTimeout(function () {
+
+
+        require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
+        window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+        let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
             baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
         };
         importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], { type: 'text/javascript' }));
-    
-    require(["vs/editor/editor.main"], function () {
-        window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
-            automaticLayout: true,
-            language: 'javascript',
-            theme: 'vs-dark'
+    `], {type: 'text/javascript'}));
+
+        require(["vs/editor/editor.main"], function () {
+            window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
+                automaticLayout: true,
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
         });
-     
-    });
-
-    
-    }, 200); 
 
 
-    
+    }, 200);
+
+
+
 }
-function jsEditorFullGenerate(){
- 
-    setTimeout(function(){ 
-   
+function jsEditorFullGenerate() {
 
-        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
-    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
-    
-    let proxy = URL.createObjectURL(new Blob([`
+    setTimeout(function () {
+
+
+        require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
+        window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+        let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
             baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
         };
         importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], { type: 'text/javascript' }));
-    
-    require(["vs/editor/editor.main"], function () {
-        window.editor3 = monaco.editor.create(document.getElementById('edit_full_screen'), {
-           
-            language: 'javascript',
-            theme: 'vs-dark'
+    `], {type: 'text/javascript'}));
+
+        require(["vs/editor/editor.main"], function () {
+            window.editor3 = monaco.editor.create(document.getElementById('edit_full_screen'), {
+
+                language: 'javascript',
+                theme: 'vs-dark'
+            });
+
         });
-     
-    });
-
-    
-    }, 200); 
 
 
-    
+    }, 200);
+
+
+
 }
-function cssEditorGenerate(){
-    setTimeout(function(){ 
+function cssEditorGenerate() {
+    setTimeout(function () {
 
-        
 
-        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' }});
-    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
-    
-    let proxy = URL.createObjectURL(new Blob([`
+
+        require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
+        window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+        let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
             baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
         };
         importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], { type: 'text/javascript' }));
-    
-    require(["vs/editor/editor.main"], function () {
-         window.editor = monaco.editor.create(document.getElementById('guiClassModal_classbody'), {
-           
-            language: 'css',
-            theme: 'vs-dark'
-        });
-     
-    });
- 
-    }, 200); 
-}
-$(document).on('focusout','#guiClassModal_classbody', function(){
+    `], {type: 'text/javascript'}));
 
-    var value =window.editor.getValue();
-    
+        require(["vs/editor/editor.main"], function () {
+            window.editor = monaco.editor.create(document.getElementById('guiClassModal_classbody'), {
+
+                language: 'css',
+                theme: 'vs-dark'
+            });
+
+        });
+
+    }, 200);
+}
+$(document).on('focusout', '#guiClassModal_classbody', function () {
+
+    var value = window.editor.getValue();
+
     updateGuiClassBody(value)
 })
-$(document).on('focusout','#jsCodeModal_fnbody', function(){
+$(document).on('focusout', '#jsCodeModal_fnbody', function () {
 
-    var value =window.editor1.getValue();
-    
+    var value = window.editor1.getValue();
+
     updateJSChangeDetails(value, "fnBody")
 })
-let FullSc= true;
-$(document).on('click','.editor_full_screenBt', function(){
+let FullSc = true;
+$(document).on('click', '.editor_full_screenBt', function () {
     $('#full_screen_editor_modal').modal('show');
-    if(FullSc){
+    if (FullSc) {
 
         jsEditorFullGenerate();
-        FullSc= false;
+        FullSc = false;
     }
     var val3 = window.editor1.getValue();
     window.editor3.setValue(val3);
-    
-    
+
+
 })
-$(document).on('click','.close_full_scree_editor', function(){
+$(document).on('click', '.close_full_scree_editor', function () {
 
     $('#full_screen_editor_modal').modal('hide');
     var val1 = window.editor3.getValue();
     window.editor1.setValue(val1);
-  
+
     updateJSChangeDetails(val1, "fnBody")
 })
 
@@ -4625,13 +4640,13 @@ function insertNewGuiClassModalCore(val) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            
+
             addGuiClassToInputCore(res.kv.id);
             getAllGuiClassByProject();
-              
+
         }
     });
-    
+
 }
 
 
@@ -4719,11 +4734,11 @@ function addGuiClassToInput4Container(el) {
 function addGuiClassToInput(el) {
     var classId = $("#gui_prop_in_gui_class_list").val();
     addGuiClassToInputCore(classId);
-   
+
 }
 
 function addGuiClassToInputCore(el) {
-    var classId =el;
+    var classId = el;
     if (!classId)
         return;
 
@@ -5149,9 +5164,9 @@ function addInputAttributes(el) {
     var attrName = $('#gui_prop_in_attr_name').val();
     var attrVal = $('#gui_prop_in_attr_value').val();
 
-    addInputAttributesCore(attrName,attrVal)
+    addInputAttributesCore(attrName, attrVal)
 }
-function addInputAttributesCore(namval,val) {
+function addInputAttributesCore(namval, val) {
     var attrName = namval;
     var attrVal = val;
 
@@ -5235,7 +5250,7 @@ function getInputAttributeListDetails(res) {
 
     var table = $('.input_attributes_list_in_component');
     table.html('');
-      
+
     try {
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
@@ -5243,23 +5258,23 @@ function getInputAttributeListDetails(res) {
             var temsp = o.attrValue.split(",");
             var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)');
 
-                tr.append($('<td>').addClass('attr-name').text(o.attrName));
-            var td =$('<td>').addClass('attr-value');
-                  for (var c = 0; c < temsp.length; c++) {
-                      
-                        td.append($('<span>')
-                                    .addClass('cstm_spn_attr')
-                                    .attr('data-rmvc','0')
-                                    .text(temsp[c])
-                                    .append('<i  class="removeAttrSingle fas fa-times"></i>'));
-                   }
-               tr.append(td);
-               tr.append($('<td>').append($('<i>')
-               .css("cursor", "pointer")
-               .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
-               .addClass("fa fa-trash attr_rmv_sabtn")));
-               table.append(tr);
-             
+            tr.append($('<td>').addClass('attr-name').text(o.attrName));
+            var td = $('<td>').addClass('attr-value');
+            for (var c = 0; c < temsp.length; c++) {
+
+                td.append($('<span>')
+                        .addClass('cstm_spn_attr')
+                        .attr('data-rmvc', '0')
+                        .text(temsp[c])
+                        .append('<i  class="removeAttrSingle fas fa-times"></i>'));
+            }
+            tr.append(td);
+            tr.append($('<td>').append($('<i>')
+                    .css("cursor", "pointer")
+                    .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
+                    .addClass("fa fa-trash attr_rmv_sabtn")));
+            table.append(tr);
+
         }
     } catch (err) {
     }
@@ -8253,7 +8268,9 @@ function mergeTableData(sourceData, destinationData) {
             try {
                 var o = sourceData.r[i];
                 var id = o[foreignKey];
-                o = $.extend(o, destDataKV[id]);
+                if (id && destDataKV[id]) {
+                    o = $.extend(o, destDataKV[id]);
+                }
                 sourceData[i] = o;
             } catch (err) {
             }
@@ -14337,35 +14354,35 @@ var SCSourceManagement = {
 }
 
 
-function setApiIpoBlock(){
-  
+function setApiIpoBlock() {
+
     var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
     console.log(keys);
-                for (var k in keys) {
+    for (var k in keys) {
 
-                    var from = keys[k];
-                    var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
-                    console.log(from,toKeys);
-                    for (var m in toKeys) {
-                        var to = toKeys[m];
-                        try {
-                            new LeaderLine(
-                                    document.getElementById(from),
-                                    document.getElementById(to),
-                                    {
+        var from = keys[k];
+        var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
+        console.log(from, toKeys);
+        for (var m in toKeys) {
+            var to = toKeys[m];
+            try {
+                new LeaderLine(
+                        document.getElementById(from),
+                        document.getElementById(to),
+                        {
 //                                    color: 'rgb(41,146,210)',
-                                        color: 'rgb(255,146,27)',
-                                        dash: true,
-                                        startPlug: 'square',
-                                        endPlug: 'arrow',
-                                        startSocket: 'right',
-                                        endSocket: 'left',
-                                    }
-                            );
-
-                        } catch (err) {
-                            console.log(err);
+                            color: 'rgb(255,146,27)',
+                            dash: true,
+                            startPlug: 'square',
+                            endPlug: 'arrow',
+                            startSocket: 'right',
+                            endSocket: 'left',
                         }
-                    }
-                }
+                );
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
 }

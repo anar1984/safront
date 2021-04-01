@@ -809,69 +809,75 @@ var be = {
                     : [];
             var f = true;
             for (var i in  extApiList) {
-                try {
-                    if (f) {
-                        outData = data;
-                        f = false;
-                    }
+//                try {
+                if (f) {
+                    outData = data;
+                    f = false;
+                }
 
-                    var extId = extApiList[i];
-                    var o = cr_project_desc[extId];
+                var extId = extApiList[i];
+                var o = cr_project_desc[extId];
 
-                    if (o.fkRelatedScId) {
-                        var fnType = cr_js_list[o.fkRelatedScId].fnType;
+                if (o.fkRelatedScId) {
+                    var fnType = cr_js_list[o.fkRelatedScId].fnType;
 
-                        var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
+                    var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
 
-                        if (fnType === 'core') {
-                            var res = eval(fnName)(outData);
+                    if (fnType === 'core') {
+                        var res = eval(fnName)(outData, element, apiId, asyncData);
+                        try {
                             if (res._table) {
                                 var mergeData = mergeTableData(res._table, outData._table);
                                 res._table = mergeData;
                             }
-                            var out = $.extend(outData, res);
-                            outData = out;
-                        } else if (fnType === 'java') {
-                            var dataCore = {kv: {}};
-                            dataCore.kv = outData;
-                            try {
-                                dataCore.kv.cookie = getToken();
-                            } catch (err) {
-                            }
-
-
-                            var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
-                            var res = resTemp.kv;
-
-                            try {
-                                if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
-                                    res._table = resTemp.tbl[0];
-                                }
-                            } catch (err) {
-                            }
-
-                            if (res._table) {
-                                var mergeData = mergeTableData(res._table, outData._table);
-                                res._table = mergeData;
-                            }
-                            var out = $.extend(outData, res);
-                            outData = out;
-
-                        }
-                    }
-
-                    if (o.fkRelatedApiId) {
-                        var res = be.callApi(o.fkRelatedApiId, outData, element, asyncData);
-                        if (res._table) {
-                            var mergeData = mergeTableData(res._table, outData._table);
-                            res._table = mergeData;
+                        } catch (err) {
                         }
                         var out = $.extend(outData, res);
                         outData = out;
-                    }
-                } catch (err) {
+                    } else if (fnType === 'java') {
+                        var dataCore = {kv: {}};
+                        dataCore.kv = outData;
+                        try {
+                            dataCore.kv.cookie = getToken();
+                        } catch (err) {
+                        }
 
+
+                        var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
+                        var res = resTemp.kv;
+
+                        try {
+                            if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
+                                res._table = resTemp.tbl[0];
+                            }
+                        } catch (err) {
+                        }
+
+                        try {
+                            if (res._table) {
+                                var mergeData = mergeTableData(res._table, outData._table);
+                                res._table = mergeData;
+                            }
+                        } catch (err) {
+                        }
+                        var out = $.extend(outData, res);
+                        outData = out;
+
+                    }
                 }
+
+                if (o.fkRelatedApiId) {
+                    var res = be.callApi(o.fkRelatedApiId, outData, element, asyncData);
+                    if (res._table) {
+                        var mergeData = mergeTableData(res._table, outData._table);
+                        res._table = mergeData;
+                    }
+                    var out = $.extend(outData, res);
+                    outData = out;
+                }
+//                } catch (err) {
+//
+//                }
             }
             return outData;
         },
@@ -1085,7 +1091,7 @@ var be = {
                         } else {
                             var id = $(element).attr('id');
                             var el1 = document.getElementById(id);
-                            triggerAPIAfter(el1, apiId, out,dataJSON.kv);
+                            triggerAPIAfter(el1, apiId, out, dataJSON.kv);
                         }
                     } catch (err) {
                         console.log(err);

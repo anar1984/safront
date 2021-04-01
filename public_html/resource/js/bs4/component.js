@@ -218,23 +218,6 @@ var Component = {
                         el.addClass(className);
 
 
-
-//                        var classBody = cr_gui_classes[classId].classBody;
-//                        try {
-//                            if (classBody.length > 1) {
-//                                var r = classBody.split(/\r*\n/);
-//                                for (var j = 0; j < r.length; j++) {
-//                                    try {
-//                                        var key = r[j].split(':')[0];
-//                                        var val = r[j].split(':')[1];
-//                                        val = val.replace(";", "");
-//                                        el.css(key, val);
-//                                    } catch (err) {
-//                                    }
-//                                }
-//                            }
-//                        } catch (err) {
-//                        }
                     }
                 }
             } catch (err) {
@@ -564,7 +547,8 @@ var Component = {
 
             col = this.SetColumnsOrder(col);
 
-            var tr = $("<tr>").append($("<th>").append(""));
+            var thzad = $("<th>");
+            var tr = $("<tr>").append(thzad.append(""));
             for (var i = 0; i < col.length; i++) {
                 var inputId = col[i].trim();
                 if (inputId.length === 0)
@@ -619,7 +603,7 @@ var Component = {
 
                 var th = $("<th>")
                         .addClass("text-center")
-                        .css("min-width", "70px;")
+//                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp, ' ')
                         .append(showColumn, ' ')
@@ -629,6 +613,34 @@ var Component = {
                         pairShowColumn[inputId].trim() === '1') {
                     th.hide();
                 }
+
+                //add attribute to th tag
+                try {
+                    var cl = cr_input_cont_attribute[inputId];
+                    for (var ii = 0; ii < cl.length; ii++) {
+                        var kv = cl[ii];
+                        var key = Object.keys(kv)[0];
+                        var val = kv[key];
+                        th.attr(key, val);
+                    }
+                } catch (err) {
+                }
+
+                //add class to th tag
+                try {
+                    var classElList = cr_cont_input_classes[inputId];
+                    if (classElList) {
+                        var cl = classElList.split(',');
+                        for (var iii = 0; iii < cl.length; iii++) {
+                            var classId = cl[iii];
+                            var className = cr_gui_classes[classId].className;
+                            className = className.replace(".", "");
+                            th.addClass(className);
+                        }
+                    }
+                } catch (err) {
+                }
+
 
                 tr.append(th);
             }
@@ -742,7 +754,7 @@ var Component = {
 
 
                     var td12 = $("<td>")
-                            .css("min-width", "70px")
+//                            .css("min-width", "70px")
                             .addClass("component-input-class")
 //                            .attr("sa-tableselectedfield", )
                             .addClass("component-table-input-class")
@@ -1038,7 +1050,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')")
                         : "";
                 tr.append($("<th>")
-                        .css("min-width", "70px;")
+//                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp)
                         );
@@ -1104,7 +1116,7 @@ var Component = {
                         val = Component.GetComponentHtmlNew(comp);
                     }
                     tr.append($("<td>")
-                            .css("min-width", "70px")
+//                            .css("min-width", "70px")
                             .addClass("component-input-class")
                             .attr("pdid", inputId)
                             .val(val)

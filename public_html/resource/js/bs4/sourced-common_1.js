@@ -17,7 +17,7 @@ function check() {
     //                progresBarStart();
     var domain = $('#domain').val();
     var username = $('#cUsername').val();
-    var password = $('#cPassword').val();
+    var password = $('#cPassworsetGUIComponentButtonGUIModald').val();
     if (!domain || !username || !password) {
         showAlertLogin();
         return;
@@ -10240,8 +10240,17 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var html = this.getGUIDesignHTML(res);
         $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first().html(html);
         
-        //initiate onclick action
-        initOnloadActionOnGUIDesign();    
+        
+        
+        if ($(el).attr("onclick_trigger_id")) {
+            var apiId = $(el).attr("onclick_trigger_id");
+            triggerAPI(el, apiId);
+            initOnloadActionOnGUIDesign();
+            $(el).closest('div.modal').first().modal('hide');
+        }else{
+            //initiate onclick action
+        initOnloadActionOnGUIDesign();  
+        }
          
 //        generatePopupModalNew(html, canvasCSS);
 //        $('[data-toggle="tooltip"]').tooltip({html: true});
