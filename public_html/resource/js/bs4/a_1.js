@@ -5256,7 +5256,8 @@ function getInputAttributeListDetails(res) {
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];
             var temsp = o.attrValue.split(",");
-            var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)');
+            var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)')
+                              .attr('data-rmv-id', o.id );
 
             tr.append($('<td>').addClass('attr-name').text(o.attrName));
             var td = $('<td>').addClass('attr-value');
@@ -5291,12 +5292,18 @@ function removeInputAttribute(el, inputAttrId) {
         return;
     }
 
+    
+    removeInputAttributeCore(inputAttrId)
+   
+}
+function removeInputAttributeCore(inputAttrId) {
+
+   
     var json = {kv: {}};
     try {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-
     json.kv.id = inputAttrId;
     var that = this;
     var data = JSON.stringify(json);
@@ -8480,6 +8487,7 @@ $(document).on('click', '.loadSourceActivity', function (evt) {
         $('.selectcustom2').selectpicker();
         global_var.doc_actual_zoom = 65;
     });
+    
 });
 
 
@@ -12333,6 +12341,7 @@ var SourcedActivityDiagram = {
                 try {
                     var ls = res.kv.fkBacklogId.split('%IN%');
                     for (var l in ls) {
+                        console.log(ls[l]);
                         SourcedActivityDiagram.SelectedStoryCardByFiler.push(ls[l]);
                     }
                 } catch (err) {
@@ -13638,6 +13647,7 @@ var SourcedActivityDiagram = {
             for (var i in keys) {
                 var div = this.SingleCard(keys[i]);
                 $('.sadiagram-entityleft').append(div);
+                console.log(keys[i]);
             }
         },
         SingleCard: function (tableId) {
