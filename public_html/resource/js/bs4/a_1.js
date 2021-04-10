@@ -1181,7 +1181,12 @@ function testMandelo() {
 $(document).on('click', '.sa-tab-action-zad', function (evt) {
     var id = $(this).find('a').first().attr('href');
     $(id).find('.sa-onloadclick').each(function () {
-        $(this).click();
+        if ($(this).attr("sa-isloaded") !== '1') {
+//            if ($(this).attr("sa-loadonetime") === '1') {
+                $(this).attr("sa-isloaded", "1");
+//            }
+            $(this).click();
+        }
     })
 });
 
@@ -2301,20 +2306,20 @@ function initOnloadActionOnGUIDesign() {
     initOnloadActionOnGUIDesign4Onchange();
 }
 
-function initOnloadActionOnGUIDesign4OnClick() {
-    $('.sa-onloadclick').each(function () {
+function initOnloadActionOnGUIDesign4OnClick(el) {
+    $(el).closest('div.redirectClass').find('.sa-onloadclick').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
-            if ($(this).attr("sa-loadonetime") === '1') {
+//            if ($(this).attr("sa-loadonetime") === '1') {
                 $(this).attr("sa-isloaded", "1");
-            }
+//            }
             $(this).click();
         }
     })
 
 }
 
-function initOnloadActionOnGUIDesign4Onchange() {
-    $('.sa-onloadchange').each(function () {
+function initOnloadActionOnGUIDesign4Onchange(el) {
+    $(el).closest('div.redirectClass').find('.sa-onloadchange').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
             if ($(this).attr("sa-loadonetime") === '1') {
                 $(this).attr("sa-isloaded", "1");
@@ -2700,12 +2705,12 @@ function triggerAPI(element, apiId, data) {
     }
     //call oncload action
     if (!$(el).hasClass('sa-onloadclick')) {
-        initOnloadActionOnGUIDesign4OnClick();
+        //initOnloadActionOnGUIDesign4OnClick();
     }
 
     //call oncload action
     if (!$(el).hasClass('sa-onloadchange')) {
-        initOnloadActionOnGUIDesign4Onchange();
+        //initOnloadActionOnGUIDesign4Onchange();
     }
 //    }
 }
@@ -2727,28 +2732,25 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
             : 'sync';
 
-    if (async === 'async') {
-        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function () {
-            if ($(this).attr("sa-isloaded") !== '1') {
-                if ($(this).attr("sa-loadonetime") === '1') {
-                    $(this).attr("sa-isloaded", "1");
-                }
-                $(this).click();
-            }
-        })
-
-        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function () {
-
-            if ($(this).attr("sa-isloaded") !== '1') {
-                if ($(this).attr("sa-loadonetime") === '1') {
-                    $(this).attr("sa-isloaded", "1");
-                }
-                $(this).change();
-            }
-
-        })
-
-    }
+//    if (async === 'async') {
+//        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function () {
+//            if ($(this).attr("sa-isloaded") !== '1') {
+//                if ($(this).attr("sa-loadonetime") === '1') {
+//                    $(this).attr("sa-isloaded", "1");
+//                }
+//                $(this).click();
+//            }
+//        });
+//
+//        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function () {
+//            if ($(this).attr("sa-isloaded") !== '1') {
+//                if ($(this).attr("sa-loadonetime") === '1') {
+//                    $(this).attr("sa-isloaded", "1");
+//                }
+//                $(this).change();
+//            }
+//        })
+//    }
 
     $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
@@ -2950,8 +2952,26 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
     }
+    
+     if ($(el).hasClass('sa-onloadclick-async')) {
+        if ($(el).attr("sa-isloaded") !== '1') {
+            $(el).attr("sa-isloaded", "1");
+            $(el).click();
+        }
+    }
 
 
+    if ($(el).hasClass('sa-onloadchange-async')) {
+        if ($(el).attr("sa-isloaded") !== '1') {
+            $(el).attr("sa-isloaded", "1");
+            $(el).change();
+        }
+    }
+
+    if ($(el).hasClass('sa-selectpicker')) {
+        $(el).selectpicker('refresh');
+    }
+    
 }
 
 function fillComboInAPICall(el, data, asyncData) {
@@ -3041,12 +3061,18 @@ function clearTableBodyAfterApiCall(el, apiId) {
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     try {
 
-        var rc = (data._table.r && data._table.r.length > 0)
-                ? data._table.r.length
-                : 0;
+        var tableId;
+
+        var rc = 0;
+        try {
+            rc = (data._table.r && data._table.r.length > 0)
+                    ? data._table.r.length
+                    : 0;
+        } catch (err) {
+        }
 
         if (rc === 0) {
-            return;
+            //return;
         }
 
         // for filling table on dinamycally
@@ -3066,7 +3092,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                 tblSelectedFields = tblSelectedFields.split(',');
                 if ($.inArray(c, tblSelectedFields) > -1) {
                     f = true;
-                    var tableId = $(this).attr('table-id');
+                    tableId = $(this).attr('table-id');
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
                     Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit);
@@ -3105,17 +3131,22 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             }
         }
 
-        callTableRelationAPIs(el);
+        callTableRelationAPIs(el, tableId);
     } catch (err) {
     }
 }
 
-function callTableRelationAPIs(el) {
+function callTableRelationAPIs(el, tableId) {
+
+    if (!tableId) {
+        return;
+    }
 
     var tableInputRel = {};
 
 
     $(el).closest('.redirectClass')
+            .find('table[table-id="' + tableId + '"]')
             .find('.has_table_relation_td')
             .each(function () {
                 var apiId = $(this).attr('rel_api');
@@ -3253,8 +3284,8 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     } else if ($(el).attr('sa-type') === 'filelist') {
-         $(el).html('');
-     
+        $(el).html('');
+
         var res = val.split(global_var.vertical_seperator);
         for (var i = 0; i < res.length; i++) {
             try {
@@ -3298,6 +3329,22 @@ function getComponentValueAfterTriggerApi(el, val) {
 
     $(el).attr('sa-data-value', val);
 
+
+    if ($(el).hasClass('sa-onloadclick-async')) {
+        if ($(el).attr("sa-isloaded") !== '1') {
+            $(el).attr("sa-isloaded", "1");
+            $(el).click();
+        }
+    }
+
+
+    if ($(el).hasClass('sa-onloadchange-async')) {
+        if ($(el).attr("sa-isloaded") !== '1') {
+            $(el).attr("sa-isloaded", "1");
+            $(el).change();
+        }
+    }
+    
 
 
 
@@ -5257,7 +5304,7 @@ function getInputAttributeListDetails(res) {
             var o = obj[i];
             var temsp = o.attrValue.split(",");
             var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)')
-                              .attr('data-rmv-id', o.id );
+                    .attr('data-rmv-id', o.id);
 
             tr.append($('<td>').addClass('attr-name').text(o.attrName));
             var td = $('<td>').addClass('attr-value');
@@ -5292,13 +5339,13 @@ function removeInputAttribute(el, inputAttrId) {
         return;
     }
 
-    
+
     removeInputAttributeCore(inputAttrId)
-   
+
 }
 function removeInputAttributeCore(inputAttrId) {
 
-   
+
     var json = {kv: {}};
     try {
         json.kv.cookie = getToken();
@@ -8487,7 +8534,7 @@ $(document).on('click', '.loadSourceActivity', function (evt) {
         $('.selectcustom2').selectpicker();
         global_var.doc_actual_zoom = 65;
     });
-    
+
 });
 
 

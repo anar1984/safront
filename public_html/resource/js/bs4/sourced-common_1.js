@@ -10204,6 +10204,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
             $(tempEl).attr('sa-triggersetvalue', '1');
             triggerAPI(tempEl, $(el).attr("onclick_trigger_id"), data);
+            if (!$(tempEl).hasClass('sa-onloadclick')) {
+                initOnloadActionOnGUIDesign4OnClick();
+            }
         } else {
             var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
             if (!$(tempEl).hasClass('sa-onloadclick')) {

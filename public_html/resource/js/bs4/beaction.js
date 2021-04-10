@@ -27,6 +27,9 @@ var be = {
             res = this.callContainerAPI(apiId, data, element, asyncData);
         }
 
+        var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
+        res = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
+
         return res;
     },
     triggerStoryCard(storyCardId, apiId) {
@@ -589,6 +592,24 @@ var be = {
             return inputList;
 
         },
+        GetOutputsByAPI: function (apiId) {
+            var inputIds = SACore.GetBacklogDetails(apiId, "inputIds").split(",");
+
+            var res = [];
+            for (var i in inputIds) {
+                var inputId = inputIds[i].trim();
+                if (inputId.length === 0)
+                    continue;
+                var inputObj = SAInput.getInputObject(inputId);
+                if (inputObj.inputType !== 'OUT') {
+                    continue;
+                }
+
+                var inputName = inputObj.inputName;
+                res.push(inputName);
+            }
+            return res;
+        },
         GetInputsByAPI: function (apiId) {
             //Get inputIds of External APIs
 
@@ -868,9 +889,12 @@ var be = {
 
                 if (o.fkRelatedApiId) {
                     var res = be.callApi(o.fkRelatedApiId, outData, element, asyncData);
-                    if (res._table) {
-                        var mergeData = mergeTableData(res._table, outData._table);
-                        res._table = mergeData;
+                    try {
+                        if (res._table) {
+                            var mergeData = mergeTableData(res._table, outData._table);
+                            res._table = mergeData;
+                        }
+                    } catch (err) {
                     }
                     var out = $.extend(outData, res);
                     outData = out;
