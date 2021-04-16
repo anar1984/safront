@@ -25,10 +25,14 @@ var be = {
             res = this.callDeleteAPI(apiId, data);
         } else {
             res = this.callContainerAPI(apiId, data, element, asyncData);
+
+            var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
+            var resOut = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
+            resOut['_table'] = res['_table'];
+            res = resOut;
         }
 
-        var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
-        res = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
+
 
         return res;
     },
@@ -1081,6 +1085,9 @@ var be = {
                     out1 = be.ExecAPI.SetKeysAsAlians4Select(output.kv, SELECT_OBJ_PAIR_GROUP);
                     out = $.extend(out, out1);
                     out.selectedField = output.kv.selectedField;
+
+                   
+
                     try {
                         var rc = (output.tbl[0].r && output.tbl[0].r.length > 0)
                                 ? output.tbl[0].r.length

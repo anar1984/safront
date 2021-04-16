@@ -1183,7 +1183,7 @@ $(document).on('click', '.sa-tab-action-zad', function (evt) {
     $(id).find('.sa-onloadclick').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
 //            if ($(this).attr("sa-loadonetime") === '1') {
-                $(this).attr("sa-isloaded", "1");
+            $(this).attr("sa-isloaded", "1");
 //            }
             $(this).click();
         }
@@ -2310,7 +2310,7 @@ function initOnloadActionOnGUIDesign4OnClick(el) {
     $(el).closest('div.redirectClass').find('.sa-onloadclick').each(function () {
         if ($(this).attr("sa-isloaded") !== '1') {
 //            if ($(this).attr("sa-loadonetime") === '1') {
-                $(this).attr("sa-isloaded", "1");
+            $(this).attr("sa-isloaded", "1");
 //            }
             $(this).click();
         }
@@ -2910,6 +2910,7 @@ function triggerAPI2Fill(el, apiId, selectField, data) {
         asyncData.compId = $(el).attr("id");
         asyncData.fn = 'fillComboInAPICall';
         asyncData.selectedField = selectField;
+        $(el).attr("sa-isrunning", "1");
         var out = be.callApi(apiId, res, el, asyncData);
     }
 }
@@ -2951,27 +2952,29 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         var tmVal = $(el).attr('sa-data-value');
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
-    }
-    
-     if ($(el).hasClass('sa-onloadclick-async')) {
-        if ($(el).attr("sa-isloaded") !== '1') {
-            $(el).attr("sa-isloaded", "1");
-            $(el).click();
+
+        if ($(el).hasClass('sa-onloadclick-async')) {
+            if ($(el).attr("sa-isloaded") !== '1' ) {
+                $(el).attr("sa-isloaded", "1");
+                $(el).click();
+            }
+        }
+
+
+        if ($(el).hasClass('sa-onloadchange-async')) {
+            if ($(el).attr("sa-isloaded") !== '1'  ) {
+                $(el).attr("sa-isloaded", "1");
+                $(el).change();
+            }
         }
     }
 
 
-    if ($(el).hasClass('sa-onloadchange-async')) {
-        if ($(el).attr("sa-isloaded") !== '1') {
-            $(el).attr("sa-isloaded", "1");
-            $(el).change();
-        }
-    }
 
     if ($(el).hasClass('sa-selectpicker')) {
         $(el).selectpicker('refresh');
     }
-    
+
 }
 
 function fillComboInAPICall(el, data, asyncData) {
@@ -3003,6 +3006,8 @@ function fillComboInAPICall(el, data, asyncData) {
         elem.append($('<option>').val(val).text(name));
     }
 
+    $(el).attr("sa-isrunning", "0");
+
 
     if (elem.attr('sa-data-nosort') !== '1') {
         sortSelectBoxByElement(elem);
@@ -3010,6 +3015,21 @@ function fillComboInAPICall(el, data, asyncData) {
 
     if (elem.attr('sa-data-value')) {
         elem.val(elem.attr('sa-data-value'));
+        
+        if ($(el).hasClass('sa-onloadclick-async')) {
+            if ($(el).attr("sa-isloaded") !== '1') {
+                $(el).attr("sa-isloaded", "1");
+                $(el).click();
+            }
+        }
+
+
+        if ($(el).hasClass('sa-onloadchange-async')) {
+            if ($(el).attr("sa-isloaded") !== '1') {
+                $(el).attr("sa-isloaded", "1");
+                $(el).change();
+            }
+        }
     }
 
     if (elem.hasClass('sa-selectpicker')) {
@@ -3231,10 +3251,16 @@ function setValueOnCompAfterTriggerApi(el, data) {
             try {
                 var field = selectedFields[i].trim();
 
+                var localSelectedField = [];
+                try {
+                    localSelectedField = Object.keys(data._table.r[0]);
+                } catch (err) {
+                }
+
                 if (field.length > 0) {
                     if ($(this).attr('sa-type') === 'select'
                             && $(this).attr('sa-load-ontrigger') === '1'
-                            && data.selectedField.split(',').includes(field)) {
+                            && localSelectedField.includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
 
@@ -3243,7 +3269,7 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
                     } else if ($(this).attr('sa-type') === 'multiselect'
                             && $(this).attr('sa-load-ontrigger') === '1'
-                            && data.selectedField.split(',').includes(field)) {
+                            && localSelectedField.includes(field)) {
 
                         fillSelectBoxAfterSyncApiCall(this, data, field);
                     }
@@ -3264,7 +3290,7 @@ function getComponentValueAfterTriggerApi(el, val) {
 
     if ($(el).attr('sa-type') === 'date') {
         SetConvertedDateByElement(el, val);
-    } else if ($(el).attr('sa-type') === 'time1') {
+    } else if ($(el).attr('sa-type') === 'time') {
         SetConvertedTimeByElement(el, val);
     } else if ($(el).attr('sa-type') === 'image') {
         $(el).attr('src', fileUrl(val));
@@ -3339,12 +3365,12 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     if ($(el).hasClass('sa-onloadchange-async')) {
-        if ($(el).attr("sa-isloaded") !== '1') {
+        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-running")!=='1') {
             $(el).attr("sa-isloaded", "1");
             $(el).change();
         }
     }
-    
+
 
 
 
