@@ -55,6 +55,57 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+function LoadChildDependenceId4Input(fkInputId) {
+    if (!fkInputId) {
+        return;
+    }
+
+    if (!SAInput.LoadedChildDependenceId4Input.includes(fkInputId)) {
+        new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(fkInputId);
+        SAInput.LoadedChildDependenceId4Input.push(fkInputId);
+    }
+}
+
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFromInputId, selectFromBacmkogId) {
+    var bid1 = (bid) ? bid : global_var.current_backlog_id;
+    showProgressAlternative();
+    var json = initJSON();
+//        json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid1;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew4SAInput",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                SAInput.LoadInput4Zad(res);
+                var selectedField = SAInput.GetInputName(selectFromInputId);
+                triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+                hideProgressAlternative();
+            } catch (err) {
+            }
+
+        }
+    });
+}
+
+function loadBacklogInputsByIdIfNotExist(bid) {
+    if (!bid) {
+        return;
+    }
+
+    if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+        new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
+        SAInput.LoadedBacklogs4Input.push(bid);
+    }
+}
+
 function compileJava() {
     var rs = '';
     var json = initJSON();
@@ -140,6 +191,12 @@ $(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () 
 function showBacklogHistoryClick(el) {
     var bid = $(el).attr('bid');
     var pid = $(el).attr('pid');
+    var isApi = $(el).attr('is_api');
+
+    if (isApi === '1') {
+        callStoryCard(bid);
+        return;
+    }
 
     if (pid === global_var.current_project_id) {
         new UserStory().refreshCurrentBacklogById(bid);
@@ -152,13 +209,14 @@ function showBacklogHistoryClick(el) {
     }
 }
 
-function fillBacklogHistory4View(backlogId) {
+function fillBacklogHistory4View(backlogId, isApi) {
 
     var kv = {};
     kv.fkBacklogId = backlogId;
     kv.backlogName = SACore.GetBacklogname(backlogId)
     kv.fkProjectId = global_var.current_project_id;
     kv.projectName = SACore.Project[global_var.current_project_id];
+    kv.isApi = isApi;
 
 
 
@@ -187,6 +245,7 @@ function setBacklogHistory4View() {
                         .attr("href", "#")
                         .attr("pid", o.fkProjectId)
                         .attr('bid', o.fkBacklogId)
+                        .attr('is_api', o.isApi)
                         .attr("onclick", "showBacklogHistoryClick(this)")
                         .text(o.backlogName))
 
@@ -523,6 +582,10 @@ function clearQueueForManualProjectClick() {
 var queue4ProLoad = {
     loadDetailsOnProjectSelect: false,
     loadInputDetailsOnProjectSelect: false,
+    loadInputDetails4TableOnProjectSelect: false,
+    loadInputDetails4TabOnProjectSelect: false,
+    loadInputDetails4DescriptionIdsOnProjectSelect: false,
+    loadInputDetails4ChildDependenceIdOnProjectSelect: false,
     loadInputDescDetailsOnProjectSelect: false,
     loadDependencyOnProjectSelect: false,
     loadSUS4Relation4Section: false,
@@ -535,6 +598,10 @@ var queue4ProLoad = {
 function clearQueue4ProLoad() {
     queue4ProLoad.loadDetailsOnProjectSelect = false;
     queue4ProLoad.loadInputDetailsOnProjectSelect = false;
+    queue4ProLoad.loadInputDetails4TableOnProjectSelect = false;
+    queue4ProLoad.loadInputDetails4TabOnProjectSelect = false;
+    queue4ProLoad.loadInputDetails4DescriptionIdsOnProjectSelect = false;
+    queue4ProLoad.loadInputDetails4ChildDependenceIdOnProjectSelect = false;
     queue4ProLoad.loadInputDescDetailsOnProjectSelect = false;
     queue4ProLoad.loadDependencyOnProjectSelect = false;
     queue4ProLoad.loadSUS4Relation4Section = false;
@@ -548,7 +615,15 @@ function ifQueue4ProLoadDone() {
     var f = true;
     if (queue4ProLoad.loadDetailsOnProjectSelect === false)
         f = false;
-    if (queue4ProLoad.loadInputDetailsOnProjectSelect === false)
+//    if (queue4ProLoad.loadInputDetailsOnProjectSelect === false)
+//        f = false;
+    if (queue4ProLoad.loadInputDetails4TableOnProjectSelect === false)
+        f = false;
+    if (queue4ProLoad.loadInputDetails4TabOnProjectSelect === false)
+        f = false;
+    if (queue4ProLoad.loadInputDetails4DescriptionIdsOnProjectSelect === false)
+        f = false;
+    if (queue4ProLoad.loadInputDetails4ChildDependenceIdOnProjectSelect === false)
         f = false;
     if (queue4ProLoad.loadInputDescDetailsOnProjectSelect === false)
         f = false;
@@ -575,6 +650,7 @@ function ifQueueForManualProjectClickDone() {
         f = false;
     if (queue4ManulProject.getInputClassRelByProject === false)
         f = false;
+
     if (queue4ManulProject.getInputAttributeByProject === false)
         f = false;
     if (queue4ManulProject.getProjectDescriptionByProject === false)
@@ -591,6 +667,7 @@ function ifQueueForManualProjectClickDone() {
     if (queue4ManulProject.getGlobalJsCodeListByProject === false)
         f = false;
 
+
     return  f;
 }
 
@@ -600,7 +677,13 @@ function toggleProjectDetails4Loading() {
 
     clearQueue4ProLoad();
     new UserStory().loadDetailsOnProjectSelect();
-    new UserStory().loadInputDetailsOnProjectSelect();
+//    new UserStory().loadInputDetailsOnProjectSelectNew();
+    new UserStory().loadInputDetails4TableOnProjectSelect();
+    new UserStory().loadInputDetails4TabOnProjectSelect();
+    new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
+    new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
+
+
     new UserStory().loadInputDescDetailsOnProjectSelect();
     new UserStory().loadDependencyOnProjectSelect();
     new UserStory().loadSUS4Relation4Section();
@@ -612,7 +695,7 @@ function toggleProjectDetails4Loading() {
 
 var global_zad_bid = "";
 $(document).on('click', '.manualProject', function (evt) {
-    showProgressAlternative();
+//    showProgressAlternative();
     var idx = 0;
     try {
 
@@ -642,7 +725,7 @@ $(document).on('click', '.manualProject', function (evt) {
     } catch (ee) {
     }
 
-    hideProgressAlternative();
+//    hideProgressAlternative();
 });
 
 function executeCoreOfManualProSelection(bid1) {
@@ -656,7 +739,8 @@ function executeCoreOfManualProSelection(bid1) {
         var bid = global_zad_bid;
         var body = (dgui[bid]) ? dgui[bid] : new UserStory().genGUIDesignHtmlById(bid);
         $('#mainBodyDivForAll').html(body);
-        initOnloadActionOnGUIDesign();
+        var el1 = document.getElementById('mainBodyDivForAll');
+        initOnloadActionOnGUIDesign(el1);
     } else if (global_var.current_modal === 'loadLivePrototype' && f2) {
         new UserStory().load();
     } else if (global_var.current_modal === 'loadStoryCard' && f2) {
@@ -2301,9 +2385,9 @@ $(document).on("dblclick", ".sa-event-relation-trigger-ondblclick", function (e)
     }
 })
 
-function initOnloadActionOnGUIDesign() {
-    initOnloadActionOnGUIDesign4OnClick();
-    initOnloadActionOnGUIDesign4Onchange();
+function initOnloadActionOnGUIDesign(el) {
+    initOnloadActionOnGUIDesign4OnClick(el);
+    initOnloadActionOnGUIDesign4Onchange(el);
 }
 
 function initOnloadActionOnGUIDesign4OnClick(el) {
@@ -2685,6 +2769,9 @@ function triggerAPI(element, apiId, data) {
     if (data) {
         res = data;
     }
+
+    loadBacklogInputsByIdIfNotExist(apiId);
+
     var initData = getGUIDataByStoryCard(element);
     var finalRes = $.extend(initData, res);
     finalRes = LeftMergeOfObjers(finalRes, res);
@@ -2732,25 +2819,8 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
             : 'sync';
 
-//    if (async === 'async') {
-//        $(el).closest('.redirectClass').find('.sa-onloadclick-async').each(function () {
-//            if ($(this).attr("sa-isloaded") !== '1') {
-//                if ($(this).attr("sa-loadonetime") === '1') {
-//                    $(this).attr("sa-isloaded", "1");
-//                }
-//                $(this).click();
-//            }
-//        });
-//
-//        $(el).closest('.redirectClass').find('.sa-onloadchange-async').each(function () {
-//            if ($(this).attr("sa-isloaded") !== '1') {
-//                if ($(this).attr("sa-loadonetime") === '1') {
-//                    $(this).attr("sa-isloaded", "1");
-//                }
-//                $(this).change();
-//            }
-//        })
-//    }
+
+
 
     $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
@@ -2952,21 +3022,6 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         var tmVal = $(el).attr('sa-data-value');
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
-
-        if ($(el).hasClass('sa-onloadclick-async')) {
-            if ($(el).attr("sa-isloaded") !== '1' ) {
-                $(el).attr("sa-isloaded", "1");
-                $(el).click();
-            }
-        }
-
-
-        if ($(el).hasClass('sa-onloadchange-async')) {
-            if ($(el).attr("sa-isloaded") !== '1'  ) {
-                $(el).attr("sa-isloaded", "1");
-                $(el).change();
-            }
-        }
     }
 
 
@@ -3006,7 +3061,7 @@ function fillComboInAPICall(el, data, asyncData) {
         elem.append($('<option>').val(val).text(name));
     }
 
-    $(el).attr("sa-isrunning", "0");
+    elem.attr("sa-isrunning", "0");
 
 
     if (elem.attr('sa-data-nosort') !== '1') {
@@ -3015,19 +3070,20 @@ function fillComboInAPICall(el, data, asyncData) {
 
     if (elem.attr('sa-data-value')) {
         elem.val(elem.attr('sa-data-value'));
-        
-        if ($(el).hasClass('sa-onloadclick-async')) {
-            if ($(el).attr("sa-isloaded") !== '1') {
-                $(el).attr("sa-isloaded", "1");
-                $(el).click();
+        elem.find('option[value="' + elem.attr('sa-data-value') + '"]').attr("selected", "selected");
+
+        if (elem.hasClass('sa-onloadclick-async')) {
+            if (elem.attr("sa-isloaded") !== '1') {
+                elem.attr("sa-isloaded", "1");
+                elem.click();
             }
         }
 
 
-        if ($(el).hasClass('sa-onloadchange-async')) {
-            if ($(el).attr("sa-isloaded") !== '1') {
-                $(el).attr("sa-isloaded", "1");
-                $(el).change();
+        if (elem.hasClass('sa-onloadchange-async')) {
+            if (elem.attr("sa-isloaded") !== '1') {
+                elem.attr("sa-isloaded", "1");
+                elem.change();
             }
         }
     }
@@ -3113,6 +3169,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                 if ($.inArray(c, tblSelectedFields) > -1) {
                     f = true;
                     tableId = $(this).attr('table-id');
+                    $("table[table-id='" + tableId + "']").first().find('tbody').hide(400);
+
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
                     Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit);
@@ -3162,6 +3220,8 @@ function callTableRelationAPIs(el, tableId) {
         return;
     }
 
+
+    var tableToggleZad = {};
     var tableInputRel = {};
 
 
@@ -3199,9 +3259,24 @@ function callTableRelationAPIs(el, tableId) {
 
     //callApis
 
+
+
+    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent', '');
+    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', '');
     for (var i in tableInputRel) {
+        var apiId = i;
+        var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent');
+        lnzad1 += "," + apiId;
+        $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent', lnzad1)
+    }
+
+
+    var f = true;
+    for (var i in tableInputRel) {
+        var apiId='';
         try {
-            var apiId = i;
+            f = false;
+             apiId = i;
             var inputs = tableInputRel[i].ids;
             var inputLine = inputs.join('%IN%');
 
@@ -3210,20 +3285,40 @@ function callTableRelationAPIs(el, tableId) {
 
             var asyncData = {};
             asyncData.apiId = apiId;
+            asyncData.tableId = tableId;
+            asyncData.toggleTableId = tableToggleZad;
             asyncData.inputId = tableInputRel[i].i; //0-ci element hemishe inputId olur
             asyncData.selectedField = tableInputRel[i].s; //0-ci element hemishe inputId olur
             asyncData.fn = "setTableAsyncValueOnApiCall";
 
+
             be.callApi(apiId, data, el, asyncData);
         } catch (err) {
             console.log(err);
+            
+            var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
+            lnzad1 += "," + apiId;
+            $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', lnzad1)
         }
+    }
+
+    if (f) {
+        $("table[table-id='" + tableId + "']").first().find('tbody').show(400);
     }
 }
 
 function setTableAsyncValueOnApiCall(el, data, asyncData) {
     var data1 = data;
     var adata = asyncData;
+    var tableId = adata.tableId;
+    var tableToggleZad = adata.toggleTableId;
+
+
+    var apiId = asyncData.apiId;
+    var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
+    lnzad1 += "," + apiId;
+    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', lnzad1)
+
 
     var obj = data._table.r;
     for (var i in obj) {
@@ -3241,6 +3336,13 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
                     updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
                 });
     }
+
+    var a = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent');
+    var b = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
+
+    if (a.split(",").length <= b.split(",").length) {
+        $("table[table-id='" + tableId + "']").first().find('tbody').show(400);
+    }
 }
 
 function setValueOnCompAfterTriggerApi(el, data) {
@@ -3253,7 +3355,8 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
                 var localSelectedField = [];
                 try {
-                    localSelectedField = Object.keys(data._table.r[0]);
+                    localSelectedField = data.selectedField;
+                    // localSelectedField = Object.keys(data._table.r[0]);
                 } catch (err) {
                 }
 
@@ -3327,9 +3430,7 @@ function getComponentValueAfterTriggerApi(el, val) {
         $(el).find('option[value="' + val + '"]').attr('selected', true);
 
 
-        if ($(el).attr("sa-isselectpicker") === '1') {
-            $(el).selectpicker('refresh');
-        }
+
 
     } else if ($(el).attr('sa-type') === 'multiselect') {
 
@@ -3365,10 +3466,14 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     if ($(el).hasClass('sa-onloadchange-async')) {
-        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-running")!=='1') {
+        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-isrunning") !== '1') {
             $(el).attr("sa-isloaded", "1");
             $(el).change();
         }
+    }
+
+    if ($(el).attr("sa-isselectpicker") === '1') {
+        $(el).selectpicker('refresh');
     }
 
 
@@ -3379,7 +3484,9 @@ function getComponentValueAfterTriggerApi(el, val) {
 function initHtmlFroalaEditorByClass(className) {
     $('.' + className).each(function () {
         var id = $(this).attr('id');
-        initHtmlFroalaEditor(id);
+        var val = $(this).val();
+        val = replaceTagsReverse(val);
+        initHtmlFroalaEditor(id, val);
     })
 }
 
@@ -3715,6 +3822,10 @@ function getJsGlobalCodeByProject() {
                             st += '}';
 
                             var sc = $('<script>').append(st);
+                            console.log('add core function =>', o.fnCoreName.trim())
+
+
+
                             $('head').append(sc);
 
                         } else if (o.fnType === 'event') {
@@ -3727,6 +3838,7 @@ function getJsGlobalCodeByProject() {
                             st += '})';
 
                             var sc = $('<script>').append(st);
+                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
                             $('head').append(sc);
 
                         }
@@ -3788,6 +3900,8 @@ function getJsCodeByProject() {
                             st += '}';
 
                             var sc = $('<script>').append(st);
+
+                            console.log('add core function =>', o.fnCoreName.trim())
                             $('head').append(sc);
 
                         } else if (o.fnType === 'event') {
@@ -3800,10 +3914,14 @@ function getJsCodeByProject() {
                             st += '})';
 
                             var sc = $('<script>').append(st);
+
+                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
+
                             $('head').append(sc);
 
                         }
                     } catch (err) {
+                        Toaster.showError("Error on loading JavaScript File called " + o.fnCoreName);
                     }
                 }
             } catch (err) {
@@ -4223,6 +4341,8 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fncorename').val(res.kv.fnCoreName);
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             window.editor1.setValue(res.kv.fnBody);
+
+            $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
@@ -4352,13 +4472,17 @@ let cdnh = true;
 let cdnh2 = true;
 
 function showJsCodeModal() {
+
     $('#jsCodeModal').modal('show');
+    console.log('sdfsdf')
+
     getAllJsCodeByProject();
     loadApisToComboOnJSCode();
 
-    if (cdnh) {
-        jsEditorGenerate();
 
+    if (cdnh) {
+
+        jsEditorGenerate();
         cdnh = false;
     }
 }
@@ -4377,7 +4501,7 @@ function guiClassModal(el) {
 
 
 function jsEditorGenerate() {
-
+    console.log('asdfafasf');
     setTimeout(function () {
 
 
@@ -4393,7 +4517,7 @@ function jsEditorGenerate() {
 
         require(["vs/editor/editor.main"], function () {
             window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
-                automaticLayout: true,
+
                 language: 'javascript',
                 theme: 'vs-dark'
             });
@@ -4437,6 +4561,7 @@ function jsEditorFullGenerate() {
 
 }
 function cssEditorGenerate() {
+
     setTimeout(function () {
 
 
@@ -4476,24 +4601,24 @@ $(document).on('focusout', '#jsCodeModal_fnbody', function () {
 })
 let FullSc = true;
 $(document).on('click', '.editor_full_screenBt', function () {
+    var val3 = window.editor1.getValue();
+
     $('#full_screen_editor_modal').modal('show');
     if (FullSc) {
 
         jsEditorFullGenerate();
         FullSc = false;
     }
-    var val3 = window.editor1.getValue();
+
     window.editor3.setValue(val3);
-
-
 })
 $(document).on('click', '.close_full_scree_editor', function () {
-
-    $('#full_screen_editor_modal').modal('hide');
     var val1 = window.editor3.getValue();
+    $('#full_screen_editor_modal').modal('hide');
+
     window.editor1.setValue(val1);
 
-    updateJSChangeDetails(val1, "fnBody")
+    updateJSChangeDetails(val1, "fnBody");
 })
 
 function getAllGuiClassByProject() {
@@ -4643,6 +4768,8 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
         async: true,
         success: function (res) {
             $('#guiClassModal_classname').val(res.kv.className);
+            $('#guiClassModal_classbody').val(res.kv.classBody);
+
             window.editor.setValue(res.kv.classBody);
         }
     });
@@ -10712,6 +10839,8 @@ function genTaskKanbanView() {
     }
 }
 
+
+
 function genTaskKanbanView4Group() {
     $('#kanban_view_new_count').html(0);
     $('#kanban_view_ongoing_count').html(0);
@@ -11078,7 +11207,8 @@ function addInputListToTaskNew_setComment() {
             var name = SAInput.GetInputName($(this).val());
             st += (idx++) + ") " + name + ": \n ";
             try {
-                var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
+                //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
+                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
                 for (var i in descId) {
                     var id = descId[i];
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));

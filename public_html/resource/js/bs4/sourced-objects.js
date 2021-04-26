@@ -1436,6 +1436,10 @@ var SAInput = {
     "TableByBacklog": {},
     "Tabs": {},
     "TabByBacklog": {},
+    "DescriptionId": {},
+    "ChildDependenceId": {},
+    "LoadedBacklogs4Input":[],
+    "LoadedChildDependenceId4Input":[],
     updateInput: function (backlogId, key, value) {
         try {
             this.Inputs[backlogId][key] = value;
@@ -1532,6 +1536,55 @@ var SAInput = {
         } catch (e) {
         }
     },
+    LoadInputSection: function (res) {
+        try {
+            
+            var jsonString = res.kv.jsonOut;
+            var jsonKV = JSON.parse(jsonString);
+            var kv = Object.keys(jsonKV);
+
+            for (var n = 0; n < kv.length; n++) {
+                var key = kv[n];
+                var valueLine = jsonKV[key];
+                var valObj = JSON.parse(valueLine);
+                this.Inputs[key] = valObj;
+            }
+        } catch (err) {
+        }
+    },
+    LoadInputNew: function (res) {
+        try {
+            this.Inputs = {};
+
+
+            var jsonString = res.kv.jsonOut;
+            var jsonKV = JSON.parse(jsonString);
+            var kv = Object.keys(jsonKV);
+
+            for (var n = 0; n < kv.length; n++) {
+                var key = kv[n];
+                var valueLine = jsonKV[key];
+                var valObj = JSON.parse(valueLine);
+                this.Inputs[key] = valObj
+
+            }
+        } catch (err) {
+        }
+    },
+    LoadInput4Zad: function (res) {
+         
+        try {
+            
+
+            var idx = getIndexOfTable(res, "Response");
+            var obj = res.tbl[idx].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                this.AddInput(o);
+            }
+        } catch (err) {
+        }
+    },
     LoadInput: function (res) {
         this.LoadInputTable(res);
         this.LoadInputTab(res);
@@ -1557,6 +1610,27 @@ var SAInput = {
                 var o = obj[n];
                 this.AddInputTable(o);
             }
+        } catch (err) {
+        }
+    },
+    LoadInputDescriptionId: function (res) {
+        try {
+            this.DescriptionId = res.kv;
+
+        } catch (err) {
+        }
+    },
+    LoadInputChildDependenceId: function (res) {
+        try {
+            this.ChildDependenceId = res.kv;
+
+        } catch (err) {
+        }
+    },
+    LoadInputChildDependenceIdNew: function (res) {
+        try {
+            this.ChildDependenceId = $.extend(this.ChildDependenceId,res.kv);
+
         } catch (err) {
         }
     },
@@ -1690,6 +1764,7 @@ var SAInput = {
         return json;
     },
     toJSONByBacklog: function (backlogId) {
+        loadBacklogInputsByIdIfNotExist(backlogId);
         var json = {"tbl": [{"r": []}]};
 
         var keys = SACore.GetInputList(backlogId);
@@ -1704,6 +1779,11 @@ var SAInput = {
         return json;
     },
     toJSON: function () {
+        if (!this.LoadedBacklogs4Input.includes(global_var.current_backlog_id)){
+            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput();
+            this.LoadedBacklogs4Input.push(global_var.current_backlog_id);
+        }
+        
         var json = {"tbl": [{"r": []}]};
         var keys = this.getInputsByBacklodId();
         var idx = 0;
@@ -1755,7 +1835,8 @@ var SAInput = {
     GetInputDescription: function (inputId) {
         var res = [];
         try {
-            res = this.Inputs[inputId]['inputDescriptionIds'].split(',');
+//            res = this.Inputs[inputId]['inputDescriptionIds'].split(',');
+            res = this.DescriptionId[inputId].split(',');
         } catch (err) {
         }
         return res;
@@ -1785,7 +1866,10 @@ var SAInput = {
         return  id;
     },
     GetCurrentChildDependenceId: function () {
-        var id = this.Inputs[global_var.current_us_input_id].childDependenceId;
+//        var id = this.Inputs[global_var.current_us_input_id].childDependenceId;
+        LoadChildDependenceId4Input(global_var.current_us_input_id);
+        
+        var id = this.ChildDependenceId[global_var.current_us_input_id];
         return  id;
     }
 }
@@ -2254,39 +2338,39 @@ var SABacklogLabel = {
 
 
 
-function setApiIpoBlock(){
-  
+function setApiIpoBlock() {
+
     var keys = Object.keys(SAEntity.Tables)
-    console.log(keys);
-                for (var k in keys) {
+//    console.log(keys);
+    for (var k in keys) {
 
-                    var from = keys[k];
-                    var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
-                    console.log(from,toKeys);
-                    for (var m in toKeys) {
-                        var to = toKeys[m];
-                        try {
-                            new LeaderLine(
-                                    document.getElementById(from),
-                                    document.getElementById(to),
-                                    {
+        var from = keys[k];
+        var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
+//        console.log(from, toKeys);
+        for (var m in toKeys) {
+            var to = toKeys[m];
+            try {
+                new LeaderLine(
+                        document.getElementById(from),
+                        document.getElementById(to),
+                        {
 //                                    color: 'rgb(41,146,210)',
-                                        color: 'rgb(255,146,27)',
-                                        dash: true,
-                                        startPlug: 'square',
-                                        endPlug: 'arrow',
-                                        startSocket: 'right',
-                                        endSocket: 'left',
-                                    }
-                            );
-
-                        } catch (err) {
-                            console.log(err);
+                            color: 'rgb(255,146,27)',
+                            dash: true,
+                            startPlug: 'square',
+                            endPlug: 'arrow',
+                            startSocket: 'right',
+                            endSocket: 'left',
                         }
-                    }
-                }
+                );
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
 }
-setTimeout(function(){
+setTimeout(function () {
 
     setApiIpoBlock();
 

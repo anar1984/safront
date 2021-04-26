@@ -1351,8 +1351,13 @@ var Component = {
         var selectFromInputId = SAInput.getInputDetails(inputId, "selectFromInputId");
 
         if (selectFromBacmkogId) {
-            var selectedField = SAInput.GetInputName(selectFromInputId)
-            triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+            if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, select, selectFromInputId, selectFromBacmkogId)
+                SAInput.LoadedBacklogs4Input.push(bid);
+            } else {
+                var selectedField = SAInput.GetInputName(selectFromInputId)
+                triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+            }
         } else {
             if (comp.content) {
                 var r = comp.content.split(/\r*\n/);
@@ -1647,6 +1652,7 @@ var Component = {
         var innerHTML = this.SectionAction.SectionEmptyMessage(comp.id);
         if (comp.param1 > 0) {
             try {
+                loadBacklogInputsByIdIfNotExist(comp.param1);
                 var jsonT = SAInput.toJSONByBacklog(comp.param1);
                 new UserStory().hasSequence(comp.sequence, comp.param1);
                 comp.sequence.push(comp.param1);

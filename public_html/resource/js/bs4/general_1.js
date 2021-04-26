@@ -1085,8 +1085,8 @@ function init4Core() {
     new User().loadPersonalUserOnInit();
     Priority.load();
     new Project().loadUserList4Combo();
-    new Notification().getNotificationCount();
-    new Notification().setTime();
+   /// new Notification().getNotificationCount();
+   // new Notification().setTime();
 
 }
 
@@ -1680,7 +1680,7 @@ function SetConvertedTimeByElement(element, time) {
         var m = time.substring(2, 4);
         var h = time.substring(0, 2);
         var d = h + ":" + m + ":" + s;
-        $(element).val(d);
+        $(element).val(time);
         $(element).text(d);
     } catch (e) {
     }
@@ -1691,8 +1691,9 @@ function SetConvertedDateByElement(element, date) {
         var day = date.substring(6, 8);
         var month = date.substring(4, 6);
         var year = date.substring(0, 4);
+        var d1 = year + "-" + month + "-" + day;
+        $(element).val(d1);
         var d = day + "." + month + "." + year;
-        $(element).val(d);
         $(element).text(d);
     } catch (e) {
     }
@@ -1981,6 +1982,7 @@ var Toaster = {
         var id = makeId(10);
         var div = $('<div>')
                 .attr('id', id)
+				.attr("z-index",50000)
                 .addClass('toast ml-auto')
                 .addClass('toast-error')
                 .attr('role', 'alert')

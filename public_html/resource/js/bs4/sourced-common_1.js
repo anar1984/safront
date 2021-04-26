@@ -17,7 +17,7 @@ function check() {
     //                progresBarStart();
     var domain = $('#domain').val();
     var username = $('#cUsername').val();
-    var password = $('#cPassworsetGUIComponentButtonGUIModald').val();
+    var password = $('#cPassword').val();
     if (!domain || !username || !password) {
         showAlertLogin();
         return;
@@ -10041,6 +10041,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return "";
         }
 
+        loadBacklogInputsByIdIfNotExist(backlogId);
+
         if (dgui[backlogId]) {
             return dgui[backlogId]
         }
@@ -10166,6 +10168,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
+        loadBacklogInputsByIdIfNotExist(popupBacklogId);
+
         closeModal('userstory-gui-input-component-res-sus-analytic');
         var backlog = SACore.GetBacklogDetails(popupBacklogId, 'param1')// this.getBacklogCoreInfoById(popupBacklogId);
         var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
@@ -10205,12 +10209,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             $(tempEl).attr('sa-triggersetvalue', '1');
             triggerAPI(tempEl, $(el).attr("onclick_trigger_id"), data);
             if (!$(tempEl).hasClass('sa-onloadclick')) {
-                initOnloadActionOnGUIDesign4OnClick();
+                initOnloadActionOnGUIDesign4OnClick(tempEl);
             }
         } else {
             var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
             if (!$(tempEl).hasClass('sa-onloadclick')) {
-//                initOnloadActionOnGUIDesign4OnClick();
+                initOnloadActionOnGUIDesign4OnClick(tempEl);
             }
         }
 //       
@@ -10218,6 +10222,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     setGUIComponentRedirectGUIModal: function (el, backlogId, e) {
         e.stopPropagation();
         closeModal('userstory-gui-input-component-res-sus-analytic');
+
         var backlog = this.getBacklogCoreInfoById(backlogId);
         var canvasCSS = Component.ReplaceCSS(backlog.kv.param1);
         global_var.actual_backlog_gui_css = canvasCSS;
@@ -10237,24 +10242,26 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
     setGUIComponentFillGUIModal: function (el, id, sectionId) {
         closeModal('userstory-gui-input-component-res-sus-analytic');
+        loadBacklogInputsByIdIfNotExist(id);
+        // loadBacklogInputsByIdIfNotExist(sectionId);
 //        var html = this.genGUIDesignHtmlById(id);
 
         var res = SAInput.toJSONByBacklog(id);
         var html = this.getGUIDesignHTML(res);
         $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first().html(html);
-        
-        
-        
+
+
+
         if ($(el).attr("onclick_trigger_id")) {
             var apiId = $(el).attr("onclick_trigger_id");
             triggerAPI(el, apiId);
-            initOnloadActionOnGUIDesign();
+            initOnloadActionOnGUIDesign(el);
             $(el).closest('div.modal').first().modal('hide');
-        }else{
+        } else {
             //initiate onclick action
-        initOnloadActionOnGUIDesign();  
+            initOnloadActionOnGUIDesign(el);
         }
-         
+
 //        generatePopupModalNew(html, canvasCSS);
 //        $('[data-toggle="tooltip"]').tooltip({html: true});
     },
@@ -10265,7 +10272,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         if ($(el).attr("onclick_trigger_id")) {
             var apiId = $(el).attr("onclick_trigger_id");
             triggerAPI(el, apiId);
-            initOnloadActionOnGUIDesign();
+            initOnloadActionOnGUIDesign(el);
             $(el).closest('div.modal').first().modal('hide');
         }
 
@@ -10308,7 +10315,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
                 }
 
-                initOnloadActionOnGUIDesign();
+                initOnloadActionOnGUIDesign(el);
                 $(el).closest('div.modal').first().modal('hide');
             }
         });
@@ -12175,6 +12182,117 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
+    loadInputDetailsOnProjectSelectNew4SAInput: function (bid) {
+        var bid = (bid) ? bid :global_var.current_backlog_id;  
+        
+        var json = initJSON();
+//        json.kv.fkProjectId = global_var.current_project_id;
+        json.kv.fkBacklogId =bid ;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew4SAInput",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                try {
+                    SAInput.LoadInput4Zad(res);
+                } catch (err) {
+                }
+
+            }
+        });
+    },
+    loadInputDetailsOnProjectSelectNew: function () {
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var rc = parseInt(res.kv.count);
+                var page = 800;
+                var ln = Math.ceil(rc / page);
+                SAInput.Inputs = {};
+                for (var i = 0; i < ln; i++) {
+                    var startLimit = i * page;
+                    var endLimit = (i + 1) * page;
+                    var flag4Proload = (i === ln - 1) ? true : false;
+                    that.loadInputDetailsOnProjectSelectNewSection(global_var.current_project_id, startLimit, endLimit, flag4Proload);
+                }
+            }
+        });
+    },
+    loadInputDetailsOnProjectSelectNewSection: function (projectId, startLimit, endLimit, flag4Proload) {
+        var json = initJSON();
+        json.kv.fkProjectId = projectId;
+        json.kv.startLimit = startLimit;
+        json.kv.endLimit = endLimit;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNewSection",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputSection(res);
+                } catch (err) {
+                }
+
+                if (flag4Proload) {
+                    queue4ProLoad.loadInputDetailsOnProjectSelect = true;
+                    executeCoreOfManualProSelection();
+                }
+
+
+
+            }
+        });
+    },
+
+    loadInputDetailsOnProjectSelectNew2: function () {
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+//            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew",
+            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputNew(res);
+                } catch (err) {
+                }
+
+                new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
+                new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
+
+                queue4ProLoad.loadInputDetailsOnProjectSelect = true;
+                executeCoreOfManualProSelection();
+
+            }
+        });
+    },
     loadInputDetailsOnProjectSelect: function () {
         var json = initJSON();
         json.kv.fkProjectId = global_var.current_project_id;
@@ -12195,6 +12313,137 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
 
                 queue4ProLoad.loadInputDetailsOnProjectSelect = true;
+                executeCoreOfManualProSelection();
+
+            }
+        });
+    },
+    loadInputDetails4TableOnProjectSelect: function () {
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4Select4TableNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputTable(res);
+                } catch (err) {
+
+                }
+
+                queue4ProLoad.loadInputDetails4TableOnProjectSelect = true;
+                executeCoreOfManualProSelection();
+
+            }
+        });
+    },
+    loadInputDetails4TabOnProjectSelect: function () {
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4Select4TabNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputTab(res);
+                } catch (err) {
+
+                }
+
+                queue4ProLoad.loadInputDetails4TabOnProjectSelect = true;
+                executeCoreOfManualProSelection();
+
+            }
+        });
+    },
+    loadInputDetails4DescriptionIdsOnProjectSelect: function () {
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4Select4DescriptionIdsNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputDescriptionId(res);
+                } catch (err) {
+
+                }
+
+                queue4ProLoad.loadInputDetails4DescriptionIdsOnProjectSelect = true;
+                executeCoreOfManualProSelection();
+
+            }
+        });
+    },
+    
+    
+    
+    loadInputDetails4ChildDependenceIdOnProjectSelect4Input: function (fkInputId) {
+        var json = initJSON();
+        json.kv.fkInputId =  fkInputId;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4Select4ChildDependenceIdNew4Input",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputChildDependenceIdNew(res);
+                } catch (err) {
+
+                }
+
+                 
+
+            }
+        });
+    },
+    loadInputDetails4ChildDependenceIdOnProjectSelect: function () {
+        queue4ProLoad.loadInputDetails4ChildDependenceIdOnProjectSelect = true;
+        executeCoreOfManualProSelection();
+        return;
+
+        var json = initJSON();
+        json.kv.fkProjectId = global_var.current_project_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetInputList4Select4ChildDependenceIdNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    SAInput.LoadInputChildDependenceId(res);
+                } catch (err) {
+
+                }
+
+                queue4ProLoad.loadInputDetails4ChildDependenceIdOnProjectSelect = true;
                 executeCoreOfManualProSelection();
 
             }
@@ -12606,7 +12855,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
-            if(obj[n].isApi==""){
+            if (obj[n].isApi === "") {
                 tbody.append(this.genUSLine(obj[n]));
             }
         }
@@ -12617,11 +12866,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
-            if(obj[n].isApi=="1"){
+            if (obj[n].isApi == "1") {
                 tbody.append(this.genUSLine(obj[n]));
             }
-            
-           
+
+
         }
 
         return tbody.html();
@@ -12633,10 +12882,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 return;
             }
             $('#container-us-body').html('');
-            
-                    $('#api_list_side_bar').html(this.getUSListBlockApi(res));      
-                    $('#container-us-body').html(this.getUSListBlockUserStory(res));
-            
+
+            $('#api_list_side_bar').html(this.getUSListBlockApi(res));
+            $('#container-us-body').html(this.getUSListBlockUserStory(res));
+
 
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0
@@ -12645,7 +12894,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setUSListsDetailedView: function () {
         this.setUSLists(global_var.current_backlog_list);
-      
+
     },
     setUSLists4KanbanViewDirect: function () {
         this.setUSLists4KanbanView();
@@ -13221,7 +13470,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
 
     genUSLine: function (o) {
-       
+
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
                 .append($("<input type='checkbox'>")
@@ -13255,8 +13504,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         var tr = $('<tr onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)" \n\
                     sid="' + o.id + '" orderNo="' + o.orderNo + '"></tr>');
+
         tr.append($('<td class="us-td-list us-td-list-checkbox"></td>')
                 .append(rs));
+
+        if (o.isApi === '1') {
+            tr.attr("is_api", "1")
+        } else {
+            tr.attr("is_api", "0")
+        }
 
 
 
@@ -14085,7 +14341,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        fillBacklogHistory4View(id);
+        fillBacklogHistory4View(id, $(e).attr("is_api"));
+
+        if ($(e).attr("is_api") === '1') {
+            callStoryCard(id);
+            return;
+        }
+
+
 
 
 
@@ -14117,7 +14380,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var orderNo = "";
         $('#smb-general-main-info').html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.current_backlog_id)));
         $('#comment_line').html('');
-        this.toggleSubmenu($('#us-submenu' + global_var.current_us_submenu), global_var.current_us_submenu);
+        //this.toggleSubmenu($('#us-submenu' + global_var.current_us_submenu), global_var.current_us_submenu);
+
+        this.toggleSubmenuIPO();
+
+        if ($(document).find(".StoryCardPanel").first().html()) {
+            $(document).find(".StoryCardPanel").remove();
+            callStoryCard(id);
+        }
 
         $('.us-task-enable').attr("style", "pointer-events:none;color:gray;")
         Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
@@ -18462,7 +18732,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#SUS_IPO_GUI_Design').html(st);
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
-        initOnloadActionOnGUIDesign();
+
+        var elm = document.getElementById('SUS_IPO_GUI_Design');
+
+        initOnloadActionOnGUIDesign4OnClick(elm);
+        initOnloadActionOnGUIDesign4Onchange(elm);
+
         initSelectpickerComponent();
 
         //set is API
@@ -21985,7 +22260,13 @@ Project.prototype = {
     toggleProjectDetails: function () {
         Utility.addParamToUrl('current_project_id', global_var.current_project_id);
         new UserStory().loadDetailsOnProjectSelect();
-        new UserStory().loadInputDetailsOnProjectSelect();
+
+//        new UserStory().loadInputDetailsOnProjectSelectNew();
+        new UserStory().loadInputDetails4TableOnProjectSelect();
+        new UserStory().loadInputDetails4TabOnProjectSelect();
+        new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
+        new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
+
         new UserStory().loadInputDescDetailsOnProjectSelect();
         new UserStory().loadDependencyOnProjectSelect();
         new UserStory().loadSUS4Relation4Section();
@@ -25126,7 +25407,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             crossDomain: true,
             async: true,
             success: function (res) {
-                
+
                 Analytics.setUSLists(res);
             },
             error: function () {

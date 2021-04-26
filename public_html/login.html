@@ -25,6 +25,7 @@
                                 <script src="resource/js/bs4/bootstrap.min.js"></script>
                                 <script src="resource/js/bs4/sourced-common.js"></script>
                                 <script src="resource/js/bs4/general.js"></script>
+                                <script src="resource/js/bs4/link.js"></script>
                                 <!-- Custom styles for this template -->
                                 <!--<link href="signin.css" rel="stylesheet">-->
                                 </head>
@@ -125,11 +126,12 @@
                                                             //console.log(data);
 
                                                             $.ajax({
-                                                                url: "api/post/login",
+                                                                url: urlGl+"api/post/login",
                                                                 type: "POST",
                                                                 data: data,
                                                                 contentType: "application/json",
                                                                 crossDomain: true,
+                                                                async:false,
                                                                 success: function () {
                                                                     //                        progresBarStop();
                                                                     document.location = "app.html";

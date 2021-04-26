@@ -214,6 +214,25 @@ function showStoryCardIn(id,elId) {
     });
 }
 
+function callStoryCard4Api(id,elId,backlogName) {
+    var divId = (elId)? elId : "body_of_nature";
+    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
+
+    $.get("resource/child/storycard.html", function (html_string)
+    {
+        if (!id || id === '-1') {
+            return;
+        }
+        $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
+        var storyCard = getPopup(html_string);
+        $("#"+divId).append(storyCard);
+        global_var.current_backlog_id = id;
+        new UserStory().toggleSubmenuStoryCard();
+        loadUsersAsOwner();
+        setStoryCardOwner();
+    });
+}
+
 function callStoryCard(id,elId,backlogName) {
     var divId = (elId)? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni

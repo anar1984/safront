@@ -11,18 +11,20 @@ var be = {
         if (SACore.GetBacklogDetails(apiId, "isApi") !== '1') {
             return;
         }
+        
+        loadBacklogInputsByIdIfNotExist(apiId);
 
         be.ValidateApiOnInput(apiId, data);
 
         var actionType = SACore.GetBacklogDetails(apiId, "apiAction");
         if (actionType === 'C') {
-            res = this.callInsertAPI(apiId, data);
+            res = this.callInsertAPI(apiId, data, element, asyncData);
         } else if (actionType === 'R') {
             res = this.callSelectAPI(apiId, data, element, asyncData);
         } else if (actionType === 'U') {
-            res = this.callUpdateAPI(apiId, data);
+            res = this.callUpdateAPI(apiId, data, element, asyncData);
         } else if (actionType === 'D') {
-            res = this.callDeleteAPI(apiId, data);
+            res = this.callDeleteAPI(apiId, data, element, asyncData);
         } else {
             res = this.callContainerAPI(apiId, data, element, asyncData);
 
@@ -35,6 +37,9 @@ var be = {
 
 
         return res;
+    },
+    GetSendToBacklogId: function (apiId) {
+
     },
     triggerStoryCard(storyCardId, apiId) {
         var res = this.GetGUIDataByStoryCard(storyCardId);
@@ -61,7 +66,7 @@ var be = {
         return res;
     },
 
-    callInsertAPI: function (apiId, data) {
+    callInsertAPI: function (apiId, data, element, asyncData) {
         if (!data) {
             data = {};
         }
@@ -70,10 +75,10 @@ var be = {
         var pureData = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
 
         var innerData = this.ExecAPI.SetInsertObjects(apiId);
-        var res = this.ExecAPI.CallInsertServices(apiId, pureData, innerData);
+        var res = this.ExecAPI.CallInsertServices(apiId, pureData, innerData, element, asyncData);
         return res;
     },
-    callUpdateAPI: function (apiId, data) {
+    callUpdateAPI: function (apiId, data, element, asyncData) {
         if (!data) {
             data = {};
         }
@@ -83,10 +88,10 @@ var be = {
 
 
         var innerData = this.ExecAPI.SetUpdateObjects(apiId);
-        var res = this.ExecAPI.CallUpdateServices(apiId, pureData, innerData);
+        var res = this.ExecAPI.CallUpdateServices(apiId, pureData, innerData, element, asyncData);
         return res;
     },
-    callDeleteAPI: function (apiId, data) {
+    callDeleteAPI: function (apiId, data, element, asyncData) {
         if (!data) {
             data = {};
         }
@@ -95,7 +100,7 @@ var be = {
         var pureData = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
 
         var innerData = this.ExecAPI.SetDeleteObjects(apiId);
-        var res = this.ExecAPI.CallDeleteServices(apiId, pureData, innerData);
+        var res = this.ExecAPI.CallDeleteServices(apiId, pureData, innerData, element, asyncData);
         return res;
     },
 
@@ -135,6 +140,7 @@ var be = {
             var SELECT_OBJ = {};
             var SELECT_OBJ_PAIR = {};
             var SELECT_OBJ_PAIR_GROUP = {};
+            var SEND_TO_BACKLOG_ID = [];
 
 
             var outputList = SACore.GetBacklogDetails(storyCardId, "inputIds").split(',');
@@ -160,6 +166,10 @@ var be = {
                             var dbname = SAEntity.GetDBDetails(inputObj.selectFromDbId, "dbName");
                             var tableName = SAEntity.GetTableDetails(inputObj.selectFromTableId, "tableName");
                             var fieldName = SAEntity.GetFieldDetails(inputObj.selectFromFieldId, "fieldName");
+
+                            if (inputObj.sendToBacklogId) {
+                                SEND_TO_BACKLOG_ID.push(inputObj.sendToBacklogId);
+                            }
 
                             fieldName = fieldName.replace(/_/g, ' ');
                             fieldName = firstLetterToLowercase(fieldName);
@@ -222,6 +232,7 @@ var be = {
             innerData.SELECT_OBJ_PAIR_GROUP = SELECT_OBJ_PAIR_GROUP;
             innerData.PARAM_DATA = paramData;
             innerData.PARAM_DATA_4_IN = paramData4In;
+            innerData.SEND_TO_BACKLOG_ID = SEND_TO_BACKLOG_ID;
 
             return innerData;
         },
@@ -230,6 +241,7 @@ var be = {
             var INSERT_OBJ = {};
             var INSERT_OBJ_PAIR = {};
             var INSERT_OBJ_DEFAULT_VALUE = {};
+            var SEND_TO_BACKLOG_ID = [];
             var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
             for (var i in outputList) {
                 try {
@@ -241,6 +253,10 @@ var be = {
                             var dbname = SAEntity.GetDBDetails(inputObj.sendToDbId, "dbName");
                             var tableName = SAEntity.GetTableDetails(inputObj.sendToTableId, "tableName");
                             var entityName = SAEntity.GetFieldDetails(inputObj.sendToFieldId, "fieldName");
+
+                            if (inputObj.sendToBacklogId) {
+                                SEND_TO_BACKLOG_ID.push(inputObj.sendToBacklogId);
+                            }
 
                             entityName = entityName.replace(/_/g, ' ');
                             entityName = firstLetterToLowercase(entityName);
@@ -275,12 +291,14 @@ var be = {
             innerData.INSERT_OBJ = INSERT_OBJ;
             innerData.INSERT_OBJ_PAIR = INSERT_OBJ_PAIR;
             innerData.INSERT_OBJ_DEFAULT_VALUE = INSERT_OBJ_DEFAULT_VALUE;
+            innerData.SEND_TO_BACKLOG_ID = SEND_TO_BACKLOG_ID;
             return innerData;
         },
         GetInputDefaultValue: function (inputId) {
             var rs = '';
             try {
-                var descIds = SAInput.getInputDetails(inputId, 'inputDescriptionIds').split(',');
+//                var descIds = SAInput.getInputDetails(inputId, 'inputDescriptionIds').split(',');
+                var descIds = SAInput.DescriptionId[inputId].split(',');
                 for (var i = 0; i < descIds.length; i++) {
                     var desc = SAInputDesc.GetDetails(descIds[i]);
                     if (desc.includes('fn_(Defaultvalueis)')) {
@@ -297,6 +315,8 @@ var be = {
             var UPDATE_OBJ = {};
             var UPDATE_OBJ_PAIR = {};
             var UPDATE_OBJ_DEFAULT_VALUE = {};
+            var SEND_TO_BACKLOG_ID = [];
+
             var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
             for (var i in outputList) {
                 try {
@@ -308,6 +328,10 @@ var be = {
                             var dbname = SAEntity.GetDBDetails(inputObj.sendToDbId, "dbName");
                             var tableName = SAEntity.GetTableDetails(inputObj.sendToTableId, "tableName");
                             var entityName = SAEntity.GetFieldDetails(inputObj.sendToFieldId, "fieldName");
+
+                            if (inputObj.sendToBacklogId) {
+                                SEND_TO_BACKLOG_ID.push(inputObj.sendToBacklogId);
+                            }
 
                             entityName = entityName.replace(/_/g, ' ');
                             entityName = firstLetterToLowercase(entityName);
@@ -344,12 +368,14 @@ var be = {
             innerData.UPDATE_OBJ = UPDATE_OBJ;
             innerData.UPDATE_OBJ_PAIR = UPDATE_OBJ_PAIR;
             innerData.UPDATE_OBJ_DEFAULT_VALUE = UPDATE_OBJ_DEFAULT_VALUE;
+            innerData.SEND_TO_BACKLOG_ID = SEND_TO_BACKLOG_ID;
             return innerData;
         },
         SetDeleteObjects: function (apiId) {
             var innerData = {};
             var DELETE_OBJ = {};
             var DELETE_OBJ_PAIR = {};
+            var SEND_TO_BACKLOG_ID = [];
             var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
             for (var i in outputList) {
                 try {
@@ -361,6 +387,11 @@ var be = {
                             var dbname = SAEntity.GetDBDetails(inputObj.sendToDbId, "dbName");
                             var tableName = SAEntity.GetTableDetails(inputObj.sendToTableId, "tableName");
                             var entityName = SAEntity.GetFieldDetails(inputObj.sendToFieldId, "fieldName");
+
+
+                            if (inputObj.sendToBacklogId) {
+                                SEND_TO_BACKLOG_ID.push(inputObj.sendToBacklogId);
+                            }
 
                             entityName = entityName.replace(/_/g, ' ');
                             entityName = firstLetterToLowercase(entityName);
@@ -394,6 +425,7 @@ var be = {
 
             innerData.DELETE_OBJ = DELETE_OBJ;
             innerData.DELETE_OBJ_PAIR = DELETE_OBJ_PAIR;
+            innerData.SEND_TO_BACKLOG_ID = SEND_TO_BACKLOG_ID;
             return innerData;
         },
         CallSelectServices: function (apiId, data, innerData, element, asyncData) {
@@ -401,6 +433,7 @@ var be = {
             var SELECT_OBJ = innerData.SELECT_OBJ;
             var SELECT_OBJ_PAIR = innerData.SELECT_OBJ_PAIR;
             var SELECT_OBJ_PAIR_GROUP = innerData.SELECT_OBJ_PAIR_GROUP;
+            var SEND_TO_BACKLOG_ID = innerData.SEND_TO_BACKLOG_ID;
 
 
 //set Required Field From Descriptons
@@ -464,13 +497,30 @@ var be = {
                     json.kv.selectedField = ln;
                     try {
                         if (isAsync === false) {
-                            var output = be.ExecAPI.CallSelectService(json, isAsync);
+                            var output = be.ExecAPI.CallSelectService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
                             var out1 = {};
                             var out = {};
                             out = be.ExecAPI.SetKeysAsAlians4Select(output.kv, SELECT_OBJ_PAIR);
                             out1 = be.ExecAPI.SetKeysAsAlians4Select(output.kv, SELECT_OBJ_PAIR_GROUP);
                             out = $.extend(out, out1);
                             out['selectedField'] = output.kv.selectedField;
+
+                            try {
+                                var _obj = {};
+
+                                var _selectedField = out.selectedField.split(",");
+                                for (var i in _selectedField) {
+                                    _obj[_selectedField[i]] = _selectedField[i];
+                                }
+                                var _kv2 = be.ExecAPI.SetKeysAsAlians4Select(_obj, SELECT_OBJ_PAIR);
+                                var _kv3 = be.ExecAPI.SetKeysAsAlians4Select(_obj, SELECT_OBJ_PAIR_GROUP);
+                                _obj = $.extend(_kv2, _kv3);
+                                var _key = Object.keys(_obj);
+
+                                out.selectedField = _key.toString();
+                            } catch (err) {
+                            }
+
                             try {
 
                                 var rc = (output.tbl[0].r && output.tbl[0].r.length > 0)
@@ -501,7 +551,7 @@ var be = {
                             } catch (e) {
                             }
                         } else {
-                            be.ExecAPI.CallSelectServiceAsync(json, SELECT_OBJ_PAIR, SELECT_OBJ_PAIR_GROUP, element, apiId, asyncData);
+                            be.ExecAPI.CallSelectServiceAsync(json, SELECT_OBJ_PAIR, SELECT_OBJ_PAIR_GROUP, element, apiId, asyncData, SEND_TO_BACKLOG_ID);
                         }
 
                     } catch (err) {
@@ -586,6 +636,7 @@ var be = {
                     var extId = extApiList[i];
                     var o = cr_project_desc[extId];
                     if (o.fkRelatedApiId) {
+                        loadBacklogInputsByIdIfNotExist(o.fkRelatedApiId);
                         var inputIds = SACore.GetBacklogDetails(o.fkRelatedApiId, "inputIds").split(",");
                         inputList = $.merge(inputList, inputIds);
                     }
@@ -674,11 +725,12 @@ var be = {
 
             return outputKV;
         },
-        CallInsertServices: function (apiId, data, innerData) {
+        CallInsertServices: function (apiId, data, innerData, element, asyncData) {
             var res = {};
             var INSERT_OBJ = innerData.INSERT_OBJ;
             var INSERT_OBJ_PAIR = innerData.INSERT_OBJ_PAIR;
             var INSERT_OBJ_DEFAULT_VALUE = innerData.INSERT_OBJ_DEFAULT_VALUE;
+            var SEND_TO_BACKLOG_ID = innerData.SEND_TO_BACKLOG_ID;
 
 //            var inputList = be.ExecAPI.GetInputsByAPI(apiId);
 
@@ -707,14 +759,14 @@ var be = {
 
             outputKVFinal = $.extend(outputKVFinal, paramData);
             //call services
-            var resEndup = be.ExecAPI.CallInsertServicesEndup(outputKVFinal, INSERT_OBJ, apiId);
+            var resEndup = be.ExecAPI.CallInsertServicesEndup(outputKVFinal, INSERT_OBJ, apiId, SEND_TO_BACKLOG_ID, element, asyncData);
 
             var temp1 = $.extend(res, resEndup);
             res = temp1;
 
             return res;
         },
-        CallInsertServicesEndup: function (outputKVFinal, INSERT_OBJ, apiId) {
+        CallInsertServicesEndup: function (outputKVFinal, INSERT_OBJ, apiId, SEND_TO_BACKLOG_ID, element, asyncData) {
             var syncType = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'));
             var isAsync = (syncType === 'async') ? true : false;
 
@@ -732,7 +784,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallInsertService(json, isAsync);
+                        var output = be.ExecAPI.CallInsertService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
 //                        var b = $.extend(res, output.kv);
 
                         res['id'] = output.kv.id;
@@ -761,11 +813,12 @@ var be = {
             }
             return stLine;
         },
-        CallUpdateServices: function (apiId, data, innerData) {
+        CallUpdateServices: function (apiId, data, innerData, element, asyncData) {
             var res = {};
             var UPDATE_OBJ_PAIR = innerData.UPDATE_OBJ_PAIR;
             var UPDATE_OBJ = innerData.UPDATE_OBJ;
             var UPDATE_OBJ_DEFAULT_VALUE = innerData.UPDATE_OBJ_DEFAULT_VALUE;
+            var SEND_TO_BACKLOG_ID = innerData.SEND_TO_BACKLOG_ID;
 
 
 //            var inputList = be.ExecAPI.GetInputsByAPI(apiId);
@@ -811,7 +864,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallUpdateService(json, isAsync);
+                        var output = be.ExecAPI.CallUpdateService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
                         var b = $.extend(res, output.kv);
                         res = b;
                         try {
@@ -929,10 +982,11 @@ var be = {
             return rs;
         },
 
-        CallDeleteServices: function (apiId, data, innerData) {
+        CallDeleteServices: function (apiId, data, innerData, element, asyncData) {
             var res = {};
             var DELETE_OBJ = innerData.DELETE_OBJ;
             var DELETE_OBJ_PAIR = innerData.DELETE_OBJ_PAIR;
+            var SEND_TO_BACKLOG_ID = innerData.SEND_TO_BACKLOG_ID;
 
 
             // var inputList = be.ExecAPI.GetInputsByAPI(apiId);
@@ -969,7 +1023,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallDeleteService(json, isAsync);
+                        var output = be.ExecAPI.CallDeleteService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
                         var b = $.extend(res, output.kv);
                         res = b;
                         try {
@@ -985,7 +1039,7 @@ var be = {
             }
             return res;
         },
-        CallInsertService: function (dataJSON, isAsync) {
+        CallInsertService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1001,11 +1055,21 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
+                    var dt = $.extend(dataJSON, res);
+                    for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
+                        if (SEND_TO_BACKLOG_ID[i]) {
+                            try {
+                                be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                    }
                 }
             });
             return rs;
         },
-        CallUpdateService: function (dataJSON, isAsync) {
+        CallUpdateService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1021,11 +1085,22 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
+
+                    var dt = $.extend(dataJSON, res);
+                    for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
+                        if (SEND_TO_BACKLOG_ID[i]) {
+                            try {
+                                be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                    }
                 }
             });
             return rs;
         },
-        CallDeleteService: function (dataJSON, isAsync) {
+        CallDeleteService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1041,11 +1116,22 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
+
+                    var dt = $.extend(dataJSON, res);
+                    for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
+                        if (SEND_TO_BACKLOG_ID[i]) {
+                            try {
+                                be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                    }
                 }
             });
             return rs;
         },
-        CallSelectService: function (dataJSON, isAsync) {
+        CallSelectService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1061,11 +1147,21 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
+                    var dt = $.extend(dataJSON, res);
+                    for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
+                        if (SEND_TO_BACKLOG_ID[i]) {
+                            try {
+                                be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                    }
                 }
             });
             return rs;
         },
-        CallSelectServiceAsync: function (dataJSON, SELECT_OBJ_PAIR, SELECT_OBJ_PAIR_GROUP, element, apiId, asyncData) {
+        CallSelectServiceAsync: function (dataJSON, SELECT_OBJ_PAIR, SELECT_OBJ_PAIR_GROUP, element, apiId, asyncData, SEND_TO_BACKLOG_ID) {
             var rs = "";
             var that = this;
             delete dataJSON._table;
@@ -1086,7 +1182,20 @@ var be = {
                     out = $.extend(out, out1);
                     out.selectedField = output.kv.selectedField;
 
-                   
+                    try {
+                        var _obj = {};
+                        var _selectedField = out.selectedField.split(",");
+                        for (var i in _selectedField) {
+                            _obj[_selectedField[i]] = _selectedField[i];
+                        }
+                        var _kv2 = be.ExecAPI.SetKeysAsAlians4Select(_obj, SELECT_OBJ_PAIR);
+                        var _kv3 = be.ExecAPI.SetKeysAsAlians4Select(_obj, SELECT_OBJ_PAIR_GROUP);
+                        _obj = $.extend(_kv2, _kv3);
+                        var _key = Object.keys(_obj);
+
+                        out.selectedField = _key.toString();
+                    } catch (err) {
+                    }
 
                     try {
                         var rc = (output.tbl[0].r && output.tbl[0].r.length > 0)
@@ -1129,6 +1238,17 @@ var be = {
                     }
 
 
+                    var dt = $.extend(dataJSON, output);
+                    for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
+                        if (SEND_TO_BACKLOG_ID[i]) {
+                            try {
+                                be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                    }
+
                 }
             });
             return rs;
@@ -1144,7 +1264,8 @@ var be = {
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
-                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+//                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1187,7 +1308,8 @@ var be = {
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'IN') {
-                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1230,7 +1352,8 @@ var be = {
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
-                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1275,7 +1398,8 @@ var be = {
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
-                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1308,7 +1432,8 @@ var be = {
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'IN') {
-                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
