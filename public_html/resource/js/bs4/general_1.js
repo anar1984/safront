@@ -1184,7 +1184,7 @@ var waitingDialog = waitingDialog || (function ($) {
             '<div class="modal-content">' +
             '<div class="modal-header"><h3 style="margin:0;"></h3>' +
             ' <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-            ' <span aria-hidden="true">Ã—</span>' +
+            ' <span aria-hidden="true">x</span>' +
             '</button>' +
             '</div>' +
             '<div class="modal-body">' +
@@ -1237,12 +1237,14 @@ var waitingDialog = waitingDialog || (function ($) {
     };
 })(jQuery);
 function showProgress() {
+    return;
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').show();
     document.getElementById('preloader').style.display = "block";
 }
 
 function showProgressAlternative() {
+    return;
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
     $('#preloader1').attr("style", "display: block; z-index: 100000; height: 10000px;");

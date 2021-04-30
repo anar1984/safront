@@ -11,7 +11,7 @@ var be = {
         if (SACore.GetBacklogDetails(apiId, "isApi") !== '1') {
             return;
         }
-        
+
         loadBacklogInputsByIdIfNotExist(apiId);
 
         be.ValidateApiOnInput(apiId, data);
@@ -678,16 +678,20 @@ var be = {
 
             var res = [];
             for (var i in inputIds) {
-                var inputId = inputIds[i].trim();
-                if (inputId.length === 0)
-                    continue;
-                var inputObj = SAInput.getInputObject(inputId);
-                if (inputObj.inputType !== 'IN') {
-                    continue;
-                }
+                try {
+                    var inputId = inputIds[i].trim();
+                    if (inputId.length === 0)
+                        continue;
+                    var inputObj = SAInput.getInputObject(inputId);
+                    if (inputObj.inputType !== 'IN') {
+                        continue;
+                    }
 
-                var inputName = inputObj.inputName;
-                res.push(inputName);
+                    var inputName = inputObj.inputName;
+                    res.push(inputName);
+                } catch (err) {
+                    console.log(err);
+                }
             }
             return res;
         },

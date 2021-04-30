@@ -46,7 +46,7 @@
         <script src="resource/js/bs4/jquery-ui.js"></script>
         <script src="resource/js/bs4/popper.min.js"></script>
         <script src="resource/js/bs4/bootstrap.min.js"></script>
-        
+
         <script src="resource/js/bs4/component.js"></script>
         <script src="resource/js/bs4/main-kanban.js"></script>
         <script src="resource/js/bs4/sourced-common_1.js"></script>
@@ -82,7 +82,7 @@
         <!--<script src="resource/js/bs4/swimlane2.js"></script>-->
         <script src="resource/js/bs4/beaction.js"></script>
         <script src="resource/js/bs4/html2canvas.min.js"></script>
-      
+
 
     </head>
 
@@ -1536,7 +1536,7 @@
                     <button type="button" class="btn-toggle1"><i class="fas fa-chevron-right"></i></button>
 
                 </div>
-                
+
 
                 <div class="panel-right col-12" id="panelSecond1">
                     <div class="new-wrapper">
@@ -7584,7 +7584,7 @@
                                 </div>
                                 <div class="col-12 text-left">
                                     <div onchange=''
-                                              rows=15  style="width: 100%; height: 200px;" id="guiClassModal_classbody"></div>
+                                         rows=15  style="width: 100%; height: 200px;" id="guiClassModal_classbody"></div>
 
                                     <h5>}</h5><br>
                                 </div>
@@ -7608,7 +7608,7 @@
 
     <div class="modal fade" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby=""
          aria-hidden="true">
-         
+
         <div class="modal-dialog modal-lg" style="width: 90%;max-width: 90%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -7618,7 +7618,7 @@
                     </button>
                 </div>
                 <div class="modal-body" style="font-size: 12px;">
-                
+
                     <div class="row">
                         <div class="col-4">
                             <b>New Function (Description)</b>
@@ -7655,7 +7655,7 @@
                                         <option selected value='core'>Core</option>
                                         <option value='event'>Event Based</option>
                                         <option   value='java'>Java</option>
-                                        
+
                                     </select>
                                     <!--                                <input  type="checkbox"
                                                                             checked="checked"
@@ -7682,7 +7682,7 @@
                                     <input class="form-control" id="jsCodeModal_apiid">
 
                                 </div>
-                                
+
                                 <div class="col-12 jscode-corepart jscode-zad  jscode-zad-core">
                                     <b>function</b> <input onchange='updateJSChange(this, "fnCoreName")' 
                                                            placeholder="Function Name"
@@ -7693,7 +7693,7 @@
                                                    class="form-control" 
                                                    style='border-color:white;margin: 15px 0px;display:inline-flex;width:30%' id="jsCodeModal_fncoreinput"><b> ){</b>
                                 </div>
-                                
+
                                 <div class="col-12 jscode-eventpart jscode-zad  jscode-zad-event" style="display:none;">
                                     <b>$(document).on("</b><input onchange='updateJSChange(this, "fnEvent")' 
                                                                   placeholder="Function Event. ex:click"
@@ -7708,22 +7708,22 @@
 
                                 <div class="col-12 jscode-javapart jscode-zad  jscode-zad-java" style='display:none;'>
                                     <button type="button" class="btn btn-secondary" onclick="compileJava()">Compile</button><br>
-                                     <b>Library</b> <textarea onchange='updateJSChange(this, "libraryUrl")' 
-                                                           placeholder="import util.io.*;"
-                                                           class="form-control"  
-                                                           id="jsCodeModal_libraryurl"></textarea>
+                                    <b>Library</b> <textarea onchange='updateJSChange(this, "libraryUrl")' 
+                                                             placeholder="import util.io.*;"
+                                                             class="form-control"  
+                                                             id="jsCodeModal_libraryurl"></textarea>
                                     <b>public static Carrier </b> <input onchange='updateJSChange(this, "fnCoreName")' 
-                                                           placeholder="Function Name"
-                                                           class="form-control"  
-                                                           style='border-color:white;margin:15px 0px;display:inline-flex;width:30%' id="jsCodeModal_fncorename"> 
+                                                                         placeholder="Function Name"
+                                                                         class="form-control"  
+                                                                         style='border-color:white;margin:15px 0px;display:inline-flex;width:30%' id="jsCodeModal_fncorename"> 
                                     <b>(</b> Carrier carrier<b> ){</b>
                                 </div>
 
                                 <div class="col-12 text-left">
-                                     
-                                     <span class="btn btn-secondary editor_full_screenBt"><i class="fas fa-expand"></i></span>
+
+                                    <span class="btn btn-secondary editor_full_screenBt"><i class="fas fa-expand"></i></span>
                                     <div onchange='' placeholder="Function Body"
-                                              rows=15  style="height: 200px; width: 100%;"  id="jsCodeModal_fnbody"></div>
+                                         rows=15  style="height: 200px; width: 100%;"  id="jsCodeModal_fnbody"></div>
 
                                     <span class="jscode-corepart"> }</span>  
                                     <span class="jscode-eventpart"> })</span>  
@@ -7880,10 +7880,10 @@
                 </div>
                 <div class="modal-body" style="width: 100%;height: 100vh;">
                     <div class="" id="edit_full_screen">
-                        
+
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -8025,16 +8025,18 @@
                                                                         $(document).ready(function () {
                                                                             Utility.setParamOnLoad();
                                                                             init4Core();
-                                                                            new Project().loadMainProjectList();
+                                                                            if (global_var.fkManualProjectId) {
+                                                                                global_var.current_project_id = global_var.fkManualProjectId;
+                                                                                new Project().loadMainProjectList4Manual();                                                                    
+            
+                                                                                global_zad_bid = $(".manualProject[pid='"+global_var.fkManualProjectId+"']").first().attr("tid");
+                                                                                loadManualProjectZad(global_var.fkManualProjectId,global_zad_bid)
+                                                                            } else {
+                                                                                new Project().loadMainProjectList();
+                                                                            }
 
                                                                             init();
 
-
-                                                                            //                                                                        var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
-                                                                            //                                                                        current_modal = (current_modal) ? current_modal : "loadStoryCard";
-                                                                            //                                                                        $('.' + current_modal).first().click();
-
-                                                                            //                                                                        $('.left-menu-load').first().click();
                                                                         });
 
                                                                         function clearText() {

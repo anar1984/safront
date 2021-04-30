@@ -85,6 +85,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFrom
         success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
+                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);
                 triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
                 hideProgressAlternative();
@@ -699,34 +700,40 @@ $(document).on('click', '.manualProject', function (evt) {
     var idx = 0;
     try {
 
-        init4ManualProjectLoad();
-
+        Utility.addParamToUrl("fkManualProjectId", $(this).attr("pid"));
         var bid = $(this).attr('tid');
-        global_zad_bid = bid;
-        global_var.current_project_id = $(this).attr("pid");
-        global_var.current_modal = "";
-        global_var.projectToggleWithSync = true;
-
-        clearQueueForManualProjectClick();
-        clearQueue4ProLoad();
-
-        getAllGuiClassList();
-        getInputClassRelByProject();
-        getInputAttributeByProject();
-        getProjectDescriptionByProject();
-        getJsCodeListByProject();
-
-        getInputActionRelByProject();
-        getJsCodeByProject();
-
-
-        toggleProjectDetails4Loading();
-
+        var fkManualProjectId = $(this).attr("pid");
+        loadManualProjectZad(fkManualProjectId,bid);
     } catch (ee) {
     }
-
+            
 //    hideProgressAlternative();
 });
+
+function loadManualProjectZad(fkManualProjectId,bid) {
+    init4ManualProjectLoad();
+
+
+    global_zad_bid = bid;
+    global_var.current_project_id = fkManualProjectId;
+    global_var.current_modal = "";
+    global_var.projectToggleWithSync = true;
+
+    clearQueueForManualProjectClick();
+    clearQueue4ProLoad();
+
+    getAllGuiClassList();
+    getInputClassRelByProject();
+    getInputAttributeByProject();
+    getProjectDescriptionByProject();
+    getJsCodeListByProject();
+
+    getInputActionRelByProject();
+    getJsCodeByProject();
+
+
+    toggleProjectDetails4Loading();
+}
 
 function executeCoreOfManualProSelection(bid1) {
 
@@ -740,6 +747,21 @@ function executeCoreOfManualProSelection(bid1) {
         var body = (dgui[bid]) ? dgui[bid] : new UserStory().genGUIDesignHtmlById(bid);
         $('#mainBodyDivForAll').html(body);
         var el1 = document.getElementById('mainBodyDivForAll');
+        
+        $(el1).find('select.hasTriggerApiCall').each(function (e) {
+            var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
+            var selectFromInputId = $(this).attr("selectFromInputId");
+
+            if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
+                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+            } else {
+                var selectedField = SAInput.GetInputName(selectFromInputId)
+                triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
+            }
+        })
+        
+        
         initOnloadActionOnGUIDesign(el1);
     } else if (global_var.current_modal === 'loadLivePrototype' && f2) {
         new UserStory().load();
@@ -3022,6 +3044,23 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         var tmVal = $(el).attr('sa-data-value');
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
+        
+         if (elem.hasClass('sa-onloadclick-async')) {
+            if (elem.attr("sa-isloaded") !== '1') {
+                elem.attr("sa-isloaded", "1");
+                elem.click();
+            }
+        }
+
+
+        if (elem.hasClass('sa-onloadchange-async')) {
+            if (elem.attr("sa-isloaded") !== '1') {
+                elem.attr("sa-isloaded", "1");
+                elem.change();
+            }
+        }
+        
+        
     }
 
 
@@ -3273,10 +3312,10 @@ function callTableRelationAPIs(el, tableId) {
 
     var f = true;
     for (var i in tableInputRel) {
-        var apiId='';
+        var apiId = '';
         try {
             f = false;
-             apiId = i;
+            apiId = i;
             var inputs = tableInputRel[i].ids;
             var inputLine = inputs.join('%IN%');
 
@@ -3295,7 +3334,7 @@ function callTableRelationAPIs(el, tableId) {
             be.callApi(apiId, data, el, asyncData);
         } catch (err) {
             console.log(err);
-            
+
             var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
             lnzad1 += "," + apiId;
             $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', lnzad1)
@@ -3377,7 +3416,7 @@ function setValueOnCompAfterTriggerApi(el, data) {
                         fillSelectBoxAfterSyncApiCall(this, data, field);
                     }
 
-                    if (data[field]) {
+                    if (localSelectedField.includes(field)) {
                         val = data[field];
                         getComponentValueAfterTriggerApi(this, val);
                     }
@@ -3451,6 +3490,11 @@ function getComponentValueAfterTriggerApi(el, val) {
         var tagName = $(el).get(0).tagName.toLowerCase();
         if (elWithText.includes(tagName)) {
             $(el).text(val);
+        }
+        
+        //.sa-callapi-onvalueset //value elave olanda avtomatik olaraq apini cagirir ve deyerini replace edir
+        if ($(el).hasClass('sa-callapi-onvalueset')){
+            
         }
     }
 
@@ -8353,7 +8397,8 @@ $(document).on('click', '.redirectClass4CSS', function (evt) {
 
 
 $(document).on('click', '.loadLivePrototype', function (evt) {
-    global_var.current_modal = "loadLivePrototype";
+       clearManualProjectFromParam(); 
+       global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
 
@@ -8382,7 +8427,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 });
 $(document).on('click', '.loadDashboard', function (evt) {
     var f = 'dashboard';
-    global_var.current_modal = "loadDashboard";
+       clearManualProjectFromParam(); global_var.current_modal = "loadDashboard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8499,7 +8544,7 @@ function callLivePrototype() {
 
 $(document).on('click', '.loadDocEditor', function (evt) {
     var f = 'doceditor';
-    global_var.current_modal = "loadDocEditor";
+       clearManualProjectFromParam(); global_var.current_modal = "loadDocEditor";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8511,7 +8556,7 @@ $(document).on('click', '.loadDocEditor', function (evt) {
     });
 });
 $(document).on('click', '.loadStoryCard', function (evt) {
-    global_var.current_modal = "loadStoryCard";
+       clearManualProjectFromParam(); global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadStoryCard();
 });
@@ -8549,7 +8594,7 @@ $(document).on('click', '.neefdiagram-call', function (evt) {
 });
 $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     var f = $(this).data('link');
-    global_var.current_modal = "loadStoryCardMgmt";
+       clearManualProjectFromParam(); global_var.current_modal = "loadStoryCardMgmt";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8569,7 +8614,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
 
 $(document).on('click', '.loadBugChange', function (evt) {
     var f = $(this).data('link');
-    global_var.current_modal = "loadBugChange";
+       clearManualProjectFromParam(); global_var.current_modal = "loadBugChange";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8600,8 +8645,8 @@ $(document).on('click', '.loadBugChange', function (evt) {
 
 $(document).on('click', '.loadUserManual', function (evt) {
     var f = 'usermanual';
-    global_var.current_modal = "loadUserManual";
-    Utility.addParamToUrl('current_modal', global_var.current_modal);
+       clearManualProjectFromParam(); global_var.current_modal = "loadUserManual";
+    Utility.addParamToUrl('current_modal',     global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8611,7 +8656,7 @@ $(document).on('click', '.loadUserManual', function (evt) {
 });
 $(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
-    global_var.current_modal = "loadStatistics";
+       clearManualProjectFromParam(); global_var.current_modal = "loadStatistics";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8625,7 +8670,7 @@ $(document).on('click', '.loadStatistics', function (evt) {
 $(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
     global_var.current_modal = "loadStatistics";
-    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    Utility.addParamToUrl('current_modal',      global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8656,7 +8701,7 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 
 $(document).on('click', '.loadEntityDiagram', function (evt) {
     var f = 'entity';
-    global_var.current_modal = "loadEntityDiagram";
+       clearManualProjectFromParam(); global_var.current_modal = "loadEntityDiagram";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8673,7 +8718,7 @@ $(document).on('click', '.loadEntityDiagram', function (evt) {
 
 $(document).on('click', '.loadSourceActivity', function (evt) {
     var f = 'sourceactivity';
-    global_var.current_modal = "loadSourceActivity";
+       clearManualProjectFromParam(); global_var.current_modal = "loadSourceActivity";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8693,7 +8738,7 @@ $(document).on('click', '.loadSourceActivity', function (evt) {
 
 $(document).on('click', '.loadTestCase', function (evt) {
     var f = $(this).data('link');
-    global_var.current_modal = "loadTestCase";
+       clearManualProjectFromParam(); global_var.current_modal = "loadTestCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8723,7 +8768,7 @@ $(document).on('click', '.loadTestCase', function (evt) {
 
 $(document).on('click', '.loadBusinessCase', function (evt) {
     var f = 'bcase';
-    global_var.current_modal = "loadBusinessCase";
+       clearManualProjectFromParam(); global_var.current_modal = "loadBusinessCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8736,7 +8781,7 @@ $(document).on('click', '.loadBusinessCase', function (evt) {
 
 $(document).on('click', '.loadBusinessService', function (evt) {
     var f = 'bservice';
-    global_var.current_modal = "loadBusinessService";
+       clearManualProjectFromParam(); global_var.current_modal = "loadBusinessService";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8748,11 +8793,17 @@ $(document).on('click', '.loadBusinessService', function (evt) {
     });
 });
 
+function clearManualProjectFromParam(){
+    global_var.fkManualProjectId = "";
+     Utility.addParamToUrl('fkManualProjectId', global_var.fkManualProjectId);
+}
 
 $(document).on('click', '.loadPermission', function (evt) {
     var f = "perm";
-    global_var.current_modal = "loadPermission";
+       clearManualProjectFromParam(); global_var.current_modal = "loadPermission";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
+    clearManualProjectFromParam();
+    
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8767,7 +8818,7 @@ $(document).on('click', '.loadPermission', function (evt) {
 
 $(document).on('click', '.loadTaskManagement', function (evt) {
     var f = $(this).data('link');
-    global_var.current_modal = "loadTaskManagement";
+       clearManualProjectFromParam(); global_var.current_modal = "loadTaskManagement";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8845,8 +8896,10 @@ $(document).on('click', '.storydiagram', function (evt) {
     });
 });
 $(document).on('click', '.loadProject', function (evt) {
-    global_var.current_modal = "loadProject";
+       clearManualProjectFromParam(); global_var.current_modal = "loadProject";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
+    
+    
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8857,7 +8910,7 @@ $(document).on('click', '.loadProject', function (evt) {
     });
 });
 $(document).on('click', '.loadUser', function (evt) {
-    global_var.current_modal = "loadUser";
+       clearManualProjectFromParam(); global_var.current_modal = "loadUser";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
@@ -8869,7 +8922,7 @@ $(document).on('click', '.loadUser', function (evt) {
     });
 });
 $(document).on('click', '.loadTaskType', function (evt) {
-    global_var.current_modal = "loadTaskType";
+       clearManualProjectFromParam(); global_var.current_modal = "loadTaskType";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');

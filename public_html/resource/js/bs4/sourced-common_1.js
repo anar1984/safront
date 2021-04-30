@@ -10037,7 +10037,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     genGUIDesignHtmlById: function (backlogId, hide) {
-        if (backlogId.length === 0) {
+        if (backlogId) {
+        } else {
             return "";
         }
 
@@ -10188,37 +10189,89 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             $(this).click();
         });
 
-        if ($(el).attr("onclick_trigger_id")) {
-            var apiId = $(el).attr("onclick_trigger_id");
+        //call selectbox api
 
-            var selectedFieldsByApiList = [];
-            var inputIds = SACore.GetBacklogDetails(apiId, "inputIds");
-            inputIds = inputIds.replace(/ /g, '');
-            var inputList = inputIds.split(',');
-            for (var ii in inputList) {
-                var inputId4Zad = inputList[ii];
-                if (SAInput.getInputDetails(inputId4Zad, 'inputType') === 'IN') {
-                    selectedFieldsByApiList.push(SAInput.getInputDetails(inputId4Zad, 'inputName'))
-                }
-            }
 
-            var data = {};
 
-            var data = getGUIDataByStoryCardList(el, selectedFieldsByApiList);
-            var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
-            $(tempEl).attr('sa-triggersetvalue', '1');
-            triggerAPI(tempEl, $(el).attr("onclick_trigger_id"), data);
-            if (!$(tempEl).hasClass('sa-onloadclick')) {
-                initOnloadActionOnGUIDesign4OnClick(tempEl);
-            }
-        } else {
-            var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
-            if (!$(tempEl).hasClass('sa-onloadclick')) {
-                initOnloadActionOnGUIDesign4OnClick(tempEl);
-            }
-        }
-//       
+        //call selectbox api
+        this.callEmptyFunctionWithAjax(el, padeId);
     },
+    callEmptyFunctionWithAjax: function (el, padeId) {
+        var json = {"kv": {}};
+        json.kv.domain = global_var.current_domain;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetEmptyApiZad",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
+                $(tempEl1).find('select.hasTriggerApiCall').each(function (e) {
+                    var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
+                    var selectFromInputId = $(this).attr("selectFromInputId");
+
+                    if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
+                        loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
+                        
+                    } else {
+                        try {
+                            var selectedField = SAInput.GetInputName(selectFromInputId)
+                            triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
+                        } catch (err) {
+                        }
+
+                    }
+                })
+
+                if ($(el).attr("onclick_trigger_id")) {
+                    var apiId = $(el).attr("onclick_trigger_id");
+                    loadBacklogInputsByIdIfNotExist(apiId);
+
+                    var selectedFieldsByApiList = [];
+                    var inputIds = SACore.GetBacklogDetails(apiId, "inputIds");
+                    inputIds = inputIds.replace(/ /g, '');
+                    var inputList = inputIds.split(',');
+                    for (var ii in inputList) {
+                        var inputId4Zad = inputList[ii];
+                        if (SAInput.getInputDetails(inputId4Zad, 'inputType') === 'IN') {
+                            selectedFieldsByApiList.push(SAInput.getInputDetails(inputId4Zad, 'inputName'))
+                        }
+                    }
+
+                    var data = {};
+
+                    var data = getGUIDataByStoryCardList(el, selectedFieldsByApiList);
+                    var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+                    $(tempEl).attr('sa-triggersetvalue', '1');
+                    triggerAPI(tempEl, $(el).attr("onclick_trigger_id"), data);
+                    if (!$(tempEl).hasClass('sa-onloadclick')) {
+                        initOnloadActionOnGUIDesign4OnClick(tempEl);
+                    }
+                } else {
+                    var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+                    if (!$(tempEl).hasClass('sa-onloadclick')) {
+                        initOnloadActionOnGUIDesign4OnClick(tempEl);
+                    }
+                }
+//       
+
+
+
+            },
+            error: function (res) {
+                alert('error var')
+
+
+
+
+            }
+        });
+    },
+
     setGUIComponentRedirectGUIModal: function (el, backlogId, e) {
         e.stopPropagation();
         closeModal('userstory-gui-input-component-res-sus-analytic');
@@ -10248,7 +10301,24 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         var res = SAInput.toJSONByBacklog(id);
         var html = this.getGUIDesignHTML(res);
-        $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first().html(html);
+        var tempEl = $(el).closest('div.redirectClass').find('#' + sectionId).find('.component-section-row').first();
+        tempEl.html(html);
+
+
+
+        $(tempEl).find('select.hasTriggerApiCall').each(function (e) {
+            var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
+            var selectFromInputId = $(this).attr("selectFromInputId");
+
+            if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
+                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+            } else {
+                var selectedField = SAInput.GetInputName(selectFromInputId)
+                triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
+            }
+        })
+
 
 
 
@@ -12183,11 +12253,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
     loadInputDetailsOnProjectSelectNew4SAInput: function (bid) {
-        var bid = (bid) ? bid :global_var.current_backlog_id;  
-        
+        var bid = (bid) ? bid : global_var.current_backlog_id;
+
         var json = initJSON();
 //        json.kv.fkProjectId = global_var.current_project_id;
-        json.kv.fkBacklogId =bid ;
+        json.kv.fkBacklogId = bid;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -12393,12 +12463,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
         });
     },
-    
-    
-    
+
     loadInputDetails4ChildDependenceIdOnProjectSelect4Input: function (fkInputId) {
         var json = initJSON();
-        json.kv.fkInputId =  fkInputId;
+        json.kv.fkInputId = fkInputId;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -12415,7 +12483,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 }
 
-                 
+
 
             }
         });
@@ -12855,7 +12923,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var obj = res.tbl[0].r;
         var tbody = $('<tbody></tbody>');
         for (var n = obj.length - 1; n >= 0; n--) {
-            if (obj[n].isApi === "") {
+            if (obj[n].isApi !== "1") {
                 tbody.append(this.genUSLine(obj[n]));
             }
         }
@@ -22058,6 +22126,40 @@ Project.prototype = {
             }
         });
     },
+    loadMainProjectList4Manual: function () {
+        var json = {kv: {}};
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.asc = "projectName";
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetProjectList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+
+            success: function (res) {
+                that.generateTableBody4MainProject(res);
+                new UserStory().addProjectToMenu(res);
+
+                loadModulePermission();
+
+                var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
+
+
+
+
+            },
+            error: function () {
+                Toaster.showGeneralError();
+            }
+        });
+    },
     loadMainProjectList: function () {
         var json = {kv: {}};
         try {
@@ -22074,9 +22176,7 @@ Project.prototype = {
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function () {
-                showProgress();
-            },
+
             success: function (res) {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
@@ -22095,7 +22195,6 @@ Project.prototype = {
                     $('.left-menu-load').first().click();
                 }
 
-                hideProgress();
             },
             error: function () {
                 Toaster.showGeneralError();

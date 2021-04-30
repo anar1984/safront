@@ -1351,13 +1351,24 @@ var Component = {
         var selectFromInputId = SAInput.getInputDetails(inputId, "selectFromInputId");
 
         if (selectFromBacmkogId) {
-            if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
-                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, select, selectFromInputId, selectFromBacmkogId)
-                SAInput.LoadedBacklogs4Input.push(bid);
-            } else {
-                var selectedField = SAInput.GetInputName(selectFromInputId)
-                triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
-            }
+             select.addClass("hasTriggerApiCall");
+             select.attr("hasTriggerApiCall","1");
+             select.attr("selectFromBacmkogId",selectFromBacmkogId);
+             select.attr("selectFromInputId",selectFromInputId);
+             
+//            if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
+//                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, select, selectFromInputId, selectFromBacmkogId)
+//                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+//            } else {
+//                var selectedField = SAInput.GetInputName(selectFromInputId)
+//                triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+//            }
+ 
+                //loadBacklogInputsByIdIfNotExist(selectFromBacmkogId)
+                 
+                //var selectedField = SAInput.GetInputName(selectFromInputId)
+               // triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+            
         } else {
             if (comp.content) {
                 var r = comp.content.split(/\r*\n/);
@@ -1578,8 +1589,7 @@ var Component = {
                 .append($("<span></span>")
                         .attr('style', gui_component.defaultCSS.InnerCheckBox + Component.ReplaceCSS(comp.css))
                         .text((comp.content) ? comp.content : comp.label)
-                        .append(star
-                                )
+                        .append(star)
                         .append('<br>'));
         return  $('<div></div>').append(div).html();
     },
