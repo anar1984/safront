@@ -34,9 +34,12 @@
 
         <div class="form-signin">
             <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
-            <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+            <!--<h1 class="h3 mb-3 font-weight-normal">Registration</h1>-->
 
-            <div class="col-md-12" >
+            <h1>Registration is temporary closed</h1>
+            
+            
+<!--            <div class="col-md-12" >
                 <div class="alert" style="background-color:red; display : none;" id="generalMessageAlert">
                     <span id="generalMessage"> </span>
                     <span class="closebtn" onclick="this.parentElement.style.display = 'none';">x</span> 
@@ -111,7 +114,7 @@
 
             <p class="mt-5 mb-3 text-muted">&copy; Sourced Agile 2019</p>
 
-        </div>
+        </div>-->
 
         <script>
 
@@ -143,7 +146,7 @@
                 //console.log(data);
 
                 $.ajax({
-                    url: "api/post/register",
+                    url: "api/post/performreg",
                     type: "POST",
                     data: data,
                     contentType: "application/json",

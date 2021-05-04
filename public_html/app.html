@@ -95,6 +95,9 @@
 
         <div id="preloader" style="display: none;"></div>
         <div id="preloader1" class="modal-backdrop fade " style="display: none;z-index:100000;height:10000px"></div>
+        <div id="preloader2" class="modal-backdrop fade text-center " style="display: none;z-index:100000;height:10000px;">
+            <img src="resource/img/loading.gif" style="position:relative;   top: 2%;       ">
+        </div>
 
 
         <nav id="main_body_nav_id" hidden class="navbar navbar-expand-sm bg-light navbar-light s-nav-bar fixed-top">
@@ -662,10 +665,10 @@
                                                     </li>
                                                     <li  class="col-6">
                                                         <div class="row row-style  project-item-zad">
-                                                            <a class="btnplus loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="Live Prototype" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
+                                                            <a class="btnplus loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="Live Prototype">
                                                                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                             </a>
-                                                            <a class="loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="UserStory" onclick="new UserStory().toggleSubmenu(this, 'ipo')">
+                                                            <a class="loadLivePrototype openNavshow  left-menu-load " data-link="ipo" title="UserStory" >
                                                                 <span class="description-main" style="margin-top: 19px;">Live Prototype</span>
                                                             </a>
                                                         </div>
@@ -1245,7 +1248,7 @@
 
                                             <div class="col-11" style="padding:0px 2px 0px 0px;">
                                                 <input type="input" id="add-bkl-line"
-                                                       onchange="new UserStory().filterByUserStoryName(this)"                                    
+                                                       onchange="searchFilterTable(this, 'container-us-body')"                                    
                                                        class="add-bkl-line add-btn2 btn-placeholder2" placeholder="Search"> 
                                                 <i class="fa fa-close search-clear" style="display: none;" onclick="new UserStory().clearSearch(this)" ></i>
 
@@ -8027,12 +8030,21 @@
                                                                             init4Core();
                                                                             if (global_var.fkManualProjectId) {
                                                                                 global_var.current_project_id = global_var.fkManualProjectId;
-                                                                                new Project().loadMainProjectList4Manual();                                                                    
-            
-                                                                                global_zad_bid = $(".manualProject[pid='"+global_var.fkManualProjectId+"']").first().attr("tid");
-                                                                                loadManualProjectZad(global_var.fkManualProjectId,global_zad_bid)
+                                                                                new Project().loadMainProjectList4Manual();
+
+
                                                                             } else {
                                                                                 new Project().loadMainProjectList();
+                                                                                var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
+                                                                                try {
+                                                                                    if (current_modal && $('.' + current_modal).first().html().length > 10) {
+                                                                                        $('.' + current_modal).first().click();
+                                                                                    } else {
+                                                                                        $('.left-menu-load').first().click();
+                                                                                    }
+                                                                                } catch (err) {
+                                                                                    $('.left-menu-load').first().click();
+                                                                                }
                                                                             }
 
                                                                             init();

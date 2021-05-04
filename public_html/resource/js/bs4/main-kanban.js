@@ -109,7 +109,7 @@ $(document).ready(function () {
 
 
 
-    
+
     $(document).on("dblclick", ".ContentText, .ContentTextTaskMgmt", function (e) {
         var id = $(this).attr('pid');
         $(this).parent().find(".StoryCardPanel").css("display", "block");
@@ -196,8 +196,8 @@ $(document).ready(function () {
 
 })
 
-function showStoryCardIn(id,elId) {
-    var divId = (elId)? elId : "body_of_nature";
+function showStoryCardIn(id, elId) {
+    var divId = (elId) ? elId : "body_of_nature";
 
     $.get("resource/child/storycard.html", function (html_string)
     {
@@ -206,7 +206,7 @@ function showStoryCardIn(id,elId) {
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = html_string;
-        $("#"+divId).html(storyCard);
+        $("#" + divId).html(storyCard);
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
@@ -214,8 +214,8 @@ function showStoryCardIn(id,elId) {
     });
 }
 
-function callStoryCard4Api(id,elId,backlogName) {
-    var divId = (elId)? elId : "body_of_nature";
+function callStoryCard4Api(id, elId, backlogName) {
+    var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
 
     $.get("resource/child/storycard.html", function (html_string)
@@ -225,7 +225,7 @@ function callStoryCard4Api(id,elId,backlogName) {
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
-        $("#"+divId).append(storyCard);
+        $("#" + divId).append(storyCard);
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
@@ -233,8 +233,15 @@ function callStoryCard4Api(id,elId,backlogName) {
     });
 }
 
-function callStoryCard(id,elId,backlogName) {
-    var divId = (elId)? elId : "body_of_nature";
+function callStoryCard(id, elId, backlogName) {
+
+    if ($(document).find(".StoryCardPanel").first().html()) {
+        $(document).find(".StoryCardPanel").remove();
+
+    }
+
+
+    var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
 
     $.get("resource/child/storycard.html", function (html_string)
@@ -244,7 +251,7 @@ function callStoryCard(id,elId,backlogName) {
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
-        $("#"+divId).append(storyCard);
+        $("#" + divId).append(storyCard);
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
@@ -253,23 +260,23 @@ function callStoryCard(id,elId,backlogName) {
 }
 
 // content header text addd
-    function getPopup(arg) {
-        return $("<div>")
-                .addClass("StoryCardPanel")
-                .append($("<div>")
-                        .addClass("storyBackGround")
-                        .css("z-index","1001")
-                        .append($("<div>")
-                                .addClass("Card-story")
-                                .append($("<div>")
-                                        .append($("<header>")).addClass('Story-card-Header')
-                                        .append($('<div class="card-UserStory-name">')
-                                                .append($('<span>')))
-                                        .append($('<div class="card-UserStory-edit">')
-                                                .append($('<div class="card-UserStory-edit-exit">')
-                                                        .append($('<i class="fas fa-times"></i>')))))
-                                .append($("<div>")
-                                        .addClass("Card-story-body")
-                                        .html((arg))))
-                        )
-    }
+function getPopup(arg) {
+    return $("<div>")
+            .addClass("StoryCardPanel")
+            .append($("<div>")
+                    .addClass("storyBackGround")
+                    .css("z-index", "1001")
+                    .append($("<div>")
+                            .addClass("Card-story")
+                            .append($("<div>")
+                                    .append($("<header>")).addClass('Story-card-Header')
+                                    .append($('<div class="card-UserStory-name">')
+                                            .append($('<span>')))
+                                    .append($('<div class="card-UserStory-edit">')
+                                            .append($('<div class="card-UserStory-edit-exit">')
+                                                    .append($('<i class="fas fa-times"></i>')))))
+                            .append($("<div>")
+                                    .addClass("Card-story-body")
+                                    .html((arg))))
+                    )
+}

@@ -55,6 +55,31 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+function searchFilterTable(el, tableId) {
+
+    var input, filter, table, tr, td, i, txtValue;
+    input = el;
+    filter = input.value.toLowerCase();
+    table = $('#' + tableId);
+
+    tr = table.find("tr").each(function () {
+        td = $(this).text();
+        txtValue = td.toLowerCase();
+        if (txtValue) {
+
+            if (txtValue.indexOf(filter) > -1) {
+                $(this).css("display", "");
+
+            } else {
+                $(this).css("display", "none");
+
+            }
+        }
+    });
+
+
+}
+
 function LoadChildDependenceId4Input(fkInputId) {
     if (!fkInputId) {
         return;
@@ -85,6 +110,8 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFrom
         success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
+                localStorage.setItem(bid,JSON.stringify(res));
+                
                 SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);
                 triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
@@ -96,16 +123,75 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFrom
     });
 }
 
+function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
+    if (!bid) {
+        return false;
+    }
+    
+    var f = false;
+
+    if (localStorage.getItem(bid)) {
+        var res = localStorage.getItem(bid);
+        var resObj = JSON.parse(res);
+        var md = '';
+        var mdUS = '-1';
+        try {
+            md = resObj.kv.lastModification;
+            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+
+        } catch (err) {
+        }
+
+         
+
+        if (md.trim() === mdUS.trim()) {
+            f = true;
+            SAInput.LoadInput4Zad(resObj);
+        } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+            f = true;
+        }
+    } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+       f = true;
+    }
+    
+    return f;
+}
+
 function loadBacklogInputsByIdIfNotExist(bid) {
     if (!bid) {
         return;
     }
 
-    if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+    if (localStorage.getItem(bid)) {
+        var res = localStorage.getItem(bid);
+        var resObj = JSON.parse(res);
+        var md = '';
+        var mdUS = '-1';
+        try {
+            md = resObj.kv.lastModification;
+            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+
+        } catch (err) {
+        }
+
+        if (md.trim() !== mdUS.trim()) {
+            localStorage.setItem(bid, '');
+        }
+
+        if (md.trim() === mdUS.trim()) {
+            SAInput.LoadInput4Zad(resObj);
+        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+            localStorage.setItem(bid, '');
+            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
+            SAInput.LoadedBacklogs4Input.push(bid);
+        }
+    } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
         new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
         SAInput.LoadedBacklogs4Input.push(bid);
     }
 }
+
+
 
 function compileJava() {
     var rs = '';
@@ -148,7 +234,7 @@ function testZad() {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
     });
     return rs;
@@ -192,7 +278,9 @@ $(document).on('change', '#storyCardInputRelationModal_inpuntypes', function () 
 function showBacklogHistoryClick(el) {
     var bid = $(el).attr('bid');
     var pid = $(el).attr('pid');
-    var isApi = $(el).attr('is_api');
+    var isApi = SACore.GetBaklogIsApi(bid); //$(el).attr('is_api');
+
+    fillBacklogHistory4View(bid, isApi);
 
     if (isApi === '1') {
         callStoryCard(bid);
@@ -632,8 +720,8 @@ function ifQueue4ProLoadDone() {
         f = false;
 //    if (queue4ProLoad.loadSUS4Relation4Section === false)
 //        f = false;
-    if (queue4ProLoad.loadBacklogLabelOnProjectSelect === false)
-        f = false;
+//    if (queue4ProLoad.loadBacklogLabelOnProjectSelect === false)
+//        f = false;
     if (queue4ProLoad.getProjectUsers === false)
         f = false;
     if (queue4ProLoad.getUsers === false)
@@ -677,13 +765,12 @@ function toggleProjectDetails4Loading() {
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
     clearQueue4ProLoad();
+
     new UserStory().loadDetailsOnProjectSelect();
-//    new UserStory().loadInputDetailsOnProjectSelectNew();
     new UserStory().loadInputDetails4TableOnProjectSelect();
     new UserStory().loadInputDetails4TabOnProjectSelect();
     new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
     new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
-
 
     new UserStory().loadInputDescDetailsOnProjectSelect();
     new UserStory().loadDependencyOnProjectSelect();
@@ -703,14 +790,39 @@ $(document).on('click', '.manualProject', function (evt) {
         Utility.addParamToUrl("fkManualProjectId", $(this).attr("pid"));
         var bid = $(this).attr('tid');
         var fkManualProjectId = $(this).attr("pid");
-        loadManualProjectZad(fkManualProjectId,bid);
+        loadManualProjectZad(fkManualProjectId, bid);
     } catch (ee) {
     }
-            
+
 //    hideProgressAlternative();
 });
 
-function loadManualProjectZad(fkManualProjectId,bid) {
+function loadManualProjectZadOld(fkManualProjectId, bid) {
+    init4ManualProjectLoad();
+
+    global_zad_bid = bid;
+    global_var.current_project_id = fkManualProjectId;
+    global_var.current_modal = "";
+    global_var.projectToggleWithSync = true;
+    Utility.addParamToUrl('current_project_id', global_var.current_project_id);
+
+    clearQueueForManualProjectClick();
+    clearQueue4ProLoad();
+
+    getAllGuiClassList();
+    getInputClassRelByProject();
+    getInputAttributeByProject();
+    getProjectDescriptionByProject();
+    getJsCodeListByProject();
+
+    getInputActionRelByProjectMAnual2();
+    getJsCodeByProject();
+
+    toggleProjectDetails4Loading();
+}
+
+
+function loadManualProjectZad(fkManualProjectId, bid) {
     init4ManualProjectLoad();
 
 
@@ -722,6 +834,7 @@ function loadManualProjectZad(fkManualProjectId,bid) {
     clearQueueForManualProjectClick();
     clearQueue4ProLoad();
 
+
     getAllGuiClassList();
     getInputClassRelByProject();
     getInputAttributeByProject();
@@ -731,38 +844,24 @@ function loadManualProjectZad(fkManualProjectId,bid) {
     getInputActionRelByProject();
     getJsCodeByProject();
 
-
     toggleProjectDetails4Loading();
 }
 
 function executeCoreOfManualProSelection(bid1) {
-
-
 
     var f1 = ifQueueForManualProjectClickDone();
     var f2 = ifQueue4ProLoadDone();
 
     if (global_var.current_modal !== 'loadLivePrototype' && f1 && f2) {
         var bid = global_zad_bid;
-        var body = (dgui[bid]) ? dgui[bid] : new UserStory().genGUIDesignHtmlById(bid);
+        var body = new UserStory().genGUIDesignHtmlById(bid);
         $('#mainBodyDivForAll').html(body);
         var el1 = document.getElementById('mainBodyDivForAll');
-        
-        $(el1).find('select.hasTriggerApiCall').each(function (e) {
-            var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
-            var selectFromInputId = $(this).attr("selectFromInputId");
 
-            if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
-                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
-                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
-            } else {
-                var selectedField = SAInput.GetInputName(selectFromInputId)
-                triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
-            }
-        })
-        
-        
+        loadSelectBoxesAfterGUIDesign(el1);
         initOnloadActionOnGUIDesign(el1);
+
+        hideProgress2();
     } else if (global_var.current_modal === 'loadLivePrototype' && f2) {
         new UserStory().load();
     } else if (global_var.current_modal === 'loadStoryCard' && f2) {
@@ -772,6 +871,27 @@ function executeCoreOfManualProSelection(bid1) {
 
 }
 
+
+function loadSelectBoxesAfterGUIDesign(element) {
+    $(element).find('select.hasTriggerApiCall').each(function (e) {
+        var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
+        var selectFromInputId = $(this).attr("selectFromInputId");
+
+        if (!ifBacklogInputs4LoaderExistByIdIfNotExist(selectFromBacmkogId)) {
+            $(this).attr("sa-isrunning", "1");
+            loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
+
+        } else {
+            try {
+                $(this).attr("sa-isrunning", "1");
+                var selectedField = SAInput.GetInputName(selectFromInputId)
+                triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
+            } catch (err) {
+            }
+
+        }
+    })
+}
 
 function p() {
     showProgressAlternative();
@@ -913,7 +1033,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
                     )
         },
         uploadProgress: function (event, position, total, percentComplete) {
-            console.log('test')
+//            console.log('test')
             var percentVal = percentComplete + '%';
             pbDiv.text(percentVal);
         },
@@ -1277,7 +1397,7 @@ function testMandelo() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
 
     });
@@ -3032,9 +3152,11 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
             finalVal += row[sval] + " ";
         }
         var name = finalVal;
-
+        val = (val) ? val.trim() : name.trim();
         $(el).append($('<option>').val(val).text(name));
     }
+    $(el).attr('sa-isrunning',0);    
+
 
     if ($(el).attr('sa-data-nosort') !== '1') {
         sortSelectBoxByElement(el);
@@ -3044,8 +3166,8 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         var tmVal = $(el).attr('sa-data-value');
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
-        
-         if (elem.hasClass('sa-onloadclick-async')) {
+
+        if (elem.hasClass('sa-onloadclick-async')) {
             if (elem.attr("sa-isloaded") !== '1') {
                 elem.attr("sa-isloaded", "1");
                 elem.click();
@@ -3059,8 +3181,8 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
                 elem.change();
             }
         }
-        
-        
+
+
     }
 
 
@@ -3096,7 +3218,7 @@ function fillComboInAPICall(el, data, asyncData) {
             finalVal += row[sval] + " ";
         }
         var name = finalVal;
-
+        val = (val) ? val.trim() : name.trim();
         elem.append($('<option>').val(val).text(name));
     }
 
@@ -3173,10 +3295,36 @@ function clearTableBodyAfterApiCall(el, apiId) {
     }
 }
 
-function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
-    try {
 
+function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
+
+
+
+
+
+    try {
         var tableId;
+        var componentId;
+
+        var selectedField = data.selectedField;
+        selectedField = selectedField.replace(/ /g, '');
+        var selectedFieldList = selectedField.split(",");
+
+        $(el).closest('.redirectClass').find('table.component-table-class-for-zad').each(function (ev) {
+            var selectedFieldTable = $(this).attr("sa-tableselectedfield");
+            selectedFieldTable = selectedFieldTable.replace(/ /g, '');
+            var selectedFieldTableList = selectedFieldTable.split(",");
+
+            var diffArray = selectedFieldList.filter(function (el) {
+                return selectedFieldTableList.indexOf(el) != -1;
+            });
+
+            tableId = (diffArray.length > 0) ? $(this).attr('table-id') : '';
+            componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
+        })
+
+        if (!tableId)
+            return
 
         var rc = 0;
         try {
@@ -3191,8 +3339,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         }
 
         // for filling table on dinamycally
-        clearTableBodyAfterApiCall(el, apiId);
-
+//        clearTableBodyAfterApiCall(el, apiId);
+        $('#' + componentId).find('tbody').html('');
 
         var cols = (data._table.r && data._table.r.length > 0)
                 ? Object.keys(data._table.r[0])
@@ -3251,6 +3399,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         callTableRelationAPIs(el, tableId);
     } catch (err) {
     }
+
+
 }
 
 function callTableRelationAPIs(el, tableId) {
@@ -3333,7 +3483,7 @@ function callTableRelationAPIs(el, tableId) {
 
             be.callApi(apiId, data, el, asyncData);
         } catch (err) {
-            console.log(err);
+//            console.log(err);
 
             var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
             lnzad1 += "," + apiId;
@@ -3416,7 +3566,8 @@ function setValueOnCompAfterTriggerApi(el, data) {
                         fillSelectBoxAfterSyncApiCall(this, data, field);
                     }
 
-                    if (localSelectedField.includes(field)) {
+                    var keys = Object.keys(data);
+                    if (keys.includes(field)) {
                         val = data[field];
                         getComponentValueAfterTriggerApi(this, val);
                     }
@@ -3491,10 +3642,10 @@ function getComponentValueAfterTriggerApi(el, val) {
         if (elWithText.includes(tagName)) {
             $(el).text(val);
         }
-        
+
         //.sa-callapi-onvalueset //value elave olanda avtomatik olaraq apini cagirir ve deyerini replace edir
-        if ($(el).hasClass('sa-callapi-onvalueset')){
-            
+        if ($(el).hasClass('sa-callapi-onvalueset')) {
+
         }
     }
 
@@ -3866,7 +4017,7 @@ function getJsGlobalCodeByProject() {
                             st += '}';
 
                             var sc = $('<script>').append(st);
-                            console.log('add core function =>', o.fnCoreName.trim())
+//                            console.log('add core function =>', o.fnCoreName.trim())
 
 
 
@@ -3882,7 +4033,7 @@ function getJsGlobalCodeByProject() {
                             st += '})';
 
                             var sc = $('<script>').append(st);
-                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
+//                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
                             $('head').append(sc);
 
                         }
@@ -3945,7 +4096,7 @@ function getJsCodeByProject() {
 
                             var sc = $('<script>').append(st);
 
-                            console.log('add core function =>', o.fnCoreName.trim())
+//                            console.log('add core function =>', o.fnCoreName.trim())
                             $('head').append(sc);
 
                         } else if (o.fnType === 'event') {
@@ -3959,7 +4110,7 @@ function getJsCodeByProject() {
 
                             var sc = $('<script>').append(st);
 
-                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
+//                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
 
                             $('head').append(sc);
 
@@ -4518,7 +4669,7 @@ let cdnh2 = true;
 function showJsCodeModal() {
 
     $('#jsCodeModal').modal('show');
-    console.log('sdfsdf')
+//    console.log('sdfsdf')
 
     getAllJsCodeByProject();
     loadApisToComboOnJSCode();
@@ -4545,7 +4696,7 @@ function guiClassModal(el) {
 
 
 function jsEditorGenerate() {
-    console.log('asdfafasf');
+//    console.log('asdfafasf');
     setTimeout(function () {
 
 
@@ -5001,7 +5152,7 @@ function addGuiClassToInputCore(el) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            console.log('ok');
+//            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
@@ -5267,7 +5418,7 @@ function setResArrayAsObject(res) {
             }
         }
     } catch (err) {
-        console.log('error in setResArrayAsObject--->>>', JSON.stringify(res))
+//        console.log('error in setResArrayAsObject--->>>', JSON.stringify(res))
     }
 }
 
@@ -5596,7 +5747,7 @@ function testIO(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
     });
 }
@@ -5625,7 +5776,7 @@ function testIOInsert(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
     });
 }
@@ -5650,7 +5801,7 @@ function testIODelete(id) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
     });
 }
@@ -5675,7 +5826,7 @@ function testIOUpdate(id) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(JSON.stringify(res));
+//            console.log(JSON.stringify(res));
         }
     });
 }
@@ -8193,7 +8344,7 @@ $(document).on('click', '#SavePage', function (evt) {
 function saveDocument() {
     var docName = $('#doc-name').html();
     var docBody = $('.fr-element').html();
-    console.log('doc-body====', docBody)
+//    console.log('doc-body====', docBody)
 
     if (docName.trim().length === 0 || docBody.trim().length === 0) {
         Toaster.showError("Document Name or Body is empty!");
@@ -8397,13 +8548,13 @@ $(document).on('click', '.redirectClass4CSS', function (evt) {
 
 
 $(document).on('click', '.loadLivePrototype', function (evt) {
-       clearManualProjectFromParam(); 
-       global_var.current_modal = "loadLivePrototype";
+//    return;
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
 
-    var f = $(this).data('link');
-    $.get("resource/child/" + f + ".html", function (html_string)
+    $.get("resource/child/ipo.html", function (html_string)
     {
         getAllGuiClassList();
         getInputClassRelByProject();
@@ -8416,18 +8567,39 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-        callLivePrototype();
-        commmonOnloadAction(this);
+        //callLivePrototype();
+        //commmonOnloadAction(this);
         getGuiClassList();
         getJsCodeByProject();
         getInputActionRelByProjectMAnual2();
 
-
+        loadLivePrototypeCore(this);
     });
+
+
 });
+
+function loadLivePrototypeCore(el) {
+
+
+    getProjectUsers();
+    new UserStory().loadInputDetails4TableOnProjectSelect();
+    new UserStory().loadInputDetails4TabOnProjectSelect();
+    new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
+    new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
+
+    getDBStructure4Select();
+    new UserStory().loadInputDescDetailsOnProjectSelect();
+    new UserStory().loadDependencyOnProjectSelect();
+    new UserStory().loadSUS4Relation4Section();
+
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
+}
+
 $(document).on('click', '.loadDashboard', function (evt) {
     var f = 'dashboard';
-       clearManualProjectFromParam(); global_var.current_modal = "loadDashboard";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadDashboard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8544,7 +8716,8 @@ function callLivePrototype() {
 
 $(document).on('click', '.loadDocEditor', function (evt) {
     var f = 'doceditor';
-       clearManualProjectFromParam(); global_var.current_modal = "loadDocEditor";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadDocEditor";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8556,7 +8729,8 @@ $(document).on('click', '.loadDocEditor', function (evt) {
     });
 });
 $(document).on('click', '.loadStoryCard', function (evt) {
-       clearManualProjectFromParam(); global_var.current_modal = "loadStoryCard";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadStoryCard();
 });
@@ -8594,7 +8768,8 @@ $(document).on('click', '.neefdiagram-call', function (evt) {
 });
 $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     var f = $(this).data('link');
-       clearManualProjectFromParam(); global_var.current_modal = "loadStoryCardMgmt";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadStoryCardMgmt";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8614,7 +8789,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
 
 $(document).on('click', '.loadBugChange', function (evt) {
     var f = $(this).data('link');
-       clearManualProjectFromParam(); global_var.current_modal = "loadBugChange";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadBugChange";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8645,8 +8821,9 @@ $(document).on('click', '.loadBugChange', function (evt) {
 
 $(document).on('click', '.loadUserManual', function (evt) {
     var f = 'usermanual';
-       clearManualProjectFromParam(); global_var.current_modal = "loadUserManual";
-    Utility.addParamToUrl('current_modal',     global_var.current_modal);
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadUserManual";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8656,7 +8833,8 @@ $(document).on('click', '.loadUserManual', function (evt) {
 });
 $(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
-       clearManualProjectFromParam(); global_var.current_modal = "loadStatistics";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadStatistics";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8670,7 +8848,7 @@ $(document).on('click', '.loadStatistics', function (evt) {
 $(document).on('click', '.loadStatistics', function (evt) {
     var f = 'stat';
     global_var.current_modal = "loadStatistics";
-    Utility.addParamToUrl('current_modal',      global_var.current_modal);
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8701,7 +8879,8 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 
 $(document).on('click', '.loadEntityDiagram', function (evt) {
     var f = 'entity';
-       clearManualProjectFromParam(); global_var.current_modal = "loadEntityDiagram";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadEntityDiagram";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8718,7 +8897,8 @@ $(document).on('click', '.loadEntityDiagram', function (evt) {
 
 $(document).on('click', '.loadSourceActivity', function (evt) {
     var f = 'sourceactivity';
-       clearManualProjectFromParam(); global_var.current_modal = "loadSourceActivity";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadSourceActivity";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8738,7 +8918,8 @@ $(document).on('click', '.loadSourceActivity', function (evt) {
 
 $(document).on('click', '.loadTestCase', function (evt) {
     var f = $(this).data('link');
-       clearManualProjectFromParam(); global_var.current_modal = "loadTestCase";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadTestCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8768,7 +8949,8 @@ $(document).on('click', '.loadTestCase', function (evt) {
 
 $(document).on('click', '.loadBusinessCase', function (evt) {
     var f = 'bcase';
-       clearManualProjectFromParam(); global_var.current_modal = "loadBusinessCase";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadBusinessCase";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8781,7 +8963,8 @@ $(document).on('click', '.loadBusinessCase', function (evt) {
 
 $(document).on('click', '.loadBusinessService', function (evt) {
     var f = 'bservice';
-       clearManualProjectFromParam(); global_var.current_modal = "loadBusinessService";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadBusinessService";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8793,17 +8976,18 @@ $(document).on('click', '.loadBusinessService', function (evt) {
     });
 });
 
-function clearManualProjectFromParam(){
+function clearManualProjectFromParam() {
     global_var.fkManualProjectId = "";
-     Utility.addParamToUrl('fkManualProjectId', global_var.fkManualProjectId);
+    Utility.addParamToUrl('fkManualProjectId', global_var.fkManualProjectId);
 }
 
 $(document).on('click', '.loadPermission', function (evt) {
     var f = "perm";
-       clearManualProjectFromParam(); global_var.current_modal = "loadPermission";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadPermission";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     clearManualProjectFromParam();
-    
+
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
@@ -8818,7 +9002,8 @@ $(document).on('click', '.loadPermission', function (evt) {
 
 $(document).on('click', '.loadTaskManagement', function (evt) {
     var f = $(this).data('link');
-       clearManualProjectFromParam(); global_var.current_modal = "loadTaskManagement";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadTaskManagement";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8896,10 +9081,11 @@ $(document).on('click', '.storydiagram', function (evt) {
     });
 });
 $(document).on('click', '.loadProject', function (evt) {
-       clearManualProjectFromParam(); global_var.current_modal = "loadProject";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadProject";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    
-    
+
+
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string)
     {
@@ -8910,7 +9096,8 @@ $(document).on('click', '.loadProject', function (evt) {
     });
 });
 $(document).on('click', '.loadUser', function (evt) {
-       clearManualProjectFromParam(); global_var.current_modal = "loadUser";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadUser";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
@@ -8922,7 +9109,8 @@ $(document).on('click', '.loadUser', function (evt) {
     });
 });
 $(document).on('click', '.loadTaskType', function (evt) {
-       clearManualProjectFromParam(); global_var.current_modal = "loadTaskType";
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadTaskType";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     hideToggleMain();
     var f = $(this).data('link');
@@ -10416,7 +10604,7 @@ $(document).keydown('.tooltipMan', function (ev) {
         el.position().left = el.position().left - 1;
     }
     if (ev.keyCode === 38) {
-        console.log('38')
+//        console.log('38')
         el.position().top = 32// el.position().top - 1;
     }
     if (ev.keyCode === 39) {
@@ -10431,7 +10619,7 @@ $(document).keyup('.tooltipMan', function (ev) {
     var el = $('#' + global_var.current_us_input_id);
 //    ev.preventDefault();
 //    $(this).position().top = $(this).position().top - 1;
-    console.log("keyup=", el.attr('id'), ' ; top=', el.position().top, '; LEFT=', el.position().left)
+//    console.log("keyup=", el.attr('id'), ' ; top=', el.position().top, '; LEFT=', el.position().left)
 
 });
 function hideModal(elementId) {
@@ -10501,7 +10689,7 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
     if ($(this).is(":checked")) {
         checked = '1';
     }
-    console.log(id, '->', checked, '->', sprintId);
+//    console.log(id, '->', checked, '->', sprintId);
     var json = {kv: {}};
     try {
         json.kv.cookie = getToken();
@@ -12362,7 +12550,7 @@ var StoryCard = {
                     r = that.ProcessDescriptionDetails(res);
 //                    return r;
                 } catch (err) {
-                    console.log(err)
+//                    console.log(err)
                 }
             }
         });
@@ -12597,11 +12785,11 @@ var SourcedActivityDiagram = {
                 try {
                     var ls = res.kv.fkBacklogId.split('%IN%');
                     for (var l in ls) {
-                        console.log(ls[l]);
+//                        console.log(ls[l]);
                         SourcedActivityDiagram.SelectedStoryCardByFiler.push(ls[l]);
                     }
                 } catch (err) {
-                    console.log(err);
+//                    console.log(err);
                 }
 
             },
@@ -12751,7 +12939,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12779,7 +12967,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12835,7 +13023,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12863,7 +13051,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12891,7 +13079,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12919,7 +13107,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12947,7 +13135,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -12975,7 +13163,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -13005,7 +13193,7 @@ var SourcedActivityDiagram = {
                                     );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -13035,7 +13223,7 @@ var SourcedActivityDiagram = {
                             );
 
                         } catch (err) {
-                            console.log(err);
+//                            console.log(err);
                         }
                     }
                 }
@@ -13159,7 +13347,7 @@ var SourcedActivityDiagram = {
                     var list = [];
                     this.ShowLeftApiOne(keys[i], 0, list);
                 } catch (err) {
-                    console.log(err)
+//                    console.log(err)
                 }
             }
         },
@@ -13171,7 +13359,7 @@ var SourcedActivityDiagram = {
                     var list = [];
                     this.ShowRightApiOne(keys[i], 0, list);
                 } catch (err) {
-                    console.log(err)
+//                    console.log(err)
                 }
             }
         },
@@ -13467,7 +13655,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13492,7 +13680,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13516,7 +13704,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13540,7 +13728,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13564,7 +13752,7 @@ var SourcedActivityDiagram = {
                         }
                 );
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13590,7 +13778,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13615,7 +13803,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13640,7 +13828,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13665,7 +13853,7 @@ var SourcedActivityDiagram = {
                 );
                 this.LineList.push(line);
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
 
@@ -13903,7 +14091,7 @@ var SourcedActivityDiagram = {
             for (var i in keys) {
                 var div = this.SingleCard(keys[i]);
                 $('.sadiagram-entityleft').append(div);
-                console.log(keys[i]);
+//                console.log(keys[i]);
             }
         },
         SingleCard: function (tableId) {
@@ -13947,7 +14135,7 @@ var SourcedActivityDiagram = {
                     cardDiv.append(this.InputLine(inId));
                 }
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         },
         InputLine: function (inputId) {
@@ -14009,7 +14197,7 @@ var SourcedActivityDiagram = {
                     cardDiv.append(this.InputLine(inId));
                 }
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         },
         InputLine: function (inputId) {
@@ -14623,12 +14811,12 @@ var SCSourceManagement = {
 function setApiIpoBlock() {
 
     var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
-    console.log(keys);
+//    console.log(keys);
     for (var k in keys) {
 
         var from = keys[k];
         var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
-        console.log(from, toKeys);
+//        console.log(from, toKeys);
         for (var m in toKeys) {
             var to = toKeys[m];
             try {
@@ -14647,7 +14835,7 @@ function setApiIpoBlock() {
                 );
 
             } catch (err) {
-                console.log(err);
+//                console.log(err);
             }
         }
     }

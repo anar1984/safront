@@ -61,7 +61,7 @@ var be = {
                 var res = eval(asyncData.fn)(element, res, asyncData);
             }
         } catch (err) {
-            console.log(err);
+//            console.log(err);
         }
         return res;
     },
@@ -555,7 +555,7 @@ var be = {
                         }
 
                     } catch (err) {
-                        console.log(err)
+//                        console.log(err)
                     }
                 }
             }
@@ -690,7 +690,7 @@ var be = {
                     var inputName = inputObj.inputName;
                     res.push(inputName);
                 } catch (err) {
-                    console.log(err);
+//                    console.log(err);
                 }
             }
             return res;
@@ -799,7 +799,7 @@ var be = {
                         } catch (e) {
                         }
                     } catch (err) {
-                        console.log(err)
+//                        console.log(err)
                     }
                 }
             }
@@ -878,7 +878,7 @@ var be = {
                         } catch (e) {
                         }
                     } catch (err) {
-                        console.log(err)
+//                        console.log(err)
                     }
                 }
             }
@@ -1037,7 +1037,7 @@ var be = {
                         } catch (e) {
                         }
                     } catch (err) {
-                        console.log(err)
+//                        console.log(err)
                     }
                 }
             }
@@ -1059,13 +1059,20 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
-                    var dt = $.extend(dataJSON, res);
+                     var res1 = {};
+                    var res2 = {}  ;
+                    try {
+                        res1 = dataJSON.kv;
+                        res2 = res.kv;
+                    } catch (err) {
+                    }
+                    var dt = $.extend(res1, res2);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
                                 be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
                             } catch (err) {
-                                console.log(err);
+//                                console.log(err);
                             }
                         }
                     }
@@ -1090,13 +1097,20 @@ var be = {
                 success: function (res) {
                     rs = res;
 
-                    var dt = $.extend(dataJSON, res);
+                     var res1 = {};
+                    var res2 = {}  ;
+                    try {
+                        res1 = dataJSON.kv;
+                        res2 = res.kv;
+                    } catch (err) {
+                    }
+                    var dt = $.extend(res1, res2);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
                                 be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
                             } catch (err) {
-                                console.log(err);
+//                                console.log(err);
                             }
                         }
                     }
@@ -1121,13 +1135,20 @@ var be = {
                 success: function (res) {
                     rs = res;
 
-                    var dt = $.extend(dataJSON, res);
+                    var res1 = {};
+                    var res2 = {}  ;
+                    try {
+                        res1 = dataJSON.kv;
+                        res2 = res.kv;
+                    } catch (err) {
+                    }
+                    var dt = $.extend(res1, res2);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
                                 be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
                             } catch (err) {
-                                console.log(err);
+//                                console.log(err);
                             }
                         }
                     }
@@ -1151,13 +1172,20 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
-                    var dt = $.extend(dataJSON, res);
+                     var res1 = {};
+                    var res2 = {}  ;
+                    try {
+                        res1 = dataJSON.kv;
+                        res2 = res.kv;
+                    } catch (err) {
+                    }
+                    var dt = $.extend(res1, res2);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
                                 be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
                             } catch (err) {
-                                console.log(err);
+//                                console.log(err);
                             }
                         }
                     }
@@ -1238,17 +1266,24 @@ var be = {
                             triggerAPIAfter(el1, apiId, out, dataJSON.kv);
                         }
                     } catch (err) {
-                        console.log(err);
+//                        console.log(err);
                     }
 
 
-                    var dt = $.extend(dataJSON, output);
+                     var res1 = {};
+                    var res2 = {}  ;
+                    try {
+                        res1 = dataJSON.kv;
+                        res2 = res.kv;
+                    } catch (err) {
+                    }
+                    var dt = $.extend(res1, res2);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
                                 be.callApi(SEND_TO_BACKLOG_ID[i], dt, element, asyncData);
                             } catch (err) {
-                                console.log(err);
+//                                console.log(err);
                             }
                         }
                     }

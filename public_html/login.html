@@ -132,7 +132,11 @@
                                                                 contentType: "application/json",
                                                                 crossDomain: true,
                                                                 async:false,
-                                                                success: function () {
+                                                                success: function (res) {
+                                                                    console.log(JSON.stringify(res))
+                                                                    localStorage.setItem('tk', res.token);
+                                                                    document.cookie = res.token;
+                                                                    
                                                                     //                        progresBarStop();
                                                                     document.location = "app.html";
                                                                 },

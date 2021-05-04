@@ -122,19 +122,8 @@ $(function () {
 
 
   // search api list
-    $(document).on('keyup',"#search-api_list", function(){
-        var gsert = $(this).val();
-        console.log(gsert);
-        $("#api_list_side_bar tr .us-list-item").each( function() {
-            var sate = $(this).text();
-            console.log('okey 2');
-             if (sate.indexOf(gsert)!=-1) {
-                $(this).parents('tr').show();
-            }
-            else {
-                $(this).parents('tr').hide();
-            } 
-        })
+    $(document).on('change',"#search-api_list", function(){
+         searchFilterTable(this,'api_list_side_bar');
     })
 
 

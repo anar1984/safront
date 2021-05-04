@@ -766,11 +766,14 @@ var Component = {
                     //manage input relation with API 
                     //add dependency for API Call classes and attributes
                     //as sa_data_table_col_rel_{apiId}_{inputId}
+
                     var dependentBacklogId = SAInput.getInputDetails(inputId, "fkDependentBacklogId");
                     var dependentInputId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
-                    var inputSelectedField4Rel = SAInput.getInputDetails(dependentInputId, 'inputName');
+
 
                     if (dependentBacklogId && dependentBacklogId.length > 0) {
+                        loadBacklogInputsByIdIfNotExist(dependentBacklogId)
+                        var inputSelectedField4Rel = SAInput.getInputDetails(dependentInputId, 'inputName');
                         td12.attr("rel_api", dependentBacklogId)
                                 .attr('rel_core_inputid', inputId)
                                 .attr('rel_core_selected_field', inputSelectedField4Rel)
@@ -1351,11 +1354,11 @@ var Component = {
         var selectFromInputId = SAInput.getInputDetails(inputId, "selectFromInputId");
 
         if (selectFromBacmkogId) {
-             select.addClass("hasTriggerApiCall");
-             select.attr("hasTriggerApiCall","1");
-             select.attr("selectFromBacmkogId",selectFromBacmkogId);
-             select.attr("selectFromInputId",selectFromInputId);
-             
+            select.addClass("hasTriggerApiCall");
+            select.attr("hasTriggerApiCall", "1");
+            select.attr("selectFromBacmkogId", selectFromBacmkogId);
+            select.attr("selectFromInputId", selectFromInputId);
+
 //            if (!SAInput.LoadedBacklogs4Input.includes(selectFromBacmkogId)) {
 //                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, select, selectFromInputId, selectFromBacmkogId)
 //                SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
@@ -1363,12 +1366,12 @@ var Component = {
 //                var selectedField = SAInput.GetInputName(selectFromInputId)
 //                triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
 //            }
- 
-                //loadBacklogInputsByIdIfNotExist(selectFromBacmkogId)
-                 
-                //var selectedField = SAInput.GetInputName(selectFromInputId)
-               // triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
-            
+
+            //loadBacklogInputsByIdIfNotExist(selectFromBacmkogId)
+
+            //var selectedField = SAInput.GetInputName(selectFromInputId)
+            // triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+
         } else {
             if (comp.content) {
                 var r = comp.content.split(/\r*\n/);

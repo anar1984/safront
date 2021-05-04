@@ -1779,11 +1779,7 @@ var SAInput = {
         return json;
     },
     toJSON: function () {
-        if (!this.LoadedBacklogs4Input.includes(global_var.current_backlog_id)){
-            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput();
-            this.LoadedBacklogs4Input.push(global_var.current_backlog_id);
-        }
-        
+        loadBacklogInputsByIdIfNotExist(global_var.current_backlog_id);
         var json = {"tbl": [{"r": []}]};
         var keys = this.getInputsByBacklodId();
         var idx = 0;

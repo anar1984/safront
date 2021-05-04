@@ -1080,14 +1080,15 @@ function init4Core() {
 
     $('[data-toggle="tooltip"]').tooltip();
 //    new UserStory().load();
-    new Label().load();
-    new Sprint().load();
+    // new Label().load();
+    //new Sprint().load();
     new User().loadPersonalUserOnInit();
-    Priority.load();
+    //Priority.load();
     new Project().loadUserList4Combo();
-   /// new Notification().getNotificationCount();
-   // new Notification().setTime();
+    /// new Notification().getNotificationCount();
+    // new Notification().setTime();
 
+    
 }
 
 function init4ManualProjectLoad() {
@@ -1110,7 +1111,7 @@ function loadModulePermission() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
@@ -1243,6 +1244,17 @@ function showProgress() {
     document.getElementById('preloader').style.display = "block";
 }
 
+function showProgress2() {
+    
+//    $('.preloader').fadeIn(0, function () {});
+//    $('#preloader1').css("display", "block");
+    $('#preloader2').attr("style", "display: block; z-index: 100000; height: 10000px;");
+    $('#preloader2').addClass('show');
+
+
+//    $('#progressBarModal').modal('show');
+}
+
 function showProgressAlternative() {
     return;
 //    $('.preloader').fadeIn(0, function () {});
@@ -1266,8 +1278,18 @@ function hideProgressAlternative() {
 //    $('#preloader1').css("display", "none");
     $('#preloader1').attr("style", "display: none; z-index: 100000; height: 10000px;");
     $('#preloader1').removeClass('show');
-
 }
+
+function hideProgress2() {
+//    $('.preloader').fadeOut(0, function () { })
+//    $('.modal-backdrop').removeClass('show');
+//    $('#progressBarModal').modal('hide');
+//    $('#preloader1').css("display", "none");
+    $('#preloader2').attr("style", "display: none; z-index: 100000; height: 10000px;");
+    $('#preloader2').removeClass('show');
+}
+
+
 
 //$.fn.imagePaste = function (html) { // html is the callback function that gets "<imgâ€¦>"
 //    var debug = true;
@@ -1984,11 +2006,11 @@ var Toaster = {
         var id = makeId(10);
         var div = $('<div>')
                 .attr('id', id)
-				.attr("z-index",50000)
+                .attr("style", "z-index: 50000; background: red!important")
                 .addClass('toast ml-auto')
                 .addClass('toast-error')
                 .attr('role', 'alert')
-                .attr('data-delay', '700')
+                .attr('data-delay', '300')
                 .attr('data-autohide', false)
                 .append($('<div>')
                         .addClass('toast-header')
@@ -2024,16 +2046,17 @@ var Toaster = {
         var id = makeId(10);
         var div = $('<div>')
                 .attr('id', id)
+                .attr("style", "z-index: 50000; background: #28a64fbd!important")
                 .addClass('toast ml-auto')
                 .addClass('toast-message')
                 .attr('role', 'alert')
-                .attr('data-delay', '700')
+                .attr('data-delay', '300')
                 .attr('data-autohide', false)
                 .append($('<div>')
                         .addClass('toast-header')
                         .append($('<strong>')
                                 .addClass('mr-auto text-primary')
-                                .append('Message')
+                                .append('Successfull Message')
                                 )
                         .append($('<button>')
                                 .addClass('ml-2 mb-1 close')

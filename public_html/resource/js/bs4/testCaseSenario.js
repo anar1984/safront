@@ -48,7 +48,7 @@ $(document).on("change", '#testcase_projectfilter', function (e) {
     var id = $(this).val();
     global_var.current_project_id = id;
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
-    new Project().toggleProject(this);
+    //new Project().toggleProject(this);
     loadStoryCardByProject4TestCase(id);
     loadAssigneesByProject(id);
 
