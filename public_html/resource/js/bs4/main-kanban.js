@@ -254,6 +254,9 @@ function callStoryCard(id, elId, backlogName) {
         $("#" + divId).append(storyCard);
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
+
+        
+
         loadUsersAsOwner();
         setStoryCardOwner();
     });

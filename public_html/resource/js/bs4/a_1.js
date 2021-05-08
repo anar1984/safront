@@ -13,7 +13,7 @@
 //});
 
 
-
+var localstorage_prefix = {"JS": "js_", "Backlog": "st_", "BacklogDescription": "stdesc_"};
 var current_js_code_id = "";
 var cr_gui_classes = {};
 var cr_gui_classes_by_name = {};
@@ -54,6 +54,238 @@ var bhistorylist = [];
 var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
+
+
+function loadBacklogDetailsByIdIfNotExist(bid) {
+    if (!bid) {
+        return;
+    }
+
+//    if (localStorage.getItem(bid)) {
+//        var res = localStorage.getItem(bid);
+//        var resObj = JSON.parse(res);
+//        var md = '';
+//        var mdUS = '-1';
+//        try {
+//            md = resObj.kv.lastModification;
+//            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+//
+//        } catch (err) {
+//        }
+//
+//        if (md.trim() !== mdUS.trim()) {
+//            localStorage.setItem(bid, '');
+//        }
+//
+//        if (md.trim() === mdUS.trim()) {
+//            SAInput.LoadInput4Zad(resObj);
+//        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+//            localStorage.setItem(bid, '');
+//            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
+//            SAInput.LoadedBacklogs4Input.push(bid);
+//        }
+//    } else 
+    if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+        loadBacklogProductionDetailsById(bid);
+        SAInput.LoadedBacklogs4Input.push(bid);
+    }
+}
+
+function loadBacklogProductionDetailsById(bid1,functionName,fnData,async) {
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+    var asyncCore = (async) ? async : false;
+    if (!bid)
+        return ;
+    
+    showProgress2();
+    var json = initJSON();
+//        json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: asyncCore,
+        success: function (res) {
+
+            localStorage.setItem(bid, JSON.stringify(res));
+            SAInput.LoadInput4Zad(res);
+            SACore.updateBacklogDescriptionByRes(res);
+
+
+            loadBacklogProductionDetailsById_loadInputClassRelation(res);
+            loadBacklogProductionDetailsById_loadInputActionRelation(res);
+            loadBacklogProductionDetailsById_loadInputAttribute(res);
+            loadBacklogProductionDetailsById_inputDesc(res);
+            loadBacklogProductionDetailsById_jslist(res);
+            loadBacklogProductionDetailsById_csslist(res);
+            SAInput.addInputTableByRes(res);
+            SAInput.addInputTabByRes(res);
+            SACore.updateBacklogByRes(res);
+            SAEntity.LoadNew(res);
+
+            hideProgress2();
+            
+            try{
+                if (functionName)
+                eval(functionName)(fnData);
+        }catch(err){}
+            
+
+        }
+    });
+}
+
+function loadBacklogProductionDetailsById_csslist(res) {
+    try {
+
+
+//        cr_gui_classes = {};
+//        cr_gui_classes_by_name = {};
+
+        var idx = getIndexOfTable(res, "cssList");
+        var obj = res.tbl[idx].r;
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            cr_gui_classes[o.id] = o;
+            try {
+                var key = o.className;
+                key = key.replace(/\./g, '');
+                cr_gui_classes_by_name[key] = o.classBody;
+                
+            } catch (err) {
+
+            }
+        }
+    } catch (err) {
+    }
+}
+
+
+
+function loadBacklogProductionDetailsById_jslist(res) {
+    try {
+
+        var idx = getIndexOfTable(res, "jsList");
+        var obj = res.tbl[idx].r;
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            cr_js_list[o.id] = o;
+        }
+    } catch (err) {
+    }
+    
+}
+
+
+
+function loadBacklogProductionDetailsById_inputDesc(res) {
+    try {
+
+        var idx = getIndexOfTable(res, "inputDescList");
+        var obj = res.tbl[idx].r;
+        for (var n = 0; n < obj.length; n++) {
+            var o = obj[n];
+            SAInputDesc.AddInputDescription(o);
+
+            SAInput.DescriptionId[o.fkInputId] = (SAInput.DescriptionId[o.fkInputId])
+                    ? SAInput.DescriptionId[o.fkInputId] + "," + o.id
+                    : SAInput.DescriptionId[o.fkInputId];
+        }
+    } catch (err) {
+    }
+}
+
+
+function loadBacklogProductionDetailsById_loadInputActionRelation(res) {
+    try {
+//                cr_input_action_rel = {};
+//                cr_input_action_rel_list = {};
+
+        var idx = getIndexOfTable(res, "inputActionRelTable");
+        var obj = (res.tbl.length > 0) ? res.tbl[idx].r : [];
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            if (!cr_input_action_rel[o.fkInputId]) {
+                cr_input_action_rel[o.fkInputId] = [];
+            }
+
+            cr_input_action_rel[o.fkInputId].push(o.id);
+            cr_input_action_rel_list[o.id] = o;
+        }
+    } catch (err) {
+    }
+}
+
+
+function loadBacklogProductionDetailsById_loadInputAttribute(res) {
+    try {
+//cr_input_comp_attribute = {};
+//                cr_input_cont_attribute = {};
+//cr_input_cont_attribute_kv = {};
+//cr_input_comp_attribute_kv = {};
+
+        var idx = getIndexOfTable(res, "inputAttrTable");
+        var obj = (res.tbl.length > 0) ? res.tbl[idx].r : [];
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            if (o.attrType === 'comp') {
+                var kv = {};
+                kv[o.attrName] = o.attrValue;
+                if (!cr_input_comp_attribute[o.fkInputId]) {
+                    cr_input_comp_attribute[o.fkInputId] = [];
+                    cr_input_comp_attribute_kv[o.fkInputId] = {};
+                }
+                cr_input_comp_attribute[o.fkInputId].push(kv)
+                cr_input_comp_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
+
+
+            } else if (o.attrType === 'cont') {
+                var kv = {};
+                kv[o.attrName] = o.attrValue;
+                if (!cr_input_cont_attribute[o.fkInputId]) {
+                    cr_input_cont_attribute[o.fkInputId] = [];
+                    cr_input_cont_attribute_kv[o.fkInputId] = {};
+                }
+                cr_input_cont_attribute[o.fkInputId].push(kv)
+                cr_input_cont_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
+
+            }
+        }
+    } catch (err) {
+    }
+}
+
+
+
+function loadBacklogProductionDetailsById_loadInputClassRelation(res) {
+    try {
+//                cr_comp_input_classes = {};
+//                cr_cont_input_classes = {};
+
+        var idx = getIndexOfTable(res, "inputClassesTable");
+        var obj = (res.tbl.length > 0) ? res.tbl[idx].r : [];
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            if (o.relType === 'comp') {
+                cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId])
+                        ? cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId
+                        : o.fkClassId;
+            } else if (o.relType === 'cont') {
+                cr_cont_input_classes[o.fkInputId] = (cr_cont_input_classes[o.fkInputId])
+                        ? cr_cont_input_classes[o.fkInputId] + "," + o.fkClassId
+                        : o.fkClassId;
+            }
+        }
+    } catch (err) {
+    }
+}
 
 function searchFilterTable(el, tableId) {
 
@@ -110,8 +342,8 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFrom
         success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
-                localStorage.setItem(bid,JSON.stringify(res));
-                
+                localStorage.setItem(bid, JSON.stringify(res));
+
                 SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);
                 triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
@@ -127,7 +359,7 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
     if (!bid) {
         return false;
     }
-    
+
     var f = false;
 
     if (localStorage.getItem(bid)) {
@@ -142,7 +374,7 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
         } catch (err) {
         }
 
-         
+
 
         if (md.trim() === mdUS.trim()) {
             f = true;
@@ -151,25 +383,62 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
             f = true;
         }
     } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
-       f = true;
+        f = true;
     }
-    
+
     return f;
 }
 
 function loadBacklogInputsByIdIfNotExist(bid) {
+    loadBacklogDetailsByIdIfNotExist(bid);
+//    if (!bid) {
+//        return;
+//    }
+//
+//    if (localStorage.getItem(bid)) {
+//        var res = localStorage.getItem(bid);
+//        var resObj = JSON.parse(res);
+//        var md = '';
+//        var mdUS = '-1';
+//        try {
+//            md = resObj.kv.lastModification;
+//            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+//
+//        } catch (err) {
+//        }
+//
+//        if (md.trim() !== mdUS.trim()) {
+//            localStorage.setItem(bid, '');
+//        }
+//
+//        if (md.trim() === mdUS.trim()) {
+//            SAInput.LoadInput4Zad(resObj);
+//        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+//            localStorage.setItem(bid, '');
+//            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
+//            SAInput.LoadedBacklogs4Input.push(bid);
+//        }
+//    } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+//        new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
+//        SAInput.LoadedBacklogs4Input.push(bid);
+//    }
+}
+
+
+function loadJSByIdIfNotExist(bid) {
     if (!bid) {
         return;
     }
 
-    if (localStorage.getItem(bid)) {
-        var res = localStorage.getItem(bid);
+    var nid = localstorage_prefix.JS + bid;
+    if (localStorage.getItem(nid)) {
+        var res = localStorage.getItem(nid);
         var resObj = JSON.parse(res);
         var md = '';
-        var mdUS = '-1';
+        var mdDes = '-1';
         try {
             md = resObj.kv.lastModification;
-            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+            mdDes = SACore.GetBacklogDetails(bid, "lastModification");
 
         } catch (err) {
         }
@@ -190,6 +459,7 @@ function loadBacklogInputsByIdIfNotExist(bid) {
         SAInput.LoadedBacklogs4Input.push(bid);
     }
 }
+
 
 
 
@@ -766,19 +1036,19 @@ function toggleProjectDetails4Loading() {
 
     clearQueue4ProLoad();
 
-    new UserStory().loadDetailsOnProjectSelect();
-    new UserStory().loadInputDetails4TableOnProjectSelect();
-    new UserStory().loadInputDetails4TabOnProjectSelect();
-    new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
-    new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
+    //new UserStory().loadDetailsOnProjectSelect();
+    //new UserStory().loadInputDetails4TableOnProjectSelect();
+    //new UserStory().loadInputDetails4TabOnProjectSelect();
+    //new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
+    //new UserStory().loadInputDetails4ChildDependenceIdOnProjectSelect();
 
-    new UserStory().loadInputDescDetailsOnProjectSelect();
-    new UserStory().loadDependencyOnProjectSelect();
-    new UserStory().loadSUS4Relation4Section();
-    new UserStory().loadBacklogLabelOnProjectSelect();
+    //new UserStory().loadInputDescDetailsOnProjectSelect();
+    //new UserStory().loadDependencyOnProjectSelect();
+//    new UserStory().loadSUS4Relation4Section();
+//    new UserStory().loadBacklogLabelOnProjectSelect();
     getProjectUsers();
     getUsers();
-    getDBStructure4Select();
+    //getDBStructure4Select();
 }
 
 var global_zad_bid = "";
@@ -825,29 +1095,63 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 function loadManualProjectZad(fkManualProjectId, bid) {
     init4ManualProjectLoad();
 
-
     global_zad_bid = bid;
     global_var.current_project_id = fkManualProjectId;
     global_var.current_modal = "";
     global_var.projectToggleWithSync = true;
 
-    clearQueueForManualProjectClick();
-    clearQueue4ProLoad();
 
 
-    getAllGuiClassList();
+
+
+
+
+    //clearQueueForManualProjectClick();
+    //clearQueue4ProLoad();
+
+    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+
     getInputClassRelByProject();
-    getInputAttributeByProject();
-    getProjectDescriptionByProject();
+    //getInputAttributeByProject();
+    //getProjectDescriptionByProject();
     getJsCodeListByProject();
 
-    getInputActionRelByProject();
-    getJsCodeByProject();
+    //getInputActionRelByProject();
 
-    toggleProjectDetails4Loading();
+
+    //toggleProjectDetails4Loading();
+    getProjectUsers();
+    getUsers();
+
+
+    /////////////
+    var bid = global_zad_bid;
+    
+    var resTB = SAInput.toJSONByBacklog(bid);
+    var body = new UserStory().getGUIDesignHTMLBody(resTB, 0);
+    
+    //var body = new UserStory().genGUIDesignHtmlById(bid);
+    $('#mainBodyDivForAll').html(body);
+    var el1 = document.getElementById('mainBodyDivForAll');
+
+    loadSelectBoxesAfterGUIDesign(el1);
+    initOnloadActionOnGUIDesign(el1);
+
+    hideProgress2();
 }
 
+
+ function genGUIDesignHtmlById (backlogId, hide) {
+     if (backlogId) {
+        } else {
+            return "";
+        }
+        
+        loadBacklogInputsByIdIfNotExist(backlogId);
+ }
 function executeCoreOfManualProSelection(bid1) {
+    return;
 
     var f1 = ifQueueForManualProjectClickDone();
     var f2 = ifQueue4ProLoadDone();
@@ -3155,7 +3459,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         val = (val) ? val.trim() : name.trim();
         $(el).append($('<option>').val(val).text(name));
     }
-    $(el).attr('sa-isrunning',0);    
+    $(el).attr('sa-isrunning', 0);
 
 
     if ($(el).attr('sa-data-nosort') !== '1') {
@@ -3309,8 +3613,11 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
-
+        var f = false;
         $(el).closest('.redirectClass').find('table.component-table-class-for-zad').each(function (ev) {
+            if (f)
+                return false;
+
             var selectedFieldTable = $(this).attr("sa-tableselectedfield");
             selectedFieldTable = selectedFieldTable.replace(/ /g, '');
             var selectedFieldTableList = selectedFieldTable.split(",");
@@ -3320,6 +3627,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             });
 
             tableId = (diffArray.length > 0) ? $(this).attr('table-id') : '';
+            if (tableId)
+                f = true;
             componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
         })
 
@@ -4159,6 +4468,7 @@ function getProjectDescriptionByProject() {
                 var obj = (res.tbl.length > 0) ? res.tbl[0].r : [];
                 for (var i = 0; i < obj.length; i++) {
                     var o = obj[i];
+
                     cr_project_desc[o.id] = o;
 
                     if (!cr_project_desc_by_backlog[o.fkBacklogId]) {
@@ -4414,6 +4724,8 @@ function getInputClassRelByProjectManual() {
         }
     });
 }
+
+
 
 
 function getInputClassRelByProject() {
@@ -8390,7 +8702,6 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {
         var id = global_var.current_backlog_id;
         callStoryCard(id);
-
     }
 });
 
@@ -8740,6 +9051,13 @@ function callLoadStoryCard() {
     loadHtml(f);
 }
 
+$(document).on('change', '.user-story-is-shared', function (evt) {
+
+    var ustype = 'isBounded';
+    var val = $(this).is(":checked") ? "1" : "0";
+    updateUS4ShortChangeDetails(val, ustype);
+});
+
 $(document).on('change', '.user-story-prototype-change', function (evt) {
 
 
@@ -8753,6 +9071,8 @@ $(document).on('change', '.user-story-prototype-change', function (evt) {
     var val = $(this).is(":checked") ? "1" : "0";
     updateUS4ShortChangeDetails(val, ustype);
 });
+
+
 $(document).on('change', '.user-story-short-change', function (evt) {
     var ustype = $(this).data('type');
     var val = $(this).val();

@@ -8903,7 +8903,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
 
-        
+
     },
     setGUIComponentEvent: function (e) {
         var s = $(e).val();
@@ -8987,7 +8987,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
- 
+
         SAInput.updateInput(id, "componentType", $('#us-gui-component-id').val());
         SAInput.updateInput(id, "orderNo", $('#us-gui-component-order-no').val());
         SAInput.updateInput(id, "cellNo", $('#us-gui-component-cell-no').val());
@@ -10036,13 +10036,15 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
 
+
+
     genGUIDesignHtmlById: function (backlogId, hide) {
         if (backlogId) {
         } else {
             return "";
         }
 
-        loadBacklogInputsByIdIfNotExist(backlogId);
+        //loadBacklogInputsByIdIfNotExist(backlogId);
 
         if (dgui[backlogId]) {
             return dgui[backlogId]
@@ -10210,10 +10212,10 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             async: true,
             success: function (res) {
                 var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
-                 loadSelectBoxesAfterGUIDesign(tempEl1);
+                loadSelectBoxesAfterGUIDesign(tempEl1);
 
                 if ($(el).attr("onclick_trigger_id")) {
-                    that.callTriggerApiAfterGUIDesign(el,padeId);
+                    that.callTriggerApiAfterGUIDesign(el, padeId);
                 } else {
                     var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
                     if (!$(tempEl).hasClass('sa-onloadclick')) {
@@ -10232,8 +10234,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
     },
 
-     
-    callTriggerApiAfterGUIDesign: function (el,padeId) {
+    callTriggerApiAfterGUIDesign: function (el, padeId) {
         var apiId = $(el).attr("onclick_trigger_id");
         loadBacklogInputsByIdIfNotExist(apiId);
 
@@ -10293,7 +10294,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
 
 
-         loadSelectBoxesAfterGUIDesign(tempEl);
+        loadSelectBoxesAfterGUIDesign(tempEl);
 
 
         if ($(el).attr("onclick_trigger_id")) {
@@ -12313,9 +12314,32 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: false,
             success: function (res) {
                 try {
-                    localStorage.setItem(bid,JSON.stringify(res));
+                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
                 } catch (err) {
+                }
+                
+                try {
+                    SACore.updateBacklogDescriptionByRes(res);
+                } catch (err) {
+                }
+
+                try {
+                    SACore.updateBacklogByRes(res);
+                } catch (err) {
+
+                }
+
+                try {
+                    SAInput.addInputTableByRes(res);
+                } catch (err) {
+
+                }
+
+                try {
+                    SAInput.addInputTabByRes(res);
+                } catch (err) {
+
                 }
 
             }
@@ -13962,12 +13986,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             if (backlogId.length === 0) {
                 return;
             }
-            
-           
-              
-            var isApi = SACore.GetBacklogDetails(backlogId,"isApi");
+
+
+
+            var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
-             
+
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;
@@ -14465,22 +14489,22 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.current_backlog_id = id;
         global_var.current_backlog_name = $(e).html();
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
-        
+
         fillBacklogHistory4View(id, $(e).attr("is_api"));
-        
+
         if ($(e).attr("is_api") === '1') {
             callStoryCard(id);
             return;
         }
-        
+
         $('.us-selected').each(function () {
             $(this).removeClass('us-selected');
             $(this).css("background-color", "");
         });
         $(e).closest('tr').first().addClass('us-selected');
         $(e).closest('tr').first().css('background-color', '#92aeda');
-        
-         $('#smb-general-main-info').html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.current_backlog_id)));
+
+        $('#smb-general-main-info').html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.current_backlog_id)));
 
         this.getBacklogDetailedInputInfoById_coreNew(SAInput.toJSON());
     },
@@ -14713,10 +14737,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
     },
     clearSearch: function () {
-        
+
         $('#add-bkl-line').val('');
         $('#add-bkl-line').change();
-        
+
 
     },
     delete: function (id) {
@@ -18155,6 +18179,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-spent-budget').val(SACore.GetCurrentBaklogSpentBudget());
         $('#user-story-apiaction').val(SACore.GetCurrentBaklogApiAction());
         $('#user-story-apirequesttype').val(SACore.GetCurrentBaklogApiSyncRequest());
+        $('.user-story-is-shared').val(SACore.GetCurrentBaklogIsShared());
 
         if (SACore.GetCurrentBaklogShowPrototype() === '1') {
             $('#user-story-show-prototype').prop("checked", true);
@@ -18164,6 +18189,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $("#live-prototype-show-key").hide(600);
         }
 
+        if (SACore.GetCurrentBaklogIsShared() === '1') {
+            $('.user-story-is-shared').prop("checked", true);
+        } else {
+            $('.user-story-is-shared').prop("checked", false);
+        }
+
+        if (SACore.GetCurrentBaklogIsShared() === '1') {
+            $('.user-story-is-shared').prop("checked", true);
+        } else {
+            $('.user-story-is-shared').prop("checked", false);
+        }
         this.toggleBacklogIsApi4StoryCard();
 
         $('#generalview_projectname').html(replaceTags(SACore.GetCurrentBaklogProjectName()));
@@ -18863,12 +18899,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         });
     },
-     getBacklogDetailedInputInfoById_coreNew: function (res) {
+    getBacklogDetailedInputInfoById_coreNew: function (res) {
         //fill input list table;
-         this.getBacklogDetailedInputInfoByIdDetails(res);
-         
-         //fill GUI Body and set params
-         //backlogun canvas parametrleri set edilir
+        this.getBacklogDetailedInputInfoByIdDetails(res);
+
+        //fill GUI Body and set params
+        //backlogun canvas parametrleri set edilir
         $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
         this.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
         this.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
@@ -18876,20 +18912,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#SUS_IPO_GUI_Design').html(st);
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
-        
+
         //get element
         var elm = document.getElementById('SUS_IPO_GUI_Design');
-        
-         //fill selectbox after GUI Design
-         loadSelectBoxesAfterGUIDesign(elm);
-        
+
+        //fill selectbox after GUI Design
+        loadSelectBoxesAfterGUIDesign(elm);
+
         //init onload click and change events
         initOnloadActionOnGUIDesign4OnClick(elm);
         initOnloadActionOnGUIDesign4Onchange(elm);
-         
-       
-         
-     },
+
+
+
+    },
     getBacklogDetailedInputInfoById_core: function (res) {
 //        $('#txtSUS_IPO_description').val(((res.kv.backlogDescription)));
         $('#txtSUS_IPO_description').val(SACore.GetCurrentDescriptionSourced());
@@ -22241,6 +22277,7 @@ Project.prototype = {
         });
     },
     loadMainProjectList4Manual: function () {
+        showProgress2()
         var json = {kv: {}};
         try {
             json.kv.cookie = getToken();
@@ -22258,7 +22295,7 @@ Project.prototype = {
             async: true,
             success: function (res) {
                 showProgress2();
-                
+
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
                 loadModulePermission();
@@ -22478,8 +22515,8 @@ Project.prototype = {
         getTaskList();
         new UserStory().load();
         new Label().load();
-        new Sprint().load();
-        this.getProjectStatList();
+       new Sprint().load();
+       this.getProjectStatList();
 ////        //add filter section
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
@@ -23198,7 +23235,7 @@ User.prototype = {
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
             type: "POST",
             data: data,
-            async: false,
+            async: true,
             contentType: 'text/html',
             success: function (res) {
 
@@ -23434,7 +23471,7 @@ User.prototype = {
             async: true,
             success: function (res) {
                 $('#myAccountModal').modal('hide');
-                that.loadPersonalUserOnInit();
+                that.loadPersonalUloadUserList4ComboserOnInit();
             },
             error: function () {
                 Toaster.showError(('somethingww'));

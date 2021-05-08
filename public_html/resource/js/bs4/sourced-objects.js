@@ -146,6 +146,16 @@ var SAEntity = {
         } catch (err) {
         }
     },
+    LoadNew: function (res) {
+        try {
+             
+            this.updateDbByRes(res);
+            this.updateTableByRes(res);
+            this.updateFieldByRes(res);
+            this.updateFieldRelByRes(res);
+        } catch (err) {
+        }
+    },
 
     GetOrderNoKeys: function () {
 //        const ordered = {};
@@ -613,6 +623,24 @@ var SACore = {
         } catch (e) {
         }
     },
+    updateBacklogDescriptionByRes: function (res) {
+        try {
+            var idx = getIndexOfTable(res, "backlogDescList");
+            var obj = res.tbl[idx].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                cr_project_desc[o.id] = o;
+
+                if (!cr_project_desc_by_backlog[o.fkBacklogId]) {
+                    cr_project_desc_by_backlog[o.fkBacklogId] = [];
+                }
+
+                cr_project_desc_by_backlog[o.fkBacklogId].push(o.id);
+
+            }
+        } catch (errr) {
+        }
+    },
     updateBacklogByRes: function (res) {
         try {
             var idx = getIndexOfTable(res, "userStoryTable");
@@ -620,6 +648,9 @@ var SACore = {
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 this.updateEntireBacklog(o.id, o);
+
+
+
             }
         } catch (errr) {
         }
@@ -1202,6 +1233,9 @@ var SACore = {
     GetCurrentBaklogApiSyncRequest: function () {
         return this.GetBacklogKey(this.GetCurrentBacklogId(), "apiSyncRequest");
     },
+    GetCurrentBaklogIsShared: function () {
+        return this.GetBacklogKey(this.GetCurrentBacklogId(), "isBounded");
+    },
     GetCurrentBaklogShowPrototype: function () {
         return this.GetBacklogKey(this.GetCurrentBacklogId(), "showPrototype");
     },
@@ -1438,8 +1472,8 @@ var SAInput = {
     "TabByBacklog": {},
     "DescriptionId": {},
     "ChildDependenceId": {},
-    "LoadedBacklogs4Input":[],
-    "LoadedChildDependenceId4Input":[],
+    "LoadedBacklogs4Input": [],
+    "LoadedChildDependenceId4Input": [],
     updateInput: function (backlogId, key, value) {
         try {
             this.Inputs[backlogId][key] = value;
@@ -1538,7 +1572,7 @@ var SAInput = {
     },
     LoadInputSection: function (res) {
         try {
-            
+
             var jsonString = res.kv.jsonOut;
             var jsonKV = JSON.parse(jsonString);
             var kv = Object.keys(jsonKV);
@@ -1572,9 +1606,9 @@ var SAInput = {
         }
     },
     LoadInput4Zad: function (res) {
-         
+
         try {
-            
+
 
             var idx = getIndexOfTable(res, "Response");
             var obj = res.tbl[idx].r;
@@ -1629,7 +1663,7 @@ var SAInput = {
     },
     LoadInputChildDependenceIdNew: function (res) {
         try {
-            this.ChildDependenceId = $.extend(this.ChildDependenceId,res.kv);
+            this.ChildDependenceId = $.extend(this.ChildDependenceId, res.kv);
 
         } catch (err) {
         }
@@ -1864,7 +1898,7 @@ var SAInput = {
     GetCurrentChildDependenceId: function () {
 //        var id = this.Inputs[global_var.current_us_input_id].childDependenceId;
         LoadChildDependenceId4Input(global_var.current_us_input_id);
-        
+
         var id = this.ChildDependenceId[global_var.current_us_input_id];
         return  id;
     }

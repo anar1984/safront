@@ -902,7 +902,6 @@ var be = {
 
                 if (o.fkRelatedScId) {
                     var fnType = cr_js_list[o.fkRelatedScId].fnType;
-
                     var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
 
                     if (fnType === 'core') {
