@@ -470,8 +470,8 @@ var Component = {
         RegenTableBody: function (el) {
             var tid = $(el).attr("table-id");
             var rc = $(el).val();
-            var body = this.GenInputTableBodyHtml(tid, rc);
-            $(el).parent().parent().find('tbody').html(body.html());
+            var body = (rc>0) ? this.GenInputTableBodyHtml(tid, rc).html() :"";
+            $(el).parent().parent().find('tbody').html(body);
             updateRowCountInputTable(tid, rc);
         },
         RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit) {
@@ -487,7 +487,7 @@ var Component = {
                     .attr("style", "font-size:11px;padding:1px 4px;border:none")
                     .attr("table-id", comp.fkInputTableId)
                     .attr("onchange", "Component.InputTableAction.RegenTableBody(this)");
-            for (var i = 1; i <= 15; i++) {
+            for (var i = 0; i <= 15; i++) {
                 var o = $('<option>').val(i).append(i);
                 if (i === parseInt(rowCount))
                     o.attr('selected', true);
@@ -518,7 +518,7 @@ var Component = {
             var table = $("<table>")
 
             var thead = this.GenInputTableHeaderHtml(tableId, comp);
-            var tbody = this.GenInputTableBodyHtml(tableId, rowCount, backlogId);
+            var tbody =   this.GenInputTableBodyHtml(tableId, rowCount, backlogId) ;
             table.append(thead).append(tbody);
             return table.html();
         },
@@ -794,7 +794,7 @@ var Component = {
 
             if (idx === 0) {
                 // tbody.append(this.TableEmptyMessage(tableId));
-                tbody.html($("<tr>").append($("<td>").append(this.TableEmptyMessage(tableId))));
+                //tbody.html($("<tr>").append($("<td>").append(this.TableEmptyMessage(tableId))));
             }
             return tbody;
         }
@@ -851,7 +851,8 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         div.removeClass("component-class")
                 .removeAttr("onclick")
-
+        
+        div.append($('<div>').addClass("progressloader loaderTable1"));
         div.append(el);
         div.addClass("table-responsive")
 

@@ -7,12 +7,15 @@
 var be = {
 
     callApi: function (apiId, data, element, asyncData) {
+
+        loadBacklogInputsByIdIfNotExist(apiId);
+
         var res = {};
         if (SACore.GetBacklogDetails(apiId, "isApi") !== '1') {
             return;
         }
 
-        loadBacklogInputsByIdIfNotExist(apiId);
+
 
         be.ValidateApiOnInput(apiId, data);
 
@@ -24,7 +27,9 @@ var be = {
         } else if (actionType === 'U') {
             res = this.callUpdateAPI(apiId, data, element, asyncData);
         } else if (actionType === 'D') {
-            res = this.callDeleteAPI(apiId, data, element, asyncData);
+            if (confirm("Silmə əməliyyatının davam etməsinə əminsiz?")) {
+               res = this.callDeleteAPI(apiId, data, element, asyncData); 
+            }
         } else {
             res = this.callContainerAPI(apiId, data, element, asyncData);
 
@@ -298,7 +303,8 @@ var be = {
             var rs = '';
             try {
 //                var descIds = SAInput.getInputDetails(inputId, 'inputDescriptionIds').split(',');
-                var descIds = SAInput.DescriptionId[inputId].split(',');
+//                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
+                var descIds = SAInput.DescriptionId[inputId];
                 for (var i = 0; i < descIds.length; i++) {
                     var desc = SAInputDesc.GetDetails(descIds[i]);
                     if (desc.includes('fn_(Defaultvalueis)')) {
@@ -436,7 +442,7 @@ var be = {
             var SEND_TO_BACKLOG_ID = innerData.SEND_TO_BACKLOG_ID;
 
 
-//set Required Field From Descriptons
+            //set Required Field From Descriptons
             var paramData = innerData.PARAM_DATA;
             var paramData4IN = innerData.PARAM_DATA_4_IN;
 
@@ -948,6 +954,10 @@ var be = {
                 }
 
                 if (o.fkRelatedApiId) {
+                    try {
+                        var backlogName = SACore.Backlogs[o.fkRelatedApiId]['backlogName'];
+                    } catch (err) {
+                    }
                     var res = be.callApi(o.fkRelatedApiId, outData, element, asyncData);
                     try {
                         if (res._table) {
@@ -1058,8 +1068,8 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
-                     var res1 = {};
-                    var res2 = {}  ;
+                    var res1 = {};
+                    var res2 = {};
                     try {
                         res1 = dataJSON.kv;
                         res2 = res.kv;
@@ -1096,8 +1106,8 @@ var be = {
                 success: function (res) {
                     rs = res;
 
-                     var res1 = {};
-                    var res2 = {}  ;
+                    var res1 = {};
+                    var res2 = {};
                     try {
                         res1 = dataJSON.kv;
                         res2 = res.kv;
@@ -1135,7 +1145,7 @@ var be = {
                     rs = res;
 
                     var res1 = {};
-                    var res2 = {}  ;
+                    var res2 = {};
                     try {
                         res1 = dataJSON.kv;
                         res2 = res.kv;
@@ -1171,8 +1181,8 @@ var be = {
                 async: async,
                 success: function (res) {
                     rs = res;
-                     var res1 = {};
-                    var res2 = {}  ;
+                    var res1 = {};
+                    var res2 = {};
                     try {
                         res1 = dataJSON.kv;
                         res2 = res.kv;
@@ -1226,6 +1236,7 @@ var be = {
 
                         out.selectedField = _key.toString();
                     } catch (err) {
+                            console.log(err)
                     }
 
                     try {
@@ -1265,12 +1276,12 @@ var be = {
                             triggerAPIAfter(el1, apiId, out, dataJSON.kv);
                         }
                     } catch (err) {
-//                        console.log(err);
+                        console.log(err);
                     }
 
 
-                     var res1 = {};
-                    var res2 = {}  ;
+                    var res1 = {};
+                    var res2 = {};
                     try {
                         res1 = dataJSON.kv;
                         res2 = res.kv;
@@ -1303,7 +1314,7 @@ var be = {
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
 //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
-                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id];
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1347,7 +1358,7 @@ var be = {
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'IN') {
                     //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
-                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id];
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1391,7 +1402,7 @@ var be = {
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
                     //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
-                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id];
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1437,7 +1448,7 @@ var be = {
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'OUT') {
                     //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
-                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id];
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();
@@ -1471,7 +1482,7 @@ var be = {
                 var inputObj = SAInput.getInputObject(oid);
                 if (inputObj.inputType === 'IN') {
                     //                    var inputDescIds = SAInput.getInputDetails(inputObj.id, 'inputDescriptionIds').split(',');
-                    var inputDescIds = SAInput.DescriptionId[inputObj.id].split(',');
+                    var inputDescIds = SAInput.DescriptionId[inputObj.id];
                     for (var j in inputDescIds) {
                         try {
                             var descId = inputDescIds[j].trim();

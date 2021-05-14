@@ -148,7 +148,7 @@ var SAEntity = {
     },
     LoadNew: function (res) {
         try {
-             
+
             this.updateDbByRes(res);
             this.updateTableByRes(res);
             this.updateFieldByRes(res);
@@ -311,12 +311,15 @@ var SAProjectUser = {
         var json = {"tbl": [{"r": []}]};
         var keys = SAInput.GetCurrentProjectUser();
         var idx = 0;
-        for (var n = 0; n < keys.length; n++) {
-            var k = keys[n];
-            k = k.trim();
-            var o = this.ProjectUsers[k];
-            json.tbl[0].r.push(o);
-            idx++;
+        try {
+            for (var n = 0; n < keys.length; n++) {
+                var k = keys[n];
+                k = k.trim();
+                var o = this.ProjectUsers[k];
+                json.tbl[0].r.push(o);
+                idx++;
+            }
+        } catch (err) {
         }
         if (idx === 0) {
             json = {"tbl": []};
@@ -635,7 +638,8 @@ var SACore = {
                     cr_project_desc_by_backlog[o.fkBacklogId] = [];
                 }
 
-                cr_project_desc_by_backlog[o.fkBacklogId].push(o.id);
+                if (!cr_project_desc_by_backlog[o.fkBacklogId].includes(o.id))
+                    cr_project_desc_by_backlog[o.fkBacklogId].push(o.id);
 
             }
         } catch (errr) {
@@ -1380,12 +1384,16 @@ var SAInputDesc = {
         var json = {"tbl": [{"r": []}]};
         var keys = SAInput.GetCurrentInputDescription();
         var idx = 0;
-        for (var n = 0; n < keys.length; n++) {
-            var k = keys[n];
-            k = k.trim();
-            var o = this.InputDescriptions[k];
-            json.tbl[0].r.push(o);
-            idx++;
+        try {
+            for (var n = 0; n < keys.length; n++) {
+                var k = keys[n];
+                k = k.trim();
+                var o = this.InputDescriptions[k];
+                json.tbl[0].r.push(o);
+                idx++;
+
+            }
+        } catch (err) {
         }
         if (idx === 0) {
             json = {"tbl": []};
@@ -1608,8 +1616,6 @@ var SAInput = {
     LoadInput4Zad: function (res) {
 
         try {
-
-
             var idx = getIndexOfTable(res, "Response");
             var obj = res.tbl[idx].r;
             for (var n = 0; n < obj.length; n++) {
@@ -1649,7 +1655,7 @@ var SAInput = {
     },
     LoadInputDescriptionId: function (res) {
         try {
-            this.DescriptionId = res.kv;
+            //this.DescriptionId = res.kv;
 
         } catch (err) {
         }
@@ -1866,7 +1872,7 @@ var SAInput = {
         var res = [];
         try {
 //            res = this.Inputs[inputId]['inputDescriptionIds'].split(',');
-            res = this.DescriptionId[inputId].split(',');
+            res = this.DescriptionId[inputId];
         } catch (err) {
         }
         return res;

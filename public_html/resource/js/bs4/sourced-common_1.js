@@ -22277,7 +22277,7 @@ Project.prototype = {
         });
     },
     loadMainProjectList4Manual: function () {
-        showProgress2()
+        showProgress3();
         var json = {kv: {}};
         try {
             json.kv.cookie = getToken();
@@ -22294,14 +22294,14 @@ Project.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                showProgress2();
+                 
 
-                that.generateTableBody4MainProject(res);
-                new UserStory().addProjectToMenu(res);
-                loadModulePermission();
+                that.generateTableBody4MainProject(res); //just FN
+                new UserStory().addProjectToMenu(res); //just FN
+                loadModulePermission(); //API Call
 
                 global_zad_bid = $(".manualProject[pid='" + global_var.fkManualProjectId + "']").first().attr("tid");
-                loadManualProjectZad(global_var.fkManualProjectId, global_zad_bid)
+                loadManualProjectZad(global_var.fkManualProjectId, global_zad_bid);
 
 
 

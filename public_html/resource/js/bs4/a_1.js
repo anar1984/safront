@@ -56,51 +56,103 @@ var saInputTagIsPressed = false;
 
 
 
+function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
+    var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
+    var pid = (projectId) ? projectId : global_var.current_project_id;
+
+    if (!bid)
+        return;
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateBacklogLastModificationDateAndTime",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: asyncCore,
+        success: function (res) {
+        }
+    });
+}
+
+var backlog_last_modification = {};
+function getBacklogLastModificationDateAndTime(bid1) {
+    var bid = (bid1) ? bid1 : global_var.current_project_id;
+
+    if (!bid)
+        return;
+    var json = initJSON();
+    json.kv.fkProjectId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogLastModificationDateAndTime",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            try {
+                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.out));
+                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
+            } catch (err) {
+
+            }
+
+        }
+    });
+}
+
 function loadBacklogDetailsByIdIfNotExist(bid) {
     if (!bid) {
         return;
     }
 
-//    if (localStorage.getItem(bid)) {
-//        var res = localStorage.getItem(bid);
-//        var resObj = JSON.parse(res);
-//        var md = '';
-//        var mdUS = '-1';
-//        try {
-//            md = resObj.kv.lastModification;
-//            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
-//
-//        } catch (err) {
-//        }
-//
-//        if (md.trim() !== mdUS.trim()) {
-//            localStorage.setItem(bid, '');
-//        }
-//
-//        if (md.trim() === mdUS.trim()) {
-//            SAInput.LoadInput4Zad(resObj);
-//        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
-//            localStorage.setItem(bid, '');
-//            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
-//            SAInput.LoadedBacklogs4Input.push(bid);
-//        }
-//    } else 
+    if (localStorage.getItem(bid)) {
+        var res = localStorage.getItem(bid);
+        var resObj = JSON.parse(res);
+        var md = '';
+        var mdUS = '-1';
+        try {
+            md = (localStorage.getItem('md_' + bid)) ? localStorage.getItem('md_' + bid) : md;
+            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
+            if (md !== mdUS) {
+                localStorage.setItem(bid, '');
+            }
+        } catch (err) {
+        }
+
+        if (md === mdUS) {
+            loadBacklogProductionDetailsById_resparams(resObj);
+        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+            localStorage.setItem(bid, '');
+            loadBacklogProductionDetailsById(bid);
+            SAInput.LoadedBacklogs4Input.push(bid);
+        }
+    } else
     if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
         loadBacklogProductionDetailsById(bid);
         SAInput.LoadedBacklogs4Input.push(bid);
     }
 }
 
-function loadBacklogProductionDetailsById(bid1,functionName,fnData,async) {
+function loadBacklogProductionDetailsById(bid1, functionName, fnData, async) {
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
     var asyncCore = (async) ? async : false;
     if (!bid)
-        return ;
-    
+        return;
+
     showProgress2();
     var json = initJSON();
-//        json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = bid;
     var that = this;
     var data = JSON.stringify(json);
@@ -114,32 +166,36 @@ function loadBacklogProductionDetailsById(bid1,functionName,fnData,async) {
         async: asyncCore,
         success: function (res) {
 
+            localStorage.setItem("md_" + bid, res.kv.modificationTime);
             localStorage.setItem(bid, JSON.stringify(res));
-            SAInput.LoadInput4Zad(res);
-            SACore.updateBacklogDescriptionByRes(res);
+
+            loadBacklogProductionDetailsById_resparams(res);
 
 
-            loadBacklogProductionDetailsById_loadInputClassRelation(res);
-            loadBacklogProductionDetailsById_loadInputActionRelation(res);
-            loadBacklogProductionDetailsById_loadInputAttribute(res);
-            loadBacklogProductionDetailsById_inputDesc(res);
-            loadBacklogProductionDetailsById_jslist(res);
-            loadBacklogProductionDetailsById_csslist(res);
-            SAInput.addInputTableByRes(res);
-            SAInput.addInputTabByRes(res);
-            SACore.updateBacklogByRes(res);
-            SAEntity.LoadNew(res);
-
-            hideProgress2();
-            
-            try{
+            try {
                 if (functionName)
-                eval(functionName)(fnData);
-        }catch(err){}
-            
-
+                    eval(functionName)(fnData);
+            } catch (err) {
+            }
+            hideProgress2();
         }
     });
+}
+
+function loadBacklogProductionDetailsById_resparams(res) {
+    SAInput.LoadInput4Zad(res);
+    SACore.updateBacklogDescriptionByRes(res);
+    loadBacklogProductionDetailsById_loadInputClassRelation(res);
+    loadBacklogProductionDetailsById_loadInputActionRelation(res);
+    loadBacklogProductionDetailsById_loadInputAttribute(res);
+    loadBacklogProductionDetailsById_inputDesc(res);
+    loadBacklogProductionDetailsById_jslist(res);
+    loadBacklogProductionDetailsById_setjslist(res);
+    loadBacklogProductionDetailsById_csslist(res);
+    SAInput.addInputTableByRes(res);
+    SAInput.addInputTabByRes(res);
+    SACore.updateBacklogByRes(res);
+    SAEntity.LoadNew(res);
 }
 
 function loadBacklogProductionDetailsById_csslist(res) {
@@ -158,9 +214,63 @@ function loadBacklogProductionDetailsById_csslist(res) {
                 var key = o.className;
                 key = key.replace(/\./g, '');
                 cr_gui_classes_by_name[key] = o.classBody;
-                
+
             } catch (err) {
 
+            }
+        }
+    } catch (err) {
+    }
+}
+
+function loadBacklogProductionDetailsById_setjslist(res) {
+
+    try {
+        var idx = getIndexOfTable(res, "jsList");
+        var obj = res.tbl[idx].r;
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            try {
+                if (jsCodeIsLoaded.includes(o.id)) {
+                    continue;
+                }
+
+                if (!jsCodeIsLoaded.includes(o.id))
+                    jsCodeIsLoaded.push(o.id);
+
+
+                if (o.fnType === 'core') {
+                    if (!o.fnCoreName) {
+                        continue;
+                    }
+                    var st = '';
+                    st += 'function ' + o.fnCoreName + "(" + o.fnCoreInput + "){";
+                    st += o.fnBody;
+                    st += '}';
+
+                    var sc = $('<script>').append(st);
+
+//                            console.log('add core function =>', o.fnCoreName.trim())
+                    $('head').append(sc);
+
+                } else if (o.fnType === 'event') {
+                    if (!o.fnEvent || !o.fnEventObject) {
+                        continue;
+                    }
+                    var st = '';
+                    st += '$(document).on("' + o.fnEvent.trim() + '","' + o.fnEventObject.trim() + '", function(e){';
+                    st += o.fnBody;
+                    st += '})';
+
+                    var sc = $('<script>').append(st);
+
+//                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
+
+                    $('head').append(sc);
+
+                }
+            } catch (err) {
+                Toaster.showError("Error on loading JavaScript File called " + o.fnCoreName);
             }
         }
     } catch (err) {
@@ -180,7 +290,7 @@ function loadBacklogProductionDetailsById_jslist(res) {
         }
     } catch (err) {
     }
-    
+
 }
 
 
@@ -190,14 +300,22 @@ function loadBacklogProductionDetailsById_inputDesc(res) {
 
         var idx = getIndexOfTable(res, "inputDescList");
         var obj = res.tbl[idx].r;
+        var arrayTemp = [];
         for (var n = 0; n < obj.length; n++) {
             var o = obj[n];
             SAInputDesc.AddInputDescription(o);
 
-            SAInput.DescriptionId[o.fkInputId] = (SAInput.DescriptionId[o.fkInputId])
-                    ? SAInput.DescriptionId[o.fkInputId] + "," + o.id
-                    : SAInput.DescriptionId[o.fkInputId];
+            if (!SAInput.DescriptionId[o.fkInputId]) {
+                SAInput.DescriptionId[o.fkInputId] = []
+            }
+            if (!SAInput.DescriptionId[o.fkInputId].includes(o.id))
+            {
+                SAInput.DescriptionId[o.fkInputId].push(o.id);
+            }
         }
+
+
+
     } catch (err) {
     }
 }
@@ -216,7 +334,8 @@ function loadBacklogProductionDetailsById_loadInputActionRelation(res) {
                 cr_input_action_rel[o.fkInputId] = [];
             }
 
-            cr_input_action_rel[o.fkInputId].push(o.id);
+            if (!cr_input_action_rel[o.fkInputId].includes(o.id))
+                cr_input_action_rel[o.fkInputId].push(o.id);
             cr_input_action_rel_list[o.id] = o;
         }
     } catch (err) {
@@ -242,7 +361,8 @@ function loadBacklogProductionDetailsById_loadInputAttribute(res) {
                     cr_input_comp_attribute[o.fkInputId] = [];
                     cr_input_comp_attribute_kv[o.fkInputId] = {};
                 }
-                cr_input_comp_attribute[o.fkInputId].push(kv)
+                if (!cr_input_comp_attribute[o.fkInputId].includes(kv))
+                    cr_input_comp_attribute[o.fkInputId].push(kv)
                 cr_input_comp_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
 
 
@@ -253,7 +373,8 @@ function loadBacklogProductionDetailsById_loadInputAttribute(res) {
                     cr_input_cont_attribute[o.fkInputId] = [];
                     cr_input_cont_attribute_kv[o.fkInputId] = {};
                 }
-                cr_input_cont_attribute[o.fkInputId].push(kv)
+                if (!cr_input_cont_attribute[o.fkInputId].includes(kv))
+                    cr_input_cont_attribute[o.fkInputId].push(kv)
                 cr_input_cont_attribute_kv[o.fkInputId][o.attrName] = o.attrValue;
 
             }
@@ -323,9 +444,44 @@ function LoadChildDependenceId4Input(fkInputId) {
     }
 }
 
-function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFromInputId, selectFromBacmkogId) {
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFromInputId, selectFromBacmkogId) {
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+
+    if (!bid)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
+//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            localStorage.setItem("md_" + bid, res.kv.modificationTime);
+            localStorage.setItem(bid, JSON.stringify(res));
+
+            loadBacklogProductionDetailsById_resparams(res);
+
+            SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+            var selectedField = SAInput.GetInputName(selectFromInputId);
+            triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+
+        }
+    });
+}
+
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, selectFromInputId, selectFromBacmkogId) {
     var bid1 = (bid) ? bid : global_var.current_backlog_id;
-    showProgressAlternative();
+//    showProgressAlternative();
     var json = initJSON();
 //        json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = bid1;
@@ -347,10 +503,9 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid, select, selectFrom
                 SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);
                 triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
-                hideProgressAlternative();
+//                hideProgressAlternative();
             } catch (err) {
             }
-
         }
     });
 }
@@ -369,16 +524,16 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
         var mdUS = '-1';
         try {
             md = resObj.kv.lastModification;
-            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
+            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
 
         } catch (err) {
         }
 
 
 
-        if (md.trim() === mdUS.trim()) {
+        if (md === mdUS) {
             f = true;
-            SAInput.LoadInput4Zad(resObj);
+            loadBacklogProductionDetailsById_resparams(resObj);
         } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
             f = true;
         }
@@ -1080,6 +1235,9 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
     clearQueue4ProLoad();
 
     getAllGuiClassList();
+//    getGuiClassList();
+
+
     getInputClassRelByProject();
     getInputAttributeByProject();
     getProjectDescriptionByProject();
@@ -1092,13 +1250,52 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 }
 
 
-function loadManualProjectZad(fkManualProjectId, bid) {
-    init4ManualProjectLoad();
+function manualProjectRefreshInit(fkManualProjectId) {
+    getBacklogLastModificationDateAndTime(fkManualProjectId);
+    global_var.current_project_id = global_var.fkManualProjectId;
+    loadMainProjectList4ManualZad();
+}
 
-    global_zad_bid = bid;
+function loadMainProjectList4ManualZad() {
+    showProgress3();
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.asc = "projectName";
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetProjectList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+            new UserStory().generateTableBody4MainProject(res); //just FN
+            new UserStory().addProjectToMenu(res); //just FN
+            loadModulePermission(); //API Call
+
+            global_zad_bid = $(".manualProject[pid='" + global_var.fkManualProjectId + "']").first().attr("tid");
+            loadManualProjectZad(global_var.fkManualProjectId, global_zad_bid);
+
+
+
+
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
+}
+
+function loadManualProjectZad(fkManualProjectId, bid) {
     global_var.current_project_id = fkManualProjectId;
-    global_var.current_modal = "";
-    global_var.projectToggleWithSync = true;
+    init4ManualProjectLoad();
 
 
 
@@ -1111,45 +1308,50 @@ function loadManualProjectZad(fkManualProjectId, bid) {
 
     getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
     getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+    getJsGlobalCodeByProject();
 
-    getInputClassRelByProject();
+//    getInputClassRelByProject();
     //getInputAttributeByProject();
     //getProjectDescriptionByProject();
-    getJsCodeListByProject();
+//    getJsCodeListByProject();
 
     //getInputActionRelByProject();
 
 
     //toggleProjectDetails4Loading();
     getProjectUsers();
-    getUsers();
+    //getUsers();
 
 
     /////////////
+    global_zad_bid = bid;
+    global_var.current_project_id = fkManualProjectId;
+    global_var.current_modal = "";
+    global_var.projectToggleWithSync = true;
     var bid = global_zad_bid;
-    
+
     var resTB = SAInput.toJSONByBacklog(bid);
     var body = new UserStory().getGUIDesignHTMLBody(resTB, 0);
-    
-    //var body = new UserStory().genGUIDesignHtmlById(bid);
+
+
     $('#mainBodyDivForAll').html(body);
     var el1 = document.getElementById('mainBodyDivForAll');
 
     loadSelectBoxesAfterGUIDesign(el1);
     initOnloadActionOnGUIDesign(el1);
 
-    hideProgress2();
+    hideProgress3();
 }
 
 
- function genGUIDesignHtmlById (backlogId, hide) {
-     if (backlogId) {
-        } else {
-            return "";
-        }
-        
-        loadBacklogInputsByIdIfNotExist(backlogId);
- }
+function genGUIDesignHtmlById(backlogId, hide) {
+    if (backlogId) {
+    } else {
+        return "";
+    }
+
+    loadBacklogInputsByIdIfNotExist(backlogId);
+}
 function executeCoreOfManualProSelection(bid1) {
     return;
 
@@ -3432,6 +3634,12 @@ function triggerAPI2Fill(el, apiId, selectField, data) {
 }
 
 function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
+
+
+
+
+
+
     var out = data;
     var rows = ((out._table) && (out._table.r) && (out._table.r.length > 0))
             ? out._table.r
@@ -3601,14 +3809,11 @@ function clearTableBodyAfterApiCall(el, apiId) {
 
 
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
-
-
-
-
+    var tableId;
+    var componentId;
 
     try {
-        var tableId;
-        var componentId;
+
 
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
@@ -3649,7 +3854,12 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
         // for filling table on dinamycally
 //        clearTableBodyAfterApiCall(el, apiId);
-        $('#' + componentId).find('tbody').html('');
+        $('table#' + componentId).find('tbody').html('');
+
+        var hasRelatedApi01 = false;
+        if (!hasRelatedApi01) {
+            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+        }
 
         var cols = (data._table.r && data._table.r.length > 0)
                 ? Object.keys(data._table.r[0])
@@ -3664,8 +3874,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                 tblSelectedFields = tblSelectedFields.split(',');
                 if ($.inArray(c, tblSelectedFields) > -1) {
                     f = true;
-                    tableId = $(this).attr('table-id');
-                    $("table[table-id='" + tableId + "']").first().find('tbody').hide(400);
+//                    tableId = $(this).attr('table-id');
+//                    $("table[table-id='" + tableId + "']").first().find('tbody').hide(400);
 
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
@@ -3707,6 +3917,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
         callTableRelationAPIs(el, tableId);
     } catch (err) {
+        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
 
@@ -3715,6 +3926,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 function callTableRelationAPIs(el, tableId) {
 
     if (!tableId) {
+        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
         return;
     }
 
@@ -3727,6 +3939,9 @@ function callTableRelationAPIs(el, tableId) {
             .find('table[table-id="' + tableId + '"]')
             .find('.has_table_relation_td')
             .each(function () {
+
+
+
                 var apiId = $(this).attr('rel_api');
                 var inputId = $(this).attr('rel_core_inputid');
                 var selectedfield = $(this).attr('rel_core_selected_field');
@@ -3756,26 +3971,30 @@ function callTableRelationAPIs(el, tableId) {
             });
 
     //callApis
-
-
-
-    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent', '');
-    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', '');
-    for (var i in tableInputRel) {
-        var apiId = i;
-        var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent');
-        lnzad1 += "," + apiId;
-        $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent', lnzad1)
-    }
-
-
     var f = true;
-    for (var i in tableInputRel) {
+    var hasRelatedApi = false;
+
+
+    $("table[table-id='" + tableId + "']").first().attr("call-count", Object.keys(tableInputRel).length);
+    $("table[table-id='" + tableId + "']").first().attr("current-call-count", "0");
+
+    var keys = Object.keys(tableInputRel);
+    for (var i = 0; i < keys.length; i++) {
+
+        var tableInputId = keys[i];
+        if (!hasRelatedApi) {
+            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+            $("table[table-id='" + tableId + "']").first().attr("is-loading", "1");
+            hasRelatedApi = true;
+        }
+
+
         var apiId = '';
         try {
             f = false;
-            apiId = i;
-            var inputs = tableInputRel[i].ids;
+
+            apiId = tableInputId;
+            var inputs = tableInputRel[tableInputId].ids;
             var inputLine = inputs.join('%IN%');
 
             var data = {};
@@ -3785,23 +4004,22 @@ function callTableRelationAPIs(el, tableId) {
             asyncData.apiId = apiId;
             asyncData.tableId = tableId;
             asyncData.toggleTableId = tableToggleZad;
-            asyncData.inputId = tableInputRel[i].i; //0-ci element hemishe inputId olur
-            asyncData.selectedField = tableInputRel[i].s; //0-ci element hemishe inputId olur
+            asyncData.inputId = tableInputRel[tableInputId].i; //0-ci element hemishe inputId olur
+            asyncData.selectedField = tableInputRel[tableInputId].s; //0-ci element hemishe inputId olur
             asyncData.fn = "setTableAsyncValueOnApiCall";
+
+
 
 
             be.callApi(apiId, data, el, asyncData);
         } catch (err) {
-//            console.log(err);
-
-            var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
-            lnzad1 += "," + apiId;
-            $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', lnzad1)
         }
     }
 
-    if (f) {
-        $("table[table-id='" + tableId + "']").first().find('tbody').show(400);
+    $("table[table-id='" + tableId + "']").first().attr("is-loading", "0");
+
+    if (!hasRelatedApi) {
+        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 }
 
@@ -3813,11 +4031,6 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
 
     var apiId = asyncData.apiId;
-    var lnzad1 = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
-    lnzad1 += "," + apiId;
-    $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done', lnzad1)
-
-
     var obj = data._table.r;
     for (var i in obj) {
         var o = obj[i];
@@ -3831,16 +4044,23 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
                     if (elem2.attr('sa-type') === 'image') {
                         elem2.attr('src', fileUrl(o[asyncData.selectedField]))
                     }
+
                     updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
                 });
     }
 
-    var a = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-sent');
-    var b = $("table[table-id='" + tableId + "']").first().attr('toggled-related-api-done');
+    var el1 = $("table[table-id='" + tableId + "']");
+    var currentCallCount = $(el1).attr('current-call-count');
+    currentCallCount = (currentCallCount) ? currentCallCount : 0;
 
-    if (a.split(",").length <= b.split(",").length) {
-        $("table[table-id='" + tableId + "']").first().find('tbody').show(400);
+    var callCount = $(el1).attr('call-count');
+    if ((parseInt(currentCallCount) + 1) >= callCount) {
+        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+    } else {
+        $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
     }
+
+
 }
 
 function setValueOnCompAfterTriggerApi(el, data) {
@@ -3853,10 +4073,11 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
                 var localSelectedField = [];
                 try {
-                    localSelectedField = data.selectedField;
+                    localSelectedField = data.selectedField.split(',');
                     // localSelectedField = Object.keys(data._table.r[0]);
                 } catch (err) {
                 }
+
 
                 if (field.length > 0) {
                     if ($(this).attr('sa-type') === 'select'
@@ -4302,7 +4523,7 @@ function getJsGlobalCodeByProject() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
 
             try {
@@ -4380,7 +4601,7 @@ function getJsCodeByProject() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             try {
                 var obj = res.tbl[0].r;
@@ -5645,7 +5866,7 @@ function getAllGuiClassList() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
 
             try {
@@ -11769,7 +11990,8 @@ function addInputListToTaskNew_setComment() {
             st += (idx++) + ") " + name + ": \n ";
             try {
                 //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
-                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
+//                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
+                var descId = SAInput.DescriptionId[$(this).val()];
                 for (var i in descId) {
                     var id = descId[i];
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));

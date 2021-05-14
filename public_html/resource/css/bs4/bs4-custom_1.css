@@ -7,6 +7,35 @@ and open the template in the editor.
     Created on : Apr 19, 2019, 5:05:25 PM
     Author     : anar.rustamov
 */
+
+.loaderTable{
+    background-image: url('http://localhost/SAFrontEnd/public_html/resource/img/loadertbl.gif');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 10%;
+    position: absolute;
+    background-position-x: center;
+    background-position-y: center;
+    background-color: #ffff !important;
+    opacity: 1;
+    z-index: 5000;
+}
+
+.loaderModal{
+    background-image: url('http://localhost/SAFrontEnd/public_html/resource/img/loadertbl.gif');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 10%;
+    position: absolute;
+    background-position-x: center;
+    background-position-y: 5%;
+    background-color: #ffff !important;
+    opacity: 1;
+    z-index: 5001;
+}
+
 body{
     /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;

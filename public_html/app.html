@@ -82,7 +82,7 @@
         <!--<script src="resource/js/bs4/swimlane2.js"></script>-->
         <script src="resource/js/bs4/beaction.js"></script>
         <script src="resource/js/bs4/html2canvas.min.js"></script>
-
+        <script src="resource/js/bs4/lzm.js"></script>
 
     </head>
 
@@ -96,8 +96,13 @@
         <div id="preloader" style="display: none;"></div>
         <div id="preloader1" class="modal-backdrop fade " style="display: none;z-index:100000;height:10000px"></div>
         <div id="preloader22" class="modal-backdrop fade text-center " style="display: none;z-index:100000;height:10000px;">
-            <img src="resource/img/loading.gif" style="position:relative;   top: 2%;       ">
+            <img src="" style="position:relative;   top: 2%;       ">
         </div>
+
+        <div id="preloader3" class="modal-backdrop fade text-center " style=" display: none;z-index:100000;height:10000px;">
+            <img src="https://app.sourcedagile.com/api/get/files/ezgif_77A9678AFCC2A.gif"   style="position:relative; top:2%;      ">
+        </div>
+
 
 
         <nav id="main_body_nav_id" hidden class="navbar navbar-expand-sm bg-light navbar-light s-nav-bar fixed-top">
@@ -8029,8 +8034,7 @@
                                                                             Utility.setParamOnLoad();
                                                                             init4Core();
                                                                             if (global_var.fkManualProjectId) {
-                                                                                global_var.current_project_id = global_var.fkManualProjectId;
-                                                                                new Project().loadMainProjectList4Manual();
+                                                                                manualProjectRefreshInit(global_var.fkManualProjectId);
 
 
                                                                             } else {

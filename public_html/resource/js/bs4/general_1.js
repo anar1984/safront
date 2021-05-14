@@ -1255,6 +1255,17 @@ function showProgress2() {
 //    $('#progressBarModal').modal('show');
 }
 
+function showProgress3() {
+    
+//    $('.preloader').fadeIn(0, function () {});
+//    $('#preloader1').css("display", "block");
+    $('#preloader3').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+    $('#preloader3').addClass('show');
+
+
+//    $('#progressBarModal').modal('show');
+}
+
 function showProgressAlternative() {
     return;
 //    $('.preloader').fadeIn(0, function () {});
@@ -1287,6 +1298,15 @@ function hideProgress2() {
 //    $('#preloader1').css("display", "none");
     $('#preloader2').attr("style", "display: none; z-index: 100000; height: 10000px;");
     $('#preloader2').removeClass('show');
+}
+
+function hideProgress3() {
+//    $('.preloader').fadeOut(0, function () { })
+//    $('.modal-backdrop').removeClass('show');
+//    $('#progressBarModal').modal('hide');
+//    $('#preloader1').css("display", "none");
+    $('#preloader3').attr("style", "background-color: #FBFBFB!important;display: none; z-index: 100000; height: 10000px;");
+    $('#preloader3').removeClass('show');
 }
 
 
@@ -1552,15 +1572,17 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
     var pageId = makeId(15);
     var st = "";
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
-    st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;' + style + '" role="document">';
+    st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
-//    st += '            <div class="modal-header text-center"> ';
-//    st += '              <h5 class="modal-title" id="userstory-gui-input-component-res-sus-label"></h5>';
-//    st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-//    st += '           <span aria-hidden="true">&times;</span>';
-//    st += '             </button>';
-//    st += '      </div>';
-    st += '   <div class="modal-body">';
+    st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
+    st += '              <span class="modal-title" id="userstory-gui-input-component-res-sus-label"></span>';
+    st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    st += '           <span aria-hidden="true">&times;</span>';
+    st += '             </button>';
+    st += '      </div>';
+
+    st += '   <div class="loaderModal1"></div>';
+    st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
     st += '   <form>';
     st += '     <input type="hidden" id=popupTrigger pid="' + triggerId + '" value="nonenone">';
     st += '     <div class="row redirectClass" bid="' + backlogId + '"';
