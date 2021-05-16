@@ -1662,6 +1662,42 @@ var Component = {
         div.append(el);
         return  $('<div></div>').append(div).html();
     },
+    Section4: function (comp,carrier1) {
+        var innerHTML = this.SectionAction.SectionEmptyMessage(comp.id);
+        if (comp.param1 > 0) {
+            try {
+                
+                var sectionId= "__"+makeId(15);
+                var divTemp = "<div class='loaderSection' pid='"+comp.param1+"' id='"+sectionId+"'><div>";
+                innerHTML = divTemp;//new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
+                new UserStory().hasSequence(comp.sequence, comp.param1);
+                comp.sequence.push(comp.param1);
+                
+                
+                
+                var carrier = new Carrier();
+                carrier.setLineId(carrier1.getLineId());
+                carrier.set("param1",comp.param1);
+                carrier.set("sectionId",sectionId);
+                carrier.set("sequence",comp.sequence);
+                carrier.setBacklogId(comp.param1);
+                _LoadSectionGuiContainer(carrier);
+                
+            } catch (err) {
+            }
+        }
+        comp.hasOnClickEvent = true;
+//        comp.showProperties = false;
+        var div = Component.ContainerDiv(comp);
+
+        div.append(this.SectionAction.GetPropertiesSection(comp));
+        div.append($('<div class="row">')
+                .addClass("component-section-row")
+                .append(innerHTML));
+
+//        div.append(innerHTML);
+        return  $('<div></div>').append(div).html();
+    },
     Section: function (comp) {
         var innerHTML = this.SectionAction.SectionEmptyMessage(comp.id);
         if (comp.param1 > 0) {
@@ -1671,7 +1707,8 @@ var Component = {
                 new UserStory().hasSequence(comp.sequence, comp.param1);
                 comp.sequence.push(comp.param1);
 //                innerHTML = this.GetComponentHtmlNew(jsonT, 0, comp.sequence);
-
+                
+               
                 innerHTML = new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
             } catch (err) {
             }

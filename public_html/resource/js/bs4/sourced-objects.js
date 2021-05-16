@@ -1803,6 +1803,21 @@ var SAInput = {
         }
         return json;
     },
+    _toJSONByBacklog: function (backlogId) {
+       
+        var json = {"tbl": [{"r": []}]};
+
+        var keys = SACore.GetInputList(backlogId);
+        var idx = 0;
+        for (var n = 0; n < keys.length; n++) {
+            var k = keys[n].trim();
+            var o = SAInput.Inputs[k];
+            json.tbl[0].r.push(o);
+            idx++;
+        }
+
+        return json;
+    },
     toJSONByBacklog: function (backlogId) {
         loadBacklogInputsByIdIfNotExist(backlogId);
         var json = {"tbl": [{"r": []}]};

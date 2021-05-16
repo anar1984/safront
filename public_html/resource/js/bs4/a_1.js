@@ -110,21 +110,266 @@ function getBacklogLastModificationDateAndTime(bid1) {
     });
 }
 
+
+
+
+
+function createStore(db, storeName, keyPath, keyOptions, deleteIfStoreExisted) {
+    if (!db || !(db instanceof IDBDatabase)) {
+        console.log('db instance is not exist or invalid object, please open it');
+        return null;
+    }
+    if (!storeName) {
+        console.log('store name is not defined.');
+        return null;
+    }
+    let mIDBObjectStore;
+    // Create an objectStore for this database
+    try {
+        if (db.objectStoreNames.contains(storeName)) {
+            if (deleteIfStoreExisted) {
+                // delete it
+                db.deleteObjectStore
+                        (storeName);
+            } else {
+                return null; // store already exist
+            }
+        }
+        if (keyPath) {
+            // has key 
+            if (keyOptions) {
+                // has option
+                mIDBObjectStore = db.createObjectStore(storeName, {keyPath: keyPath, keyOptions});
+            } else {
+                // no key options, default autoIncrement = false
+                mIDBObjectStore = db.createObjectStore(storeName, {keyPath: keyPath});
+            }
+        } else {
+            // no keyPath is provided
+            mIDBObjectStore = db.createObjectStore(storeName);
+            // IF we want to define a default key-generator then we can create a key named 'id' with auto increment,
+            // so that if IDBObjectStore.add(data) or put(data) and data does not have 'id' then 'id' will be added automatically
+            //mIDBObjectStore = db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true});
+        }
+    } catch (e) {
+        console.log('caught exception: ' + e.toString());
+    }
+    return mIDBObjectStore;
+}
+
+
+
+function getTransaction(db, storeNames, transactionMode) {
+    if (!db || !(db instanceof IDBDatabase)) {
+        console.log('db instance is not exist or invalid object, please open it');
+        return null;
+    }
+    if (!storeNames) {
+        console.log('store name is not defined.');
+        return null;
+    }
+    // get a transaction to multiple 'stores', default operation is readonly
+    var mIDBTransaction = db.transaction(storeNames, transactionMode ? transactionMode : 'readonly');
+    return mIDBTransaction;
+}
+
+
+function getStore(db, storeName, transactionMode, onTransactionCompleteCallback, onTransactionErrorCallback) {
+    if (!db || !(db instanceof IDBDatabase)) {
+        console.log('db instance is not exist or invalid object, please open it');
+        return null;
+    }
+    if (!storeName) {
+        console.log('store name is not defined.');
+        return null;
+    }
+    if (Array.isArray(storeName)) {
+        console.log('getStore(..), parameter "storeName" should not be an array, use getTransaction() instead.');
+        return null;
+    }
+    // get a transaction to single 'store', default operation is readonly
+    var mIDBTransaction = db.transaction(storeName, transactionMode ? transactionMode : 'readonly');
+    if (onTransactionCompleteCallback) {
+        mIDBTransaction.oncomplete = onTransactionCompleteCallback;
+    }
+    if (onTransactionErrorCallback) {
+        mIDBTransaction.onerror = onTransactionErrorCallback;
+    }
+    // get 'store' object
+    var mIDBObjectStore = mIDBTransaction.objectStore(storeName);
+    return mIDBObjectStore;
+}
+
+
+function deleteStore(db, storeName) {
+    if (!db || !(db instanceof IDBDatabase)) {
+        console.log('db instance is not exist or invalid object, please open it');
+        return;
+    }
+    if (!storeName) {
+        console.log('store name is not defined.');
+        return;
+    }
+    if (db.objectStoreNames.contains(storeName)) {
+        // found it, so delete it
+        db.deleteObjectStore(storeName);
+    }
+}
+
+function dbCommand(objectStore, command, data, param) {
+    if (!objectStore) {
+        console.log('dbCommand(...), objectStore parameter is not exist or invalid');
+        return null;
+    }
+    var objectStoreRequest;
+    if (command == 'add') {
+        // WARNING: if keyPath is unique and same key value already existed then transaction.onerror will be called !!
+        objectStoreRequest = objectStore.add(data, param);
+    } else if (command == 'get') {
+        objectStoreRequest = objectStore.get(data);
+    } else if (command == 'getAll') {
+        objectStoreRequest = objectStore.getAll();
+    } else if (command == 'put') {
+        // NOTE: if key already existed then the record will be UPDATED,
+        // else will INSERT NEW record
+        objectStoreRequest = objectStore.put(data);
+    } else if (command == 'delete') {
+        objectStoreRequest = objectStore.delete(data);
+    } else {
+        // TODO: for simple DEMO purpose, we do not handle other commands
+        console.log('dbCommand(...), command parameter is not handled');
+        return null;
+    }
+    // NOTE: for DEMO purpose, set default callback to display result in console
+    objectStoreRequest.onsuccess = commonResultCallback;
+    return objectStoreRequest;
+}
+
+
+function commonResultCallback(result) {
+    if (typeof (result) === 'string') {
+        console.log(result);
+    } else if (result instanceof Event) {
+        if (result.target instanceof IDBRequest) {
+            let requestResult = result.target.result;
+            if (requestResult) {
+                if (Array.isArray(requestResult)) {
+                    let totalResult = requestResult.length;
+                    console.log('Request return with ' + totalResult + ' records');
+                    requestResult.forEach(function (item, index) {
+                        console.log('record[' + index + '], key: ' + item.personId + ', content: ' + JSON.stringify(item));
+                    });
+                } else {
+                    console.log('Request return a single record: ' + JSON.stringify(requestResult));
+                }
+            } else {
+                console.log('Request return without data or data not found.');
+            }
+        }
+    }
+}
+
+var mIDBDatabase;
+
 function loadBacklogDetailsByIdIfNotExist(bid) {
     if (!bid) {
         return;
     }
 
-    if (localStorage.getItem(bid)) {
-        var res = localStorage.getItem(bid);
-        var resObj = JSON.parse(res);
+
+    if (localStorage.getItem('idb_' + bid)) {
+
+        var md = '';
+        var mdUS = '-1';
+
+//          md = (localStorage.getItem('md_' + bid)) ? localStorage.getItem('md_' + bid) : md;
+        md = (localStorage.getItem('idb_' + bid)) ? localStorage.getItem('idb_' + bid) : md;
+        mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : mdUS;
+        if (md !== mdUS) {
+            localStorage.removeItem('idb_' + bid);
+
+            try {
+                var transaction3 = db.transaction(["subdb"], "readwrite");
+                var store3 = transaction3.objectStore("subdb");
+                store3.delete(bid);
+
+            } catch (err) {
+                console.log(err);
+            }
+
+            loadBacklogProductionDetailsById(bid);
+            SAInput.LoadedBacklogs4Input.push(bid);
+        }
+
+    } else
+//    if (!SAInput.LoadedBacklogs4Input.includes(bid)) 
+    {
+        loadBacklogProductionDetailsById(bid);
+//        SAInput.LoadedBacklogs4Input.push(bid);
+    }
+}
+
+
+function loadBacklogDetailsByIdIfNotExist_old3(bid) {
+    if (!bid) {
+        return;
+    }
+
+
+
+    var dbStorageJSON = '';
+    var dbStorageMD = '';
+
+
+
+
+    try {
+
+
+
+        var transaction = db.transaction(["subdb"], "readwrite");
+        var store = transaction.objectStore("subdb");
+        var objectStoreRequest = store.get(bid);
+        objectStoreRequest.onsuccess = function (event) {
+            dbStorageJSON = event.target.result;//objectStoreRequest.result;
+
+        };
+
+    } catch (err) {
+        console.log(err);
+    }
+
+    try {
+        var transaction1 = db.transaction(["subdb"], "readwrite");
+        var store1 = transaction1.objectStore("subdb");
+        var objectStoreRequest1 = store1.get('md_' + bid);
+        objectStoreRequest1.onsuccess = function (event) {
+            dbStorageMD = objectStoreRequest1.result;
+        };
+    } catch (err) {
+        console.log(err);
+    }
+
+
+    if (dbStorageJSON && dbStorageJSON !== 'undefined') {
+        var res = dbStorageJSON.json;
+        var resObj = res; //JSON.parse(res);
         var md = '';
         var mdUS = '-1';
         try {
-            md = (localStorage.getItem('md_' + bid)) ? localStorage.getItem('md_' + bid) : md;
-            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
+//            md = (localStorage.getItem('md_' + bid)) ? localStorage.getItem('md_' + bid) : md;
+            md = ((dbStorageMD && dbStorageMD !== 'undefined')) ? dbStorageMD.json : md;
+            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : mdUS;
             if (md !== mdUS) {
-                localStorage.setItem(bid, '');
+//                localStorage.setItem(bid, '');
+                try {
+                    var transaction3 = db.transaction(["subdb"], "readwrite");
+                    var store3 = transaction3.objectStore("subdb");
+                    store3.delete(bid);
+                    store3.delete("md_" + bid);
+                } catch (err) {
+                    console.log(err);
+                }
             }
         } catch (err) {
         }
@@ -132,7 +377,16 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
         if (md === mdUS) {
             loadBacklogProductionDetailsById_resparams(resObj);
         } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
-            localStorage.setItem(bid, '');
+//            localStorage.setItem(bid, '');
+            try {
+                var transaction3 = db.transaction(["subdb"], "readwrite");
+                var store3 = transaction3.objectStore("subdb");
+                store3.delete(bid);
+                store3.delete("md_" + bid);
+            } catch (err) {
+                console.log(err);
+            }
+
             loadBacklogProductionDetailsById(bid);
             SAInput.LoadedBacklogs4Input.push(bid);
         }
@@ -143,14 +397,20 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     }
 }
 
-function loadBacklogProductionDetailsById(bid1, functionName, fnData, async) {
+
+function loadBacklogProductionDetailsById(bid1) {
+    loadBacklogProductionCoreDetailssById(bid1, "1");
+//    callEmptyFunctionWithAjax4BacklogLoader(bid1);
+}
+
+
+function loadBacklogProductionCoreDetailssById(bid1) {
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
-    var asyncCore = (async) ? async : false;
     if (!bid)
         return;
 
-    showProgress2();
+//    emptyCallforProgressBar();
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = bid;
@@ -163,21 +423,99 @@ function loadBacklogProductionDetailsById(bid1, functionName, fnData, async) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: asyncCore,
+        async: false,
         success: function (res) {
 
-            localStorage.setItem("md_" + bid, res.kv.modificationTime);
-            localStorage.setItem(bid, JSON.stringify(res));
-
-            loadBacklogProductionDetailsById_resparams(res);
-
-
             try {
-                if (functionName)
-                    eval(functionName)(fnData);
+                try {
+                    var transaction = db.transaction(["subdb"], "readwrite");
+                    var store = transaction.objectStore("subdb");
+                    store.delete('idb_' + bid);
+                    store.add({'bid': 'idb_' + bid, 'json': res});
+                } catch (err) {
+                    console.log(err);
+                }
+
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                loadBacklogProductionDetailsById_resparams(res);
+
+                hideProgress4();
+
             } catch (err) {
+                hideProgress4();
             }
-            hideProgress2();
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+}
+
+function emptyCallforProgressBar() {
+    showProgress4();
+    var json = initJSON();
+    json.kv.domain = global_var.current_domain;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetEmptyApiZad",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        },
+        error: function (res) {
+
+            alert('Some error happened');
+        }
+    });
+}
+
+var backlogLoaderController = {};
+function callEmptyFunctionWithAjax4BacklogLoader(bid1) {
+
+    var makeId4 = makeId(6);
+    backlogLoaderController[makeId4] = false;
+
+    //callEmptyFunctionWithAjax4BacklogLoader4Zad(bid1,makeId4);
+
+//    loadBacklogProductionCoreDetailssById(bid1, makeId4);
+
+    doCall(bid1, makeId4);
+//    do {
+//        console.log(makeId4);
+//    } while (!backlogLoaderController[makeId4])
+}
+
+function doCall(bid1, makeId4) {
+    var f = loadBacklogProductionCoreDetailssById(bid1, makeId4);
+    if (!backlogLoaderController[makeId4]) {
+
+        doCall(makeId4);
+    }
+}
+
+function callEmptyFunctionWithAjax4BacklogLoader4Zad(bid1, makeId4) {
+    var json = initJSON();
+    json.kv.domain = global_var.current_domain;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetEmptyApiZad",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            loadBacklogProductionCoreDetailssById(bid1, makeId4);
+        },
+        error: function (res) {
+            backlogLoaderController[makeId4] = true;
+            alert('Some error happened');
         }
     });
 }
@@ -510,6 +848,41 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, select
     });
 }
 
+
+function ifBacklogInputs4LoaderExistById(bid) {
+    if (!bid) {
+        return false;
+    }
+
+    var f = false;
+
+    if (localStorage.getItem('idb_' + bid)) {
+        var md = '-1';
+        var mdUS = '-1';
+        try {
+            md = localStorage.getItem('idb_' + bid);
+            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
+
+        } catch (err) {
+        }
+
+
+
+        if (md === mdUS) {
+            f = true;
+            //loadBacklogProductionDetailsById_resparams(resObj);
+        }
+        //else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+        //   f = true;
+        // }
+    }
+    //else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+    //  f = true;
+    // }
+
+    return f;
+}
+
 function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
     if (!bid) {
         return false;
@@ -544,39 +917,60 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
     return f;
 }
 
+function _LoadBacklogInputsByIdIfNotExist(carrier) {
+    var bid = (carrier.getBacklogId())
+            ? carrier.getBacklogId()
+            : global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+
+    showProgress4();
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            try {
+                try {
+                    var transaction = db.transaction(["subdb"], "readwrite");
+                    var store = transaction.objectStore("subdb");
+                    store.delete(bid);
+                    store.add({'bid': bid, 'json': res});
+                } catch (err) {
+                    console.log(err);
+                }
+                localStorage.setItem("md_" + bid, res.kv.modificationTime);
+                localStorage.setItem(bid, "1");
+
+                loadBacklogProductionDetailsById_resparams(res);
+
+                hideProgress4();
+                carrier.I_am_Execwarder();
+                SourcedDispatcher.Exec(carrier);
+
+            } catch (err) {
+                console.log(err);
+                hideProgress4();
+            }
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+}
+
 function loadBacklogInputsByIdIfNotExist(bid) {
     loadBacklogDetailsByIdIfNotExist(bid);
-//    if (!bid) {
-//        return;
-//    }
-//
-//    if (localStorage.getItem(bid)) {
-//        var res = localStorage.getItem(bid);
-//        var resObj = JSON.parse(res);
-//        var md = '';
-//        var mdUS = '-1';
-//        try {
-//            md = resObj.kv.lastModification;
-//            mdUS = SACore.GetBacklogDetails(bid, "lastModification");
-//
-//        } catch (err) {
-//        }
-//
-//        if (md.trim() !== mdUS.trim()) {
-//            localStorage.setItem(bid, '');
-//        }
-//
-//        if (md.trim() === mdUS.trim()) {
-//            SAInput.LoadInput4Zad(resObj);
-//        } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
-//            localStorage.setItem(bid, '');
-//            new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
-//            SAInput.LoadedBacklogs4Input.push(bid);
-//        }
-//    } else if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
-//        new UserStory().loadInputDetailsOnProjectSelectNew4SAInput(bid);
-//        SAInput.LoadedBacklogs4Input.push(bid);
-//    }
 }
 
 
@@ -1251,9 +1645,62 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
+    new User().loadPersonalUserOnInit();
+    new Project().loadUserList4Combo();
     getBacklogLastModificationDateAndTime(fkManualProjectId);
     global_var.current_project_id = global_var.fkManualProjectId;
-    loadMainProjectList4ManualZad();
+    loadFromIndexedDBtoRAM();
+    //loadMainProjectList4ManualZad();
+}
+
+function loadFromIndexedDBtoRAM() {
+    request = window.indexedDB.open("sa-db", 1);
+    request.onupgradeneeded = function (event) {
+        db = event.target.result;
+        objectStore = db.createObjectStore("subdb", {
+            keyPath: "bid",
+        });
+    }
+    request.onsuccess = function (event) {
+        db = request.result;
+
+        var transaction = db.transaction(["subdb"], "readwrite");
+        var objectStore = transaction.objectStore("subdb");
+
+
+
+        var ln = localStorage.length;
+        for (var i = 0, len = ln; i < len; i++) {
+            var key = localStorage.key(i);
+//            var value = localStorage[key];
+            try {
+                if (key.startsWith('idb_')) {
+                    localStorage.removeItem(key);
+                }
+            } catch (err) {
+            }
+        }
+
+
+        objectStore.openCursor().onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+
+                var res = cursor.value.json;
+                localStorage.setItem(cursor.key, res.kv.modificationTime);
+                loadBacklogProductionDetailsById_resparams(res);
+                cursor.continue();
+            } else {
+                loadMainProjectList4ManualZad();
+
+            }
+        }
+    };
+
+
+
+
+
 }
 
 function loadMainProjectList4ManualZad() {
@@ -1275,17 +1722,12 @@ function loadMainProjectList4ManualZad() {
         async: true,
         success: function (res) {
 
-
             new UserStory().generateTableBody4MainProject(res); //just FN
             new UserStory().addProjectToMenu(res); //just FN
             loadModulePermission(); //API Call
 
             global_zad_bid = $(".manualProject[pid='" + global_var.fkManualProjectId + "']").first().attr("tid");
             loadManualProjectZad(global_var.fkManualProjectId, global_zad_bid);
-
-
-
-
         },
         error: function () {
             Toaster.showGeneralError();
@@ -1293,15 +1735,10 @@ function loadMainProjectList4ManualZad() {
     });
 }
 
+
 function loadManualProjectZad(fkManualProjectId, bid) {
     global_var.current_project_id = fkManualProjectId;
     init4ManualProjectLoad();
-
-
-
-
-
-
 
     //clearQueueForManualProjectClick();
     //clearQueue4ProLoad();
@@ -1343,6 +1780,146 @@ function loadManualProjectZad(fkManualProjectId, bid) {
     hideProgress3();
 }
 
+function loadManualProjectZad_old(fkManualProjectId, bid) {
+    global_var.current_project_id = fkManualProjectId;
+    init4ManualProjectLoad();
+
+
+    //clearQueueForManualProjectClick();
+    //clearQueue4ProLoad();
+
+    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+    getJsGlobalCodeByProject();
+
+//    getInputClassRelByProject();
+    //getInputAttributeByProject();
+    //getProjectDescriptionByProject();
+//    getJsCodeListByProject();
+
+    //getInputActionRelByProject();
+
+
+    //toggleProjectDetails4Loading();
+    getProjectUsers();
+    //getUsers();
+
+
+    /////////////
+    global_zad_bid = bid;
+    global_var.current_project_id = fkManualProjectId;
+    global_var.current_modal = "";
+    global_var.projectToggleWithSync = true;
+    var bid = global_zad_bid;
+
+    if (!ifBacklogInputs4LoaderExistById(bid)) {
+        var carrier = new Carrier();
+        carrier.setBacklogId(bid);
+        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+        carrier.setApplier("_LoadManualProjectGui");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    } else {
+        var carrier = new Carrier();
+        carrier.setBacklogId(bid);
+        carrier.setExecwarder("_LoadBacklogDetailsFromDBAndRunFn");
+        carrier.setApplier("_LoadManualProjectGui");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    }
+
+    hideProgress3();
+}
+
+function _LoadBacklogDetailsFromDBAndRunFn(carrier) {
+    var transaction = db.transaction(["subdb"], "readwrite");
+    var store = transaction.objectStore("subdb");
+    var objectStoreRequest = store.get(carrier.getBacklogId());
+    objectStoreRequest.onsuccess = function (event) {
+        var dbStorageJSON = event.target.result;
+        loadBacklogProductionDetailsById_resparams(dbStorageJSON.json);
+
+        var resTB = SAInput._toJSONByBacklog(carrier.getBacklogId());
+        carrier.setResult(resTB);
+        carrier.I_am_Execwarder();
+        SourcedDispatcher.Exec(carrier);
+    };
+}
+
+function _CallBacklogInputListIfNotExistAndForward(carrier) {
+    carrier.setExecwarder("_LoadBacklogInputsByIdIfNotExist");
+    carrier.I_am_Requirer();
+    SourcedDispatcher.Exec(carrier);
+}
+
+function _LoadManualProjectGui(carrier) {
+    var resTB = carrier.getResult();
+    carrier.setLineId(carrier.getBacklogId());
+
+    var body = new UserStory().getGUIDesignHTMLBody(resTB, 0, [], carrier);
+    $('#mainBodyDivForAll').html(body);
+    $('#mainBodyDivForAll').attr('pid', carrier.getBacklogId());
+//    var el1 = document.getElementById('mainBodyDivForAll');
+//    loadSelectBoxesAfterGUIDesign(el1);
+//    initOnloadActionOnGUIDesign(el1);
+
+    carrier.I_am_Execwarder();
+    carrier.setApplier('_InitLoaderActionOnManualProjectGuiCreation');
+    SourcedDispatcher.Exec(carrier);
+}
+
+function _InitLoaderActionOnManualProjectGuiCreation(carrier) {
+    var lineId = carrier.getLineId();
+    var backlogId = carrier.getBacklogId();
+    console.log("lineId=", lineId, "; backlogId=", backlogId);
+
+
+    var runInit = true;
+    $('#mainBodyDivForAll').find('.loaderSection').each(function () {
+        runInit = false;
+        return;
+    })
+
+    if (runInit) {
+        var el1 = document.getElementById('mainBodyDivForAll');
+        loadSelectBoxesAfterGUIDesign(el1);
+        initOnloadActionOnGUIDesign(el1);
+    }
+
+    carrier.I_am_Applier();
+    SourcedDispatcher.Exec(carrier);
+}
+
+function _LoadSectionGuiContainer(carrier) {
+    if (!ifBacklogInputs4LoaderExistById(carrier.getBacklogId())) {
+
+        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+        carrier.setApplier("_LoadSectionGui");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    } else {
+
+        carrier.setExecwarder("_LoadBacklogDetailsFromDBAndRunFn");
+        carrier.setApplier("_LoadSectionGui");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    }
+}
+
+function _LoadSectionGui(carrier) {
+    var param1 = carrier.get("param1");
+    var sectionId = carrier.get("sectionId");
+    var sequence = carrier.get("sequence");
+    var jsonT = SAInput._toJSONByBacklog(carrier.getBacklogId());
+
+    var innerHTML = new UserStory().getGUIDesignHTMLBody(jsonT, 0, sequence, carrier);
+    $('#' + sectionId).after(innerHTML);
+    $('#' + sectionId).remove();
+
+    carrier.I_am_Execwarder();
+    carrier.setApplier('_InitLoaderActionOnManualProjectGuiCreation');
+    SourcedDispatcher.Exec(carrier);
+}
 
 function genGUIDesignHtmlById(backlogId, hide) {
     if (backlogId) {
@@ -3412,11 +3989,16 @@ function triggerAPIWithoutOnload(el, apiId, data) {
 
 }
 
-function triggerAPI(element, apiId, data) {
+function triggerAPI_old(element, apiId, data) {
     var res = {};
     if (data) {
         res = data;
     }
+
+
+
+
+
 
     loadBacklogInputsByIdIfNotExist(apiId);
 
@@ -3450,7 +4032,68 @@ function triggerAPI(element, apiId, data) {
 //    }
 }
 
+function triggerAPI(element, apiId, data) {
+    var res = {};
+    if (data) {
+        res = data;
+    }
+    var carrier = new Carrier();
+    carrier.setElement(element);
+    carrier.setBacklogId(apiId);
+    carrier.set("res", res);
+   
 
+    if (!ifBacklogInputs4LoaderExistById(apiId)) {
+        showProgress5();
+        carrier.set("res", res);
+        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+        carrier.setApplier("_TriggerAPI");
+        carrier.I_am_Requirer(); 
+    } else {
+        carrier.setApplier("_TriggerAPI");
+        carrier.I_am_Execwarder();
+       
+    } 
+    
+    SourcedDispatcher.Exec(carrier);
+}
+
+function _TriggerAPI(carrier) {
+
+    var element = carrier.getElement();
+    var res = carrier.get('res');
+    var apiId = carrier.getBacklogId();
+
+    var initData = getGUIDataByStoryCard(element);
+    var finalRes = $.extend(initData, res);
+    finalRes = LeftMergeOfObjers(finalRes, res);
+    finalRes.startLimit = 0;
+
+    var id = $(element).attr('id');
+    var el = document.getElementById(id);
+
+//    var el = element;
+
+    var out = be.callApi(apiId, finalRes, el);
+
+    var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
+            ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+            : 'sync';
+    if (async === 'sync') {
+        triggerAPIAfter(el, apiId, out, finalRes)
+    }
+    //call oncload action
+    if (!$(el).hasClass('sa-onloadclick')) {
+        //initOnloadActionOnGUIDesign4OnClick();
+    }
+
+    //call oncload action
+    if (!$(el).hasClass('sa-onloadchange')) {
+        //initOnloadActionOnGUIDesign4Onchange();
+    }
+     hideProgress5();
+    
+}
 
 function triggerAPIAfter(el, apiId, data, finalRes) {
     setValueOnCompAfterTriggerApi(el, data);
@@ -3492,27 +4135,29 @@ function LeftMergeOfObjers(sourceData, mergedData) {
 }
 
 function updateAttributeBasedOnData(el, data) {
+    try {
+        var keys = Object.keys(data);
+        for (var i in keys) {
+            try {
+                var key = keys[i];
+                var val = '@{' + key + '}';
+                $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function () {
+                    var newVal = data[key];
+                    var regexp = new RegExp(val, 'g');
+                    var classVal = $(this).attr('class').replace(regexp, newVal);
+                    $(this).attr('class', classVal);
+                });
 
-    var keys = Object.keys(data);
-    for (var i in keys) {
-        try {
-            var key = keys[i];
-            var val = '@{' + key + '}';
-            $(el).closest('.redirectClass').find('[class*="' + val + '"]').each(function () {
-                var newVal = data[key];
-                var regexp = new RegExp(val, 'g');
-                var classVal = $(this).attr('class').replace(regexp, newVal);
-                $(this).attr('class', classVal);
-            });
 
-
-            var attrName4Filter = 'sa-data-' + key;
-            $(el).closest('.redirectClass').find('[' + attrName4Filter + ']').each(function () {
-                var newVal = data[key];
-                $(this).attr(attrName4Filter, newVal);
-            });
-        } catch (err) {
+                var attrName4Filter = 'sa-data-' + key;
+                $(el).closest('.redirectClass').find('[' + attrName4Filter + ']').each(function () {
+                    var newVal = data[key];
+                    $(this).attr(attrName4Filter, newVal);
+                });
+            } catch (err) {
+            }
         }
+    } catch (err) {
     }
 }
 
@@ -3637,9 +4282,6 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
 
 
-
-
-
     var out = data;
     var rows = ((out._table) && (out._table.r) && (out._table.r.length > 0))
             ? out._table.r
@@ -3679,18 +4321,18 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         $(el).val(tmVal);
         $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
 
-        if (elem.hasClass('sa-onloadclick-async')) {
-            if (elem.attr("sa-isloaded") !== '1') {
-                elem.attr("sa-isloaded", "1");
-                elem.click();
+        if ($(el).hasClass('sa-onloadclick-async')) {
+            if ($(el).attr("sa-isloaded") !== '1') {
+                $(el).attr("sa-isloaded", "1");
+                $(el).click();
             }
         }
 
 
-        if (elem.hasClass('sa-onloadchange-async')) {
-            if (elem.attr("sa-isloaded") !== '1') {
-                elem.attr("sa-isloaded", "1");
-                elem.change();
+        if ($(el).hasClass('sa-onloadchange-async')) {
+            if ($(el).attr("sa-isloaded") !== '1') {
+                $(el).attr("sa-isloaded", "1");
+                $(el).change();
             }
         }
 

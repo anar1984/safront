@@ -83,6 +83,7 @@
         <script src="resource/js/bs4/beaction.js"></script>
         <script src="resource/js/bs4/html2canvas.min.js"></script>
         <script src="resource/js/bs4/lzm.js"></script>
+        <script src="resource/js/bs4/Source.js"></script>
 
     </head>
 
@@ -103,6 +104,13 @@
             <img src="https://app.sourcedagile.com/api/get/files/ezgif_77A9678AFCC2A.gif"   style="position:relative; top:2%;      ">
         </div>
 
+        <div id="preloader4" class="modal-backdrop fade text-center " style=" display: none;z-index:100000;height:10000px;">
+            <img src="resource/img/loadertbl.gif"   style="position:relative; top:2%;      ">
+        </div>
+
+<div id="preloader5" class="modal-backdrop fade text-center " style=" display: none;z-index:100000;height:10000px;">
+            <img src="resource/img/loadertbl.gif"   style="position:relative; top:2%;      ">
+        </div>
 
 
         <nav id="main_body_nav_id" hidden class="navbar navbar-expand-sm bg-light navbar-light s-nav-bar fixed-top">
@@ -8031,13 +8039,16 @@
                                                                     </script>
                                                                     <script>
                                                                         $(document).ready(function () {
+                                                                            init(); 
                                                                             Utility.setParamOnLoad();
-                                                                            init4Core();
+                                                                           
+                                                                            
                                                                             if (global_var.fkManualProjectId) {
                                                                                 manualProjectRefreshInit(global_var.fkManualProjectId);
 
 
                                                                             } else {
+                                                                                init4Core();
                                                                                 new Project().loadMainProjectList();
                                                                                 var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
                                                                                 try {
@@ -8051,7 +8062,7 @@
                                                                                 }
                                                                             }
 
-                                                                            init();
+                                                                           
 
                                                                         });
 

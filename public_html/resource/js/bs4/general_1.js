@@ -121,7 +121,14 @@ function getIndexOfTable(res, tablename) {
     return ind;
 }
 
+
+var db;
+var request;
+var objectStore;
 function init() {
+
+   
+
 
     $(document).on('click', '.prosDescCheckAll', function (evt) {
         var f = $(this).is(":checked") ? true : false;
@@ -1088,7 +1095,7 @@ function init4Core() {
     /// new Notification().getNotificationCount();
     // new Notification().setTime();
 
-    
+
 }
 
 function init4ManualProjectLoad() {
@@ -1245,7 +1252,7 @@ function showProgress() {
 }
 
 function showProgress2() {
-    
+
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
     $('#preloader2').attr("style", "display: block; z-index: 100000; height: 10000px;");
@@ -1256,16 +1263,42 @@ function showProgress2() {
 }
 
 function showProgress3() {
-    
+
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
     $('#preloader3').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
     $('#preloader3').addClass('show');
-
-
 //    $('#progressBarModal').modal('show');
 }
 
+function showProgress5() {
+
+//    $('.preloader').fadeIn(0, function () {});
+//    $('#preloader1').css("display", "block");
+    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+    $('#preloader5').addClass('show');
+//    $('#progressBarModal').modal('show');
+}
+
+
+function showProgress4() {
+
+//    $('.preloader').fadeIn(0, function () {});
+//    $('#preloader1').css("display", "block");
+    $('#preloader4').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+    $('#preloader4').addClass('show');
+//    $('#progressBarModal').modal('show');
+}
+
+
+function showProgress5() {
+
+//    $('.preloader').fadeIn(0, function () {});
+//    $('#preloader1').css("display", "block");
+    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+    $('#preloader5').addClass('show');
+//    $('#progressBarModal').modal('show');
+}
 function showProgressAlternative() {
     return;
 //    $('.preloader').fadeIn(0, function () {});
@@ -1310,6 +1343,23 @@ function hideProgress3() {
 }
 
 
+function hideProgress4() {
+//    $('.preloader').fadeOut(0, function () { })
+//    $('.modal-backdrop').removeClass('show');
+//    $('#progressBarModal').modal('hide');
+//    $('#preloader1').css("display", "none");
+    $('#preloader4').attr("style", "background-color: #FBFBFB!important;display: none; z-index: 100000; height: 10000px;");
+    $('#preloader4').removeClass('show');
+}
+
+function hideProgress5() {
+//    $('.preloader').fadeOut(0, function () { })
+//    $('.modal-backdrop').removeClass('show');
+//    $('#progressBarModal').modal('hide');
+//    $('#preloader1').css("display", "none");
+    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: none; z-index: 100000; height: 10000px;");
+    $('#preloader5').removeClass('show');
+}
 
 //$.fn.imagePaste = function (html) { // html is the callback function that gets "<imgâ€¦>"
 //    var debug = true;
@@ -1581,7 +1631,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
     st += '             </button>';
     st += '      </div>';
 
-    st += '   <div class="loaderModal1"></div>';
+    st += '   <div class="loaderModalInitiator"></div>';
     st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
     st += '   <form>';
     st += '     <input type="hidden" id=popupTrigger pid="' + triggerId + '" value="nonenone">';

@@ -10171,14 +10171,69 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         return st;
     },
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
+        var carrier = new Carrier();
+        carrier.setBacklogId(popupBacklogId);
+        carrier.setElement(el);
+        
+        if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
+            carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+            carrier.setApplier("new UserStory()._SetGUIComponentButtonGUIModal");
+            carrier.I_am_Requirer();
+            
+        } else {
+            carrier.setApplier("new UserStory()._SetGUIComponentButtonGUIModal");
+            carrier.I_am_Execwarder();
+            
+        }
+        
+        SourcedDispatcher.Exec(carrier);
+       
+    },
+    _SetGUIComponentButtonGUIModal: function (carrier) {
+         
+        var popupBacklogId = carrier.getBacklogId();
+        var el = carrier.getElement();
+        
+        closeModal('userstory-gui-input-component-res-sus-analytic');
+        var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
+        var resTmp = SAInput.toJSONByBacklog(popupBacklogId);
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+
+        var bcode = $(el).closest('div.redirectClass').attr("bcode");
+        bcode = (bcode === undefined) ? "" : bcode;
+        var padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId);
+        //  click on first tab
+        $('.activeTabClass').each(function (e) {
+            $(this).click();
+        });
+
+        //call selectbox api
+        new UserStory().callEmptyFunctionWithAjax(el, padeId);
+    },
+    setGUIComponentButtonGUIModal_old: function (popupBacklogId, el) {
+         if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
+        var carrier = new Carrier();
+        carrier.setBacklogId(popupBacklogId);
+        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+        carrier.setApplier("_SetGUIComponentButtonGUIModal");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    } else {
+        var carrier = new Carrier();
+        carrier.setBacklogId(bid);
+        carrier.setExecwarder("_LoadBacklogDetailsFromDBAndRunFn");
+        carrier.setApplier("_LoadManualProjectGui");
+        carrier.I_am_Requirer();
+        SourcedDispatcher.Exec(carrier);
+    }
+        
+        
+        
+        
         loadBacklogInputsByIdIfNotExist(popupBacklogId);
 
         closeModal('userstory-gui-input-component-res-sus-analytic');
-        var backlog = SACore.GetBacklogDetails(popupBacklogId, 'param1')// this.getBacklogCoreInfoById(popupBacklogId);
         var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
-
-
-//        var html = this.genGUIDesignHtmlById(popupBacklogId);
         var resTmp = SAInput.toJSONByBacklog(popupBacklogId);
         var html = this.getGUIDesignHTMLPure(resTmp);
 
@@ -10199,6 +10254,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         this.callEmptyFunctionWithAjax(el, padeId);
     },
     callEmptyFunctionWithAjax: function (el, padeId) {
+        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
+        
         var json = initJSON();
         json.kv.domain = global_var.current_domain;
         var that = this;
@@ -10222,13 +10279,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                         initOnloadActionOnGUIDesign4OnClick(tempEl);
                     }
                 }
+                $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
 //        
             },
             error: function (res) {
+                $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
                 alert('error var')
-
-
-
 
             }
         });
@@ -10721,7 +10777,6 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         if (sequence === 'undefined' || !sequence) {
             sequence = [];
-
         }
         var showPropertiesGeneral = (sequence.length === 0);
 
