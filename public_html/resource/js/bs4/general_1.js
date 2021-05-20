@@ -976,7 +976,7 @@ var ComponentOld = {
 // Start upload preview image
 
 function fileUrl(fname) {
-    return urlGl + 'api/get/files/' + fname;
+    return urlGl + 'api/get/filez/' + fname;
 }
 
 
@@ -1266,7 +1266,7 @@ function showProgress3() {
 
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
-    $('#preloader3').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+    $('#preloader3').attr("style", "background-color: #FFFFFF!important;display: block; z-index: 100000; height: 10000px;");
     $('#preloader3').addClass('show');
 //    $('#progressBarModal').modal('show');
 }
@@ -1295,7 +1295,8 @@ function showProgress5() {
 
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
-    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+//    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
+$('#preloader5').attr("style", "display: block; z-index: 100000; height: 10000px;");
     $('#preloader5').addClass('show');
 //    $('#progressBarModal').modal('show');
 }
@@ -1338,7 +1339,7 @@ function hideProgress3() {
 //    $('.modal-backdrop').removeClass('show');
 //    $('#progressBarModal').modal('hide');
 //    $('#preloader1').css("display", "none");
-    $('#preloader3').attr("style", "background-color: #FBFBFB!important;display: none; z-index: 100000; height: 10000px;");
+    $('#preloader3').attr("style", "background-color: #FFFFFF!important;display: none; z-index: 100000; height: 10000px;");
     $('#preloader3').removeClass('show');
 }
 
@@ -1357,7 +1358,7 @@ function hideProgress5() {
 //    $('.modal-backdrop').removeClass('show');
 //    $('#progressBarModal').modal('hide');
 //    $('#preloader1').css("display", "none");
-    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: none; z-index: 100000; height: 10000px;");
+    $('#preloader5').attr("style", " display: none; z-index: 100000; height: 10000px;");
     $('#preloader5').removeClass('show');
 }
 

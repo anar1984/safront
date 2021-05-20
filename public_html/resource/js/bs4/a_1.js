@@ -297,15 +297,16 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
                 console.log(err);
             }
 
-            loadBacklogProductionDetailsById(bid);
-            SAInput.LoadedBacklogs4Input.push(bid);
+            if (!SAInput.LoadedBacklogs4Input.includes(bid)) {
+                loadBacklogProductionDetailsById(bid);
+                SAInput.LoadedBacklogs4Input.push(bid);
+            }
         }
 
-    } else
-//    if (!SAInput.LoadedBacklogs4Input.includes(bid)) 
+    } else if (!SAInput.LoadedBacklogs4Input.includes(bid))
     {
         loadBacklogProductionDetailsById(bid);
-//        SAInput.LoadedBacklogs4Input.push(bid);
+        SAInput.LoadedBacklogs4Input.push(bid);
     }
 }
 
@@ -437,6 +438,7 @@ function loadBacklogProductionCoreDetailssById(bid1) {
                 }
 
                 localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                SAInput.LoadedBacklogs4Input.push(bid);
                 loadBacklogProductionDetailsById_resparams(res);
 
                 hideProgress4();
@@ -521,15 +523,16 @@ function callEmptyFunctionWithAjax4BacklogLoader4Zad(bid1, makeId4) {
 }
 
 function loadBacklogProductionDetailsById_resparams(res) {
+    loadBacklogProductionDetailsById_jslist(res);
+    loadBacklogProductionDetailsById_setjslist(res);
+    loadBacklogProductionDetailsById_csslist(res);
     SAInput.LoadInput4Zad(res);
     SACore.updateBacklogDescriptionByRes(res);
     loadBacklogProductionDetailsById_loadInputClassRelation(res);
     loadBacklogProductionDetailsById_loadInputActionRelation(res);
     loadBacklogProductionDetailsById_loadInputAttribute(res);
     loadBacklogProductionDetailsById_inputDesc(res);
-    loadBacklogProductionDetailsById_jslist(res);
-    loadBacklogProductionDetailsById_setjslist(res);
-    loadBacklogProductionDetailsById_csslist(res);
+
     SAInput.addInputTableByRes(res);
     SAInput.addInputTabByRes(res);
     SACore.updateBacklogByRes(res);
@@ -552,7 +555,6 @@ function loadBacklogProductionDetailsById_csslist(res) {
                 var key = o.className;
                 key = key.replace(/\./g, '');
                 cr_gui_classes_by_name[key] = o.classBody;
-
             } catch (err) {
 
             }
@@ -871,14 +873,12 @@ function ifBacklogInputs4LoaderExistById(bid) {
         if (md === mdUS) {
             f = true;
             //loadBacklogProductionDetailsById_resparams(resObj);
+        } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+            f = true;
         }
-        //else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
-        //   f = true;
-        // }
+    } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+        f = true;
     }
-    //else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
-    //  f = true;
-    // }
 
     return f;
 }
@@ -925,7 +925,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
     if (!bid)
         return;
 
-    showProgress4();
+    showProgress5();
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = bid;
@@ -944,27 +944,27 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
                 try {
                     var transaction = db.transaction(["subdb"], "readwrite");
                     var store = transaction.objectStore("subdb");
-                    store.delete(bid);
-                    store.add({'bid': bid, 'json': res});
+                    store.delete('idb_' + bid);
+                    store.add({'bid': 'idb_' + bid, 'json': res});
                 } catch (err) {
                     console.log(err);
                 }
-                localStorage.setItem("md_" + bid, res.kv.modificationTime);
-                localStorage.setItem(bid, "1");
+                localStorage.setItem("idb_" + bid, res.kv.modificationTime);
+                SAInput.LoadedBacklogs4Input.push(bid);
 
                 loadBacklogProductionDetailsById_resparams(res);
 
-                hideProgress4();
+                hideProgress5();
                 carrier.I_am_Execwarder();
                 SourcedDispatcher.Exec(carrier);
 
             } catch (err) {
                 console.log(err);
-                hideProgress4();
+                hideProgress5();
             }
         },
         error: function () {
-            hideProgress4();
+            hideProgress5();
         }
     });
 }
@@ -1645,10 +1645,17 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
+    global_var.current_project_id = global_var.fkManualProjectId;
+
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
+
+    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+    getJsGlobalCodeByProject();
+
     getBacklogLastModificationDateAndTime(fkManualProjectId);
-    global_var.current_project_id = global_var.fkManualProjectId;
+
     loadFromIndexedDBtoRAM();
     //loadMainProjectList4ManualZad();
 }
@@ -1743,9 +1750,9 @@ function loadManualProjectZad(fkManualProjectId, bid) {
     //clearQueueForManualProjectClick();
     //clearQueue4ProLoad();
 
-    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
-    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
-    getJsGlobalCodeByProject();
+//    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+//    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+//    getJsGlobalCodeByProject();
 
 //    getInputClassRelByProject();
     //getInputAttributeByProject();
@@ -4041,20 +4048,20 @@ function triggerAPI(element, apiId, data) {
     carrier.setElement(element);
     carrier.setBacklogId(apiId);
     carrier.set("res", res);
-   
+
 
     if (!ifBacklogInputs4LoaderExistById(apiId)) {
         showProgress5();
         carrier.set("res", res);
         carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
         carrier.setApplier("_TriggerAPI");
-        carrier.I_am_Requirer(); 
+        carrier.I_am_Requirer();
     } else {
         carrier.setApplier("_TriggerAPI");
         carrier.I_am_Execwarder();
-       
-    } 
-    
+
+    }
+
     SourcedDispatcher.Exec(carrier);
 }
 
@@ -4091,8 +4098,8 @@ function _TriggerAPI(carrier) {
     if (!$(el).hasClass('sa-onloadchange')) {
         //initOnloadActionOnGUIDesign4Onchange();
     }
-     hideProgress5();
-    
+    hideProgress5();
+
 }
 
 function triggerAPIAfter(el, apiId, data, finalRes) {
@@ -4461,9 +4468,15 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
         var f = false;
-        $(el).closest('.redirectClass').find('table.component-table-class-for-zad').each(function (ev) {
+        var elem = $(el).closest('div.redirectClass');
+        elem.find('table.component-table-class-for-zad').each(function (ev) {
             if (f)
                 return false;
+
+            var accessableApi = $(this).attr('sa-data-accessable-api');
+            if ((accessableApi) && (accessableApi !== apiId)) {
+                return;
+            }
 
             var selectedFieldTable = $(this).attr("sa-tableselectedfield");
             selectedFieldTable = selectedFieldTable.replace(/ /g, '');
@@ -4510,7 +4523,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         var f = false;
         for (var i in cols) {
             var c = cols[i];
-            $(el).closest('.redirectClass').find('.component-table-class-for-zad').each(function () {
+            elem.find('.component-table-class-for-zad').each(function () {
                 var tblSelectedFields = $(this).attr('sa-tableselectedfield');
                 tblSelectedFields = tblSelectedFields.replace(/ /g, '');
                 tblSelectedFields = tblSelectedFields.split(',');
@@ -4543,7 +4556,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                 } catch (err) {
                 }
 
-                $(el).closest('.redirectClass').find('[sa-selectedfield*="' + c + '"][row-no="' + j + '"]').each(function () {
+                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + j + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(c)) {
                         $(this).attr('sa-data-table-row-id', rowId);
@@ -4557,7 +4570,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             }
         }
 
-        callTableRelationAPIs(el, tableId);
+        callTableRelationAPIs(elem, tableId);
     } catch (err) {
         $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
@@ -4565,7 +4578,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
 }
 
-function callTableRelationAPIs(el, tableId) {
+function callTableRelationAPIs(elem, tableId) {
 
     if (!tableId) {
         $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
@@ -4577,8 +4590,7 @@ function callTableRelationAPIs(el, tableId) {
     var tableInputRel = {};
 
 
-    $(el).closest('.redirectClass')
-            .find('table[table-id="' + tableId + '"]')
+  elem.find('table[table-id="' + tableId + '"]')
             .find('.has_table_relation_td')
             .each(function () {
 
@@ -4653,7 +4665,7 @@ function callTableRelationAPIs(el, tableId) {
 
 
 
-            be.callApi(apiId, data, el, asyncData);
+            be.callApi(apiId, data, elem, asyncData);
         } catch (err) {
         }
     }
@@ -4707,46 +4719,55 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
 function setValueOnCompAfterTriggerApi(el, data) {
     $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
-        var val = "";
-        var selectedFields = $(this).attr('sa-selectedfield').split(',');
-        for (var i in selectedFields) {
-            try {
-                var field = selectedFields[i].trim();
+        var isInTable = false;
+       $(this).closest("table.component-table-class-for-zad").each(function(e){
+            isInTable = true;
+            return;
+       })  
 
-                var localSelectedField = [];
+        if (!isInTable) {
+            var val = "";
+            var selectedFields = $(this).attr('sa-selectedfield').split(',');
+            for (var i in selectedFields) {
                 try {
-                    localSelectedField = data.selectedField.split(',');
-                    // localSelectedField = Object.keys(data._table.r[0]);
+                    var field = selectedFields[i].trim();
+
+                    var localSelectedField = [];
+                    try {
+                        localSelectedField = data.selectedField.split(',');
+                        // localSelectedField = Object.keys(data._table.r[0]);
+                    } catch (err) {
+                    }
+
+
+                    if (field.length > 0) {
+                        if ($(this).attr('sa-type') === 'select'
+                                && $(this).attr('sa-load-ontrigger') === '1'
+                                && localSelectedField.includes(field)) {
+
+                            fillSelectBoxAfterSyncApiCall(this, data, field);
+
+                            //select table list-de 1 setr cavab qayinda selectbox.value deyerini
+                            //aldigi ucun bu field data-dan silinmelidir
+
+                        } else if ($(this).attr('sa-type') === 'multiselect'
+                                && $(this).attr('sa-load-ontrigger') === '1'
+                                && localSelectedField.includes(field)) {
+
+                            fillSelectBoxAfterSyncApiCall(this, data, field);
+                        }
+
+                        var keys = Object.keys(data);
+                        if (keys.includes(field)) {
+                            val = data[field];
+                            getComponentValueAfterTriggerApi(this, val);
+                        }
+                    }
                 } catch (err) {
                 }
-
-
-                if (field.length > 0) {
-                    if ($(this).attr('sa-type') === 'select'
-                            && $(this).attr('sa-load-ontrigger') === '1'
-                            && localSelectedField.includes(field)) {
-
-                        fillSelectBoxAfterSyncApiCall(this, data, field);
-
-                        //select table list-de 1 setr cavab qayinda selectbox.value deyerini
-                        //aldigi ucun bu field data-dan silinmelidir
-
-                    } else if ($(this).attr('sa-type') === 'multiselect'
-                            && $(this).attr('sa-load-ontrigger') === '1'
-                            && localSelectedField.includes(field)) {
-
-                        fillSelectBoxAfterSyncApiCall(this, data, field);
-                    }
-
-                    var keys = Object.keys(data);
-                    if (keys.includes(field)) {
-                        val = data[field];
-                        getComponentValueAfterTriggerApi(this, val);
-                    }
-                }
-            } catch (err) {
             }
         }
+
     })
 }
 
@@ -5165,7 +5186,7 @@ function getJsGlobalCodeByProject() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
 
             try {
@@ -5226,12 +5247,12 @@ function getJsCodeByProject() {
 
 
 
-    if (!global_var.current_project_id) {
-        queue4ManulProject.getJsCodeByProject = true;
-        executeCoreOfManualProSelection();
-        getJsGlobalCodeByProject();
-        return;
-    }
+//    if (!global_var.current_project_id) {
+////        queue4ManulProject.getJsCodeByProject = true;
+////        executeCoreOfManualProSelection();
+////        getJsGlobalCodeByProject();
+//        return;
+//    }
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
@@ -5243,7 +5264,7 @@ function getJsCodeByProject() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 var obj = res.tbl[0].r;
@@ -5296,8 +5317,8 @@ function getJsCodeByProject() {
 
             queue4ManulProject.getJsCodeByProject = true;
 
-            executeCoreOfManualProSelection();
-            getJsGlobalCodeByProject();
+//            executeCoreOfManualProSelection();
+//            getJsGlobalCodeByProject();
         }
     });
 
@@ -6491,12 +6512,12 @@ function removeInputClassRel(el, relId) {
 
 
 function getAllGuiClassList() {
-    if (!global_var.current_project_id) {
-        queue4ManulProject.getAllGuiClassList = true;
-        executeCoreOfManualProSelection();
-
-        return;
-    }
+//    if (!global_var.current_project_id) {
+//        queue4ManulProject.getAllGuiClassList = true;
+//        executeCoreOfManualProSelection();
+//
+//        return;
+//    }
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
@@ -6508,7 +6529,7 @@ function getAllGuiClassList() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
 
             try {
@@ -6539,10 +6560,10 @@ function getAllGuiClassList() {
             } catch (err) {
             }
 
-            queue4ManulProject.getAllGuiClassList = true;
-            executeCoreOfManualProSelection();
-
-            executeCoreOfManualProSelection();
+//            queue4ManulProject.getAllGuiClassList = true;
+//            executeCoreOfManualProSelection();
+//
+//            executeCoreOfManualProSelection();
         }
     });
 }
@@ -6577,8 +6598,8 @@ function getGuiClassList() {
 
 function setResArrayAsObject(res) {
     try {
-        cr_gui_classes = {};
-        cr_gui_classes_by_name = {};
+//        cr_gui_classes = {};
+//        cr_gui_classes_by_name = {};
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];

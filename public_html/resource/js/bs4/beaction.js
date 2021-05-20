@@ -452,6 +452,12 @@ var be = {
             var inputList = be.ExecAPI.GetInputsByAPI(apiId);
             var inputKV = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
 
+            try {
+                inputKV.currentUserField = (paramData4IN.currentUserField) ? paramData4IN.currentUserField : "";
+                inputKV.currentDateField = (paramData4IN.currentDateField) ? paramData4IN.currentDateField : "";
+                inputKV.currentTimeField = (paramData4IN.currentTimeField) ? paramData4IN.currentTimeField : "";
+            } catch (err) {
+            }
 
             //call External Api
             var extData = be.ExecAPI.CallExternalApiServices(apiId, data, innerData, element, asyncData);
@@ -467,12 +473,7 @@ var be = {
 
             inputKV = $.extend(inputKV, paramData);
 
-            try {
-                inputKV.currentUserField = (paramData4IN.currentUserField) ? paramData4IN.currentUserField : "";
-                inputKV.currentDateField = (paramData4IN.currentDateField) ? paramData4IN.currentDateField : "";
-                inputKV.currentTimeField = (paramData4IN.currentTimeField) ? paramData4IN.currentTimeField : "";
-            } catch (err) {
-            }
+           
 
 
             //////////////////////
