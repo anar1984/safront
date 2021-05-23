@@ -1335,6 +1335,7 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var select = $('<select></select>')
                 .addClass("form-control")
+                .addClass("sa-sct-full-width")
                 .attr("sa-type", 'select')
                 .attr('data-actions-box', "true")
                 .attr('data-live-search', "true")

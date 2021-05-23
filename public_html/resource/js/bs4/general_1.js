@@ -976,7 +976,7 @@ var ComponentOld = {
 // Start upload preview image
 
 function fileUrl(fname) {
-    return urlGl + 'api/get/filez/' + fname;
+    return urlGl + 'api/get/files/' + fname;
 }
 
 

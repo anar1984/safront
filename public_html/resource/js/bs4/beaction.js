@@ -15,9 +15,45 @@ var be = {
             return;
         }
 
-
-
+        var backlogName = SACore.GetBacklogDetails(apiId, "backlogName");
         be.ValidateApiOnInput(apiId, data);
+
+//        res = be.callFrontApi(apiId, data, element, asyncData);
+        res = be.callBackendApi(apiId, data, element, asyncData);
+
+        return res;
+    },
+    callBackendApi: function (apiId, coreData) {
+        var res = {};
+        var json = initJSON();
+        json.kv = coreData;
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv['apiId'] = apiId;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (rs) {
+                res = rs;
+            },
+            error: function () {
+                Toaster.showGeneralError();
+            }
+        });
+
+        return res;
+    },
+    callFrontApi: function (apiId, data, element, asyncData) {
+
+        var res = {};
 
         var actionType = SACore.GetBacklogDetails(apiId, "apiAction");
         if (actionType === 'C') {
@@ -28,7 +64,7 @@ var be = {
             res = this.callUpdateAPI(apiId, data, element, asyncData);
         } else if (actionType === 'D') {
             if (confirm("Silmə əməliyyatının davam etməsinə əminsiz?")) {
-               res = this.callDeleteAPI(apiId, data, element, asyncData); 
+                res = this.callDeleteAPI(apiId, data, element, asyncData);
             }
         } else {
             res = this.callContainerAPI(apiId, data, element, asyncData);
@@ -39,11 +75,9 @@ var be = {
             res = resOut;
         }
 
-
-
         return res;
     },
-    
+
     GetSendToBacklogId: function (apiId) {
 
     },
@@ -473,7 +507,7 @@ var be = {
 
             inputKV = $.extend(inputKV, paramData);
 
-           
+
 
 
             //////////////////////
@@ -908,72 +942,24 @@ var be = {
                 var extId = extApiList[i];
                 var o = cr_project_desc[extId];
 
-                if (o.fkRelatedScId) {
-                    var fnType = cr_js_list[o.fkRelatedScId].fnType;
-                    var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
+                if (SAFN.IsCommand(o.description)) {
+                    outData = SAFN.ExecCommand(o.description, outData);
+                } else {
+                    if (o.fkRelatedScId) {
+                        var fnType = cr_js_list[o.fkRelatedScId].fnType;
+                        var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
 
-                    if (fnType === 'core') {
-                        var res = eval(fnName)(outData, element, apiId, asyncData);
-                        try {
-                            if (res._table) {
-                                var mergeData = mergeTableData(res._table, outData._table);
-                                res._table = mergeData;
-                            }
-                        } catch (err) {
+                        if (fnType === 'core') {
+                            outData = SAFN.ConvertFunctions.CoreJS(fnName, outData, element, apiId, asyncData);
+                        } else if (fnType === 'java') {
+                            outData = SAFN.ConvertFunctions.Java(fnName, outData, element, apiId, asyncData);
                         }
-                        var out = $.extend(outData, res);
-                        outData = out;
-                    } else if (fnType === 'java') {
-                        var dataCore = {kv: {}};
-                        dataCore.kv = outData;
-                        try {
-                            dataCore.kv.cookie = getToken();
-                        } catch (err) {
-                        }
-
-
-                        var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
-                        var res = resTemp.kv;
-
-                        try {
-                            if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
-                                res._table = resTemp.tbl[0];
-                            }
-                        } catch (err) {
-                        }
-
-                        try {
-                            if (res._table) {
-                                var mergeData = mergeTableData(res._table, outData._table);
-                                res._table = mergeData;
-                            }
-                        } catch (err) {
-                        }
-                        var out = $.extend(outData, res);
-                        outData = out;
-
+                    }
+                    if (o.fkRelatedApiId) {
+                        outData = SAFN.ConvertFunctions.ApiCall(o.fkRelatedApiId, outData, element, apiId, asyncData);
                     }
                 }
 
-                if (o.fkRelatedApiId) {
-                    try {
-                        var backlogName = SACore.Backlogs[o.fkRelatedApiId]['backlogName'];
-                    } catch (err) {
-                    }
-                    var res = be.callApi(o.fkRelatedApiId, outData, element, asyncData);
-                    try {
-                        if (res._table) {
-                            var mergeData = mergeTableData(res._table, outData._table);
-                            res._table = mergeData;
-                        }
-                    } catch (err) {
-                    }
-                    var out = $.extend(outData, res);
-                    outData = out;
-                }
-//                } catch (err) {
-//
-//                }
             }
             return outData;
         },
@@ -1238,7 +1224,7 @@ var be = {
 
                         out.selectedField = _key.toString();
                     } catch (err) {
-                            console.log(err)
+                        console.log(err)
                     }
 
                     try {
@@ -1549,5 +1535,167 @@ var be = {
             throw 'There is/are error(s)'
         }
     }
+}
 
+var SAFN = {
+    Prefix: '@.',
+    CoreData: "",
+    MapList: {'map': 'Map',
+        'set': 'Set',
+        'get': 'Get',
+        'console': 'Console',
+        'setparamurl': 'SetParamUrl',
+        'getparamurlto': 'GetParamUrl',
+        'alert': 'Alert',
+        'console': 'Concole',
+        'alertdata': 'AlertData',
+        'consoledata': 'ConcoleData',
+        'deletekey': 'DeleteKey',
+    },
+    IsCommand: function (fnName) {
+        var f = false;
+        try {
+            f = (fnName.trim().startsWith(SAFN.Prefix));
+        } catch (err) {
+        }
+        return f;
+    },
+
+    ExecCommand: function (description, outData) {
+//        description = description.trim().replace(/ /g, '');
+        description = description.trim();
+        description = description.trim().replace(SAFN.Prefix, '');
+        description = description.toLowerCase();
+        var mapperLine = description.split("(")[0];
+        var mapper = SAFN.MapList[mapperLine];
+        var argLine = [];
+        try {
+            argLine = (description && description != 'undefined') ? description.split("(")[1].split(')')[0] : '';
+        } catch (err) {
+        }
+
+        var fnName = 'SAFN.Functions.' + mapper;
+        SAFN.CoreData = outData;
+        var res = (argLine.length > 2)
+                ? eval(fnName).apply(null, argLine.split(","))
+                : eval(fnName)();
+
+        var out = $.extend(outData, res);
+        outData = out;
+        return outData;
+
+    },
+
+    ConvertFunctions: {
+        CoreJS: function (fnName, outData, element, apiId, asyncData) {
+            var res = eval(fnName)(outData, element, apiId, asyncData);
+            try {
+                if (res._table) {
+                    var mergeData = mergeTableData(res._table, outData._table);
+                    res._table = mergeData;
+                }
+            } catch (err) {
+            }
+
+            var out = $.extend(outData, res);
+            outData = out;
+            return outData;
+
+        },
+        Java: function (fnName, outData, element, apiId, asyncData) {
+            var dataCore = {kv: {}};
+            dataCore.kv = outData;
+            try {
+                dataCore.kv.cookie = getToken();
+            } catch (err) {
+            }
+
+
+            var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
+            var res = resTemp.kv;
+
+            try {
+                if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
+                    res._table = resTemp.tbl[0];
+                }
+            } catch (err) {
+            }
+
+            try {
+                if (res._table) {
+                    var mergeData = mergeTableData(res._table, outData._table);
+                    res._table = mergeData;
+                }
+            } catch (err) {
+            }
+            var out = $.extend(outData, res);
+            outData = out;
+            return outData;
+        },
+        ApiCall: function (fkRelatedApiId, outData, element, apiId, asyncData) {
+            try {
+                var backlogName = SACore.Backlogs[fkRelatedApiId]['backlogName'];
+            } catch (err) {
+            }
+            var res = be.callApi(fkRelatedApiId, outData, element, asyncData);
+            try {
+                if (res._table) {
+                    var mergeData = mergeTableData(res._table, outData._table);
+                    res._table = mergeData;
+                }
+            } catch (err) {
+            }
+            var out = $.extend(outData, res);
+            outData = out;
+            return outData;
+        },
+    },
+    Functions: {
+        Map: function (sourceKey, destinationKey) {
+            var data = SAFN.CoreData;
+            data[sourceKey] = data[destinationKey];
+            return data;
+        },
+        Set: function (key, value) {
+            var data = SAFN.CoreData;
+            data[key] = value;
+            return data;
+        },
+        Get: function (key,value) {
+            var data = SAFN.CoreData;
+            data[value] = data[key];
+            return data;
+        },
+        SetParamUrl: function (key, value) {
+            Utility.addParamToUrl(key, value);
+        },
+        GetParamUrl: function (key, variable) {
+            var data = SAFN.CoreData;
+            data[variable] = Utility.getParamFromUrl(key);
+            return data;
+        },
+        Alert: function (key) {
+            var data = SAFN.CoreData;
+            var value = data[key];
+            alert(value);
+        },
+        Console: function (arg) {
+            var data = SAFN.CoreData;
+            var value = data[key];
+            console.log(value);
+        },
+        AlertData: function () {
+            var data = SAFN.CoreData;
+            alert(JSON.stringify(data));
+        },
+        ConsoleData: function () {
+            var data = SAFN.CoreData;
+            console.log(JSON.stringify(data));
+        },
+        DeleteKey: function (key) {
+            var data = SAFN.CoreData;
+            delete data[key];
+        },
+
+    }
 }

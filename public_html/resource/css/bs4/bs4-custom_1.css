@@ -7,6 +7,10 @@ and open the template in the editor.
     Created on : Apr 19, 2019, 5:05:25 PM
     Author     : anar.rustamov
 */
+.sa-sct-full-width .dropdown-menu{
+    transform: none !important;
+    min-width:100% !important;
+}
 
 .loading_custom {
 	 position: absolute;

@@ -74,7 +74,7 @@ function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: asyncCore,
+        async: true,
         success: function (res) {
         }
     });

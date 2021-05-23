@@ -699,10 +699,10 @@ var SACore = {
                 this.BacklogName[o.backlogName] = o.id;
                 this.AddBacklog(o.id, o);
                 this.SetBacklogNo(o.backlogNo, o.id);
-                if (o.isSourced === '1') {
+//                if (o.isSourced === '1') {
                     this.AddSUSs(o.id);
                     this.FillSUSCombobox(o);
-                }
+//                }
             }
             this.SortFilledCombos();
         } catch (err) {
@@ -752,10 +752,10 @@ var SACore = {
             for (var n = 0; n < keys.length; n++) {
                 var id = keys[n];
                 var o = this.Backlogs[id];
-                if (o.isSourced === '1') {
+//                if (o.isSourced === '1') {
                     this.AddSUSs(o.id);
                     this.FillSUSCombobox(o);
-                }
+//                }
             }
             this.SortFilledCombos();
         } catch (err) {
@@ -843,9 +843,9 @@ var SACore = {
         for (var n = 0; n < keys.length; n++) {
             var k = keys[n];
             var o = this.Backlogs[k];
-            if (this.checkFilterUserStory(o)) {
-                continue;
-            }
+//            if (this.checkFilterUserStory(o)) {
+//                continue;
+//            }
 
             json.tbl[0].r.push(o);
             idx++;
