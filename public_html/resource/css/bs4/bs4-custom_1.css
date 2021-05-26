@@ -1853,27 +1853,60 @@ div#container-us-body-main tbody td{
 .btnplus{
     -webkit-box-align: center;
     align-items: center;
-
     cursor: pointer;
-
-    font-size: inherit;
-    margin: 5px;
+    font-size: 18px;
+    margin-right: 5px;
     -webkit-box-pack: center;
     justify-content: center;
     line-height: 1;
     position: relative;
-    height: 32px;
-    width: 32px;
+    height: 30px;
     background-color: rgb(7, 71, 166);
-    border-width: 0px;
+    width: 30px;
     border-style: initial;
     border-color: initial;
     border-image: initial;
     border-radius: 50%;
     outline: none;
-    padding: 8px;
-
+    padding: 5px;
     text-align: center;
+  
+}
+.sub-menu-lists li{
+    padding: 3px;
+}
+.sub-menu-lists li:hover{
+    
+    border-radius: 3px;
+    background-color: rgb(7, 71, 166) ;
+ 
+}
+.sub-menu-lists li:hover .btnplus{
+   background-color: white;
+ 
+}
+.sub-menu-lists li:hover i{
+    color: rgb(7, 71, 166);
+ 
+}
+.sub-menu-lists li:hover span{
+    color: white;
+ 
+}
+.main_page_matrix{
+    position: absolute;
+    border-width: 1px;
+    overflow: hidden;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+   
+    background-position: -8px -8px;
 }
 .bottombtn {
     /* position: absolute; */

@@ -12301,9 +12301,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             var o = obj[i];
             if (o.showInMenu === '1') {
 
-                $('.project-item-zad')
+                $('.project-item-zad').parent()
                         .last()
-                        .after($('<div>')
+                        .after($('<li>')
+                                .addClass('col-6')
+                                .append($('<div>')
                                 .addClass("row row-style project-item-zad")
                                 .append($('<a>')
                                         .addClass('btnplus manualProject openNavhide left-menu-load')
@@ -12324,7 +12326,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                                 .addClass("fa fa-" + (o.menuIcon) ? o.menuIcon : "plus")
                                                 .text(o.projectName))
                                         )
-                                )
+                                ))
 
             }
 

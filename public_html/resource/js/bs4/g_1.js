@@ -18,6 +18,10 @@ $(function () {
             $("#user-story-delete-story").prop("readonly", false);
         }
     });
+    $(document).on("click", '.matrix_block_open', function (e) {
+       $(".proto_type_block").toggle("fast");
+       $(".main_page_matrix").toggle("fast");
+    });
 
     $(document).on("click", '.live-prototype-switch', function (e) {
         $("#live-prototype-show-key").toggle(600);
