@@ -9942,6 +9942,13 @@ $(document).on('change', '.user-story-is-shared', function (evt) {
     updateUS4ShortChangeDetails(val, ustype);
 });
 
+$(document).on('change', '.user-story-run-in-backend', function (evt) {
+
+    var ustype = 'runInBackend';
+    var val = $(this).is(":checked") ? "1" : "0";
+    updateUS4ShortChangeDetails(val, ustype);
+});
+
 $(document).on('change', '.user-story-prototype-change', function (evt) {
 
 

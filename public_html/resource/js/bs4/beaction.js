@@ -18,12 +18,24 @@ var be = {
         var backlogName = SACore.GetBacklogDetails(apiId, "backlogName");
         be.ValidateApiOnInput(apiId, data);
 
-//        res = be.callFrontApi(apiId, data, element, asyncData);
-        res = be.callBackendApi(apiId, data, element, asyncData);
+        var runInBackend = SACore.GetBacklogDetails(apiId, "runInBackend");
+
+        if (runInBackend === '1') {
+            res = be.callBackendApi(apiId, data, element, asyncData);
+        } else {
+            res = be.callFrontApi(apiId, data, element, asyncData);
+
+        }
 
         return res;
     },
-    callBackendApi: function (apiId, coreData) {
+    callBackendApi: function (apiId, coreData, element, asyncData) {
+        var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
+                ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+                : 'sync';
+
+        var isAsync = (async === 'async');
+
         var res = {};
         var json = initJSON();
         json.kv = coreData;
@@ -40,9 +52,43 @@ var be = {
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: isAsync,
             success: function (rs) {
-                res = rs;
+                try {
+                    if (rs.err.length > 0) {
+                        be.AJAXCallFeedback(rs.err);
+                    }
+                } catch (e) {
+                }
+
+                var out = rs.kv;
+                out['selectedField'] = rs.kv.selectedField;
+
+                try {
+
+                    out['_table'] = rs.tbl[0];
+
+                } catch (err) {
+                }
+                var b = $.extend(res, out);
+                res = b;
+
+
+                if (isAsync) {
+                    try {
+                        if (asyncData && asyncData.fn) {
+                            res = eval(asyncData.fn)(element, out, asyncData);
+                        } else {
+                            var id = $(element).attr('id');
+                            var el1 = document.getElementById(id);
+                            triggerAPIAfter(el1, apiId, out, rs.kv);
+                        }
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
+                return res;
+
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -978,6 +1024,7 @@ var be = {
                 async: false,
                 success: function (res) {
                     rs = res;
+                    return rs;
                 }
             });
             return rs;
@@ -1661,7 +1708,7 @@ var SAFN = {
             data[key] = value;
             return data;
         },
-        Get: function (key,value) {
+        Get: function (key, value) {
             var data = SAFN.CoreData;
             data[value] = data[key];
             return data;

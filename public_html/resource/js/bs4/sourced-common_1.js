@@ -18235,6 +18235,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-apiaction').val(SACore.GetCurrentBaklogApiAction());
         $('#user-story-apirequesttype').val(SACore.GetCurrentBaklogApiSyncRequest());
         $('.user-story-is-shared').val(SACore.GetCurrentBaklogIsShared());
+        $('.user-story-run-in-backend').val(SACore.GetBacklogDetails(global_var.current_backlog_id,"runInBackend"));
 
         if (SACore.GetCurrentBaklogShowPrototype() === '1') {
             $('#user-story-show-prototype').prop("checked", true);
@@ -18250,11 +18251,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('.user-story-is-shared').prop("checked", false);
         }
 
-        if (SACore.GetCurrentBaklogIsShared() === '1') {
-            $('.user-story-is-shared').prop("checked", true);
+        if (SACore.GetBacklogDetails(global_var.current_backlog_id,"runInBackend") === '1') {
+            $('.user-story-run-in-backend').prop("checked", true);
         } else {
-            $('.user-story-is-shared').prop("checked", false);
+            $('.user-story-run-in-backend').prop("checked", false);
         }
+
+//        if (SACore.GetCurrentBaklogIsShared() === '1') {
+//            $('.user-story-is-shared').prop("checked", true);
+//        } else {
+//            $('.user-story-is-shared').prop("checked", false);
+//        }
         this.toggleBacklogIsApi4StoryCard();
 
         $('#generalview_projectname').html(replaceTags(SACore.GetCurrentBaklogProjectName()));
