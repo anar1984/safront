@@ -1476,9 +1476,9 @@ END PROJECT SECTION
     background-color: #D3E0E5;
     /* #F4F5F7; */
     height:100vh;
-    overflow-y: scroll; 
-    overflow-x: hidden; 
-    padding:5px 40px;
+   overflow: hidden;
+    padding:0px;
+    margin: 0px;
 
 }
 .main-design-page.col-11{
@@ -1800,8 +1800,10 @@ END PROJECT SECTION
     background-color: #F9F9F9;
     /* line-height: 2; */
     position: fixed;
-    right: 0;
+    right: 0px;
     border: 1px solid #D1D1D1;
+    z-index: 10;
+    top: 0px;
 
 }
 .tool-panel-col.col-1{
@@ -1845,6 +1847,7 @@ END PROJECT SECTION
     border-right: none;
     z-index: 6;
     background: #ffff;
+    padding-right: 20px;
 }
 
 .prototype-section.col-3{
@@ -5394,18 +5397,39 @@ span.ruby-c-content {
     margin-right: 50px;
 }
 .row-fixed-width{
-    max-width: 120px;
+   width: 120px;
     overflow: hidden;
+    border-radius: 3px;
+
+    box-shadow: 2px 3px rgb(77 77 77 / 10%)
 }
+.row-fixed-width.input-text{
+   background-color: #edcd19;
+ 
+}
+.row-fixed-width.output-text{
+   background-color: #70cb01;
+}
+
 .row-fixed-width2{
-   width: 200px;
+   width: 190px;
    overflow: hidden;
+   
 }
-.text-vertical{
-    transform: rotate(90deg);
-    max-width: 100px;
-    margin-top: 20px;
+.row-fixed-width2 .text-vertical{
+   background-color: #ea2d53;
+   transform: rotate(90deg);
+        max-width: 100px;
+        margin-top: 50px;
+        height: 19px;
+        overflow: hidden;
+        color: white;
+        border-radius: 3px;
+   
+        box-shadow: 2px 3px rgb(77 77 77 / 10%)
+    
 }
+
 .sa-cwr{
     width: auto;
     margin: 10px;
@@ -5428,5 +5452,10 @@ span.ruby-c-content {
     display:flex;
 }
 #gui_component_main_view{
-    overflow: auto !important;
+    position: relative;
+    overflow: hidden !important;
+}
+
+.leader-line{
+    z-index: 1 !important;
 }
