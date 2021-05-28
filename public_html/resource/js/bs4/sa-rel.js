@@ -20,36 +20,83 @@ SADebug = {
     },
     RemoveAllDrawLine: function () {
         $(".leader-line").remove();
+//        $('.customLineZad').remove();
+    },
+    DrawLines_old: function () {
+        for (var i = 0; i < SADebug.Lines.length; i++) {
+            try {
+                var from = SADebug.Lines[i].fromId;
+                var to = SADebug.Lines[i].toId;
+
+                var fromDiv = document.getElementById(from);
+                var toDiv = document.getElementById(to)
+                SADebug.Connect(fromDiv, toDiv, "#0F0", 5);
+            } catch (err) {
+            }
+
+
+
+        }
+    },
+    Connect: function (div1, div2, color, thickness) {
+        var off1 = SADebug.GetOffset(div1);
+        var off2 = SADebug.GetOffset(div2);
+        // bottom right
+        var x1 = off1.left + off1.width;
+        var y1 = off1.top + off1.height;
+        // top right
+        var x2 = off2.left + off2.width;
+        var y2 = off2.top;
+        // distance
+        var length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+        // center
+        var cx = ((x1 + x2) / 2) - (length / 2);
+        var cy = ((y1 + y2) / 2) - (thickness / 2);
+        // angle
+        var angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
+        // make hr
+        var htmlLine = "<div class='customLineZad' id='" + makeId(5) + "'style='padding:0px; margin:0px; height:" + thickness +
+                "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx +
+                "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" +
+                angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" +
+                angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle +
+                "deg);' />";
+        //
+//        alert(htmlLine);
+        $('#gui_component_main_view').append(htmlLine);
+    },
+
+    GetOffset: function (el) {
+        var rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.pageXOffset,
+            top: rect.top + window.pageYOffset,
+            width: rect.width || el.offsetWidth,
+            height: rect.height || el.offsetHeight
+        };
     },
     DrawLines: function () {
         for (var i = 0; i < SADebug.Lines.length; i++) {
-            var from = SADebug.Lines[i].fromId;
-            var to = SADebug.Lines[i].toId;
-            
-            SADebug.GetLineDivId4Drawing(from,to);
-             
-        }
-    },
-   DrawLinesOld: function () {
-        for (var i = 0; i < SADebug.Lines.length; i++) {
-            var from = SADebug.Lines[i].fromId;
-            var to = SADebug.Lines[i].toId;
+            try {
+                var from = SADebug.Lines[i].fromId;
+                var to = SADebug.Lines[i].toId;
 
-            new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to),
-                    {
-                        color: 'rgb(41,146,210)',
+                new LeaderLine(
+                        document.getElementById(from),
+                        document.getElementById(to),
+                        {
+                            color: 'rgb(41,146,210)',
 //                                    color: 'rgb(255,146,27)',
 //                                    dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left',
+                            startPlug: 'square',
+                            endPlug: 'arrow',
+                            startSocket: 'right',
+                            endSocket: 'left',
 
-                    }
-
-            );
+                        }
+                );
+            } catch (err) {
+            }
         }
     },
     CallGUI: function (backlogId) {
@@ -72,7 +119,7 @@ SADebug = {
 //                .append(title)
                 ;
         $('#gui_component_main_view').append(line);
-        SADebug.AdjustLine(childBacklodId, parentBacklogId,line[0]);
+        SADebug.AdjustLine(childBacklodId, parentBacklogId, line[0]);
         return id;
     },
     AdjustLine: function (from, to, line) {
@@ -112,8 +159,8 @@ SADebug = {
         line.style.left = left + 'px';
         line.style.height = H + 'px';
     },
-    DrawLineOnZoom:function(){
-          SADebug.RemoveAllDrawLine();
+    DrawLineOnZoom: function () {
+        SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
     },
     CallApi: function (apiId) {

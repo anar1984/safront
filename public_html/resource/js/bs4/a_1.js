@@ -55,6 +55,12 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+function bindScrollZadToCanvas() {
+    $('.SUS_IPO_GUI_Design1').scroll(function () {
+        SADebug.DrawLineOnZoom();
+    });
+}
+
 
 function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
     var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
@@ -4590,7 +4596,7 @@ function callTableRelationAPIs(elem, tableId) {
     var tableInputRel = {};
 
 
-  elem.find('table[table-id="' + tableId + '"]')
+    elem.find('table[table-id="' + tableId + '"]')
             .find('.has_table_relation_td')
             .each(function () {
 
@@ -4720,10 +4726,10 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 function setValueOnCompAfterTriggerApi(el, data) {
     $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
         var isInTable = false;
-       $(this).closest("table.component-table-class-for-zad").each(function(e){
+        $(this).closest("table.component-table-class-for-zad").each(function (e) {
             isInTable = true;
             return;
-       })  
+        })
 
         if (!isInTable) {
             var val = "";
@@ -9609,8 +9615,10 @@ $(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
 
 $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     var backlogId = global_var.current_backlog_id;
+    $('.sa-main-c2').removeClass("col");
+    bindScrollZadToCanvas();
     SADebug.CallGUI(backlogId);
-    
+
 });
 
 function setInputListToInputRelation() {
@@ -14812,7 +14820,7 @@ var SourcedActivityDiagram = {
                         !SourcedActivityDiagram.UsedRightEntity.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
-            }) 
+            })
         },
         HideRightApi: function () {
             $('.sad-rightapicard').each(function () {

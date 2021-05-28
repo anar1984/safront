@@ -127,17 +127,16 @@ var request;
 var objectStore;
 function init() {
 
-   
+     
 
 
+    
     $(document).on('click', '.prosDescCheckAll', function (evt) {
         var f = $(this).is(":checked") ? true : false;
-
         $('.pdescList').each(function (e) {
             $(this).prop('checked', f);
         });
     });
-
     $(document).on('click', '.pdescDeleteAll', function (evt) {
         var st = "";
         $('.pdescList').each(function (e) {
@@ -145,23 +144,17 @@ function init() {
             st += $(this).is(":checked") ? $(this).val() + "%IN%"
                     : "";
         });
-
         deletePDescAll(st);
     });
-
     $(document).on('click', '.pdescColored', function (e) {
         var color = $(this).attr('pcolor');
-
         var st = ""
         $('.pdescList').each(function (e) {
             st += $(this).is(":checked") ? $(this).val() + "%IN%"
                     : "";
         });
-
         setColoredToPDescAll(st, color);
     });
-
-
     $(document).on('change', '.indesc_check', function (evt) {
         new UserStory().checkInputDescItem(this);
     });
@@ -186,21 +179,16 @@ function init() {
         new User().showUserDetails(this);
         $(this).toggleClass("active");
     });
-
-
     $(document).on('click', '.us-ipo-input-tr', function (evt) {
         $('.us-ipo-input-tr').removeClass("active");
         new UserStory().showIPOInputDetails(this);
         $(this).toggleClass("active");
-
         //show properties
 //        var pid = $(this).attr('pid');
 //        $('.live-prototype-component-properties').hide();
 //        $('#'+pid).find('.live-prototype-component-properties').show();
 
     });
-
-
 //    $(document).on('mouseover', '.active-inputs-selected', function (evt) {
 //        //show properties
 //        var pid = $(this).attr('pid');
@@ -221,8 +209,6 @@ function init() {
     $(document).on('click', '.chek', function (e) {
         checkedCount();
     });
-
-
     function checkedCount() {
         var count = $('.chek:checkbox:checked').length;
         $('#general2 i .badge').text(count);
@@ -245,12 +231,9 @@ function init() {
                 $('.us-filter-checkbox-priority').not(e).prop("checked", false);
             }
             checkedCount();
-
         }
         var count = $('.chek:checkbox:checked').length;
         $('#general2 i .badge').text(count);
-
-
         // =====================================================
 
 
@@ -280,8 +263,6 @@ function init() {
     $('body').on('keyup', function (e) {
         global_var.is_body_ctrl_pressed = "0";
     });
-
-
     $(document).on('click', '.us-checkbox-list', function (e) {
         if (($(this).val() === 'all')) {
             if ($(this).is(":checked")) {
@@ -302,12 +283,9 @@ function init() {
             $('.us-checkbox-list').first().prop("checked", false);
         }
     });
-
-
     $(document).on('click', '.us-filter-checkbox-label', function (e) {
         global_var.userStoryFilter.label = "";
         var st = "";
-
         if (($(this).val() === 'all')) {
             if ($(this).is(":checked")) {
                 $('.us-filter-checkbox-label').not(e).prop("checked", true);
@@ -325,16 +303,12 @@ function init() {
                 sum--;
             }
         });
-
         if (sum === 0) {
             $('#general').css('display', 'none');
         } else {
             $('#general').css('display', 'block');
         }
         $('#general i .badge').text(sum);
-
-
-
         $('.us-filter-checkbox-label').each(function (e) {
             if ($(this).is(":checked") && ($(this).val() !== 'all')) {
                 st += $(this).val() + '%IN%';
@@ -346,12 +320,6 @@ function init() {
             $('.us-filter-checkbox-label').first().prop("checked", false);
         }
     });
-
-
-
-
-
-
     $(document).on('click', '.us_filter_status', function (e) {
         global_var.userStoryFilter.backlogStatus = "";
         var st = "";
@@ -385,7 +353,6 @@ function init() {
         global_var.userStoryFilter.assignee = st;
         new UserStory().load();
     });
-
     $(document).on('click', '.us_filter_owner_class', function (e) {
         global_var.userStoryFilter.owner = "";
         var st = "";
@@ -397,9 +364,6 @@ function init() {
         global_var.userStoryFilter.owner = st;
         new UserStory().load();
     });
-
-
-
     $(document).on('click', '.us_filter_tasktype_class', function (e) {
         global_var.userStoryFilter.taskType = "";
         var st = "";
@@ -453,14 +417,12 @@ function init() {
                 sprint--;
             }
         });
-
         if (sprint === 0) {
             $('#general3').css('display', 'none');
         } else {
             $('#general3').css('display', 'block');
         }
         $('#general3 i .badge').text(sprint);
-
         // gulbahar yazdi  yuxarı hissəni 29.07.2020 
 
 
@@ -1102,7 +1064,6 @@ function init4ManualProjectLoad() {
 
 
     $('[data-toggle="tooltip"]').tooltip();
-
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
     loadModulePermission();
@@ -1147,8 +1108,6 @@ function add3Dots2String(string, length) {
 //        var st = string.substring(0, idx) + '...';
 
         var st = string.length >= length ? string.substring(0, length) + '...' : string;
-
-
         return st;
     } catch (err) {
         return string;
@@ -1257,8 +1216,6 @@ function showProgress2() {
 //    $('#preloader1').css("display", "block");
     $('#preloader2').attr("style", "display: block; z-index: 100000; height: 10000px;");
     $('#preloader2').addClass('show');
-
-
 //    $('#progressBarModal').modal('show');
 }
 
@@ -1296,7 +1253,7 @@ function showProgress5() {
 //    $('.preloader').fadeIn(0, function () {});
 //    $('#preloader1').css("display", "block");
 //    $('#preloader5').attr("style", "background-color: #FBFBFB!important;display: block; z-index: 100000; height: 10000px;");
-$('#preloader5').attr("style", "display: block; z-index: 100000; height: 10000px;");
+    $('#preloader5').attr("style", "display: block; z-index: 100000; height: 10000px;");
     $('#preloader5').addClass('show');
 //    $('#progressBarModal').modal('show');
 }
@@ -1306,8 +1263,6 @@ function showProgressAlternative() {
 //    $('#preloader1').css("display", "block");
     $('#preloader1').attr("style", "display: block; z-index: 100000; height: 10000px;");
     $('#preloader1').addClass('show');
-
-
 //    $('#progressBarModal').modal('show');
 }
 
@@ -1631,7 +1586,6 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';
     st += '      </div>';
-
     st += '   <div class="loaderModalInitiator"></div>';
     st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
     st += '   <form>';
@@ -1651,11 +1605,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
     $('#' + pageId).modal("show");
     $(document).on('hidden.bs.modal', '#' + pageId, function (evt) {
         $('#' + pageId).remove();
-
         $('body').addClass('modal-open');
-
-
-
     });
     return pageId;
 }
@@ -1819,11 +1769,8 @@ function createNewInputComponent() {
     var cellNo = $('#exampleModal-new-cell-no').val();
     var addTo = $('#exampleModal-add-to').val();
     var orderNo = SAInput.getInputDetails(global_var.current_us_input_id, "orderNo");
-
     if (!inputName)
         return;
-
-
     var orderNoNew = orderNo;
     if (addTo === 'left') {
         try {
@@ -1841,29 +1788,21 @@ function createNewInputComponent() {
     global_var.input_insert_cellno = cellNo;
 //    global_var.input_insert_orderno = orderNoNew;
     global_var.input_insert_component = componentType;
-
     new UserStory().insertNewInput();
     $('#exampleModal-new-input-name').val('');
     $('#addNewComponentModal').modal('hide');
-
-
 }
 
 $(document).on('click', '.popup-btn', function (evt) {
 
 });
-
 $(document).on('hide.bs.modal', '#exampleModal', function () {
     $('#ipo-tab-setting-general').html(global_var.input_general_content_tab);
 });
-
-
-
 $(document).on('dblclick', '.component-class', function (evt) {
     openComponentPropertiesModal(this);
     $(this).click();
 });
-
 function openComponentPropertiesModal(el) {
     if (global_var.current_modal !== 'loadLivePrototype') {
         return;
@@ -2158,7 +2097,6 @@ var Toaster = {
 
 function hasFilter4UserStory() {
     var continueOr = false;
-
     if (global_var.userStoryFilter.isSourced === '1' && o.isSourced !== '1')
         continueOr = true;
     else if (global_var.userStoryFilter.isAPI === '1' && o.isApi !== '1')
@@ -2189,14 +2127,11 @@ function hasFilter4UserStory() {
         continueOr = true;
     else if (global_var.userStoryFilter.userstory.length > 0)
         continueOr = true;
-
-
     return continueOr;
 }
 
 function hasFilter4Task() {
     var continueOr = false;
-
     if (global_var.userStoryFilter.backlogStatus.length > 0)
         continueOr = true;
     else if (global_var.userStoryFilter.createdBy.length > 0)
@@ -2207,7 +2142,5 @@ function hasFilter4Task() {
         continueOr = true;
     else if (global_var.userStoryFilter.userstory.length > 0)
         continueOr = true;
-
-
     return continueOr;
 }
