@@ -124,7 +124,7 @@ and open the template in the editor.
 }
 
 .loaderTable{
-    background-image: url('/resource/img/loadertbl.gif');
+    background-image: url('http://localhost/SAFrontEnd/public_html/resource/img/loadertbl.gif');
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;

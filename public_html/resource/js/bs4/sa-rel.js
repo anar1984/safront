@@ -88,10 +88,10 @@ SADebug = {
                             color: 'rgb(41,146,210)',
 //                                    color: 'rgb(255,146,27)',
 //                                    dash: true,
-                            startPlug: 'square',
-                            endPlug: 'arrow',
-                            startSocket: 'right',
-                            endSocket: 'left',
+//                            startPlug: 'square',
+//                            endPlug: 'arrow',
+//                            startSocket: 'right',
+//                            endSocket: 'left',
 
                         }
                 );
@@ -168,8 +168,6 @@ SADebug = {
             return;
         }
 
-
-
         var extApiList = (cr_project_desc_by_backlog[apiId])
                 ? cr_project_desc_by_backlog[apiId]
                 : [];
@@ -180,11 +178,8 @@ SADebug = {
             var extId = extApiList[i];
             var o = cr_project_desc[extId];
 
-
             if (o.fkRelatedApiId) {
                 var body = SADebug.Pattern.API.GetPattern(o.fkRelatedApiId);
-
-
                 var div3 = $("<div class='sa-cwr'>").append(body);
 
                 $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
@@ -222,20 +217,27 @@ SADebug = {
 
 
                     if (inputObj.selectFromBacklogId && !SADebug.LoadedBacklogsFromPart.includes(inputObj.selectFromBacklogId)) {
-
-                        var body = SADebug.Pattern.API.GetPattern(inputObj.selectFromBacklogId);
+                        var dyncId = makeId(10);
+                        var body = SADebug.Pattern.API.GetPattern(inputObj.selectFromBacklogId, dyncId);
                         $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
                         SADebug.LoadedBacklogsFromPart.push(inputObj.selectFromBacklogId)
-                        SADebug.CallApi(inputObj.selectFromBacklogId);
+
                         SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.selectFromBacklogId, 'gui_select_from');
+
+
+                        var apiCallId = inputObj.selectFromBacklogId;
+                        SADebug.CallApiThread(apiCallId);
                     }
 
                     if (inputObj.fkDependentBacklogId && !SADebug.LoadedBacklogsFromPart.includes(inputObj.fkDependentBacklogId)) {
                         var body = SADebug.Pattern.API.GetPattern(inputObj.fkDependentBacklogId);
                         $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
                         SADebug.LoadedBacklogsFromPart.push(inputObj.fkDependentBacklogId)
-                        SADebug.CallApi(inputObj.fkDependentBacklogId);
+
                         SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.fkDependentBacklogId, 'gui_select_from');
+
+                        var apiCallId = inputObj.fkDependentBacklogId;
+                        SADebug.CallApiThread(apiCallId);
                     }
 
 
@@ -243,8 +245,11 @@ SADebug = {
                         var body = SADebug.Pattern.API.GetPattern(inputObj.selectFromBacklogId);
                         $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
                         SADebug.LoadedBacklogsToPart.push(inputObj.sendToBacklogId);
-                        SADebug.CallApi(inputObj.sendToBacklogId);
+
                         SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.sendToBacklogId, 'gui_send_to');
+
+                        var apiCallId = inputObj.sendToBacklogId;
+                        SADebug.CallApiThread(apiCallId);
                     }
 
                     try {
@@ -262,13 +267,21 @@ SADebug = {
                                 if (apiAction === 'R' && !SADebug.LoadedBacklogsFromPart.includes(apiId)) {
                                     $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
                                     SADebug.LoadedBacklogsFromPart.push(apiId);
-                                    SADebug.CallApi(apiId);
+                                    
                                     SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_select_from');
+
+
+                                    var apiCallId = apiId;
+                                    SADebug.CallApiThread(apiCallId);
+
                                 } else if (apiAction !== 'R' && !SADebug.LoadedBacklogsToPart.includes(apiId)) {
                                     $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
                                     SADebug.LoadedBacklogsToPart.push(apiId);
-                                    SADebug.CallApi(apiId);
+ 
                                     SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_send_to');
+
+                                    var apiCallId = apiId;
+                                    SADebug.CallApiThread(apiCallId);
                                 }
 
                             }
@@ -321,9 +334,102 @@ SADebug = {
 
         }
     },
+    CallApiThread: function (apiId) {
+        var carrier = new Carrier();
+        carrier.setBacklogId(apiId);
+
+
+        $('#core_api_' + apiId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
+
+        if (!ifBacklogInputs4LoaderExistById(apiId)) {
+            showProgress5();
+            carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+            carrier.setApplier("SADebug._FillApiDivBody");
+            carrier.I_am_Requirer();
+        } else {
+            carrier.setApplier("SADebug._FillApiDivBody");
+            carrier.I_am_Execwarder();
+
+        }
+
+        SourcedDispatcher.Exec(carrier);
+    },
+    _FillApiDivBody: function (carrier) {
+        var apiId = carrier.getBacklogId();
+        var body = SACore.GetBacklogDetails(apiId, 'backlogName');
+
+        $('#core_api_' + apiId)
+                .closest("div.sa-api-esas")
+                .find('.api-body')
+                .first().append(body);
+
+        $('#core_api_' + apiId)
+                .closest("div.sa-api-esas")
+                .find('.api-input-list')
+                .first().append(SADebug.Pattern.API.GetInputList(apiId));
+
+        $('#core_api_' + apiId)
+                .closest("div.sa-api-esas")
+                .find('.api-desc-list')
+                .first().append(SADebug.Pattern.API.GetProcessDescriptionList(apiId));
+
+        $('#core_api_' + apiId)
+                .closest("div.sa-api-esas")
+                .find('.api-output-list')
+                .first().append(SADebug.Pattern.API.GetOutputList(apiId));
+
+        $('#core_api_' + apiId).closest("div.sa-api-esas").find('.progressLoader').remove();
+        
+        SADebug.CallApi(apiId);
+    },
     Pattern: {
         API: {
             GetPattern: function (apiId) {
+                if (!apiId)
+                    return "";
+
+                //loadBacklogDetailsByIdIfNotExist(apiId);
+
+                //var body = SACore.GetBacklogDetails(apiId, 'backlogName');
+
+                var div = $('<div class="sa-api-esas">')
+                        .append($('<div class="sa-rww">')
+                                .append($('<div>')
+                                        .addClass("sa-cw1"))
+                                .append($('<div>')
+                                        .addClass("sa-cw2 row")
+                                        .attr("id", "core_api_" + apiId)
+                                        //.append($('<br>').append('------------------------'))
+                                        .append($('<h5>')
+                                                .addClass("api-body")
+                                                .append('')
+                                                .addClass(''))
+                                        .append($('<div>')
+                                                .addClass('row-fixed-width')
+                                                .addClass('api-input-list')
+                                                .append("<h6>Input(s)</h6>")
+                                                .append(''))
+                                        .append($("<div>")
+                                                .addClass('row-fixed-width2')
+                                                .addClass('api-desc-list')
+                                                .append("<h6>Description(s)</h6>")
+                                                .append(''))
+                                        .append($("<div>")
+                                                .addClass('row-fixed-width')
+                                                .addClass('api-output-list')
+                                                .append("<h6>Output(s)<h6>")
+                                                .append(''))
+                                        )
+                                .append($('<div>')
+                                        .addClass("sa-cw3"))
+                                )
+                        .append($('<div class="sa-dept-rww">'))
+                        ;
+
+                return div;
+
+            },
+            GetPattern_old: function (apiId, dyncId) {
                 if (!apiId)
                     return "";
 
