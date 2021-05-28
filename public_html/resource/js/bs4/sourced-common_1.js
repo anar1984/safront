@@ -9,7 +9,6 @@
 
 
 
-
 function check() {
 //    zoomOut
     hideAlert();
