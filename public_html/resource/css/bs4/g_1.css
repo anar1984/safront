@@ -822,7 +822,7 @@ b{
     flex-wrap: nowrap;
     margin-right: 0px;
     margin-left: 4px;
-    height: 39px;
+    height: 30px;
 }
 
 
@@ -838,6 +838,7 @@ b{
 
 .description-main{
     font-size: 12px;
+    font-weight: 300;
     cursor: pointer;
     /* position: absolute; */
     /* width: 130px; */
