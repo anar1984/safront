@@ -14812,7 +14812,7 @@ var SourcedActivityDiagram = {
                         !SourcedActivityDiagram.UsedRightEntity.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
-            })
+            }) 
         },
         HideRightApi: function () {
             $('.sad-rightapicard').each(function () {
