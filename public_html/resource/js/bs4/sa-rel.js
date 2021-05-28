@@ -184,6 +184,9 @@ SADebug = {
 
                 $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
                 SADebug.SetDrawLine("core_api_" + apiId, "core_api_" + o.fkRelatedApiId, 'api_api');
+
+                var apiCallId = o.fkRelatedApiId;
+                SADebug.CallApiThread(apiCallId);
             }
 
         }
@@ -267,7 +270,7 @@ SADebug = {
                                 if (apiAction === 'R' && !SADebug.LoadedBacklogsFromPart.includes(apiId)) {
                                     $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
                                     SADebug.LoadedBacklogsFromPart.push(apiId);
-                                    
+
                                     SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_select_from');
 
 
@@ -277,7 +280,7 @@ SADebug = {
                                 } else if (apiAction !== 'R' && !SADebug.LoadedBacklogsToPart.includes(apiId)) {
                                     $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
                                     SADebug.LoadedBacklogsToPart.push(apiId);
- 
+
                                     SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_send_to');
 
                                     var apiCallId = apiId;
@@ -379,7 +382,7 @@ SADebug = {
                 .first().append(SADebug.Pattern.API.GetOutputList(apiId));
 
         $('#core_api_' + apiId).closest("div.sa-api-esas").find('.progressLoader').remove();
-        
+
         SADebug.CallApi(apiId);
     },
     Pattern: {
@@ -516,45 +519,65 @@ SADebug = {
             },
             GetProcessDescriptionList: function (apiId) {
 
-                var div = $("<div>").addClass('text-vertical');
+                var div = $("<div>").addClass('');
 
                 var extApiList = (cr_project_desc_by_backlog[apiId])
                         ? cr_project_desc_by_backlog[apiId]
                         : [];
 
+                var idx = 1;
                 for (var i in  extApiList) {
 //                try {
-
+                    var divZad = $('<div class="sa-desc-item">');
                     var extId = extApiList[i];
                     var o = cr_project_desc[extId];
 
 
                     if (SAFN.IsCommand(o.description)) {
-                        div.append(o.description)
+                        divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
+                        divZad.append($('<div class="sa-desc-item-body">')
+                                .append(o.description)
                                 .append(" (command)")
-                                .append("<br>")
+                                .append("<br>"));
+                        div.append(divZad);
                     } else {
                         if (o.fkRelatedScId) {
                             var fnType = cr_js_list[o.fkRelatedScId].fnType;
                             var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
 
                             if (fnType === 'core') {
-                                div.append(o.description)
+                                divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
+                                divZad.append($('<div class="sa-desc-item-body">')
+                                        .append(o.description)
                                         .append(" (JavaScript)")
-                                        .append("<br>")
+                                        .append("<br>"));
+                                div.append(divZad);
+
+
+
                             } else if (fnType === 'java') {
-                                div.append(o.description)
+                                divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
+                                divZad.append($('<div class="sa-desc-item-body">')
+                                        .append(o.description)
                                         .append(" (Java)")
-                                        .append("<br>")
+                                        .append("<br>"));
+                                div.append(divZad);
+
+
                             }
                         }
                         if (o.fkRelatedApiId) {
-                            div.append(o.description)
+                            divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
+                            divZad.append($('<div class="sa-desc-item-body">')
+                                    .append(o.description)
                                     .append(" (API)")
-                                    .append("<br>")
+                                    .append("<br>"));
+                            div.append(divZad);
+ 
                         }
                     }
                 }
+//                alert(JSON.stringify(div.html()))
                 return div;
             }
         },
