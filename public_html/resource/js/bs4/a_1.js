@@ -9605,8 +9605,12 @@ $(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
     setInputListToInputRelation();
     setApiListToInputRelation();
     saInputTagIsPressed = true;
+});
 
-
+$(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
+    var backlogId = global_var.current_backlog_id;
+    SADebug.CallGUI(backlogId);
+    
 });
 
 function setInputListToInputRelation() {

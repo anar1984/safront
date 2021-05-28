@@ -2299,6 +2299,7 @@ var SABacklogLabel = {
     toCurrentDescJSON: function () {
         return this.toDescJSON(global_var.current_us_input_id);
     },
+    
     toDescJSON: function (inputId) {
         var json = {"tbl": [{"r": []}]};
         var keys = SAInput.GetCurrentInputDescription();

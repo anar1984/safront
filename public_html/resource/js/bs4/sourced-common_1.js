@@ -18718,6 +18718,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#actual_zoom_id').text(global_var.actual_zoom);
         this.setIPOGUICanvas();
         this.setGUIAllCanvasZoom();
+        SADebug.DrawLineOnZoom();
     },
     zoomOut: function () {
         global_var.actual_zoom = (parseInt(global_var.actual_zoom) - 6);
@@ -18727,6 +18728,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#actual_zoom_id').text(global_var.actual_zoom);
         this.setIPOGUICanvas();
         this.setGUIAllCanvasZoom();
+        SADebug.DrawLineOnZoom();
     },
     zoomInit: function () {
         global_var.actual_zoom = 100;
@@ -18974,7 +18976,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#SUS_IPO_GUI_Design').html(st);
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
-
+        
+        $('.sa-main-c2').attr("id","core_gui_"+SACore.GetCurrentBacklogId());
         //get element
         var elm = document.getElementById('SUS_IPO_GUI_Design');
 

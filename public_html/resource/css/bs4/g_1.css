@@ -5365,3 +5365,65 @@ span.ruby-c-content {
 
     
 }
+
+.sa-cw2{
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 10px;
+    width: 450px;
+    text-align:center;
+    margin-top: 10px;
+    margin-right: 50px;
+}
+.sa-cw2 h5{
+    width: 450px;
+}
+.sa-gui-rw{
+    display: flex;
+}
+.sa-rww{
+    position: relative;
+    left: 20%;
+    transform: translate(-10%);
+    margin-bottom: 100px;
+    }
+
+.sa-cw3,.sa-cw1,.sa-c2,.sa-c,.sa-c1{
+  
+    margin-right: 50px;
+}
+.row-fixed-width{
+    max-width: 120px;
+    overflow: hidden;
+}
+.row-fixed-width2{
+   width: 200px;
+   overflow: hidden;
+}
+.text-vertical{
+    transform: rotate(90deg);
+    max-width: 100px;
+    margin-top: 20px;
+}
+.sa-cwr{
+    width: auto;
+    margin: 10px;
+ 
+}
+.sa-gui-dept-rw{
+    
+    display: flex;
+    
+}
+
+.sa-api-esas{
+   width: max-content;
+   margin: 100px;
+}
+
+.sa-dept-rww  {
+    display:flex;
+}
+#gui_component_main_view{
+    overflow: auto !important;
+}
