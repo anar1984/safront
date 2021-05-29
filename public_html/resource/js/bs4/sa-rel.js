@@ -519,7 +519,7 @@ SADebug = {
             },
             GetProcessDescriptionList: function (apiId) {
 
-                var div = $("<div>").addClass('');
+                var div = $("<div>").addClass('sa-desc-block');
 
                 var extApiList = (cr_project_desc_by_backlog[apiId])
                         ? cr_project_desc_by_backlog[apiId]
