@@ -38,43 +38,7 @@ SADebug = {
 
         }
     },
-    Connect: function (div1, div2, color, thickness) {
-        var off1 = SADebug.GetOffset(div1);
-        var off2 = SADebug.GetOffset(div2);
-        // bottom right
-        var x1 = off1.left + off1.width;
-        var y1 = off1.top + off1.height;
-        // top right
-        var x2 = off2.left + off2.width;
-        var y2 = off2.top;
-        // distance
-        var length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
-        // center
-        var cx = ((x1 + x2) / 2) - (length / 2);
-        var cy = ((y1 + y2) / 2) - (thickness / 2);
-        // angle
-        var angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
-        // make hr
-        var htmlLine = "<div class='customLineZad' id='" + makeId(5) + "'style='padding:0px; margin:0px; height:" + thickness +
-                "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx +
-                "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" +
-                angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" +
-                angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle +
-                "deg);' />";
-        //
-//        alert(htmlLine);
-        $('#gui_component_main_view').append(htmlLine);
-    },
 
-    GetOffset: function (el) {
-        var rect = el.getBoundingClientRect();
-        return {
-            left: rect.left + window.pageXOffset,
-            top: rect.top + window.pageYOffset,
-            width: rect.width || el.offsetWidth,
-            height: rect.height || el.offsetHeight
-        };
-    },
     DrawLines: function () {
         for (var i = 0; i < SADebug.Lines.length; i++) {
             try {
@@ -85,7 +49,7 @@ SADebug = {
                         document.getElementById(from),
                         document.getElementById(to),
                         {
-                            color: 'rgb(41,146,210)',
+                            color: 'rgb(41,146,210)'
 //                                    color: 'rgb(255,146,27)',
 //                                    dash: true,
 //                            startPlug: 'square',
@@ -102,63 +66,11 @@ SADebug = {
     CallGUI: function (backlogId) {
         if (backlogId.length < 3)
             return;
-        SADebug.GUIFunction.GetSelectFromApi(backlogId);
+        SADebug.GUIFunction.Generate(backlogId);
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
     },
-    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId) {
-        var userStory = 'this.userStories[childBacklodId]';
-        var parentUserStory = 'this.parentUserStories[parentBacklogId]';
-        var titlePure = userStory + " -  " + parentUserStory;
-        var title = userStory + " - <br>" + parentUserStory;
-        var id = makeId(10);
-        var line = $('<div>')
-                .attr('id', id)
-                .attr('title', titlePure)
-                .addClass('line_class')
-//                .append(title)
-                ;
-        $('#gui_component_main_view').append(line);
-        SADebug.AdjustLine(childBacklodId, parentBacklogId, line[0]);
-        return id;
-    },
-    AdjustLine: function (from, to, line) {
 
-        var t = 100;
-//        var t = 0;
-
-        var fT = from.offsetTop + from.offsetHeight - from.clientTop - 80 / 2;
-        var tT = to.offsetTop + to.offsetHeight - to.clientTop - 80 / 2;
-        var fL = from.offsetLeft + from.offsetWidth / 2;
-        var tL = to.offsetLeft + to.offsetWidth / 2;
-        var CA = Math.abs(tT - fT);
-        var CO = Math.abs(tL - fL);
-        var H = Math.sqrt(CA * CA + CO * CO);
-        var ANG = 180 / Math.PI * Math.acos(CA / H);
-        if (tT > fT) {
-            var top = (tT - fT) / 2 + fT;
-        } else {
-            var top = (fT - tT) / 2 + tT;
-        }
-        if (tL > fL) {
-            var left = (tL - fL) / 2 + fL;
-        } else {
-            var left = (fL - tL) / 2 + tL;
-        }
-
-        if ((fT < tT && fL < tL) || (tT < fT && tL < fL) || (fT > tT && fL > tL) || (tT > fT && tL > fL)) {
-            ANG *= -1;
-        }
-        top -= H / 2;
-        line.style["-webkit-transform"] = 'rotate(' + ANG + 'deg)';
-        line.style["-moz-transform"] = 'rotate(' + ANG + 'deg)';
-        line.style["-ms-transform"] = 'rotate(' + ANG + 'deg)';
-        line.style["-o-transform"] = 'rotate(' + ANG + 'deg)';
-        line.style["-transform"] = 'rotate(' + ANG + 'deg)';
-        line.style.top = top + 'px';
-        line.style.left = left + 'px';
-        line.style.height = H + 'px';
-    },
     DrawLineOnZoom: function () {
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
@@ -208,9 +120,155 @@ SADebug = {
         return guiDesign;
     },
     GUIFunction: {
+        SelectFromBacklogId: function (inputId, apiId, backlogId) {
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+                return;
 
-        GetSelectFromApi: function (backlogId) {
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
+            $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
+            SADebug.LoadedBacklogsFromPart.push(apiId)
 
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+
+
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId);
+        },
+        GetFkDependentBacklogId: function (inputId, apiId, backlogId) {
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+                return;
+
+            var body = SADebug.Pattern.API.GetPattern(apiId);
+            $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
+            SADebug.LoadedBacklogsFromPart.push(apiId)
+
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId);
+        },
+        SendToBacklogId: function (inputId, apiId, backlogId) {
+            if (SADebug.LoadedBacklogsToPart.includes(apiId))
+                return;
+
+            var body = SADebug.Pattern.API.GetPattern(apiId);
+            $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
+            SADebug.LoadedBacklogsToPart.push(apiId);
+
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId);
+
+
+        },
+        GenerateInputActionRelation4Read: function (inputId, apiId, backlogId) {
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+                return;
+
+            var body = SADebug.Pattern.API.GetPattern(apiId);
+            $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
+            SADebug.LoadedBacklogsFromPart.push(apiId);
+
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId);
+        },
+        GenerateInputActionRelation4CUD: function (inputId, apiId, backlogId) {
+            if (SADebug.LoadedBacklogsToPart.includes(apiId))
+                return;
+
+            var body = SADebug.Pattern.API.GetPattern(apiId);
+            $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
+            SADebug.LoadedBacklogsToPart.push(apiId);
+
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId);
+        },
+        GenerateInputActionRelation: function (inputId, backlogId) {
+            try {
+                var eventList = cr_input_action_rel[inputId];
+                for (var i = 0; i < eventList.length; i++) {
+                    var relId = eventList[i];
+                    var obj = cr_input_action_rel_list[relId];
+                    var apiId = obj.fkApiId;
+
+                    if (apiId) {
+
+                        var apiAction = SACore.GetBacklogDetails(apiId, "apiAction");
+                        if (apiAction === 'R') {
+                            SADebug.GUIFunction.GenerateInputActionRelation4Read(inputId, apiId, backlogId);
+                        } else if (apiAction !== 'R' && !SADebug.LoadedBacklogsToPart.includes(apiId)) {
+                            SADebug.GUIFunction.GenerateInputActionRelation4CUD(inputId, apiId, backlogId);
+                        }
+                    }
+                }
+            } catch (err) {
+            }
+        },
+        CallGuiThread: function (guiId) {
+            var carrier = new Carrier();
+            carrier.setBacklogId(guiId);
+
+
+            $('#core_api_' + guiId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
+
+            if (!ifBacklogInputs4LoaderExistById(guiId)) {
+                showProgress5();
+                carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+                carrier.setApplier("SADebug._FillApiDivBody");
+                carrier.I_am_Requirer();
+            } else {
+                carrier.setApplier("SADebug._FillApiDivBody");
+                carrier.I_am_Execwarder();
+
+            }
+
+            SourcedDispatcher.Exec(carrier);
+        },
+        GenerateDependentGui: function (guiId, backlogId) {
+            var guiDesign = '';//SADebug.GetGuiDesign(guiId);
+
+            var div3 = $("<div class='sa-cwr'>")
+                    .append($('<div class="sa-gui-esas">')
+                            .append($('<div class="progressLoader loaderTable">'))
+                            .append($('<div class="sa-gui-rw sa-rw row">')
+                                    .append($('<div class="sa-c1">'))
+                                    .append($('<div class="sa-c2">')
+                                            .attr("id", "core_gui_" + guiId)
+                                            .append($('<div>')
+                                                    .addClass("sa-gui-esas-body")
+                                                    .append(guiDesign)
+                                                    .addClass('row redirectClass gui-design')))
+                                    .append($('<div class="sa-c3">'))
+                                    )
+                            .append($('<div class="sa-gui-dept-rw sa-rw">'))
+                            )
+                    ;
+            $("#core_gui_" + backlogId).closest('div.sa-gui-esas').find('.sa-gui-dept-rw').first().append(div3);
+
+            SADebug.CallGUI(guiId);
+            SADebug.SetDrawLine("core_gui_" + backlogId, "core_gui_" + guiId, 'gui_gui');
+//                        $('#SUS_IPO_GUI_Design').html(st);
+//                        $('#SUS_IPO_GUI_Design').attr('bid', guiId);
+//                        $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
+
+//                        $('.sa-main-c2').attr("id", "core_gui_" + SACore.GetCurrentBacklogId());
+            //get element
+//                        var elm = document.getElementById('SUS_IPO_GUI_Design');
+
+            //fill selectbox after GUI Design
+            //loadSelectBoxesAfterGUIDesign(elm);
+
+            //init onload click and change events
+            // initOnloadActionOnGUIDesign4OnClick(elm);
+            // initOnloadActionOnGUIDesign4Onchange(elm);
+        },
+        Generate: function (backlogId) {
             var outputList = SACore.GetBacklogDetails(backlogId, "inputIds").split(',');
             for (var i in outputList) {
                 try {
@@ -219,116 +277,25 @@ SADebug = {
                     var inputObj = SAInput.getInputObject(oid);
 
 
-                    if (inputObj.selectFromBacklogId && !SADebug.LoadedBacklogsFromPart.includes(inputObj.selectFromBacklogId)) {
-                        var dyncId = makeId(10);
-                        var body = SADebug.Pattern.API.GetPattern(inputObj.selectFromBacklogId, dyncId);
-                        $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-                        SADebug.LoadedBacklogsFromPart.push(inputObj.selectFromBacklogId)
-
-                        SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.selectFromBacklogId, 'gui_select_from');
-
-
-                        var apiCallId = inputObj.selectFromBacklogId;
-                        SADebug.CallApiThread(apiCallId);
+                    if (inputObj.selectFromBacklogId) {
+                        SADebug.GUIFunction.SelectFromBacklogId(inputObj.id, inputObj.selectFromBacklogId, backlogId);
                     }
 
-                    if (inputObj.fkDependentBacklogId && !SADebug.LoadedBacklogsFromPart.includes(inputObj.fkDependentBacklogId)) {
-                        var body = SADebug.Pattern.API.GetPattern(inputObj.fkDependentBacklogId);
-                        $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-                        SADebug.LoadedBacklogsFromPart.push(inputObj.fkDependentBacklogId)
-
-                        SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.fkDependentBacklogId, 'gui_select_from');
-
-                        var apiCallId = inputObj.fkDependentBacklogId;
-                        SADebug.CallApiThread(apiCallId);
+                    if (inputObj.fkDependentBacklogId) {
+                        SADebug.GUIFunction.GetFkDependentBacklogId(inputObj.id, inputObj.fkDependentBacklogId, backlogId);
                     }
 
 
-                    if (inputObj.sendToBacklogId && !SADebug.LoadedBacklogsToPart.includes(inputObj.sendToBacklogId)) {
-                        var body = SADebug.Pattern.API.GetPattern(inputObj.selectFromBacklogId);
-                        $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
-                        SADebug.LoadedBacklogsToPart.push(inputObj.sendToBacklogId);
-
-                        SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + inputObj.sendToBacklogId, 'gui_send_to');
-
-                        var apiCallId = inputObj.sendToBacklogId;
-                        SADebug.CallApiThread(apiCallId);
+                    if (inputObj.sendToBacklogId) {
+                        SADebug.GUIFunction.SendToBacklogId(inputObj.id, inputObj.sendToBacklogId, backlogId);
                     }
 
-                    try {
-                        var eventList = cr_input_action_rel[inputObj.id];
-                        for (var i = 0; i < eventList.length; i++) {
-                            var relId = eventList[i];
-                            var obj = cr_input_action_rel_list[relId];
-                            var eventType = obj.actionType;
-                            var apiId = obj.fkApiId;
-
-
-                            if (apiId) {
-                                var body = SADebug.Pattern.API.GetPattern(apiId);
-                                var apiAction = SACore.GetBacklogDetails(apiId, "apiAction");
-                                if (apiAction === 'R' && !SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                                    $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-                                    SADebug.LoadedBacklogsFromPart.push(apiId);
-
-                                    SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_select_from');
-
-
-                                    var apiCallId = apiId;
-                                    SADebug.CallApiThread(apiCallId);
-
-                                } else if (apiAction !== 'R' && !SADebug.LoadedBacklogsToPart.includes(apiId)) {
-                                    $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
-                                    SADebug.LoadedBacklogsToPart.push(apiId);
-
-                                    SADebug.SetDrawLine("core_gui_" + backlogId, "core_api_" + apiId, 'gui_send_to');
-
-                                    var apiCallId = apiId;
-                                    SADebug.CallApiThread(apiCallId);
-                                }
-
-                            }
-                        }
-                    } catch (err) {
-                    }
+                    SADebug.GUIFunction.GenerateInputActionRelation(inputObj.id, backlogId);
 
                     //action = ,redirect,fill, popup
                     var guiId = inputObj.param1;
                     if (guiId) {
-                        var guiDesign = SADebug.GetGuiDesign(guiId);
-
-                        var div3 = $("<div class='sa-cwr'>")
-                                .append($('<div class="sa-gui-esas">')
-                                        .append($('<div class="sa-gui-rw sa-rw row">')
-                                                .append($('<div class="sa-c1">'))
-                                                .append($('<div class="sa-c2">')
-                                                        .attr("id", "core_gui_" + guiId)
-                                                        .append($('<div>')
-                                                                .append(guiDesign)
-                                                                .addClass('row redirectClass gui-design')))
-                                                .append($('<div class="sa-c3">'))
-                                                )
-                                        .append($('<div class="sa-gui-dept-rw sa-rw">'))
-                                        )
-                                ;
-                        $("#core_gui_" + backlogId).closest('div.sa-gui-esas').find('.sa-gui-dept-rw').first().append(div3);
-
-                        SADebug.CallGUI(guiId);
-                        SADebug.SetDrawLine("core_gui_" + backlogId, "core_gui_" + guiId, 'gui_gui');
-//                        $('#SUS_IPO_GUI_Design').html(st);
-//                        $('#SUS_IPO_GUI_Design').attr('bid', guiId);
-//                        $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
-
-//                        $('.sa-main-c2').attr("id", "core_gui_" + SACore.GetCurrentBacklogId());
-                        //get element
-//                        var elm = document.getElementById('SUS_IPO_GUI_Design');
-
-                        //fill selectbox after GUI Design
-                        //loadSelectBoxesAfterGUIDesign(elm);
-
-                        //init onload click and change events
-                        // initOnloadActionOnGUIDesign4OnClick(elm);
-                        // initOnloadActionOnGUIDesign4Onchange(elm);
+                        SADebug.GUIFunction.GenerateDependentGui(guiId, backlogId);
                     }
                 } catch (err) {
 
@@ -336,6 +303,11 @@ SADebug = {
             }
 
         }
+    },
+
+    GetSelectFromApi: function (backlogId) {
+
+
     },
     CallApiThread: function (apiId) {
         var carrier = new Carrier();
@@ -536,10 +508,13 @@ SADebug = {
                     if (SAFN.IsCommand(o.description)) {
                         divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                         divZad.append($('<div class="sa-desc-item-body">')
+                                .attr("id", "core_api_desc_" + o.id)
                                 .append(o.description)
                                 .append(" (command)")
                                 .append("<br>"));
                         div.append(divZad);
+
+                        SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                     } else {
                         if (o.fkRelatedScId) {
                             var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -548,32 +523,36 @@ SADebug = {
                             if (fnType === 'core') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
+                                        .attr("id", "core_api_desc_" + o.id)
                                         .append(o.description)
                                         .append(" (JavaScript)")
                                         .append("<br>"));
                                 div.append(divZad);
 
-
+                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
 
                             } else if (fnType === 'java') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
+                                        .attr("id", "core_api_desc_" + o.id)
                                         .append(o.description)
                                         .append(" (Java)")
                                         .append("<br>"));
                                 div.append(divZad);
 
-
+                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                             }
                         }
                         if (o.fkRelatedApiId) {
                             divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                             divZad.append($('<div class="sa-desc-item-body">')
+                                    .attr("id", "core_api_desc_" + o.id)
                                     .append(o.description)
                                     .append(" (API)")
                                     .append("<br>"));
                             div.append(divZad);
- 
+
+                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                         }
                     }
                 }
@@ -582,6 +561,96 @@ SADebug = {
             }
         },
         GUI: {}
-    }
+    },
+    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId) {
+        var userStory = 'this.userStories[childBacklodId]';
+        var parentUserStory = 'this.parentUserStories[parentBacklogId]';
+        var titlePure = userStory + " -  " + parentUserStory;
+        var title = userStory + " - <br>" + parentUserStory;
+        var id = makeId(10);
+        var line = $('<div>')
+                .attr('id', id)
+                .attr('title', titlePure)
+                .addClass('line_class')
+//                .append(title)
+                ;
+        $('#gui_component_main_view').append(line);
+        SADebug.AdjustLine(childBacklodId, parentBacklogId, line[0]);
+        return id;
+    },
+    AdjustLine: function (from, to, line) {
+
+        var t = 100;
+//        var t = 0;
+
+        var fT = from.offsetTop + from.offsetHeight - from.clientTop - 80 / 2;
+        var tT = to.offsetTop + to.offsetHeight - to.clientTop - 80 / 2;
+        var fL = from.offsetLeft + from.offsetWidth / 2;
+        var tL = to.offsetLeft + to.offsetWidth / 2;
+        var CA = Math.abs(tT - fT);
+        var CO = Math.abs(tL - fL);
+        var H = Math.sqrt(CA * CA + CO * CO);
+        var ANG = 180 / Math.PI * Math.acos(CA / H);
+        if (tT > fT) {
+            var top = (tT - fT) / 2 + fT;
+        } else {
+            var top = (fT - tT) / 2 + tT;
+        }
+        if (tL > fL) {
+            var left = (tL - fL) / 2 + fL;
+        } else {
+            var left = (fL - tL) / 2 + tL;
+        }
+
+        if ((fT < tT && fL < tL) || (tT < fT && tL < fL) || (fT > tT && fL > tL) || (tT > fT && tL > fL)) {
+            ANG *= -1;
+        }
+        top -= H / 2;
+        line.style["-webkit-transform"] = 'rotate(' + ANG + 'deg)';
+        line.style["-moz-transform"] = 'rotate(' + ANG + 'deg)';
+        line.style["-ms-transform"] = 'rotate(' + ANG + 'deg)';
+        line.style["-o-transform"] = 'rotate(' + ANG + 'deg)';
+        line.style["-transform"] = 'rotate(' + ANG + 'deg)';
+        line.style.top = top + 'px';
+        line.style.left = left + 'px';
+        line.style.height = H + 'px';
+    },
+    Connect: function (div1, div2, color, thickness) {
+        var off1 = SADebug.GetOffset(div1);
+        var off2 = SADebug.GetOffset(div2);
+        // bottom right
+        var x1 = off1.left + off1.width;
+        var y1 = off1.top + off1.height;
+        // top right
+        var x2 = off2.left + off2.width;
+        var y2 = off2.top;
+        // distance
+        var length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+        // center
+        var cx = ((x1 + x2) / 2) - (length / 2);
+        var cy = ((y1 + y2) / 2) - (thickness / 2);
+        // angle
+        var angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
+        // make hr
+        var htmlLine = "<div class='customLineZad' id='" + makeId(5) + "'style='padding:0px; margin:0px; height:" + thickness +
+                "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx +
+                "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" +
+                angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" +
+                angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle +
+                "deg);' />";
+        //
+//        alert(htmlLine);
+        $('#gui_component_main_view').append(htmlLine);
+    },
+
+    GetOffset: function (el) {
+        var rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.pageXOffset,
+            top: rect.top + window.pageYOffset,
+            width: rect.width || el.offsetWidth,
+            height: rect.height || el.offsetHeight
+        };
+    },
 
 }
