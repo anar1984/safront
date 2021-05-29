@@ -215,20 +215,25 @@ SADebug = {
             carrier.setBacklogId(guiId);
 
 
-            $('#core_api_' + guiId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
-
             if (!ifBacklogInputs4LoaderExistById(guiId)) {
                 showProgress5();
                 carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
-                carrier.setApplier("SADebug._FillApiDivBody");
+                carrier.setApplier("SADebug.GUIFunction._FillGuiDivBody");
                 carrier.I_am_Requirer();
             } else {
-                carrier.setApplier("SADebug._FillApiDivBody");
+                carrier.setApplier("SADebug.GUIFunction._FillGuiDivBody");
                 carrier.I_am_Execwarder();
 
             }
 
             SourcedDispatcher.Exec(carrier);
+        },
+        _FillGuiDivBody: function (carrier) {
+            var guiId = carrier.getBacklogId();
+            var guiDesign = SADebug.GetGuiDesign(guiId);
+            $('#core_gui_' + guiId).closest('div.sa-gui-esas').find('.progressLoader').first().remove();
+            $('#core_gui_' + guiId).closest('div.sa-gui-esas').find('.sa-gui-esas-body').html(guiDesign);
+            SADebug.CallGUI(guiId);
         },
         GenerateDependentGui: function (guiId, backlogId) {
             var guiDesign = '';//SADebug.GetGuiDesign(guiId);
@@ -251,7 +256,12 @@ SADebug = {
                     ;
             $("#core_gui_" + backlogId).closest('div.sa-gui-esas').find('.sa-gui-dept-rw').first().append(div3);
 
-            SADebug.CallGUI(guiId);
+            SADebug.GUIFunction.CallGuiThread(guiId);
+
+
+//            SADebug.CallGUI(guiId);  
+
+
             SADebug.SetDrawLine("core_gui_" + backlogId, "core_gui_" + guiId, 'gui_gui');
 //                        $('#SUS_IPO_GUI_Design').html(st);
 //                        $('#SUS_IPO_GUI_Design').attr('bid', guiId);
@@ -331,32 +341,51 @@ SADebug = {
     },
     _FillApiDivBody: function (carrier) {
         var apiId = carrier.getBacklogId();
-        var body = SACore.GetBacklogDetails(apiId, 'backlogName');
+        var apiName = SACore.GetBacklogDetails(apiId, 'backlogName');
+
+        var body = $('<div>')
+                .append($('<span>').text(apiName))
+                .append(" ")
+                .append($('<span>')
+                        .css("border-radius", "15px")
+                        .css("padding", "2px 8px")
+                        .css("background-color", "orange")
+                        .text(GetApiActionTypeText(SACore.GetBacklogDetails(apiId, 'apiAction'))
+                                )
+                        )
+                .append($('<span>')
+                        .css("border-radius", "15px")
+                        .css("padding", "2px 8px")
+                        .css("background-color", "yellow")
+                        .text(MapApiCallAsyncType(SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))))
+
+
 
         $('#core_api_' + apiId)
                 .closest("div.sa-api-esas")
                 .find('.api-body')
-                .first().append(body);
+                .first().html(body);
 
         $('#core_api_' + apiId)
                 .closest("div.sa-api-esas")
                 .find('.api-input-list')
-                .first().append(SADebug.Pattern.API.GetInputList(apiId));
+                .first().html(SADebug.Pattern.API.GetInputList(apiId));
 
         $('#core_api_' + apiId)
                 .closest("div.sa-api-esas")
                 .find('.api-desc-list')
-                .first().append(SADebug.Pattern.API.GetProcessDescriptionList(apiId));
+                .first().html(SADebug.Pattern.API.GetProcessDescriptionList(apiId));
 
         $('#core_api_' + apiId)
                 .closest("div.sa-api-esas")
                 .find('.api-output-list')
-                .first().append(SADebug.Pattern.API.GetOutputList(apiId));
+                .first().html(SADebug.Pattern.API.GetOutputList(apiId));
 
         $('#core_api_' + apiId).closest("div.sa-api-esas").find('.progressLoader').remove();
 
         SADebug.CallApi(apiId);
     },
+
     Pattern: {
         API: {
             GetPattern: function (apiId) {
@@ -375,8 +404,11 @@ SADebug = {
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
                                         //.append($('<br>').append('------------------------'))
-                                        .append($('<h5>')
+                                        .append($('<h6>')
                                                 .addClass("api-body")
+                                                .css("cursor", "pointer")
+                                                .attr("is_api", "1")
+                                                .attr('onclick', "new UserStory().getStoryInfo('" + apiId + "',this)")
                                                 .append('')
                                                 .addClass(''))
                                         .append($('<div>')
@@ -479,10 +511,52 @@ SADebug = {
                         if (inputObj.inputType !== 'OUT')
                             continue;
 
-                        div.append(inputObj.inputName)
+                        var inputDBInfo = "";
+                        var inputDBInfoSend = "";
+                        if (inputObj.selectFromFieldId) {
+                            var txt = SAEntity.Databases[inputObj.selectFromDbId].dbName + "." +
+                                    SAEntity.Tables[inputObj.selectFromTableId].tableName + "." +
+                                    SAEntity.Fields[inputObj.selectFromFieldId].fieldName;
+                            inputDBInfo = $('<span>')
+                                    .attr("title", "Select from DB")
+//                                    .append($('<span>')
+//                                            .css('padding', '2px 5px')
+//                                            .css("border-radius", "15px")
+//                                            .css("background-color", "yellow")
+//                                            .text(" << "))
+                                    .append(" ")
+                                    .append($('<span>')
+                                            .css('padding', '2px 5px')
+                                            .css("border-radius", "15px")
+                                            .css("background-color", "yellow")
+                                            .text(txt))
+                        }
+                        if (inputObj.sendToFieldId) {
+                            var txt = SAEntity.Databases[inputObj.sendToDbId].dbName + "." +
+                                    SAEntity.Tables[inputObj.sendToTableId].tableName + "." +
+                                    SAEntity.Fields[inputObj.sendToFieldId].fieldName;
+                            inputDBInfoSend = $('<span>')
+                                    .attr("title", "Send to DB")
+//                                    .append($('<span>')
+//                                            .css('padding', '2px 5px')
+//                                            .css("border-radius", "15px")
+//                                            .css("background-color", "orange")
+//                                            .text(" >> "))
+                                    .append(" ")
+                                    .append($('<span>')
+                                            .css('padding', '2px 5px')
+                                            .css("border-radius", "15px")
+                                            .css('padding', '2px 5px')
+                                            .css("background-color", "orange")
+                                            .text(txt))
+                        }
+
+                        div.append($('<span>').text(inputObj.inputName))
+                                .append(" ")
+                                .append(inputDBInfo)
+                                .append(" ")
+                                .append(inputDBInfoSend)
                                 .append("<br>");
-
-
                     } catch (err) {
 
                     }

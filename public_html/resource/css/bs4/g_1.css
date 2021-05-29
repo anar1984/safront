@@ -5398,7 +5398,7 @@ span.ruby-c-content {
     margin-right: 50px;
 }
 .row-fixed-width{
-   width: 120px;
+   /*width: 120px;*/
     overflow: hidden;
     border-radius: 3px;
 

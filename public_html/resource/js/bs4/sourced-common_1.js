@@ -18320,6 +18320,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
 
+        getRelatedStoryCardByApiId();
+
 
 
     },

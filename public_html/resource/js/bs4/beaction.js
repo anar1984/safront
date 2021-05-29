@@ -15,6 +15,8 @@ var be = {
             return;
         }
 
+        be.ShowInData4Debug(apiId, data);
+
         var backlogName = SACore.GetBacklogDetails(apiId, "backlogName");
         be.ValidateApiOnInput(apiId, data);
 
@@ -27,8 +29,16 @@ var be = {
 
         }
 
+        var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
+                ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+                : 'sync';
+
+        if (async === 'sync')
+            be.ShowOutData4Debug(apiId, data);
+
         return res;
     },
+
     callBackendApi: function (apiId, coreData, element, asyncData) {
         var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
                 ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
@@ -83,6 +93,9 @@ var be = {
                             var el1 = document.getElementById(id);
                             triggerAPIAfter(el1, apiId, out, rs.kv);
                         }
+
+
+                        be.ShowOutData4Debug(apiId, out);
                     } catch (err) {
                         console.log(err);
                     }
@@ -122,6 +135,40 @@ var be = {
         }
 
         return res;
+    },
+
+    ShowInData4Debug: function (apiId, data) {
+        try {
+            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1')
+                    .append($('<span class="sa-api-cw1-body">')
+                            .text(JSON.stringify(data)));
+        } catch (err) {
+        }
+    },
+    ShowOutData4Debug: function (apiId, data) {
+        try {
+            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3')
+                    .append($('<span class="sa-api-cw3-body">')
+                            .text(JSON.stringify(data)));
+        } catch (err) {
+        }
+    },
+
+    ShowDescriptionInData4Debug: function (apiId,descId, data) {
+        try {
+            $('#core_api_desc_' + descId).closest('div.sa-desc-item')
+                    .append($('<span class="sa-desc-in-data-body">')
+                            .text(JSON.stringify(data)));
+        } catch (err) {
+        }
+    },
+    ShowDescriptionOutData4Debug: function (apiId,descId, data) {
+        try {
+            $('#core_api_desc_' + descId).closest('div.sa-desc-item')
+                    .append($('<span class="sa-desc-out-data-body">')
+                            .text(JSON.stringify(data)));
+        } catch (err) {
+        }
     },
 
     GetSendToBacklogId: function (apiId) {
@@ -876,7 +923,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallInsertService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
+                        var output = be.ExecAPI.CallInsertService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData, apiId);
 //                        var b = $.extend(res, output.kv);
 
                         res['id'] = output.kv.id;
@@ -956,7 +1003,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallUpdateService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
+                        var output = be.ExecAPI.CallUpdateService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData, apiId);
                         var b = $.extend(res, output.kv);
                         res = b;
                         try {
@@ -985,8 +1032,12 @@ var be = {
                     f = false;
                 }
 
+
+
                 var extId = extApiList[i];
                 var o = cr_project_desc[extId];
+
+                be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
                     outData = SAFN.ExecCommand(o.description, outData);
@@ -1000,11 +1051,12 @@ var be = {
                         } else if (fnType === 'java') {
                             outData = SAFN.ConvertFunctions.Java(fnName, outData, element, apiId, asyncData);
                         }
-                    }
-                    if (o.fkRelatedApiId) {
+                    } else if (o.fkRelatedApiId) {
                         outData = SAFN.ConvertFunctions.ApiCall(o.fkRelatedApiId, outData, element, apiId, asyncData);
                     }
                 }
+
+                be.ShowDescriptionOutData4Debug(apiId, o.id, outData);
 
             }
             return outData;
@@ -1071,7 +1123,7 @@ var be = {
                     json.kv.entityDb = dbName;
                     json.kv.entity = tableName;
                     try {
-                        var output = be.ExecAPI.CallDeleteService(json, isAsync, SEND_TO_BACKLOG_ID, element, asyncData);
+                        var output = be.ExecAPI.CallDeleteService(json, isAsync, SEND_TO_BACKLOG_ID, element, apiId);
                         var b = $.extend(res, output.kv);
                         res = b;
                         try {
@@ -1087,7 +1139,7 @@ var be = {
             }
             return res;
         },
-        CallInsertService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
+        CallInsertService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData, apiId) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1120,11 +1172,14 @@ var be = {
                             }
                         }
                     }
+
+                    if (async)
+                        be.ShowOutData4Debug(apiId, dt);
                 }
             });
             return rs;
         },
-        CallUpdateService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
+        CallUpdateService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData, apiId) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1158,11 +1213,14 @@ var be = {
                             }
                         }
                     }
+
+                    if (async)
+                        be.ShowOutData4Debug(apiId, dt);
                 }
             });
             return rs;
         },
-        CallDeleteService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData) {
+        CallDeleteService: function (dataJSON, isAsync, SEND_TO_BACKLOG_ID, element, asyncData, apiId) {
             isAsync = (isAsync) ? isAsync : false;
             var async = (isAsync === true) ? true : false;
             var rs = "";
@@ -1196,6 +1254,8 @@ var be = {
                             }
                         }
                     }
+                    if (async)
+                        be.ShowOutData4Debug(apiId, dt);
                 }
             });
             return rs;
@@ -1333,6 +1393,8 @@ var be = {
                         }
                     }
 
+
+                    be.ShowOutData4Debug(apiId, dt);
                 }
             });
             return rs;
