@@ -54,11 +54,44 @@ var bhistorylist = [];
 var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
+function MapApiCallAsyncType(arg) {
+    if (arg === 'async') {
+        arg = 'Asynchrone';
+    } else {
+        arg = 'Synchrone';
+    }
+
+    return arg;
+}
+
+function GetApiActionTypeText(arg) {
+    switch (arg) {
+        case 'C':
+            arg = 'Create'
+            break;
+        case 'R':
+            arg = 'Read'
+            break;
+        case 'U':
+            arg = 'Update'
+            break;
+        case 'D':
+            arg = 'Delete'
+            break;
+        case '-1':
+            arg = 'Container'
+            break;
+
+        default:
+            arg = 'Container';
+    }
+    return arg;
+}
 
 function bindScrollZadToCanvas() {
-    $('.SUS_IPO_GUI_Design1').scroll(function () {
-        SADebug.DrawLineOnZoom();
-    });
+//    $('.SUS_IPO_GUI_Design1').scroll(function () {
+//        SADebug.DrawLineOnZoom();
+//    });
 }
 
 
@@ -1017,6 +1050,37 @@ function loadJSByIdIfNotExist(bid) {
 
 
 
+
+function getRelatedStoryCardByApiId() {
+
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetRelatedStoryCardByApiId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            var div = $('<div>');
+            for (var i = 0; i < obj.length; i++) {
+                var o = obj[i];
+
+                div.append($('<a>')
+                        .text((i+1)+') '+o.backlogName)
+                        .attr('is_api', '1')
+                        .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
+                        .append("<br>")
+
+            }
+            $('#storycard_dependentapi_span').append(div);
+        }
+    });
+}
 
 function compileJava() {
     var rs = '';
