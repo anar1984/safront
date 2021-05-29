@@ -2057,8 +2057,9 @@ label h6{
     padding: 5px;
     top: 0;
     right: 67px;
-    z-index: 2;
+    z-index: 20;
     border-radius: 4px;
+    background-color: #d3e0e5;
     /*background: linear-gradient(to bottom, #f4f7f9 0%,#f7fafd 4%,#ecf2f7 30%,#e4ebf3 68%,#dce4ee 89%,#d5e0eb 92%,#c7d3e0 96%,#c6d2df 100%);*/
 }
 
@@ -5403,30 +5404,44 @@ span.ruby-c-content {
 
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
 }
-.row-fixed-width.input-text{
+.row-fixed-width.api-input-list{
    background-color: #edcd19;
  
 }
-.row-fixed-width.output-text{
+.row-fixed-width.api-output-list{
    background-color: #70cb01;
 }
 
 .row-fixed-width2{
    width: 190px;
    overflow: hidden;
+   display: flex;
+   flex-wrap: wrap;
+}
+.row-fixed-width2 h6{
+  width: 100%;
    
 }
-.row-fixed-width2 .text-vertical{
+.row-fixed-width2 .sa-desc-item{
    background-color: #ea2d53;
-   transform: rotate(90deg);
+
         max-width: 100px;
-        margin-top: 50px;
+      
         height: 19px;
         overflow: hidden;
         color: white;
         border-radius: 3px;
    
-        box-shadow: 2px 3px rgb(77 77 77 / 10%)
+        box-shadow: 2px 3px rgb(77 77 77 / 10%);
+        display: flex;
+    
+}
+.row-fixed-width2  .sa-desc-block{
+    
+    max-width: 20px;
+    transform: rotate(90deg);
+    height: 70px;
+    float: right;
     
 }
 
