@@ -13049,6 +13049,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         for (var n = obj.length - 1; n >= 0; n--) {
             if (obj[n].isApi !== "1") {
                 tbody.append(this.genUSLine(obj[n]));
+               
+            }
+        }
+
+        return tbody.html();
+    },
+    getUSListBlockUserStoryLive: function (res) {
+        var obj = res.tbl[0].r;
+        var tbody = $('<select></select>');
+        for (var n = obj.length - 1; n >= 0; n--) {
+            if (obj[n].isApi !== "1") {
+                tbody.append(this.genUSLineOption(obj[n]));
+                
             }
         }
 
@@ -13077,6 +13090,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
             $('#api_list_side_bar').html(this.getUSListBlockApi(res));
             $('#container-us-body').html(this.getUSListBlockUserStory(res));
+            $('#storyCardListSelectBox').html(this.getUSListBlockUserStoryLive(res));
 
 
             global_var.story_card_sprint_assign_checked = 0;
@@ -13718,6 +13732,35 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         td2 += '</span>'
 
         tr.append($('<td style="padding:13px 20px;" class="us-td-list pointer  us-td-list-ozel ' + isSelected + " " + pointer_is_selected + '"></td>').html(td2));
+
+
+        return tr;
+    },
+    genUSLineOption: function (o) {
+
+        
+        var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
+        var pointer_is_selected = o.id === global_var.current_backlog_id ? "us-selected" : "";
+
+        var tr = $('<option onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)" \n\
+                    sid="' + o.id + '" orderNo="' + o.orderNo + '">'+replaceTags(o.backlogName)+'</option>');
+/* 
+        tr.append($('<td class="us-td-list us-td-list-checkbox"></td>')
+                .append(rs));
+
+        if (o.isApi === '1') {
+            tr.attr("is_api", "1")
+        } else {
+            tr.attr("is_api", "0")
+        }
+ */
+/* 
+
+        var td2 = '<a href="#"  class="us-list-item us-list-item-ozel"  onclick1="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
+        td2 += replaceTags(o.backlogName);
+        td2 += o.jiraKey.length > 0 ? " (" + o.jiraKey + ")" : "";
+        td2 += '</a>';
+        tr.append($('<div style="padding:13px 20px;" class="us-td-list pointer  us-td-list-ozel ' + isSelected + " " + pointer_is_selected + '"></div>').html(td2)); */
 
 
         return tr;
@@ -21028,7 +21071,7 @@ Notification.prototype = {
             new UserStory().load();
         } else {
 //            $("#projectList option[value='"+projectId+"']").prop('selected', true);
-            $('#projectList').val(projectId).change();
+            $('.projectList').val(projectId).change();
         }
 
 
@@ -22419,13 +22462,15 @@ Project.prototype = {
                 var o = $('<option></option')
                         .attr('value', obj[n].id)
                         .html(obj[n].projectName);
+              
                 if (urlVal === obj[n].id) {
                     o.attr("selected", "selected");
                 }
-
-                $('#projectList').append(o);
+              
+                $('.projectList').append(o);
+                
             }
-            global_var.current_project_id = $('#projectList').first().val();
+            global_var.current_project_id = $('.projectList').first().val();
             Utility.addParamToUrl('current_project_id', global_var.current_project_id);
             //$('#projectList').first().change();
         } catch (er) {

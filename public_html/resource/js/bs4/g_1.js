@@ -52,6 +52,20 @@ $(function () {
     
     
 
+    $(document).on("mouseover", '.sa-cw1', function (e) {
+        $(this).popover();
+        
+    });
+    $(document).on("mouseover", '.sa-cw3', function (e) {
+        $(this).popover();
+        
+    });
+    $(document).on("change", '#storyCardListSelectBox', function (e) {
+       var id =   $('option:selected', this).attr('sid')
+       new UserStory().getStoryInfo(id,this);
+   
+        
+    });
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
             $("#user-story-delete-story").prop("readonly", true);
@@ -650,8 +664,8 @@ $(document).ready(function () {
 });
 
 $(document).on("click", ".openNavshow", function () {
-    $('#panelFirst1').css('display', 'block')
-    $('#panelSplit1').css('display', 'block')
+    $('#panelFirst1').css('display', 'none')
+    $('#panelSplit1').css('display', 'none')
 });
 
 $(document).on("click", ".openNavhide", function () {

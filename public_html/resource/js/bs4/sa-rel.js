@@ -388,8 +388,7 @@ SADebug = {
 
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
-                                .append($('<div>')
-                                        .addClass("sa-cw1"))
+                                .append($('<div class="sa-cw1" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Input" data-trigger="click"><i class="fas fa-info-circle"></i></div>'))
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
@@ -417,8 +416,7 @@ SADebug = {
                                                 .append("<h6>Output(s)<h6>")
                                                 .append(''))
                                         )
-                                .append($('<div>')
-                                        .addClass("sa-cw3"))
+                                .append($('<div class="sa-cw3" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Output" data-trigger="click"><i class="fas fa-circle-notch"></i></div>'))
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;
@@ -436,8 +434,7 @@ SADebug = {
 
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
-                                .append($('<div>')
-                                        .addClass("sa-cw1"))
+                                .append($('<div class="sa-cw1" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Input" data-trigger="click"><i class="fas fa-info-circle"></i></div>'))
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
@@ -458,8 +455,7 @@ SADebug = {
                                                 .append("<h6>Output(s)<h6>")
                                                 .append(SADebug.Pattern.API.GetOutputList(apiId)))
                                         )
-                                .append($('<div>')
-                                        .addClass("sa-cw3"))
+                                .append($('<div class="sa-cw3" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Output" data-trigger="click"><i class="fas fa-circle-notch"></i></div>'))
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;

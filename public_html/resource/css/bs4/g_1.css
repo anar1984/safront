@@ -1774,7 +1774,7 @@ END PROJECT SECTION
 }
 /* --------------------------------------------- */
 .nav-link-custom i{
-    font-size: 20px;
+    font-size: 14px;
 }
 .tool-item.active{
     color: #006BE5 !important;
@@ -1797,12 +1797,13 @@ END PROJECT SECTION
     padding-right: 0px;
     display: flex;
     justify-content: center;
-    background-color: #F9F9F9;
+    background-color: #fff;
     /* line-height: 2; */
     position: fixed;
     right: 0px;
     border: 1px solid #D1D1D1;
-    z-index: 10;
+    z-index: 30;
+
     top: 0px;
 
 }
@@ -1836,6 +1837,9 @@ END PROJECT SECTION
     border-right: none;
     overflow: auto;
     width: 100%;
+    top: 60px;
+    position: relative;
+    height: 87vh;
 
 }
 
@@ -2056,10 +2060,15 @@ label h6{
     position: fixed;
     padding: 5px;
     top: 0;
-    right: 67px;
+    padding-left: 40px;
+    left: 0;
     z-index: 20;
     border-radius: 4px;
     background-color: #d3e0e5;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    background-color: white;
+
     /*background: linear-gradient(to bottom, #f4f7f9 0%,#f7fafd 4%,#ecf2f7 30%,#e4ebf3 68%,#dce4ee 89%,#d5e0eb 92%,#c7d3e0 96%,#c6d2df 100%);*/
 }
 
@@ -2086,10 +2095,10 @@ label h6{
 1.0 - TOOLBAR
 --------------------------------------------------------------*/
 .toolbar {
-    left: 2%;
+    left: 0;
     /* margin: -51px 0 0 -136px; */
     position: absolute;
-    top: 22%;
+    top: 14%;
     z-index: 1000;
     display: flex;
 }
@@ -2123,7 +2132,15 @@ label h6{
 }
 .toolbar .maximizeBtn{
 
-    display: none;
+    display: block;
+    background-color: #6c757d8a;
+    color: rgba(255, 255, 255, 0.637);
+}
+.toolbar .maximizeBtn:hover{
+
+    display: block;
+    background-color: #6c757d;
+    color: white;
 }
 .toolbar .verticalBtn{
 
@@ -5375,13 +5392,13 @@ span.ruby-c-content {
     background-color: #ffffffa3;
     border-radius: 6px;
     padding: 10px;
-    width: 450px;
+   
     text-align:center;
     margin-top: 10px;
     margin-right: 50px;
 }
-.sa-cw2 h5{
-    width: 450px;
+.sa-cw2 h6{
+    width: 100%;
 }
 .sa-gui-rw{
     display: flex;
@@ -5391,18 +5408,44 @@ span.ruby-c-content {
     left: 20%;
     transform: translate(-10%);
     margin-bottom: 100px;
+    max-width: 500px;
     }
 
 .sa-cw3,.sa-cw1,.sa-c2,.sa-c,.sa-c1{
   
     margin-right: 50px;
 }
+.sa-cw1{
+    
+    width: 14px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: 50%;
+    left: -32px;
+
+}
+.sa-cw3{
+    
+    width: 14px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: 50%;
+    right: -32px;
+
+}
 .row-fixed-width{
-   /*width: 120px;*/
+   width: 120px;
     overflow: hidden;
     border-radius: 3px;
 
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
+}
+.row-fixed-width:hover{
+    transform: scale(2.5);
+    position: relative;
+    z-index: 5000;
 }
 .row-fixed-width.api-input-list{
    background-color: #edcd19;
@@ -5413,7 +5456,7 @@ span.ruby-c-content {
 }
 
 .row-fixed-width2{
-   width: 190px;
+    min-width: 205px;
    overflow: hidden;
    display: flex;
    flex-wrap: wrap;
@@ -5431,6 +5474,17 @@ span.ruby-c-content {
     border-radius: 3px;
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
     
+}
+.row-fixed-width2 .sa-desc-item:hover{
+   transform: scale(2);
+   max-height: 20px;
+   width: max-content;
+       
+}
+.row-fixed-width2 .sa-desc-item-body:hover{
+
+   transform: rotate(-90deg);
+       
 }
 .row-fixed-width2  .sa-desc-block{
     

@@ -140,16 +140,18 @@ var be = {
     ShowInData4Debug: function (apiId, data) {
         try {
             $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1')
-                    .append($('<span class="sa-api-cw1-body">')
-                            .text(JSON.stringify(data)));
+                    .attr('data-content',"'"+JSON.stringify(data)+"'");
+                //    .append($('<span class="sa-api-cw1-body">')
+                  //          .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
     ShowOutData4Debug: function (apiId, data) {
         try {
             $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3')
-                    .append($('<span class="sa-api-cw3-body">')
-                            .text(JSON.stringify(data)));
+                       .attr('data-content',"'"+JSON.stringify(data)+"'");
+                   // .append($('<span class="sa-api-cw3-body">')
+                     //       .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
