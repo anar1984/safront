@@ -5389,7 +5389,7 @@ span.ruby-c-content {
 }
 
 .sa-cw2{
-    background-color: #ffffffa3;
+    background-color: #fff;
     border-radius: 6px;
     padding: 10px;
    
@@ -5466,13 +5466,17 @@ span.ruby-c-content {
    
 }
 .row-fixed-width2 .sa-desc-item{
-    background-color: #ea2d53;
-    max-width: 20px;
-    height: 100px;
-    overflow: hidden;
-    color: white;
-    border-radius: 3px;
-    box-shadow: 2px 3px rgb(77 77 77 / 10%)
+   background-color: #ea2d53;
+
+        max-width: 100px;
+      
+        height: 19px;
+        overflow: hidden;
+        color: white;
+        border-radius: 3px;
+   
+        box-shadow: 2px 3px rgb(77 77 77 / 10%);
+        display: flex;
     
 }
 .row-fixed-width2 .sa-desc-item:hover{
@@ -5488,23 +5492,13 @@ span.ruby-c-content {
 }
 .row-fixed-width2  .sa-desc-block{
     
-    max-width: 190px;
-    height: 100px;
-    display: flex;
-    margin-right: 5px;
+    max-width: 20px;
+    transform: rotate(90deg);
+    height: 70px;
+    float: right;
     
 }
 
-.sa-desc-item-body{
-    position: relative;
-    top: 0px;
-    left: 18px;
-    background: none;
-    transform-origin: 0 0;
-    transform: rotate(90deg);
-    /* color: white; */
-    width: 80px;
-}
 .sa-cwr{
     width: auto;
     margin: 10px;
