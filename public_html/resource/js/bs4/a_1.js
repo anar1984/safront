@@ -64,6 +64,42 @@ function MapApiCallAsyncType(arg) {
     return arg;
 }
 
+
+function getTop(divObj, parentDivId) {
+    var divId = "";
+    try {
+       divId=  $(divObj).attr("id");
+    } catch (err) {
+    }
+    
+    var rc = $(divObj).position().top;
+    console.log($(divObj).attr('class'),'-',rc);
+    
+    if (divId !== parentDivId){
+        var parentDiv = $(divObj).parent().first();
+        rc +=getTop(parentDiv,parentDivId);
+    }
+    return rc;
+}
+
+function getLeft(divObj, parentDivId) {
+    var divId = "";
+    try {
+       divId=  $(divObj).attr("id");
+    } catch (err) {
+    }
+    
+    var rc = $(divObj).position().left;
+    console.log($(divObj).attr('class'),'-',rc);
+    
+    if (divId !== parentDivId){
+        var parentDiv = $(divObj).parent().first();
+        rc +=getTop(parentDiv,parentDivId);
+    }
+    return rc;
+}
+
+
 function GetApiActionTypeText(arg) {
     switch (arg) {
         case 'C':
@@ -1071,7 +1107,7 @@ function getRelatedStoryCardByApiId() {
                 var o = obj[i];
 
                 div.append($('<a>')
-                        .text((i+1)+') '+o.backlogName)
+                        .text((i + 1) + ') ' + o.backlogName)
                         .attr('is_api', '1')
                         .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
                         .append("<br>")

@@ -19,7 +19,7 @@ SADebug = {
         SADebug.Lines.push(kv);
     },
     RemoveAllDrawLine: function () {
-        $(".leader-line").remove();
+        $(".line_class").remove();
 //        $('.customLineZad').remove();
     },
     DrawLines_old: function () {
@@ -45,20 +45,10 @@ SADebug = {
                 var from = SADebug.Lines[i].fromId;
                 var to = SADebug.Lines[i].toId;
 
-                new LeaderLine(
-                        document.getElementById(from),
-                        document.getElementById(to),
-                        {
-                            color: 'rgb(41,146,210)'
-//                                    color: 'rgb(255,146,27)',
-//                                    dash: true,
-//                            startPlug: 'square',
-//                            endPlug: 'arrow',
-//                            startSocket: 'right',
-//                            endSocket: 'left',
 
-                        }
-                );
+
+                SADebug.GetLineDivId4Drawing(from, to);
+
             } catch (err) {
             }
         }
@@ -72,8 +62,8 @@ SADebug = {
     },
 
     DrawLineOnZoom: function () {
-        SADebug.RemoveAllDrawLine();
-        SADebug.DrawLines();
+//        SADebug.RemoveAllDrawLine();
+//        SADebug.DrawLines();
     },
     CallApi: function (apiId) {
         if (apiId.length < 3) {
@@ -648,19 +638,27 @@ SADebug = {
                 .addClass('line_class')
 //                .append(title)
                 ;
-        $('#gui_component_main_view').append(line);
-        SADebug.AdjustLine(childBacklodId, parentBacklogId, line[0]);
+        $('#SUS_IPO_GUI_Design1').append(line);
+
+        var from = document.getElementById(childBacklodId);
+        var to = document.getElementById(parentBacklogId);
+
+
+        SADebug.AdjustLine(from, to, line[0]);
         return id;
     },
     AdjustLine: function (from, to, line) {
 
-        var t = 100;
-//        var t = 0;
+//        var t = 100;
+        var t = 0;
+        var dfT = $('#zzddff').offset().top;
+        
+        var dWidht = $(from).width()/2+ $(to).width()/2
 
-        var fT = from.offsetTop + from.offsetHeight - from.clientTop - 80 / 2;
-        var tT = to.offsetTop + to.offsetHeight - to.clientTop - 80 / 2;
-        var fL = from.offsetLeft + from.offsetWidth / 2;
-        var tL = to.offsetLeft + to.offsetWidth / 2;
+        var fT = $(from).offset().top - dfT + from.offsetHeight ;
+        var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
+        var fL = $(from).offset().left  + from.offsetWidth / 2+40;
+        var tL = $(to).offset().left+40;// + to.offsetWidth / 2;
         var CA = Math.abs(tT - fT);
         var CO = Math.abs(tL - fL);
         var H = Math.sqrt(CA * CA + CO * CO);
@@ -687,7 +685,7 @@ SADebug = {
         line.style["-transform"] = 'rotate(' + ANG + 'deg)';
         line.style.top = top + 'px';
         line.style.left = left + 'px';
-        line.style.height = H + 'px';
+        line.style.height = (H )+ 'px';
     },
     Connect: function (div1, div2, color, thickness) {
         var off1 = SADebug.GetOffset(div1);

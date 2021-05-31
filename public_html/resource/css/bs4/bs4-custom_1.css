@@ -1376,10 +1376,15 @@ a.dropdown-menu-header {
     width:1px;
     border-color:#2C73B4;
     background-color:#2C73B4;
-    z-index:10;
+    z-index:100000;
     align-items: center;
     display: -webkit-flex;
     white-space: pre;
+}
+.line_class::after {
+  content: ">";
+  background-color: #FFBA10;
+ 
 }
 
 .us-item-pivot-td{

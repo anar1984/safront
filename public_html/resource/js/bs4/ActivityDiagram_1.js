@@ -210,7 +210,7 @@ var ActivityDiagram = {
                 .addClass('line_class')
 //                .append(title)
                 ;
-        $('#activityDiagramDiv').append(line);
+            $('#activityDiagramDiv').append(line);
         return id;
     },
     adjustLineMain: function () {
