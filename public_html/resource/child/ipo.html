@@ -1,38 +1,19 @@
 <div class="row us-sub-menu-body us-sm-detail"  style="display: block;" id="smb-details-ipo">
     <div class="col-lg-12 porjectNameProto">
-        <div class="col-12 row  ">
-            <div class="col-3">
-                <span>Project</span>
-                <select onchange="new Project().toggleProject(this)" class="form-control projectList" name="" id="">
-    
-                </select>
-            </div>
-            <div class="col-3">
-                <span>Story Card</span>
-                <select class="form-control" name="" id="storyCardListSelectBox">
-    
-                </select>
-            </div>
-            <div class="col-3">
-                <span>Operation</span>
-                <div>
-                    <button class="btn  btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
-                    <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
-                    <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-th-large" style="font-size: 10px;cursor: pointer;"></i></button>  
-                    <button class="btn btn-outline-secondary live-prototype-show-inputrelation"><i class="live-prototype-show-inputrelation1 fa fa-box" style="font-size: 10px;cursor: pointer;"></i></button>  
-                    <button class="btn btn-outline-secondary matrix_block_open"><i class="fas fa-ring" style="font-size: 10px;cursor: pointer;"></i></button>  
-        
-        
-                    <button class="btn btn-outline-secondary live-prototype-show-sourcedrelation"><i class="live-prototype-show-inputrelation1 fa fa-random" style="font-size: 10px;cursor: pointer;"></i></button>  
-                    <button class="btn btn-outline-secondary matrix_block_open"><i class="fas fa-ring" style="font-size: 10px;cursor: pointer;"></i></button>  
-        
-        
-                  </div>
-            </div>
-        
-           
+        <div class="col-5 text-right ">
+            <button class="btn  btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
+            <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
+            <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-th-large" style="font-size: 10px;cursor: pointer;"></i></button>  
+            <button class="btn btn-outline-secondary live-prototype-show-inputrelation"><i class="live-prototype-show-inputrelation1 fa fa-box" style="font-size: 10px;cursor: pointer;"></i></button>  
+            <button class="btn btn-outline-secondary matrix_block_open"><i class="fas fa-ring" style="font-size: 10px;cursor: pointer;"></i></button>  
+
+
+            <button class="btn btn-outline-secondary live-prototype-show-sourcedrelation"><i class="live-prototype-show-inputrelation1 fa fa-random" style="font-size: 10px;cursor: pointer;"></i></button>  
+            <button class="btn btn-outline-secondary matrix_block_open"><i class="fas fa-ring" style="font-size: 10px;cursor: pointer;"></i></button>  
+
+
         </div>
-        <div class="col-7 text-left" style="display: none;">
+        <div class="col-7 text-left">
             <p id="smb-general-main-info">Current User Story</p>
 
         </div>
@@ -524,7 +505,7 @@
             </div>
         </div>
         <div class="toolbar ui-draggable" id="toolbar_cont_drag">
-            <ul class=" cf" style="display: none;">
+            <ul class=" cf">
                 <li value="cbox" title="checkbox">
                     <a  class="inptadd"  href="#">
                         <img src="resource/img/checkbox.png" alt="">
@@ -606,14 +587,14 @@
 
 
             </ul>
-            <div class="editsect"  style="display: none;">
+            <div class="editsect" >
 
                 <button class="btn verticalBtn"><i class="fas fa-grip-vertical"></i></button>
                 <button class="btn horizontalBtn"><i class="fas fa-grip-horizontal"></i></button>
                 <button class="btn minimzeBtn"><i class="fas fa-window-minimize"></i></button>
 
             </div>
-            <div role="button" class=" btn  maximizeBtn"><i class="fas fa-plus"></i></div>
+            <div role="button" class=" btn btn-secondary maximizeBtn"><i class="fas fa-plus"></i></div>
         </div>
         <div class="row zoom-main-new" >
             <a class="btnZoom zoom" onclick="new UserStory().zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -632,15 +613,10 @@
             <!--            <div class='row dragsection'>-->
             <div class='row   dragsection' style1="display: flex;">
 
-                <div  class="gui-design-is-api main-design-page" style="width: 100%;" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
+                <div  class="row gui-design-is-api main-design-page" style="width: 100%;" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
 
 
 
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
                     <div style=" " >
                         <div class="row">
 
@@ -657,22 +633,9 @@
 
 
 
-                        <div class="col-12 gui-design-is-apis redirectClass4CSS target" tabindex="-1" id="gui_component_main_view" style="zoom:100%;display:block1;">
+                        <div class="gui-design-is-apis redirectClass4CSS target" tabindex="-1" id="gui_component_main_view" style="zoom:100%;display:block1;overflow: auto">
                             <br><br>
                             <br><br>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-                            <br>
-                            
-                            <div class="SUS_IPO_GUI_Design1" id="SUS_IPO_GUI_Design1" style="overflow:scroll;height:95vh;z-index: 9;position: relative;" >
-                                <div class="sa-gui-esas">
-                                    <div class="sa-gui-rw sa-rw ">
-                                        <div class="sa-c1 "></div>
-                                        <div class="sa-main-c2 col  sa-c2" id=" ">
-                                            <div class="row redirectClass gui-design" id="SUS_IPO_GUI_Design" bid="" bcode="">
-=======
->>>>>>> Stashed changes
 
                             <div class=" SUS_IPO_GUI_Design1" id="SUS_IPO_GUI_Design1" style="overflow:scroll;height:95vh;z-index: 9;position: relative;" >
                                 <div id="zzzz" style="position:absolute;z-index:50000;width: 600px;height: 5px;background-color: yellow;"></div>
@@ -683,10 +646,6 @@
                                             <div class="sa-main-c2 col  sa-c2" id=" ">
                                                 <div class="row redirectClass gui-design" id="SUS_IPO_GUI_Design" bid="" bcode="">
                                                 </div>
-<<<<<<< Updated upstream
-=======
->>>>>>> 46fd92759d40b311d983e0a7576cbf958ca1a01c
->>>>>>> Stashed changes
                                             </div>
                                             <div class="sa-c3 "></div>
                                         </div>
