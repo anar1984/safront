@@ -12097,6 +12097,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         if ((global_var.current_modal === 'loadLivePrototype')
                 && (global_var.ipo_gui_view === "all")) {
+                   
             this.showAllGuiDetailsNew();
         } else if (global_var.current_modal === 'loadStatistics') {
             $('.loadStatistics').click()
@@ -12771,6 +12772,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.us-checkbox-list').first().prop("checked", false);
         $('.assignSprintAndLabel').attr("style", "pointer-events:none;color:gray;");
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
+          $('#storyCardListSelectBox option:selected').attr('sid',current_backlog_id)
         global_var.current_backlog_id = current_backlog_id.length > 1
                 ? Utility.getParamFromUrl('current_backlog_id')
                 : "";
@@ -14618,11 +14620,6 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             callStoryCard(id);
             return;
         }
-
-
-
-
-
         this.setPreviousUserstoryValues();
         this.setPreviousUserstory();
         $('.us-selected').each(function () {
@@ -18974,6 +18971,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;";
         paramWithZoom += (global_var.ipo_gui_view === 'all') ? "display:block1" : "display:none";
         $('#gui_component_main_view_all').attr('style', paramWithZoom);
+        
     },
 
     setIPOGUICanvas: function () {

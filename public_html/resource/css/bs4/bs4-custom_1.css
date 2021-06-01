@@ -1382,8 +1382,25 @@ a.dropdown-menu-header {
     white-space: pre;
 }
 .line_class::after {
-  content: ">";
-  background-color: #FFBA10;
+    font-family: FontAwesome;
+    content: "\f04b";
+    color: #4a87bd;
+    position: absolute;
+    top: -10px;
+    transform: rotate(-90deg);
+    left: -5px;
+    font-size: 10px;
+ 
+}
+.line_class::before {
+    font-family: FontAwesome;
+    content: "\f45c";
+    color: #4a87bd;
+    position: absolute;
+    top: 99.5%;
+    transform: rotate(-90deg);
+    left: -5px;
+    font-size: 10px;
  
 }
 

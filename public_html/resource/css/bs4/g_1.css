@@ -2098,7 +2098,7 @@ label h6{
     left: 0;
     /* margin: -51px 0 0 -136px; */
     position: absolute;
-    top: 14%;
+    top: 6.5%;
     z-index: 1000;
     display: flex;
 }
@@ -2132,7 +2132,7 @@ label h6{
 }
 .toolbar .maximizeBtn{
 
-    display: block;
+    display: none;
     background-color: #6c757d8a;
     color: rgba(255, 255, 255, 0.637);
 }
