@@ -156,7 +156,7 @@ var be = {
         }
     },
 
-    ShowDescriptionInData4Debug: function (apiId,descId, data) {
+    ShowDescriptionInData4Debug: function (apiId, descId, data) {
         try {
             $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .append($('<span class="sa-desc-in-data-body">')
@@ -164,7 +164,7 @@ var be = {
         } catch (err) {
         }
     },
-    ShowDescriptionOutData4Debug: function (apiId,descId, data) {
+    ShowDescriptionOutData4Debug: function (apiId, descId, data) {
         try {
             $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .append($('<span class="sa-desc-out-data-body">')
@@ -1042,7 +1042,7 @@ var be = {
                 be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
-                    outData = SAFN.ExecCommand(o.description, outData);
+                    outData = SAFN.ExecCommand(o.description, outData,element, asyncData);
                 } else {
                     if (o.fkRelatedScId) {
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -1662,6 +1662,7 @@ var SAFN = {
         'alertdata': 'AlertData',
         'consoledata': 'ConcoleData',
         'deletekey': 'DeleteKey',
+        'callapi': 'CallApi',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1671,25 +1672,46 @@ var SAFN = {
         }
         return f;
     },
+    IsCommandCallApi: function (fnName) {
+        var f = false;
+        try {
+            f = (fnName.trim().toLowerCase().startsWith('@.callapi'));
+        } catch (err) {
+        }
+        return f;
+    },
 
-    ExecCommand: function (description, outData) {
-//        description = description.trim().replace(/ /g, '');
+    GetCommandArgument:function(description){
+        var argLine = "";
+         try {
+            argLine = (description && description !== 'undefined') ? description.split("(")[1].split(')')[0] : '';
+        } catch (err) {
+        }
+        return argLine;
+    },
+    ExecCommand: function (description, outData, element, asyncData) {
+//      description = description.trim().replace(/ /g, '');
+        var callDesc = description;
+
         description = description.trim();
         description = description.trim().replace(SAFN.Prefix, '');
         description = description.toLowerCase();
         var mapperLine = description.split("(")[0];
         var mapper = SAFN.MapList[mapperLine];
         var argLine = [];
-        try {
-            argLine = (description && description != 'undefined') ? description.split("(")[1].split(')')[0] : '';
-        } catch (err) {
-        }
+        argLine = SAFN.GetCommandArgument(description);
 
         var fnName = 'SAFN.Functions.' + mapper;
         SAFN.CoreData = outData;
-        var res = (argLine.length > 2)
-                ? eval(fnName).apply(null, argLine.split(","))
-                : eval(fnName)();
+
+        var res = {};
+        if (SAFN.IsCommandCallApi(callDesc)) {
+            res = SAFN.Functions.CallApi(argLine,outData,element, asyncData);
+        } else {
+            res = (argLine.length > 2)
+                    ? eval(fnName).apply(null, argLine.split(","))
+                    : eval(fnName)();
+        }
 
         var out = $.extend(outData, res);
         outData = out;
@@ -1807,6 +1829,9 @@ var SAFN = {
             var data = SAFN.CoreData;
             delete data[key];
         },
+        CallApi: function (apiId, data, element, asyncData) {
+            be.callApi(apiId, data, element, asyncData)
+        }
 
     }
 }

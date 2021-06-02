@@ -470,7 +470,7 @@ var Component = {
         RegenTableBody: function (el) {
             var tid = $(el).attr("table-id");
             var rc = $(el).val();
-            var body = (rc>0) ? this.GenInputTableBodyHtml(tid, rc).html() :"";
+            var body = (rc > 0) ? this.GenInputTableBodyHtml(tid, rc).html() : "";
             $(el).parent().parent().find('tbody').html(body);
             updateRowCountInputTable(tid, rc);
         },
@@ -518,7 +518,7 @@ var Component = {
             var table = $("<table>")
 
             var thead = this.GenInputTableHeaderHtml(tableId, comp);
-            var tbody =   this.GenInputTableBodyHtml(tableId, rowCount, backlogId) ;
+            var tbody = this.GenInputTableBodyHtml(tableId, rowCount, backlogId);
             table.append(thead).append(tbody);
             return table.html();
         },
@@ -851,7 +851,7 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         div.removeClass("component-class")
                 .removeAttr("onclick")
-        
+
         div.append($('<div>').addClass("progressloader loaderTable1"));
         div.append(el);
         div.addClass("table-responsive")
@@ -1342,6 +1342,9 @@ var Component = {
                 .attr('style', gui_component.defaultCSS.SelectBox + Component.ReplaceCSS(comp.css));
 
         Component.ComponentEvent.Init(select, comp);
+
+
+
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span></span>')
@@ -1381,8 +1384,12 @@ var Component = {
                     select.append($('<option></option>').append(r[i]));
                 }
             } else {
-                for (var i = 1; i < 4; i++) {
-                    select.append($('<option></option>').append('Value ' + (i)));
+                if (select.attr('default-value-is-null') === '1') {
+                    select.append($('<option></option>').append(''));
+                } else {
+                    for (var i = 1; i < 4; i++) {
+                        select.append($('<option></option>').append('Value ' + (i)));
+                    }
                 }
             }
 
@@ -1663,27 +1670,27 @@ var Component = {
         div.append(el);
         return  $('<div></div>').append(div).html();
     },
-    Section4: function (comp,carrier1) {
+    Section4: function (comp, carrier1) {
         var innerHTML = this.SectionAction.SectionEmptyMessage(comp.id);
         if (comp.param1 > 0) {
             try {
-                
-                var sectionId= "__"+makeId(15);
-                var divTemp = "<div class='loaderSection' pid='"+comp.param1+"' id='"+sectionId+"'><div>";
+
+                var sectionId = "__" + makeId(15);
+                var divTemp = "<div class='loaderSection' pid='" + comp.param1 + "' id='" + sectionId + "'><div>";
                 innerHTML = divTemp;//new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
                 new UserStory().hasSequence(comp.sequence, comp.param1);
                 comp.sequence.push(comp.param1);
-                
-                
-                
+
+
+
                 var carrier = new Carrier();
                 carrier.setLineId(carrier1.getLineId());
-                carrier.set("param1",comp.param1);
-                carrier.set("sectionId",sectionId);
-                carrier.set("sequence",comp.sequence);
+                carrier.set("param1", comp.param1);
+                carrier.set("sectionId", sectionId);
+                carrier.set("sequence", comp.sequence);
                 carrier.setBacklogId(comp.param1);
                 _LoadSectionGuiContainer(carrier);
-                
+
             } catch (err) {
             }
         }
@@ -1708,8 +1715,8 @@ var Component = {
                 new UserStory().hasSequence(comp.sequence, comp.param1);
                 comp.sequence.push(comp.param1);
 //                innerHTML = this.GetComponentHtmlNew(jsonT, 0, comp.sequence);
-                
-               
+
+
                 innerHTML = new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
             } catch (err) {
             }

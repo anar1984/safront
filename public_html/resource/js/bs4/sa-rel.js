@@ -773,7 +773,8 @@ SADebug = {
         line.style["-transform"] = 'rotate(' + ANG + 'deg)';
         line.style.top = top + 'px';
         line.style.left = left + 'px';
-        line.style.height = H + 'px';
+        line.style.height = (H) + 'px';
+
     },
     Connect: function (div1, div2, color, thickness) {
         var off1 = SADebug.GetOffset(div1);
