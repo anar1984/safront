@@ -62,9 +62,23 @@ $(function () {
     });
     $(document).on("click", '.api_larged_block', function (e) {
        $('#debugApiBlockLarge').modal();
-      var htm= $(this).parents('.sa-api-esas').html();
-      $(htm).find('.api_larged_block').remove();
-       $('#apiGenBlockLarge').append(htm)
+      var htm= $(this).parents('.sa-rww').html();
+     
+       $('#apiGenBlockLarge').empty();
+       $('#apiGenBlockLarge').append(htm);
+        
+    });
+    $(document).on("click", '.data-title-btn', function (e) {
+        e.stopPropagation()
+        $('.data-block-popUp').css('display',"none");
+        $(this).parent().find('.data-block-popUp').toggle();
+      
+        
+    });
+    $(document).on("click", 'body', function (e) {
+        $('.data-block-popUp').css('display',"none");
+    
+         
         
     });
     $(document).on("change", '#storyCardListSelectBox', function (e) {

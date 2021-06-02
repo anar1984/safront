@@ -5422,7 +5422,7 @@ span.ruby-c-content {
     color: #2189e5;
     position: absolute;
     top: 50%;
-    left: -32px;
+    left: -60px;
 
 }
 .gui-design-is-apis .sa-cw3{
@@ -5432,7 +5432,7 @@ span.ruby-c-content {
     color: #2189e5;
     position: absolute;
     top: 50%;
-    right: -32px;
+    right: 30px;
 
 }
 .gui-design-is-apis .row-fixed-width{
@@ -5443,18 +5443,7 @@ span.ruby-c-content {
 
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
 }
-.gui-design-is-apis .row-fixed-width:hover{
-    transform: scale(2.5);
-    min-width: 120px;
-    height: max-content;
-    position: absolute;
-    top:0;
-    left: 50%;
-    width: auto;
-    z-index: 5000;
-    font-size: 5px;
 
-}
 .gui-design-is-apis .row-fixed-width.api-input-list{
    background-color: #edcd19;
  
@@ -5465,7 +5454,7 @@ span.ruby-c-content {
 
 .gui-design-is-apis .row-fixed-width2{
     min-width: 205px;
-   overflow: hidden;
+ 
    display: flex;
    flex-wrap: wrap;
 }
@@ -5485,26 +5474,189 @@ span.ruby-c-content {
 #apiGenBlockLarge .api_larged_block{
     display: none;
 }
+#apiGenBlockLarge .row-fixed-width{
+   width: 30%;
+}
+#apiGenBlockLarge .row-fixed-width2{
+   width: 40%;
+}
+#apiGenBlockLarge h6{
+  text-align: center;
+}
+#apiGenBlockLarge .sa-cw3{
+    position: absolute;
+    top: 0px;
+    right: 100px;
+    width: 40px;
+}
+#apiGenBlockLarge .sa-cw1{
+    position: absolute;
+    max-width: 40px;
+    left: 60px;
+}
+#apiGenBlockLarge .sa-desc-item{
+  display: flex;
+ 
+  position: relative;
+  margin: 5px 30px;
+}
+#apiGenBlockLarge .sa-desc-block{
+ margin-right: 10px;
+}
+#apiGenBlockLarge .description-data-block-in{
+    width: 20px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: 0;
+    left: -25px;
+    text-align: center;
+}
+#apiGenBlockLarge .description-data-block-out{
+    width: 20px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: 0px;
+    left: 100%;
+}
+#apiGenBlockLarge .api-input-list{
+    text-align: center;
+    border-radius: 6px;
+    background: lightblue;
+    padding: 10px;
+    font-weight: bold;
+}
+#apiGenBlockLarge .api-output-list{
+    text-align: center;
+    border-radius: 6px;
+    background: lightgreen;
+    padding: 10px;
+    font-weight: bold;
+}
+#apiGenBlockLarge .sa-desc-item-body{
+ 
+    background-color: #fb8c8c;
+    padding: 0 5px 0 5px;
+    border-radius: 3px;
+}
+#apiGenBlockLarge .sa-desc-item .sa-desc-item-no{
+  width: 20px;
+  height: 20px;
+ text-align: center;
+  border-radius: 3px;
+  background-color: black;
+  color: white;
+  margin-right: 5px;
+}
+.sa-api-cw3-block,.sa-api-cw1-block{
+    position: absolute;
+    top: 10px;
+    left: 100%;
+    transform: translate(-50%, 10px);
+    z-index: 49999;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    width: 200px;
+    word-break: break-all;
+    display: none;
+   
+}
+.gui-design-is-apis .description-data-block-in{
+    width: 20px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: -23%;
+    left: 0;
+}
+.gui-design-is-apis .description-data-block-out{
+    width: 20px;
+    font-size: 14px;
+    color: #2189e5;
+    position: absolute;
+    top: 101%;
+    left: 0;
+}
+.output-title-btn{
+    font-size: 10px;
+    transform: translate(-40%, 10px);
+    position: relative;
+    padding: 5px;
+    /* margin-bottom: 1px; */
+    top: -5px;
+    border-radius: 3px;
+    background-color: lightsalmon;
+    color: white;
+    cursor: pointer;
+    
+}
+.input-title-btn{
+    font-size: 10px;
+    transform: translate(-50%, 10px);
+    position: relative;
+    padding: 5px;
+    /* margin-bottom: 1px; */
+    top: -5px;
+    border-radius: 3px;
+    background-color: lightblue;
+    color: white;
+    cursor: pointer;
+  
+}
+.output-descrp-btn{
+    font-size: 10px;
+   
+ 
+    padding: 5px 0px;
+    /* margin-bottom: 1px; */
+   
+    border-radius: 3px;
+    background-color: lightsalmon;
+    color: white;
+    cursor: pointer;
+    
+}
+.input-descrp-btn{
+    font-size: 10px;
+   
+    padding: 5px 0px;
+    /* margin-bottom: 1px; */
+   
+    border-radius: 3px;
+    background-color: lightblue;
+    color: white;
+    cursor: pointer;
+  
+}
 
 .gui-design-is-apis .row-fixed-width2 .sa-desc-item{
     background-color: #ea2d53;
     max-width: 20px;
     height: 100px;
-    overflow: hidden;
+    
     color: white;
     border-radius: 3px;
-    box-shadow: 2px 3px rgb(77 77 77 / 10%)
+    box-shadow: 2px 3px rgb(77 77 77 / 10%);
+    position: relative;
+    margin-top: 25px;
     
-}
-.gui-design-is-apis .row-fixed-width2 .sa-desc-item:hover{
-   transform: scale(2);
-   max-height: 20px;
-   width: max-content;
-       
 }
 .gui-design-is-apis .row-fixed-width2 .sa-desc-item-body:hover{
 
-   transform: rotate(-90deg);
+    transform: rotate(-360deg);
+            position: relative;
+            z-index: 555;
+            background: white;
+            color: black;
+            padding: 5px;
+            height: auto;
+            top: 0;
+            left: -100%;
+            border-radius: 3px;
+            width: max-content;
        
 }
 .gui-design-is-apis .row-fixed-width2  .sa-desc-block{
@@ -5525,6 +5677,9 @@ span.ruby-c-content {
     transform: rotate(90deg);
     /* color: white; */
     width: 80px;
+    height: 15px;
+    word-break: break-all;
+    overflow: hidden;
 }
 .gui-design-is-apis .sa-cwr{
     width: auto;
