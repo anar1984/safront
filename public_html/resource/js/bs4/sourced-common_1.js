@@ -5379,6 +5379,26 @@ UserStory.prototype = {
                         : "";
             } catch (err) {
             }
+            
+            var descBody = MapTextAreaHtml(replaceTags(obj[n].description));
+           if (SAFN.IsCommandCallApi(obj[n].description)) {
+               var backlogId = SAFN.GetCommandArgument(obj[n].description);
+                loadBacklogInputsByIdIfNotExist(backlogId);
+               var pid = SACore.GetBacklogDetails(backlogId,'fkProjectId');
+               var backlogName = SACore.GetBacklogDetails(backlogId,'backlogName');
+               backlogName = (backlogName)?backlogName : backlogId;
+               descBody = $('<a>')
+                       .append('@.callApi( ')
+                       .append($('<span>')
+                       .css("background-color","orange")
+                       .css("border-radius","10px")
+                            .text(" "+backlogName+" "))
+                       .append(" )")
+                       .attr("bid",backlogId)
+                       .attr("pid",pid)
+                       .attr("is_api","1")
+                        .attr('onclick',"new UserStory().redirectUserStoryCore('"+backlogId+"')")
+           }
 
             var tr = $("<tr>")
                     .attr("orderno", obj[n].orderNo)
@@ -5397,7 +5417,7 @@ UserStory.prototype = {
                                     .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
                                     .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
                                     .css("border-radius", "5px")
-                                    .append(MapTextAreaHtml(replaceTags(obj[n].description)))
+                                    .append(descBody)
                                     .append(scDesc)
                                     .append(apiDesc)
                                     ))

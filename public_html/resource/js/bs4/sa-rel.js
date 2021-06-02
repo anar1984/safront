@@ -648,13 +648,21 @@ SADebug = {
 //        var t = 100;
         var t = 0;
         var dfT = $('#zzddff').offset().top;
-        
-        var dWidht = $(from).width()/2+ $(to).width()/2
 
-        var fT = $(from).offset().top - dfT + from.offsetHeight ;
-        var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
-        var fL = $(from).offset().left  + from.offsetWidth / 2+40;
-        var tL = $(to).offset().left+40;// + to.offsetWidth / 2;
+        var dWidht = $(from).width() / 2 + $(to).width() / 2
+
+        if (typeX = 'top') {
+            fT = $(from).offset().top - dfT;
+            fL = $(from).offset().left + from.offsetWidth / 2;
+        }else         if (typeX = 'bottom') {
+            fT = $(from).offset().top - dfT+from.offsetHeight;
+            fL = $(from).offset().left + from.offsetWidth / 2;
+        }
+
+        var fT = $(from).offset().top - dfT + from.offsetHeight;
+        var tT = $(to).offset().top - dfT + to.offsetHeight / 2;
+        var fL = $(from).offset().left + from.offsetWidth / 2 + 40;
+        var tL = $(to).offset().left + 40;// + to.offsetWidth / 2;
         var CA = Math.abs(tT - fT);
         var CO = Math.abs(tL - fL);
         var H = Math.sqrt(CA * CA + CO * CO);
@@ -681,7 +689,7 @@ SADebug = {
         line.style["-transform"] = 'rotate(' + ANG + 'deg)';
         line.style.top = top + 'px';
         line.style.left = left + 'px';
-        line.style.height = (H )+ 'px';
+        line.style.height = (H) + 'px';
     },
     Connect: function (div1, div2, color, thickness) {
         var off1 = SADebug.GetOffset(div1);
