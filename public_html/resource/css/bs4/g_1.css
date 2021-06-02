@@ -5388,11 +5388,11 @@ span.ruby-c-content {
     
 }
 
-.sa-cw2{
+.gui-design-is-apis .sa-cw2{
     background-color: #ffffffa3;
     border-radius: 6px;
     padding: 10px;
-   
+  
     text-align:center;
     margin-top: 10px;
     margin-right: 50px;
@@ -5400,10 +5400,10 @@ span.ruby-c-content {
 .sa-cw2 h6{
     width: 100%;
 }
-.sa-gui-rw{
+.gui-design-is-apis .sa-gui-rw{
     display: flex;
 }
-.sa-rww{
+.gui-design-is-apis .sa-rww{
     position: relative;
     left: 20%;
     transform: translate(-10%);
@@ -5411,11 +5411,11 @@ span.ruby-c-content {
     max-width: 500px;
     }
 
-.sa-cw3,.sa-cw1,.sa-c2,.sa-c,.sa-c1{
+.gui-design-is-apis.sa-cw3,.sa-cw1,.sa-c2,.sa-c,.sa-c1{
   
     margin-right: 50px;
 }
-.sa-cw1{
+.gui-design-is-apis .sa-cw1{
     
     width: 14px;
     font-size: 14px;
@@ -5425,7 +5425,7 @@ span.ruby-c-content {
     left: -32px;
 
 }
-.sa-cw3{
+.gui-design-is-apis .sa-cw3{
     
     width: 14px;
     font-size: 14px;
@@ -5435,37 +5435,58 @@ span.ruby-c-content {
     right: -32px;
 
 }
-.row-fixed-width{
+.gui-design-is-apis .row-fixed-width{
    width: 120px;
+   height: 150px;
     overflow: hidden;
     border-radius: 3px;
 
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
 }
-.row-fixed-width:hover{
+.gui-design-is-apis .row-fixed-width:hover{
     transform: scale(2.5);
-    position: relative;
+    min-width: 120px;
+    height: max-content;
+    position: absolute;
+    top:0;
+    left: 50%;
+    width: auto;
     z-index: 5000;
+    font-size: 5px;
+
 }
-.row-fixed-width.api-input-list{
+.gui-design-is-apis .row-fixed-width.api-input-list{
    background-color: #edcd19;
  
 }
-.row-fixed-width.api-output-list{
+.gui-design-is-apis .row-fixed-width.api-output-list{
    background-color: #70cb01;
 }
 
-.row-fixed-width2{
+.gui-design-is-apis .row-fixed-width2{
     min-width: 205px;
    overflow: hidden;
    display: flex;
    flex-wrap: wrap;
 }
-.row-fixed-width2 h6{
+.gui-design-is-apis .row-fixed-width2 h6{
   width: 100%;
    
 }
-.row-fixed-width2 .sa-desc-item{
+.gui-design-is-apis .sa-main-c2{
+    height: max-content;
+}
+.api_larged_block{
+    position: absolute;
+    top: 0;
+    left: -15px;
+    font-size: 9px;
+}
+#apiGenBlockLarge .api_larged_block{
+    display: none;
+}
+
+.gui-design-is-apis .row-fixed-width2 .sa-desc-item{
     background-color: #ea2d53;
     max-width: 20px;
     height: 100px;
@@ -5475,18 +5496,18 @@ span.ruby-c-content {
     box-shadow: 2px 3px rgb(77 77 77 / 10%)
     
 }
-.row-fixed-width2 .sa-desc-item:hover{
+.gui-design-is-apis .row-fixed-width2 .sa-desc-item:hover{
    transform: scale(2);
    max-height: 20px;
    width: max-content;
        
 }
-.row-fixed-width2 .sa-desc-item-body:hover{
+.gui-design-is-apis .row-fixed-width2 .sa-desc-item-body:hover{
 
    transform: rotate(-90deg);
        
 }
-.row-fixed-width2  .sa-desc-block{
+.gui-design-is-apis .row-fixed-width2  .sa-desc-block{
     
     max-width: 190px;
     height: 100px;
@@ -5495,7 +5516,7 @@ span.ruby-c-content {
     
 }
 
-.sa-desc-item-body{
+.gui-design-is-apis .sa-desc-item-body{
     position: relative;
     top: 0px;
     left: 18px;
@@ -5505,30 +5526,31 @@ span.ruby-c-content {
     /* color: white; */
     width: 80px;
 }
-.sa-cwr{
+.gui-design-is-apis .sa-cwr{
     width: auto;
     margin: 10px;
  
 }
-.sa-gui-dept-rw{
+.gui-design-is-apis .sa-gui-dept-rw{
     
     display: flex;
     
 }
 
-.sa-api-esas{
+.gui-design-is-apis .sa-api-esas{
    width: max-content;
    margin-right: 100px;
    position:relative;
 }
  
 
-.sa-dept-rww  {
+.gui-design-is-apis .sa-dept-rww  {
     display:flex;
 }
 #gui_component_main_view{
     position: relative;
-    overflow: hidden !important;
+    overflow: auto !important;
+   
 }
 
 .leader-line{

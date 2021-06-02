@@ -60,6 +60,13 @@ $(function () {
         $(this).popover();
         
     });
+    $(document).on("click", '.api_larged_block', function (e) {
+       $('#debugApiBlockLarge').modal();
+      var htm= $(this).parents('.sa-api-esas').html();
+      $(htm).find('.api_larged_block').remove();
+       $('#apiGenBlockLarge').append(htm)
+        
+    });
     $(document).on("change", '#storyCardListSelectBox', function (e) {
        var id =   $('option:selected', this).attr('sid')
        new UserStory().getStoryInfo(id,this);
