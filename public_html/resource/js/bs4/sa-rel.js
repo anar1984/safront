@@ -19,7 +19,7 @@ SADebug = {
         SADebug.Lines.push(kv);
     },
     RemoveAllDrawLine: function () {
-        $(".line_class").remove();
+        $(".leader-line").remove();
 //        $('.customLineZad').remove();
     },
     DrawLines_old: function () {
@@ -29,7 +29,8 @@ SADebug = {
                 var to = SADebug.Lines[i].toId;
 
                 var fromDiv = document.getElementById(from);
-                var toDiv = document.getElementById(to)
+                var toDiv = document.getElementById(to);
+                
                 SADebug.Connect(fromDiv, toDiv, "#0F0", 5);
             } catch (err) {
             }
@@ -45,9 +46,29 @@ SADebug = {
                 var from = SADebug.Lines[i].fromId;
                 var to = SADebug.Lines[i].toId;
 
+                var oldTop =$('#gui_component_main_view').scrollTop();
+                var oldLeft =$('#gui_component_main_view').scrollLeft();
+           
+                $('#gui_component_main_view').scrollTop(0);
+                $('#gui_component_main_view').scrollLeft(0);
 
+                new LeaderLine(
+                    document.getElementById(from),
+                    document.getElementById(to),
+                    {
+                        color: 'rgb(41,146,210)'
+//                                    color: 'rgb(255,146,27)',
+//                                    dash: true,
+//                            startPlug: 'square',
+//                            endPlug: 'arrow',
+//                            startSocket: 'right',
+//                            endSocket: 'left',
 
-                SADebug.GetLineDivId4Drawing(from, to);
+                    });
+                 
+                    $('#gui_component_main_view').scrollTop(oldTop);
+                    $('#gui_component_main_view').scrollLeft(oldLeft);
+              //  SADebug.GetLineDivId4Drawing(from, to,'right','left');
 
             } catch (err) {
             }
@@ -389,10 +410,11 @@ SADebug = {
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
                                 .append($('<div class="sa-cw1" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Input" data-trigger="click"><i class="fas fa-info-circle"></i></div>'))
+                               
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
-                                        //.append($('<br>').append('------------------------'))
+                                        .append($('<span class="btn btn-secondary api_larged_block"><i class="fas fa-expand" aria-hidden="true"></i></span>'))
                                         .append($('<h6>')
                                                 .addClass("api-body")
                                                 .css("cursor", "pointer")
@@ -435,6 +457,7 @@ SADebug = {
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
                                 .append($('<div class="sa-cw1" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Input" data-trigger="click"><i class="fas fa-info-circle"></i></div>'))
+                                .append($('<span class="btn btn-secondary api_larged_block"><i class="fas fa-expand" aria-hidden="true"></i></span>'))
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
@@ -622,7 +645,7 @@ SADebug = {
         },
         GUI: {}
     },
-    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId) {
+    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId,strtSckt,edSckt) {
         var userStory = 'this.userStories[childBacklodId]';
         var parentUserStory = 'this.parentUserStories[parentBacklogId]';
         var titlePure = userStory + " -  " + parentUserStory;
@@ -632,6 +655,9 @@ SADebug = {
                 .attr('id', id)
                 .attr('title', titlePure)
                 .addClass('line_class')
+                .attr('data-toggle',"tooltip",)
+                .attr('data-placement',"bottom")
+                .attr('title','fromId['+childBacklodId+'] toId['+parentBacklogId+']')
 //                .append(title)
                 ;
         $('#SUS_IPO_GUI_Design1').append(line);
@@ -640,21 +666,66 @@ SADebug = {
         var to = document.getElementById(parentBacklogId);
 
 
-        SADebug.AdjustLine(from, to, line[0]);
+        SADebug.AdjustLine(from, to, line[0],strtSckt,edSckt);
+        $('[data-toggle="tooltip"]').tooltip()
         return id;
     },
-    AdjustLine: function (from, to, line) {
-
+    AdjustLine: function (from, to, line,strtSckt,edSckt) {
+      var endSocket = edSckt;
+      var startSocket = strtSckt;
+        console.log(endSocket,startSocket)
 //        var t = 100;
         var t = 0;
         var dfT = $('#zzddff').offset().top;
         
+     
+        
         var dWidht = $(from).width()/2+ $(to).width()/2
-
-        var fT = $(from).offset().top - dfT + from.offsetHeight ;
-        var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
-        var fL = $(from).offset().left  + from.offsetWidth / 2+40;
-        var tL = $(to).offset().left+40;// + to.offsetWidth / 2;
+         
+     
+        if(endSocket==='left'){
+            var tL = $(to).offset().left;// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
+        }
+        if(endSocket==='right'){
+            var tL = $(to).offset().left+$(to).width()// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
+        }
+        if(endSocket==='top'){
+            var tL = ($(to).offset().left)+$(to).width()/2;// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT;
+            
+        }
+        if(endSocket==='bottom'){
+            var tL = ($(to).offset().left)+$(to).width()/2;// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT + to.offsetHeight ;
+        }
+        
+     
+        if(startSocket==='left'){
+            
+            var fL = ($(from).offset().left)// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT + from.offsetHeight/2 ;
+        }
+        if(startSocket=='right'){
+            var fL = ($(from).offset().left)+$(from).width();;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT + from.offsetHeight/2 ;
+        }
+        if(startSocket==='top'){
+            var fL = ($(from).offset().left+40)+$(from).width()/2;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT  ;
+        }
+      
+        if(startSocket==='bottom'){
+            var fL = ($(from).offset().left+40)+$(from).width()/2;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT + from.offsetHeight ;
+        }
+      
+      
+        fL= fL +15;
+        tL= tL +45;
+      
+       
         var CA = Math.abs(tT - fT);
         var CO = Math.abs(tL - fL);
         var H = Math.sqrt(CA * CA + CO * CO);
@@ -681,7 +752,7 @@ SADebug = {
         line.style["-transform"] = 'rotate(' + ANG + 'deg)';
         line.style.top = top + 'px';
         line.style.left = left + 'px';
-        line.style.height = (H )+ 'px';
+        line.style.height = H + 'px';
     },
     Connect: function (div1, div2, color, thickness) {
         var off1 = SADebug.GetOffset(div1);
@@ -708,7 +779,7 @@ SADebug = {
                 "deg);' />";
         //
 //        alert(htmlLine);
-        $('#gui_component_main_view').append(htmlLine);
+        $('#SUS_IPO_GUI_Design1').append(htmlLine);
     },
 
     GetOffset: function (el) {

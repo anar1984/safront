@@ -18977,8 +18977,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     setIPOGUICanvas: function () {
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;" + global_var.actual_backlog_gui_css;
         paramWithZoom += (global_var.ipo_gui_view === 'single') ? "display:block1" : "display:none";
-        $('#gui_component_main_view').attr('style', paramWithZoom);
-        $('#gv_gui_component_main_view').attr('style', global_var.actual_backlog_gui_css);
+        $('#SUS_IPO_GUI_Design1').css('transform', 'scale('+global_var.actual_zoom/100+')');
+       
+        var oldTop =$('#gui_component_main_view').scrollTop();
+        var oldLeft =$('#gui_component_main_view').scrollLeft();
+        $('#gui_component_main_view').scrollTop(0);
+        $('#gui_component_main_view').scrollLeft(0);
+      //  $('#SUS_IPO_GUI_Design1').css('height',fkt+"vh");
+      //  $('#gv_gui_component_main_view').attr('style', global_var.actual_backlog_gui_css);
+      
+        SADebug.RemoveAllDrawLine();
+        SADebug.DrawLines();
+        $('#gui_component_main_view').scrollTop(oldTop);
+        $('#gui_component_main_view').scrollLeft(oldLeft);
+      
     },
     getBacklogDetailedInputInfoById: function () {
         if (!global_var.current_backlog_id) {

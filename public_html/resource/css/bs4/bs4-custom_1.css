@@ -949,7 +949,7 @@ table tr.active {
     width: 800px;
     /*margin: 10px 30px 10px 20px;*/
     border-radius: 4px;
-    background: white;
+    background: rgba(255, 255, 255, 0.548);
     /*background: #F4F5F7;*/
     padding: 20px 0px 20px 0px;
     border-style: solid;
@@ -1262,7 +1262,7 @@ a.dropdown-menu-header {
     background: #dee2e6;
 } */
 ::-webkit-scrollbar-thumb {
-    background:  #eee;
+    background:  #9b9b9b;
 }
 
 
