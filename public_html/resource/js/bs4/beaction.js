@@ -1042,7 +1042,7 @@ var be = {
                 be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
-                    outData = SAFN.ExecCommand(o.description, outData,element, asyncData);
+                    outData = SAFN.ExecCommand(o.description, outData, element, asyncData);
                 } else {
                     if (o.fkRelatedScId) {
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -1651,6 +1651,9 @@ var be = {
 var SAFN = {
     Prefix: '@.',
     CoreData: "",
+    FunctionBody: "",
+    Element: "",
+    AsyncData: {},
     MapList: {'map': 'Map',
         'set': 'Set',
         'get': 'Get',
@@ -1663,6 +1666,9 @@ var SAFN = {
         'consoledata': 'ConcoleData',
         'deletekey': 'DeleteKey',
         'callapi': 'CallApi',
+        "if": "If",
+        'sum': 'Sum',
+        'concat': 'Concat',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1681,16 +1687,28 @@ var SAFN = {
         return f;
     },
 
-    GetCommandArgument:function(description){
+    GetCommandArgument: function (description) {
         var argLine = "";
-         try {
+        try {
             argLine = (description && description !== 'undefined') ? description.split("(")[1].split(')')[0] : '';
+        } catch (err) {
+        }
+        return argLine;
+    },
+    GetFunctionBody: function (description) {
+        var argLine = "";
+        try {
+            argLine = (description && description !== 'undefined') ? description.split("{")[1].split('}')[0] : '';
         } catch (err) {
         }
         return argLine;
     },
     ExecCommand: function (description, outData, element, asyncData) {
 //      description = description.trim().replace(/ /g, '');
+        SAFN.FunctionBody = SAFN.GetFunctionBody(description);
+        SAFN.Element = element;
+        SAFN.AsyncData = asyncData;
+
         var callDesc = description;
 
         description = description.trim();
@@ -1705,18 +1723,26 @@ var SAFN = {
         SAFN.CoreData = outData;
 
         var res = {};
-        if (SAFN.IsCommandCallApi(callDesc)) {
-            res = SAFN.Functions.CallApi(argLine,outData,element, asyncData);
-        } else {
-            res = (argLine.length > 2)
-                    ? eval(fnName).apply(null, argLine.split(","))
-                    : eval(fnName)();
-        }
+
+        res = (argLine.length > 2)
+                ? eval(fnName).apply(null, argLine.split(","))
+                : eval(fnName)();
+
 
         var out = $.extend(outData, res);
         outData = out;
         return outData;
 
+    },
+    GetArgumentValue: function (valueCore) {
+        valueCore = valueCore.trim();
+        var data = SAFN.CoreData;
+        var val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
+                ? valueCore.substring(1, valueCore.length - 1)
+                : valueCore.startsWith('"') && valueCore.endsWith('"')
+                ? valueCore.substring(1, valueCore.length - 1)
+                : (data[valueCore]) ? data[valueCore] : "";
+        return val;
     },
 
     ConvertFunctions: {
@@ -1786,8 +1812,59 @@ var SAFN = {
     Functions: {
         Map: function (sourceKey, destinationKey) {
             var data = SAFN.CoreData;
-            data[sourceKey] = data[destinationKey];
+            var val = data[destinationKey];
+            val = (val) ? val : "";
+            data[sourceKey] = val;
             return data;
+        },
+        Sum: function () {
+            var out = 0;
+            var outData = {};
+            for (var i = 1; i < arguments.length; i++) {
+                var val = arguments[i];
+                val = SAFN.GetArgumentValue(val);
+                out += parseFloat(val);
+            }
+            outData[arguments[0]] = out;
+            return outData;
+        },
+        Inc: function () {
+            var out = 1;
+            var outData = {};
+            for (var i = 1; i < arguments.length; i++) {
+                var val = arguments[i];
+                val = SAFN.GetArgumentValue(val);
+                out *= parseFloat(val);
+            }
+            outData[arguments[0]] = out;
+            return outData;
+        },
+        Dec: function () {
+            if (arguments.length < 3) {
+                return 1;
+            }
+
+            var out = arguments[1];
+            var outData = {};
+            for (var i = 2; i < arguments.length; i++) {
+                var val = arguments[i];
+                val = SAFN.GetArgumentValue(val);
+                out = out / parseFloat(val);
+            }
+            outData[arguments[0]] = out;
+            return outData;
+        },
+
+        Concat: function () {
+            var out = '';
+            var outData = {};
+            for (var i = 1; i < arguments.length; i++) {
+                var val = arguments[i];
+                val = SAFN.GetArgumentValue(val);
+                out += val;
+            }
+            outData[arguments[0]] = out;
+            return outData;
         },
         Set: function (key, value) {
             var data = SAFN.CoreData;
@@ -1819,7 +1896,8 @@ var SAFN = {
         },
         AlertData: function () {
             var data = SAFN.CoreData;
-            alert(JSON.stringify(data));
+            var zadData = JSON.stringify(data);
+            alert(zadData);
         },
         ConsoleData: function () {
             var data = SAFN.CoreData;
@@ -1829,8 +1907,64 @@ var SAFN = {
             var data = SAFN.CoreData;
             delete data[key];
         },
-        CallApi: function (apiId, data, element, asyncData) {
+        CallApi: function (apiId) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+            var asyncData = SAFN.AsyncData;
+
             be.callApi(apiId, data, element, asyncData)
+        },
+        If: function (keyCore, operation, valueCore) {
+            operation = operation.replace(/ /g, '');
+            operation = operation.toLowerCase();
+
+
+
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+            var asyncData = SAFN.AsyncData;
+
+            var value = SAFN.GetArgumentValue(valueCore);
+            var key = SAFN.GetArgumentValue(keyCore);
+
+            var operRes = false;
+
+            if (operation === '=') {
+                operRes = (key === value)
+            } else if (operation === '!=') {
+                operRes = (key !== value)
+            } else if (operation === '>') {
+                operRes = (parseFloat(key) > parseFloat(value));
+            } else if (operation === '>') {
+                operRes = (parseFloat(key) > parseFloat(value));
+            } else if (operation === '<') {
+                operRes = (parseFloat(key) < parseFloat(value));
+            } else if (operation === '>=' || operation === '=>') {
+                operRes = (parseFloat(key) >= parseFloat(value));
+            } else if (operation === '<=' || operation === '=<') {
+                operRes = (parseFloat(key) <= parseFloat(value));
+            } else if (operation === 'in') {
+                operRes = (key.includes(value));
+            } else if (operation === 'notin') {
+                operRes = (key.includes(value));
+            }
+
+            var outData = {};
+            if (operRes) {
+                var commands = SAFN.FunctionBody.split(";");
+                for (var i = 0; i < commands.length; i++) {
+                    var cmd = commands[i];
+                    if (cmd.length > 3) {
+                        var res = SAFN.ExecCommand(cmd, data, element, asyncData);
+                        var out = $.extend(outData, res);
+                        outData = out;
+
+                    }
+                }
+
+            }
+            return outData;
+
         }
 
     }

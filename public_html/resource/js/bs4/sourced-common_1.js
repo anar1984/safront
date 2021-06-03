@@ -5548,7 +5548,7 @@ UserStory.prototype = {
 
     toogleBacklogDescEdit: function (e, id) {
         $(".descriptiontable tr").removeClass("activetr");
-        var inp = $('<textarea type="text" class="form-control newinp" style="border:white;" >')
+        var inp = $('<textarea type="text" class="form-control newinp1" style="border:white;" >')
                 .css("width", "100%")
                 .attr("onfocusout", "new UserStory().updateBacklogDesc(this,'" + id + "')")
                 .attr("id", "id_" + id)
@@ -5560,11 +5560,11 @@ UserStory.prototype = {
 
         inp.focus();
 
-        $("#id_" + id).keyup(function (event) {
-            if (event.keyCode === 13) {
-                new UserStory().updateBacklogDesc(this, id);
-            }
-        });
+//        $("#id_" + id).keyup(function (event) {
+//            if (event.keyCode === 13) {
+//                new UserStory().updateBacklogDesc(this, id);
+//            }
+//        });
 
     },
 
@@ -20430,7 +20430,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     updateInputEditLineNew: function (el, inputId) {
-        console.log('adeten');
+       
         var inp = $('<input type="text">')
                 .css("width", "100%")
                 .css('border', 'none')
