@@ -1668,6 +1668,8 @@ var SAFN = {
         'callapi': 'CallApi',
         "if": "If",
         'sum': 'Sum',
+        'inc': 'Inc',
+        'dec': 'Dec',
         'concat': 'Concat',
     },
     IsCommand: function (fnName) {
@@ -1845,6 +1847,7 @@ var SAFN = {
             }
 
             var out = arguments[1];
+            out = SAFN.GetArgumentValue(out);
             var outData = {};
             for (var i = 2; i < arguments.length; i++) {
                 var val = arguments[i];
