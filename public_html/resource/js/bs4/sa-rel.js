@@ -56,7 +56,8 @@ SADebug = {
                     document.getElementById(from),
                     document.getElementById(to),
                     {
-                        color: 'rgb(41,146,210)'
+                        color: 'rgb(41,146,210)',
+                        size:2
 //                                    color: 'rgb(255,146,27)',
 //                                    dash: true,
 //                            startPlug: 'square',
@@ -409,7 +410,10 @@ SADebug = {
 
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
-                                .append($('<div class="sa-cw1" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Input" data-trigger="click"><i class="fas fa-info-circle"></i></div>'))
+                                .append($('<div>')
+                                .addClass('sa-cw1')
+                                .append('<span class="input-title-btn data-title-btn" >INPUT</span>')
+                                .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
                                
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
@@ -438,7 +442,10 @@ SADebug = {
                                                 .append("<h6>Output(s)<h6>")
                                                 .append(''))
                                         )
-                                .append($('<div class="sa-cw3" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Output" data-trigger="click"><i class="fas fa-circle-notch"></i></div>'))
+                                .append($('<div>')
+                                .addClass('sa-cw3')
+                                .append('<span class="output-title-btn data-title-btn" >OUTPUT</span>')
+                                .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'))
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;
@@ -478,7 +485,11 @@ SADebug = {
                                                 .append("<h6>Output(s)<h6>")
                                                 .append(SADebug.Pattern.API.GetOutputList(apiId)))
                                         )
-                                .append($('<div class="sa-cw3" data-content="Popover with data-trigger" rel="popover" data-placement="bottom" data-original-title="Output" data-trigger="click"><i class="fas fa-circle-notch"></i></div>'))
+                                .append($('<div>')
+                                           .addClass('sa-cw3')
+                                           .append('<span class="output-title-btn" >INOUT</span>')
+                                           .append('<div class="sa-api-cw3-block" ></div>')
+                                           )
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;
@@ -574,7 +585,9 @@ SADebug = {
             },
             GetProcessDescriptionList: function (apiId) {
 
-                var div = $("<div>").addClass('sa-desc-block');
+                var div = $("<div>")
+                              .addClass('sa-desc-block')
+                              
 
                 var extApiList = (cr_project_desc_by_backlog[apiId])
                         ? cr_project_desc_by_backlog[apiId]
@@ -583,7 +596,15 @@ SADebug = {
                 var idx = 1;
                 for (var i in  extApiList) {
 //                try {
-                    var divZad = $('<div class="sa-desc-item">');
+                    var divZad = $('<div class="sa-desc-item">')
+                    .append($('<div>')
+                    .addClass('description-data-block-in')
+                    .append('<h5 class="input-descrp-btn data-title-btn" >IN</h5>')
+                    .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
+                  .append($('<div>')
+                    .addClass('description-data-block-out')
+                    .append('<h5 class="output-descrp-btn data-title-btn" >OUT</h5>')
+                    .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'));;
                     var extId = extApiList[i];
                     var o = cr_project_desc[extId];
 

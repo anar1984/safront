@@ -139,26 +139,26 @@ var be = {
 
     ShowInData4Debug: function (apiId, data) {
         try {
-            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1')
-                    .attr('data-content', "'" + JSON.stringify(data) + "'");
-            //    .append($('<span class="sa-api-cw1-body">')
-            //          .text(JSON.stringify(data)));
+            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
+                    //append($('<>').text(JSON.stringify(data)));
+                 .append($('<span class="sa-api-cw1-body">')
+                         .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
     ShowOutData4Debug: function (apiId, data) {
         try {
-            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3')
-                    .attr('data-content', "'" + JSON.stringify(data) + "'");
-            // .append($('<span class="sa-api-cw3-body">')
-            //       .text(JSON.stringify(data)));
+            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
+                     //  .attr('data-content',"'"+JSON.stringify(data)+"'");
+                   .append($('<span class="sa-api-cw3-body">')
+                        .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
 
     ShowDescriptionInData4Debug: function (apiId, descId, data) {
         try {
-            $('#core_api_desc_' + descId).closest('div.sa-desc-item')
+            $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .append($('<span class="sa-desc-in-data-body">')
                             .text(JSON.stringify(data)));
         } catch (err) {
@@ -166,7 +166,7 @@ var be = {
     },
     ShowDescriptionOutData4Debug: function (apiId, descId, data) {
         try {
-            $('#core_api_desc_' + descId).closest('div.sa-desc-item')
+            $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .append($('<span class="sa-desc-out-data-body">')
                             .text(JSON.stringify(data)));
         } catch (err) {
