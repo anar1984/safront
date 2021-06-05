@@ -9877,7 +9877,9 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
-    
+
+    getProjectUsers();
+        getUsers();
 
 
     $.get("resource/child/ipo.html", function (html_string)

@@ -1671,6 +1671,7 @@ var SAFN = {
         'inc': 'Inc',
         'dec': 'Dec',
         'concat': 'Concat',
+        'callfn':'CallFn',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1916,6 +1917,13 @@ var SAFN = {
             var asyncData = SAFN.AsyncData;
 
             be.callApi(apiId, data, element, asyncData)
+        },
+        CallFn: function (fnName) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+            var asyncData = SAFN.AsyncData;
+
+           eval(fnName)(data,element,"",asyncData);
         },
         If: function (keyCore, operation, valueCore) {
             operation = operation.replace(/ /g, '');
