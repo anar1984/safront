@@ -9734,6 +9734,7 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     $('.sa-main-c2').removeClass("col");
     bindScrollZadToCanvas();
     SADebug.CallGUI(backlogId);
+    $('.gui-design'),css('background-color','transparent')
 
 });
 
@@ -9876,7 +9877,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     showToggleMain();
-
+    
 
 
     $.get("resource/child/ipo.html", function (html_string)
@@ -9910,6 +9911,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
     });
 
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 });
 

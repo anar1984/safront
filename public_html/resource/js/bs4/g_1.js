@@ -741,6 +741,7 @@ $(document).on("click", ".toolbar .minimzeBtn", function () {
     $('.toolbar .cf').css('display', 'none');
     $('.toolbar .editsect').css('display', 'none');
     $('.toolbar .maximizeBtn').css('display', 'block');
+    localStorage.setItem('data-toolbar-opened',"false");
 
 
 });
@@ -750,6 +751,7 @@ $(document).on("click", ".toolbar .maximizeBtn", function () {
     $('.toolbar .cf').css('display', 'flex');
     $('.toolbar .editsect').css('display', 'flex');
     $('.toolbar .maximizeBtn').css('display', 'none');
+    localStorage.setItem('data-toolbar-opened',"true");
 
 });
 $(document).on("click", ".toolbar .horizontalBtn", function () {

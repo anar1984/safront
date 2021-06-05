@@ -315,9 +315,7 @@ visibility: visible;
   cursor: pointer;
   margin-left: 5px;
 }
-.leader-line {
-  z-index: -1 !important;
-}
+
 .leader-line text{
   position: relative;
   z-index: 10 !important;

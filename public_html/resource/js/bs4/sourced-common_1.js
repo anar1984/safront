@@ -13106,7 +13106,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 return;
             }
             $('#container-us-body').html('');
-
+            console.log(res)
             $('#api_list_side_bar').html(this.getUSListBlockApi(res));
             $('#container-us-body').html(this.getUSListBlockUserStory(res));
             $('#storyCardListSelectBox').html(this.getUSListBlockUserStoryLive(res));
@@ -25808,6 +25808,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
     },
     setUSLists: function (res) {
         $('#analytics-details-userstorylist-list >tbody').html('');
+    
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var o = obj[n];
