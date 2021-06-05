@@ -1,5 +1,45 @@
 
 
+ function genLeadeLine(start,end,type,clor,text){
+
+
+  if(type ==="tosidearrow"){
+    new LeaderLine(document.getElementById(start), document.getElementById(end), {
+       
+      middleLabel: LeaderLine.pathLabel(text),
+     size: 2,
+     startPlug: 'arrow',
+     color: clor 
+   
+    }
+    )
+  }
+  if(type ==="tosidearrow"){
+    new LeaderLine(document.getElementById(start), document.getElementById(end), {
+       
+      middleLabel: LeaderLine.pathLabel(text),
+     size: 2,
+     startPlug: 'arrow',
+     color: clor 
+   
+    }
+    )
+  }
+  if(type ==="tosidearrow"){
+    new LeaderLine(document.getElementById(start), document.getElementById(end), {
+       
+      middleLabel: LeaderLine.pathLabel(text),
+     size: 2,
+     startPlug: 'arrow',
+     color: clor 
+   
+    }
+    )
+  }
+
+   
+ }
+
 
 var FromTo = {peer:[
 ]
@@ -12,9 +52,7 @@ var Idcontent = {content:[
 
 var is_line_dragged2 =false
 let idgenvLane = 23734723742
-//$( document ).ready(function() {
-
-
+$( document ).ready(function() {
 
 
 
@@ -46,19 +84,17 @@ $(document).on('drop', ".Content",function(e){
    is_line_dragged2 = false;
     var data2 = $(this).attr("id") ;
     //removeLine(data1,data2);
+  
      var dataText = "text"
     new LeaderLine(document.getElementById(data1), document.getElementById(data2), {
        
       middleLabel: LeaderLine.pathLabel(dataText),
      size: 2,
-     startPlug: 'square',
+     startPlug: 'arrow',
      color: 'black'
    
     }
     )
-
-
-
    
     var kv={};
     kv= [data1,data2,dataText];
@@ -66,7 +102,7 @@ $(document).on('drop', ".Content",function(e){
    
 
     e.stopPropagation();
-   
+    LaneRepair();
 
 });
 
@@ -122,7 +158,7 @@ $(document).on("click", "#LaneAddBtn" , function(){
   for (var i = 0; i < countsltd1; i++) {
   
 
-    $("#laneId"+idgenvLane).append('<td><td>');
+    $("#laneId"+idgenvLane).append('<td></td>');
  
 
 
@@ -135,6 +171,9 @@ $(document).on("click", "#LaneAddBtn" , function(){
  
     })
   items = document.querySelectorAll('.Graphtable td');
+
+
+
   
 })
   
@@ -248,224 +287,248 @@ $(document).on("click","#LaneRemoveBTn" ,function(){
 function genUsStickMAn(idgen,bgclr){
 
  return $("<div>")
-          .addClass("stickManFigure Content")
-          .attr("draggable","true")
-          .attr("data-colorcst","4")
-          .attr("id", idgen)
+           .addClass("resizeFigure")
           .append($("<div>")
+                    .addClass("stickManFigure Content")
+                    .attr("draggable","true")
+                    .attr("data-colorcst","4")
+                    .attr("id", idgen)
+                    .append($("<div>")
                     .addClass("contentArrow")
                     .attr("id", "dragArrow")
                      .attr("draggable","true")
                     .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>").addClass("remvFigbody headFG")
-                   .attr("style","border: 5px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody torsoFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody leftarmFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody rightarmFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody leftlegFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody leftfootFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody rightlegFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("remvFigbody rightfootFG")
-                   .attr("style","border: 3px solid"+bgclr+" ;"))
-          .append($("<div>").addClass("ContentBody StickMnbody"))
+                    .append($("<div>").addClass("remvFigbody headFG")
+                             .attr("style","border: 5px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody torsoFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody leftarmFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody rightarmFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                              .append($("<div>").addClass("remvFigbody leftlegFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody leftfootFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody rightlegFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("remvFigbody rightfootFG")
+                             .attr("style","border: 3px solid"+bgclr+" ;"))
+                    .append($("<div>").addClass("ContentBody StickMnbody")))
           
 }
 
 function genUsSquare(idgen,bgclr){
 
  return $("<div>")
-          .addClass("Content col-11 square")
-          .attr("draggable","true")
-          .attr("data-colorcst","1")
-          .attr("id", idgen)
-          .attr("style","background-color:"+bgclr+" ;")
+          .addClass("resizeFigure")
           .append($("<div>")
-                    .addClass("contentArrow")
-                    .attr("id", "dragArrow")
-                     .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody")
-                  
-                    )
+                    .addClass("Content  square")
+                    .attr("draggable","true")
+                    .attr("data-colorcst","1")
+                    .attr("id", idgen)
+                    .attr("style","background-color:"+bgclr+" ;")
+                    .append($("<div>")
+                              .addClass("contentArrow")
+                              .attr("id", "dragArrow")
+                               .attr("draggable","true")
+                              .append('<i class="fas fa-arrow-right"></i>'))
+                    .append($("<div>")
+                             .addClass("ContentBody")
+                            
+                              ))
           
 }
 function genUsRectangle(idgen,bgclr){
 
- return $("<div>")
-          .addClass("Content USrectangle")
-          .attr("draggable","true")
-          .attr("data-colorcst","5")
-          .attr("data-text","TextVal")
-          .attr("id", idgen)
-          .attr("style","background-color:"+bgclr+" ;")
-          .append($("<div>")
-                    .addClass("contentArrow")
-                    .attr("id", "dragArrow")
+ return  $("<div>")
+            .addClass("resizeFigure")
+            .append($("<div>")
+                     .addClass("Content USrectangle")
                      .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("UserRectBody")
-                   .attr("data-hastxt","1"))
-          .append($("<div>")
-                   .addClass("StatFigure")
-                   .html("User  <br> Story"))
+                     .attr("data-colorcst","5")
+                     .attr("data-text","TextVal")
+                     .attr("id", idgen)
+                     .attr("style","background-color:"+bgclr+" ;")
+                     .append($("<div>")
+                               .addClass("contentArrow")
+                               .attr("id", "dragArrow")
+                                .attr("draggable","true")
+                               .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("UserRectBody")
+                              .attr("data-hastxt","1"))
+                     .append($("<div>")
+                              .addClass("StatFigure")
+                              .html("User  <br> Story")))           
           
 }
 function genUsTriangle(idgen,bgclr){
 
- return $("<div>")
-          .addClass("Content triangle")
-          .attr("draggable","true")
-          .attr("data-colorcst","2")
-          .attr("id", idgen)
-          .attr("style","border-color:transparent transparent "+bgclr+" transparent;")
-          .append($("<div>")
-                    .addClass("contentArrow trinagleArrow")
-                    .attr("id", "dragArrow")
+ return  $("<div>")
+            .addClass("resizeFigure")
+            .append($("<div>")           
+                     .addClass("Content triangle")
                      .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody TriangleBody")
-                  
-                    )
+                     .attr("data-colorcst","2")
+                     .attr("id", idgen)
+                     .attr("style","border-color:transparent transparent "+bgclr+" transparent;")
+                     .append($("<div>")
+                               .addClass("contentArrow trinagleArrow")
+                               .attr("id", "dragArrow")
+                                .attr("draggable","true")
+                               .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("ContentBody TriangleBody")
+                             
+                               ))
           
 }
 function genUsHexagon(idgen,bgclr){
 
- return $("<div>")
-          .addClass("Content hexagon")
-          .attr("draggable","true")
-          .attr("data-colorcst","2")
-          .attr("id", idgen)
-          .attr("style","background-color:"+bgclr+" ;")
-          .append($("<div>")
-                    .addClass("contentArrow")
-                    .attr("id", "dragArrow")
+ return  $("<div>")
+            .addClass("resizeFigure")
+            .append($("<div>")           
+                     .addClass("Content hexagon")
                      .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody")
-                  
-                    )
-          
+                     .attr("data-colorcst","2")
+                                .attr("id", idgen)
+                     .attr("style","background-color:"+bgclr+" ;")
+                     .append($("<div>")
+                               .addClass("contentArrow")
+                               .attr("id", "dragArrow")
+                                .attr("draggable","true")
+                               .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("ContentBody")
+                             
+                               ))
+                     
 }
 function genUsRhomb(idgen,bgclr){
 
- return $("<div>")
-          .addClass("Content rhomb")
-          .attr("draggable","true")
-          .attr("data-colorcst","1")
-          .attr("id", idgen)
-          .attr("style","background-color:"+bgclr+" ;")
-          .append($("<div>")
-                    .addClass("contentArrow rhombArrow ")
-                    .attr("id", "dragArrow")
+ return  $("<div>")
+            .addClass("resizeFigure")
+            .append($("<div>")
+                     .addClass("Content rhomb")
                      .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody rhombBody")
-                  
-                    )
+                     .attr("data-colorcst","1")
+                     .attr("id", idgen)
+                     .attr("style","background-color:"+bgclr+" ;")
+                     .append($("<div>")
+                               .addClass("contentArrow rhombArrow ")
+                               .attr("id", "dragArrow")
+                                .attr("draggable","true")
+                               .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("ContentBody rhombBody")
+                             
+                               ))           
           
 }
 function genUsEllipse(idgen,bgclr){
 
  return $("<div>")
-          .addClass("Content ellipse")
-          .attr("draggable","true")
-          .attr("data-colorcst","1")
-          .attr("id", idgen)
-          .attr("style","background-color:"+bgclr+" ;")
+          .addClass("resizeFigure")
           .append($("<div>")
-                    .addClass("contentArrow  ")
-                    .attr("id", "dragArrow")
-                     .attr("draggable","true")
-                    .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody ")
-                  
-                    )
+                    .addClass("Content ellipse")
+                    .attr("draggable","true")
+                    .attr("data-colorcst","1")
+                    .attr("id", idgen)
+                    .attr("style","background-color:"+bgclr+" ;")
+                    .append($("<div>")
+                              .addClass("contentArrow  ")
+                              .attr("id", "dragArrow")
+                               .attr("draggable","true")
+                              .append('<i class="fas fa-arrow-right"></i>'))
+                    .append($("<div>")
+                             .addClass("ContentBody ")
+                            
+                              ))
           
 }
 
 function genUsCircle(idgen,bgclr){
-  return $("<div>")
-  .attr("draggable","true")
-  .addClass("Content  col-11 circle")
-  .attr("data-colorcst","1")
-  .attr("id", idgen)
-  .attr("style","background-color:"+bgclr+" ;")
-  .append($("<div>")
-            .addClass("contentArrow")
-            .attr("id", "dragArrow")
+  return  $("<div>")
+           .addClass("resizeFigure")
+           .append(
+            $("<div>")
             .attr("draggable","true")
-            .append('<i class="fas fa-arrow-right"></i>'))
-  .append($("<div>")
-           .addClass("ContentBody")
-        
-            )
+            .addClass("Content   circle")
+            .attr("data-colorcst","1")
+            .attr("id", idgen)
+            .attr("style","background-color:"+bgclr+" ;")
+            .append($("<div>")
+                      .addClass("contentArrow")
+                      .attr("id", "dragArrow")
+                      .attr("draggable","true")
+                      .append('<i class="fas fa-arrow-right"></i>'))
+            .append($("<div>")
+                     .addClass("ContentBody")
+                  
+                      ))
+  
           
 }
 function genUsDocumentFg(idgen,bgclr){
-  return $("<div>")
-  .attr("draggable","true")
-  .addClass("Content DocumentFg")
-  .attr("data-colorcst","1")
-  .attr("id", idgen)
-  .attr("style","background-color:"+bgclr+" ;")
-  .append($("<div>")
-            .addClass("contentArrow")
-            .attr("id", "dragArrow")
-            .attr("draggable","true")
-            .append('<i class="fas fa-arrow-right"></i>'))
-  .append($("<div>")
-           .addClass("ContentBody")
+  return  $("<div>")
+             .addClass("resizeFigure")
+             .append($("<div>")
+             .attr("draggable","true")
+             .addClass("Content DocumentFg")
+             .attr("data-colorcst","1")
+             .attr("id", idgen)
+             .attr("style","background-color:"+bgclr+" ;")
+             .append($("<div>")
+                       .addClass("contentArrow")
+                       .attr("id", "dragArrow")
+                       .attr("draggable","true")
+                       .append('<i class="fas fa-arrow-right"></i>'))
+              .append($("<div>")
+                       .addClass("ContentBody")
         
-            )
+            ));       
           
 }
 
 
 function genUsDiamond(idgen,bgclr){
-  return $("<div>")
-              .addClass("Content diamond")
-              .attr("draggable","true")
-              .attr("data-colorcst","1")
-              .attr("id", idgen)
-              .attr("style","background-color:"+bgclr+" ;")
-          .append($("<div>")
-            .addClass("contentArrow arrowdiamond")
-            .attr("id", "dragArrow")
-            .attr("draggable","true")
-            .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody DiamondBody")
-                   )
+  return  $("<div>")
+             .addClass("resizeFigure")
+             .append($("<div>")
+                         .addClass("Content diamond")
+                         .attr("draggable","true")
+                         .attr("data-colorcst","1")
+                         .attr("id", idgen)
+                         .attr("style","background-color:"+bgclr+" ;")
+                     .append($("<div>")
+                       .addClass("contentArrow arrowdiamond")
+                       .attr("id", "dragArrow")
+                       .attr("draggable","true")
+                       .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("ContentBody DiamondBody")
+                              ))           
           
 }
 function genUSCardfg(idgen,bgclr){
-  return $("<div>")
-              .addClass("Content cardfg")
-              .attr("draggable","true")
-              .attr("data-colorcst","1")
-              .attr("id", idgen)
-         
-              .attr("style","background-color:"+bgclr+" ;")
-          .append($("<div>")
-            .addClass("contentArrow ")
-            .attr("id", "dragArrow")
-            .attr("draggable","true")
-            .append('<i class="fas fa-arrow-right"></i>'))
-          .append($("<div>")
-                   .addClass("ContentBody ")
-                   )
+  return  $("<div>")
+             .addClass("resizeFigure")
+             .append($("<div>")
+                         .addClass("Content cardfg")
+                         .attr("draggable","true")
+                         .attr("data-colorcst","1")
+                         .attr("id", idgen)
+                    
+                         .attr("style","background-color:"+bgclr+" ;")
+                     .append($("<div>")
+                       .addClass("contentArrow ")
+                       .attr("id", "dragArrow")
+                       .attr("draggable","true")
+                       .append('<i class="fas fa-arrow-right"></i>'))
+                     .append($("<div>")
+                              .addClass("ContentBody ")
+                              ))           
           
 }
 
@@ -1136,7 +1199,7 @@ $(document).on("dblclick", ".Content" , function(){
     // console.log(color);
      var text = $('[data-text="TextVal"]').find(".ContentBody span").text();
      $("#select-text").val(text)
-     var dataHtml = $('[data-text="TextVal"]').clone();
+     var dataHtml = $('[data-text="TextVal"]').parent(".resizeFigure").clone();
 
      $(".ContentCopyDiv").html(dataHtml)
     
@@ -1165,26 +1228,31 @@ $(document).on("dblclick", ".Content" , function(){
 
 $(document).on("change", "#FigureWitdh" , function(){
     
-     var width = $(this).val()
+     var width = $(this).val();
  
   $('[data-text="TextVal"]').css("width", width +"%");
 
-   console.log(width);
+ 
 })
 $(document).on("change", "#FigureHeight" , function(){
     
      var height = $(this).val();
  
-  $('[data-text="TextVal"]').css("height", height +"%");
+     $('[data-text="TextVal"]').css("height", height +"%");
 
-   console.log(height);
 })
 
 
 
  
 function LaneRepair(){
-  $(".leader-line").remove()
+  $(".leader-line").remove();
+  
+  var dt =$('.activity-conatiner').scrollTop();
+  var dtl =$('.activity-conatiner').scrollLeft();
+  
+  $('.activity-conatiner').scrollTop(0);
+  $('.activity-conatiner').scrollLeft(0);
   var list = FromTo.peer;
   for (var i=0;i<list.length;i++){
     var id = list[i];
@@ -1196,7 +1264,7 @@ function LaneRepair(){
       color: 'black', 
       middleLabel: LeaderLine.pathLabel(id[2]),
       size: 2,
-      startPlug: 'square',
+      startPlug: 'arrow1',
     })
 
     
@@ -1204,6 +1272,8 @@ function LaneRepair(){
     
   }
    
+  $('.activity-conatiner').scrollTop(dt);
+  $('.activity-conatiner').scrollLeft(dtl);
 }
 
 
@@ -1325,6 +1395,7 @@ var dragSrcEl = null;
 
   function handleDragLeave(e) {
     this.classList.remove('over');
+    
   }
 
   function handleDrop(e) {
@@ -1338,7 +1409,8 @@ var dragSrcEl = null;
       this.innerHTML = e.dataTransfer.getData('text/html');
 
     }
-   LaneRepair()
+   LaneRepair();
+   $(".over").removeClass('over')
     return false;
   }
 
@@ -1368,7 +1440,7 @@ var dragSrcEl = null;
   });
   
 
-
+ 
 
 
   $(".Graphtable tbody tr").arrangeable({
@@ -1381,7 +1453,7 @@ var dragSrcEl = null;
 
   
 
-//});
+});
 
 
 
