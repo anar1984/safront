@@ -10,6 +10,8 @@ SADebug = {
     LoadedBacklogsFromPart: [],
     LoadedBacklogsToPart: [],
     Lines: [],
+    LoadedApi: [],
+    LoadedGui: [],
     SetDrawLine: function (fromId, toId, title, relType) {
         var kv = {};
         kv.fromId = fromId;
@@ -30,7 +32,7 @@ SADebug = {
 
                 var fromDiv = document.getElementById(from);
                 var toDiv = document.getElementById(to);
-                
+
                 SADebug.Connect(fromDiv, toDiv, "#0F0", 5);
             } catch (err) {
             }
@@ -46,18 +48,18 @@ SADebug = {
                 var from = SADebug.Lines[i].fromId;
                 var to = SADebug.Lines[i].toId;
 
-                var oldTop =$('#gui_component_main_view').scrollTop();
-                var oldLeft =$('#gui_component_main_view').scrollLeft();
-           
+                var oldTop = $('#gui_component_main_view').scrollTop();
+                var oldLeft = $('#gui_component_main_view').scrollLeft();
+
                 $('#gui_component_main_view').scrollTop(0);
                 $('#gui_component_main_view').scrollLeft(0);
 
                 new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to),
-                    {
-                        color: 'rgb(41,146,210)',
-                        size:2
+                        document.getElementById(from),
+                        document.getElementById(to),
+                        {
+                            color: 'rgb(41,146,210)',
+                            size: 2
 //                                    color: 'rgb(255,146,27)',
 //                                    dash: true,
 //                            startPlug: 'square',
@@ -65,17 +67,28 @@ SADebug = {
 //                            startSocket: 'right',
 //                            endSocket: 'left',
 
-                    });
-                 
-                    $('#gui_component_main_view').scrollTop(oldTop);
-                    $('#gui_component_main_view').scrollLeft(oldLeft);
-              //  SADebug.GetLineDivId4Drawing(from, to,'right','left');
+                        });
+
+                $('#gui_component_main_view').scrollTop(oldTop);
+                $('#gui_component_main_view').scrollLeft(oldLeft);
+                //  SADebug.GetLineDivId4Drawing(from, to,'right','left');
 
             } catch (err) {
             }
         }
     },
     CallGUI: function (backlogId) {
+        if (backlogId.length < 3)
+            return;
+
+        SADebug.LoadedBacklogsFromPart = [];
+        SADebug.LoadedBacklogsToPart = [];
+        SADebug.GUIFunction.GenerateApiRelation(backlogId);
+        SADebug.GUIFunction.GenerateGuiRelation(backlogId);
+        SADebug.RemoveAllDrawLine();
+        SADebug.DrawLines();
+    },
+    CallGUIIntern: function (backlogId) {
         if (backlogId.length < 3)
             return;
         SADebug.GUIFunction.Generate(backlogId);
@@ -133,13 +146,18 @@ SADebug = {
     },
     GUIFunction: {
         SelectFromBacklogId: function (inputId, apiId, backlogId) {
-            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                Toaster.showError("There's a loop: " + apiId);
                 return;
+            }
+
+            SADebug.LoadedBacklogsFromPart.push(apiId)
 
             var dyncId = makeId(10);
             var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-            SADebug.LoadedBacklogsFromPart.push(apiId)
+
 
             SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
 
@@ -148,12 +166,18 @@ SADebug = {
             SADebug.CallApiThread(apiCallId);
         },
         GetFkDependentBacklogId: function (inputId, apiId, backlogId) {
-            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                Toaster.showError("There's a loop: " + apiId);
                 return;
+            }
+
+            SADebug.LoadedBacklogsFromPart.push(apiId)
 
             var body = SADebug.Pattern.API.GetPattern(apiId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-            SADebug.LoadedBacklogsFromPart.push(apiId)
+
 
             SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
 
@@ -161,12 +185,16 @@ SADebug = {
             SADebug.CallApiThread(apiCallId);
         },
         SendToBacklogId: function (inputId, apiId, backlogId) {
-            if (SADebug.LoadedBacklogsToPart.includes(apiId))
+            if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+                Toaster.showError("There's a loop: " + apiId);
                 return;
+            }
+
+            SADebug.LoadedBacklogsToPart.push(apiId);
 
             var body = SADebug.Pattern.API.GetPattern(apiId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
-            SADebug.LoadedBacklogsToPart.push(apiId);
 
             SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
 
@@ -176,12 +204,16 @@ SADebug = {
 
         },
         GenerateInputActionRelation4Read: function (inputId, apiId, backlogId) {
-            if (SADebug.LoadedBacklogsFromPart.includes(apiId))
+            if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                Toaster.showError("There's a loop: " + apiId);
                 return;
+            }
+            SADebug.LoadedBacklogsFromPart.push(apiId);
 
             var body = SADebug.Pattern.API.GetPattern(apiId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
-            SADebug.LoadedBacklogsFromPart.push(apiId);
+
 
             SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
 
@@ -189,12 +221,16 @@ SADebug = {
             SADebug.CallApiThread(apiCallId);
         },
         GenerateInputActionRelation4CUD: function (inputId, apiId, backlogId) {
-            if (SADebug.LoadedBacklogsToPart.includes(apiId))
+            if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+                Toaster.showError("There's a loop: " + apiId);
                 return;
+            }
+            SADebug.LoadedBacklogsToPart.push(apiId);
 
             var body = SADebug.Pattern.API.GetPattern(apiId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
-            SADebug.LoadedBacklogsToPart.push(apiId);
+
 
             SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
 
@@ -209,7 +245,8 @@ SADebug = {
                     var obj = cr_input_action_rel_list[relId];
                     var apiId = obj.fkApiId;
 
-                    if (apiId) {
+                    if (apiId ) {
+ 
 
                         var apiAction = SACore.GetBacklogDetails(apiId, "apiAction");
                         if (apiAction === 'R') {
@@ -245,7 +282,7 @@ SADebug = {
             var guiDesign = SADebug.GetGuiDesign(guiId);
             $('#core_gui_' + guiId).closest('div.sa-gui-esas').find('.progressLoader').first().remove();
             $('#core_gui_' + guiId).closest('div.sa-gui-esas').find('.sa-gui-esas-body').html(guiDesign);
-            SADebug.CallGUI(guiId);
+            SADebug.SADebug.GUIFunction.GenerateGuiRelation(guiId);
         },
         GenerateDependentGui: function (guiId, backlogId) {
             var guiDesign = '';//SADebug.GetGuiDesign(guiId);
@@ -290,14 +327,15 @@ SADebug = {
             // initOnloadActionOnGUIDesign4OnClick(elm);
             // initOnloadActionOnGUIDesign4Onchange(elm);
         },
-        Generate: function (backlogId) {
+        GenerateApiRelation: function (backlogId) {
+
+
             var outputList = SACore.GetBacklogDetails(backlogId, "inputIds").split(',');
             for (var i in outputList) {
                 try {
                     var oid = outputList[i];
                     oid = oid.trim();
                     var inputObj = SAInput.getInputObject(oid);
-
 
                     if (inputObj.selectFromBacklogId) {
                         SADebug.GUIFunction.SelectFromBacklogId(inputObj.id, inputObj.selectFromBacklogId, backlogId);
@@ -314,6 +352,31 @@ SADebug = {
 
                     SADebug.GUIFunction.GenerateInputActionRelation(inputObj.id, backlogId);
 
+
+
+//                    //action = ,redirect,fill, popup
+//                    var guiId = inputObj.param1;
+//                    if (guiId) {
+//                        SADebug.GUIFunction.GenerateDependentGui(guiId, backlogId);
+//                    }
+                } catch (err) {
+
+                }
+            }
+
+        },
+        GenerateGuiRelation: function (backlogId) {
+
+            var outputList = SACore.GetBacklogDetails(backlogId, "inputIds").split(',');
+            for (var i in outputList) {
+                try {
+                    var oid = outputList[i];
+                    oid = oid.trim();
+                    var inputObj = SAInput.getInputObject(oid);
+
+
+
+
                     //action = ,redirect,fill, popup
                     var guiId = inputObj.param1;
                     if (guiId) {
@@ -325,6 +388,22 @@ SADebug = {
             }
 
         }
+    },
+    GenerateApiDependences: function (inputObj, backlogId) {
+        if (inputObj.selectFromBacklogId) {
+            SADebug.GUIFunction.SelectFromBacklogId(inputObj.id, inputObj.selectFromBacklogId, backlogId);
+        }
+
+        if (inputObj.fkDependentBacklogId) {
+            SADebug.GUIFunction.GetFkDependentBacklogId(inputObj.id, inputObj.fkDependentBacklogId, backlogId);
+        }
+
+
+        if (inputObj.sendToBacklogId) {
+            SADebug.GUIFunction.SendToBacklogId(inputObj.id, inputObj.sendToBacklogId, backlogId);
+        }
+
+        SADebug.GUIFunction.GenerateInputActionRelation(inputObj.id, backlogId);
     },
 
     GetSelectFromApi: function (backlogId) {
@@ -411,10 +490,10 @@ SADebug = {
                 var div = $('<div class="sa-api-esas">')
                         .append($('<div class="sa-rww">')
                                 .append($('<div>')
-                                .addClass('sa-cw1')
-                                .append('<span class="input-title-btn data-title-btn" >INPUT</span>')
-                                .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
-                               
+                                        .addClass('sa-cw1')
+                                        .append('<span class="input-title-btn data-title-btn" >INPUT</span>')
+                                        .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
+
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
                                         .attr("id", "core_api_" + apiId)
@@ -443,9 +522,9 @@ SADebug = {
                                                 .append(''))
                                         )
                                 .append($('<div>')
-                                .addClass('sa-cw3')
-                                .append('<span class="output-title-btn data-title-btn" >OUTPUT</span>')
-                                .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'))
+                                        .addClass('sa-cw3')
+                                        .append('<span class="output-title-btn data-title-btn" >OUTPUT</span>')
+                                        .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'))
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;
@@ -486,10 +565,10 @@ SADebug = {
                                                 .append(SADebug.Pattern.API.GetOutputList(apiId)))
                                         )
                                 .append($('<div>')
-                                           .addClass('sa-cw3')
-                                           .append('<span class="output-title-btn" >INOUT</span>')
-                                           .append('<div class="sa-api-cw3-block" ></div>')
-                                           )
+                                        .addClass('sa-cw3')
+                                        .append('<span class="output-title-btn" >INOUT</span>')
+                                        .append('<div class="sa-api-cw3-block" ></div>')
+                                        )
                                 )
                         .append($('<div class="sa-dept-rww">'))
                         ;
@@ -586,8 +665,8 @@ SADebug = {
             GetProcessDescriptionList: function (apiId) {
 
                 var div = $("<div>")
-                              .addClass('sa-desc-block')
-                              
+                        .addClass('sa-desc-block')
+
 
                 var extApiList = (cr_project_desc_by_backlog[apiId])
                         ? cr_project_desc_by_backlog[apiId]
@@ -597,14 +676,15 @@ SADebug = {
                 for (var i in  extApiList) {
 //                try {
                     var divZad = $('<div class="sa-desc-item">')
-                    .append($('<div>')
-                    .addClass('description-data-block-in')
-                    .append('<h5 class="input-descrp-btn data-title-btn" >IN</h5>')
-                    .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
-                  .append($('<div>')
-                    .addClass('description-data-block-out')
-                    .append('<h5 class="output-descrp-btn data-title-btn" >OUT</h5>')
-                    .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'));;
+                            .append($('<div>')
+                                    .addClass('description-data-block-in')
+                                    .append('<h5 class="input-descrp-btn data-title-btn" >IN</h5>')
+                                    .append('<div class="sa-api-cw1-block data-block-popUp" ></div>'))
+                            .append($('<div>')
+                                    .addClass('description-data-block-out')
+                                    .append('<h5 class="output-descrp-btn data-title-btn" >OUT</h5>')
+                                    .append('<div class="sa-api-cw3-block data-block-popUp" ></div>'));
+                    ;
                     var extId = extApiList[i];
                     var o = cr_project_desc[extId];
 
@@ -666,7 +746,7 @@ SADebug = {
         },
         GUI: {}
     },
-    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId,strtSckt,edSckt) {
+    GetLineDivId4Drawing: function (childBacklodId, parentBacklogId, strtSckt, edSckt) {
         var userStory = 'this.userStories[childBacklodId]';
         var parentUserStory = 'this.parentUserStories[parentBacklogId]';
         var titlePure = userStory + " -  " + parentUserStory;
@@ -676,9 +756,9 @@ SADebug = {
                 .attr('id', id)
                 .attr('title', titlePure)
                 .addClass('line_class')
-                .attr('data-toggle',"tooltip",)
-                .attr('data-placement',"bottom")
-                .attr('title','fromId['+childBacklodId+'] toId['+parentBacklogId+']')
+                .attr('data-toggle', "tooltip", )
+                .attr('data-placement', "bottom")
+                .attr('title', 'fromId[' + childBacklodId + '] toId[' + parentBacklogId + ']')
 //                .append(title)
                 ;
         $('#SUS_IPO_GUI_Design1').append(line);
@@ -687,66 +767,67 @@ SADebug = {
         var to = document.getElementById(parentBacklogId);
 
 
-        SADebug.AdjustLine(from, to, line[0],strtSckt,edSckt);
+        SADebug.AdjustLine(from, to, line[0], strtSckt, edSckt);
         $('[data-toggle="tooltip"]').tooltip()
         return id;
     },
-    AdjustLine: function (from, to, line,strtSckt,edSckt) {
-      var endSocket = edSckt;
-      var startSocket = strtSckt;
-        console.log(endSocket,startSocket)
+    AdjustLine: function (from, to, line, strtSckt, edSckt) {
+        var endSocket = edSckt;
+        var startSocket = strtSckt;
+        console.log(endSocket, startSocket)
 //        var t = 100;
         var t = 0;
         var dfT = $('#zzddff').offset().top;
-        
-     
-        
-        var dWidht = $(from).width()/2+ $(to).width()/2
-         
-     
-        if(endSocket==='left'){
+
+
+
+        var dWidht = $(from).width() / 2 + $(to).width() / 2
+
+
+        if (endSocket === 'left') {
             var tL = $(to).offset().left;// + to.offsetWidth / 2;
-            var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
+            var tT = $(to).offset().top - dfT + to.offsetHeight / 2;
         }
-        if(endSocket==='right'){
-            var tL = $(to).offset().left+$(to).width()// + to.offsetWidth / 2;
-            var tT = $(to).offset().top - dfT + to.offsetHeight/2 ;
+        if (endSocket === 'right') {
+            var tL = $(to).offset().left + $(to).width()// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT + to.offsetHeight / 2;
         }
-        if(endSocket==='top'){
-            var tL = ($(to).offset().left)+$(to).width()/2;// + to.offsetWidth / 2;
+        if (endSocket === 'top') {
+            var tL = ($(to).offset().left) + $(to).width() / 2;// + to.offsetWidth / 2;
             var tT = $(to).offset().top - dfT;
-            
+
         }
-        if(endSocket==='bottom'){
-            var tL = ($(to).offset().left)+$(to).width()/2;// + to.offsetWidth / 2;
-            var tT = $(to).offset().top - dfT + to.offsetHeight ;
+        if (endSocket === 'bottom') {
+            var tL = ($(to).offset().left) + $(to).width() / 2;// + to.offsetWidth / 2;
+            var tT = $(to).offset().top - dfT + to.offsetHeight;
         }
-        
-     
-        if(startSocket==='left'){
-            
+
+
+        if (startSocket === 'left') {
+
             var fL = ($(from).offset().left)// + to.offsetWidth / 2;
-            var fT = $(from).offset().top - dfT + from.offsetHeight/2 ;
+            var fT = $(from).offset().top - dfT + from.offsetHeight / 2;
         }
-        if(startSocket=='right'){
-            var fL = ($(from).offset().left)+$(from).width();;// + to.offsetWidth / 2;
-            var fT = $(from).offset().top - dfT + from.offsetHeight/2 ;
+        if (startSocket == 'right') {
+            var fL = ($(from).offset().left) + $(from).width();
+            ;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT + from.offsetHeight / 2;
         }
-        if(startSocket==='top'){
-            var fL = ($(from).offset().left+40)+$(from).width()/2;// + to.offsetWidth / 2;
-            var fT = $(from).offset().top - dfT  ;
+        if (startSocket === 'top') {
+            var fL = ($(from).offset().left + 40) + $(from).width() / 2;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT;
         }
-      
-        if(startSocket==='bottom'){
-            var fL = ($(from).offset().left+40)+$(from).width()/2;// + to.offsetWidth / 2;
-            var fT = $(from).offset().top - dfT + from.offsetHeight ;
+
+        if (startSocket === 'bottom') {
+            var fL = ($(from).offset().left + 40) + $(from).width() / 2;// + to.offsetWidth / 2;
+            var fT = $(from).offset().top - dfT + from.offsetHeight;
         }
-      
-      
-        fL= fL +15;
-        tL= tL +45;
-      
-       
+
+
+        fL = fL + 15;
+        tL = tL + 45;
+
+
         var CA = Math.abs(tT - fT);
         var CO = Math.abs(tL - fL);
         var H = Math.sqrt(CA * CA + CO * CO);

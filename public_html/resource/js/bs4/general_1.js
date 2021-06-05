@@ -1079,7 +1079,7 @@ function loadModulePermission() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
