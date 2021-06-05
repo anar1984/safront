@@ -5310,6 +5310,11 @@ UserStory.prototype = {
             async: false,
             success: function (res) {
                 that.getBacklogDesc();
+                
+                	 loadCurrentBacklogProdDetails();
+
+
+ refreshLiveProtytypeView();
 
             },
             error: function () {
@@ -5361,6 +5366,8 @@ UserStory.prototype = {
                     : "";
 
             var relApiId = obj[n].fkRelatedApiId;
+            loadBacklogInputsByIdIfNotExist(relApiId);
+                
             var apiDesc = (relApiId)
                     ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
                     onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">"
@@ -7032,15 +7039,19 @@ UserStory.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                SAInput.updateInputByRes(res);
-                SAInputDesc.addInputDescriptionByRes(res);
                 var id = res.kv.id;
-
-
                 var stln = that.getInputDescTdItem(id, $(el).val(), "");
                 $(stln).insertBefore($(el));
                 $(el).val('');
                 $(el).focus();
+                
+                
+                SAInput.updateInputByRes(res);
+                                SAInputDesc.addInputDescriptionByRes(res);
+                                loadCurrentBacklogProdDetailsSyncrone();
+                
+                 refreshLiveProtytypeView();
+                
 
             },
             error: function () {
@@ -7317,6 +7328,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
     },
 
+    
+
     insertNewInputNewBody: function (el, action) {
         var inputName = $(el).val();
         if (global_var.current_backlog_id.length === 0) {
@@ -7354,7 +7367,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.addInputByRes(res);
                 SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
-
+               
+                loadCurrentBacklogProdDetails();
+               
 
                 //backlogun canvas parametrleri set edilir
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
@@ -7378,6 +7393,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 $('#newInputId').val('');
                 $('#newOutputId').val('');
+                 refreshLiveProtytypeView();
 
             },
             error: function () {
@@ -7965,7 +7981,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        showProgress();
+      
 //        if ($('#indesc_shouldautofillfrom').is(":checked")) {
 //            this.updateInputBySUSOutputId();
 //        }
@@ -8011,33 +8027,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: true,
+            async: false,
             success: function (res) {
-                hideProgress();
-//                $('#addRelatedSUSOutputModal').modal('hide');
-                SAInput.updateInputByRes(res);
-                SAInputDesc.addInputDescriptionByRes(res);
-//                $('#addRelatedSUSOutputModal').modal('hide');
-
-                ///////////////
-                //backlogun canvas parametrleri set edilir
-                $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
-                that.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
-                that.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
-
-
-                var st = "";
-                var res1 = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-                that.setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
-                that.setStoryCardOutput(res1);
-
-                if (SACore.GetCurrentBaklogIsApi() !== '1') {
-                    st = that.getGUIDesignHTMLPure(res1);
-                }
-                $('#general-view-task-gui').html(st);
-                $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
-                $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+               
+                loadCurrentBacklogProdDetailsSyncrone();
+                 refreshLiveProtytypeView();
+                //if current modal is live prototype
+//                callStoryCardAfterIPOAction();
+//                $('#storyCardListSelectBox').change();
 
 
             }
@@ -18656,8 +18653,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         this.setUserStoryInforOnGeneralView4HistoryDateAndLabel();
 //        this.setUserStoryTaskInfoOnGeneralView();
-        this.loadAssignedLabel();
-        this.setBView();
+        //this.loadAssignedLabel();
+        //this.setBView();
 
         this.loadStoryCardFileList();
         try {
@@ -18667,8 +18664,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         this.getBacklogTaskStats();
-
     },
+    
     loadStoryCardFileList: function () {
         var res = SACore.GetCurrentBaklogFileUrls().split(",");
         var resId = SACore.GetCurrentBaklogFileUrlIds().split(",");
@@ -20170,6 +20167,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: false,
             success: function (res) {
                 SAInput.updateInputByRes(res);
+                
+                	 loadCurrentBacklogProdDetails();
+                         
                 $('#addRelatedSourceModal').modal('hide');
 
                 //backlogun canvas parametrleri set edilir
@@ -20269,6 +20269,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: true,
             success: function (res) {
+                	
+                loadCurrentBacklogProdDetails();
+                
                 SAInput.updateInputByRes(res);
                 $('#addRelatedSourceModal').modal('hide');
 
@@ -20512,6 +20515,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: false,
             success: function (res) {
                 SAInput.addInputByRes(res);
+                	 loadCurrentBacklogProdDetails();
                 $(el).closest('td')
                         .attr("iname", replaceTags(Replace2Primes($(el).val())))
                 $(el).closest('td').html($(el).val());
@@ -20534,6 +20538,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
+                
+                refreshLiveProtytypeView();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -20568,7 +20574,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.deleteInput(inputId);
                 SACore.updateBacklogByRes(res);
-
+	 loadCurrentBacklogProdDetails();
 
                 //////////
                 /////////
@@ -20591,6 +20597,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
+                
+                refreshLiveProtytypeView();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -20599,6 +20607,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew: function (object) {
+        loadBacklogDetailsByIdIfNotExist(object.selectFromBacklogId);
+        loadBacklogDetailsByIdIfNotExist(object.sendToBacklogId);
+        loadBacklogDetailsByIdIfNotExist(object.fkDependentBacklogId);
+        
         var descriptionRelated = replaceTags(object.descriptionRelated);
         var backlogNameRelated = replaceTags(SACore.GetBacklogname(object.fkDependentBacklogId));
         var inputNameRelated = replaceTags(SAInput.GetInputName(object.fkDependentOutputId));
@@ -20760,30 +20772,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: false,
-            success: function (res) {
-                SAInputDesc.updateInputDescriptionByRes(res);
-
-
-//////
-                $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
-                that.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
-                that.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
-
-
-
-                var st = "";
-                var res1 = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-
-                that.setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
-                that.setStoryCardOutput(res1)
-
-                if (SACore.GetCurrentBaklogIsApi() !== '1') {
-                    st = that.getGUIDesignHTMLPure(res1);
-                }
-                $('#general-view-task-gui').html(st);
-                $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
-                $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+            success: function (res) { 
+	 loadCurrentBacklogProdDetails();
+ 
+                $(el).closest('div.span-button-div').find('span.span_hover').text($(el).val())
+ refreshLiveProtytypeView();
 
 
 
@@ -20822,10 +20815,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: true,
             success: function (res) {
-                SAInputDesc.deleteInputDescription(inputDescId);
-                SAInput.updateInputByRes(res);
 
+                        loadCurrentBacklogProdDetailsSyncrone();
+                    refreshLiveProtytypeView();
                 $(el).closest('div.span-button-div').remove();
+                
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -22474,6 +22468,17 @@ Project.prototype = {
                 that.generateTableBody4MainProject(res);
                 new UserStory().addProjectToMenu(res);
                 loadModulePermission();
+                
+                var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
+                try {
+                    if (current_modal && $('.' + current_modal).first().html().length > 10) {
+                        $('.' + current_modal).first().click();
+                    } else {
+                        $('.left-menu-load').first().click();
+                    }
+                } catch (err) {
+                    $('.left-menu-load').first().click();
+                }
 
 
             },
@@ -22489,19 +22494,19 @@ Project.prototype = {
             for (var n = 0; n < obj.length; n++) {
                 SACore.AddProject(obj[n].id, obj[n].projectName);
                 SACore.AddProjectCore(obj[n].id, obj[n]);
-                var o = $('<option></option')
-                        .attr('value', obj[n].id)
-                        .html(obj[n].projectName);
-              
-                if (urlVal === obj[n].id) {
-                    o.attr("selected", "selected");
-                }
-              
-                $('.projectList').append(o);
+//                var o = $('<option></option')
+//                        .attr('value', obj[n].id)
+//                        .html(obj[n].projectName);
+//              
+//                if (urlVal === obj[n].id) {
+//                    o.attr("selected", "selected");
+//                }
+//              
+//                $('.projectList').append(o);
                 
             }
-            global_var.current_project_id = $('.projectList').first().val();
-            Utility.addParamToUrl('current_project_id', global_var.current_project_id);
+//            global_var.current_project_id = $('.projectList').first().val();
+//            Utility.addParamToUrl('current_project_id', global_var.current_project_id);
             //$('#projectList').first().change();
         } catch (er) {
 
@@ -22641,6 +22646,7 @@ Project.prototype = {
 
 
     },
+  
     toggleProjectDetails: function () {
         Utility.addParamToUrl('current_project_id', global_var.current_project_id);
         new UserStory().loadDetailsOnProjectSelect();
@@ -23359,6 +23365,7 @@ User.prototype = {
                 $('#myAccountModal_txtUsername').val((res.tbl[0].r[0].username));
                 $('#myAccountModal_txtUserFulname').val((res.tbl[0].r[0].userPersonName));
                 $('#myAccountModal_txtUserEmail').val((res.tbl[0].r[0].email1));
+                global_var.current_user_id = res.tbl[0].r[0].id;
             },
             error: function () {
                 document.location = "login.html";

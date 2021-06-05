@@ -254,12 +254,35 @@ function callStoryCard(id, elId, backlogName) {
         $("#" + divId).append(storyCard);
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
-
-        
+//        loadStoryCardBodyInfo();
 
         loadUsersAsOwner();
         setStoryCardOwner();
     });
+}
+
+function loadStoryCardBodyInfo() {
+    try {
+        //load general info
+        var res = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        new UserStory().setUserStoryInforOnGeneralView4Details4Select(res);
+    } catch (e) {
+//            this.setUserStoryInforOnGeneralView();
+    }
+
+    new UserStory().setUserStoryInforOnGeneralView4HistoryDateAndLabel();
+//        this.setUserStoryTaskInfoOnGeneralView();
+    //this.loadAssignedLabel();
+    //this.setBView();
+
+    new UserStory().loadStoryCardFileList();
+    try {
+        new UserStory().getBacklogDesc();
+    } catch (e) {
+//            this.setUserStoryInforOnGeneralView();
+    }
+
+    new UserStory().getBacklogTaskStats();
 }
 
 // content header text addd

@@ -6542,6 +6542,40 @@
                 </div>
             </div>
         </div>
+            
+             <div class="modal fade" id="addApiPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="min-width1: 60%">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12"> 
+                                <div id="exampleModal-properties-tab" class="container tab-pane active"
+                                     style=" max-height: 76vh;overflow: auto;">
+                                    <div class="col-12"    style="font-size:11px;">
+                                        <br>
+                                        <label>API name</label>
+                                        <input type="text" class="form-control" id="addApiPopupModal-userstoryname" 
+
+                                               pid="">
+                                        <br>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="display1:block;">
+                        <button type="button" class="btn btn-primary" onclick="addApiNewPopup()">
+                            Add
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="addNewComponentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="min-width1: 60%">
@@ -8085,16 +8119,8 @@
 
                                                                                     init4Core();
                                                                                     new Project().loadMainProjectList();
-                                                                                    var current_modal = Utility.getParamFromUrl('current_modal').replace("#", '');
-                                                                                    try {
-                                                                                        if (current_modal && $('.' + current_modal).first().html().length > 10) {
-                                                                                            $('.' + current_modal).first().click();
-                                                                                        } else {
-                                                                                            $('.left-menu-load').first().click();
-                                                                                        }
-                                                                                    } catch (err) {
-                                                                                        $('.left-menu-load').first().click();
-                                                                                    }
+                                                                                    
+                                                                                    
                                                                                 }
 
 
