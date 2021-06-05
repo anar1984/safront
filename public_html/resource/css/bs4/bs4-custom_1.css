@@ -7,6 +7,9 @@ and open the template in the editor.
     Created on : Apr 19, 2019, 5:05:25 PM
     Author     : anar.rustamov
 */
+#body_of_nature{
+    position: fixed;
+}
 .sa-sct-full-width .dropdown-menu{
     transform: none !important;
     min-width:100% !important;
@@ -949,8 +952,8 @@ table tr.active {
     width: 800px;
     /*margin: 10px 30px 10px 20px;*/
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.548);
-    /*background: #F4F5F7;*/
+  /*   background: rgba(255, 255, 255, 0.548); */
+    background: #F4F5F7;
     padding: 20px 0px 20px 0px;
     border-style: solid;
     border-color:rgba(255, 255, 255, 0.596);

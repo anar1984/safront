@@ -1835,7 +1835,7 @@ END PROJECT SECTION
 
 .tab-content-style{
     border-right: none;
-    overflow: auto;
+    /* overflow: auto; */
     width: 100%;
     top: 60px;
     position: relative;
@@ -5464,6 +5464,7 @@ span.ruby-c-content {
 }
 .gui-design-is-apis .sa-main-c2{
     height: max-content;
+    margin-bottom: 100px;
 }
 .api_larged_block{
     position: absolute;

@@ -1008,7 +1008,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="ipo-tab-setting-general"  class="container tab-pane" style="max-height1: 81vh;padding-top: 20px;">
+                            <div id="ipo-tab-setting-general"  class="container tab-pane" style="height: 100%;overflow: auto; padding-top: 20px;">
 
                                 <!-- gulbahar--ipo-1-hisse-setting -->
                                 <div class="col " id="ipo-1-hisse-setting">
@@ -1413,7 +1413,7 @@
                             </div>
 
 
-                            <div id="ipo-tab-setting-canvas"  class="container tab-pane"   style="padding:0px;overflow-y: scroll; overflow-x: hidden">
+                            <div id="ipo-tab-setting-canvas"  class="container tab-pane"   style="padding:0px;height: 100%; overflow-y: scroll; overflow-x: hidden">
                                 <br>
                                 <div class="form-group col-12 text-left"
                                      id="gui_design_canvas_style" >
@@ -1525,7 +1525,7 @@
                                 </div>
                             </div>
 
-                            <div id="ipo-tab-setting-container"  class="container tab-pane" style="max-height1: 81vh;">
+                            <div id="ipo-tab-setting-container"  class="container tab-pane" style="height: 100%;overflow: auto;">
                                 <br>
                                 <div class="form-group col-12 text-left"
                                      id="gui_design_container_custom_style"
@@ -2075,7 +2075,7 @@
                             </div>
 
 
-                            <div id="ipo-tab-setting-properties"  class="container tab-pane" style='height: 80vh; padding: 0px 0px 0px 0px;'>
+                            <div id="ipo-tab-setting-properties"  class="container tab-pane" style='height: 100%;overflow: auto; padding: 0px 0px 0px 0px;'>
 
                                 <!-- gulbahar--ipo-1-hisse-setting 2-->
                                 <div class="col " id='ipo-1-hisse-setting'
@@ -2534,20 +2534,23 @@
                                 <!-- revan--ipo-1-hisse-setting 2-->
                                 <div class="col " id='ipo-1-hisse-setting'
                                      style='display: block;'>
-                                    <div class="row"  >
-                                        <div class="input-group mb-3 position-fixed" style="width: 22%;" >
+                                    <div class="row"  style="position: relative;" >
+                                        <div class="input-group mb-3 " style="top: 0; left: 0; position: absolute;" >
                                             <input type="text" id="search-api_list" class="form-control" placeholder="Search ......" aria-label="Recipient's username">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
-                                        <table class="table table-hover table-borderless table-odd-style" style="margin-top:10%" >
-                                            <tbody id="api_list_side_bar">
-
-                                            </tbody>
-
-
-                                        </table>
+                                        <div style="height: 87vh;overflow: auto; margin-top:10%">
+                                            <table class="table table-hover table-borderless table-odd-style"  >
+                                                <tbody id="api_list_side_bar">
+    
+                                                </tbody>
+    
+    
+                                            </table>
+                                        </div>
+                        
 
 
                                     </div>

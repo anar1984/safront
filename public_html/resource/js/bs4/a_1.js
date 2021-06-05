@@ -9734,6 +9734,7 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     $('.sa-main-c2').removeClass("col");
     bindScrollZadToCanvas();
     SADebug.CallGUI(backlogId);
+    $('.gui-design'),css('background-color','transparent')
 
 });
 
@@ -9912,6 +9913,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
     });
 
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 });
 
