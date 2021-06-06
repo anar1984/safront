@@ -13109,7 +13109,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             console.log(res)
             $('#api_list_side_bar').html(this.getUSListBlockApi(res));
             $('#container-us-body').html(this.getUSListBlockUserStory(res));
-            $('#storyCardListSelectBox').html(this.getUSListBlockUserStoryLive(res));
+//            $('#storyCardListSelectBox').html(this.getUSListBlockUserStoryLive(res));
 
 
             global_var.story_card_sprint_assign_checked = 0;
