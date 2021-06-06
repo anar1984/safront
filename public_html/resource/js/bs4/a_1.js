@@ -9734,7 +9734,7 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     $('.sa-main-c2').removeClass("col");
     bindScrollZadToCanvas();
     SADebug.CallGUI(backlogId);
-    $('.gui-design'),css('background-color','transparent')
+    $('.gui-design').css('background-color','transparent');
 
 });
 
@@ -9906,7 +9906,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         getGuiClassList();
         getJsCodeByProject();
         getInputActionRelByProjectMAnual2();
-
+        genToolbarStatus();
 //        loadLivePrototypeCore(this);
 
 
@@ -9914,9 +9914,26 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     });
 
     new UserStory().loadDetailsOnProjectSelect4Ipo();
+  
 
 });
 
+function genToolbarStatus(){
+ var ast = localStorage.getItem('data-toolbar-opened');
+  
+ if(ast === "false"){
+  
+        $('.toolbar .minimzeBtn').click();
+
+ }
+ if(ast === "true"){
+
+   $('.maximizeBtn').click();
+
+ }
+
+
+}
 
 function loadStoryCardByProject4oIpo(e) {
 
