@@ -1,36 +1,53 @@
-
+  let typLine='line-svg-1'
+  let lineColor = '#6d6d6d'
 
  function genLeadeLine(start,end,type,clor,text){
+   
+  
 
+  if(type ==="line-svg-3"){
 
-  if(type ==="tosidearrow"){
     new LeaderLine(document.getElementById(start), document.getElementById(end), {
        
       middleLabel: LeaderLine.pathLabel(text),
      size: 2,
      startPlug: 'arrow',
+     color: clor,
+     dash: {animation: true}
+   
+    }
+    )
+  }
+  if(type ==="line-svg-2"){
+    new LeaderLine(document.getElementById(start), document.getElementById(end), {
+       
+      middleLabel: LeaderLine.pathLabel(text),
+      outlineColor: clor,
+      color: "tansparent",
+      outline: true,
+      endPlugOutline: true,
+      endPlugSize: 1.5
+   
+    }
+    )
+  }
+  if(type ==="line-svg-1"){
+    new LeaderLine(document.getElementById(start), document.getElementById(end), {
+       
+      middleLabel: LeaderLine.pathLabel(text),
+     size: 2,
+     startPlug: 'square',
      color: clor 
    
     }
     )
   }
-  if(type ==="tosidearrow"){
+  if(type ==="line-svg-4"){
     new LeaderLine(document.getElementById(start), document.getElementById(end), {
        
       middleLabel: LeaderLine.pathLabel(text),
      size: 2,
-     startPlug: 'arrow',
-     color: clor 
-   
-    }
-    )
-  }
-  if(type ==="tosidearrow"){
-    new LeaderLine(document.getElementById(start), document.getElementById(end), {
-       
-      middleLabel: LeaderLine.pathLabel(text),
-     size: 2,
-     startPlug: 'arrow',
+     startPlug: 'arrow1',
      color: clor 
    
     }
@@ -86,18 +103,12 @@ $(document).on('drop', ".Content",function(e){
     //removeLine(data1,data2);
   
      var dataText = "text"
-    new LeaderLine(document.getElementById(data1), document.getElementById(data2), {
-       
-      middleLabel: LeaderLine.pathLabel(dataText),
-     size: 2,
-     startPlug: 'arrow',
-     color: 'black'
-   
-    }
-    )
+    
+    genLeadeLine(data1,data2,typLine,lineColor,dataText)
+    
    
     var kv={};
-    kv= [data1,data2,dataText];
+    kv= [data1,data2,typLine,lineColor];
     FromTo.peer.push(kv);
    
 
@@ -148,34 +159,7 @@ function genUsLane(idgena){
     
 }
 
- 
-$(document).on("click", "#LaneAddBtn" , function(){
 
-
-   
-  $(".Graphtable tbody").append(genUsLane(idgenvLane))
-   var countsltd1= 30
-  for (var i = 0; i < countsltd1; i++) {
-  
-
-    $("#laneId"+idgenvLane).append('<td></td>');
- 
-
-
-  }
-  $("#laneId"+idgenvLane).find("td").append(genusAdderPopupopenedSl());
-  idgenvLane++
-  LaneRepair()
-  $(".Graphtable tbody tr").arrangeable({
-    dragSelector: ".dragLaneClass",
- 
-    })
-  items = document.querySelectorAll('.Graphtable td');
-
-
-
-  
-})
   
 /// rename lane
 
@@ -359,8 +343,11 @@ function genUsRectangle(idgen,bgclr){
                               .addClass("UserRectBody")
                               .attr("data-hastxt","1"))
                      .append($("<div>")
-                              .addClass("StatFigure")
-                              .html("User  <br> Story")))           
+                              .addClass("StatFigure data-show-activity-storycard")
+                              .html("User  <br> Story"))          
+                     .append($("<div>")
+                              .addClass("StatFigure1 data-show-activity-ipo")
+                              .html("show  <br> proto")))           
           
 }
 function genUsTriangle(idgen,bgclr){
@@ -712,7 +699,7 @@ $(document).on("click","#tdAdderslAccept",function(){
         $(".CardSwimAdd").css("display","Block");
         $(".ChangeFigur").css("display","none");
         $(".Forgeneralfigure").css("display","none");
-        $(".ForUSerStFigure").css("display","block");
+        $(".ForUSerStFigure").css("display","flex");
         countFigure++ ;
       }
      
@@ -809,7 +796,7 @@ $(document).on("dblclick",".figureFromspansw",function(){
         $(".CardSwimAdd").css("display","Block");
         $(".ChangeFigur").css("display","none");
         $(".Forgeneralfigure").css("display","none");
-        $(".ForUSerStFigure").css("display","block");
+        $(".ForUSerStFigure").css("display","flex");
         countFigure++ ;
       }
      
@@ -955,6 +942,19 @@ $(document).on("click", ".ExitCardswim" , function(){
     $(".CardSwimAdd").css("display","none")
     $(".Content").removeAttr("data-text")
 })
+$(document).on("click", ".lines-block-act .geItem" , function(){
+         
+  $('.lines-block-act').find('.gactive').removeClass('gactive');
+  $(this).addClass('gactive');
+  typLine = $(this).attr('data-tylp');
+  
+})
+$(document).on("click", ".ColopickerSpanLine" , function(){
+    $(".ColopickerSpanLine").removeClass('gactive')
+  $(this).addClass('gactive')
+    lineColor = $(this).attr('data-bgcolorspan');
+  
+})
 
 $(document).on("click", ".SwimBackG" , function(){
 
@@ -989,17 +989,23 @@ $(document).on("change", "#select-text" , function(){
 })
 
 
-$(document).on("change", "#select-textUS" , function(){
+$(document).on("change", ".SelectFigureText" , function(){
 
-  let textVal=$("#select-textUS").val();
+  let idt=$(this).val();
+  let textVal=$( ".SelectFigureText option:selected" ).text();
 
+  if(idt.length >0){
+ 
+    $(document).find('[data-text="TextVal"]').find(".UserRectBody").find("span").remove();
+    $(document).find('[data-text="TextVal"]').attr("data-sed-id",idt);
+      
+      $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>'+textVal+'</span>');
+      $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt","2")
+      LaneRepair();
+  }
 
-  $(document).find('[data-text="TextVal"]').find(".UserRectBody").find("span").remove();
-    
-    $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>'+textVal+'</span>');
-    $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt","2")
-    LaneRepair()
 })
+
 
 function fgStickMan(color){
   return `<div class="remvFigbody headFG" style="border: 5px solid ${color} ;" ></div>
@@ -1219,7 +1225,7 @@ $(document).on("dblclick", ".Content" , function(){
     $(".CardSwimAdd").css("display","Block");
     $(".ChangeFigur").css("display","none");
     $(".Forgeneralfigure").css("display","none");
-    $(".ForUSerStFigure").css("display","block");
+    $(".ForUSerStFigure").css("display","flex");
 
   }
      
@@ -1260,13 +1266,8 @@ function LaneRepair(){
 
     
      
-      new LeaderLine(document.getElementById(id[0]), document.getElementById(id[1]), {
-      color: 'black', 
-      middleLabel: LeaderLine.pathLabel(id[2]),
-      size: 2,
-      startPlug: 'arrow1',
-    })
-
+    
+    genLeadeLine(id[0],id[1],id[2],id[3],'text')
     
         
     
@@ -1439,7 +1440,34 @@ var dragSrcEl = null;
     item.addEventListener('dragend', handleDragEnd, false);
   });
   
+ 
+  $(document).on("click", "#LaneAddBtn" , function(){
 
+
+   
+    $(".Graphtable tbody").append(genUsLane(idgenvLane))
+     var countsltd1= 30
+    for (var i = 0; i < countsltd1; i++) {
+    
+  
+      $("#laneId"+idgenvLane).append('<td></td>');
+   
+      items = document.querySelectorAll('.Graphtable td');
+  
+    }
+    $("#laneId"+idgenvLane).find("td").append(genusAdderPopupopenedSl());
+    idgenvLane++
+    LaneRepair()
+    $(".Graphtable tbody tr").arrangeable({
+      dragSelector: ".dragLaneClass",
+   
+      })
+
+  
+  
+  
+    
+  })
  
 
 

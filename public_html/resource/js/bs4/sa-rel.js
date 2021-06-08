@@ -43,6 +43,7 @@ SADebug = {
     },
 
     DrawLines: function () {
+        $('#modal-prototypye .modal-header').css('display','none');
         for (var i = 0; i < SADebug.Lines.length; i++) {
             try {
                 var from = SADebug.Lines[i].fromId;
@@ -76,6 +77,7 @@ SADebug = {
             } catch (err) {
             }
         }
+        $('#modal-prototypye .modal-header').css('display','block');
     },
     CallGUI: function (backlogId) {
         if (backlogId.length < 3)

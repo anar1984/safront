@@ -9710,7 +9710,58 @@ $(document).on('click', '.live-prototype-show-story-card', function (evt) {
         callStoryCard(id);
     }
 });
+$(document).on('click', '.data-show-activity-storycard', function (evt) {
+    var id  = $(this).parents('.USrectangle').attr('data-sed-id')
+    if (global_var.current_modal !== "loadStoryCard") {
+      //  var id = global_var.current_backlog_id;
+        callStoryCard(id);
+    }
+  });
+$(document).on('click', '.data-show-activity-ipo', function (evt) {
+    $('#modal-prototypye').modal('show');
+    $('.trigger-leaderline-id').removeAttr('id')
+    $.get("resource/child/ipo.html", function (html_string)
+    {
+        
+        getAllGuiClassList();
+        getInputClassRelByProject();
+        getInputAttributeByProject();
+        getProjectDescriptionByProject();
+        getJsCodeListByProject();
 
+        new UserStory().clearAll();
+        $('#show-prototype-modal-act').html(html_string);
+        SACore.FillAllSelectBox();
+        $('#show_ipo_toggle').prop("checked", true) //show input list
+        showNavBar();
+
+        loadProjectList2SelectboxByClass('projectList_liveprototype');
+
+        //callLivePrototype();
+        //commmonOnloadAction(this);
+        getGuiClassList();
+        getJsCodeByProject();
+        getInputActionRelByProjectMAnual2();
+        genToolbarStatus();
+        
+//        loadLivePrototypeCore(this);
+  
+
+    });
+  
+  
+  });
+$(document).on('click', '.close-modal-act-ipo', function (evt) {
+
+    $('.trigger-leaderline-id').attr('id','gui_component_main_view');
+
+  
+  });
+$(document).on('click', '.line-prev-act-ipo', function (evt) {
+
+    $(".live-prototype-show-sourcedrelation").click();
+  
+  });
 
 
 $(document).on('click', '.live-prototype-show-live', function (evt) {
@@ -10348,6 +10399,7 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 //        getDBStructure4Select();
 //        loadDatabaseList2ComboEntity();
 //        global_var.doc_actual_zoom = 65;
+         loadProjectList2SelectboxByClass('projectList_activity');
     });
 });
 
