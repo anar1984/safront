@@ -120,7 +120,8 @@ SADebug = {
                 var div3 = $("<div class='sa-cwr'>").append(body);
 
                 $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
-                SADebug.SetDrawLine("core_api_" + apiId, "core_api_" + o.fkRelatedApiId, 'api_api');
+//                SADebug.SetDrawLine("core_api_" + apiId, "core_api_" + o.fkRelatedApiId, 'api_api');
+                 SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + o.fkRelatedApiId, 'api_desc_send_to');
 
                 var apiCallId = o.fkRelatedApiId;
                 SADebug.CallApiThread(apiCallId);
@@ -698,7 +699,7 @@ SADebug = {
                                 .append("<br>"));
                         div.append(divZad);
 
-                        SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+                        //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                     } else {
                         if (o.fkRelatedScId) {
                             var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -713,7 +714,7 @@ SADebug = {
                                         .append("<br>"));
                                 div.append(divZad);
 
-                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+                                //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
 
                             } else if (fnType === 'java') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
@@ -724,7 +725,7 @@ SADebug = {
                                         .append("<br>"));
                                 div.append(divZad);
 
-                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+                                //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                             }
                         }
                         if (o.fkRelatedApiId) {
@@ -736,7 +737,7 @@ SADebug = {
                                     .append("<br>"));
                             div.append(divZad);
 
-                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + o.fkRelatedApiId, 'api_desc_send_to');
                         }
                     }
                 }

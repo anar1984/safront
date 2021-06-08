@@ -180,12 +180,63 @@ function getBacklogLastModificationDateAndTime(bid1) {
             } catch (err) {
 
             }
-
         }
     });
 }
 
+function loadMissedBacklogsInBE() {
 
+    var keys = Object.keys(backlog_last_modification);
+    for (var k in keys) {
+        var bid = keys[k]
+        if (!ifBacklogInputs4LoaderExistById(bid)) {
+            getBacklogProductionStorageInfo(bid);
+        }
+    }
+
+
+
+}
+
+
+function getBacklogProductionStorageInfo(bid) {
+
+    var json = initJSON();
+    json.kv.fkBacklogId = bid;
+    json.kv.domain = global_var.current_domain;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogProductionStorageInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res1) {
+            var res = JSON.parse(res1.kv.json);
+            try {
+                try {
+                    var transaction = db.transaction(["subdb"], "readwrite");
+                    var store = transaction.objectStore("subdb");
+                    store.delete('idb_' + bid);
+                    store.add({'bid': 'idb_' + bid, 'json': res});
+                } catch (err) {
+                    console.log(err);
+                }
+
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                SAInput.LoadedBacklogs4Input.push(bid);
+                loadBacklogProductionDetailsById_resparams(res);
+
+                
+
+            } catch (err) {
+                
+            }
+        }
+    });
+}
 
 
 
@@ -479,34 +530,34 @@ function loadBacklogProductionDetailsById(bid1) {
 //    callEmptyFunctionWithAjax4BacklogLoader(bid1);
 }
 
-function loadCurrentBacklogProdDetails(){
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,true);
+function loadCurrentBacklogProdDetails() {
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 }
 
-function loadCurrentBacklogProdDetailsSyncrone(){
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,false);
+function loadCurrentBacklogProdDetailsSyncrone() {
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
 }
 
-function refreshLiveProtytypeView(){
+function refreshLiveProtytypeView() {
     var isApi = SACore.GetCurrentBaklogIsApi();
-    if (isApi==='1'){
+    if (isApi === '1') {
         callStoryCard(global_var.current_backlog_id);
-    }else{
+    } else {
         $('#storyCardListSelectBox').change();
     }
 }
 
-function callStoryCardAfterIPOAction(){
+function callStoryCardAfterIPOAction() {
     var isApi = SACore.GetCurrentBaklogIsApi();
-    if (isApi==='1'){
+    if (isApi === '1') {
         callStoryCard(global_var.current_backlog_id);
-    }else{
+    } else {
         $('.live-prototype-show-story-card').click();
     }
-     
+
 }
 
-function loadBacklogProductionCoreDetailssById(bid1,isAsync) {
+function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
     var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
@@ -750,12 +801,12 @@ function loadBacklogProductionDetailsById_inputDesc(res) {
             if (!SAInput.DescriptionId[o.fkInputId]) {
                 SAInput.DescriptionId[o.fkInputId] = []
             }
-            
-            if (!arrayTemp.includes(o.fkInputId)){
+
+            if (!arrayTemp.includes(o.fkInputId)) {
                 SAInput.DescriptionId[o.fkInputId] = []
                 arrayTemp.push(o.fkInputId);
             }
-            
+
             if (!SAInput.DescriptionId[o.fkInputId].includes(o.id))
             {
                 SAInput.DescriptionId[o.fkInputId].push(o.id);
@@ -1796,6 +1847,8 @@ function manualProjectRefreshInit(fkManualProjectId) {
     getBacklogLastModificationDateAndTime(fkManualProjectId);
 
     loadFromIndexedDBtoRAM();
+    
+   
     //loadMainProjectList4ManualZad();
 }
 
@@ -1837,7 +1890,9 @@ function loadFromIndexedDBtoRAM() {
                 loadBacklogProductionDetailsById_resparams(res);
                 cursor.continue();
             } else {
+               
                 loadMainProjectList4ManualZad();
+//                  loadMissedBacklogsInBE();
 
             }
         }
@@ -7227,9 +7282,9 @@ function addRelatedApiModal(el) {
         success: function (res) {
             $('#addRelatedApiModal').modal('hide');
             new UserStory().getBacklogDesc();
- 
-	 loadCurrentBacklogProdDetails();
- 
+
+            loadCurrentBacklogProdDetails();
+
         }
     });
 }
@@ -8400,18 +8455,18 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            
-            
-            
-             loadCurrentBacklogProdDetailsSyncrone();
+
+
+
+            loadCurrentBacklogProdDetailsSyncrone();
             refreshLiveProtytypeView();
 //             $('.live-prototype-show-story-card').click();
-callStoryCardAfterIPOAction();
-            
+            callStoryCardAfterIPOAction();
+
             $('#selectFromDbModal').modal('hide');
-           
-           
-           
+
+
+
 
         }
     });
@@ -8492,7 +8547,7 @@ function addSourceOfRelationAsAPI() {
 function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId) {
     var json = initJSON();
     json.kv.id = id,
-    json.kv.action = action;
+            json.kv.action = action;
     json.kv.selectFromBacklogId = selectFromBacklogId;
     json.kv.selectFromInputId = selectFromInputId;
     var that = this;
@@ -8505,11 +8560,11 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
         crossDomain: true,
         async: false,
         success: function (res) {
-         loadCurrentBacklogProdDetailsSyncrone();
-         refreshLiveProtytypeView();
-         callStoryCardAfterIPOAction();
-         $('#addRelatedSourceModal').modal('hide');
-         
+            loadCurrentBacklogProdDetailsSyncrone();
+            refreshLiveProtytypeView();
+            callStoryCardAfterIPOAction();
+            $('#addRelatedSourceModal').modal('hide');
+
         }
     });
 }
@@ -9734,7 +9789,7 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     $('.sa-main-c2').removeClass("col");
     bindScrollZadToCanvas();
     SADebug.CallGUI(backlogId);
-    $('.gui-design').css('background-color','transparent');
+    $('.gui-design').css('background-color', 'transparent');
 
 });
 
@@ -9879,7 +9934,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     showToggleMain();
 
     getProjectUsers();
-        getUsers();
+    getUsers();
 
 
     $.get("resource/child/ipo.html", function (html_string)
@@ -9914,23 +9969,23 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     });
 
     new UserStory().loadDetailsOnProjectSelect4Ipo();
-  
+
 
 });
 
-function genToolbarStatus(){
- var ast = localStorage.getItem('data-toolbar-opened');
-  
- if(ast === "false"){
-  
+function genToolbarStatus() {
+    var ast = localStorage.getItem('data-toolbar-opened');
+
+    if (ast === "false") {
+
         $('.toolbar .minimzeBtn').click();
 
- }
- if(ast === "true"){
+    }
+    if (ast === "true") {
 
-   $('.maximizeBtn').click();
+        $('.maximizeBtn').click();
 
- }
+    }
 
 
 }
@@ -11041,7 +11096,7 @@ function addApiNewPopup() {
 
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
-            
+
             $('.projectList_liveprototype').change();
             $('#addApiPopupModal-userstoryname').val('');
             $('#addApiPopupModal').modal('hide');

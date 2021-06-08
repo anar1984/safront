@@ -3192,4 +3192,7 @@ img.sc-IbsAh.kqHqhS {
     z-index: 5;
 }
 
-
+.init-on-loader{
+    border: 2px dashed read;
+    background:yellow;
+}

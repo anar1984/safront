@@ -216,8 +216,12 @@ var Component = {
                         var className = cr_gui_classes[classId].className;
                         className = className.replace(".", "");
                         el.addClass(className);
-
-
+                        
+                        if (global_var.current_modal==='loadLivePrototype' &&
+                                (className==='sa-onloadclick' || className==='sa-onloadchange'
+                                || className==='sa-onloadclick-async' || className==='sa-onloadchange-async')){
+                            el.addClass('init-on-loader')
+                        }
                     }
                 }
             } catch (err) {
