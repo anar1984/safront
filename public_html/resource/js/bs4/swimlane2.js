@@ -1,5 +1,5 @@
-  let typLine='line-svg-1'
-  let lineColor = '#6d6d6d'
+  var typLine='line-svg-1'
+  var lineColor = '#6d6d6d'
 
  function genLeadeLine(start,end,type,clor,text){
    
@@ -68,7 +68,7 @@ var Idcontent = {content:[
 
 
 var is_line_dragged2 =false
-let idgenvLane = 23734723742
+var idgenvLane = 23734723742;
 $( document ).ready(function() {
 
 
@@ -975,7 +975,7 @@ $(document).on("click", ".SwimBackG" , function(){
 $(document).on("change", "#select-text" , function(){
 
 
-  let textVal=$("#select-text").val();
+  var textVal=$("#select-text").val();
   var idFigure=$(document).find('[data-text="TextVal"]').attr("id");
  
 
@@ -991,8 +991,8 @@ $(document).on("change", "#select-text" , function(){
 
 $(document).on("change", ".SelectFigureText" , function(){
 
-  let idt=$(this).val();
-  let textVal=$( ".SelectFigureText option:selected" ).text();
+  var idt=$(this).val();
+  var textVal=$( ".SelectFigureText option:selected" ).text();
 
   if(idt.length >0){
  
@@ -1018,7 +1018,7 @@ function fgStickMan(color){
           <div class="remvFigbody rightfootFG" style="border: 3px solid ${color} ;" ></div>
   `
 }
-let color ; 
+var color ; 
 
 function getBgColorHex(){
 
@@ -1430,7 +1430,7 @@ var dragSrcEl = null;
 
  
 
-  let items = document.querySelectorAll('.Graphtable td');
+  var items = document.querySelectorAll('.Graphtable td');
   items.forEach(function (item) {
     item.addEventListener('dragstart', handleDragStart, false);
     item.addEventListener('dragenter', handleDragEnter, false);
