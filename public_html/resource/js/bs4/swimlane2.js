@@ -944,7 +944,7 @@ $(document).on("click", ".ExitCardswim" , function(){
 })
 $(document).on("click", ".lines-block-act .geItem" , function(){
          
-  $('.lines-block-act').find('.gactive').removeClass('gactive');
+  $('.geItem').removeClass('gactive');
   $(this).addClass('gactive');
   typLine = $(this).attr('data-tylp');
   
@@ -1266,8 +1266,12 @@ function LaneRepair(){
 
     
      
+    try {
+      genLeadeLine(id[0],id[1],id[2],id[3],'text');
+    } catch (error) {
+      
+    }
     
-    genLeadeLine(id[0],id[1],id[2],id[3],'text')
     
         
     

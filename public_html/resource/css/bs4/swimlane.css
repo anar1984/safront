@@ -351,14 +351,14 @@ visibility: visible;
   
 height: 32px;
 position: absolute !important;  
-  top: 1px;
+  top: 0px;
   right: 1px;
  
 }
 .dragLaneClass{
   height: 33px; 
   position: absolute;  
-  top: 2px;
+  top: 0px;
   right: 32px ;
 }
 .ShowLaneBtnSect{
