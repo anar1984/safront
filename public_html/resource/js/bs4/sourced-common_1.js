@@ -12388,7 +12388,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: false,
             success: function (res) {
                 try {
-                    localStorage.setItem(bid, JSON.stringify(res));
+//                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
                 } catch (err) {
                 }
@@ -39089,7 +39089,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: false,
             success: function (res) {
                 try {
-                    localStorage.setItem(bid, JSON.stringify(res));
+//                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
                 } catch (err) {
                 }

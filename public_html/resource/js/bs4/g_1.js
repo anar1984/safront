@@ -202,7 +202,7 @@ $(function () {
 
 
   // search api list
-    $(document).on('change',"#search-api_list", function(){
+    $(document).on('keypress',"#search-api_list", function(){
          searchFilterTable(this,'api_list_side_bar');
     })
 

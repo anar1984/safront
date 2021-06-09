@@ -966,8 +966,8 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
         async: true,
         success: function (res) {
 
-            localStorage.setItem("md_" + bid, res.kv.modificationTime);
-            localStorage.setItem(bid, JSON.stringify(res));
+//            localStorage.setItem("md_" + bid, res.kv.modificationTime);
+//            localStorage.setItem(bid, JSON.stringify(res));
 
             loadBacklogProductionDetailsById_resparams(res);
 
@@ -998,7 +998,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, select
         success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
-                localStorage.setItem(bid, JSON.stringify(res));
+//                localStorage.setItem(bid, JSON.stringify(res));
 
                 SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);
@@ -17383,8 +17383,8 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
         async: true,
         success: function (res) {
 
-            localStorage.setItem("md_" + bid, res.kv.modificationTime);
-            localStorage.setItem(bid, JSON.stringify(res));
+//            localStorage.setItem("md_" + bid, res.kv.modificationTime);
+//            localStorage.setItem(bid, JSON.stringify(res));
 
             loadBacklogProductionDetailsById_resparams(res);
 
@@ -17415,7 +17415,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, select
         success: function (res) {
             try {
                 SAInput.LoadInput4Zad(res);
-                localStorage.setItem(bid, JSON.stringify(res));
+//                localStorage.setItem(bid, JSON.stringify(res));
 
                 SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
                 var selectedField = SAInput.GetInputName(selectFromInputId);

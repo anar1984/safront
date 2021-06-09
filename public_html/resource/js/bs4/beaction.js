@@ -1677,6 +1677,8 @@ var SAFN = {
         'show': 'Show',
         'hide': 'Hide',
         'click': 'Click',
+        'showmessage':'ShowMessage',
+        'showerror':'ShowError',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1959,6 +1961,14 @@ var SAFN = {
         Click: function (className) {
             $('.' + className).click();
         },
+        ShowMessage:function(msg){
+          Toaster.showMessage(msg);  
+        },
+        ShowMessage:function(msg){
+          Toaster.showError(msg);  
+        },
+        
+        
         CallApi: function (apiId) {
             var data = SAFN.CoreData;
             var element = SAFN.Element;
