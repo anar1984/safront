@@ -6054,8 +6054,8 @@ function showJSModal(jsId) {
 
 }
 
-let cdnh = true;
-let cdnh2 = true;
+//let cdnh = true;
+//let cdnh2 = true;
 
 function showJsCodeModal() {
 
@@ -22467,8 +22467,8 @@ function showJSModal(jsId) {
 
 }
 
-let cdnh = true;
-let cdnh2 = true;
+var cdnh = true;
+var cdnh2 = true;
 
 function showJsCodeModal() {
 
@@ -22598,7 +22598,9 @@ $(document).on('focusout', '#jsCodeModal_fnbody', function () {
 
     updateJSChangeDetails(value, "fnBody")
 })
-let FullSc = true;
+
+
+//let FullSc = true;
 $(document).on('click', '.editor_full_screenBt', function () {
     var val3 = window.editor1.getValue();
 
