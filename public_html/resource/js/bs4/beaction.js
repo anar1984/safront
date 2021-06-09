@@ -141,17 +141,17 @@ var be = {
         try {
             $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
                     //append($('<>').text(JSON.stringify(data)));
-                 .append($('<span class="sa-api-cw1-body">')
-                         .text(JSON.stringify(data)));
+                    .append($('<span class="sa-api-cw1-body">')
+                            .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
     ShowOutData4Debug: function (apiId, data) {
         try {
             $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
-                     //  .attr('data-content',"'"+JSON.stringify(data)+"'");
-                   .append($('<span class="sa-api-cw3-body">')
-                        .text(JSON.stringify(data)));
+                    //  .attr('data-content',"'"+JSON.stringify(data)+"'");
+                    .append($('<span class="sa-api-cw3-body">')
+                            .text(JSON.stringify(data)));
         } catch (err) {
         }
     },
@@ -1671,7 +1671,12 @@ var SAFN = {
         'inc': 'Inc',
         'dec': 'Dec',
         'concat': 'Concat',
-        'callfn':'CallFn',
+        'callfn': 'CallFn',
+        'ifhasvalue': "IfHasValue",
+        'ifhasnotvalue': "IfHasNotValue",
+        'show': 'Show',
+        'hide': 'Hide',
+        'click': 'Click',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1717,19 +1722,33 @@ var SAFN = {
         description = description.trim();
         description = description.trim().replace(SAFN.Prefix, '');
         description = description.toLowerCase();
+
         var mapperLine = description.split("(")[0];
+        mapperLine = mapperLine.trim().replace(/\n/g, '');
+        mapperLine = mapperLine.replace(/ /g, '');
+
+
         var mapper = SAFN.MapList[mapperLine];
         var argLine = [];
-        argLine = SAFN.GetCommandArgument(description);
+        argLine = SAFN.GetCommandArgument(callDesc);
 
         var fnName = 'SAFN.Functions.' + mapper;
         SAFN.CoreData = outData;
 
         var res = {};
 
-        res = (argLine.length > 2)
-                ? eval(fnName).apply(null, argLine.split(","))
-                : eval(fnName)();
+
+        if (argLine.length === 0) {
+            res = eval(fnName)();
+        } else {
+            var argLineList = argLine.split(",");
+            if (argLineList.length === 1) {
+                res = eval(fnName)(argLine);
+            } else if (argLineList.length > 1) {
+                res = eval(fnName).apply(null, argLineList);
+            }
+        }
+
 
 
         var out = $.extend(outData, res);
@@ -1811,6 +1830,26 @@ var SAFN = {
             outData = out;
             return outData;
         },
+    },
+    Function_If_Body_Statement: function () {
+        var data = SAFN.CoreData;
+        var element = SAFN.Element;
+        var asyncData = SAFN.AsyncData;
+
+        var outData = {};
+
+        var commands = SAFN.FunctionBody.split(";");
+        for (var i = 0; i < commands.length; i++) {
+            var cmd = commands[i];
+            if (cmd.length > 3) {
+                var res = SAFN.ExecCommand(cmd, data, element, asyncData);
+                var out = $.extend(outData, res);
+                outData = out;
+            }
+        }
+
+        return outData;
+
     },
     Functions: {
         Map: function (sourceKey, destinationKey) {
@@ -1911,32 +1950,57 @@ var SAFN = {
             var data = SAFN.CoreData;
             delete data[key];
         },
+        Show: function (className) {
+            $('.' + className).show();
+        },
+        Hide: function (className) {
+            $('.' + className).hide();
+        },
+        Click: function (className) {
+            $('.' + className).click();
+        },
         CallApi: function (apiId) {
             var data = SAFN.CoreData;
             var element = SAFN.Element;
             var asyncData = SAFN.AsyncData;
 
-            be.callApi(apiId, data, element, asyncData)
+            var res = be.callApi(apiId, data, element, asyncData)
+            return res;
         },
         CallFn: function (fnName) {
             var data = SAFN.CoreData;
             var element = SAFN.Element;
             var asyncData = SAFN.AsyncData;
 
-           eval(fnName)(data,element,"",asyncData);
+            eval(fnName)(data, element, "", asyncData);
+        },
+        IfHasValue: function (keyCore) {
+            var data = SAFN.CoreData;
+
+            var outData = {};
+            if (data[keyCore]) {
+                outData = SAFN.Function_If_Body_Statement();
+            }
+            return outData;
+        },
+        IfHasNotValue: function (keyCore) {
+            var data = SAFN.CoreData;
+
+            var outData = {};
+            if (!data[keyCore]) {
+                outData = SAFN.Function_If_Body_Statement();
+            }
+            return outData;
         },
         If: function (keyCore, operation, valueCore) {
             operation = operation.replace(/ /g, '');
             operation = operation.toLowerCase();
 
-
-
-            var data = SAFN.CoreData;
-            var element = SAFN.Element;
-            var asyncData = SAFN.AsyncData;
-
             var value = SAFN.GetArgumentValue(valueCore);
             var key = SAFN.GetArgumentValue(keyCore);
+
+            key = key.trim();
+            value = value.trim();
 
             var operRes = false;
 
@@ -1962,20 +2026,9 @@ var SAFN = {
 
             var outData = {};
             if (operRes) {
-                var commands = SAFN.FunctionBody.split(";");
-                for (var i = 0; i < commands.length; i++) {
-                    var cmd = commands[i];
-                    if (cmd.length > 3) {
-                        var res = SAFN.ExecCommand(cmd, data, element, asyncData);
-                        var out = $.extend(outData, res);
-                        outData = out;
-
-                    }
-                }
-
+                outData = SAFN.Function_If_Body_Statement();
             }
             return outData;
-
         }
 
     }
