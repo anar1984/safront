@@ -767,8 +767,12 @@ SADebug = {
                                     .append("<br>"));
                             div.append(divZad);
 
+
 //                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
 //                            SADebug.SetDrawLine("core_api_desc_" + o.id, parentDivId, 'api_desc_send_to');
+
+//                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + o.fkRelatedApiId, 'api_desc_send_to');
+
                         }
                     }
                 }
