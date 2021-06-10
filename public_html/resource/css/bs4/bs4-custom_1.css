@@ -619,7 +619,7 @@ body{
     padding-bottom: 2px;
     padding-left: 4px;
     padding-right: 4px;
-    height:70vh;
+    height:78%;
     overflow-y: scroll;
     overflow-x:hidden;
     scrollbar-width: thin;
@@ -1136,7 +1136,7 @@ a.dropdown-menu-header {
 }
 
 .us-checkbox-list{
-    margin-right: -13px;
+
 }
 
 #example2 {
@@ -2038,7 +2038,7 @@ td.lbl-list-td {
 
 
 button#dropdownMenuLink{
-    margin-left: -17px;
+  
 
 }
 button#dropdownMenuLink:hover {

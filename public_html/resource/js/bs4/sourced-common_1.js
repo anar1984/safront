@@ -14116,6 +14116,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 return;
             }
 
+            $('#storyCardListSelectBox').val(backlogId);
+            $('#storyCardListSelectBox').change();
+
             $('#container-us-body').find('tr[sid=' + backlogId + ']')
                     .first().find('a').first().focus().click();
         } catch (err) {

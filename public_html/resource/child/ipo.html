@@ -19,6 +19,7 @@
             <div class="col-3">
                 <span>Operation</span>
                 <div>
+                    <button class="btn  btn-outline-secondary inp_popUp_story_card_list_cl"><i class="fas fa-list"></i></button>    
                     <button class="btn  btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
                     <button class="btn  btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
                     <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-th-large" style="font-size: 10px;cursor: pointer;"></i></button>  
@@ -96,7 +97,160 @@
             </div>
 
         </div>
-              <div class="draggablePopup ui-draggable" id="inp_popUp_line_list" style="display: none;">
+        <div class="draggablePopup ui-draggable" id="inp_popUp_story_card_list" style="display: none;">
+            <div class="closePopupIn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+            <div class="col-12" id="core_div_col_1st" style="height: 100%;">
+                <div class="s-bkl-main" style="height: 100%;">
+                    <!-- -------------start -sheach rows----------------------------- -->
+                    <div class="row  " >
+                 
+
+                        <div class="col-11" style="padding:0px 2px 0px 0px;">
+                            <input type="input" id="add-bkl-line"
+                                   onchange="searchFilterTable(this, 'container-us-body')"                                    
+                                   class="add-bkl-line  btn-placeholder2" placeholder="Search"> 
+                            <i class="fa fa-close search-clear" style="display: none;" onclick="new UserStory().clearSearch(this)" ></i>
+
+                        </div>
+            
+                    </div>
+                    <!-- -----------------------------------end - sheach rows----------------------------------- -->
+              
+                    <!----------------------------start add user and sheach rows----------------------------------------------------------------- -->
+
+                    <div class="row main-toggle"  style="align-items: center;border-bottom:0.5px solid #b7b9ba!important;border-top: 2px solid #b7b9ba ;">
+
+
+                        <div class="col-2 text-center core-view addUserStoryCheck">
+                            <!-- Gulbahar- allCheckUsername   class yazdim -->
+                            <input value='all' class="us-checkbox-list allCheckUsername" type="checkbox">
+                        </div>
+
+
+                        <div class="col-8  core-view" style="padding:0;" >
+
+                            <input 
+                                class="us-checkbox-list form-control add-btn btn-placeholder" 
+                                type="text"
+                                id="main-user-story-name-4-insert"
+                                onchange="new UserStory().insertNewBacklogShort(this)"
+                                placeholder="+ Add User Story" 
+                                >
+                        </div>
+
+               
+
+                        <!--------------- start- left dropdown menu ...--------------------------------------------------->
+                        <div class="col-2  core-view" style="padding: 0px">
+                            <div class="dropdown add-focus-none" style="display: inline-block;">
+                                <button
+                                    class="btn  dropdown-toggle fa fa-ellipsis-h " href="#" role="button"
+                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="#" class='dropdown-item assignSprintAndLabel'
+                                       style="pointer-events:none;color:gray;"
+                                       onclick="new UserStory().assignSprintModal('assignSprintModal_sprintlist')"
+                                       data-toggle="modal"
+                                       data-target="#assignSprintModal" title="Assign Sprint to User Stories">Assign
+                                        Sprint </a>
+                                    <a href="#" class='dropdown-item assignSprintAndLabel'
+                                       style="pointer-events:none;color:gray;"
+                                       onclick="new UserStory().assignLabelModal('assignLabelModal_labellist')"
+                                       data-toggle="modal"
+                                       data-target="#assignLabelModal" title="Assign Label to User Stories">Assign
+                                        Label </a>
+                                    <a href="#" class='dropdown-item assignSprintAndLabel'
+                                       style="pointer-events:none;color:gray;"
+                                       onclick="new UserStory().loadProjectList()" data-toggle="modal"
+                                       data-target="#dublicateUserStoryModal" title="Copy/Move User Stories">Copy/Move</a>
+                                    <a href="#" class='dropdown-item assignSprintAndLabel'
+                                       style="pointer-events:none;color:gray;"
+                                       onclick="new UserStory().assignPriorityModal()" data-toggle="modal"
+                                       data-target="#assignPriorityToUserStoryModal"
+                                       title="Assign Priority to User Stories">Assign Priority </a>
+                                    <hr style="margin:5px 0px;">
+                                    <!--                                                    <a href="#" class='dropdown-item assignSprintAndLabel'
+                                                                                           style="pointer-events:none;color:gray;"
+                                                                                           onclick="new UserStory().createProjectDocument()" data-toggle="modal"
+                                                                                           data-target="#texnikitapshiriq" title="Assign Priority to User Stories">Create
+                                                                                            Project Document</a>
+                                                                                        <hr>-->
+                                    <a href="#" class='dropdown-item  '
+                                       onclick="getStoryCardTrashModal()"  
+                                       title="Trach Story Card">Trash</a>
+
+
+                                </div>
+                            </div>
+                            <!--                                        <div class="dropdown show" style="padding:0px;margin:0px;">-->
+                            <!--                                            <a class="btn btn-secondary dropdown-toggle us-details"-->
+                            <!--                                               style="background-color: transparent;  border-color: transparent;padding:0px;margin:0px;"-->
+                            <!--                                               href="#" role="button"-->
+                            <!--                                               id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"-->
+                            <!--                                               aria-expanded="false">-->
+
+                            <!--                                            </a>-->
+
+                            <!--                                            <div class="dropdown-menu core-view1" aria-labelledby="dropdownMenuLink">-->
+                            <!--                                                <a href="#" class='dropdown-item assignSprintAndLabel'-->
+                            <!--                                                   style="pointer-events:none;color:gray;"-->
+                            <!--                                                   onclick="new UserStory().assignSprintModal('assignSprintModal_sprintlist')"-->
+                            <!--                                                   data-toggle="modal"-->
+                            <!--                                                   data-target="#assignSprintModal" title="Assign Sprint to User Stories">Assign-->
+                            <!--                                                    Sprint </a>-->
+                            <!--                                                <a href="#" class='dropdown-item assignSprintAndLabel'-->
+                            <!--                                                   style="pointer-events:none;color:gray;"-->
+                            <!--                                                   onclick="new UserStory().assignLabelModal('assignLabelModal_labellist')"-->
+                            <!--                                                   data-toggle="modal"-->
+                            <!--                                                   data-target="#assignLabelModal" title="Assign Label to User Stories">Assign-->
+                            <!--                                                    Label </a>-->
+                            <!--                                                <a href="#" class='dropdown-item assignSprintAndLabel'-->
+                            <!--                                                   style="pointer-events:none;color:gray;"-->
+                            <!--                                                   onclick="new UserStory().loadProjectList()" data-toggle="modal"-->
+                            <!--                                                   data-target="#dublicateUserStoryModal" title="Dublicate User Stories">Dublicate</a>-->
+                            <!--                                                <a href="#" class='dropdown-item assignSprintAndLabel'-->
+                            <!--                                                   style="pointer-events:none;color:gray;"-->
+                            <!--                                                   onclick="new UserStory().assignPriorityModal()" data-toggle="modal"-->
+                            <!--                                                   data-target="#assignPriorityToUserStoryModal"-->
+                            <!--                                                   title="Assign Priority to User Stories">Assign Priority </a>-->
+                            <!--                                                <hr>-->
+                            <!--                                                <a href="#" class='dropdown-item assignSprintAndLabel'-->
+                            <!--                                                   style="pointer-events:none;color:gray;"-->
+                            <!--                                                   onclick="new UserStory().createProjectDocument()" data-toggle="modal"-->
+                            <!--                                                   data-target="#texnikitapshiriq" title="Assign Priority to User Stories">Create-->
+                            <!--                                                    Project Document</a>-->
+
+
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                        </div>
+
+
+              
+                    </div>
+
+
+                    <div class="row main-toggle us-list-container core-view" id="container-us-body-main">
+
+                        <table class="table table-hover table-borderless table-odd-style" style="cursor: pointer;"
+                               border='0'>
+
+                            <tbody id="container-us-body">
+                                <tr class="table-active"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="draggablePopup ui-draggable" id="inp_popUp_line_list" style="display: none;">
             <div class="closePopupIn">
                 <button><i class="fas fa-times"></i></button>
             </div>
