@@ -507,6 +507,12 @@ $(document).on("click", "#input-btn-icon", function () {
         containment: "parent"
     });
 })
+$(document).on("click", ".line_icon_line_list", function () {
+    $('#inp_popUp_line_list').toggle('fast');
+    $('#inp_popUp_line_list').draggable({
+        containment: "parent"
+    });
+})
 $(document).on("click", ".live-prototype-show-line-list", function () {
     $('#leader-line-list-popUp').toggle('fast');
     $('#leader-line-list-popUp').draggable({

@@ -24,6 +24,7 @@
                     <button class="btn btn-outline-secondary live-prototype-show-live"><i class="live-prototype-show-live1 fa fa-th-large" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary live-prototype-show-inputrelation"><i class="live-prototype-show-inputrelation1 fa fa-box" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary live-prototype-show-sourcedrelation"><i class="live-prototype-show-inputrelation1 fa fa-random" style="font-size: 10px;cursor: pointer;"></i></button>  
+                    <button class="btn btn-outline-secondary line_icon_line_list"><i class=" fa fa-random" style="font-size: 10px;cursor: pointer;"></i></button>  
 
 
                 </div>
@@ -57,6 +58,45 @@
         <!-- end 10.08.2020 -->
 
         <div class="draggablePopup ui-draggable" id="inp_popUp" style="display: none;">
+            <div class="closePopupIn">
+                <button><i class="fas fa-times"></i></button>
+            </div>
+            <div id="ipo-tab-setting-inputAdd" class="tab-pane" >               
+
+                <div class="ipo-divider ipo-1-hisse only-gui-design">
+
+                    <table class=" table-hover spilted input-name-add-table" id="tblIPOList">
+                        <thead>
+                            <tr class="input-name-checkbox">
+                                <th></th>
+                                <th>
+                                    <input type="checkbox" id="us_input_list_check_all" onclick="new UserStory().toggleAllInput(this)">
+                                </th>
+                                <th>
+                                    <input type="text" style="height: 0px;" class="input-name" onchange="new UserStory().insertNewInput()" id="us-ipo-inputname" placeholder="Please Enter Input Name!">
+                                </th>
+
+                                <th>
+                                    <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:grey;width:10px;padding: 4px 17px 4px 5px;margin-bottom: 5px;" aria-hidden="true">
+                                    </button>
+                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#createTableForm" onclick="new UserStory().createTableFormModal()" style="font-size: 12px;">Create Table Form</button>
+                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModal" onclick="new UserStory().copyMoveInputsModal()" style="font-size: 12px;">Copy/Move</button>
+                                        <button class="dropdown-item firstbut " onclick="new UserStory().deleteInputs()" style="font-size: 12px;">Delete</button>
+                                    </div>
+                                </th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody style="cursor:pointer"><tr class="us-ipo-input-tr new-input-row active" id="ipo_tr_20111611165309125337" pid="20111611165309125337" iname="Name" itable=""><td>1</td><td><input type="checkbox" id="checkbox_20111611165309125337" onclick="makeClassActive( & quot; 20111611165309125337 & quot; )" class="us-input-list-item-check-box-class" value="20111611165309125337"></td><td ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn" pid="20111611165309125337" iname="Name" "="" itable="">Name</td><td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, '20111611165309125337')"><i class="fa fa-trash dust-bin" aria-hidden="true"></i></a></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+              <div class="draggablePopup ui-draggable" id="inp_popUp_line_list" style="display: none;">
             <div class="closePopupIn">
                 <button><i class="fas fa-times"></i></button>
             </div>
