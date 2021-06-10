@@ -278,7 +278,7 @@ function genUsStickMAn(idgen,bgclr){
                     .attr("data-colorcst","4")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="/github/safron/public_html/resource/img/lg3.png" alt="">')
+                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg3.png" alt="">')
 
                     .append($("<div>")
                     .addClass("contentArrow")
@@ -299,7 +299,7 @@ function genUsSquare(idgen,bgclr){
                     .attr("data-colorcst","1")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="/github/safron/public_html/resource/img/lg10.png" alt="">')
+                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt="">')
                     .append($("<div>")
                               .addClass("contentArrow")
                               .attr("id", "dragArrow")
@@ -348,7 +348,7 @@ function genUsTriangle(idgen,bgclr){
                      .attr("data-colorcst","2")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="/github/safron/public_html/resource/img/lg2.png" alt="">')
+                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg2.png" alt="">')
 
                      .append($("<div>")
                                .addClass("contentArrow trinagleArrow")
@@ -371,7 +371,7 @@ function genUsHexagon(idgen,bgclr){
                      .attr("data-colorcst","2")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                     .append(' <img src="/github/safron/public_html/resource/img/lg6.png" alt="">')
+                     .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg6.png" alt="">')
  
                      .append($("<div>")
                                .addClass("contentArrow")
@@ -394,7 +394,7 @@ function genUsRhomb(idgen,bgclr){
                      .attr("data-colorcst","1")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                     .append(' <img src="/github/safron/public_html/resource/img/lg4.png" alt="">')
+                     .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg4.png" alt="">')
  
                      .append($("<div>")
                                .addClass("contentArrow  ")
@@ -417,7 +417,7 @@ function genUsEllipse(idgen,bgclr){
                     .attr("data-colorcst","1")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="/github/safron/public_html/resource/img/lg8.png" alt="">')
+                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg8.png" alt="">')
 
                     .append($("<div>")
                               .addClass("contentArrow  ")
@@ -441,7 +441,7 @@ function genUsCircle(idgen,bgclr){
             .attr("data-colorcst","1")
             .attr("id", idgen)
             .attr("style","background-color:"+bgclr+" ;")
-            .append(' <img src="/github/safron/public_html/resource/img/lg1.png" alt="">')
+            .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg1.png" alt="">')
 
             .append($("<div>")
                       .addClass("contentArrow")
@@ -464,7 +464,7 @@ function genUsDocumentFg(idgen,bgclr){
              .attr("data-colorcst","1")
              .attr("id", idgen)
              .attr("style","background-color:"+bgclr+" ;")
-             .append(' <img src="/github/safron/public_html/resource/img/lg7.png" alt="">')
+             .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg7.png" alt="">')
 
              .append($("<div>")
                        .addClass("contentArrow")
@@ -488,7 +488,7 @@ function genUsDiamond(idgen,bgclr){
                          .attr("data-colorcst","1")
                          .attr("id", idgen)
                          .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="/github/safron/public_html/resource/img/lg5.png" alt="">')
+                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg5.png" alt="">')
 
                      .append($("<div>")
                        .addClass("contentArrow ")
@@ -509,7 +509,7 @@ function genUSCardfg(idgen,bgclr){
                          .attr("data-colorcst","1")
                          .attr("id", idgen)
                          .attr("style","background-color:"+bgclr+" ;")
-                         .append(' <img src="/github/safron/public_html/resource/img/lg9.png" alt="">')
+                         .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg9.png" alt="">')
      
                      .append($("<div>")
                        .addClass("contentArrow ")
@@ -531,17 +531,17 @@ function genusAdderPopUpTdSl(){
            .append('<p class="selectColorWord">Select Figure</p>')
            .append($("<div>")
                      .addClass("figureSelectOption")
-                     .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg3.png" alt=""></span>`)
-                     .append('<span data-figurnum="12" class="figureFromspansw "><img src="/github/safron/public_html/resource/img/lg1.png" alt=""></span>')
-                     .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/github/safron/public_html/resource/img/lg10.png" alt=""></span>')
-                     .append('<span data-figurnum="16" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg5.png" alt=""></span>')
-                     .append('<span data-figurnum="18" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg6.png" alt=""></span>')
-                     .append('<span data-figurnum="20" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg2.png" alt=""></span>')
-                     .append('<span data-figurnum="22" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg9.png" alt=""></span>')
-                     .append('<span data-figurnum="24" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg4.png" alt=""></span>')
-                     .append('<span data-figurnum="26" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg8.png" alt=""></span>')
-                     .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/github/safron/public_html/resource/img/lg7.png" alt=""></span>`)
-                     .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/github/safron/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
+                     .append(`<span data-figurnum="10" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg3.png" alt=""></span>`)
+                     .append('<span data-figurnum="12" class="figureFromspansw "><img src="http://localhost/github/safron/public_html/resource/img/lg1.png" alt=""></span>')
+                     .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt=""></span>')
+                     .append('<span data-figurnum="16" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg5.png" alt=""></span>')
+                     .append('<span data-figurnum="18" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg6.png" alt=""></span>')
+                     .append('<span data-figurnum="20" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg2.png" alt=""></span>')
+                     .append('<span data-figurnum="22" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg9.png" alt=""></span>')
+                     .append('<span data-figurnum="24" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg4.png" alt=""></span>')
+                     .append('<span data-figurnum="26" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg8.png" alt=""></span>')
+                     .append(`<span data-figurnum="28" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg7.png" alt=""></span>`)
+                     .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
                      )
           .append('<p class="selectColorWord">Select Color Figure</p>')
           .append($("<div>")
@@ -1014,47 +1014,47 @@ $(document).on("click",".figureFromspansChange",function(){
    dot.removeClass();
   if(fbg==10){
     dot.addClass("Content stickManFigure");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg3.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg3.png');
   }
   if(fbg==12){
     dot.addClass("Content circle");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg1.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg1.png');
   }
   if(fbg==14){
     dot.addClass("Content square");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg10.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg10.png');
 
   }
   if(fbg==16){
     dot.addClass("Content diamond");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg5.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg5.png');
   }
   if(fbg==18){
 
     dot.addClass("Content hexagon");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg6.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg6.png');
   }
   if(fbg==20){
       dot.addClass("Content triangle");
-      dot.find("img").attr('src','/github/safron/public_html/resource/img/lg2.png');
+      dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg2.png');
   }
   if(fbg==22){
     dot.addClass("Content cardfg");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg9.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg9.png');
   } 
   if(fbg==24){
     dot.addClass("Content rhomb");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg4.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg4.png');
     
   }
   if(fbg==26){
     dot.addClass("Content ellipse");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg8.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg8.png');
 
   }
   if(fbg==28){
     dot.addClass("Content DocumentFg");
-    dot.find("img").attr('src','/github/safron/public_html/resource/img/lg7.png');
+    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg7.png');
   }
 
 })
@@ -1324,9 +1324,7 @@ var dragSrcEl = null;
   }
 
 
-   function dragable(){
-
-   
+ 
 
   var items = document.querySelectorAll('.Graphtable td');
   items.forEach(function (item) {
@@ -1338,8 +1336,7 @@ var dragSrcEl = null;
     item.addEventListener('dragend', handleDragEnd, false);
   });
   
-}
-dragable();
+ 
   $(document).on("click", "#LaneAddBtn" , function(){
 
 
@@ -1356,11 +1353,10 @@ dragable();
     }
     $("#laneId"+idgenvLane).find("td").append(genusAdderPopupopenedSl());
     idgenvLane++
-    LaneRepair();
-    dragable();
+    LaneRepair()
     $(".Graphtable tbody tr").arrangeable({
       dragSelector: ".dragLaneClass",
-    
+   
       })
 
   
