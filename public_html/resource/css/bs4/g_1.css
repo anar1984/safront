@@ -17,18 +17,18 @@
 
 }
 input#add-bkl-line {
-    padding: 7px;
-    padding-left: 0px;
-    width: 41%;
-    border: 1px solid #f4f5f7;;
+    padding: 1px;
+    /* padding-left: 0px; */
+    width: 100%;
+    border: 1px solid #f4f5f7;
     font-size: 15px;
     color: gray;
     background-image: url(https://img.icons8.com/pastel-glyph/2x/search--v2.png);
     background-repeat: no-repeat;
     background-position: right center;
     background-size: 7%;
-    outline: 0;
-    background-color: #f4f5f7;;
+    /* outline: 0; */
+    background-color: #f4f5f7;
     cursor: pointer;
 }
 input#add-bkl-line:focus{

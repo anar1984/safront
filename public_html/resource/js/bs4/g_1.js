@@ -527,6 +527,13 @@ $(document).on("click", "#History-btn-icon", function () {
     });
     setBacklogHistory4View();
 })
+$(document).on("click", ".inp_popUp_story_card_list_cl", function () {
+    $('#inp_popUp_story_card_list').toggle('fast');
+    $('#inp_popUp_story_card_list').draggable({
+        containment: "parent"
+    });
+  
+})
 $(document).on("dblclick", ".component-container-dashed", function () {
     $('#edit_component_inp_popUp').toggle('fast');
     $('#edit_component_inp_popUp').draggable({

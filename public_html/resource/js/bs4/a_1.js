@@ -9961,7 +9961,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         getJsCodeByProject();
         getInputActionRelByProjectMAnual2();
         genToolbarStatus();
-//        loadLivePrototypeCore(this);
+         loadLivePrototypeCore(this);
 
 
 
