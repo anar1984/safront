@@ -507,6 +507,12 @@ $(document).on("click", "#input-btn-icon", function () {
         containment: "parent"
     });
 })
+$(document).on("click", ".live-prototype-show-line-list", function () {
+    $('#leader-line-list-popUp').toggle('fast');
+    $('#leader-line-list-popUp').draggable({
+        containment: "parent"
+    });
+})
 $(document).on("click", "#History-btn-icon", function () {
     $('#history_inp_popUp').toggle('fast');
     $('#history_inp_popUp').draggable({

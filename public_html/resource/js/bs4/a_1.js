@@ -66,6 +66,9 @@ function MapApiCallAsyncType(arg) {
 }
 
 
+function load
+
+
 function getTop(divObj, parentDivId) {
     var divId = "";
     try {

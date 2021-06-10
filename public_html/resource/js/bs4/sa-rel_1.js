@@ -5,8 +5,8 @@
  * and open the template in the editor.
  */
 
- 
 
+ 
 
 SADebug = {
     "BacklogId": "",
@@ -21,7 +21,7 @@ SADebug = {
         kv.toId = toId;
         kv.title = title;
         kv.inputId = inputId;
-        kv.inputName = SAInput.GetInputName(inputId);
+        kv.inputName = SAInput.GetInputName(inputId)
         SADebug.Lines.push(kv);
     },
     RemoveAllDrawLine: function () {
@@ -159,7 +159,7 @@ SADebug = {
     GUIFunction: {
         SelectFromBacklogId: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from', inputId);
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -172,7 +172,7 @@ SADebug = {
 
 
 //            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
-            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from');
 
 
 
@@ -182,7 +182,7 @@ SADebug = {
         GetFkDependentBacklogId: function (inputId, apiId, backlogId) {
 
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from'), inputId;
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -195,14 +195,14 @@ SADebug = {
 
 
 //            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
-            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from');
 
             var apiCallId = apiId;
             SADebug.CallApiThread(apiCallId, dyncId);
         },
         SendToBacklogId: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -214,7 +214,7 @@ SADebug = {
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
 
 //            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
-            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to');
 
 
             var apiCallId = apiId;
@@ -224,7 +224,7 @@ SADebug = {
         },
         GenerateInputActionRelation4Read: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from', inputId);
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -236,14 +236,14 @@ SADebug = {
 
 
 //            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
-            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from');
 
             var apiCallId = apiId;
             SADebug.CallApiThread(apiCallId, dyncId);
         },
         GenerateInputActionRelation4CUD: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -254,8 +254,8 @@ SADebug = {
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
 
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
-            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to');
 
             var apiCallId = apiId;
             SADebug.CallApiThread(apiCallId, dyncId);
