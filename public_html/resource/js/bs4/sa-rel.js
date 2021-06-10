@@ -5,6 +5,8 @@
  * and open the template in the editor.
  */
 
+ 
+
 
 SADebug = {
     "BacklogId": "",
@@ -13,12 +15,13 @@ SADebug = {
     Lines: [],
     LoadedApi: [],
     LoadedGui: [],
-    SetDrawLine: function (fromId, toId, title, relType) {
+    SetDrawLine: function (fromId, toId, title, inputId) {
         var kv = {};
         kv.fromId = fromId;
         kv.toId = toId;
         kv.title = title;
-        kv.relType = relType;
+        kv.inputId = inputId;
+        kv.inputName = SAInput.GetInputName(inputId);
         SADebug.Lines.push(kv);
     },
     RemoveAllDrawLine: function () {
@@ -44,6 +47,7 @@ SADebug = {
     },
 
     DrawLines: function () {
+        $('#modal-prototypye .modal-header').css('display', 'none');
         for (var i = 0; i < SADebug.Lines.length; i++) {
             try {
                 var from = SADebug.Lines[i].fromId;
@@ -77,10 +81,13 @@ SADebug = {
             } catch (err) {
             }
         }
+        $('#modal-prototypye .modal-header').css('display', 'block');
     },
     CallGUI: function (backlogId) {
         if (backlogId.length < 3)
             return;
+
+        SADebug.Lines = [];
 
         SADebug.LoadedBacklogsFromPart = [];
         SADebug.LoadedBacklogsToPart = [];
@@ -101,7 +108,7 @@ SADebug = {
 //        SADebug.RemoveAllDrawLine();
 //        SADebug.DrawLines();
     },
-    CallApi: function (apiId) {
+    CallApi: function (apiId, parentDivId) {
         if (apiId.length < 3) {
             return;
         }
@@ -117,15 +124,18 @@ SADebug = {
             var o = cr_project_desc[extId];
 
             if (o.fkRelatedApiId) {
-                var body = SADebug.Pattern.API.GetPattern(o.fkRelatedApiId);
+                var dyncId = makeId(10);
+                var body = SADebug.Pattern.API.GetPattern(o.fkRelatedApiId, dyncId);
                 var div3 = $("<div class='sa-cwr'>").append(body);
 
-                $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+//                $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+                $("#" + parentDivId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+
 //                SADebug.SetDrawLine("core_api_" + apiId, "core_api_" + o.fkRelatedApiId, 'api_api');
-                 SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + o.fkRelatedApiId, 'api_desc_send_to');
+                SADebug.SetDrawLine("core_api_desc_" + parentDivId + '_' + o.id, dyncId, 'api_api');
 
                 var apiCallId = o.fkRelatedApiId;
-                SADebug.CallApiThread(apiCallId);
+                SADebug.CallApiThread(apiCallId, dyncId);
             }
 
         }
@@ -149,7 +159,7 @@ SADebug = {
     GUIFunction: {
         SelectFromBacklogId: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from', inputId);
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
@@ -161,83 +171,94 @@ SADebug = {
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
 
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+//            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
+
 
 
             var apiCallId = apiId;
-            SADebug.CallApiThread(apiCallId);
+            SADebug.CallApiThread(apiCallId, dyncId);
         },
         GetFkDependentBacklogId: function (inputId, apiId, backlogId) {
 
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from'), inputId;
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
 
-            SADebug.LoadedBacklogsFromPart.push(apiId)
+            SADebug.LoadedBacklogsFromPart.push(apiId);
 
-            var body = SADebug.Pattern.API.GetPattern(apiId);
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
 
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+//            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
 
             var apiCallId = apiId;
-            SADebug.CallApiThread(apiCallId);
+            SADebug.CallApiThread(apiCallId, dyncId);
         },
         SendToBacklogId: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
 
             SADebug.LoadedBacklogsToPart.push(apiId);
 
+            var dyncId = makeId(10);
             var body = SADebug.Pattern.API.GetPattern(apiId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+//            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to', inputId);
+
 
             var apiCallId = apiId;
-            SADebug.CallApiThread(apiCallId);
+            SADebug.CallApiThread(apiCallId, dyncId);
 
 
         },
         GenerateInputActionRelation4Read: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsFromPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from', inputId);
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
             SADebug.LoadedBacklogsFromPart.push(apiId);
 
-            var body = SADebug.Pattern.API.GetPattern(apiId);
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c1').append(body);
 
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+//            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_select_from');
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_select_from', inputId);
 
             var apiCallId = apiId;
-            SADebug.CallApiThread(apiCallId);
+            SADebug.CallApiThread(apiCallId, dyncId);
         },
         GenerateInputActionRelation4CUD: function (inputId, apiId, backlogId) {
             if (SADebug.LoadedBacklogsToPart.includes(apiId)) {
-                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+                SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
                 Toaster.showError("There's a loop: " + apiId);
                 return;
             }
             SADebug.LoadedBacklogsToPart.push(apiId);
 
-            var body = SADebug.Pattern.API.GetPattern(apiId);
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
             $("#core_gui_" + backlogId).closest('div.sa-gui-rw').find('.sa-c3').append(body);
 
 
-            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to');
+            SADebug.SetDrawLine("comp_id_" + inputId, "core_api_" + apiId, 'gui_send_to', inputId);
+            SADebug.SetDrawLine("comp_id_" + inputId, dyncId, 'gui_send_to', inputId);
 
             var apiCallId = apiId;
-            SADebug.CallApiThread(apiCallId);
+            SADebug.CallApiThread(apiCallId, dyncId);
         },
         GenerateInputActionRelation: function (inputId, backlogId) {
             try {
@@ -247,8 +268,8 @@ SADebug = {
                     var obj = cr_input_action_rel_list[relId];
                     var apiId = obj.fkApiId;
 
-                    if (apiId ) {
- 
+                    if (apiId) {
+
 
                         var apiAction = SACore.GetBacklogDetails(apiId, "apiAction");
                         if (apiAction === 'R') {
@@ -412,12 +433,14 @@ SADebug = {
 
 
     },
-    CallApiThread: function (apiId) {
+    CallApiThread: function (apiId, divId) {
         var carrier = new Carrier();
         carrier.setBacklogId(apiId);
+        carrier.set("divId", divId);
 
 
-        $('#core_api_' + apiId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
+//        $('#core_api_' + apiId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
+        $('#' + divId).closest("div.sa-api-esas").prepend($('<div class="progressLoader loaderTable">'))
 
         if (!ifBacklogInputs4LoaderExistById(apiId)) {
             showProgress5();
@@ -435,6 +458,10 @@ SADebug = {
     _FillApiDivBody: function (carrier) {
         var apiId = carrier.getBacklogId();
         var apiName = SACore.GetBacklogDetails(apiId, 'backlogName');
+        var divId = carrier.get("divId");
+
+//        var finalId = '#core_api_' + apiId;
+        var finalId = '#' + divId;
 
         var body = $('<div>')
                 .append($('<span>').text(apiName))
@@ -454,34 +481,34 @@ SADebug = {
 
 
 
-        $('#core_api_' + apiId)
+        $(finalId)
                 .closest("div.sa-api-esas")
                 .find('.api-body')
                 .first().html(body);
 
-        $('#core_api_' + apiId)
+        $(finalId)
                 .closest("div.sa-api-esas")
                 .find('.api-input-list')
                 .first().html(SADebug.Pattern.API.GetInputList(apiId));
 
-        $('#core_api_' + apiId)
+        $(finalId)
                 .closest("div.sa-api-esas")
                 .find('.api-desc-list')
-                .first().html(SADebug.Pattern.API.GetProcessDescriptionList(apiId));
+                .first().html(SADebug.Pattern.API.GetProcessDescriptionList(apiId, divId));
 
-        $('#core_api_' + apiId)
+        $(finalId)
                 .closest("div.sa-api-esas")
                 .find('.api-output-list')
                 .first().html(SADebug.Pattern.API.GetOutputList(apiId));
 
-        $('#core_api_' + apiId).closest("div.sa-api-esas").find('.progressLoader').remove();
+        $(finalId).closest("div.sa-api-esas").find('.progressLoader').remove();
 
-        SADebug.CallApi(apiId);
+        SADebug.CallApi(apiId, divId);
     },
 
     Pattern: {
         API: {
-            GetPattern: function (apiId) {
+            GetPattern: function (apiId, divId) {
                 if (!apiId)
                     return "";
 
@@ -498,7 +525,8 @@ SADebug = {
 
                                 .append($('<div>')
                                         .addClass("sa-cw2 row")
-                                        .attr("id", "core_api_" + apiId)
+                                        .attr("pid", "core_api_" + apiId)
+                                        .attr('id', divId)
                                         .append($('<span class="btn btn-secondary api_larged_block"><i class="fas fa-expand" aria-hidden="true"></i></span>'))
                                         .append($('<h6>')
                                                 .addClass("api-body")
@@ -664,10 +692,10 @@ SADebug = {
                 }
                 return div;
             },
-            GetProcessDescriptionList: function (apiId) {
+            GetProcessDescriptionList: function (apiId, parentDivId) {
 
                 var div = $("<div>")
-                        .addClass('sa-desc-block')
+                        .addClass('sa-desc-block');
 
 
                 var extApiList = (cr_project_desc_by_backlog[apiId])
@@ -700,7 +728,8 @@ SADebug = {
                                 .append("<br>"));
                         div.append(divZad);
 
-                        //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                        SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                    
                     } else {
                         if (o.fkRelatedScId) {
                             var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -709,36 +738,41 @@ SADebug = {
                             if (fnType === 'core') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
-                                        .attr("id", "core_api_desc_" + o.id)
+                                        .attr("id", "core_api_desc_" + apiId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (JavaScript)")
                                         .append("<br>"));
                                 div.append(divZad);
 
-                                //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
 
                             } else if (fnType === 'java') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
-                                        .attr("id", "core_api_desc_" + o.id)
+                                        .attr("id", "core_api_desc_" + apiId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (Java)")
                                         .append("<br>"));
                                 div.append(divZad);
 
-                                //SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                                SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
                             }
                         }
                         if (o.fkRelatedApiId) {
                             divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                             divZad.append($('<div class="sa-desc-item-body">')
-                                    .attr("id", "core_api_desc_" + o.id)
+                                    .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                     .append(o.description)
                                     .append(" (API)")
                                     .append("<br>"));
                             div.append(divZad);
 
+
+//                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
+//                            SADebug.SetDrawLine("core_api_desc_" + o.id, parentDivId, 'api_desc_send_to');
+
 //                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + o.fkRelatedApiId, 'api_desc_send_to');
+
                         }
                     }
                 }

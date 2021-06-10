@@ -1677,8 +1677,8 @@ var SAFN = {
         'show': 'Show',
         'hide': 'Hide',
         'click': 'Click',
-        'showmessage':'ShowMessage',
-        'showerror':'ShowError',
+        'showmessage': 'ShowMessage',
+        'showerror': 'ShowError',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1766,6 +1766,21 @@ var SAFN = {
                 : valueCore.startsWith('"') && valueCore.endsWith('"')
                 ? valueCore.substring(1, valueCore.length - 1)
                 : (data[valueCore]) ? data[valueCore] : "";
+
+        val = val.trim();
+        return val;
+    },
+
+    GetArgumentPureValue: function (valueCore) {
+        valueCore = valueCore.trim();
+
+        var val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
+                ? valueCore.substring(1, valueCore.length - 1)
+                : valueCore.startsWith('"') && valueCore.endsWith('"')
+                ? valueCore.substring(1, valueCore.length - 1)
+                : valueCore;
+
+        val = val.trim();
         return val;
     },
 
@@ -1855,6 +1870,10 @@ var SAFN = {
     },
     Functions: {
         Map: function (sourceKey, destinationKey) {
+
+            sourceKey = SAFN.GetArgumentPureValue(sourceKey);
+            destinationKey = SAFN.GetArgumentPureValue(destinationKey);
+
             var data = SAFN.CoreData;
             var val = data[destinationKey];
             val = (val) ? val : "";
@@ -1912,31 +1931,43 @@ var SAFN = {
             return outData;
         },
         Set: function (key, value) {
+            value = SAFN.GetArgumentPureValue(value);
+
             var data = SAFN.CoreData;
             data[key] = value;
             return data;
         },
         Get: function (key, value) {
+            value = SAFN.GetArgumentPureValue(value);
+            key = SAFN.GetArgumentPureValue(key);
+
+
             var data = SAFN.CoreData;
             data[value] = data[key];
             return data;
         },
         SetParamUrl: function (key, value) {
+            value = SAFN.GetArgumentPureValue(value);
+            key = SAFN.GetArgumentPureValue(key);
+
             Utility.addParamToUrl(key, value);
         },
         GetParamUrl: function (key, variable) {
+            variable = SAFN.GetArgumentPureValue(variable);
+            key = SAFN.GetArgumentPureValue(key);
             var data = SAFN.CoreData;
             data[variable] = Utility.getParamFromUrl(key);
             return data;
         },
         Alert: function (key) {
+            key = SAFN.GetArgumentPureValue(key);
             var data = SAFN.CoreData;
             var value = data[key];
             alert(value);
         },
         Console: function (arg) {
             var data = SAFN.CoreData;
-            var value = data[key];
+            var value = data[arg];
             console.log(value);
         },
         AlertData: function () {
@@ -1949,27 +1980,35 @@ var SAFN = {
             console.log(JSON.stringify(data));
         },
         DeleteKey: function (key) {
+            key = SAFN.GetArgumentPureValue(key);
+
             var data = SAFN.CoreData;
             delete data[key];
         },
         Show: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
+
             $('.' + className).show();
         },
         Hide: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
             $('.' + className).hide();
         },
         Click: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
             $('.' + className).click();
         },
-        ShowMessage:function(msg){
-          Toaster.showMessage(msg);  
+        ShowMessage: function (msg) {
+            msg = SAFN.GetArgumentPureValue(msg);
+            Toaster.showMessage(msg);
         },
-        ShowMessage:function(msg){
-          Toaster.showError(msg);  
+        ShowError: function (msg) {
+            msg = SAFN.GetArgumentPureValue(msg);
+            Toaster.showError(msg);
         },
-        
-        
+
         CallApi: function (apiId) {
+            apiId = SAFN.GetArgumentPureValue(apiId);
             var data = SAFN.CoreData;
             var element = SAFN.Element;
             var asyncData = SAFN.AsyncData;
@@ -1978,6 +2017,8 @@ var SAFN = {
             return res;
         },
         CallFn: function (fnName) {
+            fnName = SAFN.GetArgumentPureValue(fnName);
+
             var data = SAFN.CoreData;
             var element = SAFN.Element;
             var asyncData = SAFN.AsyncData;
@@ -1985,6 +2026,7 @@ var SAFN = {
             eval(fnName)(data, element, "", asyncData);
         },
         IfHasValue: function (keyCore) {
+            keyCore = SAFN.GetArgumentPureValue(keyCore);
             var data = SAFN.CoreData;
 
             var outData = {};
@@ -1994,6 +2036,7 @@ var SAFN = {
             return outData;
         },
         IfHasNotValue: function (keyCore) {
+            keyCore = SAFN.GetArgumentPureValue(keyCore);
             var data = SAFN.CoreData;
 
             var outData = {};
@@ -2003,6 +2046,11 @@ var SAFN = {
             return outData;
         },
         If: function (keyCore, operation, valueCore) {
+
+            operation = SAFN.GetArgumentPureValue(operation);
+
+
+
             operation = operation.replace(/ /g, '');
             operation = operation.toLowerCase();
 
