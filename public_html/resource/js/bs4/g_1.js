@@ -512,6 +512,7 @@ $(document).on("click", ".line_icon_line_list", function () {
     $('#inp_popUp_line_list').draggable({
         containment: "parent"
     });
+    showGuiInputList4DebugView();
 })
 $(document).on("click", ".live-prototype-show-line-list", function () {
     $('#leader-line-list-popUp').toggle('fast');
