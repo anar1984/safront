@@ -1,4 +1,4 @@
- 
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -66,7 +66,7 @@ function MapApiCallAsyncType(arg) {
 }
 
 
-function load
+
 
 
 function getTop(divObj, parentDivId) {
@@ -16469,6 +16469,7 @@ function setApiIpoBlock() {
         }
     }
 }
+ 
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -16965,6 +16966,7 @@ function refreshLiveProtytypeView(){
         callStoryCard(global_var.current_backlog_id);
     }else{
         $('#storyCardListSelectBox').change();
+        console.log('he kecir');
     }
 }
 
@@ -26432,13 +26434,13 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         getJsCodeByProject();
         getInputActionRelByProjectMAnual2();
         genToolbarStatus();
-//        loadLivePrototypeCore(this);
-
+       loadLivePrototypeCore(this);
+ 
 
 
     });
-
     new UserStory().loadDetailsOnProjectSelect4Ipo();
+    
   
 
 });
