@@ -10001,7 +10001,7 @@ function loadStoryCardByProject4oIpo(e) {
     // clearQueue4ProLoad();
     //this.toggleProjectDetails();
 
-
+ 
 }
 
 function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
@@ -10024,7 +10024,7 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             var cmd = $('#storyCardListSelectBox');
             cmd.html('');
-
+            new UserStory().setUSLists(res);
             var f = true;
 
             var obj = res.tbl[0].r;
@@ -10032,7 +10032,7 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
                     var pname = o.backlogName;
-                    var op = $('<option></option')
+                    var op = $('<option></option>')
                             .attr('value', o.id)
                             .text(pname);
                     if (f) {

@@ -12235,7 +12235,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
 
                 var res = SACore.toJSON();
-                new UserStory().setUSLists(res);
+             
                 new UserStory().refreshCurrentBacklog();
 
                 hideProgress();
@@ -13107,10 +13107,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 return;
             }
             $('#container-us-body').html('');
-            console.log(res)
-            $('#api_list_side_bar').html(this.getUSListBlockApi(res));
+         //   $('#api_list_side_bar').html(thisb.getUSListBlockApi(res));
             $('#container-us-body').html(this.getUSListBlockUserStory(res));
-          // $('#storyCardListSelectBox').html(this.getUSListBlockUserStoryLive(res));
 
 
             global_var.story_card_sprint_assign_checked = 0;
@@ -14623,6 +14621,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $(this).removeClass('us-selected');
             $(this).css("background-color", "");
         });
+
+        $("#storyCardListSelectBox").val(id);
+        $("#storyCardListSelectBox").change();
+
         $(e).closest('tr').first().addClass('us-selected');
         $(e).closest('tr').first().css('background-color', '#92aeda');
 
