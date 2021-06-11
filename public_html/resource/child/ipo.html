@@ -105,7 +105,7 @@
                 <div class="s-bkl-main" style="height: 100%;">
                     <!-- -------------start -sheach rows----------------------------- -->
                     <div class="row  " >
-                 
+
 
                         <div class="col-11" style="padding:0px 2px 0px 0px;">
                             <input type="input" id="add-bkl-line"
@@ -114,10 +114,10 @@
                             <i class="fa fa-close search-clear" style="display: none;" onclick="new UserStory().clearSearch(this)" ></i>
 
                         </div>
-            
+
                     </div>
                     <!-- -----------------------------------end - sheach rows----------------------------------- -->
-              
+
                     <!----------------------------start add user and sheach rows----------------------------------------------------------------- -->
 
                     <div class="row main-toggle"  style="align-items: center;border-bottom:0.5px solid #b7b9ba!important;border-top: 2px solid #b7b9ba ;">
@@ -140,7 +140,7 @@
                                 >
                         </div>
 
-               
+
 
                         <!--------------- start- left dropdown menu ...--------------------------------------------------->
                         <div class="col-2  core-view" style="padding: 0px">
@@ -232,7 +232,7 @@
                         </div>
 
 
-              
+
                     </div>
 
 
@@ -261,28 +261,21 @@
                     <table class=" table-hover spilted input-name-add-table" id="tblIPOList">
                         <thead>
                             <tr class="input-name-checkbox">
-                                <th></th>
+                                <!--<th></th>-->
                                 <th>
-                                    <input type="checkbox" id="us_input_list_check_all" onclick="new UserStory().toggleAllInput(this)">
-                                </th>
-                                <th>
-                                    <input type="text" style="height: 0px;" class="input-name" onchange="new UserStory().insertNewInput()" id="us-ipo-inputname" placeholder="Please Enter Input Name!">
+                                    <input type="checkbox" checked id="us_input_list_check_all" 
+                                           onclick="toggleCheckAllInputListInDebugMode(this)">
                                 </th>
 
                                 <th>
-                                    <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:grey;width:10px;padding: 4px 17px 4px 5px;margin-bottom: 5px;" aria-hidden="true">
-                                    </button>
-                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#createTableForm" onclick="new UserStory().createTableFormModal()" style="font-size: 12px;">Create Table Form</button>
-                                        <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModal" onclick="new UserStory().copyMoveInputsModal()" style="font-size: 12px;">Copy/Move</button>
-                                        <button class="dropdown-item firstbut " onclick="new UserStory().deleteInputs()" style="font-size: 12px;">Delete</button>
-                                    </div>
+
                                 </th>
 
                             </tr>
 
                         </thead>
-                        <tbody style="cursor:pointer"><tr class="us-ipo-input-tr new-input-row active" id="ipo_tr_20111611165309125337" pid="20111611165309125337" iname="Name" itable=""><td>1</td><td><input type="checkbox" id="checkbox_20111611165309125337" onclick="makeClassActive( & quot; 20111611165309125337 & quot; )" class="us-input-list-item-check-box-class" value="20111611165309125337"></td><td ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn" pid="20111611165309125337" iname="Name" "="" itable="">Name</td><td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, '20111611165309125337')"><i class="fa fa-trash dust-bin" aria-hidden="true"></i></a></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody>
+                        <tbody style="cursor:pointer" id='backlogInput4Debug'>
+                        </tbody>
                     </table>
 
                 </div>
@@ -894,7 +887,7 @@
                                         </div>
 
                                         <a href="#" rel="iLightbox" class="home_icon_menu-item gooeyMenuDesc-1" onclick="addApiModal()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add API</h6></a>
-                                       
+
                                         <a href="#" rel="iLightbox" class="home_icon_menu-item gooeyMenuDesc-1" onclick="addUserStoryNewModal()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add User Story</h6></a>
 
                                         <a href="#" class="home_icon_menu-item gooeyMenuDesc-2" onclick="addInputAsInput()"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Input</h6> </a>
@@ -2738,13 +2731,13 @@
                                         <div style="height: 87vh;overflow: auto; margin-top:10%">
                                             <table class="table table-hover table-borderless table-odd-style"  >
                                                 <tbody id="api_list_side_bar">
-    
+
                                                 </tbody>
-    
-    
+
+
                                             </table>
                                         </div>
-                        
+
 
 
                                     </div>

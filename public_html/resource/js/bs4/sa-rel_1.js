@@ -15,13 +15,15 @@ SADebug = {
     Lines: [],
     LoadedApi: [],
     LoadedGui: [],
-    SetDrawLine: function (fromId, toId, title, inputId) {
+    SetDrawLine: function (fromId, toId, relType,inputId) {
         var kv = {};
         kv.fromId = fromId;
         kv.toId = toId;
         kv.title = title;
         kv.inputId = inputId;
-        kv.inputName = SAInput.GetInputName(inputId)
+        kv.inputName = SAInput.GetInputName(inputId);
+        kv.relationType=relType;
+        
         SADebug.Lines.push(kv);
     },
     RemoveAllDrawLine: function () {
@@ -50,8 +52,15 @@ SADebug = {
         $('#modal-prototypye .modal-header').css('display', 'none');
         for (var i = 0; i < SADebug.Lines.length; i++) {
             try {
-                var from = SADebug.Lines[i].fromId;
-                var to = SADebug.Lines[i].toId;
+                var obj = SADebug.Lines[i];
+                var active = obj.active;
+                var from = obj.fromId;
+                var to = obj.toId;
+                
+                if (active==='0'){
+                    $(to).hide();
+                    continue;
+                }
 
                 var oldTop = $('#gui_component_main_view').scrollTop();
                 var oldLeft = $('#gui_component_main_view').scrollLeft();
@@ -307,7 +316,7 @@ SADebug = {
             $('#core_gui_' + guiId).closest('div.sa-gui-esas').find('.sa-gui-esas-body').html(guiDesign);
             SADebug.SADebug.GUIFunction.GenerateGuiRelation(guiId);
         },
-        GenerateDependentGui: function (guiId, backlogId) {
+        GenerateDependentGui: function (guiId, backlogId,inputId) {
             var guiDesign = '';//SADebug.GetGuiDesign(guiId);
 
             var div3 = $("<div class='sa-cwr'>")
@@ -334,7 +343,7 @@ SADebug = {
 //            SADebug.CallGUI(guiId);  
 
 
-            SADebug.SetDrawLine("core_gui_" + backlogId, "core_gui_" + guiId, 'gui_gui');
+            SADebug.SetDrawLine("core_gui_" + backlogId, "core_gui_" + guiId, 'gui_gui',inputId);
 //                        $('#SUS_IPO_GUI_Design').html(st);
 //                        $('#SUS_IPO_GUI_Design').attr('bid', guiId);
 //                        $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
@@ -403,7 +412,7 @@ SADebug = {
                     //action = ,redirect,fill, popup
                     var guiId = inputObj.param1;
                     if (guiId) {
-                        SADebug.GUIFunction.GenerateDependentGui(guiId, backlogId);
+                        SADebug.GUIFunction.GenerateDependentGui(guiId, backlogId,inputObj.id);
                     }
                 } catch (err) {
 
