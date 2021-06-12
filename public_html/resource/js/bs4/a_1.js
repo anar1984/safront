@@ -10403,7 +10403,9 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 //        loadDatabaseList2ComboEntity();
 //        global_var.doc_actual_zoom = 65;
          loadProjectList2SelectboxByClass('projectList_activity');
+       
     });
+   
 });
 
 

@@ -3,13 +3,13 @@
 
  function genLeadeLine(start,end,type,clor,text){
    
-  
+
 
   if(type ==="line-svg-3"){
 
     new LeaderLine(document.getElementById(start), document.getElementById(end), {
        
-      middleLabel: LeaderLine.pathLabel(text),
+     middleLabel: LeaderLine.pathLabel(text),
      size: 2,
      startPlug: 'arrow',
      color: clor,
@@ -58,19 +58,457 @@
  }
 
 
-var FromTo = {peer:[
-]
-};
-
-var Idcontent = {content:[
-
-]}
 
 
 var is_line_dragged2 =false
 var idgenvLane = 23734723742;
 $( document ).ready(function() {
 
+ function genLaneListApi(){
+   
+  $.ajax({
+    url: urlGl + "/api/post/zd/elcompro/readLaneApi",
+    type: "POST",
+    data: JSON.stringify(),
+    contentType: "application/json",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+ 
+       var ln = res.tbl[0].r;
+       $(".Graphtable tbody").html('')
+       for (let index = 0; index < ln.length; index++) {
+
+        var nm = ln[index].laneName;
+        var id = ln[index].id;
+        var on = ln[index].orderNo;
+        $(".Graphtable tbody").append(genUsLane(nm,id,on));
+
+        var countsltd1= 30
+        for (var i = 0; i < countsltd1; i++) {
+        
+      
+          $("#"+id).append('<td></td>');
+       
+          items = document.querySelectorAll('.Graphtable td');
+      
+        }
+        $("#"+id).find("td").append(genusAdderPopupopenedSl());
+     
+        LaneRepair();
+        $(".Graphtable tbody tr").arrangeable({
+          dragSelector: ".dragLaneClass",
+       
+          })
+         
+       }
+      
+ 
+       lineInsideGen()
+    },
+    error: function () {
+        Toaster.showError(('somethingww'));
+    }
+   });
+ }
+
+ function addLaneApi(){
+  var on = $(".Graphtable tbody tr:last").index()+1
+  var prop = {
+    "kv": {   
+      "laneName": "Lane",
+      "orderNo": on,
+    }
+  }
+  $.ajax({
+    url: urlGl + "/api/post/zd/elcompro/addLaneApi",
+    type: "POST",
+    data: JSON.stringify(prop),
+    contentType: "application/json",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+       var id = res.kv.id;
+       
+        $(".Graphtable tbody").append(genUsLane("Lane",id,on));
+
+        var countsltd1= 30
+        for (var i = 0; i < countsltd1; i++) {
+        
+      
+          $("#"+id).append('<td></td>');
+       
+          items = document.querySelectorAll('.Graphtable td');
+      
+        }
+        $("#"+id).find("td").append(genusAdderPopupopenedSl());
+     
+   
+        $(".Graphtable tbody tr").arrangeable({
+          dragSelector: ".dragLaneClass",
+       
+          })
+          LaneRepair();
+    },
+    error: function () {
+        Toaster.showError(('somethingww'));
+    }
+   });
+ }
+ function lineInsideGen(){
+   
+  var dt = be.callApi('21061117245908875608');
+
+     var ln = dt._table.r;
+      
+       for (let index = 0; index < ln.length; index++) {
+        
+             var prId =ln[index].fkLineId;
+             var orn =ln[index].orderNo1;
+             var fgText =ln[index].figureText1;
+             var id =ln[index].id;
+             var typ =ln[index].figureName1;
+             var clr =ln[index].figureColor1;
+
+             var el = $('#'+prId).find('td').eq(orn-1)
+            
+             figureAddBlock(el,clr,typ,id)
+       
+         
+       } 
+       var items = document.querySelectorAll('.Graphtable td');
+       items.forEach(function (item) {
+         item.addEventListener('dragstart', handleDragStart, false);
+         item.addEventListener('dragenter', handleDragEnter, false);
+         item.addEventListener('dragover', handleDragOver, false);
+         item.addEventListener('dragleave', handleDragLeave, false);
+         item.addEventListener('drop', handleDrop, false);
+         item.addEventListener('dragend', handleDragEnd, false);
+       });
+       
+      
+ 
+       readLeadLineApi()
+ }
+
+
+
+ function laneUpdateApi(id){
+   
+  var on = $('#'+id).css('order');
+  var nm = $('#'+id).find('.laneHeaderName span').text();
+  var prop = {
+    "kv": {
+  
+      "id": id.trim(),
+      "laneName": nm.trim(),
+      "orderNo": on.trim(),
+      "updatedField":"id,laneName,orderNo",
+
+    }
+  }
+  $.ajax({
+    url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+    type: "POST",
+    data: JSON.stringify(prop),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+  
+
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
+
+ function laneDeleteApi(id,on,lid){
+
+  var fb = {
+    "kv": {
+      "updatedField": "id,orderNo,fkLineId",
+      "id": id,
+      "orderNo":on,
+      "fkLineId":lid
+    }
+  }
+  $.ajax({
+    url: urlGl + "api/post/zd/elcompro/updateFigureInside",
+    type: "POST",
+    data: JSON.stringify(fb),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+  
+
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
+ function figureAddApi(el,clr,nm,txt,on,lId){
+
+  var prop = {
+    "kv": {
+      "figureColor": clr,
+      "figureName": nm,
+      "figureText": txt,
+      "orderNo": on,
+      "fkLineId": lId,
+    }
+  }
+  $.ajax({
+    url: urlGl + "api/post/zd/elcompro/createFigureInside",
+    type: "POST",
+    data: JSON.stringify(prop),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+       var  countFigure = res.kv.id
+      if(nm==10){
+        $(el).parents("td").append(genUsStickMAn(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+        $(el).parents(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==12){
+        $(el).parents("td").append(genUsCircle(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+        $(el).parents(".tdAdderSwimlane").remove();
+      
+      }
+      if(nm==14){
+        $(el).parents("td").append(genUsSquare(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+        $(el).parents(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==16){
+        $(el).parents("td").append(genUsDiamond(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+        $(el).parents(".tdAdderSwimlane").remove();
+     
+      }
+      if(nm==18){
+        $(el).parents("td").append(genUsHexagon(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+        $(el).parents(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==20){
+        $(el).parents("td").append(genUsTriangle(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+       
+      }
+       if(nm==22){
+        $(el).parents("td").append(genUSCardfg(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+        
+      } 
+      if(nm==24){
+        $(el).parents("td").append(genUsRhomb(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==26){
+        $(el).parents("td").append(genUsEllipse(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==28){
+        $(el).parents("td").append(genUsDocumentFg(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==30){
+        $(el).parents("td").append(genUsRectangle(countFigure,clr));
+        $(el).parents("td").append(genTableEditbtn());
+       
+        $(el).parents(".tdAdderSwimlane").remove();
+        
+        var dataHtml = $('[data-text="TextVal"]').clone();
+    
+        $(".ContentCopyDiv").html(dataHtml);
+    
+        $(".CardSwimAdd").css("display","Block");
+        $(".ChangeFigur").css("display","none");
+        $(".Forgeneralfigure").css("display","none");
+        $(".ForUSerStFigure").css("display","flex");
+       
+      }
+
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
+ function figureAddBlock(el,clr,nm,id){
+
+ 
+       var  countFigure =id
+      if(nm==10){
+        $(el).append(genUsStickMAn(countFigure,clr));
+        $(el).append(genTableEditbtn());
+        $(el).find(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==12){
+        $(el).append(genUsCircle(countFigure,clr));
+        $(el).append(genTableEditbtn());
+        $(el).find(".tdAdderSwimlane").remove();
+      
+      }
+      if(nm==14){
+        $(el).append(genUsSquare(countFigure,clr));
+        $(el).append(genTableEditbtn());
+        $(el).find(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==16){
+        $(el).append(genUsDiamond(countFigure,clr));
+        $(el).append(genTableEditbtn());
+        $(el).find(".tdAdderSwimlane").remove();
+     
+      }
+      if(nm==18){
+        $(el).append(genUsHexagon(countFigure,clr));
+        $(el).append(genTableEditbtn());
+        $(el).find(".tdAdderSwimlane").remove();
+       
+      }
+      if(nm==20){
+        $(el).append(genUsTriangle(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+       
+      }
+       if(nm==22){
+        $(el).append(genUSCardfg(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+        
+      } 
+      if(nm==24){
+        $(el).append(genUsRhomb(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==26){
+        $(el).append(genUsEllipse(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==28){
+        $(el).append(genUsDocumentFg(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+        
+      }
+      if(nm==30){
+        $(el).append(genUsRectangle(countFigure,clr));
+        $(el).append(genTableEditbtn());
+       
+        $(el).find(".tdAdderSwimlane").remove();
+       /*  
+        var dataHtml = $('[data-text="TextVal"]').clone();
+    
+        $(".ContentCopyDiv").html(dataHtml);
+        $(".CardSwimAdd").css("display","Block");
+        $(".ChangeFigur").css("display","none");
+        $(".Forgeneralfigure").css("display","none");
+        $(".ForUSerStFigure").css("display","flex"); */
+       
+      }
+
+ 
+ }
+
+
+
+ function leadLineAddApi(from,to,txt,clr,type){
+
+  var prop = {
+    "kv": {
+      "fromId": from,
+      "toId": to,
+      "text": txt,
+      "color": clr,
+      "lineType":type,
+    }
+  }
+  $.ajax({
+    url: urlGl + "api/post/zd/elcompro/createLeaderLine",
+    type: "POST",
+    data: JSON.stringify(prop),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+    
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
+ function readLeadLineApi(){
+
+  $.ajax({
+    url: urlGl + "api/post/zd/elcompro/readLeaderLine",
+    type: "POST",
+    data: JSON.stringify(),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+      var dt = res.tbl[0].r;
+      $('.leader-line').remove();
+
+      for (let index = 0; index < dt.length; index++) {
+       var start = dt[index].fromId ;
+       var end = dt[index].toId ;
+       var type = dt[index].lineType ;
+       var clor = dt[index].color ;
+       var text = dt[index].text;
+
+        try {
+          genLeadeLine(start,end,type,clor,text);
+        } catch (error) {
+          
+        }
+
+      
+        
+      }
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
 
 
 
@@ -105,15 +543,14 @@ $(document).on('drop', ".Content",function(e){
      var dataText = "text"
     
     genLeadeLine(data1,data2,typLine,lineColor,dataText)
-    
+      
+     leadLineAddApi(data1,data2,dataText,lineColor,typLine);
    
-    var kv={};
-    kv= [data1,data2,typLine,lineColor];
-    FromTo.peer.push(kv);
+ 
    
 
     e.stopPropagation();
-    LaneRepair();
+ 
 
 });
 
@@ -121,16 +558,17 @@ $(document).on('drop', ".Content",function(e){
 //add lane btn 
 
 
-function genUsLane(idgena){
+function genUsLane(nm,id,on){
   return $("<tr>")
-          .attr("id","laneId"+idgena)
+          .attr("id",id)
+          .attr('style','order:'+on+';')
           .append($("<th>")
           
                   .addClass("LaneheaderColumn")
                   .append($("<div>")
                            .addClass("laneHeaderName")
                            .append($("<span>")
-                                      .text("Lane"))
+                                      .text(nm))
                            .append('<input type="text" class="form-control LaneheaderRenameInput" >'))
                  
                   .append($("<div>").addClass("EditSectionLane")
@@ -175,12 +613,15 @@ $(document).on("dblclick",".laneHeaderName",function(){
 
 $(document).on("focusout",".LaneheaderRenameInput",function(){
    var thisVal= $(this).val();
+   var idep = $(this).parents('tr').attr('id');
   
    if(thisVal.trim().length > 0){
        
      $(this).parent().find('span').text(thisVal);
 
-     $(this).css("visibility","hidden")
+     $(this).css("visibility","hidden");
+
+     laneUpdateApi(idep)
 
    }
   
@@ -258,9 +699,21 @@ $(document).on("click","#LaneWidthRemoveBtn",function(){
 
 $(document).on("click","#LaneRemoveBTn" ,function(){
 
-  if(confirm("Are You Sure Delete Lane?!!!!")){
-    $(this).parents("tr").remove()
+  //if(confirm("Are You Sure Delete Lane?!!!!")){
+    
+   var  id = $(this).parents("tr").attr('id')
+  var data = {
+    "kv": {
+      "id": id,
+    }
   }
+  var dt = be.callApi("21061011355206098626",data);
+   
+  if(dt==={}){
+    $(this).parents("tr").remove();
+  }
+   // laneDeleteApi(id);
+   
 
 })
 
@@ -610,97 +1063,16 @@ $(document).on("click",".figureFromspansw",function(){
 })
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<----Figre Adderr  ---->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-var countFigure = 123454353;
+
 
 $(document).on("click","#tdAdderslAccept",function(){
 
       var figureAdder = $(this).parents("td").find(".selectedfigureswfg").attr("data-figurnum");
       
       var fogureColorbg = $(this).parents("td").find(".selectedColorPickerswfg").attr("data-bgcolorspan");
-     
-      if(figureAdder==10){
-        $(this).parents("td").append(genUsStickMAn(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==12){
-        $(this).parents("td").append(genUsCircle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==14){
-        $(this).parents("td").append(genUsSquare(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==16){
-        $(this).parents("td").append(genUsDiamond(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==18){
-        $(this).parents("td").append(genUsHexagon(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==20){
-        $(this).parents("td").append(genUsTriangle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-       if(figureAdder==22){
-        $(this).parents("td").append(genUSCardfg(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      } 
-      if(figureAdder==24){
-        $(this).parents("td").append(genUsRhomb(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==26){
-        $(this).parents("td").append(genUsEllipse(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==28){
-        $(this).parents("td").append(genUsDocumentFg(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==30){
-        $(this).parents("td").append(genUsRectangle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        
-        var dataHtml = $('[data-text="TextVal"]').clone();
-    
-        $(".ContentCopyDiv").html(dataHtml);
-    
-        $(".CardSwimAdd").css("display","Block");
-        $(".ChangeFigur").css("display","none");
-        $(".Forgeneralfigure").css("display","none");
-        $(".ForUSerStFigure").css("display","flex");
-        countFigure++ ;
-      }
-     
-    
+      var on =$(this).parents("td").index();
+      var lId =$(this).parents("tr").attr('id');
+      figureAddApi(this,fogureColorbg,figureAdder,"",on,lId)
       LaneRepair()
     
 
@@ -713,92 +1085,10 @@ $(document).on("dblclick",".figureFromspansw",function(){
       var figureAdder = $(this).attr("data-figurnum");
       
       var fogureColorbg = $(this).parents("td").find(".selectedColorPickerswfg").attr("data-bgcolorspan");
-     
-      if(figureAdder==10){
-        $(this).parents("td").append(genUsStickMAn(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==12){
-        $(this).parents("td").append(genUsCircle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==14){
-        $(this).parents("td").append(genUsSquare(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==16){
-        $(this).parents("td").append(genUsDiamond(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==18){
-        $(this).parents("td").append(genUsHexagon(countFigure,fogureColorbg));
-      
-        $(this).parents("td").append(genTableEditbtn());
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==20){
-        $(this).parents("td").append(genUsTriangle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-       if(figureAdder==22){
-        $(this).parents("td").append(genUSCardfg(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      } 
-      if(figureAdder==24){
-        $(this).parents("td").append(genUsRhomb(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==26){
-        $(this).parents("td").append(genUsEllipse(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==28){
-        $(this).parents("td").append(genUsDocumentFg(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        countFigure++ ;
-      }
-      if(figureAdder==30){
-        $(this).parents("td").append(genUsRectangle(countFigure,fogureColorbg));
-        $(this).parents("td").append(genTableEditbtn());
-       
-        $(this).parents(".tdAdderSwimlane").remove();
-        
-        var dataHtml = $('[data-text="TextVal"]').clone();
-    
-        $(".ContentCopyDiv").html(dataHtml);
-    
-        $(".CardSwimAdd").css("display","Block");
-        $(".ChangeFigur").css("display","none");
-        $(".Forgeneralfigure").css("display","none");
-        $(".ForUSerStFigure").css("display","flex");
-        countFigure++ ;
-      }
-     
-    
-      LaneRepair()
+      var on =$(this).parents("td").index();
+      var lId =$(this).parents("tr").attr('id');
+      figureAddApi(this,fogureColorbg,figureAdder,"",on,lId)
+      LaneRepair();
     
 
 
@@ -828,7 +1118,7 @@ function generateTDSl(){
 
   };
 
-     console.log('esfefsefs')
+    
 
   $(".Graphtable tbody tr td").append(genusAdderPopupopenedSl());
 
@@ -896,7 +1186,7 @@ $(document).on("click", "#FigureIndexUp" , function(){
     $(this).parents("td").find(".Content").css("z-index","500");
    
     
-     console.log("Dfsdf");
+    
   
       
 })
@@ -906,9 +1196,7 @@ $(document).on("click", "#FigureIndexDown" , function(){
   
     $(this).parents("td").find(".Content").css("z-index","1");
    
-    
-     console.log("Dfsdf");
-  
+   
       
 })
 
@@ -931,7 +1219,7 @@ $(document).on("click", ".ExitCardswim" , function(){
     
   
     if(hastxt==1){
-      console.log(hastxt);
+   
       $(document).find('[data-text="TextVal"]').parent().append(genusAdderPopupopenedSl());
       $(document).find('[data-text="TextVal"]').parent().find(".contentDropEDit").remove();
       $(document).find('[data-text="TextVal"]').remove();
@@ -959,7 +1247,7 @@ $(document).on("click", ".SwimBackG" , function(){
     
   
   if(hastxt==1){
-    console.log(hastxt);
+
     $(document).find('[data-text="TextVal"]').parent().append(genusAdderPopupopenedSl());
     $(document).find('[data-text="TextVal"]').parent().find(".contentDropEDit").remove();
     $(document).find('[data-text="TextVal"]').remove();
@@ -975,14 +1263,13 @@ $(document).on("change", "#select-text" , function(){
   var textVal=$("#select-text").val();
   var idFigure=$(document).find('[data-text="TextVal"]').attr("id");
  
-
-  $(document).find('[data-text="TextVal"]').find(".ContentBody").find("span").remove();
+   $(document).find('[data-text="TextVal"]').find(".ContentBody").find("span").remove();
     
     $(document).find('[data-text="TextVal"]').find(".ContentBody").append('<span>'+textVal+'</span>');
-    var txtsave ={};
-    txtsave=[idFigure,textVal];
-    Idcontent.content.push(txtsave);
-    LaneRepair()
+   
+
+  
+
 })
 
 
@@ -998,7 +1285,7 @@ $(document).on("change", ".SelectFigureText" , function(){
       
       $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>'+textVal+'</span>');
       $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt","2")
-      LaneRepair();
+   
   }
 
 })
@@ -1088,16 +1375,17 @@ $(document).on("click", "#CancelFigureInsideText" , function(){
 })
 
 $(document).on("dblclick", ".Content" , function(){
+  $('.Content').removeAttr('data-text');
   $(this).attr("data-text","TextVal")
   var CstmFig = $('[data-text="TextVal"]').attr("data-colorcst");
 
   if(CstmFig==1||CstmFig==2||CstmFig==3||CstmFig==4){
     $(".CardSwimAdd").css("display","Block");
      color = $('[data-text="TextVal"]').css("backgroundColor");
-    // console.log(color);
+   
      var text = $('[data-text="TextVal"]').find(".ContentBody span").text();
      $("#select-text").val(text)
-     var dataHtml = $('[data-text="TextVal"]').parent(".resizeFigure").clone();
+     var dataHtml = $('[data-text="TextVal"]').parents(".resizeFigure").clone();
 
      $(".ContentCopyDiv").html(dataHtml)
     
@@ -1144,33 +1432,7 @@ $(document).on("change", "#FigureHeight" , function(){
 
  
 function LaneRepair(){
-  $(".leader-line").remove();
-  
-  var dt =$('.activity-conatiner').scrollTop();
-  var dtl =$('.activity-conatiner').scrollLeft();
-  
-  $('.activity-conatiner').scrollTop(0);
-  $('.activity-conatiner').scrollLeft(0);
-  var list = FromTo.peer;
-  for (var i=0;i<list.length;i++){
-    var id = list[i];
-    var k =   Object.keys(id);
-
-    
-     
-    try {
-      genLeadeLine(id[0],id[1],id[2],id[3],'text');
-    } catch (error) {
-      
-    }
-    
-    
-        
-    
-  }
-   
-  $('.activity-conatiner').scrollTop(dt);
-  $('.activity-conatiner').scrollLeft(dtl);
+  readLeadLineApi();
 }
 
 
@@ -1304,9 +1566,19 @@ var dragSrcEl = null;
     if (dragSrcEl != this) {
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
+     var id = $(dragSrcEl).find('.Content').attr('id');
+     var on = $(dragSrcEl).index();
+     var lid = $(dragSrcEl).parents("tr").attr('id');
+     var id1 = $(this).find('.Content').attr('id');
+     var on1 = $(this).index();
+     var lid1 = $(this).parents("tr").attr('id');
+     console.log(id,on,id1,on1)
+     laneDeleteApi(id,on,lid)
+     laneDeleteApi(id1,on1,lid1)
 
     }
-   LaneRepair();
+
+    LaneRepair();
    $(".over").removeClass('over')
     return false;
   }
@@ -1339,28 +1611,15 @@ var dragSrcEl = null;
  
   $(document).on("click", "#LaneAddBtn" , function(){
 
-
    
-    $(".Graphtable tbody").append(genUsLane(idgenvLane))
-     var countsltd1= 30
-    for (var i = 0; i < countsltd1; i++) {
+    addLaneApi(); 
+  
     
-  
-      $("#laneId"+idgenvLane).append('<td></td>');
-   
-      items = document.querySelectorAll('.Graphtable td');
-  
-    }
-    $("#laneId"+idgenvLane).find("td").append(genusAdderPopupopenedSl());
-    idgenvLane++
-    LaneRepair()
-    $(".Graphtable tbody tr").arrangeable({
-      dragSelector: ".dragLaneClass",
-   
-      })
+  })
+  $(document).on("click", "#genBtnaaaaa" , function(){
 
-  
-  
+    genLaneListApi();
+   
   
     
   })
