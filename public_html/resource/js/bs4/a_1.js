@@ -522,7 +522,6 @@ function loadBacklogProductionCoreDetailssById(bid1,isAsync) {
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
-//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
         type: "POST",
         data: data,
         contentType: "application/json",

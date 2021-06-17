@@ -128,7 +128,7 @@ function toggleInputList4Debug4Selectedfield(el) {
                             $('#gui_component_main_view').scrollTop(0);
                             $('#gui_component_main_view').scrollLeft(0);
 
-                            SADebug.JustLine4SelecedField(fromId, toId,field);
+                            SADebug.JustLine4SelecedField(fromId, toId, field);
 
                             $('#gui_component_main_view').scrollTop(oldTop);
                             $('#gui_component_main_view').scrollLeft(oldLeft);
@@ -182,8 +182,105 @@ function hideChildDivOfEsasApi(elId) {
         hideChildDivOfEsasApi(idZad);
     })
 
-
-
-
-
 }
+
+
+
+
+function deleteUpdatedBacklogStorageInfo(bid) {
+
+    var bid1 = (bid) ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = bid1;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteUpdatedBacklogStorageInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
+}
+
+
+function getUnloadedBacklogListOnInit() {
+//    getBacklogProductionStorageInfo
+    var toBeDownloadedBacklog = [];
+    var availableBacklogList = Object.keys(backlog_last_modification);
+    for (var k in availableBacklogList) {
+        var ky = availableBacklogList[k];
+        if (ky) {
+            var lastModificationDateAndTime = backlog_last_modification[ky];
+            var localModDateAndTime = '';
+            try {
+                localModDateAndTime = localStorage.getItem('idb_' + ky);
+            } catch (err) {
+            }
+            ;
+
+
+            console.log('1.', ky, '  -> upload', lastModificationDateAndTime)
+            console.log('2.', ky, '  -> current', localModDateAndTime)
+
+            if (lastModificationDateAndTime !== localModDateAndTime) {
+                if (!toBeDownloadedBacklog.includes(ky)) {
+                    toBeDownloadedBacklog.push(ky);
+                }
+            }
+        }
+    }
+
+    console.log('string=', toBeDownloadedBacklog.toString());
+    loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
+}
+
+
+function loadMissedBacklogsListFromStorage(bid) {
+
+    var bid1 = (bid) ? bid : global_var.current_backlog_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = bid1;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmLoadMissedBacklogsListFromStorage",
+//        url: urlGl + "api/post/srv/serviceTmgetTestZadShey",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                var json = '';
+                try {
+                    json = JSON.parse(obj[i].json);
+                    var idd = obj[i].id;
+                    var transaction = db.transaction(["subdb"], "readwrite");
+                    var store = transaction.objectStore("subdb");
+                    store.delete('idb_' + idd);
+                    store.add({'bid': 'idb_' + idd, 'json': json});
+
+                    localStorage.setItem('idb_' + idd, json.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(idd);
+                    loadBacklogProductionDetailsById_resparams(json);
+                } catch (err) {
+                    console.log(err);
+                }
+
+
+            }
+        }
+    });
+}
+
+
+ 
