@@ -1036,7 +1036,7 @@
 
 
                                 <div class="overflow-container">
-                              
+
 
                                     <!--------------- end- left dropdown menu ...------------------->
 
@@ -7682,17 +7682,18 @@
 
                                                                                 } else {
 
-                                                                                    request = window.indexedDB.open("sa-db", 1);
-                                                                                    request.onupgradeneeded = function (event) {
-                                                                                        db = event.target.result;
-                                                                                        objectStore = db.createObjectStore("subdb", {
-                                                                                            keyPath: "bid",
-                                                                                        });
-                                                                                    }
-                                                                                    request.onsuccess = function (event) {
-                                                                                        db = request.result;
-                                                                                    }
+//                                                                                    request = window.indexedDB.open("sa-db", 1);
+//                                                                                    request.onupgradeneeded = function (event) {
+//                                                                                        db = event.target.result;
+//                                                                                        objectStore = db.createObjectStore("subdb", {
+//                                                                                            keyPath: "bid",
+//                                                                                        });
+//                                                                                    }
+//                                                                                    request.onsuccess = function (event) {
+//                                                                                        db = request.result;
+//                                                                                    }
 
+                                                                                    loadFromIndexedDBtoRAM4LivePrototype();
                                                                                     init4Core();
                                                                                     new Project().loadMainProjectList();
 

@@ -236,7 +236,7 @@ function getUnloadedBacklogListOnInit() {
         }
     }
 
-    console.log('string=', toBeDownloadedBacklog.toString());
+//    console.log('string=', toBeDownloadedBacklog.toString());
     loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
 }
 
