@@ -10469,14 +10469,17 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
     setGUIContainerStyle: function () {
         ContainerDesign.init();
+        loadCurrentBacklogProdDetails();
         dragResize()
     },
     setGUIComponentStyle: function () {
         ComponentDesign.init();
-        dragResize()
+        loadCurrentBacklogProdDetails();
+        dragResize();
     },
     setGUICanvasStyle: function () {
         CanvasDesign.init();
+        loadCurrentBacklogProdDetails();
         dragResize()
     },
     setGUICanvasUploadImage: function () {
