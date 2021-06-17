@@ -3,20 +3,36 @@
  
   padding-top: 30px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px 0px, rgba(9, 30, 66, 0.31) 0px 0px 2px;
-
-}
-.Graphtable >tbody{
   display: flex;
-
+  width: max-content;
 }
 .LaneAdder{
   background: #fff;
     position: fixed;
     width: 93.5%;
     z-index: 5;
+    padding: 10px 0px;
 }
 
-.Graphtable > tbody > tr {
+.Graphtable .laneColumnDiv {
+
+
+ width: max-content;
+  
+ /* display: flex!important;
+ flex-wrap: wrap;   */  
+  
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px 0px, rgba(9, 30, 66, 0.31) 0px 0px 2px;
+
+}
+
+.Graphtable > .laneColumnDiv > table > tbody{
+  
+ display: flex!important;
+ flex-wrap: wrap;    
+ 
+}
+.Graphtable > .laneColumnDiv > table > tbody > tr{
 
 
  width: 320px;
@@ -24,10 +40,10 @@
  display: flex!important;
  flex-wrap: wrap;    
   
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px 0px, rgba(9, 30, 66, 0.31) 0px 0px 2px;
+
 
 }
-.Graphtable > tbody > tr >td{
+.laneColumnDiv > table > tbody > tr >td{
  width: 200px;
  height: 150px;
  position: relative;
@@ -60,7 +76,7 @@
 .tdAdderSwimlaneOpened:hover .tdAdderSwimlaneOpenedbtn{
   visibility: visible;
 }
-.Graphtable > tbody > tr:hover .tdAdderSwimlaneOpened {
+.laneColumnDiv table > tbody > tr:hover .tdAdderSwimlaneOpened {
 
   visibility: visible;
   }
@@ -340,7 +356,7 @@ border-radius: 2px;
   margin-right: 10px;
   width: 12.5px;
 }
-.Graphtable > tbody > tr >td:hover .contentDropEDit{
+.laneColumnDiv > table > tbody > tr >td:hover .contentDropEDit{
 visibility: visible;
 }
 .Content:hover .contentArrow{
@@ -709,5 +725,5 @@ pointer-events: none !important;
   background-color: #e0e0e0;
 } 
 .lines-block-act .geItem.gactive{
-border: 1px solid #cdcfd0;
+border: 3px solid #cdcfd0;
 }         

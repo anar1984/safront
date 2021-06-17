@@ -32,13 +32,38 @@
         </style>
         <div class="container" style="max-width: 95%;">
 
-            <div class="LaneAdder">
-                <button class="btn btn-light" id="LaneAddBtn"><i class="fas fa-plus"></i></button>
-                <button class="btn btn-light" id="genBtnaaaaa">start</button>
+            <div class="LaneAdder ">
+             
+               <div class="col-6" style="display:inline-flex;">
+                <div class="dropdown col-1">
+                    <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                       
+                        <a class="dropdown-item " id="editNameProcess"  href="#">Edit Process Name</a>
+                        <a class="dropdown-item " id="deleteProcessName"  href="#">Delete Process</a>
+                        <a class="dropdown-item "  href="#">Copy</a>
+                        <!--<a class="dropdown-item deleteDatabaseBtn" href="#">Trash</a>-->
+            
+                    </div>
+                </div>
+                <select class="col-4 form-control" sa-selectedfield="id" style="display: inline;" name="" id="projectListSwimlane">
+                  
+                </select>
+                <input sa-selectedfield="processName1" style="display: none;" type="text" class="form-control col-4" name="" id="newProcessNameInput">
+                  <button class="btn btn-light" id="newProcessName">New</button>
+                  
+                   <button class="btn btn-light" id="LaneAddBtn"><i class="fas fa-plus"></i></button>
+                   <button class="btn btn-light" id="testjsndj">test</button>
+                </div>
+       
+             
+          
 
 
                 <div class=" float-right lines-block-act">
-                    choose line
+                   <span>choose line type</span>
                     <button class="geItem gactive" data-tylp="line-svg-1"><svg style="width: 32px; height: 30px;">
                             <g>
                                 <g></g>
@@ -122,7 +147,7 @@
                 <div class=" float-right lines-block-act">
 
                     <div class="figureBgSelectOption">
-                        choose color
+                        <span>choose line color</span>
                         <button data-bgcolorspan="#303030" style="background-color: #6d6d6d;" class="ColopickerSpanLine gactive"></button>
                         <button data-bgcolorspan="#e3b6aac4" style="background-color: #e3b6aa;" class="ColopickerSpanLine "></button>
                         <button data-bgcolorspan="#bad9f9c4" style="background-color: #bad9f9;" class="ColopickerSpanLine"></button>
@@ -138,14 +163,21 @@
                 </div>
             </div>
 
-            <div style="padding-top: 45px;">
-                <table class="Graphtable" id="sadMainPage">
+            <div style="padding-top: 60px; position: relative;">
+                <div class="box-csta" id="loader-actvty">
+                    <div class="loader-41"></div>
+                  </div>
+
+                  <div class="Graphtable">
+
+                  </div>
+              <!--   <table class="Graphtable" id="sadMainPage">
 
                     <tbody>
 
 
                     </tbody>
-                </table>
+                </table> -->
             </div>
 
 
@@ -409,6 +441,28 @@
     </div>
 
     <div class="modal fade" id="modal-prototypye" style="margin: 0px; padding: 0px;" tabindex="-1" style="" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+   <div class="modal-dialog modal-lg" style="max-width: 100%;margin: 0px;padding: 0px;" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+            <button type="button" class="btn btn-outline-secondary line-prev-act-ipo">
+                <i class="fa fa-random" style="font-size: 15px" aria-hidden="true"></i>
+               </button>
+               <button type="button" class="close close-modal-act-ipo" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           
+           </div>
+           <div class="modal-body" style="font-size: 12px;">
+           <div class="row" id="show-prototype-modal-act">
+
+           </div>
+           </div>
+          
+       </div>
+   </div>
+</div>
+    <div class="modal fade" id="modal-insertPorject" style="margin: 0px; padding: 0px;" tabindex="-1" style="" role="dialog" aria-labelledby=""
     aria-hidden="true">
    <div class="modal-dialog modal-lg" style="max-width: 100%;margin: 0px;padding: 0px;" role="document">
        <div class="modal-content">
