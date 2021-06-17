@@ -9720,6 +9720,8 @@ $(document).on('click', '.data-show-activity-storycard', function (evt) {
     }
   });
 $(document).on('click', '.data-show-activity-ipo', function (evt) {
+    var idbl =$(this).parents('.Content').attr('data-sed-id')
+    Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
     $('#modal-prototypye').modal('show');
     $('.trigger-leaderline-id').removeAttr('id')
     $.get("resource/child/ipo.html", function (html_string)

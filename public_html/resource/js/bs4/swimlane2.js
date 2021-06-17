@@ -82,28 +82,43 @@ $( document ).ready(function() {
         var nm = ln[index].laneName;
         var id = ln[index].id;
         var on = ln[index].orderNo;
-        $(".Graphtable tbody").append(genUsLane(nm,id,on));
-
-        var countsltd1= 30
-        for (var i = 0; i < countsltd1; i++) {
+        var wd = ln[index].columnCount;
         
-      
-          $("#"+id).append('<td></td>');
-       
-          items = document.querySelectorAll('.Graphtable td');
-      
-        }
-        $("#"+id).find("td").append(genusAdderPopupopenedSl());
-     
-        LaneRepair();
-        $(".Graphtable tbody tr").arrangeable({
-          dragSelector: ".dragLaneClass",
-       
-          })
+        $(".Graphtable tbody").append(genUsLane(nm,id,on,wd));
+        if(Math.ceil(wd) > 325) {
+          var countsltd1=(((Math.ceil(wd)-320)/202)+1)*30;
+          console.log(countsltd1);
+          for (var i = 0; i < countsltd1; i++) {
+          
+        
+            $("#"+id).append('<td></td>');
          
+          
+        
+          }
+          $("#"+id).find("td").append(genusAdderPopupopenedSl());
+        } else{
+          var countsltd1= 30
+          for (var i = 0; i < countsltd1; i++) {
+          
+        
+            $("#"+id).append('<td></td>');
+         
+          
+        
+          }
+          $("#"+id).find("td").append(genusAdderPopupopenedSl());
+        }
+     
+     
+       
        }
+     
+       $(".Graphtable tbody tr").arrangeable({
+         dragSelector: ".dragLaneClass",
       
- 
+         })
+        
        lineInsideGen()
     },
     error: function () {
@@ -157,22 +172,23 @@ $( document ).ready(function() {
  }
  function lineInsideGen(){
    
-  var dt = be.callApi('21061117245908875608');
+  var dt = be.callApi('21061111083601866190');
 
      var ln = dt._table.r;
       
        for (let index = 0; index < ln.length; index++) {
-        
+       
              var prId =ln[index].fkLineId;
              var orn =ln[index].orderNo1;
              var fgText =ln[index].figureText1;
              var id =ln[index].id;
              var typ =ln[index].figureName1;
              var clr =ln[index].figureColor1;
+             var UsCaId =ln[index].storyCardId;
 
              var el = $('#'+prId).find('td').eq(orn-1)
-            
-             figureAddBlock(el,clr,typ,id)
+              console.log(ln[index])
+             figureAddBlock(el,clr,typ,id,UsCaId,fgText);
        
          
        } 
@@ -223,17 +239,39 @@ $( document ).ready(function() {
     }
    });
  }
-
- function laneDeleteApi(id,on,lid){
-
-  var fb = {
+ 
+ function laneUpdateApiColumn(id){
+   
+  var wd = $('#'+id).width();
+  var prop = {
     "kv": {
-      "updatedField": "id,orderNo,fkLineId",
-      "id": id,
-      "orderNo":on,
-      "fkLineId":lid
+  
+      "id": id.trim(),
+      "columnCount": wd,
+      "updatedField":"id,columnCount",
+
     }
   }
+  $.ajax({
+    url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+    type: "POST",
+    data: JSON.stringify(prop),
+    contentType: "application/json; charset=utf-8",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+  
+
+    },
+    error: function (err) {
+        Toaster.showError(err);
+    }
+   });
+ }
+
+ function figureUpdateApi(fb){
+
+
   $.ajax({
     url: urlGl + "api/post/zd/elcompro/updateFigureInside",
     type: "POST",
@@ -250,6 +288,7 @@ $( document ).ready(function() {
     }
    });
  }
+
  function figureAddApi(el,clr,nm,txt,on,lId){
 
   var prop = {
@@ -258,7 +297,7 @@ $( document ).ready(function() {
       "figureName": nm,
       "figureText": txt,
       "orderNo": on,
-      "fkLineId": lId,
+      "fkLineId": lId
     }
   }
   $.ajax({
@@ -269,74 +308,74 @@ $( document ).ready(function() {
     crossDomain: true,
     async: true,
     success: function (res) {
-       var  countFigure = res.kv.id
+       var  countFigure = res.kv.id;
       if(nm==10){
-        $(el).parents("td").append(genUsStickMAn(countFigure,clr));
+        $(el).parents("td").append(genUsStickMAn(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
         $(el).parents(".tdAdderSwimlane").remove();
        
       }
       if(nm==12){
-        $(el).parents("td").append(genUsCircle(countFigure,clr));
+        $(el).parents("td").append(genUsCircle(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
         $(el).parents(".tdAdderSwimlane").remove();
       
       }
       if(nm==14){
-        $(el).parents("td").append(genUsSquare(countFigure,clr));
+        $(el).parents("td").append(genUsSquare(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
         $(el).parents(".tdAdderSwimlane").remove();
        
       }
       if(nm==16){
-        $(el).parents("td").append(genUsDiamond(countFigure,clr));
+        $(el).parents("td").append(genUsDiamond(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
         $(el).parents(".tdAdderSwimlane").remove();
      
       }
       if(nm==18){
-        $(el).parents("td").append(genUsHexagon(countFigure,clr));
+        $(el).parents("td").append(genUsHexagon(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
         $(el).parents(".tdAdderSwimlane").remove();
        
       }
       if(nm==20){
-        $(el).parents("td").append(genUsTriangle(countFigure,clr));
+        $(el).parents("td").append(genUsTriangle(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
        
       }
        if(nm==22){
-        $(el).parents("td").append(genUSCardfg(countFigure,clr));
+        $(el).parents("td").append(genUSCardfg(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
         
       } 
       if(nm==24){
-        $(el).parents("td").append(genUsRhomb(countFigure,clr));
+        $(el).parents("td").append(genUsRhomb(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
         
       }
       if(nm==26){
-        $(el).parents("td").append(genUsEllipse(countFigure,clr));
+        $(el).parents("td").append(genUsEllipse(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
         
       }
       if(nm==28){
-        $(el).parents("td").append(genUsDocumentFg(countFigure,clr));
+        $(el).parents("td").append(genUsDocumentFg(countFigure,clr,txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
         
       }
       if(nm==30){
-        $(el).parents("td").append(genUsRectangle(countFigure,clr));
+        $(el).parents("td").append(genUsRectangle(countFigure,clr,"",txt));
         $(el).parents("td").append(genTableEditbtn());
        
         $(el).parents(".tdAdderSwimlane").remove();
@@ -358,77 +397,77 @@ $( document ).ready(function() {
     }
    });
  }
- function figureAddBlock(el,clr,nm,id){
+ function figureAddBlock(el,clr,nm,id,UsCaId,fgText){
 
  
        var  countFigure =id
       if(nm==10){
-        $(el).append(genUsStickMAn(countFigure,clr));
+        $(el).append(genUsStickMAn(countFigure,clr,fgText,fgText));
         $(el).append(genTableEditbtn());
         $(el).find(".tdAdderSwimlane").remove();
        
       }
       if(nm==12){
-        $(el).append(genUsCircle(countFigure,clr));
+        $(el).append(genUsCircle(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
         $(el).find(".tdAdderSwimlane").remove();
       
       }
       if(nm==14){
-        $(el).append(genUsSquare(countFigure,clr));
+        $(el).append(genUsSquare(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
         $(el).find(".tdAdderSwimlane").remove();
        
       }
       if(nm==16){
-        $(el).append(genUsDiamond(countFigure,clr));
+        $(el).append(genUsDiamond(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
         $(el).find(".tdAdderSwimlane").remove();
      
       }
       if(nm==18){
-        $(el).append(genUsHexagon(countFigure,clr));
+        $(el).append(genUsHexagon(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
         $(el).find(".tdAdderSwimlane").remove();
        
       }
       if(nm==20){
-        $(el).append(genUsTriangle(countFigure,clr));
+        $(el).append(genUsTriangle(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
        
       }
        if(nm==22){
-        $(el).append(genUSCardfg(countFigure,clr));
+        $(el).append(genUSCardfg(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
         
       } 
       if(nm==24){
-        $(el).append(genUsRhomb(countFigure,clr));
+        $(el).append(genUsRhomb(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
         
       }
       if(nm==26){
-        $(el).append(genUsEllipse(countFigure,clr));
+        $(el).append(genUsEllipse(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
         
       }
       if(nm==28){
-        $(el).append(genUsDocumentFg(countFigure,clr));
+        $(el).append(genUsDocumentFg(countFigure,clr,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
         
       }
       if(nm==30){
-        $(el).append(genUsRectangle(countFigure,clr));
+        $(el).append(genUsRectangle(countFigure,clr,UsCaId,fgText));
         $(el).append(genTableEditbtn());
        
         $(el).find(".tdAdderSwimlane").remove();
@@ -558,10 +597,10 @@ $(document).on('drop', ".Content",function(e){
 //add lane btn 
 
 
-function genUsLane(nm,id,on){
+function genUsLane(nm,id,on,wd){
   return $("<tr>")
           .attr("id",id)
-          .attr('style','order:'+on+';')
+          .attr('style','order:'+on+';width:'+wd+'px;')
           .append($("<th>")
           
                   .addClass("LaneheaderColumn")
@@ -658,11 +697,11 @@ $(document).on("click","#LaneWidthAddBtn",function(){
 
   
   var widthLane= $(this).parents("tr").width();
-  
+  var idsss= $(this).parents("tr").attr("id");
   var Addwidth = widthLane + 202;
 
   $(this).parents("tr").css("width",Addwidth+"px");
-
+  laneUpdateApiColumn(idsss)
   var countsltd2 = 30;
   for (var i = 0; i < countsltd2; i++) {
   
@@ -672,10 +711,7 @@ $(document).on("click","#LaneWidthAddBtn",function(){
 
 
   }
-  
-      
-  
-  
+    
     $(this).parents("tr").find("td:gt(-31)").append(genusAdderPopupopenedSl());
   
 
@@ -692,6 +728,9 @@ $(document).on("click","#LaneWidthRemoveBtn",function(){
   if(widthLane>204){
     $(this).parents("tr").css("width",rmwidth+"px");
     $(this).parents("tr").find("td:gt(-31)").remove();
+
+    var idsss= $(this).parents("tr").attr("id");
+    laneUpdateApiColumn(idsss)
   }
   LaneRepair()
  // $("tr:gt(3)")
@@ -712,7 +751,7 @@ $(document).on("click","#LaneRemoveBTn" ,function(){
   if(dt==={}){
     $(this).parents("tr").remove();
   }
-   // laneDeleteApi(id);
+   // figureUpdateApi(id);
    
 
 })
@@ -721,7 +760,7 @@ $(document).on("click","#LaneRemoveBTn" ,function(){
 //generate figure jquery
  
 
-function genUsStickMAn(idgen,bgclr){
+function genUsStickMAn(idgen,bgclr,fgText){
 
  return $("<div>")
            .addClass("resizeFigure")
@@ -731,18 +770,19 @@ function genUsStickMAn(idgen,bgclr){
                     .attr("data-colorcst","4")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg3.png" alt="">')
+                    .append(' <img src="/public_html/resource/img/lg3.png" alt="">')
 
                     .append($("<div>")
                     .addClass("contentArrow")
                     .attr("id", "dragArrow")
                     .attr("draggable","true")
                     .append('<i class="fas fa-arrow-right"></i>'))
-                    .append($("<div>").addClass("ContentBody StickMnbody")))
+                    .append($("<div>").addClass("ContentBody StickMnbody")
+                                       .append('<span>'+fgText+'</span>')))
           
 }
 
-function genUsSquare(idgen,bgclr){
+function genUsSquare(idgen,bgclr,fgText){
 
  return $("<div>")
           .addClass("resizeFigure")
@@ -752,28 +792,26 @@ function genUsSquare(idgen,bgclr){
                     .attr("data-colorcst","1")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt="">')
+                    .append(' <img src="/public_html/resource/img/lg10.png" alt="">')
                     .append($("<div>")
                               .addClass("contentArrow")
                               .attr("id", "dragArrow")
                                .attr("draggable","true")
                               .append('<i class="fas fa-arrow-right"></i>'))
-                    .append($("<div>")
-                             .addClass("ContentBody")
-                            
-                              ))
+                              .append($("<div>").addClass("ContentBody")
+                              .append('<span>'+fgText+'</span>')))
           
 }
-function genUsRectangle(idgen,bgclr){
-
+function genUsRectangle(idgen,bgclr,UsCaId,fgText){
+  
  return  $("<div>")
             .addClass("resizeFigure")
             .append($("<div>")
                      .addClass("Content USrectangle")
                      .attr("draggable","true")
                      .attr("data-colorcst","5")
-                     .attr("data-text","TextVal")
                      .attr("id", idgen)
+                     .attr('data-sed-id',UsCaId)
                      .attr("style","background-color:"+bgclr+" ;")
                      .append($("<div>")
                                .addClass("contentArrow")
@@ -782,7 +820,8 @@ function genUsRectangle(idgen,bgclr){
                                .append('<i class="fas fa-arrow-right"></i>'))
                      .append($("<div>")
                               .addClass("UserRectBody")
-                              .attr("data-hastxt","1"))
+                              .attr("data-hastxt","2")
+                              .append('<span>'+fgText+'</span>'))
                      .append($("<div>")
                               .addClass("StatFigure data-show-activity-storycard")
                               .html("User  <br> Story"))          
@@ -791,7 +830,7 @@ function genUsRectangle(idgen,bgclr){
                               .html("show  <br> proto")))           
           
 }
-function genUsTriangle(idgen,bgclr){
+function genUsTriangle(idgen,bgclr,fgText){
 
  return  $("<div>")
             .addClass("resizeFigure")
@@ -801,20 +840,18 @@ function genUsTriangle(idgen,bgclr){
                      .attr("data-colorcst","2")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg2.png" alt="">')
+                    .append(' <img src="/public_html/resource/img/lg2.png" alt="">')
 
                      .append($("<div>")
                                .addClass("contentArrow trinagleArrow")
                                .attr("id", "dragArrow")
                                 .attr("draggable","true")
                                .append('<i class="fas fa-arrow-right"></i>'))
-                     .append($("<div>")
-                              .addClass("ContentBody TriangleBody")
-                             
-                               ))
+                               .append($("<div>").addClass("ContentBody")
+                               .append('<span>'+fgText+'</span>')))
           
 }
-function genUsHexagon(idgen,bgclr){
+function genUsHexagon(idgen,bgclr,fgText){
 
  return  $("<div>")
             .addClass("resizeFigure")
@@ -824,20 +861,18 @@ function genUsHexagon(idgen,bgclr){
                      .attr("data-colorcst","2")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                     .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg6.png" alt="">')
+                     .append(' <img src="/public_html/resource/img/lg6.png" alt="">')
  
                      .append($("<div>")
                                .addClass("contentArrow")
                                .attr("id", "dragArrow")
                                 .attr("draggable","true")
                                .append('<i class="fas fa-arrow-right"></i>'))
-                     .append($("<div>")
-                              .addClass("ContentBody")
-                             
-                               ))
+                               .append($("<div>").addClass("ContentBody")
+                               .append('<span>'+fgText+'</span>')))
                      
 }
-function genUsRhomb(idgen,bgclr){
+function genUsRhomb(idgen,bgclr,fgText){
 
  return  $("<div>")
             .addClass("resizeFigure")
@@ -847,20 +882,18 @@ function genUsRhomb(idgen,bgclr){
                      .attr("data-colorcst","1")
                      .attr("id", idgen)
                      .attr("style","background-color:"+bgclr+" ;")
-                     .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg4.png" alt="">')
+                     .append(' <img src="/public_html/resource/img/lg4.png" alt="">')
  
                      .append($("<div>")
                                .addClass("contentArrow  ")
                                .attr("id", "dragArrow")
                                 .attr("draggable","true")
                                .append('<i class="fas fa-arrow-right"></i>'))
-                     .append($("<div>")
-                              .addClass("ContentBody ")
-                             
-                               ))           
+                               .append($("<div>").addClass("ContentBody")
+                               .append('<span>'+fgText+'</span>')))        
           
 }
-function genUsEllipse(idgen,bgclr){
+function genUsEllipse(idgen,bgclr,fgText){
 
  return $("<div>")
           .addClass("resizeFigure")
@@ -870,21 +903,19 @@ function genUsEllipse(idgen,bgclr){
                     .attr("data-colorcst","1")
                     .attr("id", idgen)
                     .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg8.png" alt="">')
+                    .append(' <img src="/public_html/resource/img/lg8.png" alt="">')
 
                     .append($("<div>")
                               .addClass("contentArrow  ")
                               .attr("id", "dragArrow")
                                .attr("draggable","true")
                               .append('<i class="fas fa-arrow-right"></i>'))
-                    .append($("<div>")
-                             .addClass("ContentBody ")
-                            
-                              ))
+                              .append($("<div>").addClass("ContentBody")
+                              .append('<span>'+fgText+'</span>')))
           
 }
 
-function genUsCircle(idgen,bgclr){
+function genUsCircle(idgen,bgclr,fgText){
   return  $("<div>")
            .addClass("resizeFigure")
            .append(
@@ -894,21 +925,18 @@ function genUsCircle(idgen,bgclr){
             .attr("data-colorcst","1")
             .attr("id", idgen)
             .attr("style","background-color:"+bgclr+" ;")
-            .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg1.png" alt="">')
+            .append(' <img src="/public_html/resource/img/lg1.png" alt="">')
 
             .append($("<div>")
                       .addClass("contentArrow")
                       .attr("id", "dragArrow")
                       .attr("draggable","true")
                       .append('<i class="fas fa-arrow-right"></i>'))
-            .append($("<div>")
-                     .addClass("ContentBody")
-                  
-                      ))
-  
+                      .append($("<div>").addClass("ContentBody")
+                      .append('<span>'+fgText+'</span>')))
           
 }
-function genUsDocumentFg(idgen,bgclr){
+function genUsDocumentFg(idgen,bgclr,fgText){
   return  $("<div>")
              .addClass("resizeFigure")
              .append($("<div>")
@@ -917,22 +945,19 @@ function genUsDocumentFg(idgen,bgclr){
              .attr("data-colorcst","1")
              .attr("id", idgen)
              .attr("style","background-color:"+bgclr+" ;")
-             .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg7.png" alt="">')
+             .append(' <img src="/public_html/resource/img/lg7.png" alt="">')
 
              .append($("<div>")
                        .addClass("contentArrow")
                        .attr("id", "dragArrow")
                        .attr("draggable","true")
                        .append('<i class="fas fa-arrow-right"></i>'))
-              .append($("<div>")
-                       .addClass("ContentBody")
-        
-            ));       
-          
+                       .append($("<div>").addClass("ContentBody")
+                       .append('<span>'+fgText+'</span>')))
 }
 
 
-function genUsDiamond(idgen,bgclr){
+function genUsDiamond(idgen,bgclr,fgText){
   return  $("<div>")
              .addClass("resizeFigure")
              .append($("<div>")
@@ -941,19 +966,18 @@ function genUsDiamond(idgen,bgclr){
                          .attr("data-colorcst","1")
                          .attr("id", idgen)
                          .attr("style","background-color:"+bgclr+" ;")
-                    .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg5.png" alt="">')
+                    .append(' <img src="/public_html/resource/img/lg5.png" alt="">')
 
                      .append($("<div>")
                        .addClass("contentArrow ")
                        .attr("id", "dragArrow")
                        .attr("draggable","true")
                        .append('<i class="fas fa-arrow-right"></i>'))
-                     .append($("<div>")
-                              .addClass("ContentBody ")
-                              ))           
+                       .append($("<div>").addClass("ContentBody")
+                       .append('<span>'+fgText+'</span>')))         
           
 }
-function genUSCardfg(idgen,bgclr){
+function genUSCardfg(idgen,bgclr,fgText){
   return  $("<div>")
              .addClass("resizeFigure")
              .append($("<div>")
@@ -962,17 +986,15 @@ function genUSCardfg(idgen,bgclr){
                          .attr("data-colorcst","1")
                          .attr("id", idgen)
                          .attr("style","background-color:"+bgclr+" ;")
-                         .append(' <img src="http://localhost/github/safron/public_html/resource/img/lg9.png" alt="">')
+                         .append(' <img src="/public_html/resource/img/lg9.png" alt="">')
      
                      .append($("<div>")
                        .addClass("contentArrow ")
                        .attr("id", "dragArrow")
                        .attr("draggable","true")
                        .append('<i class="fas fa-arrow-right"></i>'))
-                     .append($("<div>")
-                              .addClass("ContentBody ")
-                              ))           
-          
+                       .append($("<div>").addClass("ContentBody")
+                       .append('<span>'+fgText+'</span>')))
 }
 
 
@@ -984,17 +1006,17 @@ function genusAdderPopUpTdSl(){
            .append('<p class="selectColorWord">Select Figure</p>')
            .append($("<div>")
                      .addClass("figureSelectOption")
-                     .append(`<span data-figurnum="10" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg3.png" alt=""></span>`)
-                     .append('<span data-figurnum="12" class="figureFromspansw "><img src="http://localhost/github/safron/public_html/resource/img/lg1.png" alt=""></span>')
-                     .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt=""></span>')
-                     .append('<span data-figurnum="16" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg5.png" alt=""></span>')
-                     .append('<span data-figurnum="18" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg6.png" alt=""></span>')
-                     .append('<span data-figurnum="20" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg2.png" alt=""></span>')
-                     .append('<span data-figurnum="22" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg9.png" alt=""></span>')
-                     .append('<span data-figurnum="24" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg4.png" alt=""></span>')
-                     .append('<span data-figurnum="26" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg8.png" alt=""></span>')
-                     .append(`<span data-figurnum="28" class="figureFromspansw"><img src="http://localhost/github/safron/public_html/resource/img/lg7.png" alt=""></span>`)
-                     .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="http://localhost/github/safron/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
+                     .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/public_html/resource/img/lg3.png" alt=""></span>`)
+                     .append('<span data-figurnum="12" class="figureFromspansw "><img src="/public_html/resource/img/lg1.png" alt=""></span>')
+                     .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/public_html/resource/img/lg10.png" alt=""></span>')
+                     .append('<span data-figurnum="16" class="figureFromspansw"><img src="/public_html/resource/img/lg5.png" alt=""></span>')
+                     .append('<span data-figurnum="18" class="figureFromspansw"><img src="/public_html/resource/img/lg6.png" alt=""></span>')
+                     .append('<span data-figurnum="20" class="figureFromspansw"><img src="/public_html/resource/img/lg2.png" alt=""></span>')
+                     .append('<span data-figurnum="22" class="figureFromspansw"><img src="/public_html/resource/img/lg9.png" alt=""></span>')
+                     .append('<span data-figurnum="24" class="figureFromspansw"><img src="/public_html/resource/img/lg4.png" alt=""></span>')
+                     .append('<span data-figurnum="26" class="figureFromspansw"><img src="/public_html/resource/img/lg8.png" alt=""></span>')
+                     .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/public_html/resource/img/lg7.png" alt=""></span>`)
+                     .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
                      )
           .append('<p class="selectColorWord">Select Color Figure</p>')
           .append($("<div>")
@@ -1123,7 +1145,7 @@ function generateTDSl(){
   $(".Graphtable tbody tr td").append(genusAdderPopupopenedSl());
 
 }
-generateTDSl()
+
 
 function genTableEditbtn(){
   return $("<div>")
@@ -1185,9 +1207,6 @@ $(document).on("click", "#FigureIndexUp" , function(){
   
     $(this).parents("td").find(".Content").css("z-index","500");
    
-    
-    
-  
       
 })
 
@@ -1203,13 +1222,33 @@ $(document).on("click", "#FigureIndexDown" , function(){
 $(document).on("click", "#FigureRemoveBTn" , function(){
 
   if(confirm("Are you Sure Delete Figure?!!")){
-    $(this).parents("td").find(".Content").remove();
-    $(this).parents("td").append(genusAdderPopupopenedSl());
-    $(this).parents(".contentDropEDit").remove();
-    
+    var  id =  $(this).parents("td").find(".Content").attr('id')
+    var data = {
+      "kv": {
+        "id": id,
+      }
+    }
+    $.ajax({
+      url: urlGl + "/api/post/zd/elcompro/deleteFigureInside",
+      type: "POST",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      crossDomain: true,
+      async: true,
+      success: function (res) {
+        
+        $(this).parents("tr").remove();
+        $(this).parents("td").find(".Content").remove();
+        $(this).parents("td").append(genusAdderPopupopenedSl());
+        $(this).parents(".contentDropEDit").remove();
+      },
+      error: function () {
+          Toaster.showError(('somethingww'));
+      }
+     });
      
   };
-  LaneRepair();
+ 
       
 })
 
@@ -1267,7 +1306,14 @@ $(document).on("change", "#select-text" , function(){
     
     $(document).find('[data-text="TextVal"]').find(".ContentBody").append('<span>'+textVal+'</span>');
    
-
+    var fb1 = {
+      "kv": {
+        "updatedField": "id,figureText",
+        "id": idFigure,
+        "figureText":textVal
+      }
+    }
+     figureUpdateApi(fb1);
   
 
 })
@@ -1282,9 +1328,19 @@ $(document).on("change", ".SelectFigureText" , function(){
  
     $(document).find('[data-text="TextVal"]').find(".UserRectBody").find("span").remove();
     $(document).find('[data-text="TextVal"]').attr("data-sed-id",idt);
-      
+    var id1=  $(document).find('[data-text="TextVal"]').attr("id");
       $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>'+textVal+'</span>');
-      $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt","2")
+      $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt","2");
+
+      var fb1 = {
+        "kv": {
+          "updatedField": "id,storyCardId,figureText",
+          "id": id1,
+          "storyCardId":idt,
+          "figureText":textVal
+        }
+      }
+       figureUpdateApi(fb1);
    
   }
 
@@ -1301,47 +1357,47 @@ $(document).on("click",".figureFromspansChange",function(){
    dot.removeClass();
   if(fbg==10){
     dot.addClass("Content stickManFigure");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg3.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg3.png');
   }
   if(fbg==12){
     dot.addClass("Content circle");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg1.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg1.png');
   }
   if(fbg==14){
     dot.addClass("Content square");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg10.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg10.png');
 
   }
   if(fbg==16){
     dot.addClass("Content diamond");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg5.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg5.png');
   }
   if(fbg==18){
 
     dot.addClass("Content hexagon");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg6.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg6.png');
   }
   if(fbg==20){
       dot.addClass("Content triangle");
-      dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg2.png');
+      dot.find("img").attr('src','/public_html/resource/img/lg2.png');
   }
   if(fbg==22){
     dot.addClass("Content cardfg");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg9.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg9.png');
   } 
   if(fbg==24){
     dot.addClass("Content rhomb");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg4.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg4.png');
     
   }
   if(fbg==26){
     dot.addClass("Content ellipse");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg8.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg8.png');
 
   }
   if(fbg==28){
     dot.addClass("Content DocumentFg");
-    dot.find("img").attr('src','http://localhost/github/safron/public_html/resource/img/lg7.png');
+    dot.find("img").attr('src','/public_html/resource/img/lg7.png');
   }
 
 })
@@ -1432,7 +1488,7 @@ $(document).on("change", "#FigureHeight" , function(){
 
  
 function LaneRepair(){
-  readLeadLineApi();
+  //LeadLineApi();
 }
 
 
@@ -1572,9 +1628,25 @@ var dragSrcEl = null;
      var id1 = $(this).find('.Content').attr('id');
      var on1 = $(this).index();
      var lid1 = $(this).parents("tr").attr('id');
-     console.log(id,on,id1,on1)
-     laneDeleteApi(id,on,lid)
-     laneDeleteApi(id1,on1,lid1)
+
+     var fb = {
+      "kv": {
+        "updatedField": "id,orderNo,fkLineId",
+        "id": id,
+        "orderNo":on,
+        "fkLineId":lid
+      }
+    }
+    var fb1 = {
+      "kv": {
+        "updatedField": "id,orderNo,fkLineId",
+        "id": id1,
+        "orderNo":on1,
+        "fkLineId":lid1
+      }
+    }
+     figureUpdateApi(fb)
+     figureUpdateApi(fb1)
 
     }
 
