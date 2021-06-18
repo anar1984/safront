@@ -3197,3 +3197,58 @@ img.sc-IbsAh.kqHqhS {
     border: 2px dashed read;
     background:yellow;
 }
+
+
+.box-csta {
+    display: inline-block;
+    width: 100%;
+    height: 130vh;
+    border: 3px solid currentcolor; 
+    border-radius: 3px;
+    padding: 1em;
+    position: absolute;
+    vertical-align: top;
+    transition: 0.3s color, 0.3s border, 0.3s transform, 0.3s opacity;
+    color: rgba(0, 0, 0, .1);
+    background-color: #ffffff;
+    font-size: 0;
+    padding: 0;
+    /* border-width: 3px; */
+    line-height: 200px;
+    opacity: 1;
+    text-align: center;
+    z-index: 2;
+    font-size: 70px;
+    line-height: 200px;
+    
+}
+
+
+
+[class*="loader-41"] {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    color: inherit;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+.loader-41 {
+    border: 0.05em currentcolor solid;
+    border-radius: 0.2em;
+    position: relative;
+    top: 35%;
+    background: linear-gradient(45deg, transparent 48%, currentcolor 50%, currentcolor 50%, transparent 52%, transparent), linear-gradient(-45deg, transparent 48%, currentcolor 50%, currentcolor 50%, transparent 52%, transparent);
+    background-size: 0.5em 0.5em;
+    background-position: 0% 0%;
+    animation: loader-41 1s infinite linear;
+}
+@keyframes loader-41 {
+    from {
+        background-position: 0 0;
+   }
+    to {
+        background-position: -1em 0;
+   }
+}

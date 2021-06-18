@@ -10462,6 +10462,7 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 //        getDBStructure4Select();
 //        loadDatabaseList2ComboEntity();
 //        global_var.doc_actual_zoom = 65;
+          checkProccesLast();
         loadProjectList2SelectboxByClass('projectList_activity');
 
     });

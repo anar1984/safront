@@ -5315,7 +5315,7 @@ UserStory.prototype = {
                 	 loadCurrentBacklogProdDetails();
 
 
- refreshLiveProtytypeView();
+// refreshLiveProtytypeView();
 
             },
             error: function () {
@@ -7051,7 +7051,7 @@ UserStory.prototype = {
                                 SAInputDesc.addInputDescriptionByRes(res);
                                 loadCurrentBacklogProdDetailsSyncrone();
                 
-                 refreshLiveProtytypeView();
+                 //refreshLiveProtytypeView();
                 
 
             },
@@ -7394,7 +7394,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 $('#newInputId').val('');
                 $('#newOutputId').val('');
-                 refreshLiveProtytypeView();
+                // refreshLiveProtytypeView();
 
             },
             error: function () {
@@ -8032,7 +8032,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                
                 loadCurrentBacklogProdDetailsSyncrone();
-                 refreshLiveProtytypeView();
+               //  refreshLiveProtytypeView();
                 //if current modal is live prototype
 //                callStoryCardAfterIPOAction();
 //                $('#storyCardListSelectBox').change();
@@ -20548,7 +20548,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
                 
-                refreshLiveProtytypeView();
+              //  refreshLiveProtytypeView();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -20607,7 +20607,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
                 
-                refreshLiveProtytypeView();
+               // refreshLiveProtytypeView();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -20785,7 +20785,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 	 loadCurrentBacklogProdDetails();
  
                 $(el).closest('div.span-button-div').find('span.span_hover').text($(el).val())
- refreshLiveProtytypeView();
+// refreshLiveProtytypeView();
 
 
 
@@ -20826,7 +20826,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
 
                         loadCurrentBacklogProdDetailsSyncrone();
-                    refreshLiveProtytypeView();
+                    //refreshLiveProtytypeView();
                 $(el).closest('div.span-button-div').remove();
                 
             },
