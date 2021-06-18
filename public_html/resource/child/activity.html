@@ -1,5 +1,5 @@
     <style>
-         .leader-line {
+         .trigger-leaderline-id .leader-line {
             z-index: -1 !important;
         } 
         .porjectNameProto,.tool-panel-col,.toolbar,.gooeyMenu{
@@ -41,6 +41,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                        
+                        <a class="dropdown-item " id="newPorcessModal"  href="#">New Process</a>
                         <a class="dropdown-item " id="editNameProcess"  href="#">Edit Process Name</a>
                         <a class="dropdown-item " id="deleteProcessName"  href="#">Delete Process</a>
                         <a class="dropdown-item "  href="#">Copy</a>
@@ -48,14 +49,19 @@
             
                     </div>
                 </div>
-                <select class="col-4 form-control" sa-selectedfield="id" style="display: inline;" name="" id="projectListSwimlane">
+               <select class="col-4 form-control" sa-selectedfield="id" style="display: inline;" name="" id="projectListSwimlaneInside">
                   
                 </select>
-                <input sa-selectedfield="processName1" style="display: none;" type="text" class="form-control col-4" name="" id="newProcessNameInput">
-                  <button class="btn btn-light" id="newProcessName">New</button>
+              
+                 
                   
                    <button class="btn btn-light" id="LaneAddBtn"><i class="fas fa-plus"></i></button>
-                   <button class="btn btn-light" id="testjsndj">test</button>
+
+                   <div class="editNameProcessDiv col-8 text-center">
+                       <h4></h4>
+                       <input class="form-control" type="text" id="editProcessName">
+                   </div>
+                 
                 </div>
        
              
@@ -283,7 +289,7 @@
                             </div>
                         </div>
 
-
+         
 
                         <p class="selectColorWordPopup">Select Color Figure</p>
 
@@ -462,27 +468,84 @@
        </div>
    </div>
 </div>
-    <div class="modal fade" id="modal-insertPorject" style="margin: 0px; padding: 0px;" tabindex="-1" style="" role="dialog" aria-labelledby=""
-    aria-hidden="true">
-   <div class="modal-dialog modal-lg" style="max-width: 100%;margin: 0px;padding: 0px;" role="document">
-       <div class="modal-content">
-           <div class="modal-header">
-            <button type="button" class="btn btn-outline-secondary line-prev-act-ipo">
-                <i class="fa fa-random" style="font-size: 15px" aria-hidden="true"></i>
-               </button>
-               <button type="button" class="close close-modal-act-ipo" data-dismiss="modal" aria-label="Close">
-                   <span aria-hidden="true">&times;</span>
-               </button>
-           
-           </div>
-           <div class="modal-body" style="font-size: 12px;">
-           <div class="row" id="show-prototype-modal-act">
+ 
+<div class="card-custom-popUpNew" id="CardSwimAdd-gen" style="display: block;">
+    <div class="SwimBackG"></div>
+    <div class="SwimPopUp" style="width: 25%;">
+        <div class="SwimPopUpHeader">
+            <h2 class="col-12 text-center">Start</h2>
+            
+        </div>
+        <div class="SwimPopUpBody text-center">
 
-           </div>
-           </div>
-          
-       </div>
-   </div>
+            
+            <button class="btn btn-primary col-10" id="newPorcessModal">New Process</button>
+            <br>
+            <br>
+            <button class="btn btn-primary col-10" id="existingProcessModal">Open Existing Process</button>
+        
+        </div>
+
+
+
+    </div>
+
+</div>
+<div class="card-custom-popUpNew" id="CardSwimAdd-new" style="display: none;">
+    <div class="SwimBackG"></div>
+    <div class="SwimPopUp" style="width: 25%;">
+        <div class="SwimPopUpHeader">
+            <div class="col-1" style="padding: 0px;" >
+                <button class="btn btn-light popCloseModal" id=""><i class="fas fa-long-arrow-alt-left"></i></button>
+            </div>
+            <h2 class="col-11 text-center">New Process</h2>
+            
+        </div>
+        <div class="SwimPopUpBody text-center">
+
+             <div>
+                 <span>Process Name</span>
+                <input   type="text" id="newProcessNameInput" class="col-12 form-control">
+             </div>
+           
+            <br>
+            <button class="btn btn-primary col-10" id="addNewPorcessButton">Add</button>
+     
+        </div>
+
+
+
+    </div>
+
+</div>
+<div class="card-custom-popUpNew" id="CardSwimAdd-old" style="display: none;">
+    <div class="SwimBackG"></div>
+    <div class="SwimPopUp" style="width: 25%;">
+        <div class="SwimPopUpHeader">
+            <div class="col-1" style="padding: 0px;" >
+                <button class="btn btn-light popCloseModal" id=""><i class="fas fa-long-arrow-alt-left"></i></button>
+            </div>
+            <h2 class="col-11 text-center">Existing Process</h2>
+            
+        </div>
+        <div class="SwimPopUpBody text-center">
+
+             <div>
+                 <span>Choose Process Name</span>
+                 <select class="col-4 form-control col-12" sa-selectedfield="id" style="display: inline;" name="" id="projectListSwimlane">
+                  
+                </select>
+             </div>
+           
+            <br>
+            <button class="btn btn-primary col-10" id="openOldProcess">Open process</button>
+     
+        </div>
+
+
+
+    </div>
+
 </div>
     <!--<script src="resource/js/bs4/swimlane2.js"></script>-->
 

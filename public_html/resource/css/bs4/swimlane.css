@@ -461,7 +461,16 @@ z-index: 999;
 
 
 /* swimcard popup*/
-
+.editNameProcessDiv{
+  position: relative;
+}
+.editNameProcessDiv input{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  display: none;
+}
 .SwimBackG{
   bottom: 0px;
   left: 0px;
@@ -471,7 +480,7 @@ z-index: 999;
   right: 0px;
   top: 0px;
   z-index: 500;
-  background: rgba(9, 30, 66, 0.54);
+  background: rgb(243 244 245 / 87%);
   transition: opacity 220ms ease 0s;
 }
 .SwimPopUp{
