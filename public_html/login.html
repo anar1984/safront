@@ -133,7 +133,7 @@
                                                                 crossDomain: true,
                                                                 async:false,
                                                                 success: function (res) {
-                                                                    console.log(JSON.stringify(res))
+//                                                                    alert (JSON.stringify(res))
                                                                     localStorage.setItem('tk', res.token);
                                                                     document.cookie = res.token;
                                                                     

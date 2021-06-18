@@ -12035,6 +12035,7 @@ function updateUS4ShortChangeDetails(val, ustype) {
         async: true,
         success: function (res) {
             SACore.addBacklogByRes(res);
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('somethingww'));
