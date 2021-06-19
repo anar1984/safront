@@ -1746,7 +1746,7 @@ $(document).on('click', '.manualProject', function (evt) {
     try {
 
         Utility.addParamToUrl("fkManualProjectId", $(this).attr("pid"));
-         location.reload();
+        location.reload();
 //        var bid = $(this).attr('tid');
 //        var fkManualProjectId = $(this).attr("pid");
 //        loadManualProjectZad(fkManualProjectId, bid);
@@ -8904,8 +8904,27 @@ function updateDocumentName(name, id) {
 }
 
 function loadProjectListToEditor() {
-    $('#editor-container-pr-list').html($('#projectList').html());
-    $('#editor-container-pr-list').change();
+
+    var el = $('#editor-container-pr-list');
+    el.html('');
+
+    var pid = SACore.GetProjectKeys();
+    for (var n = 0; n < pid.length; n++) {
+        var pname = SACore.GetProjectName(pid[n]);
+        var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+
+
+
+        el.append(o);
+    }
+
+    el.change();
+
+
+//    $('#editor-container-pr-list').html($('#projectList').html());
+//    $('#editor-container-pr-list').change();
 
     $('.test181').each(function () {
         $(this).attr('checked', true);
@@ -9627,9 +9646,9 @@ function newDocument() {
 
 function openDocument() {
     $('#documentListModal').modal("show");
-    if (global_var.current_project_id.length === 0) {
-        return;
-    }
+//    if (global_var.current_project_id.length === 0) {
+//        return;
+//    }
 
     var json = {kv: {}};
     try {
@@ -9637,7 +9656,7 @@ function openDocument() {
     } catch (err) {
     }
 
-    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkProjectId = "";
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -9734,7 +9753,7 @@ function saveDocument() {
     } catch (err) {
     }
 
-    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkProjectId = '';
     json.kv.id = global_var.current_doc_id;
     json.kv.documentName = docName;
     json.kv.documentBody = docBody;
@@ -10053,7 +10072,7 @@ function loadStoryCardByProject4oIpo(e) {
     getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
-     getBacklogLastModificationDateAndTime(global_var.current_project_id);
+    getBacklogLastModificationDateAndTime(global_var.current_project_id);
     loadDetailsOnProjectSelect4Ipo(global_var.current_project_id);
 
 //        this.showProjectDetailsMain4Permission(global_var.current_project_id);
@@ -10462,7 +10481,7 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 //        getDBStructure4Select();
 //        loadDatabaseList2ComboEntity();
 //        global_var.doc_actual_zoom = 65;
-          checkProccesLast();
+        checkProccesLast();
         loadProjectList2SelectboxByClass('projectList_activity');
 
     });
@@ -11020,6 +11039,8 @@ function addTableAsInput() {
             SAInput.addInputByRes(res);
             SAInput.addInputTableByRes(res);
             SACore.updateBacklogByRes(res);
+            
+            loadCurrentBacklogProdDetails();
 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
 
 
@@ -11124,6 +11145,7 @@ function addUserStoryNewPopup() {
         success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
+            loadCurrentBacklogProdDetails();
 
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
@@ -11156,6 +11178,7 @@ function addApiNewPopup() {
         success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
+            loadCurrentBacklogProdDetails();
 
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
@@ -11165,6 +11188,7 @@ function addApiNewPopup() {
             $('#addApiPopupModal').modal('hide');
 
 
+            global_var.current_backlog_id = res.kv.id;
             callStoryCard(res.kv.id);
         }
     });
@@ -11258,6 +11282,7 @@ function addTabAsInput() {
             SAInput.addInputByRes(res);
             SAInput.addInputTabByRes(res);
             SACore.updateBacklogByRes(res);
+            loadCurrentBacklogProdDetails();
 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
 
 
