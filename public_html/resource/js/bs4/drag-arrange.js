@@ -278,6 +278,10 @@
                      var tableId = $(dragElement).closest('.tdSeqment').attr('pid');
                      var orderNo = getAveNoInDrag4Entity(dragElement);
                      updateDbFieldOrderNo(fieldId,orderNo,tableId);
+                } else if (global_var.current_modal === 'loadActivityDiagram') {
+                     var fieldId = $(dragElement).closest('.laneColumnDiv').attr('id');
+                    // var tableId = $(dragElement).closest('.tdSeqment').attr('pid');
+                    laneUpdateApiColumnOr(fieldId)
                 }
 
                 $clone.remove();

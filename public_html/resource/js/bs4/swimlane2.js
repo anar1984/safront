@@ -2,18 +2,23 @@
   var lineColor = '#6d6d6d'
 
 
-  function  checkProccesLast(){
+
+
+  function LaneRepair() {
+    readLeadLineApi();
+  }
+
+  function checkProccesLast() {
 
     var dt = Utility.getParamFromUrl('process_name');
-     console.log(dt);
-
-     if(dt.length >0){
+    if (dt.length > 0) {
       genProccesListCore(dt);
-      genLaneListApi(dt,"")
+      genLaneListApi(dt, "")
       $('#CardSwimAdd-gen').toggle();
       $('#projectListSwimlaneInside').change();
-     }
+    }
   }
+
   function genLeadeLine(start, end, type, clor, text) {
 
 
@@ -73,10 +78,11 @@
 
   var is_line_dragged2 = false
   var idgenvLane = 23734723742;
-  function genLaneListApi(prcId,namePro) {
+
+  function genLaneListApi(prcId, namePro) {
 
     $(".editNameProcessDiv h4").text(namePro)
-    Utility.addParamToUrl('process_name',prcId);
+    Utility.addParamToUrl('process_name', prcId);
     var prop = {
       "kv": {
         'processId': prcId
@@ -142,16 +148,17 @@
         })
 
         lineInsideGen();
-        
+
       },
       error: function () {
         Toaster.showError(('somethingww'));
       }
     });
   }
+
   function genProccesList() {
     var dt1 = be.callApi('21061417455804961195');
-    
+
     var dt = dt1._table.r;
     $("#projectListSwimlane").html("");
     for (let index = 0; index < dt.length; index++) {
@@ -164,9 +171,10 @@
 
     }
   }
+
   function genProccesListCore(val) {
     var dt1 = be.callApi('21061417455804961195');
-    
+
     var dt = dt1._table.r;
     $("#projectListSwimlaneInside").html("");
     for (let index = 0; index < dt.length; index++) {
@@ -178,17 +186,17 @@
       $("#projectListSwimlaneInside").append("<option value=" + id + ">" + nm + "</option>");
 
     }
-    if(val.length > 2){
+    if (val.length > 2) {
       $("#projectListSwimlaneInside").val(val);
     }
-  
+
   }
 
 
   function addLaneApi() {
     var on = $(".Graphtable div:last").index() + 1;
     var prcId = Utility.getParamFromUrl('process_name');
-  
+
     var prop = {
       "kv": {
         "laneName": "Lane",
@@ -220,10 +228,20 @@
         $("#" + id + " table tbody").find("td").append(genusAdderPopupopenedSl());
 
 
-        $(".Graphtable tbody tr").arrangeable({
+        $(".Graphtable .laneColumnDiv").arrangeable({
           dragSelector: ".dragLaneClass",
 
         })
+
+        var items = document.querySelectorAll('.Graphtable td');
+        items.forEach(function (item) {
+          item.addEventListener('dragstart', handleDragStart, false);
+          item.addEventListener('dragenter', handleDragEnter, false);
+          item.addEventListener('dragover', handleDragOver, false);
+          item.addEventListener('dragleave', handleDragLeave, false);
+          item.addEventListener('drop', handleDrop, false);
+          item.addEventListener('dragend', handleDragEnd, false);
+        });
         LaneRepair();
       },
       error: function () {
@@ -235,7 +253,7 @@
   function lineInsideGen() {
 
 
-  
+
     var dt = be.callApi('21061111083601866190');
     try {
       var ln = dt._table.r;
@@ -250,9 +268,9 @@
         var UsCaId = ln[index].storyCardId;
         var col = ln[index].columnNo;
         var ftSzTxt = ln[index].fontSizeTxt1;
-           if(ftSzTxt === ""){
-            ftSzTxt = 9;
-           }
+        if (ftSzTxt === "") {
+          ftSzTxt = 9;
+        }
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
         figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
 
@@ -312,6 +330,36 @@
     });
   }
 
+  function laneUpdateApiColumnOr(id) {
+
+    var wd = $('#' + id + " table tbody tr").length;
+     var on = $('#' + id ).index();
+    var prop = {
+      "kv": {
+
+        "id": id.trim(),
+        "columnCount": wd,
+        "orderNo": on,
+        "updatedField": "id,columnCount,orderNo",
+
+      }
+    }
+    $.ajax({
+      url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+      type: "POST",
+      data: JSON.stringify(prop),
+      contentType: "application/json; charset=utf-8",
+      crossDomain: true,
+      async: true,
+      success: function (res) {
+
+
+      },
+      error: function (err) {
+        Toaster.showError(err);
+      }
+    });
+  }
   function laneUpdateApiColumn(id) {
 
     var wd = $('#' + id + " table tbody tr").length;
@@ -449,9 +497,10 @@
 
         }
         if (nm == 30) {
-          $(el).parents("td").append(genUsRectangle(countFigure, clr, "", txt));
+
+          $(el).parents("td").append(genUsRectangle1(countFigure, clr, "", txt));
           $(el).parents("td").append(genTableEditbtn());
-         
+
           $(el).parents(".tdAdderSwimlane").remove();
 
           var dataHtml = $('[data-text="TextVal"]').clone();
@@ -542,10 +591,13 @@
 
     }
     if (nm == 30) {
-      $(el).append(genUsRectangle(countFigure, clr, UsCaId, fgText, ftSzTxt));
-      $(el).append(genTableEditbtn());
+      if (UsCaId.length > 3) {
+        $(el).append(genUsRectangle(countFigure, clr, UsCaId, fgText, ftSzTxt));
+        $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+        $(el).find(".tdAdderSwimlane").remove();
+      }
+
       /*  
       var dataHtml = $('[data-text="TextVal"]').clone();
   
@@ -633,445 +685,476 @@
       }
     });
   }
-     //add lane btn 
+  //add lane btn 
 
 
-     function genUsLane(nm, id, on) {
-      return $("<div>")
-        .addClass('laneColumnDiv')
-        .attr("id", id)
-        .attr('style', 'order:' + on + ';')
+  function genUsLane(nm, id, on) {
+    return $("<div>")
+      .addClass('laneColumnDiv')
+      .attr("id", id)
+      .attr('style', 'order:' + on + ';')
+      .append($("<div>")
+        .addClass("LaneheaderColumn")
         .append($("<div>")
-          .addClass("LaneheaderColumn")
+          .addClass("laneHeaderName")
+          .append($("<span>")
+            .text(nm))
+          .append('<input type="text" class="form-control LaneheaderRenameInput" >'))
+
+        .append($("<div>").addClass("EditSectionLane")
           .append($("<div>")
-            .addClass("laneHeaderName")
-            .append($("<span>")
-              .text(nm))
-            .append('<input type="text" class="form-control LaneheaderRenameInput" >'))
 
-          .append($("<div>").addClass("EditSectionLane")
-            .append($("<div>")
-
-              .addClass(' btn btn-light dragLaneClass')
-              .append('<i class="fas fa-arrows-alt"></i>'))
-            .append($("<div>")
-              .addClass("dropdown addlineAfterPart ")
-              .append('<button class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-v"></i></button>')
-              .append($("<div>")
-                .addClass("dropdown-menu ")
-                .append('<a class="dropdown-item" id="AddLeftColmn" href="#"> <i class="fas fa-chevron-left arrowCustom"></i>Add Column</a>')
-                .append('<a class="dropdown-item" id="LaneWidthAddBtn"  href="#"><i class="fas fa-chevron-right arrowCustom"></i>Add Column</a>')
-                .append('<a class="dropdown-item" id="LaneWidthRemoveBtn" href="#"><i class="fas fa-times arrowCustom"></i>Remove Column</a>')
-                .append('<a class="dropdown-item" id="LaneHideBtn" href="#"><i class="fas fa-minus arrowCustom"></i>Hide Line</a>')
-                .append('<a class="dropdown-item" id="LaneRemoveBTn" href="#"><i class="fas fa-trash-alt arrowCustom"></i>Delete Lane</a>')
-
-              )))
+            .addClass(' btn btn-light dragLaneClass')
+            .append('<i class="fas fa-arrows-alt"></i>'))
           .append($("<div>")
-            .addClass(" ShowLaneBtnSect")
-            .append('<button class="ShowLaneBtn btn btn-light" ><i class="fas fa-plus"></i></button>')
+            .addClass("dropdown addlineAfterPart ")
+            .append('<button class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fas fa-ellipsis-v"></i></button>')
             .append($("<div>")
-              .addClass("HideNameLine")
-              .append($("<span>")))))
-        .append($("<table>")
+              .addClass("dropdown-menu ")
+              .append('<a class="dropdown-item" id="AddLeftColmn" href="#"> <i class="fas fa-chevron-left arrowCustom"></i>Add Column</a>')
+              .append('<a class="dropdown-item" id="LaneWidthAddBtn"  href="#"><i class="fas fa-chevron-right arrowCustom"></i>Add Column</a>')
+              .append('<a class="dropdown-item" id="LaneWidthRemoveBtn" href="#"><i class="fas fa-times arrowCustom"></i>Remove Column</a>')
+              .append('<a class="dropdown-item" id="LaneHideBtn" href="#"><i class="fas fa-minus arrowCustom"></i>Hide Line</a>')
+              .append('<a class="dropdown-item" id="LaneRemoveBTn" href="#"><i class="fas fa-trash-alt arrowCustom"></i>Delete Lane</a>')
 
-          .append($("<tbody>")))
+            )))
+        .append($("<div>")
+          .addClass(" ShowLaneBtnSect")
+          .append('<button class="ShowLaneBtn btn btn-light" ><i class="fas fa-plus"></i></button>')
+          .append($("<div>")
+            .addClass("HideNameLine")
+            .append($("<span>")))))
+      .append($("<table>")
 
-
-
-    }
- //generate figure jquery
-
-
- function genUsStickMAn(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("stickManFigure Content")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "4")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg3.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody StickMnbody")
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsSquare(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content  square")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg10.png" alt="">')
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsRectangle(idgen, bgclr, UsCaId, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content USrectangle")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "5")
-      .attr("id", idgen)
-      .attr("data-text","TextVal")
-      .attr('data-sed-id', UsCaId)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>")
-        .addClass("UserRectBody")
-        .attr("data-hastxt", "2")
-        .css("font-size", ftSzTxt)
-        .append('<span>' + fgText + '</span>'))
-      .append($("<div>")
-        .addClass("StatFigure data-show-activity-storycard")
-        .html("User  <br> Story"))
-      .append($("<div>")
-        .addClass("StatFigure1 data-show-activity-ipo")
-        .html("show  <br> proto")))
-
-}
-
-function genUsTriangle(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content triangle")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "2")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg2.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow trinagleArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsHexagon(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content hexagon")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "2")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg6.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsRhomb(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content rhomb")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg4.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow  ")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsEllipse(idgen, bgclr, fgText, ftSzTxt) {
-
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content ellipse")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg8.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow  ")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsCircle(idgen, bgclr, fgText, ftSzTxt) {
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append(
-      $("<div>")
-      .attr("draggable", "true")
-      .addClass("Content   circle")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg1.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUsDocumentFg(idgen, bgclr, fgText, ftSzTxt) {
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .attr("draggable", "true")
-      .addClass("Content DocumentFg")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg7.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-}
-
-
-function genUsDiamond(idgen, bgclr, fgText, ftSzTxt) {
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content diamond")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg5.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow ")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-
-}
-
-function genUSCardfg(idgen, bgclr, fgText, ftSzTxt) {
-  return $("<div>")
-    .addClass("resizeFigure")
-    .append($("<div>")
-      .addClass("Content cardfg")
-      .attr("draggable", "true")
-      .attr("data-colorcst", "1")
-      .attr("id", idgen)
-      .attr("style", "background-color:" + bgclr + " ;")
-      .append(' <img src="/public_html/resource/img/lg9.png" alt="">')
-
-      .append($("<div>")
-        .addClass("contentArrow ")
-        .attr("id", "dragArrow")
-        .attr("draggable", "true")
-        .append('<i class="fas fa-arrow-right"></i>'))
-      .append($("<div>").addClass("ContentBody").css('font-size',ftSzTxt)
-        .append('<span>' + fgText + '</span>')))
-}
-
-
-//tdAdder swimlane 
-function genusAdderPopUpTdSl() {
-
-  return $("<div>")
-    .addClass("tdAdderSwimlane")
-    .append('<p class="selectColorWord">Select Figure</p>')
-    .append($("<div>")
-      .addClass("figureSelectOption")
-      .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/public_html/resource/img/lg3.png" alt=""></span>`)
-      .append('<span data-figurnum="12" class="figureFromspansw "><img src="/public_html/resource/img/lg1.png" alt=""></span>')
-      .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/public_html/resource/img/lg10.png" alt=""></span>')
-      .append('<span data-figurnum="16" class="figureFromspansw"><img src="/public_html/resource/img/lg5.png" alt=""></span>')
-      .append('<span data-figurnum="18" class="figureFromspansw"><img src="/public_html/resource/img/lg6.png" alt=""></span>')
-      .append('<span data-figurnum="20" class="figureFromspansw"><img src="/public_html/resource/img/lg2.png" alt=""></span>')
-      .append('<span data-figurnum="22" class="figureFromspansw"><img src="/public_html/resource/img/lg9.png" alt=""></span>')
-      .append('<span data-figurnum="24" class="figureFromspansw"><img src="/public_html/resource/img/lg4.png" alt=""></span>')
-      .append('<span data-figurnum="26" class="figureFromspansw"><img src="/public_html/resource/img/lg8.png" alt=""></span>')
-      .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/public_html/resource/img/lg7.png" alt=""></span>`)
-      .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
-    )
-    .append('<p class="selectColorWord">Select Color Figure</p>')
-    .append($("<div>")
-      .addClass("figureBgSelectOption")
-      .append('<span data-bgcolorspan="#fff" style="background-color: #fff;" class="ColopickerSpan selectedColorPickerswfg"></span>')
-      .append('<span data-bgcolorspan="#e3b6aac4" style="background-color: #e3b6aa;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#bad9f9c4" style="background-color: #bad9f9;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#c1e57cc4" style="background-color: #c1e57c;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#fdf67cc4" style="background-color: #fdf67c;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#fa8065c4" style="background-color: #fa8065;" class="ColopickerSpan "></span>')
-      .append('<span data-bgcolorspan="#b0b0b0c4" style="background-color: #b0b0b0;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#ff3300c4" style="background-color: #ff3300;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#3399ffc4" style="background-color: #3399ff;" class="ColopickerSpan"></span>')
-      .append('<span data-bgcolorspan="#bda8b6c4" style="background-color: #bda8b6;" class="ColopickerSpan"></span>')
-    )
-    .append($("<div>")
-      .addClass("tableAdderAccept")
-      .append('<div class="figureAddbtn" id="tdAdderslAccept"><i class="fas fa-check"></i></div>')
-      .append('<div class="figureAddbtn" id="CancelSlpopup" ><i class="fas fa-times"></i></div>')
-    )
+        .append($("<tbody>")))
 
 
 
-
-}
-
-function genusAdderPopupopenedSl() {
-
-  return $("<div>")
-    .addClass("tdAdderSwimlaneOpened")
-    .append($("<div>")
-      .addClass("tdAdderSlopDiv")
-      .append($("<button>")
-        .addClass("btn tdAdderSwimlaneOpenedbtn")
-        .append('<i class="fas fa-plus-circle"></i>')));
-}
-
-function updateFigureCore(id) {
-  var el = $("#" + id)
-  var x = $(el).parents("tr").index();
-  var on = $(el).parents("td").index();
-  var fb = {
-    "kv": {
-      "updatedField": "id,orderNo,fkLineId,columnNo",
-      "id": id,
-      "orderNo": on,
-      "columnNo": x,
-
-    }
   }
-  figureUpdateApi(fb)
-}
- //generate  table tdd 
-
- function generateTDSl() {
-
-  var genTdCount = 4;
-
-  for (var i = 0; i < genTdCount; i++) {
+  //generate figure jquery
 
 
-    $(".Graphtable tbody").append(genUsLane(idgenvLane));
-    idgenvLane++
+  function genUsStickMAn(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("stickManFigure Content")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "4")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg3.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody StickMnbody")
+          .append('<span>' + fgText + '</span>')))
+
   }
-  var countsltd = 30;
-  for (var x = 0; x < countsltd; x++) {
+
+  function genUsSquare(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content  square")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg10.png" alt="">')
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsRectangle(idgen, bgclr, UsCaId, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content USrectangle")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "5")
+        .attr("id", idgen)
+
+        .attr('data-sed-id', UsCaId)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>")
+          .addClass("UserRectBody")
+          .attr("data-hastxt", "2")
+          .css("font-size", ftSzTxt)
+          .append('<span>' + fgText + '</span>'))
+        .append($("<div>")
+          .addClass("StatFigure data-show-activity-storycard")
+          .html("User  <br> Story"))
+        .append($("<div>")
+          .addClass("StatFigure1 data-show-activity-ipo")
+          .html("show  <br> proto")))
+
+  }
+
+  function genUsRectangle1(idgen, bgclr, UsCaId, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content USrectangle")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "5")
+        .attr("id", idgen)
+        .attr("data-text", "TextVal")
+        .attr('data-sed-id', UsCaId)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>")
+          .addClass("UserRectBody")
+          .attr("data-hastxt", "1")
+          .css("font-size", ftSzTxt)
+          .append('<span>' + fgText + '</span>'))
+        .append($("<div>")
+          .addClass("StatFigure data-show-activity-storycard")
+          .html("User  <br> Story"))
+        .append($("<div>")
+          .addClass("StatFigure1 data-show-activity-ipo")
+          .html("show  <br> proto")))
+
+  }
+
+  function genUsTriangle(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content triangle")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "2")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg2.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow trinagleArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsHexagon(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content hexagon")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "2")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg6.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsRhomb(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content rhomb")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg4.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow  ")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsEllipse(idgen, bgclr, fgText, ftSzTxt) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content ellipse")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg8.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow  ")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsCircle(idgen, bgclr, fgText, ftSzTxt) {
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append(
+        $("<div>")
+        .attr("draggable", "true")
+        .addClass("Content   circle")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg1.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUsDocumentFg(idgen, bgclr, fgText, ftSzTxt) {
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .attr("draggable", "true")
+        .addClass("Content DocumentFg")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg7.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+  }
 
 
-    $(".Graphtable tbody tr").append('<td></td>');
+  function genUsDiamond(idgen, bgclr, fgText, ftSzTxt) {
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content diamond")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg5.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow ")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+
+  }
+
+  function genUSCardfg(idgen, bgclr, fgText, ftSzTxt) {
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content cardfg")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "1")
+        .attr("id", idgen)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append(' <img src="/public_html/resource/img/lg9.png" alt="">')
+
+        .append($("<div>")
+          .addClass("contentArrow ")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
+          .append('<span>' + fgText + '</span>')))
+  }
 
 
-  };
+  //tdAdder swimlane 
+  function genusAdderPopUpTdSl() {
+
+    return $("<div>")
+      .addClass("tdAdderSwimlane")
+      .append('<p class="selectColorWord">Select Figure</p>')
+      .append($("<div>")
+        .addClass("figureSelectOption")
+        .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/public_html/resource/img/lg3.png" alt=""></span>`)
+        .append('<span data-figurnum="12" class="figureFromspansw "><img src="/public_html/resource/img/lg1.png" alt=""></span>')
+        .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/public_html/resource/img/lg10.png" alt=""></span>')
+        .append('<span data-figurnum="16" class="figureFromspansw"><img src="/public_html/resource/img/lg5.png" alt=""></span>')
+        .append('<span data-figurnum="18" class="figureFromspansw"><img src="/public_html/resource/img/lg6.png" alt=""></span>')
+        .append('<span data-figurnum="20" class="figureFromspansw"><img src="/public_html/resource/img/lg2.png" alt=""></span>')
+        .append('<span data-figurnum="22" class="figureFromspansw"><img src="/public_html/resource/img/lg9.png" alt=""></span>')
+        .append('<span data-figurnum="24" class="figureFromspansw"><img src="/public_html/resource/img/lg4.png" alt=""></span>')
+        .append('<span data-figurnum="26" class="figureFromspansw"><img src="/public_html/resource/img/lg8.png" alt=""></span>')
+        .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/public_html/resource/img/lg7.png" alt=""></span>`)
+        .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
+      )
+      .append('<p class="selectColorWord">Select Color Figure</p>')
+      .append($("<div>")
+        .addClass("figureBgSelectOption")
+        .append('<span data-bgcolorspan="#fff" style="background-color: #fff;" class="ColopickerSpan selectedColorPickerswfg"></span>')
+        .append('<span data-bgcolorspan="#e3b6aac4" style="background-color: #e3b6aa;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#bad9f9c4" style="background-color: #bad9f9;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#c1e57cc4" style="background-color: #c1e57c;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#fdf67cc4" style="background-color: #fdf67c;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#fa8065c4" style="background-color: #fa8065;" class="ColopickerSpan "></span>')
+        .append('<span data-bgcolorspan="#b0b0b0c4" style="background-color: #b0b0b0;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#ff3300c4" style="background-color: #ff3300;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#3399ffc4" style="background-color: #3399ff;" class="ColopickerSpan"></span>')
+        .append('<span data-bgcolorspan="#bda8b6c4" style="background-color: #bda8b6;" class="ColopickerSpan"></span>')
+      )
+      .append($("<div>")
+        .addClass("tableAdderAccept")
+        .append('<div class="figureAddbtn" id="tdAdderslAccept"><i class="fas fa-check"></i></div>')
+        .append('<div class="figureAddbtn" id="CancelSlpopup" ><i class="fas fa-times"></i></div>')
+      )
 
 
 
-  $(".Graphtable tbody tr td").append(genusAdderPopupopenedSl());
 
-}
+  }
 
+  function genusAdderPopupopenedSl() {
 
-function genTableEditbtn() {
-  return $("<div>")
-    .addClass("btn-group contentDropEDit")
-    .append('<button type="button" class="btn  " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>')
-    .append($("<div>")
-      .addClass("dropdown-menu")
-      .append('<a class="dropdown-item" id="AddTopColmn" href="#"><i class="fas fa-chevron-up arrowCustom"></i>Add Column</a>')
-      .append('<a class="dropdown-item"  id="AddBottomColmn" href="#"><i class="fas fa-chevron-down arrowCustom"></i>Add Column</a>')
-      .append('<a class="dropdown-item"  id="AddRightColmn" href="#"><i class="fas fa-chevron-right arrowCustom"></i>Add Column</a>')
-      .append('<a class="dropdown-item"  id="AddLeftColmn" href="#"><i class="fas fa-chevron-left arrowCustom"></i>Add Column</a>')
-      .append('<a class="dropdown-item" id="FigureIndexUp" href="#"><i class="fas fa-level-up-alt arrowCustom"></i>Backward</a>')
-      .append('<a class="dropdown-item" id="FigureIndexDown" href="#"><i class="fas fa-level-down-alt arrowCustom"></i>Forward</a>')
-      .append('<a class="dropdown-item" id="FigureRemoveBTn" href="#"><i class="fas fa-trash-alt arrowCustom"></i>Delete Figure</a>')
-    )
-}
-
-
-
-//open edit popup and edit figure ---->>>>>>
-
-
-function genusReadyTdSl() {
-
-  return $("<td>")
-    .append($("<div>")
+    return $("<div>")
       .addClass("tdAdderSwimlaneOpened")
       .append($("<div>")
         .addClass("tdAdderSlopDiv")
         .append($("<button>")
           .addClass("btn tdAdderSwimlaneOpenedbtn")
-          .append('<i class="fas fa-plus-circle"></i>'))))
-}
+          .append('<i class="fas fa-plus-circle"></i>')));
+  }
+
+  function updateFigureCore(id) {
+    var el = $("#" + id)
+    var x = $(el).parents("tr").index();
+    var on = $(el).parents("td").index();
+    var fb = {
+      "kv": {
+        "updatedField": "id,orderNo,fkLineId,columnNo",
+        "id": id,
+        "orderNo": on,
+        "columnNo": x,
+
+      }
+    }
+    figureUpdateApi(fb)
+  }
+  //generate  table tdd 
+
+  function generateTDSl() {
+
+    var genTdCount = 4;
+
+    for (var i = 0; i < genTdCount; i++) {
+
+
+      $(".Graphtable tbody").append(genUsLane(idgenvLane));
+      idgenvLane++
+    }
+    var countsltd = 30;
+    for (var x = 0; x < countsltd; x++) {
+
+
+      $(".Graphtable tbody tr").append('<td></td>');
+
+
+    };
+
+
+
+    $(".Graphtable tbody tr td").append(genusAdderPopupopenedSl());
+
+  }
+
+
+  function genTableEditbtn() {
+    return $("<div>")
+      .addClass("btn-group contentDropEDit")
+      .append('<button type="button" class="btn  " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>')
+      .append($("<div>")
+        .addClass("dropdown-menu")
+        .append('<a class="dropdown-item" id="AddTopColmn" href="#"><i class="fas fa-chevron-up arrowCustom"></i>Add Column</a>')
+        .append('<a class="dropdown-item"  id="AddBottomColmn" href="#"><i class="fas fa-chevron-down arrowCustom"></i>Add Column</a>')
+        .append('<a class="dropdown-item"  id="AddRightColmn" href="#"><i class="fas fa-chevron-right arrowCustom"></i>Add Column</a>')
+        .append('<a class="dropdown-item"  id="AddLeftColmn" href="#"><i class="fas fa-chevron-left arrowCustom"></i>Add Column</a>')
+        .append('<a class="dropdown-item" id="FigureIndexUp" href="#"><i class="fas fa-level-up-alt arrowCustom"></i>Backward</a>')
+        .append('<a class="dropdown-item" id="FigureIndexDown" href="#"><i class="fas fa-level-down-alt arrowCustom"></i>Forward</a>')
+        .append('<a class="dropdown-item" id="FigureRemoveBTn" href="#"><i class="fas fa-trash-alt arrowCustom"></i>Delete Figure</a>')
+      )
+  }
+
+
+
+  //open edit popup and edit figure ---->>>>>>
+
+
+  function genusReadyTdSl() {
+
+    return $("<td>")
+      .append($("<div>")
+        .addClass("tdAdderSwimlaneOpened")
+        .append($("<div>")
+          .addClass("tdAdderSlopDiv")
+          .append($("<button>")
+            .addClass("btn tdAdderSwimlaneOpenedbtn")
+            .append('<i class="fas fa-plus-circle"></i>'))))
+  }
 
   $(document).ready(function () {
 
 
-   
+
     $(document).on("change", '#projectListSwimlaneInside', function (e) {
       $(".Graphtable tbody").html('');
       $('#loader-actvty').show();
       $('.Graphtable').css("visibility", "hidden");
       var dt = $(this).val();
-     var namePro= $( "#projectListSwimlaneInside option:selected" ).text();
-      genLaneListApi(dt,namePro);
+      var namePro = $("#projectListSwimlaneInside option:selected").text();
+      genLaneListApi(dt, namePro);
       $(".card-custom-popUpNew").hide();
     })
     $(document).on("click", '.popCloseModal', function (e) {
@@ -1082,91 +1165,91 @@ function genusReadyTdSl() {
       $('#loader-actvty').show();
       $('.Graphtable').css("visibility", "hidden");
       var dt = $('#projectListSwimlane').val();
-      var namePro= $( "#projectListSwimlane option:selected" ).text();
-      genLaneListApi(dt,namePro);
+      var namePro = $("#projectListSwimlane option:selected").text();
+      genLaneListApi(dt, namePro);
       genProccesListCore(dt);
       $(".card-custom-popUpNew").hide();
     })
 
-  
+
     $(document).on("click", '#addNewPorcessButton', function (e) {
-     
-        var dt = $("#newProcessNameInput").val()
-        if (dt.trim().length > 3) {
-          var data ={};
-          data.processName1 = dt
-          var set = be.callApi('21061417550001624882',data);
-          $("#newProcessNameInput").val("");
-          $(this).parents(".card-custom-popUpNew").hide();
-          $("#newProcessName").show();
 
-          $(".Graphtable tbody").html('');
-          $('#loader-actvty').show();
-          $('.Graphtable').css("visibility", "hidden");
-     
-          genLaneListApi(set.id,dt);
-          genProccesListCore(set.id);
-          $(".card-custom-popUpNew").hide();
-        }
+      var dt = $("#newProcessNameInput").val()
+      if (dt.trim().length > 3) {
+        var data = {};
+        data.processName1 = dt
+        var set = be.callApi('21061417550001624882', data);
+        $("#newProcessNameInput").val("");
+        $(this).parents(".card-custom-popUpNew").hide();
+        $("#newProcessName").show();
+
+        $(".Graphtable tbody").html('');
+        $('#loader-actvty').show();
+        $('.Graphtable').css("visibility", "hidden");
+
+        genLaneListApi(set.id, dt);
+        genProccesListCore(set.id);
+        $(".card-custom-popUpNew").hide();
+      }
 
 
-      
+
     })
     $(document).on("click", '#newPorcessModal', function (e) {
-     
-       $("#CardSwimAdd-new").toggle();
-      
+
+      $("#CardSwimAdd-new").toggle();
+
     })
     $(document).on("click", '#existingProcessModal', function (e) {
-     
-       $("#CardSwimAdd-old").toggle();
-       genProccesList();
-   
-      
+
+      $("#CardSwimAdd-old").toggle();
+      genProccesList();
+
+
     })
 
     $(document).on("focusout", '#editProcessName', function (e) {
-      $(this).css("display","none");
-       var val =$(this).val();
-      if(val.length > 3){
-          var data = {}
-          data.id = Utility.getParamFromUrl('process_name')
-          data.processName1 = val
-        be.callApi('21061514324609921783',data);
+      $(this).css("display", "none");
+      var val = $(this).val();
+      if (val.length > 3) {
+        var data = {}
+        data.id = Utility.getParamFromUrl('process_name')
+        data.processName1 = val
+        be.callApi('21061514324609921783', data);
         genProccesListCore(data.id);
         $('#projectListSwimlaneInside').change();
       }
     })
     $(document).on("keypress", '#editProcessName', function (e) {
-      if(e.which == 13) {
-       
-      $(this).focusout();
+      if (e.which == 13) {
+
+        $(this).focusout();
       }
-    
+
     })
     $(document).on("click", '#editNameProcess', function (e) {
-       $('.editNameProcessDiv h4').dblclick();
+      $('.editNameProcessDiv h4').dblclick();
     })
     $(document).on("dblclick", '.editNameProcessDiv h4', function (e) {
-    
+
       var val = $(this).text();
       $('#editProcessName').toggle();
       $('#editProcessName').focus();
       $('#editProcessName').val(val)
     })
-    
+
     $(document).on("click", '#deleteProcessName', function (e) {
-    
-      var data ={}
-       data.id = Utility.getParamFromUrl('process_name');
-     
-      be.callApi( '21061513313505523976',data);
+
+      var data = {}
+      data.id = Utility.getParamFromUrl('process_name');
+
+      be.callApi('21061513313505523976', data);
       genProccesListCore();
 
       $("#projectListSwimlaneInside").change();
 
     })
-  
+
 
 
 
@@ -1215,7 +1298,7 @@ function genusReadyTdSl() {
     });
 
 
- 
+
 
     /// rename lane
 
@@ -1258,8 +1341,8 @@ function genusReadyTdSl() {
 
     })
     $(document).on("click", ".close-modal-act-ipo", function () {
-   
-      $('.trigger-leaderline-id').attr('id',"gui_component_main_view");
+
+      $('.trigger-leaderline-id').attr('id', "gui_component_main_view");
       readLeadLineApi();
     })
 
@@ -1331,7 +1414,7 @@ function genusReadyTdSl() {
 
     })
 
-  
+
     $(document).on("click", "#AddLeftColmn", function () {
 
 
@@ -1383,23 +1466,48 @@ function genusReadyTdSl() {
       var data = {}
       data.id = ids
       var dt = be.callApi("21061011355206098626", data);
-      
 
-      if (dt === {}) {
+
+      if (!dt === {}) {
         $(this).parents("tr").remove();
+        
       }
- 
+        LaneRepair();
 
 
     })
 
 
-   
+
 
     $(document).on("click", ".tdAdderSwimlaneOpenedbtn", function () {
 
       $(this).parents("td").append(genusAdderPopUpTdSl());
       $(this).parents(".tdAdderSwimlaneOpened").remove();
+
+
+    })
+    $(document).on("click", "#printgraphTable", function (e) {
+
+     
+      const options = {
+        margin: 0.3,
+        filename: 'filename.pdf',
+        image: { 
+          type: 'jpeg', 
+          quality: 0.98 
+        },
+        html2canvas: { 
+          scale: 2 
+        },
+        jsPDF: { 
+          unit: 'in', 
+          format: 'letter', 
+         
+        }
+      }
+      var element  = $('#gui_component_main_view').html()
+      html2pdf().from(element).set(options).outputPdf().save();
 
 
     })
@@ -1431,6 +1539,8 @@ function genusReadyTdSl() {
 
 
     $(document).on("click", "#tdAdderslAccept", function () {
+
+
 
       var figureAdder = $(this).parents("td").find(".selectedfigureswfg").attr("data-figurnum");
 
@@ -1464,7 +1574,7 @@ function genusReadyTdSl() {
 
 
 
-   
+
 
     $(document).on("click", "#AddBottomColmn", function () {
 
@@ -1608,18 +1718,18 @@ function genusReadyTdSl() {
 
       $(document).find('[data-text="TextVal"]').find(".ContentBody").append('<span>' + textVal + '</span>');
 
-   
 
-      
-      var fb= {
+
+
+      var fb = {
         "kv": {
           "updatedField": "id,figureText",
           "id": idFigure,
           "figureText": textVal,
-      
+
         }
       }
-      
+
       figureUpdateApi(fb)
 
 
@@ -1639,19 +1749,19 @@ function genusReadyTdSl() {
         $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>' + textVal + '</span>');
         $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt", "2");
 
-      
-        var fb= {
+
+        var fb = {
           "kv": {
             "updatedField": "id,storyCardId,figureText",
             "id": id1,
             "figureText": textVal,
             "storyCardId": idt,
-        
+
           }
         }
-        
+
         figureUpdateApi(fb)
-    
+
 
       }
 
@@ -1721,16 +1831,16 @@ function genusReadyTdSl() {
       var id1 = $('[data-text="TextVal"]').attr("id");
       $('[data-text="TextVal"]').attr("style", "background-color:" + fbg + ";");
 
-      var fb= {
+      var fb = {
         "kv": {
-        
+
           "id": id1,
           "figureColor": fbg,
           "updatedField": "id,figureColor"
-      
+
         }
       }
-      
+
       figureUpdateApi(fb)
 
 
@@ -1747,18 +1857,18 @@ function genusReadyTdSl() {
       $('[data-text="TextVal"]').find(".UserRectBody").attr("style", "font-size:" + fbg + "px;");
 
 
-      var fb= {
+      var fb = {
         "kv": {
-          
+
           "id": id1,
           "figureFontSize": fbg.trim(),
           "updatedField": "id,figureFontSize",
-      
+
         }
       }
-      
+
       figureUpdateApi(fb)
-      
+
 
     })
 
@@ -1825,11 +1935,6 @@ function genusReadyTdSl() {
     })
 
 
-
-
-    function LaneRepair() {
-      readLeadLineApi();
-    }
 
 
 
@@ -1916,102 +2021,6 @@ function genusReadyTdSl() {
 
 
 
-    /* po> */
-
-
-
-
-    var dragSrcEl = null;
-
-    function handleDragStart(e) {
-
-
-
-      dragSrcEl = this;
-
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/html', this.innerHTML);
-
-    }
-
-    function handleDragOver(e) {
-      if (e.preventDefault) {
-        e.preventDefault();
-      }
-
-      e.dataTransfer.dropEffect = 'move';
-
-      return false;
-    }
-
-    function handleDragEnter(e) {
-      this.classList.add('over');
-    }
-
-    function handleDragLeave(e) {
-      this.classList.remove('over');
-
-    }
-
-    function handleDrop(e) {
-
-      if (is_line_dragged2 === true) {
-        return;
-      }
-
-      if (dragSrcEl != this) {
-        dragSrcEl.innerHTML = this.innerHTML;
-        this.innerHTML = e.dataTransfer.getData('text/html');
-        var id = $(dragSrcEl).find('.Content').attr('id');
-        var on = $(dragSrcEl).index();
-        var lid = $(dragSrcEl).parents(".laneColumnDiv").attr('id');
-        var x = $(dragSrcEl).parents("tr").index();
-        var id1 = $(this).find('.Content').attr('id');
-        var on1 = $(this).index();
-        var lid1 = $(this).parents(".laneColumnDiv").attr('id');
-        var x1 = $(this).parents("tr").index();
-
-
-        var fb = {
-          "kv": {
-            "updatedField": "id,orderNo,fkLineId,columnNo",
-            "id": id,
-            "orderNo": on,
-            "columnNo": x,
-            "fkLineId": lid
-          }
-        }
-        var fb1 = {
-          "kv": {
-            "updatedField": "id,orderNo,fkLineId,columnNo",
-            "id": id1,
-            "orderNo": on1,
-            "columnNo": x1,
-            "fkLineId": lid1
-          }
-        }
-        
-        figureUpdateApi(fb)
-        figureUpdateApi(fb1)
-
-      }
-
-      LaneRepair();
-      $(".over").removeClass('over')
-      return false;
-    }
-
-    function handleDragEnd(e) {
-
-      if (is_line_dragged2 === true) {
-        return;
-      }
-
-
-      items.forEach(function (item) {
-        item.classList.remove('over');
-      });
-    }
 
 
 
@@ -2038,7 +2047,7 @@ function genusReadyTdSl() {
 
 
 
-    $(".Graphtable tbody tr").arrangeable({
+    $(".Graphtable .laneColumnDiv").arrangeable({
 
       dragSelector: ".dragLaneClass",
 
@@ -2049,3 +2058,103 @@ function genusReadyTdSl() {
 
 
   });
+
+
+
+
+  /* po> */
+
+
+
+
+  var dragSrcEl = null;
+
+  function handleDragStart(e) {
+
+
+
+    dragSrcEl = this;
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+
+  }
+
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+
+    return false;
+  }
+
+  function handleDragEnter(e) {
+    this.classList.add('over');
+  }
+
+  function handleDragLeave(e) {
+    this.classList.remove('over');
+
+  }
+
+  function handleDrop(e) {
+
+    if (is_line_dragged2 === true) {
+      return;
+    }
+
+    if (dragSrcEl != this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+      var id = $(dragSrcEl).find('.Content').attr('id');
+      var on = $(dragSrcEl).index();
+      var lid = $(dragSrcEl).parents(".laneColumnDiv").attr('id');
+      var x = $(dragSrcEl).parents("tr").index();
+      var id1 = $(this).find('.Content').attr('id');
+      var on1 = $(this).index();
+      var lid1 = $(this).parents(".laneColumnDiv").attr('id');
+      var x1 = $(this).parents("tr").index();
+
+
+      var fb = {
+        "kv": {
+          "updatedField": "id,orderNo,fkLineId,columnNo",
+          "id": id,
+          "orderNo": on,
+          "columnNo": x,
+          "fkLineId": lid
+        }
+      }
+      var fb1 = {
+        "kv": {
+          "updatedField": "id,orderNo,fkLineId,columnNo",
+          "id": id1,
+          "orderNo": on1,
+          "columnNo": x1,
+          "fkLineId": lid1
+        }
+      }
+
+      figureUpdateApi(fb)
+      figureUpdateApi(fb1)
+
+    }
+
+    LaneRepair();
+    $(".over").removeClass('over')
+    return false;
+  }
+
+  function handleDragEnd(e) {
+
+    if (is_line_dragged2 === true) {
+      return;
+    }
+
+
+    items.forEach(function (item) {
+      item.classList.remove('over');
+    });
+  }

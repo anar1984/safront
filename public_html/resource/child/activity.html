@@ -24,6 +24,9 @@
         #modal-prototypye .modal-body{
             padding-top: 0 !important;
         }
+        .btnZoom i {
+        line-height: 0;
+        }
     </style>
 
     <div class="activity-conatiner trigger-leaderline-id" id="gui_component_main_view" style="height: 140vh;zoom:70%;">
@@ -56,6 +59,7 @@
                  
                   
                    <button class="btn btn-light" id="LaneAddBtn"><i class="fas fa-plus"></i></button>
+                   <button class="btn btn-light" id="printgraphTable"><i class="far fa-file-pdf"></i></i></button>
 
                    <div class="editNameProcessDiv col-8 text-center">
                        <h4></h4>
@@ -167,6 +171,7 @@
                         </div>
                     <!-- <input type="color" name="" id="color-picker-act"> -->
                 </div>
+             
             </div>
 
             <div style="padding-top: 60px; position: relative;">
@@ -443,9 +448,18 @@
 
         </div>
 
+        
+
 
     </div>
 
+    <div class="row zoom-main-new" >
+        <a class="btnZoom zoom" onclick="new UserStory().zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        <a class="btnZoom zoom-out" onclick="new UserStory().zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></a>
+        <a class="btnZoom zoom-refresh " onclick="new UserStory().zoomInit()"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+        <a class="btnZoom zoom-init " onclick="new UserStory().showAllGUI()"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+
+    </div>
     <div class="modal fade" id="modal-prototypye" style="margin: 0px; padding: 0px;" tabindex="-1" style="" role="dialog" aria-labelledby=""
     aria-hidden="true">
    <div class="modal-dialog modal-lg" style="max-width: 100%;margin: 0px;padding: 0px;" role="document">

@@ -47,7 +47,7 @@ function check() {
         crossDomain: true,
         success: function () {
             //                        progresBarStop();
-//            document.location = "app1.html";
+//            document.location = "app1.zoomOut";
         },
         error: function (res, status) {
             //                        progresBarStop();
@@ -19004,6 +19004,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;" + global_var.actual_backlog_gui_css;
         paramWithZoom += (global_var.ipo_gui_view === 'single') ? "display:block1" : "display:none";
         $('#SUS_IPO_GUI_Design1').css('transform', 'scale('+global_var.actual_zoom/100+')');
+        $('.Graphtable').css('transform', 'scale('+global_var.actual_zoom/100+')');
        
         var oldTop =$('#gui_component_main_view').scrollTop();
         var oldLeft =$('#gui_component_main_view').scrollLeft();
