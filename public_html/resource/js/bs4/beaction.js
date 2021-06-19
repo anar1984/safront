@@ -1656,6 +1656,8 @@ var SAFN = {
     AsyncData: {},
     MapList: {'map': 'Map',
         'set': 'Set',
+        'setvalue': 'SetValue',
+        'settext': 'SetText',
         'get': 'Get',
         'console': 'Console',
         'setparamurl': 'SetParamUrl',
@@ -1679,6 +1681,11 @@ var SAFN = {
         'click': 'Click',
         'showmessage': 'ShowMessage',
         'showerror': 'ShowError',
+        'settable': 'SetTable',
+        'settableobject': 'SetTableObject',
+        'gettable': 'GetTable',
+        'fortable': 'ForTable',
+        'forlist': 'ForList',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1708,7 +1715,11 @@ var SAFN = {
     GetFunctionBody: function (description) {
         var argLine = "";
         try {
-            argLine = (description && description !== 'undefined') ? description.split("{")[1].split('}')[0] : '';
+
+            var startIndex = description.indexOf("{");
+            var lastIndex = description.lastIndexOf('}');
+            var cmd = description.substr(startIndex + 1, (lastIndex - startIndex - 1));
+            argLine = (description && description !== 'undefined') ? cmd : '';
         } catch (err) {
         }
         return argLine;
@@ -1767,20 +1778,28 @@ var SAFN = {
                 ? valueCore.substring(1, valueCore.length - 1)
                 : (data[valueCore]) ? data[valueCore] : "";
 
-        val = val.trim();
+        try {
+            val = val.trim();
+        } catch (err) {
+        }
         return val;
     },
 
     GetArgumentPureValue: function (valueCore) {
-        valueCore = valueCore.trim();
+        var val = valueCore;
+        try {
+            valueCore = valueCore.trim();
 
-        var val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
-                ? valueCore.substring(1, valueCore.length - 1)
-                : valueCore.startsWith('"') && valueCore.endsWith('"')
-                ? valueCore.substring(1, valueCore.length - 1)
-                : valueCore;
 
-        val = val.trim();
+            val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
+                    ? valueCore.substring(1, valueCore.length - 1)
+                    : valueCore.startsWith('"') && valueCore.endsWith('"')
+                    ? valueCore.substring(1, valueCore.length - 1)
+                    : valueCore;
+
+            val = val.trim();
+        } catch (err) {
+        }
         return val;
     },
 
@@ -1868,9 +1887,28 @@ var SAFN = {
         return outData;
 
     },
+    Function_For_Body_Statement: function () {
+        var data = SAFN.CoreData;
+        var element = SAFN.Element;
+        var asyncData = SAFN.AsyncData;
+
+        var outData = {};
+
+        var commands = SAFN.FunctionBody.split('::');
+        for (var i = 0; i < commands.length; i++) {
+            var cmd = commands[i];
+            if (cmd.length > 3) {
+                var res = SAFN.ExecCommand(cmd, data, element, asyncData);
+                var out = $.extend(outData, res);
+                outData = out;
+            }
+        }
+
+        return outData;
+
+    },
     Functions: {
         Map: function (sourceKey, destinationKey) {
-
             sourceKey = SAFN.GetArgumentPureValue(sourceKey);
             destinationKey = SAFN.GetArgumentPureValue(destinationKey);
 
@@ -1886,7 +1924,7 @@ var SAFN = {
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
                 val = SAFN.GetArgumentValue(val);
-                out += parseFloat(val);
+                out += (val) ? parseFloat(val) : 0;
             }
             outData[arguments[0]] = out;
             return outData;
@@ -1897,7 +1935,7 @@ var SAFN = {
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
                 val = SAFN.GetArgumentValue(val);
-                out *= parseFloat(val);
+                out *= (val) ? parseFloat(val) : 1;
             }
             outData[arguments[0]] = out;
             return outData;
@@ -1932,10 +1970,27 @@ var SAFN = {
         },
         Set: function (key, value) {
             value = SAFN.GetArgumentPureValue(value);
+            key = SAFN.GetArgumentPureValue(key);
 
             var data = SAFN.CoreData;
             data[key] = value;
             return data;
+        },
+        SetValue: function (className, value) {
+            className = SAFN.GetArgumentPureValue(className);
+            value = SAFN.GetArgumentValue(value);
+            className = className.trim();
+            $('.'+className).val(value);
+             
+            return {};
+        },
+        SetText: function (className, value) {
+            className = SAFN.GetArgumentPureValue(className);
+            value = SAFN.GetArgumentValue(value);
+            className = className.trim();
+            $('.'+className).text(value);
+             
+            return {};
         },
         Get: function (key, value) {
             value = SAFN.GetArgumentPureValue(value);
@@ -2006,6 +2061,93 @@ var SAFN = {
             msg = SAFN.GetArgumentPureValue(msg);
             Toaster.showError(msg);
         },
+        SetTable: function (row, col, val) {
+            row = SAFN.GetArgumentPureValue(row);
+            col = SAFN.GetArgumentPureValue(col);
+            val = SAFN.GetArgumentPureValue(val);
+
+            var data = SAFN.CoreData;
+            var res = {"_table": {}};
+            res._table.r = [];
+            try {
+                if (data._table) {
+                    res._table = data._table;
+                }
+            } catch (err) {
+            }
+
+            var r = parseInt(row);
+            if (res._table.r.length > 0 && res._table.r.length > r) {
+                res._table.r[r][col] = val;
+            } else {
+                var kv = {};
+                kv[col] = val;
+                res._table.r.push(kv);
+            }
+
+            return res;
+        },
+        SetTableObject: function () {
+            var col = arguments[0];
+            col = SAFN.GetArgumentPureValue(col);
+
+            var data = SAFN.CoreData;
+            var res = {"_table": {}};
+            res._table.r = [];
+            try {
+                if (data._table) {
+                    res._table = data._table;
+                }
+            } catch (err) {
+            }
+
+            for (var i = 1; i < arguments.length; i++) {
+                var val = arguments[i];
+                val = SAFN.GetArgumentPureValue(val);
+                var row = i;
+
+
+                var r = parseInt(row);
+                if (res._table.r.length > 0 && res._table.r.length > r) {
+                    res._table.r[r][col] = val;
+                } else {
+                    var kv = {};
+                    kv[col] = val;
+                    res._table.r.push(kv);
+                }
+            }
+
+            return res;
+        },
+        GetTable: function (key, col, isDistict, separator) {
+            key = SAFN.GetArgumentPureValue(key);
+            col = SAFN.GetArgumentPureValue(col);
+            separator = SAFN.GetArgumentPureValue(separator);
+
+            var isDist = (isDistict && isDistict !== 'undefined') ? isDistict : true;
+            var data = SAFN.CoreData;
+            var dt = data._table.r;
+            var res = [];
+            for (var i = 0; i < dt.length; i++) {
+                if (isDist) {
+                    if (!res.includes(col) && dt[i][col]) {
+                        res.push(dt[i][col]);
+                    }
+                } else if (dt[i][col]) {
+                    res.push(dt[i][col]);
+                }
+
+            }
+            var rs = {};
+            var ln = res.toString();
+
+            if (separator && separator !== 'undefined') {
+                ln = ln.replace(/,/g, separator);
+            }
+
+            rs[key] = ln;
+            return rs;
+        },
 
         CallApi: function (apiId) {
             apiId = SAFN.GetArgumentPureValue(apiId);
@@ -2048,9 +2190,6 @@ var SAFN = {
         If: function (keyCore, operation, valueCore) {
 
             operation = SAFN.GetArgumentPureValue(operation);
-
-
-
             operation = operation.replace(/ /g, '');
             operation = operation.toLowerCase();
 
@@ -2087,7 +2226,57 @@ var SAFN = {
                 outData = SAFN.Function_If_Body_Statement();
             }
             return outData;
-        }
+        },
+        ForTable: function () {
+
+            var data = SAFN.CoreData;
+            var fnbody = SAFN.FunctionBody;
+            var dataTemp = data;
+
+            var dt = data._table.r;
+            var outdata = {};
+            for (var i = 0; i < dt.length; i++) {
+                var kv = dt[i];
+                var tmp = $.extend(dataTemp, kv);
+                SAFN.CoreData = tmp;
+
+                SAFN.FunctionBody = fnbody;
+                var out = SAFN.Function_For_Body_Statement();
+
+                var outT = $.extend(outdata, out);
+                outdata = outT;
+            }
+
+            SAFN.CoreData = dataTemp;
+            return outdata;
+        },
+        ForList: function (tableClassName) {
+            tableClassName = SAFN.GetArgumentPureValue(tableClassName);
+
+            var data = SAFN.CoreData;
+            var fnbody = SAFN.FunctionBody;
+            var dataTemp = data;
+            var outdata = {};
+
+            $('.' + tableClassName).find('tr').each(function (el) {
+                var tdEl = $(this).find('td').first();
+                var initData = getGUIDataByStoryCard(tdEl);
+
+                var tmp = $.extend(dataTemp, initData);
+                SAFN.CoreData = tmp;
+                SAFN.FunctionBody = fnbody;
+                var out = SAFN.Function_For_Body_Statement();
+                var outT = $.extend(outdata, out);
+                outdata = outT;
+                SAFN.CoreData = dataTemp;
+
+            })
+
+
+            return outdata;
+
+
+        },
 
     }
 }
