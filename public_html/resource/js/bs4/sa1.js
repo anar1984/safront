@@ -211,7 +211,9 @@ function deleteUpdatedBacklogStorageInfo(bid) {
 
 function getUnloadedBacklogListOnInit() {
 //    getBacklogProductionStorageInfo
+    var idx = 100;
     var toBeDownloadedBacklog = [];
+   var overallSentBacklogs = [];
     var availableBacklogList = Object.keys(backlog_last_modification);
     for (var k in availableBacklogList) {
         var ky = availableBacklogList[k];
@@ -225,13 +227,19 @@ function getUnloadedBacklogListOnInit() {
             ;
 
 
-            console.log('1.', ky, '  -> upload', lastModificationDateAndTime)
-            console.log('2.', ky, '  -> current', localModDateAndTime)
+//            console.log('1.', ky, '  -> upload', lastModificationDateAndTime)
+//            console.log('2.', ky, '  -> current', localModDateAndTime)
 
             if (lastModificationDateAndTime !== localModDateAndTime) {
-                if (!toBeDownloadedBacklog.includes(ky)) {
+                if (!overallSentBacklogs.includes(ky)) {
+                    overallSentBacklogs.push(ky);
                     toBeDownloadedBacklog.push(ky);
                 }
+            }
+            
+            if (toBeDownloadedBacklog.length>=idx){
+                 loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
+                 toBeDownloadedBacklog = [];
             }
         }
     }

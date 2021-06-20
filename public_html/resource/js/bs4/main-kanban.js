@@ -144,7 +144,13 @@ $(document).ready(function () {
 
     $(document).on("click", ".card-UserStory-edit-exit", function (e) {
         $(document).find(".StoryCardPanel").remove();
-        new UserStory().setUSLists4KanbanView();
+        $(document).find(".TaskStoryCardPanel").css("display", "none");
+        
+        if (global_var.current_modal==='loadLivePrototype'){
+            global_var.current_backlog_id = $('#storyCardListSelectBox').val();
+            Utility.addParamToUrl('current_backlog_id',global_var.current_backlog_id);
+        }
+//        new UserStory().setUSLists4KanbanView();
 
     })
 
@@ -237,7 +243,6 @@ function callStoryCard(id, elId, backlogName) {
 
     if ($(document).find(".StoryCardPanel").first().html()) {
         $(document).find(".StoryCardPanel").remove();
-
     }
 
 
@@ -253,6 +258,9 @@ function callStoryCard(id, elId, backlogName) {
         var storyCard = getPopup(html_string);
         $("#" + divId).append(storyCard);
         global_var.current_backlog_id = id;
+        
+        fillBacklogHistory4View(id, "0"); 
+        
         new UserStory().toggleSubmenuStoryCard();
 //        loadStoryCardBodyInfo();
 

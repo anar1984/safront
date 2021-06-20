@@ -8032,7 +8032,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetailsSyncrone();
                 //  refreshLiveProtytypeView();
                 //if current modal is live prototype
-//                callStoryCardAfterIPOAction();
+                callStoryCardAfterIPOAction();
 //                $('#storyCardListSelectBox').change();
 
 

@@ -1245,6 +1245,10 @@ function showBacklogHistoryClick(el) {
         return;
     }
 
+    if ($(document).find(".StoryCardPanel").first().html()) {
+        callStoryCard(bid);
+    }
+
     if (pid === global_var.current_project_id) {
         new UserStory().refreshCurrentBacklogById(bid);
     } else {
@@ -1252,7 +1256,6 @@ function showBacklogHistoryClick(el) {
         Utility.addParamToUrl('current_backlog_id', bid);
         $('#projectList').val(pid);
         $('#projectList').change();
-
     }
 }
 
@@ -3941,7 +3944,7 @@ function addStoryCardInputsAsAction() {
                 data: data,
                 contentType: "application/json",
                 crossDomain: true,
-                async: true,
+                async: false,
                 success: function (res) {
                     SAInput.addInputByRes(res);
                     SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
@@ -3956,7 +3959,7 @@ function addStoryCardInputsAsAction() {
                                 $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
                     }
 
-                    new UserStory().refreshCurrentBacklog();
+//                    new UserStory().refreshCurrentBacklog();
 
                     $('#addStoryCardInputsAsModal').modal('hide');
 
@@ -3971,6 +3974,11 @@ function addStoryCardInputsAsAction() {
             });
         }
     })
+
+    loadCurrentBacklogProdDetailsSyncrone();
+    refreshLiveProtytypeView();
+//            callStoryCardAfterIPOAction();
+    $('#addRelatedSourceModal').modal('hide');
 
 }
 
@@ -4098,11 +4106,13 @@ function addFieldsOfTableAsInputAction() {
                 data: data,
                 contentType: "application/json",
                 crossDomain: true,
-                async: true,
+                async: false,
                 success: function (res) {
                     SAInput.addInputByRes(res);
                     SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
-                    new UserStory().refreshCurrentBacklog();
+//                    new UserStory().refreshCurrentBacklog();
+
+//                    loadCurrentBacklogProdDetails();
 
                     addDatabaseRelationDetails(res.kv.id,
                             $('#addFieldsOfTableAsInputModal-actiontype').val(),
@@ -4112,8 +4122,15 @@ function addFieldsOfTableAsInputAction() {
 
                 }
             });
+
+
+
+
         }
     })
+    loadCurrentBacklogProdDetailsSyncrone();
+    refreshLiveProtytypeView();
+//  callStoryCardAfterIPOAction();
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
@@ -5962,6 +5979,7 @@ function insertNewJsFuncionDesc() {
         async: false,
         success: function (res) {
             getAllJsCodeByProject();
+            loadCurrentBacklogProdDetails();
             $('#jsCodeModal_newfunction').val('');
             $('.jscode-row-tr[pid="' + res.kv.id + '"]').first().click();
         }
@@ -6296,6 +6314,7 @@ function updateGuiClassName(el) {
         async: false,
         success: function (res) {
             getAllGuiClassByProject();
+            loadCurrentBacklogProdDetails();
         }
     });
 }
@@ -8367,12 +8386,12 @@ $(document).on("change", "#sad-diagram-sclist", function (e) {
 
 
 
-$(document).on("click", ".card-UserStory-edit-exit", function (e) {
+$(document).on("click1", ".card-UserStory-edit-exit", function (e) {
     $(document).find(".TaskStoryCardPanel").css("display", "none");
-    try {
-        getDBStructure4Select();
-    } catch (err) {
-    }
+//    try {
+//        getDBStructure4Select();
+//    } catch (err) {
+//    }
 
 })
 
@@ -8462,10 +8481,6 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
 
 
 
-            loadCurrentBacklogProdDetailsSyncrone();
-            refreshLiveProtytypeView();
-//             $('.live-prototype-show-story-card').click();
-            callStoryCardAfterIPOAction();
 
             $('#selectFromDbModal').modal('hide');
 
@@ -8564,10 +8579,7 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
         crossDomain: true,
         async: false,
         success: function (res) {
-            loadCurrentBacklogProdDetailsSyncrone();
-            refreshLiveProtytypeView();
-            callStoryCardAfterIPOAction();
-            $('#addRelatedSourceModal').modal('hide');
+
 
         }
     });
@@ -9784,7 +9796,7 @@ $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt
 
 $(document).on('click', '.live-prototype-show-story-card', function (evt) {
     if (global_var.current_modal !== "loadStoryCard") {
-        var id = global_var.current_backlog_id;
+        var id = $('#storyCardListSelectBox').val();
         callStoryCard(id);
     }
 });
@@ -9844,12 +9856,12 @@ $(document).on('click', '.line-prev-act-ipo', function (evt) {
 });
 
 
-$(document).on('click', '.live-prototype-show-live', function (evt) {
-//    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
-    $('#storyCardFieldMgmtModal').modal('show');
-    saViewIsPressed = true;
-    SCSourceManagement.Init(global_var.current_backlog_id);
-});
+//$(document).on('click', '.live-prototype-show-live', function (evt) {
+////    window.open('p.html?pid=' + global_var.current_project_id + '&bid=' + global_var.current_backlog_id, 'name');
+//    $('#storyCardFieldMgmtModal').modal('show');
+//    saViewIsPressed = true;
+//    SCSourceManagement.Init(global_var.current_backlog_id);
+//});
 
 
 $(document).on('click', '.live-prototype-show-inputrelation', function (evt) {
@@ -10081,6 +10093,48 @@ function loadStoryCardByProject4oIpo(e) {
     //this.toggleProjectDetails();
 
 
+}
+
+
+function  loadApiListOnProjectSelect4Ipo(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var tbl = $('#api_list_side_bar');
+            tbl.html('');
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi === '1') {
+                    var td = $('<tr>')
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .text(o.backlogName)
+                                            .attr("href", "#")
+                                            .attr("pid", pid)
+                                            .attr("bid", o.id)
+                                            .attr('is_api', '1')
+                                            .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                            ))
+                    tbl.append(td);
+                }
+
+            }
+
+        }
+    });
 }
 
 function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
@@ -11039,7 +11093,7 @@ function addTableAsInput() {
             SAInput.addInputByRes(res);
             SAInput.addInputTableByRes(res);
             SACore.updateBacklogByRes(res);
-            
+
             loadCurrentBacklogProdDetails();
 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
 
@@ -11183,7 +11237,8 @@ function addApiNewPopup() {
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
 
-            $('.projectList_liveprototype').change();
+            //$('.projectList_liveprototype').change();
+            loadApiListOnProjectSelect4Ipo();
             $('#addApiPopupModal-userstoryname').val('');
             $('#addApiPopupModal').modal('hide');
 
@@ -12123,6 +12178,7 @@ function updateJSChangePure(val, ustype, jsCodeId) {
         async: true,
         success: function (res) {
             getAllJsCodeByProject();
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError("Something went wrong!");
