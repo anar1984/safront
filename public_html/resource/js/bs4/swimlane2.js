@@ -132,7 +132,7 @@
             $("#" + id + " table tbody tr").find("td").append(genusAdderPopupopenedSl());
 
 
-
+            lineInsideGen(id);
 
           }
 
@@ -147,7 +147,7 @@
 
         })
 
-        lineInsideGen();
+        
 
       },
       error: function () {
@@ -250,11 +250,13 @@
     });
   }
 
-  function lineInsideGen() {
+  function lineInsideGen(LineIds) {
 
 
-
-    var dt = be.callApi('21061111083601866190');
+     var data = {}
+     data.fkLineId = LineIds
+    var dt = be.callApi('21061111083601866190',data);
+    console.log(dt)
     try {
       var ln = dt._table.r;
       for (let index = 0; index < ln.length; index++) {
@@ -641,12 +643,18 @@
     });
   }
 
-  function readLeadLineApi() {
+  function readLeadLineApi(slda) {
 
+
+    var prop = {
+      "kv":{
+        "fromId": slda,
+      }
+    }
     $.ajax({
       url: urlGl + "api/post/zd/elcompro/readLeaderLine",
       type: "POST",
-      data: JSON.stringify(),
+      data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
       crossDomain: true,
       async: true,
@@ -744,7 +752,7 @@
         .attr("data-colorcst", "4")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg3.png" alt="">')
+        .append(' <img src="/resource/img/lg3.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow")
@@ -766,7 +774,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg10.png" alt="">')
+        .append(' <img src="/resource/img/lg10.png" alt="">')
         .append($("<div>")
           .addClass("contentArrow")
           .attr("id", "dragArrow")
@@ -849,7 +857,7 @@
         .attr("data-colorcst", "2")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg2.png" alt="">')
+        .append(' <img src="/resource/img/lg2.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow trinagleArrow")
@@ -871,7 +879,7 @@
         .attr("data-colorcst", "2")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg6.png" alt="">')
+        .append(' <img src="/resource/img/lg6.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow")
@@ -893,7 +901,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg4.png" alt="">')
+        .append(' <img src="/resource/img/lg4.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow  ")
@@ -915,7 +923,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg8.png" alt="">')
+        .append(' <img src="/resource/img/lg8.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow  ")
@@ -937,7 +945,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg1.png" alt="">')
+        .append(' <img src="/resource/img/lg1.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow")
@@ -958,7 +966,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg7.png" alt="">')
+        .append(' <img src="/resource/img/lg7.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow")
@@ -979,7 +987,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg5.png" alt="">')
+        .append(' <img src="/resource/img/lg5.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow ")
@@ -1000,7 +1008,7 @@
         .attr("data-colorcst", "1")
         .attr("id", idgen)
         .attr("style", "background-color:" + bgclr + " ;")
-        .append(' <img src="/public_html/resource/img/lg9.png" alt="">')
+        .append(' <img src="/resource/img/lg9.png" alt="">')
 
         .append($("<div>")
           .addClass("contentArrow ")
@@ -1020,17 +1028,17 @@
       .append('<p class="selectColorWord">Select Figure</p>')
       .append($("<div>")
         .addClass("figureSelectOption")
-        .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/public_html/resource/img/lg3.png" alt=""></span>`)
-        .append('<span data-figurnum="12" class="figureFromspansw "><img src="/public_html/resource/img/lg1.png" alt=""></span>')
-        .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/public_html/resource/img/lg10.png" alt=""></span>')
-        .append('<span data-figurnum="16" class="figureFromspansw"><img src="/public_html/resource/img/lg5.png" alt=""></span>')
-        .append('<span data-figurnum="18" class="figureFromspansw"><img src="/public_html/resource/img/lg6.png" alt=""></span>')
-        .append('<span data-figurnum="20" class="figureFromspansw"><img src="/public_html/resource/img/lg2.png" alt=""></span>')
-        .append('<span data-figurnum="22" class="figureFromspansw"><img src="/public_html/resource/img/lg9.png" alt=""></span>')
-        .append('<span data-figurnum="24" class="figureFromspansw"><img src="/public_html/resource/img/lg4.png" alt=""></span>')
-        .append('<span data-figurnum="26" class="figureFromspansw"><img src="/public_html/resource/img/lg8.png" alt=""></span>')
-        .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/public_html/resource/img/lg7.png" alt=""></span>`)
-        .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/public_html/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
+        .append(`<span data-figurnum="10" class="figureFromspansw"><img src="/resource/img/lg3.png" alt=""></span>`)
+        .append('<span data-figurnum="12" class="figureFromspansw "><img src="/resource/img/lg1.png" alt=""></span>')
+        .append('<span data-figurnum="14" class="figureFromspansw selectedfigureswfg"><img src="/resource/img/lg10.png" alt=""></span>')
+        .append('<span data-figurnum="16" class="figureFromspansw"><img src="/resource/img/lg5.png" alt=""></span>')
+        .append('<span data-figurnum="18" class="figureFromspansw"><img src="/resource/img/lg6.png" alt=""></span>')
+        .append('<span data-figurnum="20" class="figureFromspansw"><img src="/resource/img/lg2.png" alt=""></span>')
+        .append('<span data-figurnum="22" class="figureFromspansw"><img src="/resource/img/lg9.png" alt=""></span>')
+        .append('<span data-figurnum="24" class="figureFromspansw"><img src="/resource/img/lg4.png" alt=""></span>')
+        .append('<span data-figurnum="26" class="figureFromspansw"><img src="/resource/img/lg8.png" alt=""></span>')
+        .append(`<span data-figurnum="28" class="figureFromspansw"><img src="/resource/img/lg7.png" alt=""></span>`)
+        .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="/resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
       )
       .append('<p class="selectColorWord">Select Color Figure</p>')
       .append($("<div>")
@@ -1778,47 +1786,47 @@
       dot.removeClass();
       if (fbg == 10) {
         dot.addClass("Content stickManFigure");
-        dot.find("img").attr('src', '/public_html/resource/img/lg3.png');
+        dot.find("img").attr('src', '/resource/img/lg3.png');
       }
       if (fbg == 12) {
         dot.addClass("Content circle");
-        dot.find("img").attr('src', '/public_html/resource/img/lg1.png');
+        dot.find("img").attr('src', '/resource/img/lg1.png');
       }
       if (fbg == 14) {
         dot.addClass("Content square");
-        dot.find("img").attr('src', '/public_html/resource/img/lg10.png');
+        dot.find("img").attr('src', '/resource/img/lg10.png');
 
       }
       if (fbg == 16) {
         dot.addClass("Content diamond");
-        dot.find("img").attr('src', '/public_html/resource/img/lg5.png');
+        dot.find("img").attr('src', '/resource/img/lg5.png');
       }
       if (fbg == 18) {
 
         dot.addClass("Content hexagon");
-        dot.find("img").attr('src', '/public_html/resource/img/lg6.png');
+        dot.find("img").attr('src', '/resource/img/lg6.png');
       }
       if (fbg == 20) {
         dot.addClass("Content triangle");
-        dot.find("img").attr('src', '/public_html/resource/img/lg2.png');
+        dot.find("img").attr('src', '/resource/img/lg2.png');
       }
       if (fbg == 22) {
         dot.addClass("Content cardfg");
-        dot.find("img").attr('src', '/public_html/resource/img/lg9.png');
+        dot.find("img").attr('src', '/resource/img/lg9.png');
       }
       if (fbg == 24) {
         dot.addClass("Content rhomb");
-        dot.find("img").attr('src', '/public_html/resource/img/lg4.png');
+        dot.find("img").attr('src', '/resource/img/lg4.png');
 
       }
       if (fbg == 26) {
         dot.addClass("Content ellipse");
-        dot.find("img").attr('src', '/public_html/resource/img/lg8.png');
+        dot.find("img").attr('src', '/resource/img/lg8.png');
 
       }
       if (fbg == 28) {
         dot.addClass("Content DocumentFg");
-        dot.find("img").attr('src', '/public_html/resource/img/lg7.png');
+        dot.find("img").attr('src', '/resource/img/lg7.png');
       }
 
     })
