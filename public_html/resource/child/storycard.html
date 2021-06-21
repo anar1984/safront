@@ -1,9 +1,24 @@
-<div class="row header-userName" style="background-color: #f7f7f7">
-    <div class="col-10 text-center">
-        <p id="generalview-us-header-name" ondblclick="new UserStory().username_editable(this, event)" iname="Create Payment" >User Story Name</p>
+<div class="row header-userName" style="background-color: #f7f7f7;padding-bottom: 15px;">
+    <div class="col-1">
+       
     </div>
+    <div class="col-4">
+        <span>Project</span>
+        <select onchange="loadStoryCardByProject4StoryCard(this)" class="form-control projectList_liveprototype_storycard" 
+                data-live-search="true" name="" id="">
+        </select>
+    </div>
+    <div class="col-4">
+        <span>Story Card</span>
+        <select class="form-control"  onchange="loadStoryCardInfo4StoryCard(this)"
+                name="" data-live-search="true" id="storyCardListSelectBox4StoryCard">
+        </select>
+    </div>
+<!--    <div class="col-4 text-center">
+        <p id="generalview-us-header-name" ondblclick="new UserStory().username_editable(this, event)" iname="Create Payment" >User Story Name</p>
+    </div>-->
 
-    <div class="col-2 text-right copy-move-print">
+    <div class="col-3 text-right copy-move-print">
         <button class="btn newin dropdown-toggle fa fa-ellipsis-h" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>
         <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
             <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
@@ -248,12 +263,12 @@
 
     </div>
     <div class="right-menu-description col-12" >
-         
-         
+
+
         <div  id="storycard_dependentapi"><span><b>Dependencies</b></span> <br><span
                 id="storycard_dependentapi_span" class="1us1-priority" style="font-size:11px;"></span></div>
     </div>
-    
+
     <div class="groups col-12">
 
         <div class="group">      
@@ -300,9 +315,9 @@
                 id="generalview_dependency" class="us-priority"></span></div>
         <div  id="storycard_childdependency"><span><b>Child Dependency</b></span> <br><span
                 id="generalview_childdependency" class="us-priority"></span></div>
-         
+
     </div>
-    
+
 
 
     <!--    <div class="userstoryDeletAll col-12">
