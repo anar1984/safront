@@ -6,7 +6,7 @@
 
 
   function LaneRepair() {
-    readLeadLineApi();
+     readLeadLineApi();
   }
 
   function checkProccesLast() {
@@ -142,6 +142,7 @@
 
         } catch (error) {
           $(".Graphtable ").html('');
+          $(".leader-line").remove();
           $('#loader-actvty').hide();
           $('.Graphtable').css("visibility", "visible");
           $('#LaneAddBtn').click();
@@ -286,14 +287,16 @@
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
         figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
 
+        readLeadLineApi();
 
       }
   
-      readLeadLineApi();
+    
     } catch(error) {
      
           $('#loader-actvty').hide();
           $('.Graphtable').css("visibility", "visible");
+          $('.leader-line').remove();
     }
 
 
@@ -630,7 +633,7 @@
 
 
 
-  function leadLineAddApi(from, to, txt, clr, type) {
+  function leadLineAddApi(from, to, txt, clr, type,fkPriD) {
 
     var prop = {
       "kv": {
@@ -639,6 +642,7 @@
         "text": txt,
         "color": clr,
         "lineType": type,
+        "fkProcessId":fkPriD
       }
     }
     $.ajax({
@@ -657,12 +661,12 @@
     });
   }
 
-  function readLeadLineApi(slda) {
+  function readLeadLineApi() {
 
-
+   var slda = Utility.getParamFromUrl('process_name')
     var prop = {
       "kv":{
-        "fromId": slda,
+        "fkProcessId": slda,
       }
     }
     $.ajax({
@@ -681,7 +685,8 @@
         $('#gui_component_main_view').scrollLeft(0);
         var dt = res.tbl[0].r;
         $('.leader-line').remove();
-        console.log('readLeadLineApi')
+    
+      
         for (let index = 0; index < dt.length; index++) {
           var start = dt[index].fromId;
           var end = dt[index].toId;
@@ -701,7 +706,7 @@
 
      
       } catch (error) {
-        
+        $(".leader-line").remove();
       }
        
       $('#loader-actvty').hide();
@@ -1354,10 +1359,10 @@
       $('#gui_component_main_view').scrollTop(0);
       $('#gui_component_main_view').scrollLeft(0);
       var dataText = "text"
-
+        var fkProcessId = Utility.getParamFromUrl('process_name');
       genLeadeLine(data1, data2, typLine, lineColor, dataText)
 
-      leadLineAddApi(data1, data2, dataText, lineColor, typLine);
+      leadLineAddApi(data1, data2, dataText, lineColor, typLine,fkProcessId);
 
       $('#gui_component_main_view').scrollTop(oldTop);
       $('#gui_component_main_view').scrollLeft(oldLeft);
@@ -1418,9 +1423,11 @@
 
     $(document).on("click", ".ShowLaneBtn", function () {
 
-      $(this).parents("tr").removeAttr("style")
+     var ls = $(this).parents(".laneColumnDiv").css("order");
+     $(this).parents(".laneColumnDiv").removeAttr("style");
+     $(this).parents(".laneColumnDiv").css("order",ls);
       $(this).parents(".ShowLaneBtnSect").css("display", "none")
-      $(this).parents("th").find(".laneHeaderName").css("display", "block")
+      $(this).parents(".laneColumnDiv").find(".laneHeaderName").css("display", "block")
 
     })
 
