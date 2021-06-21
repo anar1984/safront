@@ -1,11 +1,12 @@
   var typLine = 'line-svg-1'
   var lineColor = '#6d6d6d'
-  var addFgColor = ""
+  var addFgColor = '#fff'
+  var addFgFigure = "14"
 
 
 
   function LaneRepair() {
-    readLeadLineApi();
+     readLeadLineApi();
   }
 
   function checkProccesLast() {
@@ -83,6 +84,7 @@
 
     $(".editNameProcessDiv h4").text(namePro)
     Utility.addParamToUrl('process_name', prcId);
+    
     var prop = {
       "kv": {
         'processId': prcId
@@ -97,8 +99,10 @@
       async: true,
       success: function (res) {
         try {
+       
           var ln = res.tbl[0].r;
-          $(".Graphtable").html('')
+          $(".Graphtable").html('');
+       
           for (let index = 0; index < ln.length; index++) {
 
             var nm = ln[index].laneName;
@@ -137,7 +141,13 @@
           }
 
         } catch (error) {
-          $(".Graphtable ").html('')
+          $(".Graphtable ").html('');
+          $(".leader-line").remove();
+          $('#loader-actvty').hide();
+          $('.Graphtable').css("visibility", "visible");
+          $('#LaneAddBtn').click();
+          $('#LaneAddBtn').click();
+          $('#LaneAddBtn').click();
         }
 
 
@@ -254,9 +264,10 @@
 
 
      var data = {}
-     data.fkLineId = LineIds
+     data.fkLineId = LineIds;
+    
     var dt = be.callApi('21061111083601866190',data);
-    console.log(dt)
+   
     try {
       var ln = dt._table.r;
       for (let index = 0; index < ln.length; index++) {
@@ -276,10 +287,16 @@
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
         figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
 
+        readLeadLineApi();
 
       }
-    } catch {
-
+  
+    
+    } catch(error) {
+     
+          $('#loader-actvty').hide();
+          $('.Graphtable').css("visibility", "visible");
+          $('.leader-line').remove();
     }
 
 
@@ -296,7 +313,7 @@
 
 
 
-    readLeadLineApi()
+
   }
 
 
@@ -530,66 +547,66 @@
     if (nm == 10) {
       $(el).append(genUsStickMAn(countFigure, clr, fgText, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 12) {
       $(el).append(genUsCircle(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 14) {
       $(el).append(genUsSquare(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 16) {
       $(el).append(genUsDiamond(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 18) {
       $(el).append(genUsHexagon(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 20) {
       $(el).append(genUsTriangle(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 22) {
       $(el).append(genUSCardfg(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 24) {
       $(el).append(genUsRhomb(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 26) {
       $(el).append(genUsEllipse(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 28) {
       $(el).append(genUsDocumentFg(countFigure, clr, fgText, ftSzTxt));
       $(el).append(genTableEditbtn());
 
-      $(el).find(".tdAdderSwimlane").remove();
+      $(el).find(".tdAdderSwimlaneOpened").remove();
 
     }
     if (nm == 30) {
@@ -597,7 +614,7 @@
         $(el).append(genUsRectangle(countFigure, clr, UsCaId, fgText, ftSzTxt));
         $(el).append(genTableEditbtn());
 
-        $(el).find(".tdAdderSwimlane").remove();
+        $(el).find(".tdAdderSwimlaneOpened").remove();
       }
 
       /*  
@@ -616,7 +633,7 @@
 
 
 
-  function leadLineAddApi(from, to, txt, clr, type) {
+  function leadLineAddApi(from, to, txt, clr, type,fkPriD) {
 
     var prop = {
       "kv": {
@@ -625,6 +642,7 @@
         "text": txt,
         "color": clr,
         "lineType": type,
+        "fkProcessId":fkPriD
       }
     }
     $.ajax({
@@ -643,12 +661,12 @@
     });
   }
 
-  function readLeadLineApi(slda) {
+  function readLeadLineApi() {
 
-
+   var slda = Utility.getParamFromUrl('process_name')
     var prop = {
       "kv":{
-        "fromId": slda,
+        "fkProcessId": slda,
       }
     }
     $.ajax({
@@ -659,13 +677,16 @@
       crossDomain: true,
       async: true,
       success: function (res) {
+       
+      try {
         var oldTop = $('#gui_component_main_view').scrollTop();
         var oldLeft = $('#gui_component_main_view').scrollLeft();
         $('#gui_component_main_view').scrollTop(0);
         $('#gui_component_main_view').scrollLeft(0);
         var dt = res.tbl[0].r;
         $('.leader-line').remove();
-
+    
+      
         for (let index = 0; index < dt.length; index++) {
           var start = dt[index].fromId;
           var end = dt[index].toId;
@@ -683,10 +704,15 @@
 
         }
 
-        $('#loader-actvty').hide();
-        $('.Graphtable').css("visibility", "visible");
-        $('#gui_component_main_view').scrollTop(oldTop);
-        $('#gui_component_main_view').scrollLeft(oldLeft);
+     
+      } catch (error) {
+        $(".leader-line").remove();
+      }
+       
+      $('#loader-actvty').hide();
+      $('.Graphtable').css("visibility", "visible");
+      $('#gui_component_main_view').scrollTop(oldTop);
+      $('#gui_component_main_view').scrollLeft(oldLeft);
       },
       error: function (err) {
         Toaster.showError(err);
@@ -846,6 +872,46 @@
           .html("show  <br> proto")))
 
   }
+  function printDiv(element) {
+
+  var divToPrint=element;
+
+  var newWin=window.open('','Print-Window');
+
+  newWin.document.open();
+
+  newWin.document.write(`<html>
+  <head>
+  <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+  <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
+  <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
+  <link rel="stylesheet" href="resource/css/bs4/g_1.css">
+  <link rel="stylesheet" href="resource/css/bs4/style-kanban.css">
+  <link rel="stylesheet" href="resource/css/bs4/style-storytask-Manager.css">
+  <link rel="stylesheet" href="resource/css/bs4/jquery-ui.css">
+  <link rel="stylesheet" href="resource/css/bs4/dragtable.css">
+  <link rel="stylesheet" href="resource/css/bs4/print.css">
+
+
+  <link rel="stylesheet" href="resource/froala/css/froala_editor.pkgd.min.css"> 
+  <link rel="stylesheet" type="text/css" href="resource/froala/css/froala_editor.css">
+  <link rel="stylesheet" href="resource/css/bs4/writearticle.css">
+  <link rel="stylesheet" href="resource/css/bs4/hummingbird-treeview.css">
+  <link rel="stylesheet" href="resource/css/bs4/bootstrap-select.css" />
+  <link rel="stylesheet" href="resource/css/bs4/entity.css" />
+  <link rel="stylesheet" href="resource/css/bs4/data-base.css" />
+  <link rel="stylesheet" href="resource/css/bs4/testCase.css" />
+  <link rel="stylesheet" href="resource/css/bs4/easyTree.css" />
+  <link rel="stylesheet" href="resource/css/bs4/swimlane.css" />
+
+  </head>
+  <body onload="window.print()">${divToPrint.html()}</body></html>`);
+
+  newWin.document.close();
+
+  setTimeout(function(){newWin.close();},10);
+
+}
 
   function genUsTriangle(idgen, bgclr, fgText, ftSzTxt) {
 
@@ -1293,10 +1359,10 @@
       $('#gui_component_main_view').scrollTop(0);
       $('#gui_component_main_view').scrollLeft(0);
       var dataText = "text"
-
+        var fkProcessId = Utility.getParamFromUrl('process_name');
       genLeadeLine(data1, data2, typLine, lineColor, dataText)
 
-      leadLineAddApi(data1, data2, dataText, lineColor, typLine);
+      leadLineAddApi(data1, data2, dataText, lineColor, typLine,fkProcessId);
 
       $('#gui_component_main_view').scrollTop(oldTop);
       $('#gui_component_main_view').scrollLeft(oldLeft);
@@ -1340,12 +1406,12 @@
     // lane show hide 
     $(document).on("click", "#LaneHideBtn", function () {
       var nameLane = $(this).parents("th").find(".laneHeaderName span").text()
-      $(this).parents("tr").css("width", "40px");
-      $(this).parents("tr").css("overflow", "hidden");
-      $(this).parents("tr").css("pointer-events", "none");
-      $(this).parents("th").find(".ShowLaneBtnSect").css("display", "block")
-      $(this).parents("th").find(".laneHeaderName").css("display", "none")
-      $(this).parents("th").find(".HideNameLine span").text(nameLane)
+      $(this).parents(".laneColumnDiv").css("width", "40px");
+      $(this).parents(".laneColumnDiv").css("overflow", "hidden");
+      $(this).parents(".laneColumnDiv").css("pointer-events", "none");
+      $(this).parents(".laneColumnDiv").find(".ShowLaneBtnSect").css("display", "block")
+      $(this).parents(".laneColumnDiv").find(".laneHeaderName").css("display", "none")
+      $(this).parents(".laneColumnDiv").find(".HideNameLine span").text(nameLane)
 
     })
     $(document).on("click", ".close-modal-act-ipo", function () {
@@ -1357,9 +1423,11 @@
 
     $(document).on("click", ".ShowLaneBtn", function () {
 
-      $(this).parents("tr").removeAttr("style")
+     var ls = $(this).parents(".laneColumnDiv").css("order");
+     $(this).parents(".laneColumnDiv").removeAttr("style");
+     $(this).parents(".laneColumnDiv").css("order",ls);
       $(this).parents(".ShowLaneBtnSect").css("display", "none")
-      $(this).parents("th").find(".laneHeaderName").css("display", "block")
+      $(this).parents(".laneColumnDiv").find(".laneHeaderName").css("display", "block")
 
     })
 
@@ -1476,8 +1544,8 @@
       var dt = be.callApi("21061011355206098626", data);
 
 
-      if (!dt === {}) {
-        $(this).parents("tr").remove();
+      if (!dt.length > 0) {
+        $(this).parents(".laneColumnDiv").remove();
         
       }
         LaneRepair();
@@ -1492,10 +1560,15 @@
 
       $(this).parents("td").append(genusAdderPopUpTdSl());
       $(this).parents(".tdAdderSwimlaneOpened").remove();
+      $(".selectedColorPickerswfg").removeClass("selectedColorPickerswfg");
+      $(".selectedfigureswfg").removeClass("selectedfigureswfg");
+
+      $('[data-bgcolorspan="'+addFgColor+'"]').addClass("selectedColorPickerswfg")
+      $('[data-figurnum="'+addFgFigure+'"]').addClass("selectedfigureswfg")
 
 
     })
-    $(document).on("click", "#printgraphTable", function (e) {
+    $(document).on("click", "dfhdh", function (e) {
 
      
       const options = {
@@ -1519,6 +1592,13 @@
 
 
     })
+    $(document).on("click", "#printgraphTable", function (e) {
+
+     
+      printDiv($('.Graphtable'))
+
+
+    })
 
     $(document).on("click", "#CancelSlpopup", function () {
 
@@ -1532,14 +1612,15 @@
 
       $(this).parent().find(".selectedColorPickerswfg").removeClass("selectedColorPickerswfg");
       $(this).addClass("selectedColorPickerswfg")
-
+      addFgColor = $(this).attr('data-bgcolorspan');
     })
 
 
     $(document).on("click", ".figureFromspansw", function () {
 
       $(this).parent().find(".selectedfigureswfg").removeClass("selectedfigureswfg");
-      $(this).addClass("selectedfigureswfg")
+      $(this).addClass("selectedfigureswfg");
+      addFgFigure = $(this).attr('data-figurnum')
 
     })
 
@@ -1641,33 +1722,22 @@
 
     $(document).on("click", "#FigureRemoveBTn", function () {
 
-      if (confirm("Are you Sure Delete Figure?!!")) {
-        var id = $(this).parents("td").find(".Content").attr('id')
-        var data = {
-          "kv": {
-            "id": id,
-          }
-        }
-        $.ajax({
-          url: urlGl + "/api/post/zd/elcompro/deleteFigureInside",
-          type: "POST",
-          data: JSON.stringify(data),
-          contentType: "application/json",
-          crossDomain: true,
-          async: true,
-          success: function (res) {
 
-            $(this).parents("tr").remove();
-            $(this).parents("td").find(".Content").remove();
+            var ids = $(this).parents("td").find(".Content").attr('id')
+      var data = {}
+      data.id = ids
+      var dt = be.callApi("21061117190705163166", data);
+
+
+      if (!dt.length > 0) {
+            $(this).parents("td").find(".resizeFigure").remove();
             $(this).parents("td").append(genusAdderPopupopenedSl());
             $(this).parents(".contentDropEDit").remove();
-          },
-          error: function () {
-            Toaster.showError(('somethingww'));
-          }
-        });
+        
+      }
+        LaneRepair();
 
-      };
+      
 
 
     })
@@ -2033,15 +2103,7 @@
 
 
 
-    var items = document.querySelectorAll('.Graphtable td');
-    items.forEach(function (item) {
-      item.addEventListener('dragstart', handleDragStart, false);
-      item.addEventListener('dragenter', handleDragEnter, false);
-      item.addEventListener('dragover', handleDragOver, false);
-      item.addEventListener('dragleave', handleDragLeave, false);
-      item.addEventListener('drop', handleDrop, false);
-      item.addEventListener('dragend', handleDragEnd, false);
-    });
+
 
 
     $(document).on("click", "#LaneAddBtn", function () {
@@ -2069,8 +2131,15 @@
 
 
 
-
-  /* po> */
+  var items = document.querySelectorAll('.Graphtable td');
+  items.forEach(function (item) {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragenter', handleDragEnter, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('dragleave', handleDragLeave, false);
+    item.addEventListener('drop', handleDrop, false);
+    item.addEventListener('dragend', handleDragEnd, false);
+  });
 
 
 
