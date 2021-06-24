@@ -145,9 +145,13 @@
           $(".leader-line").remove();
           $('#loader-actvty').hide();
           $('.Graphtable').css("visibility", "visible");
-          $('#LaneAddBtn').click();
-          $('#LaneAddBtn').click();
-          $('#LaneAddBtn').click();
+
+          var alen = 3;
+          for (let index = 0; index < alen; index++) {
+           addLaneApi(index);
+            
+          }
+      
         }
 
 
@@ -203,10 +207,12 @@
   }
 
 
-  function addLaneApi() {
-    var on = $(".Graphtable div:last").index() + 1;
-    var prcId = Utility.getParamFromUrl('process_name');
+  function addLaneApi(on) {
+  
 
+  
+    var prcId = Utility.getParamFromUrl('process_name');
+    
     var prop = {
       "kv": {
         "laneName": "Lane",
@@ -258,6 +264,7 @@
         Toaster.showError(('somethingww'));
       }
     });
+ 
   }
 
   function lineInsideGen(LineIds) {
@@ -280,10 +287,13 @@
         var clr = ln[index].figureColor1;
         var UsCaId = ln[index].storyCardId;
         var col = ln[index].columnNo;
-        var ftSzTxt = ln[index].fontSizeTxt1;
+        var ftSzTxt = ln[index].fontSizeNew;
         if (ftSzTxt === "") {
-          ftSzTxt = 9;
+          ftSzTxt = "9";
+        }else{
+          ftSzTxt +="px"
         }
+    
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
         figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
 
@@ -873,14 +883,16 @@
 
   }
   function printDiv(element) {
+    
 
-  var divToPrint=element;
-
+  var divToPrint=$(element).clone();
+    $(divToPrint).find(".LaneAdder").remove();
   var newWin=window.open('','Print-Window');
 
   newWin.document.open();
 
-  newWin.document.write(`<html>
+  newWin.document.write(`
+  <html>
   <head>
   <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
   <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
@@ -905,11 +917,11 @@
   <link rel="stylesheet" href="resource/css/bs4/swimlane.css" />
 
   </head>
-  <body onload="window.print()">${divToPrint.html()}</body></html>`);
+  <body  onload="window.print()"><page size="A4">${divToPrint.html()}<page></body></html>`);
 
-  newWin.document.close();
+  //newWin.document.close();
 
-  setTimeout(function(){newWin.close();},10);
+ // setTimeout(function(){newWin.close();},10);
 
 }
 
@@ -1358,7 +1370,7 @@
       var oldLeft = $('#gui_component_main_view').scrollLeft();
       $('#gui_component_main_view').scrollTop(0);
       $('#gui_component_main_view').scrollLeft(0);
-      var dataText = "text"
+      var dataText = "<b>text</b>"
         var fkProcessId = Utility.getParamFromUrl('process_name');
       genLeadeLine(data1, data2, typLine, lineColor, dataText)
 
@@ -1456,6 +1468,17 @@
       var idsss = $(this).parents(".laneColumnDiv").attr("id");
       laneUpdateApiColumn(idsss);
 
+    })
+    //resize lane btn 
+    $(document).on("click", "#lineEditableInput", function () {
+
+
+      if($(this).is(':checked')){
+
+         $("#gui_component_main_view").removeClass('trigger-leaderline-id');
+       }else{
+        $("#gui_component_main_view").addClass('trigger-leaderline-id');
+       }
     })
     $(document).on("click", "#AddRightColmn", function () {
 
@@ -1595,7 +1618,7 @@
     $(document).on("click", "#printgraphTable", function (e) {
 
      
-      printDiv($('.Graphtable'))
+      printDiv($('#gui_component_main_view'))
 
 
     })
@@ -1939,8 +1962,8 @@
         "kv": {
 
           "id": id1,
-          "figureFontSize": fbg.trim(),
-          "updatedField": "id,figureFontSize",
+          "fontSizeNew": fbg.trim(),
+          "updatedField": "id,fontSizeNew",
 
         }
       }
@@ -2024,6 +2047,11 @@
 
     $(document).on("mouseover", "textPath", function (e) {
       e.stopPropagation();
+  
+      var oldTop = $('#gui_component_main_view').scrollTop();
+      var oldLeft = $('#gui_component_main_view').scrollLeft();
+      $('#gui_component_main_view').scrollTop(0);
+      $('#gui_component_main_view').scrollLeft(0);
       $("#dataText").removeAttr("id");
       $(this).attr("id", "dataText");
 
@@ -2037,7 +2065,8 @@
 
       var textLine = $("#dataText").text();
       $("#addTextInput").val(textLine);
-
+      $('#gui_component_main_view').scrollTop(oldTop);
+      $('#gui_component_main_view').scrollLeft(oldLeft);
 
     });
 
@@ -2108,8 +2137,11 @@
 
     $(document).on("click", "#LaneAddBtn", function () {
 
-
-      addLaneApi();
+    
+      var on = $(".Graphtable .laneColumnDiv").last().index();
+      on= parseFloat(on)+2
+      
+      addLaneApi(on);
 
 
     })
