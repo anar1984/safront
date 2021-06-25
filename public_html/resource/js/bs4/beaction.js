@@ -160,7 +160,7 @@ var be = {
         try {
             $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .append($('<span class="sa-desc-in-data-body">')
-                            .text(JSON.stringify(data)));
+                            .html("<pre>"+JSON.stringify(data)+"</pre>"));
         } catch (err) {
         }
     },
@@ -168,7 +168,7 @@ var be = {
         try {
             $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .append($('<span class="sa-desc-out-data-body">')
-                            .text(JSON.stringify(data)));
+                            .html("<pre>"+JSON.stringify(data)+"</pre>"));
         } catch (err) {
         }
     },

@@ -2679,7 +2679,8 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .active-inputs-selected{
-    border: 1px dashed blue;
+    border: 1px dashed #17a2b8;
+    border-radius: 5px;
 }
 
 /*#smb-general-main-info{

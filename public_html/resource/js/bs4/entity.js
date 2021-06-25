@@ -730,7 +730,7 @@ $(document).ready(function () {
 
 
 
-    $(document).on("click", ".leader-line", function (e) {
+ /*    $(document).on("click", ".leader-line", function (e) {
 
 
         $(".selectedLine").removeClass("selectedLine");
@@ -738,7 +738,7 @@ $(document).ready(function () {
 
         e.stopPropagation()
 
-    });
+    }); */
 //    $(document).click(function () {
 //
 //
