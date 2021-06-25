@@ -8818,7 +8818,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: true,
             success: function (res) {
                 SAInput.updateInputByRes(res);
-                loadCurrentBacklogProdDetails();
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
                 //refresh GUI component 
 //                that.genGUIDesign();
             },
@@ -9488,8 +9493,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             },
             success: function (res) {
                 SACore.updateBacklogByRes(res);
-                
-                
+
+
                 loadCurrentBacklogProdDetailsSyncrone();
                 //  refreshLiveProtytypeView();
                 //if current modal is live prototype
