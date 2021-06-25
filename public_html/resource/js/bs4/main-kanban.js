@@ -256,11 +256,11 @@ function callStoryCard(id, elId, backlogName) {
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
-        $("#" + divId).append(storyCard);
-        global_var.current_backlog_id = id;
+         $("#" + divId).append(storyCard);
+        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+       global_var.current_backlog_id = id;
         
         fillBacklogHistory4View(id, "0"); 
-        
         new UserStory().toggleSubmenuStoryCard();
 //        loadStoryCardBodyInfo();
 

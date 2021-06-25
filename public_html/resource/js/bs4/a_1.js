@@ -1121,7 +1121,7 @@ function loadJSByIdIfNotExist(bid) {
 
 
 function getRelatedStoryCardByApiId() {
-
+    $('#storycard_dependentapi_span').html('');
     var json = initJSON();
     json.kv.fkBacklogId = global_var.current_backlog_id;
     var that = this;
@@ -3976,7 +3976,12 @@ function addStoryCardInputsAsAction() {
     })
 
     loadCurrentBacklogProdDetailsSyncrone();
-    refreshLiveProtytypeView();
+    if (global_var.current_modal === 'loadLivePrototype') {
+        refreshLiveProtytypeView();
+    } else if (global_var.current_modal === 'loadStoryCard') {
+        reloadBacklogListOnStoryCard();
+    }
+
 //            callStoryCardAfterIPOAction();
     $('#addRelatedSourceModal').modal('hide');
 
@@ -4129,7 +4134,14 @@ function addFieldsOfTableAsInputAction() {
         }
     })
     loadCurrentBacklogProdDetailsSyncrone();
-    refreshLiveProtytypeView();
+
+
+    if (global_var.current_modal === 'loadLivePrototype') {
+        refreshLiveProtytypeView();
+    } else if (global_var.current_modal === 'loadStoryCard') {
+        reloadBacklogListOnStoryCard();
+    }
+
 //  callStoryCardAfterIPOAction();
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
@@ -6206,7 +6218,7 @@ $(document).on('focusout', '#jsCodeModal_fnbody', function () {
 })
 
 
-//let FullSc = true;
+let FullSc = true;
 $(document).on('click', '.editor_full_screenBt', function () {
     var val3 = window.editor1.getValue();
 
@@ -8478,14 +8490,13 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-
-
-
-
             $('#selectFromDbModal').modal('hide');
-
-
-
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
 
         }
     });
@@ -8579,7 +8590,13 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
         crossDomain: true,
         async: false,
         success: function (res) {
-
+            $('#addRelatedSourceModal').modal('hide');
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
 
         }
     });
@@ -10087,14 +10104,74 @@ function loadStoryCardByProject4oIpo(e) {
     getBacklogLastModificationDateAndTime(global_var.current_project_id);
     loadDetailsOnProjectSelect4Ipo(global_var.current_project_id);
 
-//        this.showProjectDetailsMain4Permission(global_var.current_project_id);
-//        hideProgress();
-    // clearQueue4ProLoad();
-    //this.toggleProjectDetails();
-
 
 }
 
+
+
+function loadStoryCardByProject4StoryCard(e) {
+
+    global_var.current_project_id = $(e).val();
+    getUnloadedBacklogListOnInit();
+    Utility.addParamToUrl('current_project_id', global_var.current_project_id);
+
+    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
+}
+
+
+
+function  loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+            var cmd = $('#storyCardListSelectBox4StoryCard');
+            cmd.html('');
+//            new UserStory().setUSLists(res);
+            var f = true;
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+
+                var pname = o.backlogName;
+                var op = $('<option></option>')
+                        .attr('value', o.id)
+                        .text(pname);
+                if (f) {
+                    op.attr("selected", true);
+                    f = false;
+                }
+                if (o.id === global_var.current_backlog_id) {
+                    op.attr("selected", true);
+                }
+                cmd.append(op);
+
+
+            }
+
+//            cmd.val(global_var.current_backlog_id);
+            sortSelectBoxByElement(cmd);
+            cmd.selectpicker('refresh');
+            cmd.change();
+
+
+        }
+    });
+}
 
 function  loadApiListOnProjectSelect4Ipo(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
@@ -10216,6 +10293,21 @@ function loadStoryCardInfo4Ipo(el) {
         new UserStory().getBacklogDetailedInputInfoById_coreNew(SAInput.toJSON());
     }
 }
+
+
+
+function loadStoryCardInfo4StoryCard(el) {
+    var id = $(el).val();
+
+    global_var.current_backlog_id = id;
+    Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+    fillBacklogHistory4View(id, "0");
+    new UserStory().toggleSubmenuStoryCard();
+    loadUsersAsOwner();
+    setStoryCardOwner();
+}
+
+
 
 function clearLivePrototypeView42() {
     $(".leader-line").remove();
@@ -10804,9 +10896,12 @@ function setActiveInputDescType(actionType) {
 function loadHtml(file) {
     $.get("resource/child/" + file + ".html", function (html_string)
     {
+
+
 //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
+        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -10814,6 +10909,7 @@ function loadHtml(file) {
         loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
+
     });
 }
 
@@ -11182,7 +11278,6 @@ function addUserStoryNewPopup() {
     if (!usName)
         return;
 
-
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
@@ -11206,6 +11301,10 @@ function addUserStoryNewPopup() {
             $('.projectList_liveprototype').change();
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModal').modal('hide');
+
+            if (global_var.current_modal === 'loadStoryCard') {
+                $('.projectList_liveprototype_storycard').change();
+            }
         }
     });
 }
@@ -13456,7 +13555,17 @@ function addUserStoryToTask_loadTaskTypeDetails(res) {
 
 
 function editUserStoryName(el) {
-    $('#generalview-us-header-name').dblclick();
+//    $('#generalview-us-header-name').dblclick();
+    $('#updateUserStoryPopupModal').modal('show');
+    $('#updateUserStoryPopupModal-userstoryname').val(SACore.GetCurrentBacklogname())
+}
+
+
+function updateUserStoryPopup(){
+    
+    updateBacklogName();
+     $('#updateUserStoryPopupModal').modal('hide');
+    
 }
 
 function addProcessDescToTask(el, procesDescId) {
