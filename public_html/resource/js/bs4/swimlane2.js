@@ -20,12 +20,12 @@
     }
   }
 
-  function genLeadeLine(start, end, type, clor, text) {
+  function genLeadeLine(start, end, type, clor, text,idLine) {
 
 
 
     if (type === "line-svg-3") {
-
+      dataLieaderLineId =idLine
       new LeaderLine(document.getElementById(start), document.getElementById(end), {
 
         middleLabel: LeaderLine.pathLabel(text),
@@ -34,11 +34,14 @@
         color: clor,
         dash: {
           animation: true
-        }
-
+        },
+    
+          
       })
+      
     }
     if (type === "line-svg-2") {
+      dataLieaderLineId =idLine
       new LeaderLine(document.getElementById(start), document.getElementById(end), {
 
         middleLabel: LeaderLine.pathLabel(text),
@@ -46,29 +49,37 @@
         color: "tansparent",
         outline: true,
         endPlugOutline: true,
-        endPlugSize: 1.5
+        endPlugSize: 1.5,
+        id:idLine
 
       })
+    
     }
     if (type === "line-svg-1") {
+      dataLieaderLineId =idLine
       new LeaderLine(document.getElementById(start), document.getElementById(end), {
 
         middleLabel: LeaderLine.pathLabel(text),
         size: 2,
         startPlug: 'square',
-        color: clor
+        color: clor,
+        id:idLine
 
       })
+     
     }
     if (type === "line-svg-4") {
+      dataLieaderLineId =idLine
       new LeaderLine(document.getElementById(start), document.getElementById(end), {
 
         middleLabel: LeaderLine.pathLabel(text),
         size: 2,
         startPlug: 'arrow1',
-        color: clor
+        color: clor,
+        id:idLine
 
       })
+     
     }
 
 
@@ -297,10 +308,10 @@
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
         figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
 
-        readLeadLineApi();
+       
 
       }
-  
+      readLeadLineApi();
     
     } catch(error) {
      
@@ -424,6 +435,25 @@
 
     $.ajax({
       url: urlGl + "api/post/zd/elcompro/updateFigureInside",
+      type: "POST",
+      data: JSON.stringify(fb),
+      contentType: "application/json; charset=utf-8",
+      crossDomain: true,
+      async: true,
+      success: function (res) {
+
+
+      },
+      error: function (err) {
+        Toaster.showError(err);
+      }
+    });
+  }
+  function LaneUpdateApi(fb) {
+
+
+    $.ajax({
+      url: urlGl + "api/post/zd/elcompro/updateLeaderLine",
       type: "POST",
       data: JSON.stringify(fb),
       contentType: "application/json; charset=utf-8",
@@ -702,10 +732,11 @@
           var end = dt[index].toId;
           var type = dt[index].lineType;
           var clor = dt[index].color;
-          var text = dt[index].text;
-
+          var txt = dt[index].text;
+          var idsed = dt[index].id;
+              
           try {
-            genLeadeLine(start, end, type, clor, text);
+            genLeadeLine(start, end, type, clor,txt,idsed);
           } catch (error) {
 
           }
@@ -1370,9 +1401,9 @@
       var oldLeft = $('#gui_component_main_view').scrollLeft();
       $('#gui_component_main_view').scrollTop(0);
       $('#gui_component_main_view').scrollLeft(0);
-      var dataText = "<b>text</b>"
+      var dataText = "T"
         var fkProcessId = Utility.getParamFromUrl('process_name');
-      genLeadeLine(data1, data2, typLine, lineColor, dataText)
+      genLeadeLine(data1, data2, typLine, lineColor, dataText);
 
       leadLineAddApi(data1, data2, dataText, lineColor, typLine,fkProcessId);
 
@@ -1953,9 +1984,9 @@
 
       $('[data-text="TextVal"]').find(".ContentBody").removeAttr("style");
       var id1 = $('[data-text="TextVal"]').attr("id");
-      $('[data-text="TextVal"]').find(".ContentBody").attr("style", "font-size:" + fbg + "px;");
+      $('[data-text="TextVal"]').find(".ContentBody").attr("style", "font-size:" + fbg + ";");
       $('[data-text="TextVal"]').find(".UserRectBody").removeAttr("style");
-      $('[data-text="TextVal"]').find(".UserRectBody").attr("style", "font-size:" + fbg + "px;");
+      $('[data-text="TextVal"]').find(".UserRectBody").attr("style", "font-size:" + fbg + ";");
 
 
       var fb = {
@@ -1985,11 +2016,13 @@
       $('.Content').removeAttr('data-text');
       $(this).attr("data-text", "TextVal")
       var CstmFig = $('[data-text="TextVal"]').attr("data-colorcst");
-
+      
+  
+   console.log(ftsize)
       if (CstmFig == 1 || CstmFig == 2 || CstmFig == 3 || CstmFig == 4) {
         $(".CardSwimAdd").css("display", "Block");
         color = $('[data-text="TextVal"]').css("backgroundColor");
-
+        var ftsize = $('[data-text="TextVal"]').find('.ContentBody ').css("font-size");
         var text = $('[data-text="TextVal"]').find(".ContentBody span").text();
         $("#select-text").val(text)
         var dataHtml = $('[data-text="TextVal"]').parents(".resizeFigure").clone();
@@ -2006,7 +2039,7 @@
 
         $("#select-text").val(text);
         var dataHtml = $('[data-text="TextVal"]').clone();
-
+        var ftsize = $('[data-text="TextVal"]').find('.UserRectBody ').css("font-size");
         $(".ContentCopyDiv").html(dataHtml);
 
         $(".CardSwimAdd").css("display", "Block");
@@ -2015,6 +2048,8 @@
         $(".ForUSerStFigure").css("display", "flex");
 
       }
+
+      $('#selecttextfontSize').val(ftsize)
 
     })
 
@@ -2059,7 +2094,7 @@
       $(".addtextLine").css("display", "block");
       $(".addtextLine").css("top", Cordn.top + "px");
       $(".addtextLine").css("left", Cordn.left + "px");
-      $(".addtextLine").css('transform', 'translate(-50%, -50%)');
+     // $(".addtextLine").css('transform', 'translate(-50%, -50%)');
 
 
 
@@ -2073,12 +2108,15 @@
     //remove line 
     $(document).on("click", "#lineRemovebtn", function (e) {
 
-      if (confirm("Are You sure Line Remove ?!!")) {
+     var dta = $("#dataText").parents("svg").attr("id");
 
-        $("#dataText").parents("svg").remove();
+     var data ={}
+         data.id = dta
+         var es = be.callApi('21061118091303585112',data)
+
         $(this).parent().css("display", "none");
-      }
-
+      
+      LaneRepair();
     })
 
 
@@ -2099,8 +2137,19 @@
 
       var Textval = $("#addTextInput").val();
 
-      if (Textval.trim().length > 0) {
+      if (Textval.trim().length > 1) {
         $("#dataText").text(Textval);
+        var dta = $("#dataText").parents("svg").attr("id");
+        var fb1 = {
+          "kv": {
+            "updatedField": "id,text",
+            "id": dta,
+            "text": Textval,
+          
+          }
+        }
+       
+        LaneUpdateApi(fb1);
       }
 
 
@@ -2122,8 +2171,18 @@
 
       $("#dataText").parents("text").css("fill", colorline)
       $("#dataText").parents("svg").find("use").css("stroke", colorline)
-      $("#dataText").parents("svg").find("use").css("fill", colorline)
-
+      $("#dataText").parents("svg").find("use").css("fill", colorline);
+      var dta = $("#dataText").parents("svg").attr("id");
+      var fb1 = {
+        "kv": {
+          "updatedField": "id,color",
+          "id": dta,
+          "color": colorline,
+        
+        }
+      }
+     
+      LaneUpdateApi(fb1);
     })
 
 
