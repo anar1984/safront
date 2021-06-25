@@ -147,6 +147,7 @@ background-color: white;
 
 
 }
+
 .figureBgSelectOption{
   padding-left: 4px;
   display: flex;
@@ -594,17 +595,19 @@ position: relative;
 }
 .btnLineHover{
   position: relative;
-  height: 32px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
+  /* font-size: 18px; */
   display: inline-block;
   background-color: #ffff !important;
-  padding-top: 7px;
-  padding-left: 8px !important;
+  /* padding-top: 7px; */
+  /* padding-left: 8px !important; */
   border-radius: 3px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+  box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px, 
  
   
 }
+
 
 
 .Graphtable > svg{
@@ -619,7 +622,59 @@ pointer-events: none !important;
 } 
 
  
-  
+.switch-holder {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+  width: 150px;
+}
+
+/* Visually hide the checkbox input from the DOM, we only need it semantically */
+.check-switch {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+/* color background */
+.switch-cst {
+  --switch-container-width: 50px;
+  --switch-size: calc(var(--switch-container-width) / 2);
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: var(--switch-size);
+  flex-basis: var(--switch-container-width);
+  border-radius: var(--switch-size);
+  background-color: #999;
+	transition: background-color 0.25s ease-in-out;
+}
+/* circle inside the switch */
+.switch-cst::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  height: calc(var(--switch-size) - 4px);
+  width: calc(var(--switch-size) - 4px);
+  border-radius: 9999px;
+  background-color: white;
+	transition: transform 0.375s ease-in-out;
+}
+/* style for ON state */
+.check-switch:checked + .switch-cst {
+  background-color: #4fd1c5;
+}
+.check-switch:checked + .switch-cst::before {
+  border-color: #4fd1c5;
+  transform: translateX(
+    calc(var(--switch-container-width) - var(--switch-size))
+  );
+}
                             /*  Graph TAblee Figure Csss Section Start */
 
      
@@ -736,3 +791,12 @@ pointer-events: none !important;
 .lines-block-act .geItem.gactive{
 border: 3px solid #cdcfd0;
 }         
+
+.StickMnbody{
+  width: 100%;
+ 
+  height: 20px;
+  overflow: hidden;
+  top: unset;
+
+}

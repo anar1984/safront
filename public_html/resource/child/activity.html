@@ -1,6 +1,8 @@
     <style>
          .trigger-leaderline-id .leader-line {
-            z-index: -1 !important;
+          
+          
+            z-index: -1 !important; 
         } 
         .porjectNameProto,.tool-panel-col,.toolbar,.gooeyMenu{
             display: none !important;
@@ -27,12 +29,22 @@
         .btnZoom i {
         line-height: 0;
         }
+        .leader-line{
+           
+            pointer-events: none !important;
+
+        } 
+        .leader-line textPath{
+           
+            pointer-events: all !important;
+            position: absolute;
+            z-index: 500000;
+        } 
     </style>
 
     <div class="activity-conatiner trigger-leaderline-id" id="gui_component_main_view" style="height: 140vh;zoom:70%;">
-        <style>
-            
-        </style>
+     
+
         <div class="container" style="max-width: 95%;">
 
             <div class="LaneAdder ">
@@ -72,6 +84,7 @@
           
 
 
+                
                 <div class=" float-right lines-block-act">
                    <span>choose line type</span>
                     <button class="geItem gactive" data-tylp="line-svg-1"><svg style="width: 32px; height: 30px;">
@@ -171,6 +184,26 @@
                         </div>
                     <!-- <input type="color" name="" id="color-picker-act"> -->
                 </div>
+                <div class=" float-right lines-block-act">
+                   
+                    <div style="display: flex;">
+                        <label class="switch-holder">
+                            <span>editable line</span>
+                            <input
+                                class="check-switch"
+                                type="checkbox"
+                                :checked="checked"
+                                @change="toggleSwitch"
+                                id="lineEditableInput"
+                            />
+                            <span class="switch-cst"></span>
+                            
+                        </label>
+                    </div>
+                    
+      
+ 
+                 </div>
              
             </div>
 
