@@ -3976,7 +3976,12 @@ function addStoryCardInputsAsAction() {
     })
 
     loadCurrentBacklogProdDetailsSyncrone();
-    refreshLiveProtytypeView();
+    if (global_var.current_modal === 'loadLivePrototype') {
+        refreshLiveProtytypeView();
+    } else if (global_var.current_modal === 'loadStoryCard') {
+        reloadBacklogListOnStoryCard();
+    }
+
 //            callStoryCardAfterIPOAction();
     $('#addRelatedSourceModal').modal('hide');
 
@@ -4129,7 +4134,14 @@ function addFieldsOfTableAsInputAction() {
         }
     })
     loadCurrentBacklogProdDetailsSyncrone();
-    refreshLiveProtytypeView();
+
+
+    if (global_var.current_modal === 'loadLivePrototype') {
+        refreshLiveProtytypeView();
+    } else if (global_var.current_modal === 'loadStoryCard') {
+        reloadBacklogListOnStoryCard();
+    }
+
 //  callStoryCardAfterIPOAction();
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
@@ -6206,7 +6218,7 @@ $(document).on('focusout', '#jsCodeModal_fnbody', function () {
 })
 
 
-//let FullSc = true;
+let FullSc = true;
 $(document).on('click', '.editor_full_screenBt', function () {
     var val3 = window.editor1.getValue();
 
@@ -8478,14 +8490,13 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-
-
-
-
             $('#selectFromDbModal').modal('hide');
-
-
-
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
 
         }
     });
@@ -8579,7 +8590,13 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
         crossDomain: true,
         async: false,
         success: function (res) {
-
+            $('#addRelatedSourceModal').modal('hide');
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
 
         }
     });
@@ -10283,6 +10300,7 @@ function loadStoryCardInfo4StoryCard(el) {
     var id = $(el).val();
 
     global_var.current_backlog_id = id;
+    Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
     fillBacklogHistory4View(id, "0");
     new UserStory().toggleSubmenuStoryCard();
     loadUsersAsOwner();
@@ -11260,7 +11278,6 @@ function addUserStoryNewPopup() {
     if (!usName)
         return;
 
-
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
@@ -11284,6 +11301,10 @@ function addUserStoryNewPopup() {
             $('.projectList_liveprototype').change();
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModal').modal('hide');
+
+            if (global_var.current_modal === 'loadStoryCard') {
+                $('.projectList_liveprototype_storycard').change();
+            }
         }
     });
 }
@@ -13534,7 +13555,17 @@ function addUserStoryToTask_loadTaskTypeDetails(res) {
 
 
 function editUserStoryName(el) {
-    $('#generalview-us-header-name').dblclick();
+//    $('#generalview-us-header-name').dblclick();
+    $('#updateUserStoryPopupModal').modal('show');
+    $('#updateUserStoryPopupModal-userstoryname').val(SACore.GetCurrentBacklogname())
+}
+
+
+function updateUserStoryPopup(){
+    
+    updateBacklogName();
+     $('#updateUserStoryPopupModal').modal('hide');
+    
 }
 
 function addProcessDescToTask(el, procesDescId) {

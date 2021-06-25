@@ -8032,7 +8032,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetailsSyncrone();
                 //  refreshLiveProtytypeView();
                 //if current modal is live prototype
-                callStoryCardAfterIPOAction();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
 //                $('#storyCardListSelectBox').change();
 
 
@@ -8730,7 +8734,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
-
+                loadCurrentBacklogProdDetails();
                 //refresh GUI component 
 
                 that.genGUIDesign();
@@ -8814,7 +8818,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: true,
             success: function (res) {
                 SAInput.updateInputByRes(res);
-
+                loadCurrentBacklogProdDetails();
                 //refresh GUI component 
 //                that.genGUIDesign();
             },
@@ -8988,6 +8992,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: true,
             success: function (res) {
                 SAInput.updateInputByRes(res);
+                loadCurrentBacklogProdDetails();
                 that.genGUIDesign();
             },
             error: function (res) {
@@ -9483,6 +9488,17 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             },
             success: function (res) {
                 SACore.updateBacklogByRes(res);
+                
+                
+                loadCurrentBacklogProdDetailsSyncrone();
+                //  refreshLiveProtytypeView();
+                //if current modal is live prototype
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
+//                $('#storyCardListSelectBox').change();
 
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
@@ -11453,6 +11469,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 SAInput.deleteInput(id);
                 SACore.updateBacklogByRes(res);
+
+                loadCurrentBacklogProdDetails();
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
@@ -19003,11 +19021,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     setIPOGUICanvas: function () {
         var paramWithZoom = "zoom:" + global_var.actual_zoom + "%;" + global_var.actual_backlog_gui_css;
         paramWithZoom += (global_var.ipo_gui_view === 'single') ? "display:block1" : "display:none";
-        $('#SUS_IPO_GUI_Design1').css('transform', 'scale('+global_var.actual_zoom/100+')');
-        $('.Graphtable').css('transform', 'scale('+global_var.actual_zoom/100+')');
-       
-        var oldTop =$('#gui_component_main_view').scrollTop();
-        var oldLeft =$('#gui_component_main_view').scrollLeft();
+        $('#SUS_IPO_GUI_Design1').css('transform', 'scale(' + global_var.actual_zoom / 100 + ')');
+        $('.Graphtable').css('transform', 'scale(' + global_var.actual_zoom / 100 + ')');
+
+        var oldTop = $('#gui_component_main_view').scrollTop();
+        var oldLeft = $('#gui_component_main_view').scrollLeft();
         $('#gui_component_main_view').scrollTop(0);
         $('#gui_component_main_view').scrollLeft(0);
         //  $('#SUS_IPO_GUI_Design1').css('height',fkt+"vh");
@@ -20304,6 +20322,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
+
+
+
+                if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
             }
         });
     },

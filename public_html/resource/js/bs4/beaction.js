@@ -589,7 +589,7 @@ var be = {
             }
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, data, innerData, element, asyncData);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, data, element, asyncData);
             var t = $.extend(inputKV, extData);
             inputKV = t;
 
@@ -861,6 +861,7 @@ var be = {
 
             //call External Api
             var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV, element, asyncData);
+            
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -883,7 +884,7 @@ var be = {
             outputKV = $.extend(outputKV, data);
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV,element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -970,7 +971,7 @@ var be = {
 
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, data);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, data,element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -1097,7 +1098,7 @@ var be = {
 
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, data);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, data,element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 

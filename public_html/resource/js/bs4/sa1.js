@@ -213,7 +213,7 @@ function getUnloadedBacklogListOnInit() {
 //    getBacklogProductionStorageInfo
     var idx = 100;
     var toBeDownloadedBacklog = [];
-   var overallSentBacklogs = [];
+    var overallSentBacklogs = [];
     var availableBacklogList = Object.keys(backlog_last_modification);
     for (var k in availableBacklogList) {
         var ky = availableBacklogList[k];
@@ -236,10 +236,10 @@ function getUnloadedBacklogListOnInit() {
                     toBeDownloadedBacklog.push(ky);
                 }
             }
-            
-            if (toBeDownloadedBacklog.length>=idx){
-                 loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
-                 toBeDownloadedBacklog = [];
+
+            if (toBeDownloadedBacklog.length >= idx) {
+                loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
+                toBeDownloadedBacklog = [];
             }
         }
     }
@@ -291,4 +291,41 @@ function loadMissedBacklogsListFromStorage(bid) {
 }
 
 
- 
+function  reloadBacklogListOnStoryCard() {
+    $('.projectList_liveprototype_storycard').change();
+}
+
+
+function updateBacklogName() {
+
+    var val = $('#updateUserStoryPopupModal-userstoryname').val();
+    if (!val) {
+        return;
+    }
+
+
+    var json = initJSON();
+    json.kv.id = global_var.current_backlog_id;
+    json.kv.backlogName = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateBacklog",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
+        },
+        error: function () {
+//                Toaster.showError("error");
+        }
+    });
+}

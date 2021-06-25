@@ -4045,7 +4045,7 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_isactive').val(res.kv.isActive);
             $('#jsCodeModal_fntype').val(res.kv.fnType);
             $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
-            
+
             jsCodeModal_checkbox_action();
 
         }
@@ -4502,6 +4502,7 @@ function addGuiClassToInput(el) {
         success: function (res) {
             getInputCompClassList();
             getInputClassRelByProjectManual();
+            loadCurrentBacklogProdDetails();
             new UserStory().genGUIDesign();
         }
     });
@@ -4655,6 +4656,7 @@ function removeInputClassRel(el, relId) {
             getInputCompClassList();
             getInputContaierClassList();
             getInputClassRelByProjectManual();
+            loadCurrentBacklogProdDetails();
             new UserStory().genGUIDesign();
         }
     });
@@ -4934,11 +4936,13 @@ function addInputAttributes(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            loadCurrentBacklogProdDetails();
             $('#gui_prop_in_attr_name').val('');
             $('#gui_prop_in_attr_value').val('');
             getInputAttributeList(global_var.current_us_input_id);
             getInputAttributeByProjectManual();
             new UserStory().genGUIDesign();
+
         }
     });
 }
@@ -5035,6 +5039,7 @@ function removeInputAttribute(el, inputAttrId) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            loadCurrentBacklogProdDetails();
             getInputAttributeList(global_var.current_us_input_id);
             getInputAttributeList4Container(global_var.current_us_input_id);
             getInputAttributeByProjectManual();
@@ -8778,16 +8783,22 @@ function addUserStoryNewPopup4SAD() {
     addUserStoryNewPopup();
 }
 
-function addUserStoryNewPopup() {
+function addUserStoryNewPopup(el) {
     var usName = $('#addUserStoryPopupModal-userstoryname').val();
     if (!usName)
         return;
-    $('#main-user-story-name-4-insert').val(usName);
-    $('#main-user-story-name-4-insert').change();
+//    $('#main-user-story-name-4-insert').val(usName);
+//    $('#main-user-story-name-4-insert').change();
+
+    new UserStory().insertNewBacklogShort(el);
+    
     $('#addUserStoryPopupModal-userstoryname').val('');
     $('#addUserStoryPopupModal').modal('hide');
     if (global_var.current_modal === 'loadSourceActivity') {
         callStoryCard(global_var.current_backlog_id);
+    } else if (global_var.current_modal === 'loadStoryCard') {
+
+        $('.projectList_liveprototype_storycard').change()
     }
 }
 
