@@ -160,7 +160,7 @@ var be = {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .append($('<span class="sa-desc-in-data-body">')
-                            .html("<pre>" + JSON.stringify(data) + "</pre>"));
+                            .html(JSON.stringify(data,null,"  ")));
         } catch (err) {
         }
     },
@@ -168,7 +168,8 @@ var be = {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .append($('<span class="sa-desc-out-data-body">')
-                            .html("<pre>" + JSON.stringify(data) + "</pre>"));
+                            .html(JSON.stringify(data,null,"  ")));
+                            
         } catch (err) {
         }
     },
