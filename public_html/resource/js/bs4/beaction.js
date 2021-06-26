@@ -139,7 +139,7 @@ var be = {
 
     ShowInData4Debug: function (apiId, data) {
         try {
-            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
+            $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
                     //append($('<>').text(JSON.stringify(data)));
                     .append($('<span class="sa-api-cw1-body">')
                             .text(JSON.stringify(data)));
@@ -148,7 +148,7 @@ var be = {
     },
     ShowOutData4Debug: function (apiId, data) {
         try {
-            $('#core_api_' + apiId).closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
+            $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
                     //  .attr('data-content',"'"+JSON.stringify(data)+"'");
                     .append($('<span class="sa-api-cw3-body">')
                             .text(JSON.stringify(data)));
@@ -158,17 +158,17 @@ var be = {
 
     ShowDescriptionInData4Debug: function (apiId, descId, data) {
         try {
-            $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw1-block')
+            $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .append($('<span class="sa-desc-in-data-body">')
-                            .html("<pre>"+JSON.stringify(data)+"</pre>"));
+                            .html("<pre>" + JSON.stringify(data) + "</pre>"));
         } catch (err) {
         }
     },
     ShowDescriptionOutData4Debug: function (apiId, descId, data) {
         try {
-            $('#core_api_desc_' + descId).closest('div.sa-desc-item').find('.sa-api-cw3-block')
+            $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .append($('<span class="sa-desc-out-data-body">')
-                            .html("<pre>"+JSON.stringify(data)+"</pre>"));
+                            .html("<pre>" + JSON.stringify(data) + "</pre>"));
         } catch (err) {
         }
     },
@@ -861,7 +861,7 @@ var be = {
 
             //call External Api
             var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV, element, asyncData);
-            
+
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -884,7 +884,7 @@ var be = {
             outputKV = $.extend(outputKV, data);
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV,element, asyncData);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, outputKV, element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -971,7 +971,7 @@ var be = {
 
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, data,element, asyncData);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, data, element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -1098,7 +1098,7 @@ var be = {
 
 
             //call External Api
-            var extData = be.ExecAPI.CallExternalApiServices(apiId, data,element, asyncData);
+            var extData = be.ExecAPI.CallExternalApiServices(apiId, data, element, asyncData);
             var t = $.extend(outputKV, extData);
             outputKV = t;
 
@@ -1680,6 +1680,7 @@ var SAFN = {
         'show': 'Show',
         'hide': 'Hide',
         'click': 'Click',
+        'change': 'Change',
         'showmessage': 'ShowMessage',
         'showerror': 'ShowError',
         'settable': 'SetTable',
@@ -1981,16 +1982,16 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
             value = SAFN.GetArgumentValue(value);
             className = className.trim();
-            $('.'+className).val(value);
-             
+            $('.' + className).val(value);
+
             return {};
         },
         SetText: function (className, value) {
             className = SAFN.GetArgumentPureValue(className);
             value = SAFN.GetArgumentValue(value);
             className = className.trim();
-            $('.'+className).text(value);
-             
+            $('.' + className).text(value);
+
             return {};
         },
         Get: function (key, value) {
@@ -2053,6 +2054,10 @@ var SAFN = {
         Click: function (className) {
             className = SAFN.GetArgumentPureValue(className);
             $('.' + className).click();
+        },
+        Change: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
+            $('.' + className).change();
         },
         ShowMessage: function (msg) {
             msg = SAFN.GetArgumentPureValue(msg);

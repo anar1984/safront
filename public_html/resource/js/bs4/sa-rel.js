@@ -727,7 +727,9 @@ SADebug = {
                     if (SAFN.IsCommand(o.description)) {
                         divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                         divZad.append($('<div class="sa-desc-item-body">')
-                                .attr("id", "core_api_desc_" + o.id)
+
+                                .attr("pid", "core_api_desc_" + o.id)
+                                .attr("id", "core_api_desc_" + apiId + "_" + o.id)
                                 .append(o.description)
                                 .append(" (command)")
                                 .append("<br>"));
@@ -741,6 +743,7 @@ SADebug = {
                             if (fnType === 'core') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
+                                        .attr("pid", "core_api_desc_" + o.id)
                                         .attr("id", "core_api_desc_" + apiId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (JavaScript)")
@@ -751,6 +754,7 @@ SADebug = {
                             } else if (fnType === 'java') {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
+                                        .attr("pid", "core_api_desc_" + o.id)
                                         .attr("id", "core_api_desc_" + apiId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (Java)")
@@ -762,6 +766,7 @@ SADebug = {
                         if (o.fkRelatedApiId) {
                             divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                             divZad.append($('<div class="sa-desc-item-body">')
+                                    .attr("pid", "core_api_desc_" + o.id)
                                     .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                     .append(o.description)
                                     .append(" (API)")
