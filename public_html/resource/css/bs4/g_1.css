@@ -5565,6 +5565,13 @@ span.ruby-c-content {
     display: none;
    
 }
+.data-block-popUp{
+    text-align: left;
+}
+.data-block-popUp span{
+   white-space: pre;
+   font-family: monospace;
+}
 .gui-design-is-apis .description-data-block-in{
     width: 20px;
     font-size: 14px;

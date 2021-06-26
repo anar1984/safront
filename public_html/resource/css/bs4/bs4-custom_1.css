@@ -2679,8 +2679,9 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .active-inputs-selected{
-    border: 1px dashed #17a2b8;
+    border: 1px dashed rgba(108, 108, 255, 0.479);
     border-radius: 5px;
+    background: rgba(0, 235, 235, 0.5);
 }
 
 /*#smb-general-main-info{
@@ -3196,7 +3197,7 @@ img.sc-IbsAh.kqHqhS {
 
 .init-on-loader{
     border: 2px dashed read;
-    background:yellow;
+    background: #ffc107c5;
 }
 
 
