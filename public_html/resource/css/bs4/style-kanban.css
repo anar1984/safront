@@ -32,7 +32,7 @@
 .task-panel-header{
  display: flex;
  z-index: 2;
-
+   padding: 0px;
 }
 .task-panel-body{
     display: flex;

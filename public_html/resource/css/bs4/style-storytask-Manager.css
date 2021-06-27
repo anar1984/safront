@@ -8,11 +8,9 @@
 }
 /*  colum  */
 .task-column{
-    width: 310px;
+    
        border-radius: 6px;
-       
-       padding: 5px;
-       margin-left: 15px;
+
        background-color:rgb(244, 245, 247);
        
 }
@@ -32,6 +30,7 @@
 .task-panel-header{
  display: flex;
  z-index: 2;
+  padding: 0px;
 
 }
 .task-panel-body{
@@ -53,6 +52,7 @@
     padding: 3px 5px 5px;
     
     display: flex;
+    
      
 }
 
