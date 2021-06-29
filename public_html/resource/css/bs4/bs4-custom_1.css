@@ -378,7 +378,7 @@ body{
 }
 
 .us-item-status-rejected{
-    background-color: #B22222; 
+    background-color: #e8bdc8; 
     font-size:10px;
     display: inline-block;
     padding: 1px 10px 1px 10px;
@@ -396,7 +396,7 @@ body{
 }
 
 .us-item-status-uat{
-    background-color: #097F55; 
+    background-color: #9defd3; 
     font-size:12px;
     font-weight: bold;
     display: inline-block;
