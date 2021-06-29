@@ -145,10 +145,10 @@ $(document).ready(function () {
     $(document).on("click", ".card-UserStory-edit-exit", function (e) {
         $(document).find(".StoryCardPanel").remove();
         $(document).find(".TaskStoryCardPanel").css("display", "none");
-        
-        if (global_var.current_modal==='loadLivePrototype'){
+
+        if (global_var.current_modal === 'loadLivePrototype') {
             global_var.current_backlog_id = $('#storyCardListSelectBox').val();
-            Utility.addParamToUrl('current_backlog_id',global_var.current_backlog_id);
+            Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         }
 //        new UserStory().setUSLists4KanbanView();
 
@@ -171,32 +171,33 @@ $(document).ready(function () {
     }
 // category 
     $(document).on("click", ".assigne", function () {
-        global_var.task_mgmt_group_by = 'assigne';
-        Utility.addParamToUrl('task_mgmt_group_by', global_var.task_mgmt_group_by);
 
-
+        global_var.task_mgmt_group_by = "assignee";
         $(".categorybtn").empty()
-        $(".categorybtn").append('<span class="category" >Assigne</span>');
+        $(".categorybtn").append('<span class="category" >Assignee</span>')
         $(".column-body-none").css("display", "none")
-        $(".groupByUserstory").css("display", "block")
+        $(".groupByUserstory").css("display", "block");
+        genTaskKanbanView();
     })
     $(document).on("click", ".none", function () {
         global_var.task_mgmt_group_by = 'none';
         Utility.addParamToUrl('task_mgmt_group_by', global_var.task_mgmt_group_by);
 
         $(".categorybtn").empty()
+        global_var.task_mgmt_group_by = "none";
         $(".categorybtn").append('<span class="category" >None</span>')
         $(".column-body-none").css("display", "")
         $(".groupByUserstory").css("display", "none")
+
+        genTaskKanbanView();
     })
     $(document).on("click", ".userStory", function () {
-        global_var.task_mgmt_group_by = 'userStory';
-        Utility.addParamToUrl('task_mgmt_group_by', global_var.task_mgmt_group_by);
-
+        global_var.task_mgmt_group_by = "userStoryTab";
         $(".categorybtn").empty()
         $(".categorybtn").append('<span class="category" >User Story</span>')
         $(".column-body-none").css("display", "none")
-        $(".groupByUserstory").css("display", "block")
+        $(".groupByUserstory").css("display", "block");
+        genTaskKanbanView();
     })
 
 
@@ -256,11 +257,11 @@ function callStoryCard(id, elId, backlogName) {
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
-         $("#" + divId).append(storyCard);
+        $("#" + divId).append(storyCard);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
-       global_var.current_backlog_id = id;
-        
-        fillBacklogHistory4View(id, "0"); 
+        global_var.current_backlog_id = id;
+
+        fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
 //        loadStoryCardBodyInfo();
 

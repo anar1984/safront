@@ -9463,11 +9463,7 @@ function loadTaskInfoToContainer(taskId, projectId) {
         return;
     }
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json =initJSON();
 
     json.kv.id = taskId;
     json.kv.fkProjectId = projectId;
@@ -10120,6 +10116,17 @@ function loadStoryCardByProject4StoryCard(e) {
 }
 
 
+function loadStoryCardByProject4TaskMgmt(e) {
+
+    global_var.current_project_id = $(e).val();
+    getUnloadedBacklogListOnInit();
+    Utility.addParamToUrl('current_project_id', global_var.current_project_id);
+
+    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+     genTaskKanbanViewTrigger();
+//    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
+}
+
 
 function  loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
@@ -10766,10 +10773,12 @@ $(document).on('click', '.loadTaskManagement', function (evt) {
     $.get("resource/child/" + f + ".html", function (html_string)
     {
         $('#mainBodyDivForAll').html(html_string);
-//        new UserStory().clearAll();
+        loadProjectList2SelectboxByClass('projectList_liveprototype_taskmgmt');
+        
+ 
         genTaskKanbanViewTrigger();
-        hideToggleMain();
-        commmonOnloadAction(this);
+//        hideToggleMain();
+//        commmonOnloadAction(this);
         new Sprint().load4Task();
     });
 });

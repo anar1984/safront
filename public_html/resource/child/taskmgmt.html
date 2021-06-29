@@ -1,8 +1,9 @@
  
 
 
-<div class="row text-center" style="padding:4px;">
-    <div class="col-5 text-left">
+<div class="row text-center" style="padding:4px 10px 30px 10px;">
+    <div class="col-1 text-left"></div>
+    <div class="col-3 text-left">
         <br>
         <div class="dropdown task-sprint-show">
             <!-- btn btn-primary   sildim -->      
@@ -31,7 +32,21 @@
             </div>
         </div>
     </div>
-    <div class="col-5 text-right">
+     <div class="col-3">
+        <span>Project</span>
+        <select onchange="loadStoryCardByProject4TaskMgmt(this)" class="form-control projectList_liveprototype_taskmgmt" 
+                data-live-search="true" name="" id="">
+        </select>
+    </div>
+    <div class="col-3">
+        <span>Search</span>
+        <input onchange1="loadStoryCardByProject4TaskMgmt(this)" class="form-control projectList_liveprototype_taskmgmt_search" 
+              
+                data-live-search="true" name="" id="projectList_liveprototype_taskmgmt_search">
+        
+    </div>
+    
+    <div class="col-2 text-right">
         <br>
         <h4>Task Management</h4>
     </div>
