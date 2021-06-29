@@ -9463,7 +9463,7 @@ function loadTaskInfoToContainer(taskId, projectId) {
         return;
     }
 
-    var json =initJSON();
+    var json = initJSON();
 
     json.kv.id = taskId;
     json.kv.fkProjectId = projectId;
@@ -10123,7 +10123,8 @@ function loadStoryCardByProject4TaskMgmt(e) {
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
     getBacklogLastModificationDateAndTime(global_var.current_project_id);
-     genTaskKanbanViewTrigger();
+    getTaskList4TaskMgmt();
+
 //    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
@@ -10774,8 +10775,8 @@ $(document).on('click', '.loadTaskManagement', function (evt) {
     {
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_taskmgmt');
-        
- 
+
+
         genTaskKanbanViewTrigger();
 //        hideToggleMain();
 //        commmonOnloadAction(this);
@@ -12906,13 +12907,45 @@ function insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus, projec
 }
 
 
-function getTaskList() {
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
+function getTaskList4TaskMgmt( ) {
+    var taskName = $('#projectList_liveprototype_taskmgmt_search').val();
+    var json = initJSON();
+
+    if (taskName) {
+        json.kv.taskName = '%%'+taskName+'%%';
     }
+
     json.kv['fkProjectId'] = global_var.current_project_id;
+    clearTaskManagementKanban();
+
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SATask.LoadTask(res);
+            genTaskKanbanViewTrigger();
+        }
+    });
+}
+
+function getTaskList(taskName) {
+    var json = initJSON();
+
+    if (taskName) {
+        json.kv.taskName = taskName;
+    }
+
+    json.kv['fkProjectId'] = global_var.current_project_id;
+
+
+
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13570,11 +13603,11 @@ function editUserStoryName(el) {
 }
 
 
-function updateUserStoryPopup(){
-    
+function updateUserStoryPopup() {
+
     updateBacklogName();
-     $('#updateUserStoryPopupModal').modal('hide');
-    
+    $('#updateUserStoryPopupModal').modal('hide');
+
 }
 
 function addProcessDescToTask(el, procesDescId) {
@@ -13751,13 +13784,20 @@ function isTaskInSprint(taskId) {
     return res;
 }
 
-function genTaskKanbanView4None() {
+function clearTaskManagementKanban() {
     $('#kanban_view_new_count').html(0);
     $('#kanban_view_ongoing_count').html(0);
     $('#kanban_view_closed_count').html(0);
     $('.task-kanban-view-new').html('');
     $('.task-kanban-view-ongoing').html('');
     $('.task-kanban-view-closed').html('');
+    $('#kanban_view_new_count_4_task').html(0);
+    $('#kanban_view_ongoing_count_4_task').html(0);
+    $('#kanban_view_closed_count_4_task').html(0);
+}
+
+function genTaskKanbanView4None() {
+    clearTaskManagementKanban();
     var bNoList = SATask.GetOrderNoKeys();
     var addedUS = [];
     try {
