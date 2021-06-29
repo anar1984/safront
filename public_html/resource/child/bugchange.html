@@ -246,7 +246,7 @@
             
         </div>
 
-        <div class=" col-12 d-flex justify-content-end paginationStyle">
+        <div class=" col-12 d-flex justify-content-center paginationStyle">
             <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination_block">
                     <li class="page-item">
@@ -276,7 +276,7 @@
 
 </div>
 
-<div  type="button" class="bigCheck" data-toggle="modal" data-target="#issue-managment-add-task" >
+<div  type="button" class="bigCheck" data-toggle="modal" id="addNewTaskButton" data-target="#issue-managment-add-task" >
 
     <label for="sb"></label>
 </div>
@@ -286,7 +286,7 @@
 
 
   <div class="modal fade" id="issue-managment-add-task" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" style="max-width: 50%;" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
@@ -295,13 +295,52 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class='col-12'>
-                <input type="text" class="form-control"
-                    name="testCaseDescription2" onchange="addNewTask4Bug(this)" placeholder="Task Description">
-            </div>
+            
+            <div class='col-12 row'>
+                <div class="col-lg-3">
+                    <select class="form-control  " data-live-search="true" data-actions-box="true"
+                        style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
+                         title="Project"></select>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-control " data-actions-box="true"
+                        onchange='' multiple data-live-search="true" id='bug_filter_assignee_id_add'
+                         title="Assignee"></select>
+                </div>
+            
+                <div class="col-lg-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select " data-actions-box="true"
+                        onchange='' multiple data-live-search="true" id='bug_filter_backlog_id_add'
+                        title="Story Card">
+            
+                    </select>
+                </div>
+                <div class="col-lg-3 " >
+
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                        data-type="priority" onchange="" id='bug_filter_priority' title="Priority">
+                        <option value=''>None</option>
+                        <option value='1'>1- Lowest</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9 - Highest</option>
+            
+                    </select>
+                </div>
+                <div class="col-lg-12" style="padding-top: 20px;">
+                    <input type="text" class="form-control"
+                    name="testCaseDescription2" id="taskNameInputNew" placeholder="Task Description">
+         
+                </div>
+                  </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Add</button>
+          <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
         </div>
       </div>
     </div>

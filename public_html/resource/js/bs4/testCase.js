@@ -238,17 +238,17 @@ function addNewTask4Bug(el) {
         return;
     }
     var taskName = $(el).val().trim();
-    var projectList = $('#bug_filter_project_id').val();
+    var projectList = $('#bug_filter_project_id_add').val();
     if (projectList.length === 0) {
         Toaster.showError("Please select project(s).")
         return;
     }
 
-    var backlogList = ($('#bug_filter_backlog_id').val().length > 0)
-            ? $('#bug_filter_backlog_id').val()
+    var backlogList = ($('#bug_filter_backlog_id_add').val().length > 0)
+            ? $('#bug_filter_backlog_id_add').val()
             : ['-1'];
-    var assigneeList = ($('#bug_filter_assignee_id').val().length > 0)
-            ? $('#bug_filter_assignee_id').val()
+    var assigneeList = ($('#bug_filter_assignee_id_add').val().length > 0)
+            ? $('#bug_filter_assignee_id_add').val()
             : ['-1'];
     var sprintList = "";
     $('.bug-task-filter-checkbox-sprint').each(function () {
@@ -359,6 +359,7 @@ function setBugFilterAssignees() {
         success: function (res) {
             var select = $('#bug_filter_assignee_id');
             var select2 = $('#bug_filter_created_by');
+            var select3 = $('#bug_filter_assignee_id_add');
             select.html('');
             select2.html('');
             var obj = res.tbl[0].r;
@@ -366,8 +367,10 @@ function setBugFilterAssignees() {
                 var o = obj[id];
                 var op = $("<option>").val(o.fkUserId).text(o.userName);
                 var op2 = $("<option>").val(o.fkUserId).text(o.userName);
+                var op3 = $("<option>").val(o.fkUserId).text(o.userName);
                 select.append(op);
                 select2.append(op2);
+                select3.append(op3);
             }
 
             if (global_var.current_user_type === 'S') {
@@ -376,6 +379,7 @@ function setBugFilterAssignees() {
 
             select.selectpicker('refresh');
             select2.selectpicker('refresh');
+            select3.selectpicker('refresh');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -413,6 +417,21 @@ function setBugFilterProject() {
                 .val(pid)
                 .text(SACore.Project[pid]))
     }
+}
+function setBugFilterProjectAdd() {
+    var select = $('#bug_filter_project_id_add');
+    var keys = Object.keys(SACore.Project);
+    select.append($("<option>")
+            .val("")
+            .text("All Projects"))
+    for (var id in keys) {
+        var pid = keys[id];
+        select.append($("<option>")
+                .val(pid)
+                .text(SACore.Project[pid]))
+    }
+
+    $('#bug_filter_project_id_add').selectpicker('refresh');
 }
 
 
@@ -479,6 +498,9 @@ function setBugFilterSprintValues() {
 
 $(document).on("click", '.openBugStatus', function (e) {
     openTaskDialog();
+})
+$(document).on("click", '#addNewTaskButton', function (e) {
+    setBugFilterProjectAdd()
 })
 
 function openTaskDialog() {
@@ -856,8 +878,8 @@ function getBugListDetails(res) {
                 ? fileUrl(createByImage)
                 : fileUrl(new User().getDefaultUserprofileName());
 
-        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)" style="cursor:pointer;color: rgb(0, 0, 255);">' + replaceTags(o.backlogName) + '</a>';
-        var taskName = '<a class="issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" style="cursor:pointer;color: rgb(0, 0, 255);">' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+        var taskName = '<a class="issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
         var task_id = getTaskCode(o.id);
 
         var t = $('<tr>')
@@ -886,10 +908,24 @@ function getBugListDetails(res) {
                         .css('white-space', 'nowrap')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                                .attr('src', img) : "")
+                        .append($("<div>")
+                                   .addClass("dropdown")
+                                   .append($("<div>")
+                                              .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                              .attr("data-toggle","dropdown")
+                                              .attr("aria-haspopup","true")
+                                              .attr("aria-expanded","false")
+                                              .attr("id","bug-listassigne-dropdown")
+                                              .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
+                                                                  .attr('src', img) : "")
+                                              .append(o.userName))
+
+                                    .append($("<div>")
+                                             .addClass("dropdown-menu")
+                                             .attr("aria-labelledby","bug-listassigne-dropdown")
+                                            .append("sadasdasd")))
                         .append(" ")
-                        .append(o.userName)
+                        
                         .append($('<i class="fa fa-filter">')
                                 .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                                 .css("display", "none")
@@ -1220,6 +1256,43 @@ $(document).on("change", '#bug_filter_project_id', function (e) {
 //    $('#bug_filter_assignee_id').selectpicker();
 
 })
+$(document).on("change", '#bug_filter_project_id_add', function (e) {
+    var id = $(this).val();
+    $('#bug_filter_project_id').val(id);
+    $('#bug_filter_project_id').change();
+    loadStoryCardByProjectAdd(id)
+
+
+})
+$(document).on("click", '#addIssueButtonId', function (e) {
+     var elem = $("#taskNameInputNew")
+    addNewTask4Bug(elem)
+    $("#issue-managment-add-task").modal('hide');
+
+
+})
+/* $(document).on("change", '#bug_filter_assignee_id_add', function (e) {
+    var id = $(this).val();
+    $('#bug_filter_assignee_id').val(id)
+
+
+})
+$(document).on("change", '#bug_filter_backlog_id_add', function (e) {
+    var id = $(this).val();
+    $('#bug_filter_backlog_id').val(id)
+
+
+})*/
+$(document).on("click", '#bug-listassigne-dropdown', function (e) {
+   
+    var id =  $(this).parents('tr').attr("projectid")
+    var el = $(this).parents(".dropdown").find(".dropdown-menu ");
+    el.empty()
+    loadAssigneesByProjectDrop(id,el);
+
+
+
+}) 
 
 function toggleColumns() {
     $('.bug-list-column').hide();
@@ -1238,6 +1311,38 @@ function getProjectListIn() {
     return st;
 }
 
+function loadAssigneesByProjectDrop(projectId,el) {
+
+
+    var json = initJSON();
+    json.kv.fkProjectId = projectId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmLoadAssigneeByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+          
+          for (var i in obj) {
+            var o = obj[i];
+            var opt = $('<a>').addClass("dropdown-item").attr("assigne-id",o.fkUserId).text(o.userName);
+          $(el).append(opt);
+          console.log(opt)
+            
+        
+
+    }
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function loadAssigneesByProject(projectId) {
 
 
@@ -1256,6 +1361,7 @@ function loadAssigneesByProject(projectId) {
             loadAssigneesByProjectDetails(res);
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
+            $('#bug_filter_assignee_id_add').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
         },
         error: function () {
@@ -1267,6 +1373,7 @@ function loadAssigneesByProject(projectId) {
 
 function loadAssigneesByProjectDetails(res) {
     $('#bug_filter_assignee_id').html('');
+    $('#bug_filter_assignee_id_add').html('');
     $('#bug_filter_created_by').html('');
     $('#testcase_createdbyfilter').html('');
 
@@ -1276,7 +1383,9 @@ function loadAssigneesByProjectDetails(res) {
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
         var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
         var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
+        var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
         $('#bug_filter_assignee_id').append(opt);
+        $('#bug_filter_assignee_id_add').append(opt4);
         $('#bug_filter_created_by').append(opt2);
         $('#testcase_createdbyfilter').append(opt3);
 
@@ -1310,10 +1419,35 @@ function loadStoryCardByProject(projectId) {
         }
     });
 }
+function loadStoryCardByProject(projectId) {
+    if (!projectId) {
+        return;
+    }
 
-function loadStoryCardByProjectDetails(res) {
+    var json = initJSON();
+    json.kv.fkProjectId = projectId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmLoadStoryCardByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            loadStoryCardByProjectDetailsAdd(res);
+            $('#bug_filter_backlog_id_add').selectpicker('refresh');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+function loadStoryCardByProjectDetailsAdd(res) {
     try {
-        var el = $('#bug_filter_backlog_id');
+        var el = $('#bug_filter_backlog_id_add');
         el.html('');
         var obj = res.tbl[0].r;
         for (var i in obj) {
@@ -1325,8 +1459,9 @@ function loadStoryCardByProjectDetails(res) {
     } catch (err) {
 
     }
-    $('#bug_filter_backlog_id').selectpicker('refresh');
+    $('#bug_filter_backlog_id_add').selectpicker('refresh');
 }
+
 
 
 

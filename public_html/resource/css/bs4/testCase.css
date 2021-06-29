@@ -10,7 +10,22 @@
     color: #172b4d;
   
  }
-
+ .bugListTable tbody tr td a{
+    -webkit-font-smoothing: antialiased;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: .875rem;
+    letter-spacing: .2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  
+ }
+ .bug-list-column-created-date{
+     text-align: center;
+ }
+.cst-dropwdown-toggle-bug{
+    background: none !important;
+}
 
 
 .addBugBtn{
@@ -145,7 +160,7 @@
     background-color: white;
     border-radius: 6px;
     border: 1px solid #e7eaf0;
-    padding-top: 10px;
+   
 }
 .col-bug-status{
     padding-left: 0px;
@@ -295,7 +310,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     font-size: 13px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+ 
     text-align: center;
 }
 
