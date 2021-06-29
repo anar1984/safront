@@ -216,6 +216,26 @@
     }
 
   }
+  function genProccesListCoreFigur(val) {
+ 
+    var dt1 = be.callApi('21061417455804961195');
+
+    var dt = dt1._table.r;
+    $(".procces_List_activity").html("");
+    for (let index = 0; index < dt.length; index++) {
+
+  
+      var nm = dt[index].processName;
+      var id = dt[index].id;
+
+      $(".procces_List_activity").append("<option value=" + id + ">" + nm + "</option>");
+
+    }
+    if (val.length > 2) {
+      $(".procces_List_activity").val(val);
+    }
+
+  }
 
 
   function addLaneApi(on) {
@@ -570,6 +590,26 @@
           $(".ChangeFigur").css("display", "none");
           $(".Forgeneralfigure").css("display", "none");
           $(".ForUSerStFigure").css("display", "flex");
+          $(".ForProcesstFigure").css("display", "none");
+
+        }
+        if (nm == 32) {
+
+          $(el).parents("td").append(genUSCardproccess(countFigure, clr, "", txt,"","4","TextVal"));
+          $(el).parents("td").append(genTableEditbtn());
+
+          $(el).parents(".tdAdderSwimlane").remove();
+
+          var dataHtml = $('[data-text="TextVal"]').clone();
+
+          $(".ContentCopyDiv").html(dataHtml);
+
+          $(".CardSwimAdd").css("display", "block");
+          $(".ChangeFigur").css("display", "none");
+          $(".Forgeneralfigure").css("display", "none");
+          $(".ForProcesstFigure").css("display", "flex");
+          $(".ForUSerStFigure").css("display", "none");
+          genProccesListCoreFigur('');
 
         }
 
@@ -665,6 +705,16 @@
       $(".ChangeFigur").css("display","none");
       $(".Forgeneralfigure").css("display","none");
       $(".ForUSerStFigure").css("display","flex"); */
+
+    }
+    if (nm == 32) {
+      if (UsCaId.length > 3) {
+        $(el).append(genUSCardproccess(countFigure, clr, UsCaId, fgText, ftSzTxt,"3",""));
+        $(el).append(genTableEditbtn());
+
+        $(el).find(".tdAdderSwimlaneOpened").remove();
+      }
+
 
     }
 
@@ -913,6 +963,33 @@
           .html("show  <br> proto")))
 
   }
+  function genUSCardproccess(idgen, bgclr, UsCaId, fgText, ftSzTxt,hstxt,txtVale) {
+
+    return $("<div>")
+      .addClass("resizeFigure")
+      .append($("<div>")
+        .addClass("Content USrectangle")
+        .attr("draggable", "true")
+        .attr("data-colorcst", "6")
+        .attr("id", idgen)
+        .attr("data-text", txtVale)
+        .attr('data-sed-id', UsCaId)
+        .attr("style", "background-color:" + bgclr + " ;")
+        .append($("<div>")
+          .addClass("contentArrow")
+          .attr("id", "dragArrow")
+          .attr("draggable", "true")
+          .append('<i class="fas fa-arrow-right"></i>'))
+        .append($("<div>")
+          .addClass("UserRectBody")
+          .attr("data-hastxt", hstxt)
+          .css("font-size", ftSzTxt)
+          .append('<span>' + fgText + '</span>'))
+        .append($("<div>")
+          .addClass("StatFigure data-show-procees")
+          .html("Process")))
+
+  }
   function printDiv(element) {
     
 
@@ -1129,6 +1206,7 @@
   }
 
 
+
   //tdAdder swimlane 
   function genusAdderPopUpTdSl() {
 
@@ -1148,6 +1226,7 @@
         .append('<span data-figurnum="26" class="figureFromspansw"><img src="resource/img/lg8.png" alt=""></span>')
         .append(`<span data-figurnum="28" class="figureFromspansw"><img src="resource/img/lg7.png" alt=""></span>`)
         .append(`<span data-figurnum="30" class="figureFromspansw usicon"><img src="resource/img/lg10.png" alt=""> <span class="customSpanUst">User <br> Story</span></span>`)
+        .append(`<span data-figurnum="32" class="figureFromspansw usicon"><img src="resource/img/lg10.png" alt=""> <span class="customSpanUst">Pro <br>cess </span></span>`)
       )
       .append('<p class="selectColorWord">Select Color Figure</p>')
       .append($("<div>")
@@ -1273,6 +1352,14 @@
       var namePro = $("#projectListSwimlaneInside option:selected").text();
       genLaneListApi(dt, namePro);
       $(".card-custom-popUpNew").hide();
+    })
+    $(document).on("click", '.data-show-procees', function (e) {
+
+      var dt  = $(this).parents('.Content').attr('data-sed-id')
+      $('#projectListSwimlaneInside').val(dt);
+      $('#projectListSwimlaneInside').change();
+
+
     })
     $(document).on("click", '.popCloseModal', function (e) {
       $(this).parents('.card-custom-popUpNew').hide()
@@ -1868,6 +1955,36 @@
     })
 
 
+    $(document).on("change", ".procces_List_activity", function () {
+
+      var idt = $(this).val();
+      var textVal = $(".procces_List_activity option:selected").text();
+
+      if (idt.length > 0) {
+
+        $(document).find('[data-text="TextVal"]').find(".UserRectBody").find("span").remove();
+        $(document).find('[data-text="TextVal"]').attr("data-sed-id", idt);
+        var id1 = $(document).find('[data-text="TextVal"]').attr("id");
+        $(document).find('[data-text="TextVal"]').find(".UserRectBody").append('<span>' + textVal + '</span>');
+        $(document).find('[data-text="TextVal"]').find(".UserRectBody").attr("data-hastxt", "4");
+
+
+        var fb = {
+          "kv": {
+            "updatedField": "id,storyCardId,figureText",
+            "id": id1,
+            "figureText": textVal,
+            "storyCardId": idt,
+
+          }
+        }
+
+        figureUpdateApi(fb)
+
+
+      }
+
+    })
     $(document).on("change", "#storyCardListSelectBox", function () {
 
       var idt = $(this).val();
@@ -2016,9 +2133,7 @@
       $('.Content').removeAttr('data-text');
       $(this).attr("data-text", "TextVal")
       var CstmFig = $('[data-text="TextVal"]').attr("data-colorcst");
-      
-  
-   console.log(ftsize)
+    
       if (CstmFig == 1 || CstmFig == 2 || CstmFig == 3 || CstmFig == 4) {
         $(".CardSwimAdd").css("display", "Block");
         color = $('[data-text="TextVal"]').css("backgroundColor");
@@ -2040,13 +2155,30 @@
         $("#select-text").val(text);
         var dataHtml = $('[data-text="TextVal"]').clone();
         var ftsize = $('[data-text="TextVal"]').find('.UserRectBody ').css("font-size");
+      
         $(".ContentCopyDiv").html(dataHtml);
 
         $(".CardSwimAdd").css("display", "Block");
         $(".ChangeFigur").css("display", "none");
         $(".Forgeneralfigure").css("display", "none");
         $(".ForUSerStFigure").css("display", "flex");
+        $(".ForProcesstFigure").css("display", "none");
 
+      }
+      if (CstmFig == 6) {
+
+
+        $("#select-text").val(text);
+        var dataHtml = $('[data-text="TextVal"]').clone();
+        var ftsize = $('[data-text="TextVal"]').find('.UserRectBody ').css("font-size");
+        $(".ContentCopyDiv").html(dataHtml);
+        var valId = $('[data-text="TextVal"]').attr("data-sed-id");
+        $(".CardSwimAdd").css("display", "Block");
+        $(".ChangeFigur").css("display", "none");
+        $(".Forgeneralfigure").css("display", "none");
+        $(".ForUSerStFigure").css("display", "none");
+        $(".ForProcesstFigure").css("display", "flex");
+        genProccesListCoreFigur(valId);
       }
 
       $('#selecttextfontSize').val(ftsize)
@@ -2059,26 +2191,10 @@
       var width = $(this).val();
 
       $('[data-text="TextVal"]').css("width", width + "%");
-
-
-    })
-    $(document).on("change", "#FigureHeight", function () {
-
-      var height = $(this).val();
-
       $('[data-text="TextVal"]').css("height", height + "%");
-
+      $("#FigureHeight").val(width);
     })
-
-
-
-
-
-
-
-
-
-
+  
 
     $(document).on("mouseover", "textPath", function (e) {
       e.stopPropagation();

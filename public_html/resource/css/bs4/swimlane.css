@@ -86,7 +86,7 @@
 }
 .tdAdderSwimlane{
   position: relative;
-  z-index: 5555;
+  z-index: 500;
   width: 200px ;
   box-shadow: rgba(9, 30, 66, 0.25) -3px -3px 4px -3px, rgba(9, 30, 66, 0.31) 2.5px 0.5px 11px;
  height: 145px;

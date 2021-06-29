@@ -397,7 +397,7 @@
                         <input type="number" min="80" id="FigureWitdh" max="100" placeholder="%"
                             class="form-control SizeInputFg">
                         <span class="selectColorWordPopup">height</span>
-                        <input type="number" min="25" id="FigureHeight" max="100" placeholder="%"
+                        <input disabled type="number" min="25" id="FigureHeight" max="100" placeholder="%"
                             class="form-control SizeInputFg">
 
 
@@ -414,6 +414,18 @@
                         </div>
 
 
+                        <div class="row ForProcesstFigure col-12" style="display: none;">
+                            <div class="col-4">
+                                <span>Process</span>
+                                <select onchange="" class="form-control procces_List_activity" 
+                                        data-live-search="true" name="" id="">
+                
+                                </select>
+                            </div>
+                           
+
+                        </div>
+
                         <div class="row ForUSerStFigure col-12">
                             <div class="col-4">
                                 <span>Project</span>
@@ -422,12 +434,16 @@
                 
                                 </select>
                             </div>
-                            <div class="col-8">
+                            <div class="col-6">
                                 <span>Story Card</span>
                                 <select class="form-control SelectFigureText"   onchange="loadStoryCardInfo4Ipo(this)"
                                         name="" data-live-search="true" id="storyCardListSelectBox">
                 
                                 </select>
+                            </div>
+                            <div class="col-2">
+                                <span>New Story Card</span>
+                                <button onclick="addUserStoryNewModal()" class="btn  btn-primary">Add</button>
                             </div>
 
                         </div>
