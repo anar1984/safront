@@ -4928,6 +4928,7 @@ UserStory.prototype = {
             async: false,
             success: function (res) {
                 that.genUsFilterTaskTypesDetails(res);
+                console.log('asfasfasf')
             }
         });
     },
@@ -4952,6 +4953,7 @@ UserStory.prototype = {
 
             $('#task-info-modal-tasktype')
                     .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
+                    console.log('ttt')
         }
         st += '</table>';
         $('#us_filter_tasktypes').html((st));

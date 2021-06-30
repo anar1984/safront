@@ -12385,6 +12385,7 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
         success: function (res) {
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
+            getBugList();
         },
         error: function () {
             Toaster.showError(('somethingww'));
