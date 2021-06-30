@@ -889,9 +889,30 @@ function getBugListDetails(res) {
                 .append($('<td>').append(row))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-task-status')
-                        .append($('<span>')
-                                .addClass('us-item-status-' + o.taskStatus)
-                                .append(o.taskStatus)))
+                        .append($("<div>")
+                                   .addClass("dropdown")
+                                   .append($("<div>")
+                                              .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                              .attr("data-toggle","dropdown")
+                                              .attr("aria-haspopup","true")
+                                              .attr("aria-expanded","false")
+                                              .attr("id","bug-status-dropdown")
+                                              .append($('<span>')
+                                               .addClass('us-item-status-' + o.taskStatus)
+                                              .append(o.taskStatus)))
+
+                                    .append($("<div>")
+                                             .addClass("dropdown-menu")
+                                             .attr("aria-labelledby","bug-status-dropdown")
+                                            
+                                            .append('<a class="dropdown-item" data-value ="new">New</a>')
+                                            .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
+                                            .append('<a class="dropdown-item" data-value ="closed">closed</a>')
+                                            .append('<a class="dropdown-item" data-value ="waiting">waiting</a>')
+                                            .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
+                                            .append('<a class="dropdown-item" data-value ="UAT">UAT</a>')
+                                          
+                                            )))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-task-id').append(task_id))
                 .append($('<td>')
@@ -903,7 +924,26 @@ function getBugListDetails(res) {
                         .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                         )
                 .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-task-nature').append(getBugListTaskNatureValue(o.taskNature)))
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>")
+                                   .addClass("dropdown")
+                                   .append($("<div>")
+                                              .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                              .attr("data-toggle","dropdown")
+                                              .attr("aria-haspopup","true")
+                                              .attr("aria-expanded","false")
+                                              .attr("id","bug-taskNature-dropdown")
+                                              .append(getBugListTaskNatureValue(o.taskNature)))
+
+                                    .append($("<div>")
+                                             .addClass("dropdown-menu")
+                                             .attr("aria-labelledby","bug-taskNature-dropdown")
+                                            
+                                            .append('<a class="dropdown-item" data-value ="new">New Request</a>')
+                                            .append('<a class="dropdown-item" data-value ="change">Change Request</a>')
+                                            .append('<a class="dropdown-item" data-value ="bug">Bug</a>')
+                                                                                  
+                                            )))
                 .append($('<td>')
                         .css('white-space', 'nowrap')
                         .addClass('bug-list-column')
@@ -938,7 +978,29 @@ function getBugListDetails(res) {
                         })
                         )
                 .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-tasktype').append(replaceTags(o.taskTypeName)))
+                        .addClass('bug-list-column-tasktype')
+                        .append($("<div>")
+                                   .addClass("dropdown")
+                                   .append($("<div>")
+                                              .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                              .attr("data-toggle","dropdown")
+                                              .attr("aria-haspopup","true")
+                                              .attr("aria-expanded","false")
+                                              .attr("id","bug-tasktype-dropdown")
+                                              .append(replaceTags(o.taskTypeName)))
+
+                                    .append($("<div>")
+                                             .addClass("dropdown-menu")
+                                             .attr("aria-labelledby","bug-tasktype-dropdown")
+                                            
+                                            /* .append('<a class="dropdown-item" data-value ="New">New</a>')
+                                            .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
+                                            .append('<a class="dropdown-item" data-value ="closed">closed</a>')
+                                            .append('<a class="dropdown-item" data-value ="waiting">waiting</a>')
+                                            .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
+                                            .append('<a class="dropdown-item" data-value ="UAT">UAT</a>') */
+                                          
+                                            )))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-priority').append(replaceTags(o.taskPriority)))
                 .append($('<td>').addClass('bug-list-column')
@@ -1066,6 +1128,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     loadUsersAsAssignee();
     loadTaskInfoToContainer(taskId, projectId);
     loadTaskCardDetails(taskId);
+  
 
 
 
@@ -1293,6 +1356,88 @@ $(document).on("click", '#bug-listassigne-dropdown', function (e) {
 
 
 }) 
+$(document).on("click", '.bug-list-column-task-status a', function (e) {
+
+    var val = $(this).attr("data-value");
+    var id = $(this).parents('tr').attr("id");
+   
+    updateTask4ShortChangePure(val, "taskStatus", id);
+    
+    
+
+}) 
+$(document).on("click", '.bug-list-column-assignee a', function (e) {
+
+    var val = $(this).attr("assigne-id");
+    var id = $(this).parents('tr').attr("id");
+   
+    updateTask4ShortChangePure(val, "fkAssigneeId", id);
+    
+    
+
+}) 
+$(document).on("click", '.bug-list-column-task-nature a', function (e) {
+
+    var val = $(this).attr("data-value");
+    var id = $(this).parents('tr').attr("id");
+   
+    updateTask4ShortChangePure(val, "taskNature", id);
+  
+    
+
+}) 
+$(document).on("click", '#bug-tasktype-dropdown', function (e) {
+
+   
+    var elm = $(this).parent().find('.dropdown-menu');
+    console.log(elm)
+    addUserStoryToTask_loadTaskType_bug_list(elm);
+  
+
+}) 
+$(document).on("click", '.bug-list-column-tasktype a', function (e) {
+
+    var val = $(this).attr("data-value");
+    var id = $(this).parents('tr').attr("id");
+   
+    updateTask4ShortChangePure(val, "fkTaskTypeId", id);
+    
+  
+
+}) 
+
+function addUserStoryToTask_loadTaskType_bug_list(elm) {
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.asc = 'typeName';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+          
+           var dt = res.tbl[0].r;
+
+           for (let index = 0; index < dt.length; index++) {
+               
+               var nm = dt[index].typeName;
+               var ids = dt[index].id;
+               var opt = $('<a>').addClass("dropdown-item").attr("data-value",ids).text(nm);
+           
+               $(elm).append(opt);
+           }
+        }
+    });
+}
 
 function toggleColumns() {
     $('.bug-list-column').hide();
@@ -1332,7 +1477,7 @@ function loadAssigneesByProjectDrop(projectId,el) {
             var o = obj[i];
             var opt = $('<a>').addClass("dropdown-item").attr("assigne-id",o.fkUserId).text(o.userName);
           $(el).append(opt);
-          console.log(opt)
+     
             
         
 
