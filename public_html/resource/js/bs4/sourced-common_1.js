@@ -5372,7 +5372,14 @@ UserStory.prototype = {
             var apiDesc = (relApiId)
                     ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
                     onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">"
-                    + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>" + shortDesc
+                    + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>" 
+                    + ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">'
+                    + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) +'</span> '
+                    + '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">'
+                    + MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest'))
+                    +'</span>'
+                    +' '
+                    + shortDesc
                     + " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
                     + obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>"
                     : "";
