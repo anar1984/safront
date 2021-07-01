@@ -74,6 +74,9 @@
 
                                                     <script>
                                                         var myParam = location.search.split('domain=')[1] ? location.search.split('domain=')[1] : '';
+                                                        
+                                                        
+                                                        
                                                         $('#cPassword').on("keyup", function (event) {
                                                             if (event.keyCode === 13) {
                                                                 event.preventDefault();
@@ -94,6 +97,10 @@
                                                         });
 
                                                         $('#domain').val(myParam.replace("/", ""));
+                                                        
+                                                        if (myParam.length>0){
+                                                            $('#domain').hide();
+                                                        }
 
                                                         //            var lng = getUrlParameter('lang');
                                                         //            if (lng === 'undefined' || !lng) {

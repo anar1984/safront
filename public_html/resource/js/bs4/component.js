@@ -1723,6 +1723,7 @@ var Component = {
 
                 innerHTML = new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
             } catch (err) {
+                console.log("Section is not loaded")
             }
         }
         comp.hasOnClickEvent = true;

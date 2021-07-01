@@ -25,9 +25,8 @@
         <script src="resource/js/bs4/jquery.min.js"></script>
         <script src="resource/js/bs4/popper.min.js"></script>
         <script src="resource/js/bs4/bootstrap.min.js"></script>
-        <script src="resource/js/bs4/sourced-common_1.js"></script>
-        <script src="resource/js/bs4/general_1.js"></script>
-        <script src="resource/js/bs4/link.js"></script>
+        <script src="resource/js/bs4/sourced-common.js"></script>
+        <script src="resource/js/bs4/general.js"></script>
 
     </head>
 
@@ -37,9 +36,9 @@
             <img class="mb-4" src="api/get/filed/sa-logo-f.png" alt="" width="100%" >
             <!--<h1 class="h3 mb-3 font-weight-normal">Registration</h1>-->
 
-            <!--<h1>Registration is temporary closed</h1>-->
-
-
+             
+            
+            
             <div class="col-md-12" >
                 <div class="alert" style="background-color:red; display : none;" id="generalMessageAlert">
                     <span id="generalMessage"> </span>
@@ -147,7 +146,7 @@
                 //console.log(data);
 
                 $.ajax({
-                    url: urlGl + "api/post/register",
+                    url: "api/post/performreg",
                     type: "POST",
                     data: data,
                     contentType: "application/json",
