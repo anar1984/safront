@@ -20,6 +20,9 @@
     cursor: pointer;
   
  }
+ .bugListTable tbody tr td{
+ padding: 0px 10px;
+ }
  .bug-list-column-created-date{
      text-align: center;
  }
@@ -96,12 +99,12 @@
     right: 0px;
     top: 50%;
     transform: translate(-50%,-50%);
-    color: rgb(218, 218, 218);
-    background: white;
-}
-.hpYuyept:hover{
     color: rgb(128, 128, 128);
+    background: lightgrey;
+    padding: 6px 3px 3px 3px;
+    border-radius: 5px;
 }
+
 
 .bug-list-column-assignee,.bug-list-column-created-by,.bug-list-column-story-card{
   
@@ -313,7 +316,31 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
  
     text-align: center;
 }
+.bug-list-column-project{
+    position: relative;
+}
+.cst-dropwdown-toggle-bug:hover:after{
+/* 
+    content: "\f0dd";
+    font-family: "FontAwesome";
+    color: rgb(128, 128, 128); */
+    display: inline-block;
+    /* width: 0; */
+    height: 0;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+    
 
+
+}
 .bigCheck label {
     background-color: white;
     border-radius: 50%;
