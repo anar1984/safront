@@ -211,7 +211,9 @@
 
 }
 
-
+.TaskContentText{
+    text-align: justify;
+}
 .searchSeqment {
     display: flex;
     width: 49rem;
