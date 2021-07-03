@@ -6096,12 +6096,15 @@ function showJsCodeModal() {
     getAllJsCodeByProject();
     loadApisToComboOnJSCode();
 
-
-    if (cdnh) {
-
+    if ($('#jsCodeModal_fnbody .monaco-editor').html()=== undefined){
         jsEditorGenerate();
-        cdnh = false;
     }
+
+//    if (cdnh) {
+
+        
+        cdnh = false;
+//    }
 }
 
 function guiClassModal(el) {
@@ -10920,6 +10923,12 @@ function loadHtml(file) {
         commmonOnloadAction(this);
         getJsCodeListByProject();
 
+        if (cdnh) {
+
+            jsEditorGenerate();
+            cdnh = false;
+        }
+
     });
 }
 
@@ -12225,7 +12234,15 @@ function updateUS4ShortChangeDetails(val, ustype) {
         async: true,
         success: function (res) {
             SACore.addBacklogByRes(res);
-            loadCurrentBacklogProdDetails();
+
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
+
+
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -12913,7 +12930,7 @@ function getTaskList4TaskMgmt( ) {
     var json = initJSON();
 
     if (taskName) {
-        json.kv.taskName = '%%'+taskName+'%%';
+        json.kv.taskName = '%%' + taskName + '%%';
     }
 
     json.kv['fkProjectId'] = global_var.current_project_id;

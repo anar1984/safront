@@ -141,7 +141,7 @@ var be = {
         try {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
                     //append($('<>').text(JSON.stringify(data)));
-                    .append($('<span class="sa-api-cw1-body">')
+                    .html($('<span class="sa-api-cw1-body">')
                             .text(JSON.stringify(data,null,"  ")));
         } catch (err) {
         }
@@ -150,7 +150,7 @@ var be = {
         try {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
                     //  .attr('data-content',"'"+JSON.stringify(data)+"'");
-                    .append($('<span class="sa-api-cw3-body">')
+                    .html($('<span class="sa-api-cw3-body">')
                             .text(JSON.stringify(data,null,"  ")));
         } catch (err) {
         }
@@ -159,7 +159,7 @@ var be = {
     ShowDescriptionInData4Debug: function (apiId, descId, data) {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw1-block')
-                    .append($('<span class="sa-desc-in-data-body">')
+                    .html($('<span class="sa-desc-in-data-body">')
                             .html(JSON.stringify(data,null,"  ")));
         } catch (err) {
         }
@@ -167,7 +167,7 @@ var be = {
     ShowDescriptionOutData4Debug: function (apiId, descId, data) {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw3-block')
-                    .append($('<span class="sa-desc-out-data-body">')
+                    .html($('<span class="sa-desc-out-data-body">')
                             .html(JSON.stringify(data,null,"  ")));
                             
         } catch (err) {
@@ -1772,17 +1772,27 @@ var SAFN = {
         return outData;
 
     },
-    GetArgumentValue: function (valueCore) {
-        valueCore = valueCore.trim();
+    GetArgumentValue: function (valueCore,isTrimmed) {
+        valueCore =   valueCore.trim()  ;
+        
         var data = SAFN.CoreData;
-        var val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
-                ? valueCore.substring(1, valueCore.length - 1)
-                : valueCore.startsWith('"') && valueCore.endsWith('"')
-                ? valueCore.substring(1, valueCore.length - 1)
-                : (data[valueCore]) ? data[valueCore] : "";
+      
+        var val = "";
+        if (valueCore.startsWith("'") && valueCore.endsWith("'")){
+            val = valueCore.substring(1, valueCore.length - 1);
+        }else if (valueCore.startsWith('"') && valueCore.endsWith('"')){
+            val =  valueCore.substring(1, valueCore.length - 1)
+        } else  {
+              var dataValue = String(data[valueCore]);
+               if ((dataValue)){
+                   val = dataValue ;
+               } 
+        }
+                  
+                 
 
-        try {
-            val = val.trim();
+        try {            
+            val = (isTrimmed) ? val.trim() : val;        
         } catch (err) {
         }
         return val;
@@ -1893,7 +1903,7 @@ var SAFN = {
     Function_For_Body_Statement: function () {
         var data = SAFN.CoreData;
         var element = SAFN.Element;
-        var asyncData = SAFN.AsyncData;
+        var asyncData = SAFN .AsyncData;
 
         var outData = {};
 
@@ -1965,7 +1975,7 @@ var SAFN = {
             var outData = {};
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
-                val = SAFN.GetArgumentValue(val);
+                val = SAFN.GetArgumentValue(val,false);
                 out += val;
             }
             outData[arguments[0]] = out;
@@ -2068,9 +2078,9 @@ var SAFN = {
             msg = SAFN.GetArgumentPureValue(msg);
             Toaster.showError(msg);
         },
-        SetTable: function (row, col, val) {
-            row = SAFN.GetArgumentPureValue(row);
+        SetTable: function (row,col,val) {
             col = SAFN.GetArgumentPureValue(col);
+            row = SAFN.GetArgumentPureValue(row);
             val = SAFN.GetArgumentPureValue(val);
 
             var data = SAFN.CoreData;
@@ -2110,9 +2120,8 @@ var SAFN = {
 
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
-                val = SAFN.GetArgumentPureValue(val);
+                val = SAFN.GetArgumentValue(val);
                 var row = i;
-
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {

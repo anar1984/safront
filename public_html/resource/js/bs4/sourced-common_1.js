@@ -4953,7 +4953,7 @@ UserStory.prototype = {
 
             $('#task-info-modal-tasktype')
                     .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
-                    console.log('ttt')
+            console.log('ttt')
         }
         st += '</table>';
         $('#us_filter_tasktypes').html((st));
@@ -5374,13 +5374,13 @@ UserStory.prototype = {
             var apiDesc = (relApiId)
                     ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
                     onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">"
-                    + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>" 
+                    + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>"
                     + ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">'
-                    + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) +'</span> '
+                    + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) + '</span> '
                     + '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">'
                     + MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest'))
-                    +'</span>'
-                    +' '
+                    + '</span>'
+                    + ' '
                     + shortDesc
                     + " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
                     + obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>"
@@ -5520,6 +5520,12 @@ UserStory.prototype = {
             async: false,
             success: function (res) {
                 that.getBacklogDesc();
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -9638,6 +9644,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
                 hideProgress();
+
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
             },
             error: function () {
                 Toaster.showGeneralError();

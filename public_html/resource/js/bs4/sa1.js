@@ -329,3 +329,15 @@ function updateBacklogName() {
         }
     });
 }
+
+function runApiOnStoryCard(){
+    var fkBacklogId = global_var.current_backlog_id;
+    global_var.runApiOnStoryCard = 1;
+    var out = be.callApi(fkBacklogId,{});
+    var html = $('<span>').css('white-space','pre')
+            .css('font-family','monospace')
+            .css("width","200px")
+            .text(JSON.stringify(out,null,"  "))
+//    alert(JSON.stringify(out));
+    generatePopupModalNew($('<div>').append(html).html());
+}
