@@ -6093,18 +6093,22 @@ function showJsCodeModal() {
     $('#jsCodeModal').modal('show');
 //    console.log('sdfsdf')
 
-    getAllJsCodeByProject();
-    loadApisToComboOnJSCode();
+
 
     if ($('#jsCodeModal_fnbody .monaco-editor').html()=== undefined){
-        jsEditorGenerate();
+    
     }
 
-//    if (cdnh) {
+  if (cdnh) {
 
         
         cdnh = false;
-//    }
+        jsEditorGenerate();
+   }else{
+
+    getAllJsCodeByProject();
+    loadApisToComboOnJSCode();
+   }
 }
 
 function guiClassModal(el) {
@@ -6122,7 +6126,8 @@ function guiClassModal(el) {
 
 function jsEditorGenerate() {
 //    console.log('asdfafasf');
-    setTimeout(function () {
+$('#jsCodeModal').modal('show');
+  
 
 
         require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
@@ -6141,12 +6146,14 @@ function jsEditorGenerate() {
                 language: 'javascript',
                 theme: 'vs-dark'
             });
-
+            getAllJsCodeByProject();
+            loadApisToComboOnJSCode();
         });
 
 
-    }, 200);
 
+     
+  
 
 
 }
