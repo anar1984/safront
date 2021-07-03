@@ -553,7 +553,7 @@ $(document).ready(function () {
 
 
 // category 
-    $(document).on("click", ".assignee2", function () {
+    $(document).on("click", ".assignee", function () {
         global_var.task_mgmt_group_by = "assignee";
         $(".categorybtn").empty()
         $(".categorybtn").append('<span class="category" >Assignee</span>')
@@ -561,7 +561,7 @@ $(document).ready(function () {
         $(".groupByUserstory").css("display", "block");
         genTaskKanbanView();
     })
-    $(document).on("click", ".none2", function () {
+    $(document).on("click", ".none", function () {
         $(".categorybtn").empty()
         global_var.task_mgmt_group_by = "none";
         $(".categorybtn").append('<span class="category" >None</span>')

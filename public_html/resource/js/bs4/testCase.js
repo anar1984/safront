@@ -244,11 +244,51 @@ function addNewTask4Bug(el) {
         return;
     }
 
-    var backlogList = ($('#bug_filter_backlog_id_add').val().length > 0)
-            ? $('#bug_filter_backlog_id_add').val()
+    var backlogList = $('#bug_filter_backlog_id_add').val()
+         /*    : ['-1']; */
+    var assigneeList = $('#bug_filter_assignee_id_add').val() /* ($('#bug_filter_assignee_id_add').val().length > 0)
+            ?  */
+            /* : ['-1']; */
+    var sprintList = "";
+    $('.bug-task-filter-checkbox-sprint').each(function () {
+        if ($(this).is(":checked")) {
+            sprintList += $(this).val() + ',';
+        }
+    })
+
+    var taskTypeName = $("#bug_task_type_id_add").val();
+
+    var taskNature = $("#bug_task_nature_id_add").val();
+
+    var taskPriority = $("#bug_filter_priority_add").val();
+
+
+  /*   for (var bid in backlogList) {
+        for (var aid in assigneeList) { */
+            insertNewTaskDetail4Bug(taskName, backlogList, assigneeList, 'new', projectList, sprintList,taskTypeName,taskNature,taskPriority)
+     /*    }
+    }
+ */
+
+    $(el).val('');
+    getBugList();
+}
+function addNewTask4BugInput(el) {
+    if (!$(el).val().trim()) {
+        return;
+    }
+    var taskName = $(el).val().trim();
+    var projectList = $('#bug_filter_project_id').val();
+    if (projectList.length === 0) {
+        Toaster.showError("Please select project(s).")
+        return;
+    }
+
+    var backlogList = ($('#bug_filter_backlog_id').val().length > 0)
+            ? $('#bug_filter_backlog_id').val()
             : ['-1'];
-    var assigneeList = ($('#bug_filter_assignee_id_add').val().length > 0)
-            ? $('#bug_filter_assignee_id_add').val()
+    var assigneeList = ($('#bug_filter_assignee_id').val().length > 0)
+            ? $('#bug_filter_assignee_id').val()
             : ['-1'];
     var sprintList = "";
     $('.bug-task-filter-checkbox-sprint').each(function () {
@@ -260,7 +300,7 @@ function addNewTask4Bug(el) {
 
     for (var bid in backlogList) {
         for (var aid in assigneeList) {
-            insertNewTaskDetail4Bug(taskName, backlogList[bid], assigneeList[aid], 'new', projectList, sprintList)
+            insertNewTaskDetail4Bug(taskName, backlogList[bid], assigneeList[aid], 'new', projectList, sprintList,"","new","")
         }
     }
 
@@ -268,8 +308,7 @@ function addNewTask4Bug(el) {
     $(el).val('');
     getBugList();
 }
-
-function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, projectId, sprintList) {
+function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, projectId, sprintList,taskTypeName,taskNature,taskPriority) {
     if (!(taskName))
         return;
     var json = {kv: {}};
@@ -293,6 +332,9 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
     json.kv['fkAssigneeId'] = assgineeId;
     json.kv.taskName = taskName;
     json.kv.taskStatus = taskStatus;
+    json.kv.taskNature = taskNature;
+    json.kv.fkTaskTypeId = taskTypeName;
+    json.kv.taskPriority = taskPriority;
     json.kv.sprintList = sprintList;
     var that = this;
     var data = JSON.stringify(json);
@@ -500,7 +542,9 @@ $(document).on("click", '.openBugStatus', function (e) {
     openTaskDialog();
 })
 $(document).on("click", '#addNewTaskButton', function (e) {
-    setBugFilterProjectAdd()
+    setBugFilterProjectAdd();
+    var dwlmt = $('#bug_task_type_id_add')
+    add_loadTaskType_bug_list(dwlmt)
 })
 
 function openTaskDialog() {
@@ -1323,7 +1367,7 @@ $(document).on("change", '#bug_filter_project_id_add', function (e) {
     var id = $(this).val();
     $('#bug_filter_project_id').val(id);
     $('#bug_filter_project_id').change();
-    loadStoryCardByProjectAdd(id)
+ loadStoryCardByProjectAdd(id)
 
 
 })
@@ -1434,6 +1478,39 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
                var opt = $('<a>').addClass("dropdown-item").attr("data-value",ids).text(nm);
            
                $(elm).append(opt);
+           }
+        }
+    });
+}
+function add_loadTaskType_bug_list(elm) {
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.asc = 'typeName';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+          
+           var dt = res.tbl[0].r;
+
+           for (let index = 0; index < dt.length; index++) {
+               
+               var nm = dt[index].typeName;
+               var ids = dt[index].id;
+               var opt = $('<option>').val(ids).text(nm);
+           
+               $(elm).append(opt);
+               $(elm).selectpicker('refresh')
            }
         }
     });
@@ -1564,7 +1641,7 @@ function loadStoryCardByProject(projectId) {
         }
     });
 }
-function loadStoryCardByProject(projectId) {
+function loadStoryCardByProjectAdd(projectId) {
     if (!projectId) {
         return;
     }
@@ -1590,6 +1667,22 @@ function loadStoryCardByProject(projectId) {
     });
 }
 
+function loadStoryCardByProjectDetails(res) {
+    try {
+        var el = $('#bug_filter_backlog_id');
+        el.html('');
+        var obj = res.tbl[0].r;
+        for (var i in obj) {
+            var o = obj[i];
+            el.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+        }
+    } catch (err) {
+
+    }
+    $('#bug_filter_backlog_id_add').selectpicker('refresh');
+}
 function loadStoryCardByProjectDetailsAdd(res) {
     try {
         var el = $('#bug_filter_backlog_id_add');

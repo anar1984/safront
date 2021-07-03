@@ -1119,9 +1119,9 @@ table.lbl-list-table tr td {
 .sprint-show-4-task{
     padding: 2px 10px;
     width: 560px;
-    position: fixed !important;
+
     z-index: 10000 !important;
-    transform: translate3d(100px, 50px, 0px) !important;
+    transform: translate3d(-50%, 35px, 0px) !important;
 }
 .filter-show{
     padding: 2px 10px;
