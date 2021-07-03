@@ -3210,7 +3210,7 @@ ul.main-nav > li > div.sub-menu-block {
    padding: 0;
   }
   #edit_full_screen{
-      width: 100%;
+      width: 100% ;
       height: 90vh;
   }
 

@@ -6157,7 +6157,7 @@ $('#jsCodeModal').modal('show');
 
 
 }
-function jsEditorFullGenerate() {
+function jsEditorFullGenerate(val3) {
 
     setTimeout(function () {
 
@@ -6178,7 +6178,7 @@ function jsEditorFullGenerate() {
                 language: 'javascript',
                 theme: 'vs-dark'
             });
-
+            window.editor3.setValue(val3);
         });
 
 
@@ -6235,11 +6235,13 @@ $(document).on('click', '.editor_full_screenBt', function () {
     $('#full_screen_editor_modal').modal('show');
     if (FullSc) {
 
-        jsEditorFullGenerate();
+        jsEditorFullGenerate(val3);
         FullSc = false;
+    }else{
+        window.editor3.setValue(val3);
     }
 
-    window.editor3.setValue(val3);
+  
 })
 $(document).on('click', '.close_full_scree_editor', function () {
     var val1 = window.editor3.getValue();
