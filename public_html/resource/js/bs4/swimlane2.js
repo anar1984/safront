@@ -1585,6 +1585,15 @@
       LaneRepair();
       var idsss = $(this).parents(".laneColumnDiv").attr("id");
       laneUpdateApiColumn(idsss);
+      var items = document.querySelectorAll('.Graphtable td');
+      items.forEach(function (item) {
+        item.addEventListener('dragstart', handleDragStart, false);
+        item.addEventListener('dragenter', handleDragEnter, false);
+        item.addEventListener('dragover', handleDragOver, false);
+        item.addEventListener('dragleave', handleDragLeave, false);
+        item.addEventListener('drop', handleDrop, false);
+        item.addEventListener('dragend', handleDragEnd, false);
+      });
 
     })
     //resize lane btn 
