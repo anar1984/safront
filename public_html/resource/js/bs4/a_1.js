@@ -11327,6 +11327,7 @@ function addUserStoryNewPopup() {
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
             $('.projectList_liveprototype').change();
+            $('.projectList_activity').change();
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModal').modal('hide');
 
