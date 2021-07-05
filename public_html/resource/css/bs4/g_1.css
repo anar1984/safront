@@ -1626,40 +1626,40 @@ END PROJECT SECTION
 .home_icon_menu-item.active:nth-child(3) {
     -webkit-transition-duration: 280ms;
     transition-duration: 280ms;
-    -webkit-transform: translate3d(10.9466px, -140.47586px, 0);
-    transform: translate3d(10.9466px, -140.47586px, 0);
+    -webkit-transform: translate3d(0px, -200px, 0);
+    transform: translate3d(0px, -200px, 0);
 
 }
 
 .home_icon_menu-item.active:nth-child(4) {
     -webkit-transition-duration: 380ms;
     transition-duration: 380ms;
-    -webkit-transform: translate3d(-30.9466px, -110.47586px, 0);
-    transform: translate3d(-30.9466px, -110.47586px, 0);
+    -webkit-transform: translate3d(0px, -160px, 0);
+    transform: translate3d(0px, -160px, 0);
 }
 
 
 .home_icon_menu-item.active:nth-child(5) {
     -webkit-transition-duration: 480ms;
     transition-duration: 480ms;
-    -webkit-transform: translate3d(-55.9466px, -75.47586px, 0);
-    transform: translate3d(-55.9466px, -75.47586px, 0);
+    -webkit-transform: translate3d(0px, -120px, 0);
+    transform: translate3d(0px, -120px, 0);
 }
 
 
 .home_icon_menu-item.active:nth-child(6) {
     -webkit-transition-duration: 580ms;
     transition-duration: 580ms;
-    -webkit-transform: translate3d(-75.9466px, -40.47586px, 0);
-    transform: translate3d(-75.9466px,-40.47586px, 0);
+    -webkit-transform: translate3d(0px, -80px, 0);
+    transform: translate3d(0px,-80px, 0);
 }
 .home_icon_menu-item.active:nth-child(7) {
     -webkit-transition-duration: 580ms;
     transition-duration: 580ms;
-    -webkit-transform: translate3d(-90.9466px, 0.47586px, 0);
-    transform: translate3d(-90.9466px, 0.47586px, 0);
+    -webkit-transform: translate3d(0px, -40px, 0);
+    transform: translate3d(0px, -40px, 0);
 }
-
+.gooeyMenuDesc-1 h6,
 .gooeyMenuDesc-2 h6,
 .gooeyMenuDesc-3 h6,
 .gooeyMenuDesc-4 h6,
@@ -1668,18 +1668,11 @@ END PROJECT SECTION
     font-weight: normal;
     font-size: 14px;
     text-decoration: none;
-    right: 80px;
-    text-align: left;
+    right: 105px;
+    text-align: right;
 
 }
-.gooeyMenuDesc-1 h6{
-    display: none;
-    font-weight: normal;
-    font-size: 14px;
-    text-decoration: none;
-    right: 100px;
-    text-align: left;
-}
+
 .gooeyMenuDesc-1.active h6{
     position: relative;
     bottom: 30px;
