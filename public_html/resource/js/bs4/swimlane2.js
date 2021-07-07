@@ -319,14 +319,15 @@
         var UsCaId = ln[index].storyCardId;
         var col = ln[index].columnNo;
         var ftSzTxt = ln[index].fontSizeNew;
-        if (ftSzTxt === "") {
+        console.log(ftSzTxt)
+        if (ftSzTxt.length  <= 0) {
           ftSzTxt = "9";
         }else{
-          ftSzTxt +="px"
+        
         }
     
         var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
-        figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt);
+        figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt.trim());
 
        
 
@@ -899,6 +900,8 @@
           .append('<i class="fas fa-arrow-right"></i>'))
         .append($("<div>").addClass("ContentBody").css('font-size', ftSzTxt)
           .append('<span>' + fgText + '</span>')))
+
+     
 
   }
 
