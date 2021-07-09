@@ -8834,11 +8834,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetailsSyncrone();
-                if (global_var.current_modal === 'loadLivePrototype') {
-                    callStoryCardAfterIPOAction();
-                } else if (global_var.current_modal === 'loadStoryCard') {
-                    reloadBacklogListOnStoryCard();
-                }
+                
                 //refresh GUI component 
 //                that.genGUIDesign();
             },
@@ -19099,6 +19095,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //fill GUI Body and set params
         //backlogun canvas parametrleri set edilir
         $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
+         $('#SUS_IPO_GUI_Design').val(SACore.GetCurrentBacklogParam1());
         this.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
         this.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
         var st = this.getGUIDesignHTMLPure(res);

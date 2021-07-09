@@ -89,9 +89,9 @@ var be = {
                         if (asyncData && asyncData.fn) {
                             res = eval(asyncData.fn)(element, out, asyncData);
                         } else {
-                            var id = $(element).attr('id');
-                            var el1 = document.getElementById(id);
-                            triggerAPIAfter(el1, apiId, out, rs.kv);
+//                            var id = $(element).attr('id');
+//                            var el1 = document.getElementById(id);
+                            triggerAPIAfter(element, apiId, out, rs.kv);
                         }
 
 
@@ -142,7 +142,7 @@ var be = {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
                     //append($('<>').text(JSON.stringify(data)));
                     .html($('<span class="sa-api-cw1-body">')
-                            .text(JSON.stringify(data,null,"  ")));
+                            .text(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
@@ -151,7 +151,7 @@ var be = {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
                     //  .attr('data-content',"'"+JSON.stringify(data)+"'");
                     .html($('<span class="sa-api-cw3-body">')
-                            .text(JSON.stringify(data,null,"  ")));
+                            .text(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
@@ -160,7 +160,7 @@ var be = {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw1-block')
                     .html($('<span class="sa-desc-in-data-body">')
-                            .html(JSON.stringify(data,null,"  ")));
+                            .html(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
@@ -168,8 +168,8 @@ var be = {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw3-block')
                     .html($('<span class="sa-desc-out-data-body">')
-                            .html(JSON.stringify(data,null,"  ")));
-                            
+                            .html(JSON.stringify(data, null, "  ")));
+
         } catch (err) {
         }
     },
@@ -1370,9 +1370,9 @@ var be = {
                         if (asyncData && asyncData.fn) {
                             var res = eval(asyncData.fn)(element, out, asyncData);
                         } else {
-                            var id = $(element).attr('id');
-                            var el1 = document.getElementById(id);
-                            triggerAPIAfter(el1, apiId, out, dataJSON.kv);
+//                            var id = $(element).attr('id');
+//                            var el1 = document.getElementById(id);
+                            triggerAPIAfter(element, apiId, out, dataJSON.kv);
                         }
                     } catch (err) {
                         console.log(err);
@@ -1689,6 +1689,10 @@ var SAFN = {
         'gettable': 'GetTable',
         'fortable': 'ForTable',
         'forlist': 'ForList',
+        'clear': 'Clear',
+        'clearclass': 'ClearClass',
+        'showparam': 'ShowParam',
+        'hideparam': 'HideParam'
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1772,27 +1776,27 @@ var SAFN = {
         return outData;
 
     },
-    GetArgumentValue: function (valueCore,isTrimmed) {
-        valueCore =   valueCore.trim()  ;
-        
-        var data = SAFN.CoreData;
-      
-        var val = "";
-        if (valueCore.startsWith("'") && valueCore.endsWith("'")){
-            val = valueCore.substring(1, valueCore.length - 1);
-        }else if (valueCore.startsWith('"') && valueCore.endsWith('"')){
-            val =  valueCore.substring(1, valueCore.length - 1)
-        } else  {
-              var dataValue = String(data[valueCore]);
-               if ((dataValue)){
-                   val = dataValue ;
-               } 
-        }
-                  
-                 
+    GetArgumentValue: function (valueCore, isTrimmed) {
+        valueCore = valueCore.trim();
 
-        try {            
-            val = (isTrimmed) ? val.trim() : val;        
+        var data = SAFN.CoreData;
+
+        var val = "";
+        if (valueCore.startsWith("'") && valueCore.endsWith("'")) {
+            val = valueCore.substring(1, valueCore.length - 1);
+        } else if (valueCore.startsWith('"') && valueCore.endsWith('"')) {
+            val = valueCore.substring(1, valueCore.length - 1)
+        } else {
+            var dataValue = String(data[valueCore]);
+            if ((dataValue)) {
+                val = dataValue;
+            }
+        }
+
+
+
+        try {
+            val = (isTrimmed) ? val.trim() : val;
         } catch (err) {
         }
         return val;
@@ -1903,7 +1907,7 @@ var SAFN = {
     Function_For_Body_Statement: function () {
         var data = SAFN.CoreData;
         var element = SAFN.Element;
-        var asyncData = SAFN .AsyncData;
+        var asyncData = SAFN.AsyncData;
 
         var outData = {};
 
@@ -1975,7 +1979,7 @@ var SAFN = {
             var outData = {};
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
-                val = SAFN.GetArgumentValue(val,false);
+                val = SAFN.GetArgumentValue(val, false);
                 out += val;
             }
             outData[arguments[0]] = out;
@@ -2078,7 +2082,7 @@ var SAFN = {
             msg = SAFN.GetArgumentPureValue(msg);
             Toaster.showError(msg);
         },
-        SetTable: function (row,col,val) {
+        SetTable: function (row, col, val) {
             col = SAFN.GetArgumentPureValue(col);
             row = SAFN.GetArgumentPureValue(row);
             val = SAFN.GetArgumentPureValue(val);
@@ -2173,6 +2177,55 @@ var SAFN = {
 
             var res = be.callApi(apiId, data, element, asyncData)
             return res;
+        },
+        Clear: function (key) {
+            key = SAFN.GetArgumentPureValue(key);
+
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).val('');
+                        $(this).empty();
+                    }
+                }
+            });
+        },
+        HideParam: function (key) {
+              key = SAFN.GetArgumentPureValue(key);
+            
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).hide();
+                    }
+                }
+            });
+        },
+        ShowParam: function (key) {
+              key = SAFN.GetArgumentPureValue(key);
+            
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).show();
+                    }
+                }
+            });
+        },
+        ClearClass: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
+
+            $('.' + className).val('');
+            $('.' + className).empty();
         },
         CallFn: function (fnName) {
             fnName = SAFN.GetArgumentPureValue(fnName);
