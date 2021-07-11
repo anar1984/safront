@@ -725,6 +725,7 @@ var Component = {
                 var tr = $("<tr>")
                         .addClass('redirectClass')
                         .attr("bid", backlogId)
+                        .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
                         .append($("<td>").append((j + parseInt(sLimit))));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();

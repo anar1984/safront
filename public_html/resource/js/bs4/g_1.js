@@ -873,6 +873,23 @@ $(document).ready(function(){
         $(this).parents('tr').find('.select_fell').val('');
 
     })
+    $(document).on('click','.new-tr-add-btn', function(){
+    
+
+        var lnm =$(this).parents('tr');
+        var datp = $(this).attr('data-pad-num');
+      $(this).find('i').toggleClass("fa-chevron-right");
+      $(this).find('i').toggleClass("fa-chevron-down");
+            datp = parseFloat(datp)+1
+            lnm.after($("<tr>").css("padding-left",datp*25)
+                    .append("<td class='text-center'><button class='btn btn-light  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
+                    .append("<td>asasasfaf</td>"))
+      
+        
+
+     
+
+    })
     $(document).on('click','.addInputClassPlus', function(){
 
         var val =$(this).parents('tr').find('.clsLbVal').text();
