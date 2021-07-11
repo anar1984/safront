@@ -2125,7 +2125,7 @@ var SAFN = {
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
                 val = SAFN.GetArgumentValue(val);
-                var row = i;
+                var row = i-1;
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {

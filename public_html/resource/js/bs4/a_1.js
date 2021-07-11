@@ -12259,11 +12259,11 @@ function updateUS4ShortChangeDetails(val, ustype) {
             SACore.addBacklogByRes(res);
 
             loadCurrentBacklogProdDetailsSyncrone();
-            if (global_var.current_modal === 'loadLivePrototype') {
-                callStoryCardAfterIPOAction();
-            } else if (global_var.current_modal === 'loadStoryCard') {
-                reloadBacklogListOnStoryCard();
-            }
+//            if (global_var.current_modal === 'loadLivePrototype') {
+//                callStoryCardAfterIPOAction();
+//            } else if (global_var.current_modal === 'loadStoryCard') {
+//                reloadBacklogListOnStoryCard();
+//            }
 
 
         },
