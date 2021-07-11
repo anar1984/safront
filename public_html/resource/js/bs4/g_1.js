@@ -882,7 +882,7 @@ $(document).ready(function(){
       $(this).find('i').toggleClass("fa-chevron-down");
             datp = parseFloat(datp)+1
             lnm.after($("<tr>")
-                    .append("<td style='padding-left:"+datp*25+"' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
+                    .append("<td style='padding-left:"+datp*25+"px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
                     .append("<td>asasasfaf</td>"))
       
         
