@@ -4123,7 +4123,7 @@ function addFieldsOfTableAsInputAction() {
                             $('#addFieldsOfTableAsInputModal-actiontype').val(),
                             $('#addFieldsOfTableAsInputModal-dbid').val(),
                             $('#addFieldsOfTableAsInputModal-tableid').val(),
-                            fieldId)
+                            fieldId, true)
 
                 }
             });
@@ -4943,7 +4943,17 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 }
 
 function setValueOnCompAfterTriggerApi(el, data) {
-    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
+    //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
+    //redirectClassa shamir edilir.
+    // eger sa-global-trigger===1 attribute-si varsa o zaman row redirectClass-da yeni
+    // umumi sehifede axtaracaqdir.
+
+
+    var element = ($(el).attr('sa-global-trigger'))
+            ? $(el).closest('div.redirectClass')
+            : $(el).closest('.redirectClass');
+
+    element.find('[sa-selectedfield]').each(function (e) {
         var isInTable = false;
         $(this).closest("table.component-table-class-for-zad").each(function (e) {
             isInTable = true;
@@ -6095,20 +6105,20 @@ function showJsCodeModal() {
 
 
 
-    if ($('#jsCodeModal_fnbody .monaco-editor').html()=== undefined){
-    
+    if ($('#jsCodeModal_fnbody .monaco-editor').html() === undefined) {
+
     }
 
-  if (cdnh) {
+    if (cdnh) {
 
-        
+
         cdnh = false;
         jsEditorGenerate();
-   }else{
+    } else {
 
-    getAllJsCodeByProject();
-    loadApisToComboOnJSCode();
-   }
+        getAllJsCodeByProject();
+        loadApisToComboOnJSCode();
+    }
 }
 
 function guiClassModal(el) {
@@ -6126,34 +6136,34 @@ function guiClassModal(el) {
 
 function jsEditorGenerate() {
 //    console.log('asdfafasf');
-$('#jsCodeModal').modal('show');
-  
+    $('#jsCodeModal').modal('show');
 
 
-        require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
-        window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
-        let proxy = URL.createObjectURL(new Blob([`
+    require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'}});
+    window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+    let proxy = URL.createObjectURL(new Blob([`
         self.MonacoEnvironment = {
             baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
         };
         importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
     `], {type: 'text/javascript'}));
 
-        require(["vs/editor/editor.main"], function () {
-            window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
+    require(["vs/editor/editor.main"], function () {
+        window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
 
-                language: 'javascript',
-                theme: 'vs-dark'
-            });
-            getAllJsCodeByProject();
-            loadApisToComboOnJSCode();
+            language: 'javascript',
+            theme: 'vs-dark'
         });
+        getAllJsCodeByProject();
+        loadApisToComboOnJSCode();
+    });
 
 
 
-     
-  
+
+
 
 
 }
@@ -6237,11 +6247,11 @@ $(document).on('click', '.editor_full_screenBt', function () {
 
         jsEditorFullGenerate(val3);
         FullSc = false;
-    }else{
+    } else {
         window.editor3.setValue(val3);
     }
 
-  
+
 })
 $(document).on('click', '.close_full_scree_editor', function () {
     var val1 = window.editor3.getValue();
@@ -8480,7 +8490,7 @@ function addDatabaseRelation() {
 
 }
 
-function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
+function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId, isRefreshed) {
 
     if (!action) {
         return;
@@ -8503,11 +8513,14 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId) {
         async: false,
         success: function (res) {
             $('#selectFromDbModal').modal('hide');
-            loadCurrentBacklogProdDetailsSyncrone();
-            if (global_var.current_modal === 'loadLivePrototype') {
-                callStoryCardAfterIPOAction();
-            } else if (global_var.current_modal === 'loadStoryCard') {
-                reloadBacklogListOnStoryCard();
+            if (isRefreshed !== true) {
+
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
             }
 
         }

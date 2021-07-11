@@ -341,3 +341,44 @@ function runApiOnStoryCard(){
 //    alert(JSON.stringify(out));
     generatePopupModalNew($('<div>').append(html).html());
 }
+
+function testApiOnStoryCard(){
+    $('#apiIntegrationModal').modal('show');
+    $('#apiIntegrationModal_method').selectpicker('refresh');
+}
+
+function sendApiIntegrationForTest(){
+     
+    var url = $('#apiIntegrationModal_urllink').val();
+    var method = $('#apiIntegrationModal_method').val();
+    var content = $('#apiIntegrationModal_body').val();
+    var contentType=$('#apiIntegrationModal_contenttype').val();
+
+
+    var json = initJSON();
+     
+    json.kv.url = url;
+    json.kv.method = method;
+    json.kv.content = content;
+    json.kv.contentType = contentType;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSendApiIntegrationForTest",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            
+        },
+        error: function (err) {
+                Toaster.showError(JSON.stringify(err));
+        }
+    });
+}
+
+function beautifyApiIntegrationContent(){
+    
+}
