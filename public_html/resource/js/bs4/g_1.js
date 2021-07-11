@@ -881,10 +881,33 @@ $(document).ready(function(){
       $(this).find('i').toggleClass("fa-chevron-right");
       $(this).find('i').toggleClass("fa-chevron-down");
             datp = parseFloat(datp)+1
-            lnm.after($("<tr>").css("padding-left",datp*25)
-                    .append("<td class='text-center'><button class='btn btn-light  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
+            lnm.after($("<tr>")
+                    .append("<td style='padding-left:"+datp*25+"' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
                     .append("<td>asasasfaf</td>"))
       
+        
+
+     
+
+    })
+     let luts = true
+    $(document).on('click','.btn-sub-tr-second ', function(){
+    
+        $(this).find('i').toggleClass("fa-chevron-right");
+        $(this).find('i').toggleClass("fa-chevron-down");
+
+     if(luts){
+        
+      
+     
+
+        alert("acildi")
+        luts = false
+     }else{
+
+       alert("baglandi")
+        luts = true
+     }
         
 
      
