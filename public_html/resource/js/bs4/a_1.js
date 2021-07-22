@@ -5233,6 +5233,8 @@ function insertNewInputActionRel(el) {
             getInputActionRelList();
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
+
+            loadCurrentBacklogProdDetails();
         }
     });
 }
@@ -6599,6 +6601,8 @@ function addGuiClassToInputCore(el) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            loadCurrentBacklogProdDetailsSyncrone();
+
 //            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
@@ -6756,6 +6760,8 @@ function removeInputClassRel(el, relId) {
             getInputContaierClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
+
+            loadCurrentBacklogProdDetailsSyncrone();
         }
     });
 }
@@ -7045,6 +7051,8 @@ function addInputAttributesCore(namval, val) {
             getInputAttributeList(global_var.current_us_input_id);
             getInputAttributeByProjectManual();
             new UserStory().genGUIDesign();
+
+            loadCurrentBacklogProdDetailsSyncrone();
         }
     });
 }
@@ -7157,6 +7165,8 @@ function removeInputAttributeCore(inputAttrId) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            loadCurrentBacklogProdDetails();
+
             getInputAttributeList(global_var.current_us_input_id);
             getInputAttributeList4Container(global_var.current_us_input_id);
             getInputAttributeByProjectManual();
@@ -8249,6 +8259,26 @@ function addNewTable(tableName, orderNo, el) {
         },
         error: function () {
             Toaster.showError(tableName + " is not inserted");
+        }
+    });
+}
+
+function createMvp() {
+     
+
+    var json =initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmCreateMvp",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            Toaster.showMessage("MVP Operations finished successfully!")
         }
     });
 }

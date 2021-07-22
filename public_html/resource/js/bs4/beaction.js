@@ -1036,8 +1036,6 @@ var be = {
                     f = false;
                 }
 
-
-
                 var extId = extApiList[i];
                 var o = cr_project_desc[extId];
 
@@ -1045,6 +1043,8 @@ var be = {
 
                 if (SAFN.IsCommand(o.description)) {
                     outData = SAFN.ExecCommand(o.description, outData, element, asyncData);
+
+
                 } else {
                     if (o.fkRelatedScId) {
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -1059,6 +1059,12 @@ var be = {
                         outData = SAFN.ConvertFunctions.ApiCall(o.fkRelatedApiId, outData, element, apiId, asyncData);
                     }
                 }
+
+
+                if (outData.err && outData.err.length > 0) {
+                    be.AJAXCallFeedback(outData.err);
+                }
+
 
                 be.ShowDescriptionOutData4Debug(apiId, o.id, outData);
 
@@ -1622,6 +1628,7 @@ var be = {
     },
     AJAXCallFeedback: function (err) {
 
+        var msgError = "";
         if ((err.length) && err.length > 0) {
             //there are/is errors
             for (var i in err) {
@@ -1642,10 +1649,11 @@ var be = {
                     //eyni code-lu component vardir;
                     if (!f) {
                         Toaster.showError(err[i].val);
+                        msgError = err[i].val;
                     }
                 }
             }
-            throw 'There is/are error(s)'
+            throw 'There is/are error(s), message:' + msgError;
         }
     }
 }
@@ -1656,7 +1664,9 @@ var SAFN = {
     FunctionBody: "",
     Element: "",
     AsyncData: {},
-    MapList: {'map': 'Map',
+    MapList: {
+        'error': 'Error',
+        'map': 'Map',
         'set': 'Set',
         'setvalue': 'SetValue',
         'settext': 'SetText',
@@ -1682,6 +1692,7 @@ var SAFN = {
         'hide': 'Hide',
         'click': 'Click',
         'change': 'Change',
+        'focus': 'Focus',
         'showmessage': 'ShowMessage',
         'showerror': 'ShowError',
         'settable': 'SetTable',
@@ -1692,7 +1703,8 @@ var SAFN = {
         'clear': 'Clear',
         'clearclass': 'ClearClass',
         'showparam': 'ShowParam',
-        'hideparam': 'HideParam'
+        'hideparam': 'HideParam',
+        'sendemail': 'SendEmail'
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -1993,6 +2005,23 @@ var SAFN = {
             data[key] = value;
             return data;
         },
+        Error: function (errCode, value) {
+            value = SAFN.GetArgumentPureValue(value);
+            errCode = SAFN.GetArgumentPureValue(errCode);
+
+            var data = SAFN.CoreData;
+
+            var err = [];
+
+            var kv = {};
+            kv.code = errCode;
+            kv.val = value;
+            err.push(kv);
+
+            data.err = err;
+
+            return data;
+        },
         SetValue: function (className, value) {
             className = SAFN.GetArgumentPureValue(className);
             value = SAFN.GetArgumentValue(value);
@@ -2074,6 +2103,20 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
             $('.' + className).change();
         },
+        Focus: function (key) {
+            key = SAFN.GetArgumentPureValue(key);
+
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).focus();
+                    }
+                }
+            });
+        },
         ShowMessage: function (msg) {
             msg = SAFN.GetArgumentPureValue(msg);
             Toaster.showMessage(msg);
@@ -2125,7 +2168,7 @@ var SAFN = {
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
                 val = SAFN.GetArgumentValue(val);
-                var row = i-1;
+                var row = i - 1;
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {
@@ -2194,8 +2237,8 @@ var SAFN = {
             });
         },
         HideParam: function (key) {
-              key = SAFN.GetArgumentPureValue(key);
-            
+            key = SAFN.GetArgumentPureValue(key);
+
             $("[sa-selectedfield^='" + key + "']").each(function () {
 
                 var selectedFields = $(this).attr('sa-selectedfield').split(',');
@@ -2208,8 +2251,8 @@ var SAFN = {
             });
         },
         ShowParam: function (key) {
-              key = SAFN.GetArgumentPureValue(key);
-            
+            key = SAFN.GetArgumentPureValue(key);
+
             $("[sa-selectedfield^='" + key + "']").each(function () {
 
                 var selectedFields = $(this).attr('sa-selectedfield').split(',');
@@ -2227,6 +2270,32 @@ var SAFN = {
             $('.' + className).val('');
             $('.' + className).empty();
         },
+
+        SendEmail: function (to, subject, message, cc, bb) {
+
+
+            if (!to || !subject || !message)
+                return;
+
+            var json = initJSON();
+            json.kv.to = to;
+            json.kv.subject = subject;
+            json.kv.message = to;
+            json.kv.cc = cc;
+            json.kv.bb = bb;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmSendMail", 
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: false
+                
+            });
+        },
+
         CallFn: function (fnName) {
             fnName = SAFN.GetArgumentPureValue(fnName);
 

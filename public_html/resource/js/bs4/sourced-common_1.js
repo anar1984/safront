@@ -8088,6 +8088,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
 
+                loadCurrentBacklogProdDetailsSyncrone();
+
+
 //////////////////////////  
 
 //backlogun canvas parametrleri set edilir
@@ -8110,6 +8113,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('[data-toggle="tooltip"]').tooltip({html: true});
 
                 new UserStory().refreshCurrentBacklog();
+
+
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -8134,12 +8139,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmDeleteInputByDependentBacklogOutput",
             type: "POST",
-            data: data,
             contentType: "application/json",
             crossDomain: true,
             async: false,
             success: function (res) {
                 SAInput.updateInputByRes(res);
+                            data: data,
+
+                 loadCurrentBacklogProdDetails();
 
                 closeModal('addRelatedSUSOutputModal');
                 that.genIPOInputDescList();
@@ -8577,6 +8584,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 that.genGUIDesign();
+
+                loadCurrentBacklogProdDetails();
+
+
             }
         });
 
@@ -8615,6 +8626,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 SACore.updateBacklogByRes(res);
                 that.loadSection4InputDetails(res);
+
+                loadCurrentBacklogProdDetails();
             }
         });
     },
@@ -8834,7 +8847,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetailsSyncrone();
-                
+
                 //refresh GUI component 
 //                that.genGUIDesign();
             },
@@ -8884,7 +8897,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 //refresh GUI component 
                 that.genGUIDesign();
 
-
+                loadCurrentBacklogProdDetails();
             }
         });
         this.updateInputOnChangeAndRefresh();
@@ -8939,6 +8952,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 //refresh GUI component 
                 that.genGUIDesign();
                 that.updateInputOnChangeAndRefresh();
+
+                loadCurrentBacklogProdDetails();
             }
         });
 
@@ -19095,7 +19110,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //fill GUI Body and set params
         //backlogun canvas parametrleri set edilir
         $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
-         $('#SUS_IPO_GUI_Design').val(SACore.GetCurrentBacklogParam1());
+        $('#SUS_IPO_GUI_Design').val(SACore.GetCurrentBacklogParam1());
         this.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
         this.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
         var st = this.getGUIDesignHTMLPure(res);

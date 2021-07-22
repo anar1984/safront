@@ -1372,7 +1372,7 @@ $(document).on("change", '#bug_filter_project_id_add', function (e) {
 
 })
 $(document).on("click", '#addIssueButtonId', function (e) {
-     var elem = $("#taskNameInputNew")
+     var elem = $("#taskNameInputNew2")
     addNewTask4Bug(elem)
     $("#issue-managment-add-task").modal('hide');
 

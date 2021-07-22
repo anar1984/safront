@@ -20,20 +20,20 @@ $(function () {
         var x2 = off2.left + off2.width;
         var y2 = off2.top;
         // distance
-        var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+        var length = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
         // center
         var cx = ((x1 + x2) / 2) - (length / 2);
         var cy = ((y1 + y2) / 2) - (thickness / 2);
         // angle
-        var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+        var angle = Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
         // make hr
         var htmlLine = "<div style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
         //
         alert(htmlLine);
-        document.body.innerHTML += htmlLine; 
+        document.body.innerHTML += htmlLine;
     }
-    
-    function getOffset( el ) {
+
+    function getOffset(el) {
         var rect = el.getBoundingClientRect();
         return {
             left: rect.left + window.pageXOffset,
@@ -42,50 +42,50 @@ $(function () {
             height: rect.height || el.offsetHeight
         };
     }
-    
-    window.testIt = function() {
+
+    window.testIt = function () {
         var div1 = document.getElementById('toolbar_cont_drag');
         var div2 = document.getElementById('animation-icon')
         connect(div1, div2, "#0F0", 5);
-       
+
     }
-    
-    
+
+
 
     $(document).on("mouseover", '.sa-cw1', function (e) {
         $(this).popover();
-        
+
     });
     $(document).on("mouseover", '.sa-cw3', function (e) {
         $(this).popover();
-        
+
     });
     $(document).on("click", '.api_larged_block', function (e) {
-       $('#debugApiBlockLarge').modal();
-      var htm= $(this).parents('.sa-rww').html();
-     
-       $('#apiGenBlockLarge').empty();
-       $('#apiGenBlockLarge').append(htm);
-        
+        $('#debugApiBlockLarge').modal();
+        var htm = $(this).parents('.sa-rww').html();
+
+        $('#apiGenBlockLarge').empty();
+        $('#apiGenBlockLarge').append(htm);
+
     });
     $(document).on("click", '.data-title-btn', function (e) {
         e.stopPropagation()
-        $('.data-block-popUp').css('display',"none");
+        $('.data-block-popUp').css('display', "none");
         $(this).parent().find('.data-block-popUp').toggle();
-      
-        
+
+
     });
     $(document).on("click", 'body', function (e) {
-        $('.data-block-popUp').css('display',"none");
-    
-         
-        
+        $('.data-block-popUp').css('display', "none");
+
+
+
     });
     $(document).on("change", '#storyCardListSelectBox', function (e) {
-       var id =   $('option:selected', this).attr('sid')
-       new UserStory().getStoryInfo(id,this);
-   
-        
+        var id = $('option:selected', this).attr('sid')
+        new UserStory().getStoryInfo(id, this);
+
+
     });
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
@@ -95,8 +95,8 @@ $(function () {
         }
     });
     $(document).on("click", '.matrix_block_open', function (e) {
-       $(".proto_type_block").toggle("fast");
-       $(".main_page_matrix").toggle("fast");
+        $(".proto_type_block").toggle("fast");
+        $(".main_page_matrix").toggle("fast");
     });
 
     $(document).on("click", '.live-prototype-switch', function (e) {
@@ -201,9 +201,9 @@ $(function () {
     })
 
 
-  // search api list
-    $(document).on('keypress',"#search-api_list", function(){
-         searchFilterTable(this,'api_list_side_bar');
+    // search api list
+    $(document).on('keypress', "#search-api_list", function () {
+        searchFilterTable(this, 'api_list_side_bar');
     })
 
 
@@ -514,6 +514,11 @@ $(document).on("click", ".line_icon_line_list", function () {
     });
     showGuiInputList4DebugView();
 })
+
+$(document).on("click", ".line_icon_mvp_create", function () {
+    createMvp();
+})
+
 $(document).on("click", ".live-prototype-show-line-list", function () {
     $('#leader-line-list-popUp').toggle('fast');
     $('#leader-line-list-popUp').draggable({
@@ -532,14 +537,14 @@ $(document).on("click", ".inp_popUp_story_card_list_cl", function () {
     $('#inp_popUp_story_card_list').draggable({
         containment: "parent"
     });
-  
+
 })
 $(document).on("dblclick", ".component-container-dashed", function () {
     $('#edit_component_inp_popUp').toggle('fast');
     $('#edit_component_inp_popUp').draggable({
         containment: "parent"
     });
-  
+
 })
 
 var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#exampleModal" id="popup-btn" >
@@ -761,7 +766,7 @@ $(document).on("click", ".toolbar .minimzeBtn", function () {
     $('.toolbar .cf').css('display', 'none');
     $('.toolbar .editsect').css('display', 'none');
     $('.toolbar .maximizeBtn').css('display', 'block');
-    localStorage.setItem('data-toolbar-opened',"false");
+    localStorage.setItem('data-toolbar-opened', "false");
 
 
 });
@@ -771,7 +776,7 @@ $(document).on("click", ".toolbar .maximizeBtn", function () {
     $('.toolbar .cf').css('display', 'flex');
     $('.toolbar .editsect').css('display', 'flex');
     $('.toolbar .maximizeBtn').css('display', 'none');
-    localStorage.setItem('data-toolbar-opened',"true");
+    localStorage.setItem('data-toolbar-opened', "true");
 
 });
 $(document).on("click", ".toolbar .horizontalBtn", function () {
@@ -793,155 +798,166 @@ $(document).on("click", ".toolbar .verticalBtn", function () {
 
 });
 
- function genIpoAPiBlock(apnm,){
-     return $('<div>')
-                 .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
-                 .append('<p>'+apnm+'</p>')
-                 .append('<p>'+apnm+'</p>');
- }
-  
-   
+function genIpoAPiBlock(apnm, ) {
+    return $('<div>')
+            .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
+            .append('<p>' + apnm + '</p>')
+            .append('<p>' + apnm + '</p>');
+}
 
-$(document).ready(function(){
 
- 
-    $(document).on('click','.btn-toggle1', function(e){
-        
+
+$(document).ready(function () {
+
+
+    $(document).on('click', '.btn-toggle1', function (e) {
+
         var _this = $(this);
-        var pnl =$('#panelFirst1');
+        var pnl = $('#panelFirst1');
         pnl.toggleClass('is-close');
-        
-        if(pnl.hasClass('is-close')) {
-          _this.html('<i class="fas fa-chevron-right"></i>');
-          pnl.css('width','0px');
-          pnl.css('display','none');
+
+        if (pnl.hasClass('is-close')) {
+            _this.html('<i class="fas fa-chevron-right"></i>');
+            pnl.css('width', '0px');
+            pnl.css('display', 'none');
         } else {
-          _this.html('<i class="fas fa-chevron-left"></i>');
-          pnl.css('width','22%');
-          pnl.css('display','block');
-        }    
-        
-        });
-    $(document).on('click','#api_block_opened', function(){
+            _this.html('<i class="fas fa-chevron-left"></i>');
+            pnl.css('width', '22%');
+            pnl.css('display', 'block');
+        }
+
+    });
+    $(document).on('click', '#api_block_opened', function () {
 
         $('div[data-closed="apisect"]').toggle('fast');
 
         $('div[data-toggle="apisect"]').toggleClass('col-12');
         $('div[data-toggle="apisect"]').toggleClass('col-6');
         setApiIpoBlock();
-        
+
 
     })
-    $(document).on('click','.addInputAttrPlus', function(){
+    $(document).on('click', '.addInputAttrPlus', function () {
 
-        var val =$(this).parents('tr').find('.select_fell').val();
-     
-        var nmval =$(this).parents('tr').find('span').text();
-        
-      
-            addInputAttributesCore(nmval,val);
+        var val = $(this).parents('tr').find('.select_fell').val();
+
+        var nmval = $(this).parents('tr').find('span').text();
+
+
+        addInputAttributesCore(nmval, val);
 
         $(this).parents('tr').find('.select_fell').val('');
 
     })
-    $(document).on('click','.select_fell_check', function(){
-    
+    $(document).on('click', '.select_fell_check', function () {
 
-        var nmval =$(this).parents('tr').find('span').text();
-        var addedVal =$('.input_attributes_list_in_component').find('tr').find('.attr-name');
 
-   
-        var check=$(this);
-            if(check.prop("checked") == true){
-                addInputAttributesCore(nmval,1);
-                return
-            }
-            else if(check.prop("checked") == false){
-                for (let ind = 0; ind < addedVal.length; ind++) {
-            
-                    if(nmval===addedVal[ind].innerText){
-                       
-                        $(addedVal[ind]).parent().addClass('remv_second_attr');
-                      
-                   } 
+        var nmval = $(this).parents('tr').find('span').text();
+        var addedVal = $('.input_attributes_list_in_component').find('tr').find('.attr-name');
+
+
+        var check = $(this);
+        if (check.prop("checked") == true) {
+            addInputAttributesCore(nmval, 1);
+            return
+        } else if (check.prop("checked") == false) {
+            for (let ind = 0; ind < addedVal.length; ind++) {
+
+                if (nmval === addedVal[ind].innerText) {
+
+                    $(addedVal[ind]).parent().addClass('remv_second_attr');
+
                 }
-                $('.remv_second_attr').find('.attr_rmv_sabtn').first().click()
-                return
             }
-                  
-        
+            $('.remv_second_attr').find('.attr_rmv_sabtn').first().click()
+            return
+        }
+
+
         $(this).parents('tr').find('.select_fell').val('');
 
     })
-    $(document).on('click','.new-tr-add-btn', function(){
-    
 
-        var lnm =$(this).parents('tr');
+    $(document).on('click', '.new-tr-add-btn', function () {
+
+        var flagzad = $(this).attr('flagzad');
+
+        var lnm = $(this).parents('tr');
         var datp = $(this).attr('data-pad-num');
-      $(this).find('i').toggleClass("fa-chevron-right");
-      $(this).find('i').toggleClass("fa-chevron-down");
-            datp = parseFloat(datp)+1
-            lnm.after($("<tr>")
-                    .append("<td style='padding-left:"+datp*25+"px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='"+datp+"'><i class='fas fa-chevron-right'></i></button></td>")
-                    .append("<td>asasasfaf</td>"))
-      
-        
+        $(this).find('i').toggleClass("fa-chevron-right");
+        $(this).find('i').toggleClass("fa-chevron-down");
+        datp = parseFloat(datp) + 1;
 
-     
+        if (flagzad === "0") {
+            alert("open")
+            $(this).attr('flagzad', "1");
+        } else {
+            alert('closed');
+            $(this).attr('flagzad', "0");
+
+        }
+
+
+        lnm.after($("<tr>").append("<td style='padding-left:" + datp * 25 + "px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='" + datp + "'><i class='fas fa-chevron-right'></i></button></td>")
+                .append("<td>asasasfaf</td>"))
+
+
+
+
 
     })
-     let luts = true
-    $(document).on('click','.btn-sub-tr-second ', function(){
-    
+    let luts = true
+    $(document).on('click', '.btn-sub-tr-second ', function () {
+
         $(this).find('i').toggleClass("fa-chevron-right");
         $(this).find('i').toggleClass("fa-chevron-down");
 
-     if(luts){
-        
-      
-     
+        if (luts) {
 
-        alert("acildi")
-        luts = false
-     }else{
 
-       alert("baglandi")
-        luts = true
-     }
-        
 
-     
+
+            alert("acildi")
+            luts = false
+        } else {
+
+            alert("baglandi")
+            luts = true
+        }
+
+
+
 
     })
-    $(document).on('click','.addInputClassPlus', function(){
+    $(document).on('click', '.addInputClassPlus', function () {
 
-        var val =$(this).parents('tr').find('.clsLbVal').text();
+        var val = $(this).parents('tr').find('.clsLbVal').text();
         insertNewGuiClassModalCore(val);
-       
+
 
     })
-    $(document).on('dblclick','.feild_sect_opened', function(){
+    $(document).on('dblclick', '.feild_sect_opened', function () {
 
-      $(this).find('ul').toggle('fast')
-        
+        $(this).find('ul').toggle('fast')
+
 
     })
-    $(document).on('click','.removeAttrSingle', function(){
+    $(document).on('click', '.removeAttrSingle', function () {
 
-        $(this).parent().attr('data-rmvc','1')
+        $(this).parent().attr('data-rmvc', '1')
 
-        var attrs= $(this).parents('td').find('[data-rmvc=0]');
+        var attrs = $(this).parents('td').find('[data-rmvc=0]');
         var id = $(this).parents('tr').attr('data-rmv-id')
-         var nmval=$(this).parents('tr').find('.attr-name').text();
-         if (confirm("Are you sure?")) {
+        var nmval = $(this).parents('tr').find('.attr-name').text();
+        if (confirm("Are you sure?")) {
             removeInputAttributeCore(id);
             for (let i = 0; i < attrs.length; i++) {
-                var val34=attrs[i].innerText;
-                addInputAttributesCore(nmval,val34);
-             }
-             $('[data-rmvc=1]').remove();
+                var val34 = attrs[i].innerText;
+                addInputAttributesCore(nmval, val34);
+            }
+            $('[data-rmvc=1]').remove();
         }
-         
+
     })
 
 })
@@ -1071,7 +1087,7 @@ $(document).ready(function () {
     })
 
 
-    
+
 
 })
 
