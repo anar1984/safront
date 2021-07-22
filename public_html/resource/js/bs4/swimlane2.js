@@ -1997,10 +1997,10 @@
       }
 
     })
-    $(document).on("change", "#storyCardListSelectBox", function () {
+    $(document).on("change", ".storyCardListSelectBox1", function () {
 
       var idt = $(this).val();
-      var textVal = $("#storyCardListSelectBox option:selected").text();
+      var textVal = $(".storyCardListSelectBox1 option:selected").text();
 
       if (idt.length > 0) {
 

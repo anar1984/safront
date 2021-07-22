@@ -19071,7 +19071,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
-        LaneRepair();
+       
         $('#gui_component_main_view').scrollTop(oldTop);
         $('#gui_component_main_view').scrollLeft(oldLeft);
 
