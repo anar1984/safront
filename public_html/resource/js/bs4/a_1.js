@@ -11662,6 +11662,46 @@ function showInputTableColumnItselfComponent(el, tableId, inputId) {
 }
 
 
+function showInputTableColumnInTree(el, tableId, inputId) {
+    if (!(tableId) || !(inputId)) {
+        return;
+    }
+
+
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkInputTableId = tableId;
+    json.kv.fkInputId = inputId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddTestByResid",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SAInput.addInputTableByRes(res);
+            if (res.kv.showColumnName === "1") {
+                $(el).css("color", "#2196F3")
+            } else {
+                $(el).css("color", "#d5d6da")
+            }
+
+            //generate GUI
+            new UserStory().generateGUIGeneral();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+
 function showInputTableColumnComponent(el, tableId, inputId) {
     if (!(tableId) || !(inputId)) {
         return;
