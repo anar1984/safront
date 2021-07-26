@@ -102,7 +102,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "/api/post/zd/elcompro/readLaneApi",
+      url: urlGl + "api/post/srv/serviceTmreadLaneApi",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json",
@@ -182,45 +182,85 @@
   }
 
   function genProccesList() {
-    var dt1 = be.callApi('21061417455804961195');
 
-    var dt = dt1._table.r;
-    $("#projectListSwimlane").html("");
-    for (let index = 0; index < dt.length; index++) {
-
-
-      var nm = dt[index].processName;
-      var id = dt[index].id;
-
-      $("#projectListSwimlane").append("<option value=" + id + ">" + nm + "</option>");
-
-    }
+      
+   
+    $.ajax({
+      url: urlGl + "api/post/srv/serviceTmreadProcessListApi",
+      type: "POST",
+      data: JSON.stringify(prop),
+      contentType: "application/json",
+      crossDomain: true,
+      async: true,
+      success: function (data) {
+      
+        var dt = data._table.r;
+        $("#projectListSwimlane").html("");
+        for (let index = 0; index < dt.length; index++) {
+    
+    
+          var nm = dt[index].processName;
+          var id = dt[index].id;
+    
+          $("#projectListSwimlane").append("<option value=" + id + ">" + nm + "</option>");
+    
+        }
+      },
+      error: function () {
+        Toaster.showError(('somethingww'));
+      }
+    });
+ 
+   
   }
 
   function genProccesListCore(val) {
-    var dt1 = be.callApi('21061417455804961195');
+  
+    $.ajax({
+      url: urlGl + "api/post/srv/serviceTmreadProcessListApi",
+      type: "POST",
+      data: JSON.stringify(),
+      contentType: "application/json",
+      crossDomain: true,
+      async: true,
+      success: function (res) {
+        var dt = res._table.r;
+        $("#projectListSwimlaneInside").html("");
+        for (let index = 0; index < dt.length; index++) {
+    
+    
+          var nm = dt[index].processName;
+          var id = dt[index].id;
+    
+          $("#projectListSwimlaneInside").append("<option value=" + id + ">" + nm + "</option>");
+    
+        }
+        if (val.length > 2) {
+          $("#projectListSwimlaneInside").val(val);
+        }
+       },
+      error: function () {
+        Toaster.showError(('somethingww'));
+      }
+    });
+    
 
-    var dt = dt1._table.r;
-    $("#projectListSwimlaneInside").html("");
-    for (let index = 0; index < dt.length; index++) {
-
-
-      var nm = dt[index].processName;
-      var id = dt[index].id;
-
-      $("#projectListSwimlaneInside").append("<option value=" + id + ">" + nm + "</option>");
-
-    }
-    if (val.length > 2) {
-      $("#projectListSwimlaneInside").val(val);
-    }
+  
 
   }
   function genProccesListCoreFigur(val) {
  
-    var dt1 = be.callApi('21061417455804961195');
 
-    var dt = dt1._table.r;
+    $.ajax({
+      url: urlGl + "api/post/srv/serviceTmreadProcessListApi",
+      type: "POST",
+      data: JSON.stringify(),
+      contentType: "application/json",
+      crossDomain: true,
+      async: true,
+      success: function (res) {
+      
+        var dt = res._table.r;
     $(".procces_List_activity").html("");
     for (let index = 0; index < dt.length; index++) {
 
@@ -234,6 +274,12 @@
     if (val.length > 2) {
       $(".procces_List_activity").val(val);
     }
+      },
+      error: function () {
+        Toaster.showError(('somethingww'));
+      }
+    });
+    
 
   }
 
@@ -252,7 +298,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "/api/post/zd/elcompro/addLaneApi",
+      url: urlGl + "api/post/srv/serviceTmaddLaneApi",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json",
@@ -300,59 +346,80 @@
 
   function lineInsideGen(LineIds) {
 
-
-     var data = {}
-     data.fkLineId = LineIds;
     
-    var dt = be.callApi('21061111083601866190',data);
    
-    try {
-      var ln = dt._table.r;
-      for (let index = 0; index < ln.length; index++) {
+    var prop = {
+      "kv": {
 
-        var prId = ln[index].fkLineId;
-        var orn = parseFloat(ln[index].orderNo1);
-        var fgText = ln[index].figureText1;
-        var id = ln[index].id;
-        var typ = ln[index].figureName1;
-        var clr = ln[index].figureColor1;
-        var UsCaId = ln[index].storyCardId;
-        var col = ln[index].columnNo;
-        var ftSzTxt = ln[index].fontSizeNew;
-        console.log(ftSzTxt)
-        if (ftSzTxt.length  <= 0) {
-          ftSzTxt = "9";
-        }else{
+        "fkLineId": LineIds,
         
-        }
-    
-        var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
-        figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt.trim());
-
-       
 
       }
-      readLeadLineApi();
-    
-    } catch(error) {
-     
-          $('#loader-actvty').hide();
-          $('.Graphtable').css("visibility", "visible");
-          $('.leader-line').remove();
     }
 
+    $.ajax({
+      url: urlGl + "api/post/srv/serviceTmupdateLaneApi",
+      type: "POST",
+      data: JSON.stringify(prop),
+      contentType: "application/json; charset=utf-8",
+      crossDomain: true,
+      async: true,
+      success: function (data) {
 
-
-    var items = document.querySelectorAll('.Graphtable td');
-    items.forEach(function (item) {
-      item.addEventListener('dragstart', handleDragStart, false);
-      item.addEventListener('dragenter', handleDragEnter, false);
-      item.addEventListener('dragover', handleDragOver, false);
-      item.addEventListener('dragleave', handleDragLeave, false);
-      item.addEventListener('drop', handleDrop, false);
-      item.addEventListener('dragend', handleDragEnd, false);
+        try {
+          var ln = data._table.r;
+          for (let index = 0; index < ln.length; index++) {
+    
+            var prId = ln[index].fkLineId;
+            var orn = parseFloat(ln[index].orderNo1);
+            var fgText = ln[index].figureText1;
+            var id = ln[index].id;
+            var typ = ln[index].figureName1;
+            var clr = ln[index].figureColor1;
+            var UsCaId = ln[index].storyCardId;
+            var col = ln[index].columnNo;
+            var ftSzTxt = ln[index].fontSizeNew;
+            console.log(ftSzTxt)
+            if (ftSzTxt.length  <= 0) {
+              ftSzTxt = "9";
+            }else{
+            
+            }
+        
+            var el = $('#' + prId + " table tbody").find('tr:eq(' + col + ')').find('td:eq(' + orn + ')');
+            figureAddBlock(el, clr, typ, id, UsCaId, fgText, ftSzTxt.trim());
+    
+           
+    
+          }
+          readLeadLineApi();
+        
+        } catch(error) {
+         
+              $('#loader-actvty').hide();
+              $('.Graphtable').css("visibility", "visible");
+              $('.leader-line').remove();
+        }
+    
+    
+    
+        var items = document.querySelectorAll('.Graphtable td');
+        items.forEach(function (item) {
+          item.addEventListener('dragstart', handleDragStart, false);
+          item.addEventListener('dragenter', handleDragEnter, false);
+          item.addEventListener('dragover', handleDragOver, false);
+          item.addEventListener('dragleave', handleDragLeave, false);
+          item.addEventListener('drop', handleDrop, false);
+          item.addEventListener('dragend', handleDragEnd, false);
+        });
+    
+      },
+      error: function (err) {
+        Toaster.showError(err);
+      }
     });
-
+    
+   
 
 
 
@@ -375,7 +442,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+      url: urlGl + "api/post/srv/serviceTmupdateLaneApi",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -406,7 +473,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+      url: urlGl + "api/post/srv/serviceTmupdateLaneApi",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -435,7 +502,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "/api/post/zd/elcompro/updateLaneApi",
+      url: urlGl + "api/post/srv/serviceTmupdateLaneApi",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -455,7 +522,7 @@
 
 
     $.ajax({
-      url: urlGl + "api/post/zd/elcompro/updateFigureInside",
+      url: urlGl + "api/post/srv/serviceTmupdateFigureInside",
       type: "POST",
       data: JSON.stringify(fb),
       contentType: "application/json; charset=utf-8",
@@ -474,7 +541,7 @@
 
 
     $.ajax({
-      url: urlGl + "api/post/zd/elcompro/updateLeaderLine",
+      url: urlGl + "api/post/srv/serviceTmupdateLeaderLine",
       type: "POST",
       data: JSON.stringify(fb),
       contentType: "application/json; charset=utf-8",
@@ -503,7 +570,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "api/post/zd/elcompro/createFigureInside",
+      url: urlGl + "api/post/srv/serviceTmcreateFigureInside",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -737,7 +804,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "api/post/zd/elcompro/createLeaderLine",
+      url: urlGl + "api/post/srv/serviceTmcreateLeaderLine",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -761,7 +828,7 @@
       }
     }
     $.ajax({
-      url: urlGl + "api/post/zd/elcompro/readLeaderLine",
+      url: urlGl + "api/post/srv/serviceTmreadLeaderLine",
       type: "POST",
       data: JSON.stringify(prop),
       contentType: "application/json; charset=utf-8",
@@ -1383,20 +1450,41 @@
 
       var dt = $("#newProcessNameInput").val()
       if (dt.trim().length > 3) {
-        var data = {};
-        data.processName1 = dt
-        var set = be.callApi('21061417550001624882', data);
-        $("#newProcessNameInput").val("");
-        $(this).parents(".card-custom-popUpNew").hide();
-        $("#newProcessName").show();
 
-        $(".Graphtable tbody").html('');
-        $('#loader-actvty').show();
-        $('.Graphtable').css("visibility", "hidden");
-
-        genLaneListApi(set.id, dt);
-        genProccesListCore(set.id);
-        $(".card-custom-popUpNew").hide();
+        var prop = {
+          "kv": {
+  
+            "processName": dt
+    
+          }
+        }
+        $.ajax({
+          url: urlGl + "api/post/srv/serviceTmcreatePorcessApi",
+          type: "POST",
+          data: JSON.stringify(prop),
+          contentType: "application/json; charset=utf-8",
+          crossDomain: true,
+          async: true,
+          success: function (res) {
+    
+            var set = res;
+            $("#newProcessNameInput").val("");
+            $(this).parents(".card-custom-popUpNew").hide();
+            $("#newProcessName").show();
+    
+            $(".Graphtable tbody").html('');
+            $('#loader-actvty').show();
+            $('.Graphtable').css("visibility", "hidden");
+    
+            genLaneListApi(set.id, dt);
+            genProccesListCore(set.id);
+            $(".card-custom-popUpNew").hide();
+          },
+          error: function (err) {
+            Toaster.showError(err);
+          }
+        });
+       
       }
 
 
@@ -1419,12 +1507,30 @@
       $(this).css("display", "none");
       var val = $(this).val();
       if (val.length > 3) {
-        var data = {}
-        data.id = Utility.getParamFromUrl('process_name')
-        data.processName1 = val
-        be.callApi('21061514324609921783', data);
+        var prop = {}
+        prop.id = Utility.getParamFromUrl('process_name')
+        prop.processName = val;
+
+            
+    
+      $.ajax({
+       url: urlGl + "api/post/srv/serviceTmupdateProcessApi",
+       type: "POST",
+       data: JSON.stringify(prop),
+       contentType: "application/json",
+       crossDomain: true,
+       async: true,
+       success: function (res) {
+       
+       
         genProccesListCore(data.id);
         $('#projectListSwimlaneInside').change();
+        },
+       error: function () {
+         Toaster.showError(('somethingww'));
+       }
+     });
+       
       }
     })
     $(document).on("keypress", '#editProcessName', function (e) {
@@ -1447,13 +1553,28 @@
 
     $(document).on("click", '#deleteProcessName', function (e) {
 
-      var data = {}
-      data.id = Utility.getParamFromUrl('process_name');
 
-      be.callApi('21061513313505523976', data);
-      genProccesListCore();
+      
+      var prop ={}
+      prop.id = Utility.getParamFromUrl('process_name');
+      $.ajax({
+       url: urlGl + "api/post/srv/serviceTmdeleteProcessApi",
+       type: "POST",
+       data: JSON.stringify(prop),
+       contentType: "application/json",
+       crossDomain: true,
+       async: true,
+       success: function (res) {
+       
+        genProccesListCore();
 
-      $("#projectListSwimlaneInside").change();
+        $("#projectListSwimlaneInside").change();
+        },
+       error: function () {
+         Toaster.showError(('somethingww'));
+       }
+     });
+     
 
     })
 
@@ -1692,16 +1813,33 @@
       //if(confirm("Are You Sure Delete Lane?!!!!")){
 
       var ids = $(this).parents(".laneColumnDiv").attr("id");
-      var data = {}
-      data.id = ids
-      var dt = be.callApi("21061011355206098626", data);
+     
+    
+      var prop ={}
+      prop.id = ids;
+      $.ajax({
+       url: urlGl + "api/post/srv/serviceTmdeleteLaneApi",
+       type: "POST",
+       data: JSON.stringify(prop),
+       contentType: "application/json",
+       crossDomain: true,
+       async: true,
+       success: function (res) {
+       
 
-
+        
       if (!dt.length > 0) {
         $(this).parents(".laneColumnDiv").remove();
         
       }
         LaneRepair();
+        },
+       error: function () {
+         Toaster.showError(('somethingww'));
+       }
+     });
+
+
 
 
     })
@@ -1877,18 +2015,35 @@
 
 
             var ids = $(this).parents("td").find(".Content").attr('id')
-      var data = {}
-      data.id = ids
-      var dt = be.callApi("21061117190705163166", data);
+    
 
 
-      if (!dt.length > 0) {
-            $(this).parents("td").find(".resizeFigure").remove();
-            $(this).parents("td").append(genusAdderPopupopenedSl());
-            $(this).parents(".contentDropEDit").remove();
-        
-      }
-        LaneRepair();
+      var prop ={}
+      prop.id = ids;
+      $.ajax({
+       url: urlGl + "api/post/srv/serviceTmdeleteFigureInside",
+       type: "POST",
+       data: JSON.stringify(prop),
+       contentType: "application/json",
+       crossDomain: true,
+       async: true,
+       success: function (res) {
+       
+
+        if (!dt.length > 0) {
+          $(this).parents("td").find(".resizeFigure").remove();
+          $(this).parents("td").append(genusAdderPopupopenedSl());
+          $(this).parents(".contentDropEDit").remove();
+      
+    }
+      LaneRepair();
+        },
+       error: function () {
+         Toaster.showError(('somethingww'));
+       }
+     });
+
+     
 
       
 
@@ -1997,10 +2152,10 @@
       }
 
     })
-    $(document).on("change", "#storyCardListSelectBox", function () {
+    $(document).on("change", ".storyCardListSelectBox1", function () {
 
       var idt = $(this).val();
-      var textVal = $("#storyCardListSelectBox option:selected").text();
+      var textVal = $(".storyCardListSelectBox1 option:selected").text();
 
       if (idt.length > 0) {
 
@@ -2238,13 +2393,26 @@
 
      var dta = $("#dataText").parents("svg").attr("id");
 
-     var data ={}
-         data.id = dta
-         var es = be.callApi('21061118091303585112',data)
-
-        $(this).parent().css("display", "none");
+     var prop ={}
+         prop.id = dta;
+         $.ajax({
+          url: urlGl + "api/post/srv/serviceTmdeleteLeaderLine",
+          type: "POST",
+          data: JSON.stringify(prop),
+          contentType: "application/json",
+          crossDomain: true,
+          async: true,
+          success: function (res) {
+            $(this).parent().css("display", "none");
       
-      LaneRepair();
+            LaneRepair();
+           },
+          error: function () {
+            Toaster.showError(('somethingww'));
+          }
+        });
+
+        
     })
 
 
