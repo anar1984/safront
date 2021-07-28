@@ -124,7 +124,7 @@ $(function () {
 
 
     });
-//user name editable
+    //user name editable
 
     $(document).click(function () {
         $('.myText').html("Hello World");
@@ -228,12 +228,12 @@ function dragResize() {
                 l = $(this).position().left;
             },
             drag: function () {
-//                var top1 = $(this).position().top
-//                var left1 = $(this).position().left;
-//
-//
-//                $('#gui_prop_cn_positiontop').val(top1 - t);
-//                $('#gui_prop_cn_positionleft').val(left1 - l);
+                //                var top1 = $(this).position().top
+                //                var left1 = $(this).position().left;
+                //
+                //
+                //                $('#gui_prop_cn_positiontop').val(top1 - t);
+                //                $('#gui_prop_cn_positionleft').val(left1 - l);
 
             },
             stop: function () {
@@ -257,8 +257,7 @@ function dragResize() {
 
         $(".resize1").resizable();
 
-    } catch (e) {
-    }
+    } catch (e) {}
 }
 
 
@@ -279,13 +278,13 @@ function myFn(id) {
 
 function makeClassActive(id) {
     return;
-//    if ($('#checkbox_' + id).is(':checked')) {
-//
-//        $('#' + id).css('border', '1px dashed blue');
-//
-//    } else {
-//        $('#' + id).css('border', 'none');
-//    }
+    //    if ($('#checkbox_' + id).is(':checked')) {
+    //
+    //        $('#' + id).css('border', '1px dashed blue');
+    //
+    //    } else {
+    //        $('#' + id).css('border', 'none');
+    //    }
 }
 
 
@@ -359,7 +358,12 @@ $(document).on("click", function (e) {
 // main-tool-panel-proparties
 
 // 1.tool panel-general
-var ch = 0, ch2 = 0, ch3 = 0, ch4 = 0, ch5 = 0, ch6 = 0;
+var ch = 0,
+    ch2 = 0,
+    ch3 = 0,
+    ch4 = 0,
+    ch5 = 0,
+    ch6 = 0;
 $(document).on("click", "#general-btn-icon", function () {
 
     $('#ipo-tab-setting-general').addClass('active');
@@ -546,6 +550,10 @@ $(document).on("dblclick", ".component-container-dashed", function () {
     });
 
 })
+$(document).on("click", ".component-container-button", function () {
+  $(this).parents(".component-container-dashed").dblclick();
+
+})
 
 var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#exampleModal" id="popup-btn" >
   <span class="editBtnLVSect deleteBTn" title="Delete Input"><i class="fas fa-trash-alt"></i></span>
@@ -652,12 +660,11 @@ function dragTable() {
         restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
     });
 
-}
-;
+};
 // 15.08.2020
 function stopMouseAction(el) {
     console.log($(el).html())
-//    alert('ok')
+    //    alert('ok')
 }
 
 
@@ -671,8 +678,15 @@ function savePdf() {
     html2pdf().from(element).set({
 
         filename: 'Sourced Agile.pdf',
-        html2canvas: {scale: 5},
-        jsPDF: {orientation: 'portrait', unit: 'in', format: 'letter', compressPDF: true}
+        html2canvas: {
+            scale: 5
+        },
+        jsPDF: {
+            orientation: 'portrait',
+            unit: 'in',
+            format: 'letter',
+            compressPDF: true
+        }
     }).save();
     $('.pdfHide').css('visibility', 'hidden');
     // 21.08.2020 start
@@ -724,25 +738,67 @@ $(document).on("click", ".openNavhide", function () {
 
 
 
+$(document).keydown(function (event) {
+    if (event.which == "17")
+        cntrlIsPressed = true;
+});
+
+$(document).keyup(function () {
+    cntrlIsPressed = false;
+});
+
+var cntrlIsPressed = false;
 
 
+var idggdd = 4868347683787384609;
 
 $(document).on("click", ".cf li .inptadd", function () {
 
-    let valin = $(this).parent().attr('value');
+
+    if (cntrlIsPressed === false) {
+        idggdd++
+        let valin = $(this).parent().attr('value');
+        let nm = $(this).parent().attr('title');
+      
+        var comp = new ComponentInfo();
+
+        comp.id = idggdd ;
+        comp.inputType ="IN";
+        comp.cellNo = "6";
+        comp.componentType = valin;
+        comp.label = nm ;
+        comp.description = "";
+
+        var st = Component.GetComponentHtmlNew(comp);
+        var ldoa = `<div class="box-loader shimmer">
+        
+      </div>`
+       
+        $("#SUS_IPO_GUI_Design .empty-message-block").remove();
+          $("#SUS_IPO_GUI_Design").append(st);
+          $("#"+idggdd).append(ldoa);
+        insertNewInputTotalDblClick(valin, nm, "6",idggdd);
+
+    } else {
+        let valin = $(this).parent().attr('value');
 
 
 
-    addInputAsInput();
+        addInputAsInput();
 
 
-    setTimeout(function () {
-        $('#addNewComponentModal').find('#exampleModal-new-input-name').focus();
+        setTimeout(function () {
+            $('#addNewComponentModal').find('#exampleModal-new-input-name').focus();
 
-    }, 700);
-    $('#addNewComponentModal').find('#exampleModal-new-component-type').val(valin);
+        }, 700);
+        $('#addNewComponentModal').find('#exampleModal-new-component-type').val(valin);
+    }
 
 })
+
+
+
+
 
 $(document).on('keypress', '#exampleModal-new-input-name', function (event) {
 
@@ -754,6 +810,25 @@ $(document).on('keypress', '#exampleModal-new-input-name', function (event) {
     }
 
 });
+$(document).on('click', '#element-edit-button-hover', function (event) {
+    var pid = $(this).parents(".component-class").attr("id")
+    var dt = $(this).parents(".component-class").find(".comp-title-span");
+    var txt = dt.text();
+    var input = $("<input>").addClass("form-control edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
+    dt.html(input);
+
+    dt.find("input").focus();
+
+
+});
+$(document).on('focusout', '#edit-name-input-component', function (event) {
+    var dt = $(this).val();
+    $(this).parent().html(dt)
+    new UserStory().updateInputByAttr(this, 'name')
+
+});
+
+
 
 function closeNewInputComponent() {
 
@@ -800,9 +875,9 @@ $(document).on("click", ".toolbar .verticalBtn", function () {
 
 function genIpoAPiBlock(apnm, ) {
     return $('<div>')
-            .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
-            .append('<p>' + apnm + '</p>')
-            .append('<p>' + apnm + '</p>');
+        .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
+        .append('<p>' + apnm + '</p>')
+        .append('<p>' + apnm + '</p>');
 }
 
 
@@ -899,7 +974,7 @@ $(document).ready(function () {
 
 
         lnm.after($("<tr>").append("<td style='padding-left:" + datp * 25 + "px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='" + datp + "'><i class='fas fa-chevron-right'></i></button></td>")
-                .append("<td>asasasfaf</td>"))
+            .append("<td>asasasfaf</td>"))
 
 
 
@@ -961,16 +1036,18 @@ $(document).ready(function () {
     })
 
 })
+
 function addNewBug(el) {
     var bugDesc = $('#id').val();
     if (!(bugDesc))
         return;
 
-    var json = {kv: {}};
+    var json = {
+        kv: {}
+    };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    } catch (err) {}
 
 
     backlogId = (backlogId) ? backlogId : "-1";
@@ -1047,13 +1124,13 @@ $(document).ready(function () {
 
     $(document).on('drop', ".ApiOutTDspan", function (ev) {
         if (dats === "OUT") {
-//            $(this).text(dats2)
-//            alert('out kelbetin')
+            //            $(this).text(dats2)
+            //            alert('out kelbetin')
 
             var id = $(this).attr('pid'),
-                    action = 'select',
-                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
-                    selectFromInputId = draggedElementPid;
+                action = 'select',
+                selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                selectFromInputId = draggedElementPid;
 
             addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
 
@@ -1064,13 +1141,13 @@ $(document).ready(function () {
 
     $(document).on('drop', ".ApiInTDspan", function (ev) {
         if (dats === "IN") {
-//            $(this).text(dats2);
-//            alert('in kelbetin')
+            //            $(this).text(dats2);
+            //            alert('in kelbetin')
 
             var id = $(this).attr('pid'),
-                    action = 'send',
-                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
-                    selectFromInputId = draggedElementPid;
+                action = 'send',
+                selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                selectFromInputId = draggedElementPid;
 
             addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
 
@@ -1090,7 +1167,3 @@ $(document).ready(function () {
 
 
 })
-
-
-
-
