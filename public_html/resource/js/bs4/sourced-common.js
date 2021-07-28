@@ -2365,6 +2365,15 @@ UserStory.prototype = {
             $('#addComponentIconUpload').hide();
         }
     },
+    toggleGUIComponentSelectBox: function () {
+
+        if (gui_component.componentPerm.SelectBox.includes($('#us-gui-component-id').val())) {
+            $('#addComponentSelectBox').show();
+      
+        } else {
+            $('#addComponentSelectBox').hide();
+        }
+    },
     toggleGUIComponentActionCombo: function () {
         if (gui_component.componentPerm.action.includes($('#us-gui-component-id').val())) {
 //            $('#us-gui-component-action').val('').change();
@@ -7479,8 +7488,10 @@ UserStory.prototype = {
 
     },
     toggleGUIComponentSelection: function () {
+       
         this.toggleGUIComponentImageUpload();
         this.toggleGUIComponentIconUpload();
+        this.toggleGUIComponentSelectBox();
         this.toggleGUIComponentActionCombo();
     },
     genIPOInputDescList4Select: function () {

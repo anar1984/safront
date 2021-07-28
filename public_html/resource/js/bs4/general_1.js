@@ -11,7 +11,7 @@ var gui_component = {
         "InputTab": "",
         "EditBox": "",
         "TextArea": "",
-        "SelectBox": "",
+        "SelectBox": ["cmb"],
         "MultiSelectBox": "",
         "RadioButton": "",
         "CheckBox": "",
@@ -1022,6 +1022,7 @@ function replaceJSON(json) {
 }
 
 function replaceTags(arg) {
+ 
     if (!arg) {
         return arg;
     }
@@ -1792,7 +1793,36 @@ function createNewInputComponent() {
     $('#exampleModal-new-input-name').val('');
     $('#addNewComponentModal').modal('hide');
 }
+/* function createNewInputComponentDblClick(inpnm,compTyp,clNo) {
+    var inputName = inpnm
+    var componentType = compTyp;
+    var cellNo = clNo;
+    var addTo = $('#exampleModal-add-to').val();
+    var orderNo = SAInput.getInputDetails(global_var.current_us_input_id, "orderNo");
+    if (!inputName)
+        return;
+    var orderNoNew = orderNo;
+    if (addTo === 'left') {
+        try {
+            orderNoNew = parseFloat(orderNo) - 0.1;
+        } catch (e) {
+        }
+    } else if (addTo === 'right') {
+        try {
+            orderNoNew = parseFloat(orderNo) + 0.1;
+        } catch (e) {
+        }
+    }
 
+    $('#us-ipo-inputname').val(inputName);
+    global_var.input_insert_cellno = cellNo;
+//    global_var.input_insert_orderno = orderNoNew;
+    global_var.input_insert_component = componentType;
+    new UserStory().insertNewInput();
+    $('#exampleModal-new-input-name').val('');
+    $('#addNewComponentModal').modal('hide');
+}
+ */
 $(document).on('click', '.popup-btn', function (evt) {
 
 });

@@ -2476,6 +2476,15 @@ UserStory.prototype = {
             $('#addComponentIconUpload').hide();
         }
     },
+    toggleGUIComponentSelectBox: function () {
+        
+        if (gui_component.defaultCSS.SelectBox.includes($('#us-gui-component-id').val())) {
+            $('#addComponentSelectBox').show();
+        
+        } else {
+            $('#addComponentSelectBox').hide();
+        }
+    },
     toggleGUIComponentActionCombo: function () {
         if (gui_component.componentPerm.action.includes($('#us-gui-component-id').val())) {
 //            $('#us-gui-component-action').val('').change();
@@ -9095,6 +9104,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     toggleGUIComponentSelection: function () {
         this.toggleGUIComponentImageUpload();
         this.toggleGUIComponentIconUpload();
+        this.toggleGUIComponentSelectBox();
         this.toggleGUIComponentActionCombo();
     },
     genIPOInputDescList4Select: function () {
@@ -10702,43 +10712,44 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return true;
         }
     },
-    fillComponentInfo4GetGUIDesign: function (comp, obj, n) {
-        comp.fkInputTableId = replaceTags(obj[n].fkRelatedCompId);
-        comp.id = replaceTags(obj[n].id);
-        comp.inputType = replaceTags(obj[n].inputType);
-        comp.cellNo = replaceTags(obj[n].cellNo);
-        comp.tableName = replaceTags(obj[n].tableName);
-        comp.componentType = replaceTags(obj[n].componentType);
-        comp.orderNo = replaceTags(obj[n].orderNo);
-        comp.label = replaceTags(obj[n].inputName);
-        comp.content = replaceTags(obj[n].inputContent);
-        comp.param1 = replaceTags(obj[n].param1);
-        comp.containerCSS = replaceTags(obj[n].param2);
-        comp.css = replaceTags(obj[n].param4) + ";" + replaceTags(obj[n].param3);
-        comp.event = replaceTags(obj[n].inputEvent);
-        comp.action = replaceTags(obj[n].action);
-        comp.inSection = replaceTags(obj[n].section);
-        comp.relatedSUS = replaceTags(obj[n].param1);
-        comp.description = "";
-        try {
-            comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[n]);
-        } catch (e) {
+        fillComponentInfo4GetGUIDesign: function (comp, obj, n) {
+            
+            comp.fkInputTableId = replaceTags(obj[n].fkRelatedCompId);
+            comp.id = replaceTags(obj[n].id);
+            comp.inputType = replaceTags(obj[n].inputType);
+            comp.cellNo = replaceTags(obj[n].cellNo);
+            comp.tableName = replaceTags(obj[n].tableName);
+            comp.componentType = replaceTags(obj[n].componentType);
+            comp.orderNo = replaceTags(obj[n].orderNo);
+            comp.label = replaceTags(obj[n].inputName);
+            comp.content = replaceTags(obj[n].inputContent);
+            comp.param1 = replaceTags(obj[n].param1);
+            comp.containerCSS = replaceTags(obj[n].param2);
+            comp.css = replaceTags(obj[n].param4) + ";" + replaceTags(obj[n].param3);
+            comp.event = replaceTags(obj[n].inputEvent);
+            comp.action = replaceTags(obj[n].action);
+            comp.inSection = replaceTags(obj[n].section);
+            comp.relatedSUS = replaceTags(obj[n].param1);
+            comp.description = "";
+            try {
+                comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[n]);
+            } catch (e) {
             comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[n]); //for BView.html
-        }
+            }
 
-        try {
-            comp.pureDescription = SAInputDesc.getDescriptionByIn(obj[n].id);
-        } catch (e) {
-            comp.pureDescription = replaceTags(obj[n].description);
-        }
+            try {
+                comp.pureDescription = SAInputDesc.getDescriptionByIn(obj[n].id);
+            } catch (e) {
+                comp.pureDescription = replaceTags(obj[n].description);
+            }
 
-        try {
-            comp.inputTable = replaceTags(obj[n].inputTable);
-        } catch (err) {
-            comp.inputTable = "";
+            try {
+                comp.inputTable = replaceTags(obj[n].inputTable);
+            } catch (err) {
+                comp.inputTable = "";
 
-        }
-    },
+            }
+        },
     showMessageOfLoop: function (sequence) {
         var st = "There is a loop in the following User Stories: \n";
         for (var i = 0; i < sequence.length; i++) {
@@ -10848,7 +10859,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     getGUIDesignHTMLBody: function (res, rowId, sequence) {
-
+         
         if (sequence === 'undefined' || !sequence) {
             sequence = [];
         }
@@ -10886,6 +10897,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
                     var comp = new ComponentInfo();
                     this.fillComponentInfo4GetGUIDesign(comp, obj, n);
+                   
                     comp.sequence = sequence;
                     comp.showProperties = showPropertiesGeneral;
 
@@ -10939,7 +10951,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     getGUIEmptyMessage: function () {
-        return  '<div class="col-12" style="padding:30px;text-align:center">' +
+        return  '<div class="col-12 empty-message-block" style="padding:30px;text-align:center">' +
                 '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
                 '<h5> No Inputs have been entered on this User Story</h5>' +
                 '<p>All Pages related to the User Story on this project will appear here</p>' +
@@ -11472,11 +11484,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
     deleteCurrentInputFromUSList: function (e) {
-        $('#exampleModal').modal('hide')
+        $('#exampleModal').modal('hide');
+      
         this.deleteInputFromUSList(e, global_var.current_us_input_id);
+   
 
     },
     deleteInputFromUSList: function (e, id) {
+       
         if (!confirm("Are you sure?")) {
             return;
         }

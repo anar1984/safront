@@ -11485,7 +11485,81 @@ function loadSUSList4InputTabDetailsNew(res) {
     } catch (err) {
     }
 }
+ function insertNewInputTotalDblClick(typ,nm,clNo,id) {
+    var iname = $('#us-ipo-inputname').val();
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.tableName = $('#us-ipo-inputname-table').val();
+    json.kv.inputName = nm;
+    json.kv.cellNo = clNo;
+    json.kv.orderNo = global_var.input_insert_orderno;
+    json.kv.inputType = "IN";
+    json.kv.componentType = typ;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewInput4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+         SAInput.addInputByRes(res);
+            SACore.updateBacklogByRes(res);
+//                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
+            loadCurrentBacklogProdDetails(); 
 
+              var el = $("#"+id);
+              var dt = res.kv;
+
+
+              el.attr("pid",dt.id);
+              el.attr("onclick","new UserStory().setInputByGUIComponent('"+dt.id+"')");
+              el.find(".tool_element_edit").attr("comp-id",dt.id)
+              el.find(".tool_element_edit").find(".delete-btn-inp").attr("comp-id","new UserStory().deleteInputFromUSList(this,'"+dt.id+"')")
+               el.find(".component-input-class").attr("pdid",dt.id).attr("id","comp_id_"+dt.id);
+               
+               el.find(".box-loader").remove();
+               el.attr("id",dt.id);
+
+
+            //refresh input list
+           // var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
+            //$('#tblIPOList > tbody').html(st);
+            //global_var.current_us_input_id = res.kv.id;
+            //$('#ipo_tr_' + res.kv.id).click();
+//                $('.us-ipo-input-tr').last().click();
+
+           // that.generateGUIGeneral();
+
+         //   that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
+            $('#us-ipo-inputname').val('');
+            $('#us-ipo-input-id').val('');
+            $('#us-ipo-inputname').focus();
+
+
+
+
+            global_var.input_insert_cellno = "";
+            global_var.input_insert_orderno = "";
+            global_var.input_insert_component = "";
+
+        },
+        error: function () {
+            Toaster.showError("Input '" + iname + '" isn\'t inserted successfully! ')
+        }
+    });
+
+    $('#us-ipo-inputname').val('');
+    $('#us-ipo-input-id').val('');
+    $('#us-ipo-inputname').focus();
+}
 
 function addTabAsInput() {
 
