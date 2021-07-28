@@ -1744,6 +1744,7 @@ var SAFN = {
         return argLine;
     },
     ExecCommand: function (description, outData, element, asyncData) {
+
 //      description = description.trim().replace(/ /g, '');
         SAFN.FunctionBody = SAFN.GetFunctionBody(description);
         SAFN.Element = element;
@@ -1770,15 +1771,18 @@ var SAFN = {
         var res = {};
 
 
-        if (argLine.length === 0) {
-            res = eval(fnName)();
-        } else {
-            var argLineList = argLine.split(",");
-            if (argLineList.length === 1) {
-                res = eval(fnName)(argLine);
-            } else if (argLineList.length > 1) {
-                res = eval(fnName).apply(null, argLineList);
+        try {
+            if (argLine.length === 0) {
+                res = eval(fnName)();
+            } else {
+                var argLineList = argLine.split(",");
+                if (argLineList.length === 1) {
+                    res = eval(fnName)(argLine);
+                } else if (argLineList.length > 1) {
+                    res = eval(fnName).apply(null, argLineList);
+                }
             }
+        } catch (err) {
         }
 
 
@@ -2286,13 +2290,13 @@ var SAFN = {
             var that = this;
             var data = JSON.stringify(json);
             $.ajax({
-                url: urlGl + "api/post/srv/serviceTmSendMail", 
+                url: urlGl + "api/post/srv/serviceTmSendMail",
                 type: "POST",
                 data: data,
                 contentType: "application/json",
                 crossDomain: true,
                 async: false
-                
+
             });
         },
 
