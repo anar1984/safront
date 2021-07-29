@@ -941,12 +941,6 @@ table tr.active {
     border-color:white;
     /*border-color:#F4F5F7;*/
 }
-#gv_gui_component_main_view{
-    background: white;
-    border-color:#F4F5F7;
-    border-style: solid;
-    border-radius: 4px;
-}
 
 .gui-design{
     width: 800px;

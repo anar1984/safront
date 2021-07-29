@@ -14705,6 +14705,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#smb-general-main-info').html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.current_backlog_id)));
 
         this.getBacklogDetailedInputInfoById_coreNew(SAInput.toJSON());
+        
     },
     getStoryInfoOld: function (id, e) {
         if (!id) {
@@ -19082,7 +19083,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#gui_component_main_view').scrollTop(0);
         $('#gui_component_main_view').scrollLeft(0);
         //  $('#SUS_IPO_GUI_Design1').css('height',fkt+"vh");
-        //  $('#gv_gui_component_main_view').attr('style', global_var.actual_backlog_gui_css);
+        $('.gv_gui_component_main_view').attr('style', global_var.actual_backlog_gui_css);
 
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
@@ -19115,6 +19116,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: true,
             success: function (res) {
                 that.getBacklogDetailedInputInfoById_core(res);
+                
             }
         });
     },

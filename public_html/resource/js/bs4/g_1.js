@@ -84,6 +84,7 @@ $(function () {
     $(document).on("change", '#storyCardListSelectBox', function (e) {
         var id = $('option:selected', this).attr('sid')
         new UserStory().getStoryInfo(id, this);
+        resizeColDivElement();
 
 
     });
@@ -216,7 +217,7 @@ var dX = 0;
 
 function dragResize() {
     return;
-    try {
+/*     try {
         $(".draggable").draggable({
             t: 0,
             l: 0,
@@ -257,7 +258,7 @@ function dragResize() {
 
         $(".resize1").resizable();
 
-    } catch (e) {}
+    } catch (e) {} */
 }
 
 
@@ -564,12 +565,12 @@ var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#ex
 $(document).on("mouseenter", ".draggable", function () {
 
 
-    $(".popup-Elements").remove();
+    /* $(".popup-Elements").remove();
 
     $("[data-edit='dataText']").removeAttr("data-edit");
     $(this).attr("data-edit", "dataText");
     $(this).append(popUpt)
-
+ */
 
 
 })
@@ -778,6 +779,7 @@ $(document).on("click", ".cf li .inptadd", function () {
           $("#SUS_IPO_GUI_Design").append(st);
           $("#"+idggdd).append(ldoa);
         insertNewInputTotalDblClick(valin, nm, "6",idggdd);
+        resizeColDivElement();
 
     } else {
         let valin = $(this).parent().attr('value');
@@ -810,20 +812,36 @@ $(document).on('keypress', '#exampleModal-new-input-name', function (event) {
     }
 
 });
+
+
+
+
 $(document).on('click', '#element-edit-button-hover', function (event) {
     var pid = $(this).parents(".component-class").attr("id")
     var dt = $(this).parents(".component-class").find(".comp-title-span");
     var txt = dt.text();
-    var input = $("<input>").addClass("form-control edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
+    var input = $("<input>").addClass("edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
     dt.html(input);
 
     dt.find("input").focus();
 
 
 });
+$(document).on('dblclick', '.comp-title-span', function (e) {
+    e.stopPropagation();
+    var pid = $(this).parents(".component-class").attr("id")
+    var dt = $(this);
+    var txt = dt.text();
+    var input = $("<input>").addClass("edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
+    dt.html(input);
+    dt.find("input").focus();
+
+});
 $(document).on('focusout', '#edit-name-input-component', function (event) {
+    $(this).hide();
     var dt = $(this).val();
-    $(this).parent().html(dt)
+    $(this).parent().html(dt);
+   
     new UserStory().updateInputByAttr(this, 'name')
 
 });

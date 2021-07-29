@@ -396,12 +396,16 @@ var Component = {
             div.attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                 'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
                 "")
-            div.append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
-                .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
-                .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
 
-                .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
-            )
+                if(global_var.current_modal === 'loadLivePrototype'){
+                    div.append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
+                    .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
+                    .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
+    
+                    .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
+                )
+                }
+             
         }
 
         return div;
