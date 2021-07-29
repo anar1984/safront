@@ -477,12 +477,15 @@ var Component = {
             $(el).parent().parent().find('tbody').html(body);
             updateRowCountInputTable(tid, rc);
         },
-        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit) {
+        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit,inputId) {
             var sLimit = (startLimit) ? startLimit : "0";
             var tid = tableId;
             var rc = rowCount;
             var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit);
             $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
+            
+            var el12= document.getElementById("comp_id_"+inputId);
+            loadSelectBoxesAfterGUIDesign(el12);
         },
         GenRowCount: function (comp) {
             var rowCount = this.GetTableRowCount(comp.fkInputTableId);

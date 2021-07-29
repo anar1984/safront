@@ -2292,23 +2292,30 @@ function executeCoreOfManualProSelection(bid1) {
 
 
 function loadSelectBoxesAfterGUIDesign(element) {
+    var zadList = [];
     $(element).find('select.hasTriggerApiCall').each(function (e) {
         var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
         var selectFromInputId = $(this).attr("selectFromInputId");
 
-        if (!ifBacklogInputs4LoaderExistByIdIfNotExist(selectFromBacmkogId)) {
-            $(this).attr("sa-isrunning", "1");
-            loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
-
-        } else {
-            try {
+        var id = $(this).attr("id");
+        if (!zadList.includes(id)) {
+            zadList.push(id);
+            if (!ifBacklogInputs4LoaderExistByIdIfNotExist(selectFromBacmkogId)) {
                 $(this).attr("sa-isrunning", "1");
-                var selectedField = SAInput.GetInputName(selectFromInputId)
-                triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
-            } catch (err) {
-            }
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoader(selectFromBacmkogId, this, selectFromInputId, selectFromBacmkogId)
 
+            } else {
+                try {
+                    $(this).attr("sa-isrunning", "1");
+                    var selectedField = SAInput.GetInputName(selectFromInputId)
+                    triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
+                } catch (err) {
+                }
+
+            }
         }
+
+
     })
 }
 
@@ -4473,8 +4480,6 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             : 'sync';
 
 
-
-
     $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
     })
@@ -4714,7 +4719,7 @@ function fillComboInAPICall(el, data, asyncData) {
             ? data._table.r
             : [];
 
-    var elem = $('#' + asyncData.compId);
+    var elem = $('.component-container-dashed #' + asyncData.compId);
     elem.html('');
     if (elem.attr('sa-data-selectbox-hassnull') === '1') {
         elem.append($('<option>').val('').text(''));
@@ -4741,29 +4746,50 @@ function fillComboInAPICall(el, data, asyncData) {
     elem.attr("sa-isrunning", "0");
 
 
-    if (elem.attr('sa-data-nosort') !== '1') {
+    if (elem.length > 1) {
+        for (var ii = 0; ii < elem.length; ii++) {
+            var eleme11 = $(elem[ii]);
+            if (eleme11.attr('sa-data-nosort') !== '1') {
+                sortSelectBoxByElement(eleme11);
+            }
+        }
+    } else {
         sortSelectBoxByElement(elem);
     }
 
-    if (elem.attr('sa-data-value')) {
-        elem.val(elem.attr('sa-data-value'));
-        elem.find('option[value="' + elem.attr('sa-data-value') + '"]').attr("selected", "selected");
 
-        if (elem.hasClass('sa-onloadclick-async')) {
-            if (elem.attr("sa-isloaded") !== '1') {
-                elem.attr("sa-isloaded", "1");
-                elem.click();
+    if (elem.length > 1) {
+        for (var ii = 0; ii < elem.length; ii++) {
+            var eleme11 = $(elem[ii]);
+            if (eleme11.attr('sa-data-value')) {
+                eleme11.val(eleme11.attr('sa-data-value'));
+                eleme11.find('option[value="' + eleme11.attr('sa-data-value') + '"]').attr("selected", "selected");
             }
         }
+    } else {
+        if (elem.attr('sa-data-value')) {
+            elem.val(elem.attr('sa-data-value'));
+            elem.find('option[value="' + elem.attr('sa-data-value') + '"]').attr("selected", "selected");
+
+            if (elem.hasClass('sa-onloadclick-async')) {
+                if (elem.attr("sa-isloaded") !== '1') {
+                    elem.attr("sa-isloaded", "1");
+                    elem.click();
+                }
+            }
 
 
-        if (elem.hasClass('sa-onloadchange-async')) {
-            if (elem.attr("sa-isloaded") !== '1') {
-                elem.attr("sa-isloaded", "1");
-                elem.change();
+            if (elem.hasClass('sa-onloadchange-async')) {
+                if (elem.attr("sa-isloaded") !== '1') {
+                    elem.attr("sa-isloaded", "1");
+                    elem.change();
+                }
             }
         }
     }
+
+
+
 
     if (elem.hasClass('sa-selectpicker')) {
         elem.selectpicker('refresh');
@@ -4889,7 +4915,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
-                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit);
+                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId);
                 }
                 if (f) {
                     return;
@@ -8394,9 +8420,9 @@ function addNewTable(tableName, orderNo, el) {
 }
 
 function createMvp() {
-     
 
-    var json =initJSON();
+
+    var json = initJSON();
     json.kv.fkBacklogId = global_var.current_backlog_id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10822,7 +10848,7 @@ $(document).on('click', '.loadActivityDiagram', function (evt) {
 //        loadDatabaseList2ComboEntity();
 //        global_var.doc_actual_zoom = 65;
         checkProccesLast();
-      
+
         loadProjectList2SelectboxByClass('projectList_activity');
 
     });
@@ -11617,7 +11643,7 @@ function loadSUSList4InputTabDetailsNew(res) {
     } catch (err) {
     }
 }
- function insertNewInputTotalDblClick(typ,nm,clNo,id) {
+function insertNewInputTotalDblClick(typ, nm, clNo, id) {
     var iname = $('#us-ipo-inputname').val();
     var json = {kv: {}};
     try {
@@ -11642,35 +11668,35 @@ function loadSUSList4InputTabDetailsNew(res) {
         crossDomain: true,
         async: true,
         success: function (res) {
-         SAInput.addInputByRes(res);
+            SAInput.addInputByRes(res);
             SACore.updateBacklogByRes(res);
 //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
-            loadCurrentBacklogProdDetails(); 
+            loadCurrentBacklogProdDetails();
 
-              var el = $("#"+id);
-              var dt = res.kv;
+            var el = $("#" + id);
+            var dt = res.kv;
 
 
-              el.attr("pid",dt.id);
-              el.attr("onclick","new UserStory().setInputByGUIComponent('"+dt.id+"')");
-              el.find(".tool_element_edit").attr("comp-id",dt.id)
-              el.find(".tool_element_edit").find(".delete-btn-inp").attr("comp-id","new UserStory().deleteInputFromUSList(this,'"+dt.id+"')")
-               el.find(".component-input-class").attr("pdid",dt.id).attr("id","comp_id_"+dt.id);
-               
-               el.find(".box-loader").remove();
-               el.attr("id",dt.id);
+            el.attr("pid", dt.id);
+            el.attr("onclick", "new UserStory().setInputByGUIComponent('" + dt.id + "')");
+            el.find(".tool_element_edit").attr("comp-id", dt.id)
+            el.find(".tool_element_edit").find(".delete-btn-inp").attr("comp-id", "new UserStory().deleteInputFromUSList(this,'" + dt.id + "')")
+            el.find(".component-input-class").attr("pdid", dt.id).attr("id", "comp_id_" + dt.id);
+
+            el.find(".box-loader").remove();
+            el.attr("id", dt.id);
 
 
             //refresh input list
-           // var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
+            // var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
             //$('#tblIPOList > tbody').html(st);
             //global_var.current_us_input_id = res.kv.id;
             //$('#ipo_tr_' + res.kv.id).click();
 //                $('.us-ipo-input-tr').last().click();
 
-           // that.generateGUIGeneral();
+            // that.generateGUIGeneral();
 
-         //   that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
+            //   that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
             $('#us-ipo-inputname').val('');
             $('#us-ipo-input-id').val('');
             $('#us-ipo-inputname').focus();
