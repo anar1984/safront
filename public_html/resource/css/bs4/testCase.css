@@ -8,9 +8,38 @@
   
     text-align: left;
     color: #172b4d;
+    border-collapse: separate;
   
  }
- .bugListTable tbody tr td a{
+ .groupTableDivInside{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    left: 0;
+    font-size: 14px;
+    text-align: left;
+    background: #c7eef0;
+    padding: 10px;
+
+}
+.bugChangegroupArrow{
+   padding: 5px;
+}
+
+
+.groupTrElement{
+    position: relative;
+    margin: 0;
+    padding: 0px;
+    min-width: 100%;
+    height: 40px;
+}
+.groupTdElement{
+    margin: 0;
+    padding: 0px;
+}
+ .bugListTable tbody .bug-tr td a{
     -webkit-font-smoothing: antialiased;
     font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
     font-size: .875rem;
@@ -20,8 +49,8 @@
     cursor: pointer;
   
  }
- .bugListTable tbody tr td{
- padding: 0px 10px;
+ .bugListTable tbody .bug-tr td{
+ padding: 15px 10px;
  }
  .bug-list-column-created-date{
      text-align: center;
@@ -233,8 +262,13 @@
     text-align: center;
      box-shadow: 0 5px 10px #e1e5ee;
      }
-.tableFixHead tbody tr:nth-child(even) {
-    background-color: #f4f6fb;
+.tableFixHead tbody .bug-tr:nth-child(even) {
+    background-color: #fce95f;
+}
+.bug-list-column .Assigne-card-story-select-img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
 .bug-list-column-task-status{

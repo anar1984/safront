@@ -11472,6 +11472,7 @@ function addUserStoryNewModal() {
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
 
+
 function addUserStoryNewPopup4SAD() {
     addUserStoryNewPopup();
 }
