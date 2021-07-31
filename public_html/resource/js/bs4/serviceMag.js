@@ -50,6 +50,7 @@ function callStoryCard4Service(projectId, backlogId, backlogName) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
         hideProgressAlternative();
 
     });

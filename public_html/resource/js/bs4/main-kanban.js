@@ -218,6 +218,7 @@ function showStoryCardIn(id, elId) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
     });
 }
 
@@ -237,6 +238,7 @@ function callStoryCard4Api(id, elId, backlogName) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
     });
 }
 
@@ -267,6 +269,7 @@ function callStoryCard(id, elId, backlogName) {
 
         loadUsersAsOwner();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
     });
 }
 

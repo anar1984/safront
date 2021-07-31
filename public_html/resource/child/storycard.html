@@ -150,7 +150,7 @@
                    onclick="runApiOnStoryCard()" value="Run API" accept=""id="user-story-execute" class="user-story-short-change">
 
         </div>
-         <div class="group">      
+        <div class="group">      
             <input type="submit" class="btn btn-light" 
                    onclick="testApiOnStoryCard()" value="Test API" accept=""id="user-story-execute" class="user-story-short-change">
 
@@ -174,9 +174,26 @@
         </div>
     </div>
 
+
+    <div class="col-12 Assigne-card-story1" style="z-index: 1000;">
+
+        <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Created By</span>
+
+        <div class="Assigne-card-story-select form-control">
+            <div id='story-card-createdby'>
+                <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
+                <span id='story-card-createdby-name' class="Assigne-card-story-select-name">Unassigned</span>
+            </div>
+
+
+        </div>
+    </div>
+
+
     <div class="col-12 Assigne-card-story" style="z-index: 1000;">
 
-        <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Owner</span>
+
+        <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Owner  </span>
 
         <div class="Assigne-card-story-select form-control">
             <div id='story-card-owner'>
@@ -191,6 +208,8 @@
 
         </div>
     </div>
+
+
 
     <div class="col-12">
         <br>

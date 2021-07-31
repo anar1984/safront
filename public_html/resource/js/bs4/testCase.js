@@ -1516,6 +1516,7 @@ function callStoryCard4BugTask(projectIdOld, backlogId, el, containDiv) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
 
         //        hideProgressAlternative();
 

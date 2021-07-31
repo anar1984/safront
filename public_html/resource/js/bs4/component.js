@@ -550,8 +550,8 @@ var Component = {
             var showColumnName = SAInput.Tables[tableId].showColumnName.split(",");
             var pairShowColumnName = this.MatchShowComponentAndId(col, showColumnName);
 
-            var showInTree = SAInput.Tables[tableId].showInTree.split(",");
-            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
+//            var showInTree = SAInput.Tables[tableId].showInTree.split(",");
+//            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
 
             col = this.SetColumnsOrder(col);
 
@@ -582,7 +582,7 @@ var Component = {
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumnName = pairShowColumnName[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
-                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+//                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
 
 
                 var showComp = (global_var.current_modal === 'loadLivePrototype') ?
@@ -609,13 +609,13 @@ var Component = {
                     .attr("onclick", "showInputTableColumnItselfComponent(this,'" + tableId + "','" + inputId + "')") :
                     "";
 
-                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
-                    $('<i class="fa fa-folder-open" aria-hidden="true">')
-                    .css("cursor", "pointer")
-                    .css('font-size', '8px')
-                    .css("color", colorInTree)
-                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
-                    "";
+//                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
+//                    $('<i class="fa fa-folder-open" aria-hidden="true">')
+//                    .css("cursor", "pointer")
+//                    .css('font-size', '8px')
+//                    .css("color", colorInTree)
+//                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
+//                    "";
 
 
 
@@ -626,7 +626,8 @@ var Component = {
                     .append(showComp, ' ')
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
-                    .append(showInTree, ' ');
+//                    .append(showInTree, ' ')
+            ;
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
@@ -736,7 +737,7 @@ var Component = {
                 var tr = $("<tr>")
                     .addClass('redirectClass')
                     .attr("bid", backlogId)
-                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
+//                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
                     .append($("<td>").append((j + parseInt(sLimit))));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();

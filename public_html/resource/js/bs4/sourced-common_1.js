@@ -2477,10 +2477,10 @@ UserStory.prototype = {
         }
     },
     toggleGUIComponentSelectBox: function () {
-        
+
         if (gui_component.defaultCSS.SelectBox.includes($('#us-gui-component-id').val())) {
             $('#addComponentSelectBox').show();
-        
+
         } else {
             $('#addComponentSelectBox').hide();
         }
@@ -5321,6 +5321,8 @@ UserStory.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
+
+                AJAXCallFeedback(res);
                 that.getBacklogDesc();
 
                 loadCurrentBacklogProdDetails();
@@ -5528,6 +5530,7 @@ UserStory.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
                 that.getBacklogDesc();
                 loadCurrentBacklogProdDetailsSyncrone();
                 if (global_var.current_modal === 'loadLivePrototype') {
@@ -5566,6 +5569,8 @@ UserStory.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
+
                 $(el).closest('tr').removeClass('activetr');
                 $(el).closest('td').attr('idesc', $(el).val());
                 $(el).closest('td').html(MapTextAreaHtml(replaceTags($(el).val())));
@@ -7064,6 +7069,8 @@ UserStory.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
+                AJAXCallFeedback(res);
+
                 var id = res.kv.id;
                 var stln = that.getInputDescTdItem(id, $(el).val(), "");
                 $(stln).insertBefore($(el));
@@ -7387,6 +7394,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: true,
             success: function (res) {
+                AJAXCallFeedback(res);
+
                 SAInput.addInputByRes(res);
                 SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
@@ -8153,9 +8162,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: false,
             success: function (res) {
                 SAInput.updateInputByRes(res);
-                            data: data,
-
-                 loadCurrentBacklogProdDetails();
+                data: data,
+                        loadCurrentBacklogProdDetails();
 
                 closeModal('addRelatedSUSOutputModal');
                 that.genIPOInputDescList();
@@ -8452,6 +8460,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
                 SAInputDesc.updateInputDescriptionByRes(res);
                 that.genIPOInputDescList();
             },
@@ -10712,44 +10721,44 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return true;
         }
     },
-        fillComponentInfo4GetGUIDesign: function (comp, obj, n) {
-            
-            comp.fkInputTableId = replaceTags(obj[n].fkRelatedCompId);
-            comp.id = replaceTags(obj[n].id);
-            comp.inputType = replaceTags(obj[n].inputType);
-            comp.cellNo = replaceTags(obj[n].cellNo);
-            comp.tableName = replaceTags(obj[n].tableName);
-            comp.componentType = replaceTags(obj[n].componentType);
-            comp.orderNo = replaceTags(obj[n].orderNo);
-            comp.label = replaceTags(obj[n].inputName);
-            comp.content = replaceTags(obj[n].inputContent);
-            comp.param1 = replaceTags(obj[n].param1);
-            comp.containerCSS = replaceTags(obj[n].param2);
-            comp.css = replaceTags(obj[n].param4) + ";" + replaceTags(obj[n].param3);
-            comp.event = replaceTags(obj[n].inputEvent);
-            comp.action = replaceTags(obj[n].action);
-            comp.inSection = replaceTags(obj[n].section);
-            comp.relatedSUS = replaceTags(obj[n].param1);
-            comp.description = "";
-            try {
-                comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[n]);
-            } catch (e) {
+    fillComponentInfo4GetGUIDesign: function (comp, obj, n) {
+
+        comp.fkInputTableId = replaceTags(obj[n].fkRelatedCompId);
+        comp.id = replaceTags(obj[n].id);
+        comp.inputType = replaceTags(obj[n].inputType);
+        comp.cellNo = replaceTags(obj[n].cellNo);
+        comp.tableName = replaceTags(obj[n].tableName);
+        comp.componentType = replaceTags(obj[n].componentType);
+        comp.orderNo = replaceTags(obj[n].orderNo);
+        comp.label = replaceTags(obj[n].inputName);
+        comp.content = replaceTags(obj[n].inputContent);
+        comp.param1 = replaceTags(obj[n].param1);
+        comp.containerCSS = replaceTags(obj[n].param2);
+        comp.css = replaceTags(obj[n].param4) + ";" + replaceTags(obj[n].param3);
+        comp.event = replaceTags(obj[n].inputEvent);
+        comp.action = replaceTags(obj[n].action);
+        comp.inSection = replaceTags(obj[n].section);
+        comp.relatedSUS = replaceTags(obj[n].param1);
+        comp.description = "";
+        try {
+            comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[n]);
+        } catch (e) {
             comp.description = this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[n]); //for BView.html
-            }
+        }
 
-            try {
-                comp.pureDescription = SAInputDesc.getDescriptionByIn(obj[n].id);
-            } catch (e) {
-                comp.pureDescription = replaceTags(obj[n].description);
-            }
+        try {
+            comp.pureDescription = SAInputDesc.getDescriptionByIn(obj[n].id);
+        } catch (e) {
+            comp.pureDescription = replaceTags(obj[n].description);
+        }
 
-            try {
-                comp.inputTable = replaceTags(obj[n].inputTable);
-            } catch (err) {
-                comp.inputTable = "";
+        try {
+            comp.inputTable = replaceTags(obj[n].inputTable);
+        } catch (err) {
+            comp.inputTable = "";
 
-            }
-        },
+        }
+    },
     showMessageOfLoop: function (sequence) {
         var st = "There is a loop in the following User Stories: \n";
         for (var i = 0; i < sequence.length; i++) {
@@ -10859,7 +10868,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     getGUIDesignHTMLBody: function (res, rowId, sequence) {
-         
+
         if (sequence === 'undefined' || !sequence) {
             sequence = [];
         }
@@ -10897,7 +10906,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
                     var comp = new ComponentInfo();
                     this.fillComponentInfo4GetGUIDesign(comp, obj, n);
-                   
+
                     comp.sequence = sequence;
                     comp.showProperties = showPropertiesGeneral;
 
@@ -11473,6 +11482,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             crossDomain: true,
             async: true,
             success: function (res) {
+                AJAXCallFeedback(res);
                 SAInputDesc.deleteInputDescription(id);
                 SAInput.updateInputByRes(res);
 
@@ -11485,13 +11495,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     deleteCurrentInputFromUSList: function (e) {
         $('#exampleModal').modal('hide');
-      
+
         this.deleteInputFromUSList(e, global_var.current_us_input_id);
-   
+
 
     },
     deleteInputFromUSList: function (e, id) {
-       
+
         if (!confirm("Are you sure?")) {
             return;
         }
@@ -14705,7 +14715,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#smb-general-main-info').html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.current_backlog_id)));
 
         this.getBacklogDetailedInputInfoById_coreNew(SAInput.toJSON());
-        
+
     },
     getStoryInfoOld: function (id, e) {
         if (!id) {
@@ -18051,6 +18061,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setStoryCardOutput(res);
         this.toggleBacklogIsApi4StoryCard();
         setStoryCardOwner();
+         setStoryCardCreatedBy();
     },
 
     setUserStoryInforOnGeneralView4Details: function (res) {
@@ -19087,7 +19098,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
-       
+
         $('#gui_component_main_view').scrollTop(oldTop);
         $('#gui_component_main_view').scrollLeft(oldLeft);
 
@@ -19116,6 +19127,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: true,
             success: function (res) {
                 that.getBacklogDetailedInputInfoById_core(res);
+
             }
         });
     },
@@ -20604,6 +20616,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
+
                 SAInput.addInputByRes(res);
                 loadCurrentBacklogProdDetails();
                 $(el).closest('td')
@@ -20646,11 +20660,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.id = inputId;
         var that = this;
         var data = JSON.stringify(json);
@@ -20662,6 +20672,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
                 SAInput.deleteInput(inputId);
                 SACore.updateBacklogByRes(res);
                 loadCurrentBacklogProdDetails();
@@ -20863,6 +20874,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
+                AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetails();
 
                 $(el).closest('div.span-button-div').find('span.span_hover').text($(el).val())
@@ -20905,7 +20917,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: true,
             success: function (res) {
-
+                AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetailsSyncrone();
                 //refreshLiveProtytypeView();
                 $(el).closest('div.span-button-div').remove();
@@ -26709,6 +26721,7 @@ function deletePDescAll(ids) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         },
         error: function () {

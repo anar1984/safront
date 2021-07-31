@@ -130,137 +130,137 @@ function bindScrollZadToCanvas() {
 //        SADebug.DrawLineOnZoom();
 //    });
 }
-function resizeColDivElement(){
+function resizeColDivElement() {
 
- 
-          
-            $('#SUS_IPO_GUI_Design .component-container-dashed').resizable({
-                handles: 'e',
-                create: function(e, ui) { // pas besoin de create pour l'instant
-          
-          
-                  var parentW = $(this).parent().width();
-                  //var container = $(this).parent();
-                  //var container = $(".row");
-                  //alert(parentW);
-          
-                },
-                start: function(e, ui) {
-          
-                  //alert(ui.size.width);
-                  //var thiscol = $(this);
-                  
-                  //alert(thiscol.css("width"));
-          
-                  //sibTotalWidth = ui.originalSize.width + ui.originalElement.next().outerWidth();
-                  //sibTotalWidth = ui.size.width; //GC
-                },
-                stop: function(e, ui) {
-          
-          
-                },
-                resize: function(e, ui) { // pas besoin pour l'instant
-                
-                  var thiscol = $(this);
-          
-                  var container = thiscol.parent();
-                  var containerW = thiscol.parent().width();
-                  var containerW = thiscol.parent().outerWidth();
-          
-                  var cellPercentWidth = 100 * ui.originalElement.outerWidth() / container.innerWidth();
-          
-                  //alert(cellPercentWidth + ' | ' + container.outerWidth() + ' | ' + ui.originalElement.outerWidth())
-                  
-                  ui.originalElement.css('width', cellPercentWidth + '%');
-          
-                  //alert(ui.originalElement.outerWidth());
-          
-                  //alert(cellPercentWidth);
-                  var Colnum = getClosest(gridsystem, cellPercentWidth);
-                    
-          
-                  //alert($(this).width() + 'px');
-                  var thiscol = $(this);
-          
-          
-                  thiscol.removeClass(bsClass).addClass('col-sm-' + Colnum);
-          
-                  //$('#bb-guide-column .bb-guide').css("width", ''); // empty all style
-          
-                  //alert(cellPercentWidth);
-          
-                }
-              });
-        
-          
-        
+
+
+    $('#SUS_IPO_GUI_Design .component-container-dashed').resizable({
+        handles: 'e',
+        create: function (e, ui) { // pas besoin de create pour l'instant
+
+
+            var parentW = $(this).parent().width();
+            //var container = $(this).parent();
+            //var container = $(".row");
+            //alert(parentW);
+
+        },
+        start: function (e, ui) {
+
+            //alert(ui.size.width);
+            //var thiscol = $(this);
+
+            //alert(thiscol.css("width"));
+
+            //sibTotalWidth = ui.originalSize.width + ui.originalElement.next().outerWidth();
+            //sibTotalWidth = ui.size.width; //GC
+        },
+        stop: function (e, ui) {
+
+
+        },
+        resize: function (e, ui) { // pas besoin pour l'instant
+
+            var thiscol = $(this);
+
+            var container = thiscol.parent();
+            var containerW = thiscol.parent().width();
+            var containerW = thiscol.parent().outerWidth();
+
+            var cellPercentWidth = 100 * ui.originalElement.outerWidth() / container.innerWidth();
+
+            //alert(cellPercentWidth + ' | ' + container.outerWidth() + ' | ' + ui.originalElement.outerWidth())
+
+            ui.originalElement.css('width', cellPercentWidth + '%');
+
+            //alert(ui.originalElement.outerWidth());
+
+            //alert(cellPercentWidth);
+            var Colnum = getClosest(gridsystem, cellPercentWidth);
+
+
+            //alert($(this).width() + 'px');
+            var thiscol = $(this);
+
+
+            thiscol.removeClass(bsClass).addClass('col-sm-' + Colnum);
+
+            //$('#bb-guide-column .bb-guide').css("width", ''); // empty all style
+
+            //alert(cellPercentWidth);
+
+        }
+    });
+
+
+
 }
-  /***********************/
-          
-          // Bootstrap grid system array
-          var gridsystem = [{
-            grid: 8.33333333,
-            col: 1
-          }, {
-            grid: 16.66666667,
-            col: 2
-          }, {
-            grid: 25,
-            col: 3
-          }, {
-            grid: 33.33333333,
-            col: 4
-          }, {
-            grid: 41.66666667,
-            col: 5
-          }, {
-            grid: 50,
-            col: 6
-          }, {
-            grid: 58.33333333,
-            col: 7
-          }, {
-            grid: 66.66666667,
-            col: 8
-          }, {
-            grid: 75,
-            col: 9
-          }, {
-            grid: 83.33333333,
-            col: 10
-          }, {
-            grid: 100,
-            col: 11
-          }, {
-            grid: 91.66666667,
-            col: 12
-          }, {
-            grid: 10000,
-            col: 10000
-          }];
-          
-          // find the closest number from Bootstrap grid
-          function getClosest(arr, value) {
-            var closest, mindiff = null;
-          
-            for (var i = 0; i < arr.length; ++i) {
-              var diff = Math.abs(arr[i].grid - value);
-          
-              if (mindiff === null || diff < mindiff) {
-                // first value or trend decreasing
-                closest = i;
-                mindiff = diff;
-              } else {
-                // trend will increase from this point onwards
-                //return arr[closest]; //object
-                return arr[closest]['col']; // col number
-                //return arr[closest]['grid']; // col percentage
-          
-              }
-            }
-            return null;
-          
+/***********************/
+
+// Bootstrap grid system array
+var gridsystem = [{
+        grid: 8.33333333,
+        col: 1
+    }, {
+        grid: 16.66666667,
+        col: 2
+    }, {
+        grid: 25,
+        col: 3
+    }, {
+        grid: 33.33333333,
+        col: 4
+    }, {
+        grid: 41.66666667,
+        col: 5
+    }, {
+        grid: 50,
+        col: 6
+    }, {
+        grid: 58.33333333,
+        col: 7
+    }, {
+        grid: 66.66666667,
+        col: 8
+    }, {
+        grid: 75,
+        col: 9
+    }, {
+        grid: 83.33333333,
+        col: 10
+    }, {
+        grid: 100,
+        col: 11
+    }, {
+        grid: 91.66666667,
+        col: 12
+    }, {
+        grid: 10000,
+        col: 10000
+    }];
+
+// find the closest number from Bootstrap grid
+function getClosest(arr, value) {
+    var closest, mindiff = null;
+
+    for (var i = 0; i < arr.length; ++i) {
+        var diff = Math.abs(arr[i].grid - value);
+
+        if (mindiff === null || diff < mindiff) {
+            // first value or trend decreasing
+            closest = i;
+            mindiff = diff;
+        } else {
+            // trend will increase from this point onwards
+            //return arr[closest]; //object
+            return arr[closest]['col']; // col number
+            //return arr[closest]['grid']; // col percentage
+
+        }
     }
+    return null;
+
+}
 function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
     var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
     var pid = (projectId) ? projectId : global_var.current_project_id;
@@ -283,6 +283,40 @@ function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
         success: function (res) {
         }
     });
+}
+
+
+
+function AJAXCallFeedback(res) {
+
+    var msgError = "";
+    var err = res.err;
+    if ((err.length) && err.length > 0) {
+        //there are/is errors
+        for (var i in err) {
+            if (err[i].code === 'general') {
+                Toaster.showError(err[i].val);
+                return;
+            } else {
+                var f = false;
+                $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
+                    var fieldList = $(this).attr('sa-selectedfield').split(',');
+                    if (fieldList.includes(err[i].code)) {
+                        f = true;
+                        $(this).closest('div').find('.apd-form-error-msg').remove();
+                        $(this).after('<p class=\'apd-form-error-msg\'>' + err[i].val + '</p>');
+                    }
+                })
+
+                //eyni code-lu component vardir;
+                if (!f) {
+                    Toaster.showError(err[i].val);
+                    msgError = err[i].val;
+                }
+            }
+        }
+        throw 'There is/are error(s), message:' + msgError;
+    }
 }
 
 var backlog_last_modification = {};
@@ -610,7 +644,7 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
- 
+
     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 }
 
@@ -7503,6 +7537,8 @@ function addRelatedApiModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            		AJAXCallFeedback(res);
+            
             $('#addRelatedApiModal').modal('hide');
             new UserStory().getBacklogDesc();
 
@@ -7533,6 +7569,8 @@ function addRelatedSourceCodeModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            		AJAXCallFeedback(res);
+            
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
@@ -7566,6 +7604,7 @@ function removeRelatedSourceCodeFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
+            		AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -7596,7 +7635,7 @@ function removeRelatedApiFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-
+		AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -10016,7 +10055,7 @@ function saveDocument() {
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
     $('#storyCardListSelectBox').change();
-  
+
 });
 
 $(document).on('click', '.live-prototype-show-story-card', function (evt) {
@@ -10525,6 +10564,7 @@ function loadStoryCardInfo4StoryCard(el) {
     new UserStory().toggleSubmenuStoryCard();
     loadUsersAsOwner();
     setStoryCardOwner();
+    setStoryCardCreatedBy();
 }
 
 
@@ -11156,6 +11196,21 @@ function setStoryCardOwner() {
             : ' Unassigned';
     $('#story-card-owner').find('img').attr('src', img);
     $('#story-card-owner').find('span').html(' ' + userName1);
+}
+
+
+function setStoryCardCreatedBy() {
+    var createdBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "createdBy");
+    var userImage = SAProjectUser.GetDetails(createdBy, "userImage");
+    var userName = SAProjectUser.GetDetails(createdBy, "userName");
+    var img = (userImage)
+            ? fileUrl(userImage)
+            : fileUrl(new User().getDefaultUserprofileName());
+    var userName1 = (userName)
+            ? userName
+            : ' Unassigned';
+    $('#story-card-createdby').find('img').attr('src', img);
+    $('#story-card-createdby').find('span').html(' ' + userName1);
 }
 
 function toggleNewUserStory4Section(el) {
@@ -12559,6 +12614,7 @@ function updateUS4ShortChangeDetails(val, ustype) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            AJAXCallFeedback(res);
             SACore.addBacklogByRes(res);
 
             loadCurrentBacklogProdDetailsSyncrone();

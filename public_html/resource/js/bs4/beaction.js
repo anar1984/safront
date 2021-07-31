@@ -130,7 +130,10 @@ var be = {
 
             var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
             var resOut = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
-            resOut['_table'] = res['_table'];
+            try {
+                resOut['_table'] = res['_table'];
+            } catch (err) {
+            }
             res = resOut;
         }
 
@@ -836,9 +839,13 @@ var be = {
         SetInputValuesOnStoryCard(inputList, data) {
             var res = {};
             for (var i in inputList) {
-                if (inputList[i].trim().length > 0) {
-                    var inputName = inputList[i].trim();
-                    res[inputName] = (data[inputName]) ? data[inputName] : "";
+                try {
+                    if (inputList[i].trim().length > 0) {
+                        var inputName = inputList[i].trim();
+                        res[inputName] = (data[inputName]) ? data[inputName] : "";
+                    }
+                } catch (err) {
+
                 }
             }
             return res;
