@@ -19129,7 +19129,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: true,
             success: function (res) {
                 that.getBacklogDetailedInputInfoById_core(res);
- 
+
             }
         });
     },
