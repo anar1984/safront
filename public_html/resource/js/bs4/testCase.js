@@ -1635,7 +1635,7 @@ $(document).on("click", '#expand-group', function (e) {
 $(document).on("click", '#addIssueButtonId', function (e) {
     var elem = $("#taskNameInputNew2")
     addNewTask4Bug(elem)
-    $("#issue-managment-add-task").modal('hide');
+//    $("#issue-managment-add-task").modal('hide');
 
 
 })
