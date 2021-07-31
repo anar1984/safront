@@ -26795,7 +26795,7 @@ function setColoredToInputDesc(el, ids, color) {
                 $(el).closest('div.span-button-div').find('a.colored-a')
                         .removeAttr('style');
             }
-        },
+        },   
         error: function () {
             Toaster.showError(('somethingww'));
         }
