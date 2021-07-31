@@ -19097,6 +19097,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('.gv_gui_component_main_view').attr('style', global_var.actual_backlog_gui_css);
 
         SADebug.RemoveAllDrawLine();
+
+        
         SADebug.DrawLines();
 
         $('#gui_component_main_view').scrollTop(oldTop);
