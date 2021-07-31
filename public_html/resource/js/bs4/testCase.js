@@ -169,6 +169,8 @@ $(document).on("change", "#inputGroupSelect01", function (e) {
 
 
 function getGroupList() {
+   try {
+        
     var sv = $("#inputGroupSelect01").val();
 
     var td = $("#bugListTable tbody tr td:eq(" + sv + ")").attr("class").split(/\s+/);
@@ -182,6 +184,10 @@ function getGroupList() {
             sortTable(sv, item);
         }
     })
+   } catch (error) {
+       
+   }
+  
 }
 
 $(document).on('click', '.bugChangegroupArrow', function (evt) {
@@ -617,7 +623,8 @@ function setBugFilterProjectAdd() {
 }
 
 function addUserStoryNewPopupBug() {
-    var usName = $('#addUserStoryPopupModal-userstoryname').val();
+    var usName = $('#addUserStoryPopupModal-userstoryname1').val();
+    console.log(usName);
     if (!usName)
         return;
 
@@ -1213,7 +1220,7 @@ function getBugListDetails(res) {
                         .attr("aria-expanded", "false")
                         .attr("id", "bug-listassigne-dropdown")
                         .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                            .attr('src', img) : "")
+                            .attr('src', img) : "<img class='Assigne-card-story-select-img' src='https://app.sourcedagile.com/api/get/files/userprofile.png'> Unassigned")
                         .append(o.userName))
 
                     .append($("<div>")
@@ -1244,7 +1251,7 @@ function getBugListDetails(res) {
                         .attr("aria-haspopup", "true")
                         .attr("aria-expanded", "false")
                         .attr("id", "bug-tasktype-dropdown")
-                        .append(replaceTags(o.taskTypeName)))
+                        .append((replaceTags(o.taskTypeName)? "<span style ='visibility:hidden;'>fddfhdh</span>":"<span style ='visibility:hidden;'>fddfhdh</span>")))
 
                     .append($("<div>")
                         .addClass("dropdown-menu")
@@ -1635,7 +1642,7 @@ $(document).on("click", '#expand-group', function (e) {
 $(document).on("click", '#addIssueButtonId', function (e) {
     var elem = $("#taskNameInputNew2")
     addNewTask4Bug(elem)
-//    $("#issue-managment-add-task").modal('hide');
+    $("#issue-managment-add-task").modal('hide');
 
 
 })
