@@ -654,13 +654,18 @@ function setBugFilterProjectAdd(elId) {
 
 function addUserStoryNewPopupBug() {
     var usName = $('#addUserStoryPopupModal-userstoryname1').val();
-    console.log(usName);
+    var prid = $('#bug_filter_project_id_add_pop').val();
+
+     if(!prid){
+        Toaster.showError("Please Choose Project")
+        return
+     }
     if (!usName)
         return;
 
     var json = initJSON();
     json.kv['backlogName'] = usName;
-    json.kv['fkProjectId'] = global_var.current_project_id;
+    json.kv['fkProjectId'] =prid ;
     json.kv['isApi'] = "0";
     var that = this;
     var data = JSON.stringify(json);
@@ -884,7 +889,7 @@ function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
         return;
 
 
-        
+
     } 
 
 
