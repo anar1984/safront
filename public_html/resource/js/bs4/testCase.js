@@ -687,10 +687,13 @@ function addUserStoryNewPopupBug() {
             // $('.projectList_activity').change();
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModalwithProject').modal('hide');
-
+           
             if (global_var.current_modal === 'loadStoryCard') {
                 $('.projectList_liveprototype_storycard').change();
             }
+
+            $("#bug_filter_backlog_id").val(res.kv.id)
+            $("#bug_filter_backlog_id").change()
         }
     });
 }
