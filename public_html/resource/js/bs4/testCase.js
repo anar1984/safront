@@ -882,7 +882,10 @@ function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
         }
     } catch (e) {
         return;
-    }
+
+
+        
+    } 
 
 
     var json = {kv: {}};
