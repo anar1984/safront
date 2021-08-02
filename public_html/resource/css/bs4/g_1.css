@@ -1246,7 +1246,7 @@ START PROJECT SECTION
 
 /* search */
 .search {
-    margin: 13px;
+    margin: 0px 10px 20px 10px;
 }
 .pro-tr .active{
     display: none;
@@ -1256,7 +1256,9 @@ START PROJECT SECTION
     display: inline-block;
     position: relative;
 }
-
+#multi-edit-menu-btn{
+    display: none;
+}
 .search > div:after {
     content: "";
     background: #000000;

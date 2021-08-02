@@ -261,60 +261,86 @@ function getSprintFilterCheckedCount() {
     return rc;
 }
 
-$(document).on('click', '.assign-label-to-task-item', function (evt) {
-    var id = $(this).attr("pid");
-    var projectId = $(this).attr('projectId');
-    var backlogId = $(this).attr('backlogId');
+function lableAddAssign(elm) {
+    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+ 
+    var labelId = $(elm).attr("id");
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+       
+        var projectId = $(check[indx]).parents("tr").attr('projectid');
+        var backlogId = $(check[indx]).parents("tr").attr('stIdr')?'-1':"";
+        var id = $(check[indx]).parents("tr").attr("id");
+   
+        
+           var  checked = '1';
+        
+    
+        var json = {
+            kv: {}
+        };
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {}
+        json.kv['fkLabelId'] = labelId;
+        json.kv['fkProjectId'] = projectId;
+        json.kv.fkBacklogId = backlogId;
+        json.kv['fkBacklogTaskId'] = id;
+        json.kv.assign = checked;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmAssignLabelToTask",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                new Label().load4Task()
+            },
+            error: function () {
+                Toaster.showError(('Something went wrong!!!'));
+            }
+        });
 
-    var labelId = $(this).attr("sid");
-    var checked = '0';
-    if ($(this).is(":checked")) {
-        checked = '1';
     }
 
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {}
-    json.kv['fkLabelId'] = labelId;
-    json.kv['fkProjectId'] = projectId;
-    json.kv.fkBacklogId = backlogId;
-    json.kv['fkBacklogTaskId'] = id;
-    json.kv.assign = checked;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmAssignLabelToTask",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            new Label().load4Task()
-        },
-        error: function () {
-            Toaster.showError(('Something went wrong!!!'));
-        }
-    });
-});
+}
+
+    
+};
 
 
-$(document).on('click', '.assign-sprint-to-task-item', function (evt) {
-    var id = $(this).attr("pid");
-    var projectId = $(this).attr('projectId');
-    var backlogId = $(this).attr('backlogId');
+ function sprintAddAssign(elm) {
+  
 
-    var sprintId = $(this).attr("sid");
-    var checked = '0';
-    if ($(this).is(":checked")) {
-        checked = '1';
+
+
+    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    var sprintId = $(elm).attr("id");
+    
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+       
+        var projectId = $(check[indx]).parents("tr").attr('projectid');
+        var backlogId =$(check[indx]).parents("tr").attr('stIdr')?'-1':"";;
+        var id = $(check[indx]).parents("tr").attr("id");
+
+        var checked = '1';
+        
+        sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked);
+        
     }
-    sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked);
 
-});
+}
+
+
+};
 
 function sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked) {
     var json = initJSON();
@@ -390,9 +416,7 @@ function addNewTask4Bug(el) {
     var backlogList = $('#bug_filter_backlog_id_add').val()
     /*    : ['-1']; */
     var assigneeList = $('#bug_filter_assignee_id_add').val()
-    /* ($('#bug_filter_assignee_id_add').val().length > 0)
-               ?  */
-    /* : ['-1']; */
+ 
     var sprintList = "";
     $('.bug-task-filter-checkbox-sprint').each(function () {
         if ($(this).is(":checked")) {
@@ -422,6 +446,8 @@ function addNewTask4BugInput(el) {
     if (!$(el).val().trim()) {
         return;
     }
+
+    var tskNature = $("#bug_add_nature").val();
     var taskName = $(el).val().trim();
     var projectList = $('#bug_filter_project_id').val();
     if (projectList.length === 0) {
@@ -443,7 +469,7 @@ function addNewTask4BugInput(el) {
 
     for (var bid in backlogList) {
         for (var aid in assigneeList) {
-            insertNewTaskDetail4Bug(taskName, backlogList[bid], assigneeList[aid], 'new', projectList, sprintList, "", "new", "")
+            insertNewTaskDetail4Bug(taskName, backlogList[bid], assigneeList[aid], 'new', projectList, sprintList, "", tskNature, "")
         }
     }
 
@@ -547,6 +573,7 @@ function setBugFilterAssignees() {
             var select = $('#bug_filter_assignee_id');
             var select2 = $('#bug_filter_created_by');
             var select3 = $('#bug_filter_assignee_id_add');
+            var select4 = $('#bug_filter_assignee_id_multi');
             select.html('');
             select2.html('');
             var obj = res.tbl[0].r;
@@ -555,9 +582,11 @@ function setBugFilterAssignees() {
                 var op = $("<option>").val(o.fkUserId).text(o.userName);
                 var op2 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op3 = $("<option>").val(o.fkUserId).text(o.userName);
+                var op4 = $("<option>").val(o.fkUserId).text(o.userName);
                 select.append(op);
                 select2.append(op2);
                 select3.append(op3);
+                select4.append(op4);
             }
 
             if (global_var.current_user_type === 'S') {
@@ -567,6 +596,7 @@ function setBugFilterAssignees() {
             select.selectpicker('refresh');
             select2.selectpicker('refresh');
             select3.selectpicker('refresh');
+            select4.selectpicker('refresh');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -606,8 +636,8 @@ function setBugFilterProject() {
     }
 }
 
-function setBugFilterProjectAdd() {
-    var select = $('#bug_filter_project_id_add');
+function setBugFilterProjectAdd(elId) {
+    var select = $("#"+elId);
     var keys = Object.keys(SACore.Project);
     select.append($("<option>")
         .val("")
@@ -619,7 +649,7 @@ function setBugFilterProjectAdd() {
             .text(SACore.Project[pid]))
     }
 
-    $('#bug_filter_project_id_add').selectpicker('refresh');
+    $('#'+elId).selectpicker('refresh');
 }
 
 function addUserStoryNewPopupBug() {
@@ -746,8 +776,146 @@ $(document).on("click", '.openBugStatus', function (e) {
     openTaskDialog();
 })
 $(document).on("click", '#addNewTaskButton', function (e) {
-    setBugFilterProjectAdd();
+    setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
+    add_loadTaskType_bug_list(dwlmt)
+})
+$(document).on("click", '#update_multi_bug_change_btn', function (e) {
+
+   var fkAssigneeId = $("#bug_filter_assignee_id_multi").val();
+   var fkTaskTypeId = $("#bug_task_type_id_multi").val();
+   var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
+   var taskPriority = $("#bug_filter_priority_add").val();
+   var taskNature = $("#bug_task_nature_id_multi").val();
+
+   var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+  
+    if(!fkAssigneeId == 0){
+
+        for (var indx = 0; indx < check.length; indx++) {
+    
+    
+            if($(check[indx]).prop('checked')){
+        
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                   
+                multiUpdateTask4ShortChangePure(fkAssigneeId, "fkAssigneeId", taskId);
+                
+            }
+        
+        }
+    }
+    if(!fkTaskTypeId == 0){
+
+        for (var indx = 0; indx < check.length; indx++) {
+    
+    
+            if($(check[indx]).prop('checked')){
+        
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                   
+                multiUpdateTask4ShortChangePure(fkTaskTypeId, "fkTaskTypeId", taskId);
+                
+            }
+        
+        }
+    }
+    if(!fkBacklogId == 0){
+
+        for (var indx = 0; indx < check.length; indx++) {
+    
+    
+            if($(check[indx]).prop('checked')){
+        
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                   
+                multiUpdateTask4ShortChangePure(fkBacklogId, "fkBacklogId", taskId);
+                
+            }
+        
+        }
+    }
+    if(!taskPriority == 0){
+
+        for (var indx = 0; indx < check.length; indx++) {
+    
+    
+            if($(check[indx]).prop('checked')){
+        
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                   
+                multiUpdateTask4ShortChangePure(taskPriority, "taskPriority", taskId);
+                
+            }
+        
+        }
+    }
+    if(!taskNature == 0){
+
+        for (var indx = 0; indx < check.length; indx++) {
+    
+    
+            if($(check[indx]).prop('checked')){
+        
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                   
+                multiUpdateTask4ShortChangePure(taskNature, "taskNature", taskId);
+                
+            }
+        
+        }
+    }
+    
+
+    $("#multieditpopUp").modal("hide");
+
+})
+
+
+function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
+ 
+
+    try {
+
+        if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
+            return;
+        }
+    } catch (e) {
+        return;
+    }
+
+
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = taskId;
+    json.kv.type = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateTask4ShortChange",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SATask.addTaskByRes(res);
+            SACore.updateBacklogByRes(res);
+      
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+$(document).on("click", '#multi-edit-menu-btn', function (e) {
+    setBugFilterProjectAdd('bug_filter_project_id_multi');
+    var dwlmt = $('#bug_task_type_id_multi')
     add_loadTaskType_bug_list(dwlmt)
 })
 
@@ -1089,7 +1257,7 @@ function getBugListDetails(res) {
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
 
-        var isLabelChecked = (bug_filter.label_id.length > 1);
+/*         var isLabelChecked = (bug_filter.label_id.length > 1);
         var divLabelFilter = $('<div>')
             .append($("<input type='checkbox'>")
                 .addClass("assign-label-to-task-item")
@@ -1098,14 +1266,14 @@ function getBugListDetails(res) {
                 .attr('backlogId', o.fkBacklogId)
                 .attr("checked", isLabelChecked)
                 .attr("sid", global_var.bug_task_label_assign_id))
-            .append($('<span>').append(" (" + global_var.bug_task_label_assign_name + ") "));
+            .append($('<span>').append(" (" + global_var.bug_task_label_assign_name + ") ")); */
 
-        var rsLabelFilter = global_var.bug_task_label_assign_checked === 1 ?
+        /* var rsLabelFilter = global_var.bug_task_label_assign_checked === 1 *//*  ?
             divLabelFilter.html() :
-            "";
-
-        var ischecked = (bug_filter.sprint_id.length > 1);
-        var div = $('<div>')
+            ""; */
+/* 
+        var ischecked = (bug_filter.sprint_id.length > 1); */
+/*         var div = $('<div>')
             .append($("<input type='checkbox'>")
                 .addClass("assign-sprint-to-task-item")
                 .attr("pid", o.id)
@@ -1113,13 +1281,13 @@ function getBugListDetails(res) {
                 .attr('backlogId', o.fkBacklogId)
                 .attr("checked", ischecked)
                 .attr("sid", global_var.bug_task_sprint_assign_id))
-            .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") "));
+            .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") ")); */
 
 
 
-        var rs = global_var.bug_task_sprint_assign_checked === 1 ?
+        var rs = global_var.bug_task_sprint_assign_checked === 1 /* ?
             div.html() :
-            "";
+            ""; */
 
         sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
         sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
@@ -1129,7 +1297,7 @@ function getBugListDetails(res) {
         sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
 
         var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
-        row += " " + rs + rsLabelFilter;
+        row += " " /* + rs + rsLabelFilter; */
 
         var userImage = o.userImage;
         var img = (userImage) ?
@@ -1148,8 +1316,9 @@ function getBugListDetails(res) {
         var t = $('<tr>')
             .attr("id", o.id)
             .attr("projectId", o.fkProjectId)
+            .attr("stIdr", o.fkBacklogId)
             .addClass('bug-tr')
-            .append($('<td>').append(row))
+            .append($('<td>').attr("style","min-width:50px;padding:5px;").append(row+'<input class="checkbox-issue-task" type="checkbox">'))
             .append($('<td>').addClass('bug-list-column')
                 .addClass('bug-list-column-task-status')
                 .append($("<div>")
@@ -1581,6 +1750,58 @@ function getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount
 }
 
 
+$(document).on("click", '.all-bug-list-check', function (e) {
+   
+    var chck = $(".checkbox-issue-task");
+    if ($(this).is(':checked')) {
+        $('#multi-edit-menu-btn').css('display','initial');
+        chck.prop('checked', true);
+        } else {
+          
+           $('#multi-edit-menu-btn').css('display','none');
+           chck.prop('checked', false);
+        }
+
+})
+$(document).on("click", '.checkbox-issue-task', function (e) {
+   
+     
+      var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+
+   var ast =[];
+var pids=[];
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+  
+    ast.push($(check[indx]).prop('checked'));
+    pids.push($(check[indx]).attr('onclick_trigger_id'));
+
+    }
+
+}
+
+
+
+   if(ast.length===check.length){
+        $(".all-bug-list-check").prop('checked', true);
+    }else{
+
+     $(".all-bug-list-check").prop('checked', false);
+
+    }
+   if(ast.length>1){
+         $('#multi-edit-menu-btn').css('display','initial');
+    }else{
+
+      $('#multi-edit-menu-btn').css('display','none');
+
+    }
+
+  
+
+})
 $(document).on("change", '#bug_filter_project_id', function (e) {
     var id = getProjectListIn();
     loadStoryCardByProject(id);
@@ -1646,18 +1867,8 @@ $(document).on("click", '#addIssueButtonId', function (e) {
 
 
 })
-/* $(document).on("change", '#bug_filter_assignee_id_add', function (e) {
-    var id = $(this).val();
-    $('#bug_filter_assignee_id').val(id)
 
 
-})
-$(document).on("change", '#bug_filter_backlog_id_add', function (e) {
-    var id = $(this).val();
-    $('#bug_filter_backlog_id').val(id)
-
-
-})*/
 $(document).on("click", '#bug-listassigne-dropdown', function (e) {
 
     var id = $(this).parents('tr').attr("projectid")
@@ -1714,7 +1925,7 @@ $(document).on("click", '.bug-list-column-tasktype a', function (e) {
 
     updateTask4ShortChangePure(val, "fkTaskTypeId", id);
 
-
+    
 
 })
 
@@ -1856,6 +2067,7 @@ function loadAssigneesByProject(projectId) {
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
+            $('#bug_filter_assignee_id_multi').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
         },
         error: function () {
@@ -1868,6 +2080,7 @@ function loadAssigneesByProject(projectId) {
 function loadAssigneesByProjectDetails(res) {
     $('#bug_filter_assignee_id').html('');
     $('#bug_filter_assignee_id_add').html('');
+    $('#bug_filter_assignee_id_multi').html('');
     $('#bug_filter_created_by').html('');
     $('#testcase_createdbyfilter').html('');
 
@@ -1878,8 +2091,10 @@ function loadAssigneesByProjectDetails(res) {
         var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
         var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
         var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+        var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
         $('#bug_filter_assignee_id').append(opt);
         $('#bug_filter_assignee_id_add').append(opt4);
+        $('#bug_filter_assignee_id_multi').append(opt5);
         $('#bug_filter_created_by').append(opt2);
         $('#testcase_createdbyfilter').append(opt3);
 

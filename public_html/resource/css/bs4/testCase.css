@@ -220,6 +220,17 @@
 ------------------------------------------- */
 .prerActionTableGeneralCls{
     border:none !important;
+   
+}
+.fixed-input-add-desc{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background: white;
+    padding: 5px;
+    z-index: 555;
+    box-shadow: rgb(9 30 66 / 40%) 0px 7px 30px 5px, rgb(9 30 66 / 60%) 0px 0px 1px;
+    margin: 5px;
 }
 .textareaStyle{
     background-color: transparent;
