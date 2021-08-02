@@ -12943,7 +12943,7 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
     if (global_var.current_modal === "loadTaskManagement") {
         $('.' + global_var.task_mgmt_group_by).click();
     } else if (global_var.current_modal === "loadBugChange") {
-        getBugListDetails(coreBugList);
+        sprintAddAssign(this);
     }
 });
 
@@ -12956,7 +12956,7 @@ $(document).on('click', '.bug-task-label-assign', function (evt) {
     if (global_var.current_modal === "loadTaskManagement") {
         $('.' + global_var.task_mgmt_group_by).click();
     } else if (global_var.current_modal === "loadBugChange") {
-        getBugListDetails(coreBugList);
+        lableAddAssign(this);
     }
 });
 
