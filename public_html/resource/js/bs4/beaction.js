@@ -1711,6 +1711,8 @@ var SAFN = {
         'clearclass': 'ClearClass',
         'showparam': 'ShowParam',
         'hideparam': 'HideParam',
+        'visible': 'Visible',
+        'unvisible': 'Unvisible',
         'sendemail': 'SendEmail'
     },
     IsCommand: function (fnName) {
@@ -2101,6 +2103,16 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
 
             $('.' + className).show();
+        },
+         Visible: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
+
+            $('.' + className).css('visibility','visible');
+        },
+        Unvisible: function (className) {
+            className = SAFN.GetArgumentPureValue(className);
+
+            $('.' + className).css('visibility','hidden');
         },
         Hide: function (className) {
             className = SAFN.GetArgumentPureValue(className);
