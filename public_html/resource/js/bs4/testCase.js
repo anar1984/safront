@@ -2182,7 +2182,7 @@ function loadStoryCardByProjectDetailsAdd(res) {
         var obj = res.tbl[0].r;
         for (var i in obj) {
             var o = obj[i];
-            el.append($('<option>')
+            el.append($('<dddoption>')
                 .val(o.id)
                 .text(o.backlogName));
         }
@@ -2204,3 +2204,8 @@ $(document).on('click', function (e) {
         }
     })
 })
+
+
+
+
+
