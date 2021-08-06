@@ -632,32 +632,32 @@ var Statistics = {
             var table = $("<table>")
                     .addClass("table table-hover project-table-list text-center")
                     .append($('<thead>')
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("User"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Assigned Tasks"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Assigned Bugs"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Assinged Change Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Assigned New Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Created Tasks"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Created Bugs"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Created New Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Created Change Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Created Story Cards"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("User"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Assigned Tasks"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Assigned Bugs"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Assinged Change Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Assigned New Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Created Tasks"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Created Bugs"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Created New Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Created Change Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Created Story Cards"))
                             );
             var obj = Statistics.ProjectList;
             for (var id in obj) {
                 var name = obj[id];
                 try {
                     var tr = $('<tr>')
-                            .append($("<td class='text-center' style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(name))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "overall", Statistics.ProjectList_TaskOverall[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "bug", Statistics.ProjectList_Bug[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "change", Statistics.ProjectList_Change[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "new", Statistics.ProjectList_New[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "created", Statistics.ProjectList_Created[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "createdbug", Statistics.ProjectList_CreatedBug[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "creatednew", Statistics.ProjectList_CreatedNew[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByAssignee(id, "createdchange", Statistics.ProjectList_CreatedChange[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "createdstory", Statistics.ProjectList_CreatedStory[id])))
+                            .append($("<td class='text-center' style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(name))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "overall", Statistics.ProjectList_TaskOverall[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "bug", Statistics.ProjectList_Bug[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "change", Statistics.ProjectList_Change[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "new", Statistics.ProjectList_New[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "created", Statistics.ProjectList_Created[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "createdbug", Statistics.ProjectList_CreatedBug[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "creatednew", Statistics.ProjectList_CreatedNew[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByAssignee(id, "createdchange", Statistics.ProjectList_CreatedChange[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "createdstory", Statistics.ProjectList_CreatedStory[id])))
 
                     table.append(tr);
                 } catch (err) {
@@ -674,13 +674,13 @@ var Statistics = {
             var table = $("<table>")
                     .addClass("table table-hover project-table-list text-center")
                     .append($('<thead>')
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("Project"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Overall Tasks"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Bugs"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Change Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# New Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Unassigned Tasks"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Tasks without Story Cards"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("Project"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Overall Tasks"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Bugs"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Change Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# New Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Unassigned Tasks"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Tasks without Story Cards"))
                             )
                     ;
             var obj = Statistics.ProjectList;
@@ -688,13 +688,13 @@ var Statistics = {
                 var name = obj[id];
                 try {
                     var tr = $('<tr>')
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(name))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "overall", Statistics.ProjectList_TaskOverall[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "bug", Statistics.ProjectList_Bug[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "change", Statistics.ProjectList_Change[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "new", Statistics.ProjectList_New[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "unassigned", Statistics.ProjectList_TaskUnassigned[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatusByTask(id, "nostorycard", Statistics.ProjectList_TaskNostorycard[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(name))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "overall", Statistics.ProjectList_TaskOverall[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "bug", Statistics.ProjectList_Bug[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "change", Statistics.ProjectList_Change[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "new", Statistics.ProjectList_New[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "unassigned", Statistics.ProjectList_TaskUnassigned[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatusByTask(id, "nostorycard", Statistics.ProjectList_TaskNostorycard[id])))
 
                     table.append(tr);
                 } catch (err) {
@@ -711,13 +711,13 @@ var Statistics = {
             var table = $("<table>")
                     .addClass("table table-hover project-table-list text-center")
                     .append($('<thead>')
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("Project"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Overall Story Cards"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Story Cards in Action"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Initial Story Cards"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Story Cards with Bugs"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Story Cards with Change Requests"))
-                            .append($("<th style='border-right: 1px solid #dee2e6;'>").append("# Story Cards with New Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("Project"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Overall Story Cards"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Story Cards in Action"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Initial Story Cards"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Story Cards with Bugs"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Story Cards with Change Requests"))
+                            .append($("<th style='border-right: 1px solid #abc4ff;'>").append("# Story Cards with New Requests"))
 
                             )
                     ;
@@ -726,13 +726,13 @@ var Statistics = {
                 var name = obj[id];
                 try {
                     var tr = $('<tr>')
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(name))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "overall", Statistics.ProjectList_Overall[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "inaction", Statistics.ProjectList_InAction[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "initial", Statistics.ProjectList_Initial[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "withbugs", Statistics.ProjectList_WithBugs[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "withchanges", Statistics.ProjectList_WithChange[id])))
-                            .append($("<td style='padding:25px 5px; border-right: 1px solid #dee2e6;'>").append(this.CellDivByStatus(id, "withnews", Statistics.ProjectList_WithNew[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(name))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "overall", Statistics.ProjectList_Overall[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "inaction", Statistics.ProjectList_InAction[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "initial", Statistics.ProjectList_Initial[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "withbugs", Statistics.ProjectList_WithBugs[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "withchanges", Statistics.ProjectList_WithChange[id])))
+                            .append($("<td style='padding:25px 5px; border-right: 1px solid #abc4ff;'>").append(this.CellDivByStatus(id, "withnews", Statistics.ProjectList_WithNew[id])))
 
                 } catch (err) {
 
@@ -976,7 +976,7 @@ var Statistics = {
                         .append($("<td>").addClass(cssTd4Undefined).append(this.GetOwnerInfo(ownerId)).append(" ").append(ownerName))
                         .append($("<td>").append(owners4New[ownerId]))
                         .append($("<td>").append(owners4Change[ownerId]))
-                        .append($("<td>").css("border-right", "1px solid #dee2e6").append(owners4Bug[ownerId]))
+                        .append($("<td>").css("border-right", "1px solid #abc4ff").append(owners4Bug[ownerId]))
                         .append($("<td>").append($("<b>").append(overall)))
                         ;
                 table.append(tr);
@@ -986,7 +986,7 @@ var Statistics = {
                     .append($("<td>").addClass("text-right").append($("<b>").append("Total")))
                     .append($("<td>").append($("<b>").append(idxNew)))
                     .append($("<td>").append($("<b>").append(idxChange)))
-                    .append($("<td>").css("border-right", "1px solid #dee2e6").append($("<b>").append(idxBug)))
+                    .append($("<td>").css("border-right", "1px solid #abc4ff").append($("<b>").append(idxBug)))
                     .append($("<td>").append($("<b>").append(idxNew + idxChange + idxBug)))
                     ;
             table.append(tr1);
@@ -1046,7 +1046,7 @@ var Statistics = {
                                 .append(this.GetTaskNatureGroupByStatus4Closed(owners4Change4Task, ownerId))
                                 )
                         .append($("<td>")
-                                .css("border-right", "1px solid #dee2e6")
+                                .css("border-right", "1px solid #abc4ff")
                                 .append((owners4Bug[ownerId]) ? $("<b>").append("Total - ").append(owners4Bug[ownerId]) : "")
                                 .append(this.GetTaskNatureGroupByStatus4New(owners4Bug4Task, ownerId))
                                 .append(this.GetTaskNatureGroupByStatus4Ongoing(owners4Bug4Task, ownerId))

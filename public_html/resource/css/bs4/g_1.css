@@ -834,6 +834,7 @@ b{
  .first-side:hover {
     overflow: visible;
     width: 30%;
+    background-color: #fff;
 } 
 
 .description-main{
@@ -1049,7 +1050,7 @@ button.dropdown-item:hover{
     opacity: 0.9;
     transition: all 0.45s cubic-bezier(0.77, 0, 0.175, 1);
     z-index: 1001;
-    background-color: #ffffff; 
+    
   
    height: 40px;
     transition: all 1s ease;
@@ -1170,18 +1171,22 @@ button.dropdown-item:hover a{
 START PROJECT SECTION
 *********************** */
 .project-table-list{
-    border: 1px solid #cccccc;
+    border: 1px solid #abc4ff;
 }
 .project-table-list thead{
     cursor: move;
 }
+.project-table-list tr{
+    background-color: #d7e3fc;
+}
 .project-table-list tr:nth-child(even){
-    background-color: #eeeeee;
+    background-color: transparent;
 }
 
+
 .project-table-list thead{
-    background-color: #eeeeee;
-    border: 1px solid #cccccc;
+    background-color: #d7e3fc;
+    border: 1px solid #abc4ff;
 }
 .project-table-list td:nth-child(1){
     border-right: 1px solid #dee2e6;
@@ -2981,6 +2986,7 @@ ul.main-nav > li > div.sub-menu-block {
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0.2;
   }
   
   .first-side .hamburger1 > div {
@@ -2993,6 +2999,9 @@ ul.main-nav > li > div.sub-menu-block {
     align-items: center;
     justify-content: center;
     transition: all 0.4s ease;
+  }
+  .first-side:hover .hamburger1{
+   opacity: 1;
   }
   /* Hamburger Lines - Top & Bottom */
   .first-side .hamburger1 > div::before,
@@ -5810,4 +5819,227 @@ span.ruby-c-content {
       transform: translateX(100%) rotate(0deg);
    }
   }
+
+
+
+  .histroy-and-dashboard h1 {
+    font-weight: 300;
+  }
+  
+  .histroy-and-dashboard {
+    background: #eaedf2;
+    width: 100%;
+    height: 100vh;
+    /* margin: 50px auto; */
+    border-radius: 4px 2px 2px 4px;
+    position: fixed;
+  }
+  
+  .histroy-and-dashboard .dark-menu {
+    background: #023047;
+    width: 5%;
+    height: 100%;
+    border-radius: 2px 0 0 2px;
+    text-align: center;
+    float: left;
+    display: block;
+  }
+  
+ .histroy-and-dashboard .dark-menu a {
+    color: #76838c;
+    display: block;
+    padding: 17px;
+    text-decoration: none;
+  }
+  
+ .histroy-and-dashboard .dark-menu a:hover {
+    color: #fff;
+  }
+  
+ .histroy-and-dashboard .dark-menu a.active {
+    color: white;
+    border-left: solid #219ebc 3px;
+  }
+  
+  .histroy-and-dashboard .light-menu {
+    width: 120px;
+    height: 100%;
+    float: left;
+    margin-right: -9px;
+  }
+  
+  .histroy-and-dashboard .light-menu a {
+    color: #85899b;
+    display: block;
+    padding: 10px 10px 10px 22px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .histroy-and-dashboard .light-menu a:hover {
+    color: #333;
+  }
+  
+  .histroy-and-dashboard  .light-menu a.active {
+    color: #33353c;
+  
+  }
+  
+  .histroy-and-dashboard .active-icon {
+    margin-left: -3px;
+  }
+  
+  .histroy-and-dashboard #search-btn {
+    background: #219ebc;
+    color: #fff;
+    border-radius: 2px 0 0 0;
+  }
+  
+  .histroy-and-dashboard .top-menu {
+    background: #d7e3fc;
+    width: 95%;
+    height: 58px;
+    float: left;
+    margin-left: 0;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .histroy-and-dashboard #page_title {
+    background: #fff;
+    padding: 11px 35px 11px 20px;
+    float: left;
+    font-size: 25px;
+    margin: 0px -10px 20px 0;
+  }
+  
+  .histroy-and-dashboard nav {
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    float: left;
+    position: relative;
+    left: 10px;
+  }
+  
+  .histroy-and-dashboard nav a {
+      position: relative;
+      display: inline-block;
+      padding: 1.9em 2em 1.2em 1em;
+      color: #757c8f;
+      text-decoration: none;
+      margin: 0 -3px;
+    position: relative;
+    top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  } 
+  
+  .histroy-and-dashboard nav a:hover::before {
+      content: ''; /* To generate the box */
+      position: absolute;
+      top: 0; right: 0; bottom: .5em; left: 0;
+      z-index: -1;
+      border-bottom: none;
+      border-radius: 5px 2px 0 0;
+      background: #eaedf2;
+      box-shadow: 0 2px hsla(0,0%,100%,.5) inset;
+      transform: perspective(5px) rotateX(2deg);
+      transform-origin: bottom left;
+  }
+  
+  .histroy-and-dashboard .active-tab::before {
+      content: ''; /* To generate the box */
+      position: absolute;
+      top: 0; right: 0; bottom: .5em; left: 0;
+      z-index: -10;
+      border-bottom: none;
+      border-radius: 5px 2px 0 0;
+      background: #eaedf2;
+      box-shadow: 0 2px hsla(0,0%,100%,.5) inset;
+      transform: perspective(5px) rotateX(2deg);
+      transform-origin: bottom left;
+    box-shadow: inset 0px 0px 10px #dadce0;
+    height: 80px;
+    margin-top: -14px;
+  }
+  
+  .histroy-and-dashboard .active-tab {
+    color: #219ebc;
+    padding: 1.9em 3em 1.2em 1em;
+    margin-right: -10px;
+    margin-left: 1px
+  }
+  
+  .histroy-and-dashboard #content {
+    background: #e2eafc;
+    width: 94%;
+    /* height: 544px; */
+    float: left;
+  
+    position: relative;
+    z-index: 10;
+    overflow-y: auto;
+    height: 100%;
+    padding: 30px;
+  }
+  
+  .histroy-and-dashboard  .table-content {
+    background: #fff;
+    width: 97.5%;
+    height: 93.1%;
+    margin-top: 20px;
+    box-shadow: #dcdee3 0px 0px 10px;
+    margin-left: 5px;
+    
+  }
+  
+ .histroy-and-dashboard .table-content table {
+    width: 100%;
+  }
+  
+  .histroy-and-dashboard .table-content thead {
+    background: #8ecae6;
+  }
+  
+  .histroy-and-dashboard .table-content thead tr td {
+    color: #757e92;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 14px 10px;
+  }
+  
+  .histroy-and-dashboard .table-content tbody tr td {
+    padding: 14px 10px;
+    border-bottom: #eaecee solid 1px;
+  }
+  
+  .histroy-and-dashboard .table-content tbody tr:hover {
+    background: #fefaf2;
+  }
+  
+  .histroy-and-dashboard .name-td {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .histroy-and-dashboard .desc-td {
+    font-size: 13px;
+    color: #64697a;
+  }
+  
+  .histroy-and-dashboard .date-td {
+    text-align: right;
+    font-size: 9px;
+  }
+  
+  .histroy-and-dashboard .checked {
+    background: #fefaf2;
+  }
+/*   table css edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+td.selected{
+	border: 1px double #4887C7 !important;
+	background-color: rgba(51, 122, 183, 0.2) !important;
+}
 
