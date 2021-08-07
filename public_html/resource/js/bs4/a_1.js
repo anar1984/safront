@@ -266,6 +266,7 @@ function getClosest(arr, value) {
 var isMouseDown = false;
 var startRowIndex = null;
 var startCellIndex = null;
+var sumTbl = 0;
 
 function selectTo(cell) {
     
@@ -295,14 +296,21 @@ function selectTo(cell) {
     for (var i = rowStart; i <= rowEnd; i++) {
       
         var rowCells = $(".selectableTable tbody tr:eq("+i+")").find("td");
-        console.log(rowCells);
+      
         for (var j = cellStart; j <= cellEnd; j++) {
             $(rowCells[j]).addClass("selected");
+            var dt = $(rowCells[j]);
+            var val=  dt.find(".component-input-class").val();
+            var val2=  dt.find(".component-input-class").text();
+            
+            sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
+             
            
         }        
     }
     
 }
+
 
 $(document).on("mousedown",".selectableTable td",function (e) {
     isMouseDown = true;
@@ -322,8 +330,31 @@ $(document).on("mousedown",".selectableTable td",function (e) {
 })
 $(document).on("mouseover",".selectableTable td",function () {
     if (!isMouseDown) return;
-    $("..selectableTable").find(".selected").removeClass("selected");
+    $(".selectableTable").find(".selected").removeClass("selected");
     selectTo($(this));
+   
+})
+
+$(document).on("click",".selectableTable thead th",function () {
+    sumTbl = 0
+    $(".selectableTable").find(".selected").removeClass("selected");
+   var ind = $(this).index();
+   var tbl  = $(this).parents(".selectableTable").find("tbody tr");
+   for (let index = 0; index < tbl.length; index++) {
+    
+   $(tbl[index]).find("td").eq(ind).toggleClass("selected");
+       var dt = $(tbl[index]).find("td").eq(ind);
+      var val=  dt.find(".component-input-class").val();
+      var val2=  dt.find(".component-input-class").text();
+      
+      sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
+       
+     
+   }
+
+
+     
+
    
 })
 $(document).on("selectstart",".selectableTable td", function () {

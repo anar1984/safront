@@ -2376,7 +2376,7 @@ label h6{
 
     width:400px;
     padding: 5px;
-    height:auto;
+    height:auto !important;
      display: none;
     position:absolute;
     left:10%; 
