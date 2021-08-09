@@ -292,7 +292,7 @@ function selectTo(cell) {
         cellEnd = cellIndex;
     }  
   
-    
+    var  kl = 0;
     for (var i = rowStart; i <= rowEnd; i++) {
       
         var rowCells = $(".selectableTable tbody tr:eq("+i+")").find("td");
@@ -303,14 +303,28 @@ function selectTo(cell) {
             var val=  dt.find(".component-input-class").val();
             var val2=  dt.find(".component-input-class").text();
             
-            sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
+            sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2);
              
-           
+            kl = rowCells.length
         }        
     }
-    
+    sumAvarMaxMinCount(sumTbl,cellEnd);
 }
 
+function sumAvarMaxMinCount(sum,count,min,max){
+
+     $(".absolute-div-row-table").remove();
+    var div  = $("<div>").addClass("absolute-div-row-table")
+                         .append(" sum:"+sum)
+                         .append(" avarge:"+(sum/count))
+                         .append(" minimum:"+(min))
+                         .append(" maximum:"+(max))
+                         .append(" count:"+(count));
+
+    $("body").append(div);
+    
+
+}
 
 $(document).on("mousedown",".selectableTable td",function (e) {
     isMouseDown = true;
@@ -2655,7 +2669,7 @@ function answerSect() {
     let arr = $('<div>')
             .addClass('col-12 answerSection')
             .append($('<div>')
-                    .addClass('row component-section-row')
+                    .addClass('row component-section-row filedset-style-section')
                     .append($('<div>')
                             .attr('style', 'text-align:center;padding-top:20px;')
                             .addClass('col-1')

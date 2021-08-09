@@ -13,6 +13,7 @@ and open the template in the editor.
 .sa-sct-full-width .dropdown-menu{
     transform: none !important;
     min-width:100% !important;
+    width: 100% !important;
 }
 
 .loading_custom {
@@ -113,7 +114,7 @@ and open the template in the editor.
 
 
 .loaderSection{
-    background-image: url('/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -127,7 +128,7 @@ and open the template in the editor.
 }
 
 .loaderTable{
-    background-image: url('http://localhost/SAFrontEnd/public_html/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -141,7 +142,7 @@ and open the template in the editor.
 }
 
 .loaderModal{
-    background-image: url('/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;

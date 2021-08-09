@@ -1700,7 +1700,8 @@ var Component = {
 
         div.append(this.SectionAction.GetPropertiesSection(comp));
         div.append($('<div class="row">')
-            .addClass("component-section-row")
+            .addClass("component-section-row filedset-style-section")
+            .append($("<span>").addClass("section-legend").text("section"))
             .append(innerHTML));
 
         //        div.append(innerHTML);
@@ -1728,7 +1729,8 @@ var Component = {
 
         div.append(this.SectionAction.GetPropertiesSection(comp));
         div.append($('<div class="row">')
-            .addClass("component-section-row")
+            .addClass("component-section-row filedset-style-section")
+            .append($("<span>").addClass("section-legend").text("section"))
             .append(innerHTML));
 
         //        div.append(innerHTML);
