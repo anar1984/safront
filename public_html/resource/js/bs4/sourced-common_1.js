@@ -2130,7 +2130,7 @@ var ContainerDesign = {
 }
 
 function allowDrop(ev) {
-    if (global_var.current_modal !== 'loadLivePrototype') {
+    /* if (global_var.current_modal !== 'loadLivePrototype') {
         return;
     }
 
@@ -2139,8 +2139,8 @@ function allowDrop(ev) {
     }
 
 
-    ev.preventDefault();
-    var onDropElement = ev.target.id;
+    ev.preventDefault(); */
+  /*   var onDropElement = ev.target.id;
     if (onDropElement !== global_var.temp_dp_id) {
         if (global_var.temp_dp_id) {
             $('#' + global_var.temp_dp_id).removeClass('component-container-dashed-onair');
@@ -2148,41 +2148,25 @@ function allowDrop(ev) {
         global_var.temp_dp_id = onDropElement;
         $('[data-toggle="tooltip"]').tooltip('hide');
     }
-    $('#' + onDropElement).addClass('component-container-dashed-onair');
+  //  $('#' + onDropElement).addClass('component-container-dashed-onair');
 
 //    console.log("allowDrop");
+*/
 }
 
 function drag(ev) {
-    if ($('#lp-draggable-mode').is(":checked")) {
+    /* if ($('#lp-draggable-mode').is(":checked")) {
         return;
     }
 
 
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("text", ev.target.id); */
 
     //  console.log("drag");
 }
-
-function drop(ev) {
-    if ($('#lp-draggable-mode').is(":checked")) {
-        return;
-    }
-
-
-    ev.preventDefault();
-    var draggedElement = ev.dataTransfer.getData("text");
-    var onDropElement = ev.target.id;
-    if (onDropElement.startsWith("comp_id")) {
-        onDropElement = ev.target.parentNode.id;
-    }
-    if (draggedElement.startsWith("comp_id")) {
-        draggedElement = draggedElement.replace("comp_id_", "");
-    }
-
-    var dragfrom;
-    var dragTo;
-    dragTo = $('#' + onDropElement).parent().children('#' + onDropElement).attr('orderno') - 0.1;
+function dropOrderSave(delmt,ev){
+ 
+  var dragTo =$(delmt).index();
 //    dragfrom = $('#' + draggedElement).parent().children('#' + draggedElement).index() - 0.1;
 
 //    var elOne = document.getElementById(draggedElement);
@@ -2204,7 +2188,7 @@ function drop(ev) {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.id = draggedElement;
+    json.kv.id = $(delmt).attr("id");;
     json.kv.orderNo = dragTo;
     var that = this;
     var data = JSON.stringify(json);
@@ -2214,7 +2198,7 @@ function drop(ev) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 SAInput.addInputTableByRes(res);
@@ -2224,11 +2208,17 @@ function drop(ev) {
             }
 
 
-            //refresh GUI component 
-            new UserStory().genGUIDesign();
-        },
+         
+        },error: function(res){
+
+            Toaster.showError(res);
+        }
     });
 //    new UserStory().genGUIDesign();
+}
+
+function drop(ev) {
+   
 
 }
 
@@ -7481,9 +7471,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     toggleSection4UnputComponent: function () {
         var action = $('#us-gui-component-action').val();
         if (gui_component.actions.actionList4InSection.includes(action)) {
-            $('#us-gui-component-in-section-div').show();
+            $('.us-gui-component-in-section-div').show();
         } else {
-            $('#us-gui-component-in-section-div').hide();
+            $('.us-gui-component-in-section-div').hide();
         }
     },
     toggleSectionAndRelUS: function () {
@@ -7557,12 +7547,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     loadSUSList4InputDetails: function (res) {
         try {
-            $('#us-gui-component-rel-sus-id').html("");
+            $('.us-gui-component-rel-sus-id').html("");
             var obj = res.tbl[0].r;
-            $('#us-gui-component-rel-sus-id').append($("<option></option>"));
+            $('.us-gui-component-rel-sus-id').append($("<option></option>"));
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id !== global_var.current_backlog_id) {
-                    $('#us-gui-component-rel-sus-id').append($("<option></option>")
+                    $('.us-gui-component-rel-sus-id').append($("<option></option>")
                             .attr("value", obj[n].id)
                             .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " "));
                 }
@@ -7573,12 +7563,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     loadSection4InputDetails: function (res) {
         try {
-            $('#us-gui-component-in-section').html("");
+            $('.us-gui-component-in-section').html("");
             var obj = res.tbl[0].r;
-            $('#us-gui-component-in-section').append($("<option></option>"));
+            $('.us-gui-component-in-section').append($("<option></option>"));
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id != global_var.current_backlog_id) {
-                    $('#us-gui-component-in-section').append($("<option></option>")
+                    $('.us-gui-component-in-section').append($("<option></option>")
                             .attr("value", obj[n].id)
                             .text(replaceTags(obj[n].inputName)));
                 }
@@ -8364,7 +8354,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
                 SAInput.addInputByRes(res);
                 loadCurrentBacklogProdDetails();
@@ -8571,9 +8561,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
         if ($(el).val()) {
-            $('#us-gui-component-rel-sus-div-i').show();
+            $('.us-gui-component-rel-sus-div-i').show();
         } else {
-            $('#us-gui-component-rel-sus-div-i').hide();
+            $('.us-gui-component-rel-sus-div-i').hide();
         }
 
 //        this.updateInputOnChangeDynamic("param1", $(el).val());
@@ -9065,11 +9055,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInput(id, "orderNo", $('#us-gui-component-order-no').val());
         SAInput.updateInput(id, "cellNo", $('#us-gui-component-cell-no').val());
         SAInput.updateInput(id, "inputContent", $('#gui_input_content').val());
-        SAInput.updateInput(id, "param1", $('#us-gui-component-rel-sus-id').val());
+        SAInput.updateInput(id, "param1", $('.us-gui-component-rel-sus-id').val());
         SAInput.updateInput(id, "param3", $('#gui_input_css_style').val());
         SAInput.updateInput(id, "param2", $('#gui_input_css_style_container').val());
-        SAInput.updateInput(id, "sectionBacklogId", $('#us-gui-component-rel-sus-id-section').val());
-        SAInput.updateInput(id, "section", $('#us-gui-component-in-section').val());
+        SAInput.updateInput(id, "sectionBacklogId", $('.us-gui-component-rel-sus-id-section').val());
+        SAInput.updateInput(id, "section", $('.us-gui-component-in-section').val());
         SAInput.updateInput(id, "param4", this.getInputCSS());
     },
 
@@ -9097,10 +9087,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInputList(checkedList, "orderNo", $('#us-gui-component-order-no').val());
         SAInput.updateInputList(checkedList, "cellNo", $('#us-gui-component-cell-no').val());
         SAInput.updateInputList(checkedList, "inputContent", $('#gui_input_content').val());
-        SAInput.updateInputList(checkedList, "param1", $('#us-gui-component-rel-sus-id').val());
+        SAInput.updateInputList(checkedList, "param1", $('.us-gui-component-rel-sus-id').val());
         SAInput.updateInputList(checkedList, "param3", $('#gui_input_css_style').val());
         SAInput.updateInputList(checkedList, "param2", $('#gui_input_css_style_container').val());
-        SAInput.updateInputList(checkedList, "fkBacklogSectionId", $('#us-gui-component-rel-sus-id-section').val());
+        SAInput.updateInputList(checkedList, "fkBacklogSectionId", $('.us-gui-component-rel-sus-id-section').val());
         SAInput.updateInputList(checkedList, "section", $('#us-gui-component-in-sectionn').val());
         SAInput.updateInputList(checkedList, "param4", this.getInputCSS());
 
@@ -11325,28 +11315,28 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setGUIComponentValuesDetails: function (res) {
         try {
 //                console.log($('gui_input_content').val() + '---------------------')
-            $('#gui_input_content').val((res.tbl[0].r[0].inputContent));
-            $('#gui_input_css_style_container').val((res.tbl[0].r[0].param2));
-            $('#gui_input_css_style').val((res.tbl[0].r[0].param3));
-            $('#u_userstory_input_id').val((res.tbl[0].r[0].id));
+            $('.gui_input_content').val((res.tbl[0].r[0].inputContent));
+            $('.gui_input_css_style_container').val((res.tbl[0].r[0].param2));
+            $('.gui_input_css_style').val((res.tbl[0].r[0].param3));
+            $('.u_userstory_input_id').val((res.tbl[0].r[0].id));
             ComponentDesign.read();
             ContainerDesign.read();
-            $('#us-gui-component-id').val(res.tbl[0].r[0].componentType);
+            $('.us-gui-component-id').val(res.tbl[0].r[0].componentType);
 //                        that.setGUI_CSS(res.tbl[0].r[0].param4);
 
 
             $('.us-gui-component-rel-sus-div-class').show();
-            $('#us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
-            $('#us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
+            $('.us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
+            $('.us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
 
-            $('#us-gui-component-action').val(res.tbl[0].r[0].action);
+            $('.us-gui-component-action').val(res.tbl[0].r[0].action);
             this.toggleSectionAndRelUS();
             this.toggleGUIComponentSelection();
-            $('#us-gui-component-order-no').val(res.tbl[0].r[0].orderNo);
-            $('#us-gui-component-cell-no').val(res.tbl[0].r[0].cellNo);
-            $('#us-gui-component-rel-sus-id-section')
+            $('.us-gui-component-order-no').val(res.tbl[0].r[0].orderNo);
+            $('.us-gui-component-cell-no').val(res.tbl[0].r[0].cellNo);
+            $('.us-gui-component-rel-sus-id-section')
                     .val(res.tbl[0].r[0].fkBacklogSectionId).change();
-            $('#us-gui-component-in-section').val(res.tbl[0].r[0].section);
+            $('.us-gui-component-in-section').val(res.tbl[0].r[0].section);
         } catch (err) {
         }
     },
@@ -14552,8 +14542,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
     loadSUS4Relation4SectionDetails: function (res) {
-        $('#us-gui-component-rel-sus-id-section').html("");
-        $('#us-gui-component-rel-sus-id-section').append($("<option></option>")
+        $('.us-gui-component-rel-sus-id-section').html("");
+        $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
                 .attr("value", "")
                 .text(""));
         try {
@@ -14562,7 +14552,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 //                if (global_var.current_backlog_id === obj[n].id) {
 //                    continue;
 //                }
-                $('#us-gui-component-rel-sus-id-section').append($("<option></option>")
+                $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
                         .attr("value", obj[n].id)
                         .text(obj[n].backlogName + "  #" + obj[n].orderNo));
             }

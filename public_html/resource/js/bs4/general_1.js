@@ -552,7 +552,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<input style='width:100%;" + css + "' type='text' value='" + content + "'>";
@@ -567,7 +567,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
         //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<input style='width:100%;" + css + "' type='text' value='" + content + "'>";
         st += "</div>";
@@ -581,7 +581,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<img src='" + content + "' style='width:100%;" + css + "'>";
         st += "</div>";
@@ -595,7 +595,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<iframe   style='width:100%;" + css + "' src='https://www.youtube.com/embed/" + content + "'>";
         st += "</iframe>";
@@ -610,7 +610,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<input style='width:100%;" + css + "' type='file'>";
@@ -625,7 +625,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<input style='width:100%;" + css + "' type='date'>";
@@ -640,7 +640,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<input style='width:100%;" + css + "' type='time'>";
@@ -655,7 +655,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<textarea style='width:100%;" + css + "' rows='3'>" + content + "</textarea>";
@@ -684,7 +684,7 @@ var ComponentOld = {
 
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<select style='width:100%;padding:4px 0 4px 0;" + css + "' type='text'>";
@@ -714,7 +714,7 @@ var ComponentOld = {
 
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span>";
         st += "<select style='width:100%;padding:4px 0 4px 0;'" + css + "' type='text' multiple>";
@@ -752,7 +752,7 @@ var ComponentOld = {
 
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span><br>";
         st += cnt;
@@ -779,7 +779,7 @@ var ComponentOld = {
 
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span>" + label + "</span><br>";
         st += cnt;
@@ -793,7 +793,7 @@ var ComponentOld = {
         var st = ""
         label = (content) ? content : label;
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += "<span style='width:100%;" + css + "'>" + label + "</span><br>";
         st += "</div>";
@@ -816,7 +816,7 @@ var ComponentOld = {
                 : ' href="#"';
         var st = "";
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += !(fromTable) ? '<br>' : "";
         st += "<a " + href + "  " + modal + " style='width:100%;" + css + "'>" + label + "</a><br>";
@@ -829,7 +829,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += '<input type="radio" ><span style="width:100%;' + css + '">' + label + "<span> <br>";
         st += "</div>";
@@ -841,7 +841,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += '<input type="hidden"> ' + "" + " <br>";
         st += "</div>";
@@ -853,7 +853,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += '<input type="checkbox" ><span style="width:100%;' + css + '">' + label + "<span> <br>";
         st += "</div>";
@@ -865,7 +865,7 @@ var ComponentOld = {
         }
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += '<hr style="' + css + '">';
         st += "</div>";
@@ -878,7 +878,7 @@ var ComponentOld = {
         content = (content) ? content : 'user-circle';
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += !(fromTable) ? '<br>' : "";
         st += '<i class="fa fa-' + content + '" style="' + css + '"></i>';
@@ -899,7 +899,7 @@ var ComponentOld = {
                 : "";
         var st = ""
         var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
         st += !(fromTable) ? '<br>' : "";
         st += '<input style="width:100%;' + css + '" type="button" ' + modal + ' value="' + content + '"> <br>';
@@ -913,7 +913,7 @@ var ComponentOld = {
         var innerHTML = new UserStory().genGUIDesignHtmlById(param1);
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='width:100%;" + css + "'>";
         st += "<div class='row'>";
         st += innerHTML;
@@ -927,7 +927,7 @@ var ComponentOld = {
         var innerHTML = new UserStory().genGUIDesignHtmlById(param1);
         var st = ""
         var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondrop="drop(event)">';
+        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
 //        st += "<div class=col-" + cell + " style='width:100%;" + css + "'>";
         st += "<div class='row'>";
         st += innerHTML;

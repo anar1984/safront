@@ -13,6 +13,7 @@ and open the template in the editor.
 .sa-sct-full-width .dropdown-menu{
     transform: none !important;
     min-width:100% !important;
+    width: 100% !important;
 }
 
 .loading_custom {
@@ -113,7 +114,7 @@ and open the template in the editor.
 
 
 .loaderSection{
-    background-image: url('/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -127,7 +128,7 @@ and open the template in the editor.
 }
 
 .loaderTable{
-    background-image: url('http://localhost/SAFrontEnd/public_html/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -141,7 +142,7 @@ and open the template in the editor.
 }
 
 .loaderModal{
-    background-image: url('/resource/img/loadertbl.gif');
+    background-image: url("../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -2673,9 +2674,9 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .active-inputs-selected{
-    border: 1px dashed rgba(108, 108, 255, 0.479);
+   
     border-radius: 5px;
-    background: rgba(0, 235, 235, 0.5);
+    background: #80bdffd2;
 }
 
 /*#smb-general-main-info{
