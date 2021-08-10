@@ -84,7 +84,8 @@ $(function () {
     $(document).on("change", '#storyCardListSelectBox', function (e) {
         var id = $('option:selected', this).attr('sid')
         new UserStory().getStoryInfo(id, this);
-        resizeColDivElement();
+        $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
+        $('.component-class').resizableGrid();
 
 
     });
@@ -837,12 +838,21 @@ $(document).on('dblclick', '.comp-title-span', function (e) {
     dt.find("input").focus();
 
 });
-$(document).on('focusout', '#edit-name-input-component', function (event) {
+$(document).on('change', '#edit-name-input-component', function (event) {
     $(this).hide();
     var dt = $(this).val();
     $(this).parent().html(dt);
    
-    new UserStory().updateInputByAttr(this, 'name')
+    new UserStory().updateInputByAttr(this, 'name');
+
+});
+$(document).on('click', '.dropdown-menu-large-btn', function (event) {
+  
+   $(this).addClass("show");
+   event.stopPropagation();
+
+     
+      
 
 });
 

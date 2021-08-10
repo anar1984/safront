@@ -2130,7 +2130,7 @@ var ContainerDesign = {
 }
 
 function allowDrop(ev) {
-    if (global_var.current_modal !== 'loadLivePrototype') {
+    /* if (global_var.current_modal !== 'loadLivePrototype') {
         return;
     }
 
@@ -2139,8 +2139,8 @@ function allowDrop(ev) {
     }
 
 
-    ev.preventDefault();
-    var onDropElement = ev.target.id;
+    ev.preventDefault(); */
+  /*   var onDropElement = ev.target.id;
     if (onDropElement !== global_var.temp_dp_id) {
         if (global_var.temp_dp_id) {
             $('#' + global_var.temp_dp_id).removeClass('component-container-dashed-onair');
@@ -2148,41 +2148,25 @@ function allowDrop(ev) {
         global_var.temp_dp_id = onDropElement;
         $('[data-toggle="tooltip"]').tooltip('hide');
     }
-    $('#' + onDropElement).addClass('component-container-dashed-onair');
+  //  $('#' + onDropElement).addClass('component-container-dashed-onair');
 
 //    console.log("allowDrop");
+*/
 }
 
 function drag(ev) {
-    if ($('#lp-draggable-mode').is(":checked")) {
+    /* if ($('#lp-draggable-mode').is(":checked")) {
         return;
     }
 
 
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("text", ev.target.id); */
 
     //  console.log("drag");
 }
-
-function drop(ev) {
-    if ($('#lp-draggable-mode').is(":checked")) {
-        return;
-    }
-
-
-    ev.preventDefault();
-    var draggedElement = ev.dataTransfer.getData("text");
-    var onDropElement = ev.target.id;
-    if (onDropElement.startsWith("comp_id")) {
-        onDropElement = ev.target.parentNode.id;
-    }
-    if (draggedElement.startsWith("comp_id")) {
-        draggedElement = draggedElement.replace("comp_id_", "");
-    }
-
-    var dragfrom;
-    var dragTo;
-    dragTo = $('#' + onDropElement).parent().children('#' + onDropElement).attr('orderno') - 0.1;
+function dropOrderSave(delmt,ev){
+ 
+  var dragTo =$(delmt).index();
 //    dragfrom = $('#' + draggedElement).parent().children('#' + draggedElement).index() - 0.1;
 
 //    var elOne = document.getElementById(draggedElement);
@@ -2204,7 +2188,7 @@ function drop(ev) {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.id = draggedElement;
+    json.kv.id = $(delmt).attr("id");;
     json.kv.orderNo = dragTo;
     var that = this;
     var data = JSON.stringify(json);
@@ -2214,7 +2198,7 @@ function drop(ev) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 SAInput.addInputTableByRes(res);
@@ -2224,11 +2208,17 @@ function drop(ev) {
             }
 
 
-            //refresh GUI component 
-            new UserStory().genGUIDesign();
-        },
+         
+        },error: function(res){
+
+            Toaster.showError(res);
+        }
     });
 //    new UserStory().genGUIDesign();
+}
+
+function drop(ev) {
+   
 
 }
 
@@ -8364,7 +8354,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
                 SAInput.addInputByRes(res);
                 loadCurrentBacklogProdDetails();

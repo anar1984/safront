@@ -340,7 +340,7 @@ var Component = {
             div.attr('ondragover', 'allowDrop(event)')
                 .attr('ondragstart', 'drag(event)')
                 .attr('ondrop', 'drop(event)')
-                .attr('draggable', 'true')
+               
         }
 
         //add classes to container
@@ -398,9 +398,145 @@ var Component = {
                 "")
 
                 if(global_var.current_modal === 'loadLivePrototype'){
-                    div.append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
+                
+                    div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
+                    .append(`<div style='display:inline-block;' class="dropdown">
+                    <span class="figureAddbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fab fa-asymmetrik" aria-hidden="true"></i>
+                    </span>
+                    <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton">
+                    <div class="row">
+                    <div class="col-12  " style=" padding:0px;">
+                        <a href="#"   style="color:#000000;font-size:14px;padding:0px;"
+                           data-toggle="modal" 
+                           data-target="#addExistingRelationModal" 
+                           onclick="new UserStory().addExistingRelationByCurrentInput(this)">
+                            + Add Related Columns</a><br>
+                        <span class="relatedSUSOutputName"></span>
+                        <span class="relatedUserStory">(<a href="#" onclick="new UserStory().redirectUserStoryCore('')"></a>)</span>
+                        <span class="deleteRelatedSUSOutput" style="">
+                            <a href="#" onclick="new UserStory().deleteInputBySUSOutputId()"><i class="fa fa-remove"></i></a>
+                        </span>
+                        <br><br>
+                    </div>
+                    <div class="col-12  "
+                         class="us-gui-component-action-div"
+                         style=" padding:0px  1px">
+                        <b><span
+                                style="width: 100%;padding:0px;">Action:</span><br></b>
+                        <select class="us-gui-component-action"
+                                style="width:100%;padding: 0px;
+                                border-radius: 4px;
+                                border: 1px solid gray;"
+                                onchange="new UserStory().setGUIComponentAction(this)">
+                            <option value="-1"></option>
+                            <option value="popup">Show Popup</option>
+                            <option value="close">Close Popup</option>
+                            <option value="redirect">Redirect to</option>
+                            <option value="fill">Fill in Section</option>
+                            <option value="save">Save Form</option>
+                            <option value="delete">Delete From Table</option>
+                        </select>
+                        <br><br>
+                    </div>
+
+                    <div class="col-12  us-gui-component-rel-sus-div-class us-gui-component-rel-sus-div"
+                         style="display: none;padding:0px;">
+
+                        <b><span style="width1: 100%;">Related Sourced User Story</span><br></b>
+                        <select type="number"
+                                class="us-gui-component-rel-sus-id"
+                                onchange="new UserStory().setGUIComponentRelSUS(this)"
+                                style="width:90%;
+                                border-radius: 4px;
+                                border: 1px solid gray;"></select>
+                        <i class="fa fa-mail-forward"
+                           style="cursor:pointer;color:green;"
+                           id='us-gui-component-rel-sus-div-i'
+                           onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id")'></i>
+                        <br><br>
+                    </div>
+
+                    <div class="col-12  us-gui-component-in-section-div  us-gui-component-rel-sus-div-class"
+                         id=""
+                         style="display: none;padding:0px;">
+
+                        <b><span
+                                style="width: 100%;">In Section (User Story)</span><br></b>
+                        <select type="number"
+                                class="us-gui-component-rel-sus-id-section us-gui-component-rel-sus-div-in-section"
+                                onchange="new UserStory().setGUIComponentRelSUSInSection(this)"
+                                style="width:90%;
+                                border-radius: 4px;
+                                border: 1px solid gray;"></select>
+                        <i class="fa fa-mail-forward"
+                           style="cursor:pointer;color:green;"
+                           id=''
+                           onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id-section")'></i>
+                        <br> <br>
+
+                        <b><span
+                                style="width: 100%;">Section</span><br></b>
+                        <select type="number"
+                                class="us-gui-component-in-section"
+                                onchange="new UserStory().setGUIComponentSection(this)"
+                                style="margin-top:1px;width:100%;
+                                border-radius: 4px;
+                                border: 1px solid gray;"></select>
+                        <br><br>
+                    </div>
+
+
+
+
+                    <div class="col-12">
+                        <fieldset class="border p-2">
+                            <legend class="w-auto w-auto-man">
+                                Event Relation
+                            </legend>
+
+                            Event<br>
+                            <select style="width:100%;padding: 0px;
+                                    border-radius: 4px;
+                                    border: 1px solid gray;"
+                                    class="input_event_type">
+                                <option value="onclick">onclick</option>
+                                <option value="onchange">onchange</option>
+                                <option value="ondblclick">ondblclick</option>
+                            </select><br>
+
+                            Related API<br>
+                            <select style="width:80%;padding: 0px;
+                                    border-radius: 4px;
+                                    border: 1px solid gray;"
+                                    class="input_event_related_api">                                                        
+                            </select>
+
+                            <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                            <br><br>
+                            <table style='border: 1px solid #dee2e6; width:100%;'>
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>API</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class='input_event_related_api_table_list_body'>
+
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+
+
+                </div>
+                    </div>
+                  </div>`)
                     .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
+              
                     .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
+                    .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
     
                     .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
                 )
@@ -572,7 +708,7 @@ var Component = {
                     .attr('id', inputId)
                     .attr('pid', inputId)
                     .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
-                    .attr('draggable', 'true')
+                   
                     .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
                     .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :

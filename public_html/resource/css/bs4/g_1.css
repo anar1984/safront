@@ -2618,7 +2618,11 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
   
 }
 
-
+.gridly, .gridly > :not(.dragging) {
+    transition: all 0.4s ease-in-out; }
+  .gridly .dragging {
+    z-index: 800; }
+  
 @media only screen and (max-width: 768px) {
   
 
@@ -5748,11 +5752,14 @@ span.ruby-c-content {
 }
 .tool_element_edit{
     position: absolute;
-    top: 0;
+    bottom: 100%;
     right: 0;
     visibility: hidden;
-   
     border-radius: 3px;
+    width: 100%;
+    width: max-content;
+    z-index: 50000;
+    text-align: right;
  
 }
 .edit-class-input-component{
@@ -5772,6 +5779,21 @@ span.ruby-c-content {
 .component-class:hover >.tool_element_edit{
    
     visibility: visible;
+}
+.hover-prototype-selector:hover{
+ 
+     border-radius: 3px;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+
+}
+.resizable-grid-resizing {
+    cursor: col-resize;
+}
+.dropdown-menu-large-btn{
+   min-width: 300px !important;
+    padding: 20px;
+    font-size: 10px;
 }
 
 
