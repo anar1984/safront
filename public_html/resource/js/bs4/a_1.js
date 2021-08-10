@@ -4473,9 +4473,9 @@ function _TriggerAPI(carrier) {
     finalRes.startLimit = 0;
 
     var id = $(element).attr('id');
-    var el = document.getElementById(id);
+//    var el = document.getElementById(id);
 
-//    var el = element;
+    var el = element;
 
     var out = be.callApi(apiId, finalRes, el);
 
@@ -4876,6 +4876,10 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
 
+    if ($(el).attr('sa-table-interm-trigger')) {
+        return;
+    }
+
     try {
 
 
@@ -5139,16 +5143,31 @@ function setValueOnCompAfterTriggerApi(el, data) {
     // umumi sehifede axtaracaqdir.
 
 
-    var element = ($(el).attr('sa-global-trigger'))
+    var zid = "";
+    try {
+        zid = $(el).closest('.redirectClass').attr('zid');
+    } catch (err) {
+    }
+
+    var element = ($(el).attr('sa-table-interm-trigger'))
+            ? $('.shey_zad_id_' + zid)
+            : ($(el).attr('sa-global-trigger'))
             ? $(el).closest('div.redirectClass')
             : $(el).closest('.redirectClass');
 
     element.find('[sa-selectedfield]').each(function (e) {
+
+
         var isInTable = false;
-        $(this).closest("table.component-table-class-for-zad").each(function (e) {
-            isInTable = true;
-            return;
-        })
+
+        if ($(el).attr('sa-table-interm-trigger')) {
+            isInTable = false;
+        } else {
+            $(this).closest("table.component-table-class-for-zad").each(function (e) {
+                isInTable = true;
+                return;
+            })
+        }
 
         if (!isInTable) {
             var val = "";
@@ -6430,6 +6449,53 @@ $(document).on('focusout', '#jsCodeModal_fnbody', function () {
 })
 
 
+$(document).on('click', '[sa-table-intree-alians]', function () {
+    var val = $(this).attr('sa-table-intree-alians');
+//    alert(val);
+
+    var zid = $(this).closest('tr.redirectClass').attr('pzid');
+
+    $('[zid="' + zid + '"').find('[sa-selectedfield]').each(function () {
+        var fieldList = $(this).attr('sa-selectedfield').split(',');
+        if (fieldList.includes(val)) {
+            $(this).click();
+        }
+    })
+})
+
+$(document).on('click', '[sa-table-intree-show-section]', function () {
+    var val = $(this).attr('sa-table-intree-show-section');
+    
+    var esasZad = $(this);
+
+    var isOpenedFlag = ($(this).attr('isOpenedFlag') === '1')
+            ? true : false;
+
+    var flagZad = (isOpenedFlag) ? '0' : '1';
+    $(this).attr('isOpenedFlag', flagZad);
+
+
+//    alert(val);
+
+    var zid = $(this).closest('tr.redirectClass').attr('pzid');
+
+    $('.shey_zad_id_' + zid).find('[sa-selectedfield]').each(function () {
+        var fieldList = $(this).attr('sa-selectedfield').split(',');
+        if (fieldList.includes(val)) {
+           if (flagZad==='1'){
+               $(this).show();
+               esasZad.prev().remove();
+               esasZad.before('<i class="fas esaszad fa-chevron-down" aria-hidden="true"></i> ') 
+               
+           }else{
+                $(this).hide();
+                esasZad.prev().remove();
+                esasZad.before('<i class="fas esaszad fa-chevron-right" aria-hidden="true"></i> ') 
+           }
+        }
+    })
+})
+
 let FullSc = true;
 $(document).on('click', '.editor_full_screenBt', function () {
     var val3 = window.editor1.getValue();
@@ -7537,8 +7603,8 @@ function addRelatedApiModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
-            
+            AJAXCallFeedback(res);
+
             $('#addRelatedApiModal').modal('hide');
             new UserStory().getBacklogDesc();
 
@@ -7569,8 +7635,8 @@ function addRelatedSourceCodeModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
-            
+            AJAXCallFeedback(res);
+
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
@@ -7604,7 +7670,7 @@ function removeRelatedSourceCodeFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
+            AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -7635,7 +7701,7 @@ function removeRelatedApiFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-		AJAXCallFeedback(res);
+            AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -11900,6 +11966,8 @@ function showInputTableColumnEntireComponent(el, tableId, inputId) {
                 $(el).css("color", "#d5d6da")
             }
 
+            loadCurrentBacklogProdDetails();
+
             //generate GUI
             new UserStory().generateGUIGeneral();
         },
@@ -11942,6 +12010,7 @@ function showInputTableColumnItselfComponent(el, tableId, inputId) {
 
             //generate GUI
             new UserStory().generateGUIGeneral();
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -12013,6 +12082,7 @@ function showInputTableColumnComponent(el, tableId, inputId) {
         crossDomain: true,
         async: true,
         success: function (res) {
+            loadCurrentBacklogProdDetails();
             SAInput.addInputTableByRes(res);
             if (res.kv.showComponent === "1") {
                 $(el).css("color", "#2196F3")

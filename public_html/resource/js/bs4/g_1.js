@@ -217,48 +217,48 @@ var dX = 0;
 
 function dragResize() {
     return;
-/*     try {
-        $(".draggable").draggable({
-            t: 0,
-            l: 0,
-            scroll: false,
-            start: function () {
-                var id = $(this).attr('id');
-                new UserStory().setInputByGUIComponent(id);
-                t = $(this).position().top;
-                l = $(this).position().left;
-            },
-            drag: function () {
-                //                var top1 = $(this).position().top
-                //                var left1 = $(this).position().left;
-                //
-                //
-                //                $('#gui_prop_cn_positiontop').val(top1 - t);
-                //                $('#gui_prop_cn_positionleft').val(left1 - l);
-
-            },
-            stop: function () {
-                var top1 = $(this).position().top;
-                var left1 = $(this).position().left;
-                var dT = top1 - t;
-                var dL = left1 - l;
-
-                var prevT = $('#gui_prop_cn_positiontop').val();
-                var prevL = $('#gui_prop_cn_positionleft').val();
-
-                var currT = (prevT) ? parseFloat(prevT) + dT : dT;
-                var currL = (prevL) ? parseFloat(prevL) + dL : dL;
-
-                $('#gui_prop_cn_positiontop').val(currT);
-                $('#gui_prop_cn_positionleft').val(currL);
-
-                new UserStory().setGUIContainerStyle();
-            },
-        })
-
-        $(".resize1").resizable();
-
-    } catch (e) {} */
+    /*     try {
+     $(".draggable").draggable({
+     t: 0,
+     l: 0,
+     scroll: false,
+     start: function () {
+     var id = $(this).attr('id');
+     new UserStory().setInputByGUIComponent(id);
+     t = $(this).position().top;
+     l = $(this).position().left;
+     },
+     drag: function () {
+     //                var top1 = $(this).position().top
+     //                var left1 = $(this).position().left;
+     //
+     //
+     //                $('#gui_prop_cn_positiontop').val(top1 - t);
+     //                $('#gui_prop_cn_positionleft').val(left1 - l);
+     
+     },
+     stop: function () {
+     var top1 = $(this).position().top;
+     var left1 = $(this).position().left;
+     var dT = top1 - t;
+     var dL = left1 - l;
+     
+     var prevT = $('#gui_prop_cn_positiontop').val();
+     var prevL = $('#gui_prop_cn_positionleft').val();
+     
+     var currT = (prevT) ? parseFloat(prevT) + dT : dT;
+     var currL = (prevL) ? parseFloat(prevL) + dL : dL;
+     
+     $('#gui_prop_cn_positiontop').val(currT);
+     $('#gui_prop_cn_positionleft').val(currL);
+     
+     new UserStory().setGUIContainerStyle();
+     },
+     })
+     
+     $(".resize1").resizable();
+     
+     } catch (e) {} */
 }
 
 
@@ -360,11 +360,11 @@ $(document).on("click", function (e) {
 
 // 1.tool panel-general
 var ch = 0,
-    ch2 = 0,
-    ch3 = 0,
-    ch4 = 0,
-    ch5 = 0,
-    ch6 = 0;
+        ch2 = 0,
+        ch3 = 0,
+        ch4 = 0,
+        ch5 = 0,
+        ch6 = 0;
 $(document).on("click", "#general-btn-icon", function () {
 
     $('#ipo-tab-setting-general').addClass('active');
@@ -552,7 +552,7 @@ $(document).on("dblclick", ".component-container-dashed", function () {
 
 })
 $(document).on("click", ".component-container-button", function () {
-  $(this).parents(".component-container-dashed").dblclick();
+    $(this).parents(".component-container-dashed").dblclick();
 
 })
 
@@ -566,11 +566,11 @@ $(document).on("mouseenter", ".draggable", function () {
 
 
     /* $(".popup-Elements").remove();
-
-    $("[data-edit='dataText']").removeAttr("data-edit");
-    $(this).attr("data-edit", "dataText");
-    $(this).append(popUpt)
- */
+     
+     $("[data-edit='dataText']").removeAttr("data-edit");
+     $(this).attr("data-edit", "dataText");
+     $(this).append(popUpt)
+     */
 
 
 })
@@ -661,7 +661,8 @@ function dragTable() {
         restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
     });
 
-};
+}
+;
 // 15.08.2020
 function stopMouseAction(el) {
     console.log($(el).html())
@@ -760,25 +761,25 @@ $(document).on("click", ".cf li .inptadd", function () {
         idggdd++
         let valin = $(this).parent().attr('value');
         let nm = $(this).parent().attr('title');
-      
+
         var comp = new ComponentInfo();
 
-        comp.id = idggdd ;
-        comp.inputType ="IN";
+        comp.id = idggdd;
+        comp.inputType = "IN";
         comp.cellNo = "6";
         comp.componentType = valin;
-        comp.label = nm ;
+        comp.label = nm;
         comp.description = "";
 
         var st = Component.GetComponentHtmlNew(comp);
         var ldoa = `<div class="box-loader shimmer">
         
       </div>`
-       
+
         $("#SUS_IPO_GUI_Design .empty-message-block").remove();
-          $("#SUS_IPO_GUI_Design").append(st);
-          $("#"+idggdd).append(ldoa);
-        insertNewInputTotalDblClick(valin, nm, "6",idggdd);
+        $("#SUS_IPO_GUI_Design").append(st);
+        $("#" + idggdd).append(ldoa);
+        insertNewInputTotalDblClick(valin, nm, "6", idggdd);
         resizeColDivElement();
 
     } else {
@@ -841,7 +842,7 @@ $(document).on('focusout', '#edit-name-input-component', function (event) {
     $(this).hide();
     var dt = $(this).val();
     $(this).parent().html(dt);
-   
+
     new UserStory().updateInputByAttr(this, 'name')
 
 });
@@ -893,9 +894,9 @@ $(document).on("click", ".toolbar .verticalBtn", function () {
 
 function genIpoAPiBlock(apnm, ) {
     return $('<div>')
-        .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
-        .append('<p>' + apnm + '</p>')
-        .append('<p>' + apnm + '</p>');
+            .addClass('ipo_api_card_new row feild_sect_opened col-11 text-center')
+            .append('<p>' + apnm + '</p>')
+            .append('<p>' + apnm + '</p>');
 }
 
 
@@ -982,17 +983,24 @@ $(document).ready(function () {
         datp = parseFloat(datp) + 1;
 
         if (flagzad === "0") {
-            alert("open")
+//            alert("open")
             $(this).attr('flagzad', "1");
+
+            var idd = $(this).closest('tr').attr('zid');
+            $('.zad_shey_id_' + idd).show();
+
         } else {
-            alert('closed');
+//            alert('closed');
             $(this).attr('flagzad', "0");
+
+            var idd = $(this).closest('tr').attr('zid');
+            $('.zad_shey_id_' + idd).hide();
 
         }
 
 
-        lnm.after($("<tr>").append("<td style='padding-left:" + datp * 25 + "px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='" + datp + "'><i class='fas fa-chevron-right'></i></button></td>")
-            .append("<td>asasasfaf</td>"))
+//        lnm.after($("<tr>").append("<td style='padding-left:" + datp * 25 + "px;' class='text-center'><button class='btn btn-light btn-sub-tr-second  btn-sm' data-pad-num='" + datp + "'><i class='fas fa-chevron-right'></i></button></td>")
+//            .append("<td>asasasfaf</td>"))
 
 
 
@@ -1065,7 +1073,8 @@ function addNewBug(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     backlogId = (backlogId) ? backlogId : "-1";
@@ -1146,9 +1155,9 @@ $(document).ready(function () {
             //            alert('out kelbetin')
 
             var id = $(this).attr('pid'),
-                action = 'select',
-                selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
-                selectFromInputId = draggedElementPid;
+                    action = 'select',
+                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                    selectFromInputId = draggedElementPid;
 
             addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
 
@@ -1163,9 +1172,9 @@ $(document).ready(function () {
             //            alert('in kelbetin')
 
             var id = $(this).attr('pid'),
-                action = 'send',
-                selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
-                selectFromInputId = draggedElementPid;
+                    action = 'send',
+                    selectFromBacklogId = $('#storyCardInputRelationModal_apilist').val(),
+                    selectFromInputId = draggedElementPid;
 
             addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId);
 

@@ -1655,7 +1655,7 @@ var be = {
 
                     //eyni code-lu component vardir;
                     if (!f) {
-                        Toaster.showError(err[i].val);
+                        Toaster.showError(err[i].val + '  (Key: '+err[i].code+')');
                         msgError = err[i].val;
                     }
                 }
