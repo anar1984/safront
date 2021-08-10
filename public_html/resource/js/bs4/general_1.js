@@ -1082,15 +1082,20 @@ function loadModulePermission() {
         crossDomain: true,
         async: false,
         success: function (res) {
-            var obj = res.tbl[0].r;
-            for (var n = 0; n < obj.length; n++) {
-                var o = obj[n];
-                if (o.accessType === 'n') {
-                    if (o.relationId === 'loadPermission')
-                        continue;
-                    $('.' + o.relationId).closest('.project-item-zad').remove();
+            try {
+                var obj = res.tbl[0].r;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+                    if (o.accessType === 'n') {
+                        if (o.relationId === 'loadPermission')
+                            continue;
+                        $('.' + o.relationId).closest('.project-item-zad').remove();
+                    }
                 }
+            } catch (error) {
+                
             }
+           
         }
     });
 }

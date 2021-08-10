@@ -11,10 +11,10 @@ var urlGl = "https://app.sourcedagile.com/";
 //var urlGl = ""
 
 function getToken() {
-//  return 'apdtok=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.nI4FGLL8v3NHWFCf7FO0JXW6beiOPfiojj51aFvHOXWa9FF64o2kyg.MH2CnADeFq5KDmYg1NLEVg.olOJytaSyucjOVax_tGMOHue8y04vcK4yvgV4gkJCktYt12MDW4hgPSqxZOIBLZA_YAiKgtBkkLn_8afnw-EoRTAD2rKJIuaHByYz49KO3e5ZNhKAUwcyEsQvq0t-4EdBI-6VGN1rcgl8MbWQIpKdkTNtunNO-70AB8brZbiNVo.Njqek04afONOu-maYvfa8Q';
+ return 'apdtok=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0._t_n7Ep8wVySH1k4-boP2wtBPzxUsB5lSkr55j24-FfJVBU5PhEvPA.yXWyRiCj2gyprdu7og8mUA.JnNuOtsf0y1AWBoM61uNJf2zm40ym9p51sFnsVz_h6d7JU2PlwXjHExqWixBAG9XMPa9ji1oxbfIbzS00pVEp1Rh8dMsnZElqF0ImYYpkSaS0G2KTheZJbwr-jarlQpoj9XR3OPkjWamqcHAXSMlsp2NcDOYAU6QkbMvsALbd0Q.dwHL1cN7W_Xg98e-tmUYMg';
 //        return '';
     //return document.cookie;
     
-    return localStorage.getItem('tk');
+    //return localStorage.getItem('tk');
 }
 

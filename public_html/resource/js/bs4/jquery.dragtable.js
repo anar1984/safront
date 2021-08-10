@@ -1,59 +1,5 @@
-/*!
- * dragtable
- *
- * @Version 2.0.14
- *
- * Copyright (c) 2010-2013, Andres akottr@gmail.com
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
- *
- * Inspired by the the dragtable from Dan Vanderkam (danvk.org/dragtable/)
- * Thanks to the jquery and jqueryui comitters
- *
- * Any comment, bug report, feature-request is welcome
- * Feel free to contact me.
- */
-
-/* TOKNOW:
- * For IE7 you need this css rule:
- * table {
- *   border-collapse: collapse;
- * }
- * Or take a clean reset.css (see http://meyerweb.com/eric/tools/css/reset/)
- */
-
-/* TODO: investigate
- * Does not work properly with css rule:
- * html {
- *      overflow: -moz-scrollbars-vertical;
- *  }
- * Workaround:
- * Fixing Firefox issues by scrolling down the page
- * http://stackoverflow.com/questions/2451528/jquery-ui-sortable-scroll-helper-element-offset-firefox-issue
- *
- * var start = $.noop;
- * var beforeStop = $.noop;
- * if($.browser.mozilla) {
- * var start = function (event, ui) {
- *               if( ui.helper !== undefined )
- *                 ui.helper.css('position','absolute').css('margin-top', $(window).scrollTop() );
- *               }
- * var beforeStop = function (event, ui) {
- *              if( ui.offset !== undefined )
- *                ui.helper.css('margin-top', 0);
- *              }
- * }
- *
- * and pass this as start and stop function to the sortable initialisation
- * start: start,
- * beforeStop: beforeStop
- */
-/*
- * Special thx to all pull requests comitters
- */
 
 (function($) {
- 
   $.widget("akottr.dragtable", {
     options: {
       revert: false,               // smooth revert
@@ -100,7 +46,6 @@
         url: this.options.persistState,
         data: this.originalTable.sortOrder
       });
-   
     },
     /*
      * persistObj looks like
@@ -110,7 +55,7 @@
      */
     _restoreState: function(persistObj) {
       for (var n in persistObj) {
-        this.originalTable.startIndex = $('#' + n).closest('th').prevAll().size() + 1;
+        this.originalTable.startIndex = $('#' + n).closest('th').prevAll().length + 1;
         this.originalTable.endIndex = parseInt(persistObj[n], 10) + 1;
         this._bubbleCols();
       }
@@ -157,14 +102,12 @@
         _this.sortableTable.el.remove();
         restoreTextSelection();
         // persist state if necessary
-        stopMouseAction(_this.originalTable.el);
         if (_this.options.persistState !== null) {
           $.isFunction(_this.options.persistState) ? _this.options.persistState(_this.originalTable) : _this.persistState();
         }
       };
     },
     _rearrangeTable: function() {
-    
       var _this = this;
       return function() {
         // remove handler-class -> handler is now finished
@@ -175,11 +118,9 @@
         _this.options.beforeReorganize(_this.originalTable, _this.sortableTable);
         // do reorganisation asynchronous
         // for chrome a little bit more than 1 ms because we want to force a rerender
-        _this.originalTable.endIndex = _this.sortableTable.movingRow.prevAll().size() + 1;
+        _this.originalTable.endIndex = _this.sortableTable.movingRow.prevAll().length + 1;
         setTimeout(_this._rearrangeTableBackroundProcessing(), 50);
-        
       };
-    
     },
     /*
      * Disrupts the table. The original table stays the same.
@@ -259,7 +200,6 @@
         });
         sortableHtml += '</table>';
         sortableHtml += '</li>';
-         
       });
       sortableHtml += '</ul>';
       this.sortableTable.el = this.originalTable.el.before(sortableHtml).prev();
@@ -270,6 +210,7 @@
 
       // assign this.sortableTable.selectedHandle
       this.sortableTable.selectedHandle = this.sortableTable.el.find('th .dragtable-handle-selected');
+
       var items = !this.options.dragaccept ? 'li' : 'li:has(' + this.options.dragaccept + ')';
       this.sortableTable.el.sortable({
         items: items,
@@ -285,7 +226,7 @@
       });
 
       // assign start index
-      this.originalTable.startIndex = $(e.target).closest('th').prevAll().size() + 1;
+      this.originalTable.startIndex = $(e.target).closest('th').prevAll().length + 1;
 
       this.options.beforeMoving(this.originalTable, this.sortableTable);
       // Start moving by delegating the original event to the new sortable table
@@ -328,9 +269,8 @@
         this.bindTo = this.bindTo.filter(this.options.dragaccept);
       }
       // bind draggable to handle if exists
-      if (this.bindTo.find(this.options.dragHandle).size() > 0) {
+      if (this.bindTo.find(this.options.dragHandle).length > 0) {
         this.bindTo = this.bindTo.find(this.options.dragHandle);
-        
       }
       // restore state if necessary
       if (this.options.restoreState !== null) {
@@ -358,7 +298,6 @@
       this._create();
     },
     destroy: function() {
-      
       this.bindTo.unbind('mousedown');
       $.Widget.prototype.destroy.apply(this, arguments); // default destroy
       // now do other stuff particular to this widget
@@ -407,6 +346,5 @@
     var asibling = a.nextSibling === b ? a : a.nextSibling;
     b.parentNode.insertBefore(a, b);
     aparent.insertBefore(b, asibling);
-  } 
-
+  }
 })(jQuery);

@@ -261,6 +261,118 @@ function getClosest(arr, value) {
     return null;
 
 }
+
+//////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var isMouseDown = false;
+var startRowIndex = null;
+var startCellIndex = null;
+var sumTbl = 0;
+
+function selectTo(cell) {
+    
+    var row = cell.parent();    
+    var cellIndex = cell.index();
+    var rowIndex = row.index();
+
+    var rowStart, rowEnd, cellStart, cellEnd;
+    
+    if (rowIndex < startRowIndex) {
+        rowStart = rowIndex;
+        rowEnd = startRowIndex;
+    } else {
+        rowStart = startRowIndex;
+        rowEnd = rowIndex;
+    }
+    
+    if (cellIndex < startCellIndex) {
+        cellStart = cellIndex;
+        cellEnd = startCellIndex;
+    } else {
+        cellStart = startCellIndex;
+        cellEnd = cellIndex;
+    }  
+  
+    
+    for (var i = rowStart; i <= rowEnd; i++) {
+      
+        var rowCells = $(".selectableTable tbody tr:eq("+i+")").find("td");
+      
+        for (var j = cellStart; j <= cellEnd; j++) {
+            $(rowCells[j]).addClass("selected");
+            var dt = $(rowCells[j]);
+            var val=  dt.find(".component-input-class").val();
+            var val2=  dt.find(".component-input-class").text();
+            
+            sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
+             
+           
+        }        
+    }
+    
+}
+
+
+$(document).on("mousedown",".selectableTable td",function (e) {
+    isMouseDown = true;
+    var cell = $(this);
+
+    $(".selectableTable").find(".selected").removeClass("selected"); // deselect everything
+    
+    if (e.shiftKey) {
+        selectTo(cell);                
+    } else {
+        cell.addClass("selected");
+        startCellIndex = cell.index();
+        startRowIndex = cell.parent().index();
+    }
+    
+    return false; // prevent text selection
+})
+$(document).on("mouseover",".selectableTable td",function () {
+    if (!isMouseDown) return;
+    $(".selectableTable").find(".selected").removeClass("selected");
+    selectTo($(this));
+   
+})
+
+$(document).on("click",".selectableTable thead th",function () {
+    sumTbl = 0
+    $(".selectableTable").find(".selected").removeClass("selected");
+   var ind = $(this).index();
+   var tbl  = $(this).parents(".selectableTable").find("tbody tr");
+   for (let index = 0; index < tbl.length; index++) {
+    
+   $(tbl[index]).find("td").eq(ind).toggleClass("selected");
+       var dt = $(tbl[index]).find("td").eq(ind);
+      var val=  dt.find(".component-input-class").val();
+      var val2=  dt.find(".component-input-class").text();
+      
+      sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
+       
+     
+   }
+
+
+     
+
+   
+})
+$(document).on("selectstart",".selectableTable td", function () {
+    return false;
+});
+
+$(document).mouseup(function () {
+    isMouseDown = false;
+ 
+});
+
+
+
+
+
+
+  //////   var table ----------------------------------------------- edit section by Revan Gozelov >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
     var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
     var pid = (projectId) ? projectId : global_var.current_project_id;
@@ -9465,10 +9577,11 @@ function commmonOnloadAction(el) {
     }
 
     if (global_var.current_modal === 'loadDashboard') {
-        $('#statistics-projectlist').html($('#projectList').html());
+       // $('#statistics-projectlist').html($('#projectList').html());
+        setBugFilterProjectAdd('statistics-projectlist')
 //        $('#statistics-projectlist').prepend($('<option>').text(""))
-        $('#statistics-projectlist :selected').first().removeAttr("selected")
-        $('.selectcustom1').selectpicker();
+        $('#statistics-projectlist option').first().remove()
+        $('.selectcustom1').selectpicker("refresh");
 //        $('#statistics-projectlist').val("")
 
     }
