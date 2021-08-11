@@ -5756,11 +5756,19 @@ span.ruby-c-content {
     right: 0;
     visibility: hidden;
     border-radius: 3px;
-    width: 100%;
-    width: max-content;
+    /* width: 100%; */
     z-index: 50000;
     text-align: right;
+    width: 170px;
+    background: white;
+    border: 1px solid lightgrey;
+    padding: 5px;
  
+}
+.tool_element_edit .figureAddbtn{
+   
+    margin-bottom: 5px;
+    
 }
 .edit-class-input-component{
     position: absolute;
@@ -5791,7 +5799,7 @@ span.ruby-c-content {
     cursor: col-resize;
 }
 .dropdown-menu-large-btn{
-   min-width: 300px !important;
+   min-width: 320px !important;
     padding: 20px;
     font-size: 10px;
 }

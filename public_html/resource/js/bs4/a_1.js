@@ -5766,10 +5766,15 @@ function deleteInputActionRel(relId) {
     });
 }
 
-function fillRelatedApi4InputEvent() {
+function fillRelatedApi4InputEvent(cls) {
 //    return;
+  
     var apiList = SACore.GetBacklogKeyList();
-    var select = $('.input_event_related_api');
+      console.log(cls);
+    var select = $('#'+cls).find('.input_event_related_api');
+       if(!cls){
+       select = $('#'+cls).find('.input_event_related_api'); 
+       }
     select.html('');
 
     for (var i in apiList) {
@@ -5780,7 +5785,8 @@ function fillRelatedApi4InputEvent() {
                     .text(SACore.GetBacklogDetails(apiId, 'backlogName')))
         }
     }
-    sortSelectBox('input_event_related_api');
+    
+  //  sortSelectBox('input_event_related_api');
 }
 
 function getJsCodeListByProject() {
@@ -6901,6 +6907,16 @@ function insertNewClassDirect(el) {
     insertNewGuiClass(className);
     $(".input4NewClassAdding").hide();
 }
+function insertNewClassDirect2(el) {
+    var className = $(el).parents(".animation-block-for-find").find('#gui_prop_in_gui_class_new').val();
+    if (className.trim().length === 0) {
+        return;
+    }
+    className = "." + className;
+    className = className.replace(/ /g, '');
+    insertNewGuiClass(className);
+    $(".input4NewClassAdding").hide();
+}
 
 function insertNewClassDirect4Container(el) {
     var className = $('#gui_prop_cn_gui_class_new').val();
@@ -7219,7 +7235,42 @@ function removeInputClassRel(el, relId) {
     });
 }
 
+function setComponentStyleUpdate(elm){
+    var style  = $(elm).attr("style");
+       
+    var dt  = style.split(";");
+    var fullSt =''
+    for (let index = 0; index < dt.length; index++) {
+        
+       
+            fullSt=fullSt +" ##"+ dt[index]+";";
+      
+        
+        
+    }
+  
+    $("#gui_input_css_style").val(fullSt);
 
+   new UserStory().setGUIComponentContentSingle();
+}
+function setContainerStyleUpdate(elm){
+    var style  = $(elm).attr("style");
+       
+    var dt  = style.split(";");
+    var fullSt =''
+    for (let index = 0; index < dt.length; index++) {
+        
+       
+            fullSt=fullSt +" ##"+ dt[index]+";";
+      
+        
+        
+    }
+  
+    $("#gui_input_css_style_container").val(fullSt);
+
+   new UserStory().setGUIComponentContentSingle();
+}
 
 function getAllGuiClassList() {
 //    if (!global_var.current_project_id) {
@@ -7464,6 +7515,15 @@ function getInputAttributeListDetails4Container(res) {
 function addInputAttributes(el) {
     var attrName = $('#gui_prop_in_attr_name').val();
     var attrVal = $('#gui_prop_in_attr_value').val();
+
+    addInputAttributesCore(attrName, attrVal)
+}
+function addInputAttributes2(el) {
+
+
+    var attrName = $(el).parents(".animation-block-for-find").find('#gui_prop_in_attr_name').val();
+    var attrVal = $(el).parents(".animation-block-for-find").find('#gui_prop_in_attr_value').val();
+    console.log(attrName,attrVal);
 
     addInputAttributesCore(attrName, attrVal)
 }
@@ -11696,7 +11756,7 @@ function sortSelectBoxByElement(el) {
 }
 
 function sortSelectBox(id) {
-    var sel = $('.' + id);
+    var sel = $('#' + id);
     var selected = sel.val(); // cache selected value, before reordering
     var opts_list = sel.find('option');
     opts_list.sort(function (a, b) {
@@ -13106,7 +13166,7 @@ function loadProjectList2SelectboxByClass(className) {
     cmd.selectpicker('refresh');
     cmd.change();
 
-
+    
 }
 
 function hideNavBar() {
@@ -13127,8 +13187,10 @@ function setZadi(height, width) {
 
     if (width !== undefined && (width))
         $('#gui_prop_cn_generalwidth').val(width);
+        $('.figureBgSelectOption #widthComponent').val(width);
     if (height !== undefined && (height))
         $('#gui_prop_cn_generalheight').val(height);
+        $('.figureBgSelectOption #heightComponent').val(height);
     new UserStory().setGUIContainerStyle();
 //    new UserStory().setGUIComponentContent(); 
 }

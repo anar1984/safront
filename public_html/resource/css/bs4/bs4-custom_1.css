@@ -2677,6 +2677,7 @@ img.sc-IbsAh.kqHqhS {
    
     border-radius: 5px;
     background: #80bdffd2;
+    box-shadow: rgb(9 30 66 / 25%) 5px 8px 5px -4px, rgb(9 30 66 / 31%) 0px 0px 1px;
 }
 
 /*#smb-general-main-info{
@@ -3248,4 +3249,10 @@ img.sc-IbsAh.kqHqhS {
     to {
         background-position: -1em 0;
    }
+}
+.light-selectbox-custom{
+    border: none;
+    box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px, rgb(9 30 66 / 31%) 0px 0px 1px;
+    border-radius: 3px;
+    height: 21px;
 }

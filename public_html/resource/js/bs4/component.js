@@ -340,7 +340,7 @@ var Component = {
             div.attr('ondragover', 'allowDrop(event)')
                 .attr('ondragstart', 'drag(event)')
                 .attr('ondrop', 'drop(event)')
-               
+
         }
 
         //add classes to container
@@ -397,153 +397,259 @@ var Component = {
                 'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
                 "")
 
-                if(global_var.current_modal === 'loadLivePrototype'){
-                
-                    div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
+            if (global_var.current_modal === 'loadLivePrototype') {
+
+                div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
                     .append(`<div style='display:inline-block;' class="dropdown">
-                    <span class="figureAddbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fab fa-asymmetrik" aria-hidden="true"></i>
-                    </span>
-                    <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton">
-                    <div class="row">
-                    <div class="col-12  " style=" padding:0px;">
-                        <a href="#"   style="color:#000000;font-size:14px;padding:0px;"
-                           data-toggle="modal" 
-                           data-target="#addExistingRelationModal" 
-                           onclick="new UserStory().addExistingRelationByCurrentInput(this)">
-                            + Add Related Columns</a><br>
-                        <span class="relatedSUSOutputName"></span>
-                        <span class="relatedUserStory">(<a href="#" onclick="new UserStory().redirectUserStoryCore('')"></a>)</span>
-                        <span class="deleteRelatedSUSOutput" style="">
-                            <a href="#" onclick="new UserStory().deleteInputBySUSOutputId()"><i class="fa fa-remove"></i></a>
+                        <span class="figureAddbtn" onclick="fillRelatedApi4InputEvent('${comp.id}')" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fab fa-asymmetrik" aria-hidden="true"></i>
                         </span>
-                        <br><br>
+                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton">
+                        <div class="row animation-block-for-find">                      
+                        <div class="col-12">
+                            <fieldset class="border p-2">
+                                <legend class="w-auto w-auto-man">
+                                    Event Relation
+                                </legend>
+                    
+                                Event<br>
+                                <select class=" form-control input_event_type">
+                                    <option value="onclick">onclick</option>
+                                    <option value="onchange">onchange</option>
+                                    <option value="ondblclick">ondblclick</option>
+                                </select><br>
+                    
+                                Related API<br>
+                                <select  class="form-control input_event_related_api">                                                        
+                                </select>
+                    
+                                <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                                <br><br>
+                                <table style='border: 1px solid #dee2e6; width:100%;'>
+                                    <thead>
+                                        <tr>
+                                            <th>Event</th>
+                                            <th>API</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class='input_event_related_api_table_list_body'>
+                    
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                    
+                    
                     </div>
-                    <div class="col-12  "
-                         class="us-gui-component-action-div"
-                         style=" padding:0px  1px">
-                        <b><span
-                                style="width: 100%;padding:0px;">Action:</span><br></b>
-                        <select class="us-gui-component-action"
-                                style="width:100%;padding: 0px;
-                                border-radius: 4px;
-                                border: 1px solid gray;"
-                                onchange="new UserStory().setGUIComponentAction(this)">
-                            <option value="-1"></option>
-                            <option value="popup">Show Popup</option>
-                            <option value="close">Close Popup</option>
-                            <option value="redirect">Redirect to</option>
-                            <option value="fill">Fill in Section</option>
-                            <option value="save">Save Form</option>
-                            <option value="delete">Delete From Table</option>
-                        </select>
-                        <br><br>
-                    </div>
-
-                    <div class="col-12  us-gui-component-rel-sus-div-class us-gui-component-rel-sus-div"
-                         style="display: none;padding:0px;">
-
-                        <b><span style="width1: 100%;">Related Sourced User Story</span><br></b>
-                        <select type="number"
-                                class="us-gui-component-rel-sus-id"
-                                onchange="new UserStory().setGUIComponentRelSUS(this)"
-                                style="width:90%;
-                                border-radius: 4px;
-                                border: 1px solid gray;"></select>
-                        <i class="fa fa-mail-forward"
-                           style="cursor:pointer;color:green;"
-                           id='us-gui-component-rel-sus-div-i'
-                           onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id")'></i>
-                        <br><br>
-                    </div>
-
-                    <div class="col-12  us-gui-component-in-section-div  us-gui-component-rel-sus-div-class"
-                         id=""
-                         style="display: none;padding:0px;">
-
-                        <b><span
-                                style="width: 100%;">In Section (User Story)</span><br></b>
-                        <select type="number"
-                                class="us-gui-component-rel-sus-id-section "
-                                onchange="new UserStory().setGUIComponentRelSUSInSection(this)"
-                                style="width:90%;
-                                border-radius: 4px;
-                                border: 1px solid gray;"></select>
-                        <i class="fa fa-mail-forward us-gui-component-rel-sus-div-in-section"
-                           style="cursor:pointer;color:green;"
-                           id=''
-                           onclick='new UserStory().redirectUserStory("us-gui-component-rel-sus-id-section")'></i>
-                        <br> <br>
-
-                        <b><span
-                                style="width: 100%;">Section</span><br></b>
-                        <select type="number"
-                                class="us-gui-component-in-section"
-                                onchange="new UserStory().setGUIComponentSection(this)"
-                                style="margin-top:1px;width:100%;
-                                border-radius: 4px;
-                                border: 1px solid gray;"></select>
-                        <br><br>
-                    </div>
-
-
-
-
-                    <div class="col-12">
-                        <fieldset class="border p-2">
+                        </div>
+                      </div>`)
+                    .append(`<div style='display:inline-block;' class="dropdown">
+                        <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-paint-brush"></i>
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton1">
+                        <div class="row animation-block-for-find">                      
+                        <div class="col-12 "  style="display:flex;flex-wrap:wrap">
+                            <fieldset class="border p-2">
                             <legend class="w-auto w-auto-man">
-                                Event Relation
+                                background-color
                             </legend>
+                            <div class="figureBgSelectOption">
+                            <button data-bgcolorspan="transparent" style="background-color: transparent;" class="ColopickerSpanLine  change-color-component gactive"><i class="fas fa-times"></i></button>
+                            <button data-bgcolorspan="#007bff" style="background-color: #007bff;" class="ColopickerSpanLine  change-color-component "></button>
+                            <button data-bgcolorspan="#6c757d" style="background-color: #6c757d;" class="ColopickerSpanLine change-color-component "></button>
+                            <button data-bgcolorspan="#28a745" style="background-color: #28a745;" class="ColopickerSpanLine change-color-component"></button>
+                            <button data-bgcolorspan="#dc3545" style="background-color: #dc3545;" class="ColopickerSpanLine change-color-component"></button>
+                            <button data-bgcolorspan="#ffc107" style="background-color: #ffc107;" class="ColopickerSpanLine change-color-component"></button>
+                            <button data-bgcolorspan="#17a2b8" style="background-color: #17a2b8;" class="ColopickerSpanLine change-color-component "></button>
+                            <button data-bgcolorspan="#343a40" style="background-color: #343a40;" class="ColopickerSpanLine change-color-component"></button>
+                 
+                            </div>
+                            </fieldset>
+                            <fieldset class="border p-2">
+                            <legend class="w-auto w-auto-man">
+                                font-color
+                            </legend>
+                            <div class="figureBgSelectOption">
+                            <button data-bgcolorspan="black" style="background-color: transparent;" class="ColopickerSpanLine  change-font-component gactive"><i class="fas fa-times"></i></button>
+                            <button data-bgcolorspan="#007bff" style="background-color: #007bff;" class="ColopickerSpanLine  change-font-component "></button>
+                            <button data-bgcolorspan="#6c757d" style="background-color: #6c757d;" class="ColopickerSpanLine change-font-component "></button>
+                            <button data-bgcolorspan="#28a745" style="background-color: #28a745;" class="ColopickerSpanLine change-font-component"></button>
+                            <button data-bgcolorspan="#dc3545" style="background-color: #dc3545;" class="ColopickerSpanLine change-font-component"></button>
+                            <button data-bgcolorspan="#ffc107" style="background-color: #ffc107;" class="ColopickerSpanLine change-font-component"></button>
+                            <button data-bgcolorspan="#17a2b8" style="background-color: #17a2b8;" class="ColopickerSpanLine change-font-component "></button>
+                            <button data-bgcolorspan="#343a40" style="background-color: #343a40;" class="ColopickerSpanLine change-font-component"></button>
+                 
+                            </div>
+                            </fieldset>
+                            <fieldset class=" col-6 border p-2">
+                            <legend class="w-auto w-auto-man">
+                            text-align
+                        </legend>
+                            <div class="figureBgSelectOption">
+                           
+                            <button data-bgalign="left"  class="ColopickerSpanLine  change-align-component gactive"><i class="fas fa-align-left"></i></button>
+                            <button data-bgalign="center"  class="ColopickerSpanLine  change-align-component "><i class="fas fa-align-center"></i></button>
+                            <button data-bgalign="right"  class="ColopickerSpanLine change-align-component "><i class="fas fa-align-right"></i></button>
+                           
+                 
+                            </div>
+                            </fieldset>
+                            <fieldset class=" col-6 border p-2">
+                            <legend class="w-auto w-auto-man">
+                            font-style
+                        </legend>
+                            <div class="figureBgSelectOption">
+                           
+                            <button data-key="font-weight" data-bgalign="bold"  class="ColopickerSpanLine  change-fstyle-component gactive"><i class="fas fa-bold"></i></button>
+                            <button data-key="font-style" data-bgalign="italic"  class="ColopickerSpanLine  change-fstyle-component "><i class="fas fa-italic"></i></button>
+                            <button data-key="text-decoration" data-bgalign="underline"  class="ColopickerSpanLine change-fstyle-component "><i class="fas fa-underline"></i></button>
+                           
+                 
+                            </div>
+                            </fieldset>
+                            <fieldset class=" col-6 border p-2">
+                            <legend class="w-auto w-auto-man">
+                            width
+                        </legend>
+                            <div class="figureBgSelectOption">
+                            <input class="form-control col-6" type="number" name="" id="widthComponent">
+                            <select name="" class="form-control bg-light form-control-sm col-6" id="getStyleVah1d1">
+                       <option value="px">px</option>
+                       <option value="px">rem</option>
+                       <option value="px">cm</option>
+                   </select>
+                            </div>
+                            </fieldset>
+                            <fieldset class=" col-6 border p-2">
+                            <legend class="w-auto w-auto-man">
+                            height
+                        </legend>
+                            <div class="figureBgSelectOption">
+                           
+                            <input class="form-control col-6" type="number" name="" id="heightComponent">
+                            <select name="" class="form-control bg-light form-control-sm col-6" id="getStyleVah1d2">
+                       <option value="px">px</option>
+                       <option value="px">rem</option>
+                       <option value="px">cm</option>
+                   </select>
+                            </div>
+                            </fieldset>
+                        </div>
+                    
+                    
+                    </div>
+                        </div>
+                      </div>`)
+                    .append(`<div style='display:inline-block;' class="dropdown">
+                        <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-key"></i>
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton1">
+                        <div class="row animation-block-for-find">                      
+                        <div class="col-12">
+                        <fieldset class="border p-2">
+                        <legend class="w-auto w-auto-man">
+                            Class
+                        </legend>
+                        <table style="width:100%">
+                            <tbody>
+                                <tr>
+                                    <td style="padding:5px;">
 
-                            Event<br>
-                            <select style="width:100%;padding: 0px;
-                                    border-radius: 4px;
-                                    border: 1px solid gray;"
-                                    class="input_event_type">
-                                <option value="onclick">onclick</option>
-                                <option value="onchange">onchange</option>
-                                <option value="ondblclick">ondblclick</option>
-                            </select><br>
+                                        <select id="gui_prop_in_gui_class_list" class="classListOnChange" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                    </td>
+                                    <td style="width: 1%">
+                                        <i class="fa fa-plus" onclick="addGuiClassToInput(this)" style="  font-size:16px;cursor:pointer;" aria-hidden="true"></i>
 
-                            Related API<br>
-                            <select style="width:80%;padding: 0px;
-                                    border-radius: 4px;
-                                    border: 1px solid gray;"
-                                    class="input_event_related_api">                                                        
-                            </select>
+                                    </td>
+                                    <td style="width: 1%">
+                                        <i class="fa fa-bars" onclick="guiClassModal(this)" style="  font-size:16px;cursor:pointer;" aria-hidden="true"></i>
 
-                            <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
-                            <br><br>
-                            <table style='border: 1px solid #dee2e6; width:100%;'>
-                                <thead>
+                                    </td>
+                                </tr>
+                                <tr class="input4NewClassAdding" style="display:none">
+                                    <td style="padding:5px;" colspan="2">
+
+                                        <input id="gui_prop_in_gui_class_new" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                    </td>
+                                    <td style="width: 1%">
+                                        <button class="buttons" onclick="insertNewClassDirect2(this)" style="   cursor:pointer;">Add</button>
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                            <tbody class="input_class_list_in_component"></tbody>
+                        </table>
+
+                    </fieldset>
+                    <fieldset class="border p-2">
+                            <legend class="w-auto w-auto-man">
+                                Attributes
+                            </legend>
+                            <table style="width:100%">
+                                <tbody>
                                     <tr>
-                                        <th>Event</th>
-                                        <th>API</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody class='input_event_related_api_table_list_body'>
+                                        <td style="padding:5px;">
+                                            <span class="col-form-label control-label">Name:</span>
+                                            <input type="text" id="gui_prop_in_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                        </td>
+                                        <td style="padding:5px;">
+                                            <span class="col-form-label control-label">Value:</span>
+                                            <input type="text" id="gui_prop_in_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-plus" onclick="addInputAttributes2(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
 
+                                        </td>
+
+                                    </tr>
                                 </tbody>
                             </table>
+                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                                <tbody class="input_attributes_list_in_component"></tbody>
+                            </table>
+
                         </fieldset>
+                        </div>
+                    
+                    
                     </div>
+                        </div>
+                      </div>`)
 
-
-                </div>
-                    </div>
-                  </div>`)
                     .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
-              
+
                     .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
+                    .append(`<select id="gui-cell-selectbox-changed" class="light-selectbox-custom">
+                                 <option value="1">1</option>
+                                 <option value="2">2</option>
+                                 <option value="3">3</option>
+                                 <option value="4">4</option>
+                                 <option value="5">5</option>
+                                 <option value="6">6</option>
+                                 <option value="7">7</option>
+                                 <option value="8">8</option>
+                                 <option value="9">9</option>
+                                 <option value="10">10</option>
+                                 <option value="11">11</option>
+                                 <option value="12">12</option>
+                               </select>`)
+
+                    .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + ' "data-add="false"><i class="fas fa-angle-left"></i></span>')
+                    .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + '  data-add="true"><i class="fas fa-angle-right"></i></span>')
                     .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
-    
+
                     .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
                 )
-                }
-             
-        }
+            }
 
+        }
+          $(div).find("#gui-cell-selectbox-changed").val(comp.cellNo)
         return div;
     },
     AddMandatoryStar: function (comp) {
@@ -613,14 +719,14 @@ var Component = {
             $(el).parent().parent().find('tbody').html(body);
             updateRowCountInputTable(tid, rc);
         },
-        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit,inputId) {
+        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit, inputId) {
             var sLimit = (startLimit) ? startLimit : "0";
             var tid = tableId;
             var rc = rowCount;
             var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit);
             $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
-            
-            var el12= document.getElementById("comp_id_"+inputId);
+
+            var el12 = document.getElementById("comp_id_" + inputId);
             loadSelectBoxesAfterGUIDesign(el12);
         },
         GenRowCount: function (comp) {
@@ -686,8 +792,8 @@ var Component = {
             var showColumnName = SAInput.Tables[tableId].showColumnName.split(",");
             var pairShowColumnName = this.MatchShowComponentAndId(col, showColumnName);
 
-//            var showInTree = SAInput.Tables[tableId].showInTree.split(",");
-//            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
+            //            var showInTree = SAInput.Tables[tableId].showInTree.split(",");
+            //            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
 
             col = this.SetColumnsOrder(col);
 
@@ -708,7 +814,7 @@ var Component = {
                     .attr('id', inputId)
                     .attr('pid', inputId)
                     .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
-                   
+
                     .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
                     .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :
@@ -718,7 +824,7 @@ var Component = {
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumnName = pairShowColumnName[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
-//                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+                //                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
 
 
                 var showComp = (global_var.current_modal === 'loadLivePrototype') ?
@@ -745,13 +851,13 @@ var Component = {
                     .attr("onclick", "showInputTableColumnItselfComponent(this,'" + tableId + "','" + inputId + "')") :
                     "";
 
-//                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
-//                    $('<i class="fa fa-folder-open" aria-hidden="true">')
-//                    .css("cursor", "pointer")
-//                    .css('font-size', '8px')
-//                    .css("color", colorInTree)
-//                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
-//                    "";
+                //                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
+                //                    $('<i class="fa fa-folder-open" aria-hidden="true">')
+                //                    .css("cursor", "pointer")
+                //                    .css('font-size', '8px')
+                //                    .css("color", colorInTree)
+                //                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
+                //                    "";
 
 
 
@@ -762,8 +868,8 @@ var Component = {
                     .append(showComp, ' ')
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
-//                    .append(showInTree, ' ')
-            ;
+                //                    .append(showInTree, ' ')
+                ;
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
@@ -873,7 +979,7 @@ var Component = {
                 var tr = $("<tr>")
                     .addClass('redirectClass')
                     .attr("bid", backlogId)
-//                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
+                    //                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
                     .append($("<td>").append((j + parseInt(sLimit))));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();
