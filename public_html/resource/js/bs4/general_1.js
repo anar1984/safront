@@ -181,7 +181,8 @@ function init() {
     });
     $(document).on('click', '.us-ipo-input-tr', function (evt) {
         $('.us-ipo-input-tr').removeClass("active");
-        new UserStory().showIPOInputDetails(this);
+        var id = $(this).attr("pid")
+        new UserStory().showIPOInputDetails(id);
         $(this).toggleClass("active");
         //show properties
 //        var pid = $(this).attr('pid');

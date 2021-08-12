@@ -81,8 +81,102 @@ $(function () {
 
 
     });
+    $(document).on("click", '.change-color-component', function (e) {
+   
+          var clr  = $(this).attr("data-bgcolorspan");
+          var elm  = $(this).parents('.component-container-dashed').find('.component-input-class');
+              elm.css("background-color",clr);
+         
+           
+           setComponentStyleUpdate(elm)
+
+        });
+    $(document).on("click", '.change-font-component', function (e) {
+   
+          var clr  = $(this).attr("data-bgcolorspan");
+          var elm  = $(this).parents('.component-container-dashed').find('.component-input-class');
+              elm.css("color",clr);
+           var lastVal  = $("#gui_input_css_style").val();
+         
+           setComponentStyleUpdate(elm)
+
+
+
+    });
+    $(document).on("click", '.change-align-component', function (e) {
+   
+          var clr  = $(this).attr("data-bgalign");
+          var elm  = $(this).parents('.component-container-dashed').find('.component-input-class');
+              elm.css("text-align",clr);
+              setComponentStyleUpdate(elm)
+          
+
+
+
+    });
+    $(document).on("click", '.change-fstyle-component', function (e) {
+   
+          var clr  = $(this).attr("data-bgalign");
+          var key  = $(this).attr("data-key");
+          var elm  = $(this).parents('.component-container-dashed').find('.component-input-class');
+              elm.css(key,clr);
+              setComponentStyleUpdate(elm);
+          
+
+
+
+    });
+    $(document).on("change", '#heightComponent', function (e) {
+   
+          var clr  = $(this).val();
+          var ind = $("#getStyleVah1d1").val();
+          var elm  = $(this).parents('.component-container-dashed');
+              elm.css("max-height",clr+ind);
+              setContainerStyleUpdate(elm);
+          
+
+    });
+    $(document).on("change", '#widthComponent', function (e) {
+   
+          var clr  = $(this).val();
+         var ind = $("#getStyleVah1d2").val();
+          var elm  = $(this).parents('.component-container-dashed');
+              elm.css("max-width",clr+ind);
+              setContainerStyleUpdate(elm);
+
+    });
+    $(document).on("change", '#gui-cell-selectbox-changed', function (e) {
+        var lastCol = $(this).parents(".component-container-dashed")
+              $("#us-gui-component-cell-no").val($(this).val());
+              
+         new UserStory().setGUIComponentCellNo($("#us-gui-component-cell-no"));
+    });
+    $(document).on("click", '.cellWitdhAdd', function (e) {
+    
+        var tr  = $(this).attr("data-add");
+        var cellNo  = $(this).attr("cell-num");
+        var lastCol = $(this).parents(".component-container-dashed")
+  if(cellNo>0&&cellNo <= 12){
+    if (tr=="true") {
+            
+        lastCol.removeClass("col-lg-"+cellNo);
+        lastCol.addClass("col-lg-"+(parseFloat(cellNo)+1));
+        $('.cellWitdhAdd').attr("cell-num",(parseFloat(cellNo)+1))
+        $("#us-gui-component-cell-no").val((parseFloat(cellNo)+1))
+    }else{
+        lastCol.removeClass("col-lg-"+cellNo);
+        
+        lastCol.addClass("col-lg-"+(parseFloat(cellNo)-1));
+        $('.cellWitdhAdd').attr("cell-num",(parseFloat(cellNo)-1));
+        $("#us-gui-component-cell-no").val((parseFloat(cellNo)-1))
+    }
+
+
+  }
+       
+    });
     $(document).on("change", '#storyCardListSelectBox', function (e) {
-        var id = $('option:selected', this).attr('sid')
+        var id = $(this).val()
         new UserStory().getStoryInfo(id, this);
         $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
         $('.component-class').resizableGrid();
@@ -850,10 +944,8 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
   
    $(this).addClass("show");
    event.stopPropagation();
-
-     
-      
-
+    event.preventDefault();
+    
 });
 
 
