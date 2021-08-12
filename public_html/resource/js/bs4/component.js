@@ -489,7 +489,7 @@ var Component = {
                         </legend>
                             <div class="figureBgSelectOption">
                            
-                            <button data-bgalign="left"  class="ColopickerSpanLine  change-align-component gactive"><i class="fas fa-align-left"></i></button>
+                            <button data-bgalign="left"  class="ColopickerSpanLine  change-align-component "><i class="fas fa-align-left"></i></button>
                             <button data-bgalign="center"  class="ColopickerSpanLine  change-align-component "><i class="fas fa-align-center"></i></button>
                             <button data-bgalign="right"  class="ColopickerSpanLine change-align-component "><i class="fas fa-align-right"></i></button>
                            
@@ -502,7 +502,7 @@ var Component = {
                         </legend>
                             <div class="figureBgSelectOption">
                            
-                            <button data-key="font-weight" data-bgalign="bold"  class="ColopickerSpanLine  change-fstyle-component gactive"><i class="fas fa-bold"></i></button>
+                            <button data-key="font-weight" data-bgalign="bold"  class="ColopickerSpanLine  change-fstyle-component "><i class="fas fa-bold"></i></button>
                             <button data-key="font-style" data-bgalign="italic"  class="ColopickerSpanLine  change-fstyle-component "><i class="fas fa-italic"></i></button>
                             <button data-key="text-decoration" data-bgalign="underline"  class="ColopickerSpanLine change-fstyle-component "><i class="fas fa-underline"></i></button>
                            
@@ -625,21 +625,22 @@ var Component = {
                     .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
 
                     .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
-                    .append(`<select id="gui-cell-selectbox-changed" class="light-selectbox-custom">
-                                 <option value="1">1</option>
-                                 <option value="2">2</option>
-                                 <option value="3">3</option>
-                                 <option value="4">4</option>
-                                 <option value="5">5</option>
-                                 <option value="6">6</option>
-                                 <option value="7">7</option>
-                                 <option value="8">8</option>
-                                 <option value="9">9</option>
-                                 <option value="10">10</option>
-                                 <option value="11">11</option>
-                                 <option value="12">12</option>
-                               </select>`)
-
+                     .append($("<select>").addClass('light-selectbox-custom')
+                                          .attr("id","gui-cell-selectbox-changed")
+                                          .append('<option '+(comp.cellNo == 1 ? 'selected=selected': '') +' value="1">1</option>')
+                                          .append('<option '+(comp.cellNo == 2 ? 'selected=selected': '') +' value="2">2</option>')
+                                          .append('<option '+(comp.cellNo == 3 ? 'selected=selected': '') +' value="3">3</option>')
+                                          .append('<option '+(comp.cellNo == 4 ? 'selected=selected': '') +' value="4">4</option>')
+                                          .append('<option '+(comp.cellNo == 5 ? 'selected=selected': '') +' value="5">5</option>')
+                                          .append('<option '+(comp.cellNo == 6 ? 'selected=selected': '') +' value="6">6</option>')
+                                          .append('<option '+(comp.cellNo == 7 ? 'selected=selected': '') +' value="7">7</option>')
+                                          .append('<option '+(comp.cellNo == 8 ? 'selected=selected': '') +' value="8">8</option>')
+                                          .append('<option '+(comp.cellNo == 9 ? 'selected=selected': '') +' value="9">9</option>')
+                                          .append('<option '+(comp.cellNo == 10 ? 'selected=selected': '') +' value="10">10</option>')
+                                          .append('<option '+(comp.cellNo == 11 ? 'selected=selected': '') +' value="11">11</option>')
+                                          .append('<option '+(comp.cellNo == 12 ? 'selected=selected': '') +' value="12">12</option>')
+                                          
+                                          )
                     .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + ' "data-add="false"><i class="fas fa-angle-left"></i></span>')
                     .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + '  data-add="true"><i class="fas fa-angle-right"></i></span>')
                     .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
@@ -649,7 +650,7 @@ var Component = {
             }
 
         }
-          $(div).find("#gui-cell-selectbox-changed").val(comp.cellNo)
+       
         return div;
     },
     AddMandatoryStar: function (comp) {

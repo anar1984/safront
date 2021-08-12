@@ -335,6 +335,7 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#gui_prop_in_backgroundcolor').val(val);
+                    $('.change-color-component[data-bgcolorspan='+val+']').click();
                     $('#cb_gui_prop_in_backgroundcolor').prop('checked', true);
                     $('#gui_prop_in_backgroundcolor').removeAttr('disabled');
                 } else {
@@ -463,6 +464,8 @@ var ComponentDesign = {
                 val = val.replace('px', '');
                 if (val) {
                     $('#gui_prop_in_horizontalposition').val(val);
+                    $('.active-inputs-selected').find('[data-bgalign="'+val+'"]').addClass('gactive');
+                    
                 } else {
                     $('#gui_prop_in_horizontalposition').val('');
                 }
@@ -494,6 +497,7 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#gui_prop_in_fontcolor').val(val);
+                    $('.change-font-component[data-bgcolorspan='+val+']').click();
                     $('#cb_gui_prop_in_fontcolor').prop('checked', true);
                     $('#gui_prop_in_fontcolor').removeAttr('disabled');
                 } else {
@@ -592,8 +596,11 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#cb_gui_prop_in_fontstylebold').prop('checked', true);
+                    $('.active-inputs-selected').find('[data-key="font-weight"]').addClass('gactive');
+
                 } else {
                     $('#cb_gui_prop_in_fontstylebold').prop('checked', false);
+                    $('[data-key="font-weight"]').removeClass('gactive');
                 }
             } catch (e) {
                 $('#cb_gui_prop_in_fontstylebold').prop('checked', false);
@@ -626,8 +633,10 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#cb_gui_prop_in_fontstyleitalic').prop('checked', true);
+                    $('.active-inputs-selected').find('[data-key="font-style"]').addClass('gactive');
                 } else {
                     $('#cb_gui_prop_in_fontstyleitalic').prop('checked', false);
+                    $('.active-inputs-selected').find('[data-key="font-style"]').removeClass('gactive');
                 }
             } catch (e) {
                 $('#cb_gui_prop_in_fontstyleitalic').prop('checked', false);

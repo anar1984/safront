@@ -2072,9 +2072,9 @@
 
     })
     $(document).on("click", ".ColopickerSpanLine", function () {
-      $(".ColopickerSpanLine").removeClass('gactive')
-      $(this).addClass('gactive')
-      lineColor = $(this).attr('data-bgcolorspan');
+     /*  $(".ColopickerSpanLine").removeClass('gactive');
+      $(this).addClass('gactive');
+      lineColor = $(this).attr('data-bgcolorspan'); */
 
     })
 

@@ -95,7 +95,7 @@ $(function () {
    
           var clr  = $(this).attr("data-bgcolorspan");
           var elm  = $(this).parents('.component-container-dashed').find('.component-input-class');
-              elm.css("color",clr);
+              elm.css("color", clr);
            var lastVal  = $("#gui_input_css_style").val();
          
            setComponentStyleUpdate(elm)
@@ -103,6 +103,27 @@ $(function () {
 
 
     });
+    $(document).on("click", ".change-font-component", function () {
+       $(".change-font-component").removeClass('gactive');
+         $(this).addClass('gactive');
+         lineColor = $(this).attr('data-bgcolorspan');
+   
+       })
+    $(document).on("click", ".change-color-component", function () {
+      $(".change-color-component").removeClass('gactive');
+         $(this).addClass('gactive');
+   
+       })
+    $(document).on("click", ".change-align-component", function () {
+        $(".change-align-component").removeClass('gactive');
+        $(this).addClass('gactive');
+   
+       })
+    $(document).on("click", ".change-fstyle-component", function () {
+     
+         $(this).toggleClass('gactive');
+   
+       })
     $(document).on("click", '.change-align-component', function (e) {
    
           var clr  = $(this).attr("data-bgalign");
