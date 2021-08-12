@@ -197,7 +197,7 @@ $(function () {
        
     });
     $(document).on("change", '#storyCardListSelectBox', function (e) {
-        var id = $(this).val()
+        var id = $('option:selected', this).attr('value')
         new UserStory().getStoryInfo(id, this);
         $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
         $('.component-class').resizableGrid();
