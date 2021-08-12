@@ -1231,6 +1231,13 @@ var SACore = {
     GetCurrentBaklogSpentBudget: function () {
         return this.GetBacklogKey(this.GetCurrentBacklogId(), "spentBudget");
     },
+
+    //resid
+    GetCurrentBaklogTitle: function () {
+        return this.GetBacklogKey(this.GetCurrentBacklogId(), "backlogTitle");
+    },
+    //resid
+
     GetCurrentBaklogApiAction: function () {
         return this.GetBacklogKey(this.GetCurrentBacklogId(), "apiAction");
     },

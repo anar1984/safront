@@ -18382,6 +18382,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-executed-counter').val(SACore.GetCurrentBaklogExecutedCounter());
         $('#user-story-est-budget').val(SACore.GetCurrentBaklogEstimatedBudget());
         $('#user-story-spent-budget').val(SACore.GetCurrentBaklogSpentBudget());
+        
+        //resid
+        $('#user-story-backlog-title').val(SACore.GetCurrentBaklogTitle());
+        //resid
+        
         $('#user-story-apiaction').val(SACore.GetCurrentBaklogApiAction());
         $('#user-story-apirequesttype').val(SACore.GetCurrentBaklogApiSyncRequest());
         $('.user-story-is-shared').val(SACore.GetCurrentBaklogIsShared());
