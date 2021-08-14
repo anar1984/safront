@@ -895,7 +895,7 @@ $(document).on("click", ".cf li .inptadd", function () {
           $("#SUS_IPO_GUI_Design").append(st);
           $("#"+idggdd).append(ldoa);
         insertNewInputTotalDblClick(valin, nm, "6",idggdd);
-        resizeColDivElement();
+     
 
     } else {
         let valin = $(this).parent().attr('value');
@@ -911,6 +911,7 @@ $(document).on("click", ".cf li .inptadd", function () {
         }, 700);
         $('#addNewComponentModal').find('#exampleModal-new-component-type').val(valin);
     }
+    $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
 
 })
 
