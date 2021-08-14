@@ -11373,7 +11373,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         getInputCompClassList();
         getInputContaierClassList();
         getInputActionRelList();
-        new UserStory().loadSUSList4InputDetails(SACore.toJSON());
+       
 
         
     },
@@ -14293,9 +14293,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.load();
     },
     redirectUserStory: function (backlogId) {
-        if ($('#' + backlogId).val()) {
+ 
+        if ($('.' + backlogId).val()) {
 //            console.log('id=' + $('#us-gui-component-rel-sus-id').val())
-            this.redirectUserStoryCore($('#' + backlogId).val());
+            this.redirectUserStoryCore($('.' + backlogId).val());
         }
     },
     redirectUserStoryCore: function (backlogId) {
@@ -19277,7 +19278,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //init onload click and change events
         initOnloadActionOnGUIDesign4OnClick(elm);
         initOnloadActionOnGUIDesign4Onchange(elm);
-
+    
 
 
     },

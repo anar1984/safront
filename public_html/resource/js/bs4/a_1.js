@@ -5775,9 +5775,9 @@ function fillRelatedApi4InputEvent(cls) {
        if(!cls){
        select = $('#'+cls).find('.input_event_related_api'); 
        }
-       var select1 = $(".animation-block-for-find .input_event_related_api")
+     
     select.html('');
-    select1.html('');
+  
 
     for (var i in apiList) {
         var apiId = apiList[i];
@@ -5785,13 +5785,11 @@ function fillRelatedApi4InputEvent(cls) {
             select.append($('<option>')
                     .val(apiId)
                     .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
-            select1.append($('<option>')
-                    .val(apiId)
-                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+           
         }
     }
     
-  //  sortSelectBox('input_event_related_api');
+    sortSelectBoxWithEl(select);
  
 }
 
@@ -11763,6 +11761,16 @@ function sortSelectBoxByElement(el) {
 
 function sortSelectBox(id) {
     var sel = $('#' + id);
+    var selected = sel.val(); // cache selected value, before reordering
+    var opts_list = sel.find('option');
+    opts_list.sort(function (a, b) {
+        return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
+    });
+    sel.html('').append(opts_list);
+    sel.val(selected); // set cached selected value
+}
+function sortSelectBoxWithEl(el) {
+    var sel = el;
     var selected = sel.val(); // cache selected value, before reordering
     var opts_list = sel.find('option');
     opts_list.sort(function (a, b) {
