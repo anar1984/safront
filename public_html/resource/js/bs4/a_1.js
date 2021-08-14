@@ -5662,16 +5662,17 @@ function getGUIDataByStoryCard(el) {
 }
 
 function insertNewInputActionRel(el) {
-    if (!global_var.current_project_id || !$('.input_event_type').val()
-            || !$('.input_event_related_api').val())
+    console.log(el);
+    if (!global_var.current_project_id || !$(el).parents(".animation-block-for-find").find('.input_event_type').val()
+            || !$(el).parents(".animation-block-for-find").find('.input_event_related_api').val())
         return;
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.fkApiId = $('.input_event_related_api').val();
-    json.kv.actionType = $('.input_event_type').val();
+    json.kv.fkApiId = $(el).parents(".animation-block-for-find").find('.input_event_related_api').val();
+    json.kv.actionType = $(el).parents(".animation-block-for-find").find('.input_event_type').val();
     var that = this;
     var data = JSON.stringify(json);
 
@@ -5770,19 +5771,23 @@ function fillRelatedApi4InputEvent(cls) {
 //    return;
   
     var apiList = SACore.GetBacklogKeyList();
-      console.log(cls);
     var select = $('#'+cls).find('.input_event_related_api');
        if(!cls){
        select = $('#'+cls).find('.input_event_related_api'); 
        }
+       var select1 = $(".animation-block-for-find .input_event_related_api")
     select.html('');
+    select1.html('');
 
     for (var i in apiList) {
         var apiId = apiList[i];
         if (SACore.GetBacklogDetails(apiId, "isApi") === '1') {
             select.append($('<option>')
                     .val(apiId)
-                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')))
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+            select1.append($('<option>')
+                    .val(apiId)
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
         }
     }
     
