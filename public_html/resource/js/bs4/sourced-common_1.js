@@ -2489,7 +2489,7 @@ UserStory.prototype = {
         if (gui_component.componentPerm.action.includes($('#us-gui-component-id').val())) {
 //            $('#us-gui-component-action').val('').change();
             $('.us-gui-component-action-div').hide();
-            $('#us-gui-component-rel-sus-div').show();
+            $('.us-gui-component-rel-sus-div').show();
         } else {
             $('.us-gui-component-action-div').show();
 //            $('#us-gui-component-action').change();
@@ -7557,17 +7557,18 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     loadSUSList4InputDetails: function (res) {
         try {
-            $('.us-gui-component-rel-sus-id').html("");
+            console.log("Ascdvbnm,")
+            $('.event_details1 .us-gui-component-rel-sus-id').html("");
             var obj = res.tbl[0].r;
-            $('.us-gui-component-rel-sus-id').append($("<option></option>"));
+            $('.event_details1 .us-gui-component-rel-sus-id').append($("<option></option>"));
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id !== global_var.current_backlog_id) {
-                    $('.us-gui-component-rel-sus-id').append($("<option></option>")
+                    $('.event_details1 .us-gui-component-rel-sus-id').append($("<option></option>")
                             .attr("value", obj[n].id)
                             .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " "));
                 }
             }
-            sortSelectBox('us-gui-component-rel-sus-id');
+           // sortSelectBox('us-gui-component-rel-sus-id');
         } catch (err) {
         }
     },
@@ -8537,7 +8538,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                // $('#userstory-gui-input-component-type-content').modal('hide');
-               // that.genGUIDesign();
+                that.genGUIDesign();
 //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
@@ -11372,6 +11373,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         getInputCompClassList();
         getInputContaierClassList();
         getInputActionRelList();
+        new UserStory().loadSUSList4InputDetails(SACore.toJSON());
 
         
     },
