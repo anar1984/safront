@@ -8538,7 +8538,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                // $('#userstory-gui-input-component-type-content').modal('hide');
-               // that.genGUIDesign();
+                that.genGUIDesign();
 //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
@@ -11373,6 +11373,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         getInputCompClassList();
         getInputContaierClassList();
         getInputActionRelList();
+        new UserStory().loadSUSList4InputDetails(SACore.toJSON());
 
         
     },
