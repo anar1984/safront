@@ -7258,7 +7258,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($('<input type="text">')
                             .attr("iid", obj[i].id)
                             .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
-                            .attr("placeholder", "Add new description")
+//                            .attr("placeholder", "Add new description")
                             .attr('class', 'description-style')
                             .attr('id', 'focuse_me')
                             .addClass('pdfHide')
@@ -10403,7 +10403,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;
-        var padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId);
+        
+        var title = SACore.GetBacklogDetails(popupBacklogId,'description');
+        var padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId, title);
         //  click on first tab
         $('.activeTabClass').each(function (e) {
             $(this).click();
@@ -18497,6 +18499,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus());
         $('#user-story-priority').val(SACore.GetCurrentBaklogPriority());
         $('#user-story-est-hours').val(SACore.GetCurrentBaklogEstimatedHours());
+        $('#user-story-description').val(SACore.GetCurrentBaklogDescription());
         $('#user-story-spent-hours').val(SACore.GetCurrentBaklogSpentHours());
         $('#user-story-est-counter').val(SACore.GetCurrentBaklogEstimatedCounter());
         $('#user-story-executed-counter').val(SACore.GetCurrentBaklogExecutedCounter());
@@ -19941,7 +19944,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($('<input type="text">')
                             .attr("iid", obj[i].id)
                             .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
-                            .attr("placeholder", "Add new description")
+//                            .attr("placeholder", "Add new description")
                             .attr('class', 'description-style')
                             .attr('id', 'focuse_me')
                             .addClass('pdfHide')

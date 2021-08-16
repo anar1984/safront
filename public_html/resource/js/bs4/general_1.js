@@ -1581,14 +1581,14 @@ function GetTagLine(text, tag) {
     return st;
 }
 
-function generatePopupModalNew(modalBody, style, triggerId, backlogId) {
+function generatePopupModalNew(modalBody, style, triggerId, backlogId,title) {
     var pageId = makeId(15);
     var st = "";
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
     st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <span class="modal-title" id="userstory-gui-input-component-res-sus-label"></span>';
+    st += '              <span class="modal-title" id="userstory-gui-input-component-res-sus-label">'+title+'</span>';
     st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';

@@ -11501,11 +11501,11 @@ function loadHtml(file) {
         commmonOnloadAction(this);
         getJsCodeListByProject();
 
-        if (cdnh) {
-
-            jsEditorGenerate();
-            cdnh = false;
-        }
+//        if (cdnh) {
+//
+//            jsEditorGenerate();
+//            cdnh = false;
+//        }
 
     });
 }
