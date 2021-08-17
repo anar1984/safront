@@ -19898,7 +19898,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     : "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
-            var tr = $('<tr></tr>').append($('<td></td>').html(innerRowId));
+            var tr = $('<tr></tr>')
+                    .addClass('story-card-input-line-tr-2')
+                    .append($('<td></td>').html(innerRowId));
             tr.append($('<td></td>')
                     .addClass('pdfHide')
                     .append($('<input type="checkbox">')
@@ -19943,8 +19945,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
                     .append($('<input type="text">')
                             .attr("iid", obj[i].id)
+                            .css('display','none')
                             .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
-//                            .attr("placeholder", "Add new description")
+                            .attr("placeholder", "Add new description")
                             .attr('class', 'description-style')
                             .attr('id', 'focuse_me')
                             .addClass('pdfHide')

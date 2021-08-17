@@ -1588,7 +1588,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId,title) {
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
     st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <span class="modal-title" id="userstory-gui-input-component-res-sus-label">'+title+'</span>';
+    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">'+title+'</b>';
     st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';
