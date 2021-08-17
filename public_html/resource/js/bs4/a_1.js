@@ -12,8 +12,8 @@
 //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 //    });
 //});
-     
-   
+
+
 var localstorage_prefix = {"JS": "js_", "Backlog": "st_", "BacklogDescription": "stdesc_"};
 var current_js_code_id = "";
 var cr_gui_classes = {};
@@ -139,13 +139,13 @@ var startCellIndex = null;
 var sumTbl = 0;
 
 function selectTo(cell) {
-    
-    var row = cell.parent();    
+
+    var row = cell.parent();
     var cellIndex = cell.index();
     var rowIndex = row.index();
 
     var rowStart, rowEnd, cellStart, cellEnd;
-    
+
     if (rowIndex < startRowIndex) {
         rowStart = rowIndex;
         rowEnd = startRowIndex;
@@ -153,116 +153,116 @@ function selectTo(cell) {
         rowStart = startRowIndex;
         rowEnd = rowIndex;
     }
-    
+
     if (cellIndex < startCellIndex) {
         cellStart = cellIndex;
         cellEnd = startCellIndex;
     } else {
         cellStart = startCellIndex;
         cellEnd = cellIndex;
-    }  
-  
-    var  kl = 0;
+    }
+
+    var kl = 0;
     for (var i = rowStart; i <= rowEnd; i++) {
-      
-        var rowCells = $(".selectableTable tbody tr:eq("+i+")").find("td");
-      
+
+        var rowCells = $(".selectableTable tbody tr:eq(" + i + ")").find("td");
+
         for (var j = cellStart; j <= cellEnd; j++) {
             $(rowCells[j]).addClass("selected");
             var dt = $(rowCells[j]);
-            var val=  dt.find(".component-input-class").val();
-            var val2=  dt.find(".component-input-class").text();
-            
-            sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2);
-             
+            var val = dt.find(".component-input-class").val();
+            var val2 = dt.find(".component-input-class").text();
+
+            sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
+
             kl = rowCells.length
-        }        
+        }
     }
-    sumAvarMaxMinCount(sumTbl,cellEnd);
+    sumAvarMaxMinCount(sumTbl, cellEnd);
 }
 
-function sumAvarMaxMinCount(sum,count,min,max){
+function sumAvarMaxMinCount(sum, count, min, max) {
 
-     $(".absolute-div-row-table").remove();
-    var div  = $("<div>").addClass("absolute-div-row-table")
-                         .append(" sum:"+sum)
-                         .append(" avarge:"+(sum/count))
-                         .append(" minimum:"+(min))
-                         .append(" maximum:"+(max))
-                         .append(" count:"+(count));
+    $(".absolute-div-row-table").remove();
+    var div = $("<div>").addClass("absolute-div-row-table")
+            .append(" sum:" + sum)
+            .append(" avarge:" + (sum / count))
+            .append(" minimum:" + (min))
+            .append(" maximum:" + (max))
+            .append(" count:" + (count));
 
     $("body").append(div);
-    
+
 
 }
 
-  
 
-$(document).on("mousedown",".selectableTable td",function (e) {
+
+$(document).on("mousedown", ".selectableTable td", function (e) {
     isMouseDown = true;
     var cell = $(this);
 
     $(".selectableTable").find(".selected").removeClass("selected"); // deselect everything
-    
+
     if (e.shiftKey) {
-        selectTo(cell);                
+        selectTo(cell);
     } else {
         cell.addClass("selected");
         startCellIndex = cell.index();
         startRowIndex = cell.parent().index();
     }
-    
+
     return false; // prevent text selection
 })
-$(document).on("mouseover",".selectableTable td",function () {
-    if (!isMouseDown) return;
+$(document).on("mouseover", ".selectableTable td", function () {
+    if (!isMouseDown)
+        return;
     $(".selectableTable").find(".selected").removeClass("selected");
     selectTo($(this));
-   
+
 })
 
-$(document).on("click",".selectableTable thead th",function () {
+$(document).on("click", ".selectableTable thead th", function () {
     sumTbl = 0
     $(".selectableTable").find(".selected").removeClass("selected");
-   var ind = $(this).index();
-   var tbl  = $(this).parents(".selectableTable").find("tbody tr");
-   for (let index = 0; index < tbl.length; index++) {
-    
-   $(tbl[index]).find("td").eq(ind).toggleClass("selected");
-       var dt = $(tbl[index]).find("td").eq(ind);
-      var val=  dt.find(".component-input-class").val();
-      var val2=  dt.find(".component-input-class").text();
-      
-      sumTbl=  sumTbl + parseFloat(val)+parseFloat(val2)
-       
-     
-   }
+    var ind = $(this).index();
+    var tbl = $(this).parents(".selectableTable").find("tbody tr");
+    for (let index = 0; index < tbl.length; index++) {
+
+        $(tbl[index]).find("td").eq(ind).toggleClass("selected");
+        var dt = $(tbl[index]).find("td").eq(ind);
+        var val = dt.find(".component-input-class").val();
+        var val2 = dt.find(".component-input-class").text();
+
+        sumTbl = sumTbl + parseFloat(val) + parseFloat(val2)
 
 
-     
+    }
 
-   
+
+
+
+
 })
-$(document).on("selectstart",".selectableTable td", function () {
+$(document).on("selectstart", ".selectableTable td", function () {
     return false;
 });
 
 $(document).mouseup(function () {
     isMouseDown = false;
- 
+
 });
 
 
 
 
-(function($, window, document, undefined) {
-  
+(function ($, window, document, undefined) {
+
     $.widget('ce.resizableGrid', {
 
-       
-        _create: function() {
+        _create: function () {
             this.resizing = false;
-       
+
             this._on({
                 'mousedown .resizable-column-handle': '_resizeStartHandler',
                 'mousemove': '_resizeHandler',
@@ -271,32 +271,32 @@ $(document).mouseup(function () {
             });
         },
 
-        _init: function() {
+        _init: function () {
             this._createHelpers();
         },
 
-        _createHelpers: function() {
+        _createHelpers: function () {
             this.element.addClass('resizable-grid');
 
-            this.element.find('> .row:not(.resizable-row)').each(function(rowIndex, rowElement) {
+            this.element.find('> .row:not(.resizable-row)').each(function (rowIndex, rowElement) {
                 var row = $(rowElement);
 
                 row.addClass('resizable-row');
 
-                row.find('> [class^="col-"]:not(.resizable-column)').each(function(columnIndex, columnElement) {
+                row.find('> [class^="col-"]:not(.resizable-column)').each(function (columnIndex, columnElement) {
                     var column = $(columnElement);
 
                     column.addClass('resizable-column');
 
                     column.append(
-                        $('<div>', { class: 'resizable-column-handle resizable-column-handle-w', 'data-is-west': 'true' }),
-                        $('<div>', { class: 'resizable-column-handle resizable-column-handle-e', 'data-is-west': 'false' })
-                    );
+                            $('<div>', {class: 'resizable-column-handle resizable-column-handle-w', 'data-is-west': 'true'}),
+                            $('<div>', {class: 'resizable-column-handle resizable-column-handle-e', 'data-is-west': 'false'})
+                            );
                 });
             });
         },
 
-        _resizeStartHandler: function(event) {
+        _resizeStartHandler: function (event) {
             this.resizing = {};
 
             this.resizing.handle = $(event.currentTarget).addClass('resizable-column-handle-resizing');
@@ -312,7 +312,7 @@ $(document).mouseup(function () {
             this.element.addClass('resizable-grid-resizing');
         },
 
-        _resizeHandler: function(event) {
+        _resizeHandler: function (event) {
             if (!this.resizing) {
                 return;
             }
@@ -324,13 +324,13 @@ $(document).mouseup(function () {
             if (resizingOffsetSize && (this.resizing.columnSize !== resizingOffsetSize)) {
                 if (resizingOffsetSize > this.resizing.columnSize) {
                     var widestColumn = this._getWidestColumn(this.resizing.siblings),
-                        widestColumnSize = this._getColumnSize(widestColumn);
+                            widestColumnSize = this._getColumnSize(widestColumn);
 
                     this._setColumnSize(widestColumn, (widestColumnSize - 1));
                     this._setColumnSize(this.resizing.column, resizingOffsetSize);
                 } else {
                     var narrowestColumn = this._getNarrowestColumn(this.resizing.siblings),
-                        narrowestColumnSize = this._getColumnSize(narrowestColumn);
+                            narrowestColumnSize = this._getColumnSize(narrowestColumn);
 
                     this._setColumnSize(narrowestColumn, (narrowestColumnSize + 1));
                     this._setColumnSize(this.resizing.column, resizingOffsetSize);
@@ -340,7 +340,7 @@ $(document).mouseup(function () {
             }
         },
 
-        _resizeStopHandler: function(event) {
+        _resizeStopHandler: function (event) {
             if (!this.resizing) {
                 return;
             }
@@ -354,7 +354,7 @@ $(document).mouseup(function () {
             this.resizing = false;
         },
 
-        _getResizingDirectionIsWest: function(x) {
+        _getResizingDirectionIsWest: function (x) {
             var resizingDirectionIsWest;
 
             if (!this.resizing.directionLastX) {
@@ -373,15 +373,15 @@ $(document).mouseup(function () {
             return resizingDirectionIsWest;
         },
 
-        _getResizingSiblings: function(column) {
+        _getResizingSiblings: function (column) {
             return ((this.resizing.handleIsWest) ? column.prevAll() : column.nextAll());
         },
 
-        _getResizingOffsetSize: function(x) {
+        _getResizingOffsetSize: function (x) {
             var that = this,
-                resizingOffsetSize;
+                    resizingOffsetSize;
 
-            $.each(this.resizing.offsets, function(index, offset) {
+            $.each(this.resizing.offsets, function (index, offset) {
                 if ((that.resizing.directionIsWest && ((x <= offset.end) && (x >= offset.start))) || (!that.resizing.directionIsWest && ((x >= offset.start) && (x <= offset.end)))) {
                     resizingOffsetSize = offset.size;
                 }
@@ -390,31 +390,31 @@ $(document).mouseup(function () {
             return resizingOffsetSize;
         },
 
-        _getResizingOffsets: function() {
+        _getResizingOffsets: function () {
             var that = this,
-                row = this.resizing.row.clone(),
-                css = { 'height': '1px', 'min-height': '1px', 'max-height': '1px' };
+                    row = this.resizing.row.clone(),
+                    css = {'height': '1px', 'min-height': '1px', 'max-height': '1px'};
 
             row.removeClass('resizable-row resizable-row-resizing').css(css);
             row.children().empty().removeClass('resizable-column resizable-column-resizing').css(css);
             this.resizing.row.parent().append(row);
 
             var column = row.children().eq(this.resizing.row.children().index(this.resizing.column)),
-                totalSize = this._getColumnSize(column);
+                    totalSize = this._getColumnSize(column);
 
-            this._getResizingSiblings(column).each(function() {
+            this._getResizingSiblings(column).each(function () {
                 totalSize += (that._getColumnSize($(this)) - 1);
                 that._setColumnSize($(this), 1);
             });
 
             var size = ((this.resizing.handleIsWest) ? totalSize : 1),
-                sizeEnd = ((this.resizing.handleIsWest) ? 1 : totalSize),
-                sizeOperator = ((this.resizing.handleIsWest) ? -1 : 1),
-                offset = 0,
-                offsetOperator = ((this.resizing.handleIsWest) ? 1 : 0);
+                    sizeEnd = ((this.resizing.handleIsWest) ? 1 : totalSize),
+                    sizeOperator = ((this.resizing.handleIsWest) ? -1 : 1),
+                    offset = 0,
+                    offsetOperator = ((this.resizing.handleIsWest) ? 1 : 0);
 
             var columnGutter = ((column.outerWidth(true) - column.width()) / 2),
-                columnWidth = ((this.resizing.handleIsWest) ? false : true);
+                    columnWidth = ((this.resizing.handleIsWest) ? false : true);
 
             var resizingOffsets = [];
 
@@ -424,7 +424,7 @@ $(document).mouseup(function () {
 
                 var left = (Math.floor((column.offset()).left) + columnGutter + ((columnWidth) ? column.width() : 0));
 
-                resizingOffsets.push({ start: (left + ((columnGutter * 3) * -1)), end: (left + (columnGutter * 3)), size: size });
+                resizingOffsets.push({start: (left + ((columnGutter * 3) * -1)), end: (left + (columnGutter * 3)), size: size});
 
                 if (size === sizeEnd) {
                     break;
@@ -439,11 +439,11 @@ $(document).mouseup(function () {
             return resizingOffsets;
         },
 
-        _getWidestColumn: function(columns) {
+        _getWidestColumn: function (columns) {
             var that = this,
-                widestColumn;
+                    widestColumn;
 
-            columns.each(function() {
+            columns.each(function () {
                 if (!widestColumn || (that._getColumnSize($(this)) > that._getColumnSize(widestColumn))) {
                     widestColumn = $(this);
                 }
@@ -452,11 +452,11 @@ $(document).mouseup(function () {
             return widestColumn;
         },
 
-        _getNarrowestColumn: function(columns) {
+        _getNarrowestColumn: function (columns) {
             var that = this,
-                narrowestColumn;
+                    narrowestColumn;
 
-            columns.each(function() {
+            columns.each(function () {
                 if (!narrowestColumn || (that._getColumnSize($(this)) < that._getColumnSize(narrowestColumn))) {
                     narrowestColumn = $(this);
                 }
@@ -465,10 +465,10 @@ $(document).mouseup(function () {
             return narrowestColumn;
         },
 
-        _getColumnSize: function(column) {
+        _getColumnSize: function (column) {
             var columnSize;
 
-            $.each($.trim(column.attr('class')).split(' '), function(index, value) {
+            $.each($.trim(column.attr('class')).split(' '), function (index, value) {
                 if (value.match(/^col-/) && !value.match(/-offset-/)) {
                     columnSize = parseInt($.trim(value).replace(/\D/g, ''), 10);
                 }
@@ -477,14 +477,14 @@ $(document).mouseup(function () {
             return columnSize;
         },
 
-        _setColumnSize: function(column, size) {
+        _setColumnSize: function (column, size) {
             column.toggleClass([['col', 'xs', this._getColumnSize(column)].join('-'), ['col', 'xs', size].join('-')].join(' '));
         },
 
-        _getColumnOffset: function(column) {
+        _getColumnOffset: function (column) {
             var columnOffset;
 
-            $.each($.trim(column.attr('class')).split(' '), function(index, value) {
+            $.each($.trim(column.attr('class')).split(' '), function (index, value) {
                 if (value.match(/^col-/) && value.match(/-offset-/)) {
                     columnOffset = parseInt($.trim(value).replace(/\D/g, ''), 10);
                 }
@@ -493,9 +493,9 @@ $(document).mouseup(function () {
             return columnOffset;
         },
 
-        _setColumnOffset: function(column, offset) {
+        _setColumnOffset: function (column, offset) {
             var currentColumnOffset,
-                toggleClasses = [];
+                    toggleClasses = [];
 
             if ((currentColumnOffset = this._getColumnOffset(column)) !== undefined) {
                 toggleClasses.push(['col', 'xs', 'offset', currentColumnOffset].join('-'));
@@ -506,11 +506,11 @@ $(document).mouseup(function () {
             column.toggleClass(toggleClasses.join(' '));
         },
 
-        _destroy: function() {
+        _destroy: function () {
             this._destroyHelpers();
         },
 
-        _destroyHelpers: function() {
+        _destroyHelpers: function () {
             this.element.find('.resizable-column-handle').remove();
             this.element.find('.resizable-column').removeClass('resizable-column resizable-column-resizing');
             this.element.find('.resizable-row').removeClass('resizable-row resizable-row-resizing');
@@ -522,7 +522,7 @@ $(document).mouseup(function () {
 
 
 
-  //////   var table ----------------------------------------------- edit section by Revan Gozelov >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//////   var table ----------------------------------------------- edit section by Revan Gozelov >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function updateBacklogLastModificationDateAndTime(projectId, backlogId) {
     var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
@@ -5769,15 +5769,15 @@ function deleteInputActionRel(relId) {
 
 function fillRelatedApi4InputEvent(cls) {
 //    return;
-  
+
     var apiList = SACore.GetBacklogKeyList();
-    var select = $('#'+cls).find('.input_event_related_api');
-       if(!cls){
-       select = $('#'+cls).find('.input_event_related_api'); 
-       }
-     
+    var select = $('#' + cls).find('.input_event_related_api');
+    if (!cls) {
+        select = $('#' + cls).find('.input_event_related_api');
+    }
+
     select.html('');
-  
+
 
     for (var i in apiList) {
         var apiId = apiList[i];
@@ -5785,12 +5785,12 @@ function fillRelatedApi4InputEvent(cls) {
             select.append($('<option>')
                     .val(apiId)
                     .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
-           
+
         }
     }
-    
+
     sortSelectBoxWithEl(select);
- 
+
 }
 
 function getJsCodeListByProject() {
@@ -7239,41 +7239,41 @@ function removeInputClassRel(el, relId) {
     });
 }
 
-function setComponentStyleUpdate(elm){
-    var style  = $(elm).attr("style");
-       
-    var dt  = style.split(";");
-    var fullSt =''
+function setComponentStyleUpdate(elm) {
+    var style = $(elm).attr("style");
+
+    var dt = style.split(";");
+    var fullSt = ''
     for (let index = 0; index < dt.length; index++) {
-        
-       
-            fullSt=fullSt +" ##"+ dt[index]+";";
-      
-        
-        
+
+
+        fullSt = fullSt + " ##" + dt[index] + ";";
+
+
+
     }
-  
+
     $("#gui_input_css_style").val(fullSt);
 
-   new UserStory().setGUIComponentContentSingle();
+    new UserStory().setGUIComponentContentSingle();
 }
-function setContainerStyleUpdate(elm){
-    var style  = $(elm).attr("style");
-       
-    var dt  = style.split(";");
-    var fullSt =''
+function setContainerStyleUpdate(elm) {
+    var style = $(elm).attr("style");
+
+    var dt = style.split(";");
+    var fullSt = ''
     for (let index = 0; index < dt.length; index++) {
-        
-       
-            fullSt=fullSt +" ##"+ dt[index]+";";
-      
-        
-        
+
+
+        fullSt = fullSt + " ##" + dt[index] + ";";
+
+
+
     }
-  
+
     $("#gui_input_css_style_container").val(fullSt);
 
-   new UserStory().setGUIComponentContentSingle();
+    new UserStory().setGUIComponentContentSingle();
 }
 
 function getAllGuiClassList() {
@@ -7527,7 +7527,7 @@ function addInputAttributes2(el) {
 
     var attrName = $(el).parents(".animation-block-for-find").find('#gui_prop_in_attr_name').val();
     var attrVal = $(el).parents(".animation-block-for-find").find('#gui_prop_in_attr_value').val();
-    console.log(attrName,attrVal);
+    console.log(attrName, attrVal);
 
     addInputAttributesCore(attrName, attrVal)
 }
@@ -7864,8 +7864,8 @@ function addRelatedApiModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
-            
+            AJAXCallFeedback(res);
+
             $('#addRelatedApiModal').modal('hide');
             new UserStory().getBacklogDesc();
 
@@ -7896,8 +7896,8 @@ function addRelatedSourceCodeModal(el) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
-            
+            AJAXCallFeedback(res);
+
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
@@ -7931,7 +7931,7 @@ function removeRelatedSourceCodeFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            		AJAXCallFeedback(res);
+            AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -7962,7 +7962,7 @@ function removeRelatedApiFromDesc(descId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-		AJAXCallFeedback(res);
+            AJAXCallFeedback(res);
             new UserStory().getBacklogDesc();
         }
     });
@@ -9726,7 +9726,7 @@ function commmonOnloadAction(el) {
     }
 
     if (global_var.current_modal === 'loadDashboard') {
-       // $('#statistics-projectlist').html($('#projectList').html());
+        // $('#statistics-projectlist').html($('#projectList').html());
         setBugFilterProjectAdd('statistics-projectlist')
 //        $('#statistics-projectlist').prepend($('<option>').text(""))
         $('#statistics-projectlist option').first().remove()
@@ -10821,6 +10821,10 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             var cmd = $('#storyCardListSelectBox');
             cmd.html('');
+
+            var cmd2 = $('.us-gui-component-rel-sus-id');
+            cmd2.html('');
+
             new UserStory().setUSLists(res);
             var f = true;
 
@@ -10829,9 +10833,13 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
                     var pname = o.backlogName;
-                    var op = $('<option></option>')
-                            .attr('value', o.id)
-                            .text(pname);
+                    var op = $('<option></option>').attr('value', o.id).text(pname);
+                    var op2 = $('<option></option>').attr('value', o.id).text(pname);
+                    
+                    if (o.id !== global_var.current_backlog_id) {
+                        cmd2.append(op2);
+                    }
+
                     if (f) {
                         op.attr("selected", true);
                         f = false;
@@ -10860,6 +10868,10 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
+
+//            sortSelectBoxByElement(cmd2);
+//            cmd2.selectpicker('refresh');
+
 
 
         }
@@ -10903,6 +10915,12 @@ function clearLivePrototypeView42() {
     $('#SUS_IPO_GUI_Design1').find('.sa-gui-dept-rw').html('');
     $('#SUS_IPO_GUI_Design1').find('.sa-c1').html('');
     $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
+}
+
+function loadGuiStoryCardsToAnimation() {
+    var el = $('.us-gui-component-rel-sus-id');
+
+
 }
 
 function loadLivePrototypeCore(el) {
@@ -13180,7 +13198,7 @@ function loadProjectList2SelectboxByClass(className) {
     cmd.selectpicker('refresh');
     cmd.change();
 
-    
+
 }
 
 function hideNavBar() {
@@ -13201,13 +13219,28 @@ function setZadi(height, width) {
 
     if (width !== undefined && (width))
         $('#gui_prop_cn_generalwidth').val(width);
-        $('.figureBgSelectOption #widthComponent').val(width);
+    $('.figureBgSelectOption #widthComponent').val(width);
     if (height !== undefined && (height))
         $('#gui_prop_cn_generalheight').val(height);
-        $('.figureBgSelectOption #heightComponent').val(height);
+    $('.figureBgSelectOption #heightComponent').val(height);
     new UserStory().setGUIContainerStyle();
 //    new UserStory().setGUIComponentContent(); 
 }
+
+
+
+
+$(document).on('mouseover', 'tr.story-card-input-line-tr-2', function (ev) {
+    $(this).find('.description-style').show();
+});
+
+$(document).on('mouseout', 'tr.story-card-input-line-tr-2', function (ev) {
+    $(this).find('.description-style').hide();
+});
+
+$(document).on('focusin', '.description-style', function (ev) {
+    $(this).show();
+});
 
 $(document).keydown('.tooltipMan', function (ev) {
 //    ev.preventDefault();
