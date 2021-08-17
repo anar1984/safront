@@ -228,6 +228,14 @@ var Statistics = {
                 this.GetProjectSummaryByAssignee();
                 Statistics.LoadAssigneesByProject();
             }
+            var  Lst = $(el).val();
+          
+            $('#statistics-BacklogList').html("")
+            for (let index = 0; index < Lst.length; index++) {
+                loadDetailsOnProjectSelect4Dashboard(Lst[index]);
+                
+            }
+       
         },
         GetProjectList: function () {
             var list = $('#statistics-projectlist').val();
