@@ -6035,11 +6035,15 @@ span.ruby-c-content {
   
     position: relative;
     z-index: 10;
-    overflow-y: auto;
+  
     height: 100%;
     padding: 30px;
   }
-  
+  #main-dashboard-tab .tab-pane{
+
+    overflow: auto !important;
+    height: 80vh;
+  }
   .histroy-and-dashboard  .table-content {
     background: #fff;
     width: 97.5%;
@@ -6052,6 +6056,7 @@ span.ruby-c-content {
   
  .histroy-and-dashboard .table-content table {
     width: 100%;
+
   }
   
   .histroy-and-dashboard .table-content thead {
@@ -6063,13 +6068,17 @@ span.ruby-c-content {
     font-size: 10px;
     text-transform: uppercase;
     padding: 14px 10px;
+    text-align: center;
   }
   
   .histroy-and-dashboard .table-content tbody tr td {
     padding: 14px 10px;
     border-bottom: #eaecee solid 1px;
+    text-align: center;
   }
-  
+  .cstm-selectpicker-block .dropdown-menu{
+   transform: initial !important;
+  }
   .histroy-and-dashboard .table-content tbody tr:hover {
     background: #fefaf2;
   }

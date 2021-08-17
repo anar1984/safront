@@ -5,9 +5,9 @@
       <a id="search-btn"  href="#"><i class="fas fa-history"></i></a>
       <a class="nav-link active" data-toggle="tab" href="#main-dashboard-tab"></span><i class=" fas fa-chart-line"></i></a>
       <a class="nav-link" data-toggle="tab" href="#main-history-backlog-tab"></span><i class=" fas fa-clipboard-list"></i></a>
-      <a  href="#" class="nav-link" data-toggle="tab"><i class=" fas fa-tasks"></i></a>
-      <a href="#" class="nav-link" data-toggle="tab"><i class="fab fa-css3-alt"></i></a>
-      <a href="#" class="nav-link" data-toggle="tab"><i class="fab fa-js-square"></i></a>
+      <a   class="nav-link" href="#main-history-task-tab" data-toggle="tab"><i class=" fas fa-tasks"></i></a>
+      <a  class="nav-link" href="#main-history-css-tab" data-toggle="tab"><i class="fab fa-css3-alt"></i></a>
+      <a  class="nav-link" href="#main-history-js-tab" data-toggle="tab"><i class="fab fa-js-square"></i></a>
     </div>  
     <!-- END Left Menu -->
   
@@ -139,248 +139,66 @@
         </div>
       
        <div class="tab-pane" id="main-history-backlog-tab">
-        <h5 class="text-center" >Input</h5>
-        <div class="table-content">
+      
+        <div class="col-12 cstm-selectpicker-block">
+          <select id="statistics-BacklogList"
+          title="UserStory"
+     
+          data-actions-box="true"
+          class="SelectDiagramOption col-6 selectcustom1" 
+           data-live-search="true">
+  
+          </select>
+          <select id="action-type-select" class=" col-2 float-right form-control">
+            <option value="input">Input</option>
+            <option value="output">Output</option>
+            <option value="process">Process Description</option>
+            <option value="process">Backlog</option>
+          </select> 
+        </div>
+       
+        <div class="table-content" style="overflow-y: auto; height: 80vh;">
           
-            <table cellspacing="0" cellpadding="0">
+            <table id="history-main-table" cellspacing="0" cellpadding="0">
                 <thead>
                   <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Date Created</td>
-                    <td></td>
+                    <td>Input Name</td>
+                    <td>History Body</td>
+                    <td>Description Name</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                    <td>History Type</td>
+                    <td>Time & Date</td>
+                  
                   </tr>  
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter revenue</td>
-                    <td class="desc-td">Revenue for last quarter in state America for year 2013, with ...</td>
-                    <td class="date-td">6 minutes ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr class="checked">
-                    <td><input type="checkbox" checked="checked"></td>
-                    <td class="name-td">Expenses in 2013</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">2 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Starbucks orders</td>
-                    <td class="desc-td">Ut euismod augue ut nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">12 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">East coast customers in 2012</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">yesterday <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter expenses</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">HR 2013 worksheet</td>
-                    <td class="desc-td">Nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Salaries last quarter</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">1 week ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-                    </div>
-        <h5 class="text-center" >Description</h5>
-        <div class="table-content">
-          
-            <table cellspacing="0" cellpadding="0">
-                <thead>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Date Created</td>
-                    <td></td>
-                  </tr>  
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter revenue</td>
-                    <td class="desc-td">Revenue for last quarter in state America for year 2013, with ...</td>
-                    <td class="date-td">6 minutes ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr class="checked">
-                    <td><input type="checkbox" checked="checked"></td>
-                    <td class="name-td">Expenses in 2013</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">2 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Starbucks orders</td>
-                    <td class="desc-td">Ut euismod augue ut nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">12 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">East coast customers in 2012</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">yesterday <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter expenses</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">HR 2013 worksheet</td>
-                    <td class="desc-td">Nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Salaries last quarter</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">1 week ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-                    </div>
-        <h5 class="text-center" >Output</h5>
-        <div class="table-content">
-          
-            <table cellspacing="0" cellpadding="0">
-                <thead>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Date Created</td>
-                    <td></td>
-                  </tr>  
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter revenue</td>
-                    <td class="desc-td">Revenue for last quarter in state America for year 2013, with ...</td>
-                    <td class="date-td">6 minutes ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr class="checked">
-                    <td><input type="checkbox" checked="checked"></td>
-                    <td class="name-td">Expenses in 2013</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">2 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Starbucks orders</td>
-                    <td class="desc-td">Ut euismod augue ut nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">12 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">East coast customers in 2012</td>
-                    <td class="desc-td"></td>
-                    <td class="date-td">yesterday <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Last quarter expenses</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">HR 2013 worksheet</td>
-                    <td class="desc-td">Nulla aliquam, eu congue ipsum euismod.</td>
-                    <td class="date-td">2 days ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Salaries last quarter</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">1 week ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="name-td">Accounting</td>
-                    <td class="desc-td">Lorem ipsum dolor sit amet.</td>
-                    <td class="date-td">5 hours ago <i class="fa fa-clock-o" aria-hidden="true"></i></td>
-                    <td></td>
-                  </tr>
+                <tbody >
+               
                 </tbody>
               </table>
                     </div>
       
+      
        </div>
+       <div class="tab-pane" id="main-history-task-tab">
+      
+               <h1 class="text-center"> Task Coming Soon</h1>
+      
+      
+       </div>
+       <div class="tab-pane" id="main-history-css-tab">
+      
+               <h1 class="text-center"> Css Coming Soon</h1>
+      
+      
+       </div>
+       <div class="tab-pane" id="main-history-js-tab">
+      
+               <h1 class="text-center"> Js Coming Soon</h1>
+      
+      
+       </div>
+      
     </div>
 
 

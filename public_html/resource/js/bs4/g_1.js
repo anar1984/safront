@@ -204,6 +204,18 @@ $(function () {
 
 
     });
+    $(document).on("change", '#statistics-BacklogList', function (e) {
+        var id = $('option:selected', this).attr('value')
+      
+        loadHistoryByBacklofId(id)
+
+
+    });
+    $(document).on("change", '#action-type-select', function (e) {
+       $('#statistics-BacklogList').change()
+
+
+    });
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
             $("#user-story-delete-story").prop("readonly", true);

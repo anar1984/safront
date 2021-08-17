@@ -10800,7 +10800,6 @@ function  loadApiListOnProjectSelect4Ipo(fkProjectId) {
         }
     });
 }
-
 function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
 
@@ -10877,6 +10876,117 @@ function  loadDetailsOnProjectSelect4Ipo(fkProjectId) {
         }
     });
 }
+function  loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
+
+    var json = initJSON();
+    json.kv.fkProjectId = fkProjectId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var tbl = $('#api_list_side_bar');
+            tbl.html('');
+
+            var cmd = $('#statistics-BacklogList');
+           
+            new UserStory().setUSLists(res);
+            var f = true;
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+             //   if (o.isApi !== '1') {
+                    var pname = o.backlogName;
+                    var op = $('<option></option>')
+                            .attr('value', o.id)
+                            .text(pname);
+                    if (f) {
+                        op.attr("selected", true);
+                        f = false;
+                    }
+                    if (o.id === global_var.current_backlog_id) {
+                        op.attr("selected", true);
+                    }
+                    cmd.append(op);
+             //   } 
+                /* else if (o.isApi === '1') {
+                    var td = $('<tr>')
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .text(o.backlogName)
+                                            .attr("href", "#")
+                                            .attr("pid", fkProjectId)
+                                            .attr("bid", o.id)
+                                            .attr('is_api', '1')
+                                            .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                            ))
+                    tbl.append(td);
+                } */
+
+            }
+
+//            cmd.val(global_var.current_backlog_id);
+            sortSelectBoxByElement(cmd);
+            cmd.selectpicker('refresh');
+            cmd.change();
+
+
+        }
+    });
+}
+function  loadHistoryByBacklofId(backlodId) {
+    var pid = (backlodId) ? backlodId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogHistoryListByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+             
+            console.log(res);
+            var type = $("#action-type-select").val();
+            var tbLi= $("#history-main-table tbody")
+            var obj = res.tbl[0].r;
+            tbLi.html("")
+            for (var n = 0; n < obj.length; n++) {
+                   console.log(type);
+                var tAct = obj[n].actionType;
+                if (tAct===type) {
+
+                    tbLi.append($("<tr>")
+                                  .append("<td  class='name-td'>"+obj[n].inputName+"</td>")
+                                  .append("<td  class='desc-td'>"+obj[n].historyBody+"</td>")
+                                  .append("<td  class='name-td'>"+obj[n].descriptionName+"</td>")
+                                  .append("<td  class='name-td'>"+obj[n].newValue+"</td>")
+                                  .append("<td  class='name-td'>"+obj[n].oldValue+"</td>")
+                                  .append("<td  class='name-td'>"+obj[n].historyType+"</td>")
+                                  .append("<td  class='date-td'>"+Utility.convertTime(obj[n].historyTime)+" "+Utility.convertDate(obj[n].historyDate)+" <i class='fa fa-clock-o' aria-hidden='true'</i></td>")
+                                  )
+                    
+                }
+               
+
+
+            }
+
+
+
+        }
+    });
+}
+
 
 
 function loadStoryCardInfo4Ipo(el) {
