@@ -208,14 +208,31 @@ $(function () {
         var id = $('option:selected', this).attr('value')
       
         loadHistoryByBacklofId(id)
-
-
-    });
-    $(document).on("change", '#action-type-select', function (e) {
-       $('#statistics-BacklogList').change()
-
+        
 
     });
+    $(document).on("click", '.div-content-body-td .load-more-button', function (e) {
+       var th = $(this);
+     
+        var attr = th.attr("data-more");
+
+        if(attr == "true"){
+            th.text("show less");
+            th.attr("data-more",'false');
+            th.parents(".div-content-body-td").css('max-height',"max-content")
+            
+
+        }else{
+            th.text("load more");
+            th.attr("data-more",'true');
+            th.parents('.div-content-body-td').css('max-height',"105px")
+        }
+      
+      
+        
+          
+    });
+    
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
             $("#user-story-delete-story").prop("readonly", true);
