@@ -11130,6 +11130,7 @@ function GenerateHistoryTable() {
            .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
            .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
            .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>") 
+           .append("<img src='https://app.sourcedagile.com/api/get/files/"+obj.logoUrl+"' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='date-td'>Date: " + obj.userName + " " + "</span>") 
           
            )
         }
