@@ -12941,6 +12941,37 @@ function insertNewUserStory(el, storyStatus) {
     });
 }
 
+function getProjectUsersById(FkprojectId) {
+
+
+    var json = initJSON();
+
+    json.kv['fkProjectId'] =FkprojectId ;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                SAProjectUser.LoadProjectUser(res);
+                loadUsersAsAssignee();
+                loadUsersAsOwner();
+            } catch (err) {}
+            queue4ProLoad.getProjectUsers = true;
+            executeCoreOfManualProSelection();
+            ForwardTaskTo_loadAssignee();
+            assignTaskToOthers_loadAssignee();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function getProjectUsers() {
 
 

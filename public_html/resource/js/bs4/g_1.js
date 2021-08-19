@@ -276,11 +276,11 @@ $(function () {
        $(".bug-tr").removeClass('active')
       $(this).parents(".bug-tr").addClass('active');
       var bugId = $(this).parents(".bug-tr").attr("id");
+      var prId = $(this).parents(".bug-tr").attr("projectid");
       global_var.current_issue_id = bugId;
       Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-      getProjectUsers();
-      ForwardTaskTo_loadAssignee();
-      assignTaskToOthers_loadAssignee();
+      getProjectUsersById(prId)
+      
     });
 
 
