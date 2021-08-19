@@ -14272,8 +14272,10 @@ function ForwardTaskTo_loadAssignee() {
     for (var i = 0; i < keys.length; i++) {
         var userName = SAProjectUser.GetDetails(keys[i], "userName");
         select.append($('<option>').val(keys[i]).text(userName));
+        console.log(userName);
     }
     sortSelectBox('forwardTaskToModal_assignee');
+    
 }
 
 function addProceccDescListToTaskNew() {
