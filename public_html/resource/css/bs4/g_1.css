@@ -6145,3 +6145,38 @@ td.selected{
 	background-color: rgba(51, 122, 183, 0.2) !important;
 }
 
+
+.table-show-hide-row-div{
+    position: absolute;
+    top: 0;
+    left: 0px;
+    background: white;
+    height: 100%;
+    
+    width: 260px;
+    -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  overflow: auto; 
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgrey;
+ 
+    box-shadow: -4px -4px 10px rgb(255 255 255), 4px 4px 10px rgb(0 0 0 / 22%);
+   display: none;
+}
+.table-show-hide-row-div-btn{
+    position: absolute;
+    /* right: -22px; */
+    top: 5px;
+    border: 1px solid lightgrey;
+    color: lightgray;
+    border-radius: 6px;
+}
+.table-show-hide-button-class-close{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 17px;
+}

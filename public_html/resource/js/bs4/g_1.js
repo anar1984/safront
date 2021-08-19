@@ -232,6 +232,16 @@ $(function () {
         
           
     });
+    $(document).on("click", '#table-show-hide-button-id-close', function (e) {
+       var th = $(this);
+
+            th.parents('.table-show-hide-row-div').hide("fast")          
+    });
+    $(document).on("click", '#table-show-hide-button-id', function (e) {
+       var th = $(this);
+            th.parent().find(".table-show-hide-row-div").toggle("fast")
+      
+    });
     
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
