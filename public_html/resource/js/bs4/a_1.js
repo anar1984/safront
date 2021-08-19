@@ -13363,7 +13363,7 @@ function updateTask4ShortChangeDetails(val, ustype) {
 }
 
 function updateTask4ShortChangeDetailsWithSync(val, ustype) {
-    updateTask4ShortChangePureWithSync(val, ustype, global_var.current_us_task_id);
+    updateTask4ShortChangePureWithSync(val, ustype, global_var.current_issue_id);
 }
 
 function updateTask4ShortChangePureWithSync(val, ustype, taskId) {
@@ -13853,7 +13853,7 @@ function assignBacklogTaskTo() {
 
     var assigneeList = assignBacklogTaskTo_assigneeList();
 
-    if (!global_var.current_us_task_id || !assigneeList) {
+    if (!global_var.current_issue_id || !assigneeList) {
         return;
     }
 
@@ -13866,7 +13866,7 @@ function assignBacklogTaskTo() {
     } catch (err) {}
 
     json.kv.taskComment = $('#assignTaskToOthersModal_comment').val();
-    json.kv.taskId = global_var.current_us_task_id;
+    json.kv.taskId = global_var.current_issue_id;
     json.kv.assigneeList = assigneeList;
     var that = this;
     var data = JSON.stringify(json);
