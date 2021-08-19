@@ -5504,10 +5504,12 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     } else if ($(el).attr('sa-type') === 'multiselect') {
+        $(el).find("option:selected").prop("selected",false);
+        $(el).selectpicker('refresh');
 
         $.each(val.split(","), function (i, e) {
             var id = $(el).attr('id');
-            $("#" + id + " option[value='" + e + "']").prop("selected", true);
+           $(el).find("option[value='" + e + "']").prop("selected", true);
         });
         $(el).selectpicker('refresh');
 

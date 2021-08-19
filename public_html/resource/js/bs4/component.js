@@ -1654,7 +1654,22 @@ var Component = {
             if (comp.content) {
                 var r = comp.content.split(/\r*\n/);
                 for (var i = 0; i < r.length; i++) {
-                    select.append($('<option></option>').append(r[i]));
+                    var val = "";
+                    var txt = "";
+                    try{
+                      if (r[i].includes("::")){
+                          val = r[i].split("::")[0];
+                          txt = r[i].split("::")[1];
+                      }else{
+                                                  val = r[i];
+                                                  txt = r[i];
+
+                      }
+                        
+                    }catch(err){
+                        txt = r[i];
+                    }
+                    select.append($('<option></option>').val(val).text(txt));
                 }
             } else {
                 if (select.attr('default-value-is-null') === '1') {

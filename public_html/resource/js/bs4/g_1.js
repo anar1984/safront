@@ -899,9 +899,7 @@ $(document).on("click", ".cf li .inptadd", function () {
         comp.description = "";
 
         var st = Component.GetComponentHtmlNew(comp);
-        var ldoa = `<div class="box-loader shimmer">
-        
-      </div>`
+        var ldoa = `<div class="box-loader shimmer"></div>`
        
         $("#SUS_IPO_GUI_Design .empty-message-block").remove();
           $("#SUS_IPO_GUI_Design").append(st);
