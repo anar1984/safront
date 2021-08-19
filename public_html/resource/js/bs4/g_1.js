@@ -278,6 +278,9 @@ $(function () {
       var bugId = $(this).parents(".bug-tr").attr("id");
       global_var.current_issue_id = bugId;
       Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
+      getProjectUsers();
+      ForwardTaskTo_loadAssignee();
+      assignTaskToOthers_loadAssignee();
     });
 
 
