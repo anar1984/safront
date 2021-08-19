@@ -39,7 +39,7 @@
     margin: 0;
     padding: 0px;
 }
- .bugListTable tbody .bug-tr td a{
+ .bugListTable tbody .bug-tr td>a{
     -webkit-font-smoothing: antialiased;
     font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
     font-size: .875rem;
@@ -123,6 +123,16 @@
     width: 25px;
     text-align: center;
 }
+.hpYuyept1{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    color: rgb(128, 128, 128);
+    background: lightgrey;
+    padding: 6px 3px 3px 3px;
+    border-radius: 5px;
+}
 .hpYuyept{
     position: absolute;
     right: 0px;
@@ -138,6 +148,10 @@
 .bug-list-column-assignee,.bug-list-column-created-by,.bug-list-column-story-card{
   
     position: relative;
+}
+.bug-list-column-story-card .bootstrap-select{
+  
+  width: 100% !important;
 }
 .bugListTable td:nth-child(1),
 .bugListTable td:nth-child(2),
@@ -417,4 +431,13 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 .bigCheck label:after {
     height: 25px;
     width: 4px;
+}
+.select-box-issue{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
 }

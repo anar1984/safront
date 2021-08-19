@@ -6180,3 +6180,20 @@ td.selected{
     top: 10px;
     font-size: 17px;
 }
+
+
+.bug-list-column-task-name{
+    position: relative;
+}
+.task-name-editdrop{
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translate(-10%, -50%);
+    z-index: 1;
+    display: none;
+}
+.bug-list-column-task-name:hover .task-name-editdrop{
+  
+    display: block;
+}

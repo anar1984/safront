@@ -1961,7 +1961,7 @@ function createChildTask() {
         success: function (res) {
             Toaster.showMessage("Child task is created.");
 
-
+         getBugList();
 
         }
     });
@@ -10041,6 +10041,15 @@ function setFilter4IssueMgmtAsProject(assigneId) {
     el.selectpicker('refresh');
 }
 
+function setChnageUserStoryCard(projectId,elm) {
+  //  var dt = $(elm).parents(".bug-list-column-story-card").find(".statistics-BacklogList")
+    var el = $(elm).parents(".bug-list-column-story-card").find('#userStory-taskList-us');
+    loadStoryCardByProjectSingle(projectId,el);
+
+    
+    el.show();
+
+}
 function setFilter4IssueMgmtAsBacklog(projectId, backlogId) {
     setFilter4IssueMgmtAsProject(projectId);
     loadStoryCardByProject(projectId);

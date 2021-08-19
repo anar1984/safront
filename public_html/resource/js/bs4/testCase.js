@@ -957,8 +957,9 @@ global_var.bug_list_popup_is_opened = false;
 $(document).on("click", '.bug-tr', function (e) {
     $('.bug-tr').removeClass("active");
     $(this).toggleClass("active")
-    bugId = $(this).attr("id");
-
+   var bugId = $(this).attr("id");
+    global_var.current_issue_id = bugId;
+    Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
     //    if (global_var.bug_list_popup_is_opened) {
     //        var taskId = $(this).attr("id");
     //        var projectId = $(this).attr("projectId");
@@ -1085,7 +1086,9 @@ function getBugList() {
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
-    json.kv.fkTaskId = global_var.current_issue_id;
+    if (global_var.current_issue_is_hide == '0') {
+        json.kv.fkTaskId = global_var.current_issue_id;
+    }
     json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
     var data = JSON.stringify(json);
@@ -1363,6 +1366,29 @@ function getBugListDetails(res) {
                 .addClass('bug-list-column-task-name')
                 .css("max-width", '400px')
                 .append(taskName, ' ')
+                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                .append($("<div>")
+                .addClass("dropdown task-name-editdrop")
+                .append($("<button>")
+                    .addClass('btn btn-light')
+                    .attr("aria-haspopup", "true")
+                    .attr("aria-expanded", "false")
+                    .attr("data-toggle", "dropdown")
+                    .attr("id", "bug-taskName-dropdown")
+                    .append('<i class="fas fa-ellipsis-h"></i>'))
+
+                .append($("<div>")
+                    .addClass("dropdown-menu")
+                    .attr("aria-labelledby", "bug-taskName-dropdown")
+
+                    .append('<a class="dropdown-item forward-task" href="#" onclick="()">Create Child Task</a>')
+                    .append('<a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward To</a>')
+                    .append('<a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>')
+                    .append('<a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>')
+                    .append('<a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>')
+                    .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
+
+                ))
                 .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
                 .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
             )
@@ -1450,15 +1476,22 @@ function getBugListDetails(res) {
             .append($('<td>').addClass('bug-list-column')
                 .addClass('bug-list-column-story-card')
                 .append("<span class='get-data-group'>" + backlogName + "</span>")
+                .append(' <select dataPid='+o.fkProjectId+' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
                 .append($('<i class="fa fa-filter">')
                     .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
                     .css("display", "none")
                     .addClass("hpYuyept"))
+                .append($('<i class="fas fa-sort-down">')
+                    .attr('onclick', 'setChnageUserStoryCard("' + o.fkProjectId + '",this)')
+                    .css("display", "none")
+                    .addClass("hpYuyept1"))
                 .mouseover(function () {
                     $(this).find(".hpYuyept").show();
+                    $(this).find(".hpYuyept1").show();
                 })
                 .mouseleave(function () {
                     $(this).find(".hpYuyept").hide();
+                    $(this).find(".hpYuyept1").hide();
                 }))
             .append($('<td>').addClass('bug-list-column')
                 .addClass('bug-list-column-project')
@@ -2114,6 +2147,57 @@ function loadAssigneesByProjectDetails(res) {
 
 }
 
+function loadStoryCardByProjectSingle(fkProjectId,elm) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+            var cmd = elm;
+            cmd.html('');
+            //            new UserStory().setUSLists(res);
+            var f = true;
+            cmd.append($('<option></option>'));
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+
+                var pname = o.backlogName;
+                var op = $('<option></option>')
+                    .attr('value', o.id)
+                    .text(pname);
+                /* if (f) {
+                    op.attr("selected", true);
+                    f = false;
+                }
+                if (o.id === global_var.current_backlog_id) {
+                    op.attr("selected", true);
+                } */
+                cmd.append(op);
+
+
+            }
+
+            //            cmd.val(global_var.current_backlog_id);
+            sortSelectBoxByElement(cmd);
+            cmd.selectpicker('refresh');
+            cmd.focus();
+
+
+        }
+    });
+}
 function loadStoryCardByProject(projectId) {
     if (!projectId) {
         return;
