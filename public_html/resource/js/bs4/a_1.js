@@ -169,14 +169,21 @@ function selectTo(cell) {
         var rowCells = $(".selectableTable tbody tr:eq(" + i + ")").find("td");
 
         for (var j = cellStart; j <= cellEnd; j++) {
-            $(rowCells[j]).addClass("selected");
-            var dt = $(rowCells[j]);
-            var val = dt.find(".component-input-class").val();
-            var val2 = dt.find(".component-input-class").text();
-
-            sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
-
-            kl = rowCells.length
+             var dso = $(rowCells[j]).css("display")
+            if (dso==='none') {
+                
+            }else{
+                $(rowCells[j]).addClass("selected");
+                var dt = $(rowCells[j]);
+                var val = dt.find(".component-input-class").val();
+                var val2 = dt.find(".component-input-class").text();
+    
+                sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
+    
+                kl = rowCells.length;
+                console.log(kl);
+            }
+           
         }
     }
     sumAvarMaxMinCount(sumTbl, cellEnd);
@@ -1954,7 +1961,7 @@ function createChildTask() {
         success: function (res) {
             Toaster.showMessage("Child task is created.");
 
-
+         getBugList();
 
         }
     });
@@ -10034,6 +10041,15 @@ function setFilter4IssueMgmtAsProject(assigneId) {
     el.selectpicker('refresh');
 }
 
+function setChnageUserStoryCard(projectId,elm) {
+  //  var dt = $(elm).parents(".bug-list-column-story-card").find(".statistics-BacklogList")
+    var el = $(elm).parents(".bug-list-column-story-card").find('#userStory-taskList-us');
+    loadStoryCardByProjectSingle(projectId,el);
+
+    
+    el.show();
+
+}
 function setFilter4IssueMgmtAsBacklog(projectId, backlogId) {
     setFilter4IssueMgmtAsProject(projectId);
     loadStoryCardByProject(projectId);
@@ -11132,7 +11148,8 @@ function GenerateHistoryTable() {
            .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
            .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
            .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>") 
-          
+           .append("<img src='https://app.sourcedagile.com/api/get/files/"+obj.logoUrl+"' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>") 
+
            )
         }
       }

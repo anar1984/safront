@@ -232,6 +232,16 @@ $(function () {
         
           
     });
+    $(document).on("click", '#table-show-hide-button-id-close', function (e) {
+       var th = $(this);
+
+            th.parents('.table-show-hide-row-div').hide("fast")          
+    });
+    $(document).on("click", '#table-show-hide-button-id', function (e) {
+       var th = $(this);
+            th.parent().find(".table-show-hide-row-div").toggle("fast")
+      
+    });
     
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
@@ -247,6 +257,27 @@ $(function () {
 
     $(document).on("click", '.live-prototype-switch', function (e) {
         $("#live-prototype-show-key").toggle(600);
+    });
+    $(document).on("dblclick", '.bug-tr .bug-list-column-task-name', function (e) {
+         console.log('fdddddddddddd');
+        var val = $(this).find("a").text();
+          $(this).find(".task-name-issue").show().val(val);
+
+    });
+    $(document).on("change", '.bug-tr .task-name-issue', function (e) {
+        var val = $(this).val();
+        var taskID = $(this).parents(".bug-tr").attr("id")
+        updateTask4ShortChangePure(val, "taskName", taskID);
+
+        $(this).hide();
+
+    });
+    $(document).on("click", '#bug-taskName-dropdown', function (e) {
+       $(".bug-tr").removeClass('active')
+      $(this).parents(".bug-tr").addClass('active');
+      var bugId = $(this).parents(".bug-tr").attr("id");
+      global_var.current_issue_id = bugId;
+      Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
     });
 
 
@@ -695,6 +726,14 @@ $(document).on("dblclick", ".component-container-dashed", function () {
         containment: "parent"
     });
 
+})
+$(document).on("change", "#userStory-taskList-us", function () {
+    var id = $(this).parents(".bug-tr").attr('id')
+    updateTask4ShortChangePure($(this).val(), "fkBacklogId",id);
+})
+$(document).on("focusout", "#userStory-taskList-us", function () {
+  
+  $(this).hide();
 })
 $(document).on("click", ".component-container-button", function () {
   $(this).parents(".component-container-dashed").dblclick();
