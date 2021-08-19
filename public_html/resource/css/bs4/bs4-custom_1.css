@@ -118,7 +118,7 @@ and open the template in the editor.
 
 
 .loaderSection{
-    background-image: url("../img/loadertbl.gif");
+    background-image: url("../../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -126,13 +126,13 @@ and open the template in the editor.
     position: absolute;
     background-position-x: center;
     background-position-y: center;
-    background-color: #ffff !important;
+   
     opacity: 1;
     z-index: 5000;
 }
 
 .loaderTable{
-    background-image: url("../img/loadertbl.gif");
+    background-image: url("../../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -140,13 +140,13 @@ and open the template in the editor.
     position: absolute;
     background-position-x: center;
     background-position-y: center;
-    background-color: #ffff !important;
+   
     opacity: 1;
     z-index: 5000;
 }
 
 .loaderModal{
-    background-image: url("../img/loadertbl.gif");
+    background-image: url("../../img/loadertbl.gif");
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
@@ -154,7 +154,7 @@ and open the template in the editor.
     position: absolute;
     background-position-x: center;
     background-position-y: 5%;
-    background-color: #ffff !important;
+    
     opacity: 1;
     z-index: 5001;
 }

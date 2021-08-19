@@ -149,26 +149,87 @@
            data-live-search="true">
   
           </select>
-          <select id="action-type-select" class=" col-2 float-right form-control">
-            <option value="input">Input</option>
-            <option value="output">Output</option>
-            <option value="process">Process Description</option>
-            <option value="process">Backlog</option>
-          </select> 
+        
         </div>
        
-        <div class="table-content" style="overflow-y: auto; height: 80vh;">
+        <div class="table-content " style="overflow-y: auto; height: 80vh;">
+            <h5 class="text-center">
+                Input
+            </h5>
           
-            <table id="history-main-table" cellspacing="0" cellpadding="0">
+            <table id="history-main-table-input" cellspacing="0" cellpadding="0">
                 <thead>
                   <tr>
                     <td>Input Name</td>
                     <td>History Body</td>
-                    <td>Description Name</td>
+                   <!--  <td>Description Name</td>
                     <td>New Value</td>
                     <td>Old Value</td>
                     <td>History Type</td>
+                    <td>Time & Date</td> -->
+                  
+                  </tr>  
+                </thead>
+                <tbody >
+               
+                </tbody>
+              </table>
+              <h5 class="text-center">
+                Procces Description
+            </h5>
+            <table id="history-main-table-process"  cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                   
+                    <td>History Type</td>
+                    <td>History Body</td>
+                   <!--  <td>Description Name</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                    <td>History Type</td>
+                    <td>Time & Date</td> -->
+                  
+                  </tr>  
+                </thead>
+                <tbody >
+               
+                </tbody>
+              </table>
+              <h5 class="text-center">
+                Output
+            </h5>
+            <table id="history-main-table-output" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <td>Input Name</td>
+                    <td>History Body</td>
+                 <!--    <td>Description Name</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                   
                     <td>Time & Date</td>
+                   -->
+                  </tr>  
+                </thead>
+                <tbody >
+               
+                </tbody>
+              </table>
+              <h5 class="text-center">
+                Backlog
+            </h5>
+            <table id="history-main-table-backlog" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+               
+                    <td>History Type</td>
+                    <td>History Body</td>
+                 <!--    <td>Description Name</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                   
+                    <td>Time & Date</td>
+                   -->
                   
                   </tr>  
                 </thead>
@@ -208,7 +269,4 @@
       </div> -->
     </div>
   </div>
-
-
-
 
