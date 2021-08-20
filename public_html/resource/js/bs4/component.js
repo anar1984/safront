@@ -763,10 +763,13 @@ var Component = {
             var backlogId = SAInput.getInputDetails(comp.id, "fkBacklogId");
 
             var rowCount = this.GetTableRowCount(tableId);
+            
             var table = $("<table>")
 
             var thead = this.GenInputTableHeaderHtml(tableId, comp);
+           // var showHide = this.GenInputTableShowHideHtml(tableId, comp);
             var tbody = this.GenInputTableBodyHtml(tableId, rowCount, backlogId);
+         
             table.append(thead).append(tbody);
             return table.html();
         },
@@ -779,6 +782,110 @@ var Component = {
                 kv[inputId] = showComponent[i];
             }
             return kv;
+        },
+        GenInputTableShowHideHtml: function (tableId, comp) {
+            var thead = $("<div>");
+            var col = SAInput.Tables[tableId].fkInputId.split(",");
+
+            var showComponent = SAInput.Tables[tableId].showComponent.split(",");
+            var pair = this.MatchShowComponentAndId(col, showComponent);
+
+            var showColumn = SAInput.Tables[tableId].showColumn.split(",");
+            var pairShowColumn = this.MatchShowComponentAndId(col, showColumn);
+
+            var showColumnName = SAInput.Tables[tableId].showColumnName.split(",");
+            var pairShowColumnName = this.MatchShowComponentAndId(col, showColumnName);
+
+            //            var showInTree = SAInput.Tables[tableId].showInTree.split(",");
+            //            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
+
+            col = this.SetColumnsOrder(col);
+
+            var thzad = $("<li>");
+            var tr = $("<ul>").addClass('table-row-show-hide-ul')/* .append(thzad.append("")) */;
+            for (var i = 0; i < col.length; i++) {
+
+                var inputId = col[i].trim();
+                if (inputId.length === 0)
+                    continue;
+
+
+
+                var inputName = SAInput.GetInputName(inputId);
+                var a = $('<label href="#">')
+                    .addClass('component-class-show-hide')
+                    .attr('id', inputId)
+                    .attr('pid', inputId)
+                    .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+
+                    .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                        "")
+                        .append("<input data-check="+inputId+" type='checkbox'>")
+                    .append(replaceTags(inputName))
+
+                var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+                var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+                var colorColumnName = pairShowColumnName[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+                //                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
+
+
+                var showComp = "";
+
+                var showColumn ="";
+
+                var showColumnName ="";
+
+     
+              if(a==""){
+
+              }else{
+                var th = $("<li>")                    //                        .css("min-width", "70px;")
+                .append(a)
+                .append(showComp, ' ')
+                .append(showColumn, ' ')
+                .append(showColumnName, ' ')
+              }
+           
+                //                    .append(showInTree, ' ')
+                ;
+
+                if (global_var.current_modal !== 'loadLivePrototype' &&
+                    pairShowColumn[inputId].trim() === '1') {
+                    th.empty().hide();
+                }
+
+                //add attribute to th tag
+                try {
+                    var cl = cr_input_cont_attribute[inputId];
+                    for (var ii = 0; ii < cl.length; ii++) {
+                        var kv = cl[ii];
+                        var key = Object.keys(kv)[0];
+                        var val = kv[key];
+                        th.attr(key, val);
+                    }
+                } catch (err) {}
+
+                //add class to th tag
+                try {
+                    var classElList = cr_cont_input_classes[inputId];
+                    if (classElList) {
+                        var cl = classElList.split(',');
+                        for (var iii = 0; iii < cl.length; iii++) {
+                            var classId = cl[iii];
+                            var className = cr_gui_classes[classId].className;
+                            className = className.replace(".", "");
+                          //  th.addClass(className);
+                        }
+                    }
+                } catch (err) {}
+
+
+                tr.append(th);
+            }
+            thead.append(tr);
+            return thead;
         },
         GenInputTableHeaderHtml: function (tableId, comp) {
             var thead = $("<thead>");
@@ -800,14 +907,16 @@ var Component = {
 
             var thzad = $("<th>");
             var tr = $("<tr>").append(thzad.append(""));
+            var trFilter = $("<tr>").addClass("filter-table-row-header-tr").append($("<th>"))
             for (var i = 0; i < col.length; i++) {
+                
                 var inputId = col[i].trim();
                 if (inputId.length === 0)
                     continue;
 
 
-
                 var inputName = SAInput.GetInputName(inputId);
+                
                 var a = (pairShowColumnName[inputId].trim() === '1') ?
                     "" :
                     $('<label href="#">')
@@ -870,11 +979,17 @@ var Component = {
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
                 //                    .append(showInTree, ' ')
-                ;
+                var thFilt = $("<th>").append((a=="")?"":$("<select>").addClass("form-control filter-table-row-select")
+                                                        .attr("id","filter-table-row-select-id")
+                                                        .attr("title",inputName)
+                                                        .attr("data-live-search","true")
+                                                        .attr("data-actions-box","true")
+                                                        .attr('filter-id',inputId))
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
                     th.hide();
+                    thFilt.hide();
                 }
 
                 //add attribute to th tag
@@ -885,6 +1000,7 @@ var Component = {
                         var key = Object.keys(kv)[0];
                         var val = kv[key];
                         th.attr(key, val);
+                        thFilt.attr(key, val);
                     }
                 } catch (err) {}
 
@@ -903,9 +1019,17 @@ var Component = {
                 } catch (err) {}
 
 
+
+              
+               
                 tr.append(th);
+                if(global_var.current_modal !== 'loadLivePrototype'){
+                    trFilter.append(thFilt);
+                }
+
             }
             thead.append(tr);
+            thead.append(trFilter);
             return thead;
         },
         TableEmptyMessage: function (tableId) {
@@ -1049,6 +1173,7 @@ var Component = {
 
                     tr.append(td12);
                 }
+    
                 tbody.append(tr);
             }
 
@@ -1113,22 +1238,33 @@ var Component = {
         div.append($('<div>').addClass("progressloader loaderTable1"));
         div.append(el);
         div.addClass("table-responsive");
-        div.append($("<button>")
-            .addClass("table-show-hide-row-div-btn")
+        div.append($("<span>")
+            .addClass("table-show-hide-row-div-btn btn btn-sm")
             .attr("id",'table-show-hide-button-id')
             .attr("data-show", "flase")
             .html('<i class="fas fa-chevron-right"></i>'))
         div.append($("<div>")
+        .attr("data-tableId",comp.id)
             .addClass("table-show-hide-row-div")
              .append($("<span>")
                          .attr("id",'table-show-hide-button-id-close')
                          .addClass("table-show-hide-button-class-close")
                          .html('<i class="fas fa-times"></i>')
                          )
-            .append($('<ul>').addClass("table-row-show-hide-ul")
+                         .append($("<div>")
+                                  .addClass("col-10 p-2")
+                                  .append($("<div>").addClass("btn-group float-right")
+                                         .append('<button class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></button>')
+                                         .append('<button class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></button>')
+                                 )
                 
-            ))
+                                  .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
+                                  )
+                         .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
 
+            )
+
+       
         return $('<div></div>').append(div).html();
     },
     InputTab: function (comp) {
@@ -1293,6 +1429,7 @@ var Component = {
             var backlogId = SAInput.getInputDetails(comp.id, "fkBacklogId");
 
             var rowCount = this.GetTableRowCount(tableId);
+            console.log(rowCount);
             var table = $("<table>");
             var thead = this.GenInputTableHeaderHtml(tableId);
             var tbody = this.GenInputTableBodyHtml(tableId, rowCount, backlogId);

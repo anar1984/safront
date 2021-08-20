@@ -6147,12 +6147,12 @@ td.selected{
 
 
 .table-show-hide-row-div{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0px;
     background: white;
     height: 100%;
-    
+    z-index: 5555;
     width: 260px;
     -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
@@ -6196,4 +6196,12 @@ td.selected{
 .bug-list-column-task-name:hover .task-name-editdrop{
   
     display: block;
+}
+.table-row-show-hide-ul{
+    list-style: none;
+    padding: 15px;
+}
+
+.filter-table-row-header-tr{
+  /*   display: none; */
 }

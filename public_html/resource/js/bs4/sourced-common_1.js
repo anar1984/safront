@@ -4918,6 +4918,29 @@ UserStory.prototype = {
         } catch (e) {
         }
     },
+    genUsTaskTypesManagment: function () {
+        var json = {kv: {}};
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkProjectId = global_var.current_project_id;
+        json.kv.asc = 'typeName';
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+            that.generateUsTaskTypesBlock(res);
+                
+            }
+        });
+    },
     genUsFilterTaskTypes: function () {
         var json = {kv: {}};
         try {
@@ -4937,9 +4960,50 @@ UserStory.prototype = {
             async: false,
             success: function (res) {
                 that.genUsFilterTaskTypesDetails(res);
-                console.log('asfasfasf')
+               
             }
         });
+    },
+    generateUsTaskTypesBlock: function (res) {
+        $('#taskTypeManagmentHeader').html("");
+        $('#taskTypeManagmentBody').html("");
+        var tsk =``
+
+        var obj = res.tbl[0].r;
+       
+        for (var n = 0; n < obj.length; n++) {
+
+            var div = $("<div>")
+                       .addClass("task-column-type")
+                       .attr("pid",obj[n].id)
+                       .append($("<div>")
+                                 .addClass("task-column-header")
+                                 .append('<span class="headerInputColumn">'+obj[n].typeName+' <b><span class="counterkanban" >0</span></b></span>')
+                       )
+           
+            $('#taskTypeManagmentHeader').append(div);
+            $('#taskTypeManagmentBody').append($("<div>")
+                                            .addClass('task-column-type')
+                                            .attr("id",obj[n].id)
+                                            .append(`<div class="TaskMiniStoryCard">
+                                            <h5>New Task</h5>
+                                            <input class="TaskMiniStoryInput form-control" type="text">
+                                            <div class="TextHeader " id="TaskAcceptStory" onclick="insertNewTaskDetailTaskTypeManagment(this)"
+                                                style="color: green;">
+                                                <i class="fas fa-check"></i>
+                                    
+                                            </div>
+                                            <div class="TextHeader " id="DeleteStory" style="color: red;">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                        </div>`)
+                                            .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>'));
+        }
+      
+
+        genTaskTypeManagmentView4None();
+       
+
     },
     genUsFilterTaskTypesDetails: function (res) {
         $('#us_filter_tasktypes').html("");
@@ -12338,6 +12402,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         } else if (global_var.current_modal === 'loadTaskManagement') {
             $('.loadTaskManagement').click();
 //            new Sprint().load4Task();
+        } else if (global_var.current_modal === 'loadTaskTypeManagment ') {
+            $('.loadTaskTypeManagment ').click();
+//            new Sprint().load4Task();
         }
 
 
@@ -13652,7 +13719,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
         var bNoList = SACore.GetBacklogNoKeys();
         var addedUS = [];
-
+     
         try {
 //            var obj = res.tbl[0].r;
             var c4new = 0;
@@ -13674,6 +13741,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     if (SACore.checkFilter(obj)) {
                         continue;
                     }
+                   
                     var html = this.genUSLine4KanbanView(obj);
                     if (obj.backlogStatus === 'new') {
                         c4new++;
@@ -13717,7 +13785,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
-
+        console.log(res)
 
         try {
             var obj = res.tbl[0].r;
@@ -13727,6 +13795,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.main_div_of_backlog_info_kanban_view_table_new ')
             for (var n = 0; n < obj.length; n++) {
                 var html = this.genUSLine4KanbanView(obj[n]);
+               
                 if (obj[n].backlogStatus === 'new') {
                     c4new++;
                     $('.main_div_of_backlog_info_kanban_view_table_new ').append(html);
@@ -19301,6 +19370,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
         var st = this.getGUIDesignHTMLPure(res);
         $('#SUS_IPO_GUI_Design').html(st);
+     
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
 

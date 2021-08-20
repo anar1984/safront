@@ -1457,7 +1457,7 @@ function getBugListDetails(res) {
                         .attr("aria-haspopup", "true")
                         .attr("aria-expanded", "false")
                         .attr("id", "bug-tasktype-dropdown")
-                        .append((replaceTags(o.taskTypeName)? "<span style ='visibility:hidden;'>fddfhdh</span>":"<span style ='visibility:hidden;'>fddfhdh</span>")))
+                        .append((replaceTags(o.taskTypeName))? "<span >"+o.taskTypeName+"</span>":"<span style ='visibility:hidden;'>djnfjsd</span>"))
 
                     .append($("<div>")
                         .addClass("dropdown-menu")
@@ -1957,7 +1957,7 @@ $(document).on("click", '#bug-tasktype-dropdown', function (e) {
 
 
     var elm = $(this).parent().find('.dropdown-menu');
-    console.log(elm)
+    
     addUserStoryToTask_loadTaskType_bug_list(elm);
 
 

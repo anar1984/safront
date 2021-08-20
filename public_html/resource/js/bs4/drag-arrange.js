@@ -148,7 +148,104 @@
          dragging = true;
        }
      }
- 
+     function getAveNoInDrag4Entity(dragElement) {
+      var prevNo = $(dragElement).prev('div.feildSection').attr('order');
+      prevNo = prevNo === undefined ? '' : prevNo;
+      var nextNo = $(dragElement).next('div.feildSection').attr('order');
+      nextNo = nextNo === undefined ? '' : nextNo;
+
+
+      var a = 0;
+      var b = 0;
+      var ave = 0;
+
+      if ((prevNo) && (nextNo)) {
+          try {
+              ave = (parseFloat(prevNo) + parseFloat(nextNo)) / 2;
+          } catch (e) {
+          }
+      } else if ((prevNo) && nextNo.length === 0) { //ensonuncu elementdir
+          try {
+              ave = (parseFloat(prevNo) + 0.5);
+          } catch (e) {
+          }
+      } else if (prevNo.length === 0 && (nextNo)) {//birinci elementdir
+          try {
+              ave = parseFloat(nextNo) - 0.5;
+          } catch (e) {
+          }
+      }
+
+
+      return ave;
+
+  }
+
+  function getAveNoInDrag4Task(dragElement) {
+      var prevNo = $(dragElement).prev('div').find('div.TaskContentText').attr('bno');
+      prevNo = prevNo === undefined ? '' : prevNo;
+      var nextNo = $(dragElement).next('div').find('div.TaskContentText').attr('bno');
+      nextNo = nextNo === undefined ? '' : nextNo;
+
+
+      var a = 0;
+      var b = 0;
+      var ave = 0;
+
+      if ((prevNo) && (nextNo)) {
+          try {
+              ave = (parseFloat(prevNo) + parseFloat(nextNo)) / 2;
+          } catch (e) {
+          }
+      } else if ((prevNo) && nextNo.length === 0) { //ensonuncu elementdir
+          try {
+              ave = (parseFloat(prevNo) + 0.5);
+          } catch (e) {
+          }
+      } else if (prevNo.length === 0 && (nextNo)) {//birinci elementdir
+          try {
+              ave = parseFloat(nextNo) - 0.5;
+          } catch (e) {
+          }
+      }
+
+
+      return ave;
+
+  }
+
+  function getAveNoInDrag(dragElement) {
+      var prevNo = $(dragElement).prev('div').find('div.ContentText').attr('bno');
+      prevNo = prevNo === undefined ? '' : prevNo;
+      var nextNo = $(dragElement).next('div').find('div.ContentText').attr('bno');
+      nextNo = nextNo === undefined ? '' : nextNo;
+
+
+      var a = 0;
+      var b = 0;
+      var ave = 0;
+
+      if ((prevNo) && (nextNo)) {
+          try {
+              ave = (parseFloat(prevNo) + parseFloat(nextNo)) / 2;
+          } catch (e) {
+          }
+      } else if ((prevNo) && nextNo.length === 0) { //ensonuncu elementdir
+          try {
+              ave = (parseFloat(prevNo) + 0.5);
+          } catch (e) {
+          }
+      } else if (prevNo.length === 0 && (nextNo)) {//birinci elementdir
+          try {
+              ave = parseFloat(nextNo) - 0.5;
+          } catch (e) {
+          }
+      }
+
+
+      return ave;
+
+  }
      function dragEndHandler(e) {
         if (dragging) {
             // remove the cloned dragged element and
@@ -180,6 +277,14 @@
                  var fieldId = $(dragElement).closest('.laneColumnDiv').attr('id');
                 // var tableId = $(dragElement).closest('.tdSeqment').attr('pid');
                 laneUpdateApiColumnOr(fieldId)
+            } else if (global_var.current_modal === 'loadTaskTypeManagment') {
+             
+              var aveNo = getAveNoInDrag(dragElement);
+              var bid = $(dragElement).find('div.TaskContentText').attr('pid');
+              var val = $(dragElement).closest('div.task-column-type').attr('id');
+               
+              updateTask4ShortChangePure(val, "fkTaskTypeId", bid);
+                         
             }
             
             e.stopPropagation();

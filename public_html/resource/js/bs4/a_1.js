@@ -48,6 +48,7 @@ var moduleList = {
     "loadProject": "Project",
     "loadUser": "User",
     "loadTaskType": "Task Type",
+    "loadTaskTypeManagment": "Task Type Management",
     "loadPermission": "Permission",
     "loadOldVersion": "Old Version",
 };
@@ -545,6 +546,45 @@ $(document).mouseup(function () {
 })(jQuery, window, document);
 
 
+function tableShowHideRowSetItem(tableId){
+
+   var chk = $("[data-tableid="+tableId+"]").find(".table-row-show-hide-ul li label input");
+   var tableVal = ""
+   for (let index = 0; index < chk.length; index++) {
+          
+       if($(chk[index]).prop("checked")){
+           tableVal = tableVal + $(chk[index]).attr("data-check")+','
+       }
+       
+   }
+      
+  localStorage.setItem("simp-"+tableId,tableVal)
+    
+}
+function tableShowHideRowGetItem(tableId){
+try {
+ 
+    var dt = localStorage.getItem("simp-"+tableId);
+    var chk = $("[data-tableid="+tableId+"]").find(".table-row-show-hide-ul");
+  
+    dt = dt.split(",")
+    for (let index = 0; index < dt.length; index++) {
+ 
+           if(dt[index] !==""){
+             chk.find("#"+dt[index]).find("input").prop("checked",true).change();
+         
+             
+           }
+          
+    }
+} catch (error) {
+    console.log(error)
+}
+  
+      
+ 
+    
+}
 
 //////   var table ----------------------------------------------- edit section by Revan Gozelov >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -5150,7 +5190,7 @@ function clearTableBodyAfterApiCall(el, apiId) {
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
-
+   var inpId ;
     try {
 
 
@@ -5180,6 +5220,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             if (tableId)
                 f = true;
             componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
+            inpId = (diffArray.length > 0) ? $(this).attr('input-id') : '';
         })
 
         if (!tableId)
@@ -5263,7 +5304,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
-
+    tableShowHideRowGetItem(inpId);
+    $(".filter-table-row-select").selectpicker();
 }
 
 function callTableRelationAPIs(elem, tableId) {
@@ -11727,6 +11769,20 @@ $(document).on('click', '.loadUser', function (evt) {
         commmonOnloadAction(this);
     });
 });
+$(document).on('click', '.loadTaskTypeManagment', function (evt) {
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadTaskTypeManagment";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    hideToggleMain();
+    var f = $(this).data('link');
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt') // this is not Working
+        new Sprint().load4Task();
+        new UserStory().genUsTaskTypesManagment();
+       // commmonOnloadAction(this); 
+    });
+});
 $(document).on('click', '.loadTaskType', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadTaskType";
@@ -13438,6 +13494,12 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
             SATask.addTaskByRes(res);
             SACore.updateBacklogByRes(res);
             getBugList();
+            try {
+                  genTaskTypeManagmentView4None();
+            } catch (error) {
+                
+            }
+          
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -13934,13 +13996,59 @@ function cloneTask() {
 
 
 
+
 function insertNewTask(el, taskStatus) {
-    var taskName = $(el).parent().find(".TaskMiniStoryInput").val();
+    
     var backlogId = global_var.task_mgmt_group_by === 'userStoryTab' ? $(el).attr('us-id') : "-1";
     var assgineeId = global_var.task_mgmt_group_by === 'assignee' ? $(el).attr('us-id') : "-1";
-    this.insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus);
+    this.insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus,fkTaskTypeId);
 }
 
+function insertNewTaskDetailTaskTypeManagment(el) {
+
+    var taskName = $(el).parent().find(".TaskMiniStoryInput").val();
+    var fkTaskTypeId = $(el).parents(".task-column-type").attr("id");
+    var projectId = $(".projectList_liveprototype_tasktypemgmt option:selected").val();
+    if (!(taskName))
+        return;
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+
+    projectId = (projectId) ? projectId : global_var.current_project_id;
+    if (!projectId) {
+        return;
+    }
+
+
+    json.kv['fkProjectId'] = projectId;
+    json.kv['fkBacklogId'] = '-1';
+    json.kv['fkAssigneeId'] = '-1';
+    json.kv.taskName = taskName;
+    json.kv.fkTaskTypeId = fkTaskTypeId;
+    json.kv.taskStatus = "new";
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewBacklogTask4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SATask.updateTaskByRes(res);
+            SACore.updateBacklogByRes(res);
+            genTaskTypeManagmentView4None();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus, projectId) {
     if (!(taskName))
         return;
@@ -14874,10 +14982,84 @@ function clearTaskManagementKanban() {
     $('#kanban_view_closed_count_4_task').html(0);
 }
 
+function genTaskTypeManagmentView4None() {
+
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkProjectId = $(".projectList_liveprototype_tasktypemgmt option:selected").val();
+    json.kv.fkAssigneeId = bug_filter.assignee_id;
+    json.kv.createdBy = bug_filter.created_by;
+    json.kv.fkBackogId = bug_filter.backlog_id;
+    json.kv.taskStatus = bug_filter.status;
+    json.kv.priority = bug_filter.priority;
+    json.kv.taskNature = bug_filter.nature;
+    json.kv.searchText = bug_filter.search_text;
+    json.kv.searchLimit = bug_filter.limit;
+    json.kv.pageNo = bug_filter.page_no;
+    json.kv.sprintId = bug_filter.sprint_id;
+    json.kv.labelId = bug_filter.label_id;
+    if (global_var.current_issue_is_hide == '0') {
+        json.kv.fkTaskId = global_var.current_issue_id;
+    }
+    json.kv.showChildTask = bug_filter.showChildTask;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+        $("#taskTypeManagmentBody").find(".task-content").remove()
+            var obj = res.tbl[0].r;
+           
+            for (var k = 0; k < obj.length; k++) {
+                       
+                var html = genUSLine4KanbanView(obj[k]);
+               
+                try {
+                    $('#'+obj[k].fkTaskTypeId).append(html);
+                } catch (error) {
+                    
+                }
+              
+               
+                
+            }
+
+       var rt = $("#taskTypeManagmentBody").find(".task-column-type");
+            
+       for (let index = 0; index < rt.length; index++) {
+           var con =$(rt[index]).find('.task-content')
+          if(con.length ==0){
+
+            $(rt[index]).append($('<div class="task-content content-drag">'))
+
+            
+          }
+          $("#taskTypeManagmentHeader").find('[pid="'+$(rt[index]).attr('id')+'"]').find(".counterkanban").text(con.length);
+       }
+
+            contentArrangableUI();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+}
 function genTaskKanbanView4None() {
     clearTaskManagementKanban();
     var bNoList = SATask.GetOrderNoKeys();
     var addedUS = [];
+  
     try {
         //            var obj = res.tbl[0].r;
         var c4new = 0;
@@ -14904,7 +15086,6 @@ function genTaskKanbanView4None() {
                 //                if (hasFilter4Task() && SATask.checkFilter(obj)) {
                 //                    continue;
                 //                }
-
                 var html = genUSLine4KanbanView(obj);
                 if (obj.taskStatus === 'new') {
                     c4new++;
