@@ -7,6 +7,24 @@
     text-align: center;
 }
 /*  colum  */
+.task-column-type{
+    width: 300px;
+       border-radius: 6px;
+       
+       padding: 5px;
+       margin-left: 15px;
+       background-color:rgb(244, 245, 247);
+       
+}
+.taskTypeNewPanel{
+    width:100%;
+    overflow-x:auto;
+}
+.taskTypeNewPanel::-webkit-scrollbar-thumb{
+    background-color: rgb(247, 245, 245) ;
+    height: 1px !important;
+   
+}
 .task-column{
     width: 30.5%;
        border-radius: 6px;
