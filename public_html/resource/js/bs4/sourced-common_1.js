@@ -23547,7 +23547,9 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
+                console.log(res);
                 return res.tbl[0].r[0].username;
+                
             },
             error: function () {
                 Toaster.showError("Something went wrong. This might be caused by duplicate table.");

@@ -360,6 +360,25 @@ $(function () {
          //   $(".filter-table-row-select").selectpicker()
     });
    
+$(document).on("change", '.prmanage-filter', function (e) {
+    bug_filter.page_no = 1;
+    getProjectManagementList()
+})
+
+$(document).on("click", '.projectManagmentPaginition .page-item-core-previous', function (e) {
+    bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
+    getProjectManagementList()
+})
+
+$(document).on("click", '.projectManagmentPaginition .page-item-core-next', function (e) {
+    bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
+    getProjectManagementList()
+})
+
+$(document).on("click", '.projectManagmentPaginition .page-item-core', function (e) {
+    bug_filter.page_no = $(this).attr("page-no");
+    getProjectManagementList()
+})
     $(document).on('click', '.closePopupIn', function (event) {
         $(this).parent().hide('fast')
     });

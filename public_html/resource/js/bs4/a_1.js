@@ -38,6 +38,7 @@ var moduleList = {
     "loadStoryCardMgmt ": "Story Card Management",
     "loadDashboard": "Dashboard",
     "loadTaskManagement": "Task Management",
+    "loadProjectManagement": "Project Management",
     "loadBugChange": "Issue Management",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
@@ -11663,6 +11664,36 @@ $(document).on('click', '.loadPermission', function (evt) {
     });
 });
 
+$(document).on('click', '.loadProjectManagement', function (evt) {
+    var f = $(this).data('link');
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadProjectManagement";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        setProjectManagementFilterProject();
+        setProjectManagementFilterAssignees();
+
+
+        $('.prmanage-mgmt-filter-select').selectpicker();
+        new Sprint().load();
+        new Label().load();
+        getProjectUsers();
+        getProjectManagementList();
+
+        if (global_var.current_issue_is_hide !== '1' &&
+            (global_var.current_issue_id)) {
+            $('.issue_' + global_var.current_issue_id).click();
+            global_var.current_issue_is_hide = "1";
+            global_var.current_issue_id = "";
+        }
+
+        if ((global_var.current_issue_id)) {
+            global_var.current_issue_id = "";
+        }
+    });
+});
+
 $(document).on('click', '.loadTaskManagement', function (evt) {
     var f = $(this).data('link');
     clearManualProjectFromParam();
@@ -11847,6 +11878,302 @@ function setStoryCardOwner() {
         ' Unassigned';
     $('#story-card-owner').find('img').attr('src', img);
     $('#story-card-owner').find('span').html(' ' + userName1);
+}
+
+ /*  Project managment By R.G >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+function setProjectManagementFilterAssignees() {
+
+    var json = initJSON();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetUserListByProjects",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var select = $('#prMn_filter_assignee_id');
+            var select2 = $('#prMn_filter_created_by');
+          
+            select.html('');
+            select2.html('');
+            var obj = res.tbl[0].r;
+            for (var id in obj) {
+                var o = obj[id];
+                var op = $("<option>").val(o.fkUserId).text(o.userName);
+                var op2 = $("<option>").val(o.fkUserId).text(o.userName);
+                select.append(op);
+                select2.append(op2);
+              
+            }
+
+            if (global_var.current_user_type === 'S') {
+                select.val(global_var.current_ticker_id)
+            }
+
+            select.selectpicker('refresh');
+            select2.selectpicker('refresh');
+       
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+function callProjectManagementFilterMulti(el) {
+    bug_filter.page_no = 1;
+    getProjectManagementList();
+}
+function setProjectManagementFilterProject() {
+    var select = $('#prMn_filter_project_id');
+    var keys = Object.keys(SACore.Project);
+    select.append($("<option>")
+        .val("")
+        .text("All Projects"))
+    for (var id in keys) {
+        var pid = keys[id];
+        select.append($("<option>")
+            .val(pid)
+            .text(SACore.Project[pid]))
+    }
+}
+function getProjectManagementList() {
+    var priD =$("#prMn_filter_project_id").val();
+    var val = $("#bug_filter_limit").val();
+    var nmSearch = $("#promgment_filter_search_text").val();
+
+    
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkProjectId = priD;
+    json.kv.startLimit = bug_filter.page_no*2;
+  
+    json.kv.endLimit = (bug_filter.page_no*2)+parseFloat(val);
+    if(nmSearch===''){
+       
+    }else{
+        json.kv.backlogName = "%%"+nmSearch+"%%";
+    }
+    json.kv.sprintId = bug_filter.sprint_id;
+    json.kv.labelId = bug_filter.label_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {         
+            getProjectManagmentListDetails(res);
+            /* toggleColumns(); */
+            setPagination(res.tbl[0].r.length,val);
+           // getGroupList();
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+}
+
+function getProjectManagmentListDetails(res) {
+    //    tbody to append
+    var table = $('#bugListTable');
+    var tbody = $('#bugListTable > tbody');
+    tbody.html('');
+    table.append(getProjectManagementListDetailsHeader());
+    // // thead to appaend----main header
+    var sumEstHours = 0,
+        sumSpentHours = 0,
+        sumEstCount = 0,
+        sumExecCount = 0,
+        sumEstBudget = 0,
+        sumSpentBudget = 0;
+
+
+
+    var obj = res.tbl[0].r;
+    console.log(obj);
+    for (var i = 0; i < obj.length; i++) {
+        var o = obj[i];
+        var createdName = SAProjectUser.GetDetails(o.createdBy, "userName") 
+        var userName = SAProjectUser.GetDetails(o.fkOwnerId, "userName") 
+          
+        var rs = global_var.bug_task_sprint_assign_checked === 1 /* ?
+            div.html() :
+            ""; */
+
+        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+
+        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+        row += " " /* + rs + rsLabelFilter; */
+
+        var userImage = SAProjectUser.GetDetails(o.fkOwnerId, "userImage");
+        var img = (userImage) ?
+            fileUrl(userImage) :
+            fileUrl(new User().getDefaultUserprofileName());
+
+        var createByImage =SAProjectUser.GetDetails(o.createdBy, "userImage") ;
+        var proJectName = SACore.GetProjectName(o.fkProjectId);
+        var createdByImg = (createByImage) ?
+            fileUrl(createByImage) :
+            fileUrl(new User().getDefaultUserprofileName());
+
+        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.id + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+        var task_id = getTaskCode(o.id);
+         
+        var t = $('<tr>')
+            .attr("id", o.id)
+            .attr("projectId", o.fkProjectId)
+            .attr("stIdr", o.fkBacklogId)
+            .addClass('bug-tr')
+            .append($('<td>').attr("style","min-width:50px;padding:5px;").append(row+'<input class="checkbox-issue-task" type="checkbox">'))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-status')
+                .append($('<span>')
+                .addClass('us-item-status-' + o.backlogNo)
+                .append(o.backlogNo)))
+            .append($('<td>')
+                .addClass('bug-list-column')
+                .addClass('bug-list-column-task-name')
+                .css("max-width", '400px')
+                .append(backlogName, ' ')
+                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                
+               
+            )
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-nature')
+                .append($("<div>").append('total-task')))
+
+            .append($('<td>')
+                .css('white-space', 'nowrap')
+                .addClass('bug-list-column')
+                .addClass('bug-list-column-assignee')
+                .append('bug')
+                .append(" ")
+
+                
+            )
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-tasktype')
+                .append($("<div>")
+                    .addClass("dropdown")
+                    .append($("<div>")
+                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug get-data-group')
+
+                        .attr("data-toggle", "dropdown")
+                        .attr("aria-haspopup", "true")
+                        .attr("aria-expanded", "false")
+                        .attr("id", "bug-tasktype-dropdown")
+                        .append((replaceTags(o.taskTypeName))? "<span >"+o.taskTypeName+"</span>":"<span style ='visibility:hidden;'>djnfjsd</span>"))
+
+                    .append($("<div>")
+                        .addClass("dropdown-menu")
+                        .attr("aria-labelledby", "bug-tasktype-dropdown")
+
+
+                    )))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-story-card')
+                .append("<span class='get-data-group'>" + proJectName + "</span>")
+
+               
+            )
+            
+            .append($('<td>').addClass('bug-list-column')
+                .css('white-space', 'nowrap')
+                .addClass('bug-list-column-owner-by ')
+                .append($("<div>").addClass("get-data-group")
+                    .append((userName) ? $('<img class="Assigne-card-story-select-img">')
+                        .attr('src', img) : "")
+                    .append(" ")
+                    .append(userName))
+                    
+                
+            )
+            .append($('<td>').addClass('bug-list-column')
+                .css('white-space', 'nowrap')
+                .addClass('bug-list-column-created-by ')
+                .append($("<div>").addClass("get-data-group")
+                    .append((createdName) ? $('<img class="Assigne-card-story-select-img">')
+                        .attr('src', createdByImg) : "")
+                    .append(" ")
+                    .append(createdName))
+                    
+                
+            )
+            .append($('<td>').addClass('bug-list-column')
+            .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+           
+
+        tbody.append(t);
+    }
+
+/*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+        sumEstBudget, sumSpentBudget); */
+
+    global_var.bug_task_sprint_assign_checked = '';
+    global_var.bug_task_sprint_assign_name = '';
+    global_var.bug_task_sprint_assign_id = '';
+
+
+    global_var.bug_task_label_assign_checked = '';
+    global_var.bug_task_label_assign_name = '';
+    global_var.bug_task_label_assign_id = '';
+    
+}
+
+function getProjectManagementListDetailsHeader() {
+    var th = $('<tr>')
+
+        .append($('<th>').append('# <input type="checkbox" class="all-bug-list-check">'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-task-status')
+            .append('US No'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-task-name').css("min-width", '250px').append('Us name'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-task-nature').append('Total Task'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-assignee').append('Bug'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-tasktype').append('Chnage request'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-priority').append('New requset'))
+         .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-project').append('Project'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-created-by').append('Owner'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-created-by').append('Created By'))
+        .append($('<th>').addClass('bug-list-column')
+            .addClass('bug-list-column-created-date').append('Created Date'))
+           
+               
+        .append($('<th>').append(''))
+
+
+
+
+    return th;
 }
 
 
@@ -13650,6 +13977,105 @@ function hideToggleMain() {
 function showToggleMain() {
     $('.main-toggle').show()
 }
+function lableAddAssignProjectManagement(elm) {
+    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+ 
+    var labelId = $(elm).attr("id");
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+       
+        var projectId = $(check[indx]).parents("tr").attr('projectid');
+        var id = $(check[indx]).parents("tr").attr("id");
+   
+        
+           var  checked = '1';
+        
+    
+        var json = {
+            kv: {}
+        };
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {}
+        json.kv['fkLabelId'] = labelId;
+        json.kv['fkProjectId'] = projectId;
+        json.kv['fkBacklogId'] = id;
+        json.kv.assign = checked;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmAssignLabel",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                new Label().load4Task()
+            },
+            error: function () {
+                Toaster.showError(('Something went wrong!!!'));
+            }
+        });
+
+    }
+
+}
+
+    
+};
+
+
+ function sprintAddAssignProjectManagement(elm) {
+  
+
+
+
+    var check = $("#bugListTable .bug-tr .checkbox-issue-task");
+    var sprintId = $(elm).attr("id");
+    
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+       
+        var projectId = $(check[indx]).parents("tr").attr('projectid');
+        var backlogId =$(check[indx]).parents("tr").attr('stIdr')?'-1':"";;
+        var id = $(check[indx]).parents("tr").attr("id");
+
+        var checked = '1';
+        
+        sprintZadininSheyeidlmesiProjectManagement(projectId, id, sprintId, checked);
+        
+    }
+
+}
+
+function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprintId, checked) {
+    var json = initJSON();
+    json.kv['fkSprintId'] = sprintId;
+    json.kv['fkProjectId'] = projectId;
+    json.kv['fkBacklogId'] = backlogId;
+    json.kv.assign = checked;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAssignSprint",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            new Sprint().load4Task()
+        }
+    });
+}
+
+
+};
 
 $(document).on('click', '.story-card-sprint-assign', function (evt) {
     global_var.story_card_sprint_assign_checked = 1;
@@ -13660,9 +14086,14 @@ $(document).on('click', '.story-card-sprint-assign', function (evt) {
         new UserStory().setUSLists4KanbanView();
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
-    } else if (global_var.current_modal === "loadBugChange") {
+    }
+     else if (global_var.current_modal === "loadBugChange") {
         getBugListDetails(coreBugList);
-    } else {
+    } 
+     else if (global_var.current_modal === "loadProjectManagement") {
+        sprintAddAssignProjectManagement(this);
+    } 
+    else {
         new UserStory().loadDetailesPure(SACore.toJSON());
     }
 });
@@ -13736,9 +14167,14 @@ $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_id = $(this).val();
     if (global_var.current_modal === "loadStoryCardMgmt") {
         new UserStory().setUSLists4KanbanView();
-    } else if (global_var.current_modal === "loadTaskManagement") {
+    } 
+    else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
-    } else {
+    } 
+    else if (global_var.current_modal === "loadProjectManagement") {
+        lableAddAssignProjectManagement(this)
+    } 
+    else {
         new UserStory().loadDetailesPure(SACore.toJSON());
     }
 });
@@ -14411,7 +14847,7 @@ function ForwardTaskTo_loadAssignee() {
     for (var i = 0; i < keys.length; i++) {
         var userName = SAProjectUser.GetDetails(keys[i], "userName");
         select.append($('<option>').val(keys[i]).text(userName));
-        console.log(userName);
+        
     }
     sortSelectBox('forwardTaskToModal_assignee');
     
