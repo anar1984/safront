@@ -21856,7 +21856,7 @@ Label.prototype = {
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
             tr.append($('<td class="lbl-list-td"></td>')
-                    .html($('<input type="checkbox" class="us-filter-checkbox-label bug-task-filter-checkbox-label" value="' + obj[n].id + '">')
+                    .html($('<input type="checkbox" class="us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                             .attr('taskIds', obj[n].labelTaskIds)
                             .prop("checked", isFiltered))
                     .attr('id', obj[n].id));
@@ -21866,7 +21866,7 @@ Label.prototype = {
                     .attr("class", "lbl-item")
                     .attr("style", "color:" + obj[n].color));
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="  story-card-label-assign bug-task-label-assign btn btn-primary">')
+                    .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
                             .css("padding", "0px 6px")
                             .attr("sname", replaceTags(obj[n].name))
                             .css("display", "none")

@@ -2965,6 +2965,9 @@ img.sc-IbsAh.kqHqhS {
     font-size:14px;
 }
 
+.task-for-backlog-event-prm{
+    cursor:pointer;
+}
 .task-for-backlog-event{
     cursor:pointer;
 }
