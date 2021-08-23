@@ -529,18 +529,27 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
 }
 
 $(document).on("change", '.bug-filter', function (e) {
-    bug_filter.page_no = 1;
-    getBugList();
+    if(global_var.current_modal=="loadBugChange"){
+        bug_filter.page_no = 1;
+        getBugList();
+    }
+   
 })
 
 $(document).on("click", '.page-item-core-previous', function (e) {
-    bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
-    getBugList();
+    if(global_var.current_modal=="loadBugChange"){
+        bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
+        getBugList();
+    }
+    
 })
 
 $(document).on("click", '.page-item-core-next', function (e) {
-    bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
-    getBugList();
+    if(global_var.current_modal=="loadBugChange"){
+        bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
+        getBugList();
+    }
+  
 })
 
 $(document).on("click", '.page-item-core', function (e) {
