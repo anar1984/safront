@@ -1336,6 +1336,17 @@ function getBugListDetails(res) {
         var taskName = '<a class="issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
         var task_id = getTaskCode(o.id);
 
+        var dropMenuDiv = $("<div>")
+                        .addClass("dropdown-menu")
+                        .attr("aria-labelledby", "bug-status-dropdown")
+
+                        .append('<a class="dropdown-item" data-value ="new">New</a>')
+                        .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
+//                        .append('<a class="dropdown-item" data-value ="closed">closed</a>')
+                        .append('<a class="dropdown-item" data-value ="waiting">Waiting</a>')
+                        .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
+//                        .append('<a class="dropdown-item" data-value ="UAT">UAT</a>')
+
         var t = $('<tr>')
             .attr("id", o.id)
             .attr("projectId", o.fkProjectId)
@@ -1355,19 +1366,8 @@ function getBugListDetails(res) {
                         .append($('<span>')
                             .addClass('us-item-status-' + o.taskStatus)
                             .append(o.taskStatus)))
-
-                    .append($("<div>")
-                        .addClass("dropdown-menu")
-                        .attr("aria-labelledby", "bug-status-dropdown")
-
-                        .append('<a class="dropdown-item" data-value ="new">New</a>')
-                        .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
-                        .append('<a class="dropdown-item" data-value ="closed">closed</a>')
-                        .append('<a class="dropdown-item" data-value ="waiting">waiting</a>')
-                        .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
-                        .append('<a class="dropdown-item" data-value ="UAT">UAT</a>')
-
-                    )))
+                    .append( o.taskStatus!=='UAT'? dropMenuDiv :"")
+                    ))
             .append($('<td>').addClass('bug-list-column')
                 .addClass('bug-list-column-task-id').append(task_id))
             .append($('<td>')
@@ -1395,6 +1395,8 @@ function getBugListDetails(res) {
                     .append('<a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>')
                     .append('<a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>')
                     .append('<a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>')
+                    .append('<a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>')
+                    .append('<a class="dropdown-item" href="#" onclick="userAcceptance()">User Acceptance Testing</a>')
                     .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
 
                 ))

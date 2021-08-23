@@ -4193,9 +4193,6 @@ function getUserList4Permission() {
                 }
                 select.append(option);
             }
-
-
-
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -5661,6 +5658,77 @@ function getMultiSelectpickerValueById(elementId) {
     return getMultiSelectpickerValue(document.getElementById(elementId))
 }
 
+function iDidIt(){
+    $('#iDidItModal').modal('show');
+}
+
+function iDidItAction(){
+    var id = global_var.current_issue_id;
+     var json = initJSON();
+     
+    json.kv.fkTaskId = id;
+    json.kv.comment = $('#iDidItModal_comment').val();
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmIDidItTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+               getBugList();
+                $('#iDidItModal_comment').html('');
+              $('#iDidItModal').modal('hide');
+              $('#iDidItModal_comment').val('');
+        }
+    });
+  
+}
+
+function userAcceptance(){
+    $('#uatModal').modal('show');
+}
+
+function uatAction(){
+    var id = global_var.current_issue_id;
+     var json = initJSON();
+     
+    json.kv.fkTaskId = id;
+    json.kv.comment = $('#iDidItModal_comment').val();
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSendUatTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+               getBugList();
+                $('#uatModal_comment').val("");
+              $('#uatModal').modal('hide');
+        }
+    });
+  
+}
+
+function setMultiselectPickerValue(elementId,val){
+    var el = $('#'+elementId);
+    el.find("option:selected").prop("selected",false);
+     el.selectpicker('refresh');
+
+        $.each(val.split(","), function (i, e) {
+            var id = el.attr('id');
+           el.find("option[value='" + e + "']").prop("selected", true);
+        });
+        el.selectpicker('refresh');
+}
+
 function getMultiSelectpickerValue(el) {
     var id = $(el).val();
     var st = "";
@@ -5716,7 +5784,7 @@ function getGUIDataByStoryCard(el) {
 }
 
 function insertNewInputActionRel(el) {
-    console.log(el);
+     
     if (!global_var.current_project_id || !$(el).parents(".animation-block-for-find").find('.input_event_type').val() ||
         !$(el).parents(".animation-block-for-find").find('.input_event_related_api').val())
         return;
@@ -13918,7 +13986,7 @@ function updateTask4ShortChangeDetailsWithSync(val, ustype) {
     updateTask4ShortChangePureWithSync(val, ustype, global_var.current_issue_id);
 }
 
-function updateTask4ShortChangePureWithSync(val, ustype, taskId) {
+function updateTask4ShortChangePureWithSync(val, ustype, taskId,comment,changeUat) {
     try {
 
         if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
@@ -13938,6 +14006,8 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId) {
     json.kv.id = taskId;
     json.kv.type = ustype;
     json.kv.value = val;
+    json.kv.comment = comment;
+    json.kv.changeUat = changeUat;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -14994,10 +15064,11 @@ function forwardTaskToAction() {
 
 
 function rejectTaskAction() {
-    updateTask4ShortChangeDetailsWithSync('rejected', 'taskStatus');
+    var comment = $('#rejectTaskModal_reason').val().trim();
+    updateTask4ShortChangePureWithSync('rejected', 'taskStatus', global_var.current_issue_id,comment,'true');
 
-    if ($('#rejectTaskModal_reason').val().trim()) {
-        $('#addComment4Task_comment').val($('#rejectTaskModal_reason').val());
+    if (comment) {
+        $('#addComment4Task_comment').val(comment);
         new UserStory().addCommentInput4Task('');
     }
     //    this.refreshCurrentBacklog();

@@ -6108,7 +6108,7 @@
         </div>
 
 
-        
+
         <div class="modal fade" id="addUserStoryPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="min-width1: 60%">
                 <div class="modal-content">
@@ -6903,6 +6903,9 @@
                                     <div class="form-group col-12">
                                         <br>
                                     </div>
+                                    
+                                    
+                                    
 
                                     <div class="form-group col-12">
                                         <label class="col-form-label control-label"> Status
@@ -6912,6 +6915,50 @@
                                                  id="txtTaskTypeStatus">
                                             <option value="A">Active</option>
                                             <option value="P">Passive</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <br>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group col-12">
+                                        <label class="col-form-label control-label"> Default Assigned User
+                                           
+                                        </label>
+                                        <select  class="form-control required addUS"
+                                                 id="taskTypeModal_fkAssigneeId">
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group col-12">
+                                        <br>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group col-12">
+                                        <label class="col-form-label control-label"> After Done Relation
+                                            <!--<span style="color:red">*</span>-->
+                                        </label>
+                                        <select  class="form-control required addUS"
+                                                 multiselect="true" data-live-search="true"
+                                                   multiple="true" data-actions-box="true"
+                                                 id="taskTypeModal_afterDoneRelation">
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <br>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label class="col-form-label control-label"> AUT Relation
+                                            <!--                                            <span style="color:red">*</span>-->
+                                        </label>
+                                        <select  class="form-control required addUS"
+                                                 multiselect="true" data-live-search="true"
+                                                 multiple="true" data-actions-box="true"
+                                                 id="taskTypeModal_aut_relation">
+
                                         </select>
                                     </div>
 
@@ -7222,7 +7269,7 @@
             <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="">Forward To</h5>
+                        <h5 class="modal-title" id="">Reject Task</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -7239,6 +7286,68 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="rejectTaskAction()">
                             Reject
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="modal fade" id="iDidItModal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">I Did It</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="font-size: 12px;">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <span>Comment</span>
+                                <textarea rows=3 class="form-control" id="iDidItModal_comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="iDidItAction()">
+                            It's done!
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+         <div class="modal fade" id="uatModal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">User Acceptance Testing</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="font-size: 12px;">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <span>Comment</span>
+                                <textarea rows=3 class="form-control" id="uatModal_comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="uatAction()">
+                           Send for Testing
                         </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
@@ -7527,9 +7636,9 @@
                             <div class="col-6"  >
                                 <input type = 'text' class='form-control' id = 'apiIntegrationModal_urllink'>
                             </div>
-                             <div class="col-1"  >
+                            <div class="col-1"  >
                                 <button onclick = 'sendApiIntegrationForTest()'
-                                          class='btn btn-primary' id = 'apiIntegrationModal_send'>
+                                        class='btn btn-primary' id = 'apiIntegrationModal_send'>
                                     Send
                                 </button>
                             </div>
@@ -7543,324 +7652,324 @@
                                         selectpicker>
                                     <option value='json' selected>JSON</option>
                                     <option value='xml'>XML</option>
-                                     
+
                                 </select>
                                 <br>
                             </div>
                             <div class="col-1"  >
                                 <br>
                                 <a href='#' onclick='beautifyApiIntegrationContent()'>Beautify</a>
-                                
+
                                 <br>
                             </div>
-                             <div class="col-12">
-                                 <textarea class='form-control ' rows='10' 
-                                        id='apiIntegrationModal_body'></textarea>
+                            <div class="col-12">
+                                <textarea class='form-control ' rows='10' 
+                                          id='apiIntegrationModal_body'></textarea>
                             </div>
-                            
-                             <div class="col-12"><br></br></div>
+
+                            <div class="col-12"><br></br></div>
                             <div class="col-8">
                                 <h6>Response</h6s>
                             </div>
                             <div class="col-1"  >
                                 <b>Status:</b>
-                                
+
                             </div>
                             <div class="col-3"  >
-                                
+
                                 <span href='#' id='apiIntegrationModal_responsestatus'></a>
-                                
-                                <br>
-                            </div>
-                             <div class="col-12">
-                                 <textarea class='form-control ' rows='10' 
-                                        id='apiIntegrationModal_response'></textarea>
+
+                                    <br>
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea class='form-control ' rows='10' 
+                                                  id='apiIntegrationModal_response'></textarea>
+                                    </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="copyClassCodeAction()"> Apply </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="copyClassCodeAction()"> Apply </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="copyJSCodeModal" tabindex="-1" role="dialog" aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" style="width: 80%;max-width: 80%" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Copy JS Code</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="font-size: 12px;">
-                        <div class="row"  >
-                            <div class="col-8"  >
-                                <div class="col text-center"  > <h4>Function List</h4></div>
-                                <input class='checkAll4JsCopyTo' type="checkbox"><b>Check All</b>
-                                <div class="row" id="copyJSCodeModal_jslist" >
+            <div class="modal fade" id="copyJSCodeModal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 80%;max-width: 80%" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Copy JS Code</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size: 12px;">
+                            <div class="row"  >
+                                <div class="col-8"  >
+                                    <div class="col text-center"  > <h4>Function List</h4></div>
+                                    <input class='checkAll4JsCopyTo' type="checkbox"><b>Check All</b>
+                                    <div class="row" id="copyJSCodeModal_jslist" >
+                                    </div>
+                                </div>
+                                <div class="col-4"id="">
+                                    <div class="col text-center"  > <h4>Project List</h4></div>
+                                    <input class='checkAll4JsCopyToProject' type="checkbox"><b>Check All</b>
+                                    <div class="row" id="copyJSCodeModal_projectlist" >
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-4"id="">
-                                <div class="col text-center"  > <h4>Project List</h4></div>
-                                <input class='checkAll4JsCopyToProject' type="checkbox"><b>Check All</b>
-                                <div class="row" id="copyJSCodeModal_projectlist" >
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="copyJSCodeAction()"> Copy </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="change-parent-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Parent Task List</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size: 12px;">
+                            <div class="row" >
+                                <div class='col'>
+                                    <select class='form-control' 
+                                            id="change-parent-task-modal-parent-task-list"></select>    
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="copyJSCodeAction()"> Copy </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="addParentTaskToTask()"> Add </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-
-        <div class="modal fade" id="change-parent-task-modal" tabindex="-1" role="dialog" aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Parent Task List</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+            <div class="modal fade" id="backlogInputPermissionModal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Input Permissions</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size: 12px;">
+                            <div class="row" id="permision_byinput_body">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-body" style="font-size: 12px;">
-                        <div class="row" >
-                            <div class='col'>
-                                <select class='form-control' 
-                                        id="change-parent-task-modal-parent-task-list"></select>    
+                </div>
+            </div>
+            <div class="modal cst_mod_dl fade" id="full_screen_editor_modal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog cst_mod_dlg modal-lg"   role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Editor</h5>
+                            <button type="button" class="close close_full_scree_editor" data-dismiss="#full_screen_editor_modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fas fa-compress"></i></span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="width: 100%;height: 100vh;">
+                            <div class="" id="edit_full_screen">
 
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="addParentTaskToTask()"> Add </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="backlogInputPermissionModal" tabindex="-1" role="dialog" aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Input Permissions</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="font-size: 12px;">
-                        <div class="row" id="permision_byinput_body">
+
+
+
+
+
+            <div class="modal fade" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Forward To</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal cst_mod_dl fade" id="full_screen_editor_modal" tabindex="-1" role="dialog" aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog cst_mod_dlg modal-lg"   role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Editor</h5>
-                        <button type="button" class="close close_full_scree_editor" data-dismiss="#full_screen_editor_modal" aria-label="Close">
-                            <span aria-hidden="true"><i class="fas fa-compress"></i></span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="width: 100%;height: 100vh;">
-                        <div class="" id="edit_full_screen">
+                        <div class="modal-body" style="font-size: 12px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <b>Assignee</b>
+                                    <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
+                                </div>
 
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-        <div class="modal fade" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby=""
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Forward To</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="font-size: 12px;">
-                        <div class="row">
-                            <div class="col-12">
-                                <b>Assignee</b>
-                                <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
-                            </div>
-
-                            <div class="col-12">
-                                <b>Comment</b>
-                                <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
+                                <div class="col-12">
+                                    <b>Comment</b>
+                                    <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="forwardTaskToAction()">
-                            Add
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="forwardTaskToAction()">
+                                Add
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
-        <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index:50000;"   aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Change User Story</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!--<form>-->
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <label for="sprintname" class="col-form-label control-label">User Story
-                                    <span style="color:red">*</span>
-                                </label>
-                                <select class="form-control required msg-clear" id="task-user-story-id-change"><select>
-                                        </div>
+            <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index:50000;"   aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Change User Story</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!--<form>-->
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="sprintname" class="col-form-label control-label">User Story
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <select class="form-control required msg-clear" id="task-user-story-id-change"><select>
+                                            </div>
 
 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="assignUserStorytoTask()">
-                                                Assign
-                                            </button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" onclick="assignUserStorytoTask()">
+                                                    Assign
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-
-
-                                        <div class="modal fade" id="cloneTaskModal" tabindex="-1" role="dialog" aria-labelledby=""
-                                             aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="">Copy to</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!--<form>-->
-                                                        <div class="row">
-                                                            <div class="form-group col-12">
-                                                                <label for="sprintname" class="col-form-label control-label">User Story
-                                                                    <span style="color:red">*</span>
-                                                                </label>
-                                                                <select class="form-control required msg-clear" id="cloneTask_backlog_id"><select>
-                                                                        </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </div>
 
 
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-primary" onclick="cloneTask()">
-                                                                                Copy
-                                                                            </button>
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                                                        </div>
-                                                                        </div>
-                                                                        </div>
-                                                                        </div>
-                                                                        </div>
-                                                                        </div>
-
-                                                                        <!--
-                                                                                                        <footer>
-                                                                                                        <div class="row us-footer" style="text-align: center">
-                                                                                                        <div class="col-lg-12">
-                                                                                                        <p class="copyright text-center">&copy; 2019 <a href="http://www.sourcedagile.com">Sourced Agile</a>. All Rights Reserved. </p>
-                                                                                                        </div>
-                                                                                                        <div class="col-lg-12 text-centered">
-                                                                                                        info@sourcedagile.com
-                                                                                                        </div>
-                                                                                                        </div>
-                                                                                                        </footer>-->
+                                            <div class="modal fade" id="cloneTaskModal" tabindex="-1" role="dialog" aria-labelledby=""
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="">Copy to</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!--<form>-->
+                                                            <div class="row">
+                                                                <div class="form-group col-12">
+                                                                    <label for="sprintname" class="col-form-label control-label">User Story
+                                                                        <span style="color:red">*</span>
+                                                                    </label>
+                                                                    <select class="form-control required msg-clear" id="cloneTask_backlog_id"><select>
+                                                                            </div>
 
 
-                                                                        </body>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-primary" onclick="cloneTask()">
+                                                                                    Copy
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                                                        </html>
-                                                                        <script>
-                                                                            $('.nav-toggle').click(function (e) {
-                                                                                e.preventDefault();
-                                                                                $("html").toggleClass("openNav");
-                                                                                $(".nav-toggle").toggleClass("active");
+                                                                            </div>
+                                                                            </div>
+                                                                            </div>
+                                                                            </div>
+                                                                            </div>
+                                                                            </div>
 
-                                                                            });
-                                                                        </script>
-                                                                        <script>
-                                                                            $(document).ready(function () {
-                                                                                init();
-                                                                                Utility.setParamOnLoad();
-
-
-                                                                                if (global_var.fkManualProjectId) {
-                                                                                    manualProjectRefreshInit(global_var.fkManualProjectId);
-
-
-                                                                                } else {
-
-//                                                                                    request = window.indexedDB.open("sa-db", 1);
-//                                                                                    request.onupgradeneeded = function (event) {
-//                                                                                        db = event.target.result;
-//                                                                                        objectStore = db.createObjectStore("subdb", {
-//                                                                                            keyPath: "bid",
-//                                                                                        });
-//                                                                                    }
-//                                                                                    request.onsuccess = function (event) {
-//                                                                                        db = request.result;
-//                                                                                    }
-
-                                                                                    loadFromIndexedDBtoRAM4LivePrototype();
-                                                                                    init4Core();
-                                                                                    new Project().loadMainProjectList();
+                                                                            <!--
+                                                                                                            <footer>
+                                                                                                            <div class="row us-footer" style="text-align: center">
+                                                                                                            <div class="col-lg-12">
+                                                                                                            <p class="copyright text-center">&copy; 2019 <a href="http://www.sourcedagile.com">Sourced Agile</a>. All Rights Reserved. </p>
+                                                                                                            </div>
+                                                                                                            <div class="col-lg-12 text-centered">
+                                                                                                            info@sourcedagile.com
+                                                                                                            </div>
+                                                                                                            </div>
+                                                                                                            </footer>-->
 
 
+                                                                            </body>
+
+                                                                            </html>
+                                                                            <script>
+                                                                                $('.nav-toggle').click(function (e) {
+                                                                                    e.preventDefault();
+                                                                                    $("html").toggleClass("openNav");
+                                                                                    $(".nav-toggle").toggleClass("active");
+
+                                                                                });
+                                                                            </script>
+                                                                            <script>
+                                                                                $(document).ready(function () {
+                                                                                    init();
+                                                                                    Utility.setParamOnLoad();
+
+
+                                                                                    if (global_var.fkManualProjectId) {
+                                                                                        manualProjectRefreshInit(global_var.fkManualProjectId);
+
+
+                                                                                    } else {
+
+                                                                                        //                                                                                    request = window.indexedDB.open("sa-db", 1);
+                                                                                        //                                                                                    request.onupgradeneeded = function (event) {
+                                                                                        //                                                                                        db = event.target.result;
+                                                                                        //                                                                                        objectStore = db.createObjectStore("subdb", {
+                                                                                        //                                                                                            keyPath: "bid",
+                                                                                        //                                                                                        });
+                                                                                        //                                                                                    }
+                                                                                        //                                                                                    request.onsuccess = function (event) {
+                                                                                        //                                                                                        db = request.result;
+                                                                                        //                                                                                    }
+
+                                                                                        loadFromIndexedDBtoRAM4LivePrototype();
+                                                                                        init4Core();
+                                                                                        new Project().loadMainProjectList();
+
+
+                                                                                    }
+
+
+
+                                                                                });
+
+                                                                                function clearText() {
+                                                                                    $('.add-bkl-line').val('');
+                                                                                    $('.search-clear').css('display', 'none');
+                                                                                    $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
                                                                                 }
-
-
-
-                                                                            });
-
-                                                                            function clearText() {
-                                                                                $('.add-bkl-line').val('');
-                                                                                $('.search-clear').css('display', 'none');
-                                                                                $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
-                                                                            }
-                                                                            ;
+                                                                                ;
 
 
 
@@ -7877,4 +7986,4 @@
 
 
 
-                                                                        </script>
+                                                                            </script>
