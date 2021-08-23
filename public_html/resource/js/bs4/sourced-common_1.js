@@ -24595,6 +24595,9 @@ TaskType.prototype = {
         json.kv.typeName = $('#txtTaskTypeName').val();
         json.kv.typeStatus = $('#txtTaskTypeStatus').val();
         json.kv.description = $('#txtTaskTypeDescription').val();
+        json.kv.fkAssigneeId = $('#taskTypeModal_fkAssigneeId').val();
+        json.kv.afterDoneRelationId = getMultiSelectpickerValueById('taskTypeModal_afterDoneRelation');
+        json.kv.autRelationId =getMultiSelectpickerValueById('taskTypeModal_aut_relation');  
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -24710,6 +24713,11 @@ TaskType.prototype = {
     },
     showTaskTypeDetails: function (e) {
         var pid = $(e).attr("pid");
+        this.addTaskTypeListToCombo('taskTypeModal_afterDoneRelation');
+        this.addTaskTypeListToCombo('taskTypeModal_aut_relation');
+        this.addTaskTypeAssigneeListToCombo('taskTypeModal_fkAssigneeId');
+        
+        
         this.showTaskTypeDetailsMain(e);
         this.insertAfterEvent();
     },
@@ -24734,6 +24742,10 @@ TaskType.prototype = {
                 $('#txtTaskTypeName').val(res.tbl[0].r[0].typeName);
                 $('#txtTaskTypeStatus').val(res.tbl[0].r[0].typeStatus);
                 $('#txtTaskTypeDescription').val(res.tbl[0].r[0].description);
+             $('#taskTypeModal_fkAssigneeId').val(res.tbl[0].r[0].fkAssigneeId);
+            setMultiselectPickerValue('taskTypeModal_afterDoneRelation',res.tbl[0].r[0].afterDoneRelationId);
+            setMultiselectPickerValue('taskTypeModal_aut_relation',res.tbl[0].r[0].autRelationId);
+            
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -24760,6 +24772,10 @@ TaskType.prototype = {
         json.kv.typeName = $('#txtTaskTypeName').val();
         json.kv.typeStatus = $('#txtTaskTypeStatus').val();
         json.kv.description = $('#txtTaskTypeDescription').val();
+        json.kv.fkAssigneeId = $('#taskTypeModal_fkAssigneeId').val();
+         json.kv.afterDoneRelationId = getMultiSelectpickerValueById('taskTypeModal_afterDoneRelation');
+        json.kv.autRelationId =getMultiSelectpickerValueById('taskTypeModal_aut_relation');  
+       
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -24877,6 +24893,67 @@ TaskType.prototype = {
         $('#txtTaskTypeName').val('');
         $('#txtTaskTypeId').val('');
         $('#txtTaskTypeDescription').val('');
+        
+        this.addTaskTypeListToCombo('taskTypeModal_afterDoneRelation');
+        this.addTaskTypeListToCombo('taskTypeModal_aut_relation');
+        this.addTaskTypeAssigneeListToCombo('taskTypeModal_fkAssigneeId');
+    },
+    
+    addTaskTypeAssigneeListToCombo:function(elementId){
+            var json = initJSON();
+            json.kv.asc = "userPersonName";
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceCrGetUserList",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: false,
+                success: function (res) {
+                    var obj = res.tbl[0].r;
+                    var select = $('#'+elementId);
+                    select.html('');
+                    for (var n = 0; n < obj.length; n++) {
+                        var o = obj[n];
+                        var option = $('<option>').val(o.id).text(o.userPersonName);                        
+                        select.append(option);
+                    }
+                },
+                error: function () {
+                    Toaster.showError(('somethingww'));
+                }
+            });
+    },
+    
+    addTaskTypeListToCombo: function (comboId) {
+        var json = initJSON();
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                $('#'+comboId).html('');
+                 var obj = res.tbl[0].r;
+                    $('#'+comboId).append($('<option></option')
+                            .val("")
+                            .text(""));
+                    for (var n = 0; n < obj.length; n++) {
+                        var o = $('<option></option')
+                                .val(obj[n].id)
+                                .text(obj[n].typeName);
+                        $('#'+comboId).append(o);
+                    }
+                    $('#'+comboId).selectpicker('refresh');
+                 
+            } 
+        });
     },
     taskTypeModalFn: function () {
         $('.newTaskTypeInsert').hide();
