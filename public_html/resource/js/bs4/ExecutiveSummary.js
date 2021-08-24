@@ -157,7 +157,7 @@ function getCaseSectionDivElement(obj) {
             .attr("id", "section_div_" + obj.id)
             .addClass("bc-section-main-div")
             .addClass("col-" + obj.gridNo)
-        
+            .append("<br><br>")
             .append($('<div class="row">')
                     .append($('<div class="col-9">')
                             .append($("<h4>")
@@ -170,7 +170,7 @@ function getCaseSectionDivElement(obj) {
 //                                    .css("display", "none")
                                     .attr("onclick", "saveSection(this)")
                                     .append('Save'))))
-            .append($('<div class="">')
+            .append($('<div class="bc-section-main-div-insection">')
                     .attr("id", "anar")
                     .append($('<textarea>')
                             .attr("id", "section_" + obj.id)
@@ -840,6 +840,7 @@ $(document).on("click", function () {
     new FroalaEditor(".exercusiveEditor", {
         enter: FroalaEditor.ENTER_P,
         height: 150,
+        toolbarInline: true
     })
 
 })
