@@ -335,7 +335,7 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#gui_prop_in_backgroundcolor').val(val);
-                    $('.change-color-component[data-bgcolorspan='+val+']').click();
+                   // $('.change-color-component[data-bgcolorspan='+val+']').click();
                     $('#cb_gui_prop_in_backgroundcolor').prop('checked', true);
                     $('#gui_prop_in_backgroundcolor').removeAttr('disabled');
                 } else {
@@ -497,7 +497,7 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#gui_prop_in_fontcolor').val(val);
-                    $('.change-font-component[data-bgcolorspan='+val+']').click();
+                   // $('.change-font-component[data-bgcolorspan='+val+']').click();
                     $('#cb_gui_prop_in_fontcolor').prop('checked', true);
                     $('#gui_prop_in_fontcolor').removeAttr('disabled');
                 } else {
@@ -9409,7 +9409,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     genIPOInputList: function () {
         $('#tblIPOList > tbody').html('');
         $('#tblInputDescriptionList > tbody').html('');
-        $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;")
+        $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;");
 
 
         var backlogId = global_var.current_backlog_id;

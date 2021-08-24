@@ -180,15 +180,21 @@ function selectTo(cell) {
                 var val = dt.find(".component-input-class").val();
                 var val2 = dt.find(".component-input-class").text();
     
-                sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
+
+                if(parseFloat(val)===NaN||parseFloat(val2)===NaN){
+
+                }else{
+                    sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
+                }
+              
     
-                kl = rowCells.length;
-                console.log(kl);
+                kl ++;
+               
             }
            
         }
     }
-    sumAvarMaxMinCount(sumTbl, cellEnd);
+    sumAvarMaxMinCount(sumTbl, kl);
 }
 
 function sumAvarMaxMinCount(sum, count, min, max) {
@@ -196,7 +202,7 @@ function sumAvarMaxMinCount(sum, count, min, max) {
     $(".absolute-div-row-table").remove();
     var div = $("<div>").addClass("absolute-div-row-table")
         .append(" sum:" + sum)
-        .append(" avarge:" + (sum / count))
+        .append((sum==NaN)?"":" avarge:" + (sum / count))
         .append(" minimum:" + (min))
         .append(" maximum:" + (max))
         .append(" count:" + (count));
@@ -559,7 +565,7 @@ function tableShowHideRowSetItem(tableId){
        
    }
       
-  localStorage.setItem("simp-"+tableId,tableVal)
+  localStorage.setItem("simp-"+tableId,tableVal);
     
 }
 function tableShowHideRowGetItem(tableId){
@@ -5188,10 +5194,8 @@ function clearTableBodyAfterApiCall(el, apiId) {
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
-   var inpId ;
+    var inpId ;
     try {
-
-
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
@@ -5624,7 +5628,7 @@ function initHtmlFroalaEditor(elementId, val) {
                 class1: 'Dashed',
                 class2: 'None',
             },
-
+            
             quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
             toolbarInline: true,
             charCounterCount: false,
@@ -12090,7 +12094,8 @@ function getStatisticList(idlist) {
                 var id = dt[index].r[0].fkBacklogId;
                 var le = dt[index].r[0];
                 $("#changes"+id).html($("<div>")
-                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Total</b>('+le.overall+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Total</b>('+le.
+                overall+')</span><br>')
                 .append('<span class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
                 .append('<span class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
                 .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')

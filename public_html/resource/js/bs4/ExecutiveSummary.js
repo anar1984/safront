@@ -9,7 +9,9 @@ var lastSelectedGroupId = "";
 
 // 4__________________Provided Services as a Solution(s)--- PLUS Button to Click________________
 function loadDocEditor4BusinessCase(id) {
-    new FroalaEditor('textarea' + id
+    new FroalaEditor('textarea' + id,{
+        toolbarInline: true
+    }
 //            , {
 //                events: {
 //                    'contentChanged': function () {
@@ -155,7 +157,7 @@ function getCaseSectionDivElement(obj) {
             .attr("id", "section_div_" + obj.id)
             .addClass("bc-section-main-div")
             .addClass("col-" + obj.gridNo)
-            .append("<br><br>")
+        
             .append($('<div class="row">')
                     .append($('<div class="col-9">')
                             .append($("<h4>")
