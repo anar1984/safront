@@ -13944,6 +13944,36 @@ function getProjectUsers4ProjectManagment() {
         }
     });
 }
+function getProjectUsers4ProjectManagment() {
+
+
+    var json = initJSON();
+
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                SAProjectUser.LoadProjectUser(res);
+                loadUsersAsAssignee();
+                loadUsersAsOwner();
+            } catch (err) {}
+            queue4ProLoad.getProjectUsers = true;
+            executeCoreOfManualProSelection();
+            getProjectManagementList();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 
 function getUsers() {
 
@@ -19034,4 +19064,4 @@ var SCSourceManagement = {
 }
 
 
-
+}
