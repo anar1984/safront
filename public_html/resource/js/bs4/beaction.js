@@ -1045,12 +1045,15 @@ var be = {
 
                 var extId = extApiList[i];
                 var o = cr_project_desc[extId];
+                
+                if (o.commentType==='comment'){
+                    continue;
+                }
 
                 be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
                     outData = SAFN.ExecCommand(o.description, outData, element, asyncData);
-
 
                 } else {
                     if (o.fkRelatedScId) {
@@ -1641,7 +1644,8 @@ var be = {
             for (var i in err) {
                 if (err[i].code === 'general') {
                     Toaster.showError(err[i].val);
-                    return;
+                    msgError = err[i].val;
+                    //return;
                 } else {
                     var f = false;
                     $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
@@ -1655,8 +1659,9 @@ var be = {
 
                     //eyni code-lu component vardir;
                     if (!f) {
-                        Toaster.showError(err[i].val);
-                        msgError = err[i].val;
+                        msgError = err[i].val+"! Error Code: "+err[i].code;
+                        Toaster.showError(msgError);
+                       
                     }
                 }
             }
@@ -1751,6 +1756,15 @@ var SAFN = {
         } catch (err) {
         }
         return argLine;
+    },
+    GetFunctionNameLine: function (description) {
+        var res = "";
+        try {
+            res = description.split("(")[0];
+            res = res.replace(/ /g, '');
+        } catch (err) {
+        }
+        return res;
     },
     ExecCommand: function (description, outData, element, asyncData) {
 
@@ -2104,15 +2118,15 @@ var SAFN = {
 
             $('.' + className).show();
         },
-         Visible: function (className) {
+        Visible: function (className) {
             className = SAFN.GetArgumentPureValue(className);
 
-            $('.' + className).css('visibility','visible');
+            $('.' + className).css('visibility', 'visible');
         },
         Unvisible: function (className) {
             className = SAFN.GetArgumentPureValue(className);
 
-            $('.' + className).css('visibility','hidden');
+            $('.' + className).css('visibility', 'hidden');
         },
         Hide: function (className) {
             className = SAFN.GetArgumentPureValue(className);
@@ -2145,7 +2159,7 @@ var SAFN = {
             Toaster.showMessage(msg);
         },
         ShowError: function (msg) {
-            msg = SAFN.GetArgumentPureValue(msg);
+            msg = SAFN.GetArgumentValue(msg);
             Toaster.showError(msg);
         },
         SetTable: function (row, col, val) {
@@ -2195,7 +2209,7 @@ var SAFN = {
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {
-                    res._table.r[r][sa-global-trigger] = val;
+                    res._table.r[r][sa - global - trigger] = val;
                 } else {
                     var kv = {};
                     kv[col] = val;
@@ -2295,7 +2309,11 @@ var SAFN = {
         },
 
         SendEmail: function (to, subject, message, cc, bb) {
-
+            to = SAFN.GetArgumentValue(to);
+            subject = SAFN.GetArgumentValue(subject);
+            message = SAFN.GetArgumentValue(message);
+            cc = SAFN.GetArgumentValue(cc);
+            bb = SAFN.GetArgumentValue(bb);
 
             if (!to || !subject || !message)
                 return;
@@ -2303,13 +2321,13 @@ var SAFN = {
             var json = initJSON();
             json.kv.to = to;
             json.kv.subject = subject;
-            json.kv.message = to;
+            json.kv.message = message;
             json.kv.cc = cc;
             json.kv.bb = bb;
             var that = this;
             var data = JSON.stringify(json);
             $.ajax({
-                url: urlGl + "api/post/srv/serviceTmSendMail",
+                url: urlGl + "api/post/srv/serviceTmSendEmail",
                 type: "POST",
                 data: data,
                 contentType: "application/json",
@@ -2439,5 +2457,365 @@ var SAFN = {
 
         },
 
+    },
+    Process: {
+        addIfStatement: function (el, relatedId) {
+
+            ADDtrafter(el, relatedId);
+        }
+    },
+    InitConversion: function () {
+        $(document).on("change", ".function-statement-input-common-4-set", function (e) {
+            SAFN.Reconvert.SetStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-map", function (e) {
+            SAFN.Reconvert.MapStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-if", function (e) {
+            SAFN.Reconvert.IfStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-sendemail", function (e) {
+            SAFN.Reconvert.SendEmailStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-showerror", function (e) {
+            SAFN.Reconvert.ShowErrorStatement(this);
+        })
+    },
+    Reconvert: {
+        IfStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var oper = div.find(".fns-oper").val();
+            var val = div.find(".fns-val").val();
+            var body = div.find(".fns-body").val();
+
+            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + body + "}";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        SetStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val").val();
+
+            var fnline = "@.set(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        MapStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val").val();
+
+            var fnline = "@.map(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        ShowErrorStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+
+            var fnline = "@.showerror(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        SendEmailStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var to = div.find(".fns-to").val();
+            var subject = div.find(".fns-subject").val();
+            var message = div.find(".fns-message").val();
+            var cc = div.find(".fns-cc").val();
+            var bb = div.find(".fns-bb").val();
+
+
+            var fnline = "@.sendemail(" + to + "," + subject + "," + message + "," + cc + "," + bb + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        }
     }
+    ,
+    Convert: {
+        IfStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var oper = (argList[1]) ? argList[1] : '';
+            var val = (argList[2]) ? argList[2] : '';
+
+            var body = SAFN.GetFunctionBody(line);
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container")
+                    .css("background-color", "yellow")
+                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                    .css("padding", '5px 10px')
+                    .css("border-radius", "5px")
+                    .append($('<span>').append($('<b>').text('if ')))
+                    .append($('<input>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-if")
+                            .addClass("fns-key")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(key))
+                    .append($('<span>').text('  '))
+                    .append($('<select>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-if")
+                            .addClass("fns-oper")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
+                            .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
+                            .append($('<option>').val('>').text('Great').attr('selected', (oper === '>') ? true : false))
+                            .append($('<option>').val('>=').text('Great Equals').attr('selected', (oper === '>=') ? true : false))
+                            .append($('<option>').val('<').text('Less').attr('selected', (oper === '<') ? true : false))
+                            .append($('<option>').val('<=').text('Less Equals').attr('selected', (oper === '<=') ? true : false))
+                            .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
+                            .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
+                            )
+                    .append($('<span>').text('  '))
+                    .append($('<input>')
+                            .addClass("fns-val")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-if")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(val))
+//                    .append($('<span>').text(' {'))
+                    .append($('<br>'))
+                    .append($('<textarea>')
+                            .addClass("fns-body")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-if")
+                            .css("margin-top", "2px")
+                            .css("border-radius", "5px")
+                            .css("border", "none")
+                            .css("width", "100%")
+                            .text(body)
+                            .val(body))
+//                    .append($('<span>').text('}'))
+
+
+            return div;
+
+
+        },
+        SetStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var val = (argList[1]) ? argList[1] : '';
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container")
+                    .css("background-color", "#80bdffd2")
+                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                    .css("padding", '5px 10px')
+                    .css("border-radius", "5px")
+                    .append($('<span>').append($('<b>').text('set ')))
+                    .append($('<input>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-set")
+                            .addClass("fns-key")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(key))
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-val")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-set")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(val))
+
+
+
+            return div;
+
+
+        },
+        MapStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var val = (argList[1]) ? argList[1] : '';
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container")
+                    .css("background-color", "#80bdffd2")
+                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                    .css("padding", '5px 10px')
+                    .css("border-radius", "5px")
+                    .append($('<span>').append($('<b>').text('map ')))
+                    .append($('<input>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-map")
+                            .addClass("fns-key")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(key))
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-val")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-map")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(val))
+
+
+
+            return div;
+
+
+        },
+        ShowErrorStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var message = (argList[0]) ? argList[0] : '';
+
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container")
+                    .css("background-color", "red")
+                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                    .css("padding", '5px 10px')
+                    .css("border-radius", "5px")
+                    .append($('<span>').append($('<b>').css("font-color", "white").text('show error ')))
+                    .append($('<input>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-showerror")
+                            .addClass("fns-key")
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "300px")
+                            .val(message))
+
+
+
+
+            return div;
+
+
+        },
+        SendEmailStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var to = (argList[0]) ? argList[0] : '';
+            var subject = (argList[1]) ? argList[1] : '';
+            var message = (argList[2]) ? argList[2] : '';
+            var cc = (argList[3]) ? argList[3] : '';
+            var bb = (argList[4]) ? argList[4] : '';
+
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container")
+                    .css("background-color", "#80bdffd2")
+                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                    .css("padding", '5px 10px')
+                    .css("border-radius", "5px")
+                    .append($('<span>').append($('<b>').text('send email ')))
+                    .append($('<input>')
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-sendemail")
+                            .addClass("fns-to")
+                            .attr('placeholder', 'To')
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(to))
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-subject")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-sendemail")
+                            .attr('placeholder', 'Subject')
+                            .css("border-radius", "5px")
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(subject))
+
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-message")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-sendemail")
+                            .css("border-radius", "5px")
+                            .attr('placeholder', 'Message Body')
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(message))
+
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-cc")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-sendemail")
+                            .css("border-radius", "5px")
+                            .attr('placeholder', 'CC')
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(cc))
+
+                    .append($('<span>').text('  '))
+
+                    .append($('<input>')
+                            .addClass("fns-bb")
+                            .addClass("function-statement-input-common")
+                            .addClass("function-statement-input-common-4-sendemail")
+                            .css("border-radius", "5px")
+                            .attr('placeholder', 'BB')
+                            .css("height", "20px")
+                            .css("border", "none")
+                            .css("width", "100px")
+                            .val(bb))
+
+            return div;
+
+
+        },
+    },
+    FnStatements: {
+        'If': '@.if(,,){}',
+        'Set': '@.set(,)',
+        'Map': '@.map(,)',
+        'ShowError': '@.showerror()',
+        'SendEmail': '@.sendemail(,)',
+    },
+
 }

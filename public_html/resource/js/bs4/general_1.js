@@ -127,7 +127,7 @@ var request;
 var objectStore;
 function init() {
 
-     
+     SAFN.InitConversion();
 
 
     
