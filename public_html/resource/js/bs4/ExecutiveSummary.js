@@ -9,7 +9,9 @@ var lastSelectedGroupId = "";
 
 // 4__________________Provided Services as a Solution(s)--- PLUS Button to Click________________
 function loadDocEditor4BusinessCase(id) {
-    new FroalaEditor('textarea' + id
+    new FroalaEditor('textarea' + id,{
+        toolbarInline: true
+    }
 //            , {
 //                events: {
 //                    'contentChanged': function () {
@@ -168,7 +170,7 @@ function getCaseSectionDivElement(obj) {
 //                                    .css("display", "none")
                                     .attr("onclick", "saveSection(this)")
                                     .append('Save'))))
-            .append($('<div class="">')
+            .append($('<div class="bc-section-main-div-insection">')
                     .attr("id", "anar")
                     .append($('<textarea>')
                             .attr("id", "section_" + obj.id)
@@ -838,6 +840,7 @@ $(document).on("click", function () {
     new FroalaEditor(".exercusiveEditor", {
         enter: FroalaEditor.ENTER_P,
         height: 150,
+        toolbarInline: true
     })
 
 })

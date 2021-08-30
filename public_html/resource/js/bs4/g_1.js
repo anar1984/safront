@@ -237,9 +237,15 @@ $(function () {
 
             th.parents('.table-show-hide-row-div').hide("fast")          
     });
-    $(document).on("click", '#table-show-hide-button-id', function (e) {
+   
+    $(document).on("click", '#table-show-hide-button-id-a', function (e) {
        var th = $(this);
-            th.parent().find(".table-show-hide-row-div").toggle("fast")
+            th.parents(".component-container-dashed").find(".table-show-hide-row-div").toggle("fast")
+      
+    });
+    $(document).on("click", '#filter-show-hide-button-id-a', function (e) {
+       var th = $(this);
+            th.parents(".component-container-dashed").find(".filter-table-row-header-tr").toggle("fast")
       
     });
     

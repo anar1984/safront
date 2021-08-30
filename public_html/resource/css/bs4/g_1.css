@@ -6203,5 +6203,11 @@ td.selected{
 }
 
 .filter-table-row-header-tr{
-  /*   display: none; */
+     display: none; 
+}
+.bc-section-main-div-insection{
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 20px;
 }

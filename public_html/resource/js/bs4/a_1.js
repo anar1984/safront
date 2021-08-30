@@ -60,6 +60,39 @@ var bhistorylist = [];
 var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
+
+function setApiIpoBlock() {
+
+    var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
+    //    console.log(keys);
+    for (var k in keys) {
+
+        var from = keys[k];
+        var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
+        //        console.log(from, toKeys);
+        for (var m in toKeys) {
+            var to = toKeys[m];
+            try {
+                new LeaderLine(
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    //                                    color: 'rgb(41,146,210)',
+                    color: 'rgb(255,146,27)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left',
+                }
+                );
+
+            } catch (err) {
+                //                console.log(err);
+            }
+        }
+    }
+}
+
 function removeBacklogDescCommentType(el, descId) {
     $(el).closest('tr').find('td.text-holder').removeClass("process-desc-as-comment");
 
@@ -248,26 +281,35 @@ function selectTo(cell) {
                 var val = dt.find(".component-input-class").val();
                 var val2 = dt.find(".component-input-class").text();
 
+
                 sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
 
-                kl = rowCells.length;
-                console.log(kl);
+                kl = rowCells.length;    
+
+                if(parseFloat(val)===NaN||parseFloat(val2)===NaN){
+
+                }else{
+                    sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
+                }
+              
+    
+                kl ++;
             }
 
         }
     }
-    sumAvarMaxMinCount(sumTbl, cellEnd);
+    sumAvarMaxMinCount(sumTbl, kl);
 }
 
 function sumAvarMaxMinCount(sum, count, min, max) {
 
     $(".absolute-div-row-table").remove();
     var div = $("<div>").addClass("absolute-div-row-table")
-            .append(" sum:" + sum)
-            .append(" avarge:" + (sum / count))
-            .append(" minimum:" + (min))
-            .append(" maximum:" + (max))
-            .append(" count:" + (count));
+        .append(" sum:" + sum)
+        .append((sum==NaN)?"":" avarge:" + (sum / count))
+        .append(" minimum:" + (min))
+        .append(" maximum:" + (max))
+        .append(" count:" + (count));
 
     $("body").append(div);
 
@@ -618,6 +660,7 @@ $(document).mouseup(function () {
 
 function tableShowHideRowSetItem(tableId) {
 
+
     var chk = $("[data-tableid=" + tableId + "]").find(".table-row-show-hide-ul li label input");
     var tableVal = ""
     for (let index = 0; index < chk.length; index++) {
@@ -625,12 +668,15 @@ function tableShowHideRowSetItem(tableId) {
         if ($(chk[index]).prop("checked")) {
             tableVal = tableVal + $(chk[index]).attr("data-check") + ','
         }
-
-    }
-
-    localStorage.setItem("simp-" + tableId, tableVal)
-
+       
+   }
+      
+  localStorage.setItem("simp-"+tableId,tableVal);
+    
 }
+
+
+
 function tableShowHideRowGetItem(tableId) {
     try {
 
@@ -5295,10 +5341,8 @@ function clearTableBodyAfterApiCall(el, apiId) {
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
-    var inpId;
+    var inpId ;
     try {
-
-
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
@@ -5733,33 +5777,37 @@ function initHtmlFroalaEditorByClass(className) {
 
 function initHtmlFroalaEditor(elementId, val) {
     var editor = new FroalaEditor('#' + elementId, {
-        tableStyles: {
-            class1: 'Dashed',
-            class2: 'None',
+
+            tableStyles: {
+                class1: 'Dashed',
+                class2: 'None',
+            },
+            
+            quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
+            toolbarInline: true,
+            charCounterCount: false,
+            fileUpload: false,
+            pastePlain: false,
+            toolbarButtons: {
+                'moreText': {
+                    'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+                },
+                'moreParagraph': {
+                    'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+                },
+                'moreRich': {
+                    'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
+                },
+                'moreMisc': {
+                    'buttons': ['undo', 'redo', 'selectAll', 'html', ],
+                    'align': 'right',
+                    'buttonsVisible': 2
+                }
+            }
         },
 
-        quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
-        toolbarInline: true,
-        charCounterCount: false,
-        fileUpload: false,
-        pastePlain: false,
-        toolbarButtons: {
-            'moreText': {
-                'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
-            },
-            'moreParagraph': {
-                'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
-            },
-            'moreRich': {
-                'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
-            },
-            'moreMisc': {
-                'buttons': ['undo', 'redo', 'selectAll', 'html', ],
-                'align': 'right',
-                'buttonsVisible': 2
-            }
-        }
-    },
+       
+
             function () {
 
                 editor.html.set(val);
@@ -10191,7 +10239,44 @@ function showGeneralStatisticsDetailsModalByAssignee(el) {
 $(document).on("dblclick", ".task-for-backlog-event", function (e) {
     showGeneralStatisticsDetailsModalByTask4SC(this);
 })
+$(document).on("dblclick", ".task-for-backlog-event-prm", function (e) {
+    showGeneralStatisticsDetailsModalByTaskforProjectManage(this);
+})
 
+function showGeneralStatisticsDetailsModalByTaskforProjectManage(el) {
+    $('#generalStatisticsDetailsModal-list').html('');
+    $('#generalStatisticsDetailsModal-details').html('');
+
+    $('#storyCardViewManualModal').modal('hide');
+    $('#generalStatisticsDetailsModal').modal("show");
+    var backlogId = $(el).attr("pid");
+    var actionType = $(el).attr('action');
+    var statusType = $(el).attr('status')
+
+
+
+    if (!backlogId || !actionType || !statusType) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkBacklogId = backlogId;
+    json.kv.actionType = actionType;
+    json.kv.statusType = statusType;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogListByStatsGroupByTask4SC",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            showGeneralStatisticsDetailsModalDetailsByTask4SC(res);
+        }
+    });
+}
 function showGeneralStatisticsDetailsModalByTask4SC(el) {
     $('#generalStatisticsDetailsModal-list').html('');
     $('#generalStatisticsDetailsModal-details').html('');
@@ -11942,8 +12027,8 @@ $(document).on('click', '.loadProjectManagement', function (evt) {
         $('.prmanage-mgmt-filter-select').selectpicker();
         new Sprint().load();
         new Label().load();
-        getProjectUsers();
-        getProjectManagementList();
+        getProjectUsers4ProjectManagment()
+      
 
         if (global_var.current_issue_is_hide !== '1' &&
                 (global_var.current_issue_id)) {
@@ -12144,7 +12229,7 @@ function setStoryCardOwner() {
     $('#story-card-owner').find('span').html(' ' + userName1);
 }
 
-/*  Project managment By R.G >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
 function setProjectManagementFilterAssignees() {
 
     var json = initJSON();
@@ -12188,7 +12273,11 @@ function setProjectManagementFilterAssignees() {
 }
 function callProjectManagementFilterMulti(el) {
     bug_filter.page_no = 1;
-    getProjectManagementList();
+  
+  
+    global_var.current_project_id = $(el).val();
+    Utility.addParamToUrl('current_project_id', $(el).val());
+    getProjectUsers4ProjectManagment();
 }
 function setProjectManagementFilterProject() {
     var select = $('#prMn_filter_project_id');
@@ -12198,17 +12287,99 @@ function setProjectManagementFilterProject() {
             .text("All Projects"))
     for (var id in keys) {
         var pid = keys[id];
+        
         select.append($("<option>")
                 .val(pid)
                 .text(SACore.Project[pid]))
     }
+    
+}
+function getStatisticList(idlist) {
+   
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBacklogId = idlist;
+   
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {  
+            
+            var dt  = res.tbl;
+            console.log(dt);
+          
+          for (let index = 0; index < dt.length; index++) {
+               var ifle = dt[index].tn;
+               console.log(ifle);
+               if(ifle=="overall"){
+                   
+                   var id = dt[index].r[0].fkBacklogId;
+                   var le = dt[index].r[0];
+                   $("#overall"+id).html($("<div>")
+                                             .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Total</b>('+le.overall+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                                             )
+               }
+               if(ifle=="changes"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $("#changes"+id).html($("<div>")
+                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Total</b>('+le.
+                overall+')</span><br>')
+                .append('<span class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+               if(ifle=="bug"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $("#bug"+id).html($("<div>")
+                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Total</b>('+le.overall+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+               if(ifle=="new"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $("#new"+id).html($("<div>")
+                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Total</b>('+le.overall+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+               
+          }
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
 }
 function getProjectManagementList() {
     var priD = $("#prMn_filter_project_id").val();
+    setPrmFilterSprintValues();
+    setPrmFilterLabelValues();
+    var priD =$("#prMn_filter_project_id").val();
     var val = $("#bug_filter_limit").val();
     var nmSearch = $("#promgment_filter_search_text").val();
-
-
+    var stLimit = (parseFloat(val)*bug_filter.page_no)-parseFloat(val);
 
     var json = {
         kv: {}
@@ -12225,6 +12396,13 @@ function getProjectManagementList() {
 
     } else {
         json.kv.backlogName = "%%" + nmSearch + "%%";
+    json.kv.startLimit =stLimit;
+  
+    json.kv.endLimit = parseFloat(val)*bug_filter.page_no;
+    if(nmSearch===''){
+       
+    }else{
+        json.kv.backlogName = "%%"+nmSearch+"%%";
     }
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
@@ -12237,9 +12415,10 @@ function getProjectManagementList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {
-            getProjectManagmentListDetails(res);
-            /* toggleColumns(); */
+       
+        success: function (res) {         
+            getProjectManagmentListDetails(res,stLimit+1);
+         
             setPagination(res.tbl[0].r.length, val);
             // getGroupList();
 
@@ -12251,7 +12430,7 @@ function getProjectManagementList() {
 
 }
 
-function getProjectManagmentListDetails(res) {
+function getProjectManagmentListDetails(res,stLimit) {
     //    tbody to append
     var table = $('#bugListTable');
     var tbody = $('#bugListTable > tbody');
@@ -12268,8 +12447,14 @@ function getProjectManagmentListDetails(res) {
 
 
     var obj = res.tbl[0].r;
-    console.log(obj);
+    var idList = ""
     for (var i = 0; i < obj.length; i++) {
+         if((obj.length -1) == i){
+            idList = idList+obj[i].id
+         }else{
+            idList = idList+obj[i].id+","
+         }
+      
         var o = obj[i];
         var createdName = SAProjectUser.GetDetails(o.createdBy, "userName")
         var userName = SAProjectUser.GetDetails(o.fkOwnerId, "userName")
@@ -12285,8 +12470,8 @@ function getProjectManagmentListDetails(res) {
         sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
         sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
 
-        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
-        row += " " /* + rs + rsLabelFilter; */
+        var row = (stLimit+i);
+      /* + rs + rsLabelFilter; */
 
         var userImage = SAProjectUser.GetDetails(o.fkOwnerId, "userImage");
         var img = (userImage) ?
@@ -12303,28 +12488,42 @@ function getProjectManagmentListDetails(res) {
         var task_id = getTaskCode(o.id);
 
         var t = $('<tr>')
-                .attr("id", o.id)
-                .attr("projectId", o.fkProjectId)
-                .attr("stIdr", o.fkBacklogId)
-                .addClass('bug-tr')
-                .append($('<td>').attr("style", "min-width:50px;padding:5px;").append(row + '<input class="checkbox-issue-task" type="checkbox">'))
-                .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-task-status')
-                        .append($('<span>')
-                                .addClass('us-item-status-' + o.backlogNo)
-                                .append(o.backlogNo)))
-                .append($('<td>')
-                        .addClass('bug-list-column')
-                        .addClass('bug-list-column-task-name')
-                        .css("max-width", '400px')
-                        .append(backlogName, ' ')
-                        .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                 
+            .attr("id", o.id)
+            .attr("projectId", o.fkProjectId)
+            .attr("stIdr", o.fkBacklogId)
+            .addClass('bug-tr')
+            .append($('<td>').attr("style","min-width:50px;padding:5px;").append(row+'<input class="checkbox-issue-task" type="checkbox">'))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-status')
+                .append($('<span>')
+                .addClass('us-item-status-' + o.backlogNo)
+                .append(o.backlogNo)))
+            .append($('<td>')
+                .addClass('bug-list-column')
+                .addClass('bug-list-column-task-name')
+                .css("max-width", '400px')
+                .append(backlogName, ' ')
+                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                
+               
+            )
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-nature')
+                .append($("<div>").attr('id','overall'+o.id).append('No-task')))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-nature')
+                .append($("<div>").attr('id','bug'+o.id).append('No-task')))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-nature')
+                .append($("<div>").attr('id','changes'+o.id).append('No-task')))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-task-nature')
+                .append($("<div>").attr('id','new'+o.id).append('No-task')))
 
-
-                        )
-                .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-task-nature')
-                        .append($("<div>").append('total-task')))
+            .append($('<td>').addClass('bug-list-column')
+                .addClass('bug-list-column-story-card')
+                .append("<span class='get-data-group'>" + proJectName + "</span>") 
 
                 .append($('<td>')
                         .css('white-space', 'nowrap')
@@ -12386,14 +12585,21 @@ function getProjectManagmentListDetails(res) {
 
                         )
                 .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                        .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>")))
 
 
-        tbody.append(t);
+         tbody.append(t);
     }
+ 
 
     /*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
      sumEstBudget, sumSpentBudget); */
+ 
+    getStatisticList(idList);
+    
+/*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+        sumEstBudget, sumSpentBudget); */
+
 
     global_var.bug_task_sprint_assign_checked = '';
     global_var.bug_task_sprint_assign_name = '';
@@ -12440,7 +12646,40 @@ function getProjectManagementListDetailsHeader() {
 
     return th;
 }
+$(document).on("click",".prManag-task-filter-checkbox-label", function(){
+    if (global_var.current_modal === 'loadProjectManagement') {
+        getProjectUsers4ProjectManagment();
+    }
+ 
+})
+$(document).on("click",".us-filter-checkbox-sprint", function(){
+    if (global_var.current_modal === 'loadProjectManagement') {
+        getProjectUsers4ProjectManagment();
+    }
+ 
+})
+function setPrmFilterLabelValues() {
+    var st = ' ';
+    $('.prManag-task-filter-checkbox-label').each(function () {
+        if ($(this).is(":checked")) {
+            st += "'" + $(this).val() + "',";
+        }
+    })
+    st = st.substring(0, st.length - 1);
+    bug_filter.label_id = st;
+}
 
+function setPrmFilterSprintValues() {
+    var st = ' ';
+    $('.us-filter-checkbox-sprint').each(function () {
+        if ($(this).is(":checked")) {
+            st += "'" + $(this).val() + "',";
+        }
+    })
+    st = st.substring(0, st.length - 1);
+    bug_filter.sprint_id = st;
+}
+ /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 function setStoryCardCreatedBy() {
     var createdBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "createdBy");
@@ -13675,6 +13914,36 @@ function getProjectUsers() {
         }
     });
 }
+function getProjectUsers4ProjectManagment() {
+
+
+    var json = initJSON();
+
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                SAProjectUser.LoadProjectUser(res);
+                loadUsersAsAssignee();
+                loadUsersAsOwner();
+            } catch (err) {}
+            queue4ProLoad.getProjectUsers = true;
+            executeCoreOfManualProSelection();
+            getProjectManagementList();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 
 function getUsers() {
 
@@ -14374,13 +14643,43 @@ function sprintAddAssignProjectManagement(elm) {
             async: true,
             success: function (res) {
                 new Sprint().load4Task()
+                new Label().load()
+            },
+            error: function () {
+                Toaster.showError(('Something went wrong!!!'));
             }
         });
     }
 
 
 }
-;
+
+ 
+
+
+function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprintId, checked) {
+    var json = initJSON();
+    json.kv['fkSprintId'] = sprintId;
+    json.kv['fkProjectId'] = projectId;
+    json.kv['fkBacklogId'] = backlogId;
+    json.kv.assign = checked;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAssignSprint",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            new Sprint().load();
+        }
+    });
+}
+
+
+
 
 $(document).on('click', '.story-card-sprint-assign', function (evt) {
     global_var.story_card_sprint_assign_checked = 1;
@@ -18735,34 +19034,4 @@ var SCSourceManagement = {
 }
 
 
-function setApiIpoBlock() {
 
-    var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
-    //    console.log(keys);
-    for (var k in keys) {
-
-        var from = keys[k];
-        var toKeys = SourcedActivityDiagram.CoreLines.SC2SC[from];
-        //        console.log(from, toKeys);
-        for (var m in toKeys) {
-            var to = toKeys[m];
-            try {
-                new LeaderLine(
-                        document.getElementById(from),
-                        document.getElementById(to), {
-                    //                                    color: 'rgb(41,146,210)',
-                    color: 'rgb(255,146,27)',
-                    dash: true,
-                    startPlug: 'square',
-                    endPlug: 'arrow',
-                    startSocket: 'right',
-                    endSocket: 'left',
-                }
-                );
-
-            } catch (err) {
-                //                console.log(err);
-            }
-        }
-    }
-}

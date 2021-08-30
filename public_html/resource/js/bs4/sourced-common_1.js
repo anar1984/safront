@@ -335,7 +335,6 @@ var ComponentDesign = {
                 var val = st.split(':')[1];
                 if (val) {
                     $('#gui_prop_in_backgroundcolor').val(val);
-//                    $('.change-color-component[data-bgcolorspan='+val+']').click();
                     $('#cb_gui_prop_in_backgroundcolor').prop('checked', true);
                     $('#gui_prop_in_backgroundcolor').removeAttr('disabled');
                 } else {
@@ -9484,7 +9483,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     genIPOInputList: function () {
         $('#tblIPOList > tbody').html('');
         $('#tblInputDescriptionList > tbody').html('');
-        $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;")
+        $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;");
 
 
         var backlogId = global_var.current_backlog_id;
@@ -21931,7 +21930,7 @@ Label.prototype = {
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
             tr.append($('<td class="lbl-list-td"></td>')
-                    .html($('<input type="checkbox" class="us-filter-checkbox-label bug-task-filter-checkbox-label" value="' + obj[n].id + '">')
+                    .html($('<input type="checkbox" class="us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                             .attr('taskIds', obj[n].labelTaskIds)
                             .prop("checked", isFiltered))
                     .attr('id', obj[n].id));
@@ -21941,7 +21940,7 @@ Label.prototype = {
                     .attr("class", "lbl-item")
                     .attr("style", "color:" + obj[n].color));
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="  story-card-label-assign bug-task-label-assign btn btn-primary">')
+                    .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
                             .css("padding", "0px 6px")
                             .attr("sname", replaceTags(obj[n].name))
                             .css("display", "none")
