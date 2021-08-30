@@ -8268,8 +8268,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
                 $('[data-toggle="tooltip"]').tooltip({html: true});
-
-                new UserStory().refreshCurrentBacklog();
+                this.updateInputOnChangeAndRefresh();
 
 
             },

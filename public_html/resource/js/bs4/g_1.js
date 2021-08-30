@@ -237,6 +237,20 @@ $(function () {
 
             th.parents('.table-show-hide-row-div').hide("fast")          
     });
+    $(document).on("click", '#group-data-table-btm', function (e) {
+        var tableId = $(this).attr('tbid');
+         
+          if($(this).hasClass('active')){
+              
+            $('#'+tableId).find(".groupTrElement").remove();
+            $(this).removeClass('active');
+           
+          }else{
+            $('.table-gorup-by-th').removeClass("active");
+            $(this).addClass('active');
+            getGroupList4Table(this)
+          }
+    });
    
     $(document).on("click", '#table-show-hide-button-id-a', function (e) {
        var th = $(this);
@@ -364,6 +378,40 @@ $(function () {
 
               tableShowHideRowGetItem(tbId);
          //   $(".filter-table-row-select").selectpicker()
+    });
+    $(document).on('click', '.all-check-button-allTable', function (event) {
+        
+       var  id = $(this).parent().attr("id");
+
+       if($(this).prop("checked")){
+        
+           $(this).parents("table").find("tbody tr").find("#comp_id_"+id).prop("checked",true);
+           $(this).parents("table").find("tbody tr").find("#comp_id_"+id).change();
+       }else{
+           $(this).parents("table").find("tbody tr").find("#comp_id_"+id).prop("checked",false);
+           $(this).parents("table").find("tbody tr").find("#comp_id_"+id).change();
+       }
+         
+    });
+    $(document).on('click', '.component-input-class[type="checkbox"]', function (event) {
+        
+       var  id = $(this).attr("pdid");
+       var ls  = $(this).parents("tbody").find("tr #comp_id_"+id);
+       var dt = 0
+           for (let i = 0; i < ls.length; i++) {
+                
+            if($(ls[i]).prop("checked")){
+                dt++
+            }              
+               
+           }
+          
+           if(ls.length > dt){
+               $(this).parents("table").find(".all-check-button-allTable").prop("checked",false)
+           }else if(ls.length === dt){
+            $(this).parents("table").find(".all-check-button-allTable").prop("checked",true)
+           }
+         
     });
    
 $(document).on("change", '.prmanage-filter', function (e) {

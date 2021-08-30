@@ -180,7 +180,7 @@ function getGroupList() {
         if (item === 'bug-list-column') {
 
         } else {
-
+         
             sortTable(sv, item);
         }
     })

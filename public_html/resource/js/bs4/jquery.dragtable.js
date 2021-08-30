@@ -47,12 +47,7 @@
         data: this.originalTable.sortOrder
       });
     },
-    /*
-     * persistObj looks like
-     * {'id1':'2','id3':'3','id2':'1'}
-     * table looks like
-     * |   id2  |   id1   |   id3   |
-     */
+ 
     _restoreState: function(persistObj) {
       for (var n in persistObj) {
         this.originalTable.startIndex = $('#' + n).closest('th').prevAll().length + 1;

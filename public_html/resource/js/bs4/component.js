@@ -32,7 +32,13 @@ function ComponentInfo() {
     this.sequence = [];
     this.rowNo = "";
 }
-
+var masTab = {
+    "dependingID":{},
+    
+    addDeend: function (dependentBacklogId,inpUtid) {
+        this.dependingID[dependentBacklogId] = inpUtid;
+    }
+}
 var Component = {
     FillComponentInfo: function (comp, inputObj) {
         comp.fkInputTableId = replaceTags(inputObj.fkRelatedCompId);
@@ -801,7 +807,7 @@ var Component = {
 
             col = this.SetColumnsOrder(col);
 
-            var thzad = $("<li>");
+         
             var tr = $("<ul>").addClass('table-row-show-hide-ul')/* .append(thzad.append("")) */;
             for (var i = 0; i < col.length; i++) {
 
@@ -846,6 +852,11 @@ var Component = {
                 .append(showComp, ' ')
                 .append(showColumn, ' ')
                 .append(showColumnName, ' ')
+                .append($("<div>")
+                           .addClass("editTools btn-group")
+                           .append('<span onclick="" id="group-data-table-btm"  class="btn btn-sm btn-light table-gorup-by-th" tbid='+comp.id+' data-order='+inputId+'><i class="fas fa-layer-group"></i></span>')
+                           )
+               
               }
            
                 //                    .append(showInTree, ' ')
@@ -854,6 +865,7 @@ var Component = {
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
                     th.empty().hide();
+                   
                 }
 
                 //add attribute to th tag
@@ -864,6 +876,7 @@ var Component = {
                         var key = Object.keys(kv)[0];
                         var val = kv[key];
                         th.attr(key, val);
+                      
                     }
                 } catch (err) {}
 
@@ -880,8 +893,8 @@ var Component = {
                         }
                     }
                 } catch (err) {}
-
-
+        
+            $("#"+tableId).parents('.component-container-dashed').find('.groupBySelectBox4Table').append("<option>"+th+"</option>")
                 tr.append(th);
             }
             thead.append(tr);
@@ -904,19 +917,36 @@ var Component = {
             //            var pairShowInTree = this.MatchShowComponentAndId(col, showInTree);
 
             col = this.SetColumnsOrder(col);
-
+            var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
+            
             var thzad = $("<th>");
             var tr = $("<tr>").append(thzad.append(""));
-            var trFilter = $("<tr>").addClass("filter-table-row-header-tr").append($("<th>"))
+            var trFilter = $("<tr>").addClass("filter-table-row-header-tr redirectClass").addClass("hide-filt-drag").append($("<th>"))
             for (var i = 0; i < col.length; i++) {
                 
                 var inputId = col[i].trim();
+                var type = SAInput.getInputDetails(inputId, "componentType");
+             
                 if (inputId.length === 0)
                     continue;
 
 
                 var inputName = SAInput.GetInputName(inputId);
                 
+                if(type==="icbox"||type==="cbox"){
+                    var a =  $('<label href="#">')
+                    .addClass('component-class')
+                    .attr('id', inputId)
+                    .attr('pid', inputId)
+                    .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+
+                    .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                        "")
+                    .append("<input type='checkbox' class='all-check-button-allTable'>")
+                }else{
+
                 var a = (pairShowColumnName[inputId].trim() === '1') ?
                     "" :
                     $('<label href="#">')
@@ -930,7 +960,8 @@ var Component = {
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                         "")
                     .append(replaceTags(inputName))
-
+                }
+                    
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumnName = pairShowColumnName[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
@@ -978,13 +1009,46 @@ var Component = {
                     .append(showComp, ' ')
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
+                    .append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
                 //                    .append(showInTree, ' ')
-                var thFilt = $("<th>").append((a=="")?"":$("<select>").addClass("form-control filter-table-row-select")
-                                                        .attr("id","filter-table-row-"+inputId)
-                                                        .attr("title",inputName)
-                                                        .attr("data-live-search","true")
-                                                        .attr("data-actions-box","true")
-                                                        .attr('filter-id',inputId))
+                var depId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
+                var newelSelect = $("<select>").addClass("form-control filter-table-row-select")
+                .attr("id","filter-table-row-"+inputId)
+                .attr("placeholder",inputName)
+                .attr("onchange","triggerAPI(this,'"+tabDepId+"')")
+                .attr("data-live-search","true")
+                .attr("sa-global-trigger",'1')
+                /* .attr("multiple","multiple") */
+                .attr("data-actions-box","true")
+                .attr('filter-id',inputId)
+                var newelInput = $("<input>").addClass("form-control filter-table-row-select")
+                .attr("id","filter-table-row-"+inputId)
+                .attr("placeholder",inputName)
+                .attr("data-live-search","true")
+                .attr("onchange","triggerAPI(this,'"+tabDepId+"')")
+                .attr("data-actions-box","true")
+                .attr("sa-global-trigger",'1')
+                .attr('filter-id',inputId)
+              
+                if(type==="lbl"||type==="hlink"){
+                    if(depId){
+                  
+                        var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":addAttrToElementSingileByR(newelSelect, SAInput.Inputs[inputId]))  
+                        
+                    
+                }else{
+                    var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":addAttrToElementSingileByR(newelInput, SAInput.Inputs[inputId])) 
+                }
+              
+                }else{
+                    var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":$("<span>").addClass(" filter-table-row-select")
+                    .attr("id","filter-table-row-"+inputId)
+                    .attr("placeholder",inputName)
+                    .attr('filter-id',inputId)) 
+                }
+               
+                
+                
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
@@ -1084,7 +1148,7 @@ var Component = {
             return res;
         },
         GenInputTableBodyHtml: function (tableId, rowCount, backlogId, startLimit) {
-
+      
             var sLimit = (startLimit) ? startLimit : '0';
             var tbody = $('<tbody>');
             var col = SAInput.Tables[tableId].fkInputId.split(",");
@@ -1101,6 +1165,7 @@ var Component = {
 
             var idx = 0;
             for (var j = 1; j <= rowCount; j++) {
+                
                 var tr = $("<tr>")
                     .addClass('redirectClass')
                     .attr("bid", backlogId)
@@ -1114,13 +1179,15 @@ var Component = {
 
                     idx++;
                     var val = this.GetTableCellValue(tableId, inputId, j - 1);
-
+                 
 
 
                     if (pair[inputId].trim() === '1') {
                         var comp = new ComponentInfo();
                         Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+                
                         comp.secondContent = val;
+                      
                         comp.isFromTableNew = true;
                         comp.isFromTable = true;
                         comp.tableRowId = "1";
@@ -1130,8 +1197,9 @@ var Component = {
                         comp.showProperties = false;
                         comp.rowNo = j;
                         val = Component.GetComponentHtmlNew(comp);
+                      
                     }
-
+                       
 
 
 
@@ -1147,14 +1215,18 @@ var Component = {
                         .val(val)
                         .append(val);
 
+                        
+                    
                     //manage input relation with API 
                     //add dependency for API Call classes and attributes
                     //as sa_data_table_col_rel_{apiId}_{inputId}
 
                     var dependentBacklogId = SAInput.getInputDetails(inputId, "fkDependentBacklogId");
                     var dependentInputId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
-
-
+                   
+                    masTab.addDeend(dependentBacklogId,inputId);
+                   
+                     
                     if (dependentBacklogId && dependentBacklogId.length > 0) {
                         loadBacklogInputsByIdIfNotExist(dependentBacklogId)
                         var inputSelectedField4Rel = SAInput.getInputDetails(dependentInputId, 'inputName');
@@ -1181,6 +1253,8 @@ var Component = {
                 // tbody.append(this.TableEmptyMessage(tableId));
                 //tbody.html($("<tr>").append($("<td>").append(this.TableEmptyMessage(tableId))));
             }
+          
+            loadTableFIlterInside();
             return tbody;
         }
     },
@@ -1270,6 +1344,7 @@ var Component = {
                                  )
                 
                                   .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
+                                
                                   )
                          .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
 

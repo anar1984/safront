@@ -2482,6 +2482,26 @@ label h6{
     text-align: right;
     background-color: lightyellow;
 }
+.custom-select-table-for{
+    border: none;
+  
+}
+/* context menu */
+.context-menu {  display: none;  position: absolute;  z-index: 9999;  padding: 12px 0;  width: 200px;  background-color: #fff;  border: solid 1px #dfdfdf;  box-shadow: 1px 1px 2px #cfcfcf;  }
+.context-menu--active {  display: block;  }
+
+.context-menu__items { list-style: none;  margin: 0;  padding: 0;  }
+.context-menu__item { display: block;  margin-bottom: 4px;  }
+.context-menu__item:last-child {  margin-bottom: 0;  }
+.context-menu__link {  display: block;  padding: 4px 12px;  color: #0066aa;  text-decoration: none;  }
+.context-menu__link:hover {  color: #fff;  background-color: #0066aa;  }
+.context-menu__items ul {  position: absolute;  white-space: nowrap;  z-index: 1;  left: -99999em;}
+.context-menu__items > li:hover > ul {  left: auto;  padding-top: 5px  ;  min-width: 100%;  }
+.context-menu__items > li li ul {  border-left:1px solid #fff;}
+.context-menu__items > li li:hover > ul {  left: 100%;  top: -1px;  }
+.context-menu__item ul { background-color: #ffffff; padding: 7px 11px;  list-style-type: none;  text-decoration: none; margin-left: 40px; }
+.page-media .context-menu__items ul li { display: block; }
+/************** For Context menu ***********/
 /* live proto inputs */
 
 .customInputIpo {
@@ -6210,4 +6230,14 @@ td.selected{
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 20px;
+}
+.table-row-show-hide-ul .editTools{
+    position: absolute;
+    right: 10px;
+}
+.table-row-show-hide-ul .editTools .btn {
+    height: 20px;
+    width: 20px;
+    font-size: 10px;
+    padding: 2px;
 }

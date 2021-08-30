@@ -165,6 +165,132 @@ function MapApiCallAsyncType(arg) {
 
     return arg;
 }
+(function($, window){
+	var cols, dragSrcEl = null, dragSrcEnter = null, dragableColumns, _this;
+
+	function insertAfter(elem, refElem) {
+		return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+	}
+
+	function isIE () {
+		var nav = navigator.userAgent.toLowerCase();
+		return (nav.indexOf('msie') !== -1) ? parseInt(nav.split('msie')[1]) : false;
+	}
+
+	dragableColumns = (function(){
+		var $table;
+		function dragColumns (table, options) {
+			_this = this;
+			$table = table;
+			_this.options = $.extend({}, _this.options, options);
+			if (_this.options.drag) {
+				if (isIE() === 9) {
+					$table.find('thead tr th').each(function(){
+						if ($(this).find('.drag-ie').length === 0) {
+							$(this).html($('<a>').html($(this).html()).attr('href', '#').addClass('drag-ie'));
+						}
+					});
+				}
+				cols = $table.find('thead tr th');
+
+				jQuery.event.props.push('dataTransfer');
+				[].forEach.call(cols, function(col){
+					col.setAttribute('draggable', true);
+
+					$(col).on('dragstart', _this.handleDragStart);
+					$(col).on('dragenter', _this.handleDragEnter);
+					$(col).on('dragover', _this.handleDragOver);
+					$(col).on('dragleave', _this.handleDragLeave);
+					$(col).on('drop', _this.handleDrop);
+					$(col).on('dragend', _this.handleDragEnd);
+				});
+			}
+		}
+
+		dragColumns.prototype = {
+			options: {
+				drag: true,
+				dragClass: 'drag',
+				overClass: 'over',
+				movedContainerSelector: '.dnd-moved'
+			},
+			handleDragStart: function(e) {
+				$(this).addClass(_this.options.dragClass);
+				dragSrcEl = this;
+				e.dataTransfer.effectAllowed = 'copy';
+				e.dataTransfer.setData('text/html', this.id);
+			},
+			handleDragOver: function (e) {
+				if (e.preventDefault) {
+					e.preventDefault();
+				}
+				e.dataTransfer.dropEffect = 'copy';
+				return false;
+			},
+			handleDragEnter: function (e) {
+				dragSrcEnter = this;
+				[].forEach.call(cols, function (col) {
+					$(col).removeClass(_this.options.overClass);
+				});
+				$(this).addClass(_this.options.overClass);
+				return false;
+			},
+			handleDragLeave: function (e) {
+				if (dragSrcEnter !== e) {
+					//this.classList.remove(_this.options.overClass);
+				}
+			},
+			handleDrop: function (e) {
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				}
+				if (dragSrcEl !== e) {
+					_this.moveColumns($(dragSrcEl).index(), $(this).index());
+				}
+				return false;
+			},
+			handleDragEnd: function (e) {
+				var colsPositions = {};
+				[].forEach.call(cols, function (col) {
+					$(col).removeClass(_this.options.overClass);
+					var name = $(col).attr('data-name');
+					var index = $(col).index();
+					if (name) {
+                        			colsPositions[name] = index;
+					}
+				});
+				if (typeof _this.options.onDragEnd === 'function' && _this.options.onDragEnd(colsPositions)) {
+					$(dragSrcEl).removeClass(_this.options.dragClass);
+				}
+				return false;
+			},
+			moveColumns: function (fromIndex, toIndex) {
+				var rows = $table.find(_this.options.movedContainerSelector);
+				for (var i = 0; i < rows.length; i++) {
+					if (toIndex > fromIndex) {
+						insertAfter(rows[i].children[fromIndex], rows[i].children[toIndex]);
+					} else if (toIndex < $table.find('thead tr th').length - 1) {
+						rows[i].insertBefore(rows[i].children[fromIndex], rows[i].children[toIndex]);
+					}
+				}
+			}
+		};
+
+		return dragColumns;
+
+	})();
+
+	return $.fn.extend({
+		dragableColumns: function(){
+			var option = (arguments[0]);
+			return this.each(function() {
+				var $table = $(this);
+				new dragableColumns($table, option);
+			});
+		}
+	});
+
+})(window.jQuery, window);
 
 
 function getTop(divObj, parentDivId) {
@@ -237,17 +363,309 @@ function bindScrollZadToCanvas() {
 
 
 //////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+function getGroupList4Table(elm) {
+   
+   try { 
+         
+     var sv = $(elm).attr("data-order");
+     var tableId = $(elm).attr('tbid');
+     $('#'+tableId).find(".groupTrElement").remove();
+     var td = $("#comp_id_"+tableId+" tbody tr").find("td[pdid="+sv+"]")
+     
+       console.log(td);
+     $.each(td, function (index, item) {
+               
+            sortableTable(tableId,sv, item);
+         
+     })
+     } catch (error) {
+        console.log(error)
+    }
+    
+ }  
+function sortableTable(tableId,sv, cls) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("comp_id_"+tableId);
+   
+    switching = true;
+   
+    while (switching) {
+      
+        switching = false;
+        rows = $(table).find("tbody tr");
+           console.log(rows.length);
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+          
+           
+            x = rows[i].querySelector("td[pdid='"+sv+"']");
+            y = rows[i + 1].querySelector("td[pdid='"+sv+"']");
+           
+            if (x.innerText.toLowerCase() > y.innerText.toLowerCase()) {
+     
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
+    }
+
+    var trList = $(table).find("tbody").find("tr");
+
+    var fTr
+    for (let index = 0; index < trList.length; index++) {
+        $(trList[index]).find("td:first-child").html(index + 1)
+        var tbl = "id-row" + cl
+        fTr = $(trList[0]);
+        if (index === 0) {
+            var tx = fTr.find('[pdid='+sv+']').find(".component-container-dashed").html();
+
+            if (tx.length < 1) {
+                tx = "undefined"
+            }
+
+            fTr.before($("<tr>")
+                .addClass("groupTrElement")
+                .append($("<td>")
+                    .addClass("groupTdElement")
+                    .append($("<div>")
+                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                        .append(tx)
+                        .addClass("groupTableDivInside"))))
+        }
+
+        var htm = $(trList[index]).find('[pdid='+sv+']').find(".component-container-dashed").html();
+        var txt2 = $(trList[index]).find('[pdid='+sv+']').find(".component-container-dashed").text();
+        var htm1 = $(trList[index + 1]).find('[pdid='+sv+']').find(".component-container-dashed").html();
+        var txt3 = $(trList[index + 1]).find('[pdid='+sv+']').find(".component-container-dashed").text();
+
+
+        if (txt2 === txt3) {
+            $(trList[index]).attr("data-aid", tbl);
+
+        } else {
+            $(trList[index]).attr("data-aid", tbl);
+            cl++
+            tbl = "id-row" + cl;
+            if (txt3 ==='') {
+                htm1 = "undefined"
+            }
+            if(index === trList.length){
+                
+                $(trList[index]).attr("data-aid", tbl);
+            }
+            $(trList[index]).after($("<tr>")
+                .addClass("groupTrElement")
+                .append($("<td>")
+                    .addClass("groupTdElement")
+
+                    .append($("<div>")
+                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                        .append(htm1)
+                        .addClass("groupTableDivInside"))));
+
+        }
+        
+
+
+    }
+
+
+
+}
+    /*********************************************** Context Menu Function Only ********************************/
+    function clickInsideElementOp( e, className ) {
+      var el = e.srcElement || e.target;
+      if ( el.classList.contains(className) ) {
+        return el;
+      } else {
+        while ( el = el.parentNode ) {
+          if ( el.classList && el.classList.contains(className) ) {
+            return el;
+          }
+        }
+      }
+      return false;
+    }
+  
+    function getPositionOp(e) {
+      var posx = 0, posy = 0;
+      if (!e) var e = window.event;
+      if (e.pageX || e.pageY) {
+        posx = e.pageX;
+        posy = e.pageY;
+      } else if (e.clientX || e.clientY) {
+        posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+      }
+      return {
+        x: posx,
+        y: posy
+      }
+    }
+     function addAttrToElementSingileByR(el, comp) {
+        try {
+            var cl = cr_input_comp_attribute[comp.id];
+            for (var i = 0; i < cl.length; i++) {
+                var kv = cl[i];
+                var key = Object.keys(kv)[0];
+                var val = kv[key];
+                el.attr(key, val);
+            }
+            return el;
+        } catch (err) {}
+    }
+    // Your Menu Class Name
+    var taskItemClassName = "component-table-input-class";
+    var contextMenuClassName = "context-menu",contextMenuItemClassName = "context-menu__item",contextMenuLinkClassName = "context-menu__link", contextMenuActive = "context-menu--active";
+    var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"), menuItems = $(menu).find(".context-menu__item");
+    var menuState = 0, menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
+  
+    function initMenuFunctionOp() {
+      contextListenerOp();
+      clickListenerOp();
+      keyupListenerOp();
+      resizeListenerOp();
+
+    }
+  
+    /**
+     * Listens for contextmenu events.
+     */
+    function contextListenerOp() {
+      document.addEventListener( "contextmenu", function(e) {
+        taskItemInContext = clickInsideElementOp( e, taskItemClassName );
+  
+        if ( taskItemInContext ) {
+          e.preventDefault();
+          toggleMenuOnOp();
+          positionMenuOp(e);
+        } else {
+          taskItemInContext = null;
+          toggleMenuOffOp();
+        }
+      });
+    }
+  
+    /**
+     * Listens for click events.
+     */
+    function clickListenerOp() {
+      document.addEventListener( "click", function(e) {
+        var clickeElIsLink = clickInsideElementOp( e, contextMenuLinkClassName );
+  
+        if ( clickeElIsLink ) {
+          e.preventDefault();
+          menuItemListenerOp( clickeElIsLink );
+        } else {
+          var button = e.which || e.button;
+          if ( button === 1 ) {
+            toggleMenuOffOp();
+          }
+        }
+      });
+    }
+  
+    /**
+     * Listens for keyup events.
+     */
+    function keyupListenerOp() {
+      window.onkeyup = function(e) {
+        if ( e.keyCode === 27 ) {
+          toggleMenuOffOp();
+        }
+      }
+    }
+  
+    /**
+     * Window resize event listener
+     */
+    function resizeListenerOp() {
+      window.onresize = function(e) {
+        toggleMenuOffOp();
+      };
+    }
+  
+    /**
+     * Turns the custom context menu on.
+     */
+    function toggleMenuOnOp() {
+      if ( menuState !== 1 ) {
+        menuState = 1;
+        $(menu).addClass( contextMenuActive );
+      }
+    }
+  
+    /**
+     * Turns the custom context menu off.
+     */
+    function toggleMenuOffOp() {
+      if ( menuState !== 0 ) {
+        menuState = 0;
+        $(menu).removeClass( contextMenuActive );
+      }
+    }
+  
+    function positionMenuOp(e) {
+      clickCoords = getPositionOp(e);
+      clickCoordsX = clickCoords.x;
+      clickCoordsY = clickCoords.y;
+      menuWidth = $(menu).offsetWidth + 4;
+      menuHeight = $(menu).offsetHeight + 4;
+  
+      windowWidth = window.innerWidth;
+      windowHeight = window.innerHeight;
+  
+      if ( (windowWidth - clickCoordsX) < menuWidth ) {
+        $(menu).css("top",(windowWidth - menuWidth)-0 + "px");
+      } else {
+        $(menu).css("top", clickCoordsX-0 + "px");
+      }
+  
+      // menu.style.top = clickCoordsY + "px";
+  
+      if ( Math.abs(windowHeight - clickCoordsY) < menuHeight ) {
+        $(menu).css("top",(windowHeight - menuHeight)-0 + "px");
+      } else {
+        $(menu).css("top",clickCoordsY-0 + "px");
+      }
+    }
+  
+  
+    function menuItemListenerOp( link ) {
+      var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
+     
+      var moveToAlbumSelectedId = link.getAttribute("data-action");
+      if(moveToAlbumSelectedId == 'remove'){
+        
+      }else if(moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7){
+     
+      }
+      toggleMenuOffOp();
+    }
+    initMenuFunctionOp();
+  
+
+
+
 var isMouseDown = false;
 var startRowIndex = null;
 var startCellIndex = null;
-var sumTbl = 0;
+
 
 function selectTo(cell) {
-
+    var sumTbl = 0;
     var row = cell.parent();
     var cellIndex = cell.index();
     var rowIndex = row.index();
-
+    var est=0
+    var min =0;
+    var max =0;
     var rowStart, rowEnd, cellStart, cellEnd;
 
     if (rowIndex < startRowIndex) {
@@ -291,28 +709,34 @@ function selectTo(cell) {
                 }else{
                     sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
                 }
-              
+                if(max<val){
+                    max=val;
+                  }
+
+                  
+                if(min>val){
+                    min=val;
+                 }
     
                 kl ++;
             }
 
         }
     }
-    sumAvarMaxMinCount(sumTbl, kl);
+    sumAvarMaxMinCount(sumTbl, kl,min,max);
 }
 
 function sumAvarMaxMinCount(sum, count, min, max) {
 
-    $(".absolute-div-row-table").remove();
-    var div = $("<div>").addClass("absolute-div-row-table")
-        .append(" sum:" + sum)
-        .append((sum==NaN)?"":" avarge:" + (sum / count))
-        .append(" minimum:" + (min))
-        .append(" maximum:" + (max))
-        .append(" count:" + (count));
-
-    $("body").append(div);
-
+    $(".absolute-div-row-table").show();
+    var elm =$("#table-selected-row-details-info").css("background",'none')
+              var avar = (sum / count);
+            $(elm).find('.sum').html((sum)?("<b>sum:</b>" + sum):"sum").attr((sum)?"data-tst":("disabled"),"true").removeAttr((sum)?"disabled":(""))
+            $(elm).find('.avarage').html((sum)?" <b>avarage:</b>" + avar.toFixed(1):"avarage").attr((sum)?"data-tst":("disabled"),"true").removeAttr((sum)?"disabled":(""))
+            $(elm).find('.min').html((min)?" <b>min:</b>" + (min):"min").attr((min)?"data-tst":("disabled"),"true").removeAttr((min)?"disabled":(""))
+            $(elm).find('.max').html((max)?" <b>max:</b>" + (max):"max").attr((max)?"data-tst":("disabled"),"true").removeAttr((max)?"disabled":(""))
+            $(elm).find('.count').html((count)?" <b>count:</b>" + (count):"").attr((count)?"data-tst":("disabled"),"true").removeAttr((count)?"disabled":(""))
+            
 
 }
 
@@ -320,6 +744,7 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 
 
 $(document).on("mousedown", ".selectableTable td", function (e) {
+    $(".absolute-div-row-table").hide();
     isMouseDown = true;
     var cell = $(this);
 
@@ -344,25 +769,38 @@ $(document).on("mouseover", ".selectableTable td", function () {
 })
 
 $(document).on("click", ".selectableTable thead th", function () {
-    sumTbl = 0
+    sumTbl = 0;
+    var est =0
     $(".selectableTable").find(".selected").removeClass("selected");
     var ind = $(this).index();
     var tbl = $(this).parents(".selectableTable").find("tbody tr");
+    var min =0;
+    var max =0;
     for (let index = 0; index < tbl.length; index++) {
 
         $(tbl[index]).find("td").eq(ind).toggleClass("selected");
         var dt = $(tbl[index]).find("td").eq(ind);
-        var val = dt.find(".component-input-class").val();
-        var val2 = dt.find(".component-input-class").text();
-
-        sumTbl = sumTbl + parseFloat(val) + parseFloat(val2)
-
+        var val = parseFloat(dt.find(".component-input-class").val());
+        if(est===1){
+            min=val;
+          }
+          est++
+        if(val){
+            sumTbl = sumTbl + val 
+        }
+      
+         if(max<val){
+           max=val;
+         }
+         if(min>val){
+           min=val;
+         }
 
     }
 
+    var count  = $(this).parents(".selectableTable").find("td.selected").length
 
-
-
+    sumAvarMaxMinCount(sumTbl, count,min,max)
 
 })
 $(document).on("selectstart", ".selectableTable td", function () {
@@ -3170,6 +3608,61 @@ function copyJsCodeClassTo() {
     copyJSCodeClassTo_loadProjectList();
 }
 
+function loadTableFIlterInside() {
+
+       var se= masTab.dependingID;
+    
+    try {
+        
+        for (const [key, value] of Object.entries(se)) {
+       
+       
+           
+            var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
+            var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');  
+        if(key){
+            var dt1 =  be.callApi(key);
+            var dt = dt1._table.r;
+            if(dt){
+                $("#filter-table-row-"+value).html("");
+                for (let l = 0; l < dt.length; l++) {
+                    
+                    $("#filter-table-row-"+value).append("<option value="+dt[l].id+">"+dt[l][ilk]+"</option>");
+                }
+                
+            }
+            
+        }
+         
+         
+         
+    
+      
+    
+        }
+    } catch (error) {
+        
+    }
+
+  
+
+    $("#filter-table-row-21010301044607177560").selectpicker("refresh")
+    $('.table').dragtable({ 
+    persistState: function(table) { 
+      
+      if (!window.sessionStorage) return; 
+      var ss = window.sessionStorage; 
+      table.el.find('th').each(function(i) { 
+        if(this.id != '') {table.sortOrder[this.id]=i;} 
+      }); 
+      ss.setItem('tableorder',JSON.stringify(table.sortOrder)); 
+    }, 
+    maxMovingRows:1,
+    dragHandle:'.handle-drag',
+    restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')') 
+});
+
+}
 function copyJSCodeClassTo_loadProjectList() {
     var div = $('#copyJSCodeModal_projectlist');
     div.html('');
@@ -5456,7 +5949,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     }
 
     tableShowHideRowGetItem(inpId);
-    $(".filter-table-row-select").selectpicker();
+    $(".filter-table-row-select").selectpicker("refresh");
 }
 
 function callTableRelationAPIs(elem, tableId) {
