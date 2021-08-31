@@ -1,5 +1,5 @@
 $(function () {
-
+//ishimi gorudum.
      //pish pishname
     // $( ".bottombtn2" ).hover(function() {
     //     console.log('ok')
