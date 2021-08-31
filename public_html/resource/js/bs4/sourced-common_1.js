@@ -13783,7 +13783,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
-
+           
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
         $('#kanban_view_closed_count').html(0);
