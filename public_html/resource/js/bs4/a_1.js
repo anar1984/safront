@@ -12297,6 +12297,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new Label().load();
         hideToggleMain();
         commmonOnloadAction(this);
+        console.log('fgggggggggggggggggggg');
    
     });
 });
@@ -12900,9 +12901,10 @@ function getProjectManagementList() {
 
     json.kv.endLimit = (bug_filter.page_no * 2) + parseFloat(val);
     if (nmSearch === '') {
-
+        console.log('bsdr');
     } else {
         json.kv.backlogName = "%%" + nmSearch + "%%";
+    }
     json.kv.startLimit =stLimit;
   
     json.kv.endLimit = parseFloat(val)*bug_filter.page_no;
@@ -12915,6 +12917,8 @@ function getProjectManagementList() {
     json.kv.labelId = bug_filter.label_id;
     var that = this;
     var data = JSON.stringify(json);
+    
+   
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
         type: "POST",
@@ -12935,7 +12939,7 @@ function getProjectManagementList() {
         }
     });
 
-}
+
 }
 function getProjectManagmentListDetails(res,stLimit) {
     //    tbody to append
@@ -13030,44 +13034,9 @@ function getProjectManagmentListDetails(res,stLimit) {
 
             .append($('<td>').addClass('bug-list-column')
                 .addClass('bug-list-column-story-card')
-                .append("<span class='get-data-group'>" + proJectName + "</span>") 
+                .append("<span class='get-data-group'>" + proJectName + "</span>")) 
 
-                .append($('<td>')
-                        .css('white-space', 'nowrap')
-                        .addClass('bug-list-column')
-                        .addClass('bug-list-column-assignee')
-                        .append('bug')
-                        .append(" ")
-
-
-                        )
-                .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-tasktype')
-                        .append($("<div>")
-                                .addClass("dropdown")
-                                .append($("<div>")
-                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug get-data-group')
-
-                                        .attr("data-toggle", "dropdown")
-                                        .attr("aria-haspopup", "true")
-                                        .attr("aria-expanded", "false")
-                                        .attr("id", "bug-tasktype-dropdown")
-                                        .append((replaceTags(o.taskTypeName)) ? "<span >" + o.taskTypeName + "</span>" : "<span style ='visibility:hidden;'>djnfjsd</span>"))
-
-                                .append($("<div>")
-                                        .addClass("dropdown-menu")
-                                        .attr("aria-labelledby", "bug-tasktype-dropdown")
-
-
-                                        )))
-                .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
-                .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-story-card')
-                        .append("<span class='get-data-group'>" + proJectName + "</span>")
-
-
-                        )
+                
 
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap')
@@ -13092,7 +13061,7 @@ function getProjectManagmentListDetails(res,stLimit) {
 
                         )
                 .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>")))
+                        .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
 
 
          tbody.append(t);
@@ -14421,37 +14390,7 @@ function getProjectUsers() {
         }
     });
 }
-function getProjectUsers() {
 
-
-
-    var json = initJSON();
-
-    json.kv['fkProjectId'] = global_var.current_project_id;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            try {
-                SAProjectUser.LoadProjectUser(res);
-                loadUsersAsAssignee();
-                loadUsersAsOwner();
-            } catch (err) {}
-            queue4ProLoad.getProjectUsers = true;
-            executeCoreOfManualProSelection();
-            getProjectManagementList();
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
-}
 function getProjectUsers4ProjectManagment() {
 
 
