@@ -1264,7 +1264,10 @@ a.dropdown-menu-header {
     background: #dee2e6;
 } */
 ::-webkit-scrollbar-thumb {
-    background:  #9b9b9b;
+    background:  #e9e8e8;
+}
+::-webkit-scrollbar-thumb:hover {
+    background:  #9b9b99;
 }
 
 

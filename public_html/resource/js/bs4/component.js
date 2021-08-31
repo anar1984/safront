@@ -816,7 +816,7 @@ var Component = {
                     continue;
 
 
-
+                    var type = SAInput.getInputDetails(inputId, "componentType");
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<label href="#">')
                     .addClass('component-class-show-hide')
@@ -828,7 +828,7 @@ var Component = {
                     .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                         "")
-                        .append("<input data-check="+inputId+" type='checkbox'>")
+                        .append("<input data-check="+inputId+" checked='true' type='checkbox'>")
                     .append(replaceTags(inputName))
 
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
@@ -864,6 +864,11 @@ var Component = {
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
                     pairShowColumn[inputId].trim() === '1') {
+                    th.empty().hide();
+                   
+                }
+
+                if (type==='icbox'||type==='cbox') {
                     th.empty().hide();
                    
                 }
@@ -1170,7 +1175,7 @@ var Component = {
                     .addClass('redirectClass')
                     .attr("bid", backlogId)
                     //                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
-                    .append($("<td>").append((j + parseInt(sLimit))));
+                    .append($("<td>").append((j + parseInt(sLimit))).addClass("text-center").css("min-width",'25px'));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();
                     if (inputId.length === 0)

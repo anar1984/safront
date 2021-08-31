@@ -6,17 +6,21 @@
                         <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
                     </a>
                 </div>-->
-        <div class="col-11 text-center" style="padding:4px;">
+        <div class="col-12 text-center" style="padding:4px;">
             <h4>User Story Management</h4>
         </div>
         <!--By G.R-->
-        <div class="TaskPanel" >
-            <div class="taskPanel container">
+        <div class="TaskPanel col-12" >
+            <div class="taskPanel col-10" style="margin: auto;">
                 <div class="category-kanban">
-                    <div class="searchSeqment">
-
+                    <div class="searchSeqment ">
+                        <div class="col-lg-4">
+                            <select class="form-control  prmanage-filter prmanage-mgmt-filter-select" data-live-search="true" data-actions-box="true"
+                                style="text-overflow: ellipsis" onchange=' new UserStory().setKanbanView(this)' id='story_mn_filter_project_id'
+                                data-type="project_id" title="Project"></select>
+                        </div>
  
-                        <div class=" sprint dropdown" style="margin-left: 10px;" >
+                        <div class="sprint dropdown" style="margin-left: 10px;" >
 
                         </div>
                         
@@ -28,7 +32,7 @@
 
 
                 </div>
-                <div class="task-panel">
+                <div class="task-panel col-10" style="margin: auto;">
                     <div class="task-column new" status="new">
 
                         <div draggable="true" class="task-column-header" >

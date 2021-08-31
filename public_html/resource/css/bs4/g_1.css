@@ -6189,6 +6189,7 @@ td.selected{
 .table-show-hide-row-div-btn{
     position: absolute;
     /* right: -22px; */
+    left: 0px;
     top: 5px;
     border: 1px solid lightgrey;
     color: lightgray;

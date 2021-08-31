@@ -1103,7 +1103,7 @@ function tableShowHideRowSetItem(tableId) {
     var tableVal = ""
     for (let index = 0; index < chk.length; index++) {
 
-        if ($(chk[index]).prop("checked")) {
+        if (!$(chk[index]).prop("checked")) {
             tableVal = tableVal + $(chk[index]).attr("data-check") + ','
         }
        
@@ -1125,11 +1125,11 @@ function tableShowHideRowGetItem(tableId) {
         for (let index = 0; index < dt.length; index++) {
 
             if (dt[index] !== "") {
-                chk.find("#" + dt[index]).find("input").prop("checked", true).change();
+                chk.find("#" + dt[index]).find("input").prop("checked", false).change();
 
 
             }
-
+            
         }
     } catch (error) {
         console.log(error)
@@ -12287,6 +12287,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
+        setProjectListByID('story_mn_filter_project_id');
         new UserStory().setKanbanView(this);
         new Label().load();
         new Sprint().load();
@@ -12296,6 +12297,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new Label().load();
         hideToggleMain();
         commmonOnloadAction(this);
+   
     });
 });
 
@@ -12787,6 +12789,18 @@ function setProjectManagementFilterProject() {
     }
     
 }
+function setProjectListByID(elid) {
+    var select = $('#'+elid);
+    var keys = Object.keys(SACore.Project);
+    for (var id in keys) {
+        var pid = keys[id];
+        
+        select.append($("<option>")
+                .val(pid)
+                .text(SACore.Project[pid]))
+    }
+    select.selectpicker('refresh')
+}
 function getStatisticList(idlist) {
    
 
@@ -12922,7 +12936,7 @@ function getProjectManagementList() {
     });
 
 }
-
+}
 function getProjectManagmentListDetails(res,stLimit) {
     //    tbody to append
     var table = $('#bugListTable');
@@ -14407,7 +14421,8 @@ function getProjectUsers() {
         }
     });
 }
-function getProjectUsers4ProjectManagment() {
+function getProjectUsers() {
+
 
 
     var json = initJSON();
@@ -19557,4 +19572,3 @@ var SCSourceManagement = {
 }
 
 
-}

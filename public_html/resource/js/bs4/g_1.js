@@ -338,7 +338,7 @@ $(function () {
             var id = $(this).attr("data-check");
             var ch =$(this);
 
-            if(ch.prop("checked")){
+            if(!ch.prop("checked")){
                 $("#"+tbId).find('[pdid='+id+']').hide();
                 var st =   $("#"+tbId+" thead").find('[pid='+id+']').parents("th")
                        st.hide();
