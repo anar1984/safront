@@ -1,6 +1,6 @@
 $(function () {
 
-
+     //pish pishname
     // $( ".bottombtn2" ).hover(function() {
     //     console.log('ok')
     //     var that=$('.myaccountName');
