@@ -12297,7 +12297,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new Label().load();
         hideToggleMain();
         commmonOnloadAction(this);
-        console.log('fgggggggggggggggggggg');
+       
    
     });
 });
@@ -12523,7 +12523,7 @@ $(document).on('click', '.loadProjectManagement', function (evt) {
         $('.prmanage-mgmt-filter-select').selectpicker();
         new Sprint().load();
         new Label().load();
-        getProjectUsers4ProjectManagment()
+        getProjectUsers4ProjectManagment();
       
 
         if (global_var.current_issue_is_hide !== '1' &&
@@ -12824,11 +12824,10 @@ function getStatisticList(idlist) {
         success: function (res) {  
             
             var dt  = res.tbl;
-            console.log(dt);
           
           for (let index = 0; index < dt.length; index++) {
                var ifle = dt[index].tn;
-               console.log(ifle);
+          
                if(ifle=="overall"){
                    
                    var id = dt[index].r[0].fkBacklogId;
@@ -13126,11 +13125,17 @@ $(document).on("click",".prManag-task-filter-checkbox-label", function(){
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
     }
+    if (global_var.current_modal === 'loadStoryCardMgmt') {
+        setPrmFilterLabeValuesUs();
+    }
  
 })
 $(document).on("click",".us-filter-checkbox-sprint", function(){
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
+    }
+    if (global_var.current_modal === 'loadStoryCardMgmt') {
+        setPrmFilterSprintValuesUs();
     }
  
 })
@@ -13154,6 +13159,186 @@ function setPrmFilterSprintValues() {
     })
     st = st.substring(0, st.length - 1);
     bug_filter.sprint_id = st;
+}
+
+
+
+
+
+function setPrmFilterSprintValuesUs() {
+    var st = ' ';
+    $('.us-filter-checkbox-sprint').each(function () {
+        if ($(this).is(":checked")) {
+           
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv.fkSprintId = $(this).val();
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmGetBakclogListBySprint",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                      var dt = res.tbl[0].r
+                    for (let i = 0; i < dt.length; i++) {
+                         
+
+                        st += dt[i].fkBacklogId+ "%IN%";
+                        
+                        
+                    }
+                    UsSprint = st;
+                    new UserStory().setUSLists4KanbanView();
+                },
+                error: function () {
+                    Toaster.showError(('somethingww'));
+                }
+            });
+        }else{
+            UsSprint = '';
+           
+           
+        }
+        
+    })
+
+    new UserStory().setUSLists4KanbanView();
+   
+}
+function setPrmFilterLabeValuesUs() {
+    var st = '';
+    $('.prManag-task-filter-checkbox-label').each(function () {
+        if ($(this).is(":checked")) {
+           
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv.fkLabelId = $(this).val();
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmGetBakclogListByLabel",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    var dt = res.tbl[0].r
+                    for (let i = 0; i < dt.length; i++) {
+                          
+                    st += dt[i].fkBacklogId + "%IN%";
+
+                                       
+                    }
+                       UsLabel = st;
+                      
+                       new UserStory().setUSLists4KanbanView();
+                },
+                error: function () {
+                    Toaster.showError(('somethingww'));
+                }
+            });
+        }else{
+            UsLabel = ''
+                   
+        }
+    })
+    new UserStory().setUSLists4KanbanView();
+}
+
+function getSTatsUserManagmentTableKanban(elm){
+      var div = $(elm).parents(".task-content").find(".stat-div-task-content");
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBacklogId = $(elm).attr("data-bid");
+   
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {  
+            $(div).html('')
+            var dt  = res.tbl;
+
+          for (let index = 0; index < dt.length; index++) {
+               var ifle = dt[index].tn;
+          
+               if(ifle=="overall"){
+                   
+                   var id = dt[index].r[0].fkBacklogId;
+                   var le = dt[index].r[0];
+                   $(div).append($("<div>").css("display",'flex')
+                                             .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Total</b>('+le.overall+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                                             .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                                             )
+               }
+               if(ifle=="changes"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $(div).append($("<div>").css("display",'flex')
+                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Changes</b>('+le.
+                overall+')</span><br>')
+                .append('<span class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+               if(ifle=="bug"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $(div).append($("<div>").css("display",'flex')
+                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Bug</b>('+le.overall+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+               if(ifle=="new"){
+                var id = dt[index].r[0].fkBacklogId;
+                var le = dt[index].r[0];
+                $(div).append($("<div>").css("display",'flex')
+                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>New</b>('+le.overall+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
+                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
+                )
+               }
+              
+          }
+          if(dt==''){
+            $(div).append('<h6 class="text-center">No Task</h6>');
+        }
+        
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+
+
 }
  /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
@@ -15240,6 +15425,20 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
     });
 });
 
+$(document).on('change', '#story_mn_filter_project_id', function (evt) {
+
+    global_var.current_project_id = $(this).val();
+    Utility.addParamToUrl('current_project_id', $(this).val());
+    
+          UsLabel ='';
+          UsSprint ='';
+        new Label().load();
+        new Sprint().load();
+        setPrmFilterLabeValuesUs();
+        setPrmFilterSprintValuesUs();
+        
+  
+});
 $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_checked = 1;
     global_var.story_card_label_assign_name = $(this).attr('sname');

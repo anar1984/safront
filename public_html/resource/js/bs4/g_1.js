@@ -1080,6 +1080,7 @@ $(document).keydown(function (event) {
         cntrlIsPressed = true;
 });
 
+
 $(document).keyup(function () {
     cntrlIsPressed = false;
 });
@@ -1178,6 +1179,18 @@ $(document).on('change', '#edit-name-input-component', function (event) {
     $(this).parent().html(dt);
    
     new UserStory().updateInputByAttr(this, 'name');
+
+});
+$(document).on('change', '#user-story-show-stat', function (event) {
+ 
+
+    if($(this).prop("checked")){
+        $(this).parents(".task-content").find(".stat-div-task-content").show();
+         getSTatsUserManagmentTableKanban(this)
+         
+    }else{
+        $(this).parents(".task-content").find(".stat-div-task-content").hide();
+    }
 
 });
 $(document).on('click', '.dropdown-menu-large-btn', function (event) {

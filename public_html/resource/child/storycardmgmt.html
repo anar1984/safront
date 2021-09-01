@@ -16,9 +16,81 @@
                     <div class="searchSeqment ">
                         <div class="col-lg-4">
                             <select class="form-control prmanage-mgmt-filter-select" data-live-search="true" data-actions-box="true"
-                                style="text-overflow: ellipsis" onchange='new UserStory().setKanbanView(this)' id='story_mn_filter_project_id'
+                                style="text-overflow: ellipsis"  id='story_mn_filter_project_id'
                                 data-type="project_id" title="Project"></select>
                         </div>
+                        <div class="col-lg-2">
+                            <div class="dropdown">
+                                <span class="dropdown-toggle1 btn-f-l"  data-toggle="dropdown">Label</span> 
+                                <div id="general" class="">
+                                    <i>
+                                        <span class="badge">0</span>
+                                    </i>
+                                </div>
+                
+                
+                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
+                                    <span>
+                                        <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
+                                           data-target="#insertNewLabel" >
+                
+                                            Add Label
+                
+                                        </a>
+                                    </span>
+                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                
+                
+                                    <div class="dropdown-divider" style="padding:0px;">
+                
+                                    </div>
+                                    <div id="tasklabellist"
+                                         class="tasklabellist"
+                
+                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+                
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                        <div class="col-lg-2" >
+                            <div class="dropdown">
+                                <!-- btn btn-primary   sildim -->      
+                                <span class="dropdown-toggle1 btn-f-l"  data-toggle="dropdown" style="cursor: pointer;margin-left: -6px;">
+                
+                                    Sprint</span> 
+                
+                                <div id="general3" class="">
+                                    <i>
+                                        <span class="badge">0</span>
+                                    </i>
+                                </div>
+                
+                
+                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
+                                    <span>
+                
+                                        <a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint" 
+                                           f="" 
+                                           style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; 
+                                           font-size: 12px; color:#727D91; margin-top: 5px;" >
+                                            New Sprint</a>
+                                    </span>
+                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                
+                
+                                    <div class="dropdown-divider" style="padding:0px;">
+                
+                                    </div>
+                                    <div id="sprintlist"
+                                         class="sprintlist"
+                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+                
+                                    </div>
+                                </div>
+                            </div>
+                        
+                           </div>
  
                         <div class="sprint dropdown" style="margin-left: 10px;" >
 

@@ -57,7 +57,8 @@ function check() {
     return false;
 }
 
-
+var UsSprint = '';
+var UsLabel = '';
 
 var CanvasDesign = {
     "ComponentCSSId": "gui_input_css_style_canvas",
@@ -13783,6 +13784,106 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
+            
+        var priD =$("#story_mn_filter_project_id").val();
+        var stLimit = '0';
+        if(priD==''){
+            return
+        }
+        var json = {
+            kv: {}
+        };
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkProjectId = priD;
+        if (UsSprint) {
+            json.kv.id = UsSprint;
+           
+        } else if(UsLabel) {
+            json.kv.id = UsLabel;
+        }
+        json.kv.startLimit =stLimit;
+      
+        json.kv.endLimit = 2000;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+         
+                $('#kanban_view_new_count').html(0);
+                $('#kanban_view_ongoing_count').html(0);
+                $('#kanban_view_closed_count').html(0);
+                $('.main_div_of_backlog_info_kanban_view_table_new').html('');
+                $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
+                $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+             
+                try {
+        //            var obj = res.tbl[0].r;
+                    var c4new = 0;
+                    var c4ongoing = 0;
+                    var c4closed = 0;
+                    $('.main_div_of_backlog_info_kanban_view_table_new')
+                 
+                        var usIdList = res.tbl[0].r;
+        
+                        for (var k = 0; k < usIdList.length; k++) {
+                          
+                             
+        
+                            var obj = usIdList[k];
+                           
+        
+                            var html = new UserStory().genUSLine4KanbanView(obj);
+                            if (obj.backlogStatus === 'new') {
+                                c4new++;
+                                $('.main_div_of_backlog_info_kanban_view_table_new').append(html);
+                            } else if (obj.backlogStatus === 'ongoing') {
+                                c4ongoing++;
+                                $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
+                            } else if (obj.backlogStatus === 'closed') {
+                                c4closed++;
+                                $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                            }
+                            $('#kanban_view_new_count').html(c4new);
+                            $('#kanban_view_ongoing_count').html(c4ongoing);
+                            $('#kanban_view_closed_count').html(c4closed);
+                        }
+                      
+                    
+        
+        
+                    if (c4new === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_new')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4ongoing === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_ongoing')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4closed === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_closed')
+                                .append($('<div class="task-content content-drag">'));
+                } catch (e) {
+                    
+                }
+                global_var.story_card_sprint_assign_checked = 0;
+                global_var.story_card_label_assign_checked = 0;
+                contentArrangableUI();
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+   
+
+    },
+    setUSLists4KanbanView_old: function () {
            
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
@@ -14326,6 +14427,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .append($('<span class="backlog-status">')
                                 .append("&nbsp;&nbsp;")
                                 .append(assigneeImg))
+                        .append(`
+                        <label class="switch ">
+            <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
+            <span class="slider round hide-off "></span>
+
+        </label>`)
+        .append($("<div>").addClass("stat-div-task-content").css("display",'none'))
 //                        .append($('<i  class="fa fa-info-circle">')
 //                                .data('toggle', 'modal')
 //                                .data('target', '#backlogTaskInfoModal')
