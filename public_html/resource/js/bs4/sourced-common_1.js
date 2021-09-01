@@ -13786,6 +13786,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanView: function () {
             
         var priD =$("#story_mn_filter_project_id").val();
+        var fkAsId = $("#story_mn_filter_assigne_id").val();
         var stLimit = '0';
         if(priD==''){
             return
@@ -13803,6 +13804,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
            
         } else if(UsLabel) {
             json.kv.id = UsLabel;
+        }
+        if(fkAsId) {
+            json.kv.fkOwnerId = fkAsId;
         }
         json.kv.startLimit =stLimit;
       

@@ -15436,9 +15436,49 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
         new Sprint().load();
         setPrmFilterLabeValuesUs();
         setPrmFilterSprintValuesUs();
-        
+        loadAssigneesByProjectUSM($(this).val());
   
 });
+$(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
+   
+          UsLabel ='';
+          UsSprint ='';
+        setPrmFilterLabeValuesUs();
+        setPrmFilterSprintValuesUs();
+          
+});
+function loadAssigneesByProjectUSM(projectId) {
+
+
+    var json = initJSON();
+    json.kv.fkProjectId = projectId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmLoadAssigneeByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            $('#story_mn_filter_assigne_id').html('')
+    for (var i in obj) {
+        var o = obj[i];
+        var opt = $('<option>').val(o.fkUserId).text(o.userName);
+        
+        $('#story_mn_filter_assigne_id').append(opt);
+        
+
+    }
+            $('#story_mn_filter_assigne_id').selectpicker('refresh');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_checked = 1;
     global_var.story_card_label_assign_name = $(this).attr('sname');
