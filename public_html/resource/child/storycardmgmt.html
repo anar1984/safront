@@ -24,9 +24,12 @@
                                 style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
                                 data-type="assigne_id" title="Assigne"></select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="search"  class="form-control" name="" id="search-us-managmenet">
+                        </div>
+                        <div class="col-lg-1">
                             <div class="dropdown">
-                                <span class="dropdown-toggle1 btn-f-l"  data-toggle="dropdown">Label</span> 
+                                <button class="dropdown-toggle1 btn btn-light "  data-toggle="dropdown">Label</button> 
                                 <div id="general" class="">
                                     <i>
                                         <span class="badge">0</span>
@@ -58,12 +61,12 @@
                                 </div>
                             </div>
                            </div>
-                        <div class="col-lg-2" >
+                        <div class="col-lg-2 text-center" >
                             <div class="dropdown">
                                 <!-- btn btn-primary   sildim -->      
-                                <span class="dropdown-toggle1 btn-f-l"  data-toggle="dropdown" style="cursor: pointer;margin-left: -6px;">
+                                <button class="dropdown-toggle1  btn btn-light"  data-toggle="dropdown" style="cursor: pointer;margin-left: -6px;">
                 
-                                    Sprint</span> 
+                                    Sprint</button> 
                 
                                 <div id="general3" class="">
                                     <i>
@@ -110,7 +113,7 @@
 
 
                 </div>
-                <div class="task-panel col-10" style="margin: auto;">
+                <div class="task-panel col-11" style="margin: auto;">
                     <div class="task-column new" status="new">
 
                         <div draggable="true" class="task-column-header" >
@@ -128,11 +131,8 @@
                                                         </div>-->
 
                         </div>
-                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_new" id="new">
-                            <div draggable="true" class="content-drag"></div>  
-
-
-
+                        <div class="CardContentAdd">
+                            <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
                         </div>
                         <div  class="miniStoryCard">
                             <h5>New Story Card</h5>
@@ -146,12 +146,16 @@
                                 <i class="fas fa-times"></i> 
                             </div>
                         </div>
-                        <div class="CardContentAdd">
-                            <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
+                        
+                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_new" id="new">
+                            <div draggable="true" class="content-drag"></div>  
+
+
+
                         </div>
+                       
                     </div>
                     <div class="task-column  on-going" status="ongoing" >
-
                         <div class="task-column-header">
                             <span class="headerInputColumn">Ongoing <b><span class="counterkanban" id="kanban_view_ongoing_count">0</span></b></span>
                             <!--                            <div class="column-header-edit">
@@ -165,11 +169,6 @@
                             
                             
                                                         </div>-->
-
-                        </div>
-                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_ongoing" id="ongoing">
-                            <div class="content-drag"></div>      
-
 
                         </div>
                         <div class="miniStoryCard">
@@ -186,6 +185,13 @@
                         <div class="CardContentAdd">
                             <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
                         </div>
+                    
+                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_ongoing" id="ongoing">
+                            <div class="content-drag"></div>      
+
+
+                        </div>
+                       
 
                     </div>
                     <div class="task-column closed"  status="closed" >
@@ -206,11 +212,6 @@
                                                         </div>-->
 
                         </div>
-                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_closed" id="closed">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
                         <div class="miniStoryCard">
                             <h5>New Story Card</h5>
                             <input  class="miniStoryInput form-control"  type="text">
@@ -227,6 +228,13 @@
                             <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
 
                         </div>
+                        
+                        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_closed" id="closed">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
                     </div>
 
                 </div>

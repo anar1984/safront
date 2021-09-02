@@ -13783,11 +13783,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
     },
-    setUSLists4KanbanView: function () {
-            
+    setUSLists4KanbanViewByStatus: function (stLm,endLm,bsTat) {
         var priD =$("#story_mn_filter_project_id").val();
         var fkAsId = $("#story_mn_filter_assigne_id").val();
-        var stLimit = '0';
+        var search = $("#search-us-managmenet").val();
+        var startLimit = stLm;
+        var endLimit = endLm;
         if(priD==''){
             return
         }
@@ -13808,9 +13809,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if(fkAsId) {
             json.kv.fkOwnerId = fkAsId;
         }
-        json.kv.startLimit =stLimit;
+        if(search.length >2) {
+            json.kv.backlogName = "%%"+search +"%%";
+        }
+        if(bsTat) {
+            json.kv.backlogStatus = bsTat;
+        }
+        json.kv.startLimit =startLimit;
       
-        json.kv.endLimit = 2000;
+        json.kv.endLimit = endLimit;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -13822,12 +13829,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: true,
             success: function (res) {
          
-                $('#kanban_view_new_count').html(0);
+               /*  $('#kanban_view_new_count').html(0);
                 $('#kanban_view_ongoing_count').html(0);
-                $('#kanban_view_closed_count').html(0);
-                $('.main_div_of_backlog_info_kanban_view_table_new').html('');
-                $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
-                $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+                $('#kanban_view_closed_count').html(0); */
              
                 try {
         //            var obj = res.tbl[0].r;
@@ -13852,6 +13856,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                             } else if (obj.backlogStatus === 'ongoing') {
                                 c4ongoing++;
                                 $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
+                                $(html).find("#user-story-show-stat").parents('label').click();
+                    
+
                             } else if (obj.backlogStatus === 'closed') {
                                 c4closed++;
                                 $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
@@ -13861,30 +13868,142 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                             $('#kanban_view_closed_count').html(c4closed);
                         }
                       
+                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).find('.more-us-card-btn').remove();
+                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+startLimit+20+'" endLimit="'+endLimit+20+'" role="button" class="more-us-card-btn col-12">More</a>');
+                       
                     
-        
-        
-                    if (c4new === 0)
-                        $('.main_div_of_backlog_info_kanban_view_table_new')
-                                .append($('<div class="task-content content-drag">'));
-                    if (c4ongoing === 0)
-                        $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                                .append($('<div class="task-content content-drag">'));
-                    if (c4closed === 0)
-                        $('.main_div_of_backlog_info_kanban_view_table_closed')
-                                .append($('<div class="task-content content-drag">'));
+
                 } catch (e) {
                     
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
                 contentArrangableUI();
+                $('[data-toggle="popover"]').popover()
             },
             error: function () {
                 Toaster.showError(('somethingww'));
             }
         });
    
+
+    },
+    setUSLists4KanbanView: function () {
+  
+
+        var stl  = ["new","ongoing",'closed']
+            for (let si = 0; si < stl.length; si++) {
+               
+               this.setUSLists4KanbanViewCore(stl[si])
+            }
+       
+
+
+    },
+    setUSLists4KanbanViewCore: function (stl) {
+  
+               
+                var priD =$("#story_mn_filter_project_id").val();
+                var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var search = $("#search-us-managmenet").val();
+                if(priD==''){
+                    return
+                }
+                var json = {
+                    kv: {}
+                };
+                try {
+                    json.kv.cookie = getToken();
+                } catch (err) {
+                }
+                json.kv.fkProjectId = priD;
+                if (UsSprint) {
+                    json.kv.id = UsSprint;
+                   
+                } else if(UsLabel) {
+                    json.kv.id = UsLabel;
+                }
+                if(fkAsId) {
+                    json.kv.fkOwnerId = fkAsId;
+                }
+                if(search.length >2) {
+                    json.kv.backlogName = "%%"+search +"%%";
+                }
+               
+                json.kv.backlogStatus = stl;
+                
+                
+                json.kv.startLimit =0;
+              
+                json.kv.endLimit = 20;
+                var that = this;
+                var data = JSON.stringify(json);
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                 
+                        $('#kanban_view_'+stl+'_count').html(0);
+                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
+                     
+                        try {
+                                                  
+                                var usIdList = res.tbl[0].r;
+                
+                                for (var k = 0; k < usIdList.length; k++) {
+                                  
+                                     
+                
+                                    var obj = usIdList[k];
+                                   
+                
+                                    var html = new UserStory().genUSLine4KanbanView(obj);
+                                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
+
+                                     if (obj.backlogStatus === 'ongoing') {
+                                    
+                                 
+                                        $(html).find("#user-story-show-stat").parents('label').click();
+                            
+                                    } 
+                                    
+                                    /* $('#kanban_view_new_count').html(c4new);
+                                    $('#kanban_view_ongoing_count').html(c4ongoing);
+                                    $('#kanban_view_closed_count').html(c4closed); */
+                                }
+                              
+                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
+                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="40" endLimit="80" role="button" class="more-us-card-btn col-12">More</a>');
+                               
+                
+                            /* if (c4new === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_new')
+                                        .append($('<div class="task-content content-drag">'));
+                            if (c4ongoing === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
+                                        .append($('<div class="task-content content-drag">'));
+                            if (c4closed === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_closed')
+                                        .append($('<div class="task-content content-drag">')); */
+                        } catch (e) {
+                            
+                        }
+                        global_var.story_card_sprint_assign_checked = 0;
+                        global_var.story_card_label_assign_checked = 0;
+                        contentArrangableUI();
+                       
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+            
+       
+            $('[data-toggle="popover"]').popover()
 
     },
     setUSLists4KanbanView_old: function () {
@@ -14346,7 +14465,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     genUSLine4KanbanView: function (o) {
 
-
+  
 
         var assigneeImg = $('<span>')
         if (o.fkOwnerId.length > 3) {
@@ -14359,10 +14478,34 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             assigneeImg.append($('<img>')
 //                        .css("width","24px")
 //                        .css('height','24px')
-                    .addClass('Assigne-card-story-select-img')
+                    .addClass('Assigne-card-story-select-img assigne')
                     .attr('src', img)
-                    .attr('alt', userName)
-                    .attr("title", userName))
+                    .attr('data-trigger', 'hover')
+                    .attr('data-toggle', 'popover')
+                    .attr('data-content', userName ? "":"UnAssigned")
+                    .attr("title", 'Owner')
+                    )
+        }
+        var createdByImg = $('<span>')
+        if (o.createdBy) {
+
+            var userImage = SAProjectUser.GetUserDetails(o.createdBy, "userImage");
+            var userName = SAProjectUser.GetUserDetails(o.createdBy, "userPersonName");
+
+
+            var img = (userImage)
+                    ? fileUrl(userImage)
+                    : fileUrl(new User().getDefaultUserprofileName());
+         createdByImg.append($('<img>')
+//                        .css("width","24px")
+//                        .css('height','24px')
+                    .addClass('Assigne-card-story-select-img created')
+                    .attr('src', img)
+                    .attr('data-trigger', 'hover')
+                    .attr('data-toggle', 'popover')
+                    .attr('data-content', userName)
+                    .attr("title", 'Created By')
+                    )
         }
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
@@ -14422,6 +14565,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                         ))
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-executor">')
+
                                         .append("&nbsp;" + o.createdByName)
                                         ))
                         .append($('<span class="backlog-status">')
@@ -14431,13 +14575,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .append($('<span class="backlog-status">')
                                 .append("&nbsp;&nbsp;")
                                 .append(assigneeImg))
+                        .append($('<span class="backlog-status">')
+                                .append("&nbsp;&nbsp;")
+                                .append(createdByImg))
                         .append(`
                         <label class="switch ">
             <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
             <span class="slider round hide-off "></span>
 
         </label>`)
-        .append($("<div>").addClass("stat-div-task-content").css("display",'none'))
+        .append($("<div>").addClass("stat-div-task-content")
+           .append($('<table>').addClass("stat-table-us")
+           .append($("<tbody>")
+                       .append($("<tr class=total>"))
+                       .append($("<tr class='bug'>"))
+                       .append($("<tr class='changes'>"))
+                       .append($("<tr class='new'>"))
+                       ))
+        .css("display",'none'))
 //                        .append($('<i  class="fa fa-info-circle">')
 //                                .data('toggle', 'modal')
 //                                .data('target', '#backlogTaskInfoModal')
@@ -14448,7 +14603,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         )
 
 
-
+                        
 
         return s;
 

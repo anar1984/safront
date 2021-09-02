@@ -1181,6 +1181,18 @@ $(document).on('change', '#edit-name-input-component', function (event) {
     new UserStory().updateInputByAttr(this, 'name');
 
 });
+
+$(document).on('click', '.more-us-card-btn', function (event) {
+       
+    var stLimit = $(this).attr('startlimit')
+    var endlimit = $(this).attr('endlimit')
+    var st = parseFloat(stLimit);
+    var end = parseFloat(endlimit);
+    var bsts = $(this).attr('data-ople');
+
+    new UserStory().setUSLists4KanbanViewByStatus(st,end,bsts);
+
+});
 $(document).on('change', '#user-story-show-stat', function (event) {
  
 
