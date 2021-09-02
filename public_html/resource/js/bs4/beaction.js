@@ -18,7 +18,7 @@ var be = {
         be.ShowInData4Debug(apiId, data);
 
         var backlogName = SACore.GetBacklogDetails(apiId, "backlogName");
-        be.ValidateApiOnInput(apiId, data);
+        be.ValidateApiOnInput(apiId, data,element);
 
         var runInBackend = SACore.GetBacklogDetails(apiId, "runInBackend");
 
@@ -66,7 +66,7 @@ var be = {
             success: function (rs) {
                 try {
                     if (rs.err.length > 0) {
-                        be.AJAXCallFeedback(rs.err);
+                        be.AJAXCallFeedback(rs.err,element);
                     }
                 } catch (e) {
                 }
@@ -599,7 +599,7 @@ var be = {
 
             //////////////////////
             ////valicadate the inputs before deyerlerin deyishdirilmesi
-            be.ValidateApi(apiId, inputKV);
+            be.ValidateApi(apiId, inputKV,element);
 
 
 
@@ -687,7 +687,7 @@ var be = {
                             res = b;
                             try {
                                 if (output.err.length > 0) {
-                                    be.AJAXCallFeedback(output.err);
+                                    be.AJAXCallFeedback(output.err,element);
                                 }
                             } catch (e) {
                             }
@@ -898,7 +898,7 @@ var be = {
 
             //////////////////////
             ////valicadate the inputs before deyerlerin deyishdirilmesi
-            be.ValidateApi(apiId, outputKV);
+            be.ValidateApi(apiId, outputKV,element);
 
             //set Required Field From Descriptons
             var paramData = be.AddDbDescriptionField4InsertUpdate(apiId, INSERT_OBJ_PAIR);
@@ -940,7 +940,7 @@ var be = {
                         res['id'] = output.kv.id;
                         try {
                             if (output.err.length > 0) {
-                                be.AJAXCallFeedback(output.err);
+                                be.AJAXCallFeedback(output.err,element);
                             }
                         } catch (e) {
                         }
@@ -985,7 +985,7 @@ var be = {
 
             //////////////////////
             ////valicadate the inputs before deyerlerin deyishdirilmesi
-            be.ValidateApi(apiId, outputKV);
+            be.ValidateApi(apiId, outputKV,element);
 
 
             //set Required Field From Descriptons
@@ -1019,7 +1019,7 @@ var be = {
                         res = b;
                         try {
                             if (output.err.length > 0) {
-                                be.AJAXCallFeedback(output.err);
+                                be.AJAXCallFeedback(output.err,element);
                             }
                         } catch (e) {
                         }
@@ -1072,7 +1072,7 @@ var be = {
 
 
                 if (outData.err && outData.err.length > 0) {
-                    be.AJAXCallFeedback(outData.err);
+                    be.AJAXCallFeedback(outData.err,element);
                 }
 
 
@@ -1123,7 +1123,7 @@ var be = {
             var isAsync = (syncType === 'async') ? true : false;
 
             //////////////////////
-            be.ValidateApi(outputKV, outputKVFinal);
+            be.ValidateApi(outputKV, outputKVFinal,element);
 
             var outputKVFinal = be.ExecAPI.SetKeysAsAlians4Delete(outputKV, DELETE_OBJ_PAIR);
 
@@ -1148,7 +1148,7 @@ var be = {
                         res = b;
                         try {
                             if (output.err.length > 0) {
-                                be.AJAXCallFeedback(output.err);
+                                be.AJAXCallFeedback(output.err,element);
                             }
                         } catch (e) {
                         }
@@ -1376,7 +1376,7 @@ var be = {
                     res = b;
                     try {
                         if (output.err.length > 0) {
-                            be.AJAXCallFeedback(output.err);
+                            be.AJAXCallFeedback(output.err,element);
                         }
                     } catch (e) {
                     }
@@ -1555,7 +1555,7 @@ var be = {
         }
         return data;
     },
-    ValidateApi: function (apiId, data) {
+    ValidateApi: function (apiId, data,element) {
         var err = [];
         var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
         for (var i in outputList) {
@@ -1586,10 +1586,10 @@ var be = {
             } catch (err) {
             }
         }
-        be.AJAXCallFeedback(err);
+        be.AJAXCallFeedback(err,element);
         return err;
     },
-    ValidateApiOnInput: function (apiId, data) {
+    ValidateApiOnInput: function (apiId, data,element) {
         var err = [];
         var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
         for (var i in outputList) {
@@ -1628,7 +1628,7 @@ var be = {
             } catch (err) {
             }
         }
-        be.AJAXCallFeedback(err);
+        be.AJAXCallFeedback(err,element);
         return err;
     },
     ApiValidation: {
@@ -1636,7 +1636,7 @@ var be = {
 
         }
     },
-    AJAXCallFeedback: function (err) {
+    AJAXCallFeedback: function (err,element) {
 
         var msgError = "";
         if ((err.length) && err.length > 0) {
@@ -1648,7 +1648,7 @@ var be = {
                     //return;
                 } else {
                     var f = false;
-                    $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
+                    $(element).closest('div.redirectClass').find('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
                         var fieldList = $(this).attr('sa-selectedfield').split(',');
                         if (fieldList.includes(err[i].code)) {
                             f = true;
@@ -1718,6 +1718,8 @@ var SAFN = {
         'hideparam': 'HideParam',
         'visible': 'Visible',
         'unvisible': 'Unvisible',
+        'visibleparam': 'VisibleParam',
+        'unvisibleparam': 'UnvisibleParam',
         'sendemail': 'SendEmail'
     },
     IsCommand: function (fnName) {
@@ -2120,13 +2122,40 @@ var SAFN = {
         },
         Visible: function (className) {
             className = SAFN.GetArgumentPureValue(className);
-
             $('.' + className).css('visibility', 'visible');
         },
         Unvisible: function (className) {
             className = SAFN.GetArgumentPureValue(className);
-
             $('.' + className).css('visibility', 'hidden');
+        },
+        VisibleParam: function (key) {
+            
+            key = SAFN.GetArgumentPureValue(key);
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).css('visibility', 'visible');
+                    }
+                }
+            });
+            
+            
+        },
+        UnvisibleParam: function (key) {
+             key = SAFN.GetArgumentPureValue(key);
+            $("[sa-selectedfield^='" + key + "']").each(function () {
+
+                var selectedFields = $(this).attr('sa-selectedfield').split(',');
+                for (var i in selectedFields) {
+                    var field = selectedFields[i].trim();
+                    if (field.length > 0 && selectedFields.includes(field)) {
+                        $(this).css('visibility', 'hidden');
+                    }
+                }
+            });
         },
         Hide: function (className) {
             className = SAFN.GetArgumentPureValue(className);
