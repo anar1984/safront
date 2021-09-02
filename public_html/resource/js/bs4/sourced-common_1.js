@@ -13869,7 +13869,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                       
                         $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).find('.more-us-card-btn').remove();
-                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+startLimit+40+'" endLimit="'+endLimit+40+'" role="button" class="more-us-card-btn col-12">More</a>');
+                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+startLimit+20+'" endLimit="'+endLimit+20+'" role="button" class="more-us-card-btn col-12">More</a>');
                        
                     
 
@@ -13935,7 +13935,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 
                 json.kv.startLimit =0;
               
-                json.kv.endLimit = 40;
+                json.kv.endLimit = 20;
                 var that = this;
                 var data = JSON.stringify(json);
                 $.ajax({
