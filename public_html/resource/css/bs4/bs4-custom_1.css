@@ -363,8 +363,8 @@ body{
 
 
 
-.us-item-status-canceled{
-    background-color: #0000FF; 
+.us-item-status-Canceled{
+    background-color: lightblue; 
     font-size:10px;
     display: inline-block;
     padding: 1px 10px 1px 10px;
@@ -412,7 +412,7 @@ body{
 
 .us-item-status-UAT{
     background-color: #097F55; 
-    font-size:12px;
+    font-size:10px;
     font-weight: bold;
     display: inline-block;
     padding: 1px 10px 1px 10px;

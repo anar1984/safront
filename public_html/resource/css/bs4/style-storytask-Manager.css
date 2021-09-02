@@ -85,12 +85,42 @@
     transition: opacity 0.2s ease 0s;
     margin: auto;
     margin-top: 7px;
+    position: relative;
+}
+.task-content .switch {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 25px;
+    height: 15.5px;
+}
+.task-content input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(10px);
 }
 .task-content:hover{
     background-color: rgb(241, 239, 239);
     
 }
+.stat-table-us{
+    width: 100%;
+   
 
+}
+.stat-table-us td{
+    margin: 5px;
+}
+.stat-table-us td span{
+    width: 100% !important;
+    text-align: center;
+}
+.stat-div-task-content{
+    margin-top: 15px;
+}
+.stat-table-us tr{
+  border: 1px solid #eeeff0;
+}
 .task-content:hover .headerInputContent {
     background-color: rgb(241, 239, 239);
 }
@@ -808,9 +838,21 @@ color: white;
 }
 
 .Assigne-card-story-select-img{
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
+
+    padding: 2px;
+}
+.Assigne-card-story-select-img.created{
+    
+    box-shadow: 0px 0px 0px 2px #6bb5f0 inset;
+
+}
+.Assigne-card-story-select-img.assigne{
+    
+    box-shadow: 0px 0px 0px 2px #bebe19 inset;
+
 }
 .Assigne-card-story-select-content{
     width: 294px;

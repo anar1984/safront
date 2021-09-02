@@ -12288,16 +12288,18 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
-        new UserStory().setKanbanView(this);
-        new Label().load();
-        new Sprint().load();
+        var prId  = Utility.getParamFromUrl('current_project_id');
+        getUsers()
+        if(prId){
+            $("#story_mn_filter_project_id").val(prId).change();
+        }
+       
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
         Priority.load();
-        new Label().load();
         hideToggleMain();
         commmonOnloadAction(this);
-       
+        $("#story_mn_filter_assigne_id").selectpicker();
    
     });
 });
@@ -13259,6 +13261,7 @@ function setPrmFilterLabeValuesUs() {
 }
 
 function getSTatsUserManagmentTableKanban(elm){
+
       var div = $(elm).parents(".task-content").find(".stat-div-task-content");
     var json = {
         kv: {}
@@ -13270,14 +13273,14 @@ function getSTatsUserManagmentTableKanban(elm){
    
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory",
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
         type: "POST",
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {  
-            $(div).html('')
+           // $(div).html('')
             var dt  = res.tbl;
 
           for (let index = 0; index < dt.length; index++) {
@@ -13285,50 +13288,62 @@ function getSTatsUserManagmentTableKanban(elm){
           
                if(ifle=="overall"){
                    
-                   var id = dt[index].r[0].fkBacklogId;
+                  console.log(dt[index]);
                    var le = dt[index].r[0];
-                   $(div).append($("<div>").css("display",'flex')
-                                             .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Total</b>('+le.overall+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                                             )
+                   $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Tasks</b>('+le.overall+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid='+le.fkBacklogId+' action="overall" status="UAT">UAT('+le.statusUat+')</span></td>')
+                                             
+                   $(div).find(".bug").html("").append('<td><span></span>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
+                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
+                                             
+                                             
                }
-               if(ifle=="changes"){
-                var id = dt[index].r[0].fkBacklogId;
+              /*  if(ifle=="changes"){
+               
                 var le = dt[index].r[0];
-                $(div).append($("<div>").css("display",'flex')
-                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Changes</b>('+le.
-                overall+')</span><br>')
-                .append('<span class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
+                $(div).find(".changes").html("").append('<td class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Change Request</b>('+le.overall+')</td>')
+                .append('<td class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
+                .append('<td class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
+                
                }
                if(ifle=="bug"){
-                var id = dt[index].r[0].fkBacklogId;
                 var le = dt[index].r[0];
-                $(div).append($("<div>").css("display",'flex')
-                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Bug</b>('+le.overall+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
+                $(div).find(".bug").html("")
+                .append('<td class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Bug</b>('+le.overall+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
+                
                }
-               if(ifle=="new"){
-                var id = dt[index].r[0].fkBacklogId;
+               if(ifle=="news"){
                 var le = dt[index].r[0];
-                $(div).append($("<div>").css("display",'flex')
-                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>New</b>('+le.overall+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
+                $(div).find('.new').html("")
+                .append('<td class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>New</b>('+le.overall+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
+                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
+                
                }
-              
+               */
           }
           if(dt==''){
-            $(div).append('<h6 class="text-center">No Task</h6>');
+            $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title "  action="overall" status="total"><b>Tasks</b>(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-new"  action="overall" status="new">new(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
+             
+            $(div).find(".bug").html("").append('<td><span></span>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
+            .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
+
         }
         
         },
@@ -15425,10 +15440,20 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
     });
 });
 
+$(document).on('change', '#search-us-managmenet', function (evt) {
+    
+        setPrmFilterLabeValuesUs();
+        setPrmFilterSprintValuesUs();
+       
+  
+});
 $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
     global_var.current_project_id = $(this).val();
+
     Utility.addParamToUrl('current_project_id', $(this).val());
+    loadAssigneesByProjectUSM($(this).val());
+  
     
           UsLabel ='';
           UsSprint ='';
@@ -15436,20 +15461,21 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
         new Sprint().load();
         setPrmFilterLabeValuesUs();
         setPrmFilterSprintValuesUs();
-        loadAssigneesByProjectUSM($(this).val());
+       
   
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
    
           UsLabel ='';
           UsSprint ='';
+          Utility.addParamToUrl('fk_assigne_id', $(this).val());
         setPrmFilterLabeValuesUs();
         setPrmFilterSprintValuesUs();
           
 });
 function loadAssigneesByProjectUSM(projectId) {
 
-
+  
     var json = initJSON();
     json.kv.fkProjectId = projectId;
     var that = this;
@@ -15464,6 +15490,7 @@ function loadAssigneesByProjectUSM(projectId) {
         success: function (res) {
             var obj = res.tbl[0].r;
             $('#story_mn_filter_assigne_id').html('')
+            $('#story_mn_filter_assigne_id').append('<option></option>');
     for (var i in obj) {
         var o = obj[i];
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
@@ -15473,6 +15500,10 @@ function loadAssigneesByProjectUSM(projectId) {
 
     }
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
+            var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
+            if(fkAssigneId){
+                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
