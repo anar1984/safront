@@ -127,10 +127,10 @@ var request;
 var objectStore;
 function init() {
 
-     SAFN.InitConversion();
+    SAFN.InitConversion();
 
 
-    
+
     $(document).on('click', '.prosDescCheckAll', function (evt) {
         var f = $(this).is(":checked") ? true : false;
         $('.pdescList').each(function (e) {
@@ -1023,7 +1023,7 @@ function replaceJSON(json) {
 }
 
 function replaceTags(arg) {
- 
+
     if (!arg) {
         return arg;
     }
@@ -1094,9 +1094,9 @@ function loadModulePermission() {
                     }
                 }
             } catch (error) {
-                
+
             }
-           
+
         }
     });
 }
@@ -1581,14 +1581,14 @@ function GetTagLine(text, tag) {
     return st;
 }
 
-function generatePopupModalNew(modalBody, style, triggerId, backlogId,title) {
+function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var pageId = makeId(15);
     var st = "";
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
     st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">'+title+'</b>';
+    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>';
     st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';
@@ -1696,13 +1696,21 @@ function GetConvertedTimeByElement(element) {
 }
 
 function GetConvertedDateByElement(element) {
+    var d = "";
     var date = new Date($(element).val());
-    var day = date.getDate();
-    day = day.toString(10).length === 1 ? '0' + day : day;
-    var month = date.getMonth() + 1;
-    month = month.toString(10).length === 1 ? '0' + month : month;
-    var year = date.getFullYear();
-    var d = year + "" + month + '' + day;
+    if (date) {
+        var day = date.getDate();
+        if (!day || day===NaN || day === 'undefined'){
+            return '';
+        }
+        day = day.toString(10).length === 1 ? '0' + day : day;
+        var month = date.getMonth() + 1;
+        month = month.toString(10).length === 1 ? '0' + month : month;
+        var year = date.getFullYear();
+        d = year + "" + month + '' + day;
+    } else {
+        d = "";
+    }
     return d;
 }
 
@@ -1800,34 +1808,34 @@ function createNewInputComponent() {
     $('#addNewComponentModal').modal('hide');
 }
 /* function createNewInputComponentDblClick(inpnm,compTyp,clNo) {
-    var inputName = inpnm
-    var componentType = compTyp;
-    var cellNo = clNo;
-    var addTo = $('#exampleModal-add-to').val();
-    var orderNo = SAInput.getInputDetails(global_var.current_us_input_id, "orderNo");
-    if (!inputName)
-        return;
-    var orderNoNew = orderNo;
-    if (addTo === 'left') {
-        try {
-            orderNoNew = parseFloat(orderNo) - 0.1;
-        } catch (e) {
-        }
-    } else if (addTo === 'right') {
-        try {
-            orderNoNew = parseFloat(orderNo) + 0.1;
-        } catch (e) {
-        }
-    }
-
-    $('#us-ipo-inputname').val(inputName);
-    global_var.input_insert_cellno = cellNo;
-//    global_var.input_insert_orderno = orderNoNew;
-    global_var.input_insert_component = componentType;
-    new UserStory().insertNewInput();
-    $('#exampleModal-new-input-name').val('');
-    $('#addNewComponentModal').modal('hide');
-}
+ var inputName = inpnm
+ var componentType = compTyp;
+ var cellNo = clNo;
+ var addTo = $('#exampleModal-add-to').val();
+ var orderNo = SAInput.getInputDetails(global_var.current_us_input_id, "orderNo");
+ if (!inputName)
+ return;
+ var orderNoNew = orderNo;
+ if (addTo === 'left') {
+ try {
+ orderNoNew = parseFloat(orderNo) - 0.1;
+ } catch (e) {
+ }
+ } else if (addTo === 'right') {
+ try {
+ orderNoNew = parseFloat(orderNo) + 0.1;
+ } catch (e) {
+ }
+ }
+ 
+ $('#us-ipo-inputname').val(inputName);
+ global_var.input_insert_cellno = cellNo;
+ //    global_var.input_insert_orderno = orderNoNew;
+ global_var.input_insert_component = componentType;
+ new UserStory().insertNewInput();
+ $('#exampleModal-new-input-name').val('');
+ $('#addNewComponentModal').modal('hide');
+ }
  */
 $(document).on('click', '.popup-btn', function (evt) {
 

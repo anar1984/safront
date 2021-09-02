@@ -13270,7 +13270,7 @@ function getSTatsUserManagmentTableKanban(elm){
    
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory",
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
         type: "POST",
         data: data,
         contentType: "application/json",
