@@ -854,6 +854,11 @@ color: white;
     box-shadow: 0px 0px 0px 2px #bebe19 inset;
 
 }
+.more-us-card-btn{
+    width: 100%;
+    display: block;
+    text-align: center;
+}
 .Assigne-card-story-select-content{
     width: 294px;
     border-radius: 6px ;

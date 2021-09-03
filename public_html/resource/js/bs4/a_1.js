@@ -12288,6 +12288,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
+        setProjectListByID('bug_filter_project_id_add');
         var prId  = Utility.getParamFromUrl('current_project_id');
         getUsers()
         if(prId){
@@ -13164,7 +13165,11 @@ function setPrmFilterSprintValues() {
 }
 
 
-
+function labelOrSplitValuesUs(){
+    setPrmFilterSprintValuesUs()
+    setPrmFilterLabeValuesUs()
+    new UserStory().setUSLists4KanbanView();
+}
 
 
 function setPrmFilterSprintValuesUs() {
@@ -13212,7 +13217,6 @@ function setPrmFilterSprintValuesUs() {
         
     })
 
-    new UserStory().setUSLists4KanbanView();
    
 }
 function setPrmFilterLabeValuesUs() {
@@ -13257,8 +13261,9 @@ function setPrmFilterLabeValuesUs() {
                    
         }
     })
-    new UserStory().setUSLists4KanbanView();
+   
 }
+
 
 function getSTatsUserManagmentTableKanban(elm){
 
@@ -13288,7 +13293,7 @@ function getSTatsUserManagmentTableKanban(elm){
           
                if(ifle=="overall"){
                    
-                  console.log(dt[index]);
+            
                    var le = dt[index].r[0];
                    $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Tasks</b>('+le.overall+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span></td>')
@@ -13296,11 +13301,11 @@ function getSTatsUserManagmentTableKanban(elm){
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid='+le.fkBacklogId+' action="overall" status="UAT">UAT('+le.statusUat+')</span></td>')
                                              
-                   $(div).find(".bug").html("").append('<td><span></span>')
+                   $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid='+le.fkBacklogId+' ><i class="fas fa-plus"></i></span>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
-                                             
+                                             .append('<td><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
                                              
                }
               /*  if(ifle=="changes"){
@@ -13339,10 +13344,11 @@ function getSTatsUserManagmentTableKanban(elm){
             .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
              
-            $(div).find(".bug").html("").append('<td><span></span>')
+            $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
+            .append('<td><a href="#" class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
 
         }
         
@@ -13355,6 +13361,7 @@ function getSTatsUserManagmentTableKanban(elm){
 
 
 }
+
  /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 function setStoryCardCreatedBy() {
@@ -15442,8 +15449,7 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
 
 $(document).on('change', '#search-us-managmenet', function (evt) {
     
-        setPrmFilterLabeValuesUs();
-        setPrmFilterSprintValuesUs();
+    labelOrSplitValuesUs();
        
   
 });
@@ -15453,14 +15459,13 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
     Utility.addParamToUrl('current_project_id', $(this).val());
     loadAssigneesByProjectUSM($(this).val());
-  
+    loadStoryCardByProjectAdd($(this).val())
     
           UsLabel ='';
           UsSprint ='';
         new Label().load();
         new Sprint().load();
-        setPrmFilterLabeValuesUs();
-        setPrmFilterSprintValuesUs();
+        labelOrSplitValuesUs();
        
   
 });
@@ -15469,8 +15474,7 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
           UsLabel ='';
           UsSprint ='';
           Utility.addParamToUrl('fk_assigne_id', $(this).val());
-        setPrmFilterLabeValuesUs();
-        setPrmFilterSprintValuesUs();
+          labelOrSplitValuesUs();
           
 });
 function loadAssigneesByProjectUSM(projectId) {
@@ -15494,12 +15498,15 @@ function loadAssigneesByProjectUSM(projectId) {
     for (var i in obj) {
         var o = obj[i];
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
+        var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
         
         $('#story_mn_filter_assigne_id').append(opt);
+        $('#bug_filter_assignee_id_add').append(opt1);
         
 
     }
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
+            $('#bug_filter_assignee_id_add').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if(fkAssigneId){
                 $('#story_mn_filter_assigne_id').val(fkAssigneId).change();

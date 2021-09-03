@@ -275,24 +275,27 @@
 
 /* mini story card*/
 .miniStoryCard {
-    width: 300px;
+    width: 90%;
     border-radius: 6px;
     background-color: #ffffff;
-    padding-bottom: 7px;
-    padding-left: 5px;
+    padding: 10px;
+    /* padding-left: 5px; */
     margin: 7px auto;
-    box-shadow: rgba(9, 30, 66, 0.35) 0.5px 0.5px 0.5px 0.5px;
+    box-shadow: rgb(9 30 66 / 35%) 0.5px 0.5px 0.5px 0.5px;
     transition: opacity 0.2s ease 0s;
     display: none;
 }
 
 .miniStoryInput {
 
-    width: 270px;
+    
 
 
 }
-
+.task-column-body{
+    height: 75vh;
+    overflow-y: auto;
+}
 
 
 
