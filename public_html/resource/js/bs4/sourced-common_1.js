@@ -5026,7 +5026,7 @@ UserStory.prototype = {
 
             $('#task-info-modal-tasktype')
                     .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
-            console.log('ttt')
+       
         }
         st += '</table>';
         $('#us_filter_tasktypes').html((st));
@@ -13837,9 +13837,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         //            var obj = res.tbl[0].r;
                     var c4new = 0;
                     var c4ongoing = 0;
-                    var c4closed = 0;
-                    $('.main_div_of_backlog_info_kanban_view_table_new')
-                 
+                    var c4closed = 0;                 
                         var usIdList = res.tbl[0].r;
         
                         for (var k = 0; k < usIdList.length; k++) {
@@ -13869,7 +13867,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                       
                         $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).find('.more-us-card-btn').remove();
-                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+startLimit+20+'" endLimit="'+endLimit+20+'" role="button" class="more-us-card-btn col-12">More</a>');
+                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+(parseFloat(startLimit)+20)+'" endLimit="'+(parseFloat(endLimit)+20)+'" role="button" class="more-us-card-btn col-12">More</a>');
                        
                     
 
@@ -13897,7 +13895,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                this.setUSLists4KanbanViewCore(stl[si])
             }
        
-
+     
 
     },
     setUSLists4KanbanViewCore: function (stl) {
@@ -13946,7 +13944,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     crossDomain: true,
                     async: true,
                     success: function (res) {
-                 
+                         var c4new = 0
                         $('#kanban_view_'+stl+'_count').html(0);
                         $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                      
@@ -13970,16 +13968,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                         $(html).find("#user-story-show-stat").parents('label').click();
                             
                                     } 
-                                    
+                                    c4new++
                                     /* $('#kanban_view_new_count').html(c4new);
                                     $('#kanban_view_ongoing_count').html(c4ongoing);
                                     $('#kanban_view_closed_count').html(c4closed); */
                                 }
-                              
+                               
+                              if(c4new > 19){
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
-                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="40" endLimit="80" role="button" class="more-us-card-btn col-12">More</a>');
+                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
                                
                 
+                              }
+                                
                             /* if (c4new === 0)
                                 $('.main_div_of_backlog_info_kanban_view_table_new')
                                         .append($('<div class="task-content content-drag">'));
@@ -13995,6 +13996,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
                         contentArrangableUI();
+                        $('[data-toggle="popover"]').popover()
                        
                     },
                     error: function () {
@@ -14003,7 +14005,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 });
             
        
-            $('[data-toggle="popover"]').popover()
+           
 
     },
     setUSLists4KanbanView_old: function () {
@@ -14463,14 +14465,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         });
     },
+    
     genUSLine4KanbanView: function (o) {
 
   
 
         var assigneeImg = $('<span>')
         if (o.fkOwnerId.length > 3) {
-            var userImage = SAProjectUser.GetDetails(o.fkOwnerId, "userImage");
-            var userName = SAProjectUser.GetDetails(o.fkOwnerId, "userName");
+            var userImage = SAProjectUser.GetUserDetails(o.fkOwnerId, "userImage");
+            var userName = SAProjectUser.GetUserDetails(o.fkOwnerId, "userName");
 
             var img = (userImage)
                     ? fileUrl(userImage)
@@ -14532,6 +14535,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 ? divLabel.html() : "#";
 
         var s = $('<div >')
+                .attr('bid', o.id)
                 .addClass('task-content content-drag')
                 .append($('<div class="task-content-header">')
                         .append($('<div class="ContentText">')
