@@ -34,7 +34,26 @@
        background-color:rgb(244, 245, 247);
        
 }
-
+@media only screen and (max-width: 900px) {
+    .task-column{
+        width: 300px;
+           border-radius: 6px;
+           
+           padding: 5px;
+           margin-left: 15px;
+           background-color:rgb(244, 245, 247);
+           
+    }
+    .task-panel{
+        width: 1000px !important;
+    }
+    .taskPanel {
+        width: 1000px !important;
+    }
+  }
+.taskPanel{
+    width: 80%;
+}
 .task-panel{
     
     display: flex;
@@ -46,6 +65,7 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    width: 90%
 }
 .task-panel-header{
  display: flex;
