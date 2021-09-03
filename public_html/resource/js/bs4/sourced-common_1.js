@@ -5026,7 +5026,7 @@ UserStory.prototype = {
 
             $('#task-info-modal-tasktype')
                     .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
-            console.log('ttt')
+       
         }
         st += '</table>';
         $('#us_filter_tasktypes').html((st));
@@ -13973,7 +13973,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                     $('#kanban_view_ongoing_count').html(c4ongoing);
                                     $('#kanban_view_closed_count').html(c4closed); */
                                 }
-                                console.log(c4new);
+                               
                               if(c4new > 19){
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');

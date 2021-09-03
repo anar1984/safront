@@ -520,6 +520,10 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
             id = res.kv.id;
             SATask.updateTaskByRes(res);
             SACore.updateBacklogByRes(res);
+
+            if (global_var.current_modal === 'loadStoryCardMgmt') {
+               $(".user-story-prototype-change1[data-bid='"+backlogId+"']").change();
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
