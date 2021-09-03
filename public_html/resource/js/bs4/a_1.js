@@ -13348,7 +13348,7 @@ function getSTatsUserManagmentTableKanban(elm){
             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
-            .append('<td class="text-center"><a href="#" class="task-for-backlog-event-prm more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
+            .append('<td class="text-center"></td>')
 
         }
         
@@ -13362,7 +13362,7 @@ function getSTatsUserManagmentTableKanban(elm){
 
 }
 
-function getBugList4UserStory(bgId) {
+function getBugList4UserStory(bgId,tbody) {
    
     var json = {
         kv: {}
@@ -13371,6 +13371,8 @@ function getBugList4UserStory(bgId) {
         json.kv.cookie = getToken();
     } catch (err) {}
     json.kv.fkBackogId = bgId;
+    json.kv.pageNo = 1;
+    json.kv.searchLimit = 200;
     
     var that = this;
     var data = JSON.stringify(json);
@@ -13382,8 +13384,37 @@ function getBugList4UserStory(bgId) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            console.log(res);
+            
+            var ela  = res.tbl[0].r
+            $(tbody).html('')
+            $(tbody).append($("<tr>")
+            .append('<td><b>Task Id</b></td>')
+            .append('<td><b>Status</b></td>')
+            .append('<td><b>Description</b></td>')
+            .append($("<td>").append("<b>Task Nature</b>"))
+            .append('<td><b>Task Type</b></td>')
+            .append('<td><b>Created</b></td>')
+            .append('<td><b>Assigne</b></td>')
+            .append('<td><b>Date</b></td>')
+            )
 
+            for (let i = 0; i < ela.length; i++) {
+               var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+               console.log(taskNature);
+                $(tbody).append($("<tr>")
+                                  .append('<td class="task-id-td">'+ela[i].projectCode+"-"+ela[i].orderNoSeq+'</td>')
+                                  .append('<td><span class="us-item-status-' + ela[i].taskStatus+'">'+ela[i].taskStatus+'</span></td>')
+                                  .append('<td>'+ela[i].taskName+'</td>')
+                                  .append($("<td>").append(taskNature))
+                                  .append('<td>'+ela[i].taskTypeName+'</td>')
+                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/'+ela[i].createByImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].createByName+'" title="" data-original-title="Created By"></td>')
+                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/'+ela[i].userImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].userName+'" title="" data-original-title="Assigne"></td>')
+                                  .append('<td class="task-time-td">'+Utility.convertDate(ela[i].createdDate)+'</td>')
+                                  )
+                
+            }
+
+            $('[data-toggle="popover"]').popover()
         },
         error: function () {
             Toaster.showError(('somethingww'));

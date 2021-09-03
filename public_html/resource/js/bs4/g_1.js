@@ -1205,12 +1205,29 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     $("#issue-managment-add-task").modal("show");
 
 });
+$(document).on('click', '.hide-more-table', function (event) {
+       
+        
+         var tbody  = $(this).parents('.stat-table-us').find("tbody")
+        tbody.empty()
+    
+
+    $(this).html('<i class="fas fa-angle-double-right"></i>')
+    $(this).addClass('more-table-details')
+    $(this).removeClass('hide-more-table')
+    
+
+});
 $(document).on('click', '.more-table-details', function (event) {
        
         var bgId = $(this).attr("pid");
-
-    getBugList4UserStory(bgId);
+         var tbody  = $(this).parents('.stat-table-us').find("tbody")
+    getBugList4UserStory(bgId,tbody);
     
+
+    $(this).html('<i class="fas fa-angle-double-left"></i>')
+    $(this).addClass('hide-more-table')
+    $(this).removeClass('more-table-details')
     
 
 });

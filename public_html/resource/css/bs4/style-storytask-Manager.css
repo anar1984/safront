@@ -105,8 +105,37 @@
 }
 .stat-table-us{
     width: 100%;
-   
+   display: block;
 
+}
+.stat-table-us tbody{
+    max-height: 240px;
+    overflow: auto;
+     display: block;
+}
+.stat-table-us thead{
+   display: block;
+   overflow-y: auto;
+   width: 100%;
+
+}
+.stat-table-us tbody .task-id-td{
+    font-size: 8px;
+    font-weight: bold;
+}
+.stat-table-us tbody .task-time-td{
+    font-size: 8px;
+
+}
+.stat-table-us tbody .task-story-select-img{
+    text-align: center;
+
+}
+.stat-table-us tbody td{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 2px 5px;
 }
 .stat-table-us td{
     margin: 5px;
@@ -117,7 +146,9 @@
 }
 .stat-div-task-content{
     margin-top: 15px;
+    
 }
+
 .stat-table-us tr{
   border: 1px solid #eeeff0;
 }
