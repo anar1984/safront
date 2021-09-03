@@ -14567,11 +14567,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .append($('<div class="us-list-item us-priority">')
                                         .append("&nbsp;" + o.priority)
                                         ))
-                        .append($('<span class="backlog-status">')
+                        /* .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-executor">')
 
                                         .append("&nbsp;" + o.createdByName)
-                                        ))
+                                        )) */
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-date">')
                                         .append("&nbsp;" + Utility.convertDate(o.createdDate))

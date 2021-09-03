@@ -1207,7 +1207,9 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
 });
 $(document).on('click', '.more-table-details', function (event) {
        
+        var bgId = $(this).attr("pid");
 
+    getBugList4UserStory(bgId);
     
     
 

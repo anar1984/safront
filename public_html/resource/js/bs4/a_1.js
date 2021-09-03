@@ -13305,7 +13305,7 @@ function getSTatsUserManagmentTableKanban(elm){
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
-                                             .append('<td><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
+                                             .append('<td class="text-center"><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
                                              
                }
               /*  if(ifle=="changes"){
@@ -13348,7 +13348,7 @@ function getSTatsUserManagmentTableKanban(elm){
             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
-            .append('<td><a href="#" class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
+            .append('<td class="text-center"><a href="#" class="task-for-backlog-event-prm more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
 
         }
         
@@ -13359,6 +13359,36 @@ function getSTatsUserManagmentTableKanban(elm){
     });
 
 
+
+}
+
+function getBugList4UserStory(bgId) {
+   
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBackogId = bgId;
+    
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            console.log(res);
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
 
 }
 
