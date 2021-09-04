@@ -371,7 +371,19 @@ body{
     border-radius:10px;
     color:white;
 }
+.component-table-class-for-zad thead th{
 
+    position: relative;
+}
+.component-table-class-for-zad thead th .handle-drag{
+
+    position: absolute;
+    right: 2px;
+    top: 0px;
+     
+    height: 23px;
+    font-size: 10px;
+}
 
 .us-item-status-waiting{
     background-color: #FFFF00; 

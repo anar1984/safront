@@ -1317,22 +1317,12 @@ var Component = {
         div.append($('<div>').addClass("progressloader loaderTable1"));
         div.append(el);
         div.addClass("table-responsive");
-        div.append($('<div>')
-                      .addClass("dorpdown")
-                      .append($("<span>")
+        div.append($("<span>")
                                  .addClass("table-show-hide-row-div-btn btn btn-sm")
-                                 .attr("id",'table-show-hide-button-id')
-                                 .attr("data-toggle","dropdown")
-                                 .attr("aria-haspopup","true")
-                                 .attr("aria-expanded","false")
-                                 .attr("data-show", "flase")
+                                 .attr("id",'table-show-hide-button-id-a')
+                                 
                                  .html('<i class="fas fa-chevron-right"></i>'))
-                      .append($("<div>")
-                                 .addClass("dropdown-menu")
-                                 .attr("aria-labelledby","table-show-hide-button-id")
-                                 .append('<a class="dropdown-item" id="filter-show-hide-button-id-a" >Filter</a>')
-                                 .append('<a class="dropdown-item" id="table-show-hide-button-id-a" >Settings</a>')
-                                 ))
+                     
         div.append($("<div>")
         .attr("data-tableId",comp.id)
             .addClass("table-show-hide-row-div")
