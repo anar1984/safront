@@ -13130,6 +13130,8 @@ $(document).on("click",".prManag-task-filter-checkbox-label", function(){
     }
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterLabeValuesUs();
+        new UserStory().setUSLists4KanbanView();
+        
     }
  
 })
@@ -13139,6 +13141,7 @@ $(document).on("click",".us-filter-checkbox-sprint", function(){
     }
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterSprintValuesUs();
+        new UserStory().setUSLists4KanbanView();
     }
  
 })
@@ -13216,7 +13219,7 @@ function setPrmFilterSprintValuesUs() {
         }
         
     })
-    new UserStory().setUSLists4KanbanView();
+ 
    
 }
 function setPrmFilterLabeValuesUs() {
@@ -13261,7 +13264,7 @@ function setPrmFilterLabeValuesUs() {
                    
         }
     })
-    new UserStory().setUSLists4KanbanView();
+  
 }
 
 

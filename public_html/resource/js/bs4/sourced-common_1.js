@@ -13815,6 +13815,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if(bsTat) {
             json.kv.backlogStatus = bsTat;
         }
+        if($(".us-mngm-is-api").prop("checked")){
+            json.kv.isApi = 1;
+            console.log('dfghjkllllllllskadnsjndjqqbd');
+        }else{
+            json.kv.isApi = 0; 
+        }
         json.kv.startLimit =startLimit;
       
         json.kv.endLimit = endLimit;
@@ -13927,6 +13933,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 if(search.length >2) {
                     json.kv.backlogName = "%%"+search +"%%";
                 }
+
+                if($(".us-mngm-is-api").prop("checked")){
+                  
+                  
+                }else{
+                    json.kv.isApi = 0; 
+                }
                
                 json.kv.backlogStatus = stl;
                 
@@ -13973,14 +13986,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                     $('#kanban_view_ongoing_count').html(c4ongoing);
                                     $('#kanban_view_closed_count').html(c4closed); */
                                 }
-                               
+                              
                               if(c4new > 19){
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
                                
                 
                               }
-                                
+                           
                             /* if (c4new === 0)
                                 $('.main_div_of_backlog_info_kanban_view_table_new')
                                         .append($('<div class="task-content content-drag">'));
@@ -13991,12 +14004,18 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 $('.main_div_of_backlog_info_kanban_view_table_closed')
                                         .append($('<div class="task-content content-drag">')); */
                         } catch (e) {
+
+                          if(c4new < 1){
+                             
+                              $('.main_div_of_backlog_info_kanban_view_table_'+stl)
+                              .append($('<div class="task-content content-drag">'));
+                            }
                             
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
                         contentArrangableUI();
-                        $('[data-toggle="popover"]').popover()
+                        $('[data-toggle="popover"]').popover();
                        
                     },
                     error: function () {

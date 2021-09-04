@@ -1163,6 +1163,11 @@ $(document).on('click', '#element-edit-button-hover', function (event) {
 
 
 });
+$(document).on('change', '.us-mngm-is-api', function (e) {
+  
+    labelOrSplitValuesUs();
+
+});
 $(document).on('dblclick', '.comp-title-span', function (e) {
     e.stopPropagation();
     var pid = $(this).parents(".component-class").attr("id")
@@ -1226,8 +1231,12 @@ $(document).on('click', '.next-large-modal-btn', function (event) {
         elm.each(function(){
 
             div.append(this);
+
+            $('[data-toggle="popover"]').popover();
         })
-    $("#task-ongoing-large-modal").modal('show')
+    $("#task-ongoing-large-modal").modal('show');
+  
+
 
 });
 $(document).on('click', '.more-table-details', function (event) {
