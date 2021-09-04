@@ -1218,6 +1218,18 @@ $(document).on('click', '.hide-more-table', function (event) {
     
 
 });
+$(document).on('click', '.next-large-modal-btn', function (event) {
+       var div = $("#body-large-modal-in-us")
+       div.empty();
+        var elm = $(this).parents('.task-column').find(".task-content").clone()
+   
+        elm.each(function(){
+
+            div.append(this);
+        })
+    $("#task-ongoing-large-modal").modal('show')
+
+});
 $(document).on('click', '.more-table-details', function (event) {
        
         var bgId = $(this).attr("pid");

@@ -107,6 +107,18 @@
     margin-top: 7px;
     position: relative;
 }
+#body-large-modal-in-us{
+      display: flex;
+      flex-wrap: wrap;
+      height: 100%;
+      overflow: auto;
+     
+}
+#body-large-modal-in-us .task-content {
+    width: 29%;
+    
+    margin-left: 20px;
+}
 .task-content .switch {
     position: absolute;
     right: 10px;

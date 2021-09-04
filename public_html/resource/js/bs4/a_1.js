@@ -13216,7 +13216,7 @@ function setPrmFilterSprintValuesUs() {
         }
         
     })
-
+    new UserStory().setUSLists4KanbanView();
    
 }
 function setPrmFilterLabeValuesUs() {
@@ -13261,7 +13261,7 @@ function setPrmFilterLabeValuesUs() {
                    
         }
     })
-   
+    new UserStory().setUSLists4KanbanView();
 }
 
 
@@ -15292,6 +15292,56 @@ function hideToggleMain() {
 function showToggleMain() {
     $('.main-toggle').show()
 }
+function lableAddAssignUSerStoryManagement(elm) {
+    var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+
+    var labelId = $(elm).attr("id");
+    for (var indx = 0; indx < check.length; indx++) {
+
+
+        if ($(check[indx]).prop('checked')) {
+
+            var projectId = $('#story_mn_filter_project_id').val();
+            var id = $(check[indx]).attr("pid");
+
+
+            var checked = '1';
+
+
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv['fkLabelId'] = labelId;
+            json.kv['fkProjectId'] = projectId;
+            json.kv['fkBacklogId'] = id;
+            json.kv.assign = checked;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmAssignLabel",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    new Label().load()
+                },
+                error: function () {
+                    Toaster.showError(('Something went wrong!!!'));
+                }
+            });
+
+        }
+
+    }
+
+
+}
 function lableAddAssignProjectManagement(elm) {
     var check = $("#bugListTable .bug-tr .checkbox-issue-task");
 
@@ -15329,7 +15379,7 @@ function lableAddAssignProjectManagement(elm) {
                 crossDomain: true,
                 async: true,
                 success: function (res) {
-                    new Label().load4Task()
+                    new Label().load()
                 },
                 error: function () {
                     Toaster.showError(('Something went wrong!!!'));
@@ -15345,6 +15395,60 @@ function lableAddAssignProjectManagement(elm) {
 ;
 
 
+function sprintAddAssignUSerStoryManagement(elm) {
+
+
+
+
+    var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+    var sprintId = $(elm).attr("id");
+
+    for (var indx = 0; indx < check.length; indx++) {
+
+
+        if ($(check[indx]).prop('checked')) {
+
+           
+            
+             var projectId = $('#story_mn_filter_project_id').val();
+            var id = $(check[indx]).attr("pid");
+
+            var checked = '1';
+
+            sprintZadininSheyeidlmesiProjectManagement(projectId, id, sprintId, checked);
+
+        }
+
+    }
+
+
+
+}
+
+function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprintId, checked) {
+    var json = initJSON();
+    json.kv['fkSprintId'] = sprintId;
+    json.kv['fkProjectId'] = projectId;
+    json.kv['fkBacklogId'] = backlogId;
+    json.kv.assign = checked;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAssignSprint",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            new Sprint().load()
+            new Label().load()
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
+}
 function sprintAddAssignProjectManagement(elm) {
 
 
@@ -15387,7 +15491,7 @@ function sprintAddAssignProjectManagement(elm) {
             crossDomain: true,
             async: true,
             success: function (res) {
-                new Sprint().load4Task()
+                new Sprint().load()
                 new Label().load()
             },
             error: function () {
@@ -15432,7 +15536,7 @@ $(document).on('click', '.story-card-sprint-assign', function (evt) {
     global_var.story_card_sprint_assign_id = $(this).val();
 
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        new UserStory().setUSLists4KanbanView();
+        sprintAddAssignUSerStoryManagement(this)
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadBugChange") {
@@ -15583,7 +15687,7 @@ $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_name = $(this).attr('sname');
     global_var.story_card_label_assign_id = $(this).val();
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        new UserStory().setUSLists4KanbanView();
+        lableAddAssignUSerStoryManagement(this)
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadProjectManagement") {
