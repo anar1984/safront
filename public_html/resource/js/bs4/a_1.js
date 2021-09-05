@@ -13268,6 +13268,76 @@ function setPrmFilterLabeValuesUs() {
 }
 
 
+function getSTatsUserManagmentTableKanbanLargeMenu(id){
+
+   
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBacklogId = id;
+   
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {  
+           // $(div).html('')
+            var dt  = res.tbl;
+
+          for (let index = 0; index < dt.length; index++) {
+               var ifle = dt[index].tn;
+             
+               if(ifle=="overall"){
+                var le = dt[index].r[0];
+                var total=   le.overall   
+                var newst  = le.statusNew
+                   var elm = $(".modal-header b.status-new-total")
+                       elm.text(parseFloat(elm.text())+parseFloat(newst));
+            
+          
+             var ong =  le.statusOngoing
+             var elm1 = $(".modal-header b.status-ongoing-total")
+                elm1.text(parseFloat(elm1.text())+parseFloat(ong));
+
+             var cl= le.statusClosed
+                var elm2 = $(".modal-header b.status-closed-total")
+                elm2.text(parseFloat(elm2.text())+parseFloat(cl));
+
+             var uat = le.statusUat 
+                var elm3 = $(".modal-header b.status-UAT-total")
+                elm3.text(parseFloat(elm3.text())+parseFloat(uat));
+                
+              var rej =le.statusRejected
+              var elm4 = $(".modal-header b.status-rejected-total")
+                elm4.text(parseFloat(elm4.text())+parseFloat(rej));
+               var can =le.statusCanceled
+               var elm5 = $(".modal-header b.status-Canceled-total")
+               elm5.text(parseFloat(elm5.text())+parseFloat(can));
+                var wait  = le.statusWaiting
+                var elm6 = $(".modal-header b.status-rejected-total")
+                elm6.text(parseFloat(elm6.text())+parseFloat(wait));
+                                             
+               }
+             
+          }
+         
+        
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+
+
+}
 function getSTatsUserManagmentTableKanban(elm){
 
       var div = $(elm).parents(".task-content").find(".stat-div-task-content");

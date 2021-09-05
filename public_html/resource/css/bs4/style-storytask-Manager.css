@@ -116,6 +116,11 @@
     margin: 20px;
    
 }
+.status-large-menu-total{
+    font-size: 1rem !important;
+    margin: auto !important;
+
+}
 .task-content .switch {
     position: absolute;
     right: 10px;
