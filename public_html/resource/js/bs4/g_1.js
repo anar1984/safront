@@ -1278,7 +1278,7 @@ function run_clock(id,endtime){
         
             new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
            
-             current_time = Date.parse(new Date());
+                current_time = Date.parse(new Date());
              deadline= new Date(current_time + time_in_minutes*60*1000)
              run_clock(id,new Date(current_time + time_in_minutes*60*1000))
         }
