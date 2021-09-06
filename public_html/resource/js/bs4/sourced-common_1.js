@@ -13815,6 +13815,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if(bsTat) {
             json.kv.backlogStatus = bsTat;
         }
+        if($(".us-mngm-is-api").prop("checked")){
+            json.kv.isApi = 1;
+            console.log('dfghjkllllllllskadnsjndjqqbd');
+        }else{
+            json.kv.isApi = 0; 
+        }
         json.kv.startLimit =startLimit;
       
         json.kv.endLimit = endLimit;
@@ -13898,6 +13904,126 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
      
 
     },
+    setUSLists4KanbanViewCoreUsLArge: function (stl) {
+               $('#body-large-modal-in-us').html('');
+               $(".modal-header b.status-new-total").text(0)
+               $(".modal-header b.status-ongoing-total").text(0)
+               $(".modal-header b.status-closed-total").text(0)
+               $(".modal-header b.status-UAT-total").text(0)
+               $(".modal-header b.status-rejected-total").text(0)
+               $(".modal-header b.status-Canceled-total").text(0)
+               $(".modal-header b.status-waiting-total").text(0)
+               
+                var priD =$("#story_mn_filter_project_id").val();
+                var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var search = $("#search-us-managmenet").val();
+                if(priD==''){
+                    return
+                }
+                var json = {
+                    kv: {}
+                };
+                try {
+                    json.kv.cookie = getToken();
+                } catch (err) {
+                }
+                json.kv.fkProjectId = priD;
+                if (UsSprint) {
+                    json.kv.id = UsSprint;
+                   
+                } else if(UsLabel) {
+                    json.kv.id = UsLabel;
+                }
+                if(fkAsId) {
+                    json.kv.fkOwnerId = fkAsId;
+                }
+                if(search.length >2) {
+                    json.kv.backlogName = "%%"+search +"%%";
+                }
+
+                if($(".us-mngm-is-api").prop("checked")){
+                  
+                  
+                }else{
+                    json.kv.isApi = 0; 
+                }
+               
+                json.kv.backlogStatus = stl;
+                
+                
+                json.kv.startLimit =0;
+              
+                json.kv.endLimit = 200;
+                var that = this;
+                var data = JSON.stringify(json);
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                         var c4new = 0
+                        $('#kanban_view_'+stl+'_count').html(0);
+                        $('#body-large-modal-in-us').html('');
+                        $("#next-large-header-modal").text("Total "+stl)
+                        try {
+                                                  
+                                var usIdList = res.tbl[0].r;
+                
+                                for (var k = 0; k < usIdList.length; k++) {
+                                  
+                                     
+                
+                                    var obj = usIdList[k];
+                                   
+                
+                                    var html = new UserStory().genUSLine4KanbanView(obj);
+                                    $('#body-large-modal-in-us').append(html);
+                                    getSTatsUserManagmentTableKanbanLargeMenu(obj.id)
+                                     if (obj.backlogStatus === 'ongoing') {
+                                    
+                                 
+                                        $(html).find("#user-story-show-stat").parents('label').click();
+                            
+                                    } 
+                                    c4new++
+                                    /* $('#kanban_view_new_count').html(c4new);
+                                    $('#kanban_view_ongoing_count').html(c4ongoing);
+                                    $('#kanban_view_closed_count').html(c4closed); */
+                                }
+                            
+                           
+                            /* if (c4new === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_new')
+                                        .append($('<div class="task-content content-drag">'));
+                            if (c4ongoing === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
+                                        .append($('<div class="task-content content-drag">'));
+                            if (c4closed === 0)
+                                $('.main_div_of_backlog_info_kanban_view_table_closed')
+                                        .append($('<div class="task-content content-drag">')); */
+                        } catch (e) {
+
+                        
+                            
+                        }
+                        global_var.story_card_sprint_assign_checked = 0;
+                        global_var.story_card_label_assign_checked = 0;
+                        contentArrangableUI();
+                        $('[data-toggle="popover"]').popover();
+                
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+            
+       
+           
+
+    },
     setUSLists4KanbanViewCore: function (stl) {
   
                
@@ -13926,6 +14052,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 if(search.length >2) {
                     json.kv.backlogName = "%%"+search +"%%";
+                }
+
+                if($(".us-mngm-is-api").prop("checked")){
+                  
+                  
+                }else{
+                    json.kv.isApi = 0; 
                 }
                
                 json.kv.backlogStatus = stl;
@@ -13973,14 +14106,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                     $('#kanban_view_ongoing_count').html(c4ongoing);
                                     $('#kanban_view_closed_count').html(c4closed); */
                                 }
-                               
+                              
                               if(c4new > 19){
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
                                
                 
                               }
-                                
+                           
                             /* if (c4new === 0)
                                 $('.main_div_of_backlog_info_kanban_view_table_new')
                                         .append($('<div class="task-content content-drag">'));
@@ -13991,12 +14124,18 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 $('.main_div_of_backlog_info_kanban_view_table_closed')
                                         .append($('<div class="task-content content-drag">')); */
                         } catch (e) {
+
+                          if(c4new < 1){
+                             
+                              $('.main_div_of_backlog_info_kanban_view_table_'+stl)
+                              .append($('<div class="task-content content-drag">'));
+                            }
                             
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
                         contentArrangableUI();
-                        $('[data-toggle="popover"]').popover()
+                        $('[data-toggle="popover"]').popover();
                        
                     },
                     error: function () {
@@ -14541,7 +14680,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .append($('<div class="ContentText">')
                                 .attr('bno', o.backlogNo)
                                 .attr('pid', o.id)
-                                .append(rs)
+                                .append($("<input type='checkbox'>")
+                                .addClass("assign-label-story-card-item-new")
+                                .attr("pid", o.id))
                                 .append(' ' + o.orderNo)
                                 .append($('<span class="headerContentText">')
                                         .attr('href', '#')
@@ -14567,11 +14708,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .append($('<div class="us-list-item us-priority">')
                                         .append("&nbsp;" + o.priority)
                                         ))
-                        .append($('<span class="backlog-status">')
+                        /* .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-executor">')
 
                                         .append("&nbsp;" + o.createdByName)
-                                        ))
+                                        )) */
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-date">')
                                         .append("&nbsp;" + Utility.convertDate(o.createdDate))
@@ -14590,13 +14731,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         </label>`)
         .append($("<div>").addClass("stat-div-task-content")
            .append($('<table>').addClass("stat-table-us")
-           .append($("<tbody>")
+                   .append($("<thead>")
                        .append($("<tr class=total>"))
                        .append($("<tr class='bug'>"))
-                       .append($("<tr class='changes'>"))
-                       .append($("<tr class='new'>"))
-                       ))
-        .css("display",'none'))
+                       )
+                   .append($("<tbody>")))
+                  .css("display",'none'))
 //                        .append($('<i  class="fa fa-info-circle">')
 //                                .data('toggle', 'modal')
 //                                .data('target', '#backlogTaskInfoModal')

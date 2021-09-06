@@ -34,7 +34,26 @@
        background-color:rgb(244, 245, 247);
        
 }
-
+@media only screen and (max-width: 900px) {
+    .task-column{
+        width: 300px;
+           border-radius: 6px;
+           
+           padding: 5px;
+           margin-left: 15px;
+           background-color:rgb(244, 245, 247);
+           
+    }
+    .task-panel{
+        width: 1000px !important;
+    }
+    .taskPanel {
+        width: 1000px !important;
+    }
+  }
+.taskPanel{
+    width: 80%;
+}
 .task-panel{
     
     display: flex;
@@ -46,6 +65,7 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    width: 90%
 }
 .task-panel-header{
  display: flex;
@@ -87,6 +107,20 @@
     margin-top: 7px;
     position: relative;
 }
+#body-large-modal-in-us{
+   
+     
+}
+#body-large-modal-in-us .task-content {
+    width: 29%;
+    margin: 20px;
+   
+}
+.status-large-menu-total{
+    font-size: 1rem !important;
+    margin: auto !important;
+
+}
 .task-content .switch {
     position: absolute;
     right: 10px;
@@ -105,8 +139,37 @@
 }
 .stat-table-us{
     width: 100%;
-   
+   display: block;
 
+}
+.stat-table-us tbody{
+    max-height: 240px;
+    overflow: auto;
+     display: block;
+}
+.stat-table-us thead{
+   display: block;
+   overflow-y: auto;
+   width: 100%;
+
+}
+.stat-table-us tbody .task-id-td{
+    font-size: 8px;
+    font-weight: bold;
+}
+.stat-table-us tbody .task-time-td{
+    font-size: 8px;
+
+}
+.stat-table-us tbody .task-story-select-img{
+    text-align: center;
+
+}
+.stat-table-us tbody td{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 2px 5px;
 }
 .stat-table-us td{
     margin: 5px;
@@ -117,7 +180,9 @@
 }
 .stat-div-task-content{
     margin-top: 15px;
+    
 }
+
 .stat-table-us tr{
   border: 1px solid #eeeff0;
 }

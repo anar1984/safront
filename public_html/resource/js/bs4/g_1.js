@@ -1163,6 +1163,11 @@ $(document).on('click', '#element-edit-button-hover', function (event) {
 
 
 });
+$(document).on('change', '.us-mngm-is-api', function (e) {
+  
+    labelOrSplitValuesUs();
+
+});
 $(document).on('dblclick', '.comp-title-span', function (e) {
     e.stopPropagation();
     var pid = $(this).parents(".component-class").attr("id")
@@ -1205,10 +1210,133 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     $("#issue-managment-add-task").modal("show");
 
 });
+$(document).on('click', '.hide-more-table', function (event) {
+       
+        
+         var tbody  = $(this).parents('.stat-table-us').find("tbody")
+        tbody.empty()
+    
+
+    $(this).html('<i class="fas fa-angle-double-right"></i>')
+    $(this).addClass('more-table-details')
+    $(this).removeClass('hide-more-table')
+    
+
+});
+var time_in_minutes = 5;
+var current_time = Date.parse(new Date());
+var deadline = new Date(current_time + time_in_minutes*60*1000);
+
+$(document).on('click', '.next-large-modal-btn', function (event) {
+       var st = $(this).attr('data-status')
+          
+     
+        new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+    $("#task-ongoing-large-modal").modal('show');
+      $("#countDown-larg").attr('data-status-time',st)
+      current_time = Date.parse(new Date());
+      deadline= new Date(current_time + time_in_minutes*60*1000)
+    run_clock('countDown-larg',deadline);
+
+});
+$(document).on('click', '.refresh-interval-butn', function (event) {
+   
+                clearInterval(timeinterval);
+            var st = $('#countDown-larg').attr('data-status-time');
+        
+            new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+           
+                current_time = Date.parse(new Date());
+             deadline= new Date(current_time + time_in_minutes*60*1000)
+             run_clock('countDown-larg',new Date(current_time + time_in_minutes*60*1000))
+  
+});
+$(document).on('click', '.pause-interval-butn', function (event) {
+       
+    if($(this).hasClass("start")){
+        pause_clock();
+        $(this).removeClass("start");
+        $(this).html('<i class="far fa-play-circle"></i>');
+
+    }else{
+        resume_clock()
+        $(this).addClass("start");
+        $(this).html('<i class="far fa-pause-circle"></i>');
+    }
+
+});
+
+
+
+
+function time_remaining(endtime){
+	var t = Date.parse(endtime) - Date.parse(new Date());
+	var seconds = Math.floor( (t/1000) % 60 );
+	var minutes = Math.floor( (t/1000/60) % 60 );
+	var hours = Math.floor( (t/(1000*60*60)) % 24 );
+	var days = Math.floor( t/(1000*60*60*24) );
+	return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
+}
+
+var timeinterval;
+function run_clock(id,endtime){
+	var clock = document.getElementById(id);
+	function update_clock(){
+		var t = time_remaining(endtime);
+		clock.innerHTML = t.minutes+':'+t.seconds;
+		if(t.total<=0){ 
+            clearInterval(timeinterval);
+            var st = $('#countDown-larg').attr('data-status-time');
+        
+            new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+           
+                current_time = Date.parse(new Date());
+             deadline= new Date(current_time + time_in_minutes*60*1000)
+             run_clock(id,new Date(current_time + time_in_minutes*60*1000))
+        }
+	}
+	update_clock(); // run function once at first to avoid delay
+	timeinterval = setInterval(update_clock,1000);
+}
+
+
+
+var paused = false; // is the clock paused?
+var time_left; // time left on the clock when paused
+
+function pause_clock(){
+	if(!paused){
+		paused = true;
+		clearInterval(timeinterval); // stop the clock
+		time_left = time_remaining(deadline).total; // preserve remaining time
+	}
+}
+
+function resume_clock(){
+	if(paused){
+		paused = false;
+
+		// update the deadline to preserve the amount of time remaining
+		deadline = new Date(Date.parse(new Date()) + time_left);
+
+		// start the clock
+		run_clock('countDown-larg',deadline);
+	}
+}
+
+
+
+  
 $(document).on('click', '.more-table-details', function (event) {
        
-
+        var bgId = $(this).attr("pid");
+         var tbody  = $(this).parents('.stat-table-us').find("tbody")
+    getBugList4UserStory(bgId,tbody);
     
+
+    $(this).html('<i class="fas fa-angle-double-left"></i>')
+    $(this).addClass('hide-more-table')
+    $(this).removeClass('more-table-details')
     
 
 });

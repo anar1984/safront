@@ -13130,6 +13130,8 @@ $(document).on("click",".prManag-task-filter-checkbox-label", function(){
     }
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterLabeValuesUs();
+        new UserStory().setUSLists4KanbanView();
+        
     }
  
 })
@@ -13139,6 +13141,7 @@ $(document).on("click",".us-filter-checkbox-sprint", function(){
     }
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterSprintValuesUs();
+        new UserStory().setUSLists4KanbanView();
     }
  
 })
@@ -13216,7 +13219,7 @@ function setPrmFilterSprintValuesUs() {
         }
         
     })
-
+ 
    
 }
 function setPrmFilterLabeValuesUs() {
@@ -13261,10 +13264,80 @@ function setPrmFilterLabeValuesUs() {
                    
         }
     })
-   
+  
 }
 
 
+function getSTatsUserManagmentTableKanbanLargeMenu(id){
+
+   
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBacklogId = id;
+   
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {  
+           // $(div).html('')
+            var dt  = res.tbl;
+
+          for (let index = 0; index < dt.length; index++) {
+               var ifle = dt[index].tn;
+             
+               if(ifle=="overall"){
+                var le = dt[index].r[0];
+                var total=   le.overall   
+                var newst  = le.statusNew
+                   var elm = $(".modal-header b.status-new-total")
+                       elm.text(parseFloat(elm.text())+parseFloat(newst));
+            
+          
+             var ong =  le.statusOngoing
+             var elm1 = $(".modal-header b.status-ongoing-total")
+                elm1.text(parseFloat(elm1.text())+parseFloat(ong));
+
+             var cl= le.statusClosed
+                var elm2 = $(".modal-header b.status-closed-total")
+                elm2.text(parseFloat(elm2.text())+parseFloat(cl));
+
+             var uat = le.statusUat 
+                var elm3 = $(".modal-header b.status-UAT-total")
+                elm3.text(parseFloat(elm3.text())+parseFloat(uat));
+                
+              var rej =le.statusRejected
+              var elm4 = $(".modal-header b.status-rejected-total")
+                elm4.text(parseFloat(elm4.text())+parseFloat(rej));
+               var can =le.statusCanceled
+               var elm5 = $(".modal-header b.status-Canceled-total")
+               elm5.text(parseFloat(elm5.text())+parseFloat(can));
+                var wait  = le.statusWaiting
+                var elm6 = $(".modal-header b.status-rejected-total")
+                elm6.text(parseFloat(elm6.text())+parseFloat(wait));
+                                             
+               }
+             
+          }
+         
+        
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+
+
+}
 function getSTatsUserManagmentTableKanban(elm){
 
       var div = $(elm).parents(".task-content").find(".stat-div-task-content");
@@ -13305,7 +13378,7 @@ function getSTatsUserManagmentTableKanban(elm){
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
-                                             .append('<td><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
+                                             .append('<td class="text-center"><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
                                              
                }
               /*  if(ifle=="changes"){
@@ -13348,7 +13421,7 @@ function getSTatsUserManagmentTableKanban(elm){
             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
-            .append('<td><a href="#" class="task-for-backlog-event-prm more-table-details"  >details</a></td>')
+            .append('<td class="text-center"></td>')
 
         }
         
@@ -13359,6 +13432,67 @@ function getSTatsUserManagmentTableKanban(elm){
     });
 
 
+
+}
+
+function getBugList4UserStory(bgId,tbody) {
+   
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkBackogId = bgId;
+    json.kv.pageNo = 1;
+    json.kv.searchLimit = 200;
+    
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            
+            var ela  = res.tbl[0].r
+            $(tbody).html('')
+            $(tbody).append($("<tr>")
+            .append('<td><b>Task Id</b></td>')
+            .append('<td><b>Status</b></td>')
+            .append('<td><b>Description</b></td>')
+            .append($("<td>").append("<b>Task Nature</b>"))
+            .append('<td><b>Task Type</b></td>')
+            .append('<td><b>Created</b></td>')
+            .append('<td><b>Assigne</b></td>')
+            .append('<td><b>Date</b></td>')
+            )
+
+            for (let i = 0; i < ela.length; i++) {
+               var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+               console.log(taskNature);
+                $(tbody).append($("<tr>")
+                                  .append('<td class="task-id-td">'+ela[i].projectCode+"-"+ela[i].orderNoSeq+'</td>')
+                                  .append('<td><span class="us-item-status-' + ela[i].taskStatus+'">'+ela[i].taskStatus+'</span></td>')
+                                  .append('<td>'+ela[i].taskName+'</td>')
+                                  .append($("<td>").append(taskNature))
+                                  .append('<td>'+ela[i].taskTypeName+'</td>')
+                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/'+ela[i].createByImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].createByName+'" title="" data-original-title="Created By"></td>')
+                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/'+ela[i].userImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].userName+'" title="" data-original-title="Assigne"></td>')
+                                  .append('<td class="task-time-td">'+Utility.convertDate(ela[i].createdDate)+'</td>')
+                                  )
+                
+            }
+
+            $('[data-toggle="popover"]').popover()
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
 
 }
 
@@ -15231,6 +15365,56 @@ function hideToggleMain() {
 function showToggleMain() {
     $('.main-toggle').show()
 }
+function lableAddAssignUSerStoryManagement(elm) {
+    var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+
+    var labelId = $(elm).attr("id");
+    for (var indx = 0; indx < check.length; indx++) {
+
+
+        if ($(check[indx]).prop('checked')) {
+
+            var projectId = $('#story_mn_filter_project_id').val();
+            var id = $(check[indx]).attr("pid");
+
+
+            var checked = '1';
+
+
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv['fkLabelId'] = labelId;
+            json.kv['fkProjectId'] = projectId;
+            json.kv['fkBacklogId'] = id;
+            json.kv.assign = checked;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmAssignLabel",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    new Label().load()
+                },
+                error: function () {
+                    Toaster.showError(('Something went wrong!!!'));
+                }
+            });
+
+        }
+
+    }
+
+
+}
 function lableAddAssignProjectManagement(elm) {
     var check = $("#bugListTable .bug-tr .checkbox-issue-task");
 
@@ -15268,7 +15452,7 @@ function lableAddAssignProjectManagement(elm) {
                 crossDomain: true,
                 async: true,
                 success: function (res) {
-                    new Label().load4Task()
+                    new Label().load()
                 },
                 error: function () {
                     Toaster.showError(('Something went wrong!!!'));
@@ -15284,6 +15468,60 @@ function lableAddAssignProjectManagement(elm) {
 ;
 
 
+function sprintAddAssignUSerStoryManagement(elm) {
+
+
+
+
+    var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+    var sprintId = $(elm).attr("id");
+
+    for (var indx = 0; indx < check.length; indx++) {
+
+
+        if ($(check[indx]).prop('checked')) {
+
+           
+            
+             var projectId = $('#story_mn_filter_project_id').val();
+            var id = $(check[indx]).attr("pid");
+
+            var checked = '1';
+
+            sprintZadininSheyeidlmesiProjectManagement(projectId, id, sprintId, checked);
+
+        }
+
+    }
+
+
+
+}
+
+function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprintId, checked) {
+    var json = initJSON();
+    json.kv['fkSprintId'] = sprintId;
+    json.kv['fkProjectId'] = projectId;
+    json.kv['fkBacklogId'] = backlogId;
+    json.kv.assign = checked;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAssignSprint",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            new Sprint().load()
+            new Label().load()
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
+}
 function sprintAddAssignProjectManagement(elm) {
 
 
@@ -15326,7 +15564,7 @@ function sprintAddAssignProjectManagement(elm) {
             crossDomain: true,
             async: true,
             success: function (res) {
-                new Sprint().load4Task()
+                new Sprint().load()
                 new Label().load()
             },
             error: function () {
@@ -15371,7 +15609,7 @@ $(document).on('click', '.story-card-sprint-assign', function (evt) {
     global_var.story_card_sprint_assign_id = $(this).val();
 
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        new UserStory().setUSLists4KanbanView();
+        sprintAddAssignUSerStoryManagement(this)
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadBugChange") {
@@ -15522,7 +15760,7 @@ $(document).on('click', '.story-card-label-assign', function (evt) {
     global_var.story_card_label_assign_name = $(this).attr('sname');
     global_var.story_card_label_assign_id = $(this).val();
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        new UserStory().setUSLists4KanbanView();
+        lableAddAssignUSerStoryManagement(this)
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadProjectManagement") {

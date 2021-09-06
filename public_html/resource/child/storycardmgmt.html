@@ -11,7 +11,7 @@
         </div>
         <!--By G.R-->
         <div class="TaskPanel col-12" >
-            <div class="taskPanel col-10" style="margin: auto;">
+            <div class="taskPanel " style="margin: auto;">
                 <div class="category-kanban">
                     <div class="searchSeqment ">
                         <div class="col-lg-4">
@@ -61,6 +61,7 @@
                                 </div>
                             </div>
                            </div>
+                        
                         <div class="col-lg-2 text-center" >
                             <div class="dropdown">
                                 <!-- btn btn-primary   sildim -->      
@@ -99,7 +100,10 @@
                             </div>
                         
                            </div>
-                           
+                           <div class="col-lg-1">
+                               <span>Is Api</span>
+                            <input type="checkbox" class="us-mngm-is-api" >
+                           </div>
  
                         <div class="sprint dropdown" style="margin-left: 10px;" >
 
@@ -113,7 +117,7 @@
 
 
                 </div>
-                <div class="task-panel col-11" style="margin: auto;">
+                <div class="task-panel" style="margin: auto;">
                     <div class="task-column new" status="new">
 
                         <div draggable="true" class="task-column-header" >
@@ -129,7 +133,7 @@
                             
                             
                                                         </div>-->
-
+                                                        <button data-status='new' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
                         </div>
                         <div class="CardContentAdd">
                             <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
@@ -169,7 +173,7 @@
                             
                             
                                                         </div>-->
-
+                           <button data-status='ongoing' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
                         </div>
                         <div class="miniStoryCard">
                             <h5>New Story Card</h5>
@@ -210,7 +214,7 @@
                             
                             
                                                         </div>-->
-
+                                                        <button data-status='closed' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
                         </div>
                         <div class="miniStoryCard">
                             <h5>New Story Card</h5>
@@ -243,3 +247,4 @@
         </div>
     </div>
 </div>
+
