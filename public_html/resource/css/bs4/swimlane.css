@@ -12,6 +12,7 @@
     width: 93.5%;
     z-index: 5;
     padding: 10px 0px;
+    display: initial;
 }
 
 .Graphtable .laneColumnDiv {
