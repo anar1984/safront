@@ -6189,7 +6189,7 @@ function getComponentValueAfterTriggerApi(el, val) {
         var res = val.split(global_var.vertical_seperator);
         for (var i = 0; i < res.length; i++) {
             try {
-                $(el).append(generateFileLine(res[i].trim(), "col-3"));
+                $(el).append(generateFileLine(res[i].trim(), "col-12"));
             } catch (e) {
             }
         }
