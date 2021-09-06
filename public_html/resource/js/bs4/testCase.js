@@ -1885,6 +1885,64 @@ $(document).on("change", '#bug_filter_project_id_add', function (e) {
 
 
 })
+
+
+$(document).on("change", '#bug_filter_project_id_multi', function (e) {
+    var id = $(this).val();//getProjectListIn();
+    loadStoryCardByProjectAdd4Multi(id);
+    //loadAssigneesByProject(id);
+    //    $('#bug_filter_backlog_id').selectpicker();
+    //    $('#bug_filter_assignee_id').selectpicker();
+
+})
+
+
+
+function loadStoryCardByProjectAdd4Multi(projectId) {
+    if (!projectId) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = projectId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmLoadStoryCardByProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            loadStoryCardByProjectDetails4Multi(res);
+            $('#bug_filter_backlog_id_multi').selectpicker('refresh');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+
+function loadStoryCardByProjectDetails4Multi(res) {
+    try {
+        var el = $('#bug_filter_backlog_id_multi');
+        el.html('');
+        var obj = res.tbl[0].r;
+        for (var i in obj) {
+            var o = obj[i];
+            el.append($('<option>')
+                .val(o.id)
+                .text(o.backlogName));
+        }
+    } catch (err) {
+
+    }
+    $('#bug_filter_backlog_id_multi').selectpicker('refresh');
+}
+
+
 $(document).on("click", '#collapse-group', function (e) {
      var $this = $(".bugChangegroupArrow");
      console.log($this);
