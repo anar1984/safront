@@ -1223,7 +1223,7 @@ $(document).on('click', '.hide-more-table', function (event) {
     
 
 });
-var time_in_minutes = 1;
+var time_in_minutes = 5;
 var current_time = Date.parse(new Date());
 var deadline = new Date(current_time + time_in_minutes*60*1000);
 
@@ -1238,6 +1238,18 @@ $(document).on('click', '.next-large-modal-btn', function (event) {
       deadline= new Date(current_time + time_in_minutes*60*1000)
     run_clock('countDown-larg',deadline);
 
+});
+$(document).on('click', '.refresh-interval-butn', function (event) {
+   
+                clearInterval(timeinterval);
+            var st = $('#countDown-larg').attr('data-status-time');
+        
+            new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+           
+                current_time = Date.parse(new Date());
+             deadline= new Date(current_time + time_in_minutes*60*1000)
+             run_clock('countDown-larg',new Date(current_time + time_in_minutes*60*1000))
+  
 });
 $(document).on('click', '.pause-interval-butn', function (event) {
        
