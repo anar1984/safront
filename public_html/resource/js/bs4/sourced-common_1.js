@@ -13967,7 +13967,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                          var c4new = 0
                         $('#kanban_view_'+stl+'_count').html(0);
                         $('#body-large-modal-in-us').html('');
-                        $("#next-large-header-modal").text("Total "+stl)
+                        $("#next-large-header-modal").text(stl+"("+res.kv.rowCount+")");
+                        $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
                         try {
                                                   
                                 var usIdList = res.tbl[0].r;
@@ -14080,7 +14081,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                          var c4new = 0
                         $('#kanban_view_'+stl+'_count').html(0);
                         $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
-                     
+                        $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
                         try {
                                                   
                                 var usIdList = res.tbl[0].r;
