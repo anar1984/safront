@@ -13817,9 +13817,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         if($(".us-mngm-is-api").prop("checked")){
             json.kv.isApi = 1;
-            console.log('dfghjkllllllllskadnsjndjqqbd');
+            
         }else{
-            json.kv.isApi = 0; 
+            json.kv.isApi = 'NE%1'; 
         }
         json.kv.startLimit =startLimit;
       
@@ -13945,7 +13945,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                   
                   
                 }else{
-                    json.kv.isApi = 0; 
+                    json.kv.isApi = 'NE%1'; 
                 }
                
                 json.kv.backlogStatus = stl;
@@ -14058,7 +14058,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                   
                   
                 }else{
-                    json.kv.isApi = 0; 
+                    json.kv.isApi = 'NE%1'; 
                 }
                
                 json.kv.backlogStatus = stl;
