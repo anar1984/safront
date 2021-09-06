@@ -13297,6 +13297,8 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
                if(ifle=="overall"){
                 var le = dt[index].r[0];
                 var total=   le.overall   
+                var elmo = $(".modal-header b.status-total-total")
+                       elmo.text(parseFloat(elmo.text())+parseFloat(total));
                 var newst  = le.statusNew
                    var elm = $(".modal-header b.status-new-total")
                        elm.text(parseFloat(elm.text())+parseFloat(newst));
@@ -13321,7 +13323,7 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
                var elm5 = $(".modal-header b.status-Canceled-total")
                elm5.text(parseFloat(elm5.text())+parseFloat(can));
                 var wait  = le.statusWaiting
-                var elm6 = $(".modal-header b.status-rejected-total")
+                var elm6 = $(".modal-header b.status-waiting-total")
                 elm6.text(parseFloat(elm6.text())+parseFloat(wait));
                                              
                }

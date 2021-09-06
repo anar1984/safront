@@ -1334,6 +1334,7 @@ var Component = {
                          .append($("<div>")
                                   .addClass("col-10 p-2")
                                   .append($("<div>").addClass("btn-group float-right")
+                                         .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-filter"></i> Filter</span>')
                                          .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
                                          .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
                                  )
@@ -1341,6 +1342,10 @@ var Component = {
                                   .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
                                 
                                   )
+                         .append($("<div>")
+                                  .addClass('col-12 p-2')
+                                  
+                         )
                          .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
 
             )
