@@ -61,7 +61,7 @@ var Component = {
         try {
             comp.description = new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(inputObj);
         } catch (e) {
-            comp.description = new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(inputObj); //for BView.html
+            comp.description = new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(inputObj); //for BView.htmt
         }
 
         try {
