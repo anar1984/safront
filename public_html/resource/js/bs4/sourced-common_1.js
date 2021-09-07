@@ -13913,6 +13913,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                $(".modal-header b.status-rejected-total").text(0)
                $(".modal-header b.status-Canceled-total").text(0)
                $(".modal-header b.status-waiting-total").text(0)
+               $(".modal-header b.status-total-total").text(0)
                
                 var priD =$("#story_mn_filter_project_id").val();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
