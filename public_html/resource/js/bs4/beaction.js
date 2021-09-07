@@ -2466,10 +2466,10 @@ var SAFN = {
             var dataTemp = data;
             var outdata = {};
 
-            $('.' + tableClassName).find('tr').each(function (el) {
-                var tdEl = $(this).find('td').first();
+            $('table.' + tableClassName+'> tbody > tr').each(function (evt) {
+                var tdEl = $(this).find('td:eq(0)');
                 var initData = getGUIDataByStoryCard(tdEl);
-
+                
                 var tmp = $.extend(dataTemp, initData);
                 SAFN.CoreData = tmp;
                 SAFN.FunctionBody = fnbody;

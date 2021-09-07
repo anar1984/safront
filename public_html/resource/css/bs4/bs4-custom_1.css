@@ -393,6 +393,9 @@ body{
     border-radius:10px;
     color:black;
 }
+#filter-show-hide-button-id-a.active{
+    color: #17a2b8!important;
+}
 
 .us-item-status-rejected{
     background-color: #e8bdc8; 
