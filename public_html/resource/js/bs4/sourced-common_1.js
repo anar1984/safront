@@ -13860,7 +13860,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                             } else if (obj.backlogStatus === 'ongoing') {
                                 c4ongoing++;
                                 $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
-                                $(html).find("#user-story-show-stat").parents('label').click();
+                                $(html).find("#user-story-show-stat").click();
                     
 
                             } else if (obj.backlogStatus === 'closed') {
@@ -13987,7 +13987,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                      if (obj.backlogStatus === 'ongoing') {
                                     
                                  
-                                        $(html).find("#user-story-show-stat").parents('label').click();
+                                        $(html).find("#user-story-show-stat").click();
                             
                                     } 
                                     c4new++
@@ -14100,7 +14100,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                      if (obj.backlogStatus === 'ongoing') {
                                     
                                  
-                                        $(html).find("#user-story-show-stat").parents('label').click();
+                                        $(html).find("#user-story-show-stat").click();
                             
                                     } 
                                     c4new++
