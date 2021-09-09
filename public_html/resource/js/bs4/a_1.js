@@ -364,6 +364,72 @@ function bindScrollZadToCanvas() {
 
 //////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+
+$(document).on("click","#import-excel-button-id-a" ,function(){
+ 
+    
+        if($(this).hasClass('active')){
+
+              $('#datetimepicker10').hide()
+            $(this).removeClass('active')
+        }else{
+            $('#datetimepicker10').show()
+            $(this).addClass('active')
+        }
+
+
+  })
+
+$(document).on("change","#file_excel_import" ,function(){
+    console.log(this)
+      filePicked(this);
+  })
+  function filePicked(oEvent) {
+  // Get The File From The Input
+  var oFile = oEvent.files[0];
+  var sFilename = oFile.name;
+   
+  // Ready The Event For When A File Gets Selected
+  var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+            // Here is your object
+            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            var json_object = JSON.stringify(XL_row_object);
+            productList = JSON.parse(json_object);
+
+            var rows = $('.table tbody tr', );
+            console.log(productList)
+            var tbody 
+            for (i = 0; i < productList.length; i++) {
+
+                var columns = Object.values(productList[i]);
+          
+
+                console.log(columns);
+
+
+                rows.eq(i).find('td.txtcode').text(columns[0]);
+                rows.eq(i).find('td.txtdesc').text(columns[1]);
+                rows.eq(i).find('td.txtprice').text(columns[2]);
+                rows.eq(i).find('td.txtqty').text(columns[3]);
+            }
+
+        })
+    };
+    reader.onerror = function(ex) {
+        console.log(ex);
+    };
+  
+  // Tell JS To Start Reading The File.. You could delay this if desired
+  reader.readAsBinaryString(oFile);}
+
+  
 function getGroupList4Table(elm) {
    
    try { 
@@ -743,6 +809,25 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 
 
 
+$(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
+   var depID = $(this).attr('data-api-tabid');
+   var val = $(this).val();
+    var stTime 
+    var endTime 
+    val = val.split('-')
+     var dt = val[0].split('/');
+     var dt1 = val[1].split('/');
+     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
+     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
+      console.log(endTime,stTime);
+      var inns =stTime.trim()+'%BN%'+endTime.trim()
+      var data ={}
+       data.insertDate = inns;
+     
+      var el = be.callApi(depID,data);
+  
+   
+})
 $(document).on("mousedown", ".selectableTable td", function (e) {
     $(".absolute-div-row-table").hide();
     isMouseDown = true;
@@ -3646,7 +3731,7 @@ function loadTableFIlterInside() {
 
   
 
-    $("#filter-table-row-21010301044607177560").selectpicker("refresh")
+    $(".filter-table-row-select").selectpicker("refresh")
     $('.table').dragtable({ 
     persistState: function(table) { 
       
@@ -3661,6 +3746,18 @@ function loadTableFIlterInside() {
     dragHandle:'.handle-drag',
     restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')') 
 });
+
+$('#date_timepicker_start_end').daterangepicker({
+    /* ranges: {
+       'Bu Gün': [moment(), moment()],
+       'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+       'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+       'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+       'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    } */
+  });
+
 
 }
 function copyJSCodeClassTo_loadProjectList() {
