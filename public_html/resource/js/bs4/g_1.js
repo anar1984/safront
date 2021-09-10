@@ -1247,6 +1247,19 @@ $(document).on('click', '.next-large-modal-btn', function (event) {
     run_clock('countDown-larg',deadline);
 
 });
+$(document).on('click', '.baclog-large-modal-next', function (event) {
+    $("#body-large-modal-in-us4backlog").html("");
+
+     var elm1 = $(this).parents('.task-content');
+     var elm =elm1.clone();
+     elm.css("width",'100%')
+     elm.find('.baclog-large-modal-next').hide();
+    
+    $("#task-ongoing-large-modal4backlog").modal('show');
+     $("#body-large-modal-in-us4backlog").append(elm);
+     $('[data-toggle="popover"]').popover();
+
+});
 $(document).on('click', '.refresh-interval-butn', function (event) {
    
                 clearInterval(timeinterval);
@@ -1335,6 +1348,22 @@ function resume_clock(){
 
 
   
+$(document).on('click', '.trigger-modal-us-header .status-large-menu-total', function (event) {
+       
+        
+    $(this).toggleClass('gactive');
+
+
+    clearInterval(timeinterval);
+    var st = $('#countDown-larg').attr('data-status-time');
+
+    new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+   
+        current_time = Date.parse(new Date());
+     deadline= new Date(current_time + time_in_minutes*60*1000)
+     run_clock('countDown-larg',new Date(current_time + time_in_minutes*60*1000));
+
+});
 $(document).on('click', '.more-table-details', function (event) {
        
         var bgId = $(this).attr("pid");
@@ -1346,6 +1375,37 @@ $(document).on('click', '.more-table-details', function (event) {
     $(this).addClass('hide-more-table')
     $(this).removeClass('more-table-details')
     
+
+});
+$(document).on('click', '.stat-table-us thead .task-for-backlog-event-prm', function (event) {
+        var tbody = $(this).parents('table').find('tbody');
+        var log = $(this).attr("status");
+        if(log==='total'){
+            tbody.find(".task-tr-list").show(); 
+            $('.stat-table-us thead .task-for-backlog-event-prm').removeClass('active')
+        }else{
+            $(this).toggleClass('active');
+            var bgId = $(this).parents('tr').find('.task-for-backlog-event-prm.active');
+            tbody.find(".task-tr-list").hide();
+       
+            for (let i = 0; i < bgId.length; i++) {
+                   
+                tbody.find('[data-tr-status="'+$(bgId[i]).attr("status")+'"]').show();
+                
+            }
+             if(bgId.length === 0){
+                tbody.find(".task-tr-list").show(); 
+             }
+        }
+        
+     
+       
+            
+});
+$(document).on('click', '#generalStatisticsDetailsModal .general-statistics-story-card-list', function (event) {
+       
+        $(this).parents('table').find('.general-statistics-story-card-list').removeClass('active')
+        $(this).addClass('active')
 
 });
 $(document).on('change', '#user-story-show-stat', function (event) {
