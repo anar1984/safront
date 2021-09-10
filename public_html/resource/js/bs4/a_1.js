@@ -1592,7 +1592,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
                 localStorage.setItem('idb_' + bid, res.kv.modificationTime);
                 SAInput.LoadedBacklogs4Input.push(bid);
-                loadBacklogProductionDetailsById_resparams(res);
+                loadBacklogProductionDetailsBiyId_resparams(res);
 
                 hideProgress4();
 
@@ -6333,6 +6333,7 @@ function iDidItAction() {
         crossDomain: true,
         async: false,
         success: function (res) {
+                            AJAXCallFeedback(res);
             getBugList();
             $('#iDidItModal_comment').html('');
             $('#iDidItModal').modal('hide');
