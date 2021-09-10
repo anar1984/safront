@@ -24,7 +24,7 @@
                                 style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
                                 data-type="assigne_id" title="Assigne"></select>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <input type="text" placeholder="search"  class="form-control" name="" id="search-us-managmenet">
                         </div>
                         <div class="col-lg-1">
@@ -109,6 +109,19 @@
 
                         </div>
                         
+                        <div class="col-2">
+                            <select id="priority-change-story-card-multi" class="form-control">
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                </select>
+                        </div>
                        
                              
                         </div>
@@ -121,6 +134,7 @@
                     <div class="task-column new" status="new">
 
                         <div draggable="true" class="task-column-header" >
+                            <input type="checkbox" name="" data-st='new' class='all-check-us-mngm' id="alcheck-new-us-mng">
                             <span class="headerInputColumn">New <b><span class="counterkanban" id="kanban_view_new_count">0</span></b></span>
                             <!--                            <div class="column-header-edit">
                                                             <i class="fas fa-ellipsis-h"></i>
@@ -161,6 +175,7 @@
                     </div>
                     <div class="task-column  on-going" status="ongoing" >
                         <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='ongoing' class='all-check-us-mngm' id="alcheck-ongoing-us-mng">
                             <span class="headerInputColumn">Ongoing <b><span class="counterkanban" id="kanban_view_ongoing_count">0</span></b></span>
                             <!--                            <div class="column-header-edit">
                                                             <i class="fas fa-ellipsis-h"></i>
@@ -200,6 +215,7 @@
                     </div>
                     <div class="task-column closed"  status="closed" >
                         <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
                             <span class="headerInputColumn">Closed 
                                 <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
                             </span>

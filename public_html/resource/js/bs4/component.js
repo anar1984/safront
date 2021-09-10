@@ -1301,6 +1301,7 @@ var Component = {
 
 
 
+        
         var el = $('<table class="table">')
             .addClass("component-table-class-for-zad")
             .addClass("component-table-class-for-zad-" + tableId)
@@ -1316,13 +1317,14 @@ var Component = {
             .removeAttr("onclick")
 
         div.append($('<div>').addClass("progressloader loaderTable1"));
+        div.append($("<span>")
+        .addClass("table-show-hide-row-div-btn btn btn-sm")
+        .attr("id",'table-show-hide-button-id-a')
+        
+        .html('<i class="fas fa-chevron-right"></i>'))
         div.append(el);
         div.addClass("table-responsive");
-        div.append($("<span>")
-                                 .addClass("table-show-hide-row-div-btn btn btn-sm")
-                                 .attr("id",'table-show-hide-button-id-a')
-                                 
-                                 .html('<i class="fas fa-chevron-right"></i>'))
+    
                      
         div.append($("<div>")
         .attr("data-tableId",comp.id)

@@ -52,7 +52,7 @@
     }
   }
 .taskPanel{
-    width: 80%;
+    width: 90%;
 }
 .task-panel{
     
@@ -138,6 +138,10 @@
 }
 .task-content:hover .baclog-large-modal-next,.task-content:hover .switch{
    visibility: visible;
+}
+.story-priorty-selectbox{
+    border: none;
+    border-radius: 3px;
 }
 .task-content input:checked + .slider:before {
     -webkit-transform: translateX(26px);

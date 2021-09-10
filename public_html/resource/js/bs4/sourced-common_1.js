@@ -13890,7 +13890,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
-                contentArrangableUI();
+               // contentArrangableUI();
                 $('[data-toggle="popover"]').popover()
             },
             error: function () {
@@ -14054,7 +14054,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                        contentArrangableUI();
+                        //contentArrangableUI();
                         $('[data-toggle="popover"]').popover();
                 
                     },
@@ -14177,7 +14177,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                        contentArrangableUI();
+                    //    contentArrangableUI();
                         $('[data-toggle="popover"]').popover();
                        
                     },
@@ -14741,6 +14741,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 //                                                .append('Add Flag')))
 //                                )
                         )
+                        
                 .append($('<div clas="taskContentBody">')
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item">')
@@ -14749,7 +14750,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                         ))
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-priority">')
-                                        .append("&nbsp;" + o.priority)
+                                .append($("<select>").attr("id",'priority-change-story-card').addClass('story-priorty-selectbox')
+                                .append(`
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                `)
+                                .val(o.priority))
+                                    
                                         ))
                         /* .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-executor">')
