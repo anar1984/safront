@@ -402,6 +402,47 @@ function deleteBugFromTable(el) {
     });
 }
 
+function addNewTask4BugMulti(tskNm) {
+    if (!tskNm.trim()) {
+        return;
+    }
+    var taskName = tskNm;
+    var projectList = $('#bug_filter_project_id_add').val();
+    if (projectList.length === 0) {
+        Toaster.showError("Please select project(s).")
+        return;
+    }
+
+    var backlogList = $('#bug_filter_backlog_id_add').val()
+    /*    : ['-1']; */
+    var assigneeList = $('#bug_filter_assignee_id_add').val()
+ 
+    var sprintList = "";
+    $('.bug-task-filter-checkbox-sprint').each(function () {
+        if ($(this).is(":checked")) {
+            sprintList += $(this).val() + ',';
+        }
+    })
+
+    var taskTypeName = $("#bug_task_type_id_add").val();
+
+    var taskNature = $("#bug_task_nature_id_add").val();
+
+    var taskPriority = $("#bug_filter_priority_add").val();
+
+
+    /*   for (var bid in backlogList) {
+          for (var aid in assigneeList) { */
+    insertNewTaskDetail4Bug(taskName, backlogList, assigneeList, 'new', projectList, sprintList, taskTypeName, taskNature, taskPriority)
+    /*    }
+    }
+ */
+
+    if (global_var.current_modal === 'loadBugChange') {
+        getBugList();
+     }
+ 
+}
 function addNewTask4Bug(el) {
     if (!$(el).val().trim()) {
         return;
@@ -1978,8 +2019,21 @@ $(document).on("click", '#expand-group', function (e) {
     }
 })
 $(document).on("click", '#addIssueButtonId', function (e) {
-    var elem = $("#taskNameInputNew2")
-    addNewTask4Bug(elem)
+   
+    var lines = [];
+    $.each($('#taskNameInputNew2').val().split(/\n/), function(i, line){
+        if(line){
+            lines.push(line);
+        }
+    });
+    
+     if(lines.length ===0 ){
+         return
+     }
+    for (let index = 0; index < lines.length; index++) {
+        addNewTask4BugMulti(lines[index])
+        
+    }
     $("#issue-managment-add-task").modal('hide');
 
 
