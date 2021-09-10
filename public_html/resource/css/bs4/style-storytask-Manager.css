@@ -107,7 +107,7 @@
     margin-top: 7px;
     position: relative;
 }
-#body-large-modal-in-us{
+#body-large-modal-in-us {
    
      
 }
@@ -123,10 +123,21 @@
 }
 .task-content .switch {
     position: absolute;
-    right: 10px;
+    right: 40px;
     top: 10px;
     width: 25px;
     height: 15.5px;
+    visibility: hidden;
+}
+.baclog-large-modal-next{
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    visibility: hidden;
+  
+}
+.task-content:hover .baclog-large-modal-next,.task-content:hover .switch{
+   visibility: visible;
 }
 .task-content input:checked + .slider:before {
     -webkit-transform: translateX(26px);
@@ -142,7 +153,21 @@
    display: block;
 
 }
-.stat-table-us tbody{
+
+
+.stat-table-us td.asc:after {
+  display: inline;
+  content: '↓';
+}
+
+.stat-table-us td.desc:after {
+  display: inline;
+  content: '↑';
+}
+.stat-table-us thead .task-for-backlog-event-prm.active{
+    border: 1px solid black;
+}
+.task-column-body .stat-table-us tbody ,#body-large-modal-in-us .stat-table-us tbody {
     max-height: 240px;
     overflow: auto;
      display: block;
@@ -203,7 +228,7 @@
 
 /*  header Content */
 .ContentText{
-    width: 240px;
+   
     overflow: hidden;
     text-overflow: hidden;
     font-size: 14px;
@@ -981,5 +1006,7 @@ color: white;
 .addEpicIcon:hover{
     background: rgba(10, 32, 71, 0.137);
 }
+.trigger-modal-us-header .status-large-menu-total.gactive{
 
-/*file uploader*/
+    border: 1px solid black;
+}

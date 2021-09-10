@@ -1014,12 +1014,8 @@ var Component = {
                     .append(showComp, ' ')
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
-                    
-                    if(global_var.current_modal !== 'loadLivePrototype'){
-                        th.append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
-
-                    }
-                    //                    .append(showInTree, ' ')
+                    .append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
+                //                    .append(showInTree, ' ')
                 var depId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
                 var newelSelect = $("<select>").addClass("form-control filter-table-row-select")
                 .attr("id","filter-table-row-"+inputId)
@@ -1213,9 +1209,7 @@ var Component = {
 
 
 
-                     val = $(val).clone();
-                     val.find(".tool_element_edit").remove();
-                
+
                     var td12 = $("<td>")
                         //                            .css("min-width", "70px")
                         .addClass("component-input-class")
@@ -1223,7 +1217,6 @@ var Component = {
                         .addClass("component-table-input-class")
                         .attr("pdid", inputId)
                         //                            .attr("sa-data-table-row-id","")
-                        
                         .val(val)
                         .append(val);
 
@@ -1293,6 +1286,7 @@ var Component = {
 
         //get input selected fields
         var tableId = comp.fkInputTableId;
+        var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
         var tblSelectedFields = '';
         var col = SAInput.Tables[tableId].fkInputId.split(",");
         for (var i = 0; i < col.length; i++) {
@@ -1341,7 +1335,8 @@ var Component = {
                          .append($("<div>")
                                   .addClass("col-10 p-2")
                                   .append($("<div>").addClass("btn-group float-right")
-                                         .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-filter"></i> Filter</span>')
+                                         .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                         .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
                                          .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
                                          .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
                                  )
@@ -1350,7 +1345,24 @@ var Component = {
                                 
                                   )
                          .append($("<div>")
-                                  .addClass('col-12 p-2')
+                                  .addClass('col-12 p-2 form-group')
+                                  .append($("<div>").hide()
+                                             .addClass('input-group date')
+                                             .attr("id",'datetimepicker10')
+                                             .append('<input type="file" data-api-tabid="'+tableId+'" class="form-control form-control-sm" id="file_excel_import">')
+                                             )
+                              
+                                  
+                         )
+                         .append($("<div>")
+                                  .addClass('col-12 p-2 form-group')
+                                  .append($("<div>")
+                                             .addClass('input-group date')
+                                             .attr("id",'datetimepicker6')
+                                             .append('<input type="text" data-api-tabid="'+tabDepId+'" class="form-control form-control-sm" id="date_timepicker_start_end">')
+                                             .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
+                                             )
+                              
                                   
                          )
                          .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
