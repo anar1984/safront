@@ -1408,6 +1408,62 @@ $(document).on('click', '#generalStatisticsDetailsModal .general-statistics-stor
         $(this).addClass('active')
 
 });
+$(document).on('change', '#priority-change-story-card-multi', function (event) {
+    var chk = $('.assign-label-story-card-item-new');
+    var sy =0;
+    for (let i = 0; i < chk.length; i++) {
+         
+      if($(chk[i]).prop("checked")){
+
+          sy++
+          var id = $(chk[i]).parents(".task-content").attr("bid")
+          updateUS4ShortChangeDetailsUsMngm($(this).val(), "priority",id);
+      }
+        
+    }
+
+   
+
+
+});
+$(document).on('change', '#priority-change-story-card', function (event) {
+       var id = $(this).parents(".task-content").attr("bid")
+    updateUS4ShortChangeDetailsUsMngm($(this).val(), "priority",id)
+
+});
+$(document).on('change', '.all-check-us-mngm', function (event) {
+      var st = $(this).attr('data-st');
+      
+
+      if($(this).prop("checked")){
+        
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",true)
+
+      }else{
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",false)
+ 
+      }
+
+});
+$(document).on('change', '.assign-label-story-card-item-new', function (event) {
+     var chk = $(this).parents('.task-column').find('.assign-label-story-card-item-new');
+      var sy =0
+      for (let i = 0; i < chk.length; i++) {
+           
+        if($(chk[i]).prop("checked")){
+ 
+            sy++
+        }
+          
+      }
+
+      if(chk.length===sy){
+        $(this).parents('.task-column').find('.all-check-us-mngm').prop('checked',true)
+      }else{
+        $(this).parents('.task-column').find('.all-check-us-mngm').prop('checked',false)
+
+      }
+});
 $(document).on('change', '#user-story-show-stat', function (event) {
  
 

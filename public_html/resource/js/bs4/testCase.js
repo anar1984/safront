@@ -556,7 +556,7 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             id = res.kv.id;
             SATask.updateTaskByRes(res);

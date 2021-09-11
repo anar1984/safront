@@ -15141,6 +15141,54 @@ function updateInput4SCDetails(inputId, val, ustype) {
     });
 }
 
+function updateUS4ShortChangeDetailsUsMngm(val, ustype,usId) {
+
+    try {
+
+        if (ustype.lentgh === 0 || val.lentgh === 0) {
+            return;
+        }
+    } catch (e) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = usId;
+    json.kv.type = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateUserStsory4ShortChange",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            SACore.addBacklogByRes(res);
+
+            loadCurrentBacklogProdDetailsSyncrone();
+            //            if (global_var.current_modal === 'loadLivePrototype') {
+            //                callStoryCardAfterIPOAction();
+            //            } else if (global_var.current_modal === 'loadStoryCard') {
+            //                reloadBacklogListOnStoryCard();
+            //            }
+            new UserStory().setUSLists4KanbanView();
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function updateUS4ShortChangeDetails(val, ustype) {
 
     try {
