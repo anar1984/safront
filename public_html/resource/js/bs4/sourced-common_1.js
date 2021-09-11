@@ -13796,6 +13796,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanViewByStatus: function (stLm,endLm,bsTat) {
         var priD =$("#story_mn_filter_project_id").val();
         var fkAsId = $("#story_mn_filter_assigne_id").val();
+        var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
         var endLimit = endLm;
@@ -13818,6 +13819,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         if(fkAsId) {
             json.kv.fkOwnerId = fkAsId;
+        }
+        if(priorty) {
+            json.kv.priority = priorty;
         }
         if(search.length >2) {
             json.kv.backlogName = "%%"+search +"%%";
@@ -13925,6 +13929,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                
                 var priD =$("#story_mn_filter_project_id").val();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
                
@@ -13944,6 +13949,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                    
                 } else if(UsLabel) {
                     json.kv.id = UsLabel;
+                }
+                if(priorty) {
+                    json.kv.priority = priorty;
                 }
                
                 if(fkAsId) {
@@ -14072,6 +14080,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                
                 var priD =$("#story_mn_filter_project_id").val();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 if(priD==''){
                     return
@@ -14089,6 +14098,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                    
                 } else if(UsLabel) {
                     json.kv.id = UsLabel;
+                }
+                if(priorty) {
+                    json.kv.priority = priorty;
                 }
                 if(fkAsId) {
                     json.kv.fkOwnerId = fkAsId;

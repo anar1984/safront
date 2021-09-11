@@ -1418,6 +1418,8 @@ $(document).on('change', '#priority-change-story-card-multi', function (event) {
           sy++
           var id = $(chk[i]).parents(".task-content").attr("bid")
           updateUS4ShortChangeDetailsUsMngm($(this).val(), "priority",id);
+          $('.task-column').find('#multi-edit-menu-btn-us').addClass("invisible");
+          $("#multieditpopUpUs").modal("hide");
       }
         
     }
@@ -1437,10 +1439,10 @@ $(document).on('change', '.all-check-us-mngm', function (event) {
 
       if($(this).prop("checked")){
         
-        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",true)
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",true).change()
 
       }else{
-        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",false)
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",false).change()
  
       }
 
@@ -1457,6 +1459,13 @@ $(document).on('change', '.assign-label-story-card-item-new', function (event) {
           
       }
 
+      if(sy>1){
+        
+        $(this).parents('.task-column').find('#multi-edit-menu-btn-us').removeClass("invisible");
+      }else{
+        $(this).parents('.task-column').find('#multi-edit-menu-btn-us').addClass("invisible");
+
+      }
       if(chk.length===sy){
         $(this).parents('.task-column').find('.all-check-us-mngm').prop('checked',true)
       }else{

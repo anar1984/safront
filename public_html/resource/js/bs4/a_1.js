@@ -12436,6 +12436,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         hideToggleMain();
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
+        $("#priority-change-story-card-filter").selectpicker();
    
     });
 });
@@ -15893,6 +15894,14 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
         labelOrSplitValuesUs();
        
   
+});
+$(document).on('change', '#priority-change-story-card-filter', function (evt) {
+   
+          UsLabel ='';
+          UsSprint ='';
+          Utility.addParamToUrl('fk_assigne_id', $(this).val());
+          labelOrSplitValuesUs();
+          
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
    
