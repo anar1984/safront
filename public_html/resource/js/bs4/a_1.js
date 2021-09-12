@@ -380,6 +380,35 @@ $(document).on("click","#import-excel-button-id-a" ,function(){
 
   })
 
+    $(document).on("click",'#file_export_excel_new',function(){
+        var tabId = $(this).attr("data-api-tabid")
+        var workbook = XLSX.utils.book_new();
+        
+        //var worksheet_data  =  [['hello','world']];
+        //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
+      
+        var worksheet_data  = document.querySelector("[table-id='"+tabId+"']");
+        var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
+        
+        workbook.SheetNames.push("Test");
+        workbook.Sheets["Test"] = worksheet;
+      
+         exportExcelFile(workbook);
+      
+     
+    });
+
+
+function exportExcelFile(workbook) {
+    return XLSX.writeFile(workbook, "bookName.xlsx");
+}
+
+
+
+
+
+
+
 $(document).on("change","#file_excel_import" ,function(){
     var tabID =$(this).attr('data-api-tabid');
       filePicked(this,tabID);
@@ -6085,6 +6114,9 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
     tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
+    $('.table-show-hide-row-div').draggable({
+        containment: "body"
+    });
 }
 
 function callTableRelationAPIs(elem, tableId) {

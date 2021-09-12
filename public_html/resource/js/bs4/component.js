@@ -731,7 +731,13 @@ var Component = {
             var tid = tableId;
             var rc = rowCount;
             var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit);
-            $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
+            if ($('.component-table-class-for-zad-' + tid).attr("sa-tablenotempty") === '1') {
+                $('.component-table-class-for-zad-' + tid).find('tbody').append(body.html());
+            }else{
+                $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
+                 
+            }
+           
 
             var el12 = document.getElementById("comp_id_" + inputId);
             loadSelectBoxesAfterGUIDesign(el12);
@@ -925,7 +931,11 @@ var Component = {
             var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
             
             var thzad = $("<th>");
-            var tr = $("<tr>").append(thzad.append(""));
+            var tr = $("<tr>").append(thzad.addClass("text-center").append($("<span>")
+            .addClass(" btn btn-sm")
+            .attr("id",'table-show-hide-button-id-a')
+            
+            .html('<i class="fas fa-chevron-right"></i>')));
             var trFilter = $("<tr>").addClass("filter-table-row-header-tr redirectClass").addClass("hide-filt-drag").append($("<th>"))
             for (var i = 0; i < col.length; i++) {
                 
@@ -1317,11 +1327,7 @@ var Component = {
             .removeAttr("onclick")
 
         div.append($('<div>').addClass("progressloader loaderTable1"));
-        div.append($("<span>")
-        .addClass("table-show-hide-row-div-btn btn btn-sm")
-        .attr("id",'table-show-hide-button-id-a')
-        
-        .html('<i class="fas fa-chevron-right"></i>'))
+       
         div.append(el);
         div.addClass("table-responsive");
     
@@ -1351,6 +1357,8 @@ var Component = {
                                   .append($("<div>").hide()
                                              .addClass('input-group date')
                                              .attr("id",'datetimepicker10')
+                                             .append('<button  data-api-tabid="'+tableId+'" class="btn btn-light" id="file_export_excel_new">New</button>')
+                                             .append('<button  data-api-tabid="'+tableId+'" class="btn btn-light" id="file_export_excel">Export</button>')
                                              .append('<input type="file" data-api-tabid="'+tableId+'" class="form-control form-control-sm" id="file_excel_import">')
                                              )
                               
