@@ -204,11 +204,174 @@ $(function () {
 
 
     });
+    $(document).on("click", '.tab-dash-trig', function (e) {
+        var data = $(this).attr('data-link')
+     
+          Utility.addParamToUrl('current_tab_dash',data)
+      
+            $("#statistics-projectlist").change();
+        
+        
+
+    });
+    $(document).on("change", '#statistics-projectlist', function (e) {
+        var current_tab = Utility.getParamFromUrl('current_tab_dash')
+        var id = $('option:selected', this).attr('value');
+        var  Lst = $(this).val();
+
+        getProjectUsersForID(id)
+          
+        for (let index = 0; index < Lst.length; index++) {
+          loadDetailsOnProjectSelect4Dashboard(Lst[index]);
+            
+        }
+        
+
+        if(current_tab==='backlog'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Backlog History")
+      
+        }
+        else if(current_tab==='stat'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            Statistics.Dashboard.InitByCombo(this);
+            $(".dashboard-title-log").text("Statistics ")
+        }
+        else if(current_tab==='css'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            loadHistoryByCssId(id)
+            $(".dashboard-title-log").text("CSS History")
+        }
+        else if(current_tab==='js'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            loadHistoryByJsId(id);
+            $(".dashboard-title-log").text("JS History")
+        }
+        else if(current_tab==='tasks'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Tasks History")
+        }
+        else if(current_tab==='sql'){
+            $("#database-table-list-div").show();
+            $("#statistics-projectlist").parent().hide();
+           
+            $("#database-table-list").change();
+            $(".dashboard-title-log").text("SQL History")
+            
+        }
+        else if(current_tab==='db'){
+            $("#database-table-list-div").show();
+            $("#statistics-projectlist").parent().hide();
+           
+            $("#database-table-list").change();
+            $(".dashboard-title-log").text("DB History")
+               
+        }
+        else if(current_tab==='backlogst'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Backlog Statistics History")
+                      
+        }
+        
+        
+
+    });
     $(document).on("change", '#statistics-BacklogList', function (e) {
         var id = $('option:selected', this).attr('value')
       
-        loadHistoryByBacklofId(id)
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlog'){
+         
+        loadHistoryByBacklofId(id)  
+            
+        }
+                
+        else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
         
+        
+
+    });
+    $(document).on("change", '#statistics-BacklogList-backlogst', function (e) {
+        var id = $('option:selected', this).attr('value')
+      
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlogst'){
+            loadHistoryByBacklogStId(id)
+            
+        }
+                
+        else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
+        
+        
+
+    });
+    $(document).on("change", '#database-tm-list', function (e) {
+         
+    
+        getDbTablesList4CodeDash(this)
+
+    });
+    $(document).on("change", '#database-table-list', function (e) {
+        var current_tab = Utility.getParamFromUrl('current_tab_dash')
+       
+
+        if(current_tab==='db'){
+            loadHistoryByDBId($(this).val())
+        }
+        else if(current_tab==='sql'){
+            loadHistoryBysqlId($(this).val())
+        }
+        
+       
+
+      
+       
+
+    });
+    $(document).on("change", '#statistics-BacklogList-task', function (e) {
+        var id = $('option:selected', this).attr('value')
+      
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlog'){
+         
+        loadHistoryByBacklofId(id);
+            
+        }else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
+        
+        
+
+    });
+    $(document).on("change", '#search-task-history-id', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
+
+    });
+    $(document).on("change", '#datebet-task-history-id', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
+
+    });
+    $(document).on("change", '#statistics-createdby-task', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
 
     });
     $(document).on("click", '.div-content-body-td .load-more-button', function (e) {
