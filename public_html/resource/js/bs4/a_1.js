@@ -12669,7 +12669,7 @@ $(document).on('click', '.loadDashboard', function (evt) {
         $('.tab-dash-trig').first().click();
         $('#datebet-task-history-id').daterangepicker({
            
-          });
+          }).val('');
     });
 });
 
