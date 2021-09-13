@@ -12426,7 +12426,7 @@ function getProjectUsersForID(id) {
                 for (var i in obj) {
                     var o = obj[i];
                     $('#statistics-createdby-task')
-                            .append($('<option>').val(o.id)
+                            .append($('<option>').val(o.fkUserId)
                                     .append(o.userName))
                 }
 
