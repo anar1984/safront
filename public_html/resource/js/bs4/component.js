@@ -1357,8 +1357,8 @@ var Component = {
                                   .append($("<div>").hide()
                                              .addClass('input-group date')
                                              .attr("id",'datetimepicker10')
-                                             .append('<button  data-api-tabid="'+tableId+'" class="btn btn-light" id="file_export_excel_new">New</button>')
-                                             .append('<button  data-api-tabid="'+tableId+'" class="btn btn-light" id="file_export_excel">Export</button>')
+                                             .append('<button  data-api-tabid="'+tableId+'" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                             .append('<button  data-api-tabid="'+tableId+'" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
                                              .append('<input type="file" data-api-tabid="'+tableId+'" class="form-control form-control-sm" id="file_excel_import">')
                                              )
                               

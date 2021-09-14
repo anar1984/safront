@@ -12019,7 +12019,12 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
 
+           $('#statistics-BacklogList').empty();
+         $('#statistics-BacklogList-task').empty();
+         $('#statistics-BacklogList-backlogst').empty();
             var cmd = $('#statistics-BacklogList');
+            var cmd1 = $('#statistics-BacklogList-task');
+            var cmd2 = $('#statistics-BacklogList-backlogst');
 
             new UserStory().setUSLists(res);
             var f = true;
@@ -12039,7 +12044,9 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                cmd.append(op);
+                cmd.append(op.clone());
+                cmd1.append(op.clone());
+                cmd2.append(op.clone());
                 //   } 
                 /* else if (o.isApi === '1') {
                  var td = $('<tr>')
@@ -12059,8 +12066,12 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
 
             //            cmd.val(global_var.current_backlog_id);
             sortSelectBoxByElement(cmd);
-            cmd.selectpicker('refresh');
-            cmd.change();
+            sortSelectBoxByElement(cmd1);
+            sortSelectBoxByElement(cmd2);
+            cmd.selectpicker('refresh').change();
+            cmd1.selectpicker('refresh').change();
+            cmd2.selectpicker('refresh').change();
+         
 
 
         }
@@ -12092,6 +12103,386 @@ var hstry = {
     }
 }
 
+function loadHistoryByTasksId(backlog_id) {
+     var serach = $("#search-task-history-id").val();
+     var val = $("#datebet-task-history-id").val();
+     var created = $("#statistics-createdby-task").val();
+    if (backlog_id === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = $('#statistics-projectlist option:selected').attr('value');
+    if(serach){
+        json.kv.taskName = '%%'+serach+"%%";
+    }
+    if(created){
+        json.kv.fkHistoryTellerId = created;
+    }
+    if(val){
+       
+        val = val.split('-')
+     var dt = val[0].split('/');
+     var dt1 = val[1].split('/');
+     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
+     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
+  
+      var inns =stTime.trim()+'%BN%'+endTime.trim();
+      json.kv.historyDate = inns;
+    }
+    
+    json.kv.fkBacklogId = backlog_id;
+    
+ 
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogTaskHistoryListByProjectIdAndByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-task tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-task tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].taskName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+
+function loadHistoryByCssId(project_id) {
+    if (project_id === undefined) {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = project_id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetCssHistoryListByProjectIdAndByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-css tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-css tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].inputName+"</td>")
+                        .append("<td>"+obj[i].cssBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+
+function loadHistoryBysqlId(fkTableId) {
+    if (fkTableId === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkTableId = fkTableId;
+    json.kv.fkDbId = $("#database-tm-list").val();
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetSqlHistoryListByDbIdAndByTableId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-sql tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-sql tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function loadHistoryByDBId(fkTableId) {
+    if (fkTableId === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkTableId = fkTableId;
+    json.kv.fkDbId = $("#database-tm-list").val();
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetDatabaseHistoryListByDbIdAndByTableId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-db tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-db tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function loadDatabaseList2ComboEntityDAsh() {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetDbList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#database-tm-list').empty();
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    $('#database-tm-list')
+                            .append($('<option>').val(o.id)
+                                    .append(o.dbName))
+                }
+
+                
+            } catch (err) {
+        
+            }
+            $('#database-tm-list').selectpicker('refresh')
+        }
+    });
+}
+function getDbTablesList4CodeDash(el) {
+    var dbid = $(el).val();
+
+    if (!dbid) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.dbId = dbid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetDBTableList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#database-table-list').html('');
+
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                $('#database-table-list')
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
+            }
+
+            $('#database-table-list').selectpicker('refresh').change();
+
+        }
+    });
+
+}
+function loadHistoryByBacklogStId(backlog_id) {
+    if (backlog_id === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = $("#statistics-projectlist").val();
+    json.kv.fkBacklogId = backlog_id;
+    json.kv.startLimit = 1;
+    json.kv.endLimit = 100;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogHistoryList4Stats",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-backlogst tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-backlogst tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].backlogName+"</td>")
+                        .append("<td>"+obj[i].historyBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function getProjectUsersForID(id) {
+
+
+    var json = initJSON();
+
+    json.kv['fkProjectId'] = id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#statistics-createdby-task').empty().append($('<option>'));
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    $('#statistics-createdby-task')
+                            .append($('<option>').val(o.fkUserId)
+                                    .append(o.userName))
+                }
+
+                
+            } catch (err) {
+        
+            }
+            $('#statistics-createdby-task').selectpicker('refresh')
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+function loadHistoryByJsId(project_id) {
+    
+    if (project_id===undefined) {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkDbId = project_id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetJsHistoryListByProjectId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-js tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-js tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].jsName+"</td>")
+                        .append("<td>"+obj[i].jsBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
 function loadHistoryByBacklofId(backlodId) {
     if (backlodId === "") {
         return
@@ -12274,6 +12665,12 @@ $(document).on('click', '.loadDashboard', function (evt) {
         Statistics.GelGeneralLabels();
         Statistics.GelGeneralSprints();
         Statistics.GetGeneralUsers();
+        $("#database-tm-list").selectpicker();
+        loadDatabaseList2ComboEntityDAsh();
+        $('.tab-dash-trig').first().click();
+        $('#datebet-task-history-id').daterangepicker({
+           
+          }).val('');
     });
 });
 

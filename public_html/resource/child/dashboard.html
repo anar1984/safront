@@ -3,11 +3,14 @@
     <div class="dark-menu nav ">
         
       <a id="search-btn"  href="#"><i class="fas fa-history"></i></a>
-      <a class="nav-link active" data-toggle="tab" href="#main-dashboard-tab"></span><i class=" fas fa-chart-line"></i></a>
-      <a class="nav-link" data-toggle="tab" href="#main-history-backlog-tab"></span><i class=" fas fa-clipboard-list"></i></a>
-      <a   class="nav-link" href="#main-history-task-tab" data-toggle="tab"><i class=" fas fa-tasks"></i></a>
-      <a  class="nav-link" href="#main-history-css-tab" data-toggle="tab"><i class="fab fa-css3-alt"></i></a>
-      <a  class="nav-link" href="#main-history-js-tab" data-toggle="tab"><i class="fab fa-js-square"></i></a>
+      <a class="nav-link tab-dash-trig " data-toggle="tab" href="#main-dashboard-tab" data-link='stat' ></span><i class=" fas fa-chart-line"></i></a>
+      <a class="nav-link tab-dash-trig" data-toggle="tab" href="#main-history-backlog-tab" data-link='backlog'></span><i class=" fas fa-clipboard-list"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-task-tab" data-toggle="tab" data-link='tasks' ><i class=" fas fa-tasks"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-backlogst-tab" data-toggle="tab" data-link='backlogst' ><i class="fas fa-clipboard"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-css-tab" data-toggle="tab" data-link='css'><i class="fab fa-css3-alt"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-js-tab" data-toggle="tab" data-link='js'><i class="fab fa-js-square"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-db-tab" data-toggle="tab" data-link='db'><i class="fas fa-database"></i></a>
+      <a  class="nav-link tab-dash-trig" href="#main-history-sql-tab" data-toggle="tab" data-link='sql'><i class="fas fa-server"></i></a>
     </div>  
     <!-- END Left Menu -->
   
@@ -18,15 +21,34 @@
         <div class="col-5">
             <select id="statistics-projectlist"
             title="Projects"
-            onchange="Statistics.Dashboard.InitByCombo(this)"
+            onchange=""
             data-actions-box="true"
             class="SelectDiagramOption col-6 selectcustom1" 
             multiple data-live-search="true">
     
     </select>
+    <div class="row" id="database-table-list-div">
+      <select style="display: none !important;" id="database-tm-list"
+      title="Database"
+  
+      data-actions-box="true"
+      class="SelectDiagramOption col-6 selectcustom1" 
+       data-live-search="true">
+  
+      </select>
+      <select id="database-table-list"
+      title="Table List"
+ 
+      data-actions-box="true"
+      class="SelectDiagramOption col-6 selectcustom1" 
+       data-live-search="true">
+
+      </select>
+    </div>
+   
         </div>
         <div class="col-7">
-            <h3>  Dashboard </h3>
+            <h3 class="dashboard-title-log">  Dashboard </h3>
         </div>
         
       
@@ -140,7 +162,7 @@
       
        <div class="tab-pane" id="main-history-backlog-tab">
       
-        <div class="col-12 cstm-selectpicker-block">
+        <div class=" cstm-selectpicker-block">
           <select id="statistics-BacklogList"
           title="UserStory"
      
@@ -244,20 +266,197 @@
        </div>
        <div class="tab-pane" id="main-history-task-tab">
       
-               <h1 class="text-center"> Task Coming Soon</h1>
+        <div class="col-12 row">
+          <select id="statistics-BacklogList-task"
+          title="UserStory"
+     
+          data-actions-box="true"
+          class="SelectDiagramOption col-3 selectcustom1" 
+           data-live-search="true">
+  
+          </select>
+          
+           <input type="text" id="search-task-history-id" class="search-task-history form-control col-3" placeholder="search task">
+           <input type="text" id='datebet-task-history-id' class="datebet-task-history form-control col-3" placeholder="Date">
+          
+           <select id="statistics-createdby-task"
+           title="Created By"
       
+           data-actions-box="true"
+           class="SelectDiagramOption col-3 selectcustom1" 
+            data-live-search="true">
+   
+           </select>
+        </div>
+        
+               <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+                <table id="history-main-table-task" cellspacing="0" cellpadding="0">
+                    <thead>
+                      <tr>
+                        <td>Task Name</td>
+                        <td>New Value</td>
+                        <td>Old Value</td>
+                        <td>Action Type</td>
+                        <td>Time & Date</td> 
+                        <td>Created</td>
+                      
+                      </tr>  
+                    </thead>
+                    <tbody>
+                   
+                    </tbody>
+                  </table>
+                
+                 
+                        </div>
+      
+       </div>
+       <div class="tab-pane" id="main-history-backlogst-tab">
+      
+        <select id="statistics-BacklogList-backlogst"
+        title="UserStory"
+   
+        data-actions-box="true"
+        class="SelectDiagramOption col-6 selectcustom1" 
+         data-live-search="true">
+
+        </select>
+               <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+                <table id="history-main-table-backlogst" cellspacing="0" cellpadding="0">
+                    <thead>
+                      <tr>
+                        <td>BG Name</td>
+                        <td>History Body</td>
+                        <td>New Value</td>
+                        <td>Old Value</td>
+                        <td>Action Type</td>
+                        <td>Time & Date</td> 
+                        <td>Created</td>
+                      
+                      </tr>  
+                    </thead>
+                    <tbody>
+                   
+                    </tbody>
+                  </table>
+                
+                 
+                        </div>
       
        </div>
        <div class="tab-pane" id="main-history-css-tab">
       
-               <h1 class="text-center"> Css Coming Soon</h1>
-      
+
+               <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+                <table id="history-main-table-css" cellspacing="0" cellpadding="0">
+                    <thead>
+                      <tr>
+                        <td>Css Name</td>
+                        <td>Body</td>
+                        <td>New Value</td>
+                        <td>Old Value</td>
+                        <td>Action Type</td>
+                        <td>Time & Date</td> 
+                        <td>Created</td>
+                      
+                      </tr>  
+                    </thead>
+                    <tbody>
+                   
+                    </tbody>
+                  </table>
+                
+                 
+                        </div>
       
        </div>
        <div class="tab-pane" id="main-history-js-tab">
       
-               <h1 class="text-center"> Js Coming Soon</h1>
+
+        <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+            <table id="history-main-table-js" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <td>JS Name</td>
+                    <td>Body</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                    <td>Action Type</td>
+                    <td>Time & Date</td> 
+                    <td>Created</td>
+                  
+                  </tr>  
+                </thead>
+                <tbody>
+               
+                </tbody>
+              </table>
+            
+             
+                    </div>
       
+       </div>
+       <div class="tab-pane" id="main-history-db-tab">
+      
+
+        <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+            <table id="history-main-table-db" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <td>DB Name</td>
+                    <td>Body</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                    <td>Action Type</td>
+                    <td>Time & Date</td> 
+                    <td>Created</td>
+                  
+                  </tr>  
+                </thead>
+                <tbody>
+               
+                </tbody>
+              </table>
+            
+             
+                    </div>
+      
+       </div>
+       <div class="tab-pane" id="main-history-sql-tab">
+    
+        <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+            <table id="history-main-table-sql" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <td>SQL Name</td>
+                    <td>Body</td>
+                    <td>New Value</td>
+                    <td>Old Value</td>
+                    <td>Action Type</td>
+                    <td>Time & Date</td> 
+                    <td>Created</td>
+                  
+                  </tr>  
+                </thead>
+                <tbody>
+               
+                </tbody>
+              </table>
+            
+             
+                    </div>
       
        </div>
       
