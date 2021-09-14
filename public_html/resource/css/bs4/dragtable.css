@@ -28,7 +28,7 @@
 .dragtable-sortable .hide-filt-drag{
     display: none;
 }
-.ui-sortable-placeholder { 
+/* .ui-sortable-placeholder { 
     -moz-box-shadow: 4px 5px 4px #C6C6C6 inset;
     -webkit-box-shadow: 4px 5px 4px #C6C6C6 inset;
     box-shadow: 4px 5px 4px #C6C6C6 inset;
@@ -43,7 +43,7 @@
 }
 .ui-sortable-placeholder * { 
     opacity: 0.0; visibility: hidden; 
-}
+} */
 .handle-drag{
     visibility: hidden;
     
