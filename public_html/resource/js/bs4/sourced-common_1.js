@@ -8,7 +8,17 @@
 /*global global_var, SAInput*/
 
 
-
+var filtUsm = {
+    TableFields:{},
+    SetTableFields: function (tableId, InputId) {
+        if (tableId in this.TableFields) {
+            if (!this.TableFields[tableId].includes(InputId))
+                this.TableFields[tableId] = this.TableFields[tableId] + ',' + InputId;
+        } else {
+            this.TableFields[tableId] = InputId;
+        }
+    }
+}
 
 function check() {
 //    zoomOut
@@ -5480,6 +5490,9 @@ UserStory.prototype = {
                         break;
                     case '@.showerror':
                         descLine = SAFN.Convert.ShowErrorStatement(mainBody);
+                        break;
+                    case '@.sum':
+                        descLine = SAFN.Convert.SumStatement(mainBody);
                         break;
                 }
             }
@@ -13786,6 +13799,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanViewByStatus: function (stLm,endLm,bsTat) {
         var priD =$("#story_mn_filter_project_id").val();
         var fkAsId = $("#story_mn_filter_assigne_id").val();
+        var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
         var endLimit = endLm;
@@ -13808,6 +13822,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
         if(fkAsId) {
             json.kv.fkOwnerId = fkAsId;
+        }
+        if(priorty) {
+            json.kv.priority = priorty;
         }
         if(search.length >2) {
             json.kv.backlogName = "%%"+search +"%%";
@@ -13867,9 +13884,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 c4closed++;
                                 $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
                             }
-                            $('#kanban_view_new_count').html(c4new);
-                            $('#kanban_view_ongoing_count').html(c4ongoing);
-                            $('#kanban_view_closed_count').html(c4closed);
+                           
                         }
                       
                         $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).find('.more-us-card-btn').remove();
@@ -13882,7 +13897,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
-                contentArrangableUI();
+               // contentArrangableUI();
                 $('[data-toggle="popover"]').popover()
             },
             error: function () {
@@ -13917,7 +13932,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                
                 var priD =$("#story_mn_filter_project_id").val();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
+                var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
+               
                 if(priD==''){
                     return
                 }
@@ -13935,12 +13953,46 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 } else if(UsLabel) {
                     json.kv.id = UsLabel;
                 }
+                if(priorty) {
+                    json.kv.priority = priorty;
+                }
+               
                 if(fkAsId) {
                     json.kv.fkOwnerId = fkAsId;
                 }
                 if(search.length >2) {
                     json.kv.backlogName = "%%"+search +"%%";
                 }
+                if(filtUs){
+                    var lstp = ""
+
+                    for (let j = 0; j < filtUs.length; j++) {
+                     
+                        var lmnh = $(filtUs[j]).find('b').attr('data-backlogs')
+                        var tstl = filtUsm.TableFields[lmnh];
+
+                        if( tstl === undefined){
+                            $('#body-large-modal-in-us').html('');
+                            return
+                        }else{
+                            tstl = tstl.split(',')
+                            for (let k = 0; k < tstl.length; k++) {
+                          
+                                lstp += tstl[k]+'%IN%';
+                            }
+                              
+                        }
+                        
+                    }
+                    if(lstp){
+                        json.kv.id = lstp; 
+                       
+                    }else{
+                       
+                    }
+                    
+
+                 }
 
                 if($(".us-mngm-is-api").prop("checked")){
                   
@@ -14013,7 +14065,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                        contentArrangableUI();
+                        //contentArrangableUI();
                         $('[data-toggle="popover"]').popover();
                 
                     },
@@ -14031,6 +14083,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                
                 var priD =$("#story_mn_filter_project_id").val();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 if(priD==''){
                     return
@@ -14048,6 +14101,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                    
                 } else if(UsLabel) {
                     json.kv.id = UsLabel;
+                }
+                if(priorty) {
+                    json.kv.priority = priorty;
                 }
                 if(fkAsId) {
                     json.kv.fkOwnerId = fkAsId;
@@ -14136,7 +14192,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                        contentArrangableUI();
+                    //    contentArrangableUI();
                         $('[data-toggle="popover"]').popover();
                        
                     },
@@ -14700,6 +14756,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 //                                                .append('Add Flag')))
 //                                )
                         )
+                        
                 .append($('<div clas="taskContentBody">')
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item">')
@@ -14708,7 +14765,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                         ))
                         .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-priority">')
-                                        .append("&nbsp;" + o.priority)
+                                .append($("<select>").attr("id",'priority-change-story-card').addClass('story-priorty-selectbox')
+                                .append(`
+                                <option value="1" selected="">1- Lowest</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 - Highest</option>
+                                `)
+                                .val(o.priority))
+                                    
                                         ))
                         /* .append($('<span class="backlog-status">')
                                 .append($('<div class="us-list-item us-item-executor">')
@@ -14731,6 +14801,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             <span class="slider round hide-off "></span>
 
         </label>`)
+        .append($("<button>")
+                   .addClass("baclog-large-modal-next btn btn-sm btn-light")
+                   .attr("data-status",o.id)
+                   .attr("data-status",'baclog-large-modal-next-id')
+                   .append('<i class="fas fa-expand" aria-hidden="true"></i>')
+        )
         .append($("<div>").addClass("stat-div-task-content")
            .append($('<table>').addClass("stat-table-us")
                    .append($("<thead>")

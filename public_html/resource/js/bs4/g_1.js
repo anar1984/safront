@@ -81,6 +81,32 @@ $(function () {
 
 
     });
+
+    /// beaction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    $(document).on('click', '#description_table_id .cs-add-input', function(e) {
+        $(this).parents('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
+        .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
+        <div class="cs-value-trash-box">
+                            <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
+                        </div>
+        <input class="fns-val function-statement-input-common function-statement-input-common-4-sum" type="text" value=""></li>`);
+    });
+    $(document).on('click', '#description_table_id .cs-value-trash', function(e) {
+        
+
+          
+
+          if(confirm("Are you Sure??")){
+            var th = $(this).parents("#sum-sortable")
+            $(this).parents('li').remove();
+           var f= $(th).find('.function-statement-input-common').first();
+          
+            SAFN.Reconvert.SumStatement(f);
+          
+
+        }
+    });
+    /// beaction end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     $(document).on("click", '.change-color-component', function (e) {
    
           var clr  = $(this).attr("data-bgcolorspan");
@@ -204,11 +230,175 @@ $(function () {
 
 
     });
+    $(document).on("click", '.tab-dash-trig', function (e) {
+        var data = $(this).attr('data-link')
+     
+          Utility.addParamToUrl('current_tab_dash',data)
+      
+            $("#statistics-projectlist").change();
+        
+        
+
+    });
+    $(document).on("change", '#statistics-projectlist', function (e) {
+        var current_tab = Utility.getParamFromUrl('current_tab_dash')
+        var id = $('option:selected', this).attr('value');
+        var  Lst = $(this).val();
+
+        getProjectUsersForID(id)
+          
+        for (let index = 0; index < Lst.length; index++) {
+          loadDetailsOnProjectSelect4Dashboard(Lst[index]);
+            
+        }
+        
+
+        if(current_tab==='backlog'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Backlog History")
+      
+        }
+        else if(current_tab==='stat'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            Statistics.Dashboard.InitByCombo(this);
+            $(".dashboard-title-log").text("Statistics ")
+        }
+        else if(current_tab==='css'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            loadHistoryByCssId(id)
+            $(".dashboard-title-log").text("CSS History")
+        }
+        else if(current_tab==='js'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            loadHistoryByJsId(id);
+            $(".dashboard-title-log").text("JS History")
+        }
+        else if(current_tab==='tasks'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Tasks History");
+            loadHistoryByTasksId()
+        }
+        else if(current_tab==='sql'){
+            $("#database-table-list-div").show();
+            $("#statistics-projectlist").parent().hide();
+           
+            $("#database-table-list").change();
+            $(".dashboard-title-log").text("SQL History")
+            
+        }
+        else if(current_tab==='db'){
+            $("#database-table-list-div").show();
+            $("#statistics-projectlist").parent().hide();
+           
+            $("#database-table-list").change();
+            $(".dashboard-title-log").text("DB History")
+               
+        }
+        else if(current_tab==='backlogst'){
+            $("#database-table-list-div").hide();
+            $("#statistics-projectlist").parent().show();
+            $(".dashboard-title-log").text("Backlog Statistics History")
+                      
+        }
+        
+        
+
+    });
     $(document).on("change", '#statistics-BacklogList', function (e) {
         var id = $('option:selected', this).attr('value')
       
-        loadHistoryByBacklofId(id)
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlog'){
+         
+        loadHistoryByBacklofId(id)  
+            
+        }
+                
+        else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
         
+        
+
+    });
+    $(document).on("change", '#statistics-BacklogList-backlogst', function (e) {
+        var id = $('option:selected', this).attr('value')
+      
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlogst'){
+            loadHistoryByBacklogStId(id)
+            
+        }
+                
+        else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
+        
+        
+
+    });
+    $(document).on("change", '#database-tm-list', function (e) {
+         
+    
+        getDbTablesList4CodeDash(this)
+
+    });
+    $(document).on("change", '#database-table-list', function (e) {
+        var current_tab = Utility.getParamFromUrl('current_tab_dash')
+       
+
+        if(current_tab==='db'){
+            loadHistoryByDBId($(this).val())
+        }
+        else if(current_tab==='sql'){
+            loadHistoryBysqlId($(this).val())
+        }
+        
+       
+
+      
+       
+
+    });
+    $(document).on("change", '#statistics-BacklogList-task', function (e) {
+        var id = $('option:selected', this).attr('value')
+      
+
+        var current_tab = Utility.getParamFromUrl('current_tab_dash');
+
+        if(current_tab==='backlog'){
+         
+        loadHistoryByBacklofId(id);
+            
+        }else if(current_tab==='tasks'){
+         loadHistoryByTasksId(id);
+        }
+        
+        
+
+    });
+    $(document).on("change", '#search-task-history-id', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
+
+    });
+    $(document).on("change", '#datebet-task-history-id', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
+
+    });
+    $(document).on("change", '#statistics-createdby-task', function (e) {
+       
+        $("#statistics-BacklogList-task").change();
 
     });
     $(document).on("click", '.div-content-body-td .load-more-button', function (e) {
@@ -1247,6 +1437,19 @@ $(document).on('click', '.next-large-modal-btn', function (event) {
     run_clock('countDown-larg',deadline);
 
 });
+$(document).on('click', '.baclog-large-modal-next', function (event) {
+    $("#body-large-modal-in-us4backlog").html("");
+
+     var elm1 = $(this).parents('.task-content');
+     var elm =elm1.clone();
+     elm.css("width",'100%')
+     elm.find('.baclog-large-modal-next').hide();
+    
+    $("#task-ongoing-large-modal4backlog").modal('show');
+     $("#body-large-modal-in-us4backlog").append(elm);
+     $('[data-toggle="popover"]').popover();
+
+});
 $(document).on('click', '.refresh-interval-butn', function (event) {
    
                 clearInterval(timeinterval);
@@ -1300,7 +1503,7 @@ function run_clock(id,endtime){
            
                 current_time = Date.parse(new Date());
              deadline= new Date(current_time + time_in_minutes*60*1000)
-             run_clock(id,new Date(current_time + time_in_minutes*60*1000))
+             run_clock(id,deadline);
         }
 	}
 	update_clock(); // run function once at first to avoid delay
@@ -1335,6 +1538,22 @@ function resume_clock(){
 
 
   
+$(document).on('click', '.trigger-modal-us-header .status-large-menu-total', function (event) {
+       
+        
+    $(this).toggleClass('gactive');
+
+
+    clearInterval(timeinterval);
+    var st = $('#countDown-larg').attr('data-status-time');
+
+    new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+   
+        current_time = Date.parse(new Date());
+     deadline= new Date(current_time + time_in_minutes*60*1000)
+     run_clock('countDown-larg',new Date(current_time + time_in_minutes*60*1000));
+
+});
 $(document).on('click', '.more-table-details', function (event) {
        
         var bgId = $(this).attr("pid");
@@ -1347,6 +1566,102 @@ $(document).on('click', '.more-table-details', function (event) {
     $(this).removeClass('more-table-details')
     
 
+});
+$(document).on('click', '.stat-table-us thead .task-for-backlog-event-prm', function (event) {
+        var tbody = $(this).parents('table').find('tbody');
+        var log = $(this).attr("status");
+        if(log==='total'){
+            tbody.find(".task-tr-list").show(); 
+            $('.stat-table-us thead .task-for-backlog-event-prm').removeClass('active')
+        }else{
+            $(this).toggleClass('active');
+            var bgId = $(this).parents('tr').find('.task-for-backlog-event-prm.active');
+            tbody.find(".task-tr-list").hide();
+       
+            for (let i = 0; i < bgId.length; i++) {
+                   
+                tbody.find('[data-tr-status="'+$(bgId[i]).attr("status")+'"]').show();
+                
+            }
+             if(bgId.length === 0){
+                tbody.find(".task-tr-list").show(); 
+             }
+        }
+        
+     
+       
+            
+});
+$(document).on('click', '#generalStatisticsDetailsModal .general-statistics-story-card-list', function (event) {
+       
+        $(this).parents('table').find('.general-statistics-story-card-list').removeClass('active')
+        $(this).addClass('active')
+
+});
+$(document).on('change', '#priority-change-story-card-multi', function (event) {
+    var chk = $('.assign-label-story-card-item-new');
+    var sy =0;
+    for (let i = 0; i < chk.length; i++) {
+         
+      if($(chk[i]).prop("checked")){
+
+          sy++
+          var id = $(chk[i]).parents(".task-content").attr("bid")
+          updateUS4ShortChangeDetailsUsMngm($(this).val(), "priority",id);
+          $('.task-column').find('#multi-edit-menu-btn-us').addClass("invisible");
+          $("#multieditpopUpUs").modal("hide");
+      }
+        
+    }
+
+   
+
+
+});
+$(document).on('change', '#priority-change-story-card', function (event) {
+       var id = $(this).parents(".task-content").attr("bid")
+    updateUS4ShortChangeDetailsUsMngm($(this).val(), "priority",id)
+
+});
+$(document).on('change', '.all-check-us-mngm', function (event) {
+      var st = $(this).attr('data-st');
+      
+
+      if($(this).prop("checked")){
+        
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",true).change()
+
+      }else{
+        $(".main_div_of_backlog_info_kanban_view_table_"+st).find('.assign-label-story-card-item-new').prop("checked",false).change()
+ 
+      }
+
+});
+$(document).on('change', '.assign-label-story-card-item-new', function (event) {
+     var chk = $(this).parents('.task-column').find('.assign-label-story-card-item-new');
+      var sy =0
+      for (let i = 0; i < chk.length; i++) {
+           
+        if($(chk[i]).prop("checked")){
+ 
+            sy++
+        }
+          
+      }
+
+      if(sy>1){
+        
+        $(this).parents('.task-column').find('#multi-edit-menu-btn-us').removeClass("invisible");
+      }else{
+        $(this).parents('.task-column').find('#multi-edit-menu-btn-us').addClass("invisible");
+
+      }
+      if(chk.length===sy){
+        $(this).parents('.task-column').find('.all-check-us-mngm').prop('checked',true)
+      }else{
+        $(this).parents('.task-column').find('.all-check-us-mngm').prop('checked',false)
+
+      }
 });
 $(document).on('change', '#user-story-show-stat', function (event) {
  

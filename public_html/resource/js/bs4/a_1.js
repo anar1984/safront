@@ -364,6 +364,104 @@ function bindScrollZadToCanvas() {
 
 //////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+
+$(document).on("click","#import-excel-button-id-a" ,function(){
+ 
+    
+        if($(this).hasClass('active')){
+
+              $('#datetimepicker10').hide()
+            $(this).removeClass('active')
+        }else{
+            $('#datetimepicker10').show()
+            $(this).addClass('active')
+        }
+
+
+  })
+
+    $(document).on("click",'#file_export_excel_new',function(){
+        var tabId = $(this).attr("data-api-tabid")
+        var workbook = XLSX.utils.book_new();
+        
+        //var worksheet_data  =  [['hello','world']];
+        //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
+      
+        var worksheet_data  = document.querySelector("[table-id='"+tabId+"']");
+        var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
+        
+        workbook.SheetNames.push("Test");
+        workbook.Sheets["Test"] = worksheet;
+      
+         exportExcelFile(workbook);
+      
+     
+    });
+
+
+function exportExcelFile(workbook) {
+    return XLSX.writeFile(workbook, "bookName.xlsx");
+}
+
+
+
+
+
+
+
+$(document).on("change","#file_excel_import" ,function(){
+    var tabID =$(this).attr('data-api-tabid');
+      filePicked(this,tabID);
+  })
+  function filePicked(oEvent,tabID) {
+  // Get The File From The Input
+  var oFile = oEvent.files[0];
+  var sFilename = oFile.name;
+   
+  // Ready The Event For When A File Gets Selected
+  var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+            // Here is your object
+            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            var json_object = JSON.stringify(XL_row_object);
+            productList = JSON.parse(json_object);
+            var tbody =$("<tbody>")
+            
+
+            for (i = 0; i < productList.length; i++) {
+                var tr = $("<tr>");
+                var columns = Object.values(productList[i]);
+                    tr.append($('<td>').text(i))
+
+               
+                for (let l = 0; l < columns.length; l++) {
+                  
+                    tr.append($('<td>').text(columns[l]))
+                    
+                }
+                
+              tbody.append(tr);
+            }
+
+            $("#"+tabID).find("tbody").empty();
+            console.log($("#"+tabID));
+            $("table[table-id='"+tabID+"']").find("tbody").append(tbody.html());
+        })
+    };
+    reader.onerror = function(ex) {
+        console.log(ex);
+    };
+  
+  // Tell JS To Start Reading The File.. You could delay this if desired
+  reader.readAsBinaryString(oFile);}
+
+  
 function getGroupList4Table(elm) {
    
    try { 
@@ -384,6 +482,41 @@ function getGroupList4Table(elm) {
     }
     
  }  
+ $(function () {
+    $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function () {
+        var tbl = $(this).parents('.stat-table-us');
+        console.log(tbl);
+        var index = $(this).index(),
+            rows = [],
+            thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
+  
+        $(tbl).find('.theader-table td').removeClass('asc desc');
+        $(this).addClass(thClass);
+  
+        $(tbl).find('tbody .task-tr-list').each(function (index, row) {
+          rows.push($(row).detach());
+        });
+  
+        rows.sort(function (a, b) {
+          var aValue = $(a).find('td').eq(index).text(),
+              bValue = $(b).find('td').eq(index).text();
+  
+          return aValue > bValue
+               ? 1
+               : aValue < bValue
+               ? -1
+               : 0;
+        });
+  
+        if ($(this).hasClass('desc')) {
+          rows.reverse();
+        }
+  
+        $.each(rows, function (index, row) {
+          $(tbl).append(row);
+        });
+      });
+  });
 function sortableTable(tableId,sv, cls) {
     var table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("comp_id_"+tableId);
@@ -743,6 +876,25 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 
 
 
+$(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
+   var depID = $(this).attr('data-api-tabid');
+   var val = $(this).val();
+    var stTime 
+    var endTime 
+    val = val.split('-')
+     var dt = val[0].split('/');
+     var dt1 = val[1].split('/');
+     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
+     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
+      console.log(endTime,stTime);
+      var inns =stTime.trim()+'%BN%'+endTime.trim()
+      var data ={}
+       data.insertDate = inns;
+     
+      var el = be.callApi(depID,data);
+  
+   
+})
 $(document).on("mousedown", ".selectableTable td", function (e) {
     $(".absolute-div-row-table").hide();
     isMouseDown = true;
@@ -3646,7 +3798,7 @@ function loadTableFIlterInside() {
 
   
 
-    $("#filter-table-row-21010301044607177560").selectpicker("refresh")
+    $(".filter-table-row-select").selectpicker("refresh")
     $('.table').dragtable({ 
     persistState: function(table) { 
       
@@ -3661,6 +3813,18 @@ function loadTableFIlterInside() {
     dragHandle:'.handle-drag',
     restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')') 
 });
+
+$('#date_timepicker_start_end').daterangepicker({
+    /* ranges: {
+       'Bu Gün': [moment(), moment()],
+       'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+       'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+       'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+       'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    } */
+  });
+
 
 }
 function copyJSCodeClassTo_loadProjectList() {
@@ -5950,6 +6114,9 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
     tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
+    $('.table-show-hide-row-div').draggable({
+        containment: "body"
+    });
 }
 
 function callTableRelationAPIs(elem, tableId) {
@@ -11851,7 +12018,12 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
 
+           $('#statistics-BacklogList').empty();
+         $('#statistics-BacklogList-task').empty();
+         $('#statistics-BacklogList-backlogst').empty();
             var cmd = $('#statistics-BacklogList');
+            var cmd1 = $('#statistics-BacklogList-task');
+            var cmd2 = $('#statistics-BacklogList-backlogst');
 
             new UserStory().setUSLists(res);
             var f = true;
@@ -11871,7 +12043,9 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                cmd.append(op);
+                cmd.append(op.clone());
+                cmd1.append(op.clone());
+                cmd2.append(op.clone());
                 //   } 
                 /* else if (o.isApi === '1') {
                  var td = $('<tr>')
@@ -11891,8 +12065,12 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
 
             //            cmd.val(global_var.current_backlog_id);
             sortSelectBoxByElement(cmd);
-            cmd.selectpicker('refresh');
-            cmd.change();
+            sortSelectBoxByElement(cmd1);
+            sortSelectBoxByElement(cmd2);
+            cmd.selectpicker('refresh').change();
+            cmd1.selectpicker('refresh').change();
+            cmd2.selectpicker('refresh').change();
+         
 
 
         }
@@ -11924,6 +12102,383 @@ var hstry = {
     }
 }
 
+function loadHistoryByTasksId(backlog_id) {
+     var serach = $("#search-task-history-id").val();
+     var val = $("#datebet-task-history-id").val();
+     var created = $("#statistics-createdby-task").val();
+   
+    var json = initJSON();
+    json.kv.fkProjectId = $('#statistics-projectlist option:selected').attr('value');
+    if(serach){
+        json.kv.taskName = '%%'+serach+"%%";
+    }
+    if(created){
+        json.kv.fkHistoryTellerId = created;
+    }
+    if(val){
+       
+        val = val.split('-')
+     var dt = val[0].split('/');
+     var dt1 = val[1].split('/');
+     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
+     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
+  
+      var inns =stTime.trim()+'%BN%'+endTime.trim();
+      json.kv.historyDate = inns;
+    }
+    
+    json.kv.fkBacklogId = backlog_id;
+    
+ 
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogTaskHistoryListByProjectIdAndByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-task tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-task tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].taskName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+
+function loadHistoryByCssId(project_id) {
+    if (project_id === undefined) {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = project_id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetCssHistoryListByProjectIdAndByBacklogId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-css tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-css tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].inputName+"</td>")
+                        .append("<td>"+obj[i].cssBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+
+function loadHistoryBysqlId(fkTableId) {
+    if (fkTableId === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkTableId = fkTableId;
+    json.kv.fkDbId = $("#database-tm-list").val();
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetSqlHistoryListByDbIdAndByTableId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-sql tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-sql tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function loadHistoryByDBId(fkTableId) {
+    if (fkTableId === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkTableId = fkTableId;
+    json.kv.fkDbId = $("#database-tm-list").val();
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetDatabaseHistoryListByDbIdAndByTableId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-db tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-db tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function loadDatabaseList2ComboEntityDAsh() {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetDbList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            $('#database-tm-list').empty();
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    $('#database-tm-list')
+                            .append($('<option>').val(o.id)
+                                    .append(o.dbName))
+                }
+
+                
+            } catch (err) {
+        
+            }
+            $('#database-tm-list').selectpicker('refresh')
+        }
+    });
+}
+function getDbTablesList4CodeDash(el) {
+    var dbid = $(el).val();
+
+    if (!dbid) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.dbId = dbid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetDBTableList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#database-table-list').html('');
+
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                $('#database-table-list')
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
+            }
+
+            $('#database-table-list').selectpicker('refresh').change();
+
+        }
+    });
+
+}
+function loadHistoryByBacklogStId(backlog_id) {
+    if (backlog_id === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = $("#statistics-projectlist").val();
+    json.kv.fkBacklogId = backlog_id;
+    json.kv.startLimit = 1;
+    json.kv.endLimit = 100;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogHistoryList4Stats",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-backlogst tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-backlogst tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].backlogName+"</td>")
+                        .append("<td>"+obj[i].historyBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+function getProjectUsersForID(id) {
+
+
+    var json = initJSON();
+
+    json.kv['fkProjectId'] = id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#statistics-createdby-task').empty().append($('<option>'));
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    $('#statistics-createdby-task')
+                            .append($('<option>').val(o.fkUserId)
+                                    .append(o.userName))
+                }
+
+                
+            } catch (err) {
+        
+            }
+            $('#statistics-createdby-task').selectpicker('refresh')
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+function loadHistoryByJsId(project_id) {
+    
+    if (project_id===undefined) {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkDbId = project_id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetJsHistoryListByProjectId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-js tbody').empty()
+        
+          var obj = res.tbl[0].r;
+          for (let i = 0; i < obj.length; i++) {
+            $('#history-main-table-js tbody')
+            .append($('<tr>')
+                        .append("<td>"+obj[i].jsName+"</td>")
+                        .append("<td>"+obj[i].jsBody+"</td>")
+                        .append("<td>"+obj[i].newValue+"</td>")
+                        .append("<td>"+obj[i].oldValue+"</td>")
+                        .append("<td>"+obj[i].historyType+"</td>")
+                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
+
+                        )
+
+              
+          }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
 function loadHistoryByBacklofId(backlodId) {
     if (backlodId === "") {
         return
@@ -12106,6 +12661,12 @@ $(document).on('click', '.loadDashboard', function (evt) {
         Statistics.GelGeneralLabels();
         Statistics.GelGeneralSprints();
         Statistics.GetGeneralUsers();
+        $("#database-tm-list").selectpicker();
+        loadDatabaseList2ComboEntityDAsh();
+        $('.tab-dash-trig').first().click();
+        $('#datebet-task-history-id').daterangepicker({
+           
+          }).val('');
     });
 });
 
@@ -12301,6 +12862,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         hideToggleMain();
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
+        $("#priority-change-story-card-filter").selectpicker();
    
     });
 });
@@ -13295,36 +13857,57 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
                var ifle = dt[index].tn;
              
                if(ifle=="overall"){
+                  
                 var le = dt[index].r[0];
-                var total=   le.overall   
+                
+                var total=   le.overall ;
+                
                 var elmo = $(".modal-header b.status-total-total")
                        elmo.text(parseFloat(elmo.text())+parseFloat(total));
                 var newst  = le.statusNew
                    var elm = $(".modal-header b.status-new-total")
                        elm.text(parseFloat(elm.text())+parseFloat(newst));
-            
-          
+                       if(newst>0){
+                        filtUsm.SetTableFields('new',le.fkBacklogId)
+                        }    
+                 
              var ong =  le.statusOngoing
              var elm1 = $(".modal-header b.status-ongoing-total")
                 elm1.text(parseFloat(elm1.text())+parseFloat(ong));
+                if(ong>0){
+                    filtUsm.SetTableFields('ongoing',le.fkBacklogId)
+                 } 
 
              var cl= le.statusClosed
                 var elm2 = $(".modal-header b.status-closed-total")
                 elm2.text(parseFloat(elm2.text())+parseFloat(cl));
-
+                if(cl>0){
+                    filtUsm.SetTableFields('closed',le.fkBacklogId)
+                 } 
              var uat = le.statusUat 
                 var elm3 = $(".modal-header b.status-UAT-total")
                 elm3.text(parseFloat(elm3.text())+parseFloat(uat));
-                
+                if(uat>0){
+                    filtUsm.SetTableFields('UAT',le.fkBacklogId)
+                 }
               var rej =le.statusRejected
               var elm4 = $(".modal-header b.status-rejected-total")
                 elm4.text(parseFloat(elm4.text())+parseFloat(rej));
+                if(rej>0){
+                    filtUsm.SetTableFields('rejected',le.fkBacklogId)
+                 }
                var can =le.statusCanceled
                var elm5 = $(".modal-header b.status-Canceled-total")
                elm5.text(parseFloat(elm5.text())+parseFloat(can));
+               if(can>0){
+                filtUsm.SetTableFields('Canceled',le.fkBacklogId)
+             }
                 var wait  = le.statusWaiting
                 var elm6 = $(".modal-header b.status-waiting-total")
                 elm6.text(parseFloat(elm6.text())+parseFloat(wait));
+                if(wait>0){
+                    filtUsm.SetTableFields('waiting',le.fkBacklogId)
+                 }
                                              
                }
              
@@ -13342,6 +13925,7 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
 }
 function getSTatsUserManagmentTableKanban(elm){
 
+        
       var div = $(elm).parents(".task-content").find(".stat-div-task-content");
     var json = {
         kv: {}
@@ -13380,37 +13964,10 @@ function getSTatsUserManagmentTableKanban(elm){
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
                                              .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
-                                             .append('<td class="text-center"><a href="#" pid='+le.fkBacklogId+' class="task-for-backlog-event-prm more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
+                                             .append('<td class="text-center"><a href="#" pid='+le.fkBacklogId+' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
                                              
                }
-              /*  if(ifle=="changes"){
-               
-                var le = dt[index].r[0];
-                $(div).find(".changes").html("").append('<td class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Change Request</b>('+le.overall+')</td>')
-                .append('<td class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
-                .append('<td class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
-                
-               }
-               if(ifle=="bug"){
-                var le = dt[index].r[0];
-                $(div).find(".bug").html("")
-                .append('<td class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Bug</b>('+le.overall+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
-                
-               }
-               if(ifle=="news"){
-                var le = dt[index].r[0];
-                $(div).find('.new').html("")
-                .append('<td class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>New</b>('+le.overall+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</td>')
-                .append('<td class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</td>')
-                
-               }
-               */
+            
           }
           if(dt==''){
             $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title "  action="overall" status="total"><b>Tasks</b>(0)</span></td>')
@@ -13448,7 +14005,7 @@ function getBugList4UserStory(bgId,tbody) {
     json.kv.fkBackogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
-    
+    var prd = $('#story_mn_filter_project_id').val();
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13459,12 +14016,14 @@ function getBugList4UserStory(bgId,tbody) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            
+            coreBugList = res;
+            setKV4CoreBugList();
+            SATask.updateTaskByRes(res);
             var ela  = res.tbl[0].r
             $(tbody).html('')
-            $(tbody).append($("<tr>")
+            $(tbody).append($("<tr>").addClass('theader-table')
             .append('<td><b>Task Id</b></td>')
-            .append('<td><b>Status</b></td>')
+            .append('<td class="trigger-status-filter"><b>Status</b></td>')
             .append('<td><b>Description</b></td>')
             .append($("<td>").append("<b>Task Nature</b>"))
             .append('<td><b>Task Type</b></td>')
@@ -13475,11 +14034,15 @@ function getBugList4UserStory(bgId,tbody) {
 
             for (let i = 0; i < ela.length; i++) {
                var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
-               console.log(taskNature);
-                $(tbody).append($("<tr>")
+             
+                $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status',ela[i].taskStatus)
                                   .append('<td class="task-id-td">'+ela[i].projectCode+"-"+ela[i].orderNoSeq+'</td>')
                                   .append('<td><span class="us-item-status-' + ela[i].taskStatus+'">'+ela[i].taskStatus+'</span></td>')
-                                  .append('<td>'+ela[i].taskName+'</td>')
+                                  .append($("<td>")
+                                              .append($("<a>")
+                                                .attr('href','#')
+                                               .attr("onclick","callTaskCard4BugTask(this,'"+prd+"','"+ela[i].id+"')")
+                                               .text(ela[i].taskName)))
                                   .append($("<td>").append(taskNature))
                                   .append('<td>'+ela[i].taskTypeName+'</td>')
                                   .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/'+ela[i].createByImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].createByName+'" title="" data-original-title="Created By"></td>')
@@ -13488,8 +14051,9 @@ function getBugList4UserStory(bgId,tbody) {
                                   )
                 
             }
-
-            $('[data-toggle="popover"]').popover()
+            
+            $('[data-toggle="popover"]').popover();
+            $(tbody).find('.trigger-status-filter').click();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -15003,6 +15567,54 @@ function updateInput4SCDetails(inputId, val, ustype) {
     });
 }
 
+function updateUS4ShortChangeDetailsUsMngm(val, ustype,usId) {
+
+    try {
+
+        if (ustype.lentgh === 0 || val.lentgh === 0) {
+            return;
+        }
+    } catch (e) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = usId;
+    json.kv.type = ustype;
+    json.kv.value = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateUserStsory4ShortChange",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            SACore.addBacklogByRes(res);
+
+            loadCurrentBacklogProdDetailsSyncrone();
+            //            if (global_var.current_modal === 'loadLivePrototype') {
+            //                callStoryCardAfterIPOAction();
+            //            } else if (global_var.current_modal === 'loadStoryCard') {
+            //                reloadBacklogListOnStoryCard();
+            //            }
+            new UserStory().setUSLists4KanbanView();
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
 function updateUS4ShortChangeDetails(val, ustype) {
 
     try {
@@ -15708,6 +16320,14 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
         labelOrSplitValuesUs();
        
   
+});
+$(document).on('change', '#priority-change-story-card-filter', function (evt) {
+   
+          UsLabel ='';
+          UsSprint ='';
+          Utility.addParamToUrl('fk_assigne_id', $(this).val());
+          labelOrSplitValuesUs();
+          
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
    
