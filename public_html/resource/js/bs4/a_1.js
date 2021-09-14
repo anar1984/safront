@@ -12212,7 +12212,7 @@ function loadHistoryBysqlId(fkTableId) {
 
     var json = initJSON();
     json.kv.fkTableId = fkTableId;
-    json.kv.fkDbId = $("#database-table-list").val();
+    json.kv.fkDbId = $("#database-tm-list").val();
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetSqlHistoryListByDbIdAndByTableId",
@@ -12228,8 +12228,8 @@ function loadHistoryBysqlId(fkTableId) {
           for (let i = 0; i < obj.length; i++) {
             $('#history-main-table-sql tbody')
             .append($('<tr>')
-                        .append("<td>"+obj[i].id+"</td>")
-                        .append("<td>"+obj[i].jsBody+"</td>")
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
                         .append("<td>"+obj[i].historyType+"</td>")
@@ -12252,7 +12252,7 @@ function loadHistoryByDBId(fkTableId) {
 
     var json = initJSON();
     json.kv.fkTableId = fkTableId;
-    json.kv.fkDbId = $("#database-table-list").val();
+    json.kv.fkDbId = $("#database-tm-list").val();
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmgetDatabaseHistoryListByDbIdAndByTableId",
@@ -12268,8 +12268,8 @@ function loadHistoryByDBId(fkTableId) {
           for (let i = 0; i < obj.length; i++) {
             $('#history-main-table-db tbody')
             .append($('<tr>')
-                        .append("<td>"+obj[i].id+"</td>")
-                        .append("<td>"+obj[i].jsBody+"</td>")
+                        .append("<td>"+obj[i].tableName+"</td>")
+                        .append("<td>"+obj[i].fieldName+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
                         .append("<td>"+obj[i].historyType+"</td>")
@@ -12465,7 +12465,7 @@ function loadHistoryByJsId(project_id) {
           for (let i = 0; i < obj.length; i++) {
             $('#history-main-table-js tbody')
             .append($('<tr>')
-                        .append("<td>"+obj[i].id+"</td>")
+                        .append("<td>"+obj[i].jsName+"</td>")
                         .append("<td>"+obj[i].jsBody+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
