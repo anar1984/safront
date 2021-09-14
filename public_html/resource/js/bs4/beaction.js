@@ -2765,18 +2765,21 @@ var SAFN = {
              var ul = $('<ul>').attr('id','sum-sortable');
               for (let i = 0; i < argList.length; i++) {
 
-                if(i>0){
-                    var li  = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
-                    .append(`<div class="cs-value-trash-box">
-                    <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
-                </div>`)
-                    .append($('<input>')
-                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
-                  
-                    .val(argList[i]))
-    
-                    ul.append(li);
+                if(argList[i]){
+                    if(i>0){
+                        var li  = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
+                        .append(`<div class="cs-value-trash-box">
+                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
+                    </div>`)
+                        .append($('<input>')
+                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                      
+                        .val(argList[i]))
+        
+                        ul.append(li);
+                    }
                 }
+               
               }
             
             
