@@ -2523,6 +2523,9 @@ var SAFN = {
                     case '@.sum':
                         descLine = SAFN.Convert.SumStatement(mainBody);
                         break;
+                    case '@.dec':
+                        descLine = SAFN.Convert.DecStatement(mainBody);
+                        break;
                     case '@.concat':
                         descLine = SAFN.Convert.ConcatStatement(mainBody);
                         break;
@@ -2572,6 +2575,9 @@ var SAFN = {
         })
         $(document).on("change", ".function-statement-input-common-4-sum", function (e) {
             SAFN.Reconvert.SumStatement(this);
+        })
+        $(document).on("change", ".function-statement-input-common-4-dec", function (e) {
+            SAFN.Reconvert.DecStatement(this);
         })
         $(document).on("change", ".function-statement-input-common-4-concat", function (e) {
             SAFN.Reconvert.ConcatStatement(this);
@@ -2651,10 +2657,33 @@ var SAFN = {
                 }
                 
             }
-
     
             var fnline = "@.sum(" + key + "," + val1 + ")";
-           
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        DecStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");
+            var val1= '';
+             for (let i = 0; i < val.length; i++) {
+                
+                if($(val[i]).val()===""){
+                  
+                }else{
+                    
+                    if(val.length===(i+1)){
+                        val1 += $(val[i]).val();
+                    }else{
+                        val1 += $(val[i]).val()+','; 
+                    }
+                  
+                }
+                
+            }
+    
+            var fnline = "@.dec(" + key + "," + val1 + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         ConcatStatement: function (triggerEl) {
@@ -2944,6 +2973,63 @@ var SAFN = {
 
             $(ul).sortable({ 
                 placeholder: "ui-sortable-placeholder" 
+            });
+            return div;
+
+        },
+        DecStatement: function (line) {
+           
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+           
+             var ul = $('<ul>').attr('id','dec-sortable');
+              for (let i = 0; i < argList.length; i++) {
+
+                // if(argList[i]){
+                    if(i>0){
+                        var li  = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
+                        .append(`<div class="cs-value-trash-box">
+                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
+                    </div>`)
+                        .append($('<input>')
+                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                      
+                        .val(argList[i]))
+        
+                        ul.append(li);
+                    }
+                // }
+               
+              }          
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-dec")
+                    .append($('<div>')
+                              .addClass("d-flex justify-content-start")
+                               .append(`<div class="col-cs-1 d-table mr-2"><span class="cs-funcname d-table-cell">Dec</span></div>`)
+                   
+                    .append($("<div>").addClass('col-cs-2')
+                            .append($("<ul>")
+                                       .css('display','initial')
+                                      .append($('<input>')
+                                                .addClass("function-statement-input-common function-statement-input-common-4-dec fns-key")
+                                                .val(key))
+                                                
+                                      .append('<span class="cs-sumin">=</span>'))
+                                 .append(ul))
+
+                    .append(`<div class="col-cs-2 d-table cs-plus-btn">
+                    <div class="d-table-cell align-middle">
+                        <a class="cs-btn-dec cs-add-input btn btn-primary">&#247;</a>
+                    </div>
+                </div>`))
+
+           $(ul).sortable({
+                update: function( ) {
+                    SAFN.Reconvert.ConcatStatement($(this).find("input"));
+                }
             });
             return div;
 
@@ -3256,6 +3342,7 @@ var SAFN = {
         'ShowError': '@.showerror()',
         'SendEmail': '@.sendemail(,)',
         'Sum': '@.sum(,)',
+        'Dec': '@.dec(,)',
         'Concat': '@.concat(,)',
         'Click': '@.click(,)',
         'Hide': '@.hide(,)',
@@ -3266,7 +3353,7 @@ var SAFN = {
 
 }
 
-// Custom Script
+// Add fields
 $(document).on('click', '#description_table_id .cs-btn-sum', function(e) {
     $(this).parents('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
     .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
@@ -3285,8 +3372,17 @@ $(document).on('click', '#description_table_id .cs-btn-concat', function(e) {
     <input class="fns-val function-statement-input-common function-statement-input-common-4-concat" type="text" value=""></li>`);
 });
 
+$(document).on('click', '#description_table_id .cs-btn-dec', function(e) {
+    $(this).parents('.cs-sum-inbox-dec').find('ul#dec-sortable li:last-child')
+    .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
+    <div class="cs-value-trash-box">
+                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
+                    </div>
+    <input class="fns-val function-statement-input-common function-statement-input-common-4-dec" type="text" value=""></li>`);
+});
 
-// Notifications
+
+// Field deletion warning
     $(document).on('click', '#description_table_id #sum-sortable .cs-value-trash', function(e) {
         if(confirm("Are you Sure??")){
           var th = $(this).parents("#sum-sortable")
@@ -3299,11 +3395,21 @@ $(document).on('click', '#description_table_id .cs-btn-concat', function(e) {
 
   $(document).on('click', '#description_table_id #concat-sortable .cs-value-trash', function(e) {
     if(confirm("Are you Sure? Concat input")){
-        var id_errConcat = $(this).parents("#concat-sortable")
+        var id_noteConcat = $(this).parents("#concat-sortable")
         $(this).parents('li').remove();
-       var errConcat= $(id_errConcat).find('.function-statement-input-common').first();
+       var noteConcat= $(id_noteConcat).find('.function-statement-input-common').first();
       
-        SAFN.Reconvert.ConcatStatement(errConcat);
+        SAFN.Reconvert.ConcatStatement(noteConcat);
+    }
+});
+
+$(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', function(e) {
+    if(confirm("Are you Sure? Dec input")){
+        var id_noteDec = $(this).parents("#dec-sortable")
+        $(this).parents('li').remove();
+       var noteDec= $(id_noteDec).find('.function-statement-input-common').first();
+      
+        SAFN.Reconvert.DecStatement(noteDec);
     }
 });
   
