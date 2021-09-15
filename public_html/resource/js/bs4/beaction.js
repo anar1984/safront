@@ -2683,7 +2683,46 @@ var SAFN = {
            
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
-
+        ClickStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");    
+            var fnline = "@.click(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        HideStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");    
+            var fnline = "@.click(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        ShowStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");    
+            var fnline = "@.hide(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        VisibleStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");    
+            var fnline = "@.visible(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        UnvisibleStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");    
+            var fnline = "@.unvisible(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
         SendEmailStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
@@ -2692,7 +2731,6 @@ var SAFN = {
             var message = div.find(".fns-message").val();
             var cc = div.find(".fns-cc").val();
             var bb = div.find(".fns-bb").val();
-
 
             var fnline = "@.sendemail(" + to + "," + subject + "," + message + "," + cc + "," + bb + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
@@ -2993,8 +3031,6 @@ var SAFN = {
                                     )
                                  )
                     )
-              
-                // SAFN.Reconvert.ClickStatement($(this).find("input"));
             return div;
         },
         HideStatement: function (line) {
