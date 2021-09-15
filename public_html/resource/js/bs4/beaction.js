@@ -2530,9 +2530,11 @@ var SAFN = {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
-            var val = div.find(".fns-val").val();
+            var val = div.find(".fns-val").each(function(){
+                val += val+',';
+            }) 
 
-            var fnline = "@.set(" + key + "," + val + ")";
+            var fnline = "@.sum(" + key + "," + val + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         MapStatement: function (triggerEl) {
@@ -2580,30 +2582,19 @@ var SAFN = {
             var div = $('<div>')
                     .addClass("col-12")
                     .addClass("function-statement-container")
-                    .css("background-color", "yellow")
-                    .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
-                    .css("padding", '5px 10px')
-                    .css("border-radius", "5px")
-                    .append($('<span>').append($('<b>').text('if ')))
+                           .append($('<span>').append($('<b>').text('if ')))
                     .append($('<input>')
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-if")
                             .addClass("fns-key")
-                            .css("border-radius", "5px")
-                            .css("height", "20px")
-                            .css("border", "none")
-                            .css("width", "100px")
+                          
                             .val(key))
                     .append($('<span>').text('  '))
                     .append($('<select>')
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-if")
                             .addClass("fns-oper")
-                            .css("border-radius", "5px")
-                            .css("height", "20px")
-                            .css("border", "none")
-                            .css("width", "100px")
-                            .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
+                                                        .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
                             .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
                             .append($('<option>').val('>').text('Great').attr('selected', (oper === '>') ? true : false))
                             .append($('<option>').val('>=').text('Great Equals').attr('selected', (oper === '>=') ? true : false))
@@ -2617,10 +2608,7 @@ var SAFN = {
                             .addClass("fns-val")
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-if")
-                            .css("border-radius", "5px")
-                            .css("height", "20px")
-                            .css("border", "none")
-                            .css("width", "100px")
+                           
                             .val(val))
 //                    .append($('<span>').text(' {'))
                     .append($('<br>'))
@@ -2628,10 +2616,7 @@ var SAFN = {
                             .addClass("fns-body")
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-if")
-                            .css("margin-top", "2px")
-                            .css("border-radius", "5px")
-                            .css("border", "none")
-                            .css("width", "100%")
+                            
                             .text(body)
                             .val(body))
 //                    .append($('<span>').text('}'))
@@ -2845,6 +2830,8 @@ var SAFN = {
         'Map': '@.map(,)',
         'ShowError': '@.showerror()',
         'SendEmail': '@.sendemail(,)',
+        'Sum':'@.sum()',
     },
 
 }
+

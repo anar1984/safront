@@ -211,7 +211,7 @@ function deleteUpdatedBacklogStorageInfo(bid) {
 
 function getUnloadedBacklogListOnInit() {
 //    getBacklogProductionStorageInfo
-    var idx = 100;
+    var idx = 50;
     var toBeDownloadedBacklog = [];
     var overallSentBacklogs = [];
     var availableBacklogList = Object.keys(backlog_last_modification);
@@ -253,6 +253,10 @@ function loadMissedBacklogsListFromStorage(bid) {
 
     var bid1 = (bid) ? bid : global_var.current_backlog_id;
 
+    if (!bid1) {
+        return;
+    }
+
     var json = initJSON();
     json.kv.fkBacklogId = bid1;
     var that = this;
@@ -266,25 +270,29 @@ function loadMissedBacklogsListFromStorage(bid) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            var obj = res.tbl[0].r;
-            for (var i = 0; i < obj.length; i++) {
-                var json = '';
-                try {
-                    json = JSON.parse(obj[i].json);
-                    var idd = obj[i].id;
-                    var transaction = db.transaction(["subdb"], "readwrite");
-                    var store = transaction.objectStore("subdb");
-                    store.delete('idb_' + idd);
-                    store.add({'bid': 'idb_' + idd, 'json': json});
+            try {
+                var obj = res.tbl[0].r;
+                for (var i = 0; i < obj.length; i++) {
+                    var json = '';
+                    try {
+                        json = JSON.parse(obj[i].json);
+                        var idd = obj[i].id;
+                        var transaction = db.transaction(["subdb"], "readwrite");
+                        var store = transaction.objectStore("subdb");
+                        store.delete('idb_' + idd);
+                        store.add({'bid': 'idb_' + idd, 'json': json});
 
-                    localStorage.setItem('idb_' + idd, json.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(idd);
-                    loadBacklogProductionDetailsById_resparams(json);
-                } catch (err) {
-                    console.log(err);
+                        localStorage.setItem('idb_' + idd, json.kv.modificationTime);
+                        SAInput.LoadedBacklogs4Input.push(idd);
+                        loadBacklogProductionDetailsById_resparams(json);
+                    } catch (err) {
+                        console.log(err);
+                    }
+
+
                 }
-
-
+            } catch (err) {
+                console.log(err);
             }
         }
     });
@@ -330,33 +338,33 @@ function updateBacklogName() {
     });
 }
 
-function runApiOnStoryCard(){
+function runApiOnStoryCard() {
     var fkBacklogId = global_var.current_backlog_id;
     global_var.runApiOnStoryCard = 1;
-    var out = be.callApi(fkBacklogId,{});
-    var html = $('<span>').css('white-space','pre')
-            .css('font-family','monospace')
-            .css("width","200px")
-            .text(JSON.stringify(out,null,"  "))
+    var out = be.callApi(fkBacklogId, {});
+    var html = $('<span>').css('white-space', 'pre')
+            .css('font-family', 'monospace')
+            .css("width", "200px")
+            .text(JSON.stringify(out, null, "  "))
 //    alert(JSON.stringify(out));
     generatePopupModalNew($('<div>').append(html).html());
 }
 
-function testApiOnStoryCard(){
+function testApiOnStoryCard() {
     $('#apiIntegrationModal').modal('show');
     $('#apiIntegrationModal_method').selectpicker('refresh');
 }
 
-function sendApiIntegrationForTest(){
-     
+function sendApiIntegrationForTest() {
+
     var url = $('#apiIntegrationModal_urllink').val();
     var method = $('#apiIntegrationModal_method').val();
     var content = $('#apiIntegrationModal_body').val();
-    var contentType=$('#apiIntegrationModal_contenttype').val();
+    var contentType = $('#apiIntegrationModal_contenttype').val();
 
 
     var json = initJSON();
-     
+
     json.kv.url = url;
     json.kv.method = method;
     json.kv.content = content;
@@ -371,14 +379,14 @@ function sendApiIntegrationForTest(){
         crossDomain: true,
         async: false,
         success: function (res) {
-            
+
         },
         error: function (err) {
-                Toaster.showError(JSON.stringify(err));
+            Toaster.showError(JSON.stringify(err));
         }
     });
 }
 
-function beautifyApiIntegrationContent(){
-    
+function beautifyApiIntegrationContent() {
+
 }

@@ -1744,7 +1744,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
                 localStorage.setItem('idb_' + bid, res.kv.modificationTime);
                 SAInput.LoadedBacklogs4Input.push(bid);
-                loadBacklogProductionDetailsBiyId_resparams(res);
+                loadBacklogProductionDetailsById_resparams(res);
 
                 hideProgress4();
 
