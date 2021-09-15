@@ -92,6 +92,17 @@ $(function () {
            setComponentStyleUpdate(elm)
 
         });
+    $(document).on("click", '#description_table_body_id', function (e) {
+   
+        $(this).find(".cs-sum-inbox").parents("td").removeAttr('ondblclick');
+
+        });
+    $(document).on("dblclick", '.cs-sum-inbox', function (e) {
+   
+            e.stopPropagation();
+            e.preventDefault();
+
+        });
     $(document).on("click", '.change-font-component', function (e) {
    
           var clr  = $(this).attr("data-bgcolorspan");

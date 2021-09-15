@@ -5514,7 +5514,7 @@ UserStory.prototype = {
             descBody = this.getBacklogDescLineDetails(descBody);
             
             var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
-
+         
             var tr = $("<tr>")
                     .attr("orderno", obj[n].orderNo)
                     .attr("pid", obj[n].id)
