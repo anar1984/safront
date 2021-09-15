@@ -16243,8 +16243,12 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
 
     if (global_var.current_modal === "loadTaskManagement") {
         $('.' + global_var.task_mgmt_group_by).click();
-    } else if (global_var.current_modal === "loadBugChange") {
+    }
+     else if (global_var.current_modal === "loadBugChange") {
         sprintAddAssign(this);
+    }
+     else if (global_var.current_modal === "loadTaskTypeManagment"||global_var.current_modal === "loadTaskManagment") {
+        sprintAddAssignTaskType(this);
     }
 });
 
@@ -17651,7 +17655,9 @@ function clearTaskManagementKanban() {
 
 function genTaskTypeManagmentView4None() {
 
-
+    setBugFilterSprintValues();
+    setBugFilterLabelValues();
+      var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val()
     var json = {
         kv: {}
     };
@@ -17666,7 +17672,10 @@ function genTaskTypeManagmentView4None() {
     json.kv.taskStatus = bug_filter.status;
     json.kv.priority = bug_filter.priority;
     json.kv.taskNature = bug_filter.nature;
-    json.kv.searchText = bug_filter.search_text;
+    if(serachtx){
+        json.kv.searchText = serachtx;
+    }
+  
     json.kv.searchLimit = bug_filter.limit;
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
@@ -17715,7 +17724,7 @@ function genTaskTypeManagmentView4None() {
                 $("#taskTypeManagmentHeader").find('[pid="' + $(rt[index]).attr('id') + '"]').find(".counterkanban").text(con.length);
             }
 
-            contentArrangableUI();
+         
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -17810,15 +17819,7 @@ function getSprintTaskCheckedCount() {
 function genUSLine4KanbanView(o) {
 
     var ischecked = (getSprintTaskCheckedCount() > 0);
-    var div = $('<div>')
-            .append($("<input type='checkbox'>")
-                    .addClass("assign-sprint-to-task-item")
-                    .attr("pid", o.id)
-                    .attr('projectId', o.fkProjectId)
-                    .attr('backlogId', o.fkBacklogId)
-                    .attr("checked", ischecked)
-                    .attr("sid", global_var.bug_task_sprint_assign_id))
-            .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") "));
+    var div ='';
 
     var rs = global_var.bug_task_sprint_assign_checked === 1 ?
             div.html() + " " :
@@ -17882,14 +17883,14 @@ function genUSLine4KanbanView(o) {
             .append(replaceTags(SACore.GetBacklogname(o.fkBacklogId)))
             .append('<br>') :
             "";
-    var rs = "";
+    
     var s = $('<div >')
             .addClass('task-content content-drag')
             .append($('<div class="task-content-header">')
                     .append($('<div class="TaskContentText">')
                             .attr('bno', o.taskOrderNo)
                             .attr('pid', o.id)
-                            .append(rs)
+                            .append('<input type="checkbox" tid="' + o.id + '"  stIdr="' + o.fkBacklogId + '"  class="checkbox-task-type-task">')
                             .append(taskImage)
                             .append($('<span class="headerContentText">')
                                     .attr('href', '#')
