@@ -20648,4 +20648,37 @@ var SCSourceManagement = {
 
 }
 
+/// for cheweeek part section 
 
+
+function genChewekoperationSystem(){
+
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputAttributeListByBacklog",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+
+                
+            }
+        }
+    });
+
+}
+$(document).on('click','.for-chewekk-new-panel-link', function(){
+   var div =  $(".component-class#21041212141705702084");
+   var f = $(this).attr("data-link")
+   $.get("resource/child/" + f + ".html", function (html_string) {
+    $(div).html(html_string);
+    genChewekoperationSystem()
+    
+});
+
+})
