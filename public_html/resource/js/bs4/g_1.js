@@ -82,31 +82,6 @@ $(function () {
 
     });
 
-    /// beaction >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    $(document).on('click', '#description_table_id .cs-add-input', function(e) {
-        $(this).parents('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
-        .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
-        <div class="cs-value-trash-box">
-                            <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
-                        </div>
-        <input class="fns-val function-statement-input-common function-statement-input-common-4-sum" type="text" value=""></li>`);
-    });
-    $(document).on('click', '#description_table_id .cs-value-trash', function(e) {
-        
-
-          
-
-          if(confirm("Are you Sure??")){
-            var th = $(this).parents("#sum-sortable")
-            $(this).parents('li').remove();
-           var f= $(th).find('.function-statement-input-common').first();
-          
-            SAFN.Reconvert.SumStatement(f);
-          
-
-        }
-    });
-    /// beaction end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     $(document).on("click", '.change-color-component', function (e) {
    
           var clr  = $(this).attr("data-bgcolorspan");
