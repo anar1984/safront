@@ -5491,6 +5491,9 @@ UserStory.prototype = {
                     case '@.showerror':
                         descLine = SAFN.Convert.ShowErrorStatement(mainBody);
                         break;
+                    case '@.sum':
+                        descLine = SAFN.Convert.SumStatement(mainBody);
+                        break;
                 }
             }
         } catch (err) {
@@ -5545,7 +5548,7 @@ UserStory.prototype = {
             descBody = this.getBacklogDescLineDetails(descBody);
             
             var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
-
+         
             var tr = $("<tr>")
                     .attr("orderno", obj[n].orderNo)
                     .attr("pid", obj[n].id)

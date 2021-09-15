@@ -12107,10 +12107,7 @@ function loadHistoryByTasksId(backlog_id) {
      var serach = $("#search-task-history-id").val();
      var val = $("#datebet-task-history-id").val();
      var created = $("#statistics-createdby-task").val();
-    if (backlog_id === "") {
-        return
-    }
-
+   
     var json = initJSON();
     json.kv.fkProjectId = $('#statistics-projectlist option:selected').attr('value');
     if(serach){

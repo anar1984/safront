@@ -2513,6 +2513,9 @@ var SAFN = {
         $(document).on("change", ".function-statement-input-common-4-showerror", function (e) {
             SAFN.Reconvert.ShowErrorStatement(this);
         })
+        $(document).on("change", ".function-statement-input-common-4-sum", function (e) {
+            SAFN.Reconvert.SumStatement(this);
+        })
     },
     Reconvert: {
         IfStatement: function (triggerEl) {
@@ -2552,6 +2555,36 @@ var SAFN = {
             var key = div.find(".fns-key").val();
 
             var fnline = "@.showerror(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        SumStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val");
+            var val1= '';
+          
+            for (let i = 0; i < val.length; i++) {
+                
+                if($(val[i]).val()===""){
+                  
+                }else{
+
+                    
+                    if(val.length===(i+1)){
+                        val1 += $(val[i]).val();
+                    }else{
+                        val1 += $(val[i]).val()+','; 
+                    }
+                  
+                }
+
+                
+            }
+
+    
+            var fnline = "@.sum(" + key + "," + val1 + ")";
+           
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         SendEmailStatement: function (triggerEl) {
@@ -2685,7 +2718,7 @@ var SAFN = {
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-map")
                             .addClass("fns-key")
-                            .css("border-radius", "5px")
+                            .css("border-radius", "3px")
                             .css("height", "20px")
                             .css("border", "none")
                             .css("width", "100px")
@@ -2696,7 +2729,7 @@ var SAFN = {
                             .addClass("fns-val")
                             .addClass("function-statement-input-common")
                             .addClass("function-statement-input-common-4-map")
-                            .css("border-radius", "5px")
+                            .css("border-radius", "3px")
                             .css("height", "20px")
                             .css("border", "none")
                             .css("width", "100px")
@@ -2704,6 +2737,65 @@ var SAFN = {
 
 
 
+            return div;
+
+
+        },
+        SumStatement: function (line) {
+           
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+           
+             var ul = $('<ul>').attr('id','sum-sortable');
+              for (let i = 0; i < argList.length; i++) {
+
+                if(argList[i]){
+                    if(i>0){
+                        var li  = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
+                        .append(`<div class="cs-value-trash-box">
+                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
+                    </div>`)
+                        .append($('<input>')
+                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                      
+                        .val(argList[i]))
+        
+                        ul.append(li);
+                    }
+                }
+               
+              }
+            
+            
+
+            var div = $('<div>')
+                    .addClass("col-12")
+                    .addClass("function-statement-container cs-sum-inbox")
+                    .append($('<div>')
+                              .addClass("d-flex justify-content-start")
+                               .append(`<div class="col-cs-1 d-table mr-2"><span class="cs-funcname d-table-cell">Sum</span></div>`)
+                   
+                    .append($("<div>").addClass('col-cs-2')
+                            .append($("<ul>")
+                                       .css('display','initial')
+                                      .append($('<input>')
+                                                .addClass("function-statement-input-common function-statement-input-common-4-sum fns-key")
+                                                .val(key))
+                                                
+                                      .append('<span class="cs-sumin">=</span>'))
+                                 .append(ul))
+
+                    .append(`<div class="col-cs-2 d-table cs-plus-btn">
+                    <div class="d-table-cell align-middle">
+                        <a class="cs-add-input btn btn-primary">+</a>
+                    </div>
+                </div>`))
+
+            $(ul).sortable({ 
+                placeholder: "ui-sortable-placeholder" 
+            });
+             
             return div;
 
 
@@ -2829,8 +2921,8 @@ var SAFN = {
         'Set': '@.set(,)',
         'Map': '@.map(,)',
         'ShowError': '@.showerror()',
-        'SendEmail': '@.sendemail(,)',
-        'Sum':'@.sum()',
+        'SendEmail': '@.sendemail(,)', 
+        'Sum': '@.sum(,)' 
     },
 
 }
