@@ -2056,6 +2056,7 @@ var SAFN = {
             value = SAFN.GetArgumentValue(value);
             className = className.trim();
             $('.' + className).val(value);
+            $('.' + className).attr('sa-data-value',value);
 
             return {};
         },

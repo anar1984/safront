@@ -5809,6 +5809,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : selectField;
+    var itemSeparator = ($(el).attr('sa-item-separator')) ? ' '+$(el).attr('sa-item-separator')+' ': " ";
 
 
     for (var i in rows) {
@@ -5817,9 +5818,12 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
         var itemValueList = itemValue.split(',');
         var finalVal = "";
+        var idx = 1;
         for (var ii in itemValueList) {
             var sval = itemValueList[ii];
-            finalVal += row[sval] + " ";
+            finalVal += row[sval];
+            finalVal += (idx<itemValueList.length)? itemSeparator :"";
+            idx++;
         }
         var name = finalVal;
         val = (val) ? val.trim() : name.trim();
