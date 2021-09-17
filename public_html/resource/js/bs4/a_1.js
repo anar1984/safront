@@ -6298,6 +6298,53 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
 }
 
+
+
+function loadHistoryByBacklogStId(backlog_id) {
+    if (backlog_id === "") {
+        return
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = $("#statistics-projectlist").val();
+    json.kv.fkBacklogId = backlog_id;
+    json.kv.startLimit = 1;
+    json.kv.endLimit = 100;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogHistoryList4Stats",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#history-main-table-backlogst tbody').empty();
+
+            var obj = res.tbl[0].r;
+            
+            for (var i = 0; i < obj.length; i++) {
+                $('#history-main-table-backlogst tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].backlogName + "</td>")
+                                .append("<td>" + obj[i].historyBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + 
+                                " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' \n\
+                                     src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl +
+                        "' data-trigger='hover' data-toggle='popover' data-content='" 
+                        + obj[i].userName + "'  data-original-title='Created By'></td>"))
+             
+            }
+         
+          $('[data-toggle="popover"]').popover();
+        }
+    });
+}
+
 function setValueOnCompAfterTriggerApi(el, data) {
     //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
     //redirectClassa shamir edilir.
@@ -12397,46 +12444,9 @@ function getDbTablesList4CodeDash(el) {
     });
 
 }
-function loadHistoryByBacklogStId(backlog_id) {
-    if (backlog_id === "") {
-        return
-    }
 
-    var json = initJSON();
-    json.kv.fkProjectId = $("#statistics-projectlist").val();
-    json.kv.fkBacklogId = backlog_id;
-    json.kv.startLimit = 1;
-    json.kv.endLimit = 100;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetBacklogHistoryList4Stats",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            $('#history-main-table-backlogst tbody').empty()
 
-            var obj = res.tbl[0].r;
-            for (let i = 0; i < obj.length; i++) {
-                $('#history-main-table-backlogst tbody')
-                        .append($('<tr>')
-                                .append("<td>" + obj[i].backlogName + "</td>")
-                                .append("<td>" + obj[i].historyBody + "</td>")
-                                .append("<td>" + obj[i].newValue + "</td>")
-                                .append("<td>" + obj[i].oldValue + "</td>")
-                                .append("<td>" + obj[i].historyType + "</td>")
-                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
-        }
-    });
-}
 function getProjectUsersForElById(id,elm) {
 
 
