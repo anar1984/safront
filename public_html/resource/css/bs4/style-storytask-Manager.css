@@ -41,6 +41,15 @@
     height: 1px !important;
    
 }
+.task-column-mng{
+    width: 300px;
+       border-radius: 6px;
+       
+       padding: 5px;
+       margin-left: 15px;
+       background-color:rgb(244, 245, 247);
+       
+}
 .task-column{
     width: 30.5%;
        border-radius: 6px;
@@ -69,6 +78,20 @@
   }
 .taskPanel{
     width: 90%;
+}
+.task-panel-tsk-manage{
+    
+    display: flex;
+   flex-wrap: wrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    width: 100%;
+    overflow-y: auto;
 }
 .task-panel{
     
