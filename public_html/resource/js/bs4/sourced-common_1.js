@@ -5465,41 +5465,7 @@ UserStory.prototype = {
          
     },
     getBacklogDescLineDetails: function (descLine) {
-        try {
-            var mainBody = descLine.trim();
-            var res = "";
-            if (SAFN.IsCommand(mainBody)) {
-                var fnName = SAFN.GetFunctionNameLine(mainBody);
-                fnName = fnName.toLowerCase();
-               
-                switch (fnName) {
-                    case '@.callapi':
-                        descLine = this.getBacklogDescLineDetails_4API(mainBody);
-                        break;
-                    case '@.if':
-                        descLine = SAFN.Convert.IfStatement(mainBody);
-                        break;
-                    case '@.set':
-                        descLine = SAFN.Convert.SetStatement(mainBody);
-                        break;
-                    case '@.map':
-                        descLine = SAFN.Convert.MapStatement(mainBody);
-                        break;
-                    case '@.sendemail':
-                        descLine = SAFN.Convert.SendEmailStatement(mainBody);
-                        break;
-                    case '@.showerror':
-                        descLine = SAFN.Convert.ShowErrorStatement(mainBody);
-                        break;
-                    case '@.sum':
-                        descLine = SAFN.Convert.SumStatement(mainBody);
-                        break;
-                }
-            }
-        } catch (err) {
-            console.log('getBacklogDescLineDetails error', err)
-        }
-
+        descLine = SAFN.InitConvention(descLine);
         return descLine;
     },
     getBacklogDescDetails: function (res) {
@@ -11526,7 +11492,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         getInputCompClassList();
         getInputContaierClassList();
         getInputActionRelList();
-
+        new UserStory().setRelatedSUS();
 
 
     },
@@ -11535,15 +11501,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 //            $('#relatedSUSOutputName').text(obj.dependenceInputName);
             var depName = SAInput.GetCurrentDependenceBacklogName();
             var outInputName = (depName.length > 0) ? SAInput.GetCurrentDependenceInputName() : "";
-            $('#relatedSUSOutputName').text(outInputName);
+            $('.relatedSUSOutputName').text(outInputName);
             if (depName) {
-                $('#relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
+                $('.relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
                         SAInput.GetCurrentDependenceId() + '\')">'
                         + replaceTags(depName) + '</a>)');
-                $('#deleteRelatedSUSOutput').show();
+                $('.deleteRelatedSUSOutput').show();
             } else {
-                $('#relatedUserStory').html('');
-                $('#deleteRelatedSUSOutput').hide();
+                $('.relatedUserStory').html('');
+                $('.deleteRelatedSUSOutput').hide();
 
             }
         } catch (e) {

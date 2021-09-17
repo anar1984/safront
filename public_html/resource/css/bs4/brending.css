@@ -21,7 +21,7 @@
      word-break: keep-all;
 }
 .cs-sum-inbox {
-    background-color: #525596;
+    background-color: #9395BD;
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
     padding: 0;
     border-radius: 5px;
@@ -54,8 +54,11 @@
     background: rgb(39 43 124 / 55%);
     color: #fff;
 }
+.cs-sum-inbox input:hover {
+    background: rgb(39 43 124 / 100%);
+}
 .cs-sum-inbox input:focus-visible {
-    outline: 1px solid rgb(0 0 0 / 48%);
+    outline: none;
 }
 .cs-add-button-li {
     margin-left: 5px;
@@ -126,7 +129,7 @@
 }
 .ui-sortable-placeholder input {
     border: 2px dashed #7D7FB0;
-    color: rgb(255 255 255 / 80%);
+    color: #fff;
 }
 .ui-sortable-placeholder:hover input{
 background: rgb(39 43 124 / 100%);
@@ -149,7 +152,7 @@ background: rgb(39 43 124 / 100%);
 }
 .cs-sum-inbox .cs-plus-btn {
     position: relative;
-    background: #3C3F89;
+    background: #525596;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-left: 10px;

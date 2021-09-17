@@ -238,6 +238,9 @@ $(document).on('click', '.bug-task-filter-checkbox-sprint', function (evt) {
     } else if (global_var.current_modal === 'loadTaskManagement') {
         $('.' + global_var.task_mgmt_group_by).click();
     }
+     else if (global_var.current_modal === 'loadTaskTypeManagment') {
+        genTaskTypeManagmentView4None();
+    }
 })
 
 function getLabelFilterCheckedCount() {
@@ -314,6 +317,34 @@ for (var indx = 0; indx < check.length; indx++) {
 };
 
 
+ function sprintAddAssignTaskType(elm) {
+  
+
+
+
+    var check = $(".task-content .checkbox-task-type-task");
+    var sprintId = $(elm).attr("id");
+    var projectId = $('.projectList_liveprototype_tasktypemgmt').val();
+    
+for (var indx = 0; indx < check.length; indx++) {
+    
+    
+    if($(check[indx]).prop('checked')){
+       
+       
+        var backlogId =$(check[indx]).attr('stIdr');;
+        var id = $(check[indx]).attr("tid");
+
+        var checked = '1';
+        
+        sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked);
+        
+    }
+
+}
+
+
+};
  function sprintAddAssign(elm) {
   
 

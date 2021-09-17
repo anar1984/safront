@@ -144,9 +144,9 @@ function setBacklogDescCommentType(el, descId, commentType) {
         success: function (res) {
 
             AJAXCallFeedback(res);
-             loadCurrentBacklogProdDetails();
+            loadCurrentBacklogProdDetails();
 //            that.getBacklogDesc();
-           
+
         },
         error: function () {
             Toaster.showGeneralError();
@@ -165,130 +165,130 @@ function MapApiCallAsyncType(arg) {
 
     return arg;
 }
-(function($, window){
-	var cols, dragSrcEl = null, dragSrcEnter = null, dragableColumns, _this;
+(function ($, window) {
+    var cols, dragSrcEl = null, dragSrcEnter = null, dragableColumns, _this;
 
-	function insertAfter(elem, refElem) {
-		return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
-	}
+    function insertAfter(elem, refElem) {
+        return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+    }
 
-	function isIE () {
-		var nav = navigator.userAgent.toLowerCase();
-		return (nav.indexOf('msie') !== -1) ? parseInt(nav.split('msie')[1]) : false;
-	}
+    function isIE() {
+        var nav = navigator.userAgent.toLowerCase();
+        return (nav.indexOf('msie') !== -1) ? parseInt(nav.split('msie')[1]) : false;
+    }
 
-	dragableColumns = (function(){
-		var $table;
-		function dragColumns (table, options) {
-			_this = this;
-			$table = table;
-			_this.options = $.extend({}, _this.options, options);
-			if (_this.options.drag) {
-				if (isIE() === 9) {
-					$table.find('thead tr th').each(function(){
-						if ($(this).find('.drag-ie').length === 0) {
-							$(this).html($('<a>').html($(this).html()).attr('href', '#').addClass('drag-ie'));
-						}
-					});
-				}
-				cols = $table.find('thead tr th');
+    dragableColumns = (function () {
+        var $table;
+        function dragColumns(table, options) {
+            _this = this;
+            $table = table;
+            _this.options = $.extend({}, _this.options, options);
+            if (_this.options.drag) {
+                if (isIE() === 9) {
+                    $table.find('thead tr th').each(function () {
+                        if ($(this).find('.drag-ie').length === 0) {
+                            $(this).html($('<a>').html($(this).html()).attr('href', '#').addClass('drag-ie'));
+                        }
+                    });
+                }
+                cols = $table.find('thead tr th');
 
-				jQuery.event.props.push('dataTransfer');
-				[].forEach.call(cols, function(col){
-					col.setAttribute('draggable', true);
+                jQuery.event.props.push('dataTransfer');
+                [].forEach.call(cols, function (col) {
+                    col.setAttribute('draggable', true);
 
-					$(col).on('dragstart', _this.handleDragStart);
-					$(col).on('dragenter', _this.handleDragEnter);
-					$(col).on('dragover', _this.handleDragOver);
-					$(col).on('dragleave', _this.handleDragLeave);
-					$(col).on('drop', _this.handleDrop);
-					$(col).on('dragend', _this.handleDragEnd);
-				});
-			}
-		}
+                    $(col).on('dragstart', _this.handleDragStart);
+                    $(col).on('dragenter', _this.handleDragEnter);
+                    $(col).on('dragover', _this.handleDragOver);
+                    $(col).on('dragleave', _this.handleDragLeave);
+                    $(col).on('drop', _this.handleDrop);
+                    $(col).on('dragend', _this.handleDragEnd);
+                });
+            }
+        }
 
-		dragColumns.prototype = {
-			options: {
-				drag: true,
-				dragClass: 'drag',
-				overClass: 'over',
-				movedContainerSelector: '.dnd-moved'
-			},
-			handleDragStart: function(e) {
-				$(this).addClass(_this.options.dragClass);
-				dragSrcEl = this;
-				e.dataTransfer.effectAllowed = 'copy';
-				e.dataTransfer.setData('text/html', this.id);
-			},
-			handleDragOver: function (e) {
-				if (e.preventDefault) {
-					e.preventDefault();
-				}
-				e.dataTransfer.dropEffect = 'copy';
-				return false;
-			},
-			handleDragEnter: function (e) {
-				dragSrcEnter = this;
-				[].forEach.call(cols, function (col) {
-					$(col).removeClass(_this.options.overClass);
-				});
-				$(this).addClass(_this.options.overClass);
-				return false;
-			},
-			handleDragLeave: function (e) {
-				if (dragSrcEnter !== e) {
-					//this.classList.remove(_this.options.overClass);
-				}
-			},
-			handleDrop: function (e) {
-				if (e.stopPropagation) {
-					e.stopPropagation();
-				}
-				if (dragSrcEl !== e) {
-					_this.moveColumns($(dragSrcEl).index(), $(this).index());
-				}
-				return false;
-			},
-			handleDragEnd: function (e) {
-				var colsPositions = {};
-				[].forEach.call(cols, function (col) {
-					$(col).removeClass(_this.options.overClass);
-					var name = $(col).attr('data-name');
-					var index = $(col).index();
-					if (name) {
-                        			colsPositions[name] = index;
-					}
-				});
-				if (typeof _this.options.onDragEnd === 'function' && _this.options.onDragEnd(colsPositions)) {
-					$(dragSrcEl).removeClass(_this.options.dragClass);
-				}
-				return false;
-			},
-			moveColumns: function (fromIndex, toIndex) {
-				var rows = $table.find(_this.options.movedContainerSelector);
-				for (var i = 0; i < rows.length; i++) {
-					if (toIndex > fromIndex) {
-						insertAfter(rows[i].children[fromIndex], rows[i].children[toIndex]);
-					} else if (toIndex < $table.find('thead tr th').length - 1) {
-						rows[i].insertBefore(rows[i].children[fromIndex], rows[i].children[toIndex]);
-					}
-				}
-			}
-		};
+        dragColumns.prototype = {
+            options: {
+                drag: true,
+                dragClass: 'drag',
+                overClass: 'over',
+                movedContainerSelector: '.dnd-moved'
+            },
+            handleDragStart: function (e) {
+                $(this).addClass(_this.options.dragClass);
+                dragSrcEl = this;
+                e.dataTransfer.effectAllowed = 'copy';
+                e.dataTransfer.setData('text/html', this.id);
+            },
+            handleDragOver: function (e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                e.dataTransfer.dropEffect = 'copy';
+                return false;
+            },
+            handleDragEnter: function (e) {
+                dragSrcEnter = this;
+                [].forEach.call(cols, function (col) {
+                    $(col).removeClass(_this.options.overClass);
+                });
+                $(this).addClass(_this.options.overClass);
+                return false;
+            },
+            handleDragLeave: function (e) {
+                if (dragSrcEnter !== e) {
+                    //this.classList.remove(_this.options.overClass);
+                }
+            },
+            handleDrop: function (e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                if (dragSrcEl !== e) {
+                    _this.moveColumns($(dragSrcEl).index(), $(this).index());
+                }
+                return false;
+            },
+            handleDragEnd: function (e) {
+                var colsPositions = {};
+                [].forEach.call(cols, function (col) {
+                    $(col).removeClass(_this.options.overClass);
+                    var name = $(col).attr('data-name');
+                    var index = $(col).index();
+                    if (name) {
+                        colsPositions[name] = index;
+                    }
+                });
+                if (typeof _this.options.onDragEnd === 'function' && _this.options.onDragEnd(colsPositions)) {
+                    $(dragSrcEl).removeClass(_this.options.dragClass);
+                }
+                return false;
+            },
+            moveColumns: function (fromIndex, toIndex) {
+                var rows = $table.find(_this.options.movedContainerSelector);
+                for (var i = 0; i < rows.length; i++) {
+                    if (toIndex > fromIndex) {
+                        insertAfter(rows[i].children[fromIndex], rows[i].children[toIndex]);
+                    } else if (toIndex < $table.find('thead tr th').length - 1) {
+                        rows[i].insertBefore(rows[i].children[fromIndex], rows[i].children[toIndex]);
+                    }
+                }
+            }
+        };
 
-		return dragColumns;
+        return dragColumns;
 
-	})();
+    })();
 
-	return $.fn.extend({
-		dragableColumns: function(){
-			var option = (arguments[0]);
-			return this.each(function() {
-				var $table = $(this);
-				new dragableColumns($table, option);
-			});
-		}
-	});
+    return $.fn.extend({
+        dragableColumns: function () {
+            var option = (arguments[0]);
+            return this.each(function () {
+                var $table = $(this);
+                new dragableColumns($table, option);
+            });
+        }
+    });
 
 })(window.jQuery, window);
 
@@ -365,38 +365,38 @@ function bindScrollZadToCanvas() {
 //////   var table ----------------------------------------------- Revan Gozelov edit section >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-$(document).on("click","#import-excel-button-id-a" ,function(){
- 
-    
-        if($(this).hasClass('active')){
-
-              $('#datetimepicker10').hide()
-            $(this).removeClass('active')
-        }else{
-            $('#datetimepicker10').show()
-            $(this).addClass('active')
-        }
+$(document).on("click", "#import-excel-button-id-a", function () {
 
 
-  })
+    if ($(this).hasClass('active')) {
 
-    $(document).on("click",'#file_export_excel_new',function(){
-        var tabId = $(this).attr("data-api-tabid")
-        var workbook = XLSX.utils.book_new();
-        
-        //var worksheet_data  =  [['hello','world']];
-        //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
-      
-        var worksheet_data  = document.querySelector("[table-id='"+tabId+"']");
-        var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
-        
-        workbook.SheetNames.push("Test");
-        workbook.Sheets["Test"] = worksheet;
-      
-         exportExcelFile(workbook);
-      
-     
-    });
+        $('#datetimepicker10').hide()
+        $(this).removeClass('active')
+    } else {
+        $('#datetimepicker10').show()
+        $(this).addClass('active')
+    }
+
+
+})
+
+$(document).on("click", '#file_export_excel_new', function () {
+    var tabId = $(this).attr("data-api-tabid")
+    var workbook = XLSX.utils.book_new();
+
+    //var worksheet_data  =  [['hello','world']];
+    //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
+
+    var worksheet_data = document.querySelector("[table-id='" + tabId + "']");
+    var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
+
+    workbook.SheetNames.push("Test");
+    workbook.Sheets["Test"] = worksheet;
+
+    exportExcelFile(workbook);
+
+
+});
 
 
 function exportExcelFile(workbook) {
@@ -409,140 +409,141 @@ function exportExcelFile(workbook) {
 
 
 
-$(document).on("change","#file_excel_import" ,function(){
-    var tabID =$(this).attr('data-api-tabid');
-      filePicked(this,tabID);
-  })
-  function filePicked(oEvent,tabID) {
-  // Get The File From The Input
-  var oFile = oEvent.files[0];
-  var sFilename = oFile.name;
-   
-  // Ready The Event For When A File Gets Selected
-  var reader = new FileReader();
+$(document).on("change", "#file_excel_import", function () {
+    var tabID = $(this).attr('data-api-tabid');
+    filePicked(this, tabID);
+})
+function filePicked(oEvent, tabID) {
+    // Get The File From The Input
+    var oFile = oEvent.files[0];
+    var sFilename = oFile.name;
 
-    reader.onload = function(e) {
+    // Ready The Event For When A File Gets Selected
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
         var data = e.target.result;
         var workbook = XLSX.read(data, {
             type: 'binary'
         });
-        workbook.SheetNames.forEach(function(sheetName) {
+        workbook.SheetNames.forEach(function (sheetName) {
             // Here is your object
             var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
             var json_object = JSON.stringify(XL_row_object);
             productList = JSON.parse(json_object);
-            var tbody =$("<tbody>")
-            
+            var tbody = $("<tbody>")
+
 
             for (i = 0; i < productList.length; i++) {
                 var tr = $("<tr>");
                 var columns = Object.values(productList[i]);
-                    tr.append($('<td>').text(i))
+                tr.append($('<td>').text(i))
 
-               
+
                 for (let l = 0; l < columns.length; l++) {
-                  
+
                     tr.append($('<td>').text(columns[l]))
-                    
+
                 }
-                
-              tbody.append(tr);
+
+                tbody.append(tr);
             }
 
-            $("#"+tabID).find("tbody").empty();
-            console.log($("#"+tabID));
-            $("table[table-id='"+tabID+"']").find("tbody").append(tbody.html());
+            $("#" + tabID).find("tbody").empty();
+            console.log($("#" + tabID));
+            $("table[table-id='" + tabID + "']").find("tbody").append(tbody.html());
         })
     };
-    reader.onerror = function(ex) {
+    reader.onerror = function (ex) {
         console.log(ex);
     };
-  
-  // Tell JS To Start Reading The File.. You could delay this if desired
-  reader.readAsBinaryString(oFile);}
 
-  
+    // Tell JS To Start Reading The File.. You could delay this if desired
+    reader.readAsBinaryString(oFile);
+}
+
+
 function getGroupList4Table(elm) {
-   
-   try { 
-         
-     var sv = $(elm).attr("data-order");
-     var tableId = $(elm).attr('tbid');
-     $('#'+tableId).find(".groupTrElement").remove();
-     var td = $("#comp_id_"+tableId+" tbody tr").find("td[pdid="+sv+"]")
-     
-       console.log(td);
-     $.each(td, function (index, item) {
-               
-            sortableTable(tableId,sv, item);
-         
-     })
-     } catch (error) {
+
+    try {
+
+        var sv = $(elm).attr("data-order");
+        var tableId = $(elm).attr('tbid');
+        $('#' + tableId).find(".groupTrElement").remove();
+        var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
+
+        console.log(td);
+        $.each(td, function (index, item) {
+
+            sortableTable(tableId, sv, item);
+
+        })
+    } catch (error) {
         console.log(error)
     }
-    
- }  
- $(function () {
+
+}
+$(function () {
     $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function () {
         var tbl = $(this).parents('.stat-table-us');
         console.log(tbl);
         var index = $(this).index(),
-            rows = [],
-            thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
-  
+                rows = [],
+                thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
+
         $(tbl).find('.theader-table td').removeClass('asc desc');
         $(this).addClass(thClass);
-  
+
         $(tbl).find('tbody .task-tr-list').each(function (index, row) {
-          rows.push($(row).detach());
+            rows.push($(row).detach());
         });
-  
+
         rows.sort(function (a, b) {
-          var aValue = $(a).find('td').eq(index).text(),
-              bValue = $(b).find('td').eq(index).text();
-  
-          return aValue > bValue
-               ? 1
-               : aValue < bValue
-               ? -1
-               : 0;
+            var aValue = $(a).find('td').eq(index).text(),
+                    bValue = $(b).find('td').eq(index).text();
+
+            return aValue > bValue
+                    ? 1
+                    : aValue < bValue
+                    ? -1
+                    : 0;
         });
-  
+
         if ($(this).hasClass('desc')) {
-          rows.reverse();
+            rows.reverse();
         }
-  
+
         $.each(rows, function (index, row) {
-          $(tbl).append(row);
+            $(tbl).append(row);
         });
-      });
-  });
-function sortableTable(tableId,sv, cls) {
+    });
+});
+function sortableTable(tableId, sv, cls) {
     var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("comp_id_"+tableId);
-   
+    table = document.getElementById("comp_id_" + tableId);
+
     switching = true;
-   
+
     while (switching) {
-      
+
         switching = false;
         rows = $(table).find("tbody tr");
-           console.log(rows.length);
+        console.log(rows.length);
         for (i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false;
-          
-           
-            x = rows[i].querySelector("td[pdid='"+sv+"']");
-            y = rows[i + 1].querySelector("td[pdid='"+sv+"']");
-           
+
+
+            x = rows[i].querySelector("td[pdid='" + sv + "']");
+            y = rows[i + 1].querySelector("td[pdid='" + sv + "']");
+
             if (x.innerText.toLowerCase() > y.innerText.toLowerCase()) {
-     
+
                 shouldSwitch = true;
                 break;
             }
         }
         if (shouldSwitch) {
-            
+
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
         }
@@ -556,26 +557,26 @@ function sortableTable(tableId,sv, cls) {
         var tbl = "id-row" + cl
         fTr = $(trList[0]);
         if (index === 0) {
-            var tx = fTr.find('[pdid='+sv+']').find(".component-container-dashed").html();
+            var tx = fTr.find('[pdid=' + sv + ']').find(".component-container-dashed").html();
 
             if (tx.length < 1) {
                 tx = "undefined"
             }
 
             fTr.before($("<tr>")
-                .addClass("groupTrElement")
-                .append($("<td>")
-                    .addClass("groupTdElement")
-                    .append($("<div>")
-                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                        .append(tx)
-                        .addClass("groupTableDivInside"))))
+                    .addClass("groupTrElement")
+                    .append($("<td>")
+                            .addClass("groupTdElement")
+                            .append($("<div>")
+                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                                    .append(tx)
+                                    .addClass("groupTableDivInside"))))
         }
 
-        var htm = $(trList[index]).find('[pdid='+sv+']').find(".component-container-dashed").html();
-        var txt2 = $(trList[index]).find('[pdid='+sv+']').find(".component-container-dashed").text();
-        var htm1 = $(trList[index + 1]).find('[pdid='+sv+']').find(".component-container-dashed").html();
-        var txt3 = $(trList[index + 1]).find('[pdid='+sv+']').find(".component-container-dashed").text();
+        var htm = $(trList[index]).find('[pdid=' + sv + ']').find(".component-container-dashed").html();
+        var txt2 = $(trList[index]).find('[pdid=' + sv + ']').find(".component-container-dashed").text();
+        var htm1 = $(trList[index + 1]).find('[pdid=' + sv + ']').find(".component-container-dashed").html();
+        var txt3 = $(trList[index + 1]).find('[pdid=' + sv + ']').find(".component-container-dashed").text();
 
 
         if (txt2 === txt3) {
@@ -585,25 +586,25 @@ function sortableTable(tableId,sv, cls) {
             $(trList[index]).attr("data-aid", tbl);
             cl++
             tbl = "id-row" + cl;
-            if (txt3 ==='') {
+            if (txt3 === '') {
                 htm1 = "undefined"
             }
-            if(index === trList.length){
-                
+            if (index === trList.length) {
+
                 $(trList[index]).attr("data-aid", tbl);
             }
             $(trList[index]).after($("<tr>")
-                .addClass("groupTrElement")
-                .append($("<td>")
-                    .addClass("groupTdElement")
+                    .addClass("groupTrElement")
+                    .append($("<td>")
+                            .addClass("groupTdElement")
 
-                    .append($("<div>")
-                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                        .append(htm1)
-                        .addClass("groupTableDivInside"))));
+                            .append($("<div>")
+                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                                    .append(htm1)
+                                    .addClass("groupTableDivInside"))));
 
         }
-        
+
 
 
     }
@@ -611,178 +612,180 @@ function sortableTable(tableId,sv, cls) {
 
 
 }
-    /*********************************************** Context Menu Function Only ********************************/
-    function clickInsideElementOp( e, className ) {
-      var el = e.srcElement || e.target;
-      if ( el.classList.contains(className) ) {
+/*********************************************** Context Menu Function Only ********************************/
+function clickInsideElementOp(e, className) {
+    var el = e.srcElement || e.target;
+    if (el.classList.contains(className)) {
         return el;
-      } else {
-        while ( el = el.parentNode ) {
-          if ( el.classList && el.classList.contains(className) ) {
-            return el;
-          }
+    } else {
+        while (el = el.parentNode) {
+            if (el.classList && el.classList.contains(className)) {
+                return el;
+            }
         }
-      }
-      return false;
     }
-  
-    function getPositionOp(e) {
-      var posx = 0, posy = 0;
-      if (!e) var e = window.event;
-      if (e.pageX || e.pageY) {
+    return false;
+}
+
+function getPositionOp(e) {
+    var posx = 0, posy = 0;
+    if (!e)
+        var e = window.event;
+    if (e.pageX || e.pageY) {
         posx = e.pageX;
         posy = e.pageY;
-      } else if (e.clientX || e.clientY) {
+    } else if (e.clientX || e.clientY) {
         posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-      }
-      return {
+    }
+    return {
         x: posx,
         y: posy
-      }
     }
-     function addAttrToElementSingileByR(el, comp) {
-        try {
-            var cl = cr_input_comp_attribute[comp.id];
-            for (var i = 0; i < cl.length; i++) {
-                var kv = cl[i];
-                var key = Object.keys(kv)[0];
-                var val = kv[key];
-                el.attr(key, val);
+}
+function addAttrToElementSingileByR(el, comp) {
+    try {
+        var cl = cr_input_comp_attribute[comp.id];
+        for (var i = 0; i < cl.length; i++) {
+            var kv = cl[i];
+            var key = Object.keys(kv)[0];
+            var val = kv[key];
+            el.attr(key, val);
+        }
+        return el;
+    } catch (err) {
+    }
+}
+// Your Menu Class Name
+var taskItemClassName = "component-table-input-class";
+var contextMenuClassName = "context-menu", contextMenuItemClassName = "context-menu__item", contextMenuLinkClassName = "context-menu__link", contextMenuActive = "context-menu--active";
+var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"), menuItems = $(menu).find(".context-menu__item");
+var menuState = 0, menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
+
+function initMenuFunctionOp() {
+    contextListenerOp();
+    clickListenerOp();
+    keyupListenerOp();
+    resizeListenerOp();
+
+}
+
+/**
+ * Listens for contextmenu events.
+ */
+function contextListenerOp() {
+    document.addEventListener("contextmenu", function (e) {
+        taskItemInContext = clickInsideElementOp(e, taskItemClassName);
+
+        if (taskItemInContext) {
+            e.preventDefault();
+            toggleMenuOnOp();
+            positionMenuOp(e);
+        } else {
+            taskItemInContext = null;
+            toggleMenuOffOp();
+        }
+    });
+}
+
+/**
+ * Listens for click events.
+ */
+function clickListenerOp() {
+    document.addEventListener("click", function (e) {
+        var clickeElIsLink = clickInsideElementOp(e, contextMenuLinkClassName);
+
+        if (clickeElIsLink) {
+            e.preventDefault();
+            menuItemListenerOp(clickeElIsLink);
+        } else {
+            var button = e.which || e.button;
+            if (button === 1) {
+                toggleMenuOffOp();
             }
-            return el;
-        } catch (err) {}
+        }
+    });
+}
+
+/**
+ * Listens for keyup events.
+ */
+function keyupListenerOp() {
+    window.onkeyup = function (e) {
+        if (e.keyCode === 27) {
+            toggleMenuOffOp();
+        }
     }
-    // Your Menu Class Name
-    var taskItemClassName = "component-table-input-class";
-    var contextMenuClassName = "context-menu",contextMenuItemClassName = "context-menu__item",contextMenuLinkClassName = "context-menu__link", contextMenuActive = "context-menu--active";
-    var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"), menuItems = $(menu).find(".context-menu__item");
-    var menuState = 0, menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
-  
-    function initMenuFunctionOp() {
-      contextListenerOp();
-      clickListenerOp();
-      keyupListenerOp();
-      resizeListenerOp();
+}
+
+/**
+ * Window resize event listener
+ */
+function resizeListenerOp() {
+    window.onresize = function (e) {
+        toggleMenuOffOp();
+    };
+}
+
+/**
+ * Turns the custom context menu on.
+ */
+function toggleMenuOnOp() {
+    if (menuState !== 1) {
+        menuState = 1;
+        $(menu).addClass(contextMenuActive);
+    }
+}
+
+/**
+ * Turns the custom context menu off.
+ */
+function toggleMenuOffOp() {
+    if (menuState !== 0) {
+        menuState = 0;
+        $(menu).removeClass(contextMenuActive);
+    }
+}
+
+function positionMenuOp(e) {
+    clickCoords = getPositionOp(e);
+    clickCoordsX = clickCoords.x;
+    clickCoordsY = clickCoords.y;
+    menuWidth = $(menu).offsetWidth + 4;
+    menuHeight = $(menu).offsetHeight + 4;
+
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+
+    if ((windowWidth - clickCoordsX) < menuWidth) {
+        $(menu).css("top", (windowWidth - menuWidth) - 0 + "px");
+    } else {
+        $(menu).css("top", clickCoordsX - 0 + "px");
+    }
+
+    // menu.style.top = clickCoordsY + "px";
+
+    if (Math.abs(windowHeight - clickCoordsY) < menuHeight) {
+        $(menu).css("top", (windowHeight - menuHeight) - 0 + "px");
+    } else {
+        $(menu).css("top", clickCoordsY - 0 + "px");
+    }
+}
+
+
+function menuItemListenerOp(link) {
+    var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
+
+    var moveToAlbumSelectedId = link.getAttribute("data-action");
+    if (moveToAlbumSelectedId == 'remove') {
+
+    } else if (moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7) {
 
     }
-  
-    /**
-     * Listens for contextmenu events.
-     */
-    function contextListenerOp() {
-      document.addEventListener( "contextmenu", function(e) {
-        taskItemInContext = clickInsideElementOp( e, taskItemClassName );
-  
-        if ( taskItemInContext ) {
-          e.preventDefault();
-          toggleMenuOnOp();
-          positionMenuOp(e);
-        } else {
-          taskItemInContext = null;
-          toggleMenuOffOp();
-        }
-      });
-    }
-  
-    /**
-     * Listens for click events.
-     */
-    function clickListenerOp() {
-      document.addEventListener( "click", function(e) {
-        var clickeElIsLink = clickInsideElementOp( e, contextMenuLinkClassName );
-  
-        if ( clickeElIsLink ) {
-          e.preventDefault();
-          menuItemListenerOp( clickeElIsLink );
-        } else {
-          var button = e.which || e.button;
-          if ( button === 1 ) {
-            toggleMenuOffOp();
-          }
-        }
-      });
-    }
-  
-    /**
-     * Listens for keyup events.
-     */
-    function keyupListenerOp() {
-      window.onkeyup = function(e) {
-        if ( e.keyCode === 27 ) {
-          toggleMenuOffOp();
-        }
-      }
-    }
-  
-    /**
-     * Window resize event listener
-     */
-    function resizeListenerOp() {
-      window.onresize = function(e) {
-        toggleMenuOffOp();
-      };
-    }
-  
-    /**
-     * Turns the custom context menu on.
-     */
-    function toggleMenuOnOp() {
-      if ( menuState !== 1 ) {
-        menuState = 1;
-        $(menu).addClass( contextMenuActive );
-      }
-    }
-  
-    /**
-     * Turns the custom context menu off.
-     */
-    function toggleMenuOffOp() {
-      if ( menuState !== 0 ) {
-        menuState = 0;
-        $(menu).removeClass( contextMenuActive );
-      }
-    }
-  
-    function positionMenuOp(e) {
-      clickCoords = getPositionOp(e);
-      clickCoordsX = clickCoords.x;
-      clickCoordsY = clickCoords.y;
-      menuWidth = $(menu).offsetWidth + 4;
-      menuHeight = $(menu).offsetHeight + 4;
-  
-      windowWidth = window.innerWidth;
-      windowHeight = window.innerHeight;
-  
-      if ( (windowWidth - clickCoordsX) < menuWidth ) {
-        $(menu).css("top",(windowWidth - menuWidth)-0 + "px");
-      } else {
-        $(menu).css("top", clickCoordsX-0 + "px");
-      }
-  
-      // menu.style.top = clickCoordsY + "px";
-  
-      if ( Math.abs(windowHeight - clickCoordsY) < menuHeight ) {
-        $(menu).css("top",(windowHeight - menuHeight)-0 + "px");
-      } else {
-        $(menu).css("top",clickCoordsY-0 + "px");
-      }
-    }
-  
-  
-    function menuItemListenerOp( link ) {
-      var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
-     
-      var moveToAlbumSelectedId = link.getAttribute("data-action");
-      if(moveToAlbumSelectedId == 'remove'){
-        
-      }else if(moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7){
-     
-      }
-      toggleMenuOffOp();
-    }
-    initMenuFunctionOp();
-  
+    toggleMenuOffOp();
+}
+initMenuFunctionOp();
+
 
 
 
@@ -796,9 +799,9 @@ function selectTo(cell) {
     var row = cell.parent();
     var cellIndex = cell.index();
     var rowIndex = row.index();
-    var est=0
-    var min =0;
-    var max =0;
+    var est = 0
+    var min = 0;
+    var max = 0;
     var rowStart, rowEnd, cellStart, cellEnd;
 
     if (rowIndex < startRowIndex) {
@@ -835,41 +838,41 @@ function selectTo(cell) {
 
                 sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
 
-                kl = rowCells.length;    
+                kl = rowCells.length;
 
-                if(parseFloat(val)===NaN||parseFloat(val2)===NaN){
+                if (parseFloat(val) === NaN || parseFloat(val2) === NaN) {
 
-                }else{
+                } else {
                     sumTbl = sumTbl + parseFloat(val) + parseFloat(val2);
                 }
-                if(max<val){
-                    max=val;
-                  }
+                if (max < val) {
+                    max = val;
+                }
 
-                  
-                if(min>val){
-                    min=val;
-                 }
-    
-                kl ++;
+
+                if (min > val) {
+                    min = val;
+                }
+
+                kl++;
             }
 
         }
     }
-    sumAvarMaxMinCount(sumTbl, kl,min,max);
+    sumAvarMaxMinCount(sumTbl, kl, min, max);
 }
 
 function sumAvarMaxMinCount(sum, count, min, max) {
 
     $(".absolute-div-row-table").show();
-    var elm =$("#table-selected-row-details-info").css("background",'none')
-              var avar = (sum / count);
-            $(elm).find('.sum').html((sum)?("<b>sum:</b>" + sum):"sum").attr((sum)?"data-tst":("disabled"),"true").removeAttr((sum)?"disabled":(""))
-            $(elm).find('.avarage').html((sum)?" <b>avarage:</b>" + avar.toFixed(1):"avarage").attr((sum)?"data-tst":("disabled"),"true").removeAttr((sum)?"disabled":(""))
-            $(elm).find('.min').html((min)?" <b>min:</b>" + (min):"min").attr((min)?"data-tst":("disabled"),"true").removeAttr((min)?"disabled":(""))
-            $(elm).find('.max').html((max)?" <b>max:</b>" + (max):"max").attr((max)?"data-tst":("disabled"),"true").removeAttr((max)?"disabled":(""))
-            $(elm).find('.count').html((count)?" <b>count:</b>" + (count):"").attr((count)?"data-tst":("disabled"),"true").removeAttr((count)?"disabled":(""))
-            
+    var elm = $("#table-selected-row-details-info").css("background", 'none')
+    var avar = (sum / count);
+    $(elm).find('.sum').html((sum) ? ("<b>sum:</b>" + sum) : "sum").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.avarage').html((sum) ? " <b>avarage:</b>" + avar.toFixed(1) : "avarage").attr((sum) ? "data-tst" : ("disabled"), "true").removeAttr((sum) ? "disabled" : (""))
+    $(elm).find('.min').html((min) ? " <b>min:</b>" + (min) : "min").attr((min) ? "data-tst" : ("disabled"), "true").removeAttr((min) ? "disabled" : (""))
+    $(elm).find('.max').html((max) ? " <b>max:</b>" + (max) : "max").attr((max) ? "data-tst" : ("disabled"), "true").removeAttr((max) ? "disabled" : (""))
+    $(elm).find('.count').html((count) ? " <b>count:</b>" + (count) : "").attr((count) ? "data-tst" : ("disabled"), "true").removeAttr((count) ? "disabled" : (""))
+
 
 }
 
@@ -877,23 +880,23 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 
 
 $(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
-   var depID = $(this).attr('data-api-tabid');
-   var val = $(this).val();
-    var stTime 
-    var endTime 
+    var depID = $(this).attr('data-api-tabid');
+    var val = $(this).val();
+    var stTime
+    var endTime
     val = val.split('-')
-     var dt = val[0].split('/');
-     var dt1 = val[1].split('/');
-     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
-     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
-      console.log(endTime,stTime);
-      var inns =stTime.trim()+'%BN%'+endTime.trim()
-      var data ={}
-       data.insertDate = inns;
-     
-      var el = be.callApi(depID,data);
-  
-   
+    var dt = val[0].split('/');
+    var dt1 = val[1].split('/');
+    stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+    endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+    console.log(endTime, stTime);
+    var inns = stTime.trim() + '%BN%' + endTime.trim()
+    var data = {}
+    data.insertDate = inns;
+
+    var el = be.callApi(depID, data);
+
+
 })
 $(document).on("mousedown", ".selectableTable td", function (e) {
     $(".absolute-div-row-table").hide();
@@ -922,37 +925,37 @@ $(document).on("mouseover", ".selectableTable td", function () {
 
 $(document).on("click", ".selectableTable thead th", function () {
     sumTbl = 0;
-    var est =0
+    var est = 0
     $(".selectableTable").find(".selected").removeClass("selected");
     var ind = $(this).index();
     var tbl = $(this).parents(".selectableTable").find("tbody tr");
-    var min =0;
-    var max =0;
+    var min = 0;
+    var max = 0;
     for (let index = 0; index < tbl.length; index++) {
 
         $(tbl[index]).find("td").eq(ind).toggleClass("selected");
         var dt = $(tbl[index]).find("td").eq(ind);
         var val = parseFloat(dt.find(".component-input-class").val());
-        if(est===1){
-            min=val;
-          }
-          est++
-        if(val){
-            sumTbl = sumTbl + val 
+        if (est === 1) {
+            min = val;
         }
-      
-         if(max<val){
-           max=val;
-         }
-         if(min>val){
-           min=val;
-         }
+        est++
+        if (val) {
+            sumTbl = sumTbl + val
+        }
+
+        if (max < val) {
+            max = val;
+        }
+        if (min > val) {
+            min = val;
+        }
 
     }
 
-    var count  = $(this).parents(".selectableTable").find("td.selected").length
+    var count = $(this).parents(".selectableTable").find("td.selected").length
 
-    sumAvarMaxMinCount(sumTbl, count,min,max)
+    sumAvarMaxMinCount(sumTbl, count, min, max)
 
 })
 $(document).on("selectstart", ".selectableTable td", function () {
@@ -1258,11 +1261,11 @@ function tableShowHideRowSetItem(tableId) {
         if (!$(chk[index]).prop("checked")) {
             tableVal = tableVal + $(chk[index]).attr("data-check") + ','
         }
-       
-   }
-      
-  localStorage.setItem("simp-"+tableId,tableVal);
-    
+
+    }
+
+    localStorage.setItem("simp-" + tableId, tableVal);
+
 }
 
 
@@ -1281,7 +1284,7 @@ function tableShowHideRowGetItem(tableId) {
 
 
             }
-            
+
         }
     } catch (error) {
         console.log(error)
@@ -3762,68 +3765,71 @@ function copyJsCodeClassTo() {
 
 function loadTableFIlterInside() {
 
-       var se= masTab.dependingID;
-    
+    var se = masTab.dependingID;
+
     try {
-        
+
         for (const [key, value] of Object.entries(se)) {
-       
-       
-           
+
+
+
             var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
-            var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');  
-        if(key){
-            var dt1 =  be.callApi(key);
-            var dt = dt1._table.r;
-            if(dt){
-                $("#filter-table-row-"+value).html("");
-                for (let l = 0; l < dt.length; l++) {
-                    
-                    $("#filter-table-row-"+value).append("<option value="+dt[l].id+">"+dt[l][ilk]+"</option>");
+            var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');
+            if (key) {
+                var dt1 = be.callApi(key);
+                var dt = dt1._table.r;
+                if (dt) {
+                    $("#filter-table-row-" + value).html("");
+                    for (let l = 0; l < dt.length; l++) {
+
+                        $("#filter-table-row-" + value).append("<option value=" + dt[l].id + ">" + dt[l][ilk] + "</option>");
+                    }
+
                 }
-                
+
             }
-            
-        }
-         
-         
-         
-    
-      
-    
+
+
+
+
+
+
         }
     } catch (error) {
-        
+
     }
 
-  
+
 
     $(".filter-table-row-select").selectpicker("refresh")
-    $('.table').dragtable({ 
-    persistState: function(table) { 
-      
-      if (!window.sessionStorage) return; 
-      var ss = window.sessionStorage; 
-      table.el.find('th').each(function(i) { 
-        if(this.id != '') {table.sortOrder[this.id]=i;} 
-      }); 
-      ss.setItem('tableorder',JSON.stringify(table.sortOrder)); 
-    }, 
-    maxMovingRows:1,
-    dragHandle:'.handle-drag',
-    restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')') 
-});
+    $('.table').dragtable({
+        persistState: function (table) {
 
-$('#date_timepicker_start_end').daterangepicker({
-    /* ranges: {
-       'Bu Gün': [moment(), moment()],
-       'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-       'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-       'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-       'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-       'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    } */
-  });
+            if (!window.sessionStorage)
+                return;
+            var ss = window.sessionStorage;
+            table.el.find('th').each(function (i) {
+                if (this.id != '') {
+                    table.sortOrder[this.id] = i;
+                }
+            });
+            ss.setItem('tableorder', JSON.stringify(table.sortOrder));
+        },
+        maxMovingRows: 1,
+        dragHandle: '.handle-drag',
+        restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
+    });
+
+    $('#date_timepicker_start_end').daterangepicker({
+        /* ranges: {
+         'Bu Gün': [moment(), moment()],
+         'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+         'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+         'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+         'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+         'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+         } */
+    });
 
 
 }
@@ -5809,7 +5815,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : selectField;
-    var itemSeparator = ($(el).attr('sa-item-separator')) ? ' '+$(el).attr('sa-item-separator')+' ': " ";
+    var itemSeparator = ($(el).attr('sa-item-separator')) ? ' ' + $(el).attr('sa-item-separator') + ' ' : " ";
 
 
     for (var i in rows) {
@@ -5822,7 +5828,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         for (var ii in itemValueList) {
             var sval = itemValueList[ii];
             finalVal += row[sval];
-            finalVal += (idx<itemValueList.length)? itemSeparator :"";
+            finalVal += (idx < itemValueList.length) ? itemSeparator : "";
             idx++;
         }
         var name = finalVal;
@@ -6002,7 +6008,7 @@ function clearTableBodyAfterApiCall(el, apiId) {
 function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
-    var inpId ;
+    var inpId;
     try {
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
@@ -6240,12 +6246,38 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
                 .each(function () {
 
+                    var finalVal = "";
+            
+
+                    var saItemValue = $(this).find('.component-input-class').first().attr('sa-item-value');
+                    var saItemSaparator = $(this).find('.component-input-class').first().attr('sa-item-separator');
+
+                    if (!saItemValue){
+                       finalVal= o[asyncData.selectedField];
+                    }
+                    
+                    try {
+                        var itemValueList = saItemValue.split(',');
+
+                        var idx = 1;
+                        for (var ii in itemValueList) {
+                            var sval = itemValueList[ii];
+                            finalVal += o[sval];
+                            finalVal += (idx < itemValueList.length) ? ' ' + saItemSaparator + ' ' : "";
+                            idx++;
+                        }
+                    } catch (err) {
+                         finalVal= o[asyncData.selectedField];
+                    }
+
+
+
                     var elem2 = $(this).find('.component-input-class').first();
-                    elem2.text(o[asyncData.selectedField]);
-                    elem2.val(o[asyncData.selectedField]);
+                    elem2.text(finalVal);
+                    elem2.val(finalVal);
 
                     if (elem2.attr('sa-type') === 'image') {
-                        elem2.attr('src', fileUrl(o[asyncData.selectedField]))
+                        elem2.attr('src', fileUrl(finalVal))
                     }
 
                     updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
@@ -6442,36 +6474,33 @@ function initHtmlFroalaEditorByClass(className) {
 function initHtmlFroalaEditor(elementId, val) {
     var editor = new FroalaEditor('#' + elementId, {
 
-            tableStyles: {
-                class1: 'Dashed',
-                class2: 'None',
-            },
-            
-            quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
-            toolbarInline: true,
-            charCounterCount: false,
-            fileUpload: false,
-            pastePlain: false,
-            toolbarButtons: {
-                'moreText': {
-                    'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
-                },
-                'moreParagraph': {
-                    'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
-                },
-                'moreRich': {
-                    'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
-                },
-                'moreMisc': {
-                    'buttons': ['undo', 'redo', 'selectAll', 'html', ],
-                    'align': 'right',
-                    'buttonsVisible': 2
-                }
-            }
+        tableStyles: {
+            class1: 'Dashed',
+            class2: 'None',
         },
 
-       
-
+        quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
+        toolbarInline: true,
+        charCounterCount: false,
+        fileUpload: false,
+        pastePlain: false,
+        toolbarButtons: {
+            'moreText': {
+                'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+            },
+            'moreParagraph': {
+                'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+            },
+            'moreRich': {
+                'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
+            },
+            'moreMisc': {
+                'buttons': ['undo', 'redo', 'selectAll', 'html', ],
+                'align': 'right',
+                'buttonsVisible': 2
+            }
+        }
+    },
             function () {
 
                 editor.html.set(val);
@@ -6504,7 +6533,7 @@ function iDidItAction() {
         crossDomain: true,
         async: false,
         success: function (res) {
-                            AJAXCallFeedback(res);
+            AJAXCallFeedback(res);
             getBugList();
             $('#iDidItModal_comment').html('');
             $('#iDidItModal').modal('hide');
@@ -12023,9 +12052,9 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
             var tbl = $('#api_list_side_bar');
             tbl.html('');
 
-           $('#statistics-BacklogList').empty();
-         $('#statistics-BacklogList-task').empty();
-         $('#statistics-BacklogList-backlogst').empty();
+            $('#statistics-BacklogList').empty();
+            $('#statistics-BacklogList-task').empty();
+            $('#statistics-BacklogList-backlogst').empty();
             var cmd = $('#statistics-BacklogList');
             var cmd1 = $('#statistics-BacklogList-task');
             var cmd2 = $('#statistics-BacklogList-backlogst');
@@ -12075,7 +12104,7 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
             cmd.selectpicker('refresh').change();
             cmd1.selectpicker('refresh').change();
             cmd2.selectpicker('refresh').change();
-         
+
 
 
         }
@@ -12108,33 +12137,33 @@ var hstry = {
 }
 
 function loadHistoryByTasksId(backlog_id) {
-     var serach = $("#search-task-history-id").val();
-     var val = $("#datebet-task-history-id").val();
-     var created = $("#statistics-createdby-task").val();
-   
+    var serach = $("#search-task-history-id").val();
+    var val = $("#datebet-task-history-id").val();
+    var created = $("#statistics-createdby-task").val();
+
     var json = initJSON();
     json.kv.fkProjectId = $('#statistics-projectlist option:selected').attr('value');
-    if(serach){
-        json.kv.taskName = '%%'+serach+"%%";
+    if (serach) {
+        json.kv.taskName = '%%' + serach + "%%";
     }
-    if(created){
+    if (created) {
         json.kv.fkHistoryTellerId = created;
     }
-    if(val){
-       
+    if (val) {
+
         val = val.split('-')
-     var dt = val[0].split('/');
-     var dt1 = val[1].split('/');
-     stTime=dt[2].trim()+dt[0].trim()+dt[1].trim();
-     endTime=dt1[2].trim()+dt1[0].trim()+dt1[1].trim();
-  
-      var inns =stTime.trim()+'%BN%'+endTime.trim();
-      json.kv.historyDate = inns;
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+
+        var inns = stTime.trim() + '%BN%' + endTime.trim();
+        json.kv.historyDate = inns;
     }
-    
+
     json.kv.fkBacklogId = backlog_id;
-    
- 
+
+
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetBacklogTaskHistoryListByProjectIdAndByBacklogId",
@@ -12145,24 +12174,24 @@ function loadHistoryByTasksId(backlog_id) {
         async: true,
         success: function (res) {
             $('#history-main-table-task tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-task tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].taskName+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-task tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].taskName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12184,25 +12213,25 @@ function loadHistoryByCssId(project_id) {
         async: true,
         success: function (res) {
             $('#history-main-table-css tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-css tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].inputName+"</td>")
-                        .append("<td>"+obj[i].cssBody+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-css tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].inputName + "</td>")
+                                .append("<td>" + obj[i].cssBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12225,25 +12254,25 @@ function loadHistoryBysqlId(fkTableId) {
         async: true,
         success: function (res) {
             $('#history-main-table-sql tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-sql tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].tableName+"</td>")
-                        .append("<td>"+obj[i].fieldName+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-sql tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].tableName + "</td>")
+                                .append("<td>" + obj[i].fieldName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12265,25 +12294,25 @@ function loadHistoryByDBId(fkTableId) {
         async: true,
         success: function (res) {
             $('#history-main-table-db tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-db tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].tableName+"</td>")
-                        .append("<td>"+obj[i].fieldName+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-db tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].tableName + "</td>")
+                                .append("<td>" + obj[i].fieldName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12316,9 +12345,9 @@ function loadDatabaseList2ComboEntityDAsh() {
                                     .append(o.dbName))
                 }
 
-                
+
             } catch (err) {
-        
+
             }
             $('#database-tm-list').selectpicker('refresh')
         }
@@ -12384,25 +12413,25 @@ function loadHistoryByBacklogStId(backlog_id) {
         async: true,
         success: function (res) {
             $('#history-main-table-backlogst tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-backlogst tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].backlogName+"</td>")
-                        .append("<td>"+obj[i].historyBody+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-backlogst tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].backlogName + "</td>")
+                                .append("<td>" + obj[i].historyBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12432,9 +12461,9 @@ function getProjectUsersForID(id) {
                                     .append(o.userName))
                 }
 
-                
+
             } catch (err) {
-        
+
             }
             $('#statistics-createdby-task').selectpicker('refresh')
 
@@ -12445,8 +12474,8 @@ function getProjectUsersForID(id) {
     });
 }
 function loadHistoryByJsId(project_id) {
-    
-    if (project_id===undefined) {
+
+    if (project_id === undefined) {
         return
     }
 
@@ -12462,25 +12491,25 @@ function loadHistoryByJsId(project_id) {
         async: true,
         success: function (res) {
             $('#history-main-table-js tbody').empty()
-        
-          var obj = res.tbl[0].r;
-          for (let i = 0; i < obj.length; i++) {
-            $('#history-main-table-js tbody')
-            .append($('<tr>')
-                        .append("<td>"+obj[i].jsName+"</td>")
-                        .append("<td>"+obj[i].jsBody+"</td>")
-                        .append("<td>"+obj[i].newValue+"</td>")
-                        .append("<td>"+obj[i].oldValue+"</td>")
-                        .append("<td>"+obj[i].historyType+"</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/"+obj[i].logoUrl+"' data-trigger='hover' data-toggle='popover' data-content='"+obj[i].userName+"'  data-original-title='Created By'></td>")
 
-                        )
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                $('#history-main-table-js tbody')
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].jsName + "</td>")
+                                .append("<td>" + obj[i].jsBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-              
-          }
-         
-          $('[data-toggle="popover"]').popover();
+                                )
+
+
+            }
+
+            $('[data-toggle="popover"]').popover();
         }
     });
 }
@@ -12670,8 +12699,8 @@ $(document).on('click', '.loadDashboard', function (evt) {
         loadDatabaseList2ComboEntityDAsh();
         $('.tab-dash-trig').first().click();
         $('#datebet-task-history-id').daterangepicker({
-           
-          }).val('');
+
+        }).val('');
     });
 });
 
@@ -12855,12 +12884,12 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
         setProjectListByID('bug_filter_project_id_add');
-        var prId  = Utility.getParamFromUrl('current_project_id');
+        var prId = Utility.getParamFromUrl('current_project_id');
         getUsers()
-        if(prId){
+        if (prId) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
-       
+
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
         Priority.load();
@@ -12868,7 +12897,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
-   
+
     });
 });
 
@@ -13094,7 +13123,7 @@ $(document).on('click', '.loadProjectManagement', function (evt) {
         new Sprint().load();
         new Label().load();
         getProjectUsers4ProjectManagment();
-      
+
 
         if (global_var.current_issue_is_hide !== '1' &&
                 (global_var.current_issue_id)) {
@@ -13339,8 +13368,8 @@ function setProjectManagementFilterAssignees() {
 }
 function callProjectManagementFilterMulti(el) {
     bug_filter.page_no = 1;
-  
-  
+
+
     global_var.current_project_id = $(el).val();
     Utility.addParamToUrl('current_project_id', $(el).val());
     getProjectUsers4ProjectManagment();
@@ -13353,19 +13382,19 @@ function setProjectManagementFilterProject() {
             .text("All Projects"))
     for (var id in keys) {
         var pid = keys[id];
-        
+
         select.append($("<option>")
                 .val(pid)
                 .text(SACore.Project[pid]))
     }
-    
+
 }
 function setProjectListByID(elid) {
-    var select = $('#'+elid);
+    var select = $('#' + elid);
     var keys = Object.keys(SACore.Project);
     for (var id in keys) {
         var pid = keys[id];
-        
+
         select.append($("<option>")
                 .val(pid)
                 .text(SACore.Project[pid]))
@@ -13373,16 +13402,17 @@ function setProjectListByID(elid) {
     select.selectpicker('refresh')
 }
 function getStatisticList(idlist) {
-   
+
 
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = idlist;
-   
+
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory",
@@ -13391,57 +13421,57 @@ function getStatisticList(idlist) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-        success: function (res) {  
-            
-            var dt  = res.tbl;
-          
-          for (let index = 0; index < dt.length; index++) {
-               var ifle = dt[index].tn;
-          
-               if(ifle=="overall"){
-                   
-                   var id = dt[index].r[0].fkBacklogId;
-                   var le = dt[index].r[0];
-                   $("#overall"+id).html($("<div>")
-                                             .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Total</b>('+le.overall+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                                             .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                                             )
-               }
-               if(ifle=="changes"){
-                var id = dt[index].r[0].fkBacklogId;
-                var le = dt[index].r[0];
-                $("#changes"+id).html($("<div>")
-                .append('<span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b >Total</b>('+le.
-                overall+')</span><br>')
-                .append('<span class="task-for-backlog-event us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
-               }
-               if(ifle=="bug"){
-                var id = dt[index].r[0].fkBacklogId;
-                var le = dt[index].r[0];
-                $("#bug"+id).html($("<div>")
-                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Total</b>('+le.overall+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
-               }
-               if(ifle=="new"){
-                var id = dt[index].r[0].fkBacklogId;
-                var le = dt[index].r[0];
-                $("#new"+id).html($("<div>")
-                .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid='+le.fkBacklogId+' status="total"><b>Total</b>('+le.overall+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span><br>')
-                .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span>')
-                )
-               }
-               
-          }
+        success: function (res) {
+
+            var dt = res.tbl;
+
+            for (let index = 0; index < dt.length; index++) {
+                var ifle = dt[index].tn;
+
+                if (ifle == "overall") {
+
+                    var id = dt[index].r[0].fkBacklogId;
+                    var le = dt[index].r[0];
+                    $("#overall" + id).html($("<div>")
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
+                }
+                if (ifle == "changes") {
+                    var id = dt[index].r[0].fkBacklogId;
+                    var le = dt[index].r[0];
+                    $("#changes" + id).html($("<div>")
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b >Total</b>(' + le.
+                                    overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
+                }
+                if (ifle == "bug") {
+                    var id = dt[index].r[0].fkBacklogId;
+                    var le = dt[index].r[0];
+                    $("#bug" + id).html($("<div>")
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
+                }
+                if (ifle == "new") {
+                    var id = dt[index].r[0].fkBacklogId;
+                    var le = dt[index].r[0];
+                    $("#new" + id).html($("<div>")
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
+                }
+
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -13453,10 +13483,10 @@ function getProjectManagementList() {
     var priD = $("#prMn_filter_project_id").val();
     setPrmFilterSprintValues();
     setPrmFilterLabelValues();
-    var priD =$("#prMn_filter_project_id").val();
+    var priD = $("#prMn_filter_project_id").val();
     var val = $("#bug_filter_limit").val();
     var nmSearch = $("#promgment_filter_search_text").val();
-    var stLimit = (parseFloat(val)*bug_filter.page_no)-parseFloat(val);
+    var stLimit = (parseFloat(val) * bug_filter.page_no) - parseFloat(val);
 
     var json = {
         kv: {}
@@ -13474,20 +13504,20 @@ function getProjectManagementList() {
     } else {
         json.kv.backlogName = "%%" + nmSearch + "%%";
     }
-    json.kv.startLimit =stLimit;
-  
-    json.kv.endLimit = parseFloat(val)*bug_filter.page_no;
-    if(nmSearch===''){
-       
-    }else{
-        json.kv.backlogName = "%%"+nmSearch+"%%";
+    json.kv.startLimit = stLimit;
+
+    json.kv.endLimit = parseFloat(val) * bug_filter.page_no;
+    if (nmSearch === '') {
+
+    } else {
+        json.kv.backlogName = "%%" + nmSearch + "%%";
     }
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
     var that = this;
     var data = JSON.stringify(json);
-    
-   
+
+
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
         type: "POST",
@@ -13495,10 +13525,10 @@ function getProjectManagementList() {
         contentType: "application/json",
         crossDomain: true,
         async: false,
-       
-        success: function (res) {         
-            getProjectManagmentListDetails(res,stLimit+1);
-         
+
+        success: function (res) {
+            getProjectManagmentListDetails(res, stLimit + 1);
+
             setPagination(res.tbl[0].r.length, val);
             // getGroupList();
 
@@ -13510,7 +13540,7 @@ function getProjectManagementList() {
 
 
 }
-function getProjectManagmentListDetails(res,stLimit) {
+function getProjectManagmentListDetails(res, stLimit) {
     //    tbody to append
     var table = $('#bugListTable');
     var tbody = $('#bugListTable > tbody');
@@ -13529,12 +13559,12 @@ function getProjectManagmentListDetails(res,stLimit) {
     var obj = res.tbl[0].r;
     var idList = ""
     for (var i = 0; i < obj.length; i++) {
-         if((obj.length -1) == i){
-            idList = idList+obj[i].id
-         }else{
-            idList = idList+obj[i].id+","
-         }
-      
+        if ((obj.length - 1) == i) {
+            idList = idList + obj[i].id
+        } else {
+            idList = idList + obj[i].id + ","
+        }
+
         var o = obj[i];
         var createdName = SAProjectUser.GetDetails(o.createdBy, "userName")
         var userName = SAProjectUser.GetDetails(o.fkOwnerId, "userName")
@@ -13550,8 +13580,8 @@ function getProjectManagmentListDetails(res,stLimit) {
         sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
         sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
 
-        var row = (stLimit+i);
-      /* + rs + rsLabelFilter; */
+        var row = (stLimit + i);
+        /* + rs + rsLabelFilter; */
 
         var userImage = SAProjectUser.GetDetails(o.fkOwnerId, "userImage");
         var img = (userImage) ?
@@ -13568,44 +13598,44 @@ function getProjectManagmentListDetails(res,stLimit) {
         var task_id = getTaskCode(o.id);
 
         var t = $('<tr>')
-                 
-            .attr("id", o.id)
-            .attr("projectId", o.fkProjectId)
-            .attr("stIdr", o.fkBacklogId)
-            .addClass('bug-tr')
-            .append($('<td>').attr("style","min-width:50px;padding:5px;").append(row+'<input class="checkbox-issue-task" type="checkbox">'))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-status')
-                .append($('<span>')
-                .addClass('us-item-status-' + o.backlogNo)
-                .append(o.backlogNo)))
-            .append($('<td>')
-                .addClass('bug-list-column')
-                .addClass('bug-list-column-task-name')
-                .css("max-width", '400px')
-                .append(backlogName, ' ')
-                .append("<input type='text' class=' task-name-issue select-box-issue'>")
-                
-               
-            )
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id','overall'+o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id','bug'+o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id','changes'+o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id','new'+o.id).append('No-task')))
 
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-story-card')
-                .append("<span class='get-data-group'>" + proJectName + "</span>")) 
+                .attr("id", o.id)
+                .attr("projectId", o.fkProjectId)
+                .attr("stIdr", o.fkBacklogId)
+                .addClass('bug-tr')
+                .append($('<td>').attr("style", "min-width:50px;padding:5px;").append(row + '<input class="checkbox-issue-task" type="checkbox">'))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-status')
+                        .append($('<span>')
+                                .addClass('us-item-status-' + o.backlogNo)
+                                .append(o.backlogNo)))
+                .append($('<td>')
+                        .addClass('bug-list-column')
+                        .addClass('bug-list-column-task-name')
+                        .css("max-width", '400px')
+                        .append(backlogName, ' ')
+                        .append("<input type='text' class=' task-name-issue select-box-issue'>")
 
-                
+
+                        )
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'overall' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'bug' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'changes' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'new' + o.id).append('No-task')))
+
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-story-card')
+                        .append("<span class='get-data-group'>" + proJectName + "</span>"))
+
+
 
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap')
@@ -13633,17 +13663,17 @@ function getProjectManagmentListDetails(res,stLimit) {
                         .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
 
 
-         tbody.append(t);
+        tbody.append(t);
     }
- 
+
 
     /*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
      sumEstBudget, sumSpentBudget); */
- 
+
     getStatisticList(idList);
-    
-/*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-        sumEstBudget, sumSpentBudget); */
+
+    /*     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+     sumEstBudget, sumSpentBudget); */
 
 
     global_var.bug_task_sprint_assign_checked = '';
@@ -13691,18 +13721,18 @@ function getProjectManagementListDetailsHeader() {
 
     return th;
 }
-$(document).on("click",".prManag-task-filter-checkbox-label", function(){
+$(document).on("click", ".prManag-task-filter-checkbox-label", function () {
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
     }
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterLabeValuesUs();
         new UserStory().setUSLists4KanbanView();
-        
+
     }
- 
+
 })
-$(document).on("click",".us-filter-checkbox-sprint", function(){
+$(document).on("click", ".us-filter-checkbox-sprint", function () {
     if (global_var.current_modal === 'loadProjectManagement') {
         getProjectUsers4ProjectManagment();
     }
@@ -13710,7 +13740,7 @@ $(document).on("click",".us-filter-checkbox-sprint", function(){
         setPrmFilterSprintValuesUs();
         new UserStory().setUSLists4KanbanView();
     }
- 
+
 })
 function setPrmFilterLabelValues() {
     var st = ' ';
@@ -13735,7 +13765,7 @@ function setPrmFilterSprintValues() {
 }
 
 
-function labelOrSplitValuesUs(){
+function labelOrSplitValuesUs() {
     setPrmFilterSprintValuesUs()
     setPrmFilterLabeValuesUs()
     new UserStory().setUSLists4KanbanView();
@@ -13746,7 +13776,7 @@ function setPrmFilterSprintValuesUs() {
     var st = ' ';
     $('.us-filter-checkbox-sprint').each(function () {
         if ($(this).is(":checked")) {
-           
+
             var json = {
                 kv: {}
             };
@@ -13764,13 +13794,13 @@ function setPrmFilterSprintValuesUs() {
                 crossDomain: true,
                 async: true,
                 success: function (res) {
-                      var dt = res.tbl[0].r
+                    var dt = res.tbl[0].r
                     for (let i = 0; i < dt.length; i++) {
-                         
 
-                        st += dt[i].fkBacklogId+ "%IN%";
-                        
-                        
+
+                        st += dt[i].fkBacklogId + "%IN%";
+
+
                     }
                     UsSprint = st;
                     new UserStory().setUSLists4KanbanView();
@@ -13779,21 +13809,21 @@ function setPrmFilterSprintValuesUs() {
                     Toaster.showError(('somethingww'));
                 }
             });
-        }else{
+        } else {
             UsSprint = '';
-           
-           
+
+
         }
-        
+
     })
- 
-   
+
+
 }
 function setPrmFilterLabeValuesUs() {
     var st = '';
     $('.prManag-task-filter-checkbox-label').each(function () {
         if ($(this).is(":checked")) {
-           
+
             var json = {
                 kv: {}
             };
@@ -13813,39 +13843,40 @@ function setPrmFilterLabeValuesUs() {
                 success: function (res) {
                     var dt = res.tbl[0].r
                     for (let i = 0; i < dt.length; i++) {
-                          
-                    st += dt[i].fkBacklogId + "%IN%";
 
-                                       
+                        st += dt[i].fkBacklogId + "%IN%";
+
+
                     }
-                       UsLabel = st;
-                      
-                       new UserStory().setUSLists4KanbanView();
+                    UsLabel = st;
+
+                    new UserStory().setUSLists4KanbanView();
                 },
                 error: function () {
                     Toaster.showError(('somethingww'));
                 }
             });
-        }else{
+        } else {
             UsLabel = ''
-                   
+
         }
     })
-  
+
 }
 
 
-function getSTatsUserManagmentTableKanbanLargeMenu(id){
+function getSTatsUserManagmentTableKanbanLargeMenu(id) {
 
-   
+
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = id;
-   
+
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
@@ -13854,71 +13885,71 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {  
-           // $(div).html('')
-            var dt  = res.tbl;
+        success: function (res) {
+            // $(div).html('')
+            var dt = res.tbl;
 
-          for (let index = 0; index < dt.length; index++) {
-               var ifle = dt[index].tn;
-             
-               if(ifle=="overall"){
-                  
-                var le = dt[index].r[0];
-                
-                var total=   le.overall ;
-                
-                var elmo = $(".modal-header b.status-total-total")
-                       elmo.text(parseFloat(elmo.text())+parseFloat(total));
-                var newst  = le.statusNew
-                   var elm = $(".modal-header b.status-new-total")
-                       elm.text(parseFloat(elm.text())+parseFloat(newst));
-                       if(newst>0){
-                        filtUsm.SetTableFields('new',le.fkBacklogId)
-                        }    
-                 
-             var ong =  le.statusOngoing
-             var elm1 = $(".modal-header b.status-ongoing-total")
-                elm1.text(parseFloat(elm1.text())+parseFloat(ong));
-                if(ong>0){
-                    filtUsm.SetTableFields('ongoing',le.fkBacklogId)
-                 } 
+            for (let index = 0; index < dt.length; index++) {
+                var ifle = dt[index].tn;
 
-             var cl= le.statusClosed
-                var elm2 = $(".modal-header b.status-closed-total")
-                elm2.text(parseFloat(elm2.text())+parseFloat(cl));
-                if(cl>0){
-                    filtUsm.SetTableFields('closed',le.fkBacklogId)
-                 } 
-             var uat = le.statusUat 
-                var elm3 = $(".modal-header b.status-UAT-total")
-                elm3.text(parseFloat(elm3.text())+parseFloat(uat));
-                if(uat>0){
-                    filtUsm.SetTableFields('UAT',le.fkBacklogId)
-                 }
-              var rej =le.statusRejected
-              var elm4 = $(".modal-header b.status-rejected-total")
-                elm4.text(parseFloat(elm4.text())+parseFloat(rej));
-                if(rej>0){
-                    filtUsm.SetTableFields('rejected',le.fkBacklogId)
-                 }
-               var can =le.statusCanceled
-               var elm5 = $(".modal-header b.status-Canceled-total")
-               elm5.text(parseFloat(elm5.text())+parseFloat(can));
-               if(can>0){
-                filtUsm.SetTableFields('Canceled',le.fkBacklogId)
-             }
-                var wait  = le.statusWaiting
-                var elm6 = $(".modal-header b.status-waiting-total")
-                elm6.text(parseFloat(elm6.text())+parseFloat(wait));
-                if(wait>0){
-                    filtUsm.SetTableFields('waiting',le.fkBacklogId)
-                 }
-                                             
-               }
-             
-          }
-         
-        
+                if (ifle == "overall") {
+
+                    var le = dt[index].r[0];
+
+                    var total = le.overall;
+
+                    var elmo = $(".modal-header b.status-total-total")
+                    elmo.text(parseFloat(elmo.text()) + parseFloat(total));
+                    var newst = le.statusNew
+                    var elm = $(".modal-header b.status-new-total")
+                    elm.text(parseFloat(elm.text()) + parseFloat(newst));
+                    if (newst > 0) {
+                        filtUsm.SetTableFields('new', le.fkBacklogId)
+                    }
+
+                    var ong = le.statusOngoing
+                    var elm1 = $(".modal-header b.status-ongoing-total")
+                    elm1.text(parseFloat(elm1.text()) + parseFloat(ong));
+                    if (ong > 0) {
+                        filtUsm.SetTableFields('ongoing', le.fkBacklogId)
+                    }
+
+                    var cl = le.statusClosed
+                    var elm2 = $(".modal-header b.status-closed-total")
+                    elm2.text(parseFloat(elm2.text()) + parseFloat(cl));
+                    if (cl > 0) {
+                        filtUsm.SetTableFields('closed', le.fkBacklogId)
+                    }
+                    var uat = le.statusUat
+                    var elm3 = $(".modal-header b.status-UAT-total")
+                    elm3.text(parseFloat(elm3.text()) + parseFloat(uat));
+                    if (uat > 0) {
+                        filtUsm.SetTableFields('UAT', le.fkBacklogId)
+                    }
+                    var rej = le.statusRejected
+                    var elm4 = $(".modal-header b.status-rejected-total")
+                    elm4.text(parseFloat(elm4.text()) + parseFloat(rej));
+                    if (rej > 0) {
+                        filtUsm.SetTableFields('rejected', le.fkBacklogId)
+                    }
+                    var can = le.statusCanceled
+                    var elm5 = $(".modal-header b.status-Canceled-total")
+                    elm5.text(parseFloat(elm5.text()) + parseFloat(can));
+                    if (can > 0) {
+                        filtUsm.SetTableFields('Canceled', le.fkBacklogId)
+                    }
+                    var wait = le.statusWaiting
+                    var elm6 = $(".modal-header b.status-waiting-total")
+                    elm6.text(parseFloat(elm6.text()) + parseFloat(wait));
+                    if (wait > 0) {
+                        filtUsm.SetTableFields('waiting', le.fkBacklogId)
+                    }
+
+                }
+
+            }
+
+
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -13928,18 +13959,19 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id){
 
 
 }
-function getSTatsUserManagmentTableKanban(elm){
+function getSTatsUserManagmentTableKanban(elm) {
 
-        
-      var div = $(elm).parents(".task-content").find(".stat-div-task-content");
+
+    var div = $(elm).parents(".task-content").find(".stat-div-task-content");
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = $(elm).attr("data-bid");
-   
+
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
@@ -13948,47 +13980,47 @@ function getSTatsUserManagmentTableKanban(elm){
         contentType: "application/json",
         crossDomain: true,
         async: true,
-        success: function (res) {  
-           // $(div).html('')
-            var dt  = res.tbl;
+        success: function (res) {
+            // $(div).html('')
+            var dt = res.tbl;
 
-          for (let index = 0; index < dt.length; index++) {
-               var ifle = dt[index].tn;
-          
-               if(ifle=="overall"){
-                   
-            
-                   var le = dt[index].r[0];
-                   $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title " pid='+le.fkBacklogId+' action="overall" status="total"><b>Tasks</b>('+le.overall+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid='+le.fkBacklogId+' action="overall" status="new">new('+le.statusNew+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid='+le.fkBacklogId+' action="overall" status="ongoing">Ongoing('+le.statusOngoing+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid='+le.fkBacklogId+' action="overall" status="closed">Closed('+le.statusClosed+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid='+le.fkBacklogId+' action="overall" status="UAT">UAT('+le.statusUat+')</span></td>')
-                                             
-                   $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid='+le.fkBacklogId+' ><i class="fas fa-plus"></i></span>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid='+le.fkBacklogId+' action="overall" status="reject">rejected('+le.statusRejected+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid='+le.fkBacklogId+' action="overall" status="Canceled">canceled('+le.statusCanceled+')</span></td>')
-                                             .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid='+le.fkBacklogId+' action="overall" status="waiting">waiting('+le.statusWaiting+')</span></td>')
-                                             .append('<td class="text-center"><a href="#" pid='+le.fkBacklogId+' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
-                                             
-               }
-            
-          }
-          if(dt==''){
-            $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title "  action="overall" status="total"><b>Tasks</b>(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-new"  action="overall" status="new">new(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
-             
-            $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
-            .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
-            .append('<td class="text-center"></td>')
+            for (let index = 0; index < dt.length; index++) {
+                var ifle = dt[index].tn;
 
-        }
-        
+                if (ifle == "overall") {
+
+
+                    var le = dt[index].r[0];
+                    $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b>Tasks</b>(' + le.overall + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid=' + le.fkBacklogId + ' action="overall" status="UAT">UAT(' + le.statusUat + ')</span></td>')
+
+                    $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid=' + le.fkBacklogId + ' action="overall" status="reject">rejected(' + le.statusRejected + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid=' + le.fkBacklogId + ' action="overall" status="Canceled">canceled(' + le.statusCanceled + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
+                            .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
+
+                }
+
+            }
+            if (dt == '') {
+                $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title "  action="overall" status="total"><b>Tasks</b>(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-new"  action="overall" status="new">new(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
+
+                $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
+                        .append('<td class="text-center"></td>')
+
+            }
+
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -13999,14 +14031,15 @@ function getSTatsUserManagmentTableKanban(elm){
 
 }
 
-function getBugList4UserStory(bgId,tbody) {
-   
+function getBugList4UserStory(bgId, tbody) {
+
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBackogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
@@ -14024,39 +14057,39 @@ function getBugList4UserStory(bgId,tbody) {
             coreBugList = res;
             setKV4CoreBugList();
             SATask.updateTaskByRes(res);
-            var ela  = res.tbl[0].r
+            var ela = res.tbl[0].r
             $(tbody).html('')
             $(tbody).append($("<tr>").addClass('theader-table')
-            .append('<td><b>Task Id</b></td>')
-            .append('<td class="trigger-status-filter"><b>Status</b></td>')
-            .append('<td><b>Description</b></td>')
-            .append($("<td>").append("<b>Task Nature</b>"))
-            .append('<td><b>Task Type</b></td>')
-            .append('<td><b>Created</b></td>')
-            .append('<td><b>Assigne</b></td>')
-            .append('<td><b>Date</b></td>')
-            )
+                    .append('<td><b>Task Id</b></td>')
+                    .append('<td class="trigger-status-filter"><b>Status</b></td>')
+                    .append('<td><b>Description</b></td>')
+                    .append($("<td>").append("<b>Task Nature</b>"))
+                    .append('<td><b>Task Type</b></td>')
+                    .append('<td><b>Created</b></td>')
+                    .append('<td><b>Assigne</b></td>')
+                    .append('<td><b>Date</b></td>')
+                    )
 
             for (let i = 0; i < ela.length; i++) {
-               var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
-             
-                $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status',ela[i].taskStatus)
-                                  .append('<td class="task-id-td">'+ela[i].projectCode+"-"+ela[i].orderNoSeq+'</td>')
-                                  .append('<td><span class="us-item-status-' + ela[i].taskStatus+'">'+ela[i].taskStatus+'</span></td>')
-                                  .append($("<td>")
-                                              .append($("<a>")
-                                                .attr('href','#')
-                                               .attr("onclick","callTaskCard4BugTask(this,'"+prd+"','"+ela[i].id+"')")
-                                               .text(ela[i].taskName)))
-                                  .append($("<td>").append(taskNature))
-                                  .append('<td>'+ela[i].taskTypeName+'</td>')
-                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/'+ela[i].createByImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].createByName+'" title="" data-original-title="Created By"></td>')
-                                  .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/'+ela[i].userImage+'" data-trigger="hover" data-toggle="popover" data-content="'+ela[i].userName+'" title="" data-original-title="Assigne"></td>')
-                                  .append('<td class="task-time-td">'+Utility.convertDate(ela[i].createdDate)+'</td>')
-                                  )
-                
+                var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+
+                $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
+                        .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
+                        .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
+                        .append($("<td>")
+                                .append($("<a>")
+                                        .attr('href', '#')
+                                        .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .text(ela[i].taskName)))
+                        .append($("<td>").append(taskNature))
+                        .append('<td>' + ela[i].taskTypeName + '</td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assigne"></td>')
+                        .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                        )
+
             }
-            
+
             $('[data-toggle="popover"]').popover();
             $(tbody).find('.trigger-status-filter').click();
         },
@@ -14067,7 +14100,7 @@ function getBugList4UserStory(bgId,tbody) {
 
 }
 
- /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+/*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 function setStoryCardCreatedBy() {
     var createdBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "createdBy");
@@ -15323,7 +15356,8 @@ function getProjectUsers4ProjectManagment() {
                 SAProjectUser.LoadProjectUser(res);
                 loadUsersAsAssignee();
                 loadUsersAsOwner();
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getProjectUsers = true;
             executeCoreOfManualProSelection();
             getProjectManagementList();
@@ -15572,7 +15606,7 @@ function updateInput4SCDetails(inputId, val, ustype) {
     });
 }
 
-function updateUS4ShortChangeDetailsUsMngm(val, ustype,usId) {
+function updateUS4ShortChangeDetailsUsMngm(val, ustype, usId) {
 
     try {
 
@@ -16100,9 +16134,9 @@ function sprintAddAssignUSerStoryManagement(elm) {
 
         if ($(check[indx]).prop('checked')) {
 
-           
-            
-             var projectId = $('#story_mn_filter_project_id').val();
+
+
+            var projectId = $('#story_mn_filter_project_id').val();
             var id = $(check[indx]).attr("pid");
 
             var checked = '1';
@@ -16195,7 +16229,7 @@ function sprintAddAssignProjectManagement(elm) {
 
 }
 
- 
+
 
 
 function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprintId, checked) {
@@ -16250,6 +16284,8 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
         $('.' + global_var.task_mgmt_group_by).click();
     } else if (global_var.current_modal === "loadBugChange") {
         sprintAddAssign(this);
+    } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
+        sprintAddAssignTaskType(this);
     }
 });
 
@@ -16305,10 +16341,10 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
 });
 
 $(document).on('change', '#search-us-managmenet', function (evt) {
-    
+
     labelOrSplitValuesUs();
-       
-  
+
+
 });
 $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
@@ -16317,34 +16353,34 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
     Utility.addParamToUrl('current_project_id', $(this).val());
     loadAssigneesByProjectUSM($(this).val());
     loadStoryCardByProjectAdd($(this).val())
-    
-          UsLabel ='';
-          UsSprint ='';
-        new Label().load();
-        new Sprint().load();
-        labelOrSplitValuesUs();
-       
-  
+
+    UsLabel = '';
+    UsSprint = '';
+    new Label().load();
+    new Sprint().load();
+    labelOrSplitValuesUs();
+
+
 });
 $(document).on('change', '#priority-change-story-card-filter', function (evt) {
-   
-          UsLabel ='';
-          UsSprint ='';
-          Utility.addParamToUrl('fk_assigne_id', $(this).val());
-          labelOrSplitValuesUs();
-          
+
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+    labelOrSplitValuesUs();
+
 });
 $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
-   
-          UsLabel ='';
-          UsSprint ='';
-          Utility.addParamToUrl('fk_assigne_id', $(this).val());
-          labelOrSplitValuesUs();
-          
+
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+    labelOrSplitValuesUs();
+
 });
 function loadAssigneesByProjectUSM(projectId) {
 
-  
+
     var json = initJSON();
     json.kv.fkProjectId = projectId;
     var that = this;
@@ -16360,20 +16396,20 @@ function loadAssigneesByProjectUSM(projectId) {
             var obj = res.tbl[0].r;
             $('#story_mn_filter_assigne_id').html('')
             $('#story_mn_filter_assigne_id').append('<option></option>');
-    for (var i in obj) {
-        var o = obj[i];
-        var opt = $('<option>').val(o.fkUserId).text(o.userName);
-        var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
-        
-        $('#story_mn_filter_assigne_id').append(opt);
-        $('#bug_filter_assignee_id_add').append(opt1);
-        
+            for (var i in obj) {
+                var o = obj[i];
+                var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
 
-    }
+                $('#story_mn_filter_assigne_id').append(opt);
+                $('#bug_filter_assignee_id_add').append(opt1);
+
+
+            }
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
-            if(fkAssigneId){
+            if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
             }
         },
@@ -17656,7 +17692,9 @@ function clearTaskManagementKanban() {
 
 function genTaskTypeManagmentView4None() {
 
-
+    setBugFilterSprintValues();
+    setBugFilterLabelValues();
+    var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val()
     var json = {
         kv: {}
     };
@@ -17671,7 +17709,10 @@ function genTaskTypeManagmentView4None() {
     json.kv.taskStatus = bug_filter.status;
     json.kv.priority = bug_filter.priority;
     json.kv.taskNature = bug_filter.nature;
-    json.kv.searchText = bug_filter.search_text;
+    if (serachtx) {
+        json.kv.searchText = serachtx;
+    }
+
     json.kv.searchLimit = bug_filter.limit;
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
@@ -17720,7 +17761,7 @@ function genTaskTypeManagmentView4None() {
                 $("#taskTypeManagmentHeader").find('[pid="' + $(rt[index]).attr('id') + '"]').find(".counterkanban").text(con.length);
             }
 
-            contentArrangableUI();
+
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -17815,15 +17856,7 @@ function getSprintTaskCheckedCount() {
 function genUSLine4KanbanView(o) {
 
     var ischecked = (getSprintTaskCheckedCount() > 0);
-    var div = $('<div>')
-            .append($("<input type='checkbox'>")
-                    .addClass("assign-sprint-to-task-item")
-                    .attr("pid", o.id)
-                    .attr('projectId', o.fkProjectId)
-                    .attr('backlogId', o.fkBacklogId)
-                    .attr("checked", ischecked)
-                    .attr("sid", global_var.bug_task_sprint_assign_id))
-            .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") "));
+    var div = '';
 
     var rs = global_var.bug_task_sprint_assign_checked === 1 ?
             div.html() + " " :
@@ -17887,14 +17920,14 @@ function genUSLine4KanbanView(o) {
             .append(replaceTags(SACore.GetBacklogname(o.fkBacklogId)))
             .append('<br>') :
             "";
-    var rs = "";
+
     var s = $('<div >')
             .addClass('task-content content-drag')
             .append($('<div class="task-content-header">')
                     .append($('<div class="TaskContentText">')
                             .attr('bno', o.taskOrderNo)
                             .attr('pid', o.id)
-                            .append(rs)
+                            .append('<input type="checkbox" tid="' + o.id + '"  stIdr="' + o.fkBacklogId + '"  class="checkbox-task-type-task">')
                             .append(taskImage)
                             .append($('<span class="headerContentText">')
                                     .attr('href', '#')
@@ -20652,4 +20685,37 @@ var SCSourceManagement = {
 
 }
 
+/// for cheweeek part section 
 
+
+function genChewekoperationSystem() {
+
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetInputAttributeListByBacklog",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i in obj) {
+                var o = obj[i];
+
+
+            }
+        }
+    });
+
+}
+$(document).on('click', '.for-chewekk-new-panel-link', function () {
+    var div = $(".component-class#21041212141705702084");
+    var f = $(this).attr("data-link")
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $(div).html(html_string);
+        genChewekoperationSystem()
+
+    });
+
+})
