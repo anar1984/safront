@@ -1,4 +1,9 @@
 /* general */
+.cs-sum-inbox ::placeholder {
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    opacity: 0.5;
+  }
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #3c3f89;

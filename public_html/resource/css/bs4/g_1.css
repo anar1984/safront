@@ -5680,6 +5680,7 @@ span.ruby-c-content {
     cursor: pointer;
     
 }
+
 .input-descrp-btn{
     font-size: 10px;
    
@@ -6243,4 +6244,24 @@ td.selected{
     width: 20px;
     font-size: 10px;
     padding: 2px;
+}
+
+/* cheweeeeeek  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.kanban-panel-4chewek{
+
+    display: flex;
+    overflow: auto;
+    margin: auto;
+}
+.kanban-panel-4chewek .task-column{
+
+    min-width: 18rem !important;
+    
+}
+.kanban-panel-4chewek .task-column-body-chwk{
+
+    height: 80vh ;
+    overflow-y: auto;
+    
 }
