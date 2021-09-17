@@ -5514,7 +5514,7 @@ UserStory.prototype = {
             descBody = this.getBacklogDescLineDetails(descBody);
             
             var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
-
+         
             var tr = $("<tr>")
                     .attr("orderno", obj[n].orderNo)
                     .attr("pid", obj[n].id)
@@ -13763,13 +13763,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanViewByStatus: function (stLm,endLm,bsTat) {
-        var priD =$("#story_mn_filter_project_id").val();
+        $('#kanban_view_'+stLm+'_count').html(0);
+        $('.main_div_of_backlog_info_kanban_view_table_'+stLm).html('');
+        var priD =getProjectValueUsManageMulti();
         var fkAsId = $("#story_mn_filter_assigne_id").val();
         var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
         var endLimit = endLm;
-        if(priD==''){
+        if(priD===''){
             return
         }
         var json = {
@@ -13895,14 +13897,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                $(".modal-header b.status-Canceled-total").text(0)
                $(".modal-header b.status-waiting-total").text(0)
                $(".modal-header b.status-total-total").text(0)
-               
-                var priD =$("#story_mn_filter_project_id").val();
+               $('#kanban_view_'+stl+'_count').html(0);
+               $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
+                var priD =getProjectValueUsManageMulti();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
                 var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
                
-                if(priD==''){
+                if(priD===''){
                     return
                 }
                 var json = {
@@ -14046,12 +14049,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setUSLists4KanbanViewCore: function (stl) {
   
+                          $('#kanban_view_'+stl+'_count').html(0);
+                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                
-                var priD =$("#story_mn_filter_project_id").val();
+                var priD =getProjectValueUsManageMulti();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
                 var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
-                if(priD==''){
+                if(priD===''){
                     return
                 }
                 var json = {

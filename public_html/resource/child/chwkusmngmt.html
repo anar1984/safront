@@ -1,0 +1,358 @@
+<div class="col-12 us-half-div" id="main_div_of_backlog_info_kanban_view">
+    <div class="row us-half-div-row">
+        <!--        <div class="col-1 text-left toggleUSPanel" style="padding:4px;  ">
+                    <a href="#" class="add-userstory-button1"
+                       onclick="new UserStory().showUserStoryPanelMain(this)">
+                        <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
+                    </a>
+                </div>-->
+     <!--    <div class="col-12 text-center" style="padding:4px;">
+            <h4>User Story Management</h4>
+        </div> -->
+        <!--By G.R-->
+        <div class="TaskPanel col-12" >
+            <div class=" " style="margin: auto;">
+                <div class="category-kanban">
+                    <div class="searchSeqment ">
+                       
+                      
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="search"  class="form-control form-control-sm" name="" id="search-us-managmenet-forchwk">
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle1 btn btn-light btn-sm"  data-toggle="dropdown">Label</button> 
+                                <div id="general" class="">
+                                    <i>
+                                        <span class="badge">0</span>
+                                    </i>
+                                </div>
+                
+                
+                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
+                                    <span>
+                                        <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
+                                           data-target="#insertNewLabel" >
+                
+                                            Add Label
+                
+                                        </a>
+                                    </span>
+                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                
+                
+                                    <div class="dropdown-divider" style="padding:0px;">
+                
+                                    </div>
+                                    <div id="tasklabellist"
+                                         class="tasklabellist"
+                
+                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+                
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                        <div class="col-lg-1">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle1 btn btn-light btn-sm "  data-toggle="dropdown"><i class="fas fa-filter"></i></button> 
+                              <!--   <div id="general" class="">
+                                    <i>
+                                        <span class="badge">0</span>
+                                    </i>
+                                </div> -->
+                
+                
+                                <div class="dropdown-menu " style="width: 360px;">
+                                    <div class="col-lg-8">
+                                        <select class="form-control " data-live-search="true" data-actions-box="true"
+                                            style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
+                                            data-type="assigne_id" title="İcra Edən"></select>
+                                    </div>
+                                    <div class="col-4">
+                                        <select id="priority-change-story-card-filter" class="form-control" data-live-search="false" data-actions-box="true" data-type="project_id" title="Priority">
+                                            <option  ></option>
+                                            <option value="1">1- Lowest</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9 - Highest</option>
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                     
+                       
+                             
+                        </div>
+                    </div>
+                  
+
+
+                </div>
+                <div class="kanban-panel-4chewek" >
+                    <div class="task-column new" status="new">
+
+                        <div draggable="true" class="task-column-header" >
+                            <input type="checkbox" name="" data-st='new' class='all-check-us-mngm' id="alcheck-new-us-mng">
+
+                            <span class="headerInputColumn">Yeni <b><span class="counterkanban" id="kanban_view_new_count">0</span></b></span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='new' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                       
+                 
+                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_new" id="new">
+                            <div draggable="true" class="content-drag"></div>  
+
+
+
+                        </div>
+                       
+                    </div>
+                    <div class="task-column  on-going" status="ongoing" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='ongoing' class='all-check-us-mngm' id="alcheck-ongoing-us-mng">
+
+                            <span class="headerInputColumn">İcra <b><span class="counterkanban" id="kanban_view_ongoing_count">0</span></b></span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                           <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                           <button data-status='ongoing' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                      
+                       
+                    
+                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_ongoing" id="ongoing">
+                            <div class="content-drag"></div>      
+
+
+                        </div>
+                       
+
+                    </div>
+                    <div class="task-column closed"  status="closed" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
+
+                            <span class="headerInputColumn">İcra Edilib 
+                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='closed' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                    
+                     
+                        
+                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_closed" id="closed">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+                    <div class="task-column rejected"  status="rejected" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
+
+                            <span class="headerInputColumn">İmtina 
+                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='rejected' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                     
+                       
+                        
+                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_rejected" id="rejected">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+                    <div class="task-column waiting"  status="waiting" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='waiting' class='all-check-us-mngm' id="alcheck-closed-us-mng">
+
+                            <span class="headerInputColumn">Gözləmə 
+                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='waiting' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                   
+                    
+                        
+                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_waiting" id="waiting">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+                    <div class="task-column canceled"  status="canceled" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='canceled' class='all-check-us-mngm' id="alcheck-canceled-us-mng">
+
+                            <span class="headerInputColumn">Ləğv edilib 
+                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='canceled' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                      
+                        
+                        
+                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_canceled" id="canceled">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+                    <div class="task-column finished"  status="finished" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='finished' class='all-check-us-mngm' id="alcheck-finished-us-mng">
+
+                            <span class="headerInputColumn">Bitib 
+                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='finished' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                    
+                        
+                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_finished" id="finished">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+                    <div class="task-column archive"  status="archive" >
+                        <div class="task-column-header">
+                            <input type="checkbox" name="" data-st='archive' class='all-check-us-mngm' id="alcheck-archive-us-mng">
+
+                            <span class="headerInputColumn">Arxivlənib 
+                                <b><span class="counterkanban" id="kanban_view_archive_count">0</span></b>
+                            </span>
+                            <!--                            <div class="column-header-edit">
+                                                            <i class="fas fa-ellipsis-h"></i>
+                                                        </div>
+                                                        <div class="Column header-choose">
+                                                            <div class="col-12 choosebtn">
+                                                                <span class=" limitSet">Limit Set Column</span>
+                                                            </div>
+                            
+                            
+                            
+                                                        </div>-->
+                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                                                        <button data-status='archive' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                        </div>
+                   
+                      
+                        
+                        <div class="task-column-body main_div_of_chwk_info_kanban_view_table_archive" id="archive">
+                            <div class="content-drag"></div>       
+
+
+                        </div>
+                      
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
