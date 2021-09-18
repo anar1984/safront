@@ -1684,7 +1684,7 @@ var SAFN = {
         'settext': 'SetText',
         'get': 'Get',
         'setparamurl': 'SetParamUrl',
-        'getparamurlto': 'GetParamUrl',
+        'getparamurl': 'GetParamUrl',
         'alert': 'Alert',
         'console': 'Concole',
         'alertdata': 'AlertData',
@@ -2550,6 +2550,9 @@ var SAFN = {
                     case '@.setparamurl':
                         descLine = SAFN.Convert.SetParamUrlStatement(mainBody);
                         break;
+                    case '@.getparamurl':
+                        descLine = SAFN.Convert.GetParamUrlStatement(mainBody);
+                        break;
                     case '@.alert':
                         descLine = SAFN.Convert.AlertStatement(mainBody);
                         break;
@@ -2649,6 +2652,10 @@ var SAFN = {
 
         $(document).on("change", ".function-statement-input-common-4-setparamurl", function (e) {
             SAFN.Reconvert.SetParamUrlStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-getparamurl", function (e) {
+            SAFN.Reconvert.GetParamUrlStatement(this);
         })
 
         $(document).on("change", ".function-statement-input-common-4-alert", function (e) {
@@ -2783,6 +2790,14 @@ var SAFN = {
             var fnline = "@.console(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
+        SetParamUrlStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.setparamurl(".fns-key").val();
+
+            var fnline = "@.setparamurl(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
         ShowErrorStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
@@ -2879,6 +2894,13 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var fnline = "@.alert(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        GetParamUrlStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var fnline = "@.getparamurl(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         SetValueStatement: function (triggerEl) {
@@ -3269,6 +3291,37 @@ var SAFN = {
                     )
                 )
 
+            return div;
+        },
+        GetParamUrlStatement: function (line) {
+
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-getparamurl")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("GetParamUrl")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
             return div;
         },
         SetValueStatement: function (line) {
@@ -4326,6 +4379,7 @@ var SAFN = {
     FnStatements: {
         'If': '@.if(,,){}',
         'Get': '@.get(,)',
+        'GetParamUrl': '@.getparamurl(,)',
         'Consolo': '@.consolo(,)',
         'DeleteKey': '@.deletekey(,)',
         'Alert': '@.alert(,)',
