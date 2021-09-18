@@ -11820,14 +11820,14 @@ function loadStoryCardByProject4StoryCard(e) {
 
 function loadStoryCardByProject4TaskMgmt(e) {
 
-    global_var.current_project_id = $(e).val();
+    global_var.current_project_id = getProjectValueUsManageMultiByel(e);
     getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
 
     getBacklogLastModificationDateAndTime(global_var.current_project_id);
     getBacklogListByProject4Element(global_var.current_project_id,$("#story_mn_filter_backlog_id"))
-    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_assigne_id"))
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_assigne_id_mng"))
     getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_created_id"))
     getTaskList4TaskMgmt();
 
@@ -12388,7 +12388,10 @@ function loadHistoryByBacklogStId(backlog_id) {
           for (let i = 0; i < obj.length; i++) {
             $('#history-main-table-backlogst tbody')
             .append($('<tr>')
-                        .append("<td>"+obj[i].backlogName+"</td>")
+                        .append("<td>"+SACore.GetProjectName(obj[i].fkProjectId)+"</td>")
+                        .append("<td>"+ SACore.GetBacklogname(obj[i].fkBacklogId)+"</td>")
+                        
+                        .append("<td>"+obj[i].inputName+"</td>")
                         .append("<td>"+obj[i].historyBody+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
@@ -12904,7 +12907,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
-        $("#story_mn_filter_assigne_id").selectpicker();
+        $("#story_mn_filter_assigne_id_mng").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
    
     });
@@ -14044,6 +14047,22 @@ function getSTatsUserManagmentTableKanban(elm){
 
 
 
+}
+function getProjectValueUsManageMultiByel(el){
+    var prd = $(el).val();
+     
+    var val =''
+    for (let i = 0; i < prd.length; i++) {
+        if(prd.length ==(i+1)){
+            val += prd[i]
+        }else{
+            val += prd[i]+"%IN%"
+        }
+       
+        
+    }
+ 
+     return val
 }
 function getProjectValueUsManageMulti(){
     var prd = $('#story_mn_filter_project_id').val();
@@ -16425,23 +16444,23 @@ function loadAssigneesByProjectUSM(projectId) {
         async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
-            $('#story_mn_filter_assigne_id').html('')
-            $('#story_mn_filter_assigne_id').append('<option></option>');
+            $('#story_mn_filter_assigne_id_mng').html('')
+            $('#story_mn_filter_assigne_id_mng').append('<option></option>');
     for (var i in obj) {
         var o = obj[i];
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
         var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
         
-        $('#story_mn_filter_assigne_id').append(opt);
+        $('#story_mn_filter_assigne_id_mng').append(opt);
         $('#bug_filter_assignee_id_add').append(opt1);
         
 
     }
-            $('#story_mn_filter_assigne_id').selectpicker('refresh');
+            $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if(fkAssigneId){
-                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
+                $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
             }
         },
         error: function () {
@@ -16867,11 +16886,12 @@ function insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus, projec
 
 function getTaskList4TaskMgmt() {
     var taskName = $('#projectList_liveprototype_taskmgmt_search').val();
-    var assigne = $('#story_mn_filter_assigne_id').val();
+    var assigne = $('#story_mn_filter_assigne_id_mng');
+    assigne = getProjectValueUsManageMultiByel(assigne);
     var created = $('#story_mn_filter_created_id').val();
     var backlog = $('#story_mn_filter_backlog_id').val();
     var json = initJSON();
-
+         
     if (taskName) {
         json.kv.taskName = '%%' + taskName + '%%';
     }
