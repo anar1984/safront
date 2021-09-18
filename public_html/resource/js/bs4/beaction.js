@@ -2334,7 +2334,7 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
 
             $('.' + className).val('');
-            $('.' + className).empty();
+//            $('.' + className).empty();
             $('.' + className).prop('checked', false);
             $('.' + className).attr('fname', '');
             $('.' + className).each(function () {
