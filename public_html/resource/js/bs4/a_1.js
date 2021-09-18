@@ -12892,11 +12892,11 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
         setProjectListByID('bug_filter_project_id_add');
-        var prId  = Utility.getParamFromUrl('current_project_id');
+        var prId  = localStorage.getItem('current_project_id');
         getUsers()
         prId = prId.split('%IN%');
         if(prId){
-            $("#story_mn_filter_project_id").val(prId);
+            $("#story_mn_filter_project_id").val(prId).change();
         }
        
         new UserStory().genUsFilterCreatedBy();
@@ -16379,9 +16379,9 @@ $(document).on('change', '#search-us-managmenet', function (evt) {
 });
 $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
-    global_var.current_project_id = $(this).val();
-   var val = getProjectValueUsManageMulti()
-    Utility.addParamToUrl('current_project_id', val);
+  
+   var val = getProjectValueUsManageMulti();
+    localStorage.setItem('current_project_id', val);
     loadAssigneesByProjectUSM(val);
     loadStoryCardByProjectAdd(val)
     
