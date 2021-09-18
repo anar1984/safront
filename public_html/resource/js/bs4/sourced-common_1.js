@@ -5518,10 +5518,13 @@ UserStory.prototype = {
             var tr = $("<tr>")
                     .attr("orderno", obj[n].orderNo)
                     .attr("pid", obj[n].id)
+                
                     .append($('<td>')
+                            .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
                             .append($('<input type="checkbox">')
                                     .val(obj[n].id)
-                                    .addClass("pdescList")))
+                                    .addClass("pdescList"))
+                            )
                     .append($('<td>')
                             .addClass('text-holder')
                             .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
@@ -5544,12 +5547,18 @@ UserStory.prototype = {
         }
         table.append(lasttr);
 
+
+        $(table).sortable({
+            handle:".cs-move-tr",
+            
+          });
+
         return table;
     },
     
     backlogProcessDescLineSubmenuItem:function(id){
      var div =  $('<div class="dropdown" style="display: inline-block;">')
-                                    .append(' <button class="btn newin dropdown-toggle fa fa-ellipsis-h" href="#" role="button" id="dropdownMenuLink" \n\
+                                    .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
                                             '</button>')
                                     .append($('<div class="dropdown-menu uuu" aria-labelledby="dropdownMenuLink">')

@@ -1683,7 +1683,6 @@ var SAFN = {
         'setvalue': 'SetValue',
         'settext': 'SetText',
         'get': 'Get',
-        'console': 'Console',
         'setparamurl': 'SetParamUrl',
         'getparamurlto': 'GetParamUrl',
         'alert': 'Alert',
@@ -2511,6 +2510,9 @@ var SAFN = {
                     case '@.deletekey':
                         descLine = SAFN.Convert.DeleteKeyStatement(mainBody);
                         break;
+                    case '@.console':
+                        descLine = SAFN.Convert.ConsoleStatement(mainBody);
+                        break;
                     case '@.set':
                         descLine = SAFN.Convert.SetStatement(mainBody);
                         break;
@@ -2598,6 +2600,10 @@ var SAFN = {
     InitConversion: function () {
         $(document).on("change", ".function-statement-input-common-4-deletekey", function (e) {
             SAFN.Reconvert.DeleteKeyStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-console", function (e) {
+            SAFN.Reconvert.ConsoleStatement(this);
         })
 
         $(document).on("change", ".function-statement-input-common-4-set", function (e) {
@@ -2729,6 +2735,14 @@ var SAFN = {
             var val = div.find(".fns-val").val();
 
             var fnline = "@.map(" + key + "," + val + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        ConsoleStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+
+            var fnline = "@.console(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         ShowErrorStatement: function (triggerEl) {
@@ -3034,6 +3048,38 @@ var SAFN = {
             return div;
 
 
+        },
+        ConsoleStatement: function (line) {
+
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Console")
+                        )
+
+                    )
+
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-console fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
+            return div;
         },
         DeleteKeyStatement: function (line) {
 
@@ -4197,6 +4243,7 @@ var SAFN = {
     },
     FnStatements: {
         'If': '@.if(,,){}',
+        'Consolo': '@.consolo(,)',
         'DeleteKey': '@.deletekey(,)',
         'Alert': '@.alert(,)',
         'SetValue': '@.setvalue(,)',
@@ -4285,4 +4332,8 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
     }
 });
 
+// $(document).ready(function() {
+//     // Initialise the table
+//     $("#description_table_id tbody").tableDnD();
+// });
 //general sortable
