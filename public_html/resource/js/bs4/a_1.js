@@ -12894,8 +12894,9 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         setProjectListByID('bug_filter_project_id_add');
         var prId  = Utility.getParamFromUrl('current_project_id');
         getUsers()
+        prId = prId.split('%IN%');
         if(prId){
-            $("#story_mn_filter_project_id").val(prId).change();
+            $("#story_mn_filter_project_id").val(prId);
         }
        
         new UserStory().genUsFilterCreatedBy();
@@ -13261,7 +13262,10 @@ $(document).on('click', '.loadTaskTypeManagment', function (evt) {
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
-        loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt') // this is not Working
+        loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt') 
+        // this is not Working
+        getUsers();
+         $(".type_liveprototype_tasktypemgmt").selectpicker();
         new Sprint().load4Task();
         new UserStory().genUsTaskTypesManagment();
         // commmonOnloadAction(this); 
@@ -13275,6 +13279,7 @@ $(document).on('click', '.loadTaskType', function (evt) {
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
+        getUsers();
         new TaskType().load();
         commmonOnloadAction(this);
     });
@@ -13736,6 +13741,10 @@ $(document).on("click",".prManag-task-filter-checkbox-label", function(){
     if (global_var.current_modal === 'loadStoryCardMgmt') {
         setPrmFilterLabeValuesUs();
         new UserStory().setUSLists4KanbanView();
+        
+    }
+    if (global_var.current_modal === 'loadTaskManagement') {
+       
         
     }
  
@@ -17141,6 +17150,7 @@ function genTaskKanbanView4Group() {
     global_var.story_card_sprint_assign_checked = 0;
     global_var.story_card_label_assign_checked = 0;
     contentArrangableUI();
+    $('[data-toggle="popover"]').popover();
 }
 
 function addNewDetailedTaskAction_assigneeList() {
@@ -17818,11 +17828,21 @@ function clearTaskManagementKanban() {
     $('#kanban_view_closed_count_4_task').html(0);
 }
 
-function genTaskTypeManagmentView4None() {
-
+function genTaskTypeManagmentForproject(elm){
+      
+     global_var.current_project_id = $(elm).val();
+     console.log(global_var.current_project_id);
+    getBacklogListByProject4Element(global_var.current_project_id,$("#story_mn_type_backlog_id"));
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_assigne_id"));
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_created_id"));
     setBugFilterSprintValues();
     setBugFilterLabelValues();
-      var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val()
+    genTaskTypeManagmentView4None();
+}
+function genTaskTypeManagmentView4None() {
+
+   
+      var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val();
     var json = {
         kv: {}
     };
@@ -17889,8 +17909,9 @@ function genTaskTypeManagmentView4None() {
                 $("#taskTypeManagmentHeader").find('[pid="' + $(rt[index]).attr('id') + '"]').find(".counterkanban").text(con.length);
             }
 
-         
+            $('[data-toggle="popover"]').popover();
         },
+        
         error: function () {
             Toaster.showError(('somethingww'));
         }
@@ -18010,6 +18031,7 @@ function genTaskKanbanView4None() {
     global_var.bug_task_sprint_assign_id = '';
 
     contentArrangableUI();
+    $('[data-toggle="popover"]').popover();
 }
 
 function getSprintTaskCheckedCount() {
@@ -18032,22 +18054,46 @@ function genUSLine4KanbanView(o) {
             "";
 
 
-
-    var assigneeImg = $('<span>')
-    if (o.fkAssigneeId.length > 3) {
-        var userImage = SAProjectUser.GetDetails(o.fkAssigneeId, "userImage");
-        var userName = SAProjectUser.GetDetails(o.fkAssigneeId, "userName");
-        var img = (userImage) ?
-                fileUrl(userImage) :
-                fileUrl(new User().getDefaultUserprofileName());
-        assigneeImg.append($('<img>')
-                //                        .css("width","24px")
-                //                        .css('height','24px')
-                .addClass('Assigne-card-story-select-img')
-                .attr('src', img)
-                .attr('alt', userName)
-                .attr("title", userName))
-    }
+            var assigneeImg = $('<span>')
+            if (o.fkAssigneeId.length > 3) {
+                var userImage = SAProjectUser.GetUserDetails(o.fkAssigneeId, "userImage");
+                var userName = SAProjectUser.GetUserDetails(o.fkAssigneeId, "userPersonName");
+    
+                var img = (userImage)
+                        ? fileUrl(userImage)
+                        : fileUrl(new User().getDefaultUserprofileName());
+                assigneeImg.append($('<img>')
+    //                        .css("width","24px")
+    //                        .css('height','24px')
+                        .addClass('Assigne-card-story-select-img assigne')
+                        .attr('src', img)
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', userName ? userName:"UnAssigned")
+                        .attr("title", 'Owner')
+                        )
+            }
+            var createdByImg = $('<span>')
+            if (o.createdBy) {
+    
+                var userImage = SAProjectUser.GetUserDetails(o.createdBy, "userImage");
+                var userName = SAProjectUser.GetUserDetails(o.createdBy, "userPersonName");
+    
+    
+                var img = (userImage)
+                        ? fileUrl(userImage)
+                        : fileUrl(new User().getDefaultUserprofileName());
+             createdByImg.append($('<img>')
+    //                        .css("width","24px")
+    //                        .css('height','24px')
+                        .addClass('Assigne-card-story-select-img created')
+                        .attr('src', img)
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', userName)
+                        .attr("title", 'Created By')
+                        )
+            }
 
     var taskImage = (o.lastImage) ?
             "<img src='" + fileUrl(o.lastImage) + "' style='max-height:150px;width:100%'>" :
@@ -18128,6 +18174,9 @@ function genUSLine4KanbanView(o) {
                     .append($('<span class="backlog-status">')
                             .append("&nbsp;&nbsp;")
                             .append(assigneeImg))
+                    .append($('<span class="backlog-status">')
+                            .append("&nbsp;&nbsp;")
+                            .append(createdByImg))
 
                     )
 
