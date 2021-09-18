@@ -1719,7 +1719,8 @@ var SAFN = {
         'unvisible': 'Unvisible',
         'visibleparam': 'VisibleParam',
         'unvisibleparam': 'UnvisibleParam',
-        'sendemail': 'SendEmail'
+        'sendemail': 'SendEmail',
+        'abs':'Abs',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -2033,6 +2034,19 @@ var SAFN = {
             data[key] = value;
             return data;
         },
+         Abs: function (key, value) {
+            try {
+                key = SAFN.GetArgumentPureValue(key);
+                value = SAFN.GetArgumentPureValue(value);
+
+                var data = SAFN.CoreData;
+                var vlt = data[key];
+                var yuvarlanancaq_step = Math.pow(10 , value);
+                data[key] = Math.round(vlt * yuvarlanancaq_step) / yuvarlanancaq_step;
+                return data;
+            } catch (err) {
+            }
+        },
         Error: function (errCode, value) {
             value = SAFN.GetArgumentPureValue(value);
             errCode = SAFN.GetArgumentPureValue(errCode);
@@ -2333,7 +2347,15 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
 
             $('.' + className).val('');
-            $('.' + className).empty();
+//            $('.' + className).empty();
+            $('.' + className).prop('checked', false);
+            $('.' + className).attr('fname', '');
+            $('.' + className).each(function () {
+                $(this).closest('div').find('#progress_bar_new').html('');
+            });
+
+
+
         },
 
         SendEmail: function (to, subject, message, cc, bb) {
