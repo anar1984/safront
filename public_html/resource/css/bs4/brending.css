@@ -209,3 +209,35 @@ background: rgb(39 43 124 / 100%);
 .cs-addons-sum-name:hover .cs-value-trash {
     visibility: visible;
 }
+#description_table_body_id.ui-sortable tr{
+    padding: 0px 8px 0px 0;
+}
+#description_table_body_id.ui-sortable tr .cs-move-tr {
+    height: 100%;
+    width: 25px;
+    background: transparent;
+    vertical-align: middle;
+    display: inline-block;
+}
+#description_table_body_id.ui-sortable tr .cs-move-tr i {
+    margin: 0 auto 0px auto;
+    font-size: 16px;
+    color: rgb(0 0 0 / 50%);
+    float: left;
+}
+/* .descriptiontable tr td:nth-child(3){
+    visibility: visible;
+    opacity: 0.7;
+}
+.descriptiontable tr:hover td:nth-child(3) {
+    visibility: visible;
+    opacity: 1;
+} */
+.table-hover tbody tr button#dropdownMenuLink {
+    background-color: transparent;
+    color: rgb(39 43 124 / 11%);
+}
+.table-hover tbody tr:hover button#dropdownMenuLink {
+    background-color: transparent;
+    color: #272B7C;
+}
