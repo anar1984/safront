@@ -2923,6 +2923,7 @@ var SAFN = {
                             .css("border-radius", "5px")
                             .css("height", "20px")
                             .css("border", "none")
+                            .css("zad", "shey")
                             .css("width", "100px")
                             .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
                             .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
