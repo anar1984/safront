@@ -1720,7 +1720,7 @@ var SAFN = {
         'visibleparam': 'VisibleParam',
         'unvisibleparam': 'UnvisibleParam',
         'sendemail': 'SendEmail',
-        'abs':'Abs',
+        'abs': 'Abs',
     },
     IsCommand: function (fnName) {
         var f = false;
@@ -2034,14 +2034,14 @@ var SAFN = {
             data[key] = value;
             return data;
         },
-         Abs: function (key, value) {
+        Abs: function (key, value) {
             try {
                 key = SAFN.GetArgumentPureValue(key);
                 value = SAFN.GetArgumentPureValue(value);
 
                 var data = SAFN.CoreData;
                 var vlt = data[key];
-                var yuvarlanancaq_step = Math.pow(10 , value);
+                var yuvarlanancaq_step = Math.pow(10, value);
                 data[key] = Math.round(vlt * yuvarlanancaq_step) / yuvarlanancaq_step;
                 return data;
             } catch (err) {
@@ -2347,7 +2347,7 @@ var SAFN = {
             className = SAFN.GetArgumentPureValue(className);
 
             $('.' + className).val('');
-//            $('.' + className).empty();
+            //            $('.' + className).empty();
             $('.' + className).prop('checked', false);
             $('.' + className).attr('fname', '');
             $('.' + className).each(function () {
@@ -3129,7 +3129,8 @@ var SAFN = {
                                 .css("margin", '6px 0 0 0')
                                 .addClass("function-statement-input-common function-statement-input-common-4-deletekey fns-key")
                                 .val(key)
-                                .attr("placeholder", "ClassName"))
+                                .attr("placeholder", "ClassName")
+                            )
                         )
                     )
                 )
@@ -4297,29 +4298,74 @@ var SAFN = {
 // Add fields
 $(document).on('click', '#description_table_id .cs-btn-sum', function (e) {
     $(this).parents('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
-        .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
-    <div class="cs-value-trash-box">
-                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
-                    </div>
-    <input class="fns-val function-statement-input-common function-statement-input-common-4-sum" type="text" value="" placeholder="Value"></li>`);
+
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 $(document).on('click', '#description_table_id .cs-btn-concat', function (e) {
     $(this).parents('.cs-sum-inbox-concat').find('ul#concat-sortable li:last-child')
-        .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
-    <div class="cs-value-trash-box">
-                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
-                    </div>
-    <input class="fns-val function-statement-input-common function-statement-input-common-4-concat" type="text" value="" placeholder="Value"></li>`);
+
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
     $(this).parents('.cs-sum-inbox-dec').find('ul#dec-sortable li:last-child')
-        .after(`<li class="ui-sortable-placeholder cs-addons-sum-name">
-    <div class="cs-value-trash-box">
-                        <div class="cs-value-trash"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</div>
-                    </div>
-    <input class="fns-val function-statement-input-common function-statement-input-common-4-dec" type="text" value="" placeholder="Value"></li>`);
+
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 
@@ -4354,8 +4400,3 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
     }
 });
 
-// $(document).ready(function() {
-//     // Initialise the table
-//     $("#description_table_id tbody").tableDnD();
-// });
-//general sortable
