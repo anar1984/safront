@@ -4929,6 +4929,7 @@ UserStory.prototype = {
         }
     },
     genUsTaskTypesManagment: function () {
+        
         var json = {kv: {}};
         try {
             json.kv.cookie = getToken();
@@ -13897,8 +13898,6 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                $(".modal-header b.status-Canceled-total").text(0)
                $(".modal-header b.status-waiting-total").text(0)
                $(".modal-header b.status-total-total").text(0)
-               $('#kanban_view_'+stl+'_count').html(0);
-               $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                 var priD =getProjectValueUsManageMulti();
                 var fkAsId = $("#story_mn_filter_assigne_id").val();
                 var priorty = $("#priority-change-story-card-filter").val();

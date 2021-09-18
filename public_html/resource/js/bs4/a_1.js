@@ -11820,14 +11820,14 @@ function loadStoryCardByProject4StoryCard(e) {
 
 function loadStoryCardByProject4TaskMgmt(e) {
 
-    global_var.current_project_id = $(e).val();
+    global_var.current_project_id = getProjectValueUsManageMultiByel(e);
     getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
 
     getBacklogLastModificationDateAndTime(global_var.current_project_id);
     getBacklogListByProject4Element(global_var.current_project_id,$("#story_mn_filter_backlog_id"))
-    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_assigne_id"))
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_assigne_id_mng"))
     getProjectUsersForElById(global_var.current_project_id,$("#story_mn_filter_created_id"))
     getTaskList4TaskMgmt();
 
@@ -12388,7 +12388,10 @@ function loadHistoryByBacklogStId(backlog_id) {
           for (let i = 0; i < obj.length; i++) {
             $('#history-main-table-backlogst tbody')
             .append($('<tr>')
-                        .append("<td>"+obj[i].backlogName+"</td>")
+                        .append("<td>"+SACore.GetProjectName(obj[i].fkProjectId)+"</td>")
+                        .append("<td>"+ SACore.GetBacklogname(obj[i].fkBacklogId)+"</td>")
+                        
+                        .append("<td>"+obj[i].inputName+"</td>")
                         .append("<td>"+obj[i].historyBody+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
@@ -12892,8 +12895,9 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
         setProjectListByID('bug_filter_project_id_add');
-        var prId  = Utility.getParamFromUrl('current_project_id');
+        var prId  = localStorage.getItem('current_project_id');
         getUsers()
+        prId = prId.split('%IN%');
         if(prId){
             $("#story_mn_filter_project_id").val(prId).change();
         }
@@ -12903,7 +12907,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
-        $("#story_mn_filter_assigne_id").selectpicker();
+        $("#story_mn_filter_assigne_id_mng").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
    
     });
@@ -13261,7 +13265,10 @@ $(document).on('click', '.loadTaskTypeManagment', function (evt) {
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string);
-        loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt') // this is not Working
+        loadProjectList2SelectboxByClass('projectList_liveprototype_tasktypemgmt') 
+        // this is not Working
+        getUsers();
+         $(".type_liveprototype_tasktypemgmt").selectpicker();
         new Sprint().load4Task();
         new UserStory().genUsTaskTypesManagment();
         // commmonOnloadAction(this); 
@@ -13275,6 +13282,7 @@ $(document).on('click', '.loadTaskType', function (evt) {
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string) {
         $('#mainBodyDivForAll').html(html_string); // this is not Working
+        getUsers();
         new TaskType().load();
         commmonOnloadAction(this);
     });
@@ -13738,6 +13746,10 @@ $(document).on("click",".prManag-task-filter-checkbox-label", function(){
         new UserStory().setUSLists4KanbanView();
         
     }
+    if (global_var.current_modal === 'loadTaskManagement') {
+       
+        
+    }
  
 })
 $(document).on("click",".us-filter-checkbox-sprint", function(){
@@ -14035,6 +14047,22 @@ function getSTatsUserManagmentTableKanban(elm){
 
 
 
+}
+function getProjectValueUsManageMultiByel(el){
+    var prd = $(el).val();
+     
+    var val =''
+    for (let i = 0; i < prd.length; i++) {
+        if(prd.length ==(i+1)){
+            val += prd[i]
+        }else{
+            val += prd[i]+"%IN%"
+        }
+       
+        
+    }
+ 
+     return val
 }
 function getProjectValueUsManageMulti(){
     var prd = $('#story_mn_filter_project_id').val();
@@ -16370,9 +16398,9 @@ $(document).on('change', '#search-us-managmenet', function (evt) {
 });
 $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
-    global_var.current_project_id = $(this).val();
-   var val = getProjectValueUsManageMulti()
-    Utility.addParamToUrl('current_project_id', val);
+  
+   var val = getProjectValueUsManageMulti();
+    localStorage.setItem('current_project_id', val);
     loadAssigneesByProjectUSM(val);
     loadStoryCardByProjectAdd(val)
     
@@ -16416,23 +16444,23 @@ function loadAssigneesByProjectUSM(projectId) {
         async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
-            $('#story_mn_filter_assigne_id').html('')
-            $('#story_mn_filter_assigne_id').append('<option></option>');
+            $('#story_mn_filter_assigne_id_mng').html('')
+            $('#story_mn_filter_assigne_id_mng').append('<option></option>');
     for (var i in obj) {
         var o = obj[i];
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
         var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
         
-        $('#story_mn_filter_assigne_id').append(opt);
+        $('#story_mn_filter_assigne_id_mng').append(opt);
         $('#bug_filter_assignee_id_add').append(opt1);
         
 
     }
-            $('#story_mn_filter_assigne_id').selectpicker('refresh');
+            $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if(fkAssigneId){
-                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
+                $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
             }
         },
         error: function () {
@@ -16858,11 +16886,12 @@ function insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus, projec
 
 function getTaskList4TaskMgmt() {
     var taskName = $('#projectList_liveprototype_taskmgmt_search').val();
-    var assigne = $('#story_mn_filter_assigne_id').val();
+    var assigne = $('#story_mn_filter_assigne_id_mng');
+    assigne = getProjectValueUsManageMultiByel(assigne);
     var created = $('#story_mn_filter_created_id').val();
     var backlog = $('#story_mn_filter_backlog_id').val();
     var json = initJSON();
-
+         
     if (taskName) {
         json.kv.taskName = '%%' + taskName + '%%';
     }
@@ -17141,6 +17170,7 @@ function genTaskKanbanView4Group() {
     global_var.story_card_sprint_assign_checked = 0;
     global_var.story_card_label_assign_checked = 0;
     contentArrangableUI();
+    $('[data-toggle="popover"]').popover();
 }
 
 function addNewDetailedTaskAction_assigneeList() {
@@ -17818,11 +17848,21 @@ function clearTaskManagementKanban() {
     $('#kanban_view_closed_count_4_task').html(0);
 }
 
-function genTaskTypeManagmentView4None() {
-
+function genTaskTypeManagmentForproject(elm){
+      
+     global_var.current_project_id = $(elm).val();
+     console.log(global_var.current_project_id);
+    getBacklogListByProject4Element(global_var.current_project_id,$("#story_mn_type_backlog_id"));
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_assigne_id"));
+    getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_created_id"));
     setBugFilterSprintValues();
     setBugFilterLabelValues();
-      var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val()
+    genTaskTypeManagmentView4None();
+}
+function genTaskTypeManagmentView4None() {
+
+   
+      var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val();
     var json = {
         kv: {}
     };
@@ -17889,8 +17929,9 @@ function genTaskTypeManagmentView4None() {
                 $("#taskTypeManagmentHeader").find('[pid="' + $(rt[index]).attr('id') + '"]').find(".counterkanban").text(con.length);
             }
 
-         
+            $('[data-toggle="popover"]').popover();
         },
+        
         error: function () {
             Toaster.showError(('somethingww'));
         }
@@ -18010,6 +18051,7 @@ function genTaskKanbanView4None() {
     global_var.bug_task_sprint_assign_id = '';
 
     contentArrangableUI();
+    $('[data-toggle="popover"]').popover();
 }
 
 function getSprintTaskCheckedCount() {
@@ -18032,22 +18074,46 @@ function genUSLine4KanbanView(o) {
             "";
 
 
-
-    var assigneeImg = $('<span>')
-    if (o.fkAssigneeId.length > 3) {
-        var userImage = SAProjectUser.GetDetails(o.fkAssigneeId, "userImage");
-        var userName = SAProjectUser.GetDetails(o.fkAssigneeId, "userName");
-        var img = (userImage) ?
-                fileUrl(userImage) :
-                fileUrl(new User().getDefaultUserprofileName());
-        assigneeImg.append($('<img>')
-                //                        .css("width","24px")
-                //                        .css('height','24px')
-                .addClass('Assigne-card-story-select-img')
-                .attr('src', img)
-                .attr('alt', userName)
-                .attr("title", userName))
-    }
+            var assigneeImg = $('<span>')
+            if (o.fkAssigneeId.length > 3) {
+                var userImage = SAProjectUser.GetUserDetails(o.fkAssigneeId, "userImage");
+                var userName = SAProjectUser.GetUserDetails(o.fkAssigneeId, "userPersonName");
+    
+                var img = (userImage)
+                        ? fileUrl(userImage)
+                        : fileUrl(new User().getDefaultUserprofileName());
+                assigneeImg.append($('<img>')
+    //                        .css("width","24px")
+    //                        .css('height','24px')
+                        .addClass('Assigne-card-story-select-img assigne')
+                        .attr('src', img)
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', userName ? userName:"UnAssigned")
+                        .attr("title", 'Owner')
+                        )
+            }
+            var createdByImg = $('<span>')
+            if (o.createdBy) {
+    
+                var userImage = SAProjectUser.GetUserDetails(o.createdBy, "userImage");
+                var userName = SAProjectUser.GetUserDetails(o.createdBy, "userPersonName");
+    
+    
+                var img = (userImage)
+                        ? fileUrl(userImage)
+                        : fileUrl(new User().getDefaultUserprofileName());
+             createdByImg.append($('<img>')
+    //                        .css("width","24px")
+    //                        .css('height','24px')
+                        .addClass('Assigne-card-story-select-img created')
+                        .attr('src', img)
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', userName)
+                        .attr("title", 'Created By')
+                        )
+            }
 
     var taskImage = (o.lastImage) ?
             "<img src='" + fileUrl(o.lastImage) + "' style='max-height:150px;width:100%'>" :
@@ -18128,6 +18194,9 @@ function genUSLine4KanbanView(o) {
                     .append($('<span class="backlog-status">')
                             .append("&nbsp;&nbsp;")
                             .append(assigneeImg))
+                    .append($('<span class="backlog-status">')
+                            .append("&nbsp;&nbsp;")
+                            .append(createdByImg))
 
                     )
 
