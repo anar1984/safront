@@ -2535,6 +2535,9 @@ var SAFN = {
                     case '@.console':
                         descLine = SAFN.Convert.ConsoleStatement(mainBody);
                         break;
+                    case '@.get':
+                        descLine = SAFN.Convert.GetStatement(mainBody);
+                        break;
                     case '@.set':
                         descLine = SAFN.Convert.SetStatement(mainBody);
                         break;
@@ -2626,6 +2629,10 @@ var SAFN = {
 
         $(document).on("change", ".function-statement-input-common-4-console", function (e) {
             SAFN.Reconvert.ConsoleStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-get", function (e) {
+            SAFN.Reconvert.GetStatement(this);
         })
 
         $(document).on("change", ".function-statement-input-common-4-set", function (e) {
@@ -2739,6 +2746,15 @@ var SAFN = {
             var body = div.find(".fns-body").val();
 
             var fnline = "@.if(" + key + "," + oper + "," + val + "){" + body + "}";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        GetStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val").val();
+
+            var fnline = "@.get(" + key + "," + val + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         SetStatement: function (triggerEl) {
@@ -3167,6 +3183,49 @@ var SAFN = {
                         )
                     )
                 )
+            return div;
+        },
+        GetStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var val = (argList[1]) ? argList[1] : '';
+
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container")
+                .addClass("cs-sum-inbox")
+                .append($("<div>")
+                    .addClass("d-flex")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Get")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .css('display', 'initial')
+                                .append($('<input>')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-get")
+                                    .addClass("fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass("fns-val")
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-get")
+                                    .val(val)
+                                    .attr("placeholder", "Value")))
+                        )
+                    )
+                )
+
             return div;
         },
         SetStatement: function (line) {
@@ -4266,9 +4325,11 @@ var SAFN = {
     },
     FnStatements: {
         'If': '@.if(,,){}',
+        'Get': '@.get(,)',
         'Consolo': '@.consolo(,)',
         'DeleteKey': '@.deletekey(,)',
         'Alert': '@.alert(,)',
+        'Set': '@.set(,)',
         'SetValue': '@.setvalue(,)',
         'SetText': '@.settext(,)',
         'Map': '@.map(,)',
