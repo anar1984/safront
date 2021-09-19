@@ -5429,6 +5429,48 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
+function moveBacklogDescDrag(el, elId, moveType) {
+    var oldOrderNo = $(el).closest('tr').attr('orderno');
+    var sourcedId = $(el).closest('tr').attr('pid');
+    var targetId = '';
+    var newOrderNo = '';
+
+
+    if (moveType === 'up') {
+        targetId = $(el).closest('tr').prev('tr').attr('pid');
+        newOrderNo = $(el).closest('tr').prev('tr').attr('orderno');
+    } else if (moveType === 'down') {
+        targetId = $(el).closest('tr').next('tr').attr('pid');
+        newOrderNo = $(el).closest('tr').next('tr').attr('orderno');
+    }
+
+
+    if (!oldOrderNo || !sourcedId || !targetId || !newOrderNo)
+        return;
+
+    var json = initJSON();
+    json.kv.sourcedId = sourcedId;
+    json.kv.targetId = targetId;
+    json.kv.oldOrderNo = oldOrderNo;
+    json.kv.newOrderNo = newOrderNo;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDesc",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            new UserStory().getBacklogDesc();
+        }
+    });
+
+
+
+}
 function moveBacklogDesc(el, elId, moveType) {
     var oldOrderNo = $(el).closest('tr').attr('orderno');
     var sourcedId = $(el).closest('tr').attr('pid');
@@ -12392,7 +12434,7 @@ function loadHistoryByBacklogStId(backlog_id) {
                         .append("<td>"+ SACore.GetBacklogname(obj[i].fkBacklogId)+"</td>")
                         
                         .append("<td>"+obj[i].inputName+"</td>")
-                        .append("<td>"+obj[i].historyBody+"</td>")
+                        .append("<td>"+obj[i].descriptionName+"</td>")
                         .append("<td>"+obj[i].newValue+"</td>")
                         .append("<td>"+obj[i].oldValue+"</td>")
                         .append("<td>"+obj[i].historyType+"</td>")
@@ -16888,7 +16930,8 @@ function getTaskList4TaskMgmt() {
     var taskName = $('#projectList_liveprototype_taskmgmt_search').val();
     var assigne = $('#story_mn_filter_assigne_id_mng');
     assigne = getProjectValueUsManageMultiByel(assigne);
-    var created = $('#story_mn_filter_created_id').val();
+    var created = $('#story_mn_filter_created_id');
+    created = getProjectValueUsManageMultiByel(created);
     var backlog = $('#story_mn_filter_backlog_id').val();
     var json = initJSON();
          
@@ -17850,8 +17893,7 @@ function clearTaskManagementKanban() {
 
 function genTaskTypeManagmentForproject(elm){
       
-     global_var.current_project_id = $(elm).val();
-     console.log(global_var.current_project_id);
+     global_var.current_project_id = getProjectValueUsManageMultiByel(elm);
     getBacklogListByProject4Element(global_var.current_project_id,$("#story_mn_type_backlog_id"));
     getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_assigne_id"));
     getProjectUsersForElById(global_var.current_project_id,$("#story_mn_type_created_id"));
@@ -17860,6 +17902,12 @@ function genTaskTypeManagmentForproject(elm){
     genTaskTypeManagmentView4None();
 }
 function genTaskTypeManagmentView4None() {
+    var assigne = $('#story_mn_type_assigne_id');
+    assigne = getProjectValueUsManageMultiByel(assigne);
+    var created = $('#story_mn_type_created_id');
+    created = getProjectValueUsManageMultiByel(created);
+    var backlog = $('#story_mn_type_backlog_id').val();
+  
 
    
       var serachtx = $('#projectList_liveprototype_tasktypemgmt_search').val();
@@ -17870,29 +17918,26 @@ function genTaskTypeManagmentView4None() {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.fkProjectId = $(".projectList_liveprototype_tasktypemgmt option:selected").val();
-    json.kv.fkAssigneeId = bug_filter.assignee_id;
-    json.kv.createdBy = bug_filter.created_by;
-    json.kv.fkBackogId = bug_filter.backlog_id;
-    json.kv.taskStatus = bug_filter.status;
-    json.kv.priority = bug_filter.priority;
-    json.kv.taskNature = bug_filter.nature;
+    json.kv.fkProjectId = global_var.current_project_id;
+ 
     if(serachtx){
         json.kv.searchText = serachtx;
+    }      
+    if (assigne) {
+        json.kv.fkAssigneeId = assigne;
     }
+    if (created) {
+        json.kv.createdBy = created;
+    }
+    if (backlog) {
+        json.kv.fkBacklogId = backlog;
+    }
+
   
-    json.kv.searchLimit = bug_filter.limit;
-    json.kv.pageNo = bug_filter.page_no;
-    json.kv.sprintId = bug_filter.sprint_id;
-    json.kv.labelId = bug_filter.label_id;
-    if (global_var.current_issue_is_hide == '0') {
-        json.kv.fkTaskId = global_var.current_issue_id;
-    }
-    json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Short",
         type: "POST",
         data: data,
         contentType: "application/json",

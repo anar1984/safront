@@ -5551,6 +5551,10 @@ UserStory.prototype = {
 
         $(table).sortable({
             handle:".cs-move-tr",
+            update: function (e,ui) {
+              console.log(ui.item.index());
+              
+            }
             
           });
 
@@ -13875,8 +13879,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
-               // contentArrangableUI();
-                $('[data-toggle="popover"]').popover()
+               contentArrangableUI();
+                $('[data-toggle="popover"]').popover(
+                    {html:true}
+                )
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -14043,7 +14049,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
                         //contentArrangableUI();
-                        $('[data-toggle="popover"]').popover();
+                        $('[data-toggle="popover"]').popover({html:true});
                 
                     },
                     error: function () {
@@ -14171,8 +14177,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                    //    contentArrangableUI();
-                        $('[data-toggle="popover"]').popover();
+                      contentArrangableUI();
+                        $('[data-toggle="popover"]').popover({html:true});
                        
                     },
                     error: function () {
@@ -14686,6 +14692,30 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("title", 'Created By')
                     )
         }
+        var updatedByImg = $('<span>')
+        if (o.updatedBy) {
+
+            var userImage = SAProjectUser.GetUserDetails(o.updatedBy, "userImage");
+            var userName = SAProjectUser.GetUserDetails(o.updatedBy, "userPersonName");
+
+
+            var img = (userImage)
+                    ? fileUrl(userImage)
+                    : fileUrl(new User().getDefaultUserprofileName());
+                    updatedByImg.append($('<img>')
+//                        .css("width","24px")
+//                        .css('height','24px')
+                    .addClass('Assigne-card-story-select-img updated')
+                    .attr('src', img)
+                    .attr('data-trigger', 'hover')
+                    .attr('data-toggle', 'popover')
+                    .attr('data-placement', 'bottom')
+
+                    .attr('data-content', `Name: ${userName} <br>
+                                           Date: ${Utility.convertDate(o.updatedDate)+" "+Utility.convertTime(o.updatedTime)}`)
+                    .attr("title", 'Updated By ')
+                    )
+        }
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
@@ -14770,10 +14800,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                         ))
                         .append($('<span class="backlog-status">')
                                 .append("&nbsp;&nbsp;")
-                                .append(assigneeImg))
+                                .append(createdByImg))
+                                .append($('<span class="backlog-status">')
+                                .append("&nbsp;&nbsp;")
+                                .append(updatedByImg))
                         .append($('<span class="backlog-status">')
                                 .append("&nbsp;&nbsp;")
-                                .append(createdByImg))
+                                .append(assigneeImg))
+                       
+                        
+                        
                         .append(`
                         <label class="switch ">
             <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
@@ -14785,6 +14821,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                    .attr("data-status",o.id)
                    .attr("data-status",'baclog-large-modal-next-id')
                    .append('<i class="fas fa-expand" aria-hidden="true"></i>')
+        )
+        .append($("<button>")
+                   .addClass("baclog-large-modal-history btn btn-sm btn-light")
+                   .attr("data-status",o.id)
+                   .append('<i class="fas fa-history"></i>')
         )
         .append($("<div>").addClass("stat-div-task-content")
            .append($('<table>').addClass("stat-table-us")

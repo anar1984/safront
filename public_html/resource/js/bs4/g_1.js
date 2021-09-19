@@ -1436,6 +1436,16 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
      $('[data-toggle="popover"]').popover();
 
 });
+$(document).on('click', '.baclog-large-modal-history', function (event) {
+  
+
+    var id = $(this).attr("data-status")
+    loadHistoryByBacklogStId(id) 
+    $("#task-ongoing-large-history").modal('show');
+       
+       
+
+});
 $(document).on('click', '.refresh-interval-butn', function (event) {
    
                 clearInterval(timeinterval);
