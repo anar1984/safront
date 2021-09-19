@@ -1,4 +1,10 @@
 /* general */
+.cs-cursor-auto, tr.cs-cursor-auto {
+    cursor: auto;
+}
+.cs-cursor-pointer {
+    cursor: pointer;
+}
 .cs-fx-red-style.cs-sum-inbox {
     background-color: #f65c5c;
 }
@@ -223,25 +229,17 @@ background: rgb(39 43 124 / 100%);
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr {
     height: 100%;
-    width: 25px;
+    width: 35px;
     background: transparent;
     vertical-align: middle;
     display: inline-block;
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr i {
-    margin: 0 auto 0px auto;
+    margin: 5px 10px 5px 10px;
     font-size: 16px;
     color: rgb(0 0 0 / 50%);
     float: left;
 }
-/* .descriptiontable tr td:nth-child(3){
-    visibility: visible;
-    opacity: 0.7;
-}
-.descriptiontable tr:hover td:nth-child(3) {
-    visibility: visible;
-    opacity: 1;
-} */
 .table-hover tbody tr button#dropdownMenuLink {
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
@@ -250,3 +248,85 @@ background: rgb(39 43 124 / 100%);
     background-color: transparent;
     color: #272B7C;
 }
+
+/* StoreCard  */
+#description_table_id thead#cs_description_table_head_id tr {
+    background: #272B7C;
+    padding: 0;
+    border: none;
+}
+#description_table_id thead#cs_description_table_head_id tr th {
+    border: none;
+    padding: 0;
+}
+.cs-table-head-title {
+    color: #ffffff;
+    padding: 15px 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+.cs-table-row-setting-btn, .cs-proces-desc-add-to-task-box {
+    position: relative;
+    height: 50px;
+    width: auto;
+    padding: 0;
+    display: inline-block;
+    color: #fff;
+    text-align: right
+}
+.cs-table-row-setting-btn .btn, .cs-proces-desc-add-to-task-box .btn {
+    background: transparent;
+    height: 50px;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+}
+.cs-table-row-setting-btn .btn:focus, .cs-proces-desc-add-to-task-box .btn:focus {
+    border:none;
+    box-shadow:none !important;
+}
+.cs-table-row-setting-btn .show>.btn-primary.dropdown-toggle,
+.cs-table-row-setting-btn .btn:hover, .cs-proces-desc-add-to-task-box .btn:hover {
+    color: #fff;
+    background-color: rgb(255 255 255 / 10%);
+    border-color: rgb(255 255 255 / 10%);
+}
+#description_table_body_id input[type=checkbox], #description_table_body_id input[type=radio] {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+}
+.cs-table-row-setting-btn .dropdown-menu {
+    border-radius: 0;
+}
+.cs-table-row-setting-btn .dropdown-menu .divider {
+    height: 1px;
+    margin: 0 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+.cs-table-row-setting-btn .dropdown-menu button {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 14px;
+    width: 100%;
+    text-align: left;
+}
+.cs-table-row-setting-btn .dropdown-menu button:focus {
+    border:none;
+    box-shadow: none;
+    outline:none;
+}
+.cs-table-row-setting-btn .dropdown-menu button:hover {
+    color: #000000;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+.cs-table-row-setting-btn .dropdown-menu button i {
+    color: #525596;
+    margin-right: 3px
+}
+.cs-table-row-setting-btn .dropdown-menu button i
