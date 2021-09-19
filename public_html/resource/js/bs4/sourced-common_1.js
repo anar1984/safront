@@ -9,7 +9,7 @@
 
 
 var filtUsm = {
-    TableFields:{},
+    TableFields: {},
     SetTableFields: function (tableId, InputId) {
         if (tableId in this.TableFields) {
             if (!this.TableFields[tableId].includes(InputId))
@@ -21,7 +21,7 @@ var filtUsm = {
 }
 
 function check() {
-//    zoomOut
+    //    zoomOut
     hideAlert();
     hideAlertLogin();
     //                progresBarStart();
@@ -33,7 +33,7 @@ function check() {
         return;
     }
     var lang = $('#lang').find(":selected").val();
-    var json = {kv: {}};
+    var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
     } catch (err) {
@@ -57,7 +57,7 @@ function check() {
         crossDomain: true,
         success: function () {
             //                        progresBarStop();
-//            document.location = "app1.zoomOut";
+            //            document.location = "app1.zoomOut";
         },
         error: function (res, status) {
             //                        progresBarStop();
@@ -281,7 +281,7 @@ var ComponentDesign = {
         ComponentDesign.General.Height();
         ComponentDesign.General.Opacity();
         ComponentDesign.General.Horizontal();
-//        ComponentDesign.General.Vertical();
+        //        ComponentDesign.General.Vertical();
 
         ComponentDesign.Font.FontColor();
         ComponentDesign.Font.FontFamily();
@@ -304,8 +304,8 @@ var ComponentDesign = {
         ComponentDesign.General.ToHeight();
         ComponentDesign.General.ToOpacity();
         ComponentDesign.General.ToHorizontal();
-//        ComponentDesign.General.Vertical();
-//
+        //        ComponentDesign.General.Vertical();
+        //
         ComponentDesign.Font.ToFontColor();
         ComponentDesign.Font.ToFontFamily();
         ComponentDesign.Font.ToFontSize();
@@ -1153,7 +1153,7 @@ var ContainerDesign = {
         ContainerDesign.General.Height();
         ContainerDesign.General.Opacity();
         ContainerDesign.General.Horizontal();
-//        ContainerDesign.General.Vertical();
+        //        ContainerDesign.General.Vertical();
 
         ContainerDesign.Font.FontColor();
         ContainerDesign.Font.FontFamily();
@@ -1180,8 +1180,8 @@ var ContainerDesign = {
         ContainerDesign.General.ToHeight();
         ContainerDesign.General.ToOpacity();
         ContainerDesign.General.ToHorizontal();
-//        ContainerDesign.General.Vertical();
-//
+        //        ContainerDesign.General.Vertical();
+        //
         ContainerDesign.Font.ToFontColor();
         ContainerDesign.Font.ToFontFamily();
         ContainerDesign.Font.ToFontSize();
@@ -1606,9 +1606,9 @@ var ContainerDesign = {
 
         },
         ToTop: function () {
-//            if ($('#lp-draggable-mode').is(":checked")) {
-//                return;
-//            }
+            //            if ($('#lp-draggable-mode').is(":checked")) {
+            //                return;
+            //            }
             var tag = "##top"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -1640,9 +1640,9 @@ var ContainerDesign = {
 
         },
         ToLeft: function () {
-//            if ($('#lp-draggable-mode').is(":checked")) {
-//                return;
-//            }
+            //            if ($('#lp-draggable-mode').is(":checked")) {
+            //                return;
+            //            }
             var tag = "##left"
             var c = $('#' + ContainerDesign.ComponentCSSId).val();
             var st = ContainerDesign.GetTagLine(c, tag);
@@ -2186,23 +2186,23 @@ function drag(ev) {
 function dropOrderSave(delmt, ev) {
 
     var dragTo = $(delmt).index();
-//    dragfrom = $('#' + draggedElement).parent().children('#' + draggedElement).index() - 0.1;
+    //    dragfrom = $('#' + draggedElement).parent().children('#' + draggedElement).index() - 0.1;
 
-//    var elOne = document.getElementById(draggedElement);
-//    var elTwo = document.getElementById(onDropElement);
-//    var childOne = $(elOne).children();
-//    var childTwo = $(elTwo).children();
-//    console.log(draggedElement + " " + dragTo);
-//    console.log(onDropElement + " " + dragfrom);
+    //    var elOne = document.getElementById(draggedElement);
+    //    var elTwo = document.getElementById(onDropElement);
+    //    var childOne = $(elOne).children();
+    //    var childTwo = $(elTwo).children();
+    //    console.log(draggedElement + " " + dragTo);
+    //    console.log(onDropElement + " " + dragfrom);
 
-//    $(elTwo).attr('id', draggedElement);
-//    $(elOne).attr('id', onDropElement);
+    //    $(elTwo).attr('id', draggedElement);
+    //    $(elOne).attr('id', onDropElement);
 
-//    $(elTwo).append(childOne);
-//    $(elOne).append(childTwo);
+    //    $(elTwo).append(childOne);
+    //    $(elOne).append(childTwo);
 
 
-    var json = {kv: {}};
+    var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
     } catch (err) {
@@ -2234,7 +2234,7 @@ function dropOrderSave(delmt, ev) {
             Toaster.showError(res);
         }
     });
-//    new UserStory().genGUIDesign();
+    //    new UserStory().genGUIDesign();
 }
 
 function drop(ev) {
@@ -2358,18 +2358,18 @@ UserStory.prototype = {
     },
     convertCommentHtml2TextArea: function (arg) {
         $(arg).html($('<textarea></textarea>')
-                .attr('id', $(arg).attr('id'))
-                .attr('onchange', 'new UserStory().saveCommentUpdate(this)')
-                .attr("style", "width:100%;background-color:#ebecf0;")
-                .attr("rows", "5")
-                .html(($(arg).attr('pval'))));
+            .attr('id', $(arg).attr('id'))
+            .attr('onchange', 'new UserStory().saveCommentUpdate(this)')
+            .attr("style", "width:100%;background-color:#ebecf0;")
+            .attr("rows", "5")
+            .html(($(arg).attr('pval'))));
     },
     convertCommentHtml2TextAreaNoChange: function (arg) {
         $(arg).html($('<textarea></textarea>')
-                .attr('id', $(arg).attr('id'))
-                .attr("style", "width:100%;background-color:#ebecf0;")
-                .attr("rows", "5")
-                .html(($(arg).attr('pval'))));
+            .attr('id', $(arg).attr('id'))
+            .attr("style", "width:100%;background-color:#ebecf0;")
+            .attr("rows", "5")
+            .html(($(arg).attr('pval'))));
     },
     convertTextArea2Html: function (arg) {
         if (!$(arg).val()) {
@@ -2411,7 +2411,7 @@ UserStory.prototype = {
     },
     setUserStoryAsAPIFeature: function () {
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2443,7 +2443,7 @@ UserStory.prototype = {
     },
     loadProjectList: function () {
         $('#dublicateUserStoryModal_projectlist').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2497,19 +2497,19 @@ UserStory.prototype = {
     },
     toggleGUIComponentActionCombo: function () {
         if (gui_component.componentPerm.action.includes($('#us-gui-component-id').val())) {
-//            $('#us-gui-component-action').val('').change();
+            //            $('#us-gui-component-action').val('').change();
             $('.us-gui-component-action-div').hide();
             $('.us-gui-component-rel-sus-div').show();
         } else {
             $('.us-gui-component-action-div').show();
-//            $('#us-gui-component-action').change();
+            //            $('#us-gui-component-action').change();
         }
     },
     loadDataCombination4Update: function () {
         if ($('#updateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2537,7 +2537,7 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2567,7 +2567,7 @@ UserStory.prototype = {
             return;
         }
         $('#change-mgmt-gui-design-label-list').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2584,7 +2584,7 @@ UserStory.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                 res = JSON.parse(replaceTags(JSON.stringify(res)));
+                //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.loadAssignedLabelDetails(res);
             }
         });
@@ -2598,7 +2598,7 @@ UserStory.prototype = {
             return;
         }
         $('#change-mgmt-gui-design-label-list').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2616,7 +2616,7 @@ UserStory.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                 res = JSON.parse(replaceTags(JSON.stringify(res)));
+                //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.loadAssignedLabelDetails(res);
             }
         });
@@ -2630,9 +2630,9 @@ UserStory.prototype = {
 
 
                 $('#change-mgmt-gui-design-label-list')
-                        .append($('<option></option>')
-                                .val(obj[n].id)
-                                .text(obj[n].name));
+                    .append($('<option></option>')
+                        .val(obj[n].id)
+                        .text(obj[n].name));
             }
         } catch (err) {
 
@@ -2646,11 +2646,11 @@ UserStory.prototype = {
         $('#assignLabel4ChangeRequestModal_labels').html('');
         $('#assignLabel4ChangeRequestModal_labels').append($('<option></option>'));
         for (var n = 0; n < obj.length; n++) {
-//            var ch = (obj[n].isChangeRequestLabel) ? " (Change Req.) " : "";
+            //            var ch = (obj[n].isChangeRequestLabel) ? " (Change Req.) " : "";
             $('#assignLabel4ChangeRequestModal_labels')
-                    .append($('<option></option>')
-                            .val(obj[n].id)
-                            .text(obj[n].name));
+                .append($('<option></option>')
+                    .val(obj[n].id)
+                    .text(obj[n].name));
         }
 
 
@@ -2667,7 +2667,7 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2676,14 +2676,14 @@ UserStory.prototype = {
         json.kv.fkBacklogId = global_var.current_backlog_id;
         json.kv.fkLabelId = $('#assignLabel4ChangeRequestModal_labels').val();
         json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val())
-                ? $('#change-mgmt-gui-design-start-date').val() : "-1";
+            ? $('#change-mgmt-gui-design-start-date').val() : "-1";
         json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val())
-                ? $('#change-mgmt-gui-design-start-time').val() : "-1";
+            ? $('#change-mgmt-gui-design-start-time').val() : "-1";
         json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val())
-                ? $('#change-mgmt-gui-design-end-date').val() : "-1";
+            ? $('#change-mgmt-gui-design-end-date').val() : "-1";
         ;
         json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val())
-                ? $('#change-mgmt-gui-design-end-time').val() : "-1";
+            ? $('#change-mgmt-gui-design-end-time').val() : "-1";
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -2707,7 +2707,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2738,24 +2738,24 @@ UserStory.prototype = {
     },
     changeRequest_setAssignedLabelByDates: function () {
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
         json.kv.startDate = ($('#change-mgmt-gui-design-start-date').val())
-                ? $('#change-mgmt-gui-design-start-date').val()
-                : "-1";
+            ? $('#change-mgmt-gui-design-start-date').val()
+            : "-1";
         json.kv.endDate = ($('#change-mgmt-gui-design-end-date').val())
-                ? $('#change-mgmt-gui-design-end-date').val()
-                : "-1";
+            ? $('#change-mgmt-gui-design-end-date').val()
+            : "-1";
         json.kv.startTime = ($('#change-mgmt-gui-design-start-time').val())
-                ? $('#change-mgmt-gui-design-start-time').val()
-                : "-1";
+            ? $('#change-mgmt-gui-design-start-time').val()
+            : "-1";
         ;
         json.kv.endTime = ($('#change-mgmt-gui-design-end-time').val())
-                ? $('#change-mgmt-gui-design-end-time').val()
-                : "-1";
+            ? $('#change-mgmt-gui-design-end-time').val()
+            : "-1";
         json.kv.domain = global_var.current_domain;
         var that = this;
         var data = JSON.stringify(json);
@@ -2767,7 +2767,7 @@ UserStory.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 $('#change-mgmt-gui-design-label-list').val('');
                 try {
                     $('#change-mgmt-gui-design-label-list').val(res.tbl[0].r[0].id);
@@ -2779,7 +2779,7 @@ UserStory.prototype = {
     changeRequestForStartDateHeader: function (projectId, backlogId, sdate, edate, stime, etime) {
 
         var st = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -2814,14 +2814,14 @@ UserStory.prototype = {
                 that.changeRequestDetails_4InputDescDeleteList(res, data);
                 that.changeRequestDetails_4InputDescUpdateList(res, data);
 
-//                $('#generalview_input_list').html('');
+                //                $('#generalview_input_list').html('');
                 st = that.changeRequestDetails(res, data, sdate, edate, stime, etime);
-//                $('#generalview_input_list').html(st);
-//
-//                that.getHistoryTimesByDate(el, type);
-//                that.changeRequest_setAssignedLabelByDates();
-//                that.changeRequest_showLastChanges();
-//                that.changeRequest_hideDates();
+                //                $('#generalview_input_list').html(st);
+                //
+                //                that.getHistoryTimesByDate(el, type);
+                //                that.changeRequest_setAssignedLabelByDates();
+                //                that.changeRequest_showLastChanges();
+                //                that.changeRequest_hideDates();
             }
         });
         return st;
@@ -2844,7 +2844,7 @@ UserStory.prototype = {
 
         $('#generalview_input_history_list').html(st);
         $('#generalview_input_history_list').append('<br><br><br>');
-//
+        //
         this.getHistoryTimesByDate(el, type);
         this.changeRequest_setAssignedLabelByDates();
         this.changeRequest_showLastChanges();
@@ -2854,17 +2854,17 @@ UserStory.prototype = {
     changeRequestDetails: function (res, data, sdate, edate, stime, etime) {
 
         var table = $('<table></table>')
-                .addClass('table')
-                .addClass('spilted')
-                .addClass('table_border_cls')
-                .attr('border', '1')
+            .addClass('table')
+            .addClass('spilted')
+            .addClass('table_border_cls')
+            .attr('border', '1')
 
 
 
         var tbody = this.changeRequestBody(res, data, sdate, edate, stime, etime);
         table.append(this.getTableHeader4InputTable(1));
         table.append(this.getTableFooter4InputTable(
-                this.changeRequestDetails_GetProcessDescList(res)), false);
+            this.changeRequestDetails_GetProcessDescList(res)), false);
         table.append(tbody);
         return table;
     },
@@ -2874,7 +2874,7 @@ UserStory.prototype = {
         var o = res.tbl[id4Input].r;
 
         for (var n = o.length - 1; n >= 0; n--) {
-//        for (var n = 0; n < o.length; n++) {
+            //        for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             if (obj.inputType === 'GUI' && obj.componentType !== 'btn') {
                 continue;
@@ -2886,37 +2886,37 @@ UserStory.prototype = {
             var css4newInput = this.addClassForNewRecord(obj, sdate, edate, stime, etime);
 
             var tr = $('<tr class="table-hover-cls"></tr>')
-                    .append($('<td></td>'))
-                    .append($('<td></td>').append((n + 1)))
-                    .append($('<td></td>')
-                            .append($('<span></span>')
-                                    .addClass()
-                                    .attr('style', (inputDeleted)
-                                            ? css4newInput + ' text-decoration: line-through;'
-                                            : css4newInput)
-                                    .append(obj.param1)
-                                    .append((obj.param3) ? " (Group by:" + obj.param3 + ")" : ""))
-                            .addClass('text-left')
-                            .append($('<span></span>')
-                                    .addClass('c-history-input-date')
-                                    .append(' (')
-                                    .append(Utility.convertDate(obj.historyDate))
-                                    .append('  ')
-                                    .append(Utility.convertTime(obj.historyTime))
-                                    .append(')'))
-                            .append(inputDeleted)
-                            .append(inputUpdate)
-                            )
-                    .append($('<td></td>')
-                            .addClass('text-left')
-                            .append(inputDescByList))
-                    ;
+                .append($('<td></td>'))
+                .append($('<td></td>').append((n + 1)))
+                .append($('<td></td>')
+                    .append($('<span></span>')
+                        .addClass()
+                        .attr('style', (inputDeleted)
+                            ? css4newInput + ' text-decoration: line-through;'
+                            : css4newInput)
+                        .append(obj.param1)
+                        .append((obj.param3) ? " (Group by:" + obj.param3 + ")" : ""))
+                    .addClass('text-left')
+                    .append($('<span></span>')
+                        .addClass('c-history-input-date')
+                        .append(' (')
+                        .append(Utility.convertDate(obj.historyDate))
+                        .append('  ')
+                        .append(Utility.convertTime(obj.historyTime))
+                        .append(')'))
+                    .append(inputDeleted)
+                    .append(inputUpdate)
+                )
+                .append($('<td></td>')
+                    .addClass('text-left')
+                    .append(inputDescByList))
+                ;
             tbody.append(tr);
         }
         return tbody;
     },
     addClassForNewRecord: function (obj, sdate, edate, stime, etime) {
-//        try {
+        //        try {
         startDate = (sdate) ? sdate : "";
         endDate = (edate) ? edate : "";
         startTime = (stime) ? stime : "";
@@ -2950,8 +2950,8 @@ UserStory.prototype = {
         if (date1 <= date && date <= date2) {
             return "margin-left:2px;margin-top:5px;background-color:#bcf906;border-radius:5px;"
         }
-//        } catch (e) {
-//        }
+        //        } catch (e) {
+        //        }
 
     },
     changeRequestDetails_GetInputDescNewListByInputId: function (data, inputId, sdate, edate, stime, etime) {
@@ -2966,25 +2966,25 @@ UserStory.prototype = {
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             var inputDescDeleted =
-                    this.changeRequestDetails_GetInputDescDeleteListByInputId(data, obj.id);
+                this.changeRequestDetails_GetInputDescDeleteListByInputId(data, obj.id);
             var inputDescUpdated =
-                    this.changeRequestDetails_GetInputDescUpdateListByInputId(data, obj.id);
+                this.changeRequestDetails_GetInputDescUpdateListByInputId(data, obj.id);
             div.append('- ')
-                    .append($('<span></span>')
-                            .attr('style', (inputDescDeleted)
-                                    ? this.addClassForNewRecord(obj, sdate, edate, stime, etime) + ' text-decoration: line-through;'
-                                    : this.addClassForNewRecord(obj, sdate, edate, stime, etime))
-                            .append(obj.desc))
-                    .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append(' (')
-                            .append(Utility.convertDate(obj.date))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.time))
-                            .append(')'))
-                    .append('<br>')
-                    .append(inputDescDeleted)
-                    .append(inputDescUpdated);
+                .append($('<span></span>')
+                    .attr('style', (inputDescDeleted)
+                        ? this.addClassForNewRecord(obj, sdate, edate, stime, etime) + ' text-decoration: line-through;'
+                        : this.addClassForNewRecord(obj, sdate, edate, stime, etime))
+                    .append(obj.desc))
+                .append($('<span></span>')
+                    .addClass('c-history-input-date')
+                    .append(' (')
+                    .append(Utility.convertDate(obj.date))
+                    .append('  ')
+                    .append(Utility.convertTime(obj.time))
+                    .append(')'))
+                .append('<br>')
+                .append(inputDescDeleted)
+                .append(inputDescUpdated);
         }
         return div;
     },
@@ -2997,24 +2997,24 @@ UserStory.prototype = {
 
         var o = data.inputUpdateList[inputId];
         var div = $('<div></div>')
-                .addClass('col-10')
-                .addClass('text-left')
-                .attr('style', 'margin-left:20px;margin-top:5px;background-color:#FFFF66;border-radius:15px;');
+            .addClass('col-10')
+            .addClass('text-left')
+            .attr('style', 'margin-left:20px;margin-top:5px;background-color:#FFFF66;border-radius:15px;');
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<div></div>')
-                    .addClass((n === 0) ? "c-input-update-last" : "c-input-update-middle")
-                    .append(obj.desc)
-                    .append($('<i></i>').append((obj.table) ? ' -- ' + obj.table : ""))
-                    .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append(' (')
-                            .append(Utility.convertDate(obj.date))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.time))
-                            .append(')'))
-                    .append('<br>')
-                    );
+                .addClass((n === 0) ? "c-input-update-last" : "c-input-update-middle")
+                .append(obj.desc)
+                .append($('<i></i>').append((obj.table) ? ' -- ' + obj.table : ""))
+                .append($('<span></span>')
+                    .addClass('c-history-input-date')
+                    .append(' (')
+                    .append(Utility.convertDate(obj.date))
+                    .append('  ')
+                    .append(Utility.convertTime(obj.time))
+                    .append(')'))
+                .append('<br>')
+            );
         }
         return div;
     },
@@ -3025,21 +3025,21 @@ UserStory.prototype = {
 
         var o = data.inputDescDeleteList[inputId];
         var div = $('<div></div>')
-                .addClass('col-10')
-                .addClass('text-left')
-                .attr('style', 'margin-left:20px;text-decoration: line-through;margin-top:5px;background-color:#00CC99;border-radius:15px;');
+            .addClass('col-10')
+            .addClass('text-left')
+            .attr('style', 'margin-left:20px;text-decoration: line-through;margin-top:5px;background-color:#00CC99;border-radius:15px;');
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                    .append(obj.desc))
-                    .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append(' (')
-                            .append(Utility.convertDate(obj.date))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.time))
-                            .append(')'))
-                    .append('<br>');
+                .append(obj.desc))
+                .append($('<span></span>')
+                    .addClass('c-history-input-date')
+                    .append(' (')
+                    .append(Utility.convertDate(obj.date))
+                    .append('  ')
+                    .append(Utility.convertTime(obj.time))
+                    .append(')'))
+                .append('<br>');
         }
         return div;
     },
@@ -3050,21 +3050,21 @@ UserStory.prototype = {
 
         var o = data.inputDescUpdateList[inputId];
         var div = $('<div></div>')
-                .addClass('col-10')
-                .addClass('text-left')
-                .attr('style', 'margin-left:20px;margin-top:5px;background-color:#FFFF66;border-radius:15px;');
+            .addClass('col-10')
+            .addClass('text-left')
+            .attr('style', 'margin-left:20px;margin-top:5px;background-color:#FFFF66;border-radius:15px;');
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                    .append(obj.desc))
-                    .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append(' (')
-                            .append(Utility.convertDate(obj.date))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.time))
-                            .append(')'))
-                    .append('<br>');
+                .append(obj.desc))
+                .append($('<span></span>')
+                    .addClass('c-history-input-date')
+                    .append(' (')
+                    .append(Utility.convertDate(obj.date))
+                    .append('  ')
+                    .append(Utility.convertTime(obj.time))
+                    .append(')'))
+                .append('<br>');
         }
         return div;
     },
@@ -3077,22 +3077,22 @@ UserStory.prototype = {
 
         var o = data.inputDeleteList[inputId];
         var div = $('<div></div>')
-                .addClass('col-10')
-                .addClass('text-left')
-                .attr('style', 'margin-left:20px;text-decoration: line-through;margin-top:5px;background-color:#00CC99;border-radius:15px;');
+            .addClass('col-10')
+            .addClass('text-left')
+            .attr('style', 'margin-left:20px;text-decoration: line-through;margin-top:5px;background-color:#00CC99;border-radius:15px;');
         for (var n = 0; n < o.length; n++) {
             var obj = o[n];
             div.append($('<span></span>')
-                    .append(obj.desc))
-                    .append($('<i></i>').append((obj.table) ? ' -- ' + obj.table : ""))
-                    .append($('<span></span>')
-                            .addClass('c-history-input-date')
-                            .append(' (')
-                            .append(Utility.convertDate(obj.date))
-                            .append('  ')
-                            .append(Utility.convertTime(obj.time))
-                            .append(')'))
-                    .append('<br>');
+                .append(obj.desc))
+                .append($('<i></i>').append((obj.table) ? ' -- ' + obj.table : ""))
+                .append($('<span></span>')
+                    .addClass('c-history-input-date')
+                    .append(' (')
+                    .append(Utility.convertDate(obj.date))
+                    .append('  ')
+                    .append(Utility.convertTime(obj.time))
+                    .append(')'))
+                .append('<br>');
         }
         return div;
     },
@@ -3107,23 +3107,23 @@ UserStory.prototype = {
             for (var n = 0; n < o.length; n++) {
                 var obj = o[n];
                 div.append(
-                        $('<div></div>')
+                    $('<div></div>')
                         .addClass('col-10')
                         .addClass('text-left')
                         .addClass((n === 0) ? "c-input-update-last" : "c-input-update-middle")
                         .attr('style', 'margin-left:20px;background-color:#FFFF66;border-radius:15px;')
                         .append($('<span></span>')
-                                .addClass('c-history-input-date')
-                                .append('  ')
-                                .append(Utility.convertDate(obj.historyDate))
-                                .append('  ')
-                                .append(Utility.convertTime(obj.historyTime))
-                                .append('<br>'))
+                            .addClass('c-history-input-date')
+                            .append('  ')
+                            .append(Utility.convertDate(obj.historyDate))
+                            .append('  ')
+                            .append(Utility.convertTime(obj.historyTime))
+                            .append('<br>'))
                         .append($('<span></span>')
-                                .addClass('c-history-process-desc')
-                                .append(MapTextAreaHtml(obj.param1)))
+                            .addClass('c-history-process-desc')
+                            .append(MapTextAreaHtml(obj.param1)))
                         .append('<hr>')
-                        );
+                );
             }
         } catch (err) {
 
@@ -3261,7 +3261,7 @@ UserStory.prototype = {
         if ($('#duplicateScenario_userstorylistwithinputs').val().length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3292,8 +3292,8 @@ UserStory.prototype = {
             }
             var txt = $('#updateScenario_datacombination').val() + obj[n].inputName + ": ' ',\n";
             $('#updateScenario_datacombination')
-                    .val(txt)
-                    ;
+                .val(txt)
+                ;
         }
     },
     loadDataCombination4DublicateDetails: function (res) {
@@ -3305,8 +3305,8 @@ UserStory.prototype = {
             }
             var txt = $('#duplicateScenario_datacombination').val() + obj[n].inputName + ": ' ',\n";
             $('#duplicateScenario_datacombination')
-                    .val(txt)
-                    ;
+                .val(txt)
+                ;
         }
     },
     loadDataCombination: function () {
@@ -3314,7 +3314,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3348,7 +3348,7 @@ UserStory.prototype = {
         }
     },
     loadSUSwithInputForScenarioModal: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3378,7 +3378,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3400,7 +3400,7 @@ UserStory.prototype = {
         });
     },
     loadSUSwithInputForUpdateScenarioModal: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3427,8 +3427,8 @@ UserStory.prototype = {
         $('#addScenario_userstorylistwithinputs').append($("<option></option>"));
         for (var n = 0; n < obj.length; n++) {
             var o = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName);
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName);
             if (global_var.current_backlog_id === obj[n].id) {
                 o.attr('selected', 'selected');
             }
@@ -3441,97 +3441,97 @@ UserStory.prototype = {
         $('#updateScenario_userstorylistwithinputs').append($("<option></option>"));
         for (var n = 0; n < obj.length; n++) {
             $('#updateScenario_userstorylistwithinputs').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
     loadPicture4TestCase: function () {
-//           $('.preloader').fadeIn(0, function () {console.log('ok')});
+        //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
         $('.canvas-image-class').each(function (e) {
-//            $('.preloader').fadeIn(400, function () {
-//                console.log('ok')
-//            });
+            //            $('.preloader').fadeIn(400, function () {
+            //                console.log('ok')
+            //            });
             var id = $(this).find('.canvas-sub-class').first().attr('id');
             var binaryString = document.getElementById(id).toDataURL("image/png;base64");
             binaryString = binaryString.replace(/data:image\/png;base64,/, '');
-//            console.log('binary='+binaryString)
+            //            console.log('binary='+binaryString)
             var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
             finalname += global_var.vertical_seperator + fname;
             idx++;
         });
         global_var.current_upload_canvas = finalname;
-//        $('.preloader').fadeOut(500, function () {
-//            console.log('done')
-//        });
+        //        $('.preloader').fadeOut(500, function () {
+        //            console.log('done')
+        //        });
     },
     loadPicture4TestTrial: function () {
-//           $('.preloader').fadeIn(0, function () {console.log('ok')});
+        //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
         $('.canvas-image-class').each(function (e) {
-//            $('.preloader').fadeIn(400, function () {
-//                console.log('ok')
-//            });
+            //            $('.preloader').fadeIn(400, function () {
+            //                console.log('ok')
+            //            });
             var id = $(this).find('.canvas-sub-class').first().attr('id');
             var binaryString = document.getElementById(id).toDataURL("image/png;base64");
             binaryString = binaryString.replace(/data:image\/png;base64,/, '');
-//            console.log('binary='+binaryString)
+            //            console.log('binary='+binaryString)
             var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
             finalname += global_var.vertical_seperator + fname;
             idx++;
         });
         global_var.current_upload_canvas = finalname;
-//        $('.preloader').fadeOut(500, function () {
-//            console.log('done')
-//        });
+        //        $('.preloader').fadeOut(500, function () {
+        //            console.log('done')
+        //        });
     },
     loadPicture4Comment: function () {
-//           $('.preloader').fadeIn(0, function () {console.log('ok')});
+        //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
         $('.canvas-image-class').each(function (e) {
-//            $('.preloader').fadeIn(400, function () {
-//                console.log('ok')
-//            });
+            //            $('.preloader').fadeIn(400, function () {
+            //                console.log('ok')
+            //            });
             var id = $(this).find('.canvas-sub-class').first().attr('id');
             var binaryString = document.getElementById(id).toDataURL("image/png;base64");
             binaryString = binaryString.replace(/data:image\/png;base64,/, '');
-//            console.log('binary='+binaryString)
+            //            console.log('binary='+binaryString)
             var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
             finalname += global_var.vertical_seperator + fname;
             idx++;
         });
         global_var.current_upload_canvas = finalname;
-//        $('.preloader').fadeOut(500, function () {
-//            console.log('done')
-//        });
+        //        $('.preloader').fadeOut(500, function () {
+        //            console.log('done')
+        //        });
     },
     loadPicture4StoryCard: function () {
-//           $('.preloader').fadeIn(0, function () {console.log('ok')});
+        //           $('.preloader').fadeIn(0, function () {console.log('ok')});
         var idx = 1;
         var that = this;
         var finalname = "";
         $('.canvas-image-class').each(function (e) {
-//            $('.preloader').fadeIn(400, function () {
-//                console.log('ok')
-//            });
+            //            $('.preloader').fadeIn(400, function () {
+            //                console.log('ok')
+            //            });
             var id = $(this).find('.canvas-sub-class').first().attr('id');
             var binaryString = document.getElementById(id).toDataURL("image/png;base64");
             binaryString = binaryString.replace(/data:image\/png;base64,/, '');
-//            console.log('binary='+binaryString)
+            //            console.log('binary='+binaryString)
             var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
             finalname += global_var.vertical_seperator + fname;
             idx++;
         });
         global_var.current_upload_canvas = finalname;
-//        $('.preloader').fadeOut(500, function () {
-//            console.log('done')
-//        });
+        //        $('.preloader').fadeOut(500, function () {
+        //            console.log('done')
+        //        });
     },
     uploadFile4NewTicket11: function (fileext, file_base_64, file_name) {
 
@@ -3576,8 +3576,8 @@ UserStory.prototype = {
         var urlVal = global_var.current_project_id;
         for (var n = 0; n < obj.length; n++) {
             var o = $('<option></option')
-                    .attr('value', obj[n].id)
-                    .html(obj[n].projectName);
+                .attr('value', obj[n].id)
+                .html(obj[n].projectName);
             if (urlVal === obj[n].id) {
                 o.attr("selected", "selected");
             }
@@ -3595,7 +3595,7 @@ UserStory.prototype = {
     },
     showUserStoryPanelMain: function () {
 
-//        $('#core_div_col_1st').attr("style", "display: yes;");
+        //        $('#core_div_col_1st').attr("style", "display: yes;");
         $('#core_div_col_1st').show('1000');
         $('.toggleUSPanel').hide('1000');
         $('#main_div_of_backlog_info').removeClass('col-12').addClass('col-9');
@@ -3609,7 +3609,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3635,7 +3635,7 @@ UserStory.prototype = {
         })
     },
     loadPaymentHistory: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3657,15 +3657,15 @@ UserStory.prototype = {
                 that.loadPaymentHistoryDetails(res);
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
     },
     getEmptyMessage4PaymentHistory: function () {
         var innerHTML = '<tr><td colspan="5" style="padding:30px;text-align:center">' +
-                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                '<h5> No Payment have been done on this Domain</h5>' +
-                '</td></tr>';
+            '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+            '<h5> No Payment have been done on this Domain</h5>' +
+            '</td></tr>';
         return innerHTML;
     },
     loadPaymentHistoryDetails: function (res) {
@@ -3675,26 +3675,26 @@ UserStory.prototype = {
             var obj = res.tbl[0].r;
             if (obj.length === 0) {
                 $('#getPaymentHistory_paymentlist > tbody')
-                        .append(this.getEmptyMessage4PaymentHistory());
+                    .append(this.getEmptyMessage4PaymentHistory());
             }
             for (var n = 0; n < obj.length; n++) {
                 var tr = $('<tr></tr>')
-                        .append($('<td></td>').append((n + 1)))
-                        .append($('<td></td>').append(obj[n].paymentDate))
-                        .append($('<td></td>').append(obj[n].paymentAmount))
-                        .append($('<td></td>').append(obj[n].currency))
-                        .append($('<td></td>').append(obj[n].description))
+                    .append($('<td></td>').append((n + 1)))
+                    .append($('<td></td>').append(obj[n].paymentDate))
+                    .append($('<td></td>').append(obj[n].paymentAmount))
+                    .append($('<td></td>').append(obj[n].currency))
+                    .append($('<td></td>').append(obj[n].description))
                 $('#getPaymentHistory_paymentlist > tbody').append(tr);
             }
         } catch (e) {
             $('#getPaymentHistory_paymentlist > tbody')
-                    .append(this.getEmptyMessage4PaymentHistory());
+                .append(this.getEmptyMessage4PaymentHistory());
         }
 
     },
     setFilterPreviousPaging: function () {
         var r = parseFloat(global_var.user_story_core_filter_current_index)
-                - parseFloat($('#us_core_filter_perpage').val());
+            - parseFloat($('#us_core_filter_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
         global_var.user_story_core_filter_current_index = r;
         global_var.user_story_core_filter_paging_button_pressed = "1";
@@ -3793,11 +3793,11 @@ UserStory.prototype = {
         $(arg).attr("style", "color:red");
     },
     showAll4Scenario: function (arg) {
-//        $('#userstory_task_comment_toogle').prop('checked', true);
-//        $('.task-child-comment').show();
-//        $('.mangodb').show();
-//        $('.task-comment-show-hide').removeAttr("style");
-//        $(arg).attr("style", "color:red");
+        //        $('#userstory_task_comment_toogle').prop('checked', true);
+        //        $('.task-child-comment').show();
+        //        $('.mangodb').show();
+        //        $('.task-comment-show-hide').removeAttr("style");
+        //        $(arg).attr("style", "color:red");
 
         $('#userstory_scenario_trial_toogle').prop('checked', true);
         $('.scenario-trial-comment').show();
@@ -3829,7 +3829,7 @@ UserStory.prototype = {
         }
 
         if ($('#addScenario_showactualresult').is(':checked')
-                && isCanvasContextExist('canvasdiv_testCase')) {
+            && isCanvasContextExist('canvasdiv_testCase')) {
             try {
                 this.loadPicture4TestCase();
             } catch (err) {
@@ -3837,7 +3837,7 @@ UserStory.prototype = {
         }
 
         if ($('#addScenario_showactualresult').is(':checked')
-                && $('#file_scenario').val().trim().length > 0) {
+            && $('#file_scenario').val().trim().length > 0) {
             this.sendFileForScenario();
         } else {
             this.addTaskScenarioBody('');
@@ -3851,7 +3851,7 @@ UserStory.prototype = {
             isActualResChecked = "1";
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3909,7 +3909,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3945,7 +3945,7 @@ UserStory.prototype = {
             Toaster.showError('Please Add Scenario.');
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -3990,7 +3990,7 @@ UserStory.prototype = {
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4021,7 +4021,7 @@ UserStory.prototype = {
         });
     },
     loadTestScenario: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4069,7 +4069,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4097,7 +4097,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4134,7 +4134,7 @@ UserStory.prototype = {
         this.loadSUSwithInput4Dublication();
     },
     loadData4DublicateTestScenario: function (id) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4185,7 +4185,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4235,7 +4235,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4264,7 +4264,7 @@ UserStory.prototype = {
         if (!scenarioId) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4294,7 +4294,7 @@ UserStory.prototype = {
             Toaster.showError('Please Add Actual Result for Trial.');
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4325,7 +4325,7 @@ UserStory.prototype = {
             return;
         }
         $('#updateTrial4Scenario_id').val(id)
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4351,17 +4351,17 @@ UserStory.prototype = {
             }
         });
     },
-//    loadScenarioTrialList: function () {
-//
-//    },
+    //    loadScenarioTrialList: function () {
+    //
+    //    },
 
     getTestScenarioDetailsEmptyMessage: function () {
         var innerHTML = '<tr><td colspan="12" style="padding:30px;text-align:center">' +
-                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                '<h5> No Test Cases have been selected or created on this User Story</h5>' +
-                '<p>All Test Cases related to the User Story on this project will appear here</p>' +
-                '<p>Please Add Test Case</p>' +
-                '</td></tr>';
+            '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+            '<h5> No Test Cases have been selected or created on this User Story</h5>' +
+            '<p>All Test Cases related to the User Story on this project will appear here</p>' +
+            '<p>Please Add Test Case</p>' +
+            '</td></tr>';
         return innerHTML;
     },
     loadTestScenarioDetails: function (res) {
@@ -4375,171 +4375,171 @@ UserStory.prototype = {
             }
             for (var n = 0; n < obj.length; n++) {
                 var img = (res.tbl[0].r[0].userImage)
-                        ? fileUrl(res.tbl[0].r[0].userImage)
-                        : fileUrl(that.getDefaultUserprofileName());
+                    ? fileUrl(res.tbl[0].r[0].userImage)
+                    : fileUrl(that.getDefaultUserprofileName());
                 var stDel = obj[n].taskStatus === 'new' ?
-                        $('<a></a>')
+                    $('<a></a>')
                         .addClass("us-edit")
                         .attr('href', "#")
                         .attr('onclick', "new UserStory().deleteTaskScenario('" + obj[n].id + "')")
                         .append($('<i></i>').addClass("fa fa-trash"))
                         .append(" Delete")
-                        : "";
+                    : "";
                 var scenarioStatusLine = obj[n].updateCount > 0 ?
-                        $('<span></span>')
+                    $('<span></span>')
                         .append($('<i></i>')
-                                .addClass("fa fa-pencil")
-                                .attr("style", "color:blue"))
+                            .addClass("fa fa-pencil")
+                            .attr("style", "color:blue"))
                         .append(obj[n].scenarioStatus)
-                        : "";
+                    : "";
                 var tr = $('<tr></tr>')
-                        .addClass("backlog_task_list")
-                        .attr('pid', obj[n].id)
-                        .attr('style', 'border-top: 1.6px solid #5181B8;cursor:pointer')
-                        .attr('ondblclick', 'new UserStory().toggleScenarioLines("' + obj[n].id + '")');
+                    .addClass("backlog_task_list")
+                    .attr('pid', obj[n].id)
+                    .attr('style', 'border-top: 1.6px solid #5181B8;cursor:pointer')
+                    .attr('ondblclick', 'new UserStory().toggleScenarioLines("' + obj[n].id + '")');
                 tr.append($("<td  class='align-middle' style='text-align: left'></td>")
-                        .append((n + 1)))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: left")
-                                .html(scenarioStatusLine))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: left")
-                                .html($('<span></span>')
-//                                        .append('Created by: ')
-                                        .append($('<img></img>')
-                                                .attr("src", img)
-                                                .addClass('figure-img img-fluid rounded-circle')
-                                                .attr('style', 'max-width:19px'))
-                                        .append('  ')
-                                        .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
-                                                .text(obj[n].userPersonName)))
-                                        .append(', ')
-                                        .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
-                                                .text(Utility.convertDate(obj[n].scenarioDate))))
-                                        .append(', ')
-                                        .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
-                                                .text(Utility.convertTime(obj[n].scenarioTime))))
+                    .append((n + 1)))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: left")
+                        .html(scenarioStatusLine))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: left")
+                        .html($('<span></span>')
+                            //                                        .append('Created by: ')
+                            .append($('<img></img>')
+                                .attr("src", img)
+                                .addClass('figure-img img-fluid rounded-circle')
+                                .attr('style', 'max-width:19px'))
+                            .append('  ')
+                            .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
+                                .text(obj[n].userPersonName)))
+                            .append(', ')
+                            .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
+                                .text(Utility.convertDate(obj[n].scenarioDate))))
+                            .append(', ')
+                            .append($('<i></i>').attr('style', 'color:#555555;').append($('<b1></b>')
+                                .text(Utility.convertTime(obj[n].scenarioTime))))
 
 
 
-                                        .append('<br>')
-                                        .append(replaceTags(obj[n].testCase))
-                                        ))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .addClass('test-case-scenario')
-                                .attr("style", "text-align: left")
-                                .html($('<span></span>')
-                                        .append(MapTextAreaHtml(replaceTags(obj[n].scenarioName)))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .addClass('test-case-data')
-                                .attr("style", "text-align: left")
-                                .html($('<span></span>')
-                                        .append(MapTextAreaHtml(replaceTags(obj[n].dataCombination)))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .addClass('test-case-expectedresult')
-                                .attr("style", "text-align: left")
-                                .html(MapTextAreaHtml(replaceTags(obj[n].expectedResult))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center;font-size:19px;")
-                                .html($('<a></a>')
+                            .append('<br>')
+                            .append(replaceTags(obj[n].testCase))
+                        ))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .addClass('test-case-scenario')
+                        .attr("style", "text-align: left")
+                        .html($('<span></span>')
+                            .append(MapTextAreaHtml(replaceTags(obj[n].scenarioName)))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .addClass('test-case-data')
+                        .attr("style", "text-align: left")
+                        .html($('<span></span>')
+                            .append(MapTextAreaHtml(replaceTags(obj[n].dataCombination)))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .addClass('test-case-expectedresult')
+                        .attr("style", "text-align: left")
+                        .html(MapTextAreaHtml(replaceTags(obj[n].expectedResult))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center;font-size:19px;")
+                        .html($('<a></a>')
+                            .attr('href', "#")
+                            .attr('title', 'View')
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#viewTestCaseInfoModal")
+                            .attr("onclick", "new UserStory().viewTestCaseInfoModal(\'" + obj[n].id + "\')")
+                            .append($('<i></i>').addClass('fa fa-eye'))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center;font-size:19px;")
+                        .html($('<a></a>')
+                            .attr('href', "#")
+                            .attr('title', 'Add New Trial')
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#addTrial4ScenarioModal")
+                            .attr("onclick", "new UserStory().addTrial4ScenarioModal(this,\'" + obj[n].id + "\')")
+                            .append($('<i></i>').addClass('fa fa-plus'))))
+
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html($('<div></div>')
+                            .addClass('dropdown')
+                            .append($("<button></button")
+                                .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
+                                .attr('type', 'button')
+                                .attr('data-toggle', 'dropdown')
+                                .append($('<span></span>').addClass("caret"))
+                            )
+                            .append($('<u></u>')
+                                .addClass("dropdown-menu")
+                                .attr("style", "line-height: 1.6em;text-decoration: none !important;")
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
                                         .attr('href', "#")
-                                        .attr('title', 'View')
+                                        .addClass("us-edit")
                                         .attr("data-toggle", "modal")
-                                        .attr("data-target", "#viewTestCaseInfoModal")
-                                        .attr("onclick", "new UserStory().viewTestCaseInfoModal(\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-eye'))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center;font-size:19px;")
-                                .html($('<a></a>')
+                                        .attr("data-target", "#updateScenario")
+                                        .attr("onclick", "new UserStory().showTestScenarioModal(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-edit'))
+                                        .append(" Edit")))
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
                                         .attr('href', "#")
-                                        .attr('title', 'Add New Trial')
+                                        .addClass("us-edit")
                                         .attr("data-toggle", "modal")
-                                        .attr("data-target", "#addTrial4ScenarioModal")
-                                        .attr("onclick", "new UserStory().addTrial4ScenarioModal(this,\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-plus'))))
+                                        .attr("data-target", "#duplicateTestCaseModal")
+                                        .attr("onclick", "new UserStory().dublicateTestCaseModal(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-clone'))
+                                        .append(" Dublicate")))
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
+                                        .attr('href', "#")
+                                        .addClass("us-edit")
+                                        .attr("data-toggle", "modal")
+                                        .attr("data-target", "#linkTestCaseModal")
+                                        .attr("onclick", "new UserStory().linkTestCaseModal(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-share-square-o'))
+                                        .append(" Link")))
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
+                                        .attr('href', "#")
+                                        .addClass("us-edit")
+                                        .attr("onclick", "new UserStory().deleteTestScenario(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-trash'))
+                                        .append(" Delete")))
 
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html($('<div></div>')
-                                        .addClass('dropdown')
-                                        .append($("<button></button")
-                                                .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
-                                                .attr('type', 'button')
-                                                .attr('data-toggle', 'dropdown')
-                                                .append($('<span></span>').addClass("caret"))
-                                                )
-                                        .append($('<u></u>')
-                                                .addClass("dropdown-menu")
-                                                .attr("style", "line-height: 1.6em;text-decoration: none !important;")
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#updateScenario")
-                                                                .attr("onclick", "new UserStory().showTestScenarioModal(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-edit'))
-                                                                .append(" Edit")))
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#duplicateTestCaseModal")
-                                                                .attr("onclick", "new UserStory().dublicateTestCaseModal(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-clone'))
-                                                                .append(" Dublicate")))
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#linkTestCaseModal")
-                                                                .attr("onclick", "new UserStory().linkTestCaseModal(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-share-square-o'))
-                                                                .append(" Link")))
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("onclick", "new UserStory().deleteTestScenario(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-trash'))
-                                                                .append(" Delete")))
-
-                                                .append($('<li></li>').append(stDel))
-                                                )
-                                        )
-                                )
-                        ;
+                                .append($('<li></li>').append(stDel))
+                            )
+                        )
+                    )
+                    ;
                 $('#tblTestScenarioList > tbody').append(tr);
                 var rs = this.fillTrialListByScenarioWithReturn(obj[n].id);
-//                var rs = '';
+                //                var rs = '';
                 var div = $('<div></div>')
-                        .addClass('col')
-                        .addClass('scenario-trial-comment')
-                        .attr('id', 'div_' + obj[n].id)
-                        .append(rs);
+                    .addClass('col')
+                    .addClass('scenario-trial-comment')
+                    .attr('id', 'div_' + obj[n].id)
+                    .append(rs);
                 var tr1 = $('<tr  class="backlog_task_list"></tr>').attr('pid', obj[n].id);
                 tr1
-//                        .append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html(''))
-                        .append($("<td class='align-middle' style='text-align: center'></td>").html(''))
-//                        append($("<td></td>")
-//                                .addClass('align-middle')
-//                                .attr("style", "text-align: center")
-//                                .html('')).
-//                        .append($("<td></td>")
-//                                .addClass('align-middle')
-//                                .attr("style", "text-align: center")
-//                                .html(''))
-                        .append($("<td class='align-middle'  style='text-align: left' colspan=8></td>").append(div));
+                    //                        .append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html(''))
+                    .append($("<td class='align-middle' style='text-align: center'></td>").html(''))
+                    //                        append($("<td></td>")
+                    //                                .addClass('align-middle')
+                    //                                .attr("style", "text-align: center")
+                    //                                .html('')).
+                    //                        .append($("<td></td>")
+                    //                                .addClass('align-middle')
+                    //                                .attr("style", "text-align: center")
+                    //                                .html(''))
+                    .append($("<td class='align-middle'  style='text-align: left' colspan=8></td>").append(div));
                 $('#tblTestScenarioList > tbody').append(tr1);
                 if ($('#userstory_scenario_trial_toogle').is(':checked')) {
                     $('.scenario-trial-comment').show();
@@ -4554,8 +4554,8 @@ UserStory.prototype = {
     linkTestCase: function () {
         var backlogId = $('#linkTestCaseModal_userstory').val();
         var testCaseId = $('#linkTestCaseModal_id').val();
-//        $('#sourcedUSList4Dependency_id').val(id);
-        var json = {kv: {}};
+        //        $('#sourcedUSList4Dependency_id').val(id);
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4581,8 +4581,8 @@ UserStory.prototype = {
     },
     loadLinkedTestCases: function (testCaseId) {
 
-//        $('#sourcedUSList4Dependency_id').val(id);
-        var json = {kv: {}};
+        //        $('#sourcedUSList4Dependency_id').val(id);
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4612,8 +4612,8 @@ UserStory.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var del = '<a href="#" onclick="new UserStory().deleteLinkedUserStory(\''
-                        + testCaseId + '\',\''
-                        + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
+                    + testCaseId + '\',\''
+                    + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].backlogName) + '</td>';
                 st += '<td>' + del + '</td>';
@@ -4631,8 +4631,8 @@ UserStory.prototype = {
     deleteLinkedUserStory: function (testCaseId, backlogId) {
         var backlogId = backlogId;
         var testCaseId = testCaseId;
-//        $('#sourcedUSList4Dependency_id').val(id);
-        var json = {kv: {}};
+        //        $('#sourcedUSList4Dependency_id').val(id);
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4663,7 +4663,7 @@ UserStory.prototype = {
     loadSourcedUserStoryToTestCase: function (id) {
         $('#linkTestCaseModal_userstory').html('');
         $('#linkTestCaseModal_id').val(id);
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4693,40 +4693,40 @@ UserStory.prototype = {
         $('#linkTestCaseModal_userstory').append($("<option></option>").attr("value", ''));
         for (var n = 0; n < obj.length; n++) {
             $('#linkTestCaseModal_userstory').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
-//    loadSourcedUserStoryToTestCase: function () {
-//        $('#sourcedUSList4Dependency').html('');
-//        $('#sourcedUSList4Dependency_id').val(id);
-//        var json = {kv: {}};        try {            json.kv.cookie = getToken();        } catch (err) {        }
-//        json.kv.fkProjectId = global_var.current_project_id;
-//        json.kv.asc = 'backlogName';
-//        var that = this;
-//        var data = JSON.stringify(json);
-//        $.ajax({
-//            url: urlGl+"api/post/srv/serviceTmGetSourcedBacklogList4Combo",
-//            type: "POST",
-//            data: data,
-//            contentType: "application/json",
-//            crossDomain: true,
-//            async: true,
-//            success: function (res) {
-//                that.addDependencyModalDetails(res);
-//            },
-//            error: function () {
-//                Toaster.showError(('somethingww'));
-//            }
-//        });
-//    },
+    //    loadSourcedUserStoryToTestCase: function () {
+    //        $('#sourcedUSList4Dependency').html('');
+    //        $('#sourcedUSList4Dependency_id').val(id);
+    //        var json = {kv: {}};        try {            json.kv.cookie = getToken();        } catch (err) {        }
+    //        json.kv.fkProjectId = global_var.current_project_id;
+    //        json.kv.asc = 'backlogName';
+    //        var that = this;
+    //        var data = JSON.stringify(json);
+    //        $.ajax({
+    //            url: urlGl+"api/post/srv/serviceTmGetSourcedBacklogList4Combo",
+    //            type: "POST",
+    //            data: data,
+    //            contentType: "application/json",
+    //            crossDomain: true,
+    //            async: true,
+    //            success: function (res) {
+    //                that.addDependencyModalDetails(res);
+    //            },
+    //            error: function () {
+    //                Toaster.showError(('somethingww'));
+    //            }
+    //        });
+    //    },
 
     viewTestCaseInfoModal: function (id) {
         if (!id) {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4771,7 +4771,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4794,10 +4794,10 @@ UserStory.prototype = {
                 $('#bindTicketToSUSModal').modal('hide');
                 if ($('#bindTicketToSUSModal_suslist').val()) {
                     that.addBindedIconToUserStoryById(
-                            $('#bindTicketToSUSModal_id').val(), res.kv.isSourced, true);
+                        $('#bindTicketToSUSModal_id').val(), res.kv.isSourced, true);
                 } else {
                     that.addBindedIconToUserStoryById(
-                            $('#bindTicketToSUSModal_id').val(), res.kv.isSourced, false);
+                        $('#bindTicketToSUSModal_id').val(), res.kv.isSourced, false);
                 }
                 that.load();
             },
@@ -4807,7 +4807,7 @@ UserStory.prototype = {
         });
     },
     selectTaskTypesBySUS: function (e) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4835,13 +4835,13 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#notifyTicketAsBug_tasktypes').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .html(replaceTags(obj[n].taskTypeName) + " (" + replaceTags(obj[n].assigneeName) + ")"));
+                .attr("value", obj[n].id)
+                .html(replaceTags(obj[n].taskTypeName) + " (" + replaceTags(obj[n].assigneeName) + ")"));
         }
     },
     setFilterNextPaging: function () {
         var rc = parseFloat(global_var.user_story_core_filter_current_index)
-                + parseFloat($('#us_core_filter_perpage').val());
+            + parseFloat($('#us_core_filter_perpage').val());
         if (rc <= parseFloat($('#us_core_filter_paginationresult_rowcount').html())) {
             global_var.user_story_core_filter_current_index = rc;
         }
@@ -4854,7 +4854,7 @@ UserStory.prototype = {
         global_var.user_story_core_filter_paging_button_pressed = "";
     },
     genUsFilterCreatedBy: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4881,7 +4881,7 @@ UserStory.prototype = {
         });
     },
     genUsFilterAssigneLabel: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4918,8 +4918,8 @@ UserStory.prototype = {
                 }
                 st += '<td>'
                 st += ' <input type="checkbox" class="us_filter_assignedlabel_class"  id="'
-                        + obj[n].fkLabelId + '" value="' + obj[n].fkLabelId + '">' +
-                        replaceTags(obj[n].name) + '</input>';
+                    + obj[n].fkLabelId + '" value="' + obj[n].fkLabelId + '">' +
+                    replaceTags(obj[n].name) + '</input>';
                 st += '</td>'
 
             }
@@ -4929,8 +4929,8 @@ UserStory.prototype = {
         }
     },
     genUsTaskTypesManagment: function () {
-        
-        var json = {kv: {}};
+
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4953,7 +4953,7 @@ UserStory.prototype = {
         });
     },
     genUsFilterTaskTypes: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -4985,18 +4985,18 @@ UserStory.prototype = {
         for (var n = 0; n < obj.length; n++) {
 
             var div = $("<div>")
-                    .addClass("task-column-type")
-                    .attr("pid", obj[n].id)
-                    .append($("<div>")
-                            .addClass("task-column-header")
-                            .append('<span class="headerInputColumn">' + obj[n].typeName + ' <b><span class="counterkanban" >0</span></b></span>')
-                            )
+                .addClass("task-column-type")
+                .attr("pid", obj[n].id)
+                .append($("<div>")
+                    .addClass("task-column-header")
+                    .append('<span class="headerInputColumn">' + obj[n].typeName + ' <b><span class="counterkanban" >0</span></b></span>')
+                )
 
             $('#taskTypeManagmentHeader').append(div);
             $('#taskTypeManagmentBody').append($("<div>")
-                    .addClass('task-column-type')
-                    .attr("id", obj[n].id)
-                    .append(`<div class="TaskMiniStoryCard">
+                .addClass('task-column-type')
+                .attr("id", obj[n].id)
+                .append(`<div class="TaskMiniStoryCard">
                                             <h5>New Task</h5>
                                             <input class="TaskMiniStoryInput form-control" type="text">
                                             <div class="TextHeader " id="TaskAcceptStory" onclick="insertNewTaskDetailTaskTypeManagment(this)"
@@ -5008,7 +5008,7 @@ UserStory.prototype = {
                                                 <i class="fas fa-times"></i>
                                             </div>
                                         </div>`)
-                    .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>'));
+                .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>'));
         }
 
 
@@ -5020,7 +5020,7 @@ UserStory.prototype = {
         $('#us_filter_tasktypes').html("");
         $('#task-info-modal-tasktype').html("");
         $('#task-info-modal-tasktype')
-                .append($('<option>').val("").append(" "));
+            .append($('<option>').val("").append(" "));
 
         var obj = res.tbl[0].r;
         var st = "";
@@ -5031,13 +5031,13 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="us_filter_tasktype_class chek"  id="'
-                    + obj[n].id + '" value="' + obj[n].id + '">&nbsp;' +
-                    replaceTags(obj[n].typeName) + '</input>'
+                + obj[n].id + '" value="' + obj[n].id + '">&nbsp;' +
+                replaceTags(obj[n].typeName) + '</input>'
             st += '</td>'
 
             $('#task-info-modal-tasktype')
-                    .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
-       
+                .append($('<option>').val(obj[n].id).append(replaceTags(obj[n].typeName)));
+
         }
         st += '</table>';
         $('#us_filter_tasktypes').html((st));
@@ -5056,8 +5056,8 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="us_filter_createdby_class chek"  id="'
-                    + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '"> ' +
-                    replaceTags(obj[n].userName) + '</input>'
+                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '"> ' +
+                replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -5077,7 +5077,7 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="us_filter_assignee_class chek"  id="'
-                    + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
+                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -5095,7 +5095,7 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="us_filter_owner_class chek"  id="'
-                    + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
+                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">&nbsp;' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -5113,7 +5113,7 @@ UserStory.prototype = {
     },
     filterByUserStoryName: function (e) {
         global_var.userStoryFilter.userstory = $(e).val();
-//        Utility.addParamToUrl('userStoryFilter.userstory ', global_var.userStoryFilter.userstory);
+        //        Utility.addParamToUrl('userStoryFilter.userstory ', global_var.userStoryFilter.userstory);
         this.load();
     },
     assignLabelModal: function (id) {
@@ -5121,7 +5121,7 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5159,8 +5159,8 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="assignLabelModal_labelcheckbox"  id="'
-                    + obj[n].id + '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
-                    obj[n].color + "\">";
+                + obj[n].id + '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:' +
+                obj[n].color + "\">";
             st += obj[n].isMenu === '1' ? '(Menu)-' : '';
             st += replaceTags(obj[n].name) + '</span>';
             st += '</td>'
@@ -5174,7 +5174,7 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5202,7 +5202,7 @@ UserStory.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5239,12 +5239,12 @@ UserStory.prototype = {
                 st += '</tr ><tr style="line-height: 1;">'
             }
             var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                    ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                    : "";
+                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
+                : "";
             st += '<td>'
             st += ' <input type="radio" name="sprintRadio" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id +
-                    '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
-                    + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
+                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
+                + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
             st += '</td>'
 
         }
@@ -5266,12 +5266,12 @@ UserStory.prototype = {
             }
 
             var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                    ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                    : "";
+                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
+                : "";
             st += '<td>'
             st += ' <input type="radio" name="assignSprintModal" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id +
-                    '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
-                    + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
+                '" value="' + obj[n].id + '">&nbsp<span style="font-size:13px;color:'
+                + obj[n].sprintColor + "\">" + replaceTags(obj[n].sprintName) + d + '</span>'
             st += '</td>'
 
         }
@@ -5333,13 +5333,13 @@ UserStory.prototype = {
     },
     manageIPOTablenameLeftSize: function (arg) {
         $('.ipo-1-hisse')
-                .removeClass('col-1')
-                .removeClass('col-2')
-                .removeClass('col-3')
-                .removeClass('col-4')
-                .removeClass('col-6')
-                .removeClass('col-12')
-                .addClass('col-' + arg)
+            .removeClass('col-1')
+            .removeClass('col-2')
+            .removeClass('col-3')
+            .removeClass('col-4')
+            .removeClass('col-6')
+            .removeClass('col-12')
+            .addClass('col-' + arg)
 
     },
     getSprintList4AssignSprinttoUserStory: function () {
@@ -5353,7 +5353,7 @@ UserStory.prototype = {
     },
     getSprintList4AssignSprinttoUserStoryByDiv: function (divId) {
         var st = "";
-//        $('#' + divId).find('.assignSprintModal_sprintcheckbox').first()
+        //        $('#' + divId).find('.assignSprintModal_sprintcheckbox').first()
         $('#' + divId).find('.assignSprintModal_sprintcheckbox').each(function (e) {
             if ($(this).is(':checked')) {
                 st += $(this).attr('id');
@@ -5403,7 +5403,7 @@ UserStory.prototype = {
                 loadCurrentBacklogProdDetails();
 
 
-// refreshLiveProtytypeView();
+                // refreshLiveProtytypeView();
 
             },
             error: function () {
@@ -5411,12 +5411,12 @@ UserStory.prototype = {
             }
         });
     },
-    
-    
+
+
 
     getBacklogDesc: function () {
         $('#generalview_backlog_proc_desc_list').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5442,28 +5442,28 @@ UserStory.prototype = {
             }
         });
     },
-    
+
     getBacklogDescLineDetails_4API: function (descLine) {
-        
+
         var backlogId = SAFN.GetCommandArgument(descLine);
         loadBacklogInputsByIdIfNotExist(backlogId);
         var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
         var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
         backlogName = (backlogName) ? backlogName : backlogId;
         var descBody = $('<a>')
-                .append('@.callApi( ')
-                .append($('<span>')
-                        .css("background-color", "orange")
-                        .css("border-radius", "10px")
-                        .text(" " + backlogName + " "))
-                .append(" )")
-                .attr("bid", backlogId)
-                .attr("pid", pid)
-                .attr("is_api", "1")
-                .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
+            .append('@.callApi( ')
+            .append($('<span>')
+                .css("background-color", "orange")
+                .css("border-radius", "10px")
+                .text(" " + backlogName + " "))
+            .append(" )")
+            .attr("bid", backlogId)
+            .attr("pid", pid)
+            .attr("is_api", "1")
+            .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
 
         return descBody;
-         
+
     },
     getBacklogDescLineDetails: function (descLine) {
         descLine = SAFN.InitConvention(descLine);
@@ -5479,69 +5479,79 @@ UserStory.prototype = {
         for (var n = 0; n < obj.length; n++) {
 
             var shortDesc = (obj[n].shortDescForApi)
-                    ? " (with description: <i>" + replaceTags(obj[n].shortDescForApi) + "<i>)"
-                    : "";
+                ? " (with description: <i>" + replaceTags(obj[n].shortDescForApi) + "<i>)"
+                : "";
 
             var relApiId = obj[n].fkRelatedApiId;
             loadBacklogInputsByIdIfNotExist(relApiId);
 
             var apiDesc = (relApiId)
-                    ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
+                ? " <b>Related API</b>: <a style=\"color:black;\" href=\"#\" \n\
                     onclick=\"new UserStory().redirectUserStoryCore('" + obj[n].fkRelatedApiId + "')\">"
-                    + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>"
-                    + ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">'
-                    + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) + '</span> '
-                    + '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">'
-                    + MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest'))
-                    + '</span>'
-                    + ' '
-                    + shortDesc
-                    + " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                    + obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>"
-                    : "";
+                + replaceTags(SACore.GetBacklogname(relApiId)) + "</a>"
+                + ' <span style="border-radius: 15px; padding: 0px 8px; background-color: orange;">'
+                + GetApiActionTypeText(SACore.GetBacklogDetails(relApiId, 'apiAction')) + '</span> '
+                + '<span style="border-radius: 15px; padding: 0px 8px; background-color: rgb(255, 255, 0);">'
+                + MapApiCallAsyncType(SACore.GetBacklogDetails(relApiId, 'apiSyncRequest'))
+                + '</span>'
+                + ' '
+                + shortDesc
+                + " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
+                + obj[n].id + "','" + obj[n].fkRelatedApiId + "','PR_DESC')\"><i class='fa fa-cog'></i></a>"
+                : "";
 
             var relScId = obj[n].fkRelatedScId;
             var scDesc = "";
             try {
                 scDesc = (relScId)
-                        ? " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
+                    ? " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
                     onclick=\"showJSModal('" + relScId + "')\">"
-                        + replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>"
-                        : "";
+                    + replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>"
+                    : "";
             } catch (err) {
             }
 
             var descBody = MapTextAreaHtml(replaceTags(obj[n].description));
             descBody = this.getBacklogDescLineDetails(descBody);
-            
+
             var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
-         
+
             var tr = $("<tr>")
-                    .attr("orderno", obj[n].orderNo)
-                    .attr("pid", obj[n].id)
-                
-                    .append($('<td>')
-                            .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-                            .append($('<input type="checkbox">')
-                                    .val(obj[n].id)
-                                    .addClass("pdescList"))
-                            )
-                    .append($('<td>')
-                            .addClass('text-holder')
-                            .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
-                            .attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
-                            .attr('idesc', replaceTags(Replace2Primes(obj[n].description)))
-                            .append($('<span>')
-                                    .addClass("procDescTitleNewNowAfter")
-                                    .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
-                                    .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
-                                    .css("border-radius", "5px")
-                                    .append(descBody)
-                                    .append(scDesc)
-                                    .append(apiDesc)
-                                    ))
-                    .append($('<td>')
-                            .append(backlogProcessDescLineSubmenuItem));
+                .attr("orderno", obj[n].orderNo)
+                .attr("pid", obj[n].id)
+
+                .append($('<td>')
+                    .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                    .append($('<input type="checkbox">')
+                        .val(obj[n].id)
+                        .addClass("pdescList"))
+                )
+                .append($('<td>')
+                    .addClass('text-holder')
+                    .addClass((obj[n].commentType === 'comment') ? 'process-desc-as-comment' : '')
+                    .attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
+                    .attr('idesc', replaceTags(Replace2Primes(obj[n].description)))
+                    .append($('<span>')
+                        .addClass("procDescTitleNewNowAfter")
+                        .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
+                        .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
+                        .css("border-radius", "5px")
+                        .append(descBody)
+                        .append(scDesc)
+                        .append(apiDesc)
+                    )
+                )
+                .append($('<td>')
+                    .append($("<button>")
+                        .addClass("btn cs-copy-btn")
+                        .append($("<i>")
+                        .addClass("fas fa-copy")
+                        )
+                    )
+                )
+                .append($('<td>')
+                    .append(backlogProcessDescLineSubmenuItem)
+                );
 
             table.append(tr);
 
@@ -5550,85 +5560,85 @@ UserStory.prototype = {
 
 
         $(table).sortable({
-            handle:".cs-move-tr",
-            
-          });
+            handle: ".cs-move-tr",
+
+        });
 
         return table;
     },
-    
-    backlogProcessDescLineSubmenuItem:function(id){
-     var div =  $('<div class="dropdown" style="display: inline-block;">')
-                                    .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
+
+    backlogProcessDescLineSubmenuItem: function (id) {
+        var div = $('<div class="dropdown" style="display: inline-block;">')
+            .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
-                                            '</button>')
-                                    .append($('<div class="dropdown-menu uuu" aria-labelledby="dropdownMenuLink">')
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Move Up')
-                                                    .attr("onclick", "moveBacklogDesc(this,'" +  id + "','up')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Move Down')
-                                                    .attr("onclick", "moveBacklogDesc(this,'" + id + "','down')")
-                                                    )
-                                            .append($('<hr>'))
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Related API')
-                                                    .attr("onclick", "addRelatedApi(this,'" +id + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Related Function')
-                                                    .attr("onclick", "addRelatedSourceCode(this,'" + id + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Remove Related API')
-                                                    .attr("onclick", "removeRelatedApiFromDesc('" + id + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Remove Related Function')
-                                                    .attr("onclick", "removeRelatedSourceCodeFromDesc('" + id + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Insert New Description')
-                                                    .attr("onclick", "ADDtrafter(this,'" + id + "')")
-                                                    )
-                                            .append($('<hr>')  )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Set as Comment')
-                                                    .attr("onclick", "setBacklogDescCommentType(this,'" + id + "','comment')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Remove  Comment')
-                                                    .attr("onclick", "removeBacklogDescCommentType(this,'" + id + "')")
-                                                    )
-                                           .append($('<hr>')  )
-                                             .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add If Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.If + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Set Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" +id + "','" + SAFN.FnStatements.Set + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Map Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.Map + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add SendEmail Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.SendEmail + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Show Arror Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.ShowError + "')")
-                                                    )
-                                            .append($('<hr>')  )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Delete')
-                                                    .attr("onclick", "new UserStory().deleteBacklogDesc(this,'" + id + "')")
-                                                    )
-                                            )
-                                             
+                '</button>')
+            .append($('<div class="dropdown-menu uuu" aria-labelledby="dropdownMenuLink">')
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Move Up')
+                    .attr("onclick", "moveBacklogDesc(this,'" + id + "','up')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Move Down')
+                    .attr("onclick", "moveBacklogDesc(this,'" + id + "','down')")
+                )
+                .append($('<hr>'))
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add Related API')
+                    .attr("onclick", "addRelatedApi(this,'" + id + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add Related Function')
+                    .attr("onclick", "addRelatedSourceCode(this,'" + id + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Remove Related API')
+                    .attr("onclick", "removeRelatedApiFromDesc('" + id + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Remove Related Function')
+                    .attr("onclick", "removeRelatedSourceCodeFromDesc('" + id + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Insert New Description')
+                    .attr("onclick", "ADDtrafter(this,'" + id + "')")
+                )
+                .append($('<hr>'))
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Set as Comment')
+                    .attr("onclick", "setBacklogDescCommentType(this,'" + id + "','comment')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Remove  Comment')
+                    .attr("onclick", "removeBacklogDescCommentType(this,'" + id + "')")
+                )
+                .append($('<hr>'))
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add If Statement')
+                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.If + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add Set Statement')
+                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.Set + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add Map Statement')
+                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.Map + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add SendEmail Statement')
+                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.SendEmail + "')")
+                )
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Add Show Arror Statement')
+                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.ShowError + "')")
+                )
+                .append($('<hr>'))
+                .append($('<button class="dropdown-item firstbut" >')
+                    .text('Delete')
+                    .attr("onclick", "new UserStory().deleteBacklogDesc(this,'" + id + "')")
+                )
+            )
+
         return div;
     },
 
@@ -5676,16 +5686,16 @@ UserStory.prototype = {
             Toaster.showError("Value is empty!");
             return;
         }
-        
-        this.updateBacklogDescDetailsZad($(el).val(),id);
+
+        this.updateBacklogDescDetailsZad($(el).val(), id);
 
         $(el).closest('tr').removeClass('activetr');
         $(el).closest('td').attr('idesc', $(el).val());
         $(el).closest('td').html(MapTextAreaHtml(replaceTags($(el).val())));
-        
+
     },
-    updateBacklogDescDetailsZad:function(desc,id){
-        
+    updateBacklogDescDetailsZad: function (desc, id) {
+
         var json = initJSON();
         json.kv.id = id;
         json.kv.description = desc;
@@ -5714,22 +5724,22 @@ UserStory.prototype = {
     toogleBacklogDescEdit: function (e, id) {
         $(".descriptiontable tr").removeClass("activetr");
         var inp = $('<textarea type="text" class="form-control newinp1" style="border:white;" >')
-                .css("width", "100%")
-                .attr("onfocusout", "new UserStory().updateBacklogDesc(this,'" + id + "')")
-                .attr("id", "id_" + id)
+            .css("width", "100%")
+            .attr("onfocusout", "new UserStory().updateBacklogDesc(this,'" + id + "')")
+            .attr("id", "id_" + id)
 
-                .val($(e).attr('idesc'))
+            .val($(e).attr('idesc'))
 
         $(e).html(inp);
         $(e).parent("tr").addClass("activetr");
 
         inp.focus();
 
-//        $("#id_" + id).keyup(function (event) {
-//            if (event.keyCode === 13) {
-//                new UserStory().updateBacklogDesc(this, id);
-//            }
-//        });
+        //        $("#id_" + id).keyup(function (event) {
+        //            if (event.keyCode === 13) {
+        //                new UserStory().updateBacklogDesc(this, id);
+        //            }
+        //        });
 
     },
 
@@ -5739,7 +5749,7 @@ UserStory.prototype = {
         if (backlogs.length === 0 || labels.length === 0) {
             return
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5773,7 +5783,7 @@ UserStory.prototype = {
         if (backlogs.length === 0 || labels.length === 0) {
             return
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5809,7 +5819,7 @@ UserStory.prototype = {
         if (backlogs.length === 0 || sprints.length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5844,7 +5854,7 @@ UserStory.prototype = {
         if (backlogs.length === 0 || sprints.length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -5885,11 +5895,11 @@ UserStory.prototype = {
 
 
 
-//        var res =  $("#smb-details-generalview").html();
-//        newWin = window.open("");
-//        newWin.document.write(res);
-//        newWin.print();
-//        newWin.close();
+        //        var res =  $("#smb-details-generalview").html();
+        //        newWin = window.open("");
+        //        newWin.document.write(res);
+        //        newWin.print();
+        //        newWin.close();
 
         var mywindow = window.open('', 'my div', 'height=1000px,width=1200px');
         mywindow.document.write('<html><head><title></title>');
@@ -5903,11 +5913,11 @@ UserStory.prototype = {
             // do whatever you want to do    
             mywindow.print();
         }, 600);
-//        mywindow.print();
-////        mywindow.document.close();
-//        mywindow.document.close();
-//        mywindow.print();
-//        mywindow.close();
+        //        mywindow.print();
+        ////        mywindow.document.close();
+        //        mywindow.document.close();
+        //        mywindow.print();
+        //        mywindow.close();
 
     },
     toPDF: function () {
@@ -5936,18 +5946,18 @@ UserStory.prototype = {
         // all coords and widths are in jsPDF instance's declared units
         // 'inches' in this case
         pdf.fromHTML(
-                source, // HTML string or DOM elem ref.
-                margins.left, // x coord
-                margins.top, {// y coord
-                    'width': margins.width, // max width of content on PDF
-                    'elementHandlers': specialElementHandlers
-                },
-                function (dispose) {
-                    // dispose: object with X, Y of the last line add to the PDF 
-                    //          this allow the insertion of new lines after html
-                    pdf.save('Test.pdf');
-                }, margins
-                );
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, {// y coord
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('Test.pdf');
+            }, margins
+        );
     },
     toDOC: function () {
 
@@ -5967,32 +5977,32 @@ UserStory.prototype = {
         fileDownload.download = 'document.doc';
         fileDownload.click();
         document.body.removeChild(fileDownload);
-//        var mywindow = window.open('', 'my div', 'height=1000px,width=1200px');
-//
-//        var st =('<html><head><title></title>');
-//        st +=('<link rel="stylesheet" href="http://www.test.com/style.css" type="text/css" />');
-//       st +=('<link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">');
-//        st +=('<link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">');
-//       st +=('<style type="text/css">.test { color:red; } </style></head><body>');
-//       st +=($("#smb-details-generalview").html());
-//       st +=('</body></html>');
+        //        var mywindow = window.open('', 'my div', 'height=1000px,width=1200px');
+        //
+        //        var st =('<html><head><title></title>');
+        //        st +=('<link rel="stylesheet" href="http://www.test.com/style.css" type="text/css" />');
+        //       st +=('<link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">');
+        //        st +=('<link rel="stylesheet" href="resource/css/bs4/bs4-custom.css">');
+        //       st +=('<style type="text/css">.test { color:red; } </style></head><body>');
+        //       st +=($("#smb-details-generalview").html());
+        //       st +=('</body></html>');
 
 
-//        window.setTimeout(function () {
-//            // do whatever you want to do    
-//            mywindow.print();
-//        }, 600);
-//$('#smb-details-generalview').html();
-//        var elHtml =  $('#smb-details-generalview').html();
-//        var link = document.createElement('a');
-//        link.setAttribute('download', 'tags.doc');
-//        link.setAttribute('href', 'data:' + 'text/doc' + ';charset=utf-8,' + encodeURIComponent(elHtml));
-//        link.click();
+        //        window.setTimeout(function () {
+        //            // do whatever you want to do    
+        //            mywindow.print();
+        //        }, 600);
+        //$('#smb-details-generalview').html();
+        //        var elHtml =  $('#smb-details-generalview').html();
+        //        var link = document.createElement('a');
+        //        link.setAttribute('download', 'tags.doc');
+        //        link.setAttribute('href', 'data:' + 'text/doc' + ';charset=utf-8,' + encodeURIComponent(elHtml));
+        //        link.click();
     },
     addTaskType: function () {
 
         if ($('#addTaskType_showcomment').is(':checked')
-                && isCanvasContextExist('canvasdiv_taskType')) {
+            && isCanvasContextExist('canvasdiv_taskType')) {
             try {
                 this.loadPicture4TestCase();
             } catch (err) {
@@ -6000,7 +6010,7 @@ UserStory.prototype = {
         }
 
         if ($('#file4AddTaskType').val().trim().length > 0) {
-//            this.sendFileForComment4Task();
+            //            this.sendFileForComment4Task();
             this.sendFileForAddTaskType();
         } else {
             this.addTaskTypeDetails('');
@@ -6012,7 +6022,7 @@ UserStory.prototype = {
         if (!id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6030,8 +6040,8 @@ UserStory.prototype = {
             success: function (res) {
                 $('#comment_status_' + id).html('ongoing');
                 $('#comment_status_' + id).removeAttr("class")
-                        .addClass('us-item-status-ongoing');
-//                that.loadBacklogTask();
+                    .addClass('us-item-status-ongoing');
+                //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             }
         });
@@ -6040,7 +6050,7 @@ UserStory.prototype = {
         if (!id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6058,8 +6068,8 @@ UserStory.prototype = {
             success: function (res) {
                 $('#comment_status_' + id).html('new');
                 $('#comment_status_' + id).removeAttr("class")
-                        .addClass('us-item-status-new');
-//                that.loadBacklogTask();
+                    .addClass('us-item-status-new');
+                //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             }
         });
@@ -6092,7 +6102,7 @@ UserStory.prototype = {
         }
 
         $('#addTaskType_addbutton').hide();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6153,7 +6163,7 @@ UserStory.prototype = {
     addSourcedIconToUserStory: function (res) {
         var st = '';
         if (res.kv.isSourced === "true") {
-//            st = ' <i class="fa fa-cube" style="color: darkred;">&nbsp;</i>';
+            //            st = ' <i class="fa fa-cube" style="color: darkred;">&nbsp;</i>';
         }
         $('#container-us-body').find('.us-selected').first().find('span').first().html((st));
     },
@@ -6172,8 +6182,8 @@ UserStory.prototype = {
     },
     refreshCurrentBacklog: function () {
         if (global_var.current_backlog_id.length > 0 &&
-                $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').html()) {
-            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function () {});
+            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').html()) {
+            $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().each(function () { });
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().focus();
             $('#container-us-body').find('tr[sid=' + global_var.current_backlog_id + ']').first().find('a').first().click();
         } else {
@@ -6181,8 +6191,8 @@ UserStory.prototype = {
         }
     },
     toggleDetailedFilter: function (e) {
-//        if ($(e).is(":checked")) {
-//            $('#us_detailed_filter_div').show();
+        //        if ($(e).is(":checked")) {
+        //            $('#us_detailed_filter_div').show();
         if ($('.drop-filter-menu').hasClass('show')) {
             console.log('has')
             $('.drop-filter-menu').removeClass('show');
@@ -6192,20 +6202,20 @@ UserStory.prototype = {
         }
 
 
-//            if (global_var.current_view === 'detailed') {
-//                $('#container-us-body-main').attr("style", "height:30vh");
-//            }
-//        } else {
-//            $('#us_detailed_filter_div').hide();
-//            if (global_var.current_view === 'detailed') {
-//                $('#container-us-body-main').attr("style", "height:50vh");
-//            }
-//        }
+        //            if (global_var.current_view === 'detailed') {
+        //                $('#container-us-body-main').attr("style", "height:30vh");
+        //            }
+        //        } else {
+        //            $('#us_detailed_filter_div').hide();
+        //            if (global_var.current_view === 'detailed') {
+        //                $('#container-us-body-main').attr("style", "height:50vh");
+        //            }
+        //        }
     },
     changeStatusIconOfUserStory: function (res) {
         var st = '<div class="us-list-item   us-item-status-' +
-                replaceTags(res.kv.backlogStatus) + '">'
-                + replaceTags(res.kv.backlogStatus) + '</div>';
+            replaceTags(res.kv.backlogStatus) + '">'
+            + replaceTags(res.kv.backlogStatus) + '</div>';
         $('#container-us-body').find('.us-selected').first().find('.backlog-status').first().html(st);
     },
     changeStatusIconOfUserStoryByStoryId: function (id, status) {
@@ -6224,7 +6234,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6262,7 +6272,7 @@ UserStory.prototype = {
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6318,7 +6328,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6345,7 +6355,7 @@ UserStory.prototype = {
 
                 $('#updateTaskTypeModal').modal('hide');
                 $('#smb-details-tasks').find('input[id=' + $('#updateTaskType_id').val() + ']').prop("checked", "true");
-//                that.backlogTaskListItemCheck($('#smb-details-tasks').find('input[id=' + $('#updateTaskType_id').val() + ']').first());
+                //                that.backlogTaskListItemCheck($('#smb-details-tasks').find('input[id=' + $('#updateTaskType_id').val() + ']').first());
                 that.changeStatusIconOfUserStory(res);
                 that.refreshCurrentBacklog();
                 that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
@@ -6363,7 +6373,7 @@ UserStory.prototype = {
         this.getBacklogTaskInfo(id);
     },
     getBacklogTaskInfo: function (id) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6395,14 +6405,14 @@ UserStory.prototype = {
         $('#updateTaskType_estiamtedhours').val(replaceTags(res.tbl[0].r[0].estimatedHours));
         $('#updateTaskType_spenthours').val(replaceTags(res.tbl[0].r[0].spentHours));
         $('#updateTaskType_status').val(replaceTags(res.tbl[0].r[0].taskStatus));
-//        this.getBacklogTaskInfoDetails4Notifier(res);
+        //        this.getBacklogTaskInfoDetails4Notifier(res);
     },
     getBacklogTaskInfoDetails4Notifier: function (res) {
         var obj = res.tbl[0].r[0].fkNotifierId.split('%IN%');
-//        console.log('notifier='+obj);
+        //        console.log('notifier='+obj);
         for (var n = 0; n < obj.length; n++) {
             $('#updateTaskTypeModal').find('input[id=' + obj[n] + ']').each(function () {
-//                console.log('val='+$(this).val());
+                //                console.log('val='+$(this).val());
                 $(this).prop('checked', true);
             });
         }
@@ -6415,7 +6425,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6436,11 +6446,11 @@ UserStory.prototype = {
                 $('.task-card-UserStory-edit-exit').click();
 
 
-//                that.addSourcedIconToUserStory(res);
-//                that.loadBacklogTask();
-//                that.changeStatusIconOfUserStory(res);
-//                that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
-//                new Project().getProjectStatList();
+                //                that.addSourcedIconToUserStory(res);
+                //                that.loadBacklogTask();
+                //                that.changeStatusIconOfUserStory(res);
+                //                that.updateStatusOfBacklogBySourcedId(global_var.current_backlog_id);
+                //                new Project().getProjectStatList();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -6448,7 +6458,7 @@ UserStory.prototype = {
         });
     },
     loadBacklogTask: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6479,7 +6489,7 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6511,7 +6521,7 @@ UserStory.prototype = {
     showCloseBacklogTaskModal: function (id) {
         $('#closeBacklogTask_spenthours').attr('pid', id);
         Utility.focus('closeBacklogTask_spenthours');
-//        $('#').focus();
+        //        $('#').focus();
     },
     closeBacklogTask: function (e) {
         if (!$('#closeBacklogTask_spenthours').val()) {
@@ -6519,12 +6529,12 @@ UserStory.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.id = global_var.current_us_task_id;
+        //        json.kv.id = global_var.current_us_task_id;
         json.kv.id = $('#closeBacklogTask_spenthours').attr('pid')
         json.kv.spentHours = $('#closeBacklogTask_spenthours').val();
         var that = this;
@@ -6551,8 +6561,8 @@ UserStory.prototype = {
         });
     },
     backlogTaskListItemCheck: function (e) {
-//       '<input class="backlogTaskListItemChecked" onclick="new UserStory().backlogTaskListItemCheck(this)" type="checkbox" id="' + obj[n].id + '">')).
-//               var checked = $("input[id=" + id + "]:checked").length;
+        //       '<input class="backlogTaskListItemChecked" onclick="new UserStory().backlogTaskListItemCheck(this)" type="checkbox" id="' + obj[n].id + '">')).
+        //               var checked = $("input[id=" + id + "]:checked").length;
         if ($(e).is(":checked")) {
             $('.backlogTaskListItemChecked').not(e).prop("checked", false);
             $('.us-task-enable').attr("style", "pointer-events:default;");
@@ -6571,8 +6581,8 @@ UserStory.prototype = {
             }
         } else {
             $('.us-task-enable').attr("style", "pointer-events:none;color:gray;")
-//            global_var.current_us_task_id = '';
-//            Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
+            //            global_var.current_us_task_id = '';
+            //            Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
         }
 
 
@@ -6587,7 +6597,7 @@ UserStory.prototype = {
 
         $(el).closest('td').find('.fa-stop-circle').first().show();
         $(el).hide();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6603,11 +6613,11 @@ UserStory.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                that.loadBacklogTask();
+                //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
     },
@@ -6618,7 +6628,7 @@ UserStory.prototype = {
 
         $(el).closest('td').find('.fa-play-circle').first().show();
         $(el).hide();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6634,11 +6644,11 @@ UserStory.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                that.loadBacklogTask();
+                //                that.loadBacklogTask();
                 that.refreshCurrentBacklog();
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
     },
@@ -6648,7 +6658,7 @@ UserStory.prototype = {
         }
 
         var r = 0;
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6670,208 +6680,208 @@ UserStory.prototype = {
                 r = res.kv.diff;
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
         return r;
     },
     loadBacklogTaskDetails: function (res) {
-//        console.log('json->'+JSON.stringify(res));
+        //        console.log('json->'+JSON.stringify(res));
         $('#tblBacklogTaskList > tbody').html("");
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
 
                 var imgAssigneeLink = obj[n].assigneeImageUrl.length === 0
-                        ? fileUrl(new User().getDefaultUserprofileName())
-                        : fileUrl(obj[n].assigneeImageUrl);
+                    ? fileUrl(new User().getDefaultUserprofileName())
+                    : fileUrl(obj[n].assigneeImageUrl);
                 var imgAssignee = $('<img></img>')
-                        .addClass('figure-img img-fluid rounded-circle')
-                        .attr('style', 'max-width:25px;margin:5px;')
-                        .attr('src', imgAssigneeLink)
-                        ;
+                    .addClass('figure-img img-fluid rounded-circle')
+                    .attr('style', 'max-width:25px;margin:5px;')
+                    .attr('src', imgAssigneeLink)
+                    ;
                 var stDel = obj[n].taskStatus === 'new' ?
-                        $('<a></a>')
+                    $('<a></a>')
                         .addClass("us-edit")
                         .attr('href', "#")
                         .attr('onclick', "new UserStory().deleteBacklogTask('" + obj[n].id + "')")
                         .append($('<i></i>').addClass("fa fa-trash"))
                         .append(" Delete")
-                        : "";
+                    : "";
                 var isBugLine = obj[n].bugCount > 0 ?
-                        $('<span></span>')
+                    $('<span></span>')
                         .append($('<i></i>')
-                                .addClass("fa fa-bug")
-                                .attr("style", "color:red"))
+                            .addClass("fa fa-bug")
+                            .attr("style", "color:red"))
                         .append(obj[n].bugCount)
-                        : "";
+                    : "";
                 var isUpdatedLine = obj[n].updateCount > 0 ?
-                        $('<span></span>')
+                    $('<span></span>')
                         .append($('<i></i>')
-                                .addClass("fa fa-pencil")
-                                .attr("style", "color:blue"))
+                            .addClass("fa fa-pencil")
+                            .attr("style", "color:blue"))
                         .append(obj[n].updateCount)
-                        : "";
+                    : "";
                 var tr = $('<tr></tr>')
-                        .addClass("backlog_task_list")
-                        .attr('pid', obj[n].id)
-                        .attr('style', 'cursor:pointer')
-                        .attr('ondblclick', 'new UserStory().toggleCommentLines("' + obj[n].id + '")');
+                    .addClass("backlog_task_list")
+                    .attr('pid', obj[n].id)
+                    .attr('style', 'cursor:pointer')
+                    .attr('ondblclick', 'new UserStory().toggleCommentLines("' + obj[n].id + '")');
                 var stopBtn = obj[n].startType === 'P'
-                        ? $('<i></i>')
+                    ? $('<i></i>')
                         .addClass('fa fa-stop-circle')
                         .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
                         .attr('style', 'color:orange;font-size:16px;display:block')
-                        : $('<i></i>')
+                    : $('<i></i>')
                         .addClass('fa fa-stop-circle')
                         .attr('onclick', 'new UserStory().taskStop("' + obj[n].id + '",this)')
                         .attr('style', 'color:orange;font-size:16px;display:none');
                 var startBtn = obj[n].startType !== 'P'
-                        ? $('<i></i>')
+                    ? $('<i></i>')
                         .addClass('fa fa-play-circle')
                         .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
                         .attr('style', 'color:green;font-size:16px;display:block')
-                        : $('<i></i>')
+                    : $('<i></i>')
                         .addClass('fa fa-play-circle')
                         .attr('onclick', 'new UserStory().taskStart("' + obj[n].id + '",this)')
                         .attr('style', 'color:green;font-size:16px;display:none');
                 var diffTime = obj[n].startType === 'P'
-                        ? this.getStartTimeDiff(obj[n].startDate, res.kv.currentDate, obj[n].startTime, res.kv.currentTime)
-                        : "";
+                    ? this.getStartTimeDiff(obj[n].startDate, res.kv.currentDate, obj[n].startTime, res.kv.currentTime)
+                    : "";
 
                 var taskTypeName = obj[n].jiraIssueKey.length > 0
-                        ? replaceTags(obj[n].taskTypeName) + " (" + obj[n].jiraIssueKey + ")"
-                        : replaceTags(obj[n].taskTypeName);
+                    ? replaceTags(obj[n].taskTypeName) + " (" + obj[n].jiraIssueKey + ")"
+                    : replaceTags(obj[n].taskTypeName);
                 tr.append($("<td  class='align-middle' style='text-align: center'></td>")
-                        .append((n + 1)))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(isBugLine))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(isUpdatedLine))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html($('<span></span>')
-                                        .addClass("us-item-status-" + replaceTags(obj[n].taskStatus))
-                                        .append(replaceTags(obj[n].taskStatus))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(taskTypeName))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .append(imgAssignee)
-                                .append(replaceTags(obj[n].assigneeName)))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .append(obj[n].estimatedHours)
-                                .append('/')
-                                .append(obj[n].completedDuration)
-                                .append(" ")
-                                .append((diffTime) ?
-                                        $("<b></b>")
-                                        .attr('style', 'color:green;')
-                                        .append('(+')
-                                        .append(diffTime)
-                                        .append(")")
-                                        : ""
-                                        )
-                                )
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .append(startBtn)
-                                .append(stopBtn)
-                                )
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(Utility.convertDate(obj[n].createdDate) + '/ ' + Utility.convertDate(obj[n].lastUpdatedDate)))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(replaceTags(obj[n].dependentTaskType1Name) + "<br>" + replaceTags(obj[n].dependentTaskType2Name)))
+                    .append((n + 1)))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(isBugLine))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(isUpdatedLine))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html($('<span></span>')
+                            .addClass("us-item-status-" + replaceTags(obj[n].taskStatus))
+                            .append(replaceTags(obj[n].taskStatus))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(taskTypeName))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .append(imgAssignee)
+                        .append(replaceTags(obj[n].assigneeName)))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .append(obj[n].estimatedHours)
+                        .append('/')
+                        .append(obj[n].completedDuration)
+                        .append(" ")
+                        .append((diffTime) ?
+                            $("<b></b>")
+                                .attr('style', 'color:green;')
+                                .append('(+')
+                                .append(diffTime)
+                                .append(")")
+                            : ""
+                        )
+                    )
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .append(startBtn)
+                        .append(stopBtn)
+                    )
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(Utility.convertDate(obj[n].createdDate) + '/ ' + Utility.convertDate(obj[n].lastUpdatedDate)))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(replaceTags(obj[n].dependentTaskType1Name) + "<br>" + replaceTags(obj[n].dependentTaskType2Name)))
 
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center;font-size:19px;")
-                                .html($('<a></a>')
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center;font-size:19px;")
+                        .html($('<a></a>')
+                            .attr('href', "#")
+                            .attr("data-toggle", "modal")
+                            .attr("data-target", "#addComment4TaskModal")
+                            .attr("onclick", "new UserStory().addComment4TaskModal(this,\'" + obj[n].id + "\')")
+                            .append($('<i></i>').addClass('fa fa-commenting-o'))))
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html($('<div></div>')
+                            .addClass('dropdown')
+                            .append($("<button></button")
+                                .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
+                                .attr('type', 'button')
+                                .attr('data-toggle', 'dropdown')
+                                .append($('<span></span>').addClass("caret"))
+                            )
+                            .append($('<u></u>')
+                                .addClass("dropdown-menu")
+                                .attr("style", "line-height: 1.6em;text-decoration: none !important;")
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
                                         .attr('href', "#")
+                                        .addClass("us-edit")
+                                        //                                                                .attr("data-toggle", "modal")
+                                        .attr("data-target", "#updateTaskTypeModal")
+                                        .attr("onclick", "new UserStory().setUSTaskAsOngoing(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-edit'))
+                                        .append(" Set as Ongoing")))
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
+                                        .attr('href', "#")
+                                        .addClass("us-edit")
                                         .attr("data-toggle", "modal")
-                                        .attr("data-target", "#addComment4TaskModal")
-                                        .attr("onclick", "new UserStory().addComment4TaskModal(this,\'" + obj[n].id + "\')")
-                                        .append($('<i></i>').addClass('fa fa-commenting-o'))))
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html($('<div></div>')
-                                        .addClass('dropdown')
-                                        .append($("<button></button")
-                                                .addClass('"btn btn-primary dropdown-toggle us-prop-btn')
-                                                .attr('type', 'button')
-                                                .attr('data-toggle', 'dropdown')
-                                                .append($('<span></span>').addClass("caret"))
-                                                )
-                                        .append($('<u></u>')
-                                                .addClass("dropdown-menu")
-                                                .attr("style", "line-height: 1.6em;text-decoration: none !important;")
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-//                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#updateTaskTypeModal")
-                                                                .attr("onclick", "new UserStory().setUSTaskAsOngoing(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-edit'))
-                                                                .append(" Set as Ongoing")))
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#closeBacklogTaskModal")
-                                                                .attr("onclick", "new UserStory().showCloseBacklogTaskModal(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-edit'))
-                                                                .append(" Close Task")))
-                                                .append($('<li></li>')
-                                                        .append($('<a></a>')
-                                                                .attr('href', "#")
-                                                                .addClass("us-edit")
-                                                                .attr("data-toggle", "modal")
-                                                                .attr("data-target", "#updateTaskTypeModal")
-                                                                .attr("onclick", "new UserStory().showUpdateBacklogTaskModal(\'" + obj[n].id + "\')")
-                                                                .append($('<i></i>').addClass('fa fa-edit'))
-                                                                .append(" Edit")))
-                                                .append($('<li></li>').append(stDel))
-                                                )
-                                        )
-                                )
-                        ;
+                                        .attr("data-target", "#closeBacklogTaskModal")
+                                        .attr("onclick", "new UserStory().showCloseBacklogTaskModal(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-edit'))
+                                        .append(" Close Task")))
+                                .append($('<li></li>')
+                                    .append($('<a></a>')
+                                        .attr('href', "#")
+                                        .addClass("us-edit")
+                                        .attr("data-toggle", "modal")
+                                        .attr("data-target", "#updateTaskTypeModal")
+                                        .attr("onclick", "new UserStory().showUpdateBacklogTaskModal(\'" + obj[n].id + "\')")
+                                        .append($('<i></i>').addClass('fa fa-edit'))
+                                        .append(" Edit")))
+                                .append($('<li></li>').append(stDel))
+                            )
+                        )
+                    )
+                    ;
                 $('#tblBacklogTaskList > tbody').append(tr);
                 var rs = this.fillCommentListByTaskWithReturn(obj[n].id);
                 var div = $('<div></div>')
-                        .addClass('col')
-                        .addClass('task-child-comment')
-                        .attr('id', 'div_' + obj[n].id)
-                        .append(rs);
+                    .addClass('col')
+                    .addClass('task-child-comment')
+                    .attr('id', 'div_' + obj[n].id)
+                    .append(rs);
                 var tr1 = $('<tr  class="backlog_task_list"></tr>').attr('pid', obj[n].id);
                 tr1.append($("<td  class='align-middle' style='padding-left:40px; text-align: center'></td>").html('')).
-                        append($("<td class='align-middle' style='text-align: center'></td>").html(''))
-//                        append($("<td></td>")
-//                                .addClass('align-middle')
-//                                .attr("style", "text-align: center")
-//                                .html('')).
-                        .append($("<td></td>")
-                                .addClass('align-middle')
-                                .attr("style", "text-align: center")
-                                .html(''))
-                        .append($("<td class='align-middle'  style='text-align: left' colspan=7></td>").append(div));
+                    append($("<td class='align-middle' style='text-align: center'></td>").html(''))
+                    //                        append($("<td></td>")
+                    //                                .addClass('align-middle')
+                    //                                .attr("style", "text-align: center")
+                    //                                .html('')).
+                    .append($("<td></td>")
+                        .addClass('align-middle')
+                        .attr("style", "text-align: center")
+                        .html(''))
+                    .append($("<td class='align-middle'  style='text-align: left' colspan=7></td>").append(div));
                 $('#tblBacklogTaskList > tbody').append(tr1);
                 if ($('#userstory_task_comment_toogle').is(':checked')) {
                     $('.task-child-comment').show();
@@ -6886,11 +6896,11 @@ UserStory.prototype = {
     setEmplyTaskListMessage: function () {
         $('#tblBacklogTaskList > tbody').html('');
         var innerHTML = '<tr><td colspan="12" style="padding:30px;text-align:center">' +
-                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                '<h5> No Tasks have been selected or created on this User Story</h5>' +
-                '<p>All Task related to the User Story on this project will appear here</p>' +
-                '<p>Please Select User Story</p>' +
-                '</td></tr>';
+            '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+            '<h5> No Tasks have been selected or created on this User Story</h5>' +
+            '<p>All Task related to the User Story on this project will appear here</p>' +
+            '<p>Please Select User Story</p>' +
+            '</td></tr>';
         $('#tblBacklogTaskList > tbody').html(innerHTML);
     },
     toggleCommentLines: function (id) {
@@ -6902,7 +6912,7 @@ UserStory.prototype = {
         setGlobalActiveCanvas(global_var.canvas.taskType);
     },
     addAssigneeToTaskType: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6928,7 +6938,7 @@ UserStory.prototype = {
         });
     },
     updateAssigneeToTaskType: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -6958,8 +6968,8 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#updateTaskType_assignee').append($("<option></option>")
-                    .attr("value", obj[n].fkUserId)
-                    .text(obj[n].userName));
+                .attr("value", obj[n].fkUserId)
+                .text(obj[n].userName));
         }
     },
     updateNotifieroTaskTypeDetails: function (res) {
@@ -6973,7 +6983,7 @@ UserStory.prototype = {
             }
             st += '<td>'
             st += ' <input type="checkbox" class="addTaskType_nofity"  id="'
-                    + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -6986,8 +6996,8 @@ UserStory.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 $('#addTaskType_assignee').append($("<option></option>")
-                        .attr("value", obj[n].fkUserId)
-                        .text(replaceTags(obj[n].userName)));
+                    .attr("value", obj[n].fkUserId)
+                    .text(replaceTags(obj[n].userName)));
             }
         } catch (e) {
         }
@@ -7004,7 +7014,7 @@ UserStory.prototype = {
                 }
                 st += '<td>'
                 st += ' <input type="checkbox" class="addTaskType_nofity"   value="'
-                        + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+                    + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
                 st += '</td>'
 
             }
@@ -7014,7 +7024,7 @@ UserStory.prototype = {
         $('#addTaskType_notifier').html(st);
     },
     addTaskTypesToCombo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7040,7 +7050,7 @@ UserStory.prototype = {
         });
     },
     updateTaskTypesToCombo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7073,11 +7083,11 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#addTaskType_tasktype1').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
             $('#addTaskType_tasktype2').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
         }
     },
     addTaskTypes1_2ToComboDetails4Update: function (res) {
@@ -7088,11 +7098,11 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#updateTaskType_tasktype1').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
             $('#updateTaskType_tasktype2').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
         }
     },
     addTaskTypesToComboDetails: function (res) {
@@ -7100,8 +7110,8 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#addTaskType_tasktype').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
         }
     },
     addTaskTypesToComboDetails4Update: function (res) {
@@ -7109,8 +7119,8 @@ UserStory.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#updateTaskType_tasktype').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
         }
     },
     check4Inputs: function () {
@@ -7127,11 +7137,11 @@ UserStory.prototype = {
         }
 
         if ($('#us-ipo-inputdescription').val().trim().length === 0) {
-//            Toaster.showError("Please enter Input Description!");
+            //            Toaster.showError("Please enter Input Description!");
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7154,7 +7164,7 @@ UserStory.prototype = {
 
 
                 that.refreshCurrentInput();
-//                that.genIPOInputDescList();
+                //                that.genIPOInputDescList();
                 $('#us-ipo-inputdescription').val('');
                 $('#us-ipo-inputdescription').focus();
             },
@@ -7175,11 +7185,11 @@ UserStory.prototype = {
         }
 
         if ($(el).val().trim().length === 0) {
-//            Toaster.showError("Please enter Input Description!");
+            //            Toaster.showError("Please enter Input Description!");
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7228,11 +7238,11 @@ UserStory.prototype = {
         }
 
         if ($(el).val().trim().length === 0) {
-//            Toaster.showError("Please enter Input Description!");
+            //            Toaster.showError("Please enter Input Description!");
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7255,7 +7265,7 @@ UserStory.prototype = {
 
 
                 that.refreshCurrentInput();
-//                that.genIPOInputDescList();
+                //                that.genIPOInputDescList();
                 $('#us-ipo-inputdescription').val('');
                 $('#us-ipo-inputdescription').focus();
 
@@ -7280,7 +7290,7 @@ UserStory.prototype = {
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
                 $(el).focus();
 
             },
@@ -7292,10 +7302,10 @@ UserStory.prototype = {
     },
 
     setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew: function (res) {
-//        res = replaceJSON(res);
+        //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
-//        try {
-//        var ind = getIndexOfTable(res, "inputDescListTable");
+        //        try {
+        //        var ind = getIndexOfTable(res, "inputDescListTable");
         var ind = 0;
         var table = "";
 
@@ -7318,12 +7328,12 @@ UserStory.prototype = {
         var idx = 1;
 
         var table = $('<table ></table>')
-                .addClass('table')
-                // .addClass('table-hover')
-                .addClass('spilted')
+            .addClass('table')
+            // .addClass('table-hover')
+            .addClass('spilted')
 
-                .attr('border', '1')
-                .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
+            .attr('border', '1')
+            .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
 
 
         var tbody = $('<tbody></tbody>');
@@ -7339,20 +7349,20 @@ UserStory.prototype = {
 
             var tr = $('<tr></tr>').append($('<td></td>').html(idx++));
             tr.append($('<td></td>')
-                    .addClass('pdfHide')
-                    .append($('<input type="checkbox">')
-                            .addClass("us-output-list-item-check-box-class-new")
-                            .val(obj[i].id)));
+                .addClass('pdfHide')
+                .append($('<input type="checkbox">')
+                    .addClass("us-output-list-item-check-box-class-new")
+                    .val(obj[i].id)));
 
 
             tr.append($('<td></td>')
-                    .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
-                    .attr("iname", replaceTags(Replace2Primes(inputName)))
-                    .attr('class', 'description-left')
-                    .append(inputName)
-                    .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
+                .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
+                .attr("iname", replaceTags(Replace2Primes(inputName)))
+                .attr('class', 'description-left')
+                .append(inputName)
+                .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                            + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
+                    + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew(this,\'' + obj[i].id + '\')">Delete</button>\n\
@@ -7372,26 +7382,26 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().removeSendSaveTo(this,\'' + obj[i].id + '\')">Remove Send/Save Data To Story Card (API)</button>\n\
 </div>\n\
 </div>'
-                            + '</div>'));
+                    + '</div>'));
             ;
 
 
 
 
-//            tr.append($('<td></td>').html(obj[i].tableName));
+            //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('class', 'description-style-background')
-                    .addClass("text-left")
-                    .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
-                    .append($('<input type="text">')
-                            .attr("iid", obj[i].id)
-                            .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
-//                            .attr("placeholder", "Add new description")
-                            .attr('class', 'description-style')
-                            .attr('id', 'focuse_me')
-                            .addClass('pdfHide')
-                            )
-                    );
+                .attr('class', 'description-style-background')
+                .addClass("text-left")
+                .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
+                .append($('<input type="text">')
+                    .attr("iid", obj[i].id)
+                    .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
+                    //                            .attr("placeholder", "Add new description")
+                    .attr('class', 'description-style')
+                    .attr('id', 'focuse_me')
+                    .addClass('pdfHide')
+                )
+            );
 
 
             $("#iid" + obj[i].id).keyup(function (event) {
@@ -7406,9 +7416,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         table.append(this.getTableHeader4OutputTable(trcount));
         table.append(tbody);
         var div = $('<div></div>').attr('id', 'sub_tbl_')
-                .addClass('col-12')
-                .css("padding", "0px")
-                .addClass('sub_table');
+            .addClass('col-12')
+            .css("padding", "0px")
+            .addClass('sub_table');
 
         div.append(table);
         return div;
@@ -7424,11 +7434,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         if ($('#us-ipo-inputname-output').val().trim().length === 0) {
-//            Toaster.showError("Please enter Input name!");
+            //            Toaster.showError("Please enter Input name!");
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7471,12 +7481,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         if ($('#us-ipo-inputname').val().trim().length === 0) {
-//            Toaster.showError("Please enter Input name!");
+            //            Toaster.showError("Please enter Input name!");
             return;
         }
 
         this.insertNewInputTotal();
-//        this.genGUIDesign();
+        //        this.genGUIDesign();
         dragResize()
     },
     insertNewInputNew: function (el, action) {
@@ -7496,12 +7506,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         if (inputName.trim().length === 0) {
-//            Toaster.showError("Please enter Input name!");
+            //            Toaster.showError("Please enter Input name!");
             return;
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7549,7 +7559,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
 
                 $('#newInputId').val('');
                 $('#newOutputId').val('');
@@ -7576,7 +7586,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (global_var.current_backlog_id.length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7623,12 +7633,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     loadSUSList4Input: function () {
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.id = "1";
+        //        json.kv.id = "1";
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = "backlogName";
         var that = this;
@@ -7653,7 +7663,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7676,7 +7686,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 }
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
     },
@@ -7692,8 +7702,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id !== global_var.current_backlog_id) {
                     $('.event_details1 .us-gui-component-rel-sus-id').append($("<option></option>")
-                            .attr("value", obj[n].id)
-                            .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " "));
+                        .attr("value", obj[n].id)
+                        .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " "));
                 }
             }
             // sortSelectBox('us-gui-component-rel-sus-id');
@@ -7708,8 +7718,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id != global_var.current_backlog_id) {
                     $('.us-gui-component-in-section').append($("<option></option>")
-                            .attr("value", obj[n].id)
-                            .text(replaceTags(obj[n].inputName)));
+                        .attr("value", obj[n].id)
+                        .text(replaceTags(obj[n].inputName)));
                 }
             }
         } catch (err) {
@@ -7719,8 +7729,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!$(e).val()) {
             return;
         }
-//        this.updateInputBySUSId(e);
-        var json = {kv: {}};
+        //        this.updateInputBySUSId(e);
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7751,7 +7761,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7783,13 +7793,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#us-related-apis').val(res.kv.id);
                 $('#sus-api-output-id').html("");
                 $('#sus-api-output-id')
-                        .append($("<option></option>").val('').text(''))
-                        .append($("<option></option>").val('-2').text(' New'))
-                        .append($("<option disabled></option>").val('').text(''))
-                        ;
-//                
+                    .append($("<option></option>").val('').text(''))
+                    .append($("<option></option>").val('-2').text(' New'))
+                    .append($("<option disabled></option>").val('').text(''))
+                    ;
+                //                
                 $('#addRelatedSourceModal-new').val('');
-//                
+                //                
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -7811,10 +7821,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('.create-new-storycard-4-select').show();
             $('#sus-api-output-id').html("");
             $('#sus-api-output-id')
-                    .append($("<option></option>").val('').text(''))
-                    .append($("<option></option>").val('-2').text(' New'))
-                    .append($("<option disabled></option>").val('').text(''))
-                    ;
+                .append($("<option></option>").val('').text(''))
+                .append($("<option></option>").val('-2').text(' New'))
+                .append($("<option disabled></option>").val('').text(''))
+                ;
             return;
         }
 
@@ -7830,14 +7840,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     loadAPIOutput4SelectNewDemo: function (val) {
         $('#sus-api-output-id').html("");
         $('#sus-api-output-id')
-                .append($("<option></option>").val('').text(''))
-                .append($("<option></option>").val('-2').text(' New'))
-                .append($("<option disabled></option>").val('').text(''))
-                ;
+            .append($("<option></option>").val('').text(''))
+            .append($("<option></option>").val('-2').text(' New'))
+            .append($("<option disabled></option>").val('').text(''))
+            ;
 
         var actionType = $('#us-related-api-input-actiontype').val() === 'send' ? "IN" : "OUT"
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7870,7 +7880,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         global_var.last_select_from_us_id = $(e).val();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7900,7 +7910,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -7931,8 +7941,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#sendDataToModal-sus-api-output-id');
         for (var n = 0; n < obj.length; n++) {
             $('#sendDataToModal-sus-api-output-id').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].inputName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].inputName)));
         }
     },
 
@@ -7959,7 +7969,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8007,8 +8017,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
             for (var n = 0; n < obj.length; n++) {
                 $('#sus-api-output-id').append($("<option></option>")
-                        .attr("value", obj[n].id)
-                        .text(replaceTags(obj[n].inputName)));
+                    .attr("value", obj[n].id)
+                    .text(replaceTags(obj[n].inputName)));
             }
 
             sortSelectBox('sus-api-output-id');
@@ -8016,10 +8026,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         $('#sus-api-output-id')
-                .append($("<option></option>").val('').text(''))
-                .append($("<option></option>").val('-2').text(' New'))
-                .append($("<option disabled></option>").val('').text(''))
-                ;
+            .append($("<option></option>").val('').text(''))
+            .append($("<option></option>").val('-2').text(' New'))
+            .append($("<option disabled></option>").val('').text(''))
+            ;
 
     },
     getOutputBySUSIdDetails: function (res) {
@@ -8028,8 +8038,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#sus-output-id');
         for (var n = 0; n < obj.length; n++) {
             $('#sus-output-id').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].inputName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].inputName)));
         }
     },
 
@@ -8039,7 +8049,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8056,7 +8066,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
-//                closeModal('addRelatedSUSOutputModal');
+                //                closeModal('addRelatedSUSOutputModal');
                 //do something here
             },
             error: function () {
@@ -8143,16 +8153,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-//        if ($('#indesc_shouldautofillfrom').is(":checked")) {
-//            this.updateInputBySUSOutputId();
-//        }
+        //        if ($('#indesc_shouldautofillfrom').is(":checked")) {
+        //            this.updateInputBySUSOutputId();
+        //        }
 
         var checkedInputIds = global_var.active_input_desc_type === 'IN'
-                ? this.getCheckedInputsNew()
-                : this.getCheckedOutputsNew();
+            ? this.getCheckedInputsNew()
+            : this.getCheckedOutputsNew();
         var currentInputId = "";
 
-        var json = {"kv": {}, "tbl": [{"r": [], "tn": "inputDescTable"}]};
+        var json = { "kv": {}, "tbl": [{ "r": [], "tn": "inputDescTable" }] };
         json.kv.cookie = getToken();
         $('.indesc_check:checked').each(function () {
             var ln = "";
@@ -8199,7 +8209,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 } else if (global_var.current_modal === 'loadStoryCard') {
                     reloadBacklogListOnStoryCard();
                 }
-//                $('#storyCardListSelectBox').change();
+                //                $('#storyCardListSelectBox').change();
 
 
             }
@@ -8213,7 +8223,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8238,9 +8248,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetailsSyncrone();
 
 
-//////////////////////////  
+                //////////////////////////  
 
-//backlogun canvas parametrleri set edilir
+                //backlogun canvas parametrleri set edilir
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
                 that.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
                 that.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
@@ -8257,7 +8267,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
                 this.updateInputOnChangeAndRefresh();
 
 
@@ -8273,7 +8283,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8291,7 +8301,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 data: data,
-                        loadCurrentBacklogProdDetails();
+                    loadCurrentBacklogProdDetails();
 
                 closeModal('addRelatedSUSOutputModal');
                 that.genIPOInputDescList();
@@ -8309,7 +8319,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8340,7 +8350,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     insertNewInputTotal: function () {
         var iname = $('#us-ipo-inputname').val();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8365,7 +8375,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.addInputByRes(res);
                 SACore.updateBacklogByRes(res);
-//                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
+                //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 loadCurrentBacklogProdDetails();
 
                 //refresh input list
@@ -8373,7 +8383,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#tblIPOList > tbody').html(st);
                 global_var.current_us_input_id = res.kv.id;
                 $('#ipo_tr_' + res.kv.id).click();
-//                $('.us-ipo-input-tr').last().click();
+                //                $('.us-ipo-input-tr').last().click();
 
                 that.generateGUIGeneral();
 
@@ -8423,7 +8433,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     insertSuplementaryOfNewInputTotal: function (inputId, inputName) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8462,7 +8472,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         var srv = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8512,11 +8522,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 }
                 $(e).closest('td').html($(e).val());
 
-//                that.genIPOInputList();
+                //                that.genIPOInputList();
                 $('#us-ipo-inputname-table').val("");
                 $('#us-ipo-inputname').val('');
                 $('#us-ipo-input-id').val('');
-//                $('#us-ipo-inputname').focus();
+                //                $('#us-ipo-inputname').focus();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -8535,7 +8545,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         var srv = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8555,7 +8565,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 $(e).closest('td').attr('idesc', $(e).val());
                 $(e).closest('td').html($(e).val());
-//                that.genIPOOutputList();
+                //                that.genIPOOutputList();
             }
         });
     },
@@ -8571,7 +8581,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
         var srv = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8603,7 +8613,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8637,13 +8647,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-//        this.updateInputOnChangeDynamic("inputContent", $('#gui_input_content').val());
-//        this.updateInputOnChangeDynamic("param3", $('#gui_input_css_style').val());
-//        this.updateInputOnChangeDynamic("param2", $('#gui_input_css_style_container').val());
-//        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
+        //        this.updateInputOnChangeDynamic("inputContent", $('#gui_input_content').val());
+        //        this.updateInputOnChangeDynamic("param3", $('#gui_input_css_style').val());
+        //        this.updateInputOnChangeDynamic("param2", $('#gui_input_css_style_container').val());
+        //        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8666,7 +8676,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 // $('#userstory-gui-input-component-type-content').modal('hide');
                 that.genGUIDesign();
-//                 that.toggleSubmenuIPO();   
+                //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
             },
@@ -8685,13 +8695,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-//        this.updateInputOnChangeDynamic("inputContent", $('#gui_input_content').val());
-//        this.updateInputOnChangeDynamic("param3", $('#gui_input_css_style').val());
-//        this.updateInputOnChangeDynamic("param2", $('#gui_input_css_style_container').val());
-//        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
+        //        this.updateInputOnChangeDynamic("inputContent", $('#gui_input_content').val());
+        //        this.updateInputOnChangeDynamic("param3", $('#gui_input_css_style').val());
+        //        this.updateInputOnChangeDynamic("param2", $('#gui_input_css_style_container').val());
+        //        this.updateInputOnChangeDynamic("param4", this.getInputCSS());
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8714,7 +8724,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.updateInputByRes(res);
                 $('#userstory-gui-input-component-type-content').modal('hide');
                 that.genGUIDesign();
-//                 that.toggleSubmenuIPO();   
+                //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
             },
@@ -8752,11 +8762,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             $('.us-gui-component-rel-sus-div-i').hide();
         }
 
-//        this.updateInputOnChangeDynamic("param1", $(el).val());
+        //        this.updateInputOnChangeDynamic("param1", $(el).val());
 
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8795,10 +8805,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-//        this.updateInputOnChangeDynamic("fkBacklogSectionId", $(el).val());
-//        this.updateInputOnChangeAndRefresh();
+        //        this.updateInputOnChangeDynamic("fkBacklogSectionId", $(el).val());
+        //        this.updateInputOnChangeAndRefresh();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8839,9 +8849,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     setGUIComponentContentModal: function (e) {
 
         $('.input-css-opt').attr('style', 'cursor: pointer;font-size:15px;color:blue;display:block;');
-//        $('.input-css-opt').show();
+        //        $('.input-css-opt').show();
         $(e).hide();
-//        $(e).attr('style','cursor: pointer;font-size:15px;;display:block;');
+        //        $(e).attr('style','cursor: pointer;font-size:15px;;display:block;');
         $('#ipo-1-hisse-setting').toggle(100);
         $('#ipo-1-hisse-input').toggle(100);
         $('#gui_input_content').val('');
@@ -8849,7 +8859,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8865,7 +8875,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 try {
                     $('#gui_input_content').val((res.tbl[0].r[0].inputContent));
                     $('#gui_input_css_style_container').val((res.tbl[0].r[0].param2));
@@ -8875,7 +8885,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 } catch (err) {
                 }
                 //refresh GUI component 
-//                that.genGUIDesign();
+                //                that.genGUIDesign();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -8896,8 +8906,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             for (var n = 0; n < obj.length; n++) {
                 var k = obj[n].split(':')[0];
                 var v = obj[n].split(':')[1];
-//                console.log('k=' + k);
-//                console.log('v=' + v);
+                //                console.log('k=' + k);
+                //                console.log('v=' + v);
                 if (k === 'background-color') {
                     $('#gui_input_background_color').val(v);
                     $('#gui_input_background_color_cbox').prop("checked", true);
@@ -8934,10 +8944,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-//        this.updateAllInputOnChange();
+        //        this.updateAllInputOnChange();
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -8983,7 +8993,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9021,7 +9031,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9043,7 +9053,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetailsSyncrone();
 
                 //refresh GUI component 
-//                that.genGUIDesign();
+                //                that.genGUIDesign();
             },
             error: function () {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
@@ -9068,7 +9078,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9090,7 +9100,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetailsSyncrone();
 
                 //refresh GUI component 
-//                that.genGUIDesign();
+                //                that.genGUIDesign();
             },
             error: function () {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
@@ -9114,10 +9124,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-//        this.updateInputOnChangeDynamic("action", $(e).val());
+        //        this.updateInputOnChangeDynamic("action", $(e).val());
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9167,10 +9177,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-//        this.updateInputOnChangeDynamic("section", $(e).val());
+        //        this.updateInputOnChangeDynamic("section", $(e).val());
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9211,7 +9221,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9245,7 +9255,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9356,7 +9366,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9396,7 +9406,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9428,13 +9438,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st += obj[n].inputName;
                 st += '(<a href="#" \n\
                         onclick="new UserStory().redirectUserStoryCore(\''
-                        + obj[n].fkBacklogId + '\')">'
-                        + replaceTags(obj[n].backlogName) + '</a>)';
+                    + obj[n].fkBacklogId + '\')">'
+                    + replaceTags(obj[n].backlogName) + '</a>)';
                 st += (obj[n].description) ? " <i class='fa fa-question-circle' style='cursor:pointer;color:#4CAF50' \n\
                                     data-toggle='tooltip' \n\
                            title='" + replaceTags(obj[n].description) + "' \n\
                            data-original-title='" + replaceTags(obj[n].description) + "'></i>"
-                        : "";
+                    : "";
                 st += "<br>"
 
             }
@@ -9453,13 +9463,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var st = "";
         try {
 
-//            if (obj.length > 0) {
+            //            if (obj.length > 0) {
             if (res.kv.dependenceBacklogName) {
                 st += '<u>' + replaceTags(res.kv.dependenceInputName)
-                        + " (" + replaceTags(res.kv.dependenceBacklogName) + '): '
-                        + "</u><br>";
+                    + " (" + replaceTags(res.kv.dependenceBacklogName) + '): '
+                    + "</u><br>";
             }
-//            }
+            //            }
             var obj = res.tbl[ind].r;
             for (var n = 0; n < obj.length; n++) {
                 st += '- ' + replaceTags(this.fnline2Text(obj[n].description)) + "<br>";
@@ -9481,7 +9491,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9518,7 +9528,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9562,7 +9572,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9606,7 +9616,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9643,13 +9653,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
         var ids = global_var.active_input_desc_type === 'IN'
-                ? this.getSelectedInputsNew()
-                : this.getSelectedOutputs();
+            ? this.getSelectedInputsNew()
+            : this.getSelectedOutputs();
         if (!ids) {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9688,13 +9698,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
         var ids = global_var.active_input_desc_type === 'IN'
-                ? this.getSelectedInputsNew()
-                : this.getSelectedOutputs();
+            ? this.getSelectedInputsNew()
+            : this.getSelectedOutputs();
         if (!ids) {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9740,7 +9750,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9772,7 +9782,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 } else if (global_var.current_modal === 'loadStoryCard') {
                     reloadBacklogListOnStoryCard();
                 }
-//                $('#storyCardListSelectBox').change();
+                //                $('#storyCardListSelectBox').change();
 
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
@@ -9790,7 +9800,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9828,7 +9838,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9872,7 +9882,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9943,7 +9953,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -9974,22 +9984,22 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var obj = res.tbl[0].r;
         var div = $("<div>");
         div.append(" New")
-                .append($('<input type="text">')
-                        .attr("id", "table-form-new-line")
-                        .css("width", "100%")
-                        .css("border-radius", "5px"))
-                .append("<br>")
+            .append($('<input type="text">')
+                .attr("id", "table-form-new-line")
+                .css("width", "100%")
+                .css("border-radius", "5px"))
+            .append("<br>")
         div.append($('<input type="radio" id="table-form-existing-name" name="table-form-existing-name">')
-                .val('__empty__'))
-                .append(" NONE ")
-                .append("<br>")
+            .val('__empty__'))
+            .append(" NONE ")
+            .append("<br>")
         for (var n = 0; n < obj.length; n++) {
             if (!(obj[n].tableName))
                 continue;
             div.append($('<input type="radio" id="table-form-existing-name" name="table-form-existing-name">')
-                    .val(obj[n].tableName))
-                    .append(" " + obj[n].tableName)
-                    .append("<br>")
+                .val(obj[n].tableName))
+                .append(" " + obj[n].tableName)
+                .append("<br>")
 
         }
         $('#table-list-4-inputs').append(div);
@@ -10008,7 +10018,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -10042,7 +10052,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -10073,7 +10083,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         global_var.active_input_desc_type = actionType;
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -10106,8 +10116,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 continue;
             }
             $('#us-list-4-copy-move-inputs').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
 
@@ -10115,12 +10125,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#us-list-4-copy-move-inputs-new').html("");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
-//            if (global_var.current_backlog_id === obj[n].id) {
-//                continue;
-//            }
+            //            if (global_var.current_backlog_id === obj[n].id) {
+            //                continue;
+            //            }
             $('#us-list-4-copy-move-inputs-new').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
 
@@ -10157,7 +10167,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             var obj = res.tbl[ind].r;
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].inputType !== 'IN' && obj[n].inputType !== 'GUI'
-                        && obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
+                    && obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
                     continue;
                 }
 
@@ -10168,26 +10178,26 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 var hideSection = obj[n].componentType === 'sctn' ? " hidden" : "";
 
                 idx = (obj[n].inputType === 'TAB' ||
-                        obj[n].inputType === 'TBL' || isTableComp.length > 0
-                        || hideSection.length > 0)
-                        ? idx - 1 : idx;
+                    obj[n].inputType === 'TBL' || isTableComp.length > 0
+                    || hideSection.length > 0)
+                    ? idx - 1 : idx;
 
                 st += '<tr class="us-ipo-input-tr new-input-row" id="ipo_tr_' + obj[n].id + '" pid="' + obj[n].id
-                        + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName))
-                        + '"' + isTableComp + hideSection + ' itable="' + replaceTags(Replace2Primes(obj[n].tableName))
-                        + '">';
+                    + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName))
+                    + '"' + isTableComp + hideSection + ' itable="' + replaceTags(Replace2Primes(obj[n].tableName))
+                    + '">';
                 st += '<td>' + (idx++) + '</td>';
                 st += '<td>' + "<input type='checkbox' id='checkbox_" + obj[n].id + "' onclick='makeClassActive(\""
-                        + obj[n].id + "\")' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
+                    + obj[n].id + "\")' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
                 st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr trashbtn"   pid="'
-                        + obj[n].id + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName)) + '"'
-                        + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
-                        + replaceTags(Replace2Primes(obj[n].inputName)) + tname + '</td>';
-//                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
-//                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
-//                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
+                    + obj[n].id + '" iname="' + replaceTags(Replace2Primes(obj[n].inputName)) + '"'
+                    + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
+                    + replaceTags(Replace2Primes(obj[n].inputName)) + tname + '</td>';
+                //                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
+                //                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
+                //                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
                 st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
-                        + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
+                    + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
                 st += '</tr>';
             }
         } catch (e) {
@@ -10208,19 +10218,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
         st += '<tr class="us-ipo-input-tr"   id="ipo_tr_' + id + '" pid="' + id
-                + '" iname="' + replaceTags(Replace2Primes(inputName))
-                + '" itable="' + replaceTags(Replace2Primes(tableName))
-                + '">';
+            + '" iname="' + replaceTags(Replace2Primes(inputName))
+            + '" itable="' + replaceTags(Replace2Primes(tableName))
+            + '">';
         st += '<td>' + (n + 1) + '</td>';
         st += '<td>' + "<input type='checkbox' class='us-input-list-item-check-box-class' value='" + obj[n].id + "'>" + '</td>';
         st += '<td  ondblclick="new UserStory().toggleToEditIName(this)" class="us-ipo-input-name-tr"   pid="'
-                + obj[n].id + '" iname="' + replaceTags(Replace2Primes(inputName)) + '">'
-                + replaceTags(Replace2Primes(inputName)) + '</td>';
+            + obj[n].id + '" iname="' + replaceTags(Replace2Primes(inputName)) + '">'
+            + replaceTags(Replace2Primes(inputName)) + '</td>';
         st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
 class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2Primes(tableName)) + '">'
-                + replaceTags(Replace2Primes(tableName)) + '</td>';
+            + replaceTags(Replace2Primes(tableName)) + '</td>';
         st += '<td><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
-                + id + '\')"><i class="fa fa-trash" "=""></i></a></td>';
+            + id + '\')"><i class="fa fa-trash" "=""></i></a></td>';
         st += '</tr>';
 
 
@@ -10237,9 +10247,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         $('#storyCardModal').modal('show');
         global_var.current_backlog_id = backlogId;
         this.toggleSubmenuStoryCard();
-//      console.log('html=',$('#smb-details-generalview').html())
+        //      console.log('html=',$('#smb-details-generalview').html())
         var html = $('#smb-details-generalview').html();
-//        console.log('html=' + html)
+        //        console.log('html=' + html)
         $('#storyCardModal_body').html(html).show();
 
 
@@ -10258,7 +10268,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         global_var.ipoTable = {};
         global_var.ipoTableVal = {};
-//        var res = this.getResFromGenGUIDesign(backlogId);
+        //        var res = this.getResFromGenGUIDesign(backlogId);
         var res = SAInput.toJSONAsInputType(backlogId);
         this.genGUIDesignDetails2(res, gui);
         clickCurrentInput();
@@ -10266,7 +10276,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
     getResFromGenGUIDesign: function (backlogId) {
         var rs = [];
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -10299,7 +10309,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         this.setGeneralGUIDesign(st);
 
         $('.tooltip').removeClass('show');
-        $('[data-toggle="tooltip"]').tooltip({html: true});
+        $('[data-toggle="tooltip"]').tooltip({ html: true });
 
         dragResize();
 
@@ -10312,7 +10322,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var st = this.getGUIDesignHTML(res, hide);
         $('#' + divId).html(st);
         $('#' + divId).closest('div.redirectClass4CSS')
-                .height($('#' + divId).closest('div.redirectClass').height());
+            .height($('#' + divId).closest('div.redirectClass').height());
 
 
 
@@ -10322,7 +10332,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return "";
         }
         var st = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -10332,7 +10342,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         json.kv.asc = "orderNo";
         var that = this;
         var data = JSON.stringify(json);
-//        showProgress();
+        //        showProgress();
         $.ajax({
 
             url: urlGl + "api/post/srv/serviceTmGetInputList",
@@ -10345,7 +10355,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 st = that.getGUIDesignHTML(res, hide);
                 $('#' + divId).html(st);
                 $('#' + divId).closest('div.redirectClass4CSS')
-                        .height($('#' + divId).closest('div.redirectClass').height());
+                    .height($('#' + divId).closest('div.redirectClass').height());
 
             }
         });
@@ -10364,19 +10374,19 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return dgui[backlogId]
         }
         var st = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
         json.kv.fkBacklogId = backlogId;
-//        json.kv.inputType = "IN%IN%GUI%IN%TBL%IN%TAB";
+        //        json.kv.inputType = "IN%IN%GUI%IN%TBL%IN%TAB";
         json.kv.inputType = "";
         json.kv.domain = global_var.current_domain;
         json.kv.asc = "orderNo";
         var that = this;
         var data = JSON.stringify(json);
-//        showProgress();
+        //        showProgress();
         $.ajax({
 
             url: urlGl + "api/post/nasrv/serviceTmGetInputList",
@@ -10423,9 +10433,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var tcnt = cnt;
         lbl = (fromTable === true) ? '' : lbl;
         cnt = (fromTable === true) && (ctype !== 'txa') && (ctype !== 'cmb')
-                && (ctype !== 'mcmb') && (ctype !== 'rbtn') && (ctype !== 'cbox')
-                && (ctype !== 'btn') && (ctype !== 'hlink')
-                ? "cell_" + idx : cnt;
+            && (ctype !== 'mcmb') && (ctype !== 'rbtn') && (ctype !== 'cbox')
+            && (ctype !== 'btn') && (ctype !== 'hlink')
+            ? "cell_" + idx : cnt;
         var st = '';
         switch (ctype) {
             case "txt":
@@ -10611,7 +10621,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     }
                 }
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
-//        
+                //        
             },
             error: function (res) {
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
@@ -10672,7 +10682,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         closeModal('userstory-gui-input-component-res-sus-analytic');
         loadBacklogInputsByIdIfNotExist(id);
         // loadBacklogInputsByIdIfNotExist(sectionId);
-//        var html = this.genGUIDesignHtmlById(id);
+        //        var html = this.genGUIDesignHtmlById(id);
 
         var res = SAInput.toJSONByBacklog(id);
         var html = this.getGUIDesignHTML(res);
@@ -10688,14 +10698,14 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             var apiId = $(el).attr("onclick_trigger_id");
             triggerAPI(el, apiId);
             initOnloadActionOnGUIDesign(el);
-//            $(el).closest('div.modal').first().modal('hide');
+            //            $(el).closest('div.modal').first().modal('hide');
         } else {
             //initiate onclick action
             initOnloadActionOnGUIDesign(el);
         }
 
-//        generatePopupModalNew(html, canvasCSS);
-//        $('[data-toggle="tooltip"]').tooltip({html: true});
+        //        generatePopupModalNew(html, canvasCSS);
+        //        $('[data-toggle="tooltip"]').tooltip({html: true});
     },
 
     setGUIComponentSaveGUIModal: function (el, e) {
@@ -10710,8 +10720,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
 
         var triggerId = $(el).closest("form")
-                .find('input[id=popupTrigger]').first().attr('pid');
-        var json = {"kv": {}};
+            .find('input[id=popupTrigger]').first().attr('pid');
+        var json = { "kv": {} };
 
         $(el).closest('div.redirectClass').find('.component-class').each(function (e) {
             json.kv[$(this).attr('id')] = $(this).find('#comp_id_' + $(this).attr('id')).val();
@@ -10733,7 +10743,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     console.log(err)
                 }
                 if (triggerId) {
-//                    var bel = $('#' + triggerId).closest('div.redirectClass').first();
+                    //                    var bel = $('#' + triggerId).closest('div.redirectClass').first();
                     var bel = $('.redirectClass[bcode=' + triggerId + ']').first();
                     var backlodId = bel.attr('bid');
                     var html = that.genGUIDesignHtmlById(backlodId);
@@ -10758,7 +10768,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var ind = $(el).closest("tr")[0].rowIndex;
         var pid = $(el).attr('pdid');
 
-        var json = {"kv": {}};
+        var json = { "kv": {} };
         json.kv.index = ind;
         $(el).closest('tr').find('.component-input-class').each(function (e) {
             if (pid !== $(this).attr('pdid'))
@@ -10806,7 +10816,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         setGlobalActiveCanvas(global_var.canvas.storyCard);
         $('#setStoryCardUploadImageModal').modal("show");
         $('#setStoryCardUploadImageModal_file').val("");
-//        $('#setStoryCardUploadImageModal_file').val("");
+        //        $('#setStoryCardUploadImageModal_file').val("");
 
 
     },
@@ -10956,7 +10966,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
     isContentTypeRelToTableRowCount: function (arg) {
         if (arg === 'cmb' || arg === 'mcmb' || arg === 'txa'
-                || arg === 'rbtn' || arg === 'cbox' || arg === 'btn' || arg === 'hlink') {
+            || arg === 'rbtn' || arg === 'cbox' || arg === 'btn' || arg === 'hlink') {
             return false;
         } else {
             return true;
@@ -11011,7 +11021,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         if (sequence.includes(id)) {
             var msg = this.showMessageOfLoop(sequence);
             Toaster.showError(msg);
-            throw  msg;
+            throw msg;
         }
     },
     getParams4GUI: function () {
@@ -11077,7 +11087,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         if (params.ipoTable[tbl] === undefined) {
             params.idx = 1;
             params.ipoTable[tbl] = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>"
-                    : "<th style='padding:0px;'></th>";
+                : "<th style='padding:0px;'></th>";
             comp.isFromTable = true;
             comp.tableRowId = params.idx;
             comp.withLabel = false;
@@ -11085,13 +11095,13 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             params.ipoTableVal[tbl] = "<td style='padding:0px;'> " + this.getComponentHtmlNew(comp) + " </td>";
             params.ipoTableContent[tbl] = obj[n].inputContent;
             params.ipoTabRowCount[tbl] = (this.isContentTypeRelToTableRowCount(obj[n].componentType))
-                    ? obj[n].inputContent.split(/\r*\n/).length
-                    : 1;
+                ? obj[n].inputContent.split(/\r*\n/).length
+                : 1;
             params.ipoTabColCount[tbl] = params.idx;
             params.idx++;
         } else {
             var str = obj[n].componentType !== 'hlink' ? "<th style='padding:0px;'>" + obj[n].inputName + "</th>"
-                    : "<th style='padding:0px;'></th>";
+                : "<th style='padding:0px;'></th>";
             params.ipoTable[tbl] = params.ipoTable[tbl] + str;
             comp.isFromTable = true;
             comp.tableRowId = params.idx;
@@ -11099,7 +11109,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             params.ipoTableVal[tbl] += "<td style='padding:0px;'> " + this.getComponentHtmlNew(comp) + " </td>";
             params.ipoTableContent[tbl] = params.ipoTableContent[tbl] + '%IN%' + obj[n].inputContent;
             params.ipoTabRowCount[tbl] = !(this.isContentTypeRelToTableRowCount(obj[n].componentType)) ? params.ipoTabRowCount[tbl]
-                    : obj[n].inputContent.split(/\r*\n/).length > params.ipoTabRowCount[tbl]
+                : obj[n].inputContent.split(/\r*\n/).length > params.ipoTabRowCount[tbl]
                     ? obj[n].inputContent.split(/\r*\n/).length
                     : params.ipoTabRowCount[tbl];
             params.ipoTabColCount[tbl] = params.idx;
@@ -11118,7 +11128,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         res = JSON.parse(replaceTags(JSON.stringify(res)));
         var st = "";
         try {
-//        console.log('res='+JSON.stringify(res));
+            //        console.log('res='+JSON.stringify(res));
             var params = this.getParams4GUI();
             var obj = res.tbl[rowId].r;
 
@@ -11130,8 +11140,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     } catch (err) {
                     }
                     var inputIds = (inIds.length > 1)
-                            ? inIds
-                            : inputIds;
+                        ? inIds
+                        : inputIds;
 
                     if (obj[n].inputType === 'OUT') {
                         continue;
@@ -11201,15 +11211,15 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
 
     getGUIEmptyMessage: function () {
-        return  '<div class="col-12 empty-message-block" style="padding:30px;text-align:center">' +
-                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                '<h5> No Inputs have been entered on this User Story</h5>' +
-                '<p>All Pages related to the User Story on this project will appear here</p>' +
-                '<p>Please Enter Inputs</p>' +
-                '</div>'
+        return '<div class="col-12 empty-message-block" style="padding:30px;text-align:center">' +
+            '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+            '<h5> No Inputs have been entered on this User Story</h5>' +
+            '<p>All Pages related to the User Story on this project will appear here</p>' +
+            '<p>Please Enter Inputs</p>' +
+            '</div>'
     },
     getGUIDesignHTMLPure: function (res) {
-//        var ind = getIndexOfTable(res, 'inputListTable');
+        //        var ind = getIndexOfTable(res, 'inputListTable');
         var ind = 0;
         return this.getGUIDesignHTMLBody(res, ind);
     },
@@ -11241,8 +11251,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             }
             st += '<li class="nav-item">';
             st += '<a class="nav-link ' + activeTabClass + p + '" data-toggle="tab" href="#tabulento'
-                    + params.tabNameId[n] + '" onclick="new UserStory().showGUITabBody(\''
-                    + params.tabParam[n] + '\',\'' + params.tabListId[n] + '\',\'' + params.tabNameId[n] + '\')">' + params.tab[n] + '</a>';
+                + params.tabNameId[n] + '" onclick="new UserStory().showGUITabBody(\''
+                + params.tabParam[n] + '\',\'' + params.tabListId[n] + '\',\'' + params.tabNameId[n] + '\')">' + params.tab[n] + '</a>';
             st += '</li>';
         }
         st += '</ul>';
@@ -11258,7 +11268,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             if (n > 0) {
                 p = "";
             }
-//            console.log('tabParam='+tabParam)
+            //            console.log('tabParam='+tabParam)
             var innerHTML = this.genGUIDesignHtmlById(tabParam[n]);
             innerHTML = (innerHTML) ? innerHTML : "<h3>" + tab[n] + "</h3>"
             st += '<div id="tabulento' + removeSpace(tab[n]) + n + '" class="container tab-pane ' + p + '"><br>'
@@ -11277,11 +11287,11 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         this.setInputByGUIComponent(inputId);
         this.setGUIDesignHtmlByIdAsync4Select(backlogId, false, id);
-//        this.setGUIDesignHtmlByIdAsync(backlogId, false, id);
-//        var innerHTML = this.genGUIDesignHtmlById(backlogId);
-//        innerHTML = (innerHTML) ? innerHTML : "<h3>" + "" + "</h3>";
-//        $('#' + id).html('');
-//        $('#' + id).append(innerHTML);
+        //        this.setGUIDesignHtmlByIdAsync(backlogId, false, id);
+        //        var innerHTML = this.genGUIDesignHtmlById(backlogId);
+        //        innerHTML = (innerHTML) ? innerHTML : "<h3>" + "" + "</h3>";
+        //        $('#' + id).html('');
+        //        $('#' + id).append(innerHTML);
     },
     genGUITabHtmlDesignBodyTemplateFull: function (params, comp) {
         if (params.tabNameId.length === 0) {
@@ -11295,7 +11305,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 p = "";
             }
 
-//            console.log('tabParam='+tabParam)
+            //            console.log('tabParam='+tabParam)
             var backlogIdT = params.tabParam[n];
             if (backlogIdT.length > 0) {
                 new UserStory().hasSequence(comp.sequence, backlogIdT);
@@ -11303,8 +11313,8 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             }
 
             var innerHTML = this.getGUIDesignHTMLBody(SAInput.toJSONByBacklog(backlogIdT), 0, comp.sequence);
-//                    "<h3>" + "" + "</h3>";
-//            var innerHTML = "<h3>" + "" + "</h3>";
+            //                    "<h3>" + "" + "</h3>";
+            //            var innerHTML = "<h3>" + "" + "</h3>";
             st += '<div id="tabulento' + params.tabNameId[n] + '" class="container tab-pane ' + p + '"><br>'
             st += '<div class="row" style=" " id="' + params.tabNameId[n] + '">';
             st += innerHTML;
@@ -11340,11 +11350,11 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             for (var i = 0; i < rc; i++) {
                 var td_val = params.ipoTableVal[keys[n]];
                 for (var j = 0; j < cc; j++) {
-//                    console.log('i=' + i + ', j=' + j + ', col_content[j]=' + col_content[j]);
+                    //                    console.log('i=' + i + ', j=' + j + ', col_content[j]=' + col_content[j]);
                     var cnt = col_content[j].split(/\r*\n/)[i];
-//                    console.log('i=' + i + ', j=' + j + ', cnt=' + cnt);
+                    //                    console.log('i=' + i + ', j=' + j + ', cnt=' + cnt);
                     cnt = (cnt) ? cnt : "";
-//                    console.log('after convertion i=' + i + ', j=' + j + ', cnt=' + cnt);
+                    //                    console.log('after convertion i=' + i + ', j=' + j + ', cnt=' + cnt);
                     td_val = td_val.replace("cell_" + (j + 1), cnt);
                 }
                 st += "<tr>" + td_val + "</tr>";
@@ -11362,7 +11372,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11389,7 +11399,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
     },
     getHtmlGenIPOOutputList: function (res) {
-//        var ind = getIndexOfTable(res, 'inputOutputList');
+        //        var ind = getIndexOfTable(res, 'inputOutputList');
         var ind = 0;
         var st = "";
         try {
@@ -11404,7 +11414,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 st += '<td  ondblclick="new UserStory().toggleToEditOutput(this)" class="us-ipo-output-name-tr"  \n\
                  pid="' + obj[n].id + '" idesc="' + replaceTags(obj[n].inputName) + '">' + replaceTags(obj[n].inputName) + '</td>';
                 st += '<td><a href="#" onclick="new UserStory().deleteOutputFromList(this, \'' + obj[n].id +
-                        '\')"><i class="fa fa-trash" "=""></i></a></td>';
+                    '\')"><i class="fa fa-trash" "=""></i></a></td>';
                 st += '</tr>';
             }
         } catch (e) {
@@ -11433,9 +11443,9 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td  ondblclick="new UserStory().toggleToEditIDescName(this)" class="us-ipo-input-name-tr" \n\
                 pid="' + obj[n].id + '" idesc="' + replaceTags((Replace2Primes(obj[n].description))) + '">'
-                        + replaceTags(this.fnline2Text(Replace2Primes(obj[n].description))) + '</td>';
+                    + replaceTags(this.fnline2Text(Replace2Primes(obj[n].description))) + '</td>';
                 st += '<td><a href="#" onclick="new UserStory().deleteInputDescFromUSList(this, \'' + obj[n].id +
-                        '\')"><i class="fa fa-trash" "=""></i></a></td>';
+                    '\')"><i class="fa fa-trash" "=""></i></a></td>';
                 st += '</tr>';
             }
         } catch (e) {
@@ -11449,7 +11459,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
     toggleToEditOutput: function (e) {
         var inp = $('<input style="width:100%" onchange="new UserStory().updateOutput(this)" type="text" pid="'
-                + $(e).attr('pid') + '" value="' + ($(e).attr('idesc')) + '">');
+            + $(e).attr('pid') + '" value="' + ($(e).attr('idesc')) + '">');
         $(e).html(inp);
         inp.focus();
     },
@@ -11462,13 +11472,13 @@ type="text" pid="' + $(e).attr('pid') + '" value="' + ($(e).attr('iname')) + '">
     toggleToEditITable: function (e) {
         var inp = $('<input style="width:100%" \n\
 onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' +
-                $(e).attr('pid') + '" value="' + ($(e).attr('itable')) + '">');
+            $(e).attr('pid') + '" value="' + ($(e).attr('itable')) + '">');
         $(e).html(inp);
         inp.focus();
     },
     toggleToEditIDescName: function (e) {
         var inp = $('<input style="width:100%" onchange="new UserStory().updateInputDesc(this)" type="text" pid="'
-                + $(e).attr('pid') + '" value="' + $(e).attr('idesc') + '">');
+            + $(e).attr('pid') + '" value="' + $(e).attr('idesc') + '">');
         $(e).html(inp);
         inp.focus();
     },
@@ -11508,14 +11518,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setRelatedSUS: function (obj) {
         try {
-//            $('#relatedSUSOutputName').text(obj.dependenceInputName);
+            //            $('#relatedSUSOutputName').text(obj.dependenceInputName);
             var depName = SAInput.GetCurrentDependenceBacklogName();
             var outInputName = (depName.length > 0) ? SAInput.GetCurrentDependenceInputName() : "";
             $('#relatedSUSOutputName').text(outInputName);
             if (depName) {
                 $('#relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                        SAInput.GetCurrentDependenceId() + '\')">'
-                        + replaceTags(depName) + '</a>)');
+                    SAInput.GetCurrentDependenceId() + '\')">'
+                    + replaceTags(depName) + '</a>)');
                 $('#deleteRelatedSUSOutput').show();
             } else {
                 $('#relatedUserStory').html('');
@@ -11548,7 +11558,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (inputId.length === 0) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11570,7 +11580,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setGUIComponentValuesDetails: function (res) {
         try {
-//                console.log($('gui_input_content').val() + '---------------------')
+            //                console.log($('gui_input_content').val() + '---------------------')
             $('#gui_input_content').val((res.tbl[0].r[0].inputContent));
             $('#gui_input_css_style_container').val((res.tbl[0].r[0].param2));
             $('#gui_input_css_style').val((res.tbl[0].r[0].param3));
@@ -11578,7 +11588,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             ComponentDesign.read();
             ContainerDesign.read();
             $('#us-gui-component-id').val(res.tbl[0].r[0].componentType);
-//                        that.setGUI_CSS(res.tbl[0].r[0].param4);
+            //                        that.setGUI_CSS(res.tbl[0].r[0].param4);
 
 
             $('.us-gui-component-rel-sus-div-class').show();
@@ -11592,7 +11602,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#us-gui-component-cell-no').val(res.tbl[0].r[0].cellNo);
             // $('.tool_element_edit #gui-cell-selectbox-changed').val(res.tbl[0].r[0].cellNo);
             $('.us-gui-component-rel-sus-id-section')
-                    .val(res.tbl[0].r[0].fkBacklogSectionId).change();
+                .val(res.tbl[0].r[0].fkBacklogSectionId).change();
             $('.us-gui-component-in-section').val(res.tbl[0].r[0].section);
         } catch (err) {
         }
@@ -11606,9 +11616,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
     },
     loadSUS4Relation4Section: function () {
-//        if (global_var.related_SUS_status !== 'A') {
-//            return;
-//        }
+        //        if (global_var.related_SUS_status !== 'A') {
+        //            return;
+        //        }
 
         var json = initJSON();
 
@@ -11628,8 +11638,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     that.loadSUS4Relation4SectionDetails(res);
                 } catch (err) {
                 }
-//                queue4ProLoad.loadSUS4Relation4Section = true;
-//                executeCoreOfManualProSelection();
+                //                queue4ProLoad.loadSUS4Relation4Section = true;
+                //                executeCoreOfManualProSelection();
 
             },
             error: function () {
@@ -11639,11 +11649,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
 
     loadSUS4Relation: function () {
-//        if (global_var.related_SUS_status !== 'A') {
-//            return;
-//        }
+        //        if (global_var.related_SUS_status !== 'A') {
+        //            return;
+        //        }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11660,7 +11670,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             crossDomain: true,
             async: true,
             success: function (res) {
-//                global_var.related_SUS_status = 'C';
+                //                global_var.related_SUS_status = 'C';
                 that.loadSUS4RelationDetails(res);
             },
             error: function () {
@@ -11676,7 +11686,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11713,7 +11723,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11756,7 +11766,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11786,14 +11796,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $('#tblIPOList > tbody').html(st);
 
                 that.addSourcedIconToUserStory(res);
-//                that.genGUIDesign(res);
+                //                that.genGUIDesign(res);
                 new Project().getProjectStatList();
 
                 $('.us-ipo-input-tr').first().click();
-//                //generate GUI
-//                $('#SUS_GUI_header').text((res.kv.backlogName));
-//                $('#userstory-gui-input-component-res-sus-label').text((res.kv.backlogName));
-//                $('#generalview_SUS_GUI_header').text((res.kv.backlogName));
+                //                //generate GUI
+                //                $('#SUS_GUI_header').text((res.kv.backlogName));
+                //                $('#userstory-gui-input-component-res-sus-label').text((res.kv.backlogName));
+                //                $('#generalview_SUS_GUI_header').text((res.kv.backlogName));
                 var ind = getIndexOfTable(res, 'inputListTable')
                 var st = that.getGUIDesignHTMLBody(res, ind);
                 $('#SUS_IPO_GUI_Design').html(st);
@@ -11853,8 +11863,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
         if (!$('#insertNewTicketModal_priority') ||
-                $('#insertNewTicketModal_priority :selected').val() === undefined
-                || $('#insertNewTicketModal_priority ').val() === null) {
+            $('#insertNewTicketModal_priority :selected').val() === undefined
+            || $('#insertNewTicketModal_priority ').val() === null) {
             Toaster.showError('Please choose Priority.');
             return;
         }
@@ -11877,11 +11887,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -11892,15 +11902,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile4NewTicket(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
 
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
                     if (trc === file_count) {
-//                        console.log('st=' + st);
+                        //                        console.log('st=' + st);
                         $('#' + id).attr("fname", st);
                         that.insertNewTicketMain();
                     }
@@ -11910,7 +11920,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
     },
     uploadFile4NewTicket: function (fileext, file_base_64, file_name) {
-//        console.log(file_base_64)
+        //        console.log(file_base_64)
 
         var d = new Object();
         d.file_base_64 = file_base_64;
@@ -11942,7 +11952,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         return finalname;
     },
     insertNewTicketMain: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -11977,7 +11987,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         });
     },
     insert: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -12010,7 +12020,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 new Sprint().load();
                 new Label().load();
                 $('#backlogName').focus();
-//                that.refreshCurrentBacklogById(res.kv.id);
+                //                that.refreshCurrentBacklogById(res.kv.id);
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -12049,10 +12059,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         }
 
 
-//        try {
-//            this.addTaskTypeDetails4Backlog(backlogId, '');
-//        } catch (err) {
-//        }
+        //        try {
+        //            this.addTaskTypeDetails4Backlog(backlogId, '');
+        //        } catch (err) {
+        //        }
     },
     addTaskTypeDetails4Backlog: function (backlogId, filename) {
         if (backlogId.length === 0) {
@@ -12071,7 +12081,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var comment = $('#addBacklog_comment').val();
         var commentType = $('#addBacklog_commenttype').val();
         $('#addBacklog_addbutton').hide();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -12107,7 +12117,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     setFilterDate: function () {
         global_var.userStoryFilter.createdDate = '';
-//        Utility.addParamToUrl('userStoryFilter.createdDate', global_var.userStoryFilter.createdDate);
+        //        Utility.addParamToUrl('userStoryFilter.createdDate', global_var.userStoryFilter.createdDate);
         var fromDate = '';
         if ($('#us_core_filter_fromdate').val()) {
             var date = new Date($('#us_core_filter_fromdate').val());
@@ -12130,11 +12140,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             toDate = year2 + "" + month2 + '' + day2;
         }
 
-//        var date1 = fromDate + '%BN%' + toDate;
+        //        var date1 = fromDate + '%BN%' + toDate;
         var date1 = fromDate + '-' + toDate;
         if (!date1.includes("NaN") && toDate && fromDate) {
             global_var.userStoryFilter.createdDate = date1;
-//            Utility.addParamToUrl('userStoryFilter.createdDate', global_var.userStoryFilter.createdDate);
+            //            Utility.addParamToUrl('userStoryFilter.createdDate', global_var.userStoryFilter.createdDate);
         }
         this.load();
     },
@@ -12148,7 +12158,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     pureClearAll: function () {
         global_var.current_nav_view = 'all';
-//        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
+        //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.userstory = "";
         global_var.userStoryFilter.backlogStatus = "";
         global_var.userStoryFilter.priority = "";
@@ -12223,7 +12233,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     clearTopFilter: function (viewStatus) {
         global_var.current_nav_view = viewStatus;
-//        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
+        //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.isSourced = '';
         global_var.userStoryFilter.userStoriesAssignedToMe = '';
         global_var.userStoryFilter.isBounded = '';
@@ -12238,7 +12248,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     showTickets: function (e) {
         global_var.current_nav_view = 'ticket';
-//        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
+        //        Utility.addParamToUrl('current_nav_view', global_var.current_nav_view);
         global_var.userStoryFilter.isSourced = '';
         global_var.userStoryFilter.userStoriesAssignedToMe = '';
         global_var.userStoryFilter.isBounded = '';
@@ -12292,11 +12302,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#main_div_of_backlog_info_pivot_view').hide();
         $('#main_div_of_backlog_info_kanban_view').hide();
         $('#main_div_of_backlog_info').hide();
-//        
+        //        
 
 
 
-//        try {
+        //        try {
         $('#list_view_table_list_4_assignee').show();
         $('#list_view_table_list').hide();
         if (global_var.current_list_view_table_item === "assignee") {
@@ -12304,23 +12314,23 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         } else {
             this.setUSLists4ListViewDirect();
         }
-//        } catch (e) {
-//
-//        }
+        //        } catch (e) {
+        //
+        //        }
 
 
     },
     manageViewColWidth: function () {
-//        if (global_var.current_view === 'detailed') {
-//            $('#core_div_col_1st').removeClass('col-3').removeClass('col-3').addClass('col-3');
-//            $('#main_div_of_backlog_info_detailed_view').removeClass('col-9').removeClass('col-9').addClass('col-9');
-//        } else if (global_var.current_view === 'kanban') {
-//            $('#core_div_col_1st').removeClass('col-3').removeClass('col-4').addClass('col-3');
-//            $('#main_div_of_backlog_info_kanban_view').removeClass('col-8').removeClass('col-9').addClass('col-9');
-//        } else if (global_var.current_view === 'list') {
-//            $('#core_div_col_1st').removeClass('col-3').removeClass('col-4').addClass('col-3');
-//            $('#main_div_of_backlog_info_list_view').removeClass('col-8').removeClass('col-9').addClass('col-9');
-//        }
+        //        if (global_var.current_view === 'detailed') {
+        //            $('#core_div_col_1st').removeClass('col-3').removeClass('col-3').addClass('col-3');
+        //            $('#main_div_of_backlog_info_detailed_view').removeClass('col-9').removeClass('col-9').addClass('col-9');
+        //        } else if (global_var.current_view === 'kanban') {
+        //            $('#core_div_col_1st').removeClass('col-3').removeClass('col-4').addClass('col-3');
+        //            $('#main_div_of_backlog_info_kanban_view').removeClass('col-8').removeClass('col-9').addClass('col-9');
+        //        } else if (global_var.current_view === 'list') {
+        //            $('#core_div_col_1st').removeClass('col-3').removeClass('col-4').addClass('col-3');
+        //            $('#main_div_of_backlog_info_list_view').removeClass('col-8').removeClass('col-9').addClass('col-9');
+        //        }
     },
     setUSLists4ListViewDirect: function () {
         global_var.current_list_view_table_item = 'userstory';
@@ -12337,38 +12347,38 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-//        console.log(JSON.stringify(global_var.current_backlog_list))
+        //        console.log(JSON.stringify(global_var.current_backlog_list))
         var obj = global_var.current_backlog_list.tbl[0].r;
         var spent_hours = 0.0;
         var estimation_hours = 0.0;
         for (var i = 0; i < obj.length; i++) {
             var isSourced = obj[i].isSourced === '1'
-                    ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                    : obj[i].fkSourcedId.length > 0
+                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
+                : obj[i].fkSourcedId.length > 0
                     ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>'
                     : "";
             var isFromCustomer = obj[i].isFromCustomer === '1' ? ""
-//                    ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-                    : "";
+                //                    ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
+                : "";
             var countLine = obj[i].isSourced === '1' && obj[i].taskCount > 0
-                    ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                    + obj[i].taskCount + ')</span>'
-                    : " ";
+                ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
+                + obj[i].taskCount + ')</span>'
+                : " ";
             countLine += obj[i].isSourced === '1' && obj[i].inputCount > 0
-                    ? '&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                    + obj[i].inputCount + ')</span>'
-                    : "";
+                ? '&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
+                + obj[i].inputCount + ')</span>'
+                : "";
             countLine += obj[i].commentCount > 0
-                    ? '&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
-                    + obj[i].commentCount + ')</span>'
-                    : "";
+                ? '&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> ('
+                + obj[i].commentCount + ')</span>'
+                : "";
             var tr = $('<tr></tr>').append($('<td></td>').html('#' + (i + 1) + ": "));
             tr.append($('<td></td>').html(countLine));
             tr.append($('<td></td>').html('<span class="us-item-status-' +
-                    obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
+                obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
             tr.append($('<td style="text-align:left;"></td>').html(isSourced + isFromCustomer +
-                    '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
-                    + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
+                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
+                + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
             tr.append($('<td></td>').html(obj[i].createdByName));
             tr.append($('<td></td>').html(Utility.convertDate(obj[i].createdDate)));
             tr.append($('<td></td>').html(obj[i].priority));
@@ -12379,16 +12389,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#list_view_table_list > tbody').append(tr);
         }
         $('#list_view_table_list > tbody')
-                .append($('<tr></tr>')
-                        .append($('<td></td>').attr('colspan', '8'))
-                        .append($('<td></td>').append($('<b></b>')
-                                .append(Number((estimation_hours).toFixed(2)))
-                                .append('/')
-                                .append(Number((spent_hours).toFixed(2)))))
-                        );
+            .append($('<tr></tr>')
+                .append($('<td></td>').attr('colspan', '8'))
+                .append($('<td></td>').append($('<b></b>')
+                    .append(Number((estimation_hours).toFixed(2)))
+                    .append('/')
+                    .append(Number((spent_hours).toFixed(2)))))
+            );
     },
     getJSONData4BaklogList: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -12421,7 +12431,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         json.kv.startLimit = global_var.user_story_core_filter_current_index;
         json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index)
-                + parseFloat($('#us_core_filter_perpage').val());
+            + parseFloat($('#us_core_filter_perpage').val());
         return json;
     },
     load: function () {
@@ -12435,8 +12445,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.assignSprintAndLabel').attr("style", "pointer-events:none;color:gray;");
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
         global_var.current_backlog_id = current_backlog_id.length > 1
-                ? Utility.getParamFromUrl('current_backlog_id')
-                : "";
+            ? Utility.getParamFromUrl('current_backlog_id')
+            : "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return;
@@ -12445,7 +12455,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         this.loadDetailesPure(SACore.toJSON());
 
         if ((global_var.current_modal === 'loadLivePrototype')
-                && (global_var.ipo_gui_view === "all")) {
+            && (global_var.ipo_gui_view === "all")) {
 
             this.showAllGuiDetailsNew();
         } else if (global_var.current_modal === 'loadStatistics') {
@@ -12457,17 +12467,17 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         } else if (global_var.current_modal === 'loadSourceActivity') {
             $('.loadSourceActivity').click();
         } else if (global_var.current_modal === 'loadBugChange') {
-//            $('.loadBugChange').click();
+            //            $('.loadBugChange').click();
         } else if (global_var.current_modal === 'loadTestCase') {
             $('.loadTestCase').click();
         } else if (global_var.current_modal === 'loadBusinessCase') {
             $('.loadBusinessCase').click();
         } else if (global_var.current_modal === 'loadTaskManagement') {
             $('.loadTaskManagement').click();
-//            new Sprint().load4Task();
+            //            new Sprint().load4Task();
         } else if (global_var.current_modal === 'loadTaskTypeManagment ') {
             $('.loadTaskTypeManagment ').click();
-//            new Sprint().load4Task();
+            //            new Sprint().load4Task();
         }
 
 
@@ -12500,23 +12510,23 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         //View All Gui-nin yeniden doldurulmasi buradan trigger edilir;
         $('#gui_component_main_view_all').html('');
-//      
+        //      
 
         new Project().toggleProjectDetails();
 
-//        this.loadDetailsOnProjectSelect();
-//        this.loadInputDetailsOnProjectSelect();
-//        this.loadInputDescDetailsOnProjectSelect();
-//        this.loadDependencyOnProjectSelect();
-//        this.loadSUS4Relation4Section();
-//        this.loadBacklogLabelOnProjectSelect();
+        //        this.loadDetailsOnProjectSelect();
+        //        this.loadInputDetailsOnProjectSelect();
+        //        this.loadInputDescDetailsOnProjectSelect();
+        //        this.loadDependencyOnProjectSelect();
+        //        this.loadSUS4Relation4Section();
+        //        this.loadBacklogLabelOnProjectSelect();
 
 
     },
     loadDetailsOnProjectSelect4Stats: function () {
         showProgress();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -12654,38 +12664,38 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             if (o.showInMenu === '1') {
 
                 $('.project-item-zad').parent()
-                        .last()
-                        .after($('<li>')
-                                .addClass('col-6')
-                                .append($('<div>')
-                                        .addClass("row row-style project-item-zad")
-                                        .append($('<a>')
-                                                .addClass('btnplus manualProject openNavhide left-menu-load')
-                                                .attr("title", o.projectName)
-                                                .attr('pid', o.id)
-                                                .attr('tid', o.fkTriggerBacklogId)
-                                                .append($("<i>")
-                                                        .addClass((o.menuIcon) ? "fa fa-" + o.menuIcon : "plus"))
-                                                )
-                                        .append($('<a>')
-                                                .addClass('  manualProject openNavhide left-menu-load')
-                                                .attr('pid', o.id)
-                                                .attr('tid', o.fkTriggerBacklogId)
-                                                .attr("title", o.projectName)
-                                                .append($("<span>")
-                                                        .css("margin-top", "19px")
-                                                        .addClass("description-main")
-                                                        .addClass("fa fa-" + (o.menuIcon) ? o.menuIcon : "plus")
-                                                        .text(o.projectName))
-                                                )
-                                        ))
+                    .last()
+                    .after($('<li>')
+                        .addClass('col-6')
+                        .append($('<div>')
+                            .addClass("row row-style project-item-zad")
+                            .append($('<a>')
+                                .addClass('btnplus manualProject openNavhide left-menu-load')
+                                .attr("title", o.projectName)
+                                .attr('pid', o.id)
+                                .attr('tid', o.fkTriggerBacklogId)
+                                .append($("<i>")
+                                    .addClass((o.menuIcon) ? "fa fa-" + o.menuIcon : "plus"))
+                            )
+                            .append($('<a>')
+                                .addClass('  manualProject openNavhide left-menu-load')
+                                .attr('pid', o.id)
+                                .attr('tid', o.fkTriggerBacklogId)
+                                .attr("title", o.projectName)
+                                .append($("<span>")
+                                    .css("margin-top", "19px")
+                                    .addClass("description-main")
+                                    .addClass("fa fa-" + (o.menuIcon) ? o.menuIcon : "plus")
+                                    .text(o.projectName))
+                            )
+                        ))
 
             }
 
         }
     },
     loadInputDetailsOnProjectSelect4Stats: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -12709,13 +12719,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var bid = (bid) ? bid : global_var.current_backlog_id;
 
         var json = initJSON();
-//        json.kv.fkProjectId = global_var.current_project_id;
+        //        json.kv.fkProjectId = global_var.current_project_id;
         json.kv.fkBacklogId = bid;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew4SAInput",
-//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+            //            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
             type: "POST",
             data: data,
             contentType: "application/json",
@@ -12723,7 +12733,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: false,
             success: function (res) {
                 try {
-//                    localStorage.setItem(bid, JSON.stringify(res));
+                    //                    localStorage.setItem(bid, JSON.stringify(res));
                     SAInput.LoadInput4Zad(res);
                 } catch (err) {
                 }
@@ -12761,7 +12771,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var data = JSON.stringify(json);
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew",
-//            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
+            //            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
             type: "POST",
             data: data,
             contentType: "application/json",
@@ -12818,7 +12828,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
-//            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew",
+            //            url: urlGl + "api/post/srv/serviceTmGetInputList4SelectNew",
             url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
             type: "POST",
             data: data,
@@ -13087,13 +13097,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     loadDetailesPure: function (res) {
         global_var.current_backlog_list = res;
-//        $("#view_button_" + global_var.current_view).click();
+        //        $("#view_button_" + global_var.current_view).click();
 
-//        this.setDetailedView($('#view_button_detailed'));
+        //        this.setDetailedView($('#view_button_detailed'));
 
-//        if (res.tbl.length === 0) {
-//            $('#main_div_of_backlog_info').addClass('disabledDiv');
-//            $('#main_div_of_backlog_info').removeClass('enabledDiv');
+        //        if (res.tbl.length === 0) {
+        //            $('#main_div_of_backlog_info').addClass('disabledDiv');
+        //            $('#main_div_of_backlog_info').removeClass('enabledDiv');
         $('#main_div_of_backlog_info_kanban_view_table_new').html('');
         $('#main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('#main_div_of_backlog_info_kanban_view_table_closed').html('');
@@ -13108,12 +13118,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         if (global_var.current_modal === 'loadStoryCardMgmt') {
             this.setKanbanView();
         }
-//        if (global_var.current_modal === 'loadTaskManagement') {
-//            genTaskKanbanView();
-//        } else {
+        //        if (global_var.current_modal === 'loadTaskManagement') {
+        //            genTaskKanbanView();
+        //        } else {
         this.setUSListsDetailedView();
         this.refreshCurrentBacklog();
-//        }
+        //        }
     },
     loadBacklogWithTask: function () {
 
@@ -13126,14 +13136,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
         $('#storyCardListSelectBox option:selected').attr('sid', current_backlog_id)
         global_var.current_backlog_id = current_backlog_id.length > 1
-                ? Utility.getParamFromUrl('current_backlog_id')
-                : "";
+            ? Utility.getParamFromUrl('current_backlog_id')
+            : "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -13165,7 +13175,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         json.kv.startLimit = global_var.user_story_core_filter_current_index;
         json.kv.endLimit = parseFloat(global_var.user_story_core_filter_current_index)
-                + parseFloat($('#us_core_filter_perpage').val());
+            + parseFloat($('#us_core_filter_perpage').val());
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -13185,7 +13195,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     loadBacklogWithTaskDetails: function (res) {
         $('#list_view_table_list_4_assignee > tbody').html('');
-//        console.log(JSON.stringify(global_var.current_backlog_list))
+        //        console.log(JSON.stringify(global_var.current_backlog_list))
         try {
             if (!res.tbl[0].r) {
                 this.setEmptyMessage4BacklogListViewByAssignee();
@@ -13225,7 +13235,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 idx_rc = 0;
                 idx_rc_estimation = 0;
                 idx_rc_spent = 0;
-//                idx_sprint = 0;
+                //                idx_sprint = 0;
                 sprintName = "";
             }
 
@@ -13250,56 +13260,56 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var idx_4_sprint = 0;
         for (var i = 0; i < obj.length; i++) {
             var isSourced = obj[i].isSourced === '1'
-                    ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                    : obj[i].fkSourcedId.length > 0
+                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
+                : obj[i].fkSourcedId.length > 0
                     ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(obj[i].sourcedName) + '">&nbsp;</i>'
                     : "";
             var tr = $('<tr></tr>').append($('<td></td>').html('#' + (i + 1) + ": "));
-//            console.log('assigneeName=' + assigneeName);
-//            console.log('obj[i].assigneeName=' + obj[i].assigneeName);
+            //            console.log('assigneeName=' + assigneeName);
+            //            console.log('obj[i].assigneeName=' + obj[i].assigneeName);
 
             var assigneeName_core = (i === obj.length) ? "-1" : obj[i].assigneeName;
             var sprintName_core = (i === obj.length) ? "-1" : obj[i].sprintName;
             if (assigneeName !== assigneeName_core) {
                 var rs = (tr_4_us[idx_4_assignee]) ? tr_4_us[idx_4_assignee] : 0;
                 var td = $('<td></td>').attr("rowspan", rs)
-                        .append(assigneeName_core)
-                        .append(' ')
-                        .append($('<b></b>')
-                                .append(" (")
-                                .append(tr_4_us_count[idx_4_assignee])
-                                .append(")")
-                                );
+                    .append(assigneeName_core)
+                    .append(' ')
+                    .append($('<b></b>')
+                        .append(" (")
+                        .append(tr_4_us_count[idx_4_assignee])
+                        .append(")")
+                    );
                 assigneeName = assigneeName_core;
                 sprintName = "";
                 tr.append(td);
                 idx_4_assignee++;
             }
 
-//            console.log('sprintName=' + sprintName);
-//            console.log('obj[i].sprintName=' + obj[i].sprintName);
+            //            console.log('sprintName=' + sprintName);
+            //            console.log('obj[i].sprintName=' + obj[i].sprintName);
             if (sprintName !== sprintName_core) {
-                var rs = (tr_4_sprint[idx_4_sprint]) ? tr_4_sprint[idx_4_sprint ] : 0;
+                var rs = (tr_4_sprint[idx_4_sprint]) ? tr_4_sprint[idx_4_sprint] : 0;
                 var td = $('<td></td>').attr("rowspan", rs)
-                        .append(sprintName_core).append(' ')
-                        .append($('<b></b>')
-                                .append(" (")
-                                .append(tr_4_sprint_count[idx_4_sprint])
-                                .append(")")
-                                );
+                    .append(sprintName_core).append(' ')
+                    .append($('<b></b>')
+                        .append(" (")
+                        .append(tr_4_sprint_count[idx_4_sprint])
+                        .append(")")
+                    );
                 sprintName = sprintName_core;
                 tr.append(td);
                 idx_4_sprint++;
             }
 
-//            tr.append($('<td></td>').append(obj[i].assigneeName));
-//            tr.append($('<td></td>').html(obj[i].sprintName));
+            //            tr.append($('<td></td>').append(obj[i].assigneeName));
+            //            tr.append($('<td></td>').html(obj[i].sprintName));
             tr.append($('<td></td>').attr('style', 'text-align:left').html(isSourced +
-                    '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
-                    + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
+                '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' + obj[i].id + '\')">'
+                + "#" + obj[i].orderNo + ": " + replaceTags(obj[i].backlogName) + '</a>'));
             tr.append($('<td></td>').html(obj[i].taskTypeName));
             tr.append($('<td></td>').html('<span class="us-item-status-' +
-                    obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
+                obj[i].backlogStatus + '">' + obj[i].backlogStatus + '</span><br>'));
             tr.append($('<td></td>').html(obj[i].createdByName));
             tr.append($('<td></td>').html(Utility.convertDate(obj[i].createdDate)));
             tr.append($('<td></td>').html(obj[i].priority));
@@ -13309,13 +13319,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#list_view_table_list_4_assignee > tbody').append(tr);
         }
         $('#list_view_table_list_4_assignee > tbody')
-                .append($('<tr></tr>')
-                        .append($('<td></td>').attr('colspan', '9'))
-                        .append($('<td></td>').append($('<b></b>')
-                                .append(Number((estimation_hours).toFixed(2)))
-                                .append('/')
-                                .append(Number((spent_hours).toFixed(2)))))
-                        );
+            .append($('<tr></tr>')
+                .append($('<td></td>').attr('colspan', '9'))
+                .append($('<td></td>').append($('<b></b>')
+                    .append(Number((estimation_hours).toFixed(2)))
+                    .append('/')
+                    .append(Number((spent_hours).toFixed(2)))))
+            );
     },
     clickFirstUserStory: function () {
         $('#container-us-body').find('.pointer').first().find('a').click();
@@ -13362,7 +13372,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setFilterPaginationRange: function () {
         var s = global_var.user_story_core_filter_current_index;
         var e = parseFloat(global_var.user_story_core_filter_current_index)
-                + parseFloat($('#us_core_filter_perpage').val())
+            + parseFloat($('#us_core_filter_perpage').val())
         $('#us_core_filter_paginationResult').html("(" + s + '-' + e + ')');
     },
     userstory_sort_by: function (e) {
@@ -13466,14 +13476,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     loadBacklogWithTask4Pivot: function () {
         var current_backlog_id = Utility.getParamFromUrl('current_backlog_id');
         global_var.current_backlog_id = current_backlog_id.length > 1
-                ? Utility.getParamFromUrl('current_backlog_id')
-                : "";
+            ? Utility.getParamFromUrl('current_backlog_id')
+            : "";
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         if (!global_var.current_project_id) {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -13508,8 +13518,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
         json.kv.startLimit = global_var.user_story_core_filter_current_index;
         json.kv.endLimit = 1000;
-//                parseFloat(global_var.user_story_core_filter_current_index)
-//                + parseFloat($('#us_core_filter_perpage').val());
+        //                parseFloat(global_var.user_story_core_filter_current_index)
+        //                + parseFloat($('#us_core_filter_perpage').val());
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -13530,31 +13540,31 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     loadBacklogWithTaskDetails4Pivot_GetUserStoryList: function (obj, data) {
         if (jQuery.inArray(obj.id, data.us_id_list) === -1) {
             var td = $('<td></td>')
-                    .attr('style', '  border-top: 0px solid white;')
-                    .addClass('us-item-pivot-td')
-                    .addClass('us-item-pivot-userstoty')
-                    .append($('<div>')
-                            .addClass('us-item-status-pivot-' + obj.backlogStatus)
-                            .css('float', 'left')
-                            .css('width', '80%')
-                            .append($('<a></a>')
-                                    .attr('href', '#')
-                                    .attr('style', 'color:black;font-size:11px;')
-                                    .attr('onclick', 'new UserStory().redirectToDetailedView("' + obj.id + '")')
-                                    .append('#' + obj.orderNo + ": " + replaceTags(obj.backlogName))
-                                    .append(" (" + data.us_hours_list[obj.id] + '/' + data.us_shours_list[obj.id] + ')')
-                                    )
-                            .append('<br>')
-                            .append($('<b></b>').append(obj.priority))
-                            .append(', ')
-                            .append($('<i></i>')
-                                    .append(obj.createdByName)
-                                    .append(", ")
-                                    .append(Utility.convertDate(obj.createdDate))
-                                    )
-                            )
-                    .append($('<div class="arrow-right-4-pivot"></div>')
-                            .css('float', 'right'));
+                .attr('style', '  border-top: 0px solid white;')
+                .addClass('us-item-pivot-td')
+                .addClass('us-item-pivot-userstoty')
+                .append($('<div>')
+                    .addClass('us-item-status-pivot-' + obj.backlogStatus)
+                    .css('float', 'left')
+                    .css('width', '80%')
+                    .append($('<a></a>')
+                        .attr('href', '#')
+                        .attr('style', 'color:black;font-size:11px;')
+                        .attr('onclick', 'new UserStory().redirectToDetailedView("' + obj.id + '")')
+                        .append('#' + obj.orderNo + ": " + replaceTags(obj.backlogName))
+                        .append(" (" + data.us_hours_list[obj.id] + '/' + data.us_shours_list[obj.id] + ')')
+                    )
+                    .append('<br>')
+                    .append($('<b></b>').append(obj.priority))
+                    .append(', ')
+                    .append($('<i></i>')
+                        .append(obj.createdByName)
+                        .append(", ")
+                        .append(Utility.convertDate(obj.createdDate))
+                    )
+                )
+                .append($('<div class="arrow-right-4-pivot"></div>')
+                    .css('float', 'right'));
             data.us_list.push(td);
             data.us_id_list.push(obj.id);
         }
@@ -13565,13 +13575,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     loadBacklogWithTaskDetails4Pivot_GetTaskList: function (obj, data) {
         var id = global_var.sourcedmatrix_filterby === 'tasktype'
-                ? obj.fkTaskTypeId
-                : global_var.sourcedmatrix_filterby === 'assignee'
+            ? obj.fkTaskTypeId
+            : global_var.sourcedmatrix_filterby === 'assignee'
                 ? obj.fkAssigneeId
                 : "";
         var name = global_var.sourcedmatrix_filterby === 'tasktype'
-                ? obj.taskTypeName
-                : global_var.sourcedmatrix_filterby === 'assignee'
+            ? obj.taskTypeName
+            : global_var.sourcedmatrix_filterby === 'assignee'
                 ? obj.assigneeName
                 : "";
         if (!name) {
@@ -13582,7 +13592,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
             data.task_id_list.push(id);
             data.task_list.push(replaceTags(name) +
-                    ' <br>(' + data.task_hours_list[id] + '/' + data.task_shours_list[id] + ')');
+                ' <br>(' + data.task_hours_list[id] + '/' + data.task_shours_list[id] + ')');
         }
     },
     loadBacklogWithTaskDetails4Pivot_GetTaskHoursList: function (obj, data) {
@@ -13610,32 +13620,32 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
 
             var groupid = global_var.sourcedmatrix_filterby === 'tasktype'
-                    ? obj[i].fkTaskTypeId
-                    : global_var.sourcedmatrix_filterby === 'assignee'
+                ? obj[i].fkTaskTypeId
+                : global_var.sourcedmatrix_filterby === 'assignee'
                     ? obj[i].fkAssigneeId
                     : "";
             data.task_hours_list[groupid] = (data.task_hours_list[groupid])
-                    && data.task_hours_list[groupid] !== 'undefined'
-                    ? ((parseFloat(data.task_hours_list[groupid], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
-                    : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
+                && data.task_hours_list[groupid] !== 'undefined'
+                ? ((parseFloat(data.task_hours_list[groupid], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
+                : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
             data.task_shours_list[groupid] = (data.task_shours_list[groupid])
-                    && data.task_shours_list[groupid] !== 'undefined'
-                    ? ((parseFloat(data.task_shours_list[groupid], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
-                    : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
+                && data.task_shours_list[groupid] !== 'undefined'
+                ? ((parseFloat(data.task_shours_list[groupid], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
+                : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
             data.us_hours_list[obj[i].id] = (data.us_hours_list[obj[i].id])
-                    && data.us_hours_list[obj[i].id] !== 'undefined'
-                    ? ((parseFloat(data.us_hours_list[obj[i].id], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
-                    : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
+                && data.us_hours_list[obj[i].id] !== 'undefined'
+                ? ((parseFloat(data.us_hours_list[obj[i].id], 1) + parseFloat(obj[i].estimatedHours, 1))).toFixed(2)
+                : (obj[i].estimatedHours) ? parseFloat(obj[i].estimatedHours, 1) : 0;
             data.us_shours_list[obj[i].id] = (data.us_shours_list[obj[i].id])
-                    && data.us_shours_list[obj[i].id] !== 'undefined'
-                    ? ((parseFloat(data.us_shours_list[obj[i].id], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
-                    : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
+                && data.us_shours_list[obj[i].id] !== 'undefined'
+                ? ((parseFloat(data.us_shours_list[obj[i].id], 1) + parseFloat(obj[i].spentHours, 1))).toFixed(2)
+                : (obj[i].spentHours) ? parseFloat(obj[i].spentHours, 1) : 0;
         }
     },
     loadBacklogWithTaskDetails4Pivot_GetCombList: function (obj, data) {
         var id = global_var.sourcedmatrix_filterby === 'tasktype'
-                ? obj.fkTaskTypeId
-                : global_var.sourcedmatrix_filterby === 'assignee'
+            ? obj.fkTaskTypeId
+            : global_var.sourcedmatrix_filterby === 'assignee'
                 ? obj.fkAssigneeId
                 : "";
         var k = obj.id + '-' + id;
@@ -13644,8 +13654,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             var sh = (obj.spentHours) ? parseFloat(obj.spentHours, 1) : 0;
             var hr = eh + '/' + sh;
             var assigneeName = global_var.sourcedmatrix_filterby === 'tasktype'
-                    ? obj.assigneeName
-                    : global_var.sourcedmatrix_filterby === 'assignee'
+                ? obj.assigneeName
+                : global_var.sourcedmatrix_filterby === 'assignee'
                     ? obj.taskTypeName
                     : "";
             assigneeName = (assigneeName) ? assigneeName : "";
@@ -13653,11 +13663,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             v += '<br>' + Utility.convertDate(obj.createdDate);
             v += (obj.modificationDate) ? "/" + Utility.convertDate(obj.modificationDate) : "";
             var td = $('<td></td>')
-                    .addClass('us-item-pivot-td')
-                    .attr('style', '  border-top: 0px solid white;')
-                    .append($('<div>')
-                            .addClass('us-item-status-pivot-' + obj.taskStatus).append(v)
-                            );
+                .addClass('us-item-pivot-td')
+                .attr('style', '  border-top: 0px solid white;')
+                .append($('<div>')
+                    .addClass('us-item-status-pivot-' + obj.taskStatus).append(v)
+                );
             data.comb_list.push(k);
             data.comb_val_list[k] = $('<div></div>').append(td).html();
         }
@@ -13702,7 +13712,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             for (var j = 0; j < data.task_id_list.length; j++) {
                 var k = data.us_id_list[i] + '-' + data.task_id_list[j];
                 tr.append((data.comb_val_list[k]) ? data.comb_val_list[k] :
-                        $('<td></td>').attr('style', '  border-top: 0px solid white;'));
+                    $('<td></td>').attr('style', '  border-top: 0px solid white;'));
             }
             div.append(tr);
         }
@@ -13764,24 +13774,24 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $(this).height(h - int);
         })
 
-//        $('.arrow-right-4-pivot').each(function (e) {
-//            var h = $(this).closest('td').height();
-//            $(this).height(h - int);
-//        })
+        //        $('.arrow-right-4-pivot').each(function (e) {
+        //            var h = $(this).closest('td').height();
+        //            $(this).height(h - int);
+        //        })
 
 
 
     },
-    setUSLists4KanbanViewByStatus: function (stLm,endLm,bsTat) {
-        $('#kanban_view_'+stLm+'_count').html(0);
-        $('.main_div_of_backlog_info_kanban_view_table_'+stLm).html('');
-        var priD =getProjectValueUsManageMulti();
+    setUSLists4KanbanViewByStatus: function (stLm, endLm, bsTat) {
+        $('#kanban_view_' + stLm + '_count').html(0);
+        $('.main_div_of_backlog_info_kanban_view_table_' + stLm).html('');
+        var priD = getProjectValueUsManageMulti();
         var fkAsId = $("#story_mn_filter_assigne_id").val();
         var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
         var endLimit = endLm;
-        if(priD===''){
+        if (priD === '') {
             return
         }
         var json = {
@@ -13794,30 +13804,30 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         json.kv.fkProjectId = priD;
         if (UsSprint) {
             json.kv.id = UsSprint;
-           
-        } else if(UsLabel) {
+
+        } else if (UsLabel) {
             json.kv.id = UsLabel;
         }
-        if(fkAsId) {
+        if (fkAsId) {
             json.kv.fkOwnerId = fkAsId;
         }
-        if(priorty) {
+        if (priorty) {
             json.kv.priority = priorty;
         }
-        if(search.length >2) {
-            json.kv.backlogName = "%%"+search +"%%";
+        if (search.length > 2) {
+            json.kv.backlogName = "%%" + search + "%%";
         }
-        if(bsTat) {
+        if (bsTat) {
             json.kv.backlogStatus = bsTat;
         }
-        if($(".us-mngm-is-api").prop("checked")){
+        if ($(".us-mngm-is-api").prop("checked")) {
             json.kv.isApi = 1;
-            
-        }else{
-            json.kv.isApi = 'NE%1'; 
+
+        } else {
+            json.kv.isApi = 'NE%1';
         }
-        json.kv.startLimit =startLimit;
-      
+        json.kv.startLimit = startLimit;
+
         json.kv.endLimit = endLimit;
         var that = this;
         var data = JSON.stringify(json);
@@ -13829,363 +13839,363 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             crossDomain: true,
             async: true,
             success: function (res) {
-         
-               /*  $('#kanban_view_new_count').html(0);
-                $('#kanban_view_ongoing_count').html(0);
-                $('#kanban_view_closed_count').html(0); */
-             
+
+                /*  $('#kanban_view_new_count').html(0);
+                 $('#kanban_view_ongoing_count').html(0);
+                 $('#kanban_view_closed_count').html(0); */
+
                 try {
-        //            var obj = res.tbl[0].r;
+                    //            var obj = res.tbl[0].r;
                     var c4new = 0;
                     var c4ongoing = 0;
-                    var c4closed = 0;                 
-                        var usIdList = res.tbl[0].r;
-        
-                        for (var k = 0; k < usIdList.length; k++) {
-                          
-                             
-        
-                            var obj = usIdList[k];
-                           
-        
-                            var html = new UserStory().genUSLine4KanbanView(obj);
-                            if (obj.backlogStatus === 'new') {
-                                c4new++;
-                                $('.main_div_of_backlog_info_kanban_view_table_new').append(html);
-                            } else if (obj.backlogStatus === 'ongoing') {
-                                c4ongoing++;
-                                $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
-                                $(html).find("#user-story-show-stat").click();
-                    
+                    var c4closed = 0;
+                    var usIdList = res.tbl[0].r;
 
-                            } else if (obj.backlogStatus === 'closed') {
-                                c4closed++;
-                                $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
-                            }
-                           
+                    for (var k = 0; k < usIdList.length; k++) {
+
+
+
+                        var obj = usIdList[k];
+
+
+                        var html = new UserStory().genUSLine4KanbanView(obj);
+                        if (obj.backlogStatus === 'new') {
+                            c4new++;
+                            $('.main_div_of_backlog_info_kanban_view_table_new').append(html);
+                        } else if (obj.backlogStatus === 'ongoing') {
+                            c4ongoing++;
+                            $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
+                            $(html).find("#user-story-show-stat").click();
+
+
+                        } else if (obj.backlogStatus === 'closed') {
+                            c4closed++;
+                            $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
                         }
-                      
-                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).find('.more-us-card-btn').remove();
-                        $('.main_div_of_backlog_info_kanban_view_table_'+bsTat).append('<a href="#" data-ople="'+bsTat+'" startLimit="'+(parseFloat(startLimit)+20)+'" endLimit="'+(parseFloat(endLimit)+20)+'" role="button" class="more-us-card-btn col-12">More</a>');
-                       
-                    
+
+                    }
+
+                    $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).find('.more-us-card-btn').remove();
+                    $('.main_div_of_backlog_info_kanban_view_table_' + bsTat).append('<a href="#" data-ople="' + bsTat + '" startLimit="' + (parseFloat(startLimit) + 20) + '" endLimit="' + (parseFloat(endLimit) + 20) + '" role="button" class="more-us-card-btn col-12">More</a>');
+
+
 
                 } catch (e) {
-                    
+
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
-               // contentArrangableUI();
+                // contentArrangableUI();
                 $('[data-toggle="popover"]').popover()
             },
             error: function () {
                 Toaster.showError(('somethingww'));
             }
         });
-   
+
 
     },
     setUSLists4KanbanView: function () {
-  
 
-        var stl  = ["new","ongoing",'closed']
-            for (let si = 0; si < stl.length; si++) {
-               
-               this.setUSLists4KanbanViewCore(stl[si])
-            }
-       
-     
+
+        var stl = ["new", "ongoing", 'closed']
+        for (let si = 0; si < stl.length; si++) {
+
+            this.setUSLists4KanbanViewCore(stl[si])
+        }
+
+
 
     },
     setUSLists4KanbanViewCoreUsLArge: function (stl) {
-               $('#body-large-modal-in-us').html('');
-               $(".modal-header b.status-new-total").text(0)
-               $(".modal-header b.status-ongoing-total").text(0)
-               $(".modal-header b.status-closed-total").text(0)
-               $(".modal-header b.status-UAT-total").text(0)
-               $(".modal-header b.status-rejected-total").text(0)
-               $(".modal-header b.status-Canceled-total").text(0)
-               $(".modal-header b.status-waiting-total").text(0)
-               $(".modal-header b.status-total-total").text(0)
-                var priD =getProjectValueUsManageMulti();
-                var fkAsId = $("#story_mn_filter_assigne_id").val();
-                var priorty = $("#priority-change-story-card-filter").val();
-                var search = $("#search-us-managmenet").val();
-                var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
-               
-                if(priD===''){
+        $('#body-large-modal-in-us').html('');
+        $(".modal-header b.status-new-total").text(0)
+        $(".modal-header b.status-ongoing-total").text(0)
+        $(".modal-header b.status-closed-total").text(0)
+        $(".modal-header b.status-UAT-total").text(0)
+        $(".modal-header b.status-rejected-total").text(0)
+        $(".modal-header b.status-Canceled-total").text(0)
+        $(".modal-header b.status-waiting-total").text(0)
+        $(".modal-header b.status-total-total").text(0)
+        var priD = getProjectValueUsManageMulti();
+        var fkAsId = $("#story_mn_filter_assigne_id").val();
+        var priorty = $("#priority-change-story-card-filter").val();
+        var search = $("#search-us-managmenet").val();
+        var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
+
+        if (priD === '') {
+            return
+        }
+        var json = {
+            kv: {}
+        };
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkProjectId = priD;
+        if (UsSprint) {
+            json.kv.id = UsSprint;
+
+        } else if (UsLabel) {
+            json.kv.id = UsLabel;
+        }
+        if (priorty) {
+            json.kv.priority = priorty;
+        }
+
+        if (fkAsId) {
+            json.kv.fkOwnerId = fkAsId;
+        }
+        if (search.length > 2) {
+            json.kv.backlogName = "%%" + search + "%%";
+        }
+        if (filtUs) {
+            var lstp = ""
+
+            for (let j = 0; j < filtUs.length; j++) {
+
+                var lmnh = $(filtUs[j]).find('b').attr('data-backlogs')
+                var tstl = filtUsm.TableFields[lmnh];
+
+                if (tstl === undefined) {
+                    $('#body-large-modal-in-us').html('');
                     return
+                } else {
+                    tstl = tstl.split(',')
+                    for (let k = 0; k < tstl.length; k++) {
+
+                        lstp += tstl[k] + '%IN%';
+                    }
+
                 }
-                var json = {
-                    kv: {}
-                };
+
+            }
+            if (lstp) {
+                json.kv.id = lstp;
+
+            } else {
+
+            }
+
+
+        }
+
+        if ($(".us-mngm-is-api").prop("checked")) {
+
+
+        } else {
+            json.kv.isApi = 'NE%1';
+        }
+
+        json.kv.backlogStatus = stl;
+
+
+        json.kv.startLimit = 0;
+
+        json.kv.endLimit = 200;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var c4new = 0
+                $('#kanban_view_' + stl + '_count').html(0);
+                $('#body-large-modal-in-us').html('');
+                $("#next-large-header-modal").text(stl + "(" + res.kv.rowCount + ")");
+                $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
                 try {
-                    json.kv.cookie = getToken();
-                } catch (err) {
-                }
-                json.kv.fkProjectId = priD;
-                if (UsSprint) {
-                    json.kv.id = UsSprint;
-                   
-                } else if(UsLabel) {
-                    json.kv.id = UsLabel;
-                }
-                if(priorty) {
-                    json.kv.priority = priorty;
-                }
-               
-                if(fkAsId) {
-                    json.kv.fkOwnerId = fkAsId;
-                }
-                if(search.length >2) {
-                    json.kv.backlogName = "%%"+search +"%%";
-                }
-                if(filtUs){
-                    var lstp = ""
 
-                    for (let j = 0; j < filtUs.length; j++) {
-                     
-                        var lmnh = $(filtUs[j]).find('b').attr('data-backlogs')
-                        var tstl = filtUsm.TableFields[lmnh];
+                    var usIdList = res.tbl[0].r;
 
-                        if( tstl === undefined){
-                            $('#body-large-modal-in-us').html('');
-                            return
-                        }else{
-                            tstl = tstl.split(',')
-                            for (let k = 0; k < tstl.length; k++) {
-                          
-                                lstp += tstl[k]+'%IN%';
-                            }
-                              
+                    for (var k = 0; k < usIdList.length; k++) {
+
+
+
+                        var obj = usIdList[k];
+
+
+                        var html = new UserStory().genUSLine4KanbanView(obj);
+                        $('#body-large-modal-in-us').append(html);
+                        getSTatsUserManagmentTableKanbanLargeMenu(obj.id)
+                        if (obj.backlogStatus === 'ongoing') {
+
+
+                            $(html).find("#user-story-show-stat").click();
+
                         }
-                        
+                        c4new++
+                        /* $('#kanban_view_new_count').html(c4new);
+                        $('#kanban_view_ongoing_count').html(c4ongoing);
+                        $('#kanban_view_closed_count').html(c4closed); */
                     }
-                    if(lstp){
-                        json.kv.id = lstp; 
-                       
-                    }else{
-                       
-                    }
-                    
 
-                 }
 
-                if($(".us-mngm-is-api").prop("checked")){
-                  
-                  
-                }else{
-                    json.kv.isApi = 'NE%1'; 
+                    /* if (c4new === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_new')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4ongoing === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_ongoing')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4closed === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_closed')
+                                .append($('<div class="task-content content-drag">')); */
+                } catch (e) {
+
+
+
                 }
-               
-                json.kv.backlogStatus = stl;
-                
-                
-                json.kv.startLimit =0;
-              
-                json.kv.endLimit = 200;
-                var that = this;
-                var data = JSON.stringify(json);
-                $.ajax({
-                    url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
-                    type: "POST",
-                    data: data,
-                    contentType: "application/json",
-                    crossDomain: true,
-                    async: true,
-                    success: function (res) {
-                         var c4new = 0
-                        $('#kanban_view_'+stl+'_count').html(0);
-                        $('#body-large-modal-in-us').html('');
-                        $("#next-large-header-modal").text(stl+"("+res.kv.rowCount+")");
-                        $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
-                        try {
-                                                  
-                                var usIdList = res.tbl[0].r;
-                
-                                for (var k = 0; k < usIdList.length; k++) {
-                                  
-                                     
-                
-                                    var obj = usIdList[k];
-                                   
-                
-                                    var html = new UserStory().genUSLine4KanbanView(obj);
-                                    $('#body-large-modal-in-us').append(html);
-                                    getSTatsUserManagmentTableKanbanLargeMenu(obj.id)
-                                     if (obj.backlogStatus === 'ongoing') {
-                                    
-                                 
-                                        $(html).find("#user-story-show-stat").click();
-                            
-                                    } 
-                                    c4new++
-                                    /* $('#kanban_view_new_count').html(c4new);
-                                    $('#kanban_view_ongoing_count').html(c4ongoing);
-                                    $('#kanban_view_closed_count').html(c4closed); */
-                                }
-                            
-                           
-                            /* if (c4new === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_new')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4ongoing === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4closed === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_closed')
-                                        .append($('<div class="task-content content-drag">')); */
-                        } catch (e) {
+                global_var.story_card_sprint_assign_checked = 0;
+                global_var.story_card_label_assign_checked = 0;
+                //contentArrangableUI();
+                $('[data-toggle="popover"]').popover();
 
-                        
-                            
-                        }
-                        global_var.story_card_sprint_assign_checked = 0;
-                        global_var.story_card_label_assign_checked = 0;
-                        //contentArrangableUI();
-                        $('[data-toggle="popover"]').popover();
-                
-                    },
-                    error: function () {
-                        Toaster.showError(('somethingww'));
-                    }
-                });
-            
-       
-           
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+
+
+
 
     },
     setUSLists4KanbanViewCore: function (stl) {
-  
-                          $('#kanban_view_'+stl+'_count').html(0);
-                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
-               
-                var priD =getProjectValueUsManageMulti();
-                var fkAsId = $("#story_mn_filter_assigne_id").val();
-                var priorty = $("#priority-change-story-card-filter").val();
-                var search = $("#search-us-managmenet").val();
-                if(priD===''){
-                    return
-                }
-                var json = {
-                    kv: {}
-                };
+
+        $('#kanban_view_' + stl + '_count').html(0);
+        $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+
+        var priD = getProjectValueUsManageMulti();
+        var fkAsId = $("#story_mn_filter_assigne_id").val();
+        var priorty = $("#priority-change-story-card-filter").val();
+        var search = $("#search-us-managmenet").val();
+        if (priD === '') {
+            return
+        }
+        var json = {
+            kv: {}
+        };
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkProjectId = priD;
+        if (UsSprint) {
+            json.kv.id = UsSprint;
+
+        } else if (UsLabel) {
+            json.kv.id = UsLabel;
+        }
+        if (priorty) {
+            json.kv.priority = priorty;
+        }
+        if (fkAsId) {
+            json.kv.fkOwnerId = fkAsId;
+        }
+        if (search.length > 2) {
+            json.kv.backlogName = "%%" + search + "%%";
+        }
+
+        if ($(".us-mngm-is-api").prop("checked")) {
+
+
+        } else {
+            json.kv.isApi = 'NE%1';
+        }
+
+        json.kv.backlogStatus = stl;
+
+
+        json.kv.startLimit = 0;
+
+        json.kv.endLimit = 20;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var c4new = 0
+                $('#kanban_view_' + stl + '_count').html(0);
+                $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+                $('#kanban_view_' + stl + '_count').text(res.kv.rowCount)
                 try {
-                    json.kv.cookie = getToken();
-                } catch (err) {
-                }
-                json.kv.fkProjectId = priD;
-                if (UsSprint) {
-                    json.kv.id = UsSprint;
-                   
-                } else if(UsLabel) {
-                    json.kv.id = UsLabel;
-                }
-                if(priorty) {
-                    json.kv.priority = priorty;
-                }
-                if(fkAsId) {
-                    json.kv.fkOwnerId = fkAsId;
-                }
-                if(search.length >2) {
-                    json.kv.backlogName = "%%"+search +"%%";
-                }
 
-                if($(".us-mngm-is-api").prop("checked")){
-                  
-                  
-                }else{
-                    json.kv.isApi = 'NE%1'; 
-                }
-               
-                json.kv.backlogStatus = stl;
-                
-                
-                json.kv.startLimit =0;
-              
-                json.kv.endLimit = 20;
-                var that = this;
-                var data = JSON.stringify(json);
-                $.ajax({
-                    url: urlGl + "api/post/srv/serviceTmGetPureBacklogList",
-                    type: "POST",
-                    data: data,
-                    contentType: "application/json",
-                    crossDomain: true,
-                    async: true,
-                    success: function (res) {
-                         var c4new = 0
-                        $('#kanban_view_'+stl+'_count').html(0);
-                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
-                        $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
-                        try {
-                                                  
-                                var usIdList = res.tbl[0].r;
-                
-                                for (var k = 0; k < usIdList.length; k++) {
-                                  
-                                     
-                
-                                    var obj = usIdList[k];
-                                   
-                
-                                    var html = new UserStory().genUSLine4KanbanView(obj);
-                                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
+                    var usIdList = res.tbl[0].r;
 
-                                     if (obj.backlogStatus === 'ongoing') {
-                                    
-                                 
-                                        $(html).find("#user-story-show-stat").click();
-                            
-                                    } 
-                                    c4new++
-                                    /* $('#kanban_view_new_count').html(c4new);
-                                    $('#kanban_view_ongoing_count').html(c4ongoing);
-                                    $('#kanban_view_closed_count').html(c4closed); */
-                                }
-                              
-                              if(c4new > 19){
-                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
-                                $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
-                               
-                
-                              }
-                           
-                            /* if (c4new === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_new')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4ongoing === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4closed === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_closed')
-                                        .append($('<div class="task-content content-drag">')); */
-                        } catch (e) {
+                    for (var k = 0; k < usIdList.length; k++) {
 
-                          if(c4new < 1){
-                             
-                              $('.main_div_of_backlog_info_kanban_view_table_'+stl)
-                              .append($('<div class="task-content content-drag">'));
-                            }
-                            
+
+
+                        var obj = usIdList[k];
+
+
+                        var html = new UserStory().genUSLine4KanbanView(obj);
+                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).append(html);
+
+                        if (obj.backlogStatus === 'ongoing') {
+
+
+                            $(html).find("#user-story-show-stat").click();
+
                         }
-                        global_var.story_card_sprint_assign_checked = 0;
-                        global_var.story_card_label_assign_checked = 0;
-                    //    contentArrangableUI();
-                        $('[data-toggle="popover"]').popover();
-                       
-                    },
-                    error: function () {
-                        Toaster.showError(('somethingww'));
+                        c4new++
+                        /* $('#kanban_view_new_count').html(c4new);
+                        $('#kanban_view_ongoing_count').html(c4ongoing);
+                        $('#kanban_view_closed_count').html(c4closed); */
                     }
-                });
-            
-       
-           
+
+                    if (c4new > 19) {
+                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).find('.more-us-card-btn').remove();
+                        $('.main_div_of_backlog_info_kanban_view_table_' + stl).append('<a href="#" data-ople="' + stl + '" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
+
+
+                    }
+
+                    /* if (c4new === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_new')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4ongoing === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_ongoing')
+                                .append($('<div class="task-content content-drag">'));
+                    if (c4closed === 0)
+                        $('.main_div_of_backlog_info_kanban_view_table_closed')
+                                .append($('<div class="task-content content-drag">')); */
+                } catch (e) {
+
+                    if (c4new < 1) {
+
+                        $('.main_div_of_backlog_info_kanban_view_table_' + stl)
+                            .append($('<div class="task-content content-drag">'));
+                    }
+
+                }
+                global_var.story_card_sprint_assign_checked = 0;
+                global_var.story_card_label_assign_checked = 0;
+                //    contentArrangableUI();
+                $('[data-toggle="popover"]').popover();
+
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+
+
+
 
     },
     setUSLists4KanbanView_old: function () {
-           
+
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
         $('#kanban_view_closed_count').html(0);
@@ -14196,7 +14206,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var addedUS = [];
 
         try {
-//            var obj = res.tbl[0].r;
+            //            var obj = res.tbl[0].r;
             var c4new = 0;
             var c4ongoing = 0;
             var c4closed = 0;
@@ -14208,7 +14218,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 for (var k = 0; k < usIdList.length; k++) {
                     var lastId = usIdList[k];
                     if (lastId.length === 0 ||
-                            jQuery.inArray(lastId, addedUS) !== -1) {
+                        jQuery.inArray(lastId, addedUS) !== -1) {
                         continue;
                     }
 
@@ -14238,13 +14248,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
             if (c4new === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_new')
-                        .append($('<div class="task-content content-drag">'));
+                    .append($('<div class="task-content content-drag">'));
             if (c4ongoing === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                        .append($('<div class="task-content content-drag">'));
+                    .append($('<div class="task-content content-drag">'));
             if (c4closed === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_closed')
-                        .append($('<div class="task-content content-drag">'));
+                    .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
         global_var.story_card_sprint_assign_checked = 0;
@@ -14287,11 +14297,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
 
             $('.main_div_of_backlog_info_kanban_view_table_new ')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
             $('.main_div_of_backlog_info_kanban_view_table_ongoing ')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
             $('.main_div_of_backlog_info_kanban_view_table_closed')
-                    .append($('<div class="task-content content-drag">'));
+                .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
 
@@ -14303,91 +14313,91 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         return st;
     },
     genUSLine1: function (o) {
-//        var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
-//        var isSourced = o.isSourced === '1' ?
-//                "<i class=\"fa fa-cube\" style=\"color: darkred;\">&nbsp;</i>"
-//                : o.fkSourcedId.length > 0
-//                ? '<i class=\"fa fa-bandcamp\" style=\"color: darkred;\">&nbsp;</i>'
-//                : "";
-//        console.log('issourced = ' + o.isSourced);
-//        var st = '';
-//        st += '<div class="col-sm-1 us-list">';
-//        st += '<div class="row">';
-//        st += '<div class="col-6 us-list-number  ">';
-//        st += '<input class="us-checkbox-list" id="' + o.id + '" type="checkbox"><br>';
-//        st += '</div>';
-//        st += '<div class="col-12 us-list-number  "><br><br><br>';
-//        st += o.orderNo;
-//        st += '</div>';
-//        st += '</div>';
-//        st += '</div>';
-//        st += '<div class="col-sm-10 us-list pointer ' + isSelected + '">';
-//        st += '<div class="us-list-item">';
-//        st += '<span class="isSourced">';
-//        st += o.isSourced === isSourced;
-//        st += '</span>';
-//        st += '<a href="#" class="us-list-item" onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
-//        st += o.backlogName;
-//        st += '</a>';
-//        st += '</div>';
-//        st += '<div class="row"><br><br></div>';
-//        st += '<span class="backlog-status">';
-//        st += '<div class="us-list-item   us-item-status-' + o.backlogStatus + '">' + o.backlogStatus + '</div>';
-//        st += '</span>'
-//        st += '<div class="us-list-item us-priority">' + o.priority + '</div>';
-//        st += '<div class="us-list-item   us-item-executor">' + o.createdByName + '</div>';
-//        st += '<div class="us-list-item   us-item-date">' + Utility.convertDate(o.createdDate) + '</div>';
-//        st += '</div>';
-//        st += '<div class="col-sm-1 us-list pointer us-4-select">';
-//        st += ' <div class="dropdown">';
-//        st += '<button class="btn btn-primary dropdown-toggle us-prop-btn" type="button" data-toggle="dropdown"><span class="caret"></span></button>';
-//        st += ' <ul class="dropdown-menu" style="line-height: 1.2em">';
-//        st += '  <li><a href="#" class="us-edit" data-target="#updateBacklog" data-toggle="modal" onclick="new UserStory().select(\'' + o.id + '\')"><i class="fa fa-edit"></i>&nbsp;<span>Edit</span></a></li>';
-//        st += '  <li><a href="#" class="us-edit" onclick="new UserStory().delete(\'' + o.id + '\')"><i class="fa fa-trash"></i>&nbsp;<span>Delete</span></a></li>';
-//        st += o.isSourced !== '1'
-//                ? '  <li><a href="#" class="us-edit" data-target="#assignSUS" data-toggle="modal" onclick="new UserStory().assignSUSModal(\'' + o.id + '\')"><i class="fa fa-edit"></i>&nbsp;<span>Associate with SUS</span></a></li>'
-//                : "";
-//        st += ' </ul>';
-//
-//        st += ' </div>';
-//        st += '</div>'
-//
-//        return st;
+        //        var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
+        //        var isSourced = o.isSourced === '1' ?
+        //                "<i class=\"fa fa-cube\" style=\"color: darkred;\">&nbsp;</i>"
+        //                : o.fkSourcedId.length > 0
+        //                ? '<i class=\"fa fa-bandcamp\" style=\"color: darkred;\">&nbsp;</i>'
+        //                : "";
+        //        console.log('issourced = ' + o.isSourced);
+        //        var st = '';
+        //        st += '<div class="col-sm-1 us-list">';
+        //        st += '<div class="row">';
+        //        st += '<div class="col-6 us-list-number  ">';
+        //        st += '<input class="us-checkbox-list" id="' + o.id + '" type="checkbox"><br>';
+        //        st += '</div>';
+        //        st += '<div class="col-12 us-list-number  "><br><br><br>';
+        //        st += o.orderNo;
+        //        st += '</div>';
+        //        st += '</div>';
+        //        st += '</div>';
+        //        st += '<div class="col-sm-10 us-list pointer ' + isSelected + '">';
+        //        st += '<div class="us-list-item">';
+        //        st += '<span class="isSourced">';
+        //        st += o.isSourced === isSourced;
+        //        st += '</span>';
+        //        st += '<a href="#" class="us-list-item" onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
+        //        st += o.backlogName;
+        //        st += '</a>';
+        //        st += '</div>';
+        //        st += '<div class="row"><br><br></div>';
+        //        st += '<span class="backlog-status">';
+        //        st += '<div class="us-list-item   us-item-status-' + o.backlogStatus + '">' + o.backlogStatus + '</div>';
+        //        st += '</span>'
+        //        st += '<div class="us-list-item us-priority">' + o.priority + '</div>';
+        //        st += '<div class="us-list-item   us-item-executor">' + o.createdByName + '</div>';
+        //        st += '<div class="us-list-item   us-item-date">' + Utility.convertDate(o.createdDate) + '</div>';
+        //        st += '</div>';
+        //        st += '<div class="col-sm-1 us-list pointer us-4-select">';
+        //        st += ' <div class="dropdown">';
+        //        st += '<button class="btn btn-primary dropdown-toggle us-prop-btn" type="button" data-toggle="dropdown"><span class="caret"></span></button>';
+        //        st += ' <ul class="dropdown-menu" style="line-height: 1.2em">';
+        //        st += '  <li><a href="#" class="us-edit" data-target="#updateBacklog" data-toggle="modal" onclick="new UserStory().select(\'' + o.id + '\')"><i class="fa fa-edit"></i>&nbsp;<span>Edit</span></a></li>';
+        //        st += '  <li><a href="#" class="us-edit" onclick="new UserStory().delete(\'' + o.id + '\')"><i class="fa fa-trash"></i>&nbsp;<span>Delete</span></a></li>';
+        //        st += o.isSourced !== '1'
+        //                ? '  <li><a href="#" class="us-edit" data-target="#assignSUS" data-toggle="modal" onclick="new UserStory().assignSUSModal(\'' + o.id + '\')"><i class="fa fa-edit"></i>&nbsp;<span>Associate with SUS</span></a></li>'
+        //                : "";
+        //        st += ' </ul>';
+        //
+        //        st += ' </div>';
+        //        st += '</div>'
+        //
+        //        return st;
     },
     genUSLine_old: function (o) {
         var isSelected = o.id === global_var.current_backlog_id ? "setUSLists" : "";
         var pointer_is_selected = o.id === global_var.current_backlog_id ? "us-selected" : "";
         var isSourced = o.isSourced === '1'
-                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                : o.fkSourcedId.length > 0
+            ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
+            : o.fkSourcedId.length > 0
                 ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + replaceTags(o.sourcedName) + '">&nbsp;</i>'
                 : "";
         var countLine = o.isSourced === '1' && o.taskCount > 0
-                ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;" \n\
+            ? '&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;" \n\
         title="Number of Tasks"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>'
-                : " ";
+            : " ";
         countLine += o.isSourced === '1' && o.inputCount > 0
-                ? '&nbsp;  <i class="fa fa-inbox" style="font-size:10px;color:#555555;" \n\
+            ? '&nbsp;  <i class="fa fa-inbox" style="font-size:10px;color:#555555;" \n\
         title="Number of Inputs"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>'
-                : "";
+            : "";
         countLine += o.commentCount > 0
-                ? '&nbsp;  <i class="fa fa-comment" style="font-size:10px;color:#555555;" \n\
+            ? '&nbsp;  <i class="fa fa-comment" style="font-size:10px;color:#555555;" \n\
         title="Number of Comments"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>'
-                : "";
+            : "";
         countLine += o.bugCount > 0
-                ? '&nbsp;  <i class="fa fa-bug" style="font-size:10px;color:#555555;" \n\
+            ? '&nbsp;  <i class="fa fa-bug" style="font-size:10px;color:#555555;" \n\
         title="Number of Bugs"></i><span style="font-size:10px; "> (' + o.bugCount + ')</span>'
-                : "";
+            : "";
         countLine += o.updateCount > 0
-                ? '&nbsp;  <i class="fa fa-edit" style="font-size:10px;color:#555555;" \n\
+            ? '&nbsp;  <i class="fa fa-edit" style="font-size:10px;color:#555555;" \n\
         title="Number of Updates"></i><span style="font-size:10px; "> (' + o.updateCount + ')</span>'
-                : "";
+            : "";
         var isFromCustomer = o.isFromCustomer === '1' ? ""
-//                ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-                : "";
+            //                ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
+            : "";
         var tr = $('<tr sid="' + o.id + '" orderNo="' + o.orderNo + '"></tr>');
         tr.append($('<td class="us-td-list"></td>')
-                .append('<input class="us-checkbox-list" id="' + o.id + '" type="checkbox">'));
+            .append('<input class="us-checkbox-list" id="' + o.id + '" type="checkbox">'));
         var mdate = (o.modificationDate) ? "/" + Utility.convertDate(o.modificationDate) : "";
         var td2 = '<span class="isSourced">';
         td2 += isSourced;
@@ -14408,7 +14418,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         td2 += '<span class="us-list-item   us-item-executor">&nbsp;' + o.createdByName + ' </span>';
         td2 += '<span class="us-list-item   us-item-date">&nbsp;' + Utility.convertDate(o.createdDate) + mdate + ' </span>';
         td2 += '<span class="us-list-item   us-item-date">&nbsp&nbsp&nbsp;' + (o.estimatedHours) + "/" + o.spentHours + ' </span>';
-//        td2 += countLine;
+        //        td2 += countLine;
         tr.append($('<td class="us-td-list pointer ' + isSelected + " " + pointer_is_selected + '"></td>').html(td2));
         var td3 = ' <div class="dropdown">';
         td3 += '<button class="btn btn-primary dropdown-toggle us-prop-btn" type="button" data-toggle="dropdown"><span class="caret"></span></button>';
@@ -14416,25 +14426,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         td3 += '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" data-target="#updateBacklog" data-toggle="modal" onclick="new UserStory().select(\'' + o.id + '\')"><i class="fa fa-edit1"></i>&nbsp;<span>Edit</span></a></li>';
         td3 += '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" onclick="new UserStory().delete(\'' + o.id + '\')"><i class="fa fa-trash1"></i>&nbsp;<span>Delete</span></a></li>';
         td3 += o.isSourced !== '1' && o.isFromCustomer !== '1'
-                ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
+            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
          data-target="#bindToSUSModal" data-toggle="modal" onclick="new UserStory().bindToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind to Sourced US</span></a></li>'
-                : "";
+            : "";
         td3 += o.isSourced == '1'
-                ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
         data-target="#addDependency" data-toggle="modal" onclick="new UserStory().addDependencyModal(\'' + o.id + '\')"><i class="fa fa-connectdevelop1"></i>&nbsp;<span>Add Dependency</span></a></li>'
-                : "";
+            : "";
         td3 += o.isSourced == '1'
-                ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
             onclick="new UserStory().addEpicToJira(\'' + o.id + '\')"><i class="fa fa-external-link1"></i>&nbsp;<span>Add Epic to JIRA</span></a></li>'
-                : "";
+            : "";
         td3 += o.isFromCustomer === '1'
-                ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
+            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;"\n\
          data-target="#notifyTicketAsBugModal" data-toggle="modal" onclick="new UserStory().notifyTicketAsBugModal(\'' + o.id + '\')"><i class="fa fa-bug1"></i>&nbsp;<span>Notify as Bug</span></a></li>'
-                : "";
+            : "";
         td3 += o.isFromCustomer === '1'
-                ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
+            ? '  <li><a href="#" class="us-edit" style="padding: 10px 5px;" \n\
          data-target="#bindTicketToSUSModal" data-toggle="modal" onclick="new UserStory().bindTicketToSUSModal(\'' + o.id + '\')"><i class="fa fa-bandcamp1"></i>&nbsp;<span>Bind Ticket to SUS</span></a></li>'
-                : "";
+            : "";
         td3 += ' </ul>';
         td3 += ' </div>';
         tr.append($('<td class="us-td-list"></td>').html(td3));
@@ -14445,25 +14455,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
-                .append($("<input type='checkbox'>")
-                        .addClass("assign-split-story-card-item")
-                        .attr("pid", o.id)
-                        .attr("checked", ischecked)
-                        .attr("sid", global_var.story_card_sprint_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
+            .append($("<input type='checkbox'>")
+                .addClass("assign-split-story-card-item")
+                .attr("pid", o.id)
+                .attr("checked", ischecked)
+                .attr("sid", global_var.story_card_sprint_assign_id))
+            .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
 
         var ischecked4Lbl = (global_var.userStoryFilter.label.length > 1);
         var divLabel = $('<div>')
-                .append($("<input type='checkbox'>")
-                        .addClass("assign-label-story-card-item")
-                        .attr("pid", o.id)
-                        .attr("checked", ischecked4Lbl)
-                        .attr("sid", global_var.story_card_label_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
+            .append($("<input type='checkbox'>")
+                .addClass("assign-label-story-card-item")
+                .attr("pid", o.id)
+                .attr("checked", ischecked4Lbl)
+                .attr("sid", global_var.story_card_label_assign_id))
+            .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
 
         var rs = global_var.story_card_sprint_assign_checked === 1
-                ? div.html()
-                : global_var.story_card_label_assign_checked === 1
+            ? div.html()
+            : global_var.story_card_label_assign_checked === 1
                 ? divLabel.html()
                 : '<input class="us-checkbox-list us-checkbox" id="' + o.id + '" type="checkbox">';
 
@@ -14478,7 +14488,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     sid="' + o.id + '" orderNo="' + o.orderNo + '"></tr>');
 
         tr.append($('<td class="us-td-list us-td-list-checkbox"></td>')
-                .append(rs));
+            .append(rs));
 
         if (o.isApi === '1') {
             tr.attr("is_api", "1")
@@ -14494,7 +14504,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         td2 += '</a>';
 
         td2 += '<span class="backlog-status">';
-//        td2 += '<div class="us-list-item   us-item-status-' + o.backlogStatus + '">' + o.backlogStatus + '</div>';
+        //        td2 += '<div class="us-list-item   us-item-status-' + o.backlogStatus + '">' + o.backlogStatus + '</div>';
         td2 += '</span>'
 
         tr.append($('<td style="padding:13px 20px;" class="us-td-list pointer  us-td-list-ozel ' + isSelected + " " + pointer_is_selected + '"></td>').html(td2));
@@ -14537,7 +14547,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -14562,7 +14572,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 new UserStory().loadSUSList4InputDetails(SACore.toJSON());
                 that.clearField();
 
-//                
+                //                
                 $('#backlogName').focus();
 
 
@@ -14577,7 +14587,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 })
 
                 that.load();
-//                
+                //                
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -14621,7 +14631,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -14641,10 +14651,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
         });
     },
-    
+
     genUSLine4KanbanView: function (o) {
 
-  
+
 
         var assigneeImg = $('<span>')
         if (o.fkOwnerId.length > 3) {
@@ -14652,18 +14662,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var userName = SAProjectUser.GetUserDetails(o.fkOwnerId, "userName");
 
             var img = (userImage)
-                    ? fileUrl(userImage)
-                    : fileUrl(new User().getDefaultUserprofileName());
+                ? fileUrl(userImage)
+                : fileUrl(new User().getDefaultUserprofileName());
             assigneeImg.append($('<img>')
-//                        .css("width","24px")
-//                        .css('height','24px')
-                    .addClass('Assigne-card-story-select-img assigne')
-                    .attr('src', img)
-                    .attr('data-trigger', 'hover')
-                    .attr('data-toggle', 'popover')
-                    .attr('data-content', userName ? "":"UnAssigned")
-                    .attr("title", 'Owner')
-                    )
+                //                        .css("width","24px")
+                //                        .css('height','24px')
+                .addClass('Assigne-card-story-select-img assigne')
+                .attr('src', img)
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr('data-content', userName ? "" : "UnAssigned")
+                .attr("title", 'Owner')
+            )
         }
         var createdByImg = $('<span>')
         if (o.createdBy) {
@@ -14673,79 +14683,79 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
 
             var img = (userImage)
-                    ? fileUrl(userImage)
-                    : fileUrl(new User().getDefaultUserprofileName());
-         createdByImg.append($('<img>')
-//                        .css("width","24px")
-//                        .css('height','24px')
-                    .addClass('Assigne-card-story-select-img created')
-                    .attr('src', img)
-                    .attr('data-trigger', 'hover')
-                    .attr('data-toggle', 'popover')
-                    .attr('data-content', userName)
-                    .attr("title", 'Created By')
-                    )
+                ? fileUrl(userImage)
+                : fileUrl(new User().getDefaultUserprofileName());
+            createdByImg.append($('<img>')
+                //                        .css("width","24px")
+                //                        .css('height','24px')
+                .addClass('Assigne-card-story-select-img created')
+                .attr('src', img)
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr('data-content', userName)
+                .attr("title", 'Created By')
+            )
         }
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
         var div = $('<div>')
-                .append($("<input type='checkbox'>")
-                        .addClass("assign-split-story-card-item")
-                        .attr("pid", o.id)
-                        .attr("checked", ischecked)
-                        .attr("sid", global_var.story_card_sprint_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
+            .append($("<input type='checkbox'>")
+                .addClass("assign-split-story-card-item")
+                .attr("pid", o.id)
+                .attr("checked", ischecked)
+                .attr("sid", global_var.story_card_sprint_assign_id))
+            .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
 
         var ischecked4Lbl = (global_var.userStoryFilter.label.length > 1);
         var divLabel = $('<div>')
-                .append($("<input type='checkbox'>")
-                        .addClass("assign-label-story-card-item")
-                        .attr("pid", o.id)
-                        .attr("checked", ischecked4Lbl)
-                        .attr("sid", global_var.story_card_label_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
+            .append($("<input type='checkbox'>")
+                .addClass("assign-label-story-card-item")
+                .attr("pid", o.id)
+                .attr("checked", ischecked4Lbl)
+                .attr("sid", global_var.story_card_label_assign_id))
+            .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
 
         var rs = global_var.story_card_sprint_assign_checked === 1
-                ? div.html()
-                : global_var.story_card_label_assign_checked === 1
+            ? div.html()
+            : global_var.story_card_label_assign_checked === 1
                 ? divLabel.html() : "#";
 
         var s = $('<div >')
-                .attr('bid', o.id)
-                .addClass('task-content content-drag')
-                .append($('<div class="task-content-header">')
-                        .append($('<div class="ContentText">')
-                                .attr('bno', o.backlogNo)
-                                .attr('pid', o.id)
-                                .append($("<input type='checkbox'>")
-                                .addClass("assign-label-story-card-item-new")
-                                .attr("pid", o.id))
-                                .append(' ' + o.orderNo)
-                                .append($('<span class="headerContentText">')
-                                        .attr('href', '#')
-                                        .attr('onclick1', "new UserStory().redirectToDetailedView('" + o.id + "')")
-                                        .append('&nbsp;' + replaceTags(o.backlogName)))
-                                )
-//                        .append($('<div class="content-header-edit">')
-//                                .append($('<i class="fas fa-ellipsis-h">'))
-//                                )
-//                        .append($('<div class="Column header-choose">')
-//                                .append($('<div class="col-12 choosebtn">')
-//                                        .append($('<span class="limitSet">')
-//                                                .append('Add Flag')))
-//                                )
-                        )
-                        
-                .append($('<div clas="taskContentBody">')
-                        .append($('<span class="backlog-status">')
-                                .append($('<div class="us-list-item">')
-                                        .addClass('us-item-status-' + o.backlogStatus)
-                                        .append(o.backlogStatus)
-                                        ))
-                        .append($('<span class="backlog-status">')
-                                .append($('<div class="us-list-item us-priority">')
-                                .append($("<select>").attr("id",'priority-change-story-card').addClass('story-priorty-selectbox')
-                                .append(`
+            .attr('bid', o.id)
+            .addClass('task-content content-drag')
+            .append($('<div class="task-content-header">')
+                .append($('<div class="ContentText">')
+                    .attr('bno', o.backlogNo)
+                    .attr('pid', o.id)
+                    .append($("<input type='checkbox'>")
+                        .addClass("assign-label-story-card-item-new")
+                        .attr("pid", o.id))
+                    .append(' ' + o.orderNo)
+                    .append($('<span class="headerContentText">')
+                        .attr('href', '#')
+                        .attr('onclick1', "new UserStory().redirectToDetailedView('" + o.id + "')")
+                        .append('&nbsp;' + replaceTags(o.backlogName)))
+                )
+                //                        .append($('<div class="content-header-edit">')
+                //                                .append($('<i class="fas fa-ellipsis-h">'))
+                //                                )
+                //                        .append($('<div class="Column header-choose">')
+                //                                .append($('<div class="col-12 choosebtn">')
+                //                                        .append($('<span class="limitSet">')
+                //                                                .append('Add Flag')))
+                //                                )
+            )
+
+            .append($('<div clas="taskContentBody">')
+                .append($('<span class="backlog-status">')
+                    .append($('<div class="us-list-item">')
+                        .addClass('us-item-status-' + o.backlogStatus)
+                        .append(o.backlogStatus)
+                    ))
+                .append($('<span class="backlog-status">')
+                    .append($('<div class="us-list-item us-priority">')
+                        .append($("<select>").attr("id", 'priority-change-story-card').addClass('story-priorty-selectbox')
+                            .append(`
                                 <option value="1" selected="">1- Lowest</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -14756,55 +14766,55 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 <option value="8">8</option>
                                 <option value="9">9 - Highest</option>
                                 `)
-                                .val(o.priority))
-                                    
-                                        ))
-                        /* .append($('<span class="backlog-status">')
-                                .append($('<div class="us-list-item us-item-executor">')
+                            .val(o.priority))
 
-                                        .append("&nbsp;" + o.createdByName)
-                                        )) */
-                        .append($('<span class="backlog-status">')
-                                .append($('<div class="us-list-item us-item-date">')
-                                        .append("&nbsp;" + Utility.convertDate(o.createdDate))
-                                        ))
-                        .append($('<span class="backlog-status">')
-                                .append("&nbsp;&nbsp;")
-                                .append(assigneeImg))
-                        .append($('<span class="backlog-status">')
-                                .append("&nbsp;&nbsp;")
-                                .append(createdByImg))
-                        .append(`
+                    ))
+                /* .append($('<span class="backlog-status">')
+                        .append($('<div class="us-list-item us-item-executor">')
+
+                                .append("&nbsp;" + o.createdByName)
+                                )) */
+                .append($('<span class="backlog-status">')
+                    .append($('<div class="us-list-item us-item-date">')
+                        .append("&nbsp;" + Utility.convertDate(o.createdDate))
+                    ))
+                .append($('<span class="backlog-status">')
+                    .append("&nbsp;&nbsp;")
+                    .append(assigneeImg))
+                .append($('<span class="backlog-status">')
+                    .append("&nbsp;&nbsp;")
+                    .append(createdByImg))
+                .append(`
                         <label class="switch ">
             <input type="checkbox" id="user-story-show-stat" data-bid='${o.id}' class="user-story-prototype-change1">
             <span class="slider round hide-off "></span>
 
         </label>`)
-        .append($("<button>")
-                   .addClass("baclog-large-modal-next btn btn-sm btn-light")
-                   .attr("data-status",o.id)
-                   .attr("data-status",'baclog-large-modal-next-id')
-                   .append('<i class="fas fa-expand" aria-hidden="true"></i>')
-        )
-        .append($("<div>").addClass("stat-div-task-content")
-           .append($('<table>').addClass("stat-table-us")
-                   .append($("<thead>")
-                       .append($("<tr class=total>"))
-                       .append($("<tr class='bug'>"))
-                       )
-                   .append($("<tbody>")))
-                  .css("display",'none'))
-//                        .append($('<i  class="fa fa-info-circle">')
-//                                .data('toggle', 'modal')
-//                                .data('target', '#backlogTaskInfoModal')
-//                                .attr('title', 'User Story Task Info')
-//                                .attr('onclick', "new UserStory().backlogTaskInfoModal('" + o.id + "')")
-//                                .append(countLine))
-
+                .append($("<button>")
+                    .addClass("baclog-large-modal-next btn btn-sm btn-light")
+                    .attr("data-status", o.id)
+                    .attr("data-status", 'baclog-large-modal-next-id')
+                    .append('<i class="fas fa-expand" aria-hidden="true"></i>')
+                )
+                .append($("<div>").addClass("stat-div-task-content")
+                    .append($('<table>').addClass("stat-table-us")
+                        .append($("<thead>")
+                            .append($("<tr class=total>"))
+                            .append($("<tr class='bug'>"))
                         )
+                        .append($("<tbody>")))
+                    .css("display", 'none'))
+                //                        .append($('<i  class="fa fa-info-circle">')
+                //                                .data('toggle', 'modal')
+                //                                .data('target', '#backlogTaskInfoModal')
+                //                                .attr('title', 'User Story Task Info')
+                //                                .attr('onclick', "new UserStory().backlogTaskInfoModal('" + o.id + "')")
+                //                                .append(countLine))
+
+            )
 
 
-                        
+
 
         return s;
 
@@ -14815,7 +14825,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         $('#backlogTaskInfoModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -14844,19 +14854,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row"));
         for (var i = 0; i < obj.length; i++) {
             var imgAssigneeLink = obj[i].assigneeImageUrl.length === 0
-                    ? fileUrl(new User().getDefaultUserprofileName())
-                    : fileUrl(obj[i].assigneeImageUrl);
+                ? fileUrl(new User().getDefaultUserprofileName())
+                : fileUrl(obj[i].assigneeImageUrl);
             var span = $('<span></span>')
-                    .append($('<img></img>')
-                            .attr('src', imgAssigneeLink)
-                            .attr('style', 'padding:5px;max-width:28px;max-height:34px;border-radius:50%;'))
-                    .append(obj[i].assigneeName)
-                    .append(" ")
-                    .append("(" + obj[i].taskTypeName + ")")
-                    .append("-")
-                    .append('<b>' + obj[i].estimatedHours + '</b>')
-                    .append('/')
-                    .append('<b>' + obj[i].completedDuration + '</b>');
+                .append($('<img></img>')
+                    .attr('src', imgAssigneeLink)
+                    .attr('style', 'padding:5px;max-width:28px;max-height:34px;border-radius:50%;'))
+                .append(obj[i].assigneeName)
+                .append(" ")
+                .append("(" + obj[i].taskTypeName + ")")
+                .append("-")
+                .append('<b>' + obj[i].estimatedHours + '</b>')
+                .append('/')
+                .append('<b>' + obj[i].completedDuration + '</b>');
             div.append(span).append("<br>");
         }
         $('#backlogTaskInfoModal_result').append(div);
@@ -14864,15 +14874,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     setPreviousUserstory: function () {
         //set previous backlog
         $('#smb-general-main-previous-us')
-                .attr('onclick', "new UserStory().redirectUserStoryCore('" + global_var.previous_backlog_id + "')")
-                .html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.previous_backlog_id)));
+            .attr('onclick', "new UserStory().redirectUserStoryCore('" + global_var.previous_backlog_id + "')")
+            .html(this.minimizeBacklogName(SACore.GetBacklogname(global_var.previous_backlog_id)));
     },
     setPreviousUserstoryValues: function () {
         global_var.previous_backlog_name = global_var.current_backlog_name;
         global_var.previous_backlog_id = global_var.current_backlog_id;
     },
     redirectToDetailedView: function (id) {
-//        this.setPreviousUserstory();
+        //        this.setPreviousUserstory();
 
         this.setPreviousUserstoryValues();
 
@@ -14882,7 +14892,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         Utility.addParamToUrl("current_view", global_var.current_view);
         Utility.addParamToUrl("current_backlog_id", global_var.current_backlog_id);
         Utility.addParamToUrl("mainview", global_var.mainview);
-//        new UserStory().clearAndShowAll(this)
+        //        new UserStory().clearAndShowAll(this)
 
         this.setDetailedView($('#view_button_detailed'));
 
@@ -14890,7 +14900,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
 
     redirectToDetailedViewGeneral: function (id) {
-//        this.setPreviousUserstory();
+        //        this.setPreviousUserstory();
 
         this.setPreviousUserstoryValues();
 
@@ -14900,20 +14910,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         Utility.addParamToUrl("current_view", global_var.current_view);
         Utility.addParamToUrl("current_backlog_id", global_var.current_backlog_id);
         Utility.addParamToUrl("mainview", global_var.mainview);
-//        new UserStory().clearAndShowAll(this)
+        //        new UserStory().clearAndShowAll(this)
 
         this.load();
     },
     redirectUserStory: function (backlogId) {
 
         if ($('.' + backlogId).val()) {
-//            console.log('id=' + $('#us-gui-component-rel-sus-id').val())
+            //            console.log('id=' + $('#us-gui-component-rel-sus-id').val())
             this.redirectUserStoryCore($('.' + backlogId).val());
         }
     },
     redirectUserStoryCore: function (backlogId) {
         try {
-//            event.preventDefault();
+            //            event.preventDefault();
 
             if (backlogId.length === 0) {
                 return;
@@ -14933,7 +14943,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#storyCardListSelectBox').change();
 
             $('#container-us-body').find('tr[sid=' + backlogId + ']')
-                    .first().find('a').first().focus().click();
+                .first().find('a').first().focus().click();
         } catch (err) {
             console.log(err)
         }
@@ -14953,7 +14963,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -14972,11 +14982,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: false,
             success: function (res) {
                 that.changeStatusIconOfUserStoryByStoryId($('#notifyTicketAsBug_id').val(), res.kv.backlogStatus);
-//                that.clickOnThe1stUserStory();
+                //                that.clickOnThe1stUserStory();
                 $('#notifyTicketAsBugModal').modal('hide');
                 if ($('#notifyTicketAsBug_suslist').val()) {
                     that.addBindedIconToUserStoryById(
-                            $('#notifyTicketAsBug_id').val(), res.kv.isSourced, true);
+                        $('#notifyTicketAsBug_id').val(), res.kv.isSourced, true);
                 }
                 that.refreshCurrentBacklog();
                 that.updateStatusOfBacklogBySourcedId($('#notifyTicketAsBug_suslist').val());
@@ -14991,7 +15001,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15011,12 +15021,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 var status = res.kv.status;
                 for (var i = 0; i < ids.length; i++) {
                     $('#container-us-body').find('tr[sid=' + ids[i] + ']')
-                            .first().find('.backlog-status').first()
-                            .html('<div class="us-list-item   us-item-status-' + status + '">' + status + '</div>');
-                }
-                $('#container-us-body').find('tr[sid=' + id + ']')
                         .first().find('.backlog-status').first()
                         .html('<div class="us-list-item   us-item-status-' + status + '">' + status + '</div>');
+                }
+                $('#container-us-body').find('tr[sid=' + id + ']')
+                    .first().find('.backlog-status').first()
+                    .html('<div class="us-list-item   us-item-status-' + status + '">' + status + '</div>');
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -15028,7 +15038,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15050,10 +15060,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#bindToSUSModal').modal('hide');
                 if ($('#bindToSUSModal_suslist').val()) {
                     that.addBindedIconToUserStoryById(
-                            $('#bindToSUSModal_id').val(), res.kv.isSourced, true);
+                        $('#bindToSUSModal_id').val(), res.kv.isSourced, true);
                 } else {
                     that.addBindedIconToUserStoryById(
-                            $('#bindToSUSModal_id').val(), res.kv.isSourced, false);
+                        $('#bindToSUSModal_id').val(), res.kv.isSourced, false);
                 }
             },
             error: function () {
@@ -15063,7 +15073,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     notifyTicketAsBugModal: function (id) {
         $('#notifyTicketAsBug_id').val(id);
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15091,13 +15101,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#notifyTicketAsBug_suslist').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
         $('#notifyTicketAsBug_suslist').first().change();
     },
     addDependency: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15128,7 +15138,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     loadBacklogDependency: function (id) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15160,7 +15170,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var del = '<a href="#" onclick="new UserStory().deleteDependency(\'' + obj[n].fkBacklogId + '\',\''
-                        + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
+                    + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>';
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].parentBacklogName) + '</td>';
                 st += '<td>' + del + '</td>';
@@ -15176,7 +15186,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#sourcedUSList4DependencyList > tbody').html(st);
     },
     deleteDependency: function (backlogId, id) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15207,7 +15217,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     loadDependencyModalInfo: function (id) {
         $('#sourcedUSList4Dependency').html('');
         $('#sourcedUSList4Dependency_id').val(id);
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15234,7 +15244,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     bindTicketToSUSModal: function (id) {
         $('#bindTicketToSUSModal_id').val(id);
         this.bindTicketToSUSModalAssignee();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15266,8 +15276,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 continue;
             }
             $('#sourcedUSList4Dependency').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
     loadSUS4RelationDetails: function (res) {
@@ -15278,52 +15288,52 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 continue;
             }
             $('#us-related-sus').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo));
         }
     },
     loadSUS4Relation4SectionDetails: function (res) {
         $('.us-gui-component-rel-sus-id-section').html("");
         $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
-                .attr("value", "")
-                .text(""));
+            .attr("value", "")
+            .text(""));
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-//                if (global_var.current_backlog_id === obj[n].id) {
-//                    continue;
-//                }
+                //                if (global_var.current_backlog_id === obj[n].id) {
+                //                    continue;
+                //                }
                 $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
-                        .attr("value", obj[n].id)
-                        .text(obj[n].backlogName + "  #" + obj[n].orderNo));
+                    .attr("value", obj[n].id)
+                    .text(obj[n].backlogName + "  #" + obj[n].orderNo));
             }
         } catch (e) {
         }
     },
-//    bindTicketToSUSModal: function (id) {
-//        $('#bindTicketToSUSModal_id').val(id);
-//        this.bindTicketToSUSModalAssignee();
-//        var json = {kv: {}};        try {            json.kv.cookie = getToken();        } catch (err) {        }
-//        json.kv.fkProjectId = global_var.current_project_id;
-//        var that = this;
-//        var data = JSON.stringify(json);
-//        $.ajax({
-//            url: urlGl+"api/post/srv/serviceTmGetSourcedBacklogList",
-//            type: "POST",
-//            data: data,
-//            contentType: "application/json",
-//            crossDomain: true,
-//            async: false,
-//            success: function (res) {
-//                that.bindTicketToSUSModalDetails(res);
-//            },
-//            error: function () {
-//                Toaster.showError(('somethingww'));
-//            }
-//        });
-//    },
+    //    bindTicketToSUSModal: function (id) {
+    //        $('#bindTicketToSUSModal_id').val(id);
+    //        this.bindTicketToSUSModalAssignee();
+    //        var json = {kv: {}};        try {            json.kv.cookie = getToken();        } catch (err) {        }
+    //        json.kv.fkProjectId = global_var.current_project_id;
+    //        var that = this;
+    //        var data = JSON.stringify(json);
+    //        $.ajax({
+    //            url: urlGl+"api/post/srv/serviceTmGetSourcedBacklogList",
+    //            type: "POST",
+    //            data: data,
+    //            contentType: "application/json",
+    //            crossDomain: true,
+    //            async: false,
+    //            success: function (res) {
+    //                that.bindTicketToSUSModalDetails(res);
+    //            },
+    //            error: function () {
+    //                Toaster.showError(('somethingww'));
+    //            }
+    //        });
+    //    },
     bindTicketToSUSModalAssignee: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15358,7 +15368,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
             st += '<td>'
             st += ' <input type="checkbox" class="us_ticket_bind_assignee"  id="'
-                    + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
+                + obj[n].fkUserId + '" value="' + obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</input>'
             st += '</td>'
 
         }
@@ -15371,13 +15381,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#bindTicketToSUSModal_suslist').append($("<option></option>").attr("value", ''));
         for (var n = 0; n < obj.length; n++) {
             $('#bindTicketToSUSModal_suslist').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].backlogName)));
         }
     },
     bindToSUSModal: function (id) {
         $('#bindToSUSModal_id').val(id);
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15407,8 +15417,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#bindToSUSModal_suslist').append($("<option></option>").attr("value", ''));
         for (var n = 0; n < obj.length; n++) {
             $('#bindToSUSModal_suslist').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].backlogName)));
         }
     },
     minimizeBacklogName: function (arg) {
@@ -15503,8 +15513,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         fillRelatedApi4InputEvent();
 
-//        this.getSendToApiListByStoryCard(id);
-//        this.getBacklogTaskStats();
+        //        this.getSendToApiListByStoryCard(id);
+        //        this.getBacklogTaskStats();
     },
 
     getBacklogTaskStats: function () {
@@ -15576,22 +15586,22 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 oid = oid.trim();
                 var inputObj = SAInput.getInputObject(oid);
 
-//                if (!pushedList.includes(inputObj.sendToBacklogId))
-//                          pushedList.includes(inputObj.selectFromBacklogId)) {
-//                    continue;
-//                }
+                //                if (!pushedList.includes(inputObj.sendToBacklogId))
+                //                          pushedList.includes(inputObj.selectFromBacklogId)) {
+                //                    continue;
+                //                }
 
                 if (inputObj.sendToBacklogId && !pushedList.includes(inputObj.sendToBacklogId)) {
                     select.append($('<option>')
-                            .val(inputObj.sendToBacklogId)
-                            .text(SACore.GetBacklogname(inputObj.sendToBacklogId)));
+                        .val(inputObj.sendToBacklogId)
+                        .text(SACore.GetBacklogname(inputObj.sendToBacklogId)));
                     pushedList.push(inputObj.sendToBacklogId);
                 }
 
                 if (inputObj.selectFromBacklogId && !pushedList.includes(inputObj.selectFromBacklogId)) {
                     select.append($('<option>')
-                            .val(inputObj.selectFromBacklogId)
-                            .text(SACore.GetBacklogname(inputObj.selectFromBacklogId)));
+                        .val(inputObj.selectFromBacklogId)
+                        .text(SACore.GetBacklogname(inputObj.selectFromBacklogId)));
                     pushedList.push(inputObj.selectFromBacklogId);
 
                 }
@@ -15605,7 +15615,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     getStoryInfoDetail4BacklogList: function (id, e) {
 
         var st = "";
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15628,7 +15638,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return st;
     },
     getStoryInfoDetail: function (id) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15644,7 +15654,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 that.setStoryGeneralInfo(res.tbl[0].r[0]);
             },
             error: function () {
@@ -15657,16 +15667,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').addClass("col-12");
         div.append($('<div></div>').addClass("col-12").html("<h4>#" + o.orderNo + ": " + replaceTags(o.backlogName) + "</h4>"));
         div.append($('<div></div>').addClass("col-12").html("<span>Creadted by " +
-                o.createdByName + " on " + Utility.convertDate(o.createdDate) + "</span>"));
+            o.createdByName + " on " + Utility.convertDate(o.createdDate) + "</span>"));
         div.append($('<div></div>').addClass("col-12").html("<hr>"));
-//        div.append($('<div></div>').addClass("col-4").html("<span><b>Project</b>: None </span>"));
-//        div.append($('<div></div>').addClass("col-4").html("<span><b>Status</b>: </span><span class=\"us-item-status-" + o.backlogStatus + "\"> " + o.backlogStatus + "</span>"));
-//        div.append($('<div></div>').addClass("col-4").html("<span><b>Priority</b>: </span><span class='us-priority'> " + o.priority + "</span>"));
-//        div.append($('<div></div>').addClass("col-4").html("<span><b>Estimated hour(s)</b>: none </span>"));
-//        div.append($('<div></div>').addClass("col-4").html("<span><b>Hour(s) Spent</b>: none </span>"));
-//        div.append($('<div></div>').addClass("col-12").html("<span><b>Because</b>: " + o.backlogBecause + "</span>"));
-//        div.append($('<div></div>').addClass("col-12").html("<span><b>Description</b>: " + o.description + "</span>"));
-//        div.append($('<div></div>').addClass("col-12").html("<hr>"));
+        //        div.append($('<div></div>').addClass("col-4").html("<span><b>Project</b>: None </span>"));
+        //        div.append($('<div></div>').addClass("col-4").html("<span><b>Status</b>: </span><span class=\"us-item-status-" + o.backlogStatus + "\"> " + o.backlogStatus + "</span>"));
+        //        div.append($('<div></div>').addClass("col-4").html("<span><b>Priority</b>: </span><span class='us-priority'> " + o.priority + "</span>"));
+        //        div.append($('<div></div>').addClass("col-4").html("<span><b>Estimated hour(s)</b>: none </span>"));
+        //        div.append($('<div></div>').addClass("col-4").html("<span><b>Hour(s) Spent</b>: none </span>"));
+        //        div.append($('<div></div>').addClass("col-12").html("<span><b>Because</b>: " + o.backlogBecause + "</span>"));
+        //        div.append($('<div></div>').addClass("col-12").html("<span><b>Description</b>: " + o.description + "</span>"));
+        //        div.append($('<div></div>').addClass("col-12").html("<hr>"));
         $('#smb-general-main-info').append(div.html());
     },
     setCommentBody: function () {
@@ -15687,7 +15697,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         var json = {
-            kv: {}};
+            kv: {}
+        };
         json.kv.id = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -15699,7 +15710,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 SACore.deleteBacklog(global_var.current_backlog_id);
                 that.load();
                 new Label().load();
@@ -15715,7 +15726,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         var json = {
-            kv: {}};
+            kv: {}
+        };
         json.kv.id = id;
         json.kv.domain = global_var.current_domain;
         var that = this;
@@ -15739,7 +15751,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         var json = {
-            kv: {}};
+            kv: {}
+        };
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -15774,7 +15787,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15830,7 +15843,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15871,8 +15884,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
             var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                    ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
-                    : "";
+                ? " (<i>" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + "</i>)"
+                : "";
             st += '<td>'
             st += ' <input type="radio" name="sprintRadioUpdate" class="assignSprintModal_sprintcheckbox"  id="' + obj[n].id + '"';
             st += ' value="' + obj[n].id + '"';
@@ -15890,7 +15903,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15942,7 +15955,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#' + vid).html(st);
     },
     updateInfo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -15968,19 +15981,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: false,
             success: function (res) {
                 SACore.updateBacklogByRes(res);
-//                Toaster.showError("successfull");
+                //                Toaster.showError("successfull");
                 new Notification("").clearField('updateBacklog');
                 closeModal('updateBacklog');
                 new Label().load();
                 new Sprint().load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     update: function () {
-//        this.setId(id);
+        //        this.setId(id);
         this.addValue4Update();
         this.addController4Update();
         this.updateInfo();
@@ -16016,84 +16029,84 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
     addFileForNewTicket: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('insertNewTicketModal_file').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
             output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                    f.size, ' bytes, last modified: ',
-                    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                    '</li>');
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
         }
 
         document.getElementById('insertNewTicketModal_list').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
     addFileForComment: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file1').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
             output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                    f.size, ' bytes, last modified: ',
-                    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                    '</li>');
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
         }
 
         document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
     addFileForAddTaskType: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file4AddTaskType').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
-//            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                    f.size, ' bytes',
-//                    '</li>');
+            //            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+            //                    f.size, ' bytes',
+            //                    '</li>');
             output.push('<li>', f.name, '</li>');
         }
 
         document.getElementById('AddTaskType_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
     addFileForStoryCard: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('setStoryCardUploadImageModal_file').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
-//            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                    f.size, ' bytes',
-//                    '</li>');
+            //            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+            //                    f.size, ' bytes',
+            //                    '</li>');
             output.push('<li>', f.name, '</li>');
         }
 
         document.getElementById('setStoryCardUploadImageModal_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
     addFileForAddBacklog: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file4AddBacklog').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
-//            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                    f.size, ' bytes',
-//                    '</li>');
+            //            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+            //                    f.size, ' bytes',
+            //                    '</li>');
             output.push('<li>', f.name, '</li>');
         }
 
         document.getElementById('addBacklog_filelist').innerHTML = '<ul>' + output.join('') + '</ul>';
     },
     addFileForTaskComment: function () {
-//        var files = evt.target.files; // FileList object
+        //        var files = evt.target.files; // FileList object
         var files = document.getElementById('file11').files;
         // files is a FileList of File objects. List some properties.
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
-//            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                    f.size, ' bytes',
-//                    '</li>');
+            //            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+            //                    f.size, ' bytes',
+            //                    '</li>');
             output.push('<li>', f.name, '</li>');
         }
 
@@ -16168,11 +16181,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16183,16 +16196,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
                     var rc = parseInt(fileNo) + 1;
                     if (trc == file_count) {
-//                        console.log('st=' + st);
+                        //                        console.log('st=' + st);
                         that.addCommentInput(st);
                         that.fillCommentList();
                     }
@@ -16209,11 +16222,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16224,10 +16237,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
@@ -16248,11 +16261,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16263,10 +16276,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
@@ -16287,11 +16300,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16302,16 +16315,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
                     var rc = parseInt(fileNo) + 1;
                     if (trc === file_count) {
-//                      console.log('st=' + st);
+                        //                      console.log('st=' + st);
                         that.addCommentInput4Task(st);
                         that.fillCommentListByTask();
                     }
@@ -16328,11 +16341,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16343,10 +16356,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
@@ -16367,11 +16380,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16382,10 +16395,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
@@ -16406,11 +16419,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16421,16 +16434,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
-//                    console.log('file count=' + file_count);
+                    //                    console.log('file count=' + file_count);
                     $('#' + id).attr("fname", s);
                     $('#' + id).attr("src", fileUrl(s));
                     st += global_var.vertical_seperator + s;
                     var rc = parseInt(fileNo) + 1;
                     if (trc == file_count) {
-//                        console.log('st=' + st);
+                        //                        console.log('st=' + st);
                         that.addCommentInput(st);
                         that.fillCommentList();
                     }
@@ -16448,11 +16461,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16463,7 +16476,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
                     s = 'url("' + fileUrl(s) + '")'
@@ -16482,11 +16495,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16498,7 +16511,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
                     st += global_var.vertical_seperator + s;
@@ -16512,7 +16525,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                         $('#setStoryCardUploadImageModal_file').val('');
                     }
-//                    s = fileUrl(s);
+                    //                    s = fileUrl(s);
 
                 };
                 reader.readAsBinaryString(file, fname);
@@ -16527,11 +16540,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         var trc = 0;
         for (var i = 0, f; f = files[i]; i++) {
-//            var file = files[0];
+            //            var file = files[0];
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log('fname=' + fname);
+            //            console.log('fname=' + fname);
             if (files && file) {
                 var reader = new FileReader();
                 reader.fileName = fname;
@@ -16542,7 +16555,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     var fname1 = readerEvt.target.fileName;
                     var fileext1 = readerEvt.target.fileExt;
                     var fileNo = readerEvt.target.fileNo;
-//                    console.log('trc no=' + trc);
+                    //                    console.log('trc no=' + trc);
                     var binaryString = readerEvt.target.result;
                     var s = that.uploadFile_temp(fileext1, btoa(binaryString), fname1);
                     s = fileUrl(s);
@@ -16554,7 +16567,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
     uploadFile_temp: function (fileext, file_base_64, file_name) {
-//        console.log(file_base_64)
+        //        console.log(file_base_64)
         var d = new Object();
         d.file_base_64 = file_base_64;
         d.file_extension = fileext;
@@ -16587,21 +16600,21 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var file = f;
             var fileext = file['name'].split('.').pop();
             var fname = file['name'].split('.')[0];
-//            console.log("file name=" + fname);
+            //            console.log("file name=" + fname);
             if (files && file) {
-//                console.log("inside file name=" + fname);
+                //                console.log("inside file name=" + fname);
                 var reader = new FileReader();
                 reader.onload = function (readerEvt) {
                     var binaryString = readerEvt.result;
                     var s = that.uploadFile(fileext, btoa(binaryString), fileext, fname);
                     r += s + global_var.vertical_seperator;
                     var fnamelist = $('#' + id).attr("fnamelist");
-//                    console.log("core fnamelist=" + fnamelist);
+                    //                    console.log("core fnamelist=" + fnamelist);
                     $('#' + id).attr("fnamelist", fnamelist + global_var.vertical_seperator + s);
                 };
-//                console.log("inside file name ok 1  " + fname);
+                //                console.log("inside file name ok 1  " + fname);
                 reader.readAsBinaryString(file);
-//                console.log("inside file name ok 222 " + fname);
+                //                console.log("inside file name ok 222 " + fname);
             }
         }
         return r;
@@ -16661,14 +16674,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         this.addCommentInput4TaskDetails($('#addComment4Task_comment').val(),
-                $('#addComment4Task_commenttype').val(),
-                $('#addComment4Task_commentestimationhours').val(),
-                fileName + global_var.vertical_seperator + global_var.current_upload_canvas,
-                global_var.current_backlog_id,
-                global_var.current_us_task_id
+            $('#addComment4Task_commenttype').val(),
+            $('#addComment4Task_commentestimationhours').val(),
+            fileName + global_var.vertical_seperator + global_var.current_upload_canvas,
+            global_var.current_backlog_id,
+            global_var.current_us_task_id
 
 
-                )
+        )
 
     },
     addCommentInput4TaskDetails: function (comment, commentType, estimatedHours, fileName, fkBacklogId, fkTaskId) {
@@ -16691,24 +16704,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: false,
             success: function (res) {
                 SATask.updateTaskByRes(res);
-//                genTaskKanbanView();
+                //                genTaskKanbanView();
                 $('#addComment4Task_comment').val('');
                 $('#addComment4Task_id').val('');
                 $('#tasklistcomment').val('');
                 $('#file11').val('');
                 $('canvasdiv_comment').html(emptyCanvasDiv());
                 genCommentListOfTask();
-//                 Toaster.showError("successfull");
-//                new Notification("").clearField('updateBacklog');
-//                closeModal('updateBacklog');
+                //                 Toaster.showError("successfull");
+                //                new Notification("").clearField('updateBacklog');
+                //                closeModal('updateBacklog');
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     addCommentInput: function (fileName) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16728,23 +16741,23 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#backlogComment').val('');
                 $('#list').val('');
                 $('#file1').val('');
-//                 Toaster.showError("successfull");
-//                new Notification("").clearField('updateBacklog');
-//                closeModal('updateBacklog');
+                //                 Toaster.showError("successfull");
+                //                new Notification("").clearField('updateBacklog');
+                //                closeModal('updateBacklog');
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     fillTrialListByTaskWithReturn: function (scenarioId) {
-//        console.log('task id'+taskId);
+        //        console.log('task id'+taskId);
         if (!scenarioId) {
             return;
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16764,7 +16777,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 rs = that.generateCommentListHtml4Task(res, taskId);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
         return rs;
@@ -16775,7 +16788,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16795,19 +16808,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 rs = that.generateTrialListHtml4Scenario(res, scenarioId);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
         return rs;
     },
     fillCommentListByTaskWithReturn: function (taskId) {
-//        console.log('task id'+taskId);
+        //        console.log('task id'+taskId);
         if (!taskId) {
             return;
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16827,7 +16840,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 rs = that.generateCommentListHtml4Task(res, taskId);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
         return rs;
@@ -16838,9 +16851,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         global_var.current_task_id_4_comment = (taskId)
-                ? taskId
-                : global_var.current_task_id_4_comment;
-        var json = {kv: {}};
+            ? taskId
+            : global_var.current_task_id_4_comment;
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16856,18 +16869,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res))
-//                $('#backlogComment').val('');
+                //                console.log(JSON.stringify(res))
+                //                $('#backlogComment').val('');
                 that.generateCommentListHtml4Task(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     fillCommentList: function () {
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -16883,12 +16896,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res))
+                //                console.log(JSON.stringify(res))
                 $('#backlogComment').val('');
                 that.generateCommentListHtml(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -16910,7 +16923,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         } else {
             this.addCommentInput4Task('');
             this.refreshCurrentBacklog();
-//            this.fillCommentListByTask();
+            //            this.fillCommentListByTask();
         }
     },
     addComment4TaskModal: function (arg, id) {
@@ -16931,90 +16944,90 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var div_by_col = $('<div></div>')
-                    .addClass("col")
-                    .addClass("mangodbcoltrial")
-                    .attr("style", obj[i].trialStatus === 'nok' ? "background-color:#FFFACD" : "");
+                .addClass("col")
+                .addClass("mangodbcoltrial")
+                .attr("style", obj[i].trialStatus === 'nok' ? "background-color:#FFFACD" : "");
             var div_by_row = $('<div></div>')
-                    .addClass("row")
-                    .addClass("mangodbtrial")
-                    .addClass(obj[i].isNotifiedAsBug === '1' ? "task-child-notified" : "")
-                    .addClass(obj[i].trialStatus === 'nok' ? "task-child-trial-bug" : "")
-//                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
-                    ;
+                .addClass("row")
+                .addClass("mangodbtrial")
+                .addClass(obj[i].isNotifiedAsBug === '1' ? "task-child-notified" : "")
+                .addClass(obj[i].trialStatus === 'nok' ? "task-child-trial-bug" : "")
+                //                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
+                ;
             var img = obj[i].createdByAvatar.length === 0
-                    ? fileUrl(new User().getDefaultUserprofileName())
-                    : fileUrl(obj[i].createdByAvatar);
+                ? fileUrl(new User().getDefaultUserprofileName())
+                : fileUrl(obj[i].createdByAvatar);
             var div1 = $('<div></div>')
-                    .addClass("col-1 comment-line")
+                .addClass("col-1 comment-line")
 
-                    .append($('<img></img>')
-                            .addClass("figure-img img-fluid rounded-circle")
-                            .attr("style", "max-width:28px")
-                            .attr("src", img)
-                            .attr("alt", obj[i].createdByName));
+                .append($('<img></img>')
+                    .addClass("figure-img img-fluid rounded-circle")
+                    .attr("style", "max-width:28px")
+                    .attr("src", img)
+                    .attr("alt", obj[i].createdByName));
             var comment = replaceTags(obj[i].actualResult);
             var div2 = $('<div></div>')
-                    .attr('style', "padding-left:5px;")
-                    .addClass("col-11")
-                    .append($("<b></b>").append(obj[i].createdByName)
-                            .append($("<span></span>")
-                                    .append(", ")
-                                    .append(Utility.convertDate(obj[i].trialDate))
-                                    .append(", ")
-                                    .append(Utility.convertTime(obj[i].trialTime))
-                                    .append(", ")
-                                    .append(obj[i].trialStatus === 'ok' ? ' OK ' : "<b style='color:red'> Not OK</b> ")
-                                    .append(" &nbsp;&nbsp;&nbsp;&nbsp;")
-                                    .append("      ")
-                                    .append(obj[i].isNotifiedAsBug !== '1'
-                                            ? $('<i></i>')
-                                            .addClass('fa fa-edit')
-                                            .attr("data-toggle", "modal")
-                                            .attr("title", "Update Trial")
-                                            .attr("data-target", "#updateTrial4ScenarioModal")
-                                            .attr("style", "cursor:pointer")
-                                            .attr("onclick", "new UserStory().editTrial4ScenarioModel('" + obj[i].id + "')")
-                                            : "")
-                                    .append(" &nbsp;&nbsp;")
-                                    .append(obj[i].isNotifiedAsBug !== '1'
-                                            ? $('<i></i>')
-                                            .addClass('fa fa-trash')
-                                            .attr("title", "Delete Trial")
-                                            .attr("style", "cursor:pointer")
-                                            .attr("onclick", "new UserStory().deleteTrial4ScenarioModel('" + obj[i].id + "')")
-                                            : $('<span></span>')
-                                            .append("N")
-                                            .attr("data-toggle", "modal")
-                                            .attr("data-target", "#notifedInfoModal")
-                                            .attr("style", "color:blue;cursor:pointer")
-                                            .attr("onclick", "new UserStory().showNotifiedInfo('" + obj[i].id + "')")
-                                            .attr("title", "Already Notified")
-                                            )
-                                    .append(" &nbsp;&nbsp;")
-                                    .append(obj[i].isNotifiedAsBug !== '1' && obj[i].trialStatus === 'nok'
-                                            ?
-                                            $('<i></i>')
-                                            .attr("href", "#")
-                                            .addClass('fa fa-bug')
-                                            .attr("data-toggle", "modal")
-                                            .attr("data-target", "#notifyTrialAsBugModal")
-                                            .attr("title", "Nofify as Bug")
-                                            .attr("style", "cursor:pointer")
-                                            .attr("onclick", "new UserStory().notifyTrialAsBugModal('" + obj[i].id + "')")
-                                            : "")
-                                    )
-                            )
-                    .append("</br>")
+                .attr('style', "padding-left:5px;")
+                .addClass("col-11")
+                .append($("<b></b>").append(obj[i].createdByName)
                     .append($("<span></span>")
-                            .attr("id", obj[i].id)
-//                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
-                            .attr("pval", replaceTags(obj[i].actualResult))
-                            .append(MapTextAreaHtml(comment)));
+                        .append(", ")
+                        .append(Utility.convertDate(obj[i].trialDate))
+                        .append(", ")
+                        .append(Utility.convertTime(obj[i].trialTime))
+                        .append(", ")
+                        .append(obj[i].trialStatus === 'ok' ? ' OK ' : "<b style='color:red'> Not OK</b> ")
+                        .append(" &nbsp;&nbsp;&nbsp;&nbsp;")
+                        .append("      ")
+                        .append(obj[i].isNotifiedAsBug !== '1'
+                            ? $('<i></i>')
+                                .addClass('fa fa-edit')
+                                .attr("data-toggle", "modal")
+                                .attr("title", "Update Trial")
+                                .attr("data-target", "#updateTrial4ScenarioModal")
+                                .attr("style", "cursor:pointer")
+                                .attr("onclick", "new UserStory().editTrial4ScenarioModel('" + obj[i].id + "')")
+                            : "")
+                        .append(" &nbsp;&nbsp;")
+                        .append(obj[i].isNotifiedAsBug !== '1'
+                            ? $('<i></i>')
+                                .addClass('fa fa-trash')
+                                .attr("title", "Delete Trial")
+                                .attr("style", "cursor:pointer")
+                                .attr("onclick", "new UserStory().deleteTrial4ScenarioModel('" + obj[i].id + "')")
+                            : $('<span></span>')
+                                .append("N")
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#notifedInfoModal")
+                                .attr("style", "color:blue;cursor:pointer")
+                                .attr("onclick", "new UserStory().showNotifiedInfo('" + obj[i].id + "')")
+                                .attr("title", "Already Notified")
+                        )
+                        .append(" &nbsp;&nbsp;")
+                        .append(obj[i].isNotifiedAsBug !== '1' && obj[i].trialStatus === 'nok'
+                            ?
+                            $('<i></i>')
+                                .attr("href", "#")
+                                .addClass('fa fa-bug')
+                                .attr("data-toggle", "modal")
+                                .attr("data-target", "#notifyTrialAsBugModal")
+                                .attr("title", "Nofify as Bug")
+                                .attr("style", "cursor:pointer")
+                                .attr("onclick", "new UserStory().notifyTrialAsBugModal('" + obj[i].id + "')")
+                            : "")
+                    )
+                )
+                .append("</br>")
+                .append($("<span></span>")
+                    .attr("id", obj[i].id)
+                    //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
+                    .attr("pval", replaceTags(obj[i].actualResult))
+                    .append(MapTextAreaHtml(comment)));
             var div2_1 = this.generateTrialFileLine(obj[i].fileName, obj[i].id);
             var div3 = $('<div></div>').addClass("col-12").append("<hr>");
             div2.append(div2_1);
             div_by_row.append(div1).append(div2)
-                    .append(div3);
+                .append(div3);
             div_by_col.append(div_by_row)
             div.append(div_by_col);
         }
@@ -17027,7 +17040,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17044,22 +17057,22 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             async: true,
             success: function (res) {
                 var st = '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
-                        res.kv.backlogId + '\')">' + replaceTags(res.kv.backlogName) + '</a>';
+                    res.kv.backlogId + '\')">' + replaceTags(res.kv.backlogName) + '</a>';
                 $('#notifiedInfo_backlog').html(st);
                 $('#notifiedInfo_assignee').html(res.kv.assigneeName);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     loadUSList4Dublication: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.isSourced = "1";
+        //        json.kv.isSourced = "1";
         json.kv.fkProjectId = global_var.current_project_id;
         json.kv.asc = "backlogName";
         var that = this;
@@ -17080,7 +17093,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         });
     },
     loadSUSwithInput4Dublication: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17110,8 +17123,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#duplicateScenario_userstorylistwithinputs').append($("<option></option>"));
         for (var n = 0; n < obj.length; n++) {
             $('#duplicateScenario_userstorylistwithinputs').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName));
         }
     },
     loadUSList4DublicationDetails: function (res) {
@@ -17122,8 +17135,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 continue;
             }
             var o = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].backlogName));
             if (obj[n].id === global_var.current_backlog_id) {
                 o.attr('selected', 'selected')
             }
@@ -17141,7 +17154,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var currentProjectId = global_var.current_project_id;
         var destProjectId = $('#dublicateUserStoryModal_projectlist').val();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17172,7 +17185,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 hideProgress();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17200,7 +17213,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         $('#notifyTrialAsBugModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17219,7 +17232,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.getTaskListByBacklogIdDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17228,7 +17241,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
         $('#notifyAsChangeRequestModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17247,7 +17260,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.getTaskListByBacklogIdDetails4History(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17260,12 +17273,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var input = $('<input></input>')
-                    .attr('type', "checkbox")
-                    .attr("value", obj[i].id)
-                    .addClass('notifyAsChangeRequestModal_nofitiedTask')
+                .attr('type', "checkbox")
+                .attr("value", obj[i].id)
+                .addClass('notifyAsChangeRequestModal_nofitiedTask')
             var span = $('<span></span>')
-                    .append(obj[i].assigneeName)
-                    .append("(" + obj[i].taskTypeName + ")")
+                .append(obj[i].assigneeName)
+                .append("(" + obj[i].taskTypeName + ")")
             div.append(input).append(span).append("<br>");
         }
         $('#notifyAsChangeRequestModal_result').append(div);
@@ -17279,24 +17292,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var input = $('<input></input>')
-                    .attr('type', "checkbox")
-                    .attr("value", obj[i].id)
-                    .addClass('notifyTrialAsBugModal_nofitiedTask')
+                .attr('type', "checkbox")
+                .attr("value", obj[i].id)
+                .addClass('notifyTrialAsBugModal_nofitiedTask')
             var span = $('<span></span>')
-                    .append(obj[i].assigneeName)
-                    .append("(" + obj[i].taskTypeName + ")")
+                .append(obj[i].assigneeName)
+                .append("(" + obj[i].taskTypeName + ")")
             div.append(input).append(span).append("<br>");
         }
         $('#notifyTrialAsBugModal_result').append(div);
     },
     notifyTrialAsBugModal4Task: function (trialId) {
         $('#notifyTrialAsBugModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.fkTrialId = trialId;
+        //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -17311,18 +17324,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.notifyTrialAsBugModalDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     notifyLabelAsChangeRequestModal4Task: function () {
         $('#notifyLabelAsChangeRequestModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.fkTrialId = trialId;
+        //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -17337,7 +17350,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.notifyLabelAsChangeRequestModal4TaskDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17373,7 +17386,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17394,7 +17407,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 closeModal('notifyLabelAsChangeRequestModal');
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17407,24 +17420,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var input = $('<input></input>')
-                    .attr('type', "checkbox")
-                    .attr("value", obj[i].id)
-                    .addClass('notifyAsChangeRequestModal_nofitiedTask')
+                .attr('type', "checkbox")
+                .attr("value", obj[i].id)
+                .addClass('notifyAsChangeRequestModal_nofitiedTask')
             var span = $('<span></span>')
-                    .append(obj[i].assigneeName)
-                    .append("(" + obj[i].taskTypeName + ")")
+                .append(obj[i].assigneeName)
+                .append("(" + obj[i].taskTypeName + ")")
             div.append(input).append(span).append("<br>");
         }
         $('#notifyLabelAsChangeRequestModal_result').append(div);
     },
     notifyAsChangeRequestModal4Task: function () {
         $('#notifyAsChangeRequestModal_result').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.fkTrialId = trialId;
+        //        json.kv.fkTrialId = trialId;
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -17439,12 +17452,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.notifyAsChangeRequestModalDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     notifyTrialAsBugModal4SUS: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17463,12 +17476,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.notifyTrialAsBugModal4SUSDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     notifyAsChangeRequestModal4SUS: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17487,7 +17500,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.notifyAsChangeRequestModal4SUSDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17496,8 +17509,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var o = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName);
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName);
             if (obj[n].id === global_var.current_backlog_id) {
                 o.attr("selected", true);
             }
@@ -17509,8 +17522,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var o = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(obj[n].backlogName);
+                .attr("value", obj[n].id)
+                .text(obj[n].backlogName);
             if (obj[n].id === global_var.current_backlog_id) {
                 o.attr("selected", true);
             }
@@ -17526,12 +17539,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var input = $('<input></input>')
-                    .attr('type', "checkbox")
-                    .attr("value", obj[i].id)
-                    .addClass('notifyTrialAsBugModal_nofitiedTask')
+                .attr('type', "checkbox")
+                .attr("value", obj[i].id)
+                .addClass('notifyTrialAsBugModal_nofitiedTask')
             var span = $('<span></span>')
-                    .append(obj[i].assigneeName)
-                    .append("(" + obj[i].taskTypeName + ")")
+                .append(obj[i].assigneeName)
+                .append("(" + obj[i].taskTypeName + ")")
             div.append(input).append(span).append("<br>");
         }
         $('#notifyTrialAsBugModal_result').append(div);
@@ -17545,12 +17558,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
         for (var i = 0; i < obj.length; i++) {
             var input = $('<input></input>')
-                    .attr('type', "checkbox")
-                    .attr("value", obj[i].id)
-                    .addClass('notifyAsChangeRequestModal_nofitiedTask')
+                .attr('type', "checkbox")
+                .attr("value", obj[i].id)
+                .addClass('notifyAsChangeRequestModal_nofitiedTask')
             var span = $('<span></span>')
-                    .append(obj[i].assigneeName)
-                    .append("(" + obj[i].taskTypeName + ")")
+                .append(obj[i].assigneeName)
+                .append("(" + obj[i].taskTypeName + ")")
             div.append(input).append(span).append("<br>");
         }
         $('#notifyAsChangeRequestModal_result').append(div);
@@ -17568,7 +17581,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17590,7 +17603,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.loadTestScenario();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17607,7 +17620,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17629,7 +17642,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.loadTestScenario();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17646,7 +17659,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17668,7 +17681,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 BacklogHistory.load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17681,7 +17694,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17700,7 +17713,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.loadTestScenario();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17722,7 +17735,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17762,7 +17775,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17794,163 +17807,163 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             for (var i = 0; i < obj.length; i++) {
 
                 var stopBtn = obj[i].startType === 'P'
-                        ? $('<i></i>')
+                    ? $('<i></i>')
                         .addClass('fa fa-stop-circle')
                         .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
                         .attr('style', 'color:orange;font-size:16px;display:block')
-                        : $('<i></i>')
+                    : $('<i></i>')
                         .addClass('fa fa-stop-circle')
                         .attr('onclick', 'new UserStory().taskStop("' + obj[i].id + '",this)')
                         .attr('style', 'color:orange;font-size:16px;display:none');
                 var startBtn = obj[i].startType !== 'P'
-                        ? $('<i></i>')
+                    ? $('<i></i>')
                         .addClass('fa fa-play-circle')
                         .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
                         .attr('style', 'color:green;font-size:16px;display:block')
-                        : $('<i></i>')
+                    : $('<i></i>')
                         .addClass('fa fa-play-circle')
                         .attr('onclick', 'new UserStory().taskStart("' + obj[i].id + '",this)')
                         .attr('style', 'color:green;font-size:16px;display:none');
                 var diffTime = obj[i].startType === 'P'
-                        ? this.getStartTimeDiff(obj[i].startDate, res.kv.currentDate, obj[i].startTime, res.kv.currentTime)
-                        : "";
+                    ? this.getStartTimeDiff(obj[i].startDate, res.kv.currentDate, obj[i].startTime, res.kv.currentTime)
+                    : "";
                 var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol");
                 var div_by_row = $('<div></div>')
-                        .addClass("row")
-                        .addClass("mangodb")
-                        .addClass(obj[i].isSubtask === '1' ? "task-child-subtask" : "")
-                        .addClass(obj[i].isBug === '1' ? "task-child-bug" : "")
-                        .addClass(obj[i].isRequest === '1' ? "task-child-request" : "");
+                    .addClass("row")
+                    .addClass("mangodb")
+                    .addClass(obj[i].isSubtask === '1' ? "task-child-subtask" : "")
+                    .addClass(obj[i].isBug === '1' ? "task-child-bug" : "")
+                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "");
                 var img = obj[i].avatarUrl.length === 0
-                        ? fileUrl(new User().getDefaultUserprofileName())
-                        : fileUrl(obj[i].avatarUrl);
+                    ? fileUrl(new User().getDefaultUserprofileName())
+                    : fileUrl(obj[i].avatarUrl);
                 var div1 = $('<div></div>')
-                        .addClass("col-1 comment-line")
+                    .addClass("col-1 comment-line")
 
-                        .append($('<img></img>')
-                                .addClass("figure-img img-fluid rounded-circle")
-                                .attr("style", "max-width:28px")
-                                .attr("src", img)
-                                .attr("alt", obj[i].username));
-//            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
+                    .append($('<img></img>')
+                        .addClass("figure-img img-fluid rounded-circle")
+                        .attr("style", "max-width:28px")
+                        .attr("src", img)
+                        .attr("alt", obj[i].username));
+                //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
                 var comment = obj[i].comment;
                 var div2 = $('<div></div>')
-                        .attr('style', "padding-left:5px;")
-                        .addClass("col-11")
-                        .addClass(obj[i].isSubtask === '1' ? "task-child-subtask" : "")
-                        .addClass(obj[i].isBug === '1' ? "task-child-bug" : "")
-                        .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
-                        .append($("<b></b>").append(obj[i].username)
-                                .append($("<span></span>")
-                                        .append(", ")
-                                        .append(Utility.convertDate(obj[i].commentDate))
-                                        .append(", ")
-                                        .append(Utility.convertTime(obj[i].commentTime))
-                                        .append(" ")
-                                        .append(" (" + obj[i].commentJiraKey + ") ")
-                                        )
-                                )
+                    .attr('style', "padding-left:5px;")
+                    .addClass("col-11")
+                    .addClass(obj[i].isSubtask === '1' ? "task-child-subtask" : "")
+                    .addClass(obj[i].isBug === '1' ? "task-child-bug" : "")
+                    .addClass(obj[i].isRequest === '1' ? "task-child-request" : "")
+                    .append($("<b></b>").append(obj[i].username)
                         .append($("<span></span>")
-                                .attr("style", "align-right")
-                                .append(" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ")
-                                .append(!obj[i].isNotifiedBug
-                                        ? $('<i></i>')
-                                        .addClass('fa fa-tasks')
-                                        .attr("a", "b")
-                                        .attr("title", "Is Sub Task?")
-                                        .attr("style", obj[i].isSubtask === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
-                                        .attr("onclick", "new UserStory().toogleCommentAsSubtask(this,'" + obj[i].id + "')")
-                                        : "")
-                                .append(" &nbsp;&nbsp;  ")
-                                .append($('<i></i>')
-                                        .addClass('fa fa-bug')
-                                        .attr("a", "b")
-                                        .attr("title", "Is Bug?")
-                                        .attr("style", obj[i].isBug === '1' ? "cursor:pointer;color:red" : "cursor:pointer;color:gray")
-                                        .attr("onclick", !obj[i].isNotifiedBug
-                                                ? "new UserStory().toogleCommentAsBug(this,'" + obj[i].id + "')"
-                                                : "")
-                                        )
-                                .append(" &nbsp;&nbsp; ")
-                                .append(!obj[i].isNotifiedBug
-                                        ? $('<i></i>')
-                                        .addClass('fa fa-pencil')
-                                        .attr("a", "b")
-                                        .attr("title", "Is Change Request?")
-                                        .attr("style", obj[i].isRequest === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
-                                        .attr("onclick", "new UserStory().toogleCommentAsRequest(this,'" + obj[i].id + "')")
-                                        : "")
-                                .append(obj[i].isNotifiedBug && obj[i].commentType !== 'N'
-                                        ? $('<a></a>')
-                                        .attr("href", "#")
-                                        .attr("title", "Close Bug")
-                                        .attr("onclick", "new UserStory().closeBug4TestTrial(this,'" + obj[i].id + "')")
-                                        .append("Close Bug")
-                                        : "")
-                                .append(obj[i].commentType === 'N'
-                                        ? $('<a></a>')
-                                        .attr("href", "#")
-                                        .attr("title", "Bug Already Closed")
-                                        .append("Bug Already Closed")
-                                        : "")
-                                )
-                        .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
-                        .append($('<span></span>')
-                                .attr('id', 'comment_status_' + obj[i].id)
-                                .addClass("us-item-status-" + replaceTags(obj[i].commentStatus))
-                                .append(replaceTags(obj[i].commentStatus)))
-                        .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
-                        .append($('<a></a>')
-                                .attr('href', "#")
-                                .attr('onclick', 'new UserStory().commentEstimatedHoursModal("' + obj[i].id + '")')
-                                .append('Estimated Hour(s): ')
-                                )
-                        .append($('<b></b>')
-                                .append((obj[i].estimatedHours) ? obj[i].estimatedHours : "0")
-                                )
-                        .append("&nbsp;&nbsp;  ")
-                        .append($('<a></a>')
-                                .attr('href', "#")
-                                .attr('onclick', 'new UserStory().commentSpentHoursModal("' + obj[i].id + '")')
-                                .append('Spent Hour(s): ')
-                                )
-                        .append($('<b></b>')
-                                .append((obj[i].spentHours) ? obj[i].spentHours : "0")
-                                )
-                        .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
+                            .append(", ")
+                            .append(Utility.convertDate(obj[i].commentDate))
+                            .append(", ")
+                            .append(Utility.convertTime(obj[i].commentTime))
+                            .append(" ")
+                            .append(" (" + obj[i].commentJiraKey + ") ")
+                        )
+                    )
+                    .append($("<span></span>")
+                        .attr("style", "align-right")
+                        .append(" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ")
+                        .append(!obj[i].isNotifiedBug
+                            ? $('<i></i>')
+                                .addClass('fa fa-tasks')
+                                .attr("a", "b")
+                                .attr("title", "Is Sub Task?")
+                                .attr("style", obj[i].isSubtask === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
+                                .attr("onclick", "new UserStory().toogleCommentAsSubtask(this,'" + obj[i].id + "')")
+                            : "")
+                        .append(" &nbsp;&nbsp;  ")
                         .append($('<i></i>')
-                                .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .attr('onclick', 'new UserStory().setStatusNew4Comment("' + obj[i].id + '")')
-                                        .append('Set as New')
-                                        )
-                                )
+                            .addClass('fa fa-bug')
+                            .attr("a", "b")
+                            .attr("title", "Is Bug?")
+                            .attr("style", obj[i].isBug === '1' ? "cursor:pointer;color:red" : "cursor:pointer;color:gray")
+                            .attr("onclick", !obj[i].isNotifiedBug
+                                ? "new UserStory().toogleCommentAsBug(this,'" + obj[i].id + "')"
+                                : "")
+                        )
+                        .append(" &nbsp;&nbsp; ")
+                        .append(!obj[i].isNotifiedBug
+                            ? $('<i></i>')
+                                .addClass('fa fa-pencil')
+                                .attr("a", "b")
+                                .attr("title", "Is Change Request?")
+                                .attr("style", obj[i].isRequest === '1' ? "cursor:pointer;color:blue" : "cursor:pointer;color:gray")
+                                .attr("onclick", "new UserStory().toogleCommentAsRequest(this,'" + obj[i].id + "')")
+                            : "")
+                        .append(obj[i].isNotifiedBug && obj[i].commentType !== 'N'
+                            ? $('<a></a>')
+                                .attr("href", "#")
+                                .attr("title", "Close Bug")
+                                .attr("onclick", "new UserStory().closeBug4TestTrial(this,'" + obj[i].id + "')")
+                                .append("Close Bug")
+                            : "")
+                        .append(obj[i].commentType === 'N'
+                            ? $('<a></a>')
+                                .attr("href", "#")
+                                .attr("title", "Bug Already Closed")
+                                .append("Bug Already Closed")
+                            : "")
+                    )
+                    .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
+                    .append($('<span></span>')
+                        .attr('id', 'comment_status_' + obj[i].id)
+                        .addClass("us-item-status-" + replaceTags(obj[i].commentStatus))
+                        .append(replaceTags(obj[i].commentStatus)))
+                    .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
+                    .append($('<a></a>')
+                        .attr('href', "#")
+                        .attr('onclick', 'new UserStory().commentEstimatedHoursModal("' + obj[i].id + '")')
+                        .append('Estimated Hour(s): ')
+                    )
+                    .append($('<b></b>')
+                        .append((obj[i].estimatedHours) ? obj[i].estimatedHours : "0")
+                    )
+                    .append("&nbsp;&nbsp;  ")
+                    .append($('<a></a>')
+                        .attr('href', "#")
+                        .attr('onclick', 'new UserStory().commentSpentHoursModal("' + obj[i].id + '")')
+                        .append('Spent Hour(s): ')
+                    )
+                    .append($('<b></b>')
+                        .append((obj[i].spentHours) ? obj[i].spentHours : "0")
+                    )
+                    .append(" &nbsp;&nbsp;  &nbsp;&nbsp;  &nbsp;&nbsp; ")
+                    .append($('<i></i>')
+                        .append($('<a></a>')
+                            .attr('href', "#")
+                            .attr('onclick', 'new UserStory().setStatusNew4Comment("' + obj[i].id + '")')
+                            .append('Set as New')
+                        )
+                    )
 
-                        .append(" &nbsp; ")
-                        .append($('<i></i>')
-                                .append($('<a></a>')
-                                        .attr('href', "#")
-                                        .attr('onclick', 'new UserStory().setStatusOngoing4Comment("' + obj[i].id + '")')
-                                        .append('Set as Ongoing')
-                                        )
-                                )
+                    .append(" &nbsp; ")
+                    .append($('<i></i>')
+                        .append($('<a></a>')
+                            .attr('href', "#")
+                            .attr('onclick', 'new UserStory().setStatusOngoing4Comment("' + obj[i].id + '")')
+                            .append('Set as Ongoing')
+                        )
+                    )
 
-                        .append("<br>")
-                        .append($("<span></span>")
-                                .attr("id", obj[i].id)
-                                .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
-                                .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
-                                .append(MapTextAreaHtml(comment)));
+                    .append("<br>")
+                    .append($("<span></span>")
+                        .attr("id", obj[i].id)
+                        .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
+                        .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
+                        .append(MapTextAreaHtml(comment)));
                 var div2_1 = this.generateCommentFileLine(obj[i].fileName);
                 var div3 = $('<div></div>').addClass("col-12").append("<br>");
                 div2.append(div2_1);
                 div_by_row.append(div1).append(div2)
-                        .append(div3);
+                    .append(div3);
                 div_by_col.append(div_by_row)
                 div.append(div_by_col);
-//                        div.append(div1).append(div2).append(div3);
+                //                        div.append(div1).append(div2).append(div3);
             }
-//        return div.html();
+            //        return div.html();
             var tid = (taskId) ? taskId : global_var.current_task_id_4_comment
             $('#div_' + tid).html(div.html());
             return div.html();
@@ -17966,7 +17979,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -17988,7 +18001,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -17997,7 +18010,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18025,7 +18038,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -18034,7 +18047,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18063,7 +18076,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -18072,7 +18085,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18101,44 +18114,44 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     generateCommentListHtml: function (res) {
         var obj = res.tbl[0].r;
         var div = $('<div></div>').append($('<div></div>'));
-//                .addClass("col-12").append("<hr>"));
+        //                .addClass("col-12").append("<hr>"));
         for (var i = 0; i < obj.length; i++) {
             var ctype = obj[i].commentType === 'B' ? '<i class="fa fa-bug" style="color:red"></i>' :
-                    obj[i].commentType === 'U' ? '<i class="fa fa-pencil" style="color:blue"></i>' : '';
+                obj[i].commentType === 'U' ? '<i class="fa fa-pencil" style="color:blue"></i>' : '';
             var img = obj[i].avatarUrl.length === 0
-                    ? fileUrl(new User().getDefaultUserprofileName())
-                    : fileUrl(obj[i].avatarUrl);
+                ? fileUrl(new User().getDefaultUserprofileName())
+                : fileUrl(obj[i].avatarUrl);
             var div1 = $('<div></div>').addClass("col-1 comment-line")
-                    .append("<img class=\"figure-img img-fluid rounded-circle\"   src=\"" + img + "\" alt=\"" + obj[i].username + "\"> ");
+                .append("<img class=\"figure-img img-fluid rounded-circle\"   src=\"" + img + "\" alt=\"" + obj[i].username + "\"> ");
             var div2 = $('<div></div>').addClass("col-11")
-                    .append("<b>" + obj[i].username + " </b><span>" +
-                            Utility.convertDate(obj[i].commentDate) + ", " +
-                            Utility.convertTime(obj[i].commentTime) + "</span>" + "  " + ctype + " </br> "
-                            + this.replaceTags(obj[i].comment));
+                .append("<b>" + obj[i].username + " </b><span>" +
+                    Utility.convertDate(obj[i].commentDate) + ", " +
+                    Utility.convertTime(obj[i].commentTime) + "</span>" + "  " + ctype + " </br> "
+                    + this.replaceTags(obj[i].comment));
             var div2_1 = this.generateCommentFileLine(obj[i].fileName, obj[i].id);
-//            var div3 = $('<div></div>').addClass("col-12").append("<hr>");
+            //            var div3 = $('<div></div>').addClass("col-12").append("<hr>");
             div.append(div1).append(div2).append(div2_1);
-//                        div.append(div1).append(div2).append(div3);
+            //                        div.append(div1).append(div2).append(div3);
         }
-//        return div.html();
+        //        return div.html();
         $('#comment_line').html(div.html());
     },
-//    replaceTags: function (arg) {
-////        console.log('before===' + arg)
-//        arg = arg.replace(/&lt;/g, "<");
-//        arg = arg.replace(/&gt;/g, ">");
-//        arg = arg.replace(/&quot;/g, "'");
-//        arg = arg.replace(/&quot;/g, "\"");
-//        arg = arg.replace(/&#x2F;/g, "/");
-//        return arg;
-//    },
+    //    replaceTags: function (arg) {
+    ////        console.log('before===' + arg)
+    //        arg = arg.replace(/&lt;/g, "<");
+    //        arg = arg.replace(/&gt;/g, ">");
+    //        arg = arg.replace(/&quot;/g, "'");
+    //        arg = arg.replace(/&quot;/g, "\"");
+    //        arg = arg.replace(/&#x2F;/g, "/");
+    //        return arg;
+    //    },
     generateTrialFileLine: function (o, id) {
         try {
             var st = o.split('|');
@@ -18154,34 +18167,34 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
                 if (global_var.image_formats.includes(fileFormat)) {
                     div12lik.append($('<img></img>')
-                            .attr('src', fileUrl(st[i]))
-                            .addClass('comment_img')
-                            .attr('data-toggle', "modal")
-                            .attr('data-target', "#commentFileImageViewer")
-                            .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
-                            .attr('alt', st[i]));
-//                    
+                        .attr('src', fileUrl(st[i]))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFileImageViewer")
+                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
+                        .attr('alt', st[i]));
+                    //                    
                 } else if (fileFormat === 'pdf') {
                     div12lik.append($('<img></img>')
-                            .attr('src', fileUrlPrivate('pdf-logo.png'))
-                            .addClass('comment_img')
-                            .attr('data-toggle', "modal")
-                            .attr('data-target', "#commentFilePdfViewer")
-                            .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
-                            .attr('alt', st[i]));
+                        .attr('src', fileUrlPrivate('pdf-logo.png'))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFilePdfViewer")
+                        .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
+                        .attr('alt', st[i]));
                 }
                 div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
                 div12lik.append($('<a target="_blank"></a>')
-                        .attr("href", fileUrl(st[i]))
-                        .append('Download')
-//                        .append($('<i></i>').addClass('fa fa-download'))
-                        .append('  '))
-                        .append($('<i></i>')
-                                .addClass('lbl-action')
-                                .append(' Delete ')
-                                .append('  ')
-                                .attr('onclick', 'new UserStory().deleteTrialFile(this,"' + st[i] + '","' + id + '")')
-                                );
+                    .attr("href", fileUrl(st[i]))
+                    .append('Download')
+                    //                        .append($('<i></i>').addClass('fa fa-download'))
+                    .append('  '))
+                    .append($('<i></i>')
+                        .addClass('lbl-action')
+                        .append(' Delete ')
+                        .append('  ')
+                        .attr('onclick', 'new UserStory().deleteTrialFile(this,"' + st[i] + '","' + id + '")')
+                    );
                 div2.append(div12lik);
                 div.append(div2);
             }
@@ -18202,7 +18215,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18222,7 +18235,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $(obj).closest('div[class="col-6"]').first().remove();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -18242,34 +18255,34 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
                 if (global_var.image_formats.includes(fileFormat)) {
                     div12lik.append($('<img></img>')
-                            .attr('src', fileUrl(st[i]))
-                            .addClass('comment_img')
-                            .attr('data-toggle', "modal")
-                            .attr('data-target', "#commentFileImageViewer")
-                            .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
-                            .attr('alt', st[i]));
-//                    
+                        .attr('src', fileUrl(st[i]))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFileImageViewer")
+                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + st[i] + '")')
+                        .attr('alt', st[i]));
+                    //                    
                 } else if (fileFormat === 'pdf') {
                     div12lik.append($('<img></img>')
-                            .attr('src', fileUrlPrivate('pdf-logo.png'))
-                            .addClass('comment_img')
-                            .attr('data-toggle', "modal")
-                            .attr('data-target', "#commentFilePdfViewer")
-                            .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
-                            .attr('alt', st[i]));
+                        .attr('src', fileUrlPrivate('pdf-logo.png'))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFilePdfViewer")
+                        .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + st[i] + '")')
+                        .attr('alt', st[i]));
                 }
                 div12lik.append(' <b> ' + add3Dots2Filename(st[i]) + '</b><br>');
                 div12lik.append($('<a target="_blank"></a>')
-                        .attr("href", fileUrl(st[i]))
-                        .append('<i class="fa fa-download" aria-hidden="true"></i>')
-//                        .append($('<i></i>').addClass('fa fa-download'))
-                        .append('  '))
-                        .append($('<i></i>')
-                                .addClass('lbl-action')
-                                .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
-                                .append('  ')
-                                .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
-                                );
+                    .attr("href", fileUrl(st[i]))
+                    .append('<i class="fa fa-download" aria-hidden="true"></i>')
+                    //                        .append($('<i></i>').addClass('fa fa-download'))
+                    .append('  '))
+                    .append($('<i></i>')
+                        .addClass('lbl-action')
+                        .append('<i class="fa fa-trash-o" aria-hidden="true"></i>')
+                        .append('  ')
+                        .attr('onclick', 'new UserStory().deleteTaskCommentFile(this,"' + st[i] + '")')
+                    );
                 div2.append(div12lik);
                 div.append(div2);
             }
@@ -18296,10 +18309,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_view');
             if (global_var.image_formats.includes(fileFormat)) {
                 div12lik.append($('<img></img>')
-                        .attr('src', fileUrl(name))
-                        .addClass('file_upload_view_img')
-                        .attr('alt', name));
-//                    
+                    .attr('src', fileUrl(name))
+                    .addClass('file_upload_view_img')
+                    .attr('alt', name));
+                //                    
             }
             div2.append(div12lik);
             div.append(div2);
@@ -18329,23 +18342,23 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
             if (global_var.image_formats.includes(fileFormat)) {
                 return "";
-//                    
+                //                    
             } else if (fileFormat === 'pdf') {
                 div12lik.append($('<img></img>')
-                        .attr('src', fileUrlPrivate('pdf-logo.png'))
-                        .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFilePdfViewer")
-                        .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + name + '")')
-                        .attr('alt', name));
+                    .attr('src', fileUrlPrivate('pdf-logo.png'))
+                    .addClass('comment_img')
+                    .attr('data-toggle', "modal")
+                    .attr('data-target', "#commentFilePdfViewer")
+                    .attr('onclick', 'new UserStory().setCommentFilePdfViewerUrl("' + name + '")')
+                    .attr('alt', name));
             }
             div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
             div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrl(name))
-                    .append('Download')
-//                        .append($('<i></i>').addClass('fa fa-download'))
-                    .append('  '))
-                    ;
+                .attr("href", fileUrl(name))
+                .append('Download')
+                //                        .append($('<i></i>').addClass('fa fa-download'))
+                .append('  '))
+                ;
             div2.append(div12lik);
             div.append(div2);
 
@@ -18374,18 +18387,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div4PinnedImage = $('<div>');
             if (isPinned) {
                 div4PinnedImage.append($('<img></img>')
-                        .attr('src', fileUrl(name))
-                        .css("max-height", "450px")
-                        .addClass("pinned-image")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
-                        .attr('alt', name));
+                    .attr('src', fileUrl(name))
+                    .css("max-height", "450px")
+                    .addClass("pinned-image")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                    .attr('alt', name));
 
                 div4PinnedImage.append($('<i></i>')
-                        .addClass('lbl-action')
-                        .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().unpinImageToStoryCard(this,"' + id + '")')
-                        );
+                    .addClass('lbl-action')
+                    .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().unpinImageToStoryCard(this,"' + id + '")')
+                );
                 div4PinnedImage.append("<br><br><br>")
 
             }
@@ -18395,56 +18408,56 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
             if (global_var.image_formats.includes(fileFormat)) {
                 div12lik.append($('<img></img>')
-                        .attr('src', fileUrl(name))
-                        .addClass('comment_img')
-                        .attr('data-toggle', "modal")
-                        .attr('data-target', "#commentFileImageViewer")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
-                        .attr('alt', name));
-//                    
+                    .attr('src', fileUrl(name))
+                    .addClass('comment_img')
+                    .attr('data-toggle', "modal")
+                    .attr('data-target', "#commentFileImageViewer")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                    .attr('alt', name));
+                //                    
             } else if (global_var.video_formats.includes(fileFormat)) {
                 fileUrlVar = videoFileURL(name);
 
                 div12lik.append($('<a target="_blank"></a>')
-                        .attr("href", videoFileURL(name))
-                        .append($('<img></img>')
-                                .attr('src', fileUrlPrivate('video_player_logo.jpg'))
-                                .addClass('comment_img')
-                                .attr('alt', name)));
-//                    
+                    .attr("href", videoFileURL(name))
+                    .append($('<img></img>')
+                        .attr('src', fileUrlPrivate('video_player_logo.jpg'))
+                        .addClass('comment_img')
+                        .attr('alt', name)));
+                //                    
             } else if (fileFormat === 'pdf') {
                 fileUrlVar = pdfFileURL(name);
 
                 div12lik.append(
-                        $('<a target="_blank"></a>')
+                    $('<a target="_blank"></a>')
                         .attr("href", pdfFileURL(name))
                         .append($('<img></img>')
-                                .attr('src', fileUrlPrivate('pdf-logo.png'))
-                                .addClass('comment_img')
-                                .attr('alt', name)));
+                            .attr('src', fileUrlPrivate('pdf-logo.png'))
+                            .addClass('comment_img')
+                            .attr('alt', name)));
             }
             div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
 
 
 
             div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrlVar)
-                    .append($('<i class="fa fa-download"></i>'))
-                    .append('  '))
-                    .append($('<i></i>')
-                            .addClass('lbl-action')
-                            .append($('<i class="fa fa-trash-o" aria-hidden="true"></i>'))
-                            .append('  ')
-                            .attr('onclick', 'new UserStory().deleteBacklogFile(this,"' + id + '")')
-                            )
-                    .append(global_var.image_formats.includes(fileFormat) && !isPinned
-                            ? $('<i></i>')
-                            .addClass('lbl-action')
-                            .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
-                            .append('  ')
-                            .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")')
-                            : "")
-                    ;
+                .attr("href", fileUrlVar)
+                .append($('<i class="fa fa-download"></i>'))
+                .append('  '))
+                .append($('<i></i>')
+                    .addClass('lbl-action')
+                    .append($('<i class="fa fa-trash-o" aria-hidden="true"></i>'))
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().deleteBacklogFile(this,"' + id + '")')
+                )
+                .append(global_var.image_formats.includes(fileFormat) && !isPinned
+                    ? $('<i></i>')
+                        .addClass('lbl-action')
+                        .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
+                        .append('  ')
+                        .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")')
+                    : "")
+                ;
             div2.append(div12lik);
             div.append(div2);
 
@@ -18464,7 +18477,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18483,7 +18496,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $(obj).closest('div[class="col-6"]').first().remove();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -18497,7 +18510,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18532,7 +18545,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18563,7 +18576,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18584,18 +18597,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                 var div4PinnedImage = $('<div>');
                 div4PinnedImage.append($('<img></img>')
-                        .attr('src', fileUrl(fname))
-                        .css("max-height", "450px")
-                        .addClass("pinned-image")
-                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + fname + '")')
-                        .attr('alt', fname));
+                    .attr('src', fileUrl(fname))
+                    .css("max-height", "450px")
+                    .addClass("pinned-image")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + fname + '")')
+                    .attr('alt', fname));
 
                 div4PinnedImage.append($('<i></i>')
-                        .addClass('lbl-action')
-                        .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
-                        .append('  ')
-                        .attr('onclick', 'new UserStory().unpinImageToStoryCard(this,"' + fid + '")')
-                        );
+                    .addClass('lbl-action')
+                    .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
+                    .append('  ')
+                    .attr('onclick', 'new UserStory().unpinImageToStoryCard(this,"' + fid + '")')
+                );
                 div4PinnedImage.append("<br><br><br>");
 
                 $('#pinnedImages').prepend(div4PinnedImage);
@@ -18620,11 +18633,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.setUserStoryInforOnGeneralView4Details4Select(res);
     },
     setUserStoryInforOnGeneralView4HistoryDateAndLabel: function () {
-//        this.setUserStoryInforOnGeneralViewDetailsEmpty();
+        //        this.setUserStoryInforOnGeneralViewDetailsEmpty();
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18651,7 +18664,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18679,7 +18692,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18727,7 +18740,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', res.kv.backlogId);
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
             } else {
                 $('.gv-gui-design-api_4share').hide();
             }
@@ -18737,9 +18750,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.loadStoryCardFileList4Share(res);
 
         //  click on first tab
-//        $('.activeTabClass').each(function (e) {
-//            $(this).click();
-//        });
+        //        $('.activeTabClass').each(function (e) {
+        //            $(this).click();
+        //        });
 
         //generate input desc table
         this.setUserStoryInputsInfoOnGeneralViewDetailsPure(res);
@@ -18753,15 +18766,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         for (var i = 0; i < resName.length; i++) {
             try {
                 $("#storycard_filelist_4_share")
-                        .append(this.generateCommentFileLine4StoryCard(
-                                resId[i].trim(), resName[i].trim(), "col-4"));
+                    .append(this.generateCommentFileLine4StoryCard(
+                        resId[i].trim(), resName[i].trim(), "col-4"));
             } catch (e) {
             }
         }
     },
     setUserStoryInforOnGeneralView4Details4Select: function (res) {
-//        try {
-//        res = JSON.parse(replaceTags(JSON.stringify(res)));
+        //        try {
+        //        res = JSON.parse(replaceTags(JSON.stringify(res)));
 
         //backlogun canvas parametrleri set edilir
         $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
@@ -18777,14 +18790,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#generalview_SUS_GUI_header').text(SACore.GetCurrentBacklogname());
 
         var st = "";
-//        var st = this.getGUIDesignHTML4StoryCard();
+        //        var st = this.getGUIDesignHTML4StoryCard();
         if (SACore.GetCurrentBaklogIsApi() !== '1') {
             st = this.getGUIDesignHTMLPure(res);
         }
         $('#general-view-task-gui').html(st);
         $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
         $('#general-view-task-gui').attr('bcode', makeId(15));
-        $('[data-toggle="tooltip"]').tooltip({html: true});
+        $('[data-toggle="tooltip"]').tooltip({ html: true });
 
 
 
@@ -18812,17 +18825,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#generalview_SUS_GUI_header').text((res.kv.backlogName));
 
 
-//        var st = this.getGUIDesignHTML4StoryCard();
+        //        var st = this.getGUIDesignHTML4StoryCard();
         var st = this.getGUIDesignHTMLPure4Share(res);
         $('#general-view-task-gui').html(st);
         $('#general-view-task-gui').attr('bid', res.kv.backlogId);
         $('#general-view-task-gui').attr('bcode', makeId(15));
-        $('[data-toggle="tooltip"]').tooltip({html: true});
+        $('[data-toggle="tooltip"]').tooltip({ html: true });
 
         //  click on first tab
-//        $('.activeTabClass').each(function (e) {
-//            $(this).click();
-//        });
+        //        $('.activeTabClass').each(function (e) {
+        //            $(this).click();
+        //        });
 
         //generate input desc table
         this.setUserStoryInputsInfoOnGeneralViewDetailsPure(res);
@@ -18841,7 +18854,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#change-mgmt-gui-design-start-time').html($('<option></option>'));
         if (type === 'end')
             $('#change-mgmt-gui-design-end-time').html($('<option></option>'));
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18876,14 +18889,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             for (var i = 0; i < times.length; i++) {
                 if (type === 'start')
                     $('#change-mgmt-gui-design-start-time')
-                            .append($('<option></option>')
-                                    .val(times[i])
-                                    .text(Utility.convertTime(times[i])));
+                        .append($('<option></option>')
+                            .val(times[i])
+                            .text(Utility.convertTime(times[i])));
                 if (type === 'end')
                     $('#change-mgmt-gui-design-end-time')
-                            .append($('<option></option>')
-                                    .val(times[i])
-                                    .text(Utility.convertTime(times[i])));
+                        .append($('<option></option>')
+                            .val(times[i])
+                            .text(Utility.convertTime(times[i])));
             }
         } catch (err) {
         }
@@ -18893,19 +18906,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var dates = res.kv.historyDates.split('%IN%');
             $('#change-mgmt-gui-design-start-date').html($('<option></option>'));
             $('#change-mgmt-gui-design-end-date')
-                    .html($('<option></option>')
-                            .val(res.kv.currentDate)
-                            .text("Current"));
+                .html($('<option></option>')
+                    .val(res.kv.currentDate)
+                    .text("Current"));
             for (var i = 0; i < dates.length; i++) {
 
                 $('#change-mgmt-gui-design-start-date')
-                        .append($('<option></option>')
-                                .val(dates[i])
-                                .text(Utility.convertDate(dates[i])));
+                    .append($('<option></option>')
+                        .val(dates[i])
+                        .text(Utility.convertDate(dates[i])));
                 $('#change-mgmt-gui-design-end-date')
-                        .append($('<option></option>')
-                                .val(dates[i])
-                                .text(Utility.convertDate(dates[i])));
+                    .append($('<option></option>')
+                        .val(dates[i])
+                        .text(Utility.convertDate(dates[i])));
             }
         } catch (err) {
         }
@@ -18915,7 +18928,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -18934,7 +18947,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.getUserStoryInfoByIdDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -18956,13 +18969,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
             var inputName = obj[i].inputType === 'OUT'
-                    ? obj[i].inputName + " (Output)"
-                    : obj[i].inputName;
+                ? obj[i].inputName + " (Output)"
+                : obj[i].inputName;
             var tr = $('<tr></tr>').append($('<td></td>').html((idx++)));
             tr.append($('<td></td>').html(inputName));
             tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>').html(
-                    this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[i])));
+                this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[i])));
             div.append(tr);
         }
         global_var['inList'].push(div.html());
@@ -19026,7 +19039,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         if (obj.sourcedName) {
             var st = '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
-                    obj.fkSourcedId + '\')">' + replaceTags(obj.sourcedName) + '</a>';
+                obj.fkSourcedId + '\')">' + replaceTags(obj.sourcedName) + '</a>';
             $('#generalview_bound').html(st);
             $('#storycard_bound').show();
         } else {
@@ -19037,9 +19050,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (obj.fkChildBoundUserStoryName) {
             $('#storycard_childbound').show();
             $('#generalview_childbound').html(
-                    this.convertChildBoundUserStories(
-                            obj.fkChildBoundUserStoryName,
-                            obj.fkChildBoundUserStoryId));
+                this.convertChildBoundUserStories(
+                    obj.fkChildBoundUserStoryName,
+                    obj.fkChildBoundUserStoryId));
         } else {
             $('#storycard_childbound').hide();
             $('#generalview_childbound').html('');
@@ -19048,15 +19061,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (obj.dependencyName) {
             $('#storycard_dependency').show();
             $('#generalview_dependency').html(
-                    this.convertChildBoundUserStories(
-                            obj.dependencyName,
-                            obj.dependencyId,
-                            obj.dependencyOrderNo));
+                this.convertChildBoundUserStories(
+                    obj.dependencyName,
+                    obj.dependencyId,
+                    obj.dependencyOrderNo));
             $('#bview_generalview_dependency').html(
-                    this.convertChildBoundUserStories4BView(
-                            obj.dependencyName,
-                            obj.dependencyId,
-                            obj.fkProjectId));
+                this.convertChildBoundUserStories4BView(
+                    obj.dependencyName,
+                    obj.dependencyId,
+                    obj.fkProjectId));
         } else {
             $('#storycard_dependency').hide();
             $('#generalview_dependency').html('');
@@ -19066,15 +19079,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (obj.childDependencyName) {
             $('#storycard_childdependency').show();
             $('#generalview_childdependency').html(
-                    this.convertChildBoundUserStories(
-                            obj.childDependencyName,
-                            obj.childDependencyId,
-                            obj.childDependencyOrderNo));
+                this.convertChildBoundUserStories(
+                    obj.childDependencyName,
+                    obj.childDependencyId,
+                    obj.childDependencyOrderNo));
             $('#bview_generalview_childdependency').html(
-                    this.convertChildBoundUserStories4BView(
-                            obj.childDependencyName,
-                            obj.childDependencyId,
-                            obj.fkProjectId));
+                this.convertChildBoundUserStories4BView(
+                    obj.childDependencyName,
+                    obj.childDependencyId,
+                    obj.fkProjectId));
         } else {
             $('#storycard_childdependency').hide();
             $('#generalview_childdependency').html('');
@@ -19140,16 +19153,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('.user-story-run-in-backend').prop("checked", false);
         }
 
-//        if (SACore.GetCurrentBaklogIsShared() === '1') {
-//            $('.user-story-is-shared').prop("checked", true);
-//        } else {
-//            $('.user-story-is-shared').prop("checked", false);
-//        }
+        //        if (SACore.GetCurrentBaklogIsShared() === '1') {
+        //            $('.user-story-is-shared').prop("checked", true);
+        //        } else {
+        //            $('.user-story-is-shared').prop("checked", false);
+        //        }
         this.toggleBacklogIsApi4StoryCard();
 
         $('#generalview_projectname').html(replaceTags(SACore.GetCurrentBaklogProjectName()));
         $('#generalview_status').removeAttr('class').addClass('us-item-status-' + SACore.GetCurrentBaklogStatus())
-                .html(SACore.GetCurrentBaklogStatus());
+            .html(SACore.GetCurrentBaklogStatus());
         $('#generalview-us-header-name').html(replaceTags(SACore.GetCurrentBacklogname()));
         $('#generalview_priority').html(replaceTags(SACore.GetCurrentBaklogPriority()));
         $('#generalview_esthours').html(replaceTags(SACore.GetCurrentBaklogEstimatedHours()));
@@ -19181,7 +19194,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         if (obj.sourcedName) {
             var st = '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
-                    obj.fkSourcedId + '\')">' + replaceTags(obj.sourcedName) + '</a>';
+                obj.fkSourcedId + '\')">' + replaceTags(obj.sourcedName) + '</a>';
             $('#generalview_bound').html(st);
             $('#storycard_bound').show();
         } else {
@@ -19192,9 +19205,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (obj.fkChildBoundUserStoryName) {
             $('#storycard_childbound').show();
             $('#generalview_childbound').html(
-                    this.convertChildBoundUserStories(
-                            obj.fkChildBoundUserStoryName,
-                            obj.fkChildBoundUserStoryId));
+                this.convertChildBoundUserStories(
+                    obj.fkChildBoundUserStoryName,
+                    obj.fkChildBoundUserStoryId));
         } else {
             $('#storycard_childbound').hide();
             $('#generalview_childbound').html('');
@@ -19226,9 +19239,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                    backlodIds[i] + '\')">' + " #"
-                    + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                    + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #"
+                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
+                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += "<br>";
         }
         return st;
@@ -19241,9 +19254,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().shareGeneralViewDirect(\'' + global_var.current_project_id + '\',\'' +
-                    backlodIds[i] + '\')">' + " #"
-                    + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                    + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #"
+                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
+                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += ", ";
         }
         return st;
@@ -19254,9 +19267,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += ' <a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                    backlodIds[i] + '\')">' + " #"
-                    + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                    + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #"
+                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
+                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += " <br>";
         }
         return st;
@@ -19269,9 +19282,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < backlodIds.length; i++) {
             st += '<a href="#" onclick="new UserStory().shareGeneralViewDirect(\'' + global_var.current_project_id + '\',\'' +
-                    backlodIds[i] + '\')">' + " #"
-                    + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
-                    + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
+                backlodIds[i] + '\')">' + " #"
+                + SACore.GetBacklogOrderNo(backlodIds[i]) + " "
+                + replaceTags(SACore.GetBacklogname(backlodIds[i])) + '</a>';
             st += ", ";
         }
         return st;
@@ -19288,7 +19301,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < name.length; i++) {
             st += '<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
-                    ids[i] + '\')">' + " #" + orderNos[i] + " " + replaceTags(name[i]) + '</a>';
+                ids[i] + '\')">' + " #" + orderNos[i] + " " + replaceTags(name[i]) + '</a>';
             st += ",&nbsp&nbsp";
         }
         return st;
@@ -19299,7 +19312,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < name.length; i++) {
             st += '<a href="#" onclick="new UserStory().shareGeneralViewDirect(\'' + fkProjectId + '\',\'' +
-                    ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
+                ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
             st += ",&nbsp&nbsp";
         }
         return st;
@@ -19312,7 +19325,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < name.length; i++) {
             st += '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
-                    ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
+                ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
             st += ",&nbsp&nbsp";
         }
         return st;
@@ -19323,7 +19336,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < name.length; i++) {
             st += '<a href="#" onclick="new UserStory().redirectToDetailedView(\'' +
-                    ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
+                ids[i] + '\')">' + replaceTags(name[i]) + '</a>';
             st += ",&nbsp&nbsp";
         }
         return st;
@@ -19339,7 +19352,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         this.addAssigneeToTaskType4Backlog();
     },
     addAssigneeToTaskType4Backlog: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -19369,14 +19382,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 $('#addBacklog_assignee').append($("<option></option>")
-                        .attr("value", obj[n].fkUserId)
-                        .text(replaceTags(obj[n].userName)));
+                    .attr("value", obj[n].fkUserId)
+                    .text(replaceTags(obj[n].userName)));
             }
         } catch (e) {
         }
     },
     addTaskTypesToCombo4Backlog: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -19405,8 +19418,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#addBacklog_tasktype').append($("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].typeName)));
+                .attr("value", obj[n].id)
+                .text(replaceTags(obj[n].typeName)));
         }
     },
     getLabelLine4Backlog: function (labelName, labelColor) {
@@ -19424,24 +19437,24 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = "";
         for (var i = 0; i < name.length; i++) {
             st += '<span style="color:' + color[i] + '">' + replaceTags(name[i]) + '</span>, ';
-//            console.log('st=' + st);
+            //            console.log('st=' + st);
         }
         return st;
     },
     toggleSubmenu: function (e, menuName) {
-//        showProgress();
+        //        showProgress();
         $('.tooltip').removeClass('show');
-        $('[data-toggle="tooltip"]').tooltip({html: true});
+        $('[data-toggle="tooltip"]').tooltip({ html: true });
         $('.sub-menu').removeClass("us-sm-active");
         var sm = '#us-submenu-' + menuName;
         $(sm).addClass('us-sm-active');
         global_var.current_us_submenu = menuName;
-//        Utility.addParamToUrl('current_us_submenu', global_var.current_us_submenu);
-//        $('.us-sm-detail').hide();
+        //        Utility.addParamToUrl('current_us_submenu', global_var.current_us_submenu);
+        //        $('.us-sm-detail').hide();
         $('#smb-details-' + menuName).show();
-//        if (menuName === 'comments') {
-//            this.fillCommentList(global_var.current_backlog_id);
-//        } else
+        //        if (menuName === 'comments') {
+        //            this.fillCommentList(global_var.current_backlog_id);
+        //        } else
 
         if (menuName === 'ipo') {
             this.toggleSubmenuIPO();
@@ -19458,26 +19471,26 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         } else if (menuName === 'generalview') {
             this.toggleSubmenuStoryCard();
         }
-//        else if (menuName === 'history') {
-//            BacklogHistory.clearBacklogHistoryFilter();
-//            BacklogHistory.loadFilterComponents();
-//            BacklogHistory.load();
-//        } else if (menuName === 'testscenario') {
-//            this.loadTestScenario();
-//        }
+        //        else if (menuName === 'history') {
+        //            BacklogHistory.clearBacklogHistoryFilter();
+        //            BacklogHistory.loadFilterComponents();
+        //            BacklogHistory.load();
+        //        } else if (menuName === 'testscenario') {
+        //            this.loadTestScenario();
+        //        }
         dragResize();
-//        hideProgress();
+        //        hideProgress();
     },
     toggleSubmenuStoryCard: function () {
         try {
-//            Backloglar load olanda inputlarin load olmasi bir az gec cekir
+            //            Backloglar load olanda inputlarin load olmasi bir az gec cekir
             this.setUserStoryInforOnGeneralView4Select();
         } catch (e) {
-//            this.setUserStoryInforOnGeneralView();
+            //            this.setUserStoryInforOnGeneralView();
         }
 
         this.setUserStoryInforOnGeneralView4HistoryDateAndLabel();
-//        this.setUserStoryTaskInfoOnGeneralView();
+        //        this.setUserStoryTaskInfoOnGeneralView();
         //this.loadAssignedLabel();
         //this.setBView();
 
@@ -19485,7 +19498,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         try {
             this.getBacklogDesc();
         } catch (e) {
-//            this.setUserStoryInforOnGeneralView();
+            //            this.setUserStoryInforOnGeneralView();
         }
 
         this.getBacklogTaskStats();
@@ -19502,7 +19515,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             try {
 
                 $("#storycard_filelist")
-                        .append(this.generateCommentFileLine4StoryCard(resId[i].trim(), res[i].trim(), "col-4"));
+                    .append(this.generateCommentFileLine4StoryCard(resId[i].trim(), res[i].trim(), "col-4"));
             } catch (e) {
             }
         }
@@ -19514,38 +19527,38 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     toggleSubmenuStoryCard4Share: function () {
         this.setUserStoryInforOnGeneralView4Share();
-//        this.setUserStoryTaskInfoOnGeneralView4Share();
+        //        this.setUserStoryTaskInfoOnGeneralView4Share();
         this.loadAssignedLabel4Share();
-//        this.setBView();
+        //        this.setBView();
     },
     setBView: function () {
         $('#shareGeneralView')
-                .attr('pid', global_var.current_project_id)
-                .attr('bid', global_var.current_backlog_id)
-                .attr('d', $('#userprofile_main_domain').html())
-                .attr('lid', "");
+            .attr('pid', global_var.current_project_id)
+            .attr('bid', global_var.current_backlog_id)
+            .attr('d', $('#userprofile_main_domain').html())
+            .attr('lid', "");
     },
     setBViewLabel: function (labelId) {
         $('#shareGeneralView')
-                .attr('lid', labelId);
+            .attr('lid', labelId);
     },
-    getGeneralViewLine: function ( ) {
+    getGeneralViewLine: function () {
         var el = $('#shareGeneralView');
         return 'bview.html?'
-                + 'pid=' + el.attr('pid')
-                + '&bid=' + el.attr('bid')
-                + '&d=' + el.attr('d')
-                + '&lid=' + el.attr('lid');
+            + 'pid=' + el.attr('pid')
+            + '&bid=' + el.attr('bid')
+            + '&d=' + el.attr('d')
+            + '&lid=' + el.attr('lid');
     },
-    getGeneralPrototypeViewLine: function ( ) {
+    getGeneralPrototypeViewLine: function () {
 
         return this.getGeneralViewLine() + "&h=1";
     },
     getGeneralViewLineDirect: function (pid, bid) {
         return 'bview.html?pid=' + pid
-                + '&bid=' + bid
-                + '&d=' + global_var.current_domain
-                + '&lid=' + '';
+            + '&bid=' + bid
+            + '&d=' + global_var.current_domain
+            + '&lid=' + '';
     },
     shareGeneralView: function (el) {
         window.open(this.getGeneralViewLine());
@@ -19558,7 +19571,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     copyGeneralView: function () {
         var copyText = $(location).attr('protocol') + "//" +
-                $(location).attr('host') + "/" + this.getGeneralViewLine();
+            $(location).attr('host') + "/" + this.getGeneralViewLine();
         var $temp = $("<input>");
         $("body").append($temp);
         $temp.val(copyText).select();
@@ -19567,7 +19580,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     copyGeneralPrototypeView: function () {
         var copyText = $(location).attr('protocol') + "//" +
-                $(location).attr('host') + "/" + this.getGeneralViewLine() + "&h=1";
+            $(location).attr('host') + "/" + this.getGeneralViewLine() + "&h=1";
         var $temp = $("<input>");
         $("body").append($temp);
         $temp.val(copyText).select();
@@ -19579,12 +19592,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.ipoTableVal = {};
         $('#relatedSUSOutputName').html('');
         $('#relatedUserStory').html('');
-//        this.loadSUSList4Input();
-//        this.loadSection4Input();
+        //        this.loadSUSList4Input();
+        //        this.loadSection4Input();
         this.toggleComponentEventDetails();
-//        this.loadSUS4Relation()
+        //        this.loadSUS4Relation()
         this.loadSUS4Relation4Section();
-//        this.getBacklogDetailedInputInfoById();
+        //        this.getBacklogDetailedInputInfoById();
         this.getBacklogDetailedInputInfoById_core(SAInput.toJSON());
     },
     setGuiMainWindowsParam1: function (param1) {
@@ -19627,11 +19640,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (global_var.is_body_ctrl_pressed === '1') {
 
             event.preventDefault();
-            if (event.deltaY < 0)
-            {
+            if (event.deltaY < 0) {
                 new UserStory().zoomIn();
-            } else if (event.deltaY > 0)
-            {
+            } else if (event.deltaY > 0) {
                 new UserStory().zoomOut();
             }
         }
@@ -19643,9 +19654,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#gui_component_main_view_all').show();
         $('#gui_component_main_view').hide();
         $('#SUS_IPO_GUI_Design').html('');
-//        if ($('#gui_component_main_view_all').html().trim().length > 0) {
-//            return;
-//        }
+        //        if ($('#gui_component_main_view_all').html().trim().length > 0) {
+        //            return;
+        //        }
         this.setGUIAllCanvasZoom();
         this.showAllGuiDetailsNew();
     },
@@ -19690,50 +19701,50 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var backgroundImage = GetTagLine(canvasCSS, "##background-image");
 
 
-            var jsonT = {"tbl": []};
+            var jsonT = { "tbl": [] };
             var childGui = this.getGUIDesignHTMLBody(obj, 0);
 
             var div = $('<div></div>')
-                    .addClass("row gui-design-gui-all gui-design-is-api redirectClass4CSS")
-                    .attr("id", "gui_all_" + backlogId)
-//                    .attr('onclick', "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
-                    .attr("tabindex", "-1")
-                    .attr("style", Component.ReplaceCSS(canvasCSS));
+                .addClass("row gui-design-gui-all gui-design-is-api redirectClass4CSS")
+                .attr("id", "gui_all_" + backlogId)
+                //                    .attr('onclick', "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
+                .attr("tabindex", "-1")
+                .attr("style", Component.ReplaceCSS(canvasCSS));
 
             div.append($('<div class="col-12"></div>')
-                    .append($('<div></div>')
-                            .addClass("col-12 text-center")
-                            .attr('style', 'background-color:white;font-size:14px;')
-                            .append($("<a></a>")
-                                    .attr("href", "#")
-                                    .attr("onclick", "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
-                                    .append($('<h4>')
-                                            .append("#")
-                                            .append(SACore.GetBacklogOrderNo(backlogId))
-                                            .append(": ")
-                                            .append(SACore.GetBacklogname(backlogId))))
-                            )
-                    .append($('<div class="row redirectClass"></div>')
-                            .attr('bid', backlogId)
-                            .attr('bcode', makeId(10))
-                            .attr('style', 'background-color:white;' + backgroundColor + ";" + backgroundImage)
+                .append($('<div></div>')
+                    .addClass("col-12 text-center")
+                    .attr('style', 'background-color:white;font-size:14px;')
+                    .append($("<a></a>")
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
+                        .append($('<h4>')
+                            .append("#")
+                            .append(SACore.GetBacklogOrderNo(backlogId))
+                            .append(": ")
+                            .append(SACore.GetBacklogname(backlogId))))
+                )
+                .append($('<div class="row redirectClass"></div>')
+                    .attr('bid', backlogId)
+                    .attr('bcode', makeId(10))
+                    .attr('style', 'background-color:white;' + backgroundColor + ";" + backgroundImage)
 
-                            .append(childGui)
-                            ));
+                    .append(childGui)
+                ));
 
             $('#gui_component_main_view_all').append(div);
 
             var hdiv = $('#gui_component_main_view_all').find('[id=gui_all_' + backlogId + ']')
-                    .find('.redirectClass').first().height();
+                .find('.redirectClass').first().height();
             $('#gui_component_main_view_all').find('[id=gui_all_' + backlogId + ']')
-                    .height(hdiv + 50);
+                .height(hdiv + 50);
             $('#gui_component_main_view_all').append('<hr>');
         }
 
-//        $('#gui_component_main_view_all').find('.redirectClass4CSS').each(function (e) {
-//            var h = $(this).find('.redirectClass4CSS').first().height();
-//            $(this).height(h + 50);
-//        });
+        //        $('#gui_component_main_view_all').find('.redirectClass4CSS').each(function (e) {
+        //            var h = $(this).find('.redirectClass4CSS').first().height();
+        //            $(this).height(h + 50);
+        //        });
 
         $('#gui_all_' + global_var.current_backlog_id).focus();
 
@@ -19748,41 +19759,41 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var canvasCSS = obj[i].param1;
             var backgroundColor = GetTagLine(canvasCSS, "##background-color");
             var backgroundImage = GetTagLine(canvasCSS, "##background-image");
-//                    canvasCSS = canvasCSS.replace(backgroundColor,"");
-//                    canvasCSS = canvasCSS.replace(backgroundImage,"");
+            //                    canvasCSS = canvasCSS.replace(backgroundColor,"");
+            //                    canvasCSS = canvasCSS.replace(backgroundImage,"");
 
 
-            var jsonT = {"tbl": []};
-//            jsonT.tbl.push(JSON.parse(obj[i].inputList));
+            var jsonT = { "tbl": [] };
+            //            jsonT.tbl.push(JSON.parse(obj[i].inputList));
             var childGui = this.getGUIDesignHTMLBody(jsonT, 0);
 
             var div = $('<div></div>')
-                    .addClass("row gui-design-gui-all gui-design-is-api redirectClass4CSS")
-                    .attr("id", "gui_all_" + obj[i].id)
-//                    .attr('onclick', "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
-                    .attr("tabindex", "-1")
-                    .attr("style", Component.ReplaceCSS(canvasCSS));
+                .addClass("row gui-design-gui-all gui-design-is-api redirectClass4CSS")
+                .attr("id", "gui_all_" + obj[i].id)
+                //                    .attr('onclick', "new UserStory().setBacklogByGuiAll('" + backlogId + "')")
+                .attr("tabindex", "-1")
+                .attr("style", Component.ReplaceCSS(canvasCSS));
             div.append($('<div class="col-12"></div>')
-                    .append($('<div></div>')
-                            .addClass("col-12 text-center")
-                            .attr('style', 'background-color:white;font-size:14px;')
-                            .append($("<a></a>")
-                                    .attr("href", "#")
-                                    .attr("onclick", "new UserStory().setBacklogByGuiAll('" + obj[i].id + "')")
-                                    .append("#" + obj[i].orderNo + ": " + obj[i].backlogName)))
-                    .append($('<div class="row redirectClass"></div>')
-                            .attr('bid', obj[i].id)
-                            .attr('bcode', makeId(10))
-                            .attr('style', 'background-color:white;' + backgroundColor + ";" + backgroundImage)
+                .append($('<div></div>')
+                    .addClass("col-12 text-center")
+                    .attr('style', 'background-color:white;font-size:14px;')
+                    .append($("<a></a>")
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().setBacklogByGuiAll('" + obj[i].id + "')")
+                        .append("#" + obj[i].orderNo + ": " + obj[i].backlogName)))
+                .append($('<div class="row redirectClass"></div>')
+                    .attr('bid', obj[i].id)
+                    .attr('bcode', makeId(10))
+                    .attr('style', 'background-color:white;' + backgroundColor + ";" + backgroundImage)
 
-                            .append(childGui)
-                            ));
+                    .append(childGui)
+                ));
 
             $('#gui_component_main_view_all').append(div);
             $('#gui_component_main_view_all').find('[id=gui_all_' + obj[i].id + ']')
-                    .height($('#gui_component_main_view_all').find('[id=gui_all_' + obj[i].id + ']')
-                            .find('.redirectClass').first().height() + 50);
-//            console.log('height=' + $('#gui_component_main_view_all').find('[id=gui_all_' + obj[i].id + ']').height());
+                .height($('#gui_component_main_view_all').find('[id=gui_all_' + obj[i].id + ']')
+                    .find('.redirectClass').first().height() + 50);
+            //            console.log('height=' + $('#gui_component_main_view_all').find('[id=gui_all_' + obj[i].id + ']').height());
             $('#gui_component_main_view_all').append('<hr>');
         }
         //activate first tab panel
@@ -19845,7 +19856,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#SUS_IPO_GUI_Design').html('');
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -19896,12 +19907,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
     },
     getBacklogDetailedInputInfoById_core: function (res) {
-//        $('#txtSUS_IPO_description').val(((res.kv.backlogDescription)));
+        //        $('#txtSUS_IPO_description').val(((res.kv.backlogDescription)));
         $('#txtSUS_IPO_description').val(SACore.GetCurrentDescriptionSourced());
         this.getBacklogDetailedInputInfoByIdDetails(res);
         //generate gui
-//                if (global_var.current_ipo_view === 'gui') {
-//        $('#SUS_GUI_header').text((res.kv.backlogName));
+        //                if (global_var.current_ipo_view === 'gui') {
+        //        $('#SUS_GUI_header').text((res.kv.backlogName));
         $('#SUS_GUI_header').text(SACore.GetCurrentBacklogname());
         $('#userstory-gui-input-component-res-sus-label').text(SACore.GetCurrentBacklogname());
         $('#generalview_SUS_GUI_header').text(SACore.GetCurrentBacklogname());
@@ -19961,15 +19972,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var st = this.getHtmlGenIPOInputList(res);
         $('#tblIPOList > tbody').html(st);
         $('.us-ipo-input-tr').first().click();
-//        $('#tblIPOOutputList > tbody').html('');
-//        var st = this.getHtmlGenIPOOutputList(res);
-//        $('#tblIPOOutputList > tbody').html(st);
+        //        $('#tblIPOOutputList > tbody').html('');
+        //        var st = this.getHtmlGenIPOOutputList(res);
+        //        $('#tblIPOOutputList > tbody').html(st);
     },
     setUserStoryTaskInfoOnGeneralView: function () {
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -19985,7 +19996,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: true,
             success: function (res) {
-//                 res = JSON.parse(replaceTags(JSON.stringify(res)));
+                //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.setUserStoryTaskInfoOnGeneralViewDetails(res);
             }
         });
@@ -19994,7 +20005,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20011,21 +20022,21 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: true,
             success: function (res) {
-//                 res = JSON.parse(replaceTags(JSON.stringify(res)));
+                //                 res = JSON.parse(replaceTags(JSON.stringify(res)));
                 that.setUserStoryTaskInfoOnGeneralViewDetails(res);
             }
         });
     },
     setUserStoryTaskInfoOnGeneralViewDetails: function (res) {
         $('#generalview_tasklist_table_list > tbody').html('');
-//       
+        //       
         try {
             var obj = res.tbl[0].r;
         } catch (e) {
             return;
         }
         for (var i = 0; i < obj.length; i++) {
-//            console.log('history type='+obj[i].componentType);
+            //            console.log('history type='+obj[i].componentType);
             var tr = $('<tr></tr>').append($('<td></td>').html((i + 1)));
             tr.append($('<td></td>').html('<span class="us-item-status-' + obj[i].taskStatus + '">' + obj[i].taskStatus + '</span>'));
             tr.append($('<td></td>').html(obj[i].taskTypeName));
@@ -20044,7 +20055,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20065,7 +20076,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -20073,7 +20084,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20094,7 +20105,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 that.setUserStoryInputsInfoOnGeneralViewDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -20103,17 +20114,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return $('<thead></thead>');
         }
         var thead = $('<thead></thead>')
-                .append($('<tr></tr>')
-                        .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
-                        .append($('<th></th>')
-                                .addClass("pdfHide")
-                                .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
-                                .append('<input type="checkbox" id="us_input_list_check_all_new" onclick="new UserStory().toggleAllInputNew(this)">'))
+            .append($('<tr></tr>')
+                .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
+                .append($('<th></th>')
+                    .addClass("pdfHide")
+                    .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
+                    .append('<input type="checkbox" id="us_input_list_check_all_new" onclick="new UserStory().toggleAllInputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
-//                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
-                        .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
-                        );
+                .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
+                //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
+                .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
+            );
         return thead;
     },
     getTableHeader4OutputTable: function (trcount) {
@@ -20121,17 +20132,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             return $('<thead></thead>');
         }
         var thead = $('<thead></thead>')
-                .append($('<tr></tr>')
-                        .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
-                        .append($('<th></th>')
-                                .addClass("pdfHide")
-                                .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
-                                .append('<input type="checkbox" id="us_output_list_check_all_new" onclick="new UserStory().toggleAllOutputNew(this)">'))
+            .append($('<tr></tr>')
+                .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
+                .append($('<th></th>')
+                    .addClass("pdfHide")
+                    .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
+                    .append('<input type="checkbox" id="us_output_list_check_all_new" onclick="new UserStory().toggleAllOutputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
-//                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
-                        .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
-                        );
+                .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
+                //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
+                .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
+            );
         return thead;
     },
     getTableFooter4InputTable: function (desc, replace) {
@@ -20146,15 +20157,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var ds = (replace === true) ? MapTextAreaHtml(replaceTags(desc)) : desc;
 
         var tfoot = $('<tfoot></tfoot>').append($('<tr></tr>').attr('style', 'padding: 30px 0 30px 0;')
-                .append($('<th></th>')
-                        .attr('style', 'border-color:#5181B8;padding: 15px 0 15px 0; border-top-width: 3px;')
-                        .attr('colspan', "2")
-                        .append('Process Description'))
-                .append($('<th></th>').attr('style', 'border-color:#5181B8;padding: 5px;\n\
+            .append($('<th></th>')
+                .attr('style', 'border-color:#5181B8;padding: 15px 0 15px 0; border-top-width: 3px;')
+                .attr('colspan', "2")
+                .append('Process Description'))
+            .append($('<th></th>').attr('style', 'border-color:#5181B8;padding: 5px;\n\
                                             font-weight:normal;border-top-width: 3px;text-align: left;')
-                        .attr('colspan', "2")
-                        .append(ds)
-                        ));
+                .attr('colspan', "2")
+                .append(ds)
+            ));
         return tfoot;
     },
     getInputTable4StoryCard4Select: function (res, ind, iteration, rowId, parentId) {
@@ -20171,9 +20182,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var idx = 1;
 
         var table = $('<table></table>')
-                .addClass('table')
-                .attr('border', '1')
-                .attr('style', 'border: 1px solid #5181B8;margin: 0 auto;');
+            .addClass('table')
+            .attr('border', '1')
+            .attr('style', 'border: 1px solid #5181B8;margin: 0 auto;');
 
 
         var tbody = $('<tbody></tbody>');
@@ -20193,13 +20204,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
             if (ct === 'sctn' || inputType === 'TAB') {
                 var td = $('<td></td>')
-                        .attr('style', "text-align:left;")
-                        .attr('colspan', '4');
+                    .attr('style', "text-align:left;")
+                    .attr('colspan', '4');
                 var innerRowId4Section = (rowId === '' ? '' : rowId + '.') + (idx++);
                 td.append("<b>" + innerRowId4Section + ". " + obj[i].inputName + "</b> ");
                 td.append($('<input type="checkbox"></input>')
-                        .addClass("pdfHide")
-                        .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
+                    .addClass("pdfHide")
+                    .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
 
                 try {
                     if (obj[i].param1.length > 0) {
@@ -20218,31 +20229,31 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 tbody.append(tr);
                 continue;
             }
-//            if (obj[i].inputType === 'GUI' && obj[i].componentType !== 'btn') {
-//                continue;
-//            }
+            //            if (obj[i].inputType === 'GUI' && obj[i].componentType !== 'btn') {
+            //                continue;
+            //            }
 
             trcount++;
 
             var inputName = obj[i].inputType === 'OUT'
-                    ? obj[i].inputName + " / Output"
-                    : obj[i].inputName;
+                ? obj[i].inputName + " / Output"
+                : obj[i].inputName;
 
             inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                    : "";
+                : "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>').append($('<td></td>').html(innerRowId));
             tr.append($('<td></td>').html(inputName));
-//            tr.append($('<td></td>').html(obj[i].tableName));
+            //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('style', 'text-align:left;')
-                    .html(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[i])));
+                .attr('style', 'text-align:left;')
+                .html(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(obj[i])));
             tbody.append(tr);
         }
 
         table.append(this.getTableHeader4InputTable(trcount));
-//        table.append(this.getTableFooter4InputTable(res.tbl[0].r[0].descriptionSourced, true));
+        //        table.append(this.getTableFooter4InputTable(res.tbl[0].r[0].descriptionSourced, true));
         var descSourced = "";
         try {
             descSourced = SACore.GetCurrentBaklogDescriptionSourced1(obj[0].fkBacklogId);
@@ -20252,8 +20263,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         table.append(this.getTableFooter4InputTable(descSourced, true));
         table.append(tbody);
         var div = $('<div></div>').attr('id', 'sub_tbl_' + parentId)
-                .addClass('col-12')
-                .addClass('sub_table')
+            .addClass('col-12')
+            .addClass('sub_table')
         if (parentId.length > 0) {
             div.attr('style', 'padding:0px 0px;display:none;');
         } else {
@@ -20269,9 +20280,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         iteration++;
 
         var table = $('<table></table>')
-                .addClass('table')
-                .attr('border', '1')
-                .attr('style', 'border:none;margin: 0 auto;');
+            .addClass('table')
+            .attr('border', '1')
+            .attr('style', 'border:none;margin: 0 auto;');
 
         var tbody = $('<tbody></tbody>');
 
@@ -20292,17 +20303,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         for (var i = 0; i < obj.length; i++) {
             if (obj[i].componentType === 'sctn' || obj[i].componentType === 'tab') {
                 var td = $('<td></td>')
-                        .attr('style', "text-align:left;")
-                        .attr('colspan', '4');
+                    .attr('style', "text-align:left;")
+                    .attr('colspan', '4');
                 var innerRowId4Section = (rowId === '' ? '' : rowId + '.') + (idx++);
                 td.append("<b>" + innerRowId4Section + ". " + obj[i].inputName + "</b> ");
                 td.append($('<input type="checkbox"></input>')
-                        .addClass('pdfHide')
-                        .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
+                    .addClass('pdfHide')
+                    .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
 
                 try {
                     if (obj[i].inputTable.length > 0) {
-                        var jsonT = {"tbl": []};
+                        var jsonT = { "tbl": [] };
                         jsonT.tbl.push(JSON.parse(obj[i].inputTable));
                         var innerTable = this.getInputTable4StoryCard(jsonT, 0, iteration, innerRowId4Section, obj[i].id);
                         td.append('<br>');
@@ -20325,20 +20336,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             trcount++;
 
             var inputName = obj[i].inputType === 'OUT'
-                    ? obj[i].inputName + " / Output"
-                    : obj[i].inputName;
+                ? obj[i].inputName + " / Output"
+                : obj[i].inputName;
 
             inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                    : "";
+                : "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>').append($('<td></td>').html(innerRowId));
             tr.append($('<td></td>').html(inputName));
-//            tr.append($('<td></td>').html(obj[i].tableName));
+            //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('style', 'text-align:left;')
-                    .html(
-                            this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[i])));
+                .attr('style', 'text-align:left;')
+                .html(
+                    this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(obj[i])));
             tbody.append(tr);
         }
 
@@ -20346,8 +20357,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         table.append(this.getTableFooter4InputTable(res.tbl[0].r[0].descriptionSourced, true));
         table.append(tbody);
         var div = $('<div></div>').attr('id', 'sub_tbl_' + parentId)
-                .addClass('col-12')
-                .addClass('sub_table');
+            .addClass('col-12')
+            .addClass('sub_table');
         if (parentId.length > 0) {
             div.attr('style', 'padding:0px 0px;display:none;');
         } else {
@@ -20358,10 +20369,10 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
 
     setUserStoryInputsInfoOnGeneralViewDetailsPure4Select: function (res) {
-//        res = replaceJSON(res);
+        //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
-//        try {
-//        var ind = getIndexOfTable(res, "inputDescListTable");
+        //        try {
+        //        var ind = getIndexOfTable(res, "inputDescListTable");
         var ind = 0;
         var table = this.getInputTable4StoryCard4Select(res, ind, 0, '', '');
         // $('#generalview_input_list').append(table);
@@ -20382,12 +20393,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var idx = 1;
 
         var table = $('<table ></table>')
-                .addClass('table')
-                // .addClass('table-hover')
-                .addClass('spilted')
+            .addClass('table')
+            // .addClass('table-hover')
+            .addClass('spilted')
 
-                .attr('border', '1')
-                .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
+            .attr('border', '1')
+            .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
 
 
         var tbody = $('<tbody></tbody>');
@@ -20430,17 +20441,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                             }
 
                             var td = $('<td></td>')
-                                    .attr('style', "text-align:left;")
-                                    .attr('colspan', '4');
+                                .attr('style', "text-align:left;")
+                                .attr('colspan', '4');
                             var innerRowId4Section = (rowId === '' ? '' : rowId + '.') + (idx++);
                             td.append("<b>" + innerRowId4Section + ". " + replaceTags(SACore.GetBacklogname(usId)) + "</b> ");
                             td.append($('<input type="checkbox"></input>')
-                                    .addClass("pdfHide")
-                                    .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
+                                .addClass("pdfHide")
+                                .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
 
 
                             var jsonT = SAInput.toJSONByBacklog(usId);
-//                  var res = SAInput.toJSONByBacklog(obj[i].param1);
+                            //                  var res = SAInput.toJSONByBacklog(obj[i].param1);
                             var innerTable = this.getInputTable4StoryCard4SelectNew(jsonT, 0, iteration, innerRowId4Section, obj[i].id);
                             td.append('<br>');
                             td.append(innerTable);
@@ -20464,17 +20475,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             if (ct === 'sctn' || ct === 'tab') {
                 var partName = ct === 'sctn' && obj[i].param1.length > 0
-                        ? replaceTags(SACore.GetBacklogname(obj[i].param1))
-                        : replaceTags(obj[i].inputName);
+                    ? replaceTags(SACore.GetBacklogname(obj[i].param1))
+                    : replaceTags(obj[i].inputName);
 
                 var td = $('<td></td>')
-                        .attr('style', "text-align:left;")
-                        .attr('colspan', '4');
+                    .attr('style', "text-align:left;")
+                    .attr('colspan', '4');
                 var innerRowId4Section = (rowId === '' ? '' : rowId + '.') + (idx++);
                 td.append("<b>" + innerRowId4Section + ". " + partName + "</b> ");
                 td.append($('<input type="checkbox"></input>')
-                        .addClass('pdfHide')
-                        .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
+                    .addClass('pdfHide')
+                    .attr('onchange', "new UserStory().toggleSubTableOfInputs(this,'" + obj[i].id + "')"))
 
                 try {
                     if (obj[i].param1.length > 0) {
@@ -20493,40 +20504,40 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 tbody.append(tr);
                 continue;
             }
-//            if (obj[i].inputType === 'GUI') {
-//                if (obj[i].componentType === 'btn' || obj[i].componentType === 'hlink') {
-//                    //do something
-//                } else {
-//                    continue;
-//                }
-//            }
+            //            if (obj[i].inputType === 'GUI') {
+            //                if (obj[i].componentType === 'btn' || obj[i].componentType === 'hlink') {
+            //                    //do something
+            //                } else {
+            //                    continue;
+            //                }
+            //            }
 
             trcount++;
 
             var inputName = obj[i].inputName;
 
             inputName += (obj[i].tableName) ? " (Grouped as:" + obj[i].tableName + ")"
-                    : "";
+                : "";
 
             var innerRowId = (rowId === '' ? '' : rowId + '.') + (idx++);
             var tr = $('<tr></tr>')
-                    .addClass('story-card-input-line-tr-2')
-                    .append($('<td></td>').html(innerRowId));
+                .addClass('story-card-input-line-tr-2')
+                .append($('<td></td>').html(innerRowId));
             tr.append($('<td></td>')
-                    .addClass('pdfHide')
-                    .append($('<input type="checkbox">')
-                            .addClass("us-input-list-item-check-box-class-new")
-                            .val(obj[i].id)));
+                .addClass('pdfHide')
+                .append($('<input type="checkbox">')
+                    .addClass("us-input-list-item-check-box-class-new")
+                    .val(obj[i].id)));
 
 
             tr.append($('<td></td>')
-                    .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
-                    .attr("iname", replaceTags(Replace2Primes(inputName)))
-                    .attr('class', 'description-left')
-                    .append(inputName)
-                    .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
+                .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
+                .attr("iname", replaceTags(Replace2Primes(inputName)))
+                .attr('class', 'description-left')
+                .append(inputName)
+                .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                            + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
+                    + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
 <button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addExistingRelationModal" onclick="new UserStory().inputExistModal(this,\'' + obj[i].id + '\')">Exist</button>\n\
@@ -20545,25 +20556,25 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().removeSendSaveTo(this,\'' + obj[i].id + '\')">Remove Send/Save Data To</button>\n\
 </div>\n\
 </div>'
-                            + '</div>'));
+                    + '</div>'));
             ;
 
 
-//            tr.append($('<td></td>').html(obj[i].tableName));
+            //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('class', 'description-style-background')
-                    .addClass("text-left")
-                    .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
-                    .append($('<input type="text">')
-                            .attr("iid", obj[i].id)
-                            .css('display', 'none')
-                            .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
-                            .attr("placeholder", "Add new description")
-                            .attr('class', 'description-style')
-                            .attr('id', 'focuse_me')
-                            .addClass('pdfHide')
-                            )
-                    );
+                .attr('class', 'description-style-background')
+                .addClass("text-left")
+                .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
+                .append($('<input type="text">')
+                    .attr("iid", obj[i].id)
+                    .css('display', 'none')
+                    .attr("onchange", "new UserStory().insertNewInputDescriptionNew(this,'" + obj[i].id + "')")
+                    .attr("placeholder", "Add new description")
+                    .attr('class', 'description-style')
+                    .attr('id', 'focuse_me')
+                    .addClass('pdfHide')
+                )
+            );
 
 
             $("#iid" + obj[i].id).keyup(function (event) {
@@ -20572,15 +20583,15 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 }
             });
 
-//                    .html(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i])));
+            //                    .html(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i])));
             tbody.append(tr);
         }
 
         table.append(this.getTableHeader4InputTable(trcount));
         table.append(tbody);
         var div = $('<div></div>').attr('id', 'sub_tbl_' + parentId)
-                .addClass('col-12')
-                .addClass('sub_table');
+            .addClass('col-12')
+            .addClass('sub_table');
         if (parentId.length > 0) {
             div.attr('style', 'padding:0px 0px;display:none;');
         } else {
@@ -20609,7 +20620,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     loadDatabaseList2Combo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20640,7 +20651,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20675,7 +20686,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20709,7 +20720,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20743,8 +20754,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#selectFromDbModal-dbid')
-                        .append($('<option>').val(obj[i].id)
-                                .append(obj[i].dbName))
+                    .append($('<option>').val(obj[i].id)
+                        .append(obj[i].dbName))
             }
         } catch (err) {
 
@@ -20753,9 +20764,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
         $('#selectFromDbModal-dbid')
-                .append($('<option>').val("").text(""))
-                .append($('<option>').val('-2').text("New Database"))
-                .append($('<option disabled>').val('').text(""));
+            .append($('<option>').val("").text(""))
+            .append($('<option>').val('-2').text("New Database"))
+            .append($('<option disabled>').val('').text(""));
 
     },
 
@@ -20795,7 +20806,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20825,8 +20836,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#selectFromDbModal-fieldid')
-                        .append($('<option>').val(obj[i].id)
-                                .append(obj[i].fieldName))
+                    .append($('<option>').val(obj[i].id)
+                        .append(obj[i].fieldName))
             }
         } catch (err) {
         }
@@ -20834,9 +20845,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         sortSelectBox('selectFromDbModal-fieldid');
 
         $('#selectFromDbModal-fieldid')
-                .append($('<option>').val("").text(""))
-                .append($('<option>').val('-2').text("New Field"))
-                .append($('<option disabled>').val('').text(""));
+            .append($('<option>').val("").text(""))
+            .append($('<option>').val('-2').text("New Field"))
+            .append($('<option disabled>').val('').text(""));
     },
 
     getDbTableList: function (dbid) {
@@ -20844,7 +20855,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20871,7 +20882,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20901,8 +20912,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#selectFromDbModal-tableid')
-                        .append($('<option>').val(obj[i].id)
-                                .append(obj[i].tableName))
+                    .append($('<option>').val(obj[i].id)
+                        .append(obj[i].tableName))
             }
         } catch (err) {
         }
@@ -20911,20 +20922,20 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
         $('#selectFromDbModal-tableid')
-                .append($('<option>').val("").text(""))
-                .append($('<option>').val('-2').text("New Table"))
-                .append($('<option disabled>').val('').text(""));
+            .append($('<option>').val("").text(""))
+            .append($('<option>').val('-2').text("New Table"))
+            .append($('<option disabled>').val('').text(""));
     },
 
-//    getDbFieldsListDetails: function (res) {
-//        var val = $(el).val();
-//
-//        if (val === '-2') {
-//            $('.create-new-db-4-select').show();
-//        } else {
-//            $('.create-new-db-4-select').hide();
-//        }
-//    },
+    //    getDbFieldsListDetails: function (res) {
+    //        var val = $(el).val();
+    //
+    //        if (val === '-2') {
+    //            $('.create-new-db-4-select').show();
+    //        } else {
+    //            $('.create-new-db-4-select').hide();
+    //        }
+    //    },
 
     removeSendSaveTo: function (el, id) {
         if (!id) {
@@ -20935,7 +20946,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -20971,7 +20982,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
             }
         });
     },
@@ -20985,7 +20996,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21024,7 +21035,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
             }
         });
     },
@@ -21038,7 +21049,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21074,7 +21085,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
             }
         });
     },
@@ -21088,7 +21099,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21127,7 +21138,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
 
 
 
@@ -21174,17 +21185,17 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         this.loadApisToCombo(action);
 
         $('#us-related-apis')
-                .append($("<option>").val('').append(('')))
-                .append($("<option>").val('-2').append(('New User Story (API)')))
-                .append($("<option disabled>").val('').append(('')))
-                ;
+            .append($("<option>").val('').append(('')))
+            .append($("<option>").val('-2').append(('New User Story (API)')))
+            .append($("<option disabled>").val('').append(('')))
+            ;
 
         if (f) {
             $('#sus-api-output-id').html('');
             $('#sus-api-output-id')
-                    .append($("<option>").val('').append(('')))
-                    .append($("<option>").val('-2').append(('New')))
-                    .append($("<option disabled>").val('').append(('')))
+                .append($("<option>").val('').append(('')))
+                .append($("<option>").val('-2').append(('New')))
+                .append($("<option disabled>").val('').append(('')))
             $('#us-related-apis').change();
         }
 
@@ -21203,11 +21214,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 var backlogId = keys[i];
                 var backlogName = SACore.GetBacklogname(backlogId);
                 backlogName += SACore.GetBacklogDetails(keys[i], "isApi") === '1'
-                        ? ' (is API)' : "";
+                    ? ' (is API)' : "";
 
                 var op = $("<option>")
-                        .val(backlogId)
-                        .append(replaceTags(backlogName));
+                    .val(backlogId)
+                    .append(replaceTags(backlogName));
                 if (keys[i] === global_var.last_select_from_us_id) {
                     op.attr("selected", true);
                 }
@@ -21235,19 +21246,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var keys = SACore.GetBacklogKeys();
         for (var i in keys) {
             var isAPi = (SACore.GetBacklogDetails(keys[i], "isApi") === '1')
-                    ? " (is API)" : "";
+                ? " (is API)" : "";
 
-//            if (SACore.GetBacklogDetails(keys[i], "isApi") !== '1') {
-//                continue;
-//            }
+            //            if (SACore.GetBacklogDetails(keys[i], "isApi") !== '1') {
+            //                continue;
+            //            }
             if (keys[i] === global_var.current_backlog_id) {
                 continue;
             }
             var backlogId = keys[i];
             var backlogName = SACore.GetBacklogname(backlogId);
             var op = $("<option>")
-                    .val(backlogId)
-                    .append(replaceTags(backlogName + isAPi));
+                .val(backlogId)
+                .append(replaceTags(backlogName + isAPi));
             if (keys[i] === global_var.last_select_from_us_id) {
                 op.attr("selected", true);
             }
@@ -21263,12 +21274,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     username_editable: function (el, inputId, event) {
         $(el).removeAttr('ondblclick');
         var inp = $('<input type="text">')
-                .css("width", "90%")
-                .css('border', 'none')
-                .attr('class', 'focus-hover')
-                .attr("onchange", "new UserStory().username_update(this,'" + inputId + "')")
-                .val($(el).html())
-                ;
+            .css("width", "90%")
+            .css('border', 'none')
+            .attr('class', 'focus-hover')
+            .attr("onchange", "new UserStory().username_update(this,'" + inputId + "')")
+            .val($(el).html())
+            ;
         $(el).html(inp);
         inp.focus();
     },
@@ -21276,13 +21287,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     updateInputEditLineNew: function (el, inputId) {
 
         var inp = $('<input type="text">')
-                .css("width", "100%")
-                .css('border', 'none')
-                .attr("onchange", "new UserStory().updateInputCompNew(this,'" + inputId + "')")
-                .attr("onfocusout", "prosesDescriptionFocusout(this,'" + inputId + "')")
-                .attr('class', 'focus-hover')
-                .val($(el).attr('iname'))
-                ;
+            .css("width", "100%")
+            .css('border', 'none')
+            .attr("onchange", "new UserStory().updateInputCompNew(this,'" + inputId + "')")
+            .attr("onfocusout", "prosesDescriptionFocusout(this,'" + inputId + "')")
+            .attr('class', 'focus-hover')
+            .val($(el).attr('iname'))
+            ;
         $(el).html(inp);
         inp.focus();
     },
@@ -21296,7 +21307,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         $(el).closest('p').attr("ondblclick", "new UserStory().username_editable(this,event)");
         $(el).closest('p').html(val);
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21317,7 +21328,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 that.load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -21337,7 +21348,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21360,10 +21371,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.addInputByRes(res);
                 loadCurrentBacklogProdDetails();
                 $(el).closest('td')
-                        .attr("iname", replaceTags(Replace2Primes($(el).val())))
+                    .attr("iname", replaceTags(Replace2Primes($(el).val())))
                 $(el).closest('td').html($(el).val());
 
-//////
+                //////
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
                 that.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
                 that.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
@@ -21380,7 +21391,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
 
                 //  refreshLiveProtytypeView();
             },
@@ -21436,7 +21447,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#general-view-task-gui').html(st);
                 $('#general-view-task-gui').attr('bid', SACore.GetCurrentBacklogId());
                 $('#general-view-task-gui').attr('bcode', makeId(15));
-                $('[data-toggle="tooltip"]').tooltip({html: true});
+                $('[data-toggle="tooltip"]').tooltip({ html: true });
 
                 // refreshLiveProtytypeView();
             },
@@ -21472,39 +21483,39 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
             if (selectFromDBField) {
                 st += " <b>Select from Database</b>: " + selectFromDBField
-                        + " (" +
-                        selectFromDBTable + " <i>from</i> " + selectFromDBDatabase
-                        + ")";
+                    + " (" +
+                    selectFromDBTable + " <i>from</i> " + selectFromDBDatabase
+                    + ")";
 
             }
             if (sendToDBField) {
                 st += (selectFromDBField) ? '<br>' : "";
                 st += " <b>Send to Database Relation</b>: " + sendToDBField
-                        + " (" +
-                        sendToDBTable + " <i>from</i> " + sendToDBDatabase
-                        + ")";
+                    + " (" +
+                    sendToDBTable + " <i>from</i> " + sendToDBDatabase
+                    + ")";
 
             }
             if (selectFromInput) {
                 st += (selectFromDBField || sendToDBField) ? '<br>' : "";
                 st += " <b>Select from API</b>: " + selectFromInput
-                        + " (" +
-                        "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('"
-                        + object.selectFromBacklogId + "')\">" + selectFromBacklog + "</a>"
-                        + ")";
+                    + " (" +
+                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('"
+                    + object.selectFromBacklogId + "')\">" + selectFromBacklog + "</a>"
+                    + ")";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                        + object.id + "','" + object.selectFromBacklogId + "','IN_DESC_FROM')\"><i class='fa fa-cog'></i></a>";
+                    + object.id + "','" + object.selectFromBacklogId + "','IN_DESC_FROM')\"><i class='fa fa-cog'></i></a>";
 
 
             }
             if (sendToInput) {
                 st += (selectFromInput || selectFromDBField || sendToDBField) ? '<br>' : "";
                 st += " <b>Send/Save data to Story Card (API)</b>: " + sendToInput
-                        + " (" +
-                        "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>"
-                        + ")";
+                    + " (" +
+                    "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>"
+                    + ")";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                        + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a>";
+                    + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a>";
 
             }
 
@@ -21519,7 +21530,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st += "<hr style='margin:0px;'>";
             }
 
-//            var obj = desc.split('%IN%');
+            //            var obj = desc.split('%IN%');
             var obj = SAInput.GetInputDescription(object.id);
             var stln = "";
             for (var n = 0; n < obj.length; n++) {
@@ -21541,47 +21552,47 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         var closeColor = "</a>"
         try {
             colored = color.length > 0
-                    ? colored
-                    : '<a class="colored-a" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
+                ? colored
+                : '<a class="colored-a" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
 
         } catch (err) {
         }
 
-        return   (desc1) ? stln + '<div class="span-button-div">'
-                + '<span class="span_hover" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
+        return (desc1) ? stln + '<div class="span-button-div">'
+            + '<span class="span_hover" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
 
-                + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
-                + '- &nbsp; ' + colored
-                + replaceTags(this.fnline2Text(desc1))
-                + closeColor
-                + "</span>"
-                + '<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">'
-                + ' <button class="dropdown-item" onclick="editInputDescription(this)">Edit</button>'
-                + ' <button class="dropdown-item" onclick="addInputDescToTaskNew(this,\'' + descId + '\',\'' + inputId + '\')">Add to Task</button>'
-                + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#f19a91\')">Oranged</button>'
-                + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#33E8FF\')">Blued</button>'
-                + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#8ad6a3\')">Greened</button>'
-                + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'\')">Whited</button>'
-                + ' <button class="dropdown-item" onclick="new UserStory().deleteInputDescriptionNew(this,\'' + descId + '\')">Delete</button>'
+            + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
+            + '- &nbsp; ' + colored
+            + replaceTags(this.fnline2Text(desc1))
+            + closeColor
+            + "</span>"
+            + '<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
+            + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">'
+            + ' <button class="dropdown-item" onclick="editInputDescription(this)">Edit</button>'
+            + ' <button class="dropdown-item" onclick="addInputDescToTaskNew(this,\'' + descId + '\',\'' + inputId + '\')">Add to Task</button>'
+            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#f19a91\')">Oranged</button>'
+            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#33E8FF\')">Blued</button>'
+            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#8ad6a3\')">Greened</button>'
+            + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'\')">Whited</button>'
+            + ' <button class="dropdown-item" onclick="new UserStory().deleteInputDescriptionNew(this,\'' + descId + '\')">Delete</button>'
 
-                + '</div>'
+            + '</div>'
 
 
 
-                + '</div>'
-                + '</div>'
-                : stln;
+            + '</div>'
+            + '</div>'
+            : stln;
 
 
     },
 
     updateInputDescriptionEditLineNew: function (el, descId) {
         var inp = $('<input type="text">')
-                .css("width", "90%")
-                .attr("onchange", "new UserStory().updateInputDescCompNew(this,'" + descId + "')")
-                .val($(el).attr('idesc'))
-                ;
+            .css("width", "90%")
+            .attr("onchange", "new UserStory().updateInputDescCompNew(this,'" + descId + "')")
+            .val($(el).attr('idesc'))
+            ;
         $(el).html(inp);
         inp.focus();
     },
@@ -21596,7 +21607,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21617,7 +21628,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetails();
 
                 $(el).closest('div.span-button-div').find('span.span_hover').text($(el).val())
-// refreshLiveProtytypeView();
+                // refreshLiveProtytypeView();
 
 
 
@@ -21640,7 +21651,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21669,9 +21680,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     setUserStoryInputsInfoOnGeneralViewDetailsPure: function (res) {
-//        res = replaceJSON(res);
+        //        res = replaceJSON(res);
         $('#generalview_input_list').html('');
-//        try {
+        //        try {
         var ind = getIndexOfTable(res, "inputDescListTable");
         var table = this.getInputTable4StoryCard(res, ind, 0, '', '');
         $('#generalview_input_list').append(table);
@@ -21707,7 +21718,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st += "<hr style='margin:0px;'>";
             }
 
-//            var obj = desc.split('%IN%');
+            //            var obj = desc.split('%IN%');
             var obj = SAInput.GetInputDescription(object.id);
             var stln = "";
             for (var n = 0; n < obj.length; n++) {
@@ -21756,12 +21767,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     setUserStoryInputsInfoOnGeneralViewDetails: function (res) {
         $('#generalview_input_list  ').html('');
-//        console.log(JSON.stringify(res))
+        //        console.log(JSON.stringify(res))
         var obj = res.tbl[0].r;
         for (var i = 0; i < obj.length; i++) {
             var inputName = obj[i].inputType === 'OUT'
-                    ? obj[i].inputName + " (Output)"
-                    : obj[i].inputName;
+                ? obj[i].inputName + " (Output)"
+                : obj[i].inputName;
             var tr = $('<tr></tr>').append($('<td></td>').html((i + 1)));
             tr.append($('<td></td>').html(inputName));
             tr.append($('<td></td>').html(obj[i].tableName));
@@ -21775,7 +21786,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!id) {
             return st;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21794,7 +21805,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st = that.setUserStoryInputDescriptionsInfoOnGeneralViewDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
         return st
@@ -21821,7 +21832,7 @@ function Notification(msg) {
 Notification.prototype = {
     getNotificationList: function () {
         $('#nav_history_overal_count').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21836,11 +21847,11 @@ Notification.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 that.getNotificationListDetails(res);
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -21851,52 +21862,52 @@ Notification.prototype = {
         for (var n = 0; n < obj.length; n++) {
             o = obj[n];
             var td1 = '<a href="#" onclick="new Notification().redirectToDetails(\'' +
-                    o.fkProjectId + "','" + o.fkBacklogId + '\')">' + replaceTags(o.backlogName)
-                    + '<br>' + replaceTags(o.projectName) + "</a>"
+                o.fkProjectId + "','" + o.fkBacklogId + '\')">' + replaceTags(o.backlogName)
+                + '<br>' + replaceTags(o.projectName) + "</a>"
             td1 += o.isReviewed === '1' ? "" : " <span style='color:red;font-size:11px'><b>(new)</b></span>";
             var tr = $('<tr></tr>')
-                    .append($('<td style="padding:4px;"></td>').html(td1))
-//                    .append($('<td style="padding:4px;"></td>').html(this.genUSLine(o)))
-                    .append($('<td style="padding:4px;font-size:12px;"></td>').html(this.genHistoryLine(o)));
+                .append($('<td style="padding:4px;"></td>').html(td1))
+                //                    .append($('<td style="padding:4px;"></td>').html(this.genUSLine(o)))
+                .append($('<td style="padding:4px;font-size:12px;"></td>').html(this.genHistoryLine(o)));
             table.append(tr);
         }
         $('#notificationList_listresult').html(table);
     },
     setTime: function () {
-//        setInterval(function () {
-//            try {
-//                new Notification().getNotificationCount();
-//            } catch (e) {
-//            }
-//        }, 60000);
+        //        setInterval(function () {
+        //            try {
+        //                new Notification().getNotificationCount();
+        //            } catch (e) {
+        //            }
+        //        }, 60000);
     },
     genHistoryLine: function (o) {
         var filen = (o.historyTellerImage) ? o.historyTellerImage : new User().getDefaultUserprofileName();
         var st = "<img style=\"padding:5px;float:left;width:34px;heigh:34px;\" class=\"figure-img img-fluid rounded-circle\"   src=\""
-                + fileUrl(filen) + "\" alt=\"" + replaceTags(o.historyTellerName) + "\">";
+            + fileUrl(filen) + "\" alt=\"" + replaceTags(o.historyTellerName) + "\">";
         st += "<b style=\"color:red!important;font-size:14px;\">" + "  " + history_type[o.historyType] + "</b> by <i><b>"
-                + o.historyTellerName + " </b><span>" + Utility.convertDate(o.historyDate) + ", " + Utility.convertTime(o.historyTime)
-                + "</span></i>, </br> " + replaceTags(o.historyBody);
+            + o.historyTellerName + " </b><span>" + Utility.convertDate(o.historyDate) + ", " + Utility.convertTime(o.historyTime)
+            + "</span></i>, </br> " + replaceTags(o.historyBody);
         return st;
     },
     genUSLine: function (o) {
         var isSourced = o.isSourced === '1'
-                ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
-                : o.fkSourcedId.length > 0
+            ? "<i class=\"fa fa-cube1\" style=\"color: darkred;\">&nbsp;</i>"
+            : o.fkSourcedId.length > 0
                 ? '<i class=\"fa fa-bandcamp\" style=\"color: green;\" title="' + o.sourcedName + '">&nbsp;</i>'
                 : "";
         var countLine = o.isSourced === '1' && o.taskCount > 0
-                ? '&nbsp;&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>'
-                : " ";
+            ? '&nbsp;&nbsp; <i class="fa fa-tasks" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.taskCount + ')</span>'
+            : " ";
         countLine += o.isSourced === '1' && o.inputCount > 0
-                ? '&nbsp;&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>'
-                : "";
+            ? '&nbsp;&nbsp; <i class="fa fa-inbox" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.inputCount + ')</span>'
+            : "";
         countLine += o.commentCount > 0
-                ? '&nbsp;&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>'
-                : "";
+            ? '&nbsp;&nbsp; <i class="fa fa-comment" style="font-size:10px;color:#555555;"></i><span style="font-size:10px; "> (' + o.commentCount + ')</span>'
+            : "";
         var isFromCustomer = o.isFromCustomer === '1'
-                ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
-                : "";
+            ? "<i class=\"fa fa-ticket\" style=\"color: blue;\">&nbsp;</i>"
+            : "";
         var td2 = '<span class="isSourced">';
         td2 += isSourced;
         td2 += '</span>';
@@ -21935,7 +21946,7 @@ Notification.prototype = {
         if (global_var.current_project_id === projectId) {
             new UserStory().load();
         } else {
-//            $("#projectList option[value='"+projectId+"']").prop('selected', true);
+            //            $("#projectList option[value='"+projectId+"']").prop('selected', true);
             $('.projectList').val(projectId).change();
         }
 
@@ -21946,7 +21957,7 @@ Notification.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -21970,7 +21981,7 @@ Notification.prototype = {
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -22009,14 +22020,14 @@ Label.prototype = {
         this.id = arg;
     },
     getName: function () {
-//        return $('#labelname').val();
+        //        return $('#labelname').val();
         return this.name;
     },
     setName: function (arg) {
         this.name = arg;
     },
     getColor: function () {
-//        return $('#labelcolor').val();
+        //        return $('#labelcolor').val();
         return this.color;
     },
     setColor: function (arg) {
@@ -22024,7 +22035,7 @@ Label.prototype = {
     },
     getCloseLabel: function () {
         return 'closeAfterInsertLabel';
-//        return this.closeLabel;
+        //        return this.closeLabel;
     },
     setCloseLabel: function (arg) {
         this.closeLabel = arg;
@@ -22091,7 +22102,7 @@ Label.prototype = {
         if (checked === 1) {
             ismenu = 1;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22117,7 +22128,7 @@ Label.prototype = {
                 that.load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -22132,7 +22143,7 @@ Label.prototype = {
         if (checked === 1) {
             ismenu = 1;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22158,7 +22169,7 @@ Label.prototype = {
                 that.load();
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -22170,7 +22181,7 @@ Label.prototype = {
             ismenu = 1;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22189,12 +22200,12 @@ Label.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                Toaster.showError("successfull");
+                //                Toaster.showError("successfull");
                 new Notification("").clearField('updateLabel');
                 closeModal('updateLabel');
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -22224,7 +22235,7 @@ Label.prototype = {
         this.load4Task();
     },
     update: function (id) {
-//        this.setId(id);
+        //        this.setId(id);
         this.addValue4Update();
         this.addLabelController4Update();
         this.updateInfo();
@@ -22245,7 +22256,7 @@ Label.prototype = {
             $(this).html("");
         });
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22279,7 +22290,7 @@ Label.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22296,7 +22307,7 @@ Label.prototype = {
             async: true,
             success: function (res) {
 
-//                console.log(JSON.stringify(res
+                //                console.log(JSON.stringify(res
                 try {
                     that.setLabelListTable(res);
                     SABacklogLabel.Load(res);
@@ -22313,9 +22324,9 @@ Label.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#tasklabellist').append($("<option></option>")
-                    .attr("value", obj[n].name)
-                    .attr("style", "color:" + obj[n].color)
-                    .text(obj[n].name));
+                .attr("value", obj[n].name)
+                .attr("style", "color:" + obj[n].color)
+                .text(obj[n].name));
         }
     },
     delete: function (id) {
@@ -22324,7 +22335,8 @@ Label.prototype = {
                 return;
             }
             var json = {
-                kv: {}};
+                kv: {}
+            };
             json.kv.id = id;
             var that = this;
             var data = JSON.stringify(json);
@@ -22336,7 +22348,7 @@ Label.prototype = {
                 crossDomain: true,
                 async: false,
                 success: function (res) {
-//                console.log(JSON.stringify(res));
+                    //                console.log(JSON.stringify(res));
                     that.load();
                     that.load4Task();
                 },
@@ -22352,7 +22364,8 @@ Label.prototype = {
             return;
         }
         var json = {
-            kv: {}};
+            kv: {}
+        };
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22364,7 +22377,7 @@ Label.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 that.setLabelInfo4Update(res);
             },
             error: function () {
@@ -22386,43 +22399,43 @@ Label.prototype = {
     setLabelListTableBody: function (res) {
         var obj = res.tbl[0].r;
         var tbl = $('<table></table>').attr("class", 'lbl-list-table');
-//        var tr1 = $('<tr class="lbl-list-tr"></tr>');
-//        tr1.append($('<td class="lbl-list-td"></td>').html('<input class="us-filter-checkbox-label"  type="checkbox" value="all">'));
-//        tr1.append($('<td class="lbl-list-td"></td>').html('<b>All</b>').attr("class", "lbl-item"));
-//        tr1.append($('<td class="lbl-list-td "></td>').html('<b> </b>').attr("class", "close-btn").attr('onclick', 'checkedClear()'));
-//
-//        tbl.append(tr1);
+        //        var tr1 = $('<tr class="lbl-list-tr"></tr>');
+        //        tr1.append($('<td class="lbl-list-td"></td>').html('<input class="us-filter-checkbox-label"  type="checkbox" value="all">'));
+        //        tr1.append($('<td class="lbl-list-td"></td>').html('<b>All</b>').attr("class", "lbl-item"));
+        //        tr1.append($('<td class="lbl-list-td "></td>').html('<b> </b>').attr("class", "close-btn").attr('onclick', 'checkedClear()'));
+        //
+        //        tbl.append(tr1);
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (global_var.userStoryFilter.label.includes(obj[n].id)) ? true : false;
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
             tr.append($('<td class="lbl-list-td"></td>')
-                    .html($('<input type="checkbox" class="us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
-                            .attr('taskIds', obj[n].labelTaskIds)
-                            .prop("checked", isFiltered))
-                    .attr('id', obj[n].id));
+                .html($('<input type="checkbox" class="us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
+                    .attr('taskIds', obj[n].labelTaskIds)
+                    .prop("checked", isFiltered))
+                .attr('id', obj[n].id));
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
-                    .append(replaceTags(obj[n].name) + " (<b>" + obj[n].backlogCount + "</b>)")
-                    .attr("class", "lbl-item")
-                    .attr("style", "color:" + obj[n].color));
+                .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
+                .append(replaceTags(obj[n].name) + " (<b>" + obj[n].backlogCount + "</b>)")
+                .attr("class", "lbl-item")
+                .attr("style", "color:" + obj[n].color));
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
-                            .css("padding", "0px 6px")
-                            .attr("sname", replaceTags(obj[n].name))
-                            .css("display", "none")
-                            .val(obj[n].id)
-                            .append("Assign")
-                            .attr('id', obj[n].id)));
+                .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
+                    .css("padding", "0px 6px")
+                    .attr("sname", replaceTags(obj[n].name))
+                    .css("display", "none")
+                    .val(obj[n].id)
+                    .append("Assign")
+                    .attr('id', obj[n].id)));
             var td = $('<td class="lbl-list-td"></td>')
-                    .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
-                            .attr('id', obj[n].id)
-                            .attr('data-toggle', "modal")
-                            .attr("onclick", "new Label().select('" + obj[n].id + "')")
-                            .attr("data-target", "#updateLabel"));
-            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                     .attr('id', obj[n].id)
-                    .attr("onclick", "new Label().delete('" + obj[n].id + "')"));
+                    .attr('data-toggle', "modal")
+                    .attr("onclick", "new Label().select('" + obj[n].id + "')")
+                    .attr("data-target", "#updateLabel"));
+            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .attr('id', obj[n].id)
+                .attr("onclick", "new Label().delete('" + obj[n].id + "')"));
             tr.append(td);
             tr.hover(function () {
                 $(this).find('.lbl-action, .story-card-label-assign').show();
@@ -22434,17 +22447,17 @@ Label.prototype = {
         return tbl;
     },
     setLabelListTable: function (res) {
-//        $('.tasklabellist').each(function () {
-//            $(this).html("");
-//        })
+        //        $('.tasklabellist').each(function () {
+        //            $(this).html("");
+        //        })
         $('#tasklabellist').html("");
         var tbl = this.setLabelListTableBody(res);
         $('#tasklabellist').html(tbl);
     },
     setLabelListTable4Body: function (res, checkedLines) {
-//        $('.tasklabellist').each(function () {
-//            $(this).html("");
-//        })
+        //        $('.tasklabellist').each(function () {
+        //            $(this).html("");
+        //        })
         $('#tasklabellist4Task').html("");
         var tbl = this.setLabelListTableBody(res, true, checkedLines);
         $('#tasklabellist4Task').html(tbl);
@@ -22470,7 +22483,7 @@ var Priority = {
         var tr1 = $('<tr class="lbl-list-tr"></tr>');
         for (var n = 1; n < 10; n++) {
             tr1.append($('<td class="lbl-list-td"></td>')
-                    .html('<input class="us-filter-checkbox-priority chek" type="checkbox" value="' + n + '"> ' + n));
+                .html('<input class="us-filter-checkbox-priority chek" type="checkbox" value="' + n + '"> ' + n));
         }
         tbl.append(tr1);
 
@@ -22489,14 +22502,13 @@ function isCloseAfterInsertChecked(id) {
     }
 }
 
-function  closeModal(id, modalId) {
-    if (isCloseAfterInsertChecked(id))
-    {
+function closeModal(id, modalId) {
+    if (isCloseAfterInsertChecked(id)) {
         $('#' + modalId).modal('hide');
     }
 }
 
-function  closeModal(modalId) {
+function closeModal(modalId) {
     $('#' + modalId).modal('hide');
 }
 
@@ -22547,14 +22559,14 @@ Sprint.prototype = {
         this.id = arg;
     },
     getName: function () {
-//        return $('#labelname').val();
+        //        return $('#labelname').val();
         return this.name;
     },
     setName: function (arg) {
         this.name = arg;
     },
     getColor: function () {
-//        return $('#labelcolor').val();
+        //        return $('#labelcolor').val();
         return this.color;
     },
     setColor: function (arg) {
@@ -22562,7 +22574,7 @@ Sprint.prototype = {
     },
     getCloseLabel: function () {
         return 'closeAfterInsertLabel';
-//        return this.closeLabel;
+        //        return this.closeLabel;
     },
     setCloseLabel: function (arg) {
         this.closeLabel = arg;
@@ -22597,8 +22609,7 @@ Sprint.prototype = {
 
         var startDt = document.getElementById("insertNewSprint4Task_startdate").value;
         var endDt = document.getElementById("insertNewSprint4Task_enddate").value;
-        if ((new Date(startDt).getTime() > new Date(endDt).getTime()))
-        {
+        if ((new Date(startDt).getTime() > new Date(endDt).getTime())) {
             new Notification("End Date should be greater than Start Date!").showInComponent('insertNewSprint4Task_enddate');
             f = true;
         }
@@ -22629,8 +22640,7 @@ Sprint.prototype = {
 
         var startDt = document.getElementById("insertNewSprint_startdate").value;
         var endDt = document.getElementById("insertNewSprint_enddate").value;
-        if ((new Date(startDt).getTime() > new Date(endDt).getTime()))
-        {
+        if ((new Date(startDt).getTime() > new Date(endDt).getTime())) {
             new Notification("End Date should be greater than Start Date!").showInComponent('insertNewSprint_enddate');
             f = true;
         }
@@ -22660,8 +22670,7 @@ Sprint.prototype = {
 
         var startDt = document.getElementById("updateSprint_startdate").value;
         var endDt = document.getElementById("updateSprint_enddate").value;
-        if ((new Date(startDt).getTime() > new Date(endDt).getTime()))
-        {
+        if ((new Date(startDt).getTime() > new Date(endDt).getTime())) {
             new Notification("End Date should be greater than Start Date!").showInComponent('updateSprint_enddate');
             f = true;
         }
@@ -22671,7 +22680,7 @@ Sprint.prototype = {
         }
     },
     insert4Task: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22708,7 +22717,7 @@ Sprint.prototype = {
         });
     },
     insert: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22728,19 +22737,19 @@ Sprint.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                Toaster.showError("successfull");
+                //                Toaster.showError("successfull");
                 new Notification("").clearField('insertNewSprint');
                 if ($('#closeAfterInsertSprint').is(":checked")) {
                     $('#insertNewSprint').modal('hide');
                 }
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
     updateInfo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22760,12 +22769,12 @@ Sprint.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
-//                Toaster.showError("successfull");
+                //                Toaster.showError("successfull");
                 new Notification("").clearField('updateSprint');
                 closeModal('updateSprint');
             },
             error: function () {
-//                Toaster.showError("error");
+                //                Toaster.showError("error");
             }
         });
     },
@@ -22798,7 +22807,7 @@ Sprint.prototype = {
         this.load4Task();
     },
     update: function (id) {
-//        this.setId(id);
+        //        this.setId(id);
         this.addValue4Update();
         this.addController4Update();
         this.updateInfo();
@@ -22811,7 +22820,7 @@ Sprint.prototype = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22827,7 +22836,7 @@ Sprint.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 try {
                     that.setSprintListTable(res);
                 } catch (e) {
@@ -22851,10 +22860,10 @@ Sprint.prototype = {
 
 
         $('#sprintlist4Task').html("");
-//        if (!global_var.current_project_id) {
-//            return;
-//        }
-        var json = {kv: {}};
+        //        if (!global_var.current_project_id) {
+        //            return;
+        //        }
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -22870,8 +22879,8 @@ Sprint.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                sprintTaskIds = res.kv.sprintTaskIds;
-//                console.log(JSON.stringify(res));
+                //                sprintTaskIds = res.kv.sprintTaskIds;
+                //                console.log(JSON.stringify(res));
                 try {
                     var tbl = that.getSprintListTableBody4Task(res, true, checkedLines);
                     $('#sprintlist4Task').html(tbl);
@@ -22888,9 +22897,9 @@ Sprint.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
-                    .attr("value", replaceTags(obj[n].name))
-                    .attr("style", "color:" + obj[n].color)
-                    .text(replaceTags(obj[n].name)));
+                .attr("value", replaceTags(obj[n].name))
+                .attr("style", "color:" + obj[n].color)
+                .text(replaceTags(obj[n].name)));
         }
     },
     delete: function (id) {
@@ -22899,7 +22908,8 @@ Sprint.prototype = {
                 return;
             }
             var json = {
-                kv: {}};
+                kv: {}
+            };
             json.kv.id = id;
             var that = this;
             var data = JSON.stringify(json);
@@ -22911,7 +22921,7 @@ Sprint.prototype = {
                 crossDomain: true,
                 async: false,
                 success: function (res) {
-//                console.log(JSON.stringify(res));
+                    //                console.log(JSON.stringify(res));
                     that.load();
                 },
                 error: function () {
@@ -22926,7 +22936,8 @@ Sprint.prototype = {
             return;
         }
         var json = {
-            kv: {}};
+            kv: {}
+        };
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -22938,7 +22949,7 @@ Sprint.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 that.setSprintInfo4Update(res);
             },
             error: function () {
@@ -22954,7 +22965,7 @@ Sprint.prototype = {
         $('#u_sprintDescription').val(obj.sprintDescription);
         SetConvertedDate('updateSprint_startdate', obj.sprintStartDate);
         SetConvertedDate('updateSprint_enddate', obj.sprintEndDate);
-//        $('#u_sprintEndDate').val(SetConvertedDate(obj.sprintEndDate));
+        //        $('#u_sprintEndDate').val(SetConvertedDate(obj.sprintEndDate));
         $('#u_sprintProjectId').val(obj.fkProjectId);
     },
     setSprintListTable: function (res) {
@@ -22970,45 +22981,45 @@ Sprint.prototype = {
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (checkedLines.includes(obj[n].id)) ? true : false;
             var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1')
-                    ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
-                    : "";
+                ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
+                : "";
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
             var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                    ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
-                    : "";
+                ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
+                : "";
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<input type="checkbox" class="bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
-                            .attr('taskIds', obj[n].sprintTaskIds)
-                            .prop("checked", isFiltered))
-                    .attr('id', obj[n].id))
-                    ;
+                .append($('<input type="checkbox" class="bug-task-filter-checkbox-sprint" value="' + obj[n].id + '">')
+                    .attr('taskIds', obj[n].sprintTaskIds)
+                    .prop("checked", isFiltered))
+                .attr('id', obj[n].id))
+                ;
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append(replaceTags(obj[n].sprintName))
-                    .append(d)
-                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
-                    .attr("class", "lbl-item")
-                    .css("font-size", "12px")
-                    .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
+                .append(replaceTags(obj[n].sprintName))
+                .append(d)
+                .append(" (<b>" + obj[n].backlogCount + "</b>)")
+                .attr("class", "lbl-item")
+                .css("font-size", "12px")
+                .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
 
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="bug-task-sprint-assign btn btn-primary">')
-                            .css("padding", "0px 6px")
-                            .attr("sname", replaceTags(obj[n].sprintName))
-                            .css("display", "none")
-                            .val(obj[n].id)
-                            .append("Assign")
-                            .attr('id', obj[n].id)));
+                .append($('<button class="bug-task-sprint-assign btn btn-primary">')
+                    .css("padding", "0px 6px")
+                    .attr("sname", replaceTags(obj[n].sprintName))
+                    .css("display", "none")
+                    .val(obj[n].id)
+                    .append("Assign")
+                    .attr('id', obj[n].id)));
 
             var td = $('<td class="lbl-list-td"></td>')
-                    .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
-                            .attr('id', obj[n].id)
-                            .attr('data-toggle', "modal")
-                            .attr("onclick", "new Sprint().select('" + obj[n].id + "')")
-                            .attr("data-target", "#updateSprint"));
-            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                     .attr('id', obj[n].id)
-                    .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
+                    .attr('data-toggle', "modal")
+                    .attr("onclick", "new Sprint().select('" + obj[n].id + "')")
+                    .attr("data-target", "#updateSprint"));
+            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .attr('id', obj[n].id)
+                .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
             tr.append(td);
             tr.hover(function () {
                 $(this).find('.lbl-action, .bug-task-sprint-assign').show();
@@ -23030,44 +23041,44 @@ Sprint.prototype = {
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (global_var.userStoryFilter.sprint.includes(obj[n].id)) ? true : false;
             var projectName = (withProject) && (obj[n].fkProjectId) && (obj[n].fkProjectId !== '-1')
-                    ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
-                    : "";
+                ? ", <b>" + replaceTags(SACore.Project[obj[n].fkProjectId]) + "</b>"
+                : "";
 
             var tr = $('<tr class="lbl-list-tr"></tr>');
             var d = ((obj[n].sprintStartDate) && (obj[n].sprintEndDate))
-                    ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
-                    : "";
+                ? " (" + Utility.convertDate(obj[n].sprintStartDate) + "-" + Utility.convertDate(obj[n].sprintEndDate) + projectName + ")"
+                : "";
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<input type="checkbox" class="us-filter-checkbox-sprint" value="' + obj[n].id + '">')
-                            .prop("checked", isFiltered))
-                    .attr('id', obj[n].id))
-                    ;
+                .append($('<input type="checkbox" class="us-filter-checkbox-sprint" value="' + obj[n].id + '">')
+                    .prop("checked", isFiltered))
+                .attr('id', obj[n].id))
+                ;
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append(replaceTags(obj[n].sprintName))
-                    .append(d)
-                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
-                    .attr("class", "lbl-item")
-                    .css("font-size", "12px")
-                    .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
+                .append(replaceTags(obj[n].sprintName))
+                .append(d)
+                .append(" (<b>" + obj[n].backlogCount + "</b>)")
+                .attr("class", "lbl-item")
+                .css("font-size", "12px")
+                .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
 
             tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="  story-card-sprint-assign btn btn-primary">')
-                            .css("padding", "0px 6px")
-                            .attr("sname", replaceTags(obj[n].sprintName))
-                            .css("display", "none")
-                            .val(obj[n].id)
-                            .append("Assign")
-                            .attr('id', obj[n].id)));
+                .append($('<button class="  story-card-sprint-assign btn btn-primary">')
+                    .css("padding", "0px 6px")
+                    .attr("sname", replaceTags(obj[n].sprintName))
+                    .css("display", "none")
+                    .val(obj[n].id)
+                    .append("Assign")
+                    .attr('id', obj[n].id)));
 
             var td = $('<td class="lbl-list-td"></td>')
-                    .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
-                            .attr('id', obj[n].id)
-                            .attr('data-toggle', "modal")
-                            .attr("onclick", "new Sprint().select('" + obj[n].id + "')")
-                            .attr("data-target", "#updateSprint"));
-            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                     .attr('id', obj[n].id)
-                    .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
+                    .attr('data-toggle', "modal")
+                    .attr("onclick", "new Sprint().select('" + obj[n].id + "')")
+                    .attr("data-target", "#updateSprint"));
+            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
+                .attr('id', obj[n].id)
+                .attr("onclick", "new Sprint().delete('" + obj[n].id + "')"));
             tr.append(td);
             tr.hover(function () {
                 $(this).find('.lbl-action, .story-card-sprint-assign').show();
@@ -23106,7 +23117,7 @@ Project.prototype = {
         }
         var purpose = ""; //this.getPurposeList();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23128,7 +23139,7 @@ Project.prototype = {
                 that.insertAfterEvent();
                 $('#exampleModal2').modal('hide');
                 that.loadProject();
-//                that.addNewProjectToList($('#txtProjectName').val(), res);
+                //                that.addNewProjectToList($('#txtProjectName').val(), res);
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -23157,9 +23168,9 @@ Project.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
-                    .attr("value", replaceTags(obj[n].name))
-                    .attr("style", "color:" + obj[n].color)
-                    .text(replaceTags(obj[n].name)));
+                .attr("value", replaceTags(obj[n].name))
+                .attr("style", "color:" + obj[n].color)
+                .text(replaceTags(obj[n].name)));
         }
 
 
@@ -23170,7 +23181,7 @@ Project.prototype = {
         this.loadProject(st);
     },
     loadProject: function (pname) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23204,7 +23215,7 @@ Project.prototype = {
         $('#overal_us_count_ongoing').html('0');
         $('#overal_us_count_closed').html('0');
         $('#overal_us_count_closed_percentage').html('0');
-//        $('#overal_us_count_ticket').html('');
+        //        $('#overal_us_count_ticket').html('');
         $('#overal_us_count_sourced').html('0');
         $('#overal_us_count_bound').html('0');
         $('#overal_us_count_initial').html('0');
@@ -23215,7 +23226,7 @@ Project.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23254,7 +23265,7 @@ Project.prototype = {
     },
     loadMainProjectList4Manual: function () {
         showProgress3();
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23289,7 +23300,7 @@ Project.prototype = {
         });
     },
     loadMainProjectList: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23335,19 +23346,19 @@ Project.prototype = {
             for (var n = 0; n < obj.length; n++) {
                 SACore.AddProject(obj[n].id, obj[n].projectName);
                 SACore.AddProjectCore(obj[n].id, obj[n]);
-//                var o = $('<option></option')
-//                        .attr('value', obj[n].id)
-//                        .html(obj[n].projectName);
-//              
-//                if (urlVal === obj[n].id) {
-//                    o.attr("selected", "selected");
-//                }
-//              
-//                $('.projectList').append(o);
+                //                var o = $('<option></option')
+                //                        .attr('value', obj[n].id)
+                //                        .html(obj[n].projectName);
+                //              
+                //                if (urlVal === obj[n].id) {
+                //                    o.attr("selected", "selected");
+                //                }
+                //              
+                //                $('.projectList').append(o);
 
             }
-//            global_var.current_project_id = $('.projectList').first().val();
-//            Utility.addParamToUrl('current_project_id', global_var.current_project_id);
+            //            global_var.current_project_id = $('.projectList').first().val();
+            //            Utility.addParamToUrl('current_project_id', global_var.current_project_id);
             //$('#projectList').first().change();
         } catch (er) {
 
@@ -23362,7 +23373,7 @@ Project.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 st += '<tr class="pro-tr"  pid="' + obj[n].id + '" pdesc="'
-                        + replaceTags(obj[n].description) + '" pname="' + replaceTags(obj[n].projectName) + '">';
+                    + replaceTags(obj[n].description) + '" pname="' + replaceTags(obj[n].projectName) + '">';
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td>' + replaceTags(obj[n].projectName) + '</td>';
                 st += '<td>' + replaceTags(obj[n].projectCode) + '</td>';
@@ -23392,7 +23403,7 @@ Project.prototype = {
         this.insertAfterEvent();
     },
     showProjectDetailsMain: function (e) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23424,7 +23435,7 @@ Project.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23440,7 +23451,7 @@ Project.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res))
+                //                console.log(JSON.stringify(res))
                 $('#tblProjectInvolvedUser > tbody').html("");
                 var st = that.setProjectPermissionList(res);
                 $('#tblProjectInvolvedUser > tbody').html(st);
@@ -23457,8 +23468,8 @@ Project.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var del = global_var.current_user_type === 'A' || global_var.current_user_type === 'M'
-                        ? '<a href="#" onclick="new Project().deleteUser(this,\'' + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>'
-                        : "";
+                    ? '<a href="#" onclick="new Project().deleteUser(this,\'' + obj[n].id + '\')"><i class="fa fa-trash" "></i></a>'
+                    : "";
                 st += '<tr>';
                 st += '<td>' + replaceTags(obj[n].userName) + '</td>';
                 st += '<td>' + del + '</td>';
@@ -23480,8 +23491,8 @@ Project.prototype = {
 
         loadLivePrototypeCore();
 
-//        this.showProjectDetailsMain4Permission(global_var.current_project_id);
-//        hideProgress();
+        //        this.showProjectDetailsMain4Permission(global_var.current_project_id);
+        //        hideProgress();
         // clearQueue4ProLoad();
         //this.toggleProjectDetails();
 
@@ -23492,7 +23503,7 @@ Project.prototype = {
         Utility.addParamToUrl('current_project_id', global_var.current_project_id);
         new UserStory().loadDetailsOnProjectSelect();
 
-//        new UserStory().loadInputDetailsOnProjectSelectNew();
+        //        new UserStory().loadInputDetailsOnProjectSelectNew();
         new UserStory().loadInputDetails4TableOnProjectSelect();
         new UserStory().loadInputDetails4TabOnProjectSelect();
         new UserStory().loadInputDetails4DescriptionIdsOnProjectSelect();
@@ -23507,7 +23518,7 @@ Project.prototype = {
         new Label().load();
         new Sprint().load();
         this.getProjectStatList();
-////        //add filter section
+        ////        //add filter section
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
         getProjectUsers();
@@ -23519,7 +23530,7 @@ Project.prototype = {
         if (!projectId) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23583,13 +23594,13 @@ Project.prototype = {
         var firstActiveTab = '';
         if (showInput === '1') {
             firstActiveTab = firstActiveTab.length === 0 ? "ipo" : firstActiveTab;
-//            console.log('firstActiveTab=' + firstActiveTab)
+            //            console.log('firstActiveTab=' + firstActiveTab)
             $('#us-submenu-ipo').show();
             $('#smb-details-ipo').show()
         } else {
             global_var.current_us_submenu = global_var.current_us_submenu === 'ipo'
-                    ? ""
-                    : global_var.current_us_submenu;
+                ? ""
+                : global_var.current_us_submenu;
             $('#us-submenu-ipo').hide();
             $('#smb-details-ipo').hide();
         }
@@ -23601,8 +23612,8 @@ Project.prototype = {
             $('#smb-details-tasks').show()
         } else {
             global_var.current_us_submenu = global_var.current_us_submenu === 'tasks'
-                    ? ""
-                    : global_var.current_us_submenu;
+                ? ""
+                : global_var.current_us_submenu;
             $('#us-submenu-tasks').hide();
             $('#smb-details-tasks').hide();
         }
@@ -23611,45 +23622,45 @@ Project.prototype = {
             firstActiveTab = firstActiveTab.length === 0 ? "generalview" : firstActiveTab;
             console.log('firstActiveTab=' + firstActiveTab)
             $('#us-submenu-generalview').show();
-//            $('#smb-details-generalview').show()
+            //            $('#smb-details-generalview').show()
         } else {
             global_var.current_us_submenu = global_var.current_us_submenu === 'generalview'
-                    ? ""
-                    : global_var.current_us_submenu;
+                ? ""
+                : global_var.current_us_submenu;
             $('#us-submenu-generalview').hide();
             $('#smb-details-generalview').hide();
         }
 
         if (showTestScenario === '1') {
             firstActiveTab = firstActiveTab.length === 0 ? "testscenario" : firstActiveTab;
-//            console.log('firstActiveTab=' + firstActiveTab)
+            //            console.log('firstActiveTab=' + firstActiveTab)
             $('#us-submenu-testscenario').show();
             $('#smb-details-testscenario').show()
         } else {
             global_var.current_us_submenu = global_var.current_us_submenu === 'testscenario'
-                    ? ""
-                    : global_var.current_us_submenu;
+                ? ""
+                : global_var.current_us_submenu;
             $('#us-submenu-testscenario').hide();
             $('#smb-details-testscenario').hide();
         }
 
         if (showHistory === '1') {
             firstActiveTab = firstActiveTab.length === 0 ? "history" : firstActiveTab;
-//            console.log('firstActiveTab=' + firstActiveTab)
+            //            console.log('firstActiveTab=' + firstActiveTab)
             $('#us-submenu-history').show();
             $('#smb-details-history').show()
         } else {
             global_var.current_us_submenu = global_var.current_us_submenu === 'history'
-                    ? ""
-                    : global_var.current_us_submenu;
+                ? ""
+                : global_var.current_us_submenu;
             $('#us-submenu-history').hide();
             $('#smb-details-history').hide();
         }
 
         firstActiveTab = global_var.current_us_submenu === ''
-                ? firstActiveTab
-                : global_var.current_us_submenu;
-//        console.log('firstActiveTab=' + firstActiveTab)
+            ? firstActiveTab
+            : global_var.current_us_submenu;
+        //        console.log('firstActiveTab=' + firstActiveTab)
         new UserStory().toggleSubmenu($('#us-submenu-' + firstActiveTab), firstActiveTab);
     },
     updateMain: function () {
@@ -23670,7 +23681,7 @@ Project.prototype = {
 
         var purpose = ""; //this.getPurposeList();
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23699,14 +23710,14 @@ Project.prototype = {
         });
     },
     loadUserList4Combo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.id = $('#txtProjectId').val();
-//        json.kv.projectName = $('#txtProjectName').val();
-//        json.kv.description = $('#txtProjectDescription').val();
+        //        json.kv.id = $('#txtProjectId').val();
+        //        json.kv.projectName = $('#txtProjectName').val();
+        //        json.kv.description = $('#txtProjectDescription').val();
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -23732,12 +23743,12 @@ Project.prototype = {
             if (!obj[n].userPersonName)
                 continue;
             var t = obj[n].liUserPermissionCode === 'A'
-                    ? '<b style="color:red">-(A)</b>'
-                    : obj[n].liUserPermissionCode === 'M'
+                ? '<b style="color:red">-(A)</b>'
+                : obj[n].liUserPermissionCode === 'M'
                     ? '<b style="color:blue">-(M)</b>'
                     : "";
             $('#sbxUserList').append($('<option id="' + obj[n].id + '" ></option>')
-                    .html(replaceTags(obj[n].userPersonName) + " " + t));
+                .html(replaceTags(obj[n].userPersonName) + " " + t));
         }
     },
     addUserToProject: function () {
@@ -23750,7 +23761,7 @@ Project.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23792,7 +23803,7 @@ Project.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23823,7 +23834,7 @@ Project.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23848,7 +23859,7 @@ Project.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -23939,7 +23950,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24010,7 +24021,7 @@ User.prototype = {
             Toaster.showError("Username is exist");
             f = true;
         } else if ($("input[id=txtUsernamePasswdCheckbox]:checked").length === 1 &&
-                $.trim($('#txtUsernamePasswd').val()).length == 0) {
+            $.trim($('#txtUsernamePasswd').val()).length == 0) {
             Toaster.showError("Please enter Password");
             f = true;
         } else if ($("input[id=txtUsernamePasswdCheckbox]:checked").length === 1 && !this.isPasswordValid()) {
@@ -24039,7 +24050,7 @@ User.prototype = {
             $('#msgUsernameValid').hide();
             return f;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24054,17 +24065,17 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 if (res.kv.res === '0') {
                     f = false;
-//                    return false;
+                    //                    return false;
                 } else {
                     f = true;
-//                    return true;
+                    //                    return true;
                 }
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
@@ -24074,7 +24085,7 @@ User.prototype = {
             Toaster.showError("User is not selected")
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24103,7 +24114,7 @@ User.prototype = {
         if (username === 'undefined' || !username) {
             return f;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24129,7 +24140,7 @@ User.prototype = {
 
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
@@ -24157,7 +24168,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24182,12 +24193,12 @@ User.prototype = {
 
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
     loadPersonalUser: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24201,8 +24212,8 @@ User.prototype = {
             contentType: 'text/html',
             success: function (res) {
                 var img = (res.tbl[0].r[0].userImage)
-                        ? fileUrl(res.tbl[0].r[0].userImage)
-                        : fileUrl(that.getDefaultUserprofileName());
+                    ? fileUrl(res.tbl[0].r[0].userImage)
+                    : fileUrl(that.getDefaultUserprofileName());
                 $('#userprofile_main_userimg').attr("src", img);
                 $('#myAccountModal_imgUserProjectInsert').attr("src", img);
                 $('#myAccountModal_txtUsername').val((res.tbl[0].r[0].username));
@@ -24212,12 +24223,12 @@ User.prototype = {
             },
             error: function () {
                 document.location = "login.html";
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
     loadPersonalUserOnInit: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24233,8 +24244,8 @@ User.prototype = {
             success: function (res) {
 
                 var img = (res.tbl[0].r[0].userImage)
-                        ? fileUrl(res.tbl[0].r[0].userImage)
-                        : fileUrl(that.getDefaultUserprofileName());
+                    ? fileUrl(res.tbl[0].r[0].userImage)
+                    : fileUrl(that.getDefaultUserprofileName());
                 $('#userprofile_main_userimg').attr("src", img);
                 $('#userprofile_main_id').html(replaceTags(res.tbl[0].r[0].userPersonName));
                 $('#userprofile_main_domain').html(res.kv.currentDomain);
@@ -24248,7 +24259,7 @@ User.prototype = {
                 //bu hisse de error atmalidir. lakin atmir
 
                 document.location = "login.html";
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
     },
@@ -24277,7 +24288,7 @@ User.prototype = {
         if (username === 'undefined' || !username) {
             return f;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24293,14 +24304,14 @@ User.prototype = {
             success: function (res) {
                 if (res.kv.res === '0') {
                     f = false;
-//                    return false;
+                    //                    return false;
                 } else {
                     f = true;
-//                    return true;
+                    //                    return true;
                 }
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
@@ -24314,7 +24325,7 @@ User.prototype = {
         if (password === 'undefined' || !password) {
             return f;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24338,7 +24349,7 @@ User.prototype = {
                 }
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
@@ -24353,7 +24364,7 @@ User.prototype = {
         if (email1 === 'undefined' || !email1) {
             return f;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24368,7 +24379,7 @@ User.prototype = {
             contentType: 'text/html',
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
                 if (res.kv.res === '0') {
                     f = false;
                 } else {
@@ -24376,13 +24387,13 @@ User.prototype = {
                 }
             },
             error: function () {
-//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+                //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
         return f;
     },
     insertAPI: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24408,8 +24419,8 @@ User.prototype = {
                 if (res.kv.error) {
                     Toaster.showError(res.kv.error);
                 } else {
-//                    that.addNewUserToList(res);
-//                    that.afterInsertEvent(res);
+                    //                    that.addNewUserToList(res);
+                    //                    that.afterInsertEvent(res);
                     $('#exampleModal6').modal('hide');
                     that.loadUser();
                 }
@@ -24445,7 +24456,7 @@ User.prototype = {
         }
     },
     updateMyInfoDetails: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24534,7 +24545,7 @@ User.prototype = {
         }
     },
     uploadFile: function (fileext, file_base_64, file_type, file_name, file_type) {
-//        console.log(file_base_64)
+        //        console.log(file_base_64)
         var d = new Object();
         d.file_base_64 = file_base_64;
         d.file_extension = fileext;
@@ -24622,9 +24633,9 @@ User.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
-                    .attr("value", obj[n].name)
-                    .attr("style", "color:" + obj[n].color)
-                    .text(obj[n].name));
+                .attr("value", obj[n].name)
+                .attr("style", "color:" + obj[n].color)
+                .text(obj[n].name));
         }
 
 
@@ -24637,7 +24648,7 @@ User.prototype = {
     }
     ,
     loadUser: function (pname) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24666,8 +24677,8 @@ User.prototype = {
     },
     getUserTypeTag: function (t) {
         return t === 'A'
-                ? '<b style="color:red">-(A)</b>'
-                : t === 'M'
+            ? '<b style="color:red">-(A)</b>'
+            : t === 'M'
                 ? '<b style="color:blue">-(M)</b>'
                 : "";
     },
@@ -24682,8 +24693,8 @@ User.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var img = (obj[n].userImage)
-                        ? fileUrl(obj[n].userImage)
-                        : fileUrl(that.getDefaultUserprofileName());
+                    ? fileUrl(obj[n].userImage)
+                    : fileUrl(that.getDefaultUserprofileName());
 
                 var status = obj[n].userStatus === 'A' ? ", <b>Active</b>" : ", <b>Passive</b>";
                 var t = this.getUserTypeTag(obj[n].liUserPermissionCode);
@@ -24715,7 +24726,7 @@ User.prototype = {
     }
     ,
     showUserDetailsMain: function (e) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24761,7 +24772,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24777,7 +24788,7 @@ User.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
-//                console.log(JSON.stringify(res))
+                //                console.log(JSON.stringify(res))
                 $('#tblUserInvolvedUser > tbody').html("");
                 var st = that.setUserPermissionList(res);
                 $('#tblUserInvolvedUser > tbody').html(st);
@@ -24836,7 +24847,7 @@ User.prototype = {
         this.uploadUserProfile4Update();
     },
     updateMainDetail: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24875,7 +24886,7 @@ User.prototype = {
         });
     },
     loadProjectList4Combo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24906,7 +24917,7 @@ User.prototype = {
             if (!obj[n].projectName)
                 continue;
             $('#sbxProjectListByUser').append($('<option id="' + obj[n].id + '" ></option>')
-                    .html(replaceTags(obj[n].projectName)));
+                .html(replaceTags(obj[n].projectName)));
         }
     }
     ,
@@ -24923,7 +24934,7 @@ User.prototype = {
 
 
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -24953,7 +24964,7 @@ User.prototype = {
         st += '<tr>';
         st += '<td>' + $('#sbxProjectListByUser').val() + '</td>';
         st += '<td><a href="#" onclick="new User().deleteProjectFromPermissionList(this,\''
-                + $('#sbxProjectListByUser option:selected').attr("id") + '\')">';
+            + $('#sbxProjectListByUser option:selected').attr("id") + '\')">';
         st += '<i class="fa fa-trash" "></i>';
         st += '</a></td>';
         st += '</tr>';
@@ -24968,7 +24979,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25001,7 +25012,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25038,7 +25049,7 @@ User.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25063,7 +25074,7 @@ User.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25130,7 +25141,7 @@ TaskType.prototype = {
             Toaster.showError("Please enter  Type Status");
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25153,8 +25164,8 @@ TaskType.prototype = {
             success: function (res) {
                 $('#exampleModal7').modal('hide');
                 that.load();
-//                that.insertAfterEvent();
-//                that.addNewTaskTypeToList($('#txtTaskTypeName').val(), res);
+                //                that.insertAfterEvent();
+                //                that.addNewTaskTypeToList($('#txtTaskTypeName').val(), res);
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -25183,9 +25194,9 @@ TaskType.prototype = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             $('#sprintlist').append($("<option></option>")
-                    .attr("value", replaceTags(obj[n].name))
-                    .attr("style", "color:" + obj[n].color)
-                    .text(replaceTags(obj[n].name)));
+                .attr("value", replaceTags(obj[n].name))
+                .attr("style", "color:" + obj[n].color)
+                .text(replaceTags(obj[n].name)));
         }
 
 
@@ -25199,7 +25210,7 @@ TaskType.prototype = {
         this.loadTaskType("%%%%");
     },
     loadTaskType: function (pname) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25231,7 +25242,7 @@ TaskType.prototype = {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 st += '<tr class="tasktype-tr"  pid="' + obj[n].id + '" pdesc="'
-                        + obj[n].description + '" pname="' + obj[n].typeName + '">';
+                    + obj[n].description + '" pname="' + obj[n].typeName + '">';
                 st += '<td>' + (n + 1) + '</td>';
                 st += '<td>' + obj[n].typeName + '</td>';
                 st += '<td>' + obj[n].typeStatus + '</td>';
@@ -25265,7 +25276,7 @@ TaskType.prototype = {
         this.insertAfterEvent();
     },
     showTaskTypeDetailsMain: function (e) {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25306,7 +25317,7 @@ TaskType.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25338,14 +25349,14 @@ TaskType.prototype = {
         });
     },
     loadUserList4Combo: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
         }
-//        json.kv.id = $('#txtTaskTypeId').val();
-//        json.kv.TaskTypeName = $('#txtTaskTypeName').val();
-//        json.kv.description = $('#txtTaskTypeDescription').val();
+        //        json.kv.id = $('#txtTaskTypeId').val();
+        //        json.kv.TaskTypeName = $('#txtTaskTypeName').val();
+        //        json.kv.description = $('#txtTaskTypeDescription').val();
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -25370,7 +25381,7 @@ TaskType.prototype = {
             if (!obj[n].userPersonName)
                 continue;
             $('#sbxUserList').append($('<option id="' + obj[n].id + '" ></option>')
-                    .html(obj[n].userPersonName));
+                .html(obj[n].userPersonName));
         }
     },
     deleteTaskType: function () {
@@ -25378,7 +25389,7 @@ TaskType.prototype = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25403,7 +25414,7 @@ TaskType.prototype = {
     },
     isUserExistInPermission: function () {
         var f = false;
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25485,12 +25496,12 @@ TaskType.prototype = {
                 $('#' + comboId).html('');
                 var obj = res.tbl[0].r;
                 $('#' + comboId).append($('<option></option')
-                        .val("")
-                        .text(""));
+                    .val("")
+                    .text(""));
                 for (var n = 0; n < obj.length; n++) {
                     var o = $('<option></option')
-                            .val(obj[n].id)
-                            .text(obj[n].typeName);
+                        .val(obj[n].id)
+                        .text(obj[n].typeName);
                     $('#' + comboId).append(o);
                 }
                 $('#' + comboId).selectpicker('refresh');
@@ -25540,19 +25551,19 @@ var BacklogHistory = {
     setFilterPaginationRange: function () {
         var s = global_var.user_story_history_filter_current_index;
         var e = parseFloat(global_var.user_story_history_filter_current_index)
-                + parseFloat($('#us_history_filter_history_perpage').val())
+            + parseFloat($('#us_history_filter_history_perpage').val())
         $('#usfilter_paginationResult').html("(" + s + '-' + e + ')');
     },
     setFilterPreviousPaging: function (e) {
         var r = parseFloat(global_var.user_story_history_filter_current_index)
-                - parseFloat($('#us_history_filter_history_perpage').val());
+            - parseFloat($('#us_history_filter_history_perpage').val());
         r = parseFloat(r) < 0 ? '0' : r;
         global_var.user_story_history_filter_current_index = r;
         BacklogHistory.load();
     },
     setFilterNextPaging: function (e) {
         var rc = parseFloat(global_var.user_story_history_filter_current_index)
-                + parseFloat($('#us_history_filter_history_perpage').val());
+            + parseFloat($('#us_history_filter_history_perpage').val());
         if (rc <= parseFloat($('#usfilter_paginationresult_rowcount').html())) {
             global_var.user_story_history_filter_current_index = rc;
         }
@@ -25590,7 +25601,7 @@ var BacklogHistory = {
         BacklogHistory.load();
     },
     loadFilterHistoryTeller: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25621,11 +25632,11 @@ var BacklogHistory = {
                     } catch (e) {
                     }
                     $("#us_history_filter_users").
-                            append($('<option></option>').val(obj[n].fkUserId).html(obj[n].userName + " (" + c + ")"));
+                        append($('<option></option>').val(obj[n].fkUserId).html(obj[n].userName + " (" + c + ")"));
                 }
 
                 $("#us_history_filter_users").find('option').first().html(
-                        $("#us_history_filter_users").find('option').first().html() + " (" + s + ')');
+                    $("#us_history_filter_users").find('option').first().html() + " (" + s + ')');
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -25653,14 +25664,14 @@ var BacklogHistory = {
         }
 
         $("#us_history_filter_history_type").find('option').first().html(
-                $("#us_history_filter_history_type").find('option').first().html() + " (" + s + ')');
+            $("#us_history_filter_history_type").find('option').first().html() + " (" + s + ')');
     },
     getFilterHistoryCount: function () {
         var id = global_var.current_backlog_id;
         if (!id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25688,7 +25699,7 @@ var BacklogHistory = {
             return;
         }
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -25709,7 +25720,7 @@ var BacklogHistory = {
 
         json.kv.startLimit = global_var.user_story_history_filter_current_index;
         json.kv.endLimit = parseFloat(global_var.user_story_history_filter_current_index)
-                + parseFloat($('#us_history_filter_history_perpage').val());
+            + parseFloat($('#us_history_filter_history_perpage').val());
         json.kv.fkBacklogId = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -25744,26 +25755,26 @@ var BacklogHistory = {
             var body = MapTextAreaHtml(replaceMainTrustedTags(obj[i].historyBody));
             var filen = (obj[i].historyTellerImage) ? obj[i].historyTellerImage : new User().getDefaultUserprofileName();
             var div1 = $('<div></div>').addClass("col-1 comment-line")
-                    .append("<img class=\"figure-img img-fluid rounded-circle\" style=\"max-width:28px\"  src=\""
-                            + fileUrl(filen) + "\" alt=\"" + obj[i].historyTellerName + "\"> ");
+                .append("<img class=\"figure-img img-fluid rounded-circle\" style=\"max-width:28px\"  src=\""
+                    + fileUrl(filen) + "\" alt=\"" + obj[i].historyTellerName + "\"> ");
             var div2 = $('<div></div>')
-                    .addClass("col-11")
-                    .append("<b style=\"color:red!important;font-size:14px;\">" + "  "
-                            + history_type[obj[i].historyType] + "</b> by <i><b>" +
-                            obj[i].historyTellerName + " </b><span>" +
-                            Utility.convertDate(obj[i].historyDate) + ", " + Utility.convertTime(obj[i].historyTime) + "</span></i>"
-                            )
-                    .append(' ')
-                    .append($('<i></i>')
-                            .attr("href", "#")
-                            .addClass('fa fa-mail-forward')
-                            .attr("data-toggle", "modal")
-                            .attr("data-target", "#notifyAsChangeRequestModal")
-                            .attr("title", "Nofify as Change Request")
-                            .attr("style", "cursor:pointer;color:green")
-                            .attr("onclick", "new UserStory().notifyAsChangeRequestModal('" + obj[i].id + "')"))
-                    .append("<br>")
-                    .append(body)
+                .addClass("col-11")
+                .append("<b style=\"color:red!important;font-size:14px;\">" + "  "
+                    + history_type[obj[i].historyType] + "</b> by <i><b>" +
+                    obj[i].historyTellerName + " </b><span>" +
+                    Utility.convertDate(obj[i].historyDate) + ", " + Utility.convertTime(obj[i].historyTime) + "</span></i>"
+                )
+                .append(' ')
+                .append($('<i></i>')
+                    .attr("href", "#")
+                    .addClass('fa fa-mail-forward')
+                    .attr("data-toggle", "modal")
+                    .attr("data-target", "#notifyAsChangeRequestModal")
+                    .attr("title", "Nofify as Change Request")
+                    .attr("style", "cursor:pointer;color:green")
+                    .attr("onclick", "new UserStory().notifyAsChangeRequestModal('" + obj[i].id + "')"))
+                .append("<br>")
+                .append(body)
             var div3 = $('<div></div>').addClass("col-12").append("<hr>");
             div.append(div1).append(div2).append(div3);
         }
@@ -25793,9 +25804,9 @@ var Analytics = {
 
         ToggleProject: function (el) {
             Analytics.Main.getAssigneeByProject(el);
-//            Analytics.Main.getLabelByProject(el);
-//            Analytics.Main.getSprintByProject(el);
-//            Analytics.Main.getReport(el);
+            //            Analytics.Main.getLabelByProject(el);
+            //            Analytics.Main.getSprintByProject(el);
+            //            Analytics.Main.getReport(el);
         },
         setFilterType: function (el, atype) {
             global_var.analytic_filter.filterType = atype;
@@ -25813,11 +25824,11 @@ var Analytics = {
         },
         emptyMessage: function () {
             return '<div style="padding:30px;text-align:center">' +
-                    '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                    '<h5> No User Stories have been found with selected criterias</h5>' +
-                    '<p>Search result related to the selected criterias on these projects will appear here</p>' +
-                    '<p>Please Assign User Stories to the Sprint.</p>' +
-                    '</div>'
+                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+                '<h5> No User Stories have been found with selected criterias</h5>' +
+                '<p>Search result related to the selected criterias on these projects will appear here</p>' +
+                '<p>Please Assign User Stories to the Sprint.</p>' +
+                '</div>'
         },
         setReportInterval: function (int, el) {
             $(".analytic-filter-interval").removeAttr('style');
@@ -25826,7 +25837,7 @@ var Analytics = {
             Analytics.Main.getReport();
         },
         getReport: function (e) {
-//            Analytics.Main.getReportMain(e);
+            //            Analytics.Main.getReportMain(e);
         },
         clearOutcomes: function () {
             $('#analytic_report_result').html(Analytics.Main.emptyMessage());
@@ -25839,7 +25850,7 @@ var Analytics = {
                 return;
             }
             Analytics.Main.clearOutcomes();
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -25902,10 +25913,10 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                        (global_var.analytic_filter.pivot_sprint[tarix])
+                    (global_var.analytic_filter.pivot_sprint[tarix])
                         ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                        ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                        : global_var.analytic_filter.pivot_sprint[tarix]
+                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
+                            : global_var.analytic_filter.pivot_sprint[tarix]
                         : o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
@@ -25951,10 +25962,10 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                        (global_var.analytic_filter.pivot_sprint[tarix])
+                    (global_var.analytic_filter.pivot_sprint[tarix])
                         ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                        ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                        : global_var.analytic_filter.pivot_sprint[tarix]
+                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
+                            : global_var.analytic_filter.pivot_sprint[tarix]
                         : o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
@@ -25997,10 +26008,10 @@ var Analytics = {
                 //intervallar uzre tarixlerin gruplasdirilmasi
                 var tarix = o.fromDate + "_" + o.toDate;
                 global_var.analytic_filter.pivot_sprint[tarix] =
-                        (global_var.analytic_filter.pivot_sprint[tarix])
+                    (global_var.analytic_filter.pivot_sprint[tarix])
                         ? !(global_var.analytic_filter.pivot_sprint[tarix].includes(o.sprintName))
-                        ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
-                        : global_var.analytic_filter.pivot_sprint[tarix]
+                            ? global_var.analytic_filter.pivot_sprint[tarix] + ", " + o.sprintName
+                            : global_var.analytic_filter.pivot_sprint[tarix]
                         : o.sprintName;
                 // group by lar uzre melumatlarin qruplasdirilmasi       
                 var gr = (o.fkProjectId) ? o.fkProjectId : "";
@@ -26047,7 +26058,7 @@ var Analytics = {
                     k.label = global_var.analytic_filter.pivot_group_name[i];
                     k.backgroundColor = color;
                     k.fill = "false",
-                            k.data = [];
+                        k.data = [];
                     var val = [];
                     for (var n = obj.length - 1; n >= 0; n--) {
                         var o = obj[n];
@@ -26080,10 +26091,10 @@ var Analytics = {
                     options: {
                         scales: {
                             yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 });
@@ -26113,7 +26124,7 @@ var Analytics = {
                     k.label = global_var.analytic_filter.pivot_group_name[i];
                     k.backgroundColor = color;
                     k.fill = "false",
-                            k.data = [];
+                        k.data = [];
                     var val = [];
                     for (var n = obj.length - 1; n >= 0; n--) {
                         var o = obj[n];
@@ -26146,10 +26157,10 @@ var Analytics = {
                     options: {
                         scales: {
                             yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
                         }
                     }
                 });
@@ -26175,23 +26186,23 @@ var Analytics = {
                 var id4Input = getIndexOfTable(res, "fromToDatesTable");
                 var obj = res.tbl[id4Input].r;
                 var table = $('<table id="table_table_filter_pivot_table"></table>')
-                        .addClass('table')
-                        .addClass('text-center')
-                        .attr('border', '1')
-                        .attr('style', 'border:none;margin: 0 auto;');
+                    .addClass('table')
+                    .addClass('text-center')
+                    .attr('border', '1')
+                    .attr('style', 'border:none;margin: 0 auto;');
                 var tbody = $('<tbody></tbody>');
                 var tr = $('<tr></tr>').append($('<td></td>'));
                 //tarix intervalli uzre sutunlarin hazirlanmasi
                 for (var n = obj.length - 1; n >= 0; n--) {
                     var o = obj[n];
                     tr.append($('<td></td>')
-                            .append(Utility.convertDate(o.fromDate))
-                            .append(' - ')
-                            .append(Utility.convertDate(o.toDate))
-                            .append((global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate])
-                                    ? "<br><i>" + global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate] + "</i>"
-                                    : "")
-                            );
+                        .append(Utility.convertDate(o.fromDate))
+                        .append(' - ')
+                        .append(Utility.convertDate(o.toDate))
+                        .append((global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate])
+                            ? "<br><i>" + global_var.analytic_filter.pivot_sprint[o.fromDate + "_" + o.toDate] + "</i>"
+                            : "")
+                    );
                 }
                 tbody.append(tr);
                 //group by uzre datalarin bir massive yigilmasi ve oradan da sutunun elave edilmesi
@@ -26205,12 +26216,12 @@ var Analytics = {
                         var v = "";
                         try {
                             v = (global_var.analytic_filter.pivot_cell[k][grid]) ?
-                                    global_var.analytic_filter.pivot_cell[k][grid] : "";
+                                global_var.analytic_filter.pivot_cell[k][grid] : "";
                         } catch (err) {
                         }
                         tr1.append($('<td></td>')
-                                .append(v)
-                                );
+                            .append(v)
+                        );
                     }
                     tbody.append(tr1);
                 }
@@ -26230,37 +26241,37 @@ var Analytics = {
                 var res = global_var.analytic_filter.res;
                 var obj = res.tbl[0].r;
                 var table = $('<table id="table_table_filter_table"></table>')
-                        .addClass('table')
-                        .addClass('text-center')
-                        .attr('border', '1')
-                        .attr('style', 'border: 2px solid #5181B8;margin: 0 auto;');
+                    .addClass('table')
+                    .addClass('text-center')
+                    .attr('border', '1')
+                    .attr('style', 'border: 2px solid #5181B8;margin: 0 auto;');
                 var tbody = $('<tbody></tbody>');
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
                     var tr = $('<tr></tr>')
-                            .append($('<td></td>').append(Utility.convertDate(o.fromDate) + "-" + Utility.convertDate(o.toDate)))
-                            .append($('<td></td>').append(o.sprintName))
-                            .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
-                                    ? $('<td></td>').append(global_var.analytic_filter.project_list[o.fkProjectId]) : "")
-//                       .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
-//                                ? $('<td></td>').append(o.fkProjectId) : "")
-                            .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
-                                    ? $('<td></td>').append(global_var.analytic_filter.assignee_list[o.fkAssigneeId]) : "")
-                            .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
-                                    ? $('<td></td>').append(global_var.analytic_filter.task_type_list[o.fkTaskTypeId]) : "")
-//                        .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
-//                                ?$('<td></td>').append(global_var.analytic_filter.label_list[o.fkTaskLabelId]): "")
-                            .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
-                                    ? $('<td></td>').append(o.priority) : "")
-                            .append($('<td></td>').append(o.newUserstoryCount))
-//                        .append($('<td></td>').append(o.bugCount))
-//                        .append($('<td></td>').append(o.requestCount))
-                            .append($('<td></td>').append(o.sumEstimatedHours))
-//                        .append($('<td></td>').append(o.sumEstimatedHoursBug))
-//                        .append($('<td></td>').append(o.sumEstimatedHoursRequest))
-                            .append($('<td></td>').append(o.sumSpentHours))
-//                        .append($('<td></td>').append(o.sumSpentHoursBug))
-//                        .append($('<td></td>').append(o.sumSpentHoursRequest));
+                        .append($('<td></td>').append(Utility.convertDate(o.fromDate) + "-" + Utility.convertDate(o.toDate)))
+                        .append($('<td></td>').append(o.sprintName))
+                        .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
+                            ? $('<td></td>').append(global_var.analytic_filter.project_list[o.fkProjectId]) : "")
+                        //                       .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
+                        //                                ? $('<td></td>').append(o.fkProjectId) : "")
+                        .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
+                            ? $('<td></td>').append(global_var.analytic_filter.assignee_list[o.fkAssigneeId]) : "")
+                        .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
+                            ? $('<td></td>').append(global_var.analytic_filter.task_type_list[o.fkTaskTypeId]) : "")
+                        //                        .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
+                        //                                ?$('<td></td>').append(global_var.analytic_filter.label_list[o.fkTaskLabelId]): "")
+                        .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
+                            ? $('<td></td>').append(o.priority) : "")
+                        .append($('<td></td>').append(o.newUserstoryCount))
+                        //                        .append($('<td></td>').append(o.bugCount))
+                        //                        .append($('<td></td>').append(o.requestCount))
+                        .append($('<td></td>').append(o.sumEstimatedHours))
+                        //                        .append($('<td></td>').append(o.sumEstimatedHoursBug))
+                        //                        .append($('<td></td>').append(o.sumEstimatedHoursRequest))
+                        .append($('<td></td>').append(o.sumSpentHours))
+                    //                        .append($('<td></td>').append(o.sumSpentHoursBug))
+                    //                        .append($('<td></td>').append(o.sumSpentHoursRequest));
                     tbody.append(tr);
                 }
                 table.append(this.getReportTableHeader());
@@ -26274,33 +26285,33 @@ var Analytics = {
         getReportTableHeader: function () {
 
             var tr = $('<tr></tr>')
-                    .append($('<th></th>').append("Interval"))
-                    .append($('<th></th>').append("Sprint(s)"))
-                    .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
-                            ? $('<th></th>').append("Project") : "")
-                    .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
-                            ? $('<th></th>').append("Assignee") : "")
-                    .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
-                            ? $('<th></th>').append("Task Type") : "")
-//                    .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
-//                                ?$('<th></th>').append("Label"):"")
-                    .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
-                            ? $('<th></th>').append("Priority") : "")
-                    .append($('<th></th>').append('User Story Count'))
-//                    .append($('<th></th>').append('Bug Count'))
-//                    .append($('<th></th>').append('Request Count'))
-                    .append($('<th></th>').append('Estimated Hours'))
-//                    .append($('<th></th>').append('Estimated Hours For Bugs'))
-//                    .append($('<th></th>').append('Estimated Hours For Request'))
-                    .append($('<th></th>').append('Spent Hours'))
-//                    .append($('<th></th>').append('Spent Hours For Bug'))
-//                    .append($('<th></th>').append('Spent Hours For Request'));
+                .append($('<th></th>').append("Interval"))
+                .append($('<th></th>').append("Sprint(s)"))
+                .append($('#analytics_filter_checkbox_groupby_project').is(":checked")
+                    ? $('<th></th>').append("Project") : "")
+                .append($('#analytics_filter_checkbox_groupby_assignee').is(":checked")
+                    ? $('<th></th>').append("Assignee") : "")
+                .append($('#analytics_filter_checkbox_groupby_tasktype').is(":checked")
+                    ? $('<th></th>').append("Task Type") : "")
+                //                    .append($('#analytics_filter_checkbox_groupby_label').is(":checked")
+                //                                ?$('<th></th>').append("Label"):"")
+                .append($('#analytics_filter_checkbox_groupby_priority').is(":checked")
+                    ? $('<th></th>').append("Priority") : "")
+                .append($('<th></th>').append('User Story Count'))
+                //                    .append($('<th></th>').append('Bug Count'))
+                //                    .append($('<th></th>').append('Request Count'))
+                .append($('<th></th>').append('Estimated Hours'))
+                //                    .append($('<th></th>').append('Estimated Hours For Bugs'))
+                //                    .append($('<th></th>').append('Estimated Hours For Request'))
+                .append($('<th></th>').append('Spent Hours'))
+            //                    .append($('<th></th>').append('Spent Hours For Bug'))
+            //                    .append($('<th></th>').append('Spent Hours For Request'));
             var thead = $('<thead></thead>').append(tr);
             return thead;
         },
         getAssigneeByProject: function (e) {
             $('#analytics_main_list_of_assignee >tbody').html('');
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -26321,12 +26332,12 @@ var Analytics = {
                     var obj = res.tbl[0].r;
                     var st = "";
                     for (var n = 0; n < obj.length; n++) {
-                        global_var.analytic_filter.assignee_list[obj[n].fkUserId ] = replaceTags(obj[n].userName);
+                        global_var.analytic_filter.assignee_list[obj[n].fkUserId] = replaceTags(obj[n].userName);
                         if (!st.includes(obj[n].fkUserId)) {
                             var tr = $('<tr></tr>')
-                                    .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
+                                .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
  class="analytics_filter_checkbox_assignee" id="' + obj[n].fkUserId + '" value="' +
-                                            obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</td>')
+                                    obj[n].fkUserId + '">' + replaceTags(obj[n].userName) + '</td>')
                             $('#analytics_main_list_of_assignee >tbody').append(tr);
                             st += obj[n].fkUserId;
                         }
@@ -26336,7 +26347,7 @@ var Analytics = {
         },
         getLabelByProject: function (e) {
             $('#analytics_main_list_of_labels >tbody').html('');
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -26360,9 +26371,9 @@ var Analytics = {
                         global_var.analytic_filter.label_list[obj[n].id] = replaceTags(obj[n].name);
                         if (!st.includes(obj[n].id)) {
                             var tr = $('<tr></tr>')
-                                    .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
+                                .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
  class="analytics_filter_checkbox_label" id="' + obj[n].id + '" value="' +
-                                            obj[n].id + '">' + replaceTags(obj[n].name) + '</td>')
+                                    obj[n].id + '">' + replaceTags(obj[n].name) + '</td>')
                             $('#analytics_main_list_of_labels >tbody').append(tr);
                             st += obj[n].id;
                         }
@@ -26372,7 +26383,7 @@ var Analytics = {
         },
         getSprintByProject: function (e) {
             $('#analytics_main_list_of_sprints >tbody').html('');
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -26396,9 +26407,9 @@ var Analytics = {
                         global_var.analytic_filter.sprint_list[obj[n].id] = replaceTags(obj[n].sprintName);
                         if (!st.includes(obj[n].id)) {
                             var tr = $('<tr></tr>')
-                                    .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
+                                .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
                                                      class="analytics_filter_checkbox_sprint" id="' + obj[n].id + '" value="' +
-                                            obj[n].id + '">' + replaceTags(obj[n].sprintName) + '</td>')
+                                    obj[n].id + '">' + replaceTags(obj[n].sprintName) + '</td>')
                             $('#analytics_main_list_of_sprints >tbody').append(tr);
                             st += obj[n].id;
                         }
@@ -26408,7 +26419,7 @@ var Analytics = {
         },
         getTaskTypeByProject: function (e) {
             $('#analytics_main_list_of_tasktypes >tbody').html('');
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -26432,9 +26443,9 @@ var Analytics = {
                         global_var.analytic_filter.task_type_list[obj[n].id] = replaceTags(obj[n].typeName);
                         if (!st.includes(obj[n].id)) {
                             var tr = $('<tr></tr>')
-                                    .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
+                                .append('<td><input  type="checkbox" onchange="Analytics.Main.getReport(this)"\n\
  class="analytics_filter_checkbox_tasktype" id="' + obj[n].id + '" value="' +
-                                            obj[n].id + '">' + replaceTags(obj[n].typeName) + '</td>')
+                                    obj[n].id + '">' + replaceTags(obj[n].typeName) + '</td>')
                             $('#analytics_main_list_of_tasktypes >tbody').append(tr);
                             st += obj[n].id;
                         }
@@ -26443,7 +26454,7 @@ var Analytics = {
             });
         },
         loadProjects: function () {
-            var json = {kv: {}};
+            var json = { kv: {} };
             try {
                 json.kv.cookie = getToken();
             } catch (err) {
@@ -26463,11 +26474,11 @@ var Analytics = {
                     $('#analytics_main_list_of_projects >tbody').html('');
                     var obj = res.tbl[0].r;
                     for (var n = 0; n < obj.length; n++) {
-                        global_var.analytic_filter.project_list[obj[n].id ] = replaceTags(obj[n].projectName);
+                        global_var.analytic_filter.project_list[obj[n].id] = replaceTags(obj[n].projectName);
                         var tr = $('<tr></tr>')
-                                .append('<td><input onchange="Analytics.Main.ToggleProject(this)" \n\
+                            .append('<td><input onchange="Analytics.Main.ToggleProject(this)" \n\
 type="checkbox" class="analytics_filter_checkbox_project" id="' +
-                                        obj[n].id + '" value="' + obj[n].id + '">' + replaceTags(obj[n].projectName) + '</td>')
+                                obj[n].id + '" value="' + obj[n].id + '">' + replaceTags(obj[n].projectName) + '</td>')
                         $('#analytics_main_list_of_projects >tbody').append(tr);
                     }
                 },
@@ -26521,7 +26532,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
 
     },
     loadProjects4SpentHours: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26541,9 +26552,9 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
                     var tr = $('<tr></tr>')
-                            .append('<td><input onchange="Analytics.getAssigneeByProject(this)" \n\
+                        .append('<td><input onchange="Analytics.getAssigneeByProject(this)" \n\
 type="checkbox" class="analytics_filter_checkbox_project" id="' +
-                                    obj[n].id + '" value="' + obj[n].id + '">' + replaceTags(obj[n].projectName) + '</td>')
+                            obj[n].id + '" value="' + obj[n].id + '">' + replaceTags(obj[n].projectName) + '</td>')
                     $('#analytics_filter_by_projects >tbody').append(tr);
                 }
             },
@@ -26554,7 +26565,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
     },
     generalCountByProject: function () {
         $('#analytics-details-general-project-list >tbody').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26586,29 +26597,29 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
                 var ongoingPerc = o.overalCount === '0' ? 0 : parseFloat((parseFloat(o.ongoingCount) * 100) / parseFloat(o.overalCount)).toFixed(2);
                 var closedPerc = o.overalCount === '0' ? 0 : parseFloat((parseFloat(o.closedCount) * 100) / parseFloat(o.overalCount)).toFixed(2);
                 var tr = $('<tr></tr>')
-                        .append($('<td></td>').html((n + 1)))
-                        .append($('<td></td>').html(replaceTags(o.projectName)))
-                        .append($('<td></td>').html(o.overalCount))
-                        .append($('<td></td>').html(o.newCount))
-                        .append($('<td></td>').html(newPerc))
-                        .append($('<td></td>').html(o.ongoingCount))
-                        .append($('<td></td>').html(ongoingPerc))
-                        .append($('<td></td>').html(o.closedCount))
-                        .append($('<td></td>').html(closedPerc))
-                        .append($('<td></td>').html(o.sourcedCount))
-                        .append($('<td></td>').html(o.boundCount))
-                        .append($('<td></td>').html(o.initialCount));
+                    .append($('<td></td>').html((n + 1)))
+                    .append($('<td></td>').html(replaceTags(o.projectName)))
+                    .append($('<td></td>').html(o.overalCount))
+                    .append($('<td></td>').html(o.newCount))
+                    .append($('<td></td>').html(newPerc))
+                    .append($('<td></td>').html(o.ongoingCount))
+                    .append($('<td></td>').html(ongoingPerc))
+                    .append($('<td></td>').html(o.closedCount))
+                    .append($('<td></td>').html(closedPerc))
+                    .append($('<td></td>').html(o.sourcedCount))
+                    .append($('<td></td>').html(o.boundCount))
+                    .append($('<td></td>').html(o.initialCount));
                 $('#analytics-details-general-project-list >tbody').append(tr);
             }
 
         } catch (e) {
-//            console.log("error")
+            //            console.log("error")
         }
 
     },
     projectTaskCount: function () {
         $('#analytics-details-project-task-list >tbody').html('');
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26630,40 +26641,40 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
                 }
             },
             error: function () {
-//                Toaster.showError(('somethingww'));
+                //                Toaster.showError(('somethingww'));
             }
         });
     },
     projectTaskCountDetails: function (res) {
         $('#analytics-details-project-task-list >tbody').html('');
-//        if (!res.tbl){
-//            return;
-//        }
+        //        if (!res.tbl){
+        //            return;
+        //        }
         try {
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 var tr = $('<tr></tr>')
-                        .append($('<td></td>').html((n + 1)))
-                        .append($('<td></td>').html(replaceTags(o.projectName)))
-                        .append($('<td></td>').html(o.overalCount))
-                        .append($('<td></td>').html(o.bugCount))
-                        .append($('<td></td>').html(o.updateCount))
-                        .append($('<td></td>').html(o.overallTaskCount))
-                        .append($('<td></td>').html(o.taskNewCount))
-                        .append($('<td></td>').html(o.taskOngoingCount))
-                        .append($('<td></td>').html(o.taskClosedCount))
-                        .append($('<td></td>').html(o.inputCount))
-                        .append($('<td></td>').html(o.commentCount));
+                    .append($('<td></td>').html((n + 1)))
+                    .append($('<td></td>').html(replaceTags(o.projectName)))
+                    .append($('<td></td>').html(o.overalCount))
+                    .append($('<td></td>').html(o.bugCount))
+                    .append($('<td></td>').html(o.updateCount))
+                    .append($('<td></td>').html(o.overallTaskCount))
+                    .append($('<td></td>').html(o.taskNewCount))
+                    .append($('<td></td>').html(o.taskOngoingCount))
+                    .append($('<td></td>').html(o.taskClosedCount))
+                    .append($('<td></td>').html(o.inputCount))
+                    .append($('<td></td>').html(o.commentCount));
                 $('#analytics-details-project-task-list >tbody').append(tr);
             }
 
         } catch (e) {
-//            console.log("error")
+            //            console.log("error")
         }
     },
     loadProjects: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26690,17 +26701,17 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         $('#projectList4Analytics').html('');
         var obj = res.tbl[0].r;
         $('#projectList4Analytics').append($('<option></option')
-                .attr("value", "-1")
-                .html("--------"));
+            .attr("value", "-1")
+            .html("--------"));
         for (var n = 0; n < obj.length; n++) {
             var o = $('<option></option')
-                    .attr("value", obj[n].id)
-                    .html(replaceTags(obj[n].projectName));
+                .attr("value", obj[n].id)
+                .html(replaceTags(obj[n].projectName));
             $('#projectList4Analytics').append(o);
         }
     },
     loadUserStory: function () {
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26733,16 +26744,16 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         for (var n = 0; n < obj.length; n++) {
             var o = obj[n];
             var tr = $('<tr></tr>')
-                    .append($('<td></td>').append((n + 1)))
-                    .append($('<td></td>').append(o.orderNo))
-                    .append($('<td></td>').append(replaceTags(o.backlogName)))
-                    .append($('<td></td>').append(o.backlogStatus))
-                    .append($('<td></td>').append(o.priority))
-                    .append($('<td></td>').append(o.taskCount))
-                    .append($('<td></td>').append(o.inputCount))
-                    .append($('<td></td>').append(o.commentCount))
-                    .append($('<td></td>').append(o.bugCount))
-                    .append($('<td></td>').append(o.updateCount));
+                .append($('<td></td>').append((n + 1)))
+                .append($('<td></td>').append(o.orderNo))
+                .append($('<td></td>').append(replaceTags(o.backlogName)))
+                .append($('<td></td>').append(o.backlogStatus))
+                .append($('<td></td>').append(o.priority))
+                .append($('<td></td>').append(o.taskCount))
+                .append($('<td></td>').append(o.inputCount))
+                .append($('<td></td>').append(o.commentCount))
+                .append($('<td></td>').append(o.bugCount))
+                .append($('<td></td>').append(o.updateCount));
             $('#analytics-details-userstorylist-list >tbody').append(tr);
         }
     },
@@ -26755,7 +26766,7 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
         var historyDate = (dateFrom && dateTo) ? dateFrom + "%IN%" + dateTo : "";
         var orderBy = $('#analytics_spenthours_sort_by_list').val();
         var asc = global_var.analytics_current_sort;
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -26775,18 +26786,18 @@ type="checkbox" class="analytics_filter_checkbox_project" id="' +
             crossDomain: true,
             async: false,
             success: function (res) {
-//                console.log(JSON.stringify(res));
+                //                console.log(JSON.stringify(res));
 
                 $('#analytics-details-spenthours-table >tbody').html('');
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
                     var tr = $('<tr></tr>')
-                            .append($('<td></td>').html((n + 1)))
-                            .append($('<td></td>').html(o.projectName))
-                            .append($('<td></td>').html(o.historyTellerName))
-                            .append($('<td></td>').html(Utility.convertDate(o.historyDate)))
-                            .append($('<td></td>').html(o.spentHours));
+                        .append($('<td></td>').html((n + 1)))
+                        .append($('<td></td>').html(o.projectName))
+                        .append($('<td></td>').html(o.historyTellerName))
+                        .append($('<td></td>').html(Utility.convertDate(o.historyDate)))
+                        .append($('<td></td>').html(o.spentHours));
                     $('#analytics-details-spenthours-table >tbody').append(tr);
                 }
             }
@@ -26977,7 +26988,7 @@ var ProjectPreview = {
         if (!global_var.current_project_id) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -27011,15 +27022,15 @@ var ProjectPreview = {
         $('#projectpreview_sidebar_id_main').html("");
         for (var n = 0; n < 1; n++) {
             var a = $("<a></a>")
-                    .attr("href", "#menu" + (1))
-                    .attr("data-toggle", "collapse")
-                    .attr("data-parent", "#MainMenu")
-                    .addClass("list-group-item list-group-item-success")
-                    .attr('style', "background-color:#E8E8E8")
-                    .attr("aria-expanded", "true")
-                    .append("Main Menu")
-                    .append('   ')
-                    .append($('<i></i>').addClass("fa fa-caret-down"));
+                .attr("href", "#menu" + (1))
+                .attr("data-toggle", "collapse")
+                .attr("data-parent", "#MainMenu")
+                .addClass("list-group-item list-group-item-success")
+                .attr('style', "background-color:#E8E8E8")
+                .attr("aria-expanded", "true")
+                .append("Main Menu")
+                .append('   ')
+                .append($('<i></i>').addClass("fa fa-caret-down"));
             var div = ProjectPreview.getAllBacklogListbyLabel();
             $('#projectpreview_sidebar_id_main').append(a);
             $('#projectpreview_sidebar_id_main').append(div);
@@ -27030,15 +27041,15 @@ var ProjectPreview = {
         $('#projectpreview_sidebar_id_main').html("");
         try {
             var a = $("<a></a>")
-                    .attr("href", "#menu1")
-                    .attr("data-toggle", "collapse")
-                    .attr("data-parent", "#MainMenu")
-                    .addClass("list-group-item list-group-item-success")
-                    .attr('style', "background-color:#E8E8E8")
-                    .attr("aria-expanded", "true")
-                    .append('All User Stories')
-                    .append('   ')
-                    .append($('<i></i>').addClass("fa fa-caret-down"));
+                .attr("href", "#menu1")
+                .attr("data-toggle", "collapse")
+                .attr("data-parent", "#MainMenu")
+                .addClass("list-group-item list-group-item-success")
+                .attr('style', "background-color:#E8E8E8")
+                .attr("aria-expanded", "true")
+                .append('All User Stories')
+                .append('   ')
+                .append($('<i></i>').addClass("fa fa-caret-down"));
             var div = ProjectPreview.getAllBacklogListDetails();
             if (div.length > 0) {
                 $('#projectpreview_sidebar_id_main').append(a);
@@ -27049,7 +27060,7 @@ var ProjectPreview = {
         } catch (err) {
             console.log(err)
         }
-//        $('#menu1').find('a').first().click();
+        //        $('#menu1').find('a').first().click();
         $('.um-item-list').first().click();
 
     },
@@ -27063,15 +27074,15 @@ var ProjectPreview = {
 
 
                     var a = $("<a></a>")
-                            .attr("href", "#menu" + (n + 1))
-                            .attr("data-toggle", "collapse")
-                            .attr("data-parent", "#MainMenu")
-                            .addClass("list-group-item list-group-item-success")
-                            .attr('style', "background-color:#E8E8E8")
-                            .attr("aria-expanded", "true")
-                            .append(obj[n].name)
-                            .append('   ')
-                            .append($('<i></i>').addClass("fa fa-caret-down"));
+                        .attr("href", "#menu" + (n + 1))
+                        .attr("data-toggle", "collapse")
+                        .attr("data-parent", "#MainMenu")
+                        .addClass("list-group-item list-group-item-success")
+                        .attr('style', "background-color:#E8E8E8")
+                        .attr("aria-expanded", "true")
+                        .append(obj[n].name)
+                        .append('   ')
+                        .append($('<i></i>').addClass("fa fa-caret-down"));
                     var div = ProjectPreview.getBacklogListbyLabelDetails4View(obj[n].id, n);
                     if (div.length > 0) {
                         $('#projectpreview_sidebar_id_main').append(a);
@@ -27085,13 +27096,13 @@ var ProjectPreview = {
             }
             if (st.length === 0) {
                 $('#projectpreview_sidebar_id_main')
-                        .append(this.setEmptyMessage4ProjectViev())
+                    .append(this.setEmptyMessage4ProjectViev())
 
             }
         } catch (err) {
             console.log(err)
         }
-//        $('#menu1').find('a').first().click();
+        //        $('#menu1').find('a').first().click();
         $('.um-item-list').first().click();
     },
     getLabelListDetails: function (res) {
@@ -27099,15 +27110,15 @@ var ProjectPreview = {
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var a = $("<a></a>")
-                    .attr("href", "#menu" + (n + 1))
-                    .attr("data-toggle", "collapse")
-                    .attr("data-parent", "#MainMenu")
-                    .addClass("list-group-item list-group-item-success")
-                    .attr('style', "background-color:#E8E8E8")
-                    .attr("aria-expanded", "true")
-                    .append(obj[n].name)
-                    .append('   ')
-                    .append($('<i></i>').addClass("fa fa-caret-down"));
+                .attr("href", "#menu" + (n + 1))
+                .attr("data-toggle", "collapse")
+                .attr("data-parent", "#MainMenu")
+                .addClass("list-group-item list-group-item-success")
+                .attr('style', "background-color:#E8E8E8")
+                .attr("aria-expanded", "true")
+                .append(obj[n].name)
+                .append('   ')
+                .append($('<i></i>').addClass("fa fa-caret-down"));
             var div = ProjectPreview.getBacklogListbyLabel(obj[n].id, n);
             $('#projectpreview_sidebar_id_main').append(a);
             $('#projectpreview_sidebar_id_main').append(div);
@@ -27118,7 +27129,7 @@ var ProjectPreview = {
         if (!labelId) {
             return;
         }
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -27145,7 +27156,7 @@ var ProjectPreview = {
     },
     getAllBacklogListbyLabel: function () {
 
-        var json = {kv: {}};
+        var json = { kv: {} };
         try {
             json.kv.cookie = getToken();
         } catch (err) {
@@ -27173,8 +27184,8 @@ var ProjectPreview = {
     getAllBacklogListDetails: function () {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
-                .attr('id', "menu1")
-                .addClass("collapse show");
+            .attr('id', "menu1")
+            .addClass("collapse show");
 
         var idx = 0;
         var obj = SACore.GetBacklogKeys();
@@ -27187,12 +27198,12 @@ var ProjectPreview = {
             }
             idx++;
             var a = $("<a href='#'></a>")
-                    .attr('style', "cursor:pointer;")
-                    .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n] + "')")
-                    .addClass("list-group-item")
-                    .addClass('um-item-list')
-                    .css('padding', "5px 5px")
-                    .append(bname);
+                .attr('style', "cursor:pointer;")
+                .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n] + "')")
+                .addClass("list-group-item")
+                .addClass('um-item-list')
+                .css('padding', "5px 5px")
+                .append(bname);
             div.append(a);
         }
 
@@ -27206,8 +27217,8 @@ var ProjectPreview = {
     getBacklogListbyLabelDetails4View: function (labelId, n) {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
-                .attr('id', "menu" + (n + 1))
-                .addClass("collapse show");
+            .attr('id', "menu" + (n + 1))
+            .addClass("collapse show");
 
         var idx = 0;
         var obj = SABacklogLabel.GetLabelBacklogDepList(labelId);
@@ -27220,12 +27231,12 @@ var ProjectPreview = {
             }
             idx++;
             var a = $("<a href='#'></a>")
-                    .attr('style', "cursor:pointer;")
-                    .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n] + "')")
-                    .addClass("list-group-item")
-                    .addClass('um-item-list')
-                    .css('padding', "5px 5px")
-                    .append(bname);
+                .attr('style', "cursor:pointer;")
+                .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n] + "')")
+                .addClass("list-group-item")
+                .addClass('um-item-list')
+                .css('padding', "5px 5px")
+                .append(bname);
             div.append(a);
         }
 
@@ -27239,15 +27250,15 @@ var ProjectPreview = {
     getBacklogListbyLabelDetails: function (res, n) {
         var div1 = $('<div></div>');
         var div = $('<div></div>')
-                .attr('id', "menu" + (n + 1))
-                .addClass("collapse show");
+            .attr('id', "menu" + (n + 1))
+            .addClass("collapse show");
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var a = $("<a></a>")
-                    .attr('style', "cursor:pointer;")
-                    .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n].fkBacklogId + "')")
-                    .addClass("list-group-item")
-                    .append(replaceTags(obj[n].backlogName));
+                .attr('style', "cursor:pointer;")
+                .attr("onclick", "ProjectPreview.getGUIPage('" + obj[n].fkBacklogId + "')")
+                .addClass("list-group-item")
+                .append(replaceTags(obj[n].backlogName));
             div.append(a);
         }
         div1.append(div);
@@ -27278,12 +27289,12 @@ var ProjectPreview = {
         printById('texnikitapshiriq_body');
     },
     getGUIPage4Header: function (backlogId) {
-        return  $('<div class="col-12">')
-                .css("background-color", "#2C73B4")
-                .css("margin-top", "30px")
-                .append($('<h3>').css("color", "white")
-                        .append(SACore.GetBacklogname(backlogId))
-                        .append(" ( #" + SACore.GetBacklogOrderNo(backlogId) + ")"))
+        return $('<div class="col-12">')
+            .css("background-color", "#2C73B4")
+            .css("margin-top", "30px")
+            .append($('<h3>').css("color", "white")
+                .append(SACore.GetBacklogname(backlogId))
+                .append(" ( #" + SACore.GetBacklogOrderNo(backlogId) + ")"))
     },
     getGUIPage4NotifiedLabel: function (backlogId, div) {
         var key = SACore.GetBaklogNotifiedLabel(backlogId);
@@ -27299,7 +27310,7 @@ var ProjectPreview = {
                 var etime = SABacklogLabel.GetNotifiedLabelEndTime(notifiedId);
 
                 var tbl = new UserStory().changeRequestForStartDateHeader(
-                        projectId, backlogId, sdate, edate, stime, etime)
+                    projectId, backlogId, sdate, edate, stime, etime)
 
                 var lblName = SABacklogLabel.GetBacklogLabelName(labelId);
 
@@ -27312,15 +27323,15 @@ var ProjectPreview = {
                     }
 
                     div.append($("<h6>").append(lblName).append(" - (")
-                            .append(Utility.convertDate(sdate))
-                            .append(", ")
-                            .append(Utility.convertTime(stime))
-                            .append(" - ")
-                            .append(Utility.convertDate(edate))
-                            .append(", ")
-                            .append(Utility.convertTime(etime))
-                            .append(")")
-                            );
+                        .append(Utility.convertDate(sdate))
+                        .append(", ")
+                        .append(Utility.convertTime(stime))
+                        .append(" - ")
+                        .append(Utility.convertDate(edate))
+                        .append(", ")
+                        .append(Utility.convertTime(etime))
+                        .append(")")
+                    );
                 }
                 div.append(tbl)
             } catch (err) {
@@ -27335,8 +27346,8 @@ var ProjectPreview = {
         var divRoot = $('<div class="col-12">');
 
         var div = $('<div>')
-                .attr("style", "max-width:800px;border: 1px solid gray; border-round:4px;" +
-                        Component.ReplaceCSS(SACore.GetBacklogParam1(backlogId)));
+            .attr("style", "max-width:800px;border: 1px solid gray; border-round:4px;" +
+                Component.ReplaceCSS(SACore.GetBacklogParam1(backlogId)));
 
         if (SACore.GetBaklogIsApi(backlogId) !== '1') {
             st = new UserStory().getGUIDesignHTMLPure(res);
@@ -27426,12 +27437,12 @@ var ProjectPreview = {
 
         var innerHTML = new UserStory().genGUIDesignHtmlById(backlogId);
         innerHTML = (innerHTML) ? innerHTML
-                : '<div style="padding:30px;text-align:center">' +
-                '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
-                '<h5> No User Story have been selected or created on this project</h5>' +
-                '<p>All Pages related to the User Story on this project will appear here</p>' +
-                '<p>Please Select User Story</p>' +
-                '</div>'
+            : '<div style="padding:30px;text-align:center">' +
+            '<h5> <i class="fa fa-cubes" style="font-size:30px"></i></h5>' +
+            '<h5> No User Story have been selected or created on this project</h5>' +
+            '<p>All Pages related to the User Story on this project will appear here</p>' +
+            '<p>Please Select User Story</p>' +
+            '</div>'
         $('#projectpreview_gui_design').html(innerHTML);
     },
 
@@ -27502,12 +27513,12 @@ function ADDtrafter(e, relatedId, body) {
 
     var tr = $(e).closest("tr");
     var inp = $('<input type="text" class="form-control newinp" style="border:white;" >')
-            .css("width", "100%")
-            .val(body)
-            .attr("change", "new UserStory().insertNewBacklogDescMiddle(this,'" + relatedId + "')")
+        .css("width", "100%")
+        .val(body)
+        .attr("change", "new UserStory().insertNewBacklogDescMiddle(this,'" + relatedId + "')")
     var additiontr = $("<tr>")
-            .append($('<td>').html('<input type="checkbox">'))
-            .append($('<td>').html(inp));
+        .append($('<td>').html('<input type="checkbox">'))
+        .append($('<td>').html(inp));
     tr.after(additiontr);
     inp.focus();
 }
@@ -27516,8 +27527,8 @@ function ADDtrafterAuto(e, relatedId, body) {
 
     var tr = $(e).closest("tr");
     var additiontr = $("<tr>")
-            .append($('<td>').html('<input type="checkbox">'))
-            .append($('<td>').text(body));
+        .append($('<td>').html('<input type="checkbox">'))
+        .append($('<td>').text(body));
     tr.after(additiontr);
     new UserStory().insertNewBacklogDescDetails(body, relatedId);
 }
@@ -27533,7 +27544,7 @@ function deletePDescAll(ids) {
     }
 
 
-    var json = {kv: {}};
+    var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
     } catch (err) {
@@ -27565,7 +27576,7 @@ function setColoredToPDescAll(ids, color) {
         return;
     }
 
-    var json = {kv: {}};
+    var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
     } catch (err) {
@@ -27596,7 +27607,7 @@ function setColoredToInputDesc(el, ids, color) {
         return;
     }
 
-    var json = {kv: {}};
+    var json = { kv: {} };
     try {
         json.kv.cookie = getToken();
     } catch (err) {
@@ -27617,12 +27628,12 @@ function setColoredToInputDesc(el, ids, color) {
 
             if (color) {
                 $(el).closest('div.span-button-div').find('a.colored-a')
-                        .css('border', ' 3px solid ' + color)
-                        .css('background-color', color)
-                        .css('border-radius', ' 5px;');
+                    .css('border', ' 3px solid ' + color)
+                    .css('background-color', color)
+                    .css('border-radius', ' 5px;');
             } else {
                 $(el).closest('div.span-button-div').find('a.colored-a')
-                        .removeAttr('style');
+                    .removeAttr('style');
             }
         },
         error: function () {

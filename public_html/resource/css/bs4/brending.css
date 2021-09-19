@@ -329,4 +329,10 @@ background: rgb(39 43 124 / 100%);
     color: #525596;
     margin-right: 3px
 }
-.cs-table-row-setting-btn .dropdown-menu button i
+tbody tr button.cs-copy-btn {
+    background-color: transparent;
+    color: rgb(39 43 124 / 11%);
+}
+.descriptiontable tr td:nth-child(3) {
+    visibility: visible;
+}
