@@ -5429,6 +5429,48 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
+function moveBacklogDescDrag(el, elId, moveType) {
+    var oldOrderNo = $(el).closest('tr').attr('orderno');
+    var sourcedId = $(el).closest('tr').attr('pid');
+    var targetId = '';
+    var newOrderNo = '';
+
+
+    if (moveType === 'up') {
+        targetId = $(el).closest('tr').prev('tr').attr('pid');
+        newOrderNo = $(el).closest('tr').prev('tr').attr('orderno');
+    } else if (moveType === 'down') {
+        targetId = $(el).closest('tr').next('tr').attr('pid');
+        newOrderNo = $(el).closest('tr').next('tr').attr('orderno');
+    }
+
+
+    if (!oldOrderNo || !sourcedId || !targetId || !newOrderNo)
+        return;
+
+    var json = initJSON();
+    json.kv.sourcedId = sourcedId;
+    json.kv.targetId = targetId;
+    json.kv.oldOrderNo = oldOrderNo;
+    json.kv.newOrderNo = newOrderNo;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDesc",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            new UserStory().getBacklogDesc();
+        }
+    });
+
+
+
+}
 function moveBacklogDesc(el, elId, moveType) {
     var oldOrderNo = $(el).closest('tr').attr('orderno');
     var sourcedId = $(el).closest('tr').attr('pid');

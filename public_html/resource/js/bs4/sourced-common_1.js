@@ -5551,6 +5551,10 @@ UserStory.prototype = {
 
         $(table).sortable({
             handle:".cs-move-tr",
+            update: function (e,ui) {
+              console.log(ui.item.index());
+              
+            }
             
           });
 
@@ -13875,7 +13879,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 }
                 global_var.story_card_sprint_assign_checked = 0;
                 global_var.story_card_label_assign_checked = 0;
-               // contentArrangableUI();
+               contentArrangableUI();
                 $('[data-toggle="popover"]').popover(
                     {html:true}
                 )
@@ -14173,7 +14177,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
-                    //    contentArrangableUI();
+                      contentArrangableUI();
                         $('[data-toggle="popover"]').popover({html:true});
                        
                     },
@@ -14817,6 +14821,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                    .attr("data-status",o.id)
                    .attr("data-status",'baclog-large-modal-next-id')
                    .append('<i class="fas fa-expand" aria-hidden="true"></i>')
+        )
+        .append($("<button>")
+                   .addClass("baclog-large-modal-history btn btn-sm btn-light")
+                   .attr("data-status",o.id)
+                   .append('<i class="fas fa-history"></i>')
         )
         .append($("<div>").addClass("stat-div-task-content")
            .append($('<table>').addClass("stat-table-us")
