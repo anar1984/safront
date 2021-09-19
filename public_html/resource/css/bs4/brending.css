@@ -1,4 +1,13 @@
 /* general */
+.cs-fx-red-style.cs-sum-inbox {
+    background-color: #f65c5c;
+}
+.cs-fx-red-style.cs-sum-inbox input{
+    background-color: rgb(124 39 39 / 55%);
+}
+.cs-fx-red-style.cs-sum-inbox input:hover {
+    background: rgb(124 39 39 / 100%);
+}
 .cs-sum-inbox ::placeholder {
     color: rgb(255, 255, 255);
     font-size: 14px;

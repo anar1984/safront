@@ -2565,6 +2565,9 @@ var SAFN = {
                     case '@.showerror':
                         descLine = SAFN.Convert.ShowErrorStatement(mainBody);
                         break;
+                    case '@.error':
+                        descLine = SAFN.Convert.ErrorStatement(mainBody);
+                        break;
                     case '@.sum':
                         descLine = SAFN.Convert.SumStatement(mainBody);
                         break;
@@ -2736,11 +2739,17 @@ var SAFN = {
         $(document).on("change", ".function-statement-input-common-4-hideparam", function (e) {
             SAFN.Reconvert.HideParamStatement(this);
         })
+
         $(document).on("change", ".function-statement-input-common-4-visibleparam", function (e) {
             SAFN.Reconvert.VisibleParamStatement(this);
         })
+
         $(document).on("change", ".function-statement-input-common-4-unvisibleparam", function (e) {
             SAFN.Reconvert.UnvisibleParamStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-error", function (e) {
+            SAFN.Reconvert.ErrorStatement(this);
         })
     },
     Reconvert: {
@@ -2788,14 +2797,6 @@ var SAFN = {
             var key = div.find(".fns-key").val();
 
             var fnline = "@.console(" + key + ")";
-            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
-        },
-        SetParamUrlStatement: function (triggerEl) {
-            var div = $(triggerEl).closest('div.function-statement-container');
-            var pid = $(triggerEl).closest('tr').attr('pid');
-            var key = div.setparamurl(".fns-key").val();
-
-            var fnline = "@.setparamurl(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         ShowErrorStatement: function (triggerEl) {
@@ -2879,7 +2880,7 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.click(" + key + "," + val + ")";
+            var fnline = "@.click(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         DeleteKeyStatement: function (triggerEl) {
@@ -2921,7 +2922,7 @@ var SAFN = {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
-            var val = div.find(".fns-val");
+            var val = div.find(".fns-val").val();
             var fnline = "@.setparamurl(" + key + "," + val + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
@@ -2930,7 +2931,7 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.change(" + key + "," + val + ")";
+            var fnline = "@.change(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         FocusStatement: function (triggerEl) {
@@ -2944,6 +2945,7 @@ var SAFN = {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
+
             var fnline = "@.showmessage(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
@@ -2994,7 +2996,7 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.hide(" + key + "," + val + ")";
+            var fnline = "@.hide(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         ShowStatement: function (triggerEl) {
@@ -3002,7 +3004,7 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.show(" + key + "," + val + ")";
+            var fnline = "@.show(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         VisibleStatement: function (triggerEl) {
@@ -3010,7 +3012,7 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.visible(" + key + "," + val + ")";
+            var fnline = "@.visible(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         UnvisibleStatement: function (triggerEl) {
@@ -3018,7 +3020,15 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var val = div.find(".fns-val");
-            var fnline = "@.unvisible(" + key + "," + val + ")";
+            var fnline = "@.unvisible(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        ErrorStatement: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var val = div.find(".fns-val").val();
+            var fnline = "@.error(" + key + "," + val + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         SendEmailStatement: function (triggerEl) {
@@ -3338,7 +3348,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("SetValue")
+                            .text("Set Value")
                         )
                     )
                     .append($("<div>").addClass('col-cs-2')
@@ -3369,7 +3379,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("SetText")
+                            .text("Set Text")
                         )
 
                     )
@@ -3907,21 +3917,22 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("ShowMessage")
+                            .text("Show Message")
                         )
 
                     )
 
                     .append($("<div>").addClass('col-cs-2')
                         .append($("<ul>")
-                            .css('display', 'initial')
-                            .css("padding", '0 6px 0px 0')
-                            .append($("<input>")
-                                .css("margin", '6px 0 0 0')
-                                .addClass("function-statement-input-common function-statement-input-common-4-showmessage fns-key")
-                                .val(key)
-                                .attr("placeholder", "ClassName")
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass("function-statement-input-common function-statement-input-common-4-showmessage fns-key")
+                                    .css("width", "300px")
+                                    .val(key)
+                                    .attr("placeholder", "Message")
+                                )
                             )
+
                         )
                     )
                 )
@@ -4273,28 +4284,76 @@ var SAFN = {
 
             var div = $("<div>")
                 .addClass("col-12")
-                .addClass("function-statement-container")
-                .css("background-color", "red")
-                .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
-                .css("padding", '5px 10px')
-                .css("border-radius", "5px")
-                .append($('<span>')
-                    .append($('<b>').css("font-color", "white").text('show error ')
+                .addClass("function-statement-container cs-fx-red-style cs-sum-inbox cs-sum-inbox-show")
+                .append($("<div>")
+                    .addClass("d-flex ")
+                    .append($("<div>")
+                        .addClass("col-cs-1 mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Show Error")
+                        )
+
                     )
-                )
-                .append($('<input>')
-                    .addClass("function-statement-input-common")
-                    .addClass("function-statement-input-common-4-showerror")
-                    .addClass("fns-key")
-                    .css("border-radius", "5px")
-                    .css("height", "20px")
-                    .css("border", "none")
-                    .css("width", "300px")
-                    .val(message)
+
+                    .append($("<div>")
+                        .addClass('col-cs-2 flex-grow-1')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-show fns-key")
+                                    .css("width", "300px")
+                                    .val(message)
+                                    .attr("placeholder", "Message"))
+                            )
+                        )
+                    )
                 )
 
             return div;
 
+        },
+        ErrorStatement: function (line) {
+            var arg = SAFN.GetCommandArgument(line);
+            var argList = arg.split(",");
+            var key = (argList[0]) ? argList[0] : '';
+            var val = (argList[1]) ? argList[1] : '';
+
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-error")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Error")
+                        )
+
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass("function-statement-input-common function-statement-input-common-4-error fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")
+                                )
+                            )
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass("function-statement-input-common function-statement-input-common-4-error fns-val")
+                                    .val(val)
+                                    .attr("placeholder", "Value")
+                                )
+                            )
+                        )
+                    )
+                )
+
+            return div;
         },
         SendEmailStatement: function (line) {
             var arg = SAFN.GetCommandArgument(line);
@@ -4388,6 +4447,7 @@ var SAFN = {
         'SetText': '@.settext(,)',
         'Map': '@.map(,)',
         'ShowError': '@.showerror()',
+        'Error': '@.error(,)',
         'SendEmail': '@.sendemail(,)',
         'Sum': '@.sum(,)',
         'Dec': '@.dec(,)',
