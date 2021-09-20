@@ -2090,13 +2090,13 @@ var SAFN = {
             return data;
         },
         SetParamUrl: function (key, value) {
-            value = SAFN.GetArgumentPureValue(value);
+            value = SAFN.GetArgumentValue(value);
             key = SAFN.GetArgumentPureValue(key);
 
             Utility.addParamToUrl(key, value);
         },
         GetParamUrl: function (key, variable) {
-            variable = SAFN.GetArgumentPureValue(variable);
+            variable = SAFN.GetArgumentValue(variable);
             key = SAFN.GetArgumentPureValue(key);
             var data = SAFN.CoreData;
             data[variable] = Utility.getParamFromUrl(key);
@@ -2525,7 +2525,7 @@ var SAFN = {
 
                 switch (fnName) {
                     case '@.callapi':
-                        descLine = SAFN.Convert.getBacklogDescLineDetails_4API(mainBody);
+                        descLine = SAFN.Convert.CallApiStatement(mainBody);
                         break;
                     case '@.if':
                         descLine = SAFN.Convert.IfStatement(mainBody);
@@ -2642,6 +2642,11 @@ var SAFN = {
 
         $(document).on("change", ".function-statement-input-common-4-console", function (e) {
             SAFN.Reconvert.ConsoleStatement(this);
+        })
+        $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
+            var val= $(this).val();
+            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick","new UserStory().redirectUserStoryCore('" + val + "')")
+            SAFN.Reconvert.CallApiStatement(this);
         })
 
         $(document).on("change", ".function-statement-input-common-4-consoledata", function (e) {
@@ -2812,6 +2817,14 @@ var SAFN = {
             var key = div.find(".fns-key").val();
 
             var fnline = "@.console(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        CallApiStatement: function (triggerEl) {
+            var div = $(triggerEl).parents('div.function-statement-container');
+            var pid = $(triggerEl).parents('tr').attr('pid');
+            var key = $(triggerEl).val();
+      
+            var fnline = "@.callapi(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         ConsoleDataStatement: function (triggerEl) {
@@ -3071,26 +3084,14 @@ var SAFN = {
     }
     ,
     Convert: {
-        getBacklogDescLineDetails_4API: function (descLine) {
+        CallApiStatement: function (descLine) {
 
             var backlogId = SAFN.GetCommandArgument(descLine);
             loadBacklogInputsByIdIfNotExist(backlogId);
             var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
             var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
             backlogName = (backlogName) ? backlogName : backlogId;
-            // var descBody = $('<div>')
-            //     .append('@.callApi( ')
-            //     .append($('<span>')
-            //         .css("background-color", "orange")
-            //         .css("border-radius", "10px")
-            //         .text(" " + backlogName + " "))
-            //     .append(" )")
-            //     .attr("bid", backlogId)
-            //     .attr("pid", pid)
-            //     .attr("is_api", "1")
-            //     .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
-
-            var descBody = $('<div>')
+                var descBody = $('<div>')
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
                 .append($("<div>")
@@ -3111,7 +3112,8 @@ var SAFN = {
                                 .addClass("function-statement-input-common cs-select-box")
                                 .append($('<select>')
                                     .attr('data-live-search', "true")
-                                    .addClass("function-statement-input-common select-api-box ")
+                                    .attr("id",'get-callapi-select-box')
+                                    .addClass("function-statement-input-common select-api-box fns-key ")
                                     .append($("<option>").append((backlogName) ? backlogName : "Select Api").val((backlogId) ? backlogId : ""))
 
 
@@ -3122,7 +3124,7 @@ var SAFN = {
                             .addClass('cs-select-btn-box')
                                 .append($('<button>')
                                     .append('<i class="fas fa-share"></i>')
-                                    .attr("onclick", "new UserStory().redirectUserStoryCore(" + backlogId + ")")
+                                    .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
                                 )
                             )
                         )
@@ -4588,6 +4590,7 @@ var SAFN = {
         'HideParam': '@.hideparam(,)',
         'VisibleParam': '@.visibleparam(,)',
         'UnvisibleParam': '@.unvisibleparam(,)',
+        'CallApi': '@.callapi(,)',
     },
 
 }
@@ -4696,4 +4699,61 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         SAFN.Reconvert.DecStatement(noteDec);
     }
 });
+$(document).on('keydown', '.cs-select-box > .select-api-box .bs-searchbox input', function (e) {
+     
+    if(e.keyCode === 13){
+        
+        var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
+        var txt = $(this).val()
+        loadSelecPickerOnChnageApiList("",elm,txt);
+    }
+    
 
+});
+$(document).on('click', '.cs-copy-btn', function (e) {
+     
+   var val = $(this).parents("tr").find('.text-holder').attr("idesc");
+   var $temp = $("<input>");
+   $("body").append($temp);
+   $temp.val(val).select();
+   document.execCommand("copy");
+   $temp.remove();
+});
+
+
+function loadSelecPickerOnChnageApiList(fkProjectId,element,txt) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+      
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    json.kv.backlogName = "%IN%"+txt+"%IN%";
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var tbl = $(element);
+            tbl.html('');
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi === '1') {
+                    var td = $('<option>')
+                            .text(o.backlogName)
+                            .val(o.id)
+                                
+                    tbl.append(td);
+                }
+
+            }
+
+            $(element).selectpicker('refresh');
+
+        }
+    });
+}

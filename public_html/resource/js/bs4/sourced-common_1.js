@@ -5565,8 +5565,9 @@ UserStory.prototype = {
             }
             
           });
-
-        return table;
+               $(".select-api-box").selectpicker();
+   
+          return table;
     },
     
     backlogProcessDescLineSubmenuItem:function(id){
