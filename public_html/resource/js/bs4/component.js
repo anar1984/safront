@@ -1230,7 +1230,7 @@ var Component = {
                         .val(val)
                         .append(val);
 
-                        
+                      td12 = $(td12).find(".tool_element_edit").remove();
                     
                     //manage input relation with API 
                     //add dependency for API Call classes and attributes
