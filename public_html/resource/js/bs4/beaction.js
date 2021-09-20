@@ -2112,6 +2112,8 @@ var SAFN = {
             var data = SAFN.CoreData;
             var value = data[arg];
             console.log(value);
+            
+            
         },
         AlertData: function () {
             var data = SAFN.CoreData;
