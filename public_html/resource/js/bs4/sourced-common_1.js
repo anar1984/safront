@@ -5540,6 +5540,14 @@ UserStory.prototype = {
                                     .append(scDesc)
                                     .append(apiDesc)
                                     ))
+                     .append($('<td>')
+                                    .append($("<button>")
+                                        .addClass("btn cs-copy-btn")
+                                        .append($("<i>")
+                                        .addClass("fas fa-copy")
+                                        )
+                                    )
+                                )
                     .append($('<td>')
                             .append(backlogProcessDescLineSubmenuItem));
 
@@ -5552,7 +5560,7 @@ UserStory.prototype = {
         $(table).sortable({
             handle:".cs-move-tr",
             update: function (e,ui) {
-              console.log(ui.item.index());
+              moveBacklogDescDrag(ui.item)
               
             }
             
