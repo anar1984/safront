@@ -5429,30 +5429,16 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
-function moveBacklogDescDrag(el, elId, moveType) {
-    var oldOrderNo = $(el).closest('tr').attr('orderno');
+function moveBacklogDescDrag(el) {
+ 
     var sourcedId = $(el).closest('tr').attr('pid');
-    var targetId = '';
-    var newOrderNo = '';
 
-
-    if (moveType === 'up') {
-        targetId = $(el).closest('tr').prev('tr').attr('pid');
-        newOrderNo = $(el).closest('tr').prev('tr').attr('orderno');
-    } else if (moveType === 'down') {
-        targetId = $(el).closest('tr').next('tr').attr('pid');
-        newOrderNo = $(el).closest('tr').next('tr').attr('orderno');
-    }
-
-
-    if (!oldOrderNo || !sourcedId || !targetId || !newOrderNo)
-        return;
-
+       var after = $(el).closest('tr').prev('tr').attr('orderno');
+       var before = $(el).closest('tr').next('tr').attr('orderno');
+    console.log(after,before);
     var json = initJSON();
     json.kv.sourcedId = sourcedId;
-    json.kv.targetId = targetId;
-    json.kv.oldOrderNo = oldOrderNo;
-    json.kv.newOrderNo = newOrderNo;
+    json.kv.newOrderNo = (parseFloat(after)+parseFloat(before))/2;
     var that = this;
     var data = JSON.stringify(json);
 

@@ -959,7 +959,14 @@ var Component = {
                     .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                         "")
-                    .append("<input type='checkbox' class='all-check-button-allTable'>")
+
+                        checkAll= cr_input_comp_attribute_kv[inputId]['sa-checkAllNone']
+                        if(!checkAll){
+                            a.append("<input type='checkbox' class='all-check-button-allTable'>")
+
+                        }else{
+                            a.append(replaceTags(inputName))
+                        }
                 }else{
 
                 var a = (pairShowColumnName[inputId].trim() === '1') ?
@@ -1024,7 +1031,11 @@ var Component = {
                     .append(showComp, ' ')
                     .append(showColumn, ' ')
                     .append(showColumnName, ' ')
-                    .append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
+                    if (global_var.current_modal !== 'loadLivePrototype') {
+                        th.append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
+
+                     }
+
                 //                    .append(showInTree, ' ')
                 var depId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
                 var newelSelect = $("<select>").addClass("form-control filter-table-row-select")
@@ -1218,7 +1229,8 @@ var Component = {
 
 
 
-
+                    val = $(val).clone();
+                    val.find(".tool_element_edit").remove();
 
                     var td12 = $("<td>")
                         //                            .css("min-width", "70px")
@@ -1230,7 +1242,7 @@ var Component = {
                         .val(val)
                         .append(val);
 
-                      td12 = $(td12).find(".tool_element_edit").remove();
+                       
                     
                     //manage input relation with API 
                     //add dependency for API Call classes and attributes
