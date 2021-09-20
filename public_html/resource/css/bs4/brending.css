@@ -336,3 +336,37 @@ tbody tr button.cs-copy-btn {
 .descriptiontable tr td:nth-child(3) {
     visibility: visible;
 }
+.descriptiontable tbody input[type=checkbox], .descriptiontable tbody input[type=radio] {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+}
+.descriptiontable tbody tr:first-child{
+    padding: 0px 8px 0px 35px;
+}
+.descriptiontable tbody .add-description {
+    height: 35px;
+    width: 100%;
+    resize: none;
+    white-space: pre;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+}
+
+element.style {
+}
+.descriptiontable tbody .add-description {
+    height: 35px;
+    width: 100%;
+    resize: none;
+    white-space: pre;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 1px rgb(0 123 255 / 25%);
+}

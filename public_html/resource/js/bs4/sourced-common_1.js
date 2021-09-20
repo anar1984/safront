@@ -5443,28 +5443,7 @@ UserStory.prototype = {
         });
     },
 
-    getBacklogDescLineDetails_4API: function (descLine) {
-
-        var backlogId = SAFN.GetCommandArgument(descLine);
-        loadBacklogInputsByIdIfNotExist(backlogId);
-        var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
-        var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
-        backlogName = (backlogName) ? backlogName : backlogId;
-        var descBody = $('<a>')
-            .append('@.callApi( ')
-            .append($('<span>')
-                .css("background-color", "orange")
-                .css("border-radius", "10px")
-                .text(" " + backlogName + " "))
-            .append(" )")
-            .attr("bid", backlogId)
-            .attr("pid", pid)
-            .attr("is_api", "1")
-            .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
-
-        return descBody;
-
-    },
+ 
     getBacklogDescLineDetails: function (descLine) {
         descLine = SAFN.InitConvention(descLine);
         return descLine;

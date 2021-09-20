@@ -1686,8 +1686,8 @@ var SAFN = {
         'setparamurl': 'SetParamUrl',
         'getparamurl': 'GetParamUrl',
         'alert': 'Alert',
-        'console': 'Concole',
         'alertdata': 'AlertData',
+        'console': 'Concole',
         'consoledata': 'ConcoleData',
         'deletekey': 'DeleteKey',
         'callapi': 'CallApi',
@@ -2108,15 +2108,16 @@ var SAFN = {
             var value = data[key];
             alert(value);
         },
-        Console: function (arg) {
-            var data = SAFN.CoreData;
-            var value = data[arg];
-            console.log(value);
-        },
+        
         AlertData: function () {
             var data = SAFN.CoreData;
             var zadData = JSON.stringify(data);
             alert(zadData);
+        },
+        Console: function (arg) {
+            var data = SAFN.CoreData;
+            var value = data[arg];
+            console.log(value);
         },
         ConsoleData: function () {
             var data = SAFN.CoreData;
@@ -2524,7 +2525,7 @@ var SAFN = {
 
                 switch (fnName) {
                     case '@.callapi':
-                        descLine = this.getBacklogDescLineDetails_4API(mainBody);
+                        descLine = SAFN.Convert.getBacklogDescLineDetails_4API(mainBody);
                         break;
                     case '@.if':
                         descLine = SAFN.Convert.IfStatement(mainBody);
@@ -2534,6 +2535,9 @@ var SAFN = {
                         break;
                     case '@.console':
                         descLine = SAFN.Convert.ConsoleStatement(mainBody);
+                        break;
+                    case '@.consoledata':
+                        descLine = SAFN.Convert.ConsoleDataStatement(mainBody);
                         break;
                     case '@.get':
                         descLine = SAFN.Convert.GetStatement(mainBody);
@@ -2555,6 +2559,9 @@ var SAFN = {
                         break;
                     case '@.alert':
                         descLine = SAFN.Convert.AlertStatement(mainBody);
+                        break;
+                    case '@.alertdata':
+                        descLine = SAFN.Convert.AlertDataStatement(mainBody);
                         break;
                     case '@.map':
                         descLine = SAFN.Convert.MapStatement(mainBody);
@@ -2637,6 +2644,10 @@ var SAFN = {
             SAFN.Reconvert.ConsoleStatement(this);
         })
 
+        $(document).on("change", ".function-statement-input-common-4-consoledata", function (e) {
+            SAFN.Reconvert.ConsoleDataStatement(this);
+        })
+
         $(document).on("change", ".function-statement-input-common-4-get", function (e) {
             SAFN.Reconvert.GetStatement(this);
         })
@@ -2663,6 +2674,10 @@ var SAFN = {
 
         $(document).on("change", ".function-statement-input-common-4-alert", function (e) {
             SAFN.Reconvert.AlertStatement(this);
+        })
+
+        $(document).on("change", ".function-statement-input-common-4-alertdata", function (e) {
+            SAFN.Reconvert.AlertDataStatement(this);
         })
 
         $(document).on("change", ".function-statement-input-common-4-map", function (e) {
@@ -2799,6 +2814,11 @@ var SAFN = {
             var fnline = "@.console(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
+        ConsoleDataStatement: function (triggerEl) {
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var fnline = "@.consoledata()";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
         ShowErrorStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
@@ -2895,6 +2915,11 @@ var SAFN = {
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
             var fnline = "@.alert(" + key + ")";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+        },
+        AlertDataStatement: function (triggerEl) {
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var fnline = "@.alertdata()";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         GetParamUrlStatement: function (triggerEl) {
@@ -3046,6 +3071,60 @@ var SAFN = {
     }
     ,
     Convert: {
+        getBacklogDescLineDetails_4API: function (descLine) {
+
+            var backlogId = SAFN.GetCommandArgument(descLine);
+            loadBacklogInputsByIdIfNotExist(backlogId);
+            var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
+            var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
+            backlogName = (backlogName) ? backlogName : backlogId;
+            // var descBody = $('<div>')
+            //     .append('@.callApi( ')
+            //     .append($('<span>')
+            //         .css("background-color", "orange")
+            //         .css("border-radius", "10px")
+            //         .text(" " + backlogName + " "))
+            //     .append(" )")
+            //     .attr("bid", backlogId)
+            //     .attr("pid", pid)
+            //     .attr("is_api", "1")
+            //     .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
+            
+            var descBody = $('<div>')
+            .addClass("col-12")
+                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                    .append($("<div>")
+                        .addClass("d-flex justify-content-start")
+                        .append($("<div>")
+                            .addClass("col-cs-1 d-table mr-2")
+                            .append($("<span>")
+                                .addClass("cs-funcname d-table-cell")
+                                .text("CallApi")
+                            )
+    
+                        )
+    
+                        .append($("<div>").addClass('col-cs-2')
+                            .append($("<ul>").css('display', 'initial')
+                                .css("padding", '0 6px 0px 0')
+                                .append($('<div>')
+                                    .css("margin", '6px 0 0 0')
+                                    .addClass("function-statement-input-common ")
+                                    
+                                    )
+                                .append($('<select>')
+                                    .css("margin", '6px 0 0 0')
+                                    .addClass("function-statement-input-common ")
+                                    .append($("<option>").append(backlogName).val(backlogId).attr(""))
+            
+                                    )
+                            )
+                        )
+                    )
+    
+            return descBody;
+    
+        },
         IfStatement: function (line) {
             var arg = SAFN.GetCommandArgument(line);
             var argList = arg.split(",");
@@ -3151,6 +3230,23 @@ var SAFN = {
                 )
             return div;
         },
+        ConsoleDataStatement: function () {
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-consoledata")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Console Data")
+                        )
+
+                    )
+                )
+            return div;
+        },
         DeleteKeyStatement: function (line) {
 
             var arg = SAFN.GetCommandArgument(line);
@@ -3213,6 +3309,23 @@ var SAFN = {
                                 .val(key)
                                 .attr("placeholder", "ClassName"))
                         )
+                    )
+                )
+            return div;
+        },
+        AlertDataStatement: function () {
+            var div = $("<div>")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-alertledata")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Alert Data")
+                        )
+
                     )
                 )
             return div;
@@ -4440,8 +4553,10 @@ var SAFN = {
         'Get': '@.get(,)',
         'GetParamUrl': '@.getparamurl(,)',
         'Consolo': '@.consolo(,)',
+        'ConsoleData': '@.consoledata(,)',
         'DeleteKey': '@.deletekey(,)',
         'Alert': '@.alert(,)',
+        'AlertData': '@.alertdata(,)',
         'Set': '@.set(,)',
         'SetValue': '@.setvalue(,)',
         'SetText': '@.settext(,)',
