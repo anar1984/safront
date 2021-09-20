@@ -2465,12 +2465,12 @@ label h6{
  .sa-section-modal .section-legend{
     display: block;
     position: absolute;
-    top: 4px;
+    top: 10px;
     left: 3%;
-    background-color: initial;
+    background-color: white;
     /* padding: 3px; */
     font-weight: bold;
-    font-size: 20px;
+    font-size: 14px;
 }
 .absolute-div-row-table{
     position: fixed;

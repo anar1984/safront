@@ -257,6 +257,10 @@ function callStoryCard(id, elId, backlogName) {
         if (!id || id === '-1') {
             return;
         }
+        
+        var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
+        global_var.current_project_id = fkProjectId;
+        
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
         $("#" + divId).append(storyCard);
