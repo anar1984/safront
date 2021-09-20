@@ -2108,7 +2108,7 @@ var SAFN = {
             var value = data[key];
             alert(value);
         },
-        
+
         AlertData: function () {
             var data = SAFN.CoreData;
             var zadData = JSON.stringify(data);
@@ -3089,41 +3089,48 @@ var SAFN = {
             //     .attr("pid", pid)
             //     .attr("is_api", "1")
             //     .attr('onclick', "new UserStory().redirectUserStoryCore('" + backlogId + "')");
-            
+
             var descBody = $('<div>')
-            .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                        .addClass("d-flex justify-content-start")
-                        .append($("<div>")
-                            .addClass("col-cs-1 d-table mr-2")
-                            .append($("<span>")
-                                .addClass("cs-funcname d-table-cell")
-                                .text("CallApi")
-                            )
-    
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("CallApi")
                         )
-    
-                        .append($("<div>").addClass('col-cs-2')
-                            .append($("<ul>").css('display', 'initial')
-                                .css("padding", '0 6px 0px 0')
-                                .append($('<div>')
-                                    .css("margin", '6px 0 0 0')
-                                    .addClass("function-statement-input-common ")
-                                    
-                                    )
+
+                    )
+
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'inline-block')
+                            .css("padding", '0 0 0 0')
+                            .append($('<li>')
+                                .addClass("function-statement-input-common cs-select-box")
                                 .append($('<select>')
-                                    .css("margin", '6px 0 0 0')
-                                    .addClass("function-statement-input-common ")
-                                    .append($("<option>").append(backlogName).val(backlogId).attr(""))
-            
-                                    )
+                                    .attr('data-live-search', "true")
+                                    .addClass("function-statement-input-common select-api-box ")
+                                    .append($("<option>").append((backlogName) ? backlogName : "Select Api").val((backlogId) ? backlogId : ""))
+
+
+                                )
+                            )
+
+                            .append($("<li>")
+                            .addClass('cs-select-btn-box')
+                                .append($('<button>')
+                                    .append('<i class="fas fa-share"></i>')
+                                    .attr("onclick", "new UserStory().redirectUserStoryCore(" + backlogId + ")")
+                                )
                             )
                         )
                     )
-    
+                )
+
             return descBody;
-    
+
         },
         IfStatement: function (line) {
             var arg = SAFN.GetCommandArgument(line);

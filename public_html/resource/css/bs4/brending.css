@@ -354,6 +354,7 @@ tbody tr button.cs-copy-btn {
 }
 
 element.style {
+
 }
 .descriptiontable tbody .add-description {
     height: 35px;
@@ -369,4 +370,58 @@ element.style {
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 1px rgb(0 123 255 / 25%);
+}
+.cs-sum-inbox .cs-select-box .bootstrap-select.select-api-box {
+
+}
+.cs-sum-inbox .select-api-box .bs-searchbox input.form-control {
+
+}
+.cs-sum-inbox .cs-select-box .bootstrap-select .btn {
+    font-size: 14px;
+    height: 25px;
+    padding: 0 7px;
+    line-height: 23px;
+    border-radius: 3px;
+    background: rgb(39 43 124 / 55%);
+}
+.cs-sum-inbox .cs-select-btn-box {
+    padding: 0px 0px 0px 4px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 40px;
+    margin-right: 0;
+}
+.cs-sum-inbox .cs-select-btn-box button {
+    background: #575b99;
+    border: none;
+    color: #fff;
+    line-height: 38px;
+    width: 40px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.cs-sum-inbox .cs-select-btn-box button:hover {
+    background: rgb(39 43 124 / 100%);
+}
+.cs-sum-inbox .cs-select-btn-box button:focus{
+    outline: none;
+    border: none;
+}
+.cs-select-box .bootstrap-select .dropdown-menu li a {
+    font-size: 14px;
+    height: 30px;
+    padding: 3px 7px;
+}
+.cs-select-box .dropdown-item.active, .cs-select-box .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #272b7c;
+}
+.cs-select-box .bootstrap-select .dropdown-menu li {
+ display: block;
+}
+.cs-select-box .bootstrap-select .dropdown-toggle:focus {
+    outline: thin dotted #272b7c !important;
+    outline: none;
 }
