@@ -5429,30 +5429,16 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
-function moveBacklogDescDrag(el, elId, moveType) {
-    var oldOrderNo = $(el).closest('tr').attr('orderno');
+function moveBacklogDescDrag(el) {
+ 
     var sourcedId = $(el).closest('tr').attr('pid');
-    var targetId = '';
-    var newOrderNo = '';
 
-
-    if (moveType === 'up') {
-        targetId = $(el).closest('tr').prev('tr').attr('pid');
-        newOrderNo = $(el).closest('tr').prev('tr').attr('orderno');
-    } else if (moveType === 'down') {
-        targetId = $(el).closest('tr').next('tr').attr('pid');
-        newOrderNo = $(el).closest('tr').next('tr').attr('orderno');
-    }
-
-
-    if (!oldOrderNo || !sourcedId || !targetId || !newOrderNo)
-        return;
-
+       var after = $(el).closest('tr').prev('tr').attr('orderno');
+       var before = $(el).closest('tr').next('tr').attr('orderno');
+    console.log(after,before);
     var json = initJSON();
     json.kv.sourcedId = sourcedId;
-    json.kv.targetId = targetId;
-    json.kv.oldOrderNo = oldOrderNo;
-    json.kv.newOrderNo = newOrderNo;
+    json.kv.newOrderNo = (parseFloat(after)+parseFloat(before))/2;
     var that = this;
     var data = JSON.stringify(json);
 
@@ -12949,7 +12935,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
-        $("#story_mn_filter_assigne_id_mng").selectpicker();
+        $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
    
     });
@@ -15615,9 +15601,9 @@ function updateUS4Status(id, backlogNo, status) {
             SACore.RemoveFromBacklogNo(id);
             SACore.SetBacklogNo(backlogNo, id);
             global_var.current_backlog_id = res.kv.id;
-            Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+           /*  Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
             new UserStory().setUSLists4KanbanViewDirect();
-            contentArrangableUI();
+            contentArrangableUI(); */
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16486,23 +16472,26 @@ function loadAssigneesByProjectUSM(projectId) {
         async: false,
         success: function (res) {
             var obj = res.tbl[0].r;
-            $('#story_mn_filter_assigne_id_mng').html('')
+            $('#story_mn_filter_assigne_id_mng').html('');
+            $('#story_mn_filter_assigne_id').html('');
             $('#story_mn_filter_assigne_id_mng').append('<option></option>');
     for (var i in obj) {
         var o = obj[i];
         var opt = $('<option>').val(o.fkUserId).text(o.userName);
-        var opt1 = $('<option>').val(o.fkUserId).text(o.userName);
-        
-        $('#story_mn_filter_assigne_id_mng').append(opt);
-        $('#bug_filter_assignee_id_add').append(opt1);
+            
+        $('#story_mn_filter_assigne_id_mng').append(opt.clone());
+        $('#story_mn_filter_assigne_id').append(opt.clone());
+        $('#bug_filter_assignee_id_add').append(opt.clone());
         
 
     }
             $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
+            $('#story_mn_filter_assigne_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if(fkAssigneId){
                 $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
+                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
             }
         },
         error: function () {
