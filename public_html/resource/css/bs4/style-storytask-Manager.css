@@ -982,7 +982,12 @@ color: white;
 }
 .Assigne-card-story-select-img.assigne{
     
-    box-shadow: 0px 0px 0px 2px #bebe19 inset;
+    box-shadow: 0px 0px 0px 2px #5bc233 inset;
+
+}
+.Assigne-card-story-select-img.updated{
+    
+    box-shadow: 0px 0px 0px 2px #da3838 inset;
 
 }
 .more-us-card-btn{
