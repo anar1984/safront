@@ -5443,7 +5443,7 @@ function moveBacklogDescDrag(el) {
     var data = JSON.stringify(json);
 
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDesc",
+        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
         type: "POST",
         data: data,
         contentType: "application/json",

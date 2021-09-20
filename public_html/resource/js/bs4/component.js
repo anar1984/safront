@@ -940,6 +940,7 @@ var Component = {
             for (var i = 0; i < col.length; i++) {
                 
                 var inputId = col[i].trim();
+                
                 var type = SAInput.getInputDetails(inputId, "componentType");
              
                 if (inputId.length === 0)
@@ -959,14 +960,24 @@ var Component = {
                     .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                         "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                         "")
+                         var checkAll 
+                      
+                        try {
 
-                        checkAll= cr_input_comp_attribute_kv[inputId]['sa-checkAllNone']
+                            checkAll = cr_input_comp_attribute_kv[inputId]['sa-checkAllNone'];
+
                         if(!checkAll){
+
                             a.append("<input type='checkbox' class='all-check-button-allTable'>")
 
                         }else{
                             a.append(replaceTags(inputName))
                         }
+                            
+                        } catch (error) {
+                            a.append("<input type='checkbox' class='all-check-button-allTable'>")
+                        }
+                        
                 }else{
 
                 var a = (pairShowColumnName[inputId].trim() === '1') ?
