@@ -5566,6 +5566,7 @@ UserStory.prototype = {
             
           });
                $(".select-api-box").selectpicker();
+               loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
    
           return table;
     },
