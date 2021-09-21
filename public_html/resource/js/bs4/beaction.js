@@ -2643,6 +2643,7 @@ var SAFN = {
         $(document).on("change", ".function-statement-input-common-4-console", function (e) {
             SAFN.Reconvert.ConsoleStatement(this);
         })
+
         $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
             var val= $(this).val();
             $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick","new UserStory().redirectUserStoryCore('" + val + "')")
@@ -2822,8 +2823,20 @@ var SAFN = {
         CallApiStatement: function (triggerEl) {
             var div = $(triggerEl).parents('div.function-statement-container');
             var pid = $(triggerEl).parents('tr').attr('pid');
+            
             var key = $(triggerEl).val();
       
+            
+            // for (let i = 0; i < keyall.length; i++) {
+
+            //     if (!($(keyall[i]).val() === "")) {
+
+            //         key += $(keyall[i]).val();
+            //     }
+
+            // }
+
+
             var fnline = "@.callapi(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
@@ -3100,7 +3113,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("CallApi")
+                            .text("Call API")
                         )
 
                     )
@@ -4699,15 +4712,13 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         SAFN.Reconvert.DecStatement(noteDec);
     }
 });
-$(document).on('keydown', '.cs-select-box > .select-api-box .bs-searchbox input', function (e) {
+$(document).on('keypress', '.cs-select-box > .select-api-box .bs-searchbox input', function (e) {
      
-    if(e.keyCode === 13){
+    // if(e.keyCode === 13){
         
         var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
-        var txt = $(this).val()
-        loadSelecPickerOnChnageApiList("",elm,txt);
-    }
-    
+        loadSelecPickerOnChnageApiList(elm);
+    // }
 
 });
 $(document).on('click', '.cs-copy-btn', function (e) {
@@ -4721,28 +4732,20 @@ $(document).on('click', '.cs-copy-btn', function (e) {
 });
 
 
-function loadSelecPickerOnChnageApiList(fkProjectId,element,txt) {
-    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
-      
-    var json = initJSON();
-    json.kv.fkProjectId = pid;
-    json.kv.backlogName = "%IN%"+txt+"%IN%";
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            var tbl = $(element);
-            tbl.html('');
+function loadSelecPickerOnChnageApiList(element) {
+   
+ 
+    var data = SACore.Backlogs;
 
-            var obj = res.tbl[0].r;
-            for (var n = 0; n < obj.length; n++) {
-                var o = obj[n];
-                if (o.isApi === '1') {
+
+    
+            var tbl = $(element);
+                tbl.html('');
+                console.log(data.length);
+            for (var n = 0; n < data.length; n++) {
+              
+                var o = data[0];
+                if (o.isApi == '1') {
                     var td = $('<option>')
                             .text(o.backlogName)
                             .val(o.id)
@@ -4754,6 +4757,6 @@ function loadSelecPickerOnChnageApiList(fkProjectId,element,txt) {
 
             $(element).selectpicker('refresh');
 
-        }
-    });
+        
+    
 }
