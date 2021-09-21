@@ -93,6 +93,27 @@ function setApiIpoBlock() {
     }
 }
 
+function getUserFullInfo(fkUserId){
+    var res1  = "";
+     var json = initJSON();
+     json.kv.fkUserId = fkUserId; 
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceCrGetUserFullInfo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            res1 =  res.kv;
+             
+        } 
+    });
+    return res1;
+}
+
 function removeBacklogDescCommentType(el, descId) {
     $(el).closest('tr').find('td.text-holder').removeClass("process-desc-as-comment");
 
