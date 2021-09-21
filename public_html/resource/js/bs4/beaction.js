@@ -2951,8 +2951,7 @@ var SAFN = {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
             var key = div.find(".fns-key").val();
-            var val = div.find(".fns-val").val();
-            var fnline = "@.getparamurl(" + key + "," + val + ")";
+            var fnline = "@.getparamurl(" + key + ")";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
         },
         SetValueStatement: function (triggerEl) {
@@ -3104,7 +3103,6 @@ var SAFN = {
             var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
             var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
             backlogName = (backlogName) ? backlogName : backlogId;
-            var opt = loadSelecPickerOnChnageApiList(backlogId);
                 var descBody = $('<div>')
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
@@ -3126,10 +3124,9 @@ var SAFN = {
                                 .addClass("function-statement-input-common cs-select-box")
                                 .append($('<select>')
                                     .attr('data-live-search', "true")
-                                    .attr('title', "Select Api")
                                     .attr("id",'get-callapi-select-box')
                                     .addClass("function-statement-input-common select-api-box fns-key ")
-                                    .html(opt) 
+                                    .append($("<option>").append((backlogName) ? backlogName : "Select Api").val((backlogId) ? backlogId : ""))
 
 
                                 )
@@ -3445,7 +3442,6 @@ var SAFN = {
             var arg = SAFN.GetCommandArgument(line);
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
-            var val = (argList[1]) ? argList[1] : '';
             var div = $("<div>")
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-getparamurl")
@@ -3461,18 +3457,12 @@ var SAFN = {
                     .append($("<div>").addClass('col-cs-2')
                         .append($("<ul>")
                             .css('display', 'initial')
-                            .append($("<li>")
-                                .append($("<input>")
-                                    .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-key")
-                                    .val(key)
-                                    .attr("placeholder", "Key")))
-                            .append($("<li>")
-                                .append($("<input>")
-                                    .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-val")
-                                    .val(val)
-                                    .attr("placeholder", "Value")
-                                )
-                            )
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
                         )
                     )
                 )
@@ -4721,15 +4711,15 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         SAFN.Reconvert.DecStatement(noteDec);
     }
 });
-// $(document).on('click', '.cs-select-box .select-api-box', function (e) {
+$(document).on('keypress', '.cs-select-box > .select-api-box .bs-searchbox input', function (e) {
      
-//     // if(e.keyCode === 13){
+    // if(e.keyCode === 13){
         
-//         var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
-//         loadSelecPickerOnChnageApiList(elm);
-//     // }
+        var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
+        loadSelecPickerOnChnageApiList(elm);
+    // }
 
-// });
+});
 $(document).on('click', '.cs-copy-btn', function (e) {
      
    var val = $(this).parents("tr").find('.text-holder').attr("idesc");
@@ -4741,37 +4731,31 @@ $(document).on('click', '.cs-copy-btn', function (e) {
 });
 
 
-function loadSelecPickerOnChnageApiList(backlogId) {
-      var prid = global_var.current_project_id;
+function loadSelecPickerOnChnageApiList(element) {
+   
+ 
+    var data = SACore.Backlogs;
 
-    var data = Object.keys(SACore.Backlogs);
-  
-    console.log(prid);
-    var tbl = $('<select>');
+
     
-      
-    for (var n = 0; n < data.length; n++) {
-      
-        var o = SACore.Backlogs[data[n]];
-        if(prid===o.fkProjectId){
-            if (o.isApi === '1') {
-        
-                var td = $('<option>')
-                    .text(o.backlogName)
-                    .val(o.id)
-    
-                    if (o.id===backlogId){
-                        td.attr('selected','selected')
-                    }
-                
-               
-                            
-                tbl.append(td);
+            var tbl = $(element);
+                tbl.html('');
+                console.log(data.length);
+            for (var n = 0; n < data.length; n++) {
+              
+                var o = data[0];
+                if (o.isApi == '1') {
+                    var td = $('<option>')
+                            .text(o.backlogName)
+                            .val(o.id)
+                                
+                    tbl.append(td);
+                }
+
             }
-        }
-       
 
-    }
+            $(element).selectpicker('refresh');
 
-   return tbl.html()
+        
+    
 }
