@@ -2199,7 +2199,7 @@ var SAFN = {
             });
         },
         ShowMessage: function (msg) {
-            msg = SAFN.GetArgumentPureValue(msg);
+            msg = SAFN.GetArgumentValue(msg);
             Toaster.showMessage(msg);
         },
         ShowError: function (msg) {
