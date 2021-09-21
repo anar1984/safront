@@ -2108,7 +2108,6 @@ var SAFN = {
             var value = data[key];
             alert(value);
         },
-
         AlertData: function () {
             var data = SAFN.CoreData;
             var zadData = JSON.stringify(data);
@@ -2198,7 +2197,7 @@ var SAFN = {
             });
         },
         ShowMessage: function (msg) {
-            msg = SAFN.GetArgumentPureValue(msg);
+            msg = SAFN.GetArgumentValue(msg);
             Toaster.showMessage(msg);
         },
         ShowError: function (msg) {
