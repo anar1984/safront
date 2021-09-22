@@ -2791,6 +2791,7 @@ var SAFN = {
 
             var fnline = "@.if(" + key + "," + oper + "," + val + "){" + body + "}";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+
         },
         GetStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
@@ -3207,71 +3208,88 @@ var SAFN = {
             var key = (argList[0]) ? argList[0] : '';
             var oper = (argList[1]) ? argList[1] : '';
             var val = (argList[2]) ? argList[2] : '';
-
             var body = SAFN.GetFunctionBody(line);
+            if (!oper === 'false') {
+                var selected = $('selected');
+            }
 
+            var dscZd = body.split(';');
+            var table = $('<table>').addClass('if-inc-table').attr('border', 0);
+            for (var ii = 0; ii < dscZd.length; ii++) {
+                var ln22 = dscZd[ii];
+                var ln33 = SAFN.InitConvention(ln22);
+                var tr = $('<tr>');
+                // tr.append($('<td>').html(ln33));
+                tr.append($('<td>')
+                        .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                        .append($('<input type="checkbox">'))
+                     )
+                    .append($('<td>')
+                        .html(ln33)
+                    )
+                    .append($('<td>')
+                        .append('<div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>')
+                    );
+                table.append(tr);
+            }
+
+
+
+            // $('.function-statement-input-common-4-if').selectpicker();
             var div = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container")
-                .css("background-color", "yellow")
-                .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
-                .css("padding", '5px 10px')
-                .css("border-radius", "5px")
-                .append($('<span>').append($('<b>').text('if ')))
-                .append($('<input>')
-                    .addClass("function-statement-input-common")
-                    .addClass("function-statement-input-common-4-if")
-                    .addClass("fns-key")
-                    .css("border-radius", "5px")
-                    .css("height", "20px")
-                    .css("border", "none")
-                    .css("width", "100px")
-                    .val(key))
-                .append($('<span>').text('  '))
-                .append($('<select>')
-                    .addClass("function-statement-input-common")
-                    .addClass("function-statement-input-common-4-if")
-                    .addClass("fns-oper")
-                    .css("border-radius", "5px")
-                    .css("height", "20px")
-                    .css("border", "none")
-                    .css("width", "100px")
-                    .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
-                    .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
-                    .append($('<option>').val('>').text('Great').attr('selected', (oper === '>') ? true : false))
-                    .append($('<option>').val('>=').text('Great Equals').attr('selected', (oper === '>=') ? true : false))
-                    .append($('<option>').val('<').text('Less').attr('selected', (oper === '<') ? true : false))
-                    .append($('<option>').val('<=').text('Less Equals').attr('selected', (oper === '<=') ? true : false))
-                    .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
-                    .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
-                )
-                .append($('<span>').text('  '))
-                .append($('<input>')
-                    .addClass("fns-val")
-                    .addClass("function-statement-input-common")
-                    .addClass("function-statement-input-common-4-if")
-                    .css("border-radius", "5px")
-                    .css("height", "20px")
-                    .css("border", "none")
-                    .css("width", "100px")
-                    .val(val))
-                //                    .append($('<span>').text(' {'))
-                .append($('<br>'))
-                .append($('<textarea>')
-                    .addClass("fns-body")
-                    .addClass("function-statement-input-common")
-                    .addClass("function-statement-input-common-4-if")
-                    .css("margin-top", "2px")
-                    .css("border-radius", "5px")
-                    .css("border", "none")
-                    .css("width", "100%")
-                    .text(body)
-                    .val(body))
-            //                    .append($('<span>').text('}'))
+                .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
+                .append($("<div>")
+                    .addClass('col-sm-12')
+                    .append($("<ul>")
+                        .append($("<li>")
+                            .append($("<span>")
+                                .addClass("cs-funcname")
+                                .css("padding", "5px 10px 5px 10px")
+                                .text("if")
+                            )
+                        )
+                        .append($("<li>")
+                            .append($('<input>')
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-if")
+                                .addClass("fns-key")
+                                .val(key))
+                        )
+                        .append($("<li>")
+                            .addClass("cs-select-box")
+                            .append($('<select>')
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-if select-api-box")
+                                .addClass("fns-oper")
+                                .append($('<option>').val('=').text('Equals').attr('selected', selected))
+                                .append($('<option>').val('!=').text('Not equals').attr('selected', selected))
+                                .append($('<option>').val('>').text('Great').attr('selected', selected))
+                                .append($('<option>').val('>=').text('Great Equals').attr('selected', selected))
+                                .append($('<option>').val('<').text('Less').attr('selected', selected))
+                                .append($('<option>').val('<=').text('Less Equals').attr('selected', selected))
+                                .append($('<option>').val('in').text('Contains').attr('selected', selected))
+                                .append($('<option>').val('notin').text('Not contains').attr('selected', selected))
+                            )
+                        )
+                        .append($("<li>")
+                            .append($('<input>')
+                                .addClass("fns-val")
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-if")
+                                .val(val))
 
+                        )
+                    )
+                    .append($("<div>")
+                        .append($('<br>'))
+                        .append(table)
+
+                    )
+
+                )
 
             return div;
-
 
         },
         ConsoleStatement: function (line) {
@@ -4846,37 +4864,40 @@ function loadSelecPickerOnChnageFnList(element) {
         async: false,
         success: function (res) {
             var dt = res.tbl[0].r
-            $(element).each(function () {  
+            $(element).each(function () {
 
                 var fnid = $(this).val();
-                
+
                 for (var n = 0; n < dt.length; n++) {
 
                     var o = dt[n];
-    
-    
-                        var td = $('<option>')
-                            .text(o.fnDescription)
-                            .val(o.id)
-    
-                        if (o.id === fnid) {
-                            td.attr('selected', 'selected')
-                        }
-    
-    
-    
-                        $(this).append(td);
-                    
-    
-    
-    
+
+
+                    var td = $('<option>')
+                        .text(o.fnDescription)
+                        .val(o.id)
+
+                    if (o.id === fnid) {
+                        td.attr('selected', 'selected')
+                    }
+
+
+
+                    $(this).append(td);
+
+
+
+
                 }
                 $(this).selectpicker();
             })
-           
+
         }
     });
 
 
     return tbl.html()
 }
+
+// if new scripts
+// $('select.function-statement-input-common-4-if').selectpicker();

@@ -63,6 +63,10 @@
     margin: 0 2px;
     padding: 6px 4px;
 }
+.cs-sum-inbox ul.dropdown-menu li {
+    padding: 0;
+    margin: 0;
+}
 .cs-sum-inbox input {
     font-size: 14px;
     padding: 3px 5px;
@@ -244,7 +248,7 @@ background: rgb(39 43 124 / 100%);
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
 }
-.table-hover tbody tr:hover button#dropdownMenuLink {
+.table-hover tbody tr:hover button#dropdownMenuLink, table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
     background-color: transparent;
     color: #272B7C;
 }
@@ -377,7 +381,7 @@ element.style {
 .cs-sum-inbox .select-api-box .bs-searchbox input.form-control {
 
 }
-.cs-sum-inbox .cs-select-box .bootstrap-select .btn {
+.cs-sum-inbox .cs-select-box .bootstrap-select .btn, .cs-sum-inbox .select-api-box.bootstrap-select .btn {
     font-size: 14px;
     height: 25px;
     padding: 0 7px;
@@ -424,4 +428,37 @@ element.style {
 .cs-select-box .bootstrap-select .dropdown-toggle:focus {
     outline: thin dotted #272b7c !important;
     outline: none;
+}
+table.if-inc-table {
+    background: #ffffff;
+}
+table.if-inc-table tr {
+    
+}
+table.if-inc-table tr:hover {
+    background-color: rgb(0 0 0 / 0%);
+}
+table.if-inc-table tr td {
+    
+}
+table.if-inc-table .btn {
+    background-color: transparent;
+    color: rgb(39 43 124 / 11%) !important;
+    font-size: 14px;
+    font-weight: 400;
+    height: 39px;
+    padding: 3px 10px;
+}
+table.if-inc-table .btn i{
+    font-weight: 600;
+}
+table.if-inc-table .btn-primary:not(:disabled):not(.disabled).active, table.if-inc-table .btn-primary:not(:disabled):not(.disabled):active, table.if-inc-table .show>.btn-primary.dropdown-toggle {
+    background-color: transparent;
+    border-color: transparent;
+    color: #272B7C;
+}
+table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, table.if-inc-table tr:hover .btn  {
+    background-color: transparent;
+    border-color: transparent;
+    color: #272B7C !important;
 }
