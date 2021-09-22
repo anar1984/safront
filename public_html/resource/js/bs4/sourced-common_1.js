@@ -5565,8 +5565,10 @@ UserStory.prototype = {
             }
             
           });
-
-        return table;
+               $(".select-api-box").selectpicker();
+               loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
+   
+          return table;
     },
     
     backlogProcessDescLineSubmenuItem:function(id){
@@ -14963,16 +14965,20 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     redirectUserStoryCore: function (backlogId) {
         try {
 //            event.preventDefault();
-
+              
             if (backlogId.length === 0) {
                 return;
             }
+            if(global_var.current_modal==='loadStoryCard'){
+                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
 
+                return
+            }
 
 
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
-
+            
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;
@@ -24286,6 +24292,7 @@ User.prototype = {
                         : fileUrl(that.getDefaultUserprofileName());
                 $('#userprofile_main_userimg').attr("src", img);
                 $('#userprofile_main_id').html(replaceTags(res.tbl[0].r[0].userPersonName));
+                $('#userprofile_main_id').attr('usrId',res.tbl[0].r[0].id);
                 $('#userprofile_main_domain').html(res.kv.currentDomain);
                 global_var.current_domain = res.kv.currentDomain;
                 global_var.current_ticker_id = res.tbl[0].r[0].id;

@@ -550,7 +550,7 @@
         <!-- <div class="col-1"></div> -->
         <div class="col-12">
             <br>
-            <label class="prosesDes"><b>Process Description</b></label>
+            <!-- <label class="prosesDes"><b>Process Description</b></label>
 
             <div class="col-12 add_descriotion_btn pdfHide"> 
                 <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" style="margin-left: -22px;" href="#" role="button" 
@@ -565,10 +565,38 @@
                     <button   class="dropdown-item firstbut pdescDeleteAll">Delete</button>
 
                 </div>
-            </div>
+            </div> -->
 
 
             <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
+                <thead id="cs_description_table_head_id">
+                    <tr class="cs-cursor-auto">
+                      <th class="col-3"><div class="cs-table-head-title prosesDes">Process Description</div></th>
+                      <th class="col-9">
+                        <div class="cs-table-head-right-section">
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <div class="cs-table-row-setting-btn dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-cog"></i> Row setting
+                                        <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class="pdescColored" pcolor='#f19a91' val="#f19a91"><i class="fas fa-tint"></i> Oranged</button></li>
+                                            <li><button class="firstbut pdescColored" pcolor="#33E8FF"><i class="fas fa-tint"></i> Blued</button></li>
+                                            <li><button class="firstbut pdescColored" pcolor="#8ad6a3"><i class="fas fa-tint"></i> Greened</button></li>
+                                            <li><button class="firstbut pdescColored" pcolor=""><i class="fas fa-tint"></i> Default</button></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li><button class="firstbut pdescDeleteAll"><i class="fas fa-trash-alt"></i> Delete</button></li>
+                                        </ul>
+                                    </div>
+                                    <div class="cs-proces-desc-add-to-task-box">
+                                        <button class="btn btn-primary" onclick="addProceccDescListToTaskNew()"  ><i class="fas fa-address-book"></i> Add to Task</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                    </tr>
+                  </thead>
                 <tbody id="description_table_body_id">       
                 </tbody>
                 <tfooter>
