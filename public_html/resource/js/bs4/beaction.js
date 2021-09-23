@@ -3242,7 +3242,7 @@ var SAFN = {
             )
             .append($('<input>')
                     .addClass("function-statement-input-common function-statement-input-common-4-if")
-                    .addClass("form-control add-description backlogDescriptionText")
+                    .addClass("form-control ifbacklogDescriptionText")
                     .css("width", "100%")
                     .attr('placeholder', 'Add Process Description')
                 );
@@ -3257,7 +3257,7 @@ var SAFN = {
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
                 .append($("<div>")
-                    .addClass('col-sm-12')
+                    .addClass('col-sm-12').css('padding','0 0 0 0')
                     .append($("<ul>")
                         .append($("<li>")
                             .append($("<span>")
@@ -3299,9 +3299,7 @@ var SAFN = {
                         )
                     )
                     .append($("<div>")
-                        .append($('<br>'))
-                        .append(table)
-                        .append(tfoot)
+                        .append(table.append(tfoot))
                     )
 
                 )
@@ -4918,3 +4916,44 @@ function loadSelecPickerOnChnageFnList(element) {
 
 // if new scripts
 // $('select.function-statement-input-common-4-if').selectpicker();
+
+$(document).on('click', '.ifbacklogDescriptionText', function (e) {
+    $( ".ifbacklogDescriptionText" ).autocomplete({
+        source: [ 
+        '@.if(,,){}',
+        '@.get()',
+        '@.getparamurl(,)',
+        '@.consolo(,)',
+        '@.consoledata(,)',
+        '@.deletekey(,)',
+        '@.alert(,)',
+        '@.alertdata(,)',
+        '@.set(,)',
+        '@.setvalue(,)',
+        '@.settext(,)',
+        '@.map(,)',
+        '@.showerror()',
+        '@.error(,)',
+        '@.sendemail(,)',
+        '@.sum(,)',
+        '@.dec(,)',
+        '@.concat(,)',
+        '@.show(,)',
+        '@.hide(,)',
+        '@.click(,)',
+        '@.change(,)',
+        '@.focus()',
+        '@.visible(,)',
+        '@.unvisible(,)',
+        '@.showmessage(,)',
+        '@.clear(,)',
+        '@.clearclass(,)',
+        '@.showparam(,)',
+        '@.hideparam(,)',
+        '@.visibleparam(,)',
+        '@.unvisibleparam(,)',
+        '@.callfn(,)',
+        '@.callapi(,)'
+        ]
+    });
+});
