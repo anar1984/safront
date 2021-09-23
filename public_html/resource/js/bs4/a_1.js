@@ -5682,9 +5682,9 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
             'sync';
 
 
-//    $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
-//        $(this).selectpicker('refresh');
-//    })
+    $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
+        $(this).selectpicker('refresh');
+    })
 
 
 
