@@ -14965,20 +14965,16 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     redirectUserStoryCore: function (backlogId) {
         try {
 //            event.preventDefault();
-              
+
             if (backlogId.length === 0) {
                 return;
             }
-            if(global_var.current_modal==='loadStoryCard'){
-                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
 
-                return
-            }
 
 
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
-            
+
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;
