@@ -3160,7 +3160,7 @@ var SAFN = {
             var opt = loadSelecPickerOnChnageApiList(backlogId);
             var descBody = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callapi")
                 .append($("<div>")
                     .addClass("d-flex justify-content-start")
                     .append($("<div>")
@@ -3214,25 +3214,42 @@ var SAFN = {
             }
 
             var dscZd = body.split(';');
-            var table = $('<table>').addClass('if-inc-table').attr('border', 0);
+            var table = $('<table><tbody>').addClass('if-inc-table').attr('border', 0);
+            var tfoot = $('<tfoot>').addClass('if-inc-tbody').attr('border', 0);
+            var ftr = $('<tr>');
             for (var ii = 0; ii < dscZd.length; ii++) {
                 var ln22 = dscZd[ii];
                 var ln33 = SAFN.InitConvention(ln22);
                 var tr = $('<tr>');
+                
                 // tr.append($('<td>').html(ln33));
                 tr.append($('<td>')
-                        .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-                        .append($('<input type="checkbox">'))
-                     )
+                    .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                    .append($('<input type="checkbox">'))
+                )
                     .append($('<td>')
                         .html(ln33)
                     )
                     .append($('<td>')
-                        .append('<div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>')
+                        .append('<div class="dropdown"><button class="btn btn-primary fn-tr-setting-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>')
                     );
+
                 table.append(tr);
             }
 
+            ftr.append($('<td>')
+                .append($('<input type="checkbox" class="ifProsDescCheckAll">'))
+            )
+            .append($('<input>')
+                    .addClass("function-statement-input-common function-statement-input-common-4-if")
+                    .addClass("form-control add-description backlogDescriptionText")
+                    .css("width", "100%")
+                    .attr('placeholder', 'Add Process Description')
+                );
+
+
+
+            tfoot.append(ftr);
 
 
             // $('.function-statement-input-common-4-if').selectpicker();
@@ -3284,7 +3301,7 @@ var SAFN = {
                     .append($("<div>")
                         .append($('<br>'))
                         .append(table)
-
+                        .append(tfoot)
                     )
 
                 )
