@@ -431,6 +431,7 @@ tbody .ifbacklogDescriptionText:hover{
 }
 table.if-inc-table {
     background: #ffffff;
+    width: 100%;
 }
 table.if-inc-table tr {
     
@@ -440,6 +441,22 @@ table.if-inc-table tr:hover {
 }
 table.if-inc-table tr td {
     
+}
+.cs-sum-inbox .ifbacklogDescBox {
+    width: 100%;
+}
+.cs-sum-inbox input.ifbacklogDescText {
+    height: 35px;
+    width: 100%;
+    resize: none;
+    white-space: pre;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    color: #000;
+}
+input.ifbacklogDescText:hover {
+    background: rgb(255 255 255);
+    color: #000;
 }
 table.if-inc-table .btn.fn-tr-setting-btn {
     background-color: transparent;
@@ -481,4 +498,13 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 }
 #description_table_body_id tfoot.if-inc-tbody tr, #description_table_body_id .if-inc-tbody tr {
     padding: 0px 7px 4px 0px;
+}
+.cs-if-script-box {
+    background-color: #F89CBE;
+}
+.cs-if-script-box input {
+    background: rgb(193 95 131 / 55%);
+}
+.cs-if-script-box input:hover {
+    background: rgb(193 95 131 / 100%);
 }

@@ -2783,13 +2783,18 @@ var SAFN = {
     Reconvert: {
         IfStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
-            var pid = $(triggerEl).closest('tr').attr('pid');
-            var key = div.find(".fns-key").val();
-            var oper = div.find(".fns-oper").val();
-            var val = div.find(".fns-val").val();
-            var body = div.find(".fns-body").val();
+            var pid = $(triggerEl).closest('.if-div-element').attr('pid');
+            var key = div.find(".fns-key-if").val();
+            var oper = div.find(".fns-oper-if").val();
+            var val = div.find(".fns-val-if").val();
 
-            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + body + "}";
+            var body = div.find(".if-inc-table tbody tr");
+            var bd = ''
+              body.each(function (p) {
+                   bd+= $(this).attr('idesc') +";"
+                })
+
+            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
 
         },
@@ -3220,8 +3225,8 @@ var SAFN = {
             for (var ii = 0; ii < dscZd.length; ii++) {
                 var ln22 = dscZd[ii];
                 var ln33 = SAFN.InitConvention(ln22);
-                var tr = $('<tr>');
-                
+                var tr = $('<tr>').attr("idesc", ln22);
+
                 // tr.append($('<td>').html(ln33));
                 tr.append($('<td>')
                     .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
@@ -3240,11 +3245,17 @@ var SAFN = {
             ftr.append($('<td>')
                 .append($('<input type="checkbox" class="ifProsDescCheckAll">'))
             )
-            .append($('<input>')
-                    .addClass("function-statement-input-common function-statement-input-common-4-if")
-                    .addClass("form-control ifbacklogDescriptionText")
-                    .css("width", "100%")
-                    .attr('placeholder', 'Add Process Description')
+                .append($('<td>')
+                    .append($('<div>')
+                        .addClass('ifbacklogDescBox')
+                        .append($('<input>')
+                            .attr('id', 'ifbacklogDescText')
+                            .addClass("function-statement-input-common function-statement-input-common-4-if")
+                            .addClass("form-control ifbacklogDescText")
+                            .css("width", "100%")
+                            .attr('placeholder', 'Add Process Description')
+                        )
+                    )
                 );
 
 
@@ -3255,9 +3266,9 @@ var SAFN = {
             // $('.function-statement-input-common-4-if').selectpicker();
             var div = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
+                .addClass("function-statement-container cs-sum-inbox cs-if-script-box if-div-element")
                 .append($("<div>")
-                    .addClass('col-sm-12').css('padding','0 0 0 0')
+                    .addClass('col-sm-12').css('padding', '0 0 0 0')
                     .append($("<ul>")
                         .append($("<li>")
                             .append($("<span>")
@@ -3270,7 +3281,7 @@ var SAFN = {
                             .append($('<input>')
                                 .addClass("function-statement-input-common")
                                 .addClass("function-statement-input-common-4-if")
-                                .addClass("fns-key")
+                                .addClass("fns-key-if")
                                 .val(key))
                         )
                         .append($("<li>")
@@ -3278,7 +3289,7 @@ var SAFN = {
                             .append($('<select>')
                                 .addClass("function-statement-input-common")
                                 .addClass("function-statement-input-common-4-if select-api-box")
-                                .addClass("fns-oper")
+                                .addClass("fns-oper-if")
                                 .append($('<option>').val('=').text('Equals').attr('selected', selected))
                                 .append($('<option>').val('!=').text('Not equals').attr('selected', selected))
                                 .append($('<option>').val('>').text('Great').attr('selected', selected))
@@ -3291,7 +3302,7 @@ var SAFN = {
                         )
                         .append($("<li>")
                             .append($('<input>')
-                                .addClass("fns-val")
+                                .addClass("fns-val-if")
                                 .addClass("function-statement-input-common")
                                 .addClass("function-statement-input-common-4-if")
                                 .val(val))
@@ -4825,6 +4836,25 @@ $(document).on('click', '.cs-copy-btn', function (e) {
     document.execCommand("copy");
     $temp.remove();
 });
+$(document).on('change', '#ifbacklogDescText', function (e) {
+      
+    var div = $(this).closest('div.function-statement-container');
+    var pid = $(this).closest('.if-div-element').attr('pid');
+    var key = div.find(".fns-key-if").val();
+    var oper = div.find(".fns-oper-if").val();
+    var val = div.find(".fns-val-if").val();
+
+    var body = div.find(".if-inc-table tbody tr");
+    var bd = ''
+      body.each(function (p) {
+           bd+= $(this).attr('idesc') +";"
+        })
+           bd+=$(this).val();
+    var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
+    new UserStory().updateBacklogDescDetailsZad(fnline, pid);  
+    new UserStory().getBacklogDesc();
+
+});
 
 
 function loadSelecPickerOnChnageApiList(backlogId) {
@@ -4917,43 +4947,47 @@ function loadSelecPickerOnChnageFnList(element) {
 // if new scripts
 // $('select.function-statement-input-common-4-if').selectpicker();
 
-$(document).on('click', '.ifbacklogDescriptionText', function (e) {
-    $( ".ifbacklogDescriptionText" ).autocomplete({
-        source: [ 
-        '@.if(,,){}',
-        '@.get()',
-        '@.getparamurl(,)',
-        '@.consolo(,)',
-        '@.consoledata(,)',
-        '@.deletekey(,)',
-        '@.alert(,)',
-        '@.alertdata(,)',
-        '@.set(,)',
-        '@.setvalue(,)',
-        '@.settext(,)',
-        '@.map(,)',
-        '@.showerror()',
-        '@.error(,)',
-        '@.sendemail(,)',
-        '@.sum(,)',
-        '@.dec(,)',
-        '@.concat(,)',
-        '@.show(,)',
-        '@.hide(,)',
-        '@.click(,)',
-        '@.change(,)',
-        '@.focus()',
-        '@.visible(,)',
-        '@.unvisible(,)',
-        '@.showmessage(,)',
-        '@.clear(,)',
-        '@.clearclass(,)',
-        '@.showparam(,)',
-        '@.hideparam(,)',
-        '@.visibleparam(,)',
-        '@.unvisibleparam(,)',
-        '@.callfn(,)',
-        '@.callapi(,)'
-        ]
+$('#ifbacklogDescText').keyup(function (e) {
+    $('#ifbacklogDescText').each(function () {
+        var shortcodes = [
+            '@.if(){}',
+            '@.get()',
+            '@.getparamurl()',
+            '@.consolo()',
+            '@.consoledata()',
+            '@.deletekey()',
+            '@.alert()',
+            '@.alertdata()',
+            '@.set()',
+            '@.setvalue()',
+            '@.settext()',
+            '@.map()',
+            '@.showerror()',
+            '@.error()',
+            '@.sendemail()',
+            '@.sum()',
+            '@.dec()',
+            '@.concat()',
+            '@.show()',
+            '@.hide()',
+            '@.click()',
+            '@.change()',
+            '@.focus()',
+            '@.visible()',
+            '@.unvisible()',
+            '@.showmessage()',
+            '@.clear()',
+            '@.clearclass()',
+            '@.showparam()',
+            '@.hideparam()',
+            '@.visibleparam()',
+            '@.unvisibleparam()',
+            '@.callfn()',
+            '@.callapi()'
+        ];
+        $("#ifbacklogDescText").autocomplete({
+            source: shortcodes,
+        });
+
     });
 });
