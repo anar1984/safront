@@ -5864,6 +5864,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : selectField;
+    var itemSeparator = ($(el).attr('sa-item-separator')) ? ' '+$(el).attr('sa-item-separator')+' ': " ";
 
 
     for (var i in rows) {
@@ -5872,9 +5873,12 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
         var itemValueList = itemValue.split(',');
         var finalVal = "";
+        var idx = 1;
         for (var ii in itemValueList) {
             var sval = itemValueList[ii];
-            finalVal += row[sval] + " ";
+            finalVal += row[sval];
+            finalVal += (idx<itemValueList.length)? itemSeparator :"";
+            idx++;
         }
         var name = finalVal;
         val = (val) ? val.trim() : name.trim();
@@ -5892,15 +5896,11 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
         if (tmVal.length === 1) {
             $(el).val(tmVal);
-            $(el).find('option[value="' + tmVal + '"]').
-                    attr('sa-is-selected', 'true')
-                    .attr('selected', true);
+            $(el).find('option[value="' + tmVal + '"]').attr('selected', true);
         } else {
             for (var i = 0; i < tmVal.length; i++) {
                 var vl = tmVal[i];
-                $(el).find('option[value="' + vl + '"]')
-                        .attr('sa-is-selected', 'true')
-                        .attr('selected', true);
+                $(el).find('option[value="' + vl + '"]').attr('selected', true);
             }
         }
 
@@ -6320,6 +6320,73 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
 
 }
+
+
+function setTableAsyncValueOnApiCall(el, data, asyncData) {
+   var data1 = data;
+    var adata = asyncData;
+    var tableId = adata.tableId;
+    var tableToggleZad = adata.toggleTableId;
+
+
+    var apiId = asyncData.apiId;
+    var obj = data._table.r;
+    for (var i in obj) {
+        var o = obj[i];
+        $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
+                .each(function () {
+
+                    var finalVal = "";
+            
+
+                    var saItemValue = $(this).find('.component-input-class').first().attr('sa-item-value');
+                    var saItemSaparator = $(this).find('.component-input-class').first().attr('sa-item-separator');
+
+                    if (!saItemValue){
+                       finalVal= o[asyncData.selectedField];
+                    }
+                    
+                    try {
+                        var itemValueList = saItemValue.split(',');
+
+                        var idx = 1;
+                        for (var ii in itemValueList) {
+                            var sval = itemValueList[ii];
+                            finalVal += o[sval];
+                            finalVal += (idx < itemValueList.length) ? ' ' + saItemSaparator + ' ' : "";
+                            idx++;
+                        }
+                    } catch (err) {
+                         finalVal= o[asyncData.selectedField];
+                    }
+
+
+
+                    var elem2 = $(this).find('.component-input-class').first();
+                    elem2.text(finalVal);
+                    elem2.val(finalVal);
+
+                    if (elem2.attr('sa-type') === 'image') {
+                        elem2.attr('src', fileUrl(finalVal))
+                    }
+
+                    updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
+                });
+    }
+
+    var el1 = $("table[table-id='" + tableId + "']");
+    var currentCallCount = $(el1).attr('current-call-count');
+    currentCallCount = (currentCallCount) ? currentCallCount : 0;
+
+    var callCount = $(el1).attr('call-count');
+    if ((parseInt(currentCallCount) + 1) >= callCount) {
+        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+    } else {
+        $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
+    }
+
+}
+
 
 function setValueOnCompAfterTriggerApi(el, data) {
     //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
