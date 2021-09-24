@@ -8309,8 +8309,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 closeModal('addRelatedSUSOutputModal');
                 that.genIPOInputDescList();
-                $('#relatedSUSOutputName').text("");
-                $('#relatedUserStory').html("");
+                $('.relatedSUSOutputName').text("");
+                $('.relatedUserStory').html("");
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -11525,15 +11525,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 //            $('#relatedSUSOutputName').text(obj.dependenceInputName);
             var depName = SAInput.GetCurrentDependenceBacklogName();
             var outInputName = (depName.length > 0) ? SAInput.GetCurrentDependenceInputName() : "";
-            $('#relatedSUSOutputName').text(outInputName);
+            $('.relatedSUSOutputName').text(outInputName);
             if (depName) {
-                $('#relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
+                $('.relatedUserStory').html('(<a href="#" onclick="new UserStory().redirectUserStoryCore(\'' +
                         SAInput.GetCurrentDependenceId() + '\')">'
                         + replaceTags(depName) + '</a>)');
-                $('#deleteRelatedSUSOutput').show();
+                $('.deleteRelatedSUSOutput').show();
             } else {
-                $('#relatedUserStory').html('');
-                $('#deleteRelatedSUSOutput').hide();
+                $('.relatedUserStory').html('');
+                $('.deleteRelatedSUSOutput').hide();
 
             }
         } catch (e) {
@@ -19628,8 +19628,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     toggleSubmenuIPO: function () {
         global_var.ipoTable = {};
         global_var.ipoTableVal = {};
-        $('#relatedSUSOutputName').html('');
-        $('#relatedUserStory').html('');
+        $('.relatedSUSOutputName').html('');
+        $('.relatedUserStory').html('');
 //        this.loadSUSList4Input();
 //        this.loadSection4Input();
         this.toggleComponentEventDetails();
