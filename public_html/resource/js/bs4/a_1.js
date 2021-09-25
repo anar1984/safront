@@ -21111,6 +21111,10 @@ $(document).on('click', '.for-chewekk-new-panel-link', function () {
     $.get("resource/child/" + f + ".html", function (html_string) {
         $(div).html(html_string);
         genChewekoperationSystem();
+        $('.selectpicker').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-chevron-down',
+         });
 
     });
 

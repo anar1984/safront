@@ -1,358 +1,154 @@
-<div class="col-12 us-half-div" id="main_div_of_backlog_info_kanban_view">
-    <div class="row us-half-div-row">
-        <!--        <div class="col-1 text-left toggleUSPanel" style="padding:4px;  ">
-                    <a href="#" class="add-userstory-button1"
-                       onclick="new UserStory().showUserStoryPanelMain(this)">
-                        <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
-                    </a>
-                </div>-->
-     <!--    <div class="col-12 text-center" style="padding:4px;">
-            <h4>User Story Management</h4>
-        </div> -->
-        <!--By G.R-->
-        <div class="TaskPanel col-12" >
-            <div class=" " style="margin: auto;">
-                <div class="category-kanban">
-                    <div class="searchSeqment ">
-                       
-                      
-                        <div class="col-lg-5">
-                            <input type="text" placeholder="search"  class="form-control form-control-sm" name="" id="search-us-managmenet-forchwk">
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="dropdown">
-                                <button class="dropdown-toggle1 btn btn-light btn-sm"  data-toggle="dropdown">Label</button> 
-                                <div id="general" class="">
-                                    <i>
-                                        <span class="badge">0</span>
-                                    </i>
-                                </div>
-                
-                
-                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
-                                    <span>
-                                        <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
-                                           data-target="#insertNewLabel" >
-                
-                                            Add Label
-                
-                                        </a>
-                                    </span>
-                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                
-                
-                                    <div class="dropdown-divider" style="padding:0px;">
-                
-                                    </div>
-                                    <div id="tasklabellist"
-                                         class="tasklabellist"
-                
-                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
-                
-                                    </div>
-                                </div>
-                            </div>
-                           </div>
-                        <div class="col-lg-1">
-                            <div class="dropdown">
-                                <button class="dropdown-toggle1 btn btn-light btn-sm "  data-toggle="dropdown"><i class="fas fa-filter"></i></button> 
-                              <!--   <div id="general" class="">
-                                    <i>
-                                        <span class="badge">0</span>
-                                    </i>
-                                </div> -->
-                
-                
-                                <div class="dropdown-menu " style="width: 360px;">
-                                    <div class="col-lg-8">
-                                        <select class="form-control " data-live-search="true" data-actions-box="true"
-                                            style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
-                                            data-type="assigne_id" title="İcra Edən"></select>
-                                    </div>
-                                    <div class="col-4">
-                                        <select id="priority-change-story-card-filter" class="form-control" data-live-search="false" data-actions-box="true" data-type="project_id" title="Priority">
-                                            <option  ></option>
-                                            <option value="1">1- Lowest</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9 - Highest</option>
-                                            </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                     
-                     
-                       
-                             
-                        </div>
-                    </div>
-                  
+<div class="wrapper" style="width: 100%;">
+    
+    <header>
 
+    </header>
 
+    <div class="cs-taskManagement-filter-box cs-gray-bg mb-3 mt-3">
+        <div class="d-flex bd-highlight">
+            <div class="mr-auto p-3 bd-highlight">
+               <div class="d-flex align-content-start flex-wrap">
+                <div class="form-group cs-search cs-filter-col">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Axtar...">
                 </div>
-                <div class="kanban-panel-4chewek" >
-                    <div class="task-column new" status="new">
-
-                        <div draggable="true" class="task-column-header" >
-                            <input type="checkbox" name="" data-st='new' class='all-check-us-mngm' id="alcheck-new-us-mng">
-
-                            <span class="headerInputColumn">Yeni <b><span class="counterkanban" id="kanban_view_new_count">0</span></b></span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='new' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                       
-                 
-                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_new" id="new">
-                            <div draggable="true" class="content-drag"></div>  
-
-
-
-                        </div>
-                       
-                    </div>
-                    <div class="task-column  on-going" status="ongoing" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='ongoing' class='all-check-us-mngm' id="alcheck-ongoing-us-mng">
-
-                            <span class="headerInputColumn">İcra <b><span class="counterkanban" id="kanban_view_ongoing_count">0</span></b></span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                           <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                           <button data-status='ongoing' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                      
-                       
-                    
-                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_ongoing" id="ongoing">
-                            <div class="content-drag"></div>      
-
-
-                        </div>
-                       
-
-                    </div>
-                    <div class="task-column closed"  status="closed" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
-
-                            <span class="headerInputColumn">İcra Edilib 
-                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='closed' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                    
-                     
-                        
-                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_closed" id="closed">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-                    <div class="task-column rejected"  status="rejected" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='closed' class='all-check-us-mngm' id="alcheck-closed-us-mng">
-
-                            <span class="headerInputColumn">İmtina 
-                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='rejected' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                     
-                       
-                        
-                        <div class="task-column-body-chwk main_div_of_backlog_info_kanban_view_table_rejected" id="rejected">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-                    <div class="task-column waiting"  status="waiting" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='waiting' class='all-check-us-mngm' id="alcheck-closed-us-mng">
-
-                            <span class="headerInputColumn">Gözləmə 
-                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='waiting' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                   
-                    
-                        
-                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_waiting" id="waiting">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-                    <div class="task-column canceled"  status="canceled" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='canceled' class='all-check-us-mngm' id="alcheck-canceled-us-mng">
-
-                            <span class="headerInputColumn">Ləğv edilib 
-                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='canceled' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                      
-                        
-                        
-                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_canceled" id="canceled">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-                    <div class="task-column finished"  status="finished" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='finished' class='all-check-us-mngm' id="alcheck-finished-us-mng">
-
-                            <span class="headerInputColumn">Bitib 
-                                <b><span class="counterkanban" id="kanban_view_closed_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='finished' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                    
-                        
-                        <div class="task-column-body-chwk main_div_of_chwk_info_kanban_view_table_finished" id="finished">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-                    <div class="task-column archive"  status="archive" >
-                        <div class="task-column-header">
-                            <input type="checkbox" name="" data-st='archive' class='all-check-us-mngm' id="alcheck-archive-us-mng">
-
-                            <span class="headerInputColumn">Arxivlənib 
-                                <b><span class="counterkanban" id="kanban_view_archive_count">0</span></b>
-                            </span>
-                            <!--                            <div class="column-header-edit">
-                                                            <i class="fas fa-ellipsis-h"></i>
-                                                        </div>
-                                                        <div class="Column header-choose">
-                                                            <div class="col-12 choosebtn">
-                                                                <span class=" limitSet">Limit Set Column</span>
-                                                            </div>
-                            
-                            
-                            
-                                                        </div>-->
-                                                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
-
-                                                        <button data-status='archive' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
-                        </div>
-                   
-                      
-                        
-                        <div class="task-column-body main_div_of_chwk_info_kanban_view_table_archive" id="archive">
-                            <div class="content-drag"></div>       
-
-
-                        </div>
-                      
-                    </div>
-
+                <div class="form-group cs-filter-col">
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                    </select>
                 </div>
-
+                <div class="form-group cs-filter-col">
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                    </select>
+                </div>
+                <div class="form-group cs-filter-col">
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                    </select>
+                </div>
+                <div class="form-group cs-filter-col">
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                    </select>
+                </div>
+                <div class="form-group cs-filter-col">
+                    <select class="selectpicker" data-live-search="true">
+                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
+                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+                    </select>
+                </div>
+             
+               </div>
+            </div>
+            <div class="p-2 bd-highlight cs-dark-blue-bg d-table right-radius-5px cursor-pointer">
+                <div class="filter-layaout-box d-table-cell align-middle">
+                    <img src="img/layout.svg" class="cs-svg-icon-layout">
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="cs-task-main mt-5" style="overflow: scroll;">
+        <div class="cs-task-panel-column">
+            <div class="cs-task-col">
+                <div class="cs-task-boxes cs-gray-bg">
+                    <div class="cs-task-status-header">
+                        <div class="d-flex bd-highlight cs-flex-align-middle">
+                            <div class="flex-fill bd-highlight">
+                                <div class="cs-card-size cs-dark-gray-color">
+                                    <span><i class="fas fa-clipboard-list"></i></span>
+                                    <span>21</span>
+                                </div>
+                            </div>
+                            <div class="flex-fill bd-highlight">
+                                <h4 class="cs-status-box-name cs-dark-blue-color text-center">Yeni</h4>
+                            </div>
+                            <div class="flex-fill bd-highlight">
+                                <div class="cs-card-fullview cs-dark-gray-color">
+                                    <a href="#"><i class="fas fa-columns"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cs-task-item-box">
+                        <div class="cs-task-item-in-box cs-white-bg">
+                            <div class="cs-task-cart-head">
+                                <div class="d-flex bd-highlight cs-flex-align-middle">
+                                    <div class="d-flex flex-fill bd-highlight">
+                                        <div class="cs-cart-head-col">
+                                            <div class="form-group m-0">
+                                                <input type="checkbox" id="cs-checkbox">
+                                                <label for="cs-checkbox"></label>
+                                            </div>                                            
+                                        </div>
+                                        <div class="cs-cart-head-col">
+                                            <div class="cs-staturs-circle-note"></div>
+                                            <span class="cs-cart-head-title">Mövzu adı</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-fill bd-highlight text-right">
+                                        <div class="cs-task-card-attachfile">
+                                            <label for="cs-file-upload" class="cs-file-upload">
+                                                <i class="fas fa-paperclip"></i>
+                                            </label>
+                                            <input id="cs-file-upload" type="file"/>
+                                        </div>
+                                        <label class="switch ">
+                                            <input type="checkbox" id="user-story-show-stat" data-bid="0101" class="user-story-prototype-change1" />
+                                            <span class="slider round hide-off "></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cs-task-card-body">
+                                <div class="cs-task-card-desc">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                            <div class="cs-task-card-bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cs-task-col">
+                <div class="cs-task-boxes cs-gray-bg">
+                    <div class="cs-task-item-box">
+                        hello
+                    </div>
+                </div>
+            </div>
+            <div class="cs-task-col">
+                <div class="cs-task-boxes cs-gray-bg">
+                    <div class="cs-task-item-box">
+                        hello
+                    </div>
+                </div>
+            </div>
+            <div class="cs-task-col">
+                <div class="cs-task-boxes cs-gray-bg">
+                    <div class="cs-task-item-box">
+                        hello
+                    </div>
+                </div>
+            </div>
+            <div class="cs-task-col">
+                <div class="cs-task-boxes cs-gray-bg">
+                    <div class="cs-task-item-box">
+                        hello
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   </div>
