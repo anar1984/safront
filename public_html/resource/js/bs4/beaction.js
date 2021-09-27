@@ -2783,7 +2783,7 @@ var SAFN = {
     Reconvert: {
         IfStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
-            var pid = $(triggerEl).closest('.if-div-element').attr('pid');
+            var pid = $(triggerEl).closest('.if-div-element').attr('ifpid');
             var key = div.find(".fns-key-if").val();
             var oper = div.find(".fns-oper-if").val();
             var val = div.find(".fns-val-if").val();
@@ -4839,7 +4839,7 @@ $(document).on('click', '.cs-copy-btn', function (e) {
 $(document).on('change', '#ifbacklogDescText', function (e) {
       
     var div = $(this).closest('div.function-statement-container');
-    var pid = $(this).closest('.if-div-element').attr('pid');
+    var pid = $(this).closest('.if-div-element').attr('ifpid');
     var key = div.find(".fns-key-if").val();
     var oper = div.find(".fns-oper-if").val();
     var val = div.find(".fns-val-if").val();
@@ -4947,13 +4947,13 @@ function loadSelecPickerOnChnageFnList(element) {
 // if new scripts
 // $('select.function-statement-input-common-4-if').selectpicker();
 
-$('#ifbacklogDescText').keyup(function (e) {
-    $('#ifbacklogDescText').each(function () {
+$(document).ready(function(){
+    $(document).on('keyup keydown click', '#backlogDescriptionText', function (e) {
         var shortcodes = [
             '@.if(){}',
             '@.get()',
             '@.getparamurl()',
-            '@.consolo()',
+            '@.console()',
             '@.consoledata()',
             '@.deletekey()',
             '@.alert()',
@@ -4985,9 +4985,12 @@ $('#ifbacklogDescText').keyup(function (e) {
             '@.callfn()',
             '@.callapi()'
         ];
-        $("#ifbacklogDescText").autocomplete({
+        $("#backlogDescriptionText").autocomplete({
             source: shortcodes,
+            select: function(event,ui){
+              $("#backlogDescriptionText").change();
+            },
+            position: { my: "left bottom", at: "left top", collision: "flip" }
         });
-
     });
 });

@@ -508,3 +508,10 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 .cs-if-script-box input:hover {
     background: rgb(193 95 131 / 100%);
 }
+.ui-widget-content {
+    max-height: 600px;
+    overflow: hidden auto;
+    z-index: 1000 !important;
+    width: 773px;
+    display: none;
+}
