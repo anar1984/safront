@@ -330,33 +330,33 @@ function updateBacklogName() {
     });
 }
 
-function runApiOnStoryCard(){
+function runApiOnStoryCard() {
     var fkBacklogId = global_var.current_backlog_id;
     global_var.runApiOnStoryCard = 1;
-    var out = be.callApi(fkBacklogId,{});
-    var html = $('<span>').css('white-space','pre')
-            .css('font-family','monospace')
-            .css("width","200px")
-            .text(JSON.stringify(out,null,"  "))
+    var out = be.callApi(fkBacklogId, {});
+    var html = $('<span>').css('white-space', 'pre')
+            .css('font-family', 'monospace')
+            .css("width", "200px")
+            .text(JSON.stringify(out, null, "  "))
 //    alert(JSON.stringify(out));
     generatePopupModalNew($('<div>').append(html).html());
 }
 
-function testApiOnStoryCard(){
+function testApiOnStoryCard() {
     $('#apiIntegrationModal').modal('show');
     $('#apiIntegrationModal_method').selectpicker('refresh');
 }
 
-function sendApiIntegrationForTest(){
-     
+function sendApiIntegrationForTest() {
+
     var url = $('#apiIntegrationModal_urllink').val();
     var method = $('#apiIntegrationModal_method').val();
     var content = $('#apiIntegrationModal_body').val();
-    var contentType=$('#apiIntegrationModal_contenttype').val();
+    var contentType = $('#apiIntegrationModal_contenttype').val();
 
 
     var json = initJSON();
-     
+
     json.kv.url = url;
     json.kv.method = method;
     json.kv.content = content;
@@ -371,14 +371,84 @@ function sendApiIntegrationForTest(){
         crossDomain: true,
         async: false,
         success: function (res) {
-            
+
         },
         error: function (err) {
-                Toaster.showError(JSON.stringify(err));
+            Toaster.showError(JSON.stringify(err));
         }
     });
 }
 
-function beautifyApiIntegrationContent(){
+function beautifyApiIntegrationContent() {
+
+}
+
+function getFnBodyZadPush( ) {
+    let line = `@.if(a,>,1){
+		@.if(b,<,3){
+			@.if(){
+				@.map(cc,bb);
+				@.alertdata();
+			}
+			@.if(){
+				@.map(vv,bb);
+				@.set(bb,44);
+			}
+			@.set(a,5);
+			@.map(b,a);
+		}
+		@.if(b,=,3){
+			@.set(c,5);
+			@.set(b,6);
+			@.forlist(){
+				@.if(bb,>,5){
+					@.showmessage('it is okay');
+				}				
+			}
+		}
+                @.showmessage("it's not done yet");
+        
+
+  }   `;
     
+    line = line.replace(/\t/g,'');
+    line = line.replace(/\r/g,'');
+    line = line.replace(/\n/g,'');
+    line = line.trim();
+    
+    var startIndex = line.indexOf("{");
+    var lastIndex = line.indexOf('}');
+    var idx = getFnBodyZadIteration(line,startIndex,lastIndex);    
+    var out = line.substr(startIndex + 1, (idx - startIndex -1));
+    console.log(out);
+}
+
+
+function getFnBodyZadIteration(line, startIndex, lastIndex) {
+try {
+
+ 
+        var cmd = line.substr(startIndex + 1, (lastIndex - startIndex-1 ));
+        var argLine = (line && line !== 'undefined') ? cmd.trim() : '';
+        var numberOfParthBetweenIndexes = argLine.split('{').length - 1;
+        numberOfParthBetweenIndexes = (numberOfParthBetweenIndexes < 0) ? 0
+                : numberOfParthBetweenIndexes;
+
+        if (numberOfParthBetweenIndexes===0){
+            return lastIndex+1;
+        }       
+
+        var indTmp = lastIndex+1;
+        for (var i = 0; i < numberOfParthBetweenIndexes; i++) {
+            var intTempTT = indTmp
+            indTmp = line.indexOf('}',indTmp)+1;
+            if (indTmp<=0){
+                indTmp = intTempTT;
+            }
+        }
+        
+        
+        return getFnBodyZadIteration(line,lastIndex,indTmp);          
+    } catch (err) {
+    }
 }
