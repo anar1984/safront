@@ -580,3 +580,40 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     background-color: #272B7C;
     border-color: #272B7C;
 }
+.storyCardFunctionInsertBox .sc-insert-func-result {
+    border: 1px solid #E9E9F1;
+    padding: 15px 10px;
+}
+.storyCardFunctionInsertBox .sc-insert-func-result ul {
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+.storyCardFunctionInsertBox .sc-insert-func-result ul li {
+    text-decoration: none;
+    list-style: none;
+    width: 100%;
+}
+.storyCardFunctionInsertBox .close:focus, .storyCardFunctionInsertBox button.close:focus {
+    outline: none;
+}
+.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode, .storyCardFunctionInsertBox .sc-insert-func-result a {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    background: transparent;
+    color: #272B7C;
+    padding: 2px 5px;
+    cursor:pointer;
+} 
+.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode:hover, .storyCardFunctionInsertBox .sc-insert-func-result a:hover {
+    background: #525596;
+    color: #ffffff;
+} 
+.storyCardFunctionInsertBox .sc-insert-func-help {
+    font-size: 13px;
+    color: #272B7C;
+    line-height: normal;
+    margin-top: 30px;
+}
