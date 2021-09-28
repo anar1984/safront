@@ -515,3 +515,68 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     width: 773px;
     display: none;
 }
+.cs-function-list li.ui-menu-item {
+    color: #272b7c;
+    padding: 3px 5px;
+    border: none;
+    background: #ffffff;
+}
+.cs-function-list li.ui-menu-item:hover, .cs-function-list li.ui-menu-item.ui-state-focus {
+    color: #ffffff;
+    background: #555898;
+    cursor: pointer;
+}
+.fx-shortcodes-btn {
+    position: relative;
+    width: 40px;
+    height: 30px;
+    margin-top: 2px;
+}
+.agile-icon-fx {
+    
+}
+.agile-icon-fx:after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    filter: brightness(50%) contrast(30%);
+}
+.agile-icon-fx:after {
+    height: 100%;
+    width: 100%;
+    background-image: url(../../img/fx.svg);
+    background-repeat: no-repeat;
+    background-size: 100% 70%;
+    -o-background-size: 100% 70%;
+    -webkit-background-size: 100% 70%;
+}
+.storyCardFunctionInsertBox .modal-header {
+    border-bottom-color: #E9E9F1;
+    background: #E9E9F1;
+    padding: 10px 20px;
+    color: #272B7C;
+}
+.storyCardFunctionInsertBox .close, .storyCardFunctionInsertBox button.close:hover, .storyCardFunctionInsertBox .close span {
+    color: #272B7C;
+    opacity: 1 !important;
+}
+.storyCardFunctionInsertBox .ScInserFuncBtn, .storyCardFunctionInsertBox .ScCancellFuncBtn  {
+    height: 30px;
+    line-height: 10px;
+    padding: 5px 15px;
+}
+.storyCardFunctionInsertBox .ScInserFuncBtn {
+    color: #fff;
+    background-color: #272B7C;
+    border-color: #272B7C;
+}
+.storyCardFunctionInsertBox .ScCancellFuncBtn {
+    background-color: #9395BD;
+    border-color: #9395BD;
+}
+.storyCardFunctionInsertBox .ScCancellFuncBtn:hover {
+    color: #fff;
+    background-color: #272B7C;
+    border-color: #272B7C;
+}

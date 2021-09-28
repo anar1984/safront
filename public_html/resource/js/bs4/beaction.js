@@ -3227,7 +3227,6 @@ var SAFN = {
                 var ln33 = SAFN.InitConvention(ln22);
                 var tr = $('<tr>').attr("idesc", ln22);
 
-                // tr.append($('<td>').html(ln33));
                 tr.append($('<td>')
                     .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
                     .append($('<input type="checkbox">'))
@@ -4945,8 +4944,6 @@ function loadSelecPickerOnChnageFnList(element) {
 }
 
 // if new scripts
-// $('select.function-statement-input-common-4-if').selectpicker();
-
 $(document).ready(function(){
     $(document).on('keyup keydown click', '#backlogDescriptionText', function (e) {
         var shortcodes = [
@@ -4991,6 +4988,13 @@ $(document).ready(function(){
               $("#backlogDescriptionText").change();
             },
             position: { my: "left bottom", at: "left top", collision: "flip" }
-        });
+        }).autocomplete( "widget" ).addClass( "cs-function-list" );
+    });
+    $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
+        $("#backlogDescriptionText").change();
+    });
+    $(document).on('click', '.fx-shortcodes-btn', function (e) {
+ 
     });
 });
+
