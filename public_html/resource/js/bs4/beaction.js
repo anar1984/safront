@@ -4817,15 +4817,7 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         SAFN.Reconvert.DecStatement(noteDec);
     }
 });
-// $(document).on('click', '.cs-select-box .select-api-box', function (e) {
 
-//     // if(e.keyCode === 13){
-
-//         var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
-//         loadSelecPickerOnChnageApiList(elm);
-//     // }
-
-// });
 $(document).on('click', '.cs-copy-btn', function (e) {
 
     var val = $(this).parents("tr").find('.text-holder').attr("idesc");
