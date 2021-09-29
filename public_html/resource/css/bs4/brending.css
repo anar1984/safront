@@ -583,37 +583,70 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 .storyCardFunctionInsertBox .sc-insert-func-result {
     border: 1px solid #E9E9F1;
     padding: 15px 10px;
+    border-radius: 3px;
 }
 .storyCardFunctionInsertBox .sc-insert-func-result ul {
     text-decoration: none;
     padding: 0;
     margin: 0;
+    width: 456px !important;
+    height: 100%;
+    max-height: 130px;
+    position: relative;
+    top: 8px !important;
+    left: 0 !important;
+    border: none;
+    display: block !important;
 }
 .storyCardFunctionInsertBox .sc-insert-func-result ul li {
     text-decoration: none;
     list-style: none;
     width: 100%;
 }
+.sc-insert-func-result .cs-fc-shortcode li.ui-menu-item.ui-state-focus {
+    padding: 0;
+    margin: 0;
+}
 .storyCardFunctionInsertBox .close:focus, .storyCardFunctionInsertBox button.close:focus {
     outline: none;
 }
-.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode, .storyCardFunctionInsertBox .sc-insert-func-result a {
+.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode li, .sc-insert-func-result .cs-fc-shortcode li.ui-menu-item.ui-state-focus {
     display: block;
     text-decoration: none;
     font-size: 14px;
     text-transform: uppercase;
     background: transparent;
+    border: none;
+} 
+.storyCardFunctionInsertBox .sc-insert-func-result li a, .sc-insert-func-result .cs-fc-shortcode li.ui-menu-item.ui-state-focus a {
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
     color: #272B7C;
     padding: 2px 5px;
     cursor:pointer;
 } 
-.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode:hover, .storyCardFunctionInsertBox .sc-insert-func-result a:hover {
+.storyCardFunctionInsertBox .sc-insert-func-result .cs-fc-shortcode li:hover, .storyCardFunctionInsertBox .sc-insert-func-result li a:hover, .sc-insert-func-result .cs-fc-shortcode li.ui-menu-item.ui-state-focus a {
     background: #525596;
-    color: #ffffff;
+    color: #ffffff !important;
 } 
 .storyCardFunctionInsertBox .sc-insert-func-help {
     font-size: 13px;
     color: #272B7C;
     line-height: normal;
     margin-top: 30px;
+}
+.sc-insert-func-result .inser-funct-input {
+    width: 100%;
+    border: 1px solid #e9e9f1;
+    border-radius: 3px;
+    padding: 8px 9px;
+    font-size: 14px;
+}
+.sc-insert-func-result .inser-funct-input:focus {
+    box-shadow: 0 0 0 1px rgb(20 22 62 / 26%);
+    outline: none;
 }
