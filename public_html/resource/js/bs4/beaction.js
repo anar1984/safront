@@ -4975,6 +4975,7 @@ $(document).ready(function(){
             '@.callapi()'
         ];
         $("#backlogDescriptionText").autocomplete({
+            minLength: 0,
             source: shortcodes,
             select: function(event,ui){
               $("#backlogDescriptionText").change();
@@ -4985,9 +4986,8 @@ $(document).ready(function(){
     $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
         $("#backlogDescriptionText").change();
     });
-
-        // $(document).on('keyup', '.inser-funct-input', function (e) {
     $('.inser-funct-input').each(function () {
+     
         var funcdata = [
             {"label":"IF","fx":"@.if(){}","desc":"FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
             {"label":"GET","fx":"@.get()","desc":"GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
@@ -5025,9 +5025,8 @@ $(document).ready(function(){
             {"label":"CALL API","fx":"@.callapi()", "desc":"CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
         ];
         $(this).autocomplete({
-            minLength: 0,
-            delay: 1000,
             source: funcdata,
+            minLength: 0,
             create: function () {
                 $(this).autocomplete('instance')._renderItem = function (ul, item) {
                     return $('<li>').append('<a class="cs-fx-btn" fxShortcodeData="'+ item.fx +'" fxhelpdata="'+ item.desc +'">' + item.label +'</a>')
@@ -5054,8 +5053,9 @@ $(document).ready(function(){
         });
 
     });
-   
-    // sc-insert-func-help
+    // $(document).on('click', '.agile-icon-fx', function (e) {
+    //     $('input.inser-funct-input').focus();
+    // });
 
 });
 
