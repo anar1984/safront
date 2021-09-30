@@ -2040,7 +2040,9 @@ $(document).ready(function () {
         $(this).parent().find('.ApiInTDspan').text('Send to API');
     })
 
-
+    $(".cs-more-filter").live("click", function () {
+        $(".cs-more-filter i").toggleClass("fa-arrow-bottom");
+    });
 
 
 })
