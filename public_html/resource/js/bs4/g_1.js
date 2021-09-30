@@ -2039,10 +2039,10 @@ $(document).ready(function () {
     $(document).on('click', ".DeleteINAPi", function (ev) {
         $(this).parent().find('.ApiInTDspan').text('Send to API');
     })
-
-    $(".cs-more-filter").live("click", function () {
-        $(".cs-more-filter i").toggleClass("fa-arrow-bottom");
+       
+    $(document).on('click', ".cs-more-filter", function (e) {
+        $(".cs-more-filter i").toggleClass("fa-arrow-down").toggleClass("fa-arrow-up");
+        $('.cs-more-filter-box').toggleClass('show');
     });
-
 
 })

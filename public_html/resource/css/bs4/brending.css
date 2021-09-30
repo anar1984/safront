@@ -1345,3 +1345,10 @@ label.cs-file-upload:hover {
 .cs-more-filter:hover, .cs-more-filter:focus, .cs-more-filter:active {
     color: #999;
 }
+.cs-more-filter-box {
+    display: none !important;
+}
+.cs-more-filter-box.show {
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
