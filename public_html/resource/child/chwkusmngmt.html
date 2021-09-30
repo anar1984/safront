@@ -1,5 +1,5 @@
 <div class="wrapper" style="width: 100%;">
-    
+
     <header>
 
     </header>
@@ -7,148 +7,87 @@
     <div class="cs-taskManagement-filter-box cs-gray-bg mb-3 mt-3">
         <div class="d-flex bd-highlight">
             <div class="mr-auto p-3 bd-highlight">
-               <div class="d-flex align-content-start flex-wrap">
-                <div class="form-group cs-search cs-filter-col">
-                    <span class="fa fa-search form-control-feedback"></span>
-                    <input type="text" class="form-control" placeholder="Axtar...">
+                <div class="d-flex align-content-start flex-wrap filter-section">
+                    <div class="form-group cs-search cs-filter-col">
+                        <span class="fa fa-search form-control-feedback"></span>
+                        <input type="text" class="form-control" id="task-kanban-search-tapsiriq" placeholder="Axtar...">
+                    </div>
+                    <div class="form-group cs-filter-col">
+                        <select class="selectpicker"  title="Modul" id="reqeustModul-filter-tapsiriq" data-live-search="true">
+                            <option value="techizat-satinalma" selected='selected'>Təchizat-Satınalma</option>
+                            <option value="satis-marketing">Satış-Marketing</option>
+                            <option value="maliyye-muhasibatliq">Maliyyə-Mühasibatlıq</option>
+                            <option value="ir-karguzarliq">İR-Kargüzarlıq</option>
+                            <option value="adminstrativ-inzibati">Adminstrativ-İnzibati</option>
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col">
+                        <select class="selectpicker" multiple title="Növ" id="reqeustType-filter-tapsiriq" onchange="getTapsiriqList()" data-live-search="true">
+                            
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col aktiv_pasiv_filter" >
+                        <select class="selectpicker" title="Kontragentlər" onchange="getTapsiriqList()" multiple data-live-search="true"
+                            id="kontragent-filter-tapsiriq">
+                           
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col status_filter">
+                        <select class="selectpicker" title="Əməliyyat" onchange="getTapsiriqList()" multiple data-live-search="true"
+                            id="taskTypeId-filter-tapsiriq">
+                           
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col status_filter">
+                        <select class="selectpicker user-filter-tapsiriq" onchange="getTapsiriqList()" id="excekuter-filter-tapsiriq" title="İcraçi" multiple data-live-search="true">
+                           
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col" >
+                        <select class="selectpicker user-filter-tapsiriq" onchange="getTapsiriqList()" id="createdby-filter-tapsiriq" multiple title="Daxil edən" data-live-search="true">
+                        
+                        </select>
+                    </div>
+                    <div class="form-group cs-filter-col d-flex" >
+                       <input type="text"   class="form-control form-control-sm"  onchange="getTapsiriqList()" placeholder="Tarix" id="date_timepicker_start_end_tapsiriq">
+                                <span class="input-group-append" role="right-icon"><button class="btn btn-light btn-sm  border-left-0" disabled="" type="button"><i
+                                        class="fa fa-calendar" aria-hidden="true"></i></button></span>
+                    </div>
+
+
                 </div>
-                <div class="form-group cs-filter-col">
-                    <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                    </select>
-                </div>
-                <div class="form-group cs-filter-col">
-                    <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                    </select>
-                </div>
-                <div class="form-group cs-filter-col">
-                    <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                    </select>
-                </div>
-                <div class="form-group cs-filter-col">
-                    <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                    </select>
-                </div>
-                <div class="form-group cs-filter-col">
-                    <select class="selectpicker" data-live-search="true">
-                        <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-                        <option data-tokens="mustard">Burger, Shake and a Smile</option>
-                        <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-                    </select>
-                </div>
-             
-               </div>
             </div>
-            <div class="p-2 bd-highlight cs-dark-blue-bg d-table right-radius-5px cursor-pointer">
+            <div class="p-2 bd-highlight  d-table right-radius-5px cursor-pointer">
                 <div class="filter-layaout-box d-table-cell align-middle">
-                    <img src="img/layout.svg" class="cs-svg-icon-layout">
+                    <label class="cs-card-ceckbox switch">
+                        <input type="checkbox" id="show-all-colmn-tapsriq" onchange="getTapsiriqList()" data-bid="21092419581001883141" class="user-story-prototype-change1">
+                        <span class="slider round hide-off "></span>
+                    </label>
+                </div>
+                <div class="filter-layaout-box d-table-cell align-middle">
+
+                    <div class="dropdown">
+                        <span style="color: white;" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                        <div class="dropdown-menu  task-view-button-group" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" data-view='aktiv_passiv' href="#">Aktiv Passiv</a>
+                            <a class="dropdown-item" data-view='status' href="#">Status</a>
+                     <!--        <a class="dropdown-item" data-view='operation' href="#">Əməliyyat</a> -->
+                        </div>
+                    </div>
+                  
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="cs-task-main mt-5" style="overflow: scroll;">
+    <div class="cs-task-main mt-1" style="overflow: scroll;">
         <div class="cs-task-panel-column">
-            <div class="cs-task-col">
-                <div class="cs-task-boxes cs-gray-bg">
-                    <div class="cs-task-status-header">
-                        <div class="d-flex bd-highlight cs-flex-align-middle">
-                            <div class="flex-fill bd-highlight">
-                                <div class="cs-card-size cs-dark-gray-color">
-                                    <span><i class="fas fa-clipboard-list"></i></span>
-                                    <span>21</span>
-                                </div>
-                            </div>
-                            <div class="flex-fill bd-highlight">
-                                <h4 class="cs-status-box-name cs-dark-blue-color text-center">Yeni</h4>
-                            </div>
-                            <div class="flex-fill bd-highlight">
-                                <div class="cs-card-fullview cs-dark-gray-color">
-                                    <a href="#"><i class="fas fa-columns"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cs-task-item-box">
-                        <div class="cs-task-item-in-box cs-white-bg">
-                            <div class="cs-task-cart-head">
-                                <div class="d-flex bd-highlight cs-flex-align-middle">
-                                    <div class="d-flex flex-fill bd-highlight">
-                                        <div class="cs-cart-head-col">
-                                            <div class="form-group m-0">
-                                                <input type="checkbox" id="cs-checkbox">
-                                                <label for="cs-checkbox"></label>
-                                            </div>                                            
-                                        </div>
-                                        <div class="cs-cart-head-col">
-                                            <div class="cs-staturs-circle-note"></div>
-                                            <span class="cs-cart-head-title">Mövzu adı</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-fill bd-highlight text-right">
-                                        <div class="cs-task-card-attachfile">
-                                            <label for="cs-file-upload" class="cs-file-upload">
-                                                <i class="fas fa-paperclip"></i>
-                                            </label>
-                                            <input id="cs-file-upload" type="file"/>
-                                        </div>
-                                        <label class="switch ">
-                                            <input type="checkbox" id="user-story-show-stat" data-bid="0101" class="user-story-prototype-change1" />
-                                            <span class="slider round hide-off "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cs-task-card-body">
-                                <div class="cs-task-card-desc">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                </div>
-                            </div>
-                            <div class="cs-task-card-bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cs-task-col">
-                <div class="cs-task-boxes cs-gray-bg">
-                    <div class="cs-task-item-box">
-                        hello
-                    </div>
-                </div>
-            </div>
-            <div class="cs-task-col">
-                <div class="cs-task-boxes cs-gray-bg">
-                    <div class="cs-task-item-box">
-                        hello
-                    </div>
-                </div>
-            </div>
-            <div class="cs-task-col">
-                <div class="cs-task-boxes cs-gray-bg">
-                    <div class="cs-task-item-box">
-                        hello
-                    </div>
-                </div>
-            </div>
-            <div class="cs-task-col">
-                <div class="cs-task-boxes cs-gray-bg">
-                    <div class="cs-task-item-box">
-                        hello
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
-    
-   </div>
+
+</div>
+

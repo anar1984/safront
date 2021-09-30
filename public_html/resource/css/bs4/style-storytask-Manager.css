@@ -210,6 +210,9 @@
 .stat-table-us thead .task-for-backlog-event-prm.active{
     border: 1px solid black;
 }
+.stat-table-us thead .new-tapsiriq-rew.active{
+    border: 1px solid black;
+}
 .task-column-body .stat-table-us tbody ,#body-large-modal-in-us .stat-table-us tbody {
     max-height: 240px;
     overflow: auto;
@@ -243,7 +246,7 @@
     margin: 5px;
 }
 .stat-table-us td span{
-    width: 100% !important;
+    width: 100% ;
     text-align: center;
 }
 .stat-div-task-content{
