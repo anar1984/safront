@@ -5057,6 +5057,5 @@ $(document).ready(function(){
         $('#insert-funct-input').focus();
         $('#insert-funct-input').val(' ').keydown();
     })
-
 });
 
