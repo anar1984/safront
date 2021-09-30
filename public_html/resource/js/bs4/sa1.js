@@ -383,72 +383,46 @@ function beautifyApiIntegrationContent() {
 
 }
 
-function getFnBodyZadPush( ) {
-    let line = `@.if(a,>,1){
-		@.if(b,<,3){
-			@.if(){
-				@.map(cc,bb);
-				@.alertdata();
-			}
-			@.if(){
-				@.map(vv,bb);
-				@.set(bb,44);
-			}
-			@.set(a,5);
-			@.map(b,a);
-		}
-		@.if(b,=,3){
-			@.set(c,5);
-			@.set(b,6);
-			@.forlist(){
-				@.if(bb,>,5){
-					@.showmessage('it is okay');
-				}				
-			}
-		}
-                @.showmessage("it's not done yet");
-        
+function getFnBodyZadPush(line, startIndex) {
 
-  }   `;
-    
-    line = line.replace(/\t/g,'');
-    line = line.replace(/\r/g,'');
-    line = line.replace(/\n/g,'');
-    line = line.trim();
-    
-    var startIndex = line.indexOf("{");
     var lastIndex = line.indexOf('}');
-    var idx = getFnBodyZadIteration(line,startIndex,lastIndex);    
-    var out = line.substr(startIndex + 1, (idx - startIndex -1));
-    console.log(out);
+    var idx = getFnBodyZadIteration(line, startIndex+1, lastIndex,1,0);
+    return idx;
+//    var out = line.substr(startIndex + 1, (idx - startIndex -1));
+//    console.log(out);
 }
 
 
-function getFnBodyZadIteration(line, startIndex, lastIndex) {
-try {
+function getFnBodyZadIteration(line, startIndex, lastIndex, iterationCount, paranCount) {
+    try {
 
- 
-        var cmd = line.substr(startIndex + 1, (lastIndex - startIndex-1 ));
+
+        var cmd = line.substr(startIndex , (lastIndex - startIndex+1));
         var argLine = (line && line !== 'undefined') ? cmd.trim() : '';
         var numberOfParthBetweenIndexes = argLine.split('{').length - 1;
         numberOfParthBetweenIndexes = (numberOfParthBetweenIndexes < 0) ? 0
                 : numberOfParthBetweenIndexes;
 
-        if (numberOfParthBetweenIndexes===0){
-            return lastIndex+1;
-        }       
+        paranCount = +numberOfParthBetweenIndexes;
 
-        var indTmp = lastIndex+1;
-        for (var i = 0; i < numberOfParthBetweenIndexes; i++) {
-            var intTempTT = indTmp
-            indTmp = line.indexOf('}',indTmp)+1;
-            if (indTmp<=0){
-                indTmp = intTempTT;
-            }
+//        if (numberOfParthBetweenIndexes === 0) {
+//            return lastIndex + 1;
+//        }
+        if ((numberOfParthBetweenIndexes===0) && (iterationCount * 2 >= paranCount)) {
+            return lastIndex + 1;
         }
-        
-        
-        return getFnBodyZadIteration(line,lastIndex,indTmp);          
+
+        var indTmp = lastIndex ;
+        for (var i = 0; i < numberOfParthBetweenIndexes; i++) {
+            var intTempTT = indTmp;
+            indTmp = line.indexOf('}', indTmp+1);
+//            if (indTmp <= 0) {
+//                indTmp = intTempTT;
+//            }
+        }
+
+        iterationCount++;
+        return getFnBodyZadIteration(line, lastIndex+1, indTmp, iterationCount, paranCount);
     } catch (err) {
     }
 }
