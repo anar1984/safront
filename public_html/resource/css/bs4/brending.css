@@ -1049,7 +1049,7 @@ input:checked + .slider:before {
 }
 .cs-task-main {
     margin-left: 30px;
-    margin-right: 30px;
+    margin-right: 23px;
 }
 .cs-task-panel-column {
     display: flex;
@@ -1214,7 +1214,7 @@ label.cs-file-upload:hover {
  display: inline-block;
 }
 .cs-task-card-prioritet {
-    margin-right: 1px;
+    margin-right: 4px;
 }
 .cs-task-card-prioritet .dropdown-toggle::after {
     color: #989898;
@@ -1252,6 +1252,9 @@ label.cs-file-upload:hover {
     border-color: transparent;
     font-size: 13px;
     padding: 2px 5px;
+    width: 100%;
+    min-width: 100px;
+    max-width: 120px;
 }
 .cs-task-card-prioritet .btn:hover {
     background-color: #f3f3f3;
@@ -1288,7 +1291,7 @@ label.cs-file-upload:hover {
     box-shadow: 0px 0px 0px 2px #6bb5f0 inset;
 }
 .maximize-large{
-    min-width: 95vw;
+    min-width: 100%;
 }
 .maximize-large .cs-task-item-in-box{
     max-width: 24.3%;
@@ -1302,4 +1305,26 @@ label.cs-file-upload:hover {
 }
 #taskModalBlock .stat-table-us td{
   width: 200px;
+}
+.cs-taskManagement-filter-box .cs-card-ceckbox .slider {
+    background-color: #9b9b9b;
+}
+.cs-taskManagement-filter-box .cs-card-ceckbox .slider:before {
+    background-color: #f3f3f3;
+}
+.cs-taskManagement-filter-box .cs-card-ceckbox input:checked + .slider {
+    background-color: #163656;
+}
+.cs-taskManagement-filter-box .filter-layaout-box #dropdownMenuButton {
+    color: #9b9b9b;
+}
+.cs-taskManagement-filter-box .filter-layaout-box #dropdownMenuButton:hover {
+    color: #163656;
+}
+.cs-taskManagement-filter-box .cs-card-ceckbox.switch {
+    margin-top: 5px;
+    margin-right: 14px;
+}
+.cs_date_timepicker_start_end_icon button:hover i {
+    color: #163656;
 }
