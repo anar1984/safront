@@ -65,10 +65,6 @@
     margin: 0 2px;
     padding: 6px 4px;
 }
-.cs-sum-inbox ul.dropdown-menu li {
-    padding: 0;
-    margin: 0;
-}
 .cs-sum-inbox input {
     font-size: 14px;
     padding: 3px 5px;
@@ -250,7 +246,7 @@ background: rgb(39 43 124 / 100%);
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
 }
-.table-hover tbody tr:hover button#dropdownMenuLink, table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
+.table-hover tbody tr:hover button#dropdownMenuLink {
     background-color: transparent;
     color: #272B7C;
 }
@@ -358,17 +354,17 @@ tbody tr button.cs-copy-btn {
     background-color: #ffffff;
     border: 1px solid #d0d0d0;
 }
-.descriptiontable tbody .add-description, tbody .ifbacklogDescriptionText {
+
+element.style {
+
+}
+.descriptiontable tbody .add-description {
     height: 35px;
     width: 100%;
     resize: none;
     white-space: pre;
     background-color: #ffffff;
     border: 1px solid #d0d0d0;
-}
-tbody .ifbacklogDescriptionText:hover{
-    color: #495057;
-    background-color: #fff;
 }
 .form-control:focus {
     color: #495057;
@@ -383,7 +379,7 @@ tbody .ifbacklogDescriptionText:hover{
 .cs-sum-inbox .select-api-box .bs-searchbox input.form-control {
 
 }
-.cs-sum-inbox .cs-select-box .bootstrap-select .btn, .cs-sum-inbox .select-api-box.bootstrap-select .btn {
+.cs-sum-inbox .cs-select-box .bootstrap-select .btn {
     font-size: 14px;
     height: 25px;
     padding: 0 7px;
@@ -431,6 +427,17 @@ tbody .ifbacklogDescriptionText:hover{
     outline: thin dotted #272b7c !important;
     outline: none;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

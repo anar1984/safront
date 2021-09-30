@@ -2783,20 +2783,14 @@ var SAFN = {
     Reconvert: {
         IfStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
-            var pid = $(triggerEl).closest('.if-div-element').attr('ifpid');
-            var key = div.find(".fns-key-if").val();
-            var oper = div.find(".fns-oper-if").val();
-            var val = div.find(".fns-val-if").val();
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").val();
+            var oper = div.find(".fns-oper").val();
+            var val = div.find(".fns-val").val();
+            var body = div.find(".fns-body").val();
 
-            var body = div.find(".if-inc-table tbody tr");
-            var bd = ''
-              body.each(function (p) {
-                   bd+= $(this).attr('idesc') +";"
-                })
-
-            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
+            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + body + "}";
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
-
         },
         GetStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
@@ -3165,7 +3159,7 @@ var SAFN = {
             var opt = loadSelecPickerOnChnageApiList(backlogId);
             var descBody = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callapi")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
                 .append($("<div>")
                     .addClass("d-flex justify-content-start")
                     .append($("<div>")
@@ -3213,108 +3207,71 @@ var SAFN = {
             var key = (argList[0]) ? argList[0] : '';
             var oper = (argList[1]) ? argList[1] : '';
             var val = (argList[2]) ? argList[2] : '';
+
             var body = SAFN.GetFunctionBody(line);
-            if (!oper === 'false') {
-                var selected = $('selected');
-            }
 
-            var dscZd = body.split(';');
-            var table = $('<table><tbody>').addClass('if-inc-table').attr('border', 0);
-            var tfoot = $('<tfoot>').addClass('if-inc-tbody').attr('border', 0);
-            var ftr = $('<tr>');
-            for (var ii = 0; ii < dscZd.length; ii++) {
-                var ln22 = dscZd[ii];
-                var ln33 = SAFN.InitConvention(ln22);
-                var tr = $('<tr>').attr("idesc", ln22);
-
-                tr.append($('<td>')
-                    .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-                    .append($('<input type="checkbox">'))
-                )
-                    .append($('<td>')
-                        .html(ln33)
-                    )
-                    .append($('<td>')
-                        .append('<div class="dropdown"><button class="btn btn-primary fn-tr-setting-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>')
-                    );
-
-                table.append(tr);
-            }
-
-            ftr.append($('<td>')
-                .append($('<input type="checkbox" class="ifProsDescCheckAll">'))
-            )
-                .append($('<td>')
-                    .append($('<div>')
-                        .addClass('ifbacklogDescBox')
-                        .append($('<input>')
-                            .attr('id', 'ifbacklogDescText')
-                            .addClass("function-statement-input-common function-statement-input-common-4-if")
-                            .addClass("form-control ifbacklogDescText")
-                            .css("width", "100%")
-                            .attr('placeholder', 'Add Process Description')
-                        )
-                    )
-                );
-
-
-
-            tfoot.append(ftr);
-
-
-            // $('.function-statement-input-common-4-if').selectpicker();
             var div = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-if-script-box if-div-element")
-                .append($("<div>")
-                    .addClass('col-sm-12').css('padding', '0 0 0 0')
-                    .append($("<ul>")
-                        .append($("<li>")
-                            .append($("<span>")
-                                .addClass("cs-funcname")
-                                .css("padding", "5px 10px 5px 10px")
-                                .text("if")
-                            )
-                        )
-                        .append($("<li>")
-                            .append($('<input>')
-                                .addClass("function-statement-input-common")
-                                .addClass("function-statement-input-common-4-if")
-                                .addClass("fns-key-if")
-                                .val(key))
-                        )
-                        .append($("<li>")
-                            .addClass("cs-select-box")
-                            .append($('<select>')
-                                .addClass("function-statement-input-common")
-                                .addClass("function-statement-input-common-4-if select-api-box")
-                                .addClass("fns-oper-if")
-                                .append($('<option>').val('=').text('Equals').attr('selected', selected))
-                                .append($('<option>').val('!=').text('Not equals').attr('selected', selected))
-                                .append($('<option>').val('>').text('Great').attr('selected', selected))
-                                .append($('<option>').val('>=').text('Great Equals').attr('selected', selected))
-                                .append($('<option>').val('<').text('Less').attr('selected', selected))
-                                .append($('<option>').val('<=').text('Less Equals').attr('selected', selected))
-                                .append($('<option>').val('in').text('Contains').attr('selected', selected))
-                                .append($('<option>').val('notin').text('Not contains').attr('selected', selected))
-                            )
-                        )
-                        .append($("<li>")
-                            .append($('<input>')
-                                .addClass("fns-val-if")
-                                .addClass("function-statement-input-common")
-                                .addClass("function-statement-input-common-4-if")
-                                .val(val))
-
-                        )
-                    )
-                    .append($("<div>")
-                        .append(table.append(tfoot))
-                    )
-
+                .addClass("function-statement-container")
+                .css("background-color", "yellow")
+                .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
+                .css("padding", '5px 10px')
+                .css("border-radius", "5px")
+                .append($('<span>').append($('<b>').text('if ')))
+                .append($('<input>')
+                    .addClass("function-statement-input-common")
+                    .addClass("function-statement-input-common-4-if")
+                    .addClass("fns-key")
+                    .css("border-radius", "5px")
+                    .css("height", "20px")
+                    .css("border", "none")
+                    .css("width", "100px")
+                    .val(key))
+                .append($('<span>').text('  '))
+                .append($('<select>')
+                    .addClass("function-statement-input-common")
+                    .addClass("function-statement-input-common-4-if")
+                    .addClass("fns-oper")
+                    .css("border-radius", "5px")
+                    .css("height", "20px")
+                    .css("border", "none")
+                    .css("width", "100px")
+                    .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
+                    .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
+                    .append($('<option>').val('>').text('Great').attr('selected', (oper === '>') ? true : false))
+                    .append($('<option>').val('>=').text('Great Equals').attr('selected', (oper === '>=') ? true : false))
+                    .append($('<option>').val('<').text('Less').attr('selected', (oper === '<') ? true : false))
+                    .append($('<option>').val('<=').text('Less Equals').attr('selected', (oper === '<=') ? true : false))
+                    .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
+                    .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
                 )
+                .append($('<span>').text('  '))
+                .append($('<input>')
+                    .addClass("fns-val")
+                    .addClass("function-statement-input-common")
+                    .addClass("function-statement-input-common-4-if")
+                    .css("border-radius", "5px")
+                    .css("height", "20px")
+                    .css("border", "none")
+                    .css("width", "100px")
+                    .val(val))
+                //                    .append($('<span>').text(' {'))
+                .append($('<br>'))
+                .append($('<textarea>')
+                    .addClass("fns-body")
+                    .addClass("function-statement-input-common")
+                    .addClass("function-statement-input-common-4-if")
+                    .css("margin-top", "2px")
+                    .css("border-radius", "5px")
+                    .css("border", "none")
+                    .css("width", "100%")
+                    .text(body)
+                    .val(body))
+            //                    .append($('<span>').text('}'))
+
 
             return div;
+
 
         },
         ConsoleStatement: function (line) {
@@ -4817,7 +4774,15 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         SAFN.Reconvert.DecStatement(noteDec);
     }
 });
+// $(document).on('click', '.cs-select-box .select-api-box', function (e) {
 
+//     // if(e.keyCode === 13){
+
+//         var elm = $(this).parents(".cs-select-box").find("select.select-api-box");
+//         loadSelecPickerOnChnageApiList(elm);
+//     // }
+
+// });
 $(document).on('click', '.cs-copy-btn', function (e) {
 
     var val = $(this).parents("tr").find('.text-holder').attr("idesc");
@@ -4826,25 +4791,6 @@ $(document).on('click', '.cs-copy-btn', function (e) {
     $temp.val(val).select();
     document.execCommand("copy");
     $temp.remove();
-});
-$(document).on('change', '#ifbacklogDescText', function (e) {
-      
-    var div = $(this).closest('div.function-statement-container');
-    var pid = $(this).closest('.if-div-element').attr('ifpid');
-    var key = div.find(".fns-key-if").val();
-    var oper = div.find(".fns-oper-if").val();
-    var val = div.find(".fns-val-if").val();
-
-    var body = div.find(".if-inc-table tbody tr");
-    var bd = ''
-      body.each(function (p) {
-           bd+= $(this).attr('idesc') +";"
-        })
-           bd+=$(this).val();
-    var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
-    new UserStory().updateBacklogDescDetailsZad(fnline, pid);  
-    new UserStory().getBacklogDesc();
-
 });
 
 
@@ -4900,162 +4846,37 @@ function loadSelecPickerOnChnageFnList(element) {
         async: false,
         success: function (res) {
             var dt = res.tbl[0].r
-            $(element).each(function () {
+            $(element).each(function () {  
 
                 var fnid = $(this).val();
-
+                
                 for (var n = 0; n < dt.length; n++) {
 
                     var o = dt[n];
-
-
-                    var td = $('<option>')
-                        .text(o.fnDescription)
-                        .val(o.id)
-
-                    if (o.id === fnid) {
-                        td.attr('selected', 'selected')
-                    }
-
-
-
-                    $(this).append(td);
-
-
-
-
+    
+    
+                        var td = $('<option>')
+                            .text(o.fnDescription)
+                            .val(o.id)
+    
+                        if (o.id === fnid) {
+                            td.attr('selected', 'selected')
+                        }
+    
+    
+    
+                        $(this).append(td);
+                    
+    
+    
+    
                 }
                 $(this).selectpicker();
             })
-
+           
         }
     });
 
 
     return tbl.html()
 }
-
-// if new scripts
-$(document).ready(function(){
-    $(document).on('keyup keydown click', '#backlogDescriptionText', function (e) {
-        var shortcodes = [
-            '@.if(){}',
-            '@.get()',
-            '@.getparamurl()',
-            '@.console()',
-            '@.consoledata()',
-            '@.deletekey()',
-            '@.alert()',
-            '@.alertdata()',
-            '@.set()',
-            '@.setvalue()',
-            '@.settext()',
-            '@.map()',
-            '@.showerror()',
-            '@.error()',
-            '@.sendemail()',
-            '@.sum()',
-            '@.dec()',
-            '@.concat()',
-            '@.show()',
-            '@.hide()',
-            '@.click()',
-            '@.change()',
-            '@.focus()',
-            '@.visible()',
-            '@.unvisible()',
-            '@.showmessage()',
-            '@.clear()',
-            '@.clearclass()',
-            '@.showparam()',
-            '@.hideparam()',
-            '@.visibleparam()',
-            '@.unvisibleparam()',
-            '@.callfn()',
-            '@.callapi()'
-        ];
-        $("#backlogDescriptionText").autocomplete({
-            minLength: 0,
-            source: shortcodes,
-            select: function(event,ui){
-              $("#backlogDescriptionText").change();
-            },
-            position: { my: "left bottom", at: "left top", collision: "flip" }
-        }).autocomplete( "widget" ).addClass( "cs-function-list" );
-    });
-    $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
-        $("#backlogDescriptionText").change();
-    });
-    $('.insert-funct-input').each(function () {
-     
-        var funcdata = [
-            {"label":"IF","fx":"@.if(){}","desc":"FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label":"GET","fx":"@.get()","desc":"GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label":"GET PARAM URL","fx":"@.getparamurl()","desc":"GET PARAM URL long established fact that a reader will be distracted by the of a page when looking at its layout. The point of using"},
-            {"label":"CONSOLE","fx":"@.console()", "desc":"CONSOLE is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of 4."},
-            {"label":"CONSOLE DATA","fx":"@.consoledata()", "desc":"CONSOLE DATA established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label":"DELETE KEY","fx":"@.deletekey()", "desc":"DELETE KEY established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label":"ALERT","fx":"@.alert()", "desc":"ALERT is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label":"ALERT DATA","fx":"@.alertdata()", "desc":"ALERT DATA is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point"},
-            {"label":"SET","fx":"@.set()", "desc":"SUM is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label":"SET VALUE","fx":"@.setvalue()", "desc":"SET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SET TEXT","fx":"@.settext()", "desc":"SET TEXT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"MAP","fx":"@.map()", "desc":"MAP It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SHOW ERROR","fx":"@.showerror()", "desc":"SHOW ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"ERROR","fx":"@.error()", "desc":"ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"lanel":"SEND EMAIL","fx":"@.sendemail()", "desc":"SED EMAIL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SUM","fx":"@.sum()", "desc":"SUM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"DEC","fx":"@.dec()", "desc":"DEC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CONCAT","fx":"@.concat()", "desc":"CONCAT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SHOW","fx":"@.show()", "desc":"SHOW It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"HIDE","fx":"@.hide()", "desc":"HIDE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CLICK","fx":"@.click()", "desc":"CLICK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CHANGE","fx":"@.change()", "desc":"CHANGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"FOCUS","fx":"@.focus()", "desc":"FOCUS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"VISIBLE","fx":"@.visible()", "desc":"VISABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"UNVISIBLE","fx":"@.unvisible()", "desc":"UNVISIBLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SHOW MESSAGE","fx":"@.showmessage()", "desc":"SHOW MESSAGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CLEAR","fx":"@.clear()", "desc":"CLEAR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CLEAR CLASS","fx":"@.clearclass()", "desc":"CLEAR CLASS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"SHOW PARAM","fx":"@.showparam()", "desc":"SHOW PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"HIDE PARAM","fx":"@.hideparam()", "desc":"HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"VISIBLE PARAM","fx":"@.visibleparam()", "desc":"VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"UNVISIBLE PARAM","fx":"@.unvisibleparam()", "desc":"UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CALL FN","fx":"@.callfn()", "desc":"CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label":"CALL API","fx":"@.callapi()", "desc":"CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
-        ];
-        $(this).autocomplete({
-            source: funcdata,
-            minLength: 0,
-            create: function () {
-                $(this).autocomplete('instance')._renderItem = function (ul, item) {
-                    return $('<li>').append('<a class="cs-fx-btn" fxShortcodeData="'+ item.fx +'" fxhelpdata="'+ item.desc +'">' + item.label +'</a>')
-                            .appendTo(ul);
-                };
-            }
-        }).autocomplete( "widget" ).addClass( "cs-fc-shortcode" ).autocomplete({
-            position: { my: "left bottom", at: "left top", collision: "flip" }
-        });
-        
-        $( ".insert-funct-input" ).autocomplete( "option", "appendTo", ".sc-insert-func-result" );
-       
-        $(document).on('click', '.cs-fc-shortcode .cs-fx-btn', function (e) {
-            $('.sc-insert-func-help p').text('');
-            $('.sc-insert-func-help p').append($(this).attr('fxhelpdata'));
-            $('.sc-insert-func-help input').val('');
-            $('.sc-insert-func-help input').val($(this).attr('fxshortcodedata'));
-        });
-
-        $(document).on('keyup keydown click', '#ScInserFuncBtn', function (e) {
-            var bdt = $('.sc-insert-func-help input').val();
-            $('#backlogDescriptionText').val(bdt);
-            $('#backlogDescriptionText').change();
-        });
-
-    });
-     $('#storyCardFunctionInsertBox').on('shown.bs.modal', function () {
-        $('#insert-funct-input').focus();
-        $('#insert-funct-input').val(' ').keydown();
-    })
-});
-
