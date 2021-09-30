@@ -1563,6 +1563,32 @@ $(document).on('click', '.more-table-details', function (event) {
     
 
 });
+$(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (event) {
+        var tbody = $(this).parents('table').find('tbody');
+        console.log('dddddddddd')
+        var log = $(this).attr("status");
+        if(log==='total'){
+            tbody.find(".task-tr-list").show(); 
+            $('.stat-table-us thead .new-tapsiriq-rew').removeClass('active')
+        }else{
+            $(this).toggleClass('active');
+            var bgId = $(this).parents('tr').find('.new-tapsiriq-rew.active');
+            tbody.find(".task-tr-list").hide();
+       
+            for (let i = 0; i < bgId.length; i++) {
+                   
+                tbody.find('[data-tr-status="'+$(bgId[i]).attr("status")+'"]').show();
+                
+            }
+             if(bgId.length === 0){
+                tbody.find(".task-tr-list").show(); 
+             }
+        }
+        
+     
+       
+            
+});
 $(document).on('click', '.stat-table-us thead .task-for-backlog-event-prm', function (event) {
         var tbody = $(this).parents('table').find('tbody');
         var log = $(this).attr("status");

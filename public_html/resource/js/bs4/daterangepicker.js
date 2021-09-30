@@ -1,1572 +1,2259 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.moment=t()}(this,function(){"use strict";var e,i;function c(){return e.apply(null,arguments)}function o(e){return e instanceof Array||"[object Array]"===Object.prototype.toString.call(e)}function u(e){return null!=e&&"[object Object]"===Object.prototype.toString.call(e)}function l(e){return void 0===e}function h(e){return"number"==typeof e||"[object Number]"===Object.prototype.toString.call(e)}function d(e){return e instanceof Date||"[object Date]"===Object.prototype.toString.call(e)}function f(e,t){var n,s=[];for(n=0;n<e.length;++n)s.push(t(e[n],n));return s}function m(e,t){return Object.prototype.hasOwnProperty.call(e,t)}function _(e,t){for(var n in t)m(t,n)&&(e[n]=t[n]);return m(t,"toString")&&(e.toString=t.toString),m(t,"valueOf")&&(e.valueOf=t.valueOf),e}function y(e,t,n,s){return Tt(e,t,n,s,!0).utc()}function g(e){return null==e._pf&&(e._pf={empty:!1,unusedTokens:[],unusedInput:[],overflow:-2,charsLeftOver:0,nullInput:!1,invalidMonth:null,invalidFormat:!1,userInvalidated:!1,iso:!1,parsedDateParts:[],meridiem:null,rfc2822:!1,weekdayMismatch:!1}),e._pf}function v(e){if(null==e._isValid){var t=g(e),n=i.call(t.parsedDateParts,function(e){return null!=e}),s=!isNaN(e._d.getTime())&&t.overflow<0&&!t.empty&&!t.invalidMonth&&!t.invalidWeekday&&!t.weekdayMismatch&&!t.nullInput&&!t.invalidFormat&&!t.userInvalidated&&(!t.meridiem||t.meridiem&&n);if(e._strict&&(s=s&&0===t.charsLeftOver&&0===t.unusedTokens.length&&void 0===t.bigHour),null!=Object.isFrozen&&Object.isFrozen(e))return s;e._isValid=s}return e._isValid}function p(e){var t=y(NaN);return null!=e?_(g(t),e):g(t).userInvalidated=!0,t}i=Array.prototype.some?Array.prototype.some:function(e){for(var t=Object(this),n=t.length>>>0,s=0;s<n;s++)if(s in t&&e.call(this,t[s],s,t))return!0;return!1};var r=c.momentProperties=[];function w(e,t){var n,s,i;if(l(t._isAMomentObject)||(e._isAMomentObject=t._isAMomentObject),l(t._i)||(e._i=t._i),l(t._f)||(e._f=t._f),l(t._l)||(e._l=t._l),l(t._strict)||(e._strict=t._strict),l(t._tzm)||(e._tzm=t._tzm),l(t._isUTC)||(e._isUTC=t._isUTC),l(t._offset)||(e._offset=t._offset),l(t._pf)||(e._pf=g(t)),l(t._locale)||(e._locale=t._locale),0<r.length)for(n=0;n<r.length;n++)l(i=t[s=r[n]])||(e[s]=i);return e}var t=!1;function M(e){w(this,e),this._d=new Date(null!=e._d?e._d.getTime():NaN),this.isValid()||(this._d=new Date(NaN)),!1===t&&(t=!0,c.updateOffset(this),t=!1)}function k(e){return e instanceof M||null!=e&&null!=e._isAMomentObject}function S(e){return e<0?Math.ceil(e)||0:Math.floor(e)}function D(e){var t=+e,n=0;return 0!==t&&isFinite(t)&&(n=S(t)),n}function a(e,t,n){var s,i=Math.min(e.length,t.length),r=Math.abs(e.length-t.length),a=0;for(s=0;s<i;s++)(n&&e[s]!==t[s]||!n&&D(e[s])!==D(t[s]))&&a++;return a+r}function Y(e){!1===c.suppressDeprecationWarnings&&"undefined"!=typeof console&&console.warn&&console.warn("Deprecation warning: "+e)}function n(i,r){var a=!0;return _(function(){if(null!=c.deprecationHandler&&c.deprecationHandler(null,i),a){for(var e,t=[],n=0;n<arguments.length;n++){if(e="","object"==typeof arguments[n]){for(var s in e+="\n["+n+"] ",arguments[0])e+=s+": "+arguments[0][s]+", ";e=e.slice(0,-2)}else e=arguments[n];t.push(e)}Y(i+"\nArguments: "+Array.prototype.slice.call(t).join("")+"\n"+(new Error).stack),a=!1}return r.apply(this,arguments)},r)}var s,O={};function T(e,t){null!=c.deprecationHandler&&c.deprecationHandler(e,t),O[e]||(Y(t),O[e]=!0)}function b(e){return e instanceof Function||"[object Function]"===Object.prototype.toString.call(e)}function x(e,t){var n,s=_({},e);for(n in t)m(t,n)&&(u(e[n])&&u(t[n])?(s[n]={},_(s[n],e[n]),_(s[n],t[n])):null!=t[n]?s[n]=t[n]:delete s[n]);for(n in e)m(e,n)&&!m(t,n)&&u(e[n])&&(s[n]=_({},s[n]));return s}function P(e){null!=e&&this.set(e)}c.suppressDeprecationWarnings=!1,c.deprecationHandler=null,s=Object.keys?Object.keys:function(e){var t,n=[];for(t in e)m(e,t)&&n.push(t);return n};var W={};function C(e,t){var n=e.toLowerCase();W[n]=W[n+"s"]=W[t]=e}function H(e){return"string"==typeof e?W[e]||W[e.toLowerCase()]:void 0}function R(e){var t,n,s={};for(n in e)m(e,n)&&(t=H(n))&&(s[t]=e[n]);return s}var U={};function F(e,t){U[e]=t}function L(e,t,n){var s=""+Math.abs(e),i=t-s.length;return(0<=e?n?"+":"":"-")+Math.pow(10,Math.max(0,i)).toString().substr(1)+s}var N=/(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,G=/(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,V={},E={};function I(e,t,n,s){var i=s;"string"==typeof s&&(i=function(){return this[s]()}),e&&(E[e]=i),t&&(E[t[0]]=function(){return L(i.apply(this,arguments),t[1],t[2])}),n&&(E[n]=function(){return this.localeData().ordinal(i.apply(this,arguments),e)})}function A(e,t){return e.isValid()?(t=j(t,e.localeData()),V[t]=V[t]||function(s){var e,i,t,r=s.match(N);for(e=0,i=r.length;e<i;e++)E[r[e]]?r[e]=E[r[e]]:r[e]=(t=r[e]).match(/\[[\s\S]/)?t.replace(/^\[|\]$/g,""):t.replace(/\\/g,"");return function(e){var t,n="";for(t=0;t<i;t++)n+=b(r[t])?r[t].call(e,s):r[t];return n}}(t),V[t](e)):e.localeData().invalidDate()}function j(e,t){var n=5;function s(e){return t.longDateFormat(e)||e}for(G.lastIndex=0;0<=n&&G.test(e);)e=e.replace(G,s),G.lastIndex=0,n-=1;return e}var Z=/\d/,z=/\d\d/,$=/\d{3}/,q=/\d{4}/,J=/[+-]?\d{6}/,B=/\d\d?/,Q=/\d\d\d\d?/,X=/\d\d\d\d\d\d?/,K=/\d{1,3}/,ee=/\d{1,4}/,te=/[+-]?\d{1,6}/,ne=/\d+/,se=/[+-]?\d+/,ie=/Z|[+-]\d\d:?\d\d/gi,re=/Z|[+-]\d\d(?::?\d\d)?/gi,ae=/[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFF07\uFF10-\uFFEF]{1,256}|[\u0600-\u06FF\/]{1,256}(\s*?[\u0600-\u06FF]{1,256}){1,2}/i,oe={};function ue(e,n,s){oe[e]=b(n)?n:function(e,t){return e&&s?s:n}}function le(e,t){return m(oe,e)?oe[e](t._strict,t._locale):new RegExp(he(e.replace("\\","").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g,function(e,t,n,s,i){return t||n||s||i})))}function he(e){return e.replace(/[-\/\\^$*+?.()|[\]{}]/g,"\\$&")}var de={};function ce(e,n){var t,s=n;for("string"==typeof e&&(e=[e]),h(n)&&(s=function(e,t){t[n]=D(e)}),t=0;t<e.length;t++)de[e[t]]=s}function fe(e,i){ce(e,function(e,t,n,s){n._w=n._w||{},i(e,n._w,n,s)})}var me=0,_e=1,ye=2,ge=3,ve=4,pe=5,we=6,Me=7,ke=8;function Se(e){return De(e)?366:365}function De(e){return e%4==0&&e%100!=0||e%400==0}I("Y",0,0,function(){var e=this.year();return e<=9999?""+e:"+"+e}),I(0,["YY",2],0,function(){return this.year()%100}),I(0,["YYYY",4],0,"year"),I(0,["YYYYY",5],0,"year"),I(0,["YYYYYY",6,!0],0,"year"),C("year","y"),F("year",1),ue("Y",se),ue("YY",B,z),ue("YYYY",ee,q),ue("YYYYY",te,J),ue("YYYYYY",te,J),ce(["YYYYY","YYYYYY"],me),ce("YYYY",function(e,t){t[me]=2===e.length?c.parseTwoDigitYear(e):D(e)}),ce("YY",function(e,t){t[me]=c.parseTwoDigitYear(e)}),ce("Y",function(e,t){t[me]=parseInt(e,10)}),c.parseTwoDigitYear=function(e){return D(e)+(68<D(e)?1900:2e3)};var Ye,Oe=Te("FullYear",!0);function Te(t,n){return function(e){return null!=e?(xe(this,t,e),c.updateOffset(this,n),this):be(this,t)}}function be(e,t){return e.isValid()?e._d["get"+(e._isUTC?"UTC":"")+t]():NaN}function xe(e,t,n){e.isValid()&&!isNaN(n)&&("FullYear"===t&&De(e.year())&&1===e.month()&&29===e.date()?e._d["set"+(e._isUTC?"UTC":"")+t](n,e.month(),Pe(n,e.month())):e._d["set"+(e._isUTC?"UTC":"")+t](n))}function Pe(e,t){if(isNaN(e)||isNaN(t))return NaN;var n,s=(t%(n=12)+n)%n;return e+=(t-s)/12,1===s?De(e)?29:28:31-s%7%2}Ye=Array.prototype.indexOf?Array.prototype.indexOf:function(e){var t;for(t=0;t<this.length;++t)if(this[t]===e)return t;return-1},I("M",["MM",2],"Mo",function(){return this.month()+1}),I("MMM",0,0,function(e){return this.localeData().monthsShort(this,e)}),I("MMMM",0,0,function(e){return this.localeData().months(this,e)}),C("month","M"),F("month",8),ue("M",B),ue("MM",B,z),ue("MMM",function(e,t){return t.monthsShortRegex(e)}),ue("MMMM",function(e,t){return t.monthsRegex(e)}),ce(["M","MM"],function(e,t){t[_e]=D(e)-1}),ce(["MMM","MMMM"],function(e,t,n,s){var i=n._locale.monthsParse(e,s,n._strict);null!=i?t[_e]=i:g(n).invalidMonth=e});var We=/D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/,Ce="January_February_March_April_May_June_July_August_September_October_November_December".split("_");var He="Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");function Re(e,t){var n;if(!e.isValid())return e;if("string"==typeof t)if(/^\d+$/.test(t))t=D(t);else if(!h(t=e.localeData().monthsParse(t)))return e;return n=Math.min(e.date(),Pe(e.year(),t)),e._d["set"+(e._isUTC?"UTC":"")+"Month"](t,n),e}function Ue(e){return null!=e?(Re(this,e),c.updateOffset(this,!0),this):be(this,"Month")}var Fe=ae;var Le=ae;function Ne(){function e(e,t){return t.length-e.length}var t,n,s=[],i=[],r=[];for(t=0;t<12;t++)n=y([2e3,t]),s.push(this.monthsShort(n,"")),i.push(this.months(n,"")),r.push(this.months(n,"")),r.push(this.monthsShort(n,""));for(s.sort(e),i.sort(e),r.sort(e),t=0;t<12;t++)s[t]=he(s[t]),i[t]=he(i[t]);for(t=0;t<24;t++)r[t]=he(r[t]);this._monthsRegex=new RegExp("^("+r.join("|")+")","i"),this._monthsShortRegex=this._monthsRegex,this._monthsStrictRegex=new RegExp("^("+i.join("|")+")","i"),this._monthsShortStrictRegex=new RegExp("^("+s.join("|")+")","i")}function Ge(e){var t;if(e<100&&0<=e){var n=Array.prototype.slice.call(arguments);n[0]=e+400,t=new Date(Date.UTC.apply(null,n)),isFinite(t.getUTCFullYear())&&t.setUTCFullYear(e)}else t=new Date(Date.UTC.apply(null,arguments));return t}function Ve(e,t,n){var s=7+t-n;return-((7+Ge(e,0,s).getUTCDay()-t)%7)+s-1}function Ee(e,t,n,s,i){var r,a,o=1+7*(t-1)+(7+n-s)%7+Ve(e,s,i);return a=o<=0?Se(r=e-1)+o:o>Se(e)?(r=e+1,o-Se(e)):(r=e,o),{year:r,dayOfYear:a}}function Ie(e,t,n){var s,i,r=Ve(e.year(),t,n),a=Math.floor((e.dayOfYear()-r-1)/7)+1;return a<1?s=a+Ae(i=e.year()-1,t,n):a>Ae(e.year(),t,n)?(s=a-Ae(e.year(),t,n),i=e.year()+1):(i=e.year(),s=a),{week:s,year:i}}function Ae(e,t,n){var s=Ve(e,t,n),i=Ve(e+1,t,n);return(Se(e)-s+i)/7}I("w",["ww",2],"wo","week"),I("W",["WW",2],"Wo","isoWeek"),C("week","w"),C("isoWeek","W"),F("week",5),F("isoWeek",5),ue("w",B),ue("ww",B,z),ue("W",B),ue("WW",B,z),fe(["w","ww","W","WW"],function(e,t,n,s){t[s.substr(0,1)]=D(e)});function je(e,t){return e.slice(t,7).concat(e.slice(0,t))}I("d",0,"do","day"),I("dd",0,0,function(e){return this.localeData().weekdaysMin(this,e)}),I("ddd",0,0,function(e){return this.localeData().weekdaysShort(this,e)}),I("dddd",0,0,function(e){return this.localeData().weekdays(this,e)}),I("e",0,0,"weekday"),I("E",0,0,"isoWeekday"),C("day","d"),C("weekday","e"),C("isoWeekday","E"),F("day",11),F("weekday",11),F("isoWeekday",11),ue("d",B),ue("e",B),ue("E",B),ue("dd",function(e,t){return t.weekdaysMinRegex(e)}),ue("ddd",function(e,t){return t.weekdaysShortRegex(e)}),ue("dddd",function(e,t){return t.weekdaysRegex(e)}),fe(["dd","ddd","dddd"],function(e,t,n,s){var i=n._locale.weekdaysParse(e,s,n._strict);null!=i?t.d=i:g(n).invalidWeekday=e}),fe(["d","e","E"],function(e,t,n,s){t[s]=D(e)});var Ze="Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_");var ze="Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_");var $e="Su_Mo_Tu_We_Th_Fr_Sa".split("_");var qe=ae;var Je=ae;var Be=ae;function Qe(){function e(e,t){return t.length-e.length}var t,n,s,i,r,a=[],o=[],u=[],l=[];for(t=0;t<7;t++)n=y([2e3,1]).day(t),s=this.weekdaysMin(n,""),i=this.weekdaysShort(n,""),r=this.weekdays(n,""),a.push(s),o.push(i),u.push(r),l.push(s),l.push(i),l.push(r);for(a.sort(e),o.sort(e),u.sort(e),l.sort(e),t=0;t<7;t++)o[t]=he(o[t]),u[t]=he(u[t]),l[t]=he(l[t]);this._weekdaysRegex=new RegExp("^("+l.join("|")+")","i"),this._weekdaysShortRegex=this._weekdaysRegex,this._weekdaysMinRegex=this._weekdaysRegex,this._weekdaysStrictRegex=new RegExp("^("+u.join("|")+")","i"),this._weekdaysShortStrictRegex=new RegExp("^("+o.join("|")+")","i"),this._weekdaysMinStrictRegex=new RegExp("^("+a.join("|")+")","i")}function Xe(){return this.hours()%12||12}function Ke(e,t){I(e,0,0,function(){return this.localeData().meridiem(this.hours(),this.minutes(),t)})}function et(e,t){return t._meridiemParse}I("H",["HH",2],0,"hour"),I("h",["hh",2],0,Xe),I("k",["kk",2],0,function(){return this.hours()||24}),I("hmm",0,0,function(){return""+Xe.apply(this)+L(this.minutes(),2)}),I("hmmss",0,0,function(){return""+Xe.apply(this)+L(this.minutes(),2)+L(this.seconds(),2)}),I("Hmm",0,0,function(){return""+this.hours()+L(this.minutes(),2)}),I("Hmmss",0,0,function(){return""+this.hours()+L(this.minutes(),2)+L(this.seconds(),2)}),Ke("a",!0),Ke("A",!1),C("hour","h"),F("hour",13),ue("a",et),ue("A",et),ue("H",B),ue("h",B),ue("k",B),ue("HH",B,z),ue("hh",B,z),ue("kk",B,z),ue("hmm",Q),ue("hmmss",X),ue("Hmm",Q),ue("Hmmss",X),ce(["H","HH"],ge),ce(["k","kk"],function(e,t,n){var s=D(e);t[ge]=24===s?0:s}),ce(["a","A"],function(e,t,n){n._isPm=n._locale.isPM(e),n._meridiem=e}),ce(["h","hh"],function(e,t,n){t[ge]=D(e),g(n).bigHour=!0}),ce("hmm",function(e,t,n){var s=e.length-2;t[ge]=D(e.substr(0,s)),t[ve]=D(e.substr(s)),g(n).bigHour=!0}),ce("hmmss",function(e,t,n){var s=e.length-4,i=e.length-2;t[ge]=D(e.substr(0,s)),t[ve]=D(e.substr(s,2)),t[pe]=D(e.substr(i)),g(n).bigHour=!0}),ce("Hmm",function(e,t,n){var s=e.length-2;t[ge]=D(e.substr(0,s)),t[ve]=D(e.substr(s))}),ce("Hmmss",function(e,t,n){var s=e.length-4,i=e.length-2;t[ge]=D(e.substr(0,s)),t[ve]=D(e.substr(s,2)),t[pe]=D(e.substr(i))});var tt,nt=Te("Hours",!0),st={calendar:{sameDay:"[Today at] LT",nextDay:"[Tomorrow at] LT",nextWeek:"dddd [at] LT",lastDay:"[Yesterday at] LT",lastWeek:"[Last] dddd [at] LT",sameElse:"L"},longDateFormat:{LTS:"h:mm:ss A",LT:"h:mm A",L:"MM/DD/YYYY",LL:"MMMM D, YYYY",LLL:"MMMM D, YYYY h:mm A",LLLL:"dddd, MMMM D, YYYY h:mm A"},invalidDate:"Invalid date",ordinal:"%d",dayOfMonthOrdinalParse:/\d{1,2}/,relativeTime:{future:"in %s",past:"%s ago",s:"a few seconds",ss:"%d seconds",m:"a minute",mm:"%d minutes",h:"an hour",hh:"%d hours",d:"a day",dd:"%d days",M:"a month",MM:"%d months",y:"a year",yy:"%d years"},months:Ce,monthsShort:He,week:{dow:0,doy:6},weekdays:Ze,weekdaysMin:$e,weekdaysShort:ze,meridiemParse:/[ap]\.?m?\.?/i},it={},rt={};function at(e){return e?e.toLowerCase().replace("_","-"):e}function ot(e){var t=null;if(!it[e]&&"undefined"!=typeof module&&module&&module.exports)try{t=tt._abbr,require("./locale/"+e),ut(t)}catch(e){}return it[e]}function ut(e,t){var n;return e&&((n=l(t)?ht(e):lt(e,t))?tt=n:"undefined"!=typeof console&&console.warn&&console.warn("Locale "+e+" not found. Did you forget to load it?")),tt._abbr}function lt(e,t){if(null===t)return delete it[e],null;var n,s=st;if(t.abbr=e,null!=it[e])T("defineLocaleOverride","use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info."),s=it[e]._config;else if(null!=t.parentLocale)if(null!=it[t.parentLocale])s=it[t.parentLocale]._config;else{if(null==(n=ot(t.parentLocale)))return rt[t.parentLocale]||(rt[t.parentLocale]=[]),rt[t.parentLocale].push({name:e,config:t}),null;s=n._config}return it[e]=new P(x(s,t)),rt[e]&&rt[e].forEach(function(e){lt(e.name,e.config)}),ut(e),it[e]}function ht(e){var t;if(e&&e._locale&&e._locale._abbr&&(e=e._locale._abbr),!e)return tt;if(!o(e)){if(t=ot(e))return t;e=[e]}return function(e){for(var t,n,s,i,r=0;r<e.length;){for(t=(i=at(e[r]).split("-")).length,n=(n=at(e[r+1]))?n.split("-"):null;0<t;){if(s=ot(i.slice(0,t).join("-")))return s;if(n&&n.length>=t&&a(i,n,!0)>=t-1)break;t--}r++}return tt}(e)}function dt(e){var t,n=e._a;return n&&-2===g(e).overflow&&(t=n[_e]<0||11<n[_e]?_e:n[ye]<1||n[ye]>Pe(n[me],n[_e])?ye:n[ge]<0||24<n[ge]||24===n[ge]&&(0!==n[ve]||0!==n[pe]||0!==n[we])?ge:n[ve]<0||59<n[ve]?ve:n[pe]<0||59<n[pe]?pe:n[we]<0||999<n[we]?we:-1,g(e)._overflowDayOfYear&&(t<me||ye<t)&&(t=ye),g(e)._overflowWeeks&&-1===t&&(t=Me),g(e)._overflowWeekday&&-1===t&&(t=ke),g(e).overflow=t),e}function ct(e,t,n){return null!=e?e:null!=t?t:n}function ft(e){var t,n,s,i,r,a=[];if(!e._d){var o,u;for(o=e,u=new Date(c.now()),s=o._useUTC?[u.getUTCFullYear(),u.getUTCMonth(),u.getUTCDate()]:[u.getFullYear(),u.getMonth(),u.getDate()],e._w&&null==e._a[ye]&&null==e._a[_e]&&function(e){var t,n,s,i,r,a,o,u;if(null!=(t=e._w).GG||null!=t.W||null!=t.E)r=1,a=4,n=ct(t.GG,e._a[me],Ie(bt(),1,4).year),s=ct(t.W,1),((i=ct(t.E,1))<1||7<i)&&(u=!0);else{r=e._locale._week.dow,a=e._locale._week.doy;var l=Ie(bt(),r,a);n=ct(t.gg,e._a[me],l.year),s=ct(t.w,l.week),null!=t.d?((i=t.d)<0||6<i)&&(u=!0):null!=t.e?(i=t.e+r,(t.e<0||6<t.e)&&(u=!0)):i=r}s<1||s>Ae(n,r,a)?g(e)._overflowWeeks=!0:null!=u?g(e)._overflowWeekday=!0:(o=Ee(n,s,i,r,a),e._a[me]=o.year,e._dayOfYear=o.dayOfYear)}(e),null!=e._dayOfYear&&(r=ct(e._a[me],s[me]),(e._dayOfYear>Se(r)||0===e._dayOfYear)&&(g(e)._overflowDayOfYear=!0),n=Ge(r,0,e._dayOfYear),e._a[_e]=n.getUTCMonth(),e._a[ye]=n.getUTCDate()),t=0;t<3&&null==e._a[t];++t)e._a[t]=a[t]=s[t];for(;t<7;t++)e._a[t]=a[t]=null==e._a[t]?2===t?1:0:e._a[t];24===e._a[ge]&&0===e._a[ve]&&0===e._a[pe]&&0===e._a[we]&&(e._nextDay=!0,e._a[ge]=0),e._d=(e._useUTC?Ge:function(e,t,n,s,i,r,a){var o;return e<100&&0<=e?(o=new Date(e+400,t,n,s,i,r,a),isFinite(o.getFullYear())&&o.setFullYear(e)):o=new Date(e,t,n,s,i,r,a),o}).apply(null,a),i=e._useUTC?e._d.getUTCDay():e._d.getDay(),null!=e._tzm&&e._d.setUTCMinutes(e._d.getUTCMinutes()-e._tzm),e._nextDay&&(e._a[ge]=24),e._w&&void 0!==e._w.d&&e._w.d!==i&&(g(e).weekdayMismatch=!0)}}var mt=/^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,_t=/^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,yt=/Z|[+-]\d\d(?::?\d\d)?/,gt=[["YYYYYY-MM-DD",/[+-]\d{6}-\d\d-\d\d/],["YYYY-MM-DD",/\d{4}-\d\d-\d\d/],["GGGG-[W]WW-E",/\d{4}-W\d\d-\d/],["GGGG-[W]WW",/\d{4}-W\d\d/,!1],["YYYY-DDD",/\d{4}-\d{3}/],["YYYY-MM",/\d{4}-\d\d/,!1],["YYYYYYMMDD",/[+-]\d{10}/],["YYYYMMDD",/\d{8}/],["GGGG[W]WWE",/\d{4}W\d{3}/],["GGGG[W]WW",/\d{4}W\d{2}/,!1],["YYYYDDD",/\d{7}/]],vt=[["HH:mm:ss.SSSS",/\d\d:\d\d:\d\d\.\d+/],["HH:mm:ss,SSSS",/\d\d:\d\d:\d\d,\d+/],["HH:mm:ss",/\d\d:\d\d:\d\d/],["HH:mm",/\d\d:\d\d/],["HHmmss.SSSS",/\d\d\d\d\d\d\.\d+/],["HHmmss,SSSS",/\d\d\d\d\d\d,\d+/],["HHmmss",/\d\d\d\d\d\d/],["HHmm",/\d\d\d\d/],["HH",/\d\d/]],pt=/^\/?Date\((\-?\d+)/i;function wt(e){var t,n,s,i,r,a,o=e._i,u=mt.exec(o)||_t.exec(o);if(u){for(g(e).iso=!0,t=0,n=gt.length;t<n;t++)if(gt[t][1].exec(u[1])){i=gt[t][0],s=!1!==gt[t][2];break}if(null==i)return void(e._isValid=!1);if(u[3]){for(t=0,n=vt.length;t<n;t++)if(vt[t][1].exec(u[3])){r=(u[2]||" ")+vt[t][0];break}if(null==r)return void(e._isValid=!1)}if(!s&&null!=r)return void(e._isValid=!1);if(u[4]){if(!yt.exec(u[4]))return void(e._isValid=!1);a="Z"}e._f=i+(r||"")+(a||""),Yt(e)}else e._isValid=!1}var Mt=/^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;function kt(e,t,n,s,i,r){var a=[function(e){var t=parseInt(e,10);{if(t<=49)return 2e3+t;if(t<=999)return 1900+t}return t}(e),He.indexOf(t),parseInt(n,10),parseInt(s,10),parseInt(i,10)];return r&&a.push(parseInt(r,10)),a}var St={UT:0,GMT:0,EDT:-240,EST:-300,CDT:-300,CST:-360,MDT:-360,MST:-420,PDT:-420,PST:-480};function Dt(e){var t,n,s,i=Mt.exec(e._i.replace(/\([^)]*\)|[\n\t]/g," ").replace(/(\s\s+)/g," ").replace(/^\s\s*/,"").replace(/\s\s*$/,""));if(i){var r=kt(i[4],i[3],i[2],i[5],i[6],i[7]);if(t=i[1],n=r,s=e,t&&ze.indexOf(t)!==new Date(n[0],n[1],n[2]).getDay()&&(g(s).weekdayMismatch=!0,!(s._isValid=!1)))return;e._a=r,e._tzm=function(e,t,n){if(e)return St[e];if(t)return 0;var s=parseInt(n,10),i=s%100;return(s-i)/100*60+i}(i[8],i[9],i[10]),e._d=Ge.apply(null,e._a),e._d.setUTCMinutes(e._d.getUTCMinutes()-e._tzm),g(e).rfc2822=!0}else e._isValid=!1}function Yt(e){if(e._f!==c.ISO_8601)if(e._f!==c.RFC_2822){e._a=[],g(e).empty=!0;var t,n,s,i,r,a,o,u,l=""+e._i,h=l.length,d=0;for(s=j(e._f,e._locale).match(N)||[],t=0;t<s.length;t++)i=s[t],(n=(l.match(le(i,e))||[])[0])&&(0<(r=l.substr(0,l.indexOf(n))).length&&g(e).unusedInput.push(r),l=l.slice(l.indexOf(n)+n.length),d+=n.length),E[i]?(n?g(e).empty=!1:g(e).unusedTokens.push(i),a=i,u=e,null!=(o=n)&&m(de,a)&&de[a](o,u._a,u,a)):e._strict&&!n&&g(e).unusedTokens.push(i);g(e).charsLeftOver=h-d,0<l.length&&g(e).unusedInput.push(l),e._a[ge]<=12&&!0===g(e).bigHour&&0<e._a[ge]&&(g(e).bigHour=void 0),g(e).parsedDateParts=e._a.slice(0),g(e).meridiem=e._meridiem,e._a[ge]=function(e,t,n){var s;if(null==n)return t;return null!=e.meridiemHour?e.meridiemHour(t,n):(null!=e.isPM&&((s=e.isPM(n))&&t<12&&(t+=12),s||12!==t||(t=0)),t)}(e._locale,e._a[ge],e._meridiem),ft(e),dt(e)}else Dt(e);else wt(e)}function Ot(e){var t,n,s,i,r=e._i,a=e._f;return e._locale=e._locale||ht(e._l),null===r||void 0===a&&""===r?p({nullInput:!0}):("string"==typeof r&&(e._i=r=e._locale.preparse(r)),k(r)?new M(dt(r)):(d(r)?e._d=r:o(a)?function(e){var t,n,s,i,r;if(0===e._f.length)return g(e).invalidFormat=!0,e._d=new Date(NaN);for(i=0;i<e._f.length;i++)r=0,t=w({},e),null!=e._useUTC&&(t._useUTC=e._useUTC),t._f=e._f[i],Yt(t),v(t)&&(r+=g(t).charsLeftOver,r+=10*g(t).unusedTokens.length,g(t).score=r,(null==s||r<s)&&(s=r,n=t));_(e,n||t)}(e):a?Yt(e):l(n=(t=e)._i)?t._d=new Date(c.now()):d(n)?t._d=new Date(n.valueOf()):"string"==typeof n?(s=t,null===(i=pt.exec(s._i))?(wt(s),!1===s._isValid&&(delete s._isValid,Dt(s),!1===s._isValid&&(delete s._isValid,c.createFromInputFallback(s)))):s._d=new Date(+i[1])):o(n)?(t._a=f(n.slice(0),function(e){return parseInt(e,10)}),ft(t)):u(n)?function(e){if(!e._d){var t=R(e._i);e._a=f([t.year,t.month,t.day||t.date,t.hour,t.minute,t.second,t.millisecond],function(e){return e&&parseInt(e,10)}),ft(e)}}(t):h(n)?t._d=new Date(n):c.createFromInputFallback(t),v(e)||(e._d=null),e))}function Tt(e,t,n,s,i){var r,a={};return!0!==n&&!1!==n||(s=n,n=void 0),(u(e)&&function(e){if(Object.getOwnPropertyNames)return 0===Object.getOwnPropertyNames(e).length;var t;for(t in e)if(e.hasOwnProperty(t))return!1;return!0}(e)||o(e)&&0===e.length)&&(e=void 0),a._isAMomentObject=!0,a._useUTC=a._isUTC=i,a._l=n,a._i=e,a._f=t,a._strict=s,(r=new M(dt(Ot(a))))._nextDay&&(r.add(1,"d"),r._nextDay=void 0),r}function bt(e,t,n,s){return Tt(e,t,n,s,!1)}c.createFromInputFallback=n("value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged and will be removed in an upcoming major release. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.",function(e){e._d=new Date(e._i+(e._useUTC?" UTC":""))}),c.ISO_8601=function(){},c.RFC_2822=function(){};var xt=n("moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/",function(){var e=bt.apply(null,arguments);return this.isValid()&&e.isValid()?e<this?this:e:p()}),Pt=n("moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/",function(){var e=bt.apply(null,arguments);return this.isValid()&&e.isValid()?this<e?this:e:p()});function Wt(e,t){var n,s;if(1===t.length&&o(t[0])&&(t=t[0]),!t.length)return bt();for(n=t[0],s=1;s<t.length;++s)t[s].isValid()&&!t[s][e](n)||(n=t[s]);return n}var Ct=["year","quarter","month","week","day","hour","minute","second","millisecond"];function Ht(e){var t=R(e),n=t.year||0,s=t.quarter||0,i=t.month||0,r=t.week||t.isoWeek||0,a=t.day||0,o=t.hour||0,u=t.minute||0,l=t.second||0,h=t.millisecond||0;this._isValid=function(e){for(var t in e)if(-1===Ye.call(Ct,t)||null!=e[t]&&isNaN(e[t]))return!1;for(var n=!1,s=0;s<Ct.length;++s)if(e[Ct[s]]){if(n)return!1;parseFloat(e[Ct[s]])!==D(e[Ct[s]])&&(n=!0)}return!0}(t),this._milliseconds=+h+1e3*l+6e4*u+1e3*o*60*60,this._days=+a+7*r,this._months=+i+3*s+12*n,this._data={},this._locale=ht(),this._bubble()}function Rt(e){return e instanceof Ht}function Ut(e){return e<0?-1*Math.round(-1*e):Math.round(e)}function Ft(e,n){I(e,0,0,function(){var e=this.utcOffset(),t="+";return e<0&&(e=-e,t="-"),t+L(~~(e/60),2)+n+L(~~e%60,2)})}Ft("Z",":"),Ft("ZZ",""),ue("Z",re),ue("ZZ",re),ce(["Z","ZZ"],function(e,t,n){n._useUTC=!0,n._tzm=Nt(re,e)});var Lt=/([\+\-]|\d\d)/gi;function Nt(e,t){var n=(t||"").match(e);if(null===n)return null;var s=((n[n.length-1]||[])+"").match(Lt)||["-",0,0],i=60*s[1]+D(s[2]);return 0===i?0:"+"===s[0]?i:-i}function Gt(e,t){var n,s;return t._isUTC?(n=t.clone(),s=(k(e)||d(e)?e.valueOf():bt(e).valueOf())-n.valueOf(),n._d.setTime(n._d.valueOf()+s),c.updateOffset(n,!1),n):bt(e).local()}function Vt(e){return 15*-Math.round(e._d.getTimezoneOffset()/15)}function Et(){return!!this.isValid()&&(this._isUTC&&0===this._offset)}c.updateOffset=function(){};var It=/^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/,At=/^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;function jt(e,t){var n,s,i,r=e,a=null;return Rt(e)?r={ms:e._milliseconds,d:e._days,M:e._months}:h(e)?(r={},t?r[t]=e:r.milliseconds=e):(a=It.exec(e))?(n="-"===a[1]?-1:1,r={y:0,d:D(a[ye])*n,h:D(a[ge])*n,m:D(a[ve])*n,s:D(a[pe])*n,ms:D(Ut(1e3*a[we]))*n}):(a=At.exec(e))?(n="-"===a[1]?-1:1,r={y:Zt(a[2],n),M:Zt(a[3],n),w:Zt(a[4],n),d:Zt(a[5],n),h:Zt(a[6],n),m:Zt(a[7],n),s:Zt(a[8],n)}):null==r?r={}:"object"==typeof r&&("from"in r||"to"in r)&&(i=function(e,t){var n;if(!e.isValid()||!t.isValid())return{milliseconds:0,months:0};t=Gt(t,e),e.isBefore(t)?n=zt(e,t):((n=zt(t,e)).milliseconds=-n.milliseconds,n.months=-n.months);return n}(bt(r.from),bt(r.to)),(r={}).ms=i.milliseconds,r.M=i.months),s=new Ht(r),Rt(e)&&m(e,"_locale")&&(s._locale=e._locale),s}function Zt(e,t){var n=e&&parseFloat(e.replace(",","."));return(isNaN(n)?0:n)*t}function zt(e,t){var n={};return n.months=t.month()-e.month()+12*(t.year()-e.year()),e.clone().add(n.months,"M").isAfter(t)&&--n.months,n.milliseconds=+t-+e.clone().add(n.months,"M"),n}function $t(s,i){return function(e,t){var n;return null===t||isNaN(+t)||(T(i,"moment()."+i+"(period, number) is deprecated. Please use moment()."+i+"(number, period). See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info."),n=e,e=t,t=n),qt(this,jt(e="string"==typeof e?+e:e,t),s),this}}function qt(e,t,n,s){var i=t._milliseconds,r=Ut(t._days),a=Ut(t._months);e.isValid()&&(s=null==s||s,a&&Re(e,be(e,"Month")+a*n),r&&xe(e,"Date",be(e,"Date")+r*n),i&&e._d.setTime(e._d.valueOf()+i*n),s&&c.updateOffset(e,r||a))}jt.fn=Ht.prototype,jt.invalid=function(){return jt(NaN)};var Jt=$t(1,"add"),Bt=$t(-1,"subtract");function Qt(e,t){var n=12*(t.year()-e.year())+(t.month()-e.month()),s=e.clone().add(n,"months");return-(n+(t-s<0?(t-s)/(s-e.clone().add(n-1,"months")):(t-s)/(e.clone().add(n+1,"months")-s)))||0}function Xt(e){var t;return void 0===e?this._locale._abbr:(null!=(t=ht(e))&&(this._locale=t),this)}c.defaultFormat="YYYY-MM-DDTHH:mm:ssZ",c.defaultFormatUtc="YYYY-MM-DDTHH:mm:ss[Z]";var Kt=n("moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.",function(e){return void 0===e?this.localeData():this.locale(e)});function en(){return this._locale}var tn=126227808e5;function nn(e,t){return(e%t+t)%t}function sn(e,t,n){return e<100&&0<=e?new Date(e+400,t,n)-tn:new Date(e,t,n).valueOf()}function rn(e,t,n){return e<100&&0<=e?Date.UTC(e+400,t,n)-tn:Date.UTC(e,t,n)}function an(e,t){I(0,[e,e.length],0,t)}function on(e,t,n,s,i){var r;return null==e?Ie(this,s,i).year:((r=Ae(e,s,i))<t&&(t=r),function(e,t,n,s,i){var r=Ee(e,t,n,s,i),a=Ge(r.year,0,r.dayOfYear);return this.year(a.getUTCFullYear()),this.month(a.getUTCMonth()),this.date(a.getUTCDate()),this}.call(this,e,t,n,s,i))}I(0,["gg",2],0,function(){return this.weekYear()%100}),I(0,["GG",2],0,function(){return this.isoWeekYear()%100}),an("gggg","weekYear"),an("ggggg","weekYear"),an("GGGG","isoWeekYear"),an("GGGGG","isoWeekYear"),C("weekYear","gg"),C("isoWeekYear","GG"),F("weekYear",1),F("isoWeekYear",1),ue("G",se),ue("g",se),ue("GG",B,z),ue("gg",B,z),ue("GGGG",ee,q),ue("gggg",ee,q),ue("GGGGG",te,J),ue("ggggg",te,J),fe(["gggg","ggggg","GGGG","GGGGG"],function(e,t,n,s){t[s.substr(0,2)]=D(e)}),fe(["gg","GG"],function(e,t,n,s){t[s]=c.parseTwoDigitYear(e)}),I("Q",0,"Qo","quarter"),C("quarter","Q"),F("quarter",7),ue("Q",Z),ce("Q",function(e,t){t[_e]=3*(D(e)-1)}),I("D",["DD",2],"Do","date"),C("date","D"),F("date",9),ue("D",B),ue("DD",B,z),ue("Do",function(e,t){return e?t._dayOfMonthOrdinalParse||t._ordinalParse:t._dayOfMonthOrdinalParseLenient}),ce(["D","DD"],ye),ce("Do",function(e,t){t[ye]=D(e.match(B)[0])});var un=Te("Date",!0);I("DDD",["DDDD",3],"DDDo","dayOfYear"),C("dayOfYear","DDD"),F("dayOfYear",4),ue("DDD",K),ue("DDDD",$),ce(["DDD","DDDD"],function(e,t,n){n._dayOfYear=D(e)}),I("m",["mm",2],0,"minute"),C("minute","m"),F("minute",14),ue("m",B),ue("mm",B,z),ce(["m","mm"],ve);var ln=Te("Minutes",!1);I("s",["ss",2],0,"second"),C("second","s"),F("second",15),ue("s",B),ue("ss",B,z),ce(["s","ss"],pe);var hn,dn=Te("Seconds",!1);for(I("S",0,0,function(){return~~(this.millisecond()/100)}),I(0,["SS",2],0,function(){return~~(this.millisecond()/10)}),I(0,["SSS",3],0,"millisecond"),I(0,["SSSS",4],0,function(){return 10*this.millisecond()}),I(0,["SSSSS",5],0,function(){return 100*this.millisecond()}),I(0,["SSSSSS",6],0,function(){return 1e3*this.millisecond()}),I(0,["SSSSSSS",7],0,function(){return 1e4*this.millisecond()}),I(0,["SSSSSSSS",8],0,function(){return 1e5*this.millisecond()}),I(0,["SSSSSSSSS",9],0,function(){return 1e6*this.millisecond()}),C("millisecond","ms"),F("millisecond",16),ue("S",K,Z),ue("SS",K,z),ue("SSS",K,$),hn="SSSS";hn.length<=9;hn+="S")ue(hn,ne);function cn(e,t){t[we]=D(1e3*("0."+e))}for(hn="S";hn.length<=9;hn+="S")ce(hn,cn);var fn=Te("Milliseconds",!1);I("z",0,0,"zoneAbbr"),I("zz",0,0,"zoneName");var mn=M.prototype;function _n(e){return e}mn.add=Jt,mn.calendar=function(e,t){var n=e||bt(),s=Gt(n,this).startOf("day"),i=c.calendarFormat(this,s)||"sameElse",r=t&&(b(t[i])?t[i].call(this,n):t[i]);return this.format(r||this.localeData().calendar(i,this,bt(n)))},mn.clone=function(){return new M(this)},mn.diff=function(e,t,n){var s,i,r;if(!this.isValid())return NaN;if(!(s=Gt(e,this)).isValid())return NaN;switch(i=6e4*(s.utcOffset()-this.utcOffset()),t=H(t)){case"year":r=Qt(this,s)/12;break;case"month":r=Qt(this,s);break;case"quarter":r=Qt(this,s)/3;break;case"second":r=(this-s)/1e3;break;case"minute":r=(this-s)/6e4;break;case"hour":r=(this-s)/36e5;break;case"day":r=(this-s-i)/864e5;break;case"week":r=(this-s-i)/6048e5;break;default:r=this-s}return n?r:S(r)},mn.endOf=function(e){var t;if(void 0===(e=H(e))||"millisecond"===e||!this.isValid())return this;var n=this._isUTC?rn:sn;switch(e){case"year":t=n(this.year()+1,0,1)-1;break;case"quarter":t=n(this.year(),this.month()-this.month()%3+3,1)-1;break;case"month":t=n(this.year(),this.month()+1,1)-1;break;case"week":t=n(this.year(),this.month(),this.date()-this.weekday()+7)-1;break;case"isoWeek":t=n(this.year(),this.month(),this.date()-(this.isoWeekday()-1)+7)-1;break;case"day":case"date":t=n(this.year(),this.month(),this.date()+1)-1;break;case"hour":t=this._d.valueOf(),t+=36e5-nn(t+(this._isUTC?0:6e4*this.utcOffset()),36e5)-1;break;case"minute":t=this._d.valueOf(),t+=6e4-nn(t,6e4)-1;break;case"second":t=this._d.valueOf(),t+=1e3-nn(t,1e3)-1;break}return this._d.setTime(t),c.updateOffset(this,!0),this},mn.format=function(e){e||(e=this.isUtc()?c.defaultFormatUtc:c.defaultFormat);var t=A(this,e);return this.localeData().postformat(t)},mn.from=function(e,t){return this.isValid()&&(k(e)&&e.isValid()||bt(e).isValid())?jt({to:this,from:e}).locale(this.locale()).humanize(!t):this.localeData().invalidDate()},mn.fromNow=function(e){return this.from(bt(),e)},mn.to=function(e,t){return this.isValid()&&(k(e)&&e.isValid()||bt(e).isValid())?jt({from:this,to:e}).locale(this.locale()).humanize(!t):this.localeData().invalidDate()},mn.toNow=function(e){return this.to(bt(),e)},mn.get=function(e){return b(this[e=H(e)])?this[e]():this},mn.invalidAt=function(){return g(this).overflow},mn.isAfter=function(e,t){var n=k(e)?e:bt(e);return!(!this.isValid()||!n.isValid())&&("millisecond"===(t=H(t)||"millisecond")?this.valueOf()>n.valueOf():n.valueOf()<this.clone().startOf(t).valueOf())},mn.isBefore=function(e,t){var n=k(e)?e:bt(e);return!(!this.isValid()||!n.isValid())&&("millisecond"===(t=H(t)||"millisecond")?this.valueOf()<n.valueOf():this.clone().endOf(t).valueOf()<n.valueOf())},mn.isBetween=function(e,t,n,s){var i=k(e)?e:bt(e),r=k(t)?t:bt(t);return!!(this.isValid()&&i.isValid()&&r.isValid())&&("("===(s=s||"()")[0]?this.isAfter(i,n):!this.isBefore(i,n))&&(")"===s[1]?this.isBefore(r,n):!this.isAfter(r,n))},mn.isSame=function(e,t){var n,s=k(e)?e:bt(e);return!(!this.isValid()||!s.isValid())&&("millisecond"===(t=H(t)||"millisecond")?this.valueOf()===s.valueOf():(n=s.valueOf(),this.clone().startOf(t).valueOf()<=n&&n<=this.clone().endOf(t).valueOf()))},mn.isSameOrAfter=function(e,t){return this.isSame(e,t)||this.isAfter(e,t)},mn.isSameOrBefore=function(e,t){return this.isSame(e,t)||this.isBefore(e,t)},mn.isValid=function(){return v(this)},mn.lang=Kt,mn.locale=Xt,mn.localeData=en,mn.max=Pt,mn.min=xt,mn.parsingFlags=function(){return _({},g(this))},mn.set=function(e,t){if("object"==typeof e)for(var n=function(e){var t=[];for(var n in e)t.push({unit:n,priority:U[n]});return t.sort(function(e,t){return e.priority-t.priority}),t}(e=R(e)),s=0;s<n.length;s++)this[n[s].unit](e[n[s].unit]);else if(b(this[e=H(e)]))return this[e](t);return this},mn.startOf=function(e){var t;if(void 0===(e=H(e))||"millisecond"===e||!this.isValid())return this;var n=this._isUTC?rn:sn;switch(e){case"year":t=n(this.year(),0,1);break;case"quarter":t=n(this.year(),this.month()-this.month()%3,1);break;case"month":t=n(this.year(),this.month(),1);break;case"week":t=n(this.year(),this.month(),this.date()-this.weekday());break;case"isoWeek":t=n(this.year(),this.month(),this.date()-(this.isoWeekday()-1));break;case"day":case"date":t=n(this.year(),this.month(),this.date());break;case"hour":t=this._d.valueOf(),t-=nn(t+(this._isUTC?0:6e4*this.utcOffset()),36e5);break;case"minute":t=this._d.valueOf(),t-=nn(t,6e4);break;case"second":t=this._d.valueOf(),t-=nn(t,1e3);break}return this._d.setTime(t),c.updateOffset(this,!0),this},mn.subtract=Bt,mn.toArray=function(){var e=this;return[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second(),e.millisecond()]},mn.toObject=function(){var e=this;return{years:e.year(),months:e.month(),date:e.date(),hours:e.hours(),minutes:e.minutes(),seconds:e.seconds(),milliseconds:e.milliseconds()}},mn.toDate=function(){return new Date(this.valueOf())},mn.toISOString=function(e){if(!this.isValid())return null;var t=!0!==e,n=t?this.clone().utc():this;return n.year()<0||9999<n.year()?A(n,t?"YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]":"YYYYYY-MM-DD[T]HH:mm:ss.SSSZ"):b(Date.prototype.toISOString)?t?this.toDate().toISOString():new Date(this.valueOf()+60*this.utcOffset()*1e3).toISOString().replace("Z",A(n,"Z")):A(n,t?"YYYY-MM-DD[T]HH:mm:ss.SSS[Z]":"YYYY-MM-DD[T]HH:mm:ss.SSSZ")},mn.inspect=function(){if(!this.isValid())return"moment.invalid(/* "+this._i+" */)";var e="moment",t="";this.isLocal()||(e=0===this.utcOffset()?"moment.utc":"moment.parseZone",t="Z");var n="["+e+'("]',s=0<=this.year()&&this.year()<=9999?"YYYY":"YYYYYY",i=t+'[")]';return this.format(n+s+"-MM-DD[T]HH:mm:ss.SSS"+i)},mn.toJSON=function(){return this.isValid()?this.toISOString():null},mn.toString=function(){return this.clone().locale("en").format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")},mn.unix=function(){return Math.floor(this.valueOf()/1e3)},mn.valueOf=function(){return this._d.valueOf()-6e4*(this._offset||0)},mn.creationData=function(){return{input:this._i,format:this._f,locale:this._locale,isUTC:this._isUTC,strict:this._strict}},mn.year=Oe,mn.isLeapYear=function(){return De(this.year())},mn.weekYear=function(e){return on.call(this,e,this.week(),this.weekday(),this.localeData()._week.dow,this.localeData()._week.doy)},mn.isoWeekYear=function(e){return on.call(this,e,this.isoWeek(),this.isoWeekday(),1,4)},mn.quarter=mn.quarters=function(e){return null==e?Math.ceil((this.month()+1)/3):this.month(3*(e-1)+this.month()%3)},mn.month=Ue,mn.daysInMonth=function(){return Pe(this.year(),this.month())},mn.week=mn.weeks=function(e){var t=this.localeData().week(this);return null==e?t:this.add(7*(e-t),"d")},mn.isoWeek=mn.isoWeeks=function(e){var t=Ie(this,1,4).week;return null==e?t:this.add(7*(e-t),"d")},mn.weeksInYear=function(){var e=this.localeData()._week;return Ae(this.year(),e.dow,e.doy)},mn.isoWeeksInYear=function(){return Ae(this.year(),1,4)},mn.date=un,mn.day=mn.days=function(e){if(!this.isValid())return null!=e?this:NaN;var t,n,s=this._isUTC?this._d.getUTCDay():this._d.getDay();return null!=e?(t=e,n=this.localeData(),e="string"!=typeof t?t:isNaN(t)?"number"==typeof(t=n.weekdaysParse(t))?t:null:parseInt(t,10),this.add(e-s,"d")):s},mn.weekday=function(e){if(!this.isValid())return null!=e?this:NaN;var t=(this.day()+7-this.localeData()._week.dow)%7;return null==e?t:this.add(e-t,"d")},mn.isoWeekday=function(e){if(!this.isValid())return null!=e?this:NaN;if(null==e)return this.day()||7;var t,n,s=(t=e,n=this.localeData(),"string"==typeof t?n.weekdaysParse(t)%7||7:isNaN(t)?null:t);return this.day(this.day()%7?s:s-7)},mn.dayOfYear=function(e){var t=Math.round((this.clone().startOf("day")-this.clone().startOf("year"))/864e5)+1;return null==e?t:this.add(e-t,"d")},mn.hour=mn.hours=nt,mn.minute=mn.minutes=ln,mn.second=mn.seconds=dn,mn.millisecond=mn.milliseconds=fn,mn.utcOffset=function(e,t,n){var s,i=this._offset||0;if(!this.isValid())return null!=e?this:NaN;if(null==e)return this._isUTC?i:Vt(this);if("string"==typeof e){if(null===(e=Nt(re,e)))return this}else Math.abs(e)<16&&!n&&(e*=60);return!this._isUTC&&t&&(s=Vt(this)),this._offset=e,this._isUTC=!0,null!=s&&this.add(s,"m"),i!==e&&(!t||this._changeInProgress?qt(this,jt(e-i,"m"),1,!1):this._changeInProgress||(this._changeInProgress=!0,c.updateOffset(this,!0),this._changeInProgress=null)),this},mn.utc=function(e){return this.utcOffset(0,e)},mn.local=function(e){return this._isUTC&&(this.utcOffset(0,e),this._isUTC=!1,e&&this.subtract(Vt(this),"m")),this},mn.parseZone=function(){if(null!=this._tzm)this.utcOffset(this._tzm,!1,!0);else if("string"==typeof this._i){var e=Nt(ie,this._i);null!=e?this.utcOffset(e):this.utcOffset(0,!0)}return this},mn.hasAlignedHourOffset=function(e){return!!this.isValid()&&(e=e?bt(e).utcOffset():0,(this.utcOffset()-e)%60==0)},mn.isDST=function(){return this.utcOffset()>this.clone().month(0).utcOffset()||this.utcOffset()>this.clone().month(5).utcOffset()},mn.isLocal=function(){return!!this.isValid()&&!this._isUTC},mn.isUtcOffset=function(){return!!this.isValid()&&this._isUTC},mn.isUtc=Et,mn.isUTC=Et,mn.zoneAbbr=function(){return this._isUTC?"UTC":""},mn.zoneName=function(){return this._isUTC?"Coordinated Universal Time":""},mn.dates=n("dates accessor is deprecated. Use date instead.",un),mn.months=n("months accessor is deprecated. Use month instead",Ue),mn.years=n("years accessor is deprecated. Use year instead",Oe),mn.zone=n("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/",function(e,t){return null!=e?("string"!=typeof e&&(e=-e),this.utcOffset(e,t),this):-this.utcOffset()}),mn.isDSTShifted=n("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information",function(){if(!l(this._isDSTShifted))return this._isDSTShifted;var e={};if(w(e,this),(e=Ot(e))._a){var t=e._isUTC?y(e._a):bt(e._a);this._isDSTShifted=this.isValid()&&0<a(e._a,t.toArray())}else this._isDSTShifted=!1;return this._isDSTShifted});var yn=P.prototype;function gn(e,t,n,s){var i=ht(),r=y().set(s,t);return i[n](r,e)}function vn(e,t,n){if(h(e)&&(t=e,e=void 0),e=e||"",null!=t)return gn(e,t,n,"month");var s,i=[];for(s=0;s<12;s++)i[s]=gn(e,s,n,"month");return i}function pn(e,t,n,s){t=("boolean"==typeof e?h(t)&&(n=t,t=void 0):(t=e,e=!1,h(n=t)&&(n=t,t=void 0)),t||"");var i,r=ht(),a=e?r._week.dow:0;if(null!=n)return gn(t,(n+a)%7,s,"day");var o=[];for(i=0;i<7;i++)o[i]=gn(t,(i+a)%7,s,"day");return o}yn.calendar=function(e,t,n){var s=this._calendar[e]||this._calendar.sameElse;return b(s)?s.call(t,n):s},yn.longDateFormat=function(e){var t=this._longDateFormat[e],n=this._longDateFormat[e.toUpperCase()];return t||!n?t:(this._longDateFormat[e]=n.replace(/MMMM|MM|DD|dddd/g,function(e){return e.slice(1)}),this._longDateFormat[e])},yn.invalidDate=function(){return this._invalidDate},yn.ordinal=function(e){return this._ordinal.replace("%d",e)},yn.preparse=_n,yn.postformat=_n,yn.relativeTime=function(e,t,n,s){var i=this._relativeTime[n];return b(i)?i(e,t,n,s):i.replace(/%d/i,e)},yn.pastFuture=function(e,t){var n=this._relativeTime[0<e?"future":"past"];return b(n)?n(t):n.replace(/%s/i,t)},yn.set=function(e){var t,n;for(n in e)b(t=e[n])?this[n]=t:this["_"+n]=t;this._config=e,this._dayOfMonthOrdinalParseLenient=new RegExp((this._dayOfMonthOrdinalParse.source||this._ordinalParse.source)+"|"+/\d{1,2}/.source)},yn.months=function(e,t){return e?o(this._months)?this._months[e.month()]:this._months[(this._months.isFormat||We).test(t)?"format":"standalone"][e.month()]:o(this._months)?this._months:this._months.standalone},yn.monthsShort=function(e,t){return e?o(this._monthsShort)?this._monthsShort[e.month()]:this._monthsShort[We.test(t)?"format":"standalone"][e.month()]:o(this._monthsShort)?this._monthsShort:this._monthsShort.standalone},yn.monthsParse=function(e,t,n){var s,i,r;if(this._monthsParseExact)return function(e,t,n){var s,i,r,a=e.toLocaleLowerCase();if(!this._monthsParse)for(this._monthsParse=[],this._longMonthsParse=[],this._shortMonthsParse=[],s=0;s<12;++s)r=y([2e3,s]),this._shortMonthsParse[s]=this.monthsShort(r,"").toLocaleLowerCase(),this._longMonthsParse[s]=this.months(r,"").toLocaleLowerCase();return n?"MMM"===t?-1!==(i=Ye.call(this._shortMonthsParse,a))?i:null:-1!==(i=Ye.call(this._longMonthsParse,a))?i:null:"MMM"===t?-1!==(i=Ye.call(this._shortMonthsParse,a))?i:-1!==(i=Ye.call(this._longMonthsParse,a))?i:null:-1!==(i=Ye.call(this._longMonthsParse,a))?i:-1!==(i=Ye.call(this._shortMonthsParse,a))?i:null}.call(this,e,t,n);for(this._monthsParse||(this._monthsParse=[],this._longMonthsParse=[],this._shortMonthsParse=[]),s=0;s<12;s++){if(i=y([2e3,s]),n&&!this._longMonthsParse[s]&&(this._longMonthsParse[s]=new RegExp("^"+this.months(i,"").replace(".","")+"$","i"),this._shortMonthsParse[s]=new RegExp("^"+this.monthsShort(i,"").replace(".","")+"$","i")),n||this._monthsParse[s]||(r="^"+this.months(i,"")+"|^"+this.monthsShort(i,""),this._monthsParse[s]=new RegExp(r.replace(".",""),"i")),n&&"MMMM"===t&&this._longMonthsParse[s].test(e))return s;if(n&&"MMM"===t&&this._shortMonthsParse[s].test(e))return s;if(!n&&this._monthsParse[s].test(e))return s}},yn.monthsRegex=function(e){return this._monthsParseExact?(m(this,"_monthsRegex")||Ne.call(this),e?this._monthsStrictRegex:this._monthsRegex):(m(this,"_monthsRegex")||(this._monthsRegex=Le),this._monthsStrictRegex&&e?this._monthsStrictRegex:this._monthsRegex)},yn.monthsShortRegex=function(e){return this._monthsParseExact?(m(this,"_monthsRegex")||Ne.call(this),e?this._monthsShortStrictRegex:this._monthsShortRegex):(m(this,"_monthsShortRegex")||(this._monthsShortRegex=Fe),this._monthsShortStrictRegex&&e?this._monthsShortStrictRegex:this._monthsShortRegex)},yn.week=function(e){return Ie(e,this._week.dow,this._week.doy).week},yn.firstDayOfYear=function(){return this._week.doy},yn.firstDayOfWeek=function(){return this._week.dow},yn.weekdays=function(e,t){var n=o(this._weekdays)?this._weekdays:this._weekdays[e&&!0!==e&&this._weekdays.isFormat.test(t)?"format":"standalone"];return!0===e?je(n,this._week.dow):e?n[e.day()]:n},yn.weekdaysMin=function(e){return!0===e?je(this._weekdaysMin,this._week.dow):e?this._weekdaysMin[e.day()]:this._weekdaysMin},yn.weekdaysShort=function(e){return!0===e?je(this._weekdaysShort,this._week.dow):e?this._weekdaysShort[e.day()]:this._weekdaysShort},yn.weekdaysParse=function(e,t,n){var s,i,r;if(this._weekdaysParseExact)return function(e,t,n){var s,i,r,a=e.toLocaleLowerCase();if(!this._weekdaysParse)for(this._weekdaysParse=[],this._shortWeekdaysParse=[],this._minWeekdaysParse=[],s=0;s<7;++s)r=y([2e3,1]).day(s),this._minWeekdaysParse[s]=this.weekdaysMin(r,"").toLocaleLowerCase(),this._shortWeekdaysParse[s]=this.weekdaysShort(r,"").toLocaleLowerCase(),this._weekdaysParse[s]=this.weekdays(r,"").toLocaleLowerCase();return n?"dddd"===t?-1!==(i=Ye.call(this._weekdaysParse,a))?i:null:"ddd"===t?-1!==(i=Ye.call(this._shortWeekdaysParse,a))?i:null:-1!==(i=Ye.call(this._minWeekdaysParse,a))?i:null:"dddd"===t?-1!==(i=Ye.call(this._weekdaysParse,a))?i:-1!==(i=Ye.call(this._shortWeekdaysParse,a))?i:-1!==(i=Ye.call(this._minWeekdaysParse,a))?i:null:"ddd"===t?-1!==(i=Ye.call(this._shortWeekdaysParse,a))?i:-1!==(i=Ye.call(this._weekdaysParse,a))?i:-1!==(i=Ye.call(this._minWeekdaysParse,a))?i:null:-1!==(i=Ye.call(this._minWeekdaysParse,a))?i:-1!==(i=Ye.call(this._weekdaysParse,a))?i:-1!==(i=Ye.call(this._shortWeekdaysParse,a))?i:null}.call(this,e,t,n);for(this._weekdaysParse||(this._weekdaysParse=[],this._minWeekdaysParse=[],this._shortWeekdaysParse=[],this._fullWeekdaysParse=[]),s=0;s<7;s++){if(i=y([2e3,1]).day(s),n&&!this._fullWeekdaysParse[s]&&(this._fullWeekdaysParse[s]=new RegExp("^"+this.weekdays(i,"").replace(".","\\.?")+"$","i"),this._shortWeekdaysParse[s]=new RegExp("^"+this.weekdaysShort(i,"").replace(".","\\.?")+"$","i"),this._minWeekdaysParse[s]=new RegExp("^"+this.weekdaysMin(i,"").replace(".","\\.?")+"$","i")),this._weekdaysParse[s]||(r="^"+this.weekdays(i,"")+"|^"+this.weekdaysShort(i,"")+"|^"+this.weekdaysMin(i,""),this._weekdaysParse[s]=new RegExp(r.replace(".",""),"i")),n&&"dddd"===t&&this._fullWeekdaysParse[s].test(e))return s;if(n&&"ddd"===t&&this._shortWeekdaysParse[s].test(e))return s;if(n&&"dd"===t&&this._minWeekdaysParse[s].test(e))return s;if(!n&&this._weekdaysParse[s].test(e))return s}},yn.weekdaysRegex=function(e){return this._weekdaysParseExact?(m(this,"_weekdaysRegex")||Qe.call(this),e?this._weekdaysStrictRegex:this._weekdaysRegex):(m(this,"_weekdaysRegex")||(this._weekdaysRegex=qe),this._weekdaysStrictRegex&&e?this._weekdaysStrictRegex:this._weekdaysRegex)},yn.weekdaysShortRegex=function(e){return this._weekdaysParseExact?(m(this,"_weekdaysRegex")||Qe.call(this),e?this._weekdaysShortStrictRegex:this._weekdaysShortRegex):(m(this,"_weekdaysShortRegex")||(this._weekdaysShortRegex=Je),this._weekdaysShortStrictRegex&&e?this._weekdaysShortStrictRegex:this._weekdaysShortRegex)},yn.weekdaysMinRegex=function(e){return this._weekdaysParseExact?(m(this,"_weekdaysRegex")||Qe.call(this),e?this._weekdaysMinStrictRegex:this._weekdaysMinRegex):(m(this,"_weekdaysMinRegex")||(this._weekdaysMinRegex=Be),this._weekdaysMinStrictRegex&&e?this._weekdaysMinStrictRegex:this._weekdaysMinRegex)},yn.isPM=function(e){return"p"===(e+"").toLowerCase().charAt(0)},yn.meridiem=function(e,t,n){return 11<e?n?"pm":"PM":n?"am":"AM"},ut("en",{dayOfMonthOrdinalParse:/\d{1,2}(th|st|nd|rd)/,ordinal:function(e){var t=e%10;return e+(1===D(e%100/10)?"th":1===t?"st":2===t?"nd":3===t?"rd":"th")}}),c.lang=n("moment.lang is deprecated. Use moment.locale instead.",ut),c.langData=n("moment.langData is deprecated. Use moment.localeData instead.",ht);var wn=Math.abs;function Mn(e,t,n,s){var i=jt(t,n);return e._milliseconds+=s*i._milliseconds,e._days+=s*i._days,e._months+=s*i._months,e._bubble()}function kn(e){return e<0?Math.floor(e):Math.ceil(e)}function Sn(e){return 4800*e/146097}function Dn(e){return 146097*e/4800}function Yn(e){return function(){return this.as(e)}}var On=Yn("ms"),Tn=Yn("s"),bn=Yn("m"),xn=Yn("h"),Pn=Yn("d"),Wn=Yn("w"),Cn=Yn("M"),Hn=Yn("Q"),Rn=Yn("y");function Un(e){return function(){return this.isValid()?this._data[e]:NaN}}var Fn=Un("milliseconds"),Ln=Un("seconds"),Nn=Un("minutes"),Gn=Un("hours"),Vn=Un("days"),En=Un("months"),In=Un("years");var An=Math.round,jn={ss:44,s:45,m:45,h:22,d:26,M:11};var Zn=Math.abs;function zn(e){return(0<e)-(e<0)||+e}function $n(){if(!this.isValid())return this.localeData().invalidDate();var e,t,n=Zn(this._milliseconds)/1e3,s=Zn(this._days),i=Zn(this._months);t=S((e=S(n/60))/60),n%=60,e%=60;var r=S(i/12),a=i%=12,o=s,u=t,l=e,h=n?n.toFixed(3).replace(/\.?0+$/,""):"",d=this.asSeconds();if(!d)return"P0D";var c=d<0?"-":"",f=zn(this._months)!==zn(d)?"-":"",m=zn(this._days)!==zn(d)?"-":"",_=zn(this._milliseconds)!==zn(d)?"-":"";return c+"P"+(r?f+r+"Y":"")+(a?f+a+"M":"")+(o?m+o+"D":"")+(u||l||h?"T":"")+(u?_+u+"H":"")+(l?_+l+"M":"")+(h?_+h+"S":"")}var qn=Ht.prototype;return qn.isValid=function(){return this._isValid},qn.abs=function(){var e=this._data;return this._milliseconds=wn(this._milliseconds),this._days=wn(this._days),this._months=wn(this._months),e.milliseconds=wn(e.milliseconds),e.seconds=wn(e.seconds),e.minutes=wn(e.minutes),e.hours=wn(e.hours),e.months=wn(e.months),e.years=wn(e.years),this},qn.add=function(e,t){return Mn(this,e,t,1)},qn.subtract=function(e,t){return Mn(this,e,t,-1)},qn.as=function(e){if(!this.isValid())return NaN;var t,n,s=this._milliseconds;if("month"===(e=H(e))||"quarter"===e||"year"===e)switch(t=this._days+s/864e5,n=this._months+Sn(t),e){case"month":return n;case"quarter":return n/3;case"year":return n/12}else switch(t=this._days+Math.round(Dn(this._months)),e){case"week":return t/7+s/6048e5;case"day":return t+s/864e5;case"hour":return 24*t+s/36e5;case"minute":return 1440*t+s/6e4;case"second":return 86400*t+s/1e3;case"millisecond":return Math.floor(864e5*t)+s;default:throw new Error("Unknown unit "+e)}},qn.asMilliseconds=On,qn.asSeconds=Tn,qn.asMinutes=bn,qn.asHours=xn,qn.asDays=Pn,qn.asWeeks=Wn,qn.asMonths=Cn,qn.asQuarters=Hn,qn.asYears=Rn,qn.valueOf=function(){return this.isValid()?this._milliseconds+864e5*this._days+this._months%12*2592e6+31536e6*D(this._months/12):NaN},qn._bubble=function(){var e,t,n,s,i,r=this._milliseconds,a=this._days,o=this._months,u=this._data;return 0<=r&&0<=a&&0<=o||r<=0&&a<=0&&o<=0||(r+=864e5*kn(Dn(o)+a),o=a=0),u.milliseconds=r%1e3,e=S(r/1e3),u.seconds=e%60,t=S(e/60),u.minutes=t%60,n=S(t/60),u.hours=n%24,o+=i=S(Sn(a+=S(n/24))),a-=kn(Dn(i)),s=S(o/12),o%=12,u.days=a,u.months=o,u.years=s,this},qn.clone=function(){return jt(this)},qn.get=function(e){return e=H(e),this.isValid()?this[e+"s"]():NaN},qn.milliseconds=Fn,qn.seconds=Ln,qn.minutes=Nn,qn.hours=Gn,qn.days=Vn,qn.weeks=function(){return S(this.days()/7)},qn.months=En,qn.years=In,qn.humanize=function(e){if(!this.isValid())return this.localeData().invalidDate();var t,n,s,i,r,a,o,u,l,h,d,c=this.localeData(),f=(n=!e,s=c,i=jt(t=this).abs(),r=An(i.as("s")),a=An(i.as("m")),o=An(i.as("h")),u=An(i.as("d")),l=An(i.as("M")),h=An(i.as("y")),(d=r<=jn.ss&&["s",r]||r<jn.s&&["ss",r]||a<=1&&["m"]||a<jn.m&&["mm",a]||o<=1&&["h"]||o<jn.h&&["hh",o]||u<=1&&["d"]||u<jn.d&&["dd",u]||l<=1&&["M"]||l<jn.M&&["MM",l]||h<=1&&["y"]||["yy",h])[2]=n,d[3]=0<+t,d[4]=s,function(e,t,n,s,i){return i.relativeTime(t||1,!!n,e,s)}.apply(null,d));return e&&(f=c.pastFuture(+this,f)),c.postformat(f)},qn.toISOString=$n,qn.toString=$n,qn.toJSON=$n,qn.locale=Xt,qn.localeData=en,qn.toIsoString=n("toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)",$n),qn.lang=Kt,I("X",0,0,"unix"),I("x",0,0,"valueOf"),ue("x",se),ue("X",/[+-]?\d+(\.\d{1,3})?/),ce("X",function(e,t,n){n._d=new Date(1e3*parseFloat(e,10))}),ce("x",function(e,t,n){n._d=new Date(D(e))}),c.version="2.24.0",e=bt,c.fn=mn,c.min=function(){return Wt("isBefore",[].slice.call(arguments,0))},c.max=function(){return Wt("isAfter",[].slice.call(arguments,0))},c.now=function(){return Date.now?Date.now():+new Date},c.utc=y,c.unix=function(e){return bt(1e3*e)},c.months=function(e,t){return vn(e,t,"months")},c.isDate=d,c.locale=ut,c.invalid=p,c.duration=jt,c.isMoment=k,c.weekdays=function(e,t,n){return pn(e,t,n,"weekdays")},c.parseZone=function(){return bt.apply(null,arguments).parseZone()},c.localeData=ht,c.isDuration=Rt,c.monthsShort=function(e,t){return vn(e,t,"monthsShort")},c.weekdaysMin=function(e,t,n){return pn(e,t,n,"weekdaysMin")},c.defineLocale=lt,c.updateLocale=function(e,t){if(null!=t){var n,s,i=st;null!=(s=ot(e))&&(i=s._config),(n=new P(t=x(i,t))).parentLocale=it[e],it[e]=n,ut(e)}else null!=it[e]&&(null!=it[e].parentLocale?it[e]=it[e].parentLocale:null!=it[e]&&delete it[e]);return it[e]},c.locales=function(){return s(it)},c.weekdaysShort=function(e,t,n){return pn(e,t,n,"weekdaysShort")},c.normalizeUnits=H,c.relativeTimeRounding=function(e){return void 0===e?An:"function"==typeof e&&(An=e,!0)},c.relativeTimeThreshold=function(e,t){return void 0!==jn[e]&&(void 0===t?jn[e]:(jn[e]=t,"s"===e&&(jn.ss=t-1),!0))},c.calendarFormat=function(e,t){var n=e.diff(t,"days",!0);return n<-6?"sameElse":n<-1?"lastWeek":n<0?"lastDay":n<1?"sameDay":n<2?"nextDay":n<7?"nextWeek":"sameElse"},c.prototype=mn,c.HTML5_FMT={DATETIME_LOCAL:"YYYY-MM-DDTHH:mm",DATETIME_LOCAL_SECONDS:"YYYY-MM-DDTHH:mm:ss",DATETIME_LOCAL_MS:"YYYY-MM-DDTHH:mm:ss.SSS",DATE:"YYYY-MM-DD",TIME:"HH:mm",TIME_SECONDS:"HH:mm:ss",TIME_MS:"HH:mm:ss.SSS",WEEK:"GGGG-[W]WW",MONTH:"YYYY-MM"},c});
+//! moment.js
+//! version : 2.18.1
+//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
+//! license : MIT
+//! momentjs.com
+! function (a, b) {
+    "object" == typeof exports && "undefined" != typeof module ? module.exports = b() : "function" == typeof define && define.amd ? define(b) : a.moment = b()
+}(this, function () {
+    "use strict";
 
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Make globaly available as well
-        define(['moment', 'jquery'], function (moment, jquery) {
-            if (!jquery.fn) jquery.fn = {}; // webpack server rendering
-            if (typeof moment !== 'function' && moment.hasOwnProperty('default')) moment = moment['default']
-            return factory(moment, jquery);
-        });
-    } else if (typeof module === 'object' && module.exports) {
-        // Node / Browserify
-        //isomorphic issue
-        var jQuery = (typeof window != 'undefined') ? window.jQuery : undefined;
-        if (!jQuery) {
-            jQuery = require('jquery');
-            if (!jQuery.fn) jQuery.fn = {};
-        }
-        var moment = (typeof window != 'undefined' && typeof window.moment != 'undefined') ? window.moment : require('moment');
-        module.exports = factory(moment, jQuery);
-    } else {
-        // Browser globals
-        root.daterangepicker = factory(root.moment, root.jQuery);
+    function a() {
+        return sd.apply(null, arguments)
     }
-}(typeof window !== 'undefined' ? window : this, function(moment, $) {
-    var DateRangePicker = function(element, options, cb) {
 
-        //default settings for options
-        this.parentEl = 'body';
-        this.element = $(element);
-        this.startDate = moment().startOf('day');
-        this.endDate = moment().endOf('day');
-        this.minDate = false;
-        this.maxDate = false;
-        this.maxSpan = false;
-        this.autoApply = false;
-        this.singleDatePicker = false;
-        this.showDropdowns = false;
-        this.minYear = moment().subtract(100, 'year').format('YYYY');
-        this.maxYear = moment().add(100, 'year').format('YYYY');
-        this.showWeekNumbers = false;
-        this.showISOWeekNumbers = false;
-        this.showCustomRangeLabel = true;
-        this.timePicker = false;
-        this.timePicker24Hour = false;
-        this.timePickerIncrement = 1;
-        this.timePickerSeconds = false;
-        this.linkedCalendars = true;
-        this.autoUpdateInput = true;
-        this.alwaysShowCalendars = false;
-        this.ranges = {};
+    function b(a) {
+        sd = a
+    }
 
-        this.opens = 'right';
-        if (this.element.hasClass('pull-right'))
-            this.opens = 'left';
+    function c(a) {
+        return a instanceof Array || "[object Array]" === Object.prototype.toString.call(a)
+    }
 
-        this.drops = 'down';
-        if (this.element.hasClass('dropup'))
-            this.drops = 'up';
+    function d(a) {
+        return null != a && "[object Object]" === Object.prototype.toString.call(a)
+    }
 
-        this.buttonClasses = 'btn btn-sm';
-        this.applyButtonClasses = 'btn-primary';
-        this.cancelButtonClasses = 'btn-default';
+    function e(a) {
+        var b;
+        for (b in a) return !1;
+        return !0
+    }
 
-        this.locale = {
-            direction: 'ltr',
-            format: moment.localeData().longDateFormat('L'),
-            separator: ' - ',
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
-            weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
-            daysOfWeek: moment.weekdaysMin(),
-            monthNames: moment.monthsShort(),
-            firstDay: moment.localeData().firstDayOfWeek()
-        };
+    function f(a) {
+        return void 0 === a
+    }
 
-        this.callback = function() { };
+    function g(a) {
+        return "number" == typeof a || "[object Number]" === Object.prototype.toString.call(a)
+    }
 
-        //some state information
-        this.isShowing = false;
-        this.leftCalendar = {};
-        this.rightCalendar = {};
+    function h(a) {
+        return a instanceof Date || "[object Date]" === Object.prototype.toString.call(a)
+    }
 
-        //custom options from user
-        if (typeof options !== 'object' || options === null)
-            options = {};
+    function i(a, b) {
+        var c, d = [];
+        for (c = 0; c < a.length; ++c) d.push(b(a[c], c));
+        return d
+    }
 
-        //allow setting options with data attributes
-        //data-api options will be overwritten with custom javascript options
-        options = $.extend(this.element.data(), options);
+    function j(a, b) {
+        return Object.prototype.hasOwnProperty.call(a, b)
+    }
 
-        //html template for the picker UI
-        if (typeof options.template !== 'string' && !(options.template instanceof $))
-            options.template =
-            '<div class="daterangepicker">' +
-                '<div class="ranges"></div>' +
-                '<div class="drp-calendar left">' +
-                    '<div class="calendar-table"></div>' +
-                    '<div class="calendar-time"></div>' +
-                '</div>' +
-                '<div class="drp-calendar right">' +
-                    '<div class="calendar-table"></div>' +
-                    '<div class="calendar-time"></div>' +
-                '</div>' +
-                '<div class="drp-buttons">' +
-                    '<span class="drp-selected"></span>' +
-                    '<button class="cancelBtn" type="button"></button>' +
-                    '<button class="applyBtn" disabled="disabled" type="button"></button> ' +
-                '</div>' +
-            '</div>';
+    function k(a, b) {
+        for (var c in b) j(b, c) && (a[c] = b[c]);
+        return j(b, "toString") && (a.toString = b.toString), j(b, "valueOf") && (a.valueOf = b.valueOf), a
+    }
 
-        this.parentEl = (options.parentEl && $(options.parentEl).length) ? $(options.parentEl) : $(this.parentEl);
-        this.container = $(options.template).appendTo(this.parentEl);
+    function l(a, b, c, d) {
+        return sb(a, b, c, d, !0).utc()
+    }
 
-        //
-        // handle all the possible options overriding defaults
-        //
-
-        if (typeof options.locale === 'object') {
-
-            if (typeof options.locale.direction === 'string')
-                this.locale.direction = options.locale.direction;
-
-            if (typeof options.locale.format === 'string')
-                this.locale.format = options.locale.format;
-
-            if (typeof options.locale.separator === 'string')
-                this.locale.separator = options.locale.separator;
-
-            if (typeof options.locale.daysOfWeek === 'object')
-                this.locale.daysOfWeek = options.locale.daysOfWeek.slice();
-
-            if (typeof options.locale.monthNames === 'object')
-              this.locale.monthNames = options.locale.monthNames.slice();
-
-            if (typeof options.locale.firstDay === 'number')
-              this.locale.firstDay = options.locale.firstDay;
-
-            if (typeof options.locale.applyLabel === 'string')
-              this.locale.applyLabel = options.locale.applyLabel;
-
-            if (typeof options.locale.cancelLabel === 'string')
-              this.locale.cancelLabel = options.locale.cancelLabel;
-
-            if (typeof options.locale.weekLabel === 'string')
-              this.locale.weekLabel = options.locale.weekLabel;
-
-            if (typeof options.locale.customRangeLabel === 'string'){
-                //Support unicode chars in the custom range name.
-                var elem = document.createElement('textarea');
-                elem.innerHTML = options.locale.customRangeLabel;
-                var rangeHtml = elem.value;
-                this.locale.customRangeLabel = rangeHtml;
-            }
+    function m() {
+        return {
+            empty: !1,
+            unusedTokens: [],
+            unusedInput: [],
+            overflow: -2,
+            charsLeftOver: 0,
+            nullInput: !1,
+            invalidMonth: null,
+            invalidFormat: !1,
+            userInvalidated: !1,
+            iso: !1,
+            parsedDateParts: [],
+            meridiem: null,
+            rfc2822: !1,
+            weekdayMismatch: !1
         }
-        this.container.addClass(this.locale.direction);
+    }
 
-        if (typeof options.startDate === 'string')
-            this.startDate = moment(options.startDate, this.locale.format);
+    function n(a) {
+        return null == a._pf && (a._pf = m()), a._pf
+    }
 
-        if (typeof options.endDate === 'string')
-            this.endDate = moment(options.endDate, this.locale.format);
-
-        if (typeof options.minDate === 'string')
-            this.minDate = moment(options.minDate, this.locale.format);
-
-        if (typeof options.maxDate === 'string')
-            this.maxDate = moment(options.maxDate, this.locale.format);
-
-        if (typeof options.startDate === 'object')
-            this.startDate = moment(options.startDate);
-
-        if (typeof options.endDate === 'object')
-            this.endDate = moment(options.endDate);
-
-        if (typeof options.minDate === 'object')
-            this.minDate = moment(options.minDate);
-
-        if (typeof options.maxDate === 'object')
-            this.maxDate = moment(options.maxDate);
-
-        // sanity check for bad options
-        if (this.minDate && this.startDate.isBefore(this.minDate))
-            this.startDate = this.minDate.clone();
-
-        // sanity check for bad options
-        if (this.maxDate && this.endDate.isAfter(this.maxDate))
-            this.endDate = this.maxDate.clone();
-
-        if (typeof options.applyButtonClasses === 'string')
-            this.applyButtonClasses = options.applyButtonClasses;
-
-        if (typeof options.applyClass === 'string') //backwards compat
-            this.applyButtonClasses = options.applyClass;
-
-        if (typeof options.cancelButtonClasses === 'string')
-            this.cancelButtonClasses = options.cancelButtonClasses;
-
-        if (typeof options.cancelClass === 'string') //backwards compat
-            this.cancelButtonClasses = options.cancelClass;
-
-        if (typeof options.maxSpan === 'object')
-            this.maxSpan = options.maxSpan;
-
-        if (typeof options.dateLimit === 'object') //backwards compat
-            this.maxSpan = options.dateLimit;
-
-        if (typeof options.opens === 'string')
-            this.opens = options.opens;
-
-        if (typeof options.drops === 'string')
-            this.drops = options.drops;
-
-        if (typeof options.showWeekNumbers === 'boolean')
-            this.showWeekNumbers = options.showWeekNumbers;
-
-        if (typeof options.showISOWeekNumbers === 'boolean')
-            this.showISOWeekNumbers = options.showISOWeekNumbers;
-
-        if (typeof options.buttonClasses === 'string')
-            this.buttonClasses = options.buttonClasses;
-
-        if (typeof options.buttonClasses === 'object')
-            this.buttonClasses = options.buttonClasses.join(' ');
-
-        if (typeof options.showDropdowns === 'boolean')
-            this.showDropdowns = options.showDropdowns;
-
-        if (typeof options.minYear === 'number')
-            this.minYear = options.minYear;
-
-        if (typeof options.maxYear === 'number')
-            this.maxYear = options.maxYear;
-
-        if (typeof options.showCustomRangeLabel === 'boolean')
-            this.showCustomRangeLabel = options.showCustomRangeLabel;
-
-        if (typeof options.singleDatePicker === 'boolean') {
-            this.singleDatePicker = options.singleDatePicker;
-            if (this.singleDatePicker)
-                this.endDate = this.startDate.clone();
+    function o(a) {
+        if (null == a._isValid) {
+            var b = n(a),
+                c = ud.call(b.parsedDateParts, function (a) {
+                    return null != a
+                }),
+                d = !isNaN(a._d.getTime()) && b.overflow < 0 && !b.empty && !b.invalidMonth && !b.invalidWeekday && !b.nullInput && !b.invalidFormat && !b.userInvalidated && (!b.meridiem || b.meridiem && c);
+            if (a._strict && (d = d && 0 === b.charsLeftOver && 0 === b.unusedTokens.length && void 0 === b.bigHour), null != Object.isFrozen && Object.isFrozen(a)) return d;
+            a._isValid = d
         }
+        return a._isValid
+    }
 
-        if (typeof options.timePicker === 'boolean')
-            this.timePicker = options.timePicker;
+    function p(a) {
+        var b = l(NaN);
+        return null != a ? k(n(b), a) : n(b).userInvalidated = !0, b
+    }
 
-        if (typeof options.timePickerSeconds === 'boolean')
-            this.timePickerSeconds = options.timePickerSeconds;
+    function q(a, b) {
+        var c, d, e;
+        if (f(b._isAMomentObject) || (a._isAMomentObject = b._isAMomentObject), f(b._i) || (a._i = b._i), f(b._f) || (a._f = b._f), f(b._l) || (a._l = b._l), f(b._strict) || (a._strict = b._strict), f(b._tzm) || (a._tzm = b._tzm), f(b._isUTC) || (a._isUTC = b._isUTC), f(b._offset) || (a._offset = b._offset), f(b._pf) || (a._pf = n(b)), f(b._locale) || (a._locale = b._locale), vd.length > 0)
+            for (c = 0; c < vd.length; c++) d = vd[c], e = b[d], f(e) || (a[d] = e);
+        return a
+    }
 
-        if (typeof options.timePickerIncrement === 'number')
-            this.timePickerIncrement = options.timePickerIncrement;
+    function r(b) {
+        q(this, b), this._d = new Date(null != b._d ? b._d.getTime() : NaN), this.isValid() || (this._d = new Date(NaN)), wd === !1 && (wd = !0, a.updateOffset(this), wd = !1)
+    }
 
-        if (typeof options.timePicker24Hour === 'boolean')
-            this.timePicker24Hour = options.timePicker24Hour;
+    function s(a) {
+        return a instanceof r || null != a && null != a._isAMomentObject
+    }
 
-        if (typeof options.autoApply === 'boolean')
-            this.autoApply = options.autoApply;
+    function t(a) {
+        return a < 0 ? Math.ceil(a) || 0 : Math.floor(a)
+    }
 
-        if (typeof options.autoUpdateInput === 'boolean')
-            this.autoUpdateInput = options.autoUpdateInput;
+    function u(a) {
+        var b = +a,
+            c = 0;
+        return 0 !== b && isFinite(b) && (c = t(b)), c
+    }
 
-        if (typeof options.linkedCalendars === 'boolean')
-            this.linkedCalendars = options.linkedCalendars;
+    function v(a, b, c) {
+        var d, e = Math.min(a.length, b.length),
+            f = Math.abs(a.length - b.length),
+            g = 0;
+        for (d = 0; d < e; d++)(c && a[d] !== b[d] || !c && u(a[d]) !== u(b[d])) && g++;
+        return g + f
+    }
 
-        if (typeof options.isInvalidDate === 'function')
-            this.isInvalidDate = options.isInvalidDate;
+    function w(b) {
+        a.suppressDeprecationWarnings === !1 && "undefined" != typeof console && console.warn && console.warn("Deprecation warning: " + b)
+    }
 
-        if (typeof options.isCustomDate === 'function')
-            this.isCustomDate = options.isCustomDate;
-
-        if (typeof options.alwaysShowCalendars === 'boolean')
-            this.alwaysShowCalendars = options.alwaysShowCalendars;
-
-        // update day names order to firstDay
-        if (this.locale.firstDay != 0) {
-            var iterator = this.locale.firstDay;
-            while (iterator > 0) {
-                this.locale.daysOfWeek.push(this.locale.daysOfWeek.shift());
-                iterator--;
-            }
-        }
-
-        var start, end, range;
-
-        //if no start/end dates set, check if an input element contains initial values
-        if (typeof options.startDate === 'undefined' && typeof options.endDate === 'undefined') {
-            if ($(this.element).is(':text')) {
-                var val = $(this.element).val(),
-                    split = val.split(this.locale.separator);
-
-                start = end = null;
-
-                if (split.length == 2) {
-                    start = moment(split[0], this.locale.format);
-                    end = moment(split[1], this.locale.format);
-                } else if (this.singleDatePicker && val !== "") {
-                    start = moment(val, this.locale.format);
-                    end = moment(val, this.locale.format);
+    function x(b, c) {
+        var d = !0;
+        return k(function () {
+            if (null != a.deprecationHandler && a.deprecationHandler(null, b), d) {
+                for (var e, f = [], g = 0; g < arguments.length; g++) {
+                    if (e = "", "object" == typeof arguments[g]) {
+                        e += "\n[" + g + "] ";
+                        for (var h in arguments[0]) e += h + ": " + arguments[0][h] + ", ";
+                        e = e.slice(0, -2)
+                    } else e = arguments[g];
+                    f.push(e)
                 }
-                if (start !== null && end !== null) {
-                    this.setStartDate(start);
-                    this.setEndDate(end);
-                }
+                w(b + "\nArguments: " + Array.prototype.slice.call(f).join("") + "\n" + (new Error).stack), d = !1
             }
-        }
-
-        if (typeof options.ranges === 'object') {
-            for (range in options.ranges) {
-
-                if (typeof options.ranges[range][0] === 'string')
-                    start = moment(options.ranges[range][0], this.locale.format);
-                else
-                    start = moment(options.ranges[range][0]);
-
-                if (typeof options.ranges[range][1] === 'string')
-                    end = moment(options.ranges[range][1], this.locale.format);
-                else
-                    end = moment(options.ranges[range][1]);
-
-                // If the start or end date exceed those allowed by the minDate or maxSpan
-                // options, shorten the range to the allowable period.
-                if (this.minDate && start.isBefore(this.minDate))
-                    start = this.minDate.clone();
-
-                var maxDate = this.maxDate;
-                if (this.maxSpan && maxDate && start.clone().add(this.maxSpan).isAfter(maxDate))
-                    maxDate = start.clone().add(this.maxSpan);
-                if (maxDate && end.isAfter(maxDate))
-                    end = maxDate.clone();
-
-                // If the end of the range is before the minimum or the start of the range is
-                // after the maximum, don't display this range option at all.
-                if ((this.minDate && end.isBefore(this.minDate, this.timepicker ? 'minute' : 'day'))
-                  || (maxDate && start.isAfter(maxDate, this.timepicker ? 'minute' : 'day')))
-                    continue;
-
-                //Support unicode chars in the range names.
-                var elem = document.createElement('textarea');
-                elem.innerHTML = range;
-                var rangeHtml = elem.value;
-
-                this.ranges[rangeHtml] = [start, end];
-            }
-
-            var list = '<ul>';
-            for (range in this.ranges) {
-                list += '<li data-range-key="' + range + '">' + range + '</li>';
-            }
-            if (this.showCustomRangeLabel) {
-                list += '<li data-range-key="' + this.locale.customRangeLabel + '">' + this.locale.customRangeLabel + '</li>';
-            }
-            list += '</ul>';
-            this.container.find('.ranges').prepend(list);
-        }
-
-        if (typeof cb === 'function') {
-            this.callback = cb;
-        }
-
-        if (!this.timePicker) {
-            this.startDate = this.startDate.startOf('day');
-            this.endDate = this.endDate.endOf('day');
-            this.container.find('.calendar-time').hide();
-        }
-
-        //can't be used together for now
-        if (this.timePicker && this.autoApply)
-            this.autoApply = false;
-
-        if (this.autoApply) {
-            this.container.addClass('auto-apply');
-        }
-
-        if (typeof options.ranges === 'object')
-            this.container.addClass('show-ranges');
-
-        if (this.singleDatePicker) {
-            this.container.addClass('single');
-            this.container.find('.drp-calendar.left').addClass('single');
-            this.container.find('.drp-calendar.left').show();
-            this.container.find('.drp-calendar.right').hide();
-            if (!this.timePicker && this.autoApply) {
-                this.container.addClass('auto-apply');
-            }
-        }
-
-        if ((typeof options.ranges === 'undefined' && !this.singleDatePicker) || this.alwaysShowCalendars) {
-            this.container.addClass('show-calendar');
-        }
-
-        this.container.addClass('opens' + this.opens);
-
-        //apply CSS classes and labels to buttons
-        this.container.find('.applyBtn, .cancelBtn').addClass(this.buttonClasses);
-        if (this.applyButtonClasses.length)
-            this.container.find('.applyBtn').addClass(this.applyButtonClasses);
-        if (this.cancelButtonClasses.length)
-            this.container.find('.cancelBtn').addClass(this.cancelButtonClasses);
-        this.container.find('.applyBtn').html(this.locale.applyLabel);
-        this.container.find('.cancelBtn').html(this.locale.cancelLabel);
-
-        //
-        // event listeners
-        //
-
-        this.container.find('.drp-calendar')
-            .on('click.daterangepicker', '.prev', $.proxy(this.clickPrev, this))
-            .on('click.daterangepicker', '.next', $.proxy(this.clickNext, this))
-            .on('mousedown.daterangepicker', 'td.available', $.proxy(this.clickDate, this))
-            .on('mouseenter.daterangepicker', 'td.available', $.proxy(this.hoverDate, this))
-            .on('change.daterangepicker', 'select.yearselect', $.proxy(this.monthOrYearChanged, this))
-            .on('change.daterangepicker', 'select.monthselect', $.proxy(this.monthOrYearChanged, this))
-            .on('change.daterangepicker', 'select.hourselect,select.minuteselect,select.secondselect,select.ampmselect', $.proxy(this.timeChanged, this));
-
-        this.container.find('.ranges')
-            .on('click.daterangepicker', 'li', $.proxy(this.clickRange, this));
-
-        this.container.find('.drp-buttons')
-            .on('click.daterangepicker', 'button.applyBtn', $.proxy(this.clickApply, this))
-            .on('click.daterangepicker', 'button.cancelBtn', $.proxy(this.clickCancel, this));
-
-        if (this.element.is('input') || this.element.is('button')) {
-            this.element.on({
-                'click.daterangepicker': $.proxy(this.show, this),
-                'focus.daterangepicker': $.proxy(this.show, this),
-                'keyup.daterangepicker': $.proxy(this.elementChanged, this),
-                'keydown.daterangepicker': $.proxy(this.keydown, this) //IE 11 compatibility
-            });
-        } else {
-            this.element.on('click.daterangepicker', $.proxy(this.toggle, this));
-            this.element.on('keydown.daterangepicker', $.proxy(this.toggle, this));
-        }
-
-        //
-        // if attached to a text input, set the initial value
-        //
-
-        this.updateElement();
-
-    };
-
-    DateRangePicker.prototype = {
-
-        constructor: DateRangePicker,
-
-        setStartDate: function(startDate) {
-            if (typeof startDate === 'string')
-                this.startDate = moment(startDate, this.locale.format);
-
-            if (typeof startDate === 'object')
-                this.startDate = moment(startDate);
-
-            if (!this.timePicker)
-                this.startDate = this.startDate.startOf('day');
-
-            if (this.timePicker && this.timePickerIncrement)
-                this.startDate.minute(Math.round(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
-
-            if (this.minDate && this.startDate.isBefore(this.minDate)) {
-                this.startDate = this.minDate.clone();
-                if (this.timePicker && this.timePickerIncrement)
-                    this.startDate.minute(Math.round(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
-            }
-
-            if (this.maxDate && this.startDate.isAfter(this.maxDate)) {
-                this.startDate = this.maxDate.clone();
-                if (this.timePicker && this.timePickerIncrement)
-                    this.startDate.minute(Math.floor(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
-            }
-
-            if (!this.isShowing)
-                this.updateElement();
-
-            this.updateMonthsInView();
-        },
-
-        setEndDate: function(endDate) {
-            if (typeof endDate === 'string')
-                this.endDate = moment(endDate, this.locale.format);
-
-            if (typeof endDate === 'object')
-                this.endDate = moment(endDate);
-
-            if (!this.timePicker)
-                this.endDate = this.endDate.endOf('day');
-
-            if (this.timePicker && this.timePickerIncrement)
-                this.endDate.minute(Math.round(this.endDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
-
-            if (this.endDate.isBefore(this.startDate))
-                this.endDate = this.startDate.clone();
-
-            if (this.maxDate && this.endDate.isAfter(this.maxDate))
-                this.endDate = this.maxDate.clone();
-
-            if (this.maxSpan && this.startDate.clone().add(this.maxSpan).isBefore(this.endDate))
-                this.endDate = this.startDate.clone().add(this.maxSpan);
-
-            this.previousRightTime = this.endDate.clone();
-
-            this.container.find('.drp-selected').html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
-
-            if (!this.isShowing)
-                this.updateElement();
-
-            this.updateMonthsInView();
-        },
-
-        isInvalidDate: function() {
-            return false;
-        },
-
-        isCustomDate: function() {
-            return false;
-        },
-
-        updateView: function() {
-            if (this.timePicker) {
-                this.renderTimePicker('left');
-                this.renderTimePicker('right');
-                if (!this.endDate) {
-                    this.container.find('.right .calendar-time select').prop('disabled', true).addClass('disabled');
-                } else {
-                    this.container.find('.right .calendar-time select').prop('disabled', false).removeClass('disabled');
-                }
-            }
-            if (this.endDate)
-                this.container.find('.drp-selected').html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
-            this.updateMonthsInView();
-            this.updateCalendars();
-            this.updateFormInputs();
-        },
-
-        updateMonthsInView: function() {
-            if (this.endDate) {
-
-                //if both dates are visible already, do nothing
-                if (!this.singleDatePicker && this.leftCalendar.month && this.rightCalendar.month &&
-                    (this.startDate.format('YYYY-MM') == this.leftCalendar.month.format('YYYY-MM') || this.startDate.format('YYYY-MM') == this.rightCalendar.month.format('YYYY-MM'))
-                    &&
-                    (this.endDate.format('YYYY-MM') == this.leftCalendar.month.format('YYYY-MM') || this.endDate.format('YYYY-MM') == this.rightCalendar.month.format('YYYY-MM'))
-                    ) {
-                    return;
-                }
-
-                this.leftCalendar.month = this.startDate.clone().date(2);
-                if (!this.linkedCalendars && (this.endDate.month() != this.startDate.month() || this.endDate.year() != this.startDate.year())) {
-                    this.rightCalendar.month = this.endDate.clone().date(2);
-                } else {
-                    this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'month');
-                }
-
-            } else {
-                if (this.leftCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM') && this.rightCalendar.month.format('YYYY-MM') != this.startDate.format('YYYY-MM')) {
-                    this.leftCalendar.month = this.startDate.clone().date(2);
-                    this.rightCalendar.month = this.startDate.clone().date(2).add(1, 'month');
-                }
-            }
-            if (this.maxDate && this.linkedCalendars && !this.singleDatePicker && this.rightCalendar.month > this.maxDate) {
-              this.rightCalendar.month = this.maxDate.clone().date(2);
-              this.leftCalendar.month = this.maxDate.clone().date(2).subtract(1, 'month');
-            }
-        },
-
-        updateCalendars: function() {
-
-            if (this.timePicker) {
-                var hour, minute, second;
-                if (this.endDate) {
-                    hour = parseInt(this.container.find('.left .hourselect').val(), 10);
-                    minute = parseInt(this.container.find('.left .minuteselect').val(), 10);
-                    if (isNaN(minute)) {
-                        minute = parseInt(this.container.find('.left .minuteselect option:last').val(), 10);
-                    }
-                    second = this.timePickerSeconds ? parseInt(this.container.find('.left .secondselect').val(), 10) : 0;
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.left .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
-                } else {
-                    hour = parseInt(this.container.find('.right .hourselect').val(), 10);
-                    minute = parseInt(this.container.find('.right .minuteselect').val(), 10);
-                    if (isNaN(minute)) {
-                        minute = parseInt(this.container.find('.right .minuteselect option:last').val(), 10);
-                    }
-                    second = this.timePickerSeconds ? parseInt(this.container.find('.right .secondselect').val(), 10) : 0;
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.right .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
-                }
-                this.leftCalendar.month.hour(hour).minute(minute).second(second);
-                this.rightCalendar.month.hour(hour).minute(minute).second(second);
-            }
-
-            this.renderCalendar('left');
-            this.renderCalendar('right');
-
-            //highlight any predefined range matching the current start and end dates
-            this.container.find('.ranges li').removeClass('active');
-            if (this.endDate == null) return;
-
-            this.calculateChosenLabel();
-        },
-
-        renderCalendar: function(side) {
-
-            //
-            // Build the matrix of dates that will populate the calendar
-            //
-
-            var calendar = side == 'left' ? this.leftCalendar : this.rightCalendar;
-            var month = calendar.month.month();
-            var year = calendar.month.year();
-            var hour = calendar.month.hour();
-            var minute = calendar.month.minute();
-            var second = calendar.month.second();
-            var daysInMonth = moment([year, month]).daysInMonth();
-            var firstDay = moment([year, month, 1]);
-            var lastDay = moment([year, month, daysInMonth]);
-            var lastMonth = moment(firstDay).subtract(1, 'month').month();
-            var lastYear = moment(firstDay).subtract(1, 'month').year();
-            var daysInLastMonth = moment([lastYear, lastMonth]).daysInMonth();
-            var dayOfWeek = firstDay.day();
-
-            //initialize a 6 rows x 7 columns array for the calendar
-            var calendar = [];
-            calendar.firstDay = firstDay;
-            calendar.lastDay = lastDay;
-
-            for (var i = 0; i < 6; i++) {
-                calendar[i] = [];
-            }
-
-            //populate the calendar with date objects
-            var startDay = daysInLastMonth - dayOfWeek + this.locale.firstDay + 1;
-            if (startDay > daysInLastMonth)
-                startDay -= 7;
-
-            if (dayOfWeek == this.locale.firstDay)
-                startDay = daysInLastMonth - 6;
-
-            var curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]);
-
-            var col, row;
-            for (var i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(24, 'hour')) {
-                if (i > 0 && col % 7 === 0) {
-                    col = 0;
-                    row++;
-                }
-                calendar[row][col] = curDate.clone().hour(hour).minute(minute).second(second);
-                curDate.hour(12);
-
-                if (this.minDate && calendar[row][col].format('YYYY-MM-DD') == this.minDate.format('YYYY-MM-DD') && calendar[row][col].isBefore(this.minDate) && side == 'left') {
-                    calendar[row][col] = this.minDate.clone();
-                }
-
-                if (this.maxDate && calendar[row][col].format('YYYY-MM-DD') == this.maxDate.format('YYYY-MM-DD') && calendar[row][col].isAfter(this.maxDate) && side == 'right') {
-                    calendar[row][col] = this.maxDate.clone();
-                }
-
-            }
-
-            //make the calendar object available to hoverDate/clickDate
-            if (side == 'left') {
-                this.leftCalendar.calendar = calendar;
-            } else {
-                this.rightCalendar.calendar = calendar;
-            }
-
-            //
-            // Display the calendar
-            //
-
-            var minDate = side == 'left' ? this.minDate : this.startDate;
-            var maxDate = this.maxDate;
-            var selected = side == 'left' ? this.startDate : this.endDate;
-            var arrow = this.locale.direction == 'ltr' ? {left: 'chevron-left', right: 'chevron-right'} : {left: 'chevron-right', right: 'chevron-left'};
-
-            var html = '<table class="table-condensed">';
-            html += '<thead>';
-            html += '<tr>';
-
-            // add empty cell for week number
-            if (this.showWeekNumbers || this.showISOWeekNumbers)
-                html += '<th></th>';
-
-            if ((!minDate || minDate.isBefore(calendar.firstDay)) && (!this.linkedCalendars || side == 'left')) {
-                html += '<th class="prev available"><span></span></th>';
-            } else {
-                html += '<th></th>';
-            }
-
-            var dateHtml = this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
-
-            if (this.showDropdowns) {
-                var currentMonth = calendar[1][1].month();
-                var currentYear = calendar[1][1].year();
-                var maxYear = (maxDate && maxDate.year()) || (this.maxYear);
-                var minYear = (minDate && minDate.year()) || (this.minYear);
-                var inMinYear = currentYear == minYear;
-                var inMaxYear = currentYear == maxYear;
-
-                var monthHtml = '<select class="monthselect">';
-                for (var m = 0; m < 12; m++) {
-                    if ((!inMinYear || (minDate && m >= minDate.month())) && (!inMaxYear || (maxDate && m <= maxDate.month()))) {
-                        monthHtml += "<option value='" + m + "'" +
-                            (m === currentMonth ? " selected='selected'" : "") +
-                            ">" + this.locale.monthNames[m] + "</option>";
-                    } else {
-                        monthHtml += "<option value='" + m + "'" +
-                            (m === currentMonth ? " selected='selected'" : "") +
-                            " disabled='disabled'>" + this.locale.monthNames[m] + "</option>";
-                    }
-                }
-                monthHtml += "</select>";
-
-                var yearHtml = '<select class="yearselect">';
-                for (var y = minYear; y <= maxYear; y++) {
-                    yearHtml += '<option value="' + y + '"' +
-                        (y === currentYear ? ' selected="selected"' : '') +
-                        '>' + y + '</option>';
-                }
-                yearHtml += '</select>';
-
-                dateHtml = monthHtml + yearHtml;
-            }
-
-            html += '<th colspan="5" class="month">' + dateHtml + '</th>';
-            if ((!maxDate || maxDate.isAfter(calendar.lastDay)) && (!this.linkedCalendars || side == 'right' || this.singleDatePicker)) {
-                html += '<th class="next available"><span></span></th>';
-            } else {
-                html += '<th></th>';
-            }
-
-            html += '</tr>';
-            html += '<tr>';
-
-            // add week number label
-            if (this.showWeekNumbers || this.showISOWeekNumbers)
-                html += '<th class="week">' + this.locale.weekLabel + '</th>';
-
-            $.each(this.locale.daysOfWeek, function(index, dayOfWeek) {
-                html += '<th>' + dayOfWeek + '</th>';
-            });
-
-            html += '</tr>';
-            html += '</thead>';
-            html += '<tbody>';
-
-            //adjust maxDate to reflect the maxSpan setting in order to
-            //grey out end dates beyond the maxSpan
-            if (this.endDate == null && this.maxSpan) {
-                var maxLimit = this.startDate.clone().add(this.maxSpan).endOf('day');
-                if (!maxDate || maxLimit.isBefore(maxDate)) {
-                    maxDate = maxLimit;
-                }
-            }
-
-            for (var row = 0; row < 6; row++) {
-                html += '<tr>';
-
-                // add week number
-                if (this.showWeekNumbers)
-                    html += '<td class="week">' + calendar[row][0].week() + '</td>';
-                else if (this.showISOWeekNumbers)
-                    html += '<td class="week">' + calendar[row][0].isoWeek() + '</td>';
-
-                for (var col = 0; col < 7; col++) {
-
-                    var classes = [];
-
-                    //highlight today's date
-                    if (calendar[row][col].isSame(new Date(), "day"))
-                        classes.push('today');
-
-                    //highlight weekends
-                    if (calendar[row][col].isoWeekday() > 5)
-                        classes.push('weekend');
-
-                    //grey out the dates in other months displayed at beginning and end of this calendar
-                    if (calendar[row][col].month() != calendar[1][1].month())
-                        classes.push('off', 'ends');
-
-                    //don't allow selection of dates before the minimum date
-                    if (this.minDate && calendar[row][col].isBefore(this.minDate, 'day'))
-                        classes.push('off', 'disabled');
-
-                    //don't allow selection of dates after the maximum date
-                    if (maxDate && calendar[row][col].isAfter(maxDate, 'day'))
-                        classes.push('off', 'disabled');
-
-                    //don't allow selection of date if a custom function decides it's invalid
-                    if (this.isInvalidDate(calendar[row][col]))
-                        classes.push('off', 'disabled');
-
-                    //highlight the currently selected start date
-                    if (calendar[row][col].format('YYYY-MM-DD') == this.startDate.format('YYYY-MM-DD'))
-                        classes.push('active', 'start-date');
-
-                    //highlight the currently selected end date
-                    if (this.endDate != null && calendar[row][col].format('YYYY-MM-DD') == this.endDate.format('YYYY-MM-DD'))
-                        classes.push('active', 'end-date');
-
-                    //highlight dates in-between the selected dates
-                    if (this.endDate != null && calendar[row][col] > this.startDate && calendar[row][col] < this.endDate)
-                        classes.push('in-range');
-
-                    //apply custom classes for this date
-                    var isCustom = this.isCustomDate(calendar[row][col]);
-                    if (isCustom !== false) {
-                        if (typeof isCustom === 'string')
-                            classes.push(isCustom);
-                        else
-                            Array.prototype.push.apply(classes, isCustom);
-                    }
-
-                    var cname = '', disabled = false;
-                    for (var i = 0; i < classes.length; i++) {
-                        cname += classes[i] + ' ';
-                        if (classes[i] == 'disabled')
-                            disabled = true;
-                    }
-                    if (!disabled)
-                        cname += 'available';
-
-                    html += '<td class="' + cname.replace(/^\s+|\s+$/g, '') + '" data-title="' + 'r' + row + 'c' + col + '">' + calendar[row][col].date() + '</td>';
-
-                }
-                html += '</tr>';
-            }
-
-            html += '</tbody>';
-            html += '</table>';
-
-            this.container.find('.drp-calendar.' + side + ' .calendar-table').html(html);
-
-        },
-
-        renderTimePicker: function(side) {
-
-            // Don't bother updating the time picker if it's currently disabled
-            // because an end date hasn't been clicked yet
-            if (side == 'right' && !this.endDate) return;
-
-            var html, selected, minDate, maxDate = this.maxDate;
-
-            if (this.maxSpan && (!this.maxDate || this.startDate.clone().add(this.maxSpan).isBefore(this.maxDate)))
-                maxDate = this.startDate.clone().add(this.maxSpan);
-
-            if (side == 'left') {
-                selected = this.startDate.clone();
-                minDate = this.minDate;
-            } else if (side == 'right') {
-                selected = this.endDate.clone();
-                minDate = this.startDate;
-
-                //Preserve the time already selected
-                var timeSelector = this.container.find('.drp-calendar.right .calendar-time');
-                if (timeSelector.html() != '') {
-
-                    selected.hour(!isNaN(selected.hour()) ? selected.hour() : timeSelector.find('.hourselect option:selected').val());
-                    selected.minute(!isNaN(selected.minute()) ? selected.minute() : timeSelector.find('.minuteselect option:selected').val());
-                    selected.second(!isNaN(selected.second()) ? selected.second() : timeSelector.find('.secondselect option:selected').val());
-
-                    if (!this.timePicker24Hour) {
-                        var ampm = timeSelector.find('.ampmselect option:selected').val();
-                        if (ampm === 'PM' && selected.hour() < 12)
-                            selected.hour(selected.hour() + 12);
-                        if (ampm === 'AM' && selected.hour() === 12)
-                            selected.hour(0);
-                    }
-
-                }
-
-                if (selected.isBefore(this.startDate))
-                    selected = this.startDate.clone();
-
-                if (maxDate && selected.isAfter(maxDate))
-                    selected = maxDate.clone();
-
-            }
-
-            //
-            // hours
-            //
-
-            html = '<select class="hourselect">';
-
-            var start = this.timePicker24Hour ? 0 : 1;
-            var end = this.timePicker24Hour ? 23 : 12;
-
-            for (var i = start; i <= end; i++) {
-                var i_in_24 = i;
-                if (!this.timePicker24Hour)
-                    i_in_24 = selected.hour() >= 12 ? (i == 12 ? 12 : i + 12) : (i == 12 ? 0 : i);
-
-                var time = selected.clone().hour(i_in_24);
-                var disabled = false;
-                if (minDate && time.minute(59).isBefore(minDate))
-                    disabled = true;
-                if (maxDate && time.minute(0).isAfter(maxDate))
-                    disabled = true;
-
-                if (i_in_24 == selected.hour() && !disabled) {
-                    html += '<option value="' + i + '" selected="selected">' + i + '</option>';
-                } else if (disabled) {
-                    html += '<option value="' + i + '" disabled="disabled" class="disabled">' + i + '</option>';
-                } else {
-                    html += '<option value="' + i + '">' + i + '</option>';
-                }
-            }
-
-            html += '</select> ';
-
-            //
-            // minutes
-            //
-
-            html += ': <select class="minuteselect">';
-
-            for (var i = 0; i < 60; i += this.timePickerIncrement) {
-                var padded = i < 10 ? '0' + i : i;
-                var time = selected.clone().minute(i);
-
-                var disabled = false;
-                if (minDate && time.second(59).isBefore(minDate))
-                    disabled = true;
-                if (maxDate && time.second(0).isAfter(maxDate))
-                    disabled = true;
-
-                if (selected.minute() == i && !disabled) {
-                    html += '<option value="' + i + '" selected="selected">' + padded + '</option>';
-                } else if (disabled) {
-                    html += '<option value="' + i + '" disabled="disabled" class="disabled">' + padded + '</option>';
-                } else {
-                    html += '<option value="' + i + '">' + padded + '</option>';
-                }
-            }
-
-            html += '</select> ';
-
-            //
-            // seconds
-            //
-
-            if (this.timePickerSeconds) {
-                html += ': <select class="secondselect">';
-
-                for (var i = 0; i < 60; i++) {
-                    var padded = i < 10 ? '0' + i : i;
-                    var time = selected.clone().second(i);
-
-                    var disabled = false;
-                    if (minDate && time.isBefore(minDate))
-                        disabled = true;
-                    if (maxDate && time.isAfter(maxDate))
-                        disabled = true;
-
-                    if (selected.second() == i && !disabled) {
-                        html += '<option value="' + i + '" selected="selected">' + padded + '</option>';
-                    } else if (disabled) {
-                        html += '<option value="' + i + '" disabled="disabled" class="disabled">' + padded + '</option>';
-                    } else {
-                        html += '<option value="' + i + '">' + padded + '</option>';
-                    }
-                }
-
-                html += '</select> ';
-            }
-
-            //
-            // AM/PM
-            //
-
-            if (!this.timePicker24Hour) {
-                html += '<select class="ampmselect">';
-
-                var am_html = '';
-                var pm_html = '';
-
-                if (minDate && selected.clone().hour(12).minute(0).second(0).isBefore(minDate))
-                    am_html = ' disabled="disabled" class="disabled"';
-
-                if (maxDate && selected.clone().hour(0).minute(0).second(0).isAfter(maxDate))
-                    pm_html = ' disabled="disabled" class="disabled"';
-
-                if (selected.hour() >= 12) {
-                    html += '<option value="AM"' + am_html + '>AM</option><option value="PM" selected="selected"' + pm_html + '>PM</option>';
-                } else {
-                    html += '<option value="AM" selected="selected"' + am_html + '>AM</option><option value="PM"' + pm_html + '>PM</option>';
-                }
-
-                html += '</select>';
-            }
-
-            this.container.find('.drp-calendar.' + side + ' .calendar-time').html(html);
-
-        },
-
-        updateFormInputs: function() {
-
-            if (this.singleDatePicker || (this.endDate && (this.startDate.isBefore(this.endDate) || this.startDate.isSame(this.endDate)))) {
-                this.container.find('button.applyBtn').prop('disabled', false);
-            } else {
-                this.container.find('button.applyBtn').prop('disabled', true);
-            }
-
-        },
-
-        move: function() {
-            var parentOffset = { top: 0, left: 0 },
-                containerTop,
-                drops = this.drops;
-
-            var parentRightEdge = $(window).width();
-            if (!this.parentEl.is('body')) {
-                parentOffset = {
-                    top: this.parentEl.offset().top - this.parentEl.scrollTop(),
-                    left: this.parentEl.offset().left - this.parentEl.scrollLeft()
-                };
-                parentRightEdge = this.parentEl[0].clientWidth + this.parentEl.offset().left;
-            }
-
-            switch (drops) {
-            case 'auto':
-                containerTop = this.element.offset().top + this.element.outerHeight() - parentOffset.top;
-                if (containerTop + this.container.outerHeight() >= this.parentEl[0].scrollHeight) {
-                    containerTop = this.element.offset().top - this.container.outerHeight() - parentOffset.top;
-                    drops = 'up';
-                }
-                break;
-            case 'up':
-                containerTop = this.element.offset().top - this.container.outerHeight() - parentOffset.top;
-                break;
-            default:
-                containerTop = this.element.offset().top + this.element.outerHeight() - parentOffset.top;
-                break;
-            }
-
-            // Force the container to it's actual width
-            this.container.css({
-              top: 0,
-              left: 0,
-              right: 'auto'
-            });
-            var containerWidth = this.container.outerWidth();
-
-            this.container.toggleClass('drop-up', drops == 'up');
-
-            if (this.opens == 'left') {
-                var containerRight = parentRightEdge - this.element.offset().left - this.element.outerWidth();
-                if (containerWidth + containerRight > $(window).width()) {
-                    this.container.css({
-                        top: containerTop,
-                        right: 'auto',
-                        left: 9
-                    });
-                } else {
-                    this.container.css({
-                        top: containerTop,
-                        right: containerRight,
-                        left: 'auto'
-                    });
-                }
-            } else if (this.opens == 'center') {
-                var containerLeft = this.element.offset().left - parentOffset.left + this.element.outerWidth() / 2
-                                        - containerWidth / 2;
-                if (containerLeft < 0) {
-                    this.container.css({
-                        top: containerTop,
-                        right: 'auto',
-                        left: 9
-                    });
-                } else if (containerLeft + containerWidth > $(window).width()) {
-                    this.container.css({
-                        top: containerTop,
-                        left: 'auto',
-                        right: 0
-                    });
-                } else {
-                    this.container.css({
-                        top: containerTop,
-                        left: containerLeft,
-                        right: 'auto'
-                    });
-                }
-            } else {
-                var containerLeft = this.element.offset().left - parentOffset.left;
-                if (containerLeft + containerWidth > $(window).width()) {
-                    this.container.css({
-                        top: containerTop,
-                        left: 'auto',
-                        right: 0
-                    });
-                } else {
-                    this.container.css({
-                        top: containerTop,
-                        left: containerLeft,
-                        right: 'auto'
-                    });
-                }
-            }
-        },
-
-        show: function(e) {
-            if (this.isShowing) return;
-
-            // Create a click proxy that is private to this instance of datepicker, for unbinding
-            this._outsideClickProxy = $.proxy(function(e) { this.outsideClick(e); }, this);
-
-            // Bind global datepicker mousedown for hiding and
-            $(document)
-              .on('mousedown.daterangepicker', this._outsideClickProxy)
-              // also support mobile devices
-              .on('touchend.daterangepicker', this._outsideClickProxy)
-              // also explicitly play nice with Bootstrap dropdowns, which stopPropagation when clicking them
-              .on('click.daterangepicker', '[data-toggle=dropdown]', this._outsideClickProxy)
-              // and also close when focus changes to outside the picker (eg. tabbing between controls)
-              .on('focusin.daterangepicker', this._outsideClickProxy);
-
-            // Reposition the picker if the window is resized while it's open
-            $(window).on('resize.daterangepicker', $.proxy(function(e) { this.move(e); }, this));
-
-            this.oldStartDate = this.startDate.clone();
-            this.oldEndDate = this.endDate.clone();
-            this.previousRightTime = this.endDate.clone();
-
-            this.updateView();
-            this.container.show();
-            this.move();
-            this.element.trigger('show.daterangepicker', this);
-            this.isShowing = true;
-        },
-
-        hide: function(e) {
-            if (!this.isShowing) return;
-
-            //incomplete date selection, revert to last values
-            if (!this.endDate) {
-                this.startDate = this.oldStartDate.clone();
-                this.endDate = this.oldEndDate.clone();
-            }
-
-            //if a new date range was selected, invoke the user callback function
-            if (!this.startDate.isSame(this.oldStartDate) || !this.endDate.isSame(this.oldEndDate))
-                this.callback(this.startDate.clone(), this.endDate.clone(), this.chosenLabel);
-
-            //if picker is attached to a text input, update it
-            this.updateElement();
-
-            $(document).off('.daterangepicker');
-            $(window).off('.daterangepicker');
-            this.container.hide();
-            this.element.trigger('hide.daterangepicker', this);
-            this.isShowing = false;
-        },
-
-        toggle: function(e) {
-            if (this.isShowing) {
-                this.hide();
-            } else {
-                this.show();
-            }
-        },
-
-        outsideClick: function(e) {
-            var target = $(e.target);
-            // if the page is clicked anywhere except within the daterangerpicker/button
-            // itself then call this.hide()
-            if (
-                // ie modal dialog fix
-                e.type == "focusin" ||
-                target.closest(this.element).length ||
-                target.closest(this.container).length ||
-                target.closest('.calendar-table').length
-                ) return;
-            this.hide();
-            this.element.trigger('outsideClick.daterangepicker', this);
-        },
-
-        showCalendars: function() {
-            this.container.addClass('show-calendar');
-            this.move();
-            this.element.trigger('showCalendar.daterangepicker', this);
-        },
-
-        hideCalendars: function() {
-            this.container.removeClass('show-calendar');
-            this.element.trigger('hideCalendar.daterangepicker', this);
-        },
-
-        clickRange: function(e) {
-            var label = e.target.getAttribute('data-range-key');
-            this.chosenLabel = label;
-            if (label == this.locale.customRangeLabel) {
-                this.showCalendars();
-            } else {
-                var dates = this.ranges[label];
-                this.startDate = dates[0];
-                this.endDate = dates[1];
-
-                if (!this.timePicker) {
-                    this.startDate.startOf('day');
-                    this.endDate.endOf('day');
-                }
-
-                if (!this.alwaysShowCalendars)
-                    this.hideCalendars();
-                this.clickApply();
-            }
-        },
-
-        clickPrev: function(e) {
-            var cal = $(e.target).parents('.drp-calendar');
-            if (cal.hasClass('left')) {
-                this.leftCalendar.month.subtract(1, 'month');
-                if (this.linkedCalendars)
-                    this.rightCalendar.month.subtract(1, 'month');
-            } else {
-                this.rightCalendar.month.subtract(1, 'month');
-            }
-            this.updateCalendars();
-        },
-
-        clickNext: function(e) {
-            var cal = $(e.target).parents('.drp-calendar');
-            if (cal.hasClass('left')) {
-                this.leftCalendar.month.add(1, 'month');
-            } else {
-                this.rightCalendar.month.add(1, 'month');
-                if (this.linkedCalendars)
-                    this.leftCalendar.month.add(1, 'month');
-            }
-            this.updateCalendars();
-        },
-
-        hoverDate: function(e) {
-
-            //ignore dates that can't be selected
-            if (!$(e.target).hasClass('available')) return;
-
-            var title = $(e.target).attr('data-title');
-            var row = title.substr(1, 1);
-            var col = title.substr(3, 1);
-            var cal = $(e.target).parents('.drp-calendar');
-            var date = cal.hasClass('left') ? this.leftCalendar.calendar[row][col] : this.rightCalendar.calendar[row][col];
-
-            //highlight the dates between the start date and the date being hovered as a potential end date
-            var leftCalendar = this.leftCalendar;
-            var rightCalendar = this.rightCalendar;
-            var startDate = this.startDate;
-            if (!this.endDate) {
-                this.container.find('.drp-calendar tbody td').each(function(index, el) {
-
-                    //skip week numbers, only look at dates
-                    if ($(el).hasClass('week')) return;
-
-                    var title = $(el).attr('data-title');
-                    var row = title.substr(1, 1);
-                    var col = title.substr(3, 1);
-                    var cal = $(el).parents('.drp-calendar');
-                    var dt = cal.hasClass('left') ? leftCalendar.calendar[row][col] : rightCalendar.calendar[row][col];
-
-                    if ((dt.isAfter(startDate) && dt.isBefore(date)) || dt.isSame(date, 'day')) {
-                        $(el).addClass('in-range');
-                    } else {
-                        $(el).removeClass('in-range');
-                    }
-
-                });
-            }
-
-        },
-
-        clickDate: function(e) {
-
-            if (!$(e.target).hasClass('available')) return;
-
-            var title = $(e.target).attr('data-title');
-            var row = title.substr(1, 1);
-            var col = title.substr(3, 1);
-            var cal = $(e.target).parents('.drp-calendar');
-            var date = cal.hasClass('left') ? this.leftCalendar.calendar[row][col] : this.rightCalendar.calendar[row][col];
-
-            //
-            // this function needs to do a few things:
-            // * alternate between selecting a start and end date for the range,
-            // * if the time picker is enabled, apply the hour/minute/second from the select boxes to the clicked date
-            // * if autoapply is enabled, and an end date was chosen, apply the selection
-            // * if single date picker mode, and time picker isn't enabled, apply the selection immediately
-            // * if one of the inputs above the calendars was focused, cancel that manual input
-            //
-
-            if (this.endDate || date.isBefore(this.startDate, 'day')) { //picking start
-                if (this.timePicker) {
-                    var hour = parseInt(this.container.find('.left .hourselect').val(), 10);
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.left .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
-                    var minute = parseInt(this.container.find('.left .minuteselect').val(), 10);
-                    if (isNaN(minute)) {
-                        minute = parseInt(this.container.find('.left .minuteselect option:last').val(), 10);
-                    }
-                    var second = this.timePickerSeconds ? parseInt(this.container.find('.left .secondselect').val(), 10) : 0;
-                    date = date.clone().hour(hour).minute(minute).second(second);
-                }
-                this.endDate = null;
-                this.setStartDate(date.clone());
-            } else if (!this.endDate && date.isBefore(this.startDate)) {
-                //special case: clicking the same date for start/end,
-                //but the time of the end date is before the start date
-                this.setEndDate(this.startDate.clone());
-            } else { // picking end
-                if (this.timePicker) {
-                    var hour = parseInt(this.container.find('.right .hourselect').val(), 10);
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.right .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
-                    var minute = parseInt(this.container.find('.right .minuteselect').val(), 10);
-                    if (isNaN(minute)) {
-                        minute = parseInt(this.container.find('.right .minuteselect option:last').val(), 10);
-                    }
-                    var second = this.timePickerSeconds ? parseInt(this.container.find('.right .secondselect').val(), 10) : 0;
-                    date = date.clone().hour(hour).minute(minute).second(second);
-                }
-                this.setEndDate(date.clone());
-                if (this.autoApply) {
-                  this.calculateChosenLabel();
-                  this.clickApply();
-                }
-            }
-
-            if (this.singleDatePicker) {
-                this.setEndDate(this.startDate);
-                if (!this.timePicker && this.autoApply)
-                    this.clickApply();
-            }
-
-            this.updateView();
-
-            //This is to cancel the blur event handler if the mouse was in one of the inputs
-            e.stopPropagation();
-
-        },
-
-        calculateChosenLabel: function () {
-            var customRange = true;
-            var i = 0;
-            for (var range in this.ranges) {
-              if (this.timePicker) {
-                    var format = this.timePickerSeconds ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD HH:mm";
-                    //ignore times when comparing dates if time picker seconds is not enabled
-                    if (this.startDate.format(format) == this.ranges[range][0].format(format) && this.endDate.format(format) == this.ranges[range][1].format(format)) {
-                        customRange = false;
-                        this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').attr('data-range-key');
-                        break;
-                    }
-                } else {
-                    //ignore times when comparing dates if time picker is not enabled
-                    if (this.startDate.format('YYYY-MM-DD') == this.ranges[range][0].format('YYYY-MM-DD') && this.endDate.format('YYYY-MM-DD') == this.ranges[range][1].format('YYYY-MM-DD')) {
-                        customRange = false;
-                        this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').attr('data-range-key');
-                        break;
-                    }
-                }
-                i++;
-            }
-            if (customRange) {
-                if (this.showCustomRangeLabel) {
-                    this.chosenLabel = this.container.find('.ranges li:last').addClass('active').attr('data-range-key');
-                } else {
-                    this.chosenLabel = null;
-                }
-                this.showCalendars();
-            }
-        },
-
-        clickApply: function(e) {
-            this.hide();
-            this.element.trigger('apply.daterangepicker', this);
-        },
-
-        clickCancel: function(e) {
-            this.startDate = this.oldStartDate;
-            this.endDate = this.oldEndDate;
-            this.hide();
-            this.element.trigger('cancel.daterangepicker', this);
-        },
-
-        monthOrYearChanged: function(e) {
-            var isLeft = $(e.target).closest('.drp-calendar').hasClass('left'),
-                leftOrRight = isLeft ? 'left' : 'right',
-                cal = this.container.find('.drp-calendar.'+leftOrRight);
-
-            // Month must be Number for new moment versions
-            var month = parseInt(cal.find('.monthselect').val(), 10);
-            var year = cal.find('.yearselect').val();
-
-            if (!isLeft) {
-                if (year < this.startDate.year() || (year == this.startDate.year() && month < this.startDate.month())) {
-                    month = this.startDate.month();
-                    year = this.startDate.year();
-                }
-            }
-
-            if (this.minDate) {
-                if (year < this.minDate.year() || (year == this.minDate.year() && month < this.minDate.month())) {
-                    month = this.minDate.month();
-                    year = this.minDate.year();
-                }
-            }
-
-            if (this.maxDate) {
-                if (year > this.maxDate.year() || (year == this.maxDate.year() && month > this.maxDate.month())) {
-                    month = this.maxDate.month();
-                    year = this.maxDate.year();
-                }
-            }
-
-            if (isLeft) {
-                this.leftCalendar.month.month(month).year(year);
-                if (this.linkedCalendars)
-                    this.rightCalendar.month = this.leftCalendar.month.clone().add(1, 'month');
-            } else {
-                this.rightCalendar.month.month(month).year(year);
-                if (this.linkedCalendars)
-                    this.leftCalendar.month = this.rightCalendar.month.clone().subtract(1, 'month');
-            }
-            this.updateCalendars();
-        },
-
-        timeChanged: function(e) {
-
-            var cal = $(e.target).closest('.drp-calendar'),
-                isLeft = cal.hasClass('left');
-
-            var hour = parseInt(cal.find('.hourselect').val(), 10);
-            var minute = parseInt(cal.find('.minuteselect').val(), 10);
-            if (isNaN(minute)) {
-                minute = parseInt(cal.find('.minuteselect option:last').val(), 10);
-            }
-            var second = this.timePickerSeconds ? parseInt(cal.find('.secondselect').val(), 10) : 0;
-
-            if (!this.timePicker24Hour) {
-                var ampm = cal.find('.ampmselect').val();
-                if (ampm === 'PM' && hour < 12)
-                    hour += 12;
-                if (ampm === 'AM' && hour === 12)
-                    hour = 0;
-            }
-
-            if (isLeft) {
-                var start = this.startDate.clone();
-                start.hour(hour);
-                start.minute(minute);
-                start.second(second);
-                this.setStartDate(start);
-                if (this.singleDatePicker) {
-                    this.endDate = this.startDate.clone();
-                } else if (this.endDate && this.endDate.format('YYYY-MM-DD') == start.format('YYYY-MM-DD') && this.endDate.isBefore(start)) {
-                    this.setEndDate(start.clone());
-                }
-            } else if (this.endDate) {
-                var end = this.endDate.clone();
-                end.hour(hour);
-                end.minute(minute);
-                end.second(second);
-                this.setEndDate(end);
-            }
-
-            //update the calendars so all clickable dates reflect the new time component
-            this.updateCalendars();
-
-            //update the form inputs above the calendars with the new time
-            this.updateFormInputs();
-
-            //re-render the time pickers because changing one selection can affect what's enabled in another
-            this.renderTimePicker('left');
-            this.renderTimePicker('right');
-
-        },
-
-        elementChanged: function() {
-            if (!this.element.is('input')) return;
-            if (!this.element.val().length) return;
-
-            var dateString = this.element.val().split(this.locale.separator),
-                start = null,
-                end = null;
-
-            if (dateString.length === 2) {
-                start = moment(dateString[0], this.locale.format);
-                end = moment(dateString[1], this.locale.format);
-            }
-
-            if (this.singleDatePicker || start === null || end === null) {
-                start = moment(this.element.val(), this.locale.format);
-                end = start;
-            }
-
-            if (!start.isValid() || !end.isValid()) return;
-
-            this.setStartDate(start);
-            this.setEndDate(end);
-            this.updateView();
-        },
-
-        keydown: function(e) {
-            //hide on tab or enter
-            if ((e.keyCode === 9) || (e.keyCode === 13)) {
-                this.hide();
-            }
-
-            //hide on esc and prevent propagation
-            if (e.keyCode === 27) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                this.hide();
-            }
-        },
-
-        updateElement: function() {
-            if (this.element.is('input') && this.autoUpdateInput) {
-                var newValue = this.startDate.format(this.locale.format);
-                if (!this.singleDatePicker) {
-                    newValue += this.locale.separator + this.endDate.format(this.locale.format);
-                }
-                if (newValue !== this.element.val()) {
-                    this.element.val(newValue).trigger('change');
-                }
-            }
-        },
-
-        remove: function() {
-            this.container.remove();
-            this.element.off('.daterangepicker');
-            this.element.removeData();
-        }
-
-    };
-
-    $.fn.daterangepicker = function(options, callback) {
-        var implementOptions = $.extend(true, {}, $.fn.daterangepicker.defaultOptions, options);
-        this.each(function() {
-            var el = $(this);
-            if (el.data('daterangepicker'))
-                el.data('daterangepicker').remove();
-            el.data('daterangepicker', new DateRangePicker(el, implementOptions, callback));
+            return c.apply(this, arguments)
+        }, c)
+    }
+
+    function y(b, c) {
+        null != a.deprecationHandler && a.deprecationHandler(b, c), xd[b] || (w(c), xd[b] = !0)
+    }
+
+    function z(a) {
+        return a instanceof Function || "[object Function]" === Object.prototype.toString.call(a)
+    }
+
+    function A(a) {
+        var b, c;
+        for (c in a) b = a[c], z(b) ? this[c] = b : this["_" + c] = b;
+        this._config = a, this._dayOfMonthOrdinalParseLenient = new RegExp((this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) + "|" + /\d{1,2}/.source)
+    }
+
+    function B(a, b) {
+        var c, e = k({}, a);
+        for (c in b) j(b, c) && (d(a[c]) && d(b[c]) ? (e[c] = {}, k(e[c], a[c]), k(e[c], b[c])) : null != b[c] ? e[c] = b[c] : delete e[c]);
+        for (c in a) j(a, c) && !j(b, c) && d(a[c]) && (e[c] = k({}, e[c]));
+        return e
+    }
+
+    function C(a) {
+        null != a && this.set(a)
+    }
+
+    function D(a, b, c) {
+        var d = this._calendar[a] || this._calendar.sameElse;
+        return z(d) ? d.call(b, c) : d
+    }
+
+    function E(a) {
+        var b = this._longDateFormat[a],
+            c = this._longDateFormat[a.toUpperCase()];
+        return b || !c ? b : (this._longDateFormat[a] = c.replace(/MMMM|MM|DD|dddd/g, function (a) {
+            return a.slice(1)
+        }), this._longDateFormat[a])
+    }
+
+    function F() {
+        return this._invalidDate
+    }
+
+    function G(a) {
+        return this._ordinal.replace("%d", a)
+    }
+
+    function H(a, b, c, d) {
+        var e = this._relativeTime[c];
+        return z(e) ? e(a, b, c, d) : e.replace(/%d/i, a)
+    }
+
+    function I(a, b) {
+        var c = this._relativeTime[a > 0 ? "future" : "past"];
+        return z(c) ? c(b) : c.replace(/%s/i, b)
+    }
+
+    function J(a, b) {
+        var c = a.toLowerCase();
+        Hd[c] = Hd[c + "s"] = Hd[b] = a
+    }
+
+    function K(a) {
+        return "string" == typeof a ? Hd[a] || Hd[a.toLowerCase()] : void 0
+    }
+
+    function L(a) {
+        var b, c, d = {};
+        for (c in a) j(a, c) && (b = K(c), b && (d[b] = a[c]));
+        return d
+    }
+
+    function M(a, b) {
+        Id[a] = b
+    }
+
+    function N(a) {
+        var b = [];
+        for (var c in a) b.push({
+            unit: c,
+            priority: Id[c]
         });
-        return this;
+        return b.sort(function (a, b) {
+            return a.priority - b.priority
+        }), b
+    }
+
+    function O(b, c) {
+        return function (d) {
+            return null != d ? (Q(this, b, d), a.updateOffset(this, c), this) : P(this, b)
+        }
+    }
+
+    function P(a, b) {
+        return a.isValid() ? a._d["get" + (a._isUTC ? "UTC" : "") + b]() : NaN
+    }
+
+    function Q(a, b, c) {
+        a.isValid() && a._d["set" + (a._isUTC ? "UTC" : "") + b](c)
+    }
+
+    function R(a) {
+        return a = K(a), z(this[a]) ? this[a]() : this
+    }
+
+    function S(a, b) {
+        if ("object" == typeof a) {
+            a = L(a);
+            for (var c = N(a), d = 0; d < c.length; d++) this[c[d].unit](a[c[d].unit])
+        } else if (a = K(a), z(this[a])) return this[a](b);
+        return this
+    }
+
+    function T(a, b, c) {
+        var d = "" + Math.abs(a),
+            e = b - d.length,
+            f = a >= 0;
+        return (f ? c ? "+" : "" : "-") + Math.pow(10, Math.max(0, e)).toString().substr(1) + d
+    }
+
+    function U(a, b, c, d) {
+        var e = d;
+        "string" == typeof d && (e = function () {
+            return this[d]()
+        }), a && (Md[a] = e), b && (Md[b[0]] = function () {
+            return T(e.apply(this, arguments), b[1], b[2])
+        }), c && (Md[c] = function () {
+            return this.localeData().ordinal(e.apply(this, arguments), a)
+        })
+    }
+
+    function V(a) {
+        return a.match(/\[[\s\S]/) ? a.replace(/^\[|\]$/g, "") : a.replace(/\\/g, "")
+    }
+
+    function W(a) {
+        var b, c, d = a.match(Jd);
+        for (b = 0, c = d.length; b < c; b++) Md[d[b]] ? d[b] = Md[d[b]] : d[b] = V(d[b]);
+        return function (b) {
+            var e, f = "";
+            for (e = 0; e < c; e++) f += z(d[e]) ? d[e].call(b, a) : d[e];
+            return f
+        }
+    }
+
+    function X(a, b) {
+        return a.isValid() ? (b = Y(b, a.localeData()), Ld[b] = Ld[b] || W(b), Ld[b](a)) : a.localeData().invalidDate()
+    }
+
+    function Y(a, b) {
+        function c(a) {
+            return b.longDateFormat(a) || a
+        }
+        var d = 5;
+        for (Kd.lastIndex = 0; d >= 0 && Kd.test(a);) a = a.replace(Kd, c), Kd.lastIndex = 0, d -= 1;
+        return a
+    }
+
+    function Z(a, b, c) {
+        ce[a] = z(b) ? b : function (a, d) {
+            return a && c ? c : b
+        }
+    }
+
+    function $(a, b) {
+        return j(ce, a) ? ce[a](b._strict, b._locale) : new RegExp(_(a))
+    }
+
+    function _(a) {
+        return aa(a.replace("\\", "").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (a, b, c, d, e) {
+            return b || c || d || e
+        }))
+    }
+
+    function aa(a) {
+        return a.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")
+    }
+
+    function ba(a, b) {
+        var c, d = b;
+        for ("string" == typeof a && (a = [a]), g(b) && (d = function (a, c) {
+                c[b] = u(a)
+            }), c = 0; c < a.length; c++) de[a[c]] = d
+    }
+
+    function ca(a, b) {
+        ba(a, function (a, c, d, e) {
+            d._w = d._w || {}, b(a, d._w, d, e)
+        })
+    }
+
+    function da(a, b, c) {
+        null != b && j(de, a) && de[a](b, c._a, c, a)
+    }
+
+    function ea(a, b) {
+        return new Date(Date.UTC(a, b + 1, 0)).getUTCDate()
+    }
+
+    function fa(a, b) {
+        return a ? c(this._months) ? this._months[a.month()] : this._months[(this._months.isFormat || oe).test(b) ? "format" : "standalone"][a.month()] : c(this._months) ? this._months : this._months.standalone
+    }
+
+    function ga(a, b) {
+        return a ? c(this._monthsShort) ? this._monthsShort[a.month()] : this._monthsShort[oe.test(b) ? "format" : "standalone"][a.month()] : c(this._monthsShort) ? this._monthsShort : this._monthsShort.standalone
+    }
+
+    function ha(a, b, c) {
+        var d, e, f, g = a.toLocaleLowerCase();
+        if (!this._monthsParse)
+            for (this._monthsParse = [], this._longMonthsParse = [], this._shortMonthsParse = [], d = 0; d < 12; ++d) f = l([2e3, d]), this._shortMonthsParse[d] = this.monthsShort(f, "").toLocaleLowerCase(), this._longMonthsParse[d] = this.months(f, "").toLocaleLowerCase();
+        return c ? "MMM" === b ? (e = ne.call(this._shortMonthsParse, g), e !== -1 ? e : null) : (e = ne.call(this._longMonthsParse, g), e !== -1 ? e : null) : "MMM" === b ? (e = ne.call(this._shortMonthsParse, g), e !== -1 ? e : (e = ne.call(this._longMonthsParse, g), e !== -1 ? e : null)) : (e = ne.call(this._longMonthsParse, g), e !== -1 ? e : (e = ne.call(this._shortMonthsParse, g), e !== -1 ? e : null))
+    }
+
+    function ia(a, b, c) {
+        var d, e, f;
+        if (this._monthsParseExact) return ha.call(this, a, b, c);
+        for (this._monthsParse || (this._monthsParse = [], this._longMonthsParse = [], this._shortMonthsParse = []), d = 0; d < 12; d++) {
+            if (e = l([2e3, d]), c && !this._longMonthsParse[d] && (this._longMonthsParse[d] = new RegExp("^" + this.months(e, "").replace(".", "") + "$", "i"), this._shortMonthsParse[d] = new RegExp("^" + this.monthsShort(e, "").replace(".", "") + "$", "i")), c || this._monthsParse[d] || (f = "^" + this.months(e, "") + "|^" + this.monthsShort(e, ""), this._monthsParse[d] = new RegExp(f.replace(".", ""), "i")), c && "MMMM" === b && this._longMonthsParse[d].test(a)) return d;
+            if (c && "MMM" === b && this._shortMonthsParse[d].test(a)) return d;
+            if (!c && this._monthsParse[d].test(a)) return d
+        }
+    }
+
+    function ja(a, b) {
+        var c;
+        if (!a.isValid()) return a;
+        if ("string" == typeof b)
+            if (/^\d+$/.test(b)) b = u(b);
+            else if (b = a.localeData().monthsParse(b), !g(b)) return a;
+        return c = Math.min(a.date(), ea(a.year(), b)), a._d["set" + (a._isUTC ? "UTC" : "") + "Month"](b, c), a
+    }
+
+    function ka(b) {
+        return null != b ? (ja(this, b), a.updateOffset(this, !0), this) : P(this, "Month")
+    }
+
+    function la() {
+        return ea(this.year(), this.month())
+    }
+
+    function ma(a) {
+        return this._monthsParseExact ? (j(this, "_monthsRegex") || oa.call(this), a ? this._monthsShortStrictRegex : this._monthsShortRegex) : (j(this, "_monthsShortRegex") || (this._monthsShortRegex = re), this._monthsShortStrictRegex && a ? this._monthsShortStrictRegex : this._monthsShortRegex)
+    }
+
+    function na(a) {
+        return this._monthsParseExact ? (j(this, "_monthsRegex") || oa.call(this), a ? this._monthsStrictRegex : this._monthsRegex) : (j(this, "_monthsRegex") || (this._monthsRegex = se), this._monthsStrictRegex && a ? this._monthsStrictRegex : this._monthsRegex)
+    }
+
+    function oa() {
+        function a(a, b) {
+            return b.length - a.length
+        }
+        var b, c, d = [],
+            e = [],
+            f = [];
+        for (b = 0; b < 12; b++) c = l([2e3, b]), d.push(this.monthsShort(c, "")), e.push(this.months(c, "")), f.push(this.months(c, "")), f.push(this.monthsShort(c, ""));
+        for (d.sort(a), e.sort(a), f.sort(a), b = 0; b < 12; b++) d[b] = aa(d[b]), e[b] = aa(e[b]);
+        for (b = 0; b < 24; b++) f[b] = aa(f[b]);
+        this._monthsRegex = new RegExp("^(" + f.join("|") + ")", "i"), this._monthsShortRegex = this._monthsRegex, this._monthsStrictRegex = new RegExp("^(" + e.join("|") + ")", "i"), this._monthsShortStrictRegex = new RegExp("^(" + d.join("|") + ")", "i")
+    }
+
+    function pa(a) {
+        return qa(a) ? 366 : 365
+    }
+
+    function qa(a) {
+        return a % 4 === 0 && a % 100 !== 0 || a % 400 === 0
+    }
+
+    function ra() {
+        return qa(this.year())
+    }
+
+    function sa(a, b, c, d, e, f, g) {
+        var h = new Date(a, b, c, d, e, f, g);
+        return a < 100 && a >= 0 && isFinite(h.getFullYear()) && h.setFullYear(a), h
+    }
+
+    function ta(a) {
+        var b = new Date(Date.UTC.apply(null, arguments));
+        return a < 100 && a >= 0 && isFinite(b.getUTCFullYear()) && b.setUTCFullYear(a), b
+    }
+
+    function ua(a, b, c) {
+        var d = 7 + b - c,
+            e = (7 + ta(a, 0, d).getUTCDay() - b) % 7;
+        return -e + d - 1
+    }
+
+    function va(a, b, c, d, e) {
+        var f, g, h = (7 + c - d) % 7,
+            i = ua(a, d, e),
+            j = 1 + 7 * (b - 1) + h + i;
+        return j <= 0 ? (f = a - 1, g = pa(f) + j) : j > pa(a) ? (f = a + 1, g = j - pa(a)) : (f = a, g = j), {
+            year: f,
+            dayOfYear: g
+        }
+    }
+
+    function wa(a, b, c) {
+        var d, e, f = ua(a.year(), b, c),
+            g = Math.floor((a.dayOfYear() - f - 1) / 7) + 1;
+        return g < 1 ? (e = a.year() - 1, d = g + xa(e, b, c)) : g > xa(a.year(), b, c) ? (d = g - xa(a.year(), b, c), e = a.year() + 1) : (e = a.year(), d = g), {
+            week: d,
+            year: e
+        }
+    }
+
+    function xa(a, b, c) {
+        var d = ua(a, b, c),
+            e = ua(a + 1, b, c);
+        return (pa(a) - d + e) / 7
+    }
+
+    function ya(a) {
+        return wa(a, this._week.dow, this._week.doy).week
+    }
+
+    function za() {
+        return this._week.dow
+    }
+
+    function Aa() {
+        return this._week.doy
+    }
+
+    function Ba(a) {
+        var b = this.localeData().week(this);
+        return null == a ? b : this.add(7 * (a - b), "d")
+    }
+
+    function Ca(a) {
+        var b = wa(this, 1, 4).week;
+        return null == a ? b : this.add(7 * (a - b), "d")
+    }
+
+    function Da(a, b) {
+        return "string" != typeof a ? a : isNaN(a) ? (a = b.weekdaysParse(a), "number" == typeof a ? a : null) : parseInt(a, 10)
+    }
+
+    function Ea(a, b) {
+        return "string" == typeof a ? b.weekdaysParse(a) % 7 || 7 : isNaN(a) ? null : a
+    }
+
+    function Fa(a, b) {
+        return a ? c(this._weekdays) ? this._weekdays[a.day()] : this._weekdays[this._weekdays.isFormat.test(b) ? "format" : "standalone"][a.day()] : c(this._weekdays) ? this._weekdays : this._weekdays.standalone
+    }
+
+    function Ga(a) {
+        return a ? this._weekdaysShort[a.day()] : this._weekdaysShort
+    }
+
+    function Ha(a) {
+        return a ? this._weekdaysMin[a.day()] : this._weekdaysMin
+    }
+
+    function Ia(a, b, c) {
+        var d, e, f, g = a.toLocaleLowerCase();
+        if (!this._weekdaysParse)
+            for (this._weekdaysParse = [], this._shortWeekdaysParse = [], this._minWeekdaysParse = [], d = 0; d < 7; ++d) f = l([2e3, 1]).day(d), this._minWeekdaysParse[d] = this.weekdaysMin(f, "").toLocaleLowerCase(), this._shortWeekdaysParse[d] = this.weekdaysShort(f, "").toLocaleLowerCase(), this._weekdaysParse[d] = this.weekdays(f, "").toLocaleLowerCase();
+        return c ? "dddd" === b ? (e = ne.call(this._weekdaysParse, g), e !== -1 ? e : null) : "ddd" === b ? (e = ne.call(this._shortWeekdaysParse, g), e !== -1 ? e : null) : (e = ne.call(this._minWeekdaysParse, g), e !== -1 ? e : null) : "dddd" === b ? (e = ne.call(this._weekdaysParse, g), e !== -1 ? e : (e = ne.call(this._shortWeekdaysParse, g), e !== -1 ? e : (e = ne.call(this._minWeekdaysParse, g), e !== -1 ? e : null))) : "ddd" === b ? (e = ne.call(this._shortWeekdaysParse, g), e !== -1 ? e : (e = ne.call(this._weekdaysParse, g), e !== -1 ? e : (e = ne.call(this._minWeekdaysParse, g), e !== -1 ? e : null))) : (e = ne.call(this._minWeekdaysParse, g), e !== -1 ? e : (e = ne.call(this._weekdaysParse, g), e !== -1 ? e : (e = ne.call(this._shortWeekdaysParse, g), e !== -1 ? e : null)))
+    }
+
+    function Ja(a, b, c) {
+        var d, e, f;
+        if (this._weekdaysParseExact) return Ia.call(this, a, b, c);
+        for (this._weekdaysParse || (this._weekdaysParse = [], this._minWeekdaysParse = [], this._shortWeekdaysParse = [], this._fullWeekdaysParse = []), d = 0; d < 7; d++) {
+            if (e = l([2e3, 1]).day(d), c && !this._fullWeekdaysParse[d] && (this._fullWeekdaysParse[d] = new RegExp("^" + this.weekdays(e, "").replace(".", ".?") + "$", "i"), this._shortWeekdaysParse[d] = new RegExp("^" + this.weekdaysShort(e, "").replace(".", ".?") + "$", "i"), this._minWeekdaysParse[d] = new RegExp("^" + this.weekdaysMin(e, "").replace(".", ".?") + "$", "i")), this._weekdaysParse[d] || (f = "^" + this.weekdays(e, "") + "|^" + this.weekdaysShort(e, "") + "|^" + this.weekdaysMin(e, ""), this._weekdaysParse[d] = new RegExp(f.replace(".", ""), "i")), c && "dddd" === b && this._fullWeekdaysParse[d].test(a)) return d;
+            if (c && "ddd" === b && this._shortWeekdaysParse[d].test(a)) return d;
+            if (c && "dd" === b && this._minWeekdaysParse[d].test(a)) return d;
+            if (!c && this._weekdaysParse[d].test(a)) return d
+        }
+    }
+
+    function Ka(a) {
+        if (!this.isValid()) return null != a ? this : NaN;
+        var b = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
+        return null != a ? (a = Da(a, this.localeData()), this.add(a - b, "d")) : b
+    }
+
+    function La(a) {
+        if (!this.isValid()) return null != a ? this : NaN;
+        var b = (this.day() + 7 - this.localeData()._week.dow) % 7;
+        return null == a ? b : this.add(a - b, "d")
+    }
+
+    function Ma(a) {
+        if (!this.isValid()) return null != a ? this : NaN;
+        if (null != a) {
+            var b = Ea(a, this.localeData());
+            return this.day(this.day() % 7 ? b : b - 7)
+        }
+        return this.day() || 7
+    }
+
+    function Na(a) {
+        return this._weekdaysParseExact ? (j(this, "_weekdaysRegex") || Qa.call(this), a ? this._weekdaysStrictRegex : this._weekdaysRegex) : (j(this, "_weekdaysRegex") || (this._weekdaysRegex = ye), this._weekdaysStrictRegex && a ? this._weekdaysStrictRegex : this._weekdaysRegex)
+    }
+
+    function Oa(a) {
+        return this._weekdaysParseExact ? (j(this, "_weekdaysRegex") || Qa.call(this), a ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex) : (j(this, "_weekdaysShortRegex") || (this._weekdaysShortRegex = ze), this._weekdaysShortStrictRegex && a ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex)
+    }
+
+    function Pa(a) {
+        return this._weekdaysParseExact ? (j(this, "_weekdaysRegex") || Qa.call(this), a ? this._weekdaysMinStrictRegex : this._weekdaysMinRegex) : (j(this, "_weekdaysMinRegex") || (this._weekdaysMinRegex = Ae), this._weekdaysMinStrictRegex && a ? this._weekdaysMinStrictRegex : this._weekdaysMinRegex)
+    }
+
+    function Qa() {
+        function a(a, b) {
+            return b.length - a.length
+        }
+        var b, c, d, e, f, g = [],
+            h = [],
+            i = [],
+            j = [];
+        for (b = 0; b < 7; b++) c = l([2e3, 1]).day(b), d = this.weekdaysMin(c, ""), e = this.weekdaysShort(c, ""), f = this.weekdays(c, ""), g.push(d), h.push(e), i.push(f), j.push(d), j.push(e), j.push(f);
+        for (g.sort(a), h.sort(a), i.sort(a), j.sort(a), b = 0; b < 7; b++) h[b] = aa(h[b]), i[b] = aa(i[b]), j[b] = aa(j[b]);
+        this._weekdaysRegex = new RegExp("^(" + j.join("|") + ")", "i"), this._weekdaysShortRegex = this._weekdaysRegex, this._weekdaysMinRegex = this._weekdaysRegex, this._weekdaysStrictRegex = new RegExp("^(" + i.join("|") + ")", "i"), this._weekdaysShortStrictRegex = new RegExp("^(" + h.join("|") + ")", "i"), this._weekdaysMinStrictRegex = new RegExp("^(" + g.join("|") + ")", "i")
+    }
+
+    function Ra() {
+        return this.hours() % 12 || 12
+    }
+
+    function Sa() {
+        return this.hours() || 24
+    }
+
+    function Ta(a, b) {
+        U(a, 0, 0, function () {
+            return this.localeData().meridiem(this.hours(), this.minutes(), b)
+        })
+    }
+
+    function Ua(a, b) {
+        return b._meridiemParse
+    }
+
+    function Va(a) {
+        return "p" === (a + "").toLowerCase().charAt(0)
+    }
+
+    function Wa(a, b, c) {
+        return a > 11 ? c ? "pm" : "PM" : c ? "am" : "AM"
+    }
+
+    function Xa(a) {
+        return a ? a.toLowerCase().replace("_", "-") : a
+    }
+
+    function Ya(a) {
+        for (var b, c, d, e, f = 0; f < a.length;) {
+            for (e = Xa(a[f]).split("-"), b = e.length, c = Xa(a[f + 1]), c = c ? c.split("-") : null; b > 0;) {
+                if (d = Za(e.slice(0, b).join("-"))) return d;
+                if (c && c.length >= b && v(e, c, !0) >= b - 1) break;
+                b--
+            }
+            f++
+        }
+        return null
+    }
+
+    function Za(a) {
+        var b = null;
+        if (!Fe[a] && "undefined" != typeof module && module && module.exports) try {
+            b = Be._abbr, require("./locale/" + a), $a(b)
+        } catch (a) {}
+        return Fe[a]
+    }
+
+    function $a(a, b) {
+        var c;
+        return a && (c = f(b) ? bb(a) : _a(a, b), c && (Be = c)), Be._abbr
+    }
+
+    function _a(a, b) {
+        if (null !== b) {
+            var c = Ee;
+            if (b.abbr = a, null != Fe[a]) y("defineLocaleOverride", "use moment.updateLocale(localeName, config) to change an existing locale. moment.defineLocale(localeName, config) should only be used for creating a new locale See http://momentjs.com/guides/#/warnings/define-locale/ for more info."), c = Fe[a]._config;
+            else if (null != b.parentLocale) {
+                if (null == Fe[b.parentLocale]) return Ge[b.parentLocale] || (Ge[b.parentLocale] = []), Ge[b.parentLocale].push({
+                    name: a,
+                    config: b
+                }), null;
+                c = Fe[b.parentLocale]._config
+            }
+            return Fe[a] = new C(B(c, b)), Ge[a] && Ge[a].forEach(function (a) {
+                _a(a.name, a.config)
+            }), $a(a), Fe[a]
+        }
+        return delete Fe[a], null
+    }
+
+    function ab(a, b) {
+        if (null != b) {
+            var c, d = Ee;
+            null != Fe[a] && (d = Fe[a]._config), b = B(d, b), c = new C(b), c.parentLocale = Fe[a], Fe[a] = c, $a(a)
+        } else null != Fe[a] && (null != Fe[a].parentLocale ? Fe[a] = Fe[a].parentLocale : null != Fe[a] && delete Fe[a]);
+        return Fe[a]
+    }
+
+    function bb(a) {
+        var b;
+        if (a && a._locale && a._locale._abbr && (a = a._locale._abbr), !a) return Be;
+        if (!c(a)) {
+            if (b = Za(a)) return b;
+            a = [a]
+        }
+        return Ya(a)
+    }
+
+    function cb() {
+        return Ad(Fe)
+    }
+
+    function db(a) {
+        var b, c = a._a;
+        return c && n(a).overflow === -2 && (b = c[fe] < 0 || c[fe] > 11 ? fe : c[ge] < 1 || c[ge] > ea(c[ee], c[fe]) ? ge : c[he] < 0 || c[he] > 24 || 24 === c[he] && (0 !== c[ie] || 0 !== c[je] || 0 !== c[ke]) ? he : c[ie] < 0 || c[ie] > 59 ? ie : c[je] < 0 || c[je] > 59 ? je : c[ke] < 0 || c[ke] > 999 ? ke : -1, n(a)._overflowDayOfYear && (b < ee || b > ge) && (b = ge), n(a)._overflowWeeks && b === -1 && (b = le), n(a)._overflowWeekday && b === -1 && (b = me), n(a).overflow = b), a
+    }
+
+    function eb(a) {
+        var b, c, d, e, f, g, h = a._i,
+            i = He.exec(h) || Ie.exec(h);
+        if (i) {
+            for (n(a).iso = !0, b = 0, c = Ke.length; b < c; b++)
+                if (Ke[b][1].exec(i[1])) {
+                    e = Ke[b][0], d = Ke[b][2] !== !1;
+                    break
+                } if (null == e) return void(a._isValid = !1);
+            if (i[3]) {
+                for (b = 0, c = Le.length; b < c; b++)
+                    if (Le[b][1].exec(i[3])) {
+                        f = (i[2] || " ") + Le[b][0];
+                        break
+                    } if (null == f) return void(a._isValid = !1)
+            }
+            if (!d && null != f) return void(a._isValid = !1);
+            if (i[4]) {
+                if (!Je.exec(i[4])) return void(a._isValid = !1);
+                g = "Z"
+            }
+            a._f = e + (f || "") + (g || ""), lb(a)
+        } else a._isValid = !1
+    }
+
+    function fb(a) {
+        var b, c, d, e, f, g, h, i, j = {
+                " GMT": " +0000",
+                " EDT": " -0400",
+                " EST": " -0500",
+                " CDT": " -0500",
+                " CST": " -0600",
+                " MDT": " -0600",
+                " MST": " -0700",
+                " PDT": " -0700",
+                " PST": " -0800"
+            },
+            k = "YXWVUTSRQPONZABCDEFGHIKLM";
+        if (b = a._i.replace(/\([^\)]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s|\s$/g, ""), c = Ne.exec(b)) {
+            if (d = c[1] ? "ddd" + (5 === c[1].length ? ", " : " ") : "", e = "D MMM " + (c[2].length > 10 ? "YYYY " : "YY "), f = "HH:mm" + (c[4] ? ":ss" : ""), c[1]) {
+                var l = new Date(c[2]),
+                    m = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][l.getDay()];
+                if (c[1].substr(0, 3) !== m) return n(a).weekdayMismatch = !0, void(a._isValid = !1)
+            }
+            switch (c[5].length) {
+                case 2:
+                    0 === i ? h = " +0000" : (i = k.indexOf(c[5][1].toUpperCase()) - 12, h = (i < 0 ? " -" : " +") + ("" + i).replace(/^-?/, "0").match(/..$/)[0] + "00");
+                    break;
+                case 4:
+                    h = j[c[5]];
+                    break;
+                default:
+                    h = j[" GMT"]
+            }
+            c[5] = h, a._i = c.splice(1).join(""), g = " ZZ", a._f = d + e + f + g, lb(a), n(a).rfc2822 = !0
+        } else a._isValid = !1
+    }
+
+    function gb(b) {
+        var c = Me.exec(b._i);
+        return null !== c ? void(b._d = new Date(+c[1])) : (eb(b), void(b._isValid === !1 && (delete b._isValid, fb(b), b._isValid === !1 && (delete b._isValid, a.createFromInputFallback(b)))))
+    }
+
+    function hb(a, b, c) {
+        return null != a ? a : null != b ? b : c
+    }
+
+    function ib(b) {
+        var c = new Date(a.now());
+        return b._useUTC ? [c.getUTCFullYear(), c.getUTCMonth(), c.getUTCDate()] : [c.getFullYear(), c.getMonth(), c.getDate()]
+    }
+
+    function jb(a) {
+        var b, c, d, e, f = [];
+        if (!a._d) {
+            for (d = ib(a), a._w && null == a._a[ge] && null == a._a[fe] && kb(a), null != a._dayOfYear && (e = hb(a._a[ee], d[ee]), (a._dayOfYear > pa(e) || 0 === a._dayOfYear) && (n(a)._overflowDayOfYear = !0), c = ta(e, 0, a._dayOfYear), a._a[fe] = c.getUTCMonth(), a._a[ge] = c.getUTCDate()), b = 0; b < 3 && null == a._a[b]; ++b) a._a[b] = f[b] = d[b];
+            for (; b < 7; b++) a._a[b] = f[b] = null == a._a[b] ? 2 === b ? 1 : 0 : a._a[b];
+            24 === a._a[he] && 0 === a._a[ie] && 0 === a._a[je] && 0 === a._a[ke] && (a._nextDay = !0, a._a[he] = 0), a._d = (a._useUTC ? ta : sa).apply(null, f), null != a._tzm && a._d.setUTCMinutes(a._d.getUTCMinutes() - a._tzm), a._nextDay && (a._a[he] = 24)
+        }
+    }
+
+    function kb(a) {
+        var b, c, d, e, f, g, h, i;
+        if (b = a._w, null != b.GG || null != b.W || null != b.E) f = 1, g = 4, c = hb(b.GG, a._a[ee], wa(tb(), 1, 4).year), d = hb(b.W, 1), e = hb(b.E, 1), (e < 1 || e > 7) && (i = !0);
+        else {
+            f = a._locale._week.dow, g = a._locale._week.doy;
+            var j = wa(tb(), f, g);
+            c = hb(b.gg, a._a[ee], j.year), d = hb(b.w, j.week), null != b.d ? (e = b.d, (e < 0 || e > 6) && (i = !0)) : null != b.e ? (e = b.e + f, (b.e < 0 || b.e > 6) && (i = !0)) : e = f
+        }
+        d < 1 || d > xa(c, f, g) ? n(a)._overflowWeeks = !0 : null != i ? n(a)._overflowWeekday = !0 : (h = va(c, d, e, f, g), a._a[ee] = h.year, a._dayOfYear = h.dayOfYear)
+    }
+
+    function lb(b) {
+        if (b._f === a.ISO_8601) return void eb(b);
+        if (b._f === a.RFC_2822) return void fb(b);
+        b._a = [], n(b).empty = !0;
+        var c, d, e, f, g, h = "" + b._i,
+            i = h.length,
+            j = 0;
+        for (e = Y(b._f, b._locale).match(Jd) || [], c = 0; c < e.length; c++) f = e[c], d = (h.match($(f, b)) || [])[0], d && (g = h.substr(0, h.indexOf(d)), g.length > 0 && n(b).unusedInput.push(g), h = h.slice(h.indexOf(d) + d.length), j += d.length), Md[f] ? (d ? n(b).empty = !1 : n(b).unusedTokens.push(f), da(f, d, b)) : b._strict && !d && n(b).unusedTokens.push(f);
+        n(b).charsLeftOver = i - j, h.length > 0 && n(b).unusedInput.push(h), b._a[he] <= 12 && n(b).bigHour === !0 && b._a[he] > 0 && (n(b).bigHour = void 0), n(b).parsedDateParts = b._a.slice(0), n(b).meridiem = b._meridiem, b._a[he] = mb(b._locale, b._a[he], b._meridiem), jb(b), db(b)
+    }
+
+    function mb(a, b, c) {
+        var d;
+        return null == c ? b : null != a.meridiemHour ? a.meridiemHour(b, c) : null != a.isPM ? (d = a.isPM(c), d && b < 12 && (b += 12), d || 12 !== b || (b = 0), b) : b
+    }
+
+    function nb(a) {
+        var b, c, d, e, f;
+        if (0 === a._f.length) return n(a).invalidFormat = !0, void(a._d = new Date(NaN));
+        for (e = 0; e < a._f.length; e++) f = 0, b = q({}, a), null != a._useUTC && (b._useUTC = a._useUTC), b._f = a._f[e], lb(b), o(b) && (f += n(b).charsLeftOver, f += 10 * n(b).unusedTokens.length, n(b).score = f, (null == d || f < d) && (d = f, c = b));
+        k(a, c || b)
+    }
+
+    function ob(a) {
+        if (!a._d) {
+            var b = L(a._i);
+            a._a = i([b.year, b.month, b.day || b.date, b.hour, b.minute, b.second, b.millisecond], function (a) {
+                return a && parseInt(a, 10)
+            }), jb(a)
+        }
+    }
+
+    function pb(a) {
+        var b = new r(db(qb(a)));
+        return b._nextDay && (b.add(1, "d"), b._nextDay = void 0), b
+    }
+
+    function qb(a) {
+        var b = a._i,
+            d = a._f;
+        return a._locale = a._locale || bb(a._l), null === b || void 0 === d && "" === b ? p({
+            nullInput: !0
+        }) : ("string" == typeof b && (a._i = b = a._locale.preparse(b)), s(b) ? new r(db(b)) : (h(b) ? a._d = b : c(d) ? nb(a) : d ? lb(a) : rb(a), o(a) || (a._d = null), a))
+    }
+
+    function rb(b) {
+        var e = b._i;
+        f(e) ? b._d = new Date(a.now()) : h(e) ? b._d = new Date(e.valueOf()) : "string" == typeof e ? gb(b) : c(e) ? (b._a = i(e.slice(0), function (a) {
+            return parseInt(a, 10)
+        }), jb(b)) : d(e) ? ob(b) : g(e) ? b._d = new Date(e) : a.createFromInputFallback(b)
+    }
+
+    function sb(a, b, f, g, h) {
+        var i = {};
+        return f !== !0 && f !== !1 || (g = f, f = void 0), (d(a) && e(a) || c(a) && 0 === a.length) && (a = void 0), i._isAMomentObject = !0, i._useUTC = i._isUTC = h, i._l = f, i._i = a, i._f = b, i._strict = g, pb(i)
+    }
+
+    function tb(a, b, c, d) {
+        return sb(a, b, c, d, !1)
+    }
+
+    function ub(a, b) {
+        var d, e;
+        if (1 === b.length && c(b[0]) && (b = b[0]), !b.length) return tb();
+        for (d = b[0], e = 1; e < b.length; ++e) b[e].isValid() && !b[e][a](d) || (d = b[e]);
+        return d
+    }
+
+    function vb() {
+        var a = [].slice.call(arguments, 0);
+        return ub("isBefore", a)
+    }
+
+    function wb() {
+        var a = [].slice.call(arguments, 0);
+        return ub("isAfter", a)
+    }
+
+    function xb(a) {
+        for (var b in a)
+            if (Re.indexOf(b) === -1 || null != a[b] && isNaN(a[b])) return !1;
+        for (var c = !1, d = 0; d < Re.length; ++d)
+            if (a[Re[d]]) {
+                if (c) return !1;
+                parseFloat(a[Re[d]]) !== u(a[Re[d]]) && (c = !0)
+            } return !0
+    }
+
+    function yb() {
+        return this._isValid
+    }
+
+    function zb() {
+        return Sb(NaN)
+    }
+
+    function Ab(a) {
+        var b = L(a),
+            c = b.year || 0,
+            d = b.quarter || 0,
+            e = b.month || 0,
+            f = b.week || 0,
+            g = b.day || 0,
+            h = b.hour || 0,
+            i = b.minute || 0,
+            j = b.second || 0,
+            k = b.millisecond || 0;
+        this._isValid = xb(b), this._milliseconds = +k + 1e3 * j + 6e4 * i + 1e3 * h * 60 * 60, this._days = +g + 7 * f, this._months = +e + 3 * d + 12 * c, this._data = {}, this._locale = bb(), this._bubble()
+    }
+
+    function Bb(a) {
+        return a instanceof Ab
+    }
+
+    function Cb(a) {
+        return a < 0 ? Math.round(-1 * a) * -1 : Math.round(a)
+    }
+
+    function Db(a, b) {
+        U(a, 0, 0, function () {
+            var a = this.utcOffset(),
+                c = "+";
+            return a < 0 && (a = -a, c = "-"), c + T(~~(a / 60), 2) + b + T(~~a % 60, 2)
+        })
+    }
+
+    function Eb(a, b) {
+        var c = (b || "").match(a);
+        if (null === c) return null;
+        var d = c[c.length - 1] || [],
+            e = (d + "").match(Se) || ["-", 0, 0],
+            f = +(60 * e[1]) + u(e[2]);
+        return 0 === f ? 0 : "+" === e[0] ? f : -f
+    }
+
+    function Fb(b, c) {
+        var d, e;
+        return c._isUTC ? (d = c.clone(), e = (s(b) || h(b) ? b.valueOf() : tb(b).valueOf()) - d.valueOf(), d._d.setTime(d._d.valueOf() + e), a.updateOffset(d, !1), d) : tb(b).local()
+    }
+
+    function Gb(a) {
+        return 15 * -Math.round(a._d.getTimezoneOffset() / 15)
+    }
+
+    function Hb(b, c, d) {
+        var e, f = this._offset || 0;
+        if (!this.isValid()) return null != b ? this : NaN;
+        if (null != b) {
+            if ("string" == typeof b) {
+                if (b = Eb(_d, b), null === b) return this
+            } else Math.abs(b) < 16 && !d && (b = 60 * b);
+            return !this._isUTC && c && (e = Gb(this)), this._offset = b, this._isUTC = !0, null != e && this.add(e, "m"), f !== b && (!c || this._changeInProgress ? Xb(this, Sb(b - f, "m"), 1, !1) : this._changeInProgress || (this._changeInProgress = !0, a.updateOffset(this, !0), this._changeInProgress = null)), this
+        }
+        return this._isUTC ? f : Gb(this)
+    }
+
+    function Ib(a, b) {
+        return null != a ? ("string" != typeof a && (a = -a), this.utcOffset(a, b), this) : -this.utcOffset()
+    }
+
+    function Jb(a) {
+        return this.utcOffset(0, a)
+    }
+
+    function Kb(a) {
+        return this._isUTC && (this.utcOffset(0, a), this._isUTC = !1, a && this.subtract(Gb(this), "m")), this
+    }
+
+    function Lb() {
+        if (null != this._tzm) this.utcOffset(this._tzm, !1, !0);
+        else if ("string" == typeof this._i) {
+            var a = Eb($d, this._i);
+            null != a ? this.utcOffset(a) : this.utcOffset(0, !0)
+        }
+        return this
+    }
+
+    function Mb(a) {
+        return !!this.isValid() && (a = a ? tb(a).utcOffset() : 0, (this.utcOffset() - a) % 60 === 0)
+    }
+
+    function Nb() {
+        return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset()
+    }
+
+    function Ob() {
+        if (!f(this._isDSTShifted)) return this._isDSTShifted;
+        var a = {};
+        if (q(a, this), a = qb(a), a._a) {
+            var b = a._isUTC ? l(a._a) : tb(a._a);
+            this._isDSTShifted = this.isValid() && v(a._a, b.toArray()) > 0
+        } else this._isDSTShifted = !1;
+        return this._isDSTShifted
+    }
+
+    function Pb() {
+        return !!this.isValid() && !this._isUTC
+    }
+
+    function Qb() {
+        return !!this.isValid() && this._isUTC
+    }
+
+    function Rb() {
+        return !!this.isValid() && (this._isUTC && 0 === this._offset)
+    }
+
+    function Sb(a, b) {
+        var c, d, e, f = a,
+            h = null;
+        return Bb(a) ? f = {
+            ms: a._milliseconds,
+            d: a._days,
+            M: a._months
+        } : g(a) ? (f = {}, b ? f[b] = a : f.milliseconds = a) : (h = Te.exec(a)) ? (c = "-" === h[1] ? -1 : 1, f = {
+            y: 0,
+            d: u(h[ge]) * c,
+            h: u(h[he]) * c,
+            m: u(h[ie]) * c,
+            s: u(h[je]) * c,
+            ms: u(Cb(1e3 * h[ke])) * c
+        }) : (h = Ue.exec(a)) ? (c = "-" === h[1] ? -1 : 1, f = {
+            y: Tb(h[2], c),
+            M: Tb(h[3], c),
+            w: Tb(h[4], c),
+            d: Tb(h[5], c),
+            h: Tb(h[6], c),
+            m: Tb(h[7], c),
+            s: Tb(h[8], c)
+        }) : null == f ? f = {} : "object" == typeof f && ("from" in f || "to" in f) && (e = Vb(tb(f.from), tb(f.to)), f = {}, f.ms = e.milliseconds, f.M = e.months), d = new Ab(f), Bb(a) && j(a, "_locale") && (d._locale = a._locale), d
+    }
+
+    function Tb(a, b) {
+        var c = a && parseFloat(a.replace(",", "."));
+        return (isNaN(c) ? 0 : c) * b
+    }
+
+    function Ub(a, b) {
+        var c = {
+            milliseconds: 0,
+            months: 0
+        };
+        return c.months = b.month() - a.month() + 12 * (b.year() - a.year()), a.clone().add(c.months, "M").isAfter(b) && --c.months, c.milliseconds = +b - +a.clone().add(c.months, "M"), c
+    }
+
+    function Vb(a, b) {
+        var c;
+        return a.isValid() && b.isValid() ? (b = Fb(b, a), a.isBefore(b) ? c = Ub(a, b) : (c = Ub(b, a), c.milliseconds = -c.milliseconds, c.months = -c.months), c) : {
+            milliseconds: 0,
+            months: 0
+        }
+    }
+
+    function Wb(a, b) {
+        return function (c, d) {
+            var e, f;
+            return null === d || isNaN(+d) || (y(b, "moment()." + b + "(period, number) is deprecated. Please use moment()." + b + "(number, period). See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info."), f = c, c = d, d = f), c = "string" == typeof c ? +c : c, e = Sb(c, d), Xb(this, e, a), this
+        }
+    }
+
+    function Xb(b, c, d, e) {
+        var f = c._milliseconds,
+            g = Cb(c._days),
+            h = Cb(c._months);
+        b.isValid() && (e = null == e || e, f && b._d.setTime(b._d.valueOf() + f * d), g && Q(b, "Date", P(b, "Date") + g * d), h && ja(b, P(b, "Month") + h * d), e && a.updateOffset(b, g || h))
+    }
+
+    function Yb(a, b) {
+        var c = a.diff(b, "days", !0);
+        return c < -6 ? "sameElse" : c < -1 ? "lastWeek" : c < 0 ? "lastDay" : c < 1 ? "sameDay" : c < 2 ? "nextDay" : c < 7 ? "nextWeek" : "sameElse"
+    }
+
+    function Zb(b, c) {
+        var d = b || tb(),
+            e = Fb(d, this).startOf("day"),
+            f = a.calendarFormat(this, e) || "sameElse",
+            g = c && (z(c[f]) ? c[f].call(this, d) : c[f]);
+        return this.format(g || this.localeData().calendar(f, this, tb(d)))
+    }
+
+    function $b() {
+        return new r(this)
+    }
+
+    function _b(a, b) {
+        var c = s(a) ? a : tb(a);
+        return !(!this.isValid() || !c.isValid()) && (b = K(f(b) ? "millisecond" : b), "millisecond" === b ? this.valueOf() > c.valueOf() : c.valueOf() < this.clone().startOf(b).valueOf())
+    }
+
+    function ac(a, b) {
+        var c = s(a) ? a : tb(a);
+        return !(!this.isValid() || !c.isValid()) && (b = K(f(b) ? "millisecond" : b), "millisecond" === b ? this.valueOf() < c.valueOf() : this.clone().endOf(b).valueOf() < c.valueOf())
+    }
+
+    function bc(a, b, c, d) {
+        return d = d || "()", ("(" === d[0] ? this.isAfter(a, c) : !this.isBefore(a, c)) && (")" === d[1] ? this.isBefore(b, c) : !this.isAfter(b, c))
+    }
+
+    function cc(a, b) {
+        var c, d = s(a) ? a : tb(a);
+        return !(!this.isValid() || !d.isValid()) && (b = K(b || "millisecond"), "millisecond" === b ? this.valueOf() === d.valueOf() : (c = d.valueOf(), this.clone().startOf(b).valueOf() <= c && c <= this.clone().endOf(b).valueOf()))
+    }
+
+    function dc(a, b) {
+        return this.isSame(a, b) || this.isAfter(a, b)
+    }
+
+    function ec(a, b) {
+        return this.isSame(a, b) || this.isBefore(a, b)
+    }
+
+    function fc(a, b, c) {
+        var d, e, f, g;
+        return this.isValid() ? (d = Fb(a, this), d.isValid() ? (e = 6e4 * (d.utcOffset() - this.utcOffset()), b = K(b), "year" === b || "month" === b || "quarter" === b ? (g = gc(this, d), "quarter" === b ? g /= 3 : "year" === b && (g /= 12)) : (f = this - d, g = "second" === b ? f / 1e3 : "minute" === b ? f / 6e4 : "hour" === b ? f / 36e5 : "day" === b ? (f - e) / 864e5 : "week" === b ? (f - e) / 6048e5 : f), c ? g : t(g)) : NaN) : NaN
+    }
+
+    function gc(a, b) {
+        var c, d, e = 12 * (b.year() - a.year()) + (b.month() - a.month()),
+            f = a.clone().add(e, "months");
+        return b - f < 0 ? (c = a.clone().add(e - 1, "months"), d = (b - f) / (f - c)) : (c = a.clone().add(e + 1, "months"), d = (b - f) / (c - f)), -(e + d) || 0
+    }
+
+    function hc() {
+        return this.clone().locale("en").format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
+    }
+
+    function ic() {
+        if (!this.isValid()) return null;
+        var a = this.clone().utc();
+        return a.year() < 0 || a.year() > 9999 ? X(a, "YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]") : z(Date.prototype.toISOString) ? this.toDate().toISOString() : X(a, "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]")
+    }
+
+    function jc() {
+        if (!this.isValid()) return "moment.invalid(/* " + this._i + " */)";
+        var a = "moment",
+            b = "";
+        this.isLocal() || (a = 0 === this.utcOffset() ? "moment.utc" : "moment.parseZone", b = "Z");
+        var c = "[" + a + '("]',
+            d = 0 <= this.year() && this.year() <= 9999 ? "YYYY" : "YYYYYY",
+            e = "-MM-DD[T]HH:mm:ss.SSS",
+            f = b + '[")]';
+        return this.format(c + d + e + f)
+    }
+
+    function kc(b) {
+        b || (b = this.isUtc() ? a.defaultFormatUtc : a.defaultFormat);
+        var c = X(this, b);
+        return this.localeData().postformat(c)
+    }
+
+    function lc(a, b) {
+        return this.isValid() && (s(a) && a.isValid() || tb(a).isValid()) ? Sb({
+            to: this,
+            from: a
+        }).locale(this.locale()).humanize(!b) : this.localeData().invalidDate()
+    }
+
+    function mc(a) {
+        return this.from(tb(), a)
+    }
+
+    function nc(a, b) {
+        return this.isValid() && (s(a) && a.isValid() || tb(a).isValid()) ? Sb({
+            from: this,
+            to: a
+        }).locale(this.locale()).humanize(!b) : this.localeData().invalidDate()
+    }
+
+    function oc(a) {
+        return this.to(tb(), a)
+    }
+
+    function pc(a) {
+        var b;
+        return void 0 === a ? this._locale._abbr : (b = bb(a), null != b && (this._locale = b), this)
+    }
+
+    function qc() {
+        return this._locale
+    }
+
+    function rc(a) {
+        switch (a = K(a)) {
+            case "year":
+                this.month(0);
+            case "quarter":
+            case "month":
+                this.date(1);
+            case "week":
+            case "isoWeek":
+            case "day":
+            case "date":
+                this.hours(0);
+            case "hour":
+                this.minutes(0);
+            case "minute":
+                this.seconds(0);
+            case "second":
+                this.milliseconds(0)
+        }
+        return "week" === a && this.weekday(0), "isoWeek" === a && this.isoWeekday(1), "quarter" === a && this.month(3 * Math.floor(this.month() / 3)), this
+    }
+
+    function sc(a) {
+        return a = K(a), void 0 === a || "millisecond" === a ? this : ("date" === a && (a = "day"), this.startOf(a).add(1, "isoWeek" === a ? "week" : a).subtract(1, "ms"))
+    }
+
+    function tc() {
+        return this._d.valueOf() - 6e4 * (this._offset || 0)
+    }
+
+    function uc() {
+        return Math.floor(this.valueOf() / 1e3)
+    }
+
+    function vc() {
+        return new Date(this.valueOf())
+    }
+
+    function wc() {
+        var a = this;
+        return [a.year(), a.month(), a.date(), a.hour(), a.minute(), a.second(), a.millisecond()]
+    }
+
+    function xc() {
+        var a = this;
+        return {
+            years: a.year(),
+            months: a.month(),
+            date: a.date(),
+            hours: a.hours(),
+            minutes: a.minutes(),
+            seconds: a.seconds(),
+            milliseconds: a.milliseconds()
+        }
+    }
+
+    function yc() {
+        return this.isValid() ? this.toISOString() : null
+    }
+
+    function zc() {
+        return o(this)
+    }
+
+    function Ac() {
+        return k({}, n(this))
+    }
+
+    function Bc() {
+        return n(this).overflow
+    }
+
+    function Cc() {
+        return {
+            input: this._i,
+            format: this._f,
+            locale: this._locale,
+            isUTC: this._isUTC,
+            strict: this._strict
+        }
+    }
+
+    function Dc(a, b) {
+        U(0, [a, a.length], 0, b)
+    }
+
+    function Ec(a) {
+        return Ic.call(this, a, this.week(), this.weekday(), this.localeData()._week.dow, this.localeData()._week.doy)
+    }
+
+    function Fc(a) {
+        return Ic.call(this, a, this.isoWeek(), this.isoWeekday(), 1, 4)
+    }
+
+    function Gc() {
+        return xa(this.year(), 1, 4)
+    }
+
+    function Hc() {
+        var a = this.localeData()._week;
+        return xa(this.year(), a.dow, a.doy)
+    }
+
+    function Ic(a, b, c, d, e) {
+        var f;
+        return null == a ? wa(this, d, e).year : (f = xa(a, d, e), b > f && (b = f), Jc.call(this, a, b, c, d, e))
+    }
+
+    function Jc(a, b, c, d, e) {
+        var f = va(a, b, c, d, e),
+            g = ta(f.year, 0, f.dayOfYear);
+        return this.year(g.getUTCFullYear()), this.month(g.getUTCMonth()), this.date(g.getUTCDate()), this
+    }
+
+    function Kc(a) {
+        return null == a ? Math.ceil((this.month() + 1) / 3) : this.month(3 * (a - 1) + this.month() % 3)
+    }
+
+    function Lc(a) {
+        var b = Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
+        return null == a ? b : this.add(a - b, "d")
+    }
+
+    function Mc(a, b) {
+        b[ke] = u(1e3 * ("0." + a))
+    }
+
+    function Nc() {
+        return this._isUTC ? "UTC" : ""
+    }
+
+    function Oc() {
+        return this._isUTC ? "Coordinated Universal Time" : ""
+    }
+
+    function Pc(a) {
+        return tb(1e3 * a)
+    }
+
+    function Qc() {
+        return tb.apply(null, arguments).parseZone()
+    }
+
+    function Rc(a) {
+        return a
+    }
+
+    function Sc(a, b, c, d) {
+        var e = bb(),
+            f = l().set(d, b);
+        return e[c](f, a)
+    }
+
+    function Tc(a, b, c) {
+        if (g(a) && (b = a, a = void 0), a = a || "", null != b) return Sc(a, b, c, "month");
+        var d, e = [];
+        for (d = 0; d < 12; d++) e[d] = Sc(a, d, c, "month");
+        return e
+    }
+
+    function Uc(a, b, c, d) {
+        "boolean" == typeof a ? (g(b) && (c = b, b = void 0), b = b || "") : (b = a, c = b, a = !1, g(b) && (c = b, b = void 0), b = b || "");
+        var e = bb(),
+            f = a ? e._week.dow : 0;
+        if (null != c) return Sc(b, (c + f) % 7, d, "day");
+        var h, i = [];
+        for (h = 0; h < 7; h++) i[h] = Sc(b, (h + f) % 7, d, "day");
+        return i
+    }
+
+    function Vc(a, b) {
+        return Tc(a, b, "months")
+    }
+
+    function Wc(a, b) {
+        return Tc(a, b, "monthsShort")
+    }
+
+    function Xc(a, b, c) {
+        return Uc(a, b, c, "weekdays")
+    }
+
+    function Yc(a, b, c) {
+        return Uc(a, b, c, "weekdaysShort")
+    }
+
+    function Zc(a, b, c) {
+        return Uc(a, b, c, "weekdaysMin")
+    }
+
+    function $c() {
+        var a = this._data;
+        return this._milliseconds = df(this._milliseconds), this._days = df(this._days), this._months = df(this._months), a.milliseconds = df(a.milliseconds), a.seconds = df(a.seconds), a.minutes = df(a.minutes), a.hours = df(a.hours), a.months = df(a.months), a.years = df(a.years), this
+    }
+
+    function _c(a, b, c, d) {
+        var e = Sb(b, c);
+        return a._milliseconds += d * e._milliseconds, a._days += d * e._days, a._months += d * e._months, a._bubble()
+    }
+
+    function ad(a, b) {
+        return _c(this, a, b, 1)
+    }
+
+    function bd(a, b) {
+        return _c(this, a, b, -1)
+    }
+
+    function cd(a) {
+        return a < 0 ? Math.floor(a) : Math.ceil(a)
+    }
+
+    function dd() {
+        var a, b, c, d, e, f = this._milliseconds,
+            g = this._days,
+            h = this._months,
+            i = this._data;
+        return f >= 0 && g >= 0 && h >= 0 || f <= 0 && g <= 0 && h <= 0 || (f += 864e5 * cd(fd(h) + g), g = 0, h = 0), i.milliseconds = f % 1e3, a = t(f / 1e3), i.seconds = a % 60, b = t(a / 60), i.minutes = b % 60, c = t(b / 60), i.hours = c % 24, g += t(c / 24), e = t(ed(g)), h += e, g -= cd(fd(e)), d = t(h / 12), h %= 12, i.days = g, i.months = h, i.years = d, this
+    }
+
+    function ed(a) {
+        return 4800 * a / 146097
+    }
+
+    function fd(a) {
+        return 146097 * a / 4800
+    }
+
+    function gd(a) {
+        if (!this.isValid()) return NaN;
+        var b, c, d = this._milliseconds;
+        if (a = K(a), "month" === a || "year" === a) return b = this._days + d / 864e5, c = this._months + ed(b), "month" === a ? c : c / 12;
+        switch (b = this._days + Math.round(fd(this._months)), a) {
+            case "week":
+                return b / 7 + d / 6048e5;
+            case "day":
+                return b + d / 864e5;
+            case "hour":
+                return 24 * b + d / 36e5;
+            case "minute":
+                return 1440 * b + d / 6e4;
+            case "second":
+                return 86400 * b + d / 1e3;
+            case "millisecond":
+                return Math.floor(864e5 * b) + d;
+            default:
+                throw new Error("Unknown unit " + a)
+        }
+    }
+
+    function hd() {
+        return this.isValid() ? this._milliseconds + 864e5 * this._days + this._months % 12 * 2592e6 + 31536e6 * u(this._months / 12) : NaN
+    }
+
+    function id(a) {
+        return function () {
+            return this.as(a)
+        }
+    }
+
+    function jd(a) {
+        return a = K(a), this.isValid() ? this[a + "s"]() : NaN
+    }
+
+    function kd(a) {
+        return function () {
+            return this.isValid() ? this._data[a] : NaN
+        }
+    }
+
+    function ld() {
+        return t(this.days() / 7)
+    }
+
+    function md(a, b, c, d, e) {
+        return e.relativeTime(b || 1, !!c, a, d)
+    }
+
+    function nd(a, b, c) {
+        var d = Sb(a).abs(),
+            e = uf(d.as("s")),
+            f = uf(d.as("m")),
+            g = uf(d.as("h")),
+            h = uf(d.as("d")),
+            i = uf(d.as("M")),
+            j = uf(d.as("y")),
+            k = e <= vf.ss && ["s", e] || e < vf.s && ["ss", e] || f <= 1 && ["m"] || f < vf.m && ["mm", f] || g <= 1 && ["h"] || g < vf.h && ["hh", g] || h <= 1 && ["d"] || h < vf.d && ["dd", h] || i <= 1 && ["M"] || i < vf.M && ["MM", i] || j <= 1 && ["y"] || ["yy", j];
+        return k[2] = b, k[3] = +a > 0, k[4] = c, md.apply(null, k)
+    }
+
+    function od(a) {
+        return void 0 === a ? uf : "function" == typeof a && (uf = a, !0)
+    }
+
+    function pd(a, b) {
+        return void 0 !== vf[a] && (void 0 === b ? vf[a] : (vf[a] = b, "s" === a && (vf.ss = b - 1), !0))
+    }
+
+    function qd(a) {
+        if (!this.isValid()) return this.localeData().invalidDate();
+        var b = this.localeData(),
+            c = nd(this, !a, b);
+        return a && (c = b.pastFuture(+this, c)), b.postformat(c)
+    }
+
+    function rd() {
+        if (!this.isValid()) return this.localeData().invalidDate();
+        var a, b, c, d = wf(this._milliseconds) / 1e3,
+            e = wf(this._days),
+            f = wf(this._months);
+        a = t(d / 60), b = t(a / 60), d %= 60, a %= 60, c = t(f / 12), f %= 12;
+        var g = c,
+            h = f,
+            i = e,
+            j = b,
+            k = a,
+            l = d,
+            m = this.asSeconds();
+        return m ? (m < 0 ? "-" : "") + "P" + (g ? g + "Y" : "") + (h ? h + "M" : "") + (i ? i + "D" : "") + (j || k || l ? "T" : "") + (j ? j + "H" : "") + (k ? k + "M" : "") + (l ? l + "S" : "") : "P0D"
+    }
+    var sd, td;
+    td = Array.prototype.some ? Array.prototype.some : function (a) {
+        for (var b = Object(this), c = b.length >>> 0, d = 0; d < c; d++)
+            if (d in b && a.call(this, b[d], d, b)) return !0;
+        return !1
     };
-
-    return DateRangePicker;
-
-}));
+    var ud = td,
+        vd = a.momentProperties = [],
+        wd = !1,
+        xd = {};
+    a.suppressDeprecationWarnings = !1, a.deprecationHandler = null;
+    var yd;
+    yd = Object.keys ? Object.keys : function (a) {
+        var b, c = [];
+        for (b in a) j(a, b) && c.push(b);
+        return c
+    };
+    var zd, Ad = yd,
+        Bd = {
+            sameDay: "[Today at] LT",
+            nextDay: "[Tomorrow at] LT",
+            nextWeek: "dddd [at] LT",
+            lastDay: "[Yesterday at] LT",
+            lastWeek: "[Last] dddd [at] LT",
+            sameElse: "L"
+        },
+        Cd = {
+            LTS: "h:mm:ss A",
+            LT: "h:mm A",
+            L: "MM/DD/YYYY",
+            LL: "MMMM D, YYYY",
+            LLL: "MMMM D, YYYY h:mm A",
+            LLLL: "dddd, MMMM D, YYYY h:mm A"
+        },
+        Dd = "Invalid date",
+        Ed = "%d",
+        Fd = /\d{1,2}/,
+        Gd = {
+            future: "in %s",
+            past: "%s ago",
+            s: "a few seconds",
+            ss: "%d seconds",
+            m: "a minute",
+            mm: "%d minutes",
+            h: "an hour",
+            hh: "%d hours",
+            d: "a day",
+            dd: "%d days",
+            M: "a month",
+            MM: "%d months",
+            y: "a year",
+            yy: "%d years"
+        },
+        Hd = {},
+        Id = {},
+        Jd = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,
+        Kd = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
+        Ld = {},
+        Md = {},
+        Nd = /\d/,
+        Od = /\d\d/,
+        Pd = /\d{3}/,
+        Qd = /\d{4}/,
+        Rd = /[+-]?\d{6}/,
+        Sd = /\d\d?/,
+        Td = /\d\d\d\d?/,
+        Ud = /\d\d\d\d\d\d?/,
+        Vd = /\d{1,3}/,
+        Wd = /\d{1,4}/,
+        Xd = /[+-]?\d{1,6}/,
+        Yd = /\d+/,
+        Zd = /[+-]?\d+/,
+        $d = /Z|[+-]\d\d:?\d\d/gi,
+        _d = /Z|[+-]\d\d(?::?\d\d)?/gi,
+        ae = /[+-]?\d+(\.\d{1,3})?/,
+        be = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i,
+        ce = {},
+        de = {},
+        ee = 0,
+        fe = 1,
+        ge = 2,
+        he = 3,
+        ie = 4,
+        je = 5,
+        ke = 6,
+        le = 7,
+        me = 8;
+    zd = Array.prototype.indexOf ? Array.prototype.indexOf : function (a) {
+        var b;
+        for (b = 0; b < this.length; ++b)
+            if (this[b] === a) return b;
+        return -1
+    };
+    var ne = zd;
+    U("M", ["MM", 2], "Mo", function () {
+        return this.month() + 1
+    }), U("MMM", 0, 0, function (a) {
+        return this.localeData().monthsShort(this, a)
+    }), U("MMMM", 0, 0, function (a) {
+        return this.localeData().months(this, a)
+    }), J("month", "M"), M("month", 8), Z("M", Sd), Z("MM", Sd, Od), Z("MMM", function (a, b) {
+        return b.monthsShortRegex(a)
+    }), Z("MMMM", function (a, b) {
+        return b.monthsRegex(a)
+    }), ba(["M", "MM"], function (a, b) {
+        b[fe] = u(a) - 1
+    }), ba(["MMM", "MMMM"], function (a, b, c, d) {
+        var e = c._locale.monthsParse(a, d, c._strict);
+        null != e ? b[fe] = e : n(c).invalidMonth = a
+    });
+    var oe = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/,
+        pe = "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
+        qe = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
+        re = be,
+        se = be;
+    U("Y", 0, 0, function () {
+        var a = this.year();
+        return a <= 9999 ? "" + a : "+" + a
+    }), U(0, ["YY", 2], 0, function () {
+        return this.year() % 100
+    }), U(0, ["YYYY", 4], 0, "year"), U(0, ["YYYYY", 5], 0, "year"), U(0, ["YYYYYY", 6, !0], 0, "year"), J("year", "y"), M("year", 1), Z("Y", Zd), Z("YY", Sd, Od), Z("YYYY", Wd, Qd), Z("YYYYY", Xd, Rd), Z("YYYYYY", Xd, Rd), ba(["YYYYY", "YYYYYY"], ee), ba("YYYY", function (b, c) {
+        c[ee] = 2 === b.length ? a.parseTwoDigitYear(b) : u(b)
+    }), ba("YY", function (b, c) {
+        c[ee] = a.parseTwoDigitYear(b)
+    }), ba("Y", function (a, b) {
+        b[ee] = parseInt(a, 10)
+    }), a.parseTwoDigitYear = function (a) {
+        return u(a) + (u(a) > 68 ? 1900 : 2e3)
+    };
+    var te = O("FullYear", !0);
+    U("w", ["ww", 2], "wo", "week"), U("W", ["WW", 2], "Wo", "isoWeek"), J("week", "w"), J("isoWeek", "W"), M("week", 5), M("isoWeek", 5), Z("w", Sd), Z("ww", Sd, Od), Z("W", Sd), Z("WW", Sd, Od), ca(["w", "ww", "W", "WW"], function (a, b, c, d) {
+        b[d.substr(0, 1)] = u(a)
+    });
+    var ue = {
+        dow: 0,
+        doy: 6
+    };
+    U("d", 0, "do", "day"), U("dd", 0, 0, function (a) {
+        return this.localeData().weekdaysMin(this, a)
+    }), U("ddd", 0, 0, function (a) {
+        return this.localeData().weekdaysShort(this, a)
+    }), U("dddd", 0, 0, function (a) {
+        return this.localeData().weekdays(this, a)
+    }), U("e", 0, 0, "weekday"), U("E", 0, 0, "isoWeekday"), J("day", "d"), J("weekday", "e"), J("isoWeekday", "E"), M("day", 11), M("weekday", 11), M("isoWeekday", 11), Z("d", Sd), Z("e", Sd), Z("E", Sd), Z("dd", function (a, b) {
+        return b.weekdaysMinRegex(a)
+    }), Z("ddd", function (a, b) {
+        return b.weekdaysShortRegex(a)
+    }), Z("dddd", function (a, b) {
+        return b.weekdaysRegex(a)
+    }), ca(["dd", "ddd", "dddd"], function (a, b, c, d) {
+        var e = c._locale.weekdaysParse(a, d, c._strict);
+        null != e ? b.d = e : n(c).invalidWeekday = a
+    }), ca(["d", "e", "E"], function (a, b, c, d) {
+        b[d] = u(a)
+    });
+    var ve = "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
+        we = "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
+        xe = "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+        ye = be,
+        ze = be,
+        Ae = be;
+    U("H", ["HH", 2], 0, "hour"), U("h", ["hh", 2], 0, Ra), U("k", ["kk", 2], 0, Sa), U("hmm", 0, 0, function () {
+        return "" + Ra.apply(this) + T(this.minutes(), 2)
+    }), U("hmmss", 0, 0, function () {
+        return "" + Ra.apply(this) + T(this.minutes(), 2) + T(this.seconds(), 2)
+    }), U("Hmm", 0, 0, function () {
+        return "" + this.hours() + T(this.minutes(), 2)
+    }), U("Hmmss", 0, 0, function () {
+        return "" + this.hours() + T(this.minutes(), 2) + T(this.seconds(), 2)
+    }), Ta("a", !0), Ta("A", !1), J("hour", "h"), M("hour", 13), Z("a", Ua), Z("A", Ua), Z("H", Sd), Z("h", Sd), Z("k", Sd), Z("HH", Sd, Od), Z("hh", Sd, Od), Z("kk", Sd, Od), Z("hmm", Td), Z("hmmss", Ud), Z("Hmm", Td), Z("Hmmss", Ud), ba(["H", "HH"], he), ba(["k", "kk"], function (a, b, c) {
+        var d = u(a);
+        b[he] = 24 === d ? 0 : d
+    }), ba(["a", "A"], function (a, b, c) {
+        c._isPm = c._locale.isPM(a), c._meridiem = a
+    }), ba(["h", "hh"], function (a, b, c) {
+        b[he] = u(a), n(c).bigHour = !0
+    }), ba("hmm", function (a, b, c) {
+        var d = a.length - 2;
+        b[he] = u(a.substr(0, d)), b[ie] = u(a.substr(d)), n(c).bigHour = !0
+    }), ba("hmmss", function (a, b, c) {
+        var d = a.length - 4,
+            e = a.length - 2;
+        b[he] = u(a.substr(0, d)), b[ie] = u(a.substr(d, 2)), b[je] = u(a.substr(e)), n(c).bigHour = !0
+    }), ba("Hmm", function (a, b, c) {
+        var d = a.length - 2;
+        b[he] = u(a.substr(0, d)), b[ie] = u(a.substr(d))
+    }), ba("Hmmss", function (a, b, c) {
+        var d = a.length - 4,
+            e = a.length - 2;
+        b[he] = u(a.substr(0, d)), b[ie] = u(a.substr(d, 2)), b[je] = u(a.substr(e))
+    });
+    var Be, Ce = /[ap]\.?m?\.?/i,
+        De = O("Hours", !0),
+        Ee = {
+            calendar: Bd,
+            longDateFormat: Cd,
+            invalidDate: Dd,
+            ordinal: Ed,
+            dayOfMonthOrdinalParse: Fd,
+            relativeTime: Gd,
+            months: pe,
+            monthsShort: qe,
+            week: ue,
+            weekdays: ve,
+            weekdaysMin: xe,
+            weekdaysShort: we,
+            meridiemParse: Ce
+        },
+        Fe = {},
+        Ge = {},
+        He = /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+        Ie = /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+        Je = /Z|[+-]\d\d(?::?\d\d)?/,
+        Ke = [
+            ["YYYYYY-MM-DD", /[+-]\d{6}-\d\d-\d\d/],
+            ["YYYY-MM-DD", /\d{4}-\d\d-\d\d/],
+            ["GGGG-[W]WW-E", /\d{4}-W\d\d-\d/],
+            ["GGGG-[W]WW", /\d{4}-W\d\d/, !1],
+            ["YYYY-DDD", /\d{4}-\d{3}/],
+            ["YYYY-MM", /\d{4}-\d\d/, !1],
+            ["YYYYYYMMDD", /[+-]\d{10}/],
+            ["YYYYMMDD", /\d{8}/],
+            ["GGGG[W]WWE", /\d{4}W\d{3}/],
+            ["GGGG[W]WW", /\d{4}W\d{2}/, !1],
+            ["YYYYDDD", /\d{7}/]
+        ],
+        Le = [
+            ["HH:mm:ss.SSSS", /\d\d:\d\d:\d\d\.\d+/],
+            ["HH:mm:ss,SSSS", /\d\d:\d\d:\d\d,\d+/],
+            ["HH:mm:ss", /\d\d:\d\d:\d\d/],
+            ["HH:mm", /\d\d:\d\d/],
+            ["HHmmss.SSSS", /\d\d\d\d\d\d\.\d+/],
+            ["HHmmss,SSSS", /\d\d\d\d\d\d,\d+/],
+            ["HHmmss", /\d\d\d\d\d\d/],
+            ["HHmm", /\d\d\d\d/],
+            ["HH", /\d\d/]
+        ],
+        Me = /^\/?Date\((\-?\d+)/i,
+        Ne = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d?\d\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(?:\d\d)?\d\d\s)(\d\d:\d\d)(\:\d\d)?(\s(?:UT|GMT|[ECMP][SD]T|[A-IK-Za-ik-z]|[+-]\d{4}))$/;
+    a.createFromInputFallback = x("value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged and will be removed in an upcoming major release. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.", function (a) {
+        a._d = new Date(a._i + (a._useUTC ? " UTC" : ""))
+    }), a.ISO_8601 = function () {}, a.RFC_2822 = function () {};
+    var Oe = x("moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/", function () {
+            var a = tb.apply(null, arguments);
+            return this.isValid() && a.isValid() ? a < this ? this : a : p()
+        }),
+        Pe = x("moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/", function () {
+            var a = tb.apply(null, arguments);
+            return this.isValid() && a.isValid() ? a > this ? this : a : p()
+        }),
+        Qe = function () {
+            return Date.now ? Date.now() : +new Date
+        },
+        Re = ["year", "quarter", "month", "week", "day", "hour", "minute", "second", "millisecond"];
+    Db("Z", ":"), Db("ZZ", ""), Z("Z", _d), Z("ZZ", _d), ba(["Z", "ZZ"], function (a, b, c) {
+        c._useUTC = !0, c._tzm = Eb(_d, a)
+    });
+    var Se = /([\+\-]|\d\d)/gi;
+    a.updateOffset = function () {};
+    var Te = /^(\-)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/,
+        Ue = /^(-)?P(?:(-?[0-9,.]*)Y)?(?:(-?[0-9,.]*)M)?(?:(-?[0-9,.]*)W)?(?:(-?[0-9,.]*)D)?(?:T(?:(-?[0-9,.]*)H)?(?:(-?[0-9,.]*)M)?(?:(-?[0-9,.]*)S)?)?$/;
+    Sb.fn = Ab.prototype, Sb.invalid = zb;
+    var Ve = Wb(1, "add"),
+        We = Wb(-1, "subtract");
+    a.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ", a.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
+    var Xe = x("moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.", function (a) {
+        return void 0 === a ? this.localeData() : this.locale(a)
+    });
+    U(0, ["gg", 2], 0, function () {
+        return this.weekYear() % 100
+    }), U(0, ["GG", 2], 0, function () {
+        return this.isoWeekYear() % 100
+    }), Dc("gggg", "weekYear"), Dc("ggggg", "weekYear"), Dc("GGGG", "isoWeekYear"), Dc("GGGGG", "isoWeekYear"), J("weekYear", "gg"), J("isoWeekYear", "GG"), M("weekYear", 1), M("isoWeekYear", 1), Z("G", Zd), Z("g", Zd), Z("GG", Sd, Od), Z("gg", Sd, Od), Z("GGGG", Wd, Qd), Z("gggg", Wd, Qd), Z("GGGGG", Xd, Rd), Z("ggggg", Xd, Rd), ca(["gggg", "ggggg", "GGGG", "GGGGG"], function (a, b, c, d) {
+        b[d.substr(0, 2)] = u(a)
+    }), ca(["gg", "GG"], function (b, c, d, e) {
+        c[e] = a.parseTwoDigitYear(b)
+    }), U("Q", 0, "Qo", "quarter"), J("quarter", "Q"), M("quarter", 7), Z("Q", Nd), ba("Q", function (a, b) {
+        b[fe] = 3 * (u(a) - 1)
+    }), U("D", ["DD", 2], "Do", "date"), J("date", "D"), M("date", 9), Z("D", Sd), Z("DD", Sd, Od), Z("Do", function (a, b) {
+        return a ? b._dayOfMonthOrdinalParse || b._ordinalParse : b._dayOfMonthOrdinalParseLenient
+    }), ba(["D", "DD"], ge), ba("Do", function (a, b) {
+        b[ge] = u(a.match(Sd)[0], 10)
+    });
+    var Ye = O("Date", !0);
+    U("DDD", ["DDDD", 3], "DDDo", "dayOfYear"), J("dayOfYear", "DDD"), M("dayOfYear", 4), Z("DDD", Vd), Z("DDDD", Pd), ba(["DDD", "DDDD"], function (a, b, c) {
+        c._dayOfYear = u(a)
+    }), U("m", ["mm", 2], 0, "minute"), J("minute", "m"), M("minute", 14), Z("m", Sd), Z("mm", Sd, Od), ba(["m", "mm"], ie);
+    var Ze = O("Minutes", !1);
+    U("s", ["ss", 2], 0, "second"), J("second", "s"), M("second", 15), Z("s", Sd), Z("ss", Sd, Od), ba(["s", "ss"], je);
+    var $e = O("Seconds", !1);
+    U("S", 0, 0, function () {
+        return ~~(this.millisecond() / 100)
+    }), U(0, ["SS", 2], 0, function () {
+        return ~~(this.millisecond() / 10)
+    }), U(0, ["SSS", 3], 0, "millisecond"), U(0, ["SSSS", 4], 0, function () {
+        return 10 * this.millisecond()
+    }), U(0, ["SSSSS", 5], 0, function () {
+        return 100 * this.millisecond()
+    }), U(0, ["SSSSSS", 6], 0, function () {
+        return 1e3 * this.millisecond()
+    }), U(0, ["SSSSSSS", 7], 0, function () {
+        return 1e4 * this.millisecond()
+    }), U(0, ["SSSSSSSS", 8], 0, function () {
+        return 1e5 * this.millisecond()
+    }), U(0, ["SSSSSSSSS", 9], 0, function () {
+        return 1e6 * this.millisecond()
+    }), J("millisecond", "ms"), M("millisecond", 16), Z("S", Vd, Nd), Z("SS", Vd, Od), Z("SSS", Vd, Pd);
+    var _e;
+    for (_e = "SSSS"; _e.length <= 9; _e += "S") Z(_e, Yd);
+    for (_e = "S"; _e.length <= 9; _e += "S") ba(_e, Mc);
+    var af = O("Milliseconds", !1);
+    U("z", 0, 0, "zoneAbbr"), U("zz", 0, 0, "zoneName");
+    var bf = r.prototype;
+    bf.add = Ve, bf.calendar = Zb, bf.clone = $b, bf.diff = fc, bf.endOf = sc, bf.format = kc, bf.from = lc, bf.fromNow = mc, bf.to = nc, bf.toNow = oc, bf.get = R, bf.invalidAt = Bc, bf.isAfter = _b, bf.isBefore = ac, bf.isBetween = bc, bf.isSame = cc, bf.isSameOrAfter = dc, bf.isSameOrBefore = ec, bf.isValid = zc, bf.lang = Xe, bf.locale = pc, bf.localeData = qc, bf.max = Pe, bf.min = Oe, bf.parsingFlags = Ac, bf.set = S, bf.startOf = rc, bf.subtract = We, bf.toArray = wc, bf.toObject = xc, bf.toDate = vc, bf.toISOString = ic, bf.inspect = jc, bf.toJSON = yc, bf.toString = hc, bf.unix = uc, bf.valueOf = tc, bf.creationData = Cc, bf.year = te, bf.isLeapYear = ra, bf.weekYear = Ec, bf.isoWeekYear = Fc, bf.quarter = bf.quarters = Kc, bf.month = ka, bf.daysInMonth = la, bf.week = bf.weeks = Ba, bf.isoWeek = bf.isoWeeks = Ca, bf.weeksInYear = Hc, bf.isoWeeksInYear = Gc, bf.date = Ye, bf.day = bf.days = Ka, bf.weekday = La, bf.isoWeekday = Ma, bf.dayOfYear = Lc, bf.hour = bf.hours = De, bf.minute = bf.minutes = Ze, bf.second = bf.seconds = $e, bf.millisecond = bf.milliseconds = af, bf.utcOffset = Hb, bf.utc = Jb, bf.local = Kb, bf.parseZone = Lb, bf.hasAlignedHourOffset = Mb, bf.isDST = Nb, bf.isLocal = Pb, bf.isUtcOffset = Qb, bf.isUtc = Rb, bf.isUTC = Rb, bf.zoneAbbr = Nc, bf.zoneName = Oc, bf.dates = x("dates accessor is deprecated. Use date instead.", Ye), bf.months = x("months accessor is deprecated. Use month instead", ka), bf.years = x("years accessor is deprecated. Use year instead", te), bf.zone = x("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/", Ib), bf.isDSTShifted = x("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information", Ob);
+    var cf = C.prototype;
+    cf.calendar = D, cf.longDateFormat = E, cf.invalidDate = F, cf.ordinal = G, cf.preparse = Rc, cf.postformat = Rc, cf.relativeTime = H, cf.pastFuture = I, cf.set = A, cf.months = fa, cf.monthsShort = ga, cf.monthsParse = ia, cf.monthsRegex = na, cf.monthsShortRegex = ma, cf.week = ya, cf.firstDayOfYear = Aa, cf.firstDayOfWeek = za, cf.weekdays = Fa, cf.weekdaysMin = Ha, cf.weekdaysShort = Ga, cf.weekdaysParse = Ja, cf.weekdaysRegex = Na, cf.weekdaysShortRegex = Oa, cf.weekdaysMinRegex = Pa, cf.isPM = Va, cf.meridiem = Wa, $a("en", {
+        dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
+        ordinal: function (a) {
+            var b = a % 10,
+                c = 1 === u(a % 100 / 10) ? "th" : 1 === b ? "st" : 2 === b ? "nd" : 3 === b ? "rd" : "th";
+            return a + c
+        }
+    }), a.lang = x("moment.lang is deprecated. Use moment.locale instead.", $a), a.langData = x("moment.langData is deprecated. Use moment.localeData instead.", bb);
+    var df = Math.abs,
+        ef = id("ms"),
+        ff = id("s"),
+        gf = id("m"),
+        hf = id("h"),
+        jf = id("d"),
+        kf = id("w"),
+        lf = id("M"),
+        mf = id("y"),
+        nf = kd("milliseconds"),
+        of = kd("seconds"),
+        pf = kd("minutes"),
+        qf = kd("hours"),
+        rf = kd("days"),
+        sf = kd("months"),
+        tf = kd("years"),
+        uf = Math.round,
+        vf = {
+            ss: 44,
+            s: 45,
+            m: 45,
+            h: 22,
+            d: 26,
+            M: 11
+        },
+        wf = Math.abs,
+        xf = Ab.prototype;
+    return xf.isValid = yb, xf.abs = $c, xf.add = ad, xf.subtract = bd, xf.as = gd, xf.asMilliseconds = ef, xf.asSeconds = ff, xf.asMinutes = gf, xf.asHours = hf, xf.asDays = jf, xf.asWeeks = kf, xf.asMonths = lf, xf.asYears = mf, xf.valueOf = hd, xf._bubble = dd, xf.get = jd, xf.milliseconds = nf, xf.seconds = of , xf.minutes = pf, xf.hours = qf, xf.days = rf, xf.weeks = ld, xf.months = sf, xf.years = tf, xf.humanize = qd, xf.toISOString = rd, xf.toString = rd, xf.toJSON = rd, xf.locale = pc, xf.localeData = qc, xf.toIsoString = x("toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)", rd), xf.lang = Xe, U("X", 0, 0, "unix"), U("x", 0, 0, "valueOf"), Z("x", Zd), Z("X", ae), ba("X", function (a, b, c) {
+        c._d = new Date(1e3 * parseFloat(a, 10))
+    }), ba("x", function (a, b, c) {
+        c._d = new Date(u(a))
+    }), a.version = "2.18.1", b(tb), a.fn = bf, a.min = vb, a.max = wb, a.now = Qe, a.utc = l, a.unix = Pc, a.months = Vc, a.isDate = h, a.locale = $a, a.invalid = p, a.duration = Sb, a.isMoment = s, a.weekdays = Xc, a.parseZone = Qc, a.localeData = bb, a.isDuration = Bb, a.monthsShort = Wc, a.weekdaysMin = Zc, a.defineLocale = _a, a.updateLocale = ab, a.locales = cb, a.weekdaysShort = Yc, a.normalizeUnits = K, a.relativeTimeRounding = od, a.relativeTimeThreshold = pd, a.calendarFormat = Yb, a.prototype = bf, a
+});
+/**
+ * Minified by jsDelivr using Terser v3.14.1.
+ * Original file: /npm/daterangepicker@3.1.0/daterangepicker.js
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+! function (t, e) {
+    if ("function" == typeof define && define.amd) define(["moment", "jquery"], function (t, a) {
+        return a.fn || (a.fn = {}), "function" != typeof t && t.hasOwnProperty("default") && (t = t.default), e(t, a)
+    });
+    else if ("object" == typeof module && module.exports) {
+        var a = "undefined" != typeof window ? window.jQuery : void 0;
+        a || (a = require("jquery")).fn || (a.fn = {});
+        var i = "undefined" != typeof window && void 0 !== window.moment ? window.moment : require("moment");
+        module.exports = e(i, a)
+    } else t.daterangepicker = e(t.moment, t.jQuery)
+}(this, function (t, e) {
+    var a = function (a, i, s) {
+        if (this.parentEl = "body", this.element = e(a), this.startDate = t().startOf("day"), this.endDate = t().endOf("day"), this.minDate = !1, this.maxDate = !1, this.maxSpan = !1, this.autoApply = !1, this.singleDatePicker = !1, this.showDropdowns = !1, this.minYear = t().subtract(100, "year").format("YYYY"), this.maxYear = t().add(100, "year").format("YYYY"), this.showWeekNumbers = !1, this.showISOWeekNumbers = !1, this.showCustomRangeLabel = !0, this.timePicker = !1, this.timePicker24Hour = !1, this.timePickerIncrement = 1, this.timePickerSeconds = !1, this.linkedCalendars = !0, this.autoUpdateInput = !0, this.alwaysShowCalendars = !1, this.ranges = {}, this.opens = "right", this.element.hasClass("pull-right") && (this.opens = "left"), this.drops = "down", this.element.hasClass("dropup") && (this.drops = "up"), this.buttonClasses = "btn btn-sm", this.applyButtonClasses = "btn-primary", this.cancelButtonClasses = "btn-default", this.locale = {
+                direction: "ltr",
+                format: t.localeData().longDateFormat("L"),
+                separator: " - ",
+                applyLabel: "Apply",
+                cancelLabel: "Cancel",
+                weekLabel: "W",
+                customRangeLabel: "Custom Range",
+                daysOfWeek: t.weekdaysMin(),
+                monthNames: t.monthsShort(),
+                firstDay: t.localeData().firstDayOfWeek()
+            }, this.callback = function () {}, this.isShowing = !1, this.leftCalendar = {}, this.rightCalendar = {}, "object" == typeof i && null !== i || (i = {}), "string" == typeof (i = e.extend(this.element.data(), i)).template || i.template instanceof e || (i.template = '<div class="daterangepicker"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time"></div></div><div class="drp-buttons"><span class="drp-selected"></span><button class="cancelBtn" type="button"></button><button class="applyBtn" disabled="disabled" type="button"></button> </div></div>'), this.parentEl = i.parentEl && e(i.parentEl).length ? e(i.parentEl) : e(this.parentEl), this.container = e(i.template).appendTo(this.parentEl), "object" == typeof i.locale && ("string" == typeof i.locale.direction && (this.locale.direction = i.locale.direction), "string" == typeof i.locale.format && (this.locale.format = i.locale.format), "string" == typeof i.locale.separator && (this.locale.separator = i.locale.separator), "object" == typeof i.locale.daysOfWeek && (this.locale.daysOfWeek = i.locale.daysOfWeek.slice()), "object" == typeof i.locale.monthNames && (this.locale.monthNames = i.locale.monthNames.slice()), "number" == typeof i.locale.firstDay && (this.locale.firstDay = i.locale.firstDay), "string" == typeof i.locale.applyLabel && (this.locale.applyLabel = i.locale.applyLabel), "string" == typeof i.locale.cancelLabel && (this.locale.cancelLabel = i.locale.cancelLabel), "string" == typeof i.locale.weekLabel && (this.locale.weekLabel = i.locale.weekLabel), "string" == typeof i.locale.customRangeLabel)) {
+            (p = document.createElement("textarea")).innerHTML = i.locale.customRangeLabel;
+            var n = p.value;
+            this.locale.customRangeLabel = n
+        }
+        if (this.container.addClass(this.locale.direction), "string" == typeof i.startDate && (this.startDate = t(i.startDate, this.locale.format)), "string" == typeof i.endDate && (this.endDate = t(i.endDate, this.locale.format)), "string" == typeof i.minDate && (this.minDate = t(i.minDate, this.locale.format)), "string" == typeof i.maxDate && (this.maxDate = t(i.maxDate, this.locale.format)), "object" == typeof i.startDate && (this.startDate = t(i.startDate)), "object" == typeof i.endDate && (this.endDate = t(i.endDate)), "object" == typeof i.minDate && (this.minDate = t(i.minDate)), "object" == typeof i.maxDate && (this.maxDate = t(i.maxDate)), this.minDate && this.startDate.isBefore(this.minDate) && (this.startDate = this.minDate.clone()), this.maxDate && this.endDate.isAfter(this.maxDate) && (this.endDate = this.maxDate.clone()), "string" == typeof i.applyButtonClasses && (this.applyButtonClasses = i.applyButtonClasses), "string" == typeof i.applyClass && (this.applyButtonClasses = i.applyClass), "string" == typeof i.cancelButtonClasses && (this.cancelButtonClasses = i.cancelButtonClasses), "string" == typeof i.cancelClass && (this.cancelButtonClasses = i.cancelClass), "object" == typeof i.maxSpan && (this.maxSpan = i.maxSpan), "object" == typeof i.dateLimit && (this.maxSpan = i.dateLimit), "string" == typeof i.opens && (this.opens = i.opens), "string" == typeof i.drops && (this.drops = i.drops), "boolean" == typeof i.showWeekNumbers && (this.showWeekNumbers = i.showWeekNumbers), "boolean" == typeof i.showISOWeekNumbers && (this.showISOWeekNumbers = i.showISOWeekNumbers), "string" == typeof i.buttonClasses && (this.buttonClasses = i.buttonClasses), "object" == typeof i.buttonClasses && (this.buttonClasses = i.buttonClasses.join(" ")), "boolean" == typeof i.showDropdowns && (this.showDropdowns = i.showDropdowns), "number" == typeof i.minYear && (this.minYear = i.minYear), "number" == typeof i.maxYear && (this.maxYear = i.maxYear), "boolean" == typeof i.showCustomRangeLabel && (this.showCustomRangeLabel = i.showCustomRangeLabel), "boolean" == typeof i.singleDatePicker && (this.singleDatePicker = i.singleDatePicker, this.singleDatePicker && (this.endDate = this.startDate.clone())), "boolean" == typeof i.timePicker && (this.timePicker = i.timePicker), "boolean" == typeof i.timePickerSeconds && (this.timePickerSeconds = i.timePickerSeconds), "number" == typeof i.timePickerIncrement && (this.timePickerIncrement = i.timePickerIncrement), "boolean" == typeof i.timePicker24Hour && (this.timePicker24Hour = i.timePicker24Hour), "boolean" == typeof i.autoApply && (this.autoApply = i.autoApply), "boolean" == typeof i.autoUpdateInput && (this.autoUpdateInput = i.autoUpdateInput), "boolean" == typeof i.linkedCalendars && (this.linkedCalendars = i.linkedCalendars), "function" == typeof i.isInvalidDate && (this.isInvalidDate = i.isInvalidDate), "function" == typeof i.isCustomDate && (this.isCustomDate = i.isCustomDate), "boolean" == typeof i.alwaysShowCalendars && (this.alwaysShowCalendars = i.alwaysShowCalendars), 0 != this.locale.firstDay)
+            for (var r = this.locale.firstDay; r > 0;) this.locale.daysOfWeek.push(this.locale.daysOfWeek.shift()), r--;
+        var o, h, l;
+        if (void 0 === i.startDate && void 0 === i.endDate && e(this.element).is(":text")) {
+            var c = e(this.element).val(),
+                d = c.split(this.locale.separator);
+            o = h = null, 2 == d.length ? (o = t(d[0], this.locale.format), h = t(d[1], this.locale.format)) : this.singleDatePicker && "" !== c && (o = t(c, this.locale.format), h = t(c, this.locale.format)), null !== o && null !== h && (this.setStartDate(o), this.setEndDate(h))
+        }
+        if ("object" == typeof i.ranges) {
+            for (l in i.ranges) {
+                o = "string" == typeof i.ranges[l][0] ? t(i.ranges[l][0], this.locale.format) : t(i.ranges[l][0]), h = "string" == typeof i.ranges[l][1] ? t(i.ranges[l][1], this.locale.format) : t(i.ranges[l][1]), this.minDate && o.isBefore(this.minDate) && (o = this.minDate.clone());
+                var m = this.maxDate;
+                if (this.maxSpan && m && o.clone().add(this.maxSpan).isAfter(m) && (m = o.clone().add(this.maxSpan)), m && h.isAfter(m) && (h = m.clone()), !(this.minDate && h.isBefore(this.minDate, this.timepicker ? "minute" : "day") || m && o.isAfter(m, this.timepicker ? "minute" : "day"))) {
+                    var p;
+                    (p = document.createElement("textarea")).innerHTML = l;
+                    n = p.value;
+                    this.ranges[n] = [o, h]
+                }
+            }
+            var f = "<ul>";
+            for (l in this.ranges) f += '<li data-range-key="' + l + '">' + l + "</li>";
+            this.showCustomRangeLabel && (f += '<li data-range-key="' + this.locale.customRangeLabel + '">' + this.locale.customRangeLabel + "</li>"), f += "</ul>", this.container.find(".ranges").prepend(f)
+        }
+        "function" == typeof s && (this.callback = s), this.timePicker || (this.startDate = this.startDate.startOf("day"), this.endDate = this.endDate.endOf("day"), this.container.find(".calendar-time").hide()), this.timePicker && this.autoApply && (this.autoApply = !1), this.autoApply && this.container.addClass("auto-apply"), "object" == typeof i.ranges && this.container.addClass("show-ranges"), this.singleDatePicker && (this.container.addClass("single"), this.container.find(".drp-calendar.left").addClass("single"), this.container.find(".drp-calendar.left").show(), this.container.find(".drp-calendar.right").hide(), !this.timePicker && this.autoApply && this.container.addClass("auto-apply")), (void 0 === i.ranges && !this.singleDatePicker || this.alwaysShowCalendars) && this.container.addClass("show-calendar"), this.container.addClass("opens" + this.opens), this.container.find(".applyBtn, .cancelBtn").addClass(this.buttonClasses), this.applyButtonClasses.length && this.container.find(".applyBtn").addClass(this.applyButtonClasses), this.cancelButtonClasses.length && this.container.find(".cancelBtn").addClass(this.cancelButtonClasses), this.container.find(".applyBtn").html(this.locale.applyLabel), this.container.find(".cancelBtn").html(this.locale.cancelLabel), this.container.find(".drp-calendar").on("click.daterangepicker", ".prev", e.proxy(this.clickPrev, this)).on("click.daterangepicker", ".next", e.proxy(this.clickNext, this)).on("mousedown.daterangepicker", "td.available", e.proxy(this.clickDate, this)).on("mouseenter.daterangepicker", "td.available", e.proxy(this.hoverDate, this)).on("change.daterangepicker", "select.yearselect", e.proxy(this.monthOrYearChanged, this)).on("change.daterangepicker", "select.monthselect", e.proxy(this.monthOrYearChanged, this)).on("change.daterangepicker", "select.hourselect,select.minuteselect,select.secondselect,select.ampmselect", e.proxy(this.timeChanged, this)), this.container.find(".ranges").on("click.daterangepicker", "li", e.proxy(this.clickRange, this)), this.container.find(".drp-buttons").on("click.daterangepicker", "button.applyBtn", e.proxy(this.clickApply, this)).on("click.daterangepicker", "button.cancelBtn", e.proxy(this.clickCancel, this)), this.element.is("input") || this.element.is("button") ? this.element.on({
+            "click.daterangepicker": e.proxy(this.show, this),
+            "focus.daterangepicker": e.proxy(this.show, this),
+            "keyup.daterangepicker": e.proxy(this.elementChanged, this),
+            "keydown.daterangepicker": e.proxy(this.keydown, this)
+        }) : (this.element.on("click.daterangepicker", e.proxy(this.toggle, this)), this.element.on("keydown.daterangepicker", e.proxy(this.toggle, this))), this.updateElement()
+    };
+    return a.prototype = {
+        constructor: a,
+        setStartDate: function (e) {
+            "string" == typeof e && (this.startDate = t(e, this.locale.format)), "object" == typeof e && (this.startDate = t(e)), this.timePicker || (this.startDate = this.startDate.startOf("day")), this.timePicker && this.timePickerIncrement && this.startDate.minute(Math.round(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement), this.minDate && this.startDate.isBefore(this.minDate) && (this.startDate = this.minDate.clone(), this.timePicker && this.timePickerIncrement && this.startDate.minute(Math.round(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement)), this.maxDate && this.startDate.isAfter(this.maxDate) && (this.startDate = this.maxDate.clone(), this.timePicker && this.timePickerIncrement && this.startDate.minute(Math.floor(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement)), this.isShowing || this.updateElement(), this.updateMonthsInView()
+        },
+        setEndDate: function (e) {
+            "string" == typeof e && (this.endDate = t(e, this.locale.format)), "object" == typeof e && (this.endDate = t(e)), this.timePicker || (this.endDate = this.endDate.endOf("day")), this.timePicker && this.timePickerIncrement && this.endDate.minute(Math.round(this.endDate.minute() / this.timePickerIncrement) * this.timePickerIncrement), this.endDate.isBefore(this.startDate) && (this.endDate = this.startDate.clone()), this.maxDate && this.endDate.isAfter(this.maxDate) && (this.endDate = this.maxDate.clone()), this.maxSpan && this.startDate.clone().add(this.maxSpan).isBefore(this.endDate) && (this.endDate = this.startDate.clone().add(this.maxSpan)), this.previousRightTime = this.endDate.clone(), this.container.find(".drp-selected").html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format)), this.isShowing || this.updateElement(), this.updateMonthsInView()
+        },
+        isInvalidDate: function () {
+            return !1
+        },
+        isCustomDate: function () {
+            return !1
+        },
+        updateView: function () {
+            this.timePicker && (this.renderTimePicker("left"), this.renderTimePicker("right"), this.endDate ? this.container.find(".right .calendar-time select").prop("disabled", !1).removeClass("disabled") : this.container.find(".right .calendar-time select").prop("disabled", !0).addClass("disabled")), this.endDate && this.container.find(".drp-selected").html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format)), this.updateMonthsInView(), this.updateCalendars(), this.updateFormInputs()
+        },
+        updateMonthsInView: function () {
+            if (this.endDate) {
+                if (!this.singleDatePicker && this.leftCalendar.month && this.rightCalendar.month && (this.startDate.format("YYYY-MM") == this.leftCalendar.month.format("YYYY-MM") || this.startDate.format("YYYY-MM") == this.rightCalendar.month.format("YYYY-MM")) && (this.endDate.format("YYYY-MM") == this.leftCalendar.month.format("YYYY-MM") || this.endDate.format("YYYY-MM") == this.rightCalendar.month.format("YYYY-MM"))) return;
+                this.leftCalendar.month = this.startDate.clone().date(2), this.linkedCalendars || this.endDate.month() == this.startDate.month() && this.endDate.year() == this.startDate.year() ? this.rightCalendar.month = this.startDate.clone().date(2).add(1, "month") : this.rightCalendar.month = this.endDate.clone().date(2)
+            } else this.leftCalendar.month.format("YYYY-MM") != this.startDate.format("YYYY-MM") && this.rightCalendar.month.format("YYYY-MM") != this.startDate.format("YYYY-MM") && (this.leftCalendar.month = this.startDate.clone().date(2), this.rightCalendar.month = this.startDate.clone().date(2).add(1, "month"));
+            this.maxDate && this.linkedCalendars && !this.singleDatePicker && this.rightCalendar.month > this.maxDate && (this.rightCalendar.month = this.maxDate.clone().date(2), this.leftCalendar.month = this.maxDate.clone().date(2).subtract(1, "month"))
+        },
+        updateCalendars: function () {
+            if (this.timePicker) {
+                var t, e, a, i;
+                if (this.endDate) {
+                    if (t = parseInt(this.container.find(".left .hourselect").val(), 10), e = parseInt(this.container.find(".left .minuteselect").val(), 10), isNaN(e) && (e = parseInt(this.container.find(".left .minuteselect option:last").val(), 10)), a = this.timePickerSeconds ? parseInt(this.container.find(".left .secondselect").val(), 10) : 0, !this.timePicker24Hour) "PM" === (i = this.container.find(".left .ampmselect").val()) && t < 12 && (t += 12), "AM" === i && 12 === t && (t = 0)
+                } else if (t = parseInt(this.container.find(".right .hourselect").val(), 10), e = parseInt(this.container.find(".right .minuteselect").val(), 10), isNaN(e) && (e = parseInt(this.container.find(".right .minuteselect option:last").val(), 10)), a = this.timePickerSeconds ? parseInt(this.container.find(".right .secondselect").val(), 10) : 0, !this.timePicker24Hour) "PM" === (i = this.container.find(".right .ampmselect").val()) && t < 12 && (t += 12), "AM" === i && 12 === t && (t = 0);
+                this.leftCalendar.month.hour(t).minute(e).second(a), this.rightCalendar.month.hour(t).minute(e).second(a)
+            }
+            this.renderCalendar("left"), this.renderCalendar("right"), this.container.find(".ranges li").removeClass("active"), null != this.endDate && this.calculateChosenLabel()
+        },
+        renderCalendar: function (a) {
+            var i, s = (i = "left" == a ? this.leftCalendar : this.rightCalendar).month.month(),
+                n = i.month.year(),
+                r = i.month.hour(),
+                o = i.month.minute(),
+                h = i.month.second(),
+                l = t([n, s]).daysInMonth(),
+                c = t([n, s, 1]),
+                d = t([n, s, l]),
+                m = t(c).subtract(1, "month").month(),
+                p = t(c).subtract(1, "month").year(),
+                f = t([p, m]).daysInMonth(),
+                u = c.day();
+            (i = []).firstDay = c, i.lastDay = d;
+            for (var D = 0; D < 6; D++) i[D] = [];
+            var g = f - u + this.locale.firstDay + 1;
+            g > f && (g -= 7), u == this.locale.firstDay && (g = f - 6);
+            for (var y = t([p, m, g, 12, o, h]), k = (D = 0, 0), b = 0; D < 42; D++, k++, y = t(y).add(24, "hour")) D > 0 && k % 7 == 0 && (k = 0, b++), i[b][k] = y.clone().hour(r).minute(o).second(h), y.hour(12), this.minDate && i[b][k].format("YYYY-MM-DD") == this.minDate.format("YYYY-MM-DD") && i[b][k].isBefore(this.minDate) && "left" == a && (i[b][k] = this.minDate.clone()), this.maxDate && i[b][k].format("YYYY-MM-DD") == this.maxDate.format("YYYY-MM-DD") && i[b][k].isAfter(this.maxDate) && "right" == a && (i[b][k] = this.maxDate.clone());
+            "left" == a ? this.leftCalendar.calendar = i : this.rightCalendar.calendar = i;
+            var v = "left" == a ? this.minDate : this.startDate,
+                C = this.maxDate,
+                Y = ("left" == a ? this.startDate : this.endDate, this.locale.direction, '<table class="table-condensed">');
+            Y += "<thead>", Y += "<tr>", (this.showWeekNumbers || this.showISOWeekNumbers) && (Y += "<th></th>"), v && !v.isBefore(i.firstDay) || this.linkedCalendars && "left" != a ? Y += "<th></th>" : Y += '<th class="prev available"><span></span></th>';
+            var w = this.locale.monthNames[i[1][1].month()] + i[1][1].format(" YYYY");
+            if (this.showDropdowns) {
+                for (var P = i[1][1].month(), x = i[1][1].year(), M = C && C.year() || this.maxYear, I = v && v.year() || this.minYear, S = x == I, B = x == M, A = '<select class="monthselect">', L = 0; L < 12; L++)(!S || v && L >= v.month()) && (!B || C && L <= C.month()) ? A += "<option value='" + L + "'" + (L === P ? " selected='selected'" : "") + ">" + this.locale.monthNames[L] + "</option>" : A += "<option value='" + L + "'" + (L === P ? " selected='selected'" : "") + " disabled='disabled'>" + this.locale.monthNames[L] + "</option>";
+                A += "</select>";
+                for (var N = '<select class="yearselect">', E = I; E <= M; E++) N += '<option value="' + E + '"' + (E === x ? ' selected="selected"' : "") + ">" + E + "</option>";
+                w = A + (N += "</select>")
+            }
+            if (Y += '<th colspan="5" class="month">' + w + "</th>", C && !C.isAfter(i.lastDay) || this.linkedCalendars && "right" != a && !this.singleDatePicker ? Y += "<th></th>" : Y += '<th class="next available"><span></span></th>', Y += "</tr>", Y += "<tr>", (this.showWeekNumbers || this.showISOWeekNumbers) && (Y += '<th class="week">' + this.locale.weekLabel + "</th>"), e.each(this.locale.daysOfWeek, function (t, e) {
+                    Y += "<th>" + e + "</th>"
+                }), Y += "</tr>", Y += "</thead>", Y += "<tbody>", null == this.endDate && this.maxSpan) {
+                var O = this.startDate.clone().add(this.maxSpan).endOf("day");
+                C && !O.isBefore(C) || (C = O)
+            }
+            for (b = 0; b < 6; b++) {
+                Y += "<tr>", this.showWeekNumbers ? Y += '<td class="week">' + i[b][0].week() + "</td>" : this.showISOWeekNumbers && (Y += '<td class="week">' + i[b][0].isoWeek() + "</td>");
+                for (k = 0; k < 7; k++) {
+                    var W = [];
+                    i[b][k].isSame(new Date, "day") && W.push("today"), i[b][k].isoWeekday() > 5 && W.push("weekend"), i[b][k].month() != i[1][1].month() && W.push("off", "ends"), this.minDate && i[b][k].isBefore(this.minDate, "day") && W.push("off", "disabled"), C && i[b][k].isAfter(C, "day") && W.push("off", "disabled"), this.isInvalidDate(i[b][k]) && W.push("off", "disabled"), i[b][k].format("YYYY-MM-DD") == this.startDate.format("YYYY-MM-DD") && W.push("active", "start-date"), null != this.endDate && i[b][k].format("YYYY-MM-DD") == this.endDate.format("YYYY-MM-DD") && W.push("active", "end-date"), null != this.endDate && i[b][k] > this.startDate && i[b][k] < this.endDate && W.push("in-range");
+                    var H = this.isCustomDate(i[b][k]);
+                    !1 !== H && ("string" == typeof H ? W.push(H) : Array.prototype.push.apply(W, H));
+                    var j = "",
+                        R = !1;
+                    for (D = 0; D < W.length; D++) j += W[D] + " ", "disabled" == W[D] && (R = !0);
+                    R || (j += "available"), Y += '<td class="' + j.replace(/^\s+|\s+$/g, "") + '" data-title="r' + b + "c" + k + '">' + i[b][k].date() + "</td>"
+                }
+                Y += "</tr>"
+            }
+            Y += "</tbody>", Y += "</table>", this.container.find(".drp-calendar." + a + " .calendar-table").html(Y)
+        },
+        renderTimePicker: function (t) {
+            if ("right" != t || this.endDate) {
+                var e, a, i, s = this.maxDate;
+                if (!this.maxSpan || this.maxDate && !this.startDate.clone().add(this.maxSpan).isBefore(this.maxDate) || (s = this.startDate.clone().add(this.maxSpan)), "left" == t) a = this.startDate.clone(), i = this.minDate;
+                else if ("right" == t) {
+                    a = this.endDate.clone(), i = this.startDate;
+                    var n = this.container.find(".drp-calendar.right .calendar-time");
+                    if ("" != n.html() && (a.hour(isNaN(a.hour()) ? n.find(".hourselect option:selected").val() : a.hour()), a.minute(isNaN(a.minute()) ? n.find(".minuteselect option:selected").val() : a.minute()), a.second(isNaN(a.second()) ? n.find(".secondselect option:selected").val() : a.second()), !this.timePicker24Hour)) {
+                        var r = n.find(".ampmselect option:selected").val();
+                        "PM" === r && a.hour() < 12 && a.hour(a.hour() + 12), "AM" === r && 12 === a.hour() && a.hour(0)
+                    }
+                    a.isBefore(this.startDate) && (a = this.startDate.clone()), s && a.isAfter(s) && (a = s.clone())
+                }
+                e = '<select class="hourselect">';
+                for (var o = this.timePicker24Hour ? 0 : 1, h = this.timePicker24Hour ? 23 : 12, l = o; l <= h; l++) {
+                    var c = l;
+                    this.timePicker24Hour || (c = a.hour() >= 12 ? 12 == l ? 12 : l + 12 : 12 == l ? 0 : l);
+                    var d = a.clone().hour(c),
+                        m = !1;
+                    i && d.minute(59).isBefore(i) && (m = !0), s && d.minute(0).isAfter(s) && (m = !0), c != a.hour() || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + l + "</option>" : '<option value="' + l + '">' + l + "</option>" : e += '<option value="' + l + '" selected="selected">' + l + "</option>"
+                }
+                e += "</select> ", e += ': <select class="minuteselect">';
+                for (l = 0; l < 60; l += this.timePickerIncrement) {
+                    var p = l < 10 ? "0" + l : l;
+                    d = a.clone().minute(l), m = !1;
+                    i && d.second(59).isBefore(i) && (m = !0), s && d.second(0).isAfter(s) && (m = !0), a.minute() != l || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + p + "</option>" : '<option value="' + l + '">' + p + "</option>" : e += '<option value="' + l + '" selected="selected">' + p + "</option>"
+                }
+                if (e += "</select> ", this.timePickerSeconds) {
+                    e += ': <select class="secondselect">';
+                    for (l = 0; l < 60; l++) {
+                        p = l < 10 ? "0" + l : l, d = a.clone().second(l), m = !1;
+                        i && d.isBefore(i) && (m = !0), s && d.isAfter(s) && (m = !0), a.second() != l || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + p + "</option>" : '<option value="' + l + '">' + p + "</option>" : e += '<option value="' + l + '" selected="selected">' + p + "</option>"
+                    }
+                    e += "</select> "
+                }
+                if (!this.timePicker24Hour) {
+                    e += '<select class="ampmselect">';
+                    var f = "",
+                        u = "";
+                    i && a.clone().hour(12).minute(0).second(0).isBefore(i) && (f = ' disabled="disabled" class="disabled"'), s && a.clone().hour(0).minute(0).second(0).isAfter(s) && (u = ' disabled="disabled" class="disabled"'), a.hour() >= 12 ? e += '<option value="AM"' + f + '>AM</option><option value="PM" selected="selected"' + u + ">PM</option>" : e += '<option value="AM" selected="selected"' + f + '>AM</option><option value="PM"' + u + ">PM</option>", e += "</select>"
+                }
+                this.container.find(".drp-calendar." + t + " .calendar-time").html(e)
+            }
+        },
+        updateFormInputs: function () {
+            this.singleDatePicker || this.endDate && (this.startDate.isBefore(this.endDate) || this.startDate.isSame(this.endDate)) ? this.container.find("button.applyBtn").prop("disabled", !1) : this.container.find("button.applyBtn").prop("disabled", !0)
+        },
+        move: function () {
+            var t, a = {
+                    top: 0,
+                    left: 0
+                },
+                i = this.drops,
+                s = e(window).width();
+            switch (this.parentEl.is("body") || (a = {
+                top: this.parentEl.offset().top - this.parentEl.scrollTop(),
+                left: this.parentEl.offset().left - this.parentEl.scrollLeft()
+            }, s = this.parentEl[0].clientWidth + this.parentEl.offset().left), i) {
+                case "auto":
+                    (t = this.element.offset().top + this.element.outerHeight() - a.top) + this.container.outerHeight() >= this.parentEl[0].scrollHeight && (t = this.element.offset().top - this.container.outerHeight() - a.top, i = "up");
+                    break;
+                case "up":
+                    t = this.element.offset().top - this.container.outerHeight() - a.top;
+                    break;
+                default:
+                    t = this.element.offset().top + this.element.outerHeight() - a.top
+            }
+            this.container.css({
+                top: 0,
+                left: 0,
+                right: "auto"
+            });
+            var n = this.container.outerWidth();
+            if (this.container.toggleClass("drop-up", "up" == i), "left" == this.opens) {
+                var r = s - this.element.offset().left - this.element.outerWidth();
+                n + r > e(window).width() ? this.container.css({
+                    top: t,
+                    right: "auto",
+                    left: 9
+                }) : this.container.css({
+                    top: t,
+                    right: r,
+                    left: "auto"
+                })
+            } else if ("center" == this.opens) {
+                (o = this.element.offset().left - a.left + this.element.outerWidth() / 2 - n / 2) < 0 ? this.container.css({
+                    top: t,
+                    right: "auto",
+                    left: 9
+                }) : o + n > e(window).width() ? this.container.css({
+                    top: t,
+                    left: "auto",
+                    right: 0
+                }) : this.container.css({
+                    top: t,
+                    left: o,
+                    right: "auto"
+                })
+            } else {
+                var o;
+                (o = this.element.offset().left - a.left) + n > e(window).width() ? this.container.css({
+                    top: t,
+                    left: "auto",
+                    right: 0
+                }) : this.container.css({
+                    top: t,
+                    left: o,
+                    right: "auto"
+                })
+            }
+        },
+        show: function (t) {
+            this.isShowing || (this._outsideClickProxy = e.proxy(function (t) {
+                this.outsideClick(t)
+            }, this), e(document).on("mousedown.daterangepicker", this._outsideClickProxy).on("touchend.daterangepicker", this._outsideClickProxy).on("click.daterangepicker", "[data-toggle=dropdown]", this._outsideClickProxy).on("focusin.daterangepicker", this._outsideClickProxy), e(window).on("resize.daterangepicker", e.proxy(function (t) {
+                this.move(t)
+            }, this)), this.oldStartDate = this.startDate.clone(), this.oldEndDate = this.endDate.clone(), this.previousRightTime = this.endDate.clone(), this.updateView(), this.container.show(), this.move(), this.element.trigger("show.daterangepicker", this), this.isShowing = !0)
+        },
+        hide: function (t) {
+            this.isShowing && (this.endDate || (this.startDate = this.oldStartDate.clone(), this.endDate = this.oldEndDate.clone()), this.startDate.isSame(this.oldStartDate) && this.endDate.isSame(this.oldEndDate) || this.callback(this.startDate.clone(), this.endDate.clone(), this.chosenLabel), this.updateElement(), e(document).off(".daterangepicker"), e(window).off(".daterangepicker"), this.container.hide(), this.element.trigger("hide.daterangepicker", this), this.isShowing = !1)
+        },
+        toggle: function (t) {
+            this.isShowing ? this.hide() : this.show()
+        },
+        outsideClick: function (t) {
+            var a = e(t.target);
+            "focusin" == t.type || a.closest(this.element).length || a.closest(this.container).length || a.closest(".calendar-table").length || (this.hide(), this.element.trigger("outsideClick.daterangepicker", this))
+        },
+        showCalendars: function () {
+            this.container.addClass("show-calendar"), this.move(), this.element.trigger("showCalendar.daterangepicker", this)
+        },
+        hideCalendars: function () {
+            this.container.removeClass("show-calendar"), this.element.trigger("hideCalendar.daterangepicker", this)
+        },
+        clickRange: function (t) {
+            var e = t.target.getAttribute("data-range-key");
+            if (this.chosenLabel = e, e == this.locale.customRangeLabel) this.showCalendars();
+            else {
+                var a = this.ranges[e];
+                this.startDate = a[0], this.endDate = a[1], this.timePicker || (this.startDate.startOf("day"), this.endDate.endOf("day")), this.alwaysShowCalendars || this.hideCalendars(), this.clickApply()
+            }
+        },
+        clickPrev: function (t) {
+            e(t.target).parents(".drp-calendar").hasClass("left") ? (this.leftCalendar.month.subtract(1, "month"), this.linkedCalendars && this.rightCalendar.month.subtract(1, "month")) : this.rightCalendar.month.subtract(1, "month"), this.updateCalendars()
+        },
+        clickNext: function (t) {
+            e(t.target).parents(".drp-calendar").hasClass("left") ? this.leftCalendar.month.add(1, "month") : (this.rightCalendar.month.add(1, "month"), this.linkedCalendars && this.leftCalendar.month.add(1, "month")), this.updateCalendars()
+        },
+        hoverDate: function (t) {
+            if (e(t.target).hasClass("available")) {
+                var a = e(t.target).attr("data-title"),
+                    i = a.substr(1, 1),
+                    s = a.substr(3, 1),
+                    n = e(t.target).parents(".drp-calendar").hasClass("left") ? this.leftCalendar.calendar[i][s] : this.rightCalendar.calendar[i][s],
+                    r = this.leftCalendar,
+                    o = this.rightCalendar,
+                    h = this.startDate;
+                this.endDate || this.container.find(".drp-calendar tbody td").each(function (t, a) {
+                    if (!e(a).hasClass("week")) {
+                        var i = e(a).attr("data-title"),
+                            s = i.substr(1, 1),
+                            l = i.substr(3, 1),
+                            c = e(a).parents(".drp-calendar").hasClass("left") ? r.calendar[s][l] : o.calendar[s][l];
+                        c.isAfter(h) && c.isBefore(n) || c.isSame(n, "day") ? e(a).addClass("in-range") : e(a).removeClass("in-range")
+                    }
+                })
+            }
+        },
+        clickDate: function (t) {
+            if (e(t.target).hasClass("available")) {
+                var a = e(t.target).attr("data-title"),
+                    i = a.substr(1, 1),
+                    s = a.substr(3, 1),
+                    n = e(t.target).parents(".drp-calendar").hasClass("left") ? this.leftCalendar.calendar[i][s] : this.rightCalendar.calendar[i][s];
+                if (this.endDate || n.isBefore(this.startDate, "day")) {
+                    if (this.timePicker) {
+                        var r = parseInt(this.container.find(".left .hourselect").val(), 10);
+                        if (!this.timePicker24Hour) "PM" === (l = this.container.find(".left .ampmselect").val()) && r < 12 && (r += 12), "AM" === l && 12 === r && (r = 0);
+                        var o = parseInt(this.container.find(".left .minuteselect").val(), 10);
+                        isNaN(o) && (o = parseInt(this.container.find(".left .minuteselect option:last").val(), 10));
+                        var h = this.timePickerSeconds ? parseInt(this.container.find(".left .secondselect").val(), 10) : 0;
+                        n = n.clone().hour(r).minute(o).second(h)
+                    }
+                    this.endDate = null, this.setStartDate(n.clone())
+                } else if (!this.endDate && n.isBefore(this.startDate)) this.setEndDate(this.startDate.clone());
+                else {
+                    if (this.timePicker) {
+                        var l;
+                        r = parseInt(this.container.find(".right .hourselect").val(), 10);
+                        if (!this.timePicker24Hour) "PM" === (l = this.container.find(".right .ampmselect").val()) && r < 12 && (r += 12), "AM" === l && 12 === r && (r = 0);
+                        o = parseInt(this.container.find(".right .minuteselect").val(), 10);
+                        isNaN(o) && (o = parseInt(this.container.find(".right .minuteselect option:last").val(), 10));
+                        h = this.timePickerSeconds ? parseInt(this.container.find(".right .secondselect").val(), 10) : 0;
+                        n = n.clone().hour(r).minute(o).second(h)
+                    }
+                    this.setEndDate(n.clone()), this.autoApply && (this.calculateChosenLabel(), this.clickApply())
+                }
+                this.singleDatePicker && (this.setEndDate(this.startDate), !this.timePicker && this.autoApply && this.clickApply()), this.updateView(), t.stopPropagation()
+            }
+        },
+        calculateChosenLabel: function () {
+            var t = !0,
+                e = 0;
+            for (var a in this.ranges) {
+                if (this.timePicker) {
+                    var i = this.timePickerSeconds ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD HH:mm";
+                    if (this.startDate.format(i) == this.ranges[a][0].format(i) && this.endDate.format(i) == this.ranges[a][1].format(i)) {
+                        t = !1, this.chosenLabel = this.container.find(".ranges li:eq(" + e + ")").addClass("active").attr("data-range-key");
+                        break
+                    }
+                } else if (this.startDate.format("YYYY-MM-DD") == this.ranges[a][0].format("YYYY-MM-DD") && this.endDate.format("YYYY-MM-DD") == this.ranges[a][1].format("YYYY-MM-DD")) {
+                    t = !1, this.chosenLabel = this.container.find(".ranges li:eq(" + e + ")").addClass("active").attr("data-range-key");
+                    break
+                }
+                e++
+            }
+            t && (this.showCustomRangeLabel ? this.chosenLabel = this.container.find(".ranges li:last").addClass("active").attr("data-range-key") : this.chosenLabel = null, this.showCalendars())
+        },
+        clickApply: function (t) {
+            this.hide(), this.element.trigger("apply.daterangepicker", this)
+        },
+        clickCancel: function (t) {
+            this.startDate = this.oldStartDate, this.endDate = this.oldEndDate, this.hide(), this.element.trigger("cancel.daterangepicker", this)
+        },
+        monthOrYearChanged: function (t) {
+            var a = e(t.target).closest(".drp-calendar").hasClass("left"),
+                i = a ? "left" : "right",
+                s = this.container.find(".drp-calendar." + i),
+                n = parseInt(s.find(".monthselect").val(), 10),
+                r = s.find(".yearselect").val();
+            a || (r < this.startDate.year() || r == this.startDate.year() && n < this.startDate.month()) && (n = this.startDate.month(), r = this.startDate.year()), this.minDate && (r < this.minDate.year() || r == this.minDate.year() && n < this.minDate.month()) && (n = this.minDate.month(), r = this.minDate.year()), this.maxDate && (r > this.maxDate.year() || r == this.maxDate.year() && n > this.maxDate.month()) && (n = this.maxDate.month(), r = this.maxDate.year()), a ? (this.leftCalendar.month.month(n).year(r), this.linkedCalendars && (this.rightCalendar.month = this.leftCalendar.month.clone().add(1, "month"))) : (this.rightCalendar.month.month(n).year(r), this.linkedCalendars && (this.leftCalendar.month = this.rightCalendar.month.clone().subtract(1, "month"))), this.updateCalendars()
+        },
+        timeChanged: function (t) {
+            var a = e(t.target).closest(".drp-calendar"),
+                i = a.hasClass("left"),
+                s = parseInt(a.find(".hourselect").val(), 10),
+                n = parseInt(a.find(".minuteselect").val(), 10);
+            isNaN(n) && (n = parseInt(a.find(".minuteselect option:last").val(), 10));
+            var r = this.timePickerSeconds ? parseInt(a.find(".secondselect").val(), 10) : 0;
+            if (!this.timePicker24Hour) {
+                var o = a.find(".ampmselect").val();
+                "PM" === o && s < 12 && (s += 12), "AM" === o && 12 === s && (s = 0)
+            }
+            if (i) {
+                var h = this.startDate.clone();
+                h.hour(s), h.minute(n), h.second(r), this.setStartDate(h), this.singleDatePicker ? this.endDate = this.startDate.clone() : this.endDate && this.endDate.format("YYYY-MM-DD") == h.format("YYYY-MM-DD") && this.endDate.isBefore(h) && this.setEndDate(h.clone())
+            } else if (this.endDate) {
+                var l = this.endDate.clone();
+                l.hour(s), l.minute(n), l.second(r), this.setEndDate(l)
+            }
+            this.updateCalendars(), this.updateFormInputs(), this.renderTimePicker("left"), this.renderTimePicker("right")
+        },
+        elementChanged: function () {
+            if (this.element.is("input") && this.element.val().length) {
+                var e = this.element.val().split(this.locale.separator),
+                    a = null,
+                    i = null;
+                2 === e.length && (a = t(e[0], this.locale.format), i = t(e[1], this.locale.format)), (this.singleDatePicker || null === a || null === i) && (i = a = t(this.element.val(), this.locale.format)), a.isValid() && i.isValid() && (this.setStartDate(a), this.setEndDate(i), this.updateView())
+            }
+        },
+        keydown: function (t) {
+            9 !== t.keyCode && 13 !== t.keyCode || this.hide(), 27 === t.keyCode && (t.preventDefault(), t.stopPropagation(), this.hide())
+        },
+        updateElement: function () {
+            if (this.element.is("input") && this.autoUpdateInput) {
+                var t = this.startDate.format(this.locale.format);
+                this.singleDatePicker || (t += this.locale.separator + this.endDate.format(this.locale.format)), t !== this.element.val() && this.element.val(t).trigger("change")
+            }
+        },
+        remove: function () {
+            this.container.remove(), this.element.off(".daterangepicker"), this.element.removeData()
+        }
+    }, e.fn.daterangepicker = function (t, i) {
+        var s = e.extend(!0, {}, e.fn.daterangepicker.defaultOptions, t);
+        return this.each(function () {
+            var t = e(this);
+            t.data("daterangepicker") && t.data("daterangepicker").remove(), t.data("daterangepicker", new a(t, s, i))
+        }), this
+    }, a
+});
+//# sourceMappingURL=/sm/f07d8d7b2652873f485707eab4f3d300bf1f6f3b42912e189c8933b1b9b3dfde.map
