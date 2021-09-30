@@ -4986,7 +4986,7 @@ $(document).ready(function(){
     $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
         $("#backlogDescriptionText").change();
     });
-    $('.inser-funct-input').each(function () {
+    $('.insert-funct-input').each(function () {
      
         var funcdata = [
             {"label":"IF","fx":"@.if(){}","desc":"FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
@@ -5037,7 +5037,7 @@ $(document).ready(function(){
             position: { my: "left bottom", at: "left top", collision: "flip" }
         });
         
-        $( ".inser-funct-input" ).autocomplete( "option", "appendTo", ".sc-insert-func-result" );
+        $( ".insert-funct-input" ).autocomplete( "option", "appendTo", ".sc-insert-func-result" );
        
         $(document).on('click', '.cs-fc-shortcode .cs-fx-btn', function (e) {
             $('.sc-insert-func-help p').text('');
@@ -5053,9 +5053,10 @@ $(document).ready(function(){
         });
 
     });
-    // $(document).on('click', '.agile-icon-fx', function (e) {
-    //     $('input.inser-funct-input').focus();
-    // });
+     $('#storyCardFunctionInsertBox').on('shown.bs.modal', function () {
+        $('#insert-funct-input').focus();
+        $('#insert-funct-input').val(' ').keydown();
+    })
 
 });
 

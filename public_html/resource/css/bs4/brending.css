@@ -532,8 +532,14 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     height: 30px;
     margin-top: 2px;
 }
+.fx-shortcodes-btn label {
+    display: block;
+    height: 100%;
+    cursor: pointer;
+}
 .agile-icon-fx {
-    
+    display: block;
+    height: 100%;
 }
 .agile-icon-fx:after{
     content: "";
@@ -639,14 +645,14 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     line-height: normal;
     margin-top: 30px;
 }
-.sc-insert-func-result .inser-funct-input {
+.sc-insert-func-result .insert-funct-input {
     width: 100%;
     border: 1px solid #e9e9f1;
     border-radius: 3px;
     padding: 8px 9px;
     font-size: 14px;
 }
-.sc-insert-func-result .inser-funct-input:focus {
+.sc-insert-func-result .insert-funct-input:focus {
     box-shadow: 0 0 0 1px rgb(20 22 62 / 26%);
     outline: none;
 }
