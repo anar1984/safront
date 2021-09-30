@@ -330,33 +330,33 @@ function updateBacklogName() {
     });
 }
 
-function runApiOnStoryCard(){
+function runApiOnStoryCard() {
     var fkBacklogId = global_var.current_backlog_id;
     global_var.runApiOnStoryCard = 1;
-    var out = be.callApi(fkBacklogId,{});
-    var html = $('<span>').css('white-space','pre')
-            .css('font-family','monospace')
-            .css("width","200px")
-            .text(JSON.stringify(out,null,"  "))
+    var out = be.callApi(fkBacklogId, {});
+    var html = $('<span>').css('white-space', 'pre')
+            .css('font-family', 'monospace')
+            .css("width", "200px")
+            .text(JSON.stringify(out, null, "  "))
 //    alert(JSON.stringify(out));
     generatePopupModalNew($('<div>').append(html).html());
 }
 
-function testApiOnStoryCard(){
+function testApiOnStoryCard() {
     $('#apiIntegrationModal').modal('show');
     $('#apiIntegrationModal_method').selectpicker('refresh');
 }
 
-function sendApiIntegrationForTest(){
-     
+function sendApiIntegrationForTest() {
+
     var url = $('#apiIntegrationModal_urllink').val();
     var method = $('#apiIntegrationModal_method').val();
     var content = $('#apiIntegrationModal_body').val();
-    var contentType=$('#apiIntegrationModal_contenttype').val();
+    var contentType = $('#apiIntegrationModal_contenttype').val();
 
 
     var json = initJSON();
-     
+
     json.kv.url = url;
     json.kv.method = method;
     json.kv.content = content;
@@ -371,14 +371,58 @@ function sendApiIntegrationForTest(){
         crossDomain: true,
         async: false,
         success: function (res) {
-            
+
         },
         error: function (err) {
-                Toaster.showError(JSON.stringify(err));
+            Toaster.showError(JSON.stringify(err));
         }
     });
 }
 
-function beautifyApiIntegrationContent(){
-    
+function beautifyApiIntegrationContent() {
+
+}
+
+function getFnBodyZadPush(line, startIndex) {
+
+    var lastIndex = line.indexOf('}',startIndex);
+    var idx = getFnBodyZadIteration(line, startIndex+1, lastIndex,1,0);
+    return idx;
+//    var out = line.substr(startIndex + 1, (idx - startIndex -1));
+//    console.log(out);
+}
+
+
+function getFnBodyZadIteration(line, startIndex, lastIndex, iterationCount, paranCount) {
+    try {
+
+
+        var cmd = line.substr(startIndex , (lastIndex - startIndex+1));
+        var argLine = (line && line !== 'undefined') ? cmd.trim() : '';
+        var numberOfParthBetweenIndexes = argLine.split('{').length - 1;
+        numberOfParthBetweenIndexes = (numberOfParthBetweenIndexes < 0) ? 0
+                : numberOfParthBetweenIndexes;
+
+        paranCount = +numberOfParthBetweenIndexes;
+
+//        if (numberOfParthBetweenIndexes === 0) {
+//            return lastIndex + 1;
+//        }
+        if ((numberOfParthBetweenIndexes===0) && (iterationCount * 2 >= paranCount)) {
+            return lastIndex + 1;
+        }
+
+        var indTmp = lastIndex ;
+        for (var i = 0; i < numberOfParthBetweenIndexes; i++) {
+            var intTempTT = indTmp;
+            indTmp = line.indexOf('}', indTmp+1);
+//            if (indTmp <= 0) {
+//                indTmp = intTempTT;
+//            }
+        }
+
+        iterationCount++;
+        return getFnBodyZadIteration(line, lastIndex+1, indTmp, iterationCount, paranCount);
+    } catch (err) {
+    }
 }

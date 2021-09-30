@@ -5511,7 +5511,7 @@ UserStory.prototype = {
             } catch (err) {
             }
 
-            var descBody = MapTextAreaHtml(replaceTags(obj[n].description));
+            var descBody = MapTextAreaHtml((obj[n].description));
             descBody = this.getBacklogDescLineDetails(descBody);
             
             var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
@@ -5530,7 +5530,7 @@ UserStory.prototype = {
                             .addClass('text-holder')
                             .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
                             .attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
-                            .attr('idesc', replaceTags(Replace2Primes(obj[n].description)))
+                            .attr('idesc', Replace2Primes(obj[n].description))
                             .append($('<span>')
                                     .addClass("procDescTitleNewNowAfter")
                                     .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
