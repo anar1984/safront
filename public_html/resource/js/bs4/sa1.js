@@ -385,7 +385,7 @@ function beautifyApiIntegrationContent() {
 
 function getFnBodyZadPush(line, startIndex) {
 
-    var lastIndex = line.indexOf('}');
+    var lastIndex = line.indexOf('}',startIndex);
     var idx = getFnBodyZadIteration(line, startIndex+1, lastIndex,1,0);
     return idx;
 //    var out = line.substr(startIndex + 1, (idx - startIndex -1));
