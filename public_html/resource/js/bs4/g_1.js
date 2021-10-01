@@ -1439,10 +1439,20 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
 $(document).on('click', '.baclog-large-modal-history', function (event) {
   
 
-    var id = $(this).attr("data-status")
-    loadHistoryByBacklogStId(id) 
+         
+
+    var id = $(this).attr("data-status");
+    loadHistoryByBacklogStId(id);
     $("#task-ongoing-large-history").modal('show');
        
+
+});
+$(document).on('click', '#HiostoryView', function (event) {
+
+       
+    var id = $('#storyCardListSelectBox4StoryCard').val();
+    loadHistoryByBacklogStId(id) 
+    $("#task-ongoing-large-history").modal('show');
        
 
 });
