@@ -1565,7 +1565,7 @@ $(document).on('click', '.more-table-details', function (event) {
 });
 $(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (event) {
         var tbody = $(this).parents('table').find('tbody');
-        console.log('dddddddddd')
+    
         var log = $(this).attr("status");
         if(log==='total'){
             tbody.find(".task-tr-list").show(); 
