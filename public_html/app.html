@@ -7834,23 +7834,68 @@
             </div>
 
             <!-- Export Import Modal -->
-            <div class="ExportImportBox modal fade" id="ExportImportBox" tabindex="-1" role="dialog" aria-labelledby="ExportImportBoxModal" aria-hidden="true">
+            <div class="cs-modal-box ExportImportBox modal fade" id="ExportImportBox" tabindex="-1" role="dialog" aria-labelledby="ExportImportBoxModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h6 class="modal-title" id="ExportImportBoxModal">Functions</h6>
+                    <h6 class="modal-title" id="ExportImportBoxModal">Export / Import Data</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
                     <div class="modal-body">
-                        <div class="sc-insert-func-filter">
-
+                        <div class="cs-popup-body">
+                            <div class="flex-container">
+                                <div class="row"> 
+                                 <div class="col-6">
+                                    <div class="flex-item">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Company Name</span>
+                                            <select class="selectpicker">
+                                                <option>Elcom</option>
+                                                <option>Azercell</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex-item mt-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Project Name</span>
+                                            <select class="selectpicker" id="project_list_for_export">
+                                                <option>Cheweek</option>
+                                                <option>Project 2</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex-item">
+                                        <div class="input-group mt-2">
+                                            <span class="input-group-addon">Select Store Card</span>
+                                              <select class="selectpicker" id='backlog_list_for_export' multiple>
+                                                <option>Store Card 1</option>
+                                                <option>Store Card 2</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex-item">
+                                        <div class="input-group mt-2">
+                                            <button type="button" class="btn btn-light">Export</button>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-6">
+                                     <div style=" display: flex;
+                                     flex-direction: column;
+                                     justify-content: space-between;
+                                     height: 400px; display:none!">
+                                         Done!
+                                     </div>
+                                 </div>
+                                </div>
+                            </div>
                         </div>
                      
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="ExportImportBoxBtn" class="ScCancellFuncBtn btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="ExportImportCloseBtn" class="ExportImportCloseBtn btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
                 </div>

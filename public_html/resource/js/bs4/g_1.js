@@ -1456,6 +1456,21 @@ $(document).on('click', '#HiostoryView', function (event) {
        
 
 });
+$(document).on('click', '#ExportImportView', function (event) {
+    
+    
+    setProjectListByID('project_list_for_export');
+       $('#project_list_for_export').change();
+
+});
+$(document).on('change', '#project_list_for_export', function (event) {
+    
+    var elm =$("#backlog_list_for_export");
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
+       
+
+});
 $(document).on('click', '.refresh-interval-butn', function (event) {
    
                 clearInterval(timeinterval);
