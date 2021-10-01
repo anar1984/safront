@@ -1731,6 +1731,18 @@ var SAFN = {
         }
         return f;
     },
+    Function_Body_Statement_Number_of_Open_Paranteth(functionBody, lastIndex) {
+        var zadBody = functionBody.substr(0, lastIndex);
+        var ls = zadBody.split('{').length - 1;
+        ls = (ls < 0) ? 0 : ls;
+        return ls;
+    },
+    Function_Body_Statement_Number_of_Close_Paranteth(functionBody, lastIndex) {
+        var zadBody = functionBody.substr(0, lastIndex);
+        var ls = zadBody.split('}').length - 1;
+        ls = (ls < 0) ? 0 : ls;
+        return ls;
+    },
     Function_If_Body_Statement_Replacement: function (functionBody) {
         functionBody = functionBody.replace(/\t/g, '');
         functionBody = functionBody.replace(/\r/g, '');
@@ -1741,6 +1753,16 @@ var SAFN = {
         while (functionBody.includes('@.if')) {
 
             var startIndex = functionBody.indexOf('@.if');
+            
+            var rcOpenParanteth = SAFN.Function_Body_Statement_Number_of_Open_Paranteth(functionBody, startIndex);
+            var rcCloseParanteth = SAFN.Function_Body_Statement_Number_of_Close_Paranteth(functionBody, startIndex);
+
+            if (rcOpenParanteth !== rcCloseParanteth) {
+                functionBody = functionBody.substr(0, startIndex) + '__IFTMP__'
+                        + functionBody.substr(startIndex + 4, functionBody.length);
+                continue;
+            }
+
             var startIndexOfParan = functionBody.indexOf('{', startIndex);
             var lastIndexOfParan = getFnBodyZadPush(functionBody, startIndexOfParan);
 
@@ -1751,9 +1773,11 @@ var SAFN = {
             functionBody = functionBody.substr(0, startIndex) + idGen + ';'
                     + functionBody.substr(lastIndexOfParan, functionBody.length);
         }
+        functionBody = functionBody.replace(/__IFTMP__/g, '@.if');
         return functionBody;
     },
     Function_For_Body_Statement_Replacement: function (functionBody) {
+        
         functionBody = functionBody.replace(/\t/g, '');
         functionBody = functionBody.replace(/\r/g, '');
         functionBody = functionBody.replace(/<br>/g, '');
@@ -1763,6 +1787,16 @@ var SAFN = {
         while (functionBody.includes('@.for')) {
 
             var startIndex = functionBody.indexOf('@.for');
+            
+            var rcOpenParanteth = SAFN.Function_Body_Statement_Number_of_Open_Paranteth(functionBody, startIndex);
+            var rcCloseParanteth = SAFN.Function_Body_Statement_Number_of_Close_Paranteth(functionBody, startIndex);
+
+            if (rcOpenParanteth !== rcCloseParanteth) {
+                functionBody = functionBody.substr(0, startIndex) + '__FORTMP__'
+                        + functionBody.substr(startIndex + 5, functionBody.length);
+                continue;
+            }
+            
             var startIndexOfParan = functionBody.indexOf('{', startIndex);
             var lastIndexOfParan = getFnBodyZadPush(functionBody, startIndexOfParan);
 
@@ -1773,6 +1807,7 @@ var SAFN = {
             functionBody = functionBody.substr(0, startIndex) + idGen + ';'
                     + functionBody.substr(lastIndexOfParan, functionBody.length);
         }
+        functionBody = functionBody.replace(/__FORTMP__/g, '@.for');
         return functionBody;
     },
     IsCommandCallApi: function (fnName) {
@@ -3351,7 +3386,7 @@ var SAFN = {
 
             body = SAFN.Function_For_Body_Statement_Replacement(body);
             body = SAFN.Function_If_Body_Statement_Replacement(body);
-            
+
             var bodyList = body.split(';');
             var lnSt = $('<div>');
             for (var sti in bodyList) {
