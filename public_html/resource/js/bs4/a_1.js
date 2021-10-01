@@ -20961,6 +20961,18 @@ var requestType = {
         },
     ]
 }
+$(document).on('click', '.for-chewekk-new-chat-link', function () {
+    var div = $(".component-class#21041212141705702084 >.component-section-row ");
+    var f = $(this).attr("data-link")
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $(div).html(html_string);
+       
+
+        $('#comp_id_21052514504106703772').click();
+    });
+
+  
+})
 $(document).on('click', '.for-chewekk-new-panel-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
