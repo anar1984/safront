@@ -1456,9 +1456,9 @@ $(document).on('click', '#HiostoryView', function (event) {
        
 
 });
+// import export start
 $(document).on('click', '#ExportImportView', function (event) {
-    
-    
+        
     setProjectListByID('project_list_for_export');
        $('#project_list_for_export').change();
 
@@ -1468,9 +1468,59 @@ $(document).on('change', '#project_list_for_export', function (event) {
     var elm =$("#backlog_list_for_export");
     var val = $(this).val();
     getBacklogListByProject4Element(val, elm);
-       
 
 });
+
+// $('#backlog_list_for_export').each(function () {
+
+// });
+
+function getMultiSelectpickerValueByElementName(elementName) {
+    var id = $('#'+elementName).val();
+    var st = "";
+    for (var i = 0; i < id.length; i++) {
+        if (!id[i])
+            continue;
+        st += id[i]
+        if (i < id.length - 1) {
+            st += '%IN%,'
+        }
+    }
+    return st;
+}
+
+$(document).on('click', '#inportexport-file-btn', function (event) {
+ 
+    var json = initJSON();
+    json.kv.fkProjectId = $('#project_list_for_export').val();
+    json.kv.projectName = $('#project_list_for_export').val();
+    json.kv.fkBacklogsIds = getMultiSelectpickerValueByElementName( 'backlog_list_for_export');
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsExportMultipleBacklogs",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            // jQuery('.alert');
+            // jQuery('.alert').html(res.success);
+            $('.dataname');
+            $('.dataname').html(res.success);
+
+        },
+        error: function () {
+            Toaster.showError(('Export error'));
+        }
+    });
+
+});
+
+
+// import export end
+
+
 $(document).on('click', '.refresh-interval-butn', function (event) {
    
                 clearInterval(timeinterval);
