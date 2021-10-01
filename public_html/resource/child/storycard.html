@@ -30,8 +30,8 @@
             <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
             <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
             <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
-            <button class="dropdown-item firstbut " id="ExportImportView" ><a href="#" >History Story Card</a></button>
-            <button class="dropdown-item firstbut " id="ExportImportView" ><a href="#" >Import/Export</a></button>
+            <button class="dropdown-item firstbut " id="HiostoryView" ><a href="#" >History</a></button>
+            <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Import/Export</a></button>
             <hr style="margin: 4px 0px;">
             <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid=""  onclick="new UserStory().delete()"><a href="#" >Delete</a></button>
             <br>
@@ -676,3 +676,49 @@
 
 
 
+<div class="modal fade" id="task-ongoing-large-history" style="z-index: 1045;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
+    <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+        <div class="modal-content" style="width: 100%; height: 100%;">
+            <div class="modal-header" >
+                <h5 class="modal-title" >History</h5>
+               <div class="float-right">
+                
+                </div>
+                
+                <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body histroy-and-dashboard" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto; position: relative;">
+                <!--<form>-->
+                  <div class="row" >
+                    <div class="table-content " style="overflow-y: auto; height: 80vh;">
+          
+          
+                        <table id="history-main-table-backlogst" style="width: max-content;min-width: 100%;" cellspacing="0" cellpadding="0">
+                            <thead>
+                              <tr>
+                                <td>Project </td>
+                                <td>Backlog</td>
+                                <td>Input</td>
+                                <td>Description</td>
+                                <td>New Value</td>
+                                <td>Old Value</td>
+                                <td>Action Type</td>
+                                <td>Time & Date</td> 
+                                <td>Created</td>
+                              
+                              </tr>  
+                            </thead>
+                            <tbody>
+                           
+                            </tbody>
+                          </table>
+                        
+                         
+                                </div>   
+                  </div>
+                                </div>
+                                </div>
+</div>
+</div>

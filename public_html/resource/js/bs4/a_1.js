@@ -13433,6 +13433,7 @@ function setProjectManagementFilterProject() {
 
 function setProjectListByID(elid) {
     var select = $('#' + elid);
+    select.html('')
     var keys = Object.keys(SACore.Project);
     for (var id in keys) {
         var pid = keys[id];
@@ -16604,7 +16605,7 @@ function getBacklogListByProject4Element(projectId, elm) {
         json.kv.cookie = getToken();
     } catch (err) {}
 
-    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkProjectId = projectId;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({

@@ -1439,10 +1439,35 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
 $(document).on('click', '.baclog-large-modal-history', function (event) {
   
 
-    var id = $(this).attr("data-status")
+         
+
+    var id = $(this).attr("data-status");
+    loadHistoryByBacklogStId(id);
+    $("#task-ongoing-large-history").modal('show');
+       
+
+});
+$(document).on('click', '#HiostoryView', function (event) {
+
+       
+    var id = $('#storyCardListSelectBox4StoryCard').val();
     loadHistoryByBacklogStId(id) 
     $("#task-ongoing-large-history").modal('show');
        
+
+});
+$(document).on('click', '#ExportImportView', function (event) {
+    
+    
+    setProjectListByID('project_list_for_export');
+       $('#project_list_for_export').change();
+
+});
+$(document).on('change', '#project_list_for_export', function (event) {
+    
+    var elm =$("#backlog_list_for_export");
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
        
 
 });
