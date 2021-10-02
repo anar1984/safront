@@ -1483,7 +1483,7 @@ function getMultiSelectpickerValueByElementName(elementName) {
             continue;
         st += id[i]
         if (i < id.length - 1) {
-            st += '%IN%,'
+            st += '%IN%'
         }
     }
     return st;
@@ -1495,6 +1495,7 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
     json.kv.fkProjectId = $('#project_list_for_export').val();
     json.kv.projectName = $('#project_list_for_export').val();
     json.kv.fkBacklogsIds = getMultiSelectpickerValueByElementName( 'backlog_list_for_export');
+    // json.kv.filename = zipfilename;
     var data = JSON.stringify(json);
     $.ajax({
         url: urlGl + "api/post/srv/serviceRsExportMultipleBacklogs",
@@ -1504,11 +1505,13 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            // jQuery('.alert');
-            // jQuery('.alert').html(res.success);
-            $('.dataname');
-            $('.dataname').html(res.success);
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+             $('.dataname');
+             $('.dataname').html('<span style="color:green;">Filke Successfully Exported!</span><br><small style="font-size:7px;">'+res.kv.filename+'</small><br>');
 
+             $('.dataname').append("<a class='download-e-file'>Download File</a>");
+             $('.dataname .download-e-file').attr('href','https://test.sourcedagile.com/api/get/filed/' + res.kv.filename);
+             $('.dataname .download-e-file').attr('download', + res.kv.filename);
         },
         error: function () {
             Toaster.showError(('Export error'));
