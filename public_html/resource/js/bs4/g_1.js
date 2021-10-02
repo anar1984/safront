@@ -1463,6 +1463,16 @@ $(document).on('click', '#ExportImportView', function (event) {
        $('#project_list_for_export').change();
 
 });
+
+$(document).on('click', '#upload_data_file_btn', function (event) {
+        var elm = $("#setStoryCardUploadZipData");
+    if ($(elm).val().trim().length > 0) {
+        uploadFile4IpoImport($(elm).attr('id'));
+          $('#ImportBox').moadl("hide");
+    }
+
+});
+
 $(document).on('change', '#project_list_for_export', function (event) {
     
     var elm =$("#backlog_list_for_export");
