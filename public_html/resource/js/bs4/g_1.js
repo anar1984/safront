@@ -1510,7 +1510,7 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
              $('.dataname').html('<span style="color:green;">Filke Successfully Exported!</span><br><small style="font-size:7px;">'+res.kv.filename+'</small><br>');
 
              $('.dataname').append("<a class='download-e-file'>Download File</a>");
-             $('.dataname .download-e-file').attr('href', urlGl + '/api/get/filed/' + res.kv.filename);
+             $('.dataname .download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
              $('.dataname .download-e-file').attr('download', + res.kv.filename);
         },
         error: function () {
