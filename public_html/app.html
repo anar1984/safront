@@ -7846,47 +7846,31 @@
                     <div class="modal-body">
                         <div class="cs-popup-body">
                             <div class="flex-container">
-                                <div class="row"> 
+                                <div class="row">
                                  <div class="col-6">
-                                    <div class="flex-item">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Company Name</span>
-                                            <select class="selectpicker">
-                                                <option>Elcom</option>
-                                                <option>Azercell</option>
-                                              </select>
+                                       <div class="flex-item mt-2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Project Name</span>
+                                                <select class="selectpicker" id="project_list_for_export" data-live-search="true">
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex-item mt-2">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Project Name</span>
-                                            <select class="selectpicker" id="project_list_for_export">
-                                                <option>Cheweek</option>
-                                                <option>Project 2</option>
-                                              </select>
+                                        <div class="flex-item">
+                                            <div class="input-group mt-2">
+                                                <span class="input-group-addon">Select Store Card</span>
+                                                <select class="selectpicker" id='backlog_list_for_export' data-actions-box="true" multiple data-live-search="true">
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex-item">
-                                        <div class="input-group mt-2">
-                                            <span class="input-group-addon">Select Store Card</span>
-                                              <select class="selectpicker" id='backlog_list_for_export' multiple>
-                                                <option>Store Card 1</option>
-                                                <option>Store Card 2</option>
-                                              </select>
+                                        <div class="flex-item">
+                                            <div class="input-group mt-2">
+                                                <button type="button" class="btn btn-light" id="inportexport-file-btn">Export</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex-item">
-                                        <div class="input-group mt-2">
-                                            <button type="button" class="btn btn-light">Export</button>
-                                        </div>
-                                    </div>
+                                    
                                  </div>
                                  <div class="col-6">
-                                     <div style=" display: flex;
-                                     flex-direction: column;
-                                     justify-content: space-between;
-                                     height: 400px; display:none!">
-                                         Done!
+                                     <div class="dataname">
                                      </div>
                                  </div>
                                 </div>
