@@ -21183,7 +21183,7 @@ function tapsiriqColStatement(prtNum, namePr) {
                 ))
 }
 
-function getContentTapsiriq1(id,mzmn,image,nameUs,taskStatus,tasktype,time,date) {
+function getContentTapsiriq1(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,prorty) {
 
     return  $("<div>")
              .addClass('cs-task-item-in-box  cs-white-bg')
@@ -21241,8 +21241,12 @@ function getContentTapsiriq1(id,mzmn,image,nameUs,taskStatus,tasktype,time,date)
                                             .append($("<div>")
                                                        .addClass("cs-task-card-prioritet")
                                                        .append($("<select>").addClass("selectpicker")
-                                                                     .append('<option data-icon="fas fa-flag"> Standart</option>')
-                                                                     ))
+                                                                     .attr("title",'yoxdur')
+                                                                     .attr("id",'task-us-prio-change')
+                                                                     .append('<option value="1" data-icon="fas fa-flag text-info">Standart</option>')
+                                                                     .append('<option value="2" data-icon="fas fa-flag text-warning">Təcili</option>')
+                                                                     .append('<option value="3" data-icon="fas fa-flag text-danger">Çox təcili</option>')
+                                                                     .val(prorty)))
                                             .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
                                                 <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
@@ -21317,9 +21321,9 @@ function getContentTapsiriq(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,h
                                            .addClass("lex-fill bd-highlight text-right")
                                             .append($("<div>")
                                                        .addClass("cs-task-card-prioritet")
-                                                       .append($("<select>").addClass("selectpicker")
+                                                       .append(/* $("<select>").addClass("selectpicker")
                                                                      .append('<option data-icon="fas fa-flag"> Standart</option>')
-                                                                     ))
+                                                                      */))
                                             .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
                                                 <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
@@ -21599,16 +21603,13 @@ function genstatustapsiriq(res,x,say) {
     
                fkRequestId = o.fkRequestId
                ids+= o.fkRequestId+"%IN%"
-                var html = getContentTapsiriq1(o.id,fkRequestId,img,userName,st,a,time,date);
+                var html = getContentTapsiriq1(o.id,fkRequestId,img,userName,st,a,time,date,o.taskPriority);
                $("#flex-col-"+o.taskStatus).append(html);
             
        
     }
 
-    $('.cs-task-panel-column .selectpicker').selectpicker({
-        iconBase: 'fa',
-        tickIcon: 'fa-chevron-down',
-    });
+    selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
     if(say>25){
         $("#flex-col-"+x).append($("<div>")
                                       .addClass("more-button-fortapsiriq text-center ")
@@ -21677,8 +21678,9 @@ function genstatustapsiriqmore(res,elm,count,etmit) {
     
                }
     
-               taskDescription = o.taskDescription+"("+o.taskNo+")"
-                var html = getContentTapsiriq1(o.id,taskDescription,img,userName,st,a,time,date);
+               taskDescription = o.taskDescription+"("+o.taskNo+")";
+               
+                var html = getContentTapsiriq1(o.id,taskDescription,img,userName,st,a,time,date,o.taskPriority);
                $("#flex-col-"+o.taskStatus).append(html);
             
        
@@ -21695,12 +21697,9 @@ function genstatustapsiriqmore(res,elm,count,etmit) {
                                          .attr("end-limit",say)
                                          )
         }
-
-    $('.cs-task-panel-column .selectpicker').selectpicker({
-        iconBase: 'fa',
-        tickIcon: 'fa-chevron-down',
-    });
-   
+            
+  
+selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
    
     $('[data-toggle="popover"]').popover({
         html:true
@@ -21710,6 +21709,16 @@ function genstatustapsiriqmore(res,elm,count,etmit) {
     }
     
 
+}
+function selectPickerNewoldValuechnage(elm) {
+    elm.each(function (e) {
+       var old = $(this).val();
+       $(this).selectpicker({
+        iconBase: 'fa',
+        tickIcon: 'fa-chevron-down',
+    });
+  $(this).val(old).selectpicker("refresh");
+    })
 }
 function genAktivPassiv(res,x,say) {
 
@@ -22147,6 +22156,14 @@ $(document).on('change', '#user-story-show-stat4tapsiriq', function (event) {
     }else{
         $(this).parents(".cs-task-item-in-box").find(".stat-div-task-content").hide();
     }
+
+});
+$(document).on('change', '#task-us-prio-change', function (event) {
+   
+      var ml ={};
+      ml.taskPriority = $(this).val();
+      ml.id = $(this).closest('.cs-task-item-in-box ').attr('id');
+   var elm = be.callApi("21092917070904357762",ml);
 
 });
 function getProjectUsers4Tapsiriq() {

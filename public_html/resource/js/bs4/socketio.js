@@ -2557,6 +2557,7 @@
         }, n.prototype.setJitter = function (t) {
             this.jitter = t
         }
+        
     }])
 }));
 //# sourceMappingURL=socket.io.min.js.map
