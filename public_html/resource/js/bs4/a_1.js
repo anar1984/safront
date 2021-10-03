@@ -3516,7 +3516,134 @@ function uploadFile4Ipo(id) {
         }
     }
 }
+function uploadFile4IpoImport(id) {
+    var r = "";
+    var that = this;
+    var files = document.getElementById(id).files;
+    var file_count = files.length;
+    var st = "";
+    var trc = 0;
 
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    pbDiv.html('');
+
+    $('#' + id).attr('fname', '');
+
+    for (var i = 0, f; f = files[i]; i++) {
+        //            var file = files[0];
+        var file = f;
+        var fileext = file['name'].split('.').pop();
+        var fname = file['name'].split('.')[0];
+        //            console.log('fname=' + fname);
+        if (files && file) {
+            var reader = new FileReader();
+            reader.fileName = fname;
+            reader.fileExt = fileext;
+            reader.fileNo = i;
+            reader.onload = function (readerEvt) {
+                trc++;
+                var fname1 = readerEvt.target.fileName;
+                var fileext1 = readerEvt.target.fileExt;
+                var fileNo = readerEvt.target.fileNo;
+                //                    console.log('trc no=' + trc);
+                var binaryString = readerEvt.target.result;
+                uploadFile4IpoCoreImport(fileext1, btoa(binaryString), fname1, id);
+               
+            };
+            reader.readAsBinaryString(file, fname);
+        }
+    }
+}
+
+function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+
+    var idx = makeId(10);
+
+    var d = new Object();
+    d.file_base_64 = file_base_64;
+    d.file_extension = fileext;
+    d.file_type = "general";
+    d.file_name = file_name;
+    conf = JSON.parse('{"kv":{}}');
+    conf['kv'] = d;
+    conf.kv.cookie = getToken();
+    var dat = JSON.stringify(conf);
+    var finalname = "";
+    $.ajax({
+        url: urlGl + "api/post/upload",
+        type: "POST",
+        data: dat,
+        contentType: "application/json",
+        async: true,
+        beforeSend: function () {
+            pbDiv.append('<br>').append($('<span>')
+                .attr('id', 'pro_zad_span' + idx)
+                .text(file_name)
+                .append($('<img>')
+                    .attr('id', 'pro_zad_' + idx)
+                    .attr('src', 'resource/img/loader.gif'))
+            )
+        },
+        uploadProgress: function (event, position, total, percentComplete) {
+            //            console.log('test')
+            var percentVal = percentComplete + '%';
+            pbDiv.text(percentVal);
+        },
+        success: function (data) {
+            finalname = data.kv.uploaded_file_name;
+
+            $('#pro_zad_' + idx).remove();
+            $('#pro_zad_span' + idx)
+                .after($('<i class="fa fa-times">')
+                    .attr('pid', idx)
+                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+
+
+
+            var st = $('#' + id).attr('fname');
+            st = (st && st !== 'undefined') ? st : '';
+            st += (st) ? global_var.vertical_seperator + finalname :
+                finalname;
+
+            $('#' + id).attr('fname', st);
+             console.log(finalname);
+             importSendNameApi(finalname) 
+        },
+        error: function () {}
+    });
+    return finalname;
+}
+
+
+function importSendNameApi(filNm) {
+    var prId = global_var.current_project_id
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {}
+    json.kv.fkProjectId = prId;
+    json.kv.projectName = filNm;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsUnzipFileAndImport",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
+}
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
 
