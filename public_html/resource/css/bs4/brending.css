@@ -1,4 +1,12 @@
 /* general */
+.cs-btn-secondary {
+    color: #fff;
+    background-color: #9395BD;
+    border-color: #9395BD;
+}
+.mt-30px {
+    margin-top: 30px !important;
+}
 .cs-cursor-auto, tr.cs-cursor-auto {
     cursor: auto;
 }
@@ -1351,4 +1359,142 @@ label.cs-file-upload:hover {
 .cs-more-filter-box.show {
     display: -ms-flexbox !important;
     display: flex !important;
+}
+.cs-modal-box .modal-header {
+    font-size: 14px;
+    padding: 12px 1rem;
+    border-bottom-color: #E9E9F1;
+    background-color: #E9E9F1;
+    color: #272B7C;
+}
+.cs-modal-box .close, .cs-modal-box button.close {
+    opacity: 1;
+    color: #272B7C;
+    text-shadow: none;
+}
+.cs-modal-box button.close:focus {
+    outline: none;
+    opacity: 1;
+}
+.cs-modal-box .close span {
+
+}
+.cs-input-group {
+padding: 0 10px;
+}
+.cs-flex-center-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cs-input-group .btn {
+    color: #ffffff;
+    background-color: #525596;
+    border-color: #525596;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-input-group .dropdown-item.active, .cs-input-group .dropdown-item:active {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
+}
+.cs-input-group .btn:hover, .cs-modal-box .btn:hover {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
+}
+.cs-input-group .btn-light:not(:disabled):not(.disabled).active, .cs-input-group .btn-light:not(:disabled):not(.disabled):active, .cs-input-group .show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #525596;
+    border-color: #525596;
+}
+.cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder, .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+    color: #ffffff;
+}
+.cs-input-group .dropdown-menu {
+    color: #272B7C;
+    padding: 7px 0;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-input-group .dropdown-menu > li a {
+    padding: 7px 20px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-input-group .input-group-addon{
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+.cs-modal-box .modal-footer .btn {
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-modal-box .btn-primary {
+    color: #fff;
+    background-color: #525596;
+    border-color: #525596;
+}
+.dataname {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.dataname .cs-succsess-msg {
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+    display: block;
+    margin-bottom: 10px;
+}
+.dataname .cs-err-msg {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ef4a4a;
+    display: block;
+}
+.dataname small {
+
+}
+.dataname .download-e-file {
+    background-color: #525596;
+    border-color: #525596;
+    color: #fff;
+    padding: 0px 15px 0px 0;
+    height: 30px;
+    line-height: 1.1;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+}
+.dataname .download-e-file:hover, .dataname .download-e-file:active {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    text-decoration: none;
+}
+.dataname .download-e-file span {
+    padding: 8px 10px;
+    margin-right: 10px;
+    font-size: 10px;
+    display: inline-block;
+    height: 30px;
+    background-color: rgb(4 4 4 / 20%);
+    vertical-align: middle;
+}
+
+.dataname .progress-bar {
+    position: relative;
+    border-radius: 50px;
+    height: 30px;
+    width: 0%;
+    background-color: #555898;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-size: 14px;
 }
