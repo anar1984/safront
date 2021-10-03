@@ -8,7 +8,7 @@
 
 var urlGl = "https://test.sourcedagile.com/";     
 
-//var urlGl = "http://localhost:8079/tsn3/";
+//var urlGl = "http://192.168.1.3:8080/tsn3/";
 //var urlGl = ""
 
 function getToken() {
