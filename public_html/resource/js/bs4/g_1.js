@@ -1468,7 +1468,7 @@ $(document).on('click', '#upload_data_file_btn', function (event) {
         var elm = $("#setStoryCardUploadZipData");
     if ($(elm).val().trim().length > 0) {
         uploadFile4IpoImport($(elm).attr('id'));
-          $('#ImportBox').moadl("hide");
+          $('#ImportBox').modal("hide");
     }
 
 });
@@ -1506,8 +1506,8 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
  
     var json = initJSON();
     json.kv.fkProjectId = $('#project_list_for_export').val();
-    json.kv.projectName = $('#project_list_for_export').val();
-    json.kv.fkBacklogsIds = getMultiSelectpickerValueByElementName( 'backlog_list_for_export');
+    json.kv.projectName = $('#project_list_for_export').find('option:selected').text();
+    json.kv.fkBacklogsIds = getMultiSelectpickerValueByElementName('backlog_list_for_export');
     // json.kv.filename = zipfilename;
     var data = JSON.stringify(json);
     $.ajax({
