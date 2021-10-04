@@ -3617,15 +3617,14 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
 
 
 function importSendNameApi(filNm) {
-    var prId = global_var.current_project_id
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
     } catch (err) {}
-    json.kv.fkProjectId = prId;
-    json.kv.projectName = filNm;
+
+    json.kv.fileName = filNm;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
