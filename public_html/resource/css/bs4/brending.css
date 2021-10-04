@@ -259,9 +259,13 @@ background: rgb(39 43 124 / 100%);
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
 }
-.table-hover tbody tr:hover button#dropdownMenuLink, table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
+.table-hover tbody tr:hover button#dropdownMenuLink,  table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
     background-color: transparent;
     color: #272B7C;
+}
+table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select-if-style .btn:focus {
+    background-color: #da7a9e;
+    border-color: #da7a9e;
 }
 
 /* StoreCard  */
@@ -502,6 +506,9 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 0;
     border-radius: 5px;
     float: left;
+}
+.cs-if-script-box table tr td .cs-sum-inbox > .cs-if-script-in-box {
+    background-color: #f89cbe;
 }
 .if-inc-tbody {
     width: 100%;
@@ -1432,7 +1439,7 @@ padding: 0 10px;
     color: #272B7C;
     padding: 7px 0;
     font-size: 14px;
-    height: 30px;
+    height: auto;
     line-height: 1;
 }
 .cs-input-group .dropdown-menu > li a {
@@ -1533,4 +1540,34 @@ padding: 0 10px;
 .cs-if-script-box .cs-input-group {
     padding: 6px 10px;
     vertical-align: middle;
+}
+.table-hover tbody tr .tr-remove-btn {
+    font-size: 13px;
+    color: rgb(39 43 124 / 11%) !important;
+}
+table.if-inc-table tr:hover .tr-remove-btn :not(:disabled):not(.disabled):active, table.if-inc-table tr:hover .btn.tr-remove-btn  {
+    background-color: transparent;
+    border-color: transparent;
+    color: #272B7C !important;
+}
+.table-hover tbody tr:hover .tr-remove-btn {
+    background-color: transparent;
+    color: #212529;
+}
+.cs-if-script-box .if-inc-tfoot{
+    width: 100%;
+    display: block;
+}
+.cs-if-script-box .if-inc-tfoot tr, .cs-if-script-box tfoot tr{
+    width: 100%;
+}
+.cs-if-script-box .if-inc-tfoot tr td, .cs-if-script-box tfoot tr td{
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    /* align-items: center; */
+    align-self: stretch;
+    flex: 1 1 0%;
+    word-break: break-all;
+    text-align: left;
 }

@@ -2866,10 +2866,10 @@ var SAFN = {
     Reconvert: {
         IfStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
-            var pid = $(triggerEl).closest('.if-div-element').attr('ifpid');
-            var key = div.find(".fns-key-if").val();
-            var oper = div.find(".fns-oper-if").val();
-            var val = div.find(".fns-val-if").val();
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").first().val();
+            var oper = div.find(".fns-oper").first().val();
+            var val = div.find(".fns-val").first().val();
 
             var body = div.find(".if-inc-table tbody tr");
             var bd = ''
@@ -3304,34 +3304,49 @@ var SAFN = {
 
             var bodyList = body.split(';');
             var table = $('<table><tbody>').addClass('if-inc-table').attr('border', 0);
-            var tfoot = $('<tfoot>').addClass('if-inc-tbody').attr('border', 0);
-            var ftr = $('<tr>');
+            var tfoot = $('<tfoot>').addClass('if-inc-tfoot').attr('border', 0);
+            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control newinp add-description" placeholder="Add Process Description"></td>');
 
-            var lnSt = $('<tr>');
+         
             for (var sti in bodyList) {
+                var lnSt = $('<tr>');
                 var fnShey = bodyList[sti].trim();
+               
+                lnSt.append($('<td>')
+                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                .append($('<input type="checkbox">'))
+                 );
                 if (fnShey.startsWith("__IF__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
-                    lnSt.append(SAFN.Convert.IfStatement(zdShey));
+                    lnSt.append($('<td>')
+                        .html(SAFN.Convert.IfStatement(zdShey))
+                    );
+                    
                 } else if (fnShey.startsWith("__FORLIST__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
-                    lnSt.append(SAFN.Convert.ForListStatement(zdShey));
+                    lnSt.append($('<td>').append(SAFN.Convert.ForListStatement(zdShey)));
                 } else {
                     var lnOut = SAFN.InitConvention(fnShey);
-                    lnSt.append(lnOut).append('<br>');
+                    lnSt.append($('<td>').append(lnOut));
                 }
+                lnSt.append($('<td>')
+                        .append('<button class="btn btn-primary tr-remove-btn" id="if-tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                    );
 
-            table.append(lnSt);
+                    if(fnShey.length >0){
+                        table.append(lnSt);
+                    }
+            
 
             }
 
-            tfoot.append(ftr);
+            // tfoot.append(ftr);
 
             var div = $('<div>')
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
 
-                .append($('<div>').addClass('d-flex justify-content-start')
+                .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
                     .append($('<div>').addClass('col-cs-1 d-table mr-2')
                         .append($('<span>').addClass('cs-funcname d-table-cell').text('IF'))
                     )
@@ -3371,16 +3386,12 @@ var SAFN = {
                                 .val(val)
                             )
                         )
-                        .append($('<br>'))
                     )
                 )
-                .append($('<div>')
-                    .attr('style', 'padding:5px;margin:5px;font-color:white')
-                    .append(lnSt))
-
                 .append($("<div>")
-                    .append(table.append(tfoot))
-                )
+                .append(table)
+                .append(tfoot.append($('<tr>').append(ftr)))
+            )
 
 
             return div;
