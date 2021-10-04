@@ -1500,6 +1500,9 @@ function getMultiSelectpickerValueByElementName(elementName) {
 }
 
 $(document).on('click', '#inportexport-file-btn', function (event) {
+    $('.dataname .progress-bar').remove();
+    $('.dataname .cs-succsess-msg').remove();
+    $('.dataname .download-e-file').remove();
  
     var json = initJSON();
     json.kv.fkProjectId = $('#project_list_for_export').val();
@@ -1516,15 +1519,25 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
         async: true,
         success: function (res) {
             //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
-             $('.dataname');
-             $('.dataname').html('<span style="color:green;">Filke Successfully Exported!</span><br><small style="font-size:7px;">'+res.kv.filename+'</small><br>');
+            if( $("#backlog_list_for_export option:selected").length) {
+                
+             $('.dataname .cs-err-msg').remove();
+     
+             $('.dataname').append('<span class="cs-succsess-msg">File Successfully Exported!</span>');
 
-             $('.dataname').append("<a class='download-e-file'>Download File</a>");
+             $('.dataname').append("<a class='download-e-file'><span><i class='fas fa-download'></i></span> Download</a>");
              $('.dataname .download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
              $('.dataname .download-e-file').attr('download', + res.kv.filename);
+            }else{
+                $('.dataname .progress').remove();
+                $('.dataname .cs-succsess-msg').remove();
+                $('.dataname .download-e-file').remove();
+                $('.dataname').html('<span class="cs-err-msg">Select any store card!</span>');
+            }
         },
         error: function () {
             Toaster.showError(('Export error'));
+           
         }
     });
 
