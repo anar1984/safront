@@ -71,6 +71,9 @@
     margin: 0 2px;
     padding: 6px 4px;
 }
+.cs-sum-inbox .select-if-style ul li {
+    display: block;
+}
 .cs-sum-inbox ul.dropdown-menu li {
     padding: 0;
     margin: 0;
@@ -509,12 +512,24 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 }
 .cs-if-script-box {
     background-color: #F89CBE;
+    padding: 10px 6px;
 }
-.cs-if-script-box input {
+.cs-if-script-box input.cs-if-input {
     background: rgb(193 95 131 / 55%);
 }
-.cs-if-script-box input:hover {
+.cs-if-script-box input.cs-if-input:hover {
     background: rgb(193 95 131 / 100%);
+}
+.cs-if-script-box input {
+
+}
+.cs-if-script-box input:hover {
+
+}
+.cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-if-style .show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #c15f83;
+    border-color: #c15f83;
 }
 .ui-widget-content {
     max-height: 600px;
@@ -1497,4 +1512,25 @@ padding: 0 10px;
     margin-top: 10px;
     margin-bottom: 0px;
     font-size: 14px;
+}
+.cs-input-group .function-statement-input-common-4-if .btn {
+    color: #ffffff;
+    background-color: #da7a9e;
+    border-color: #da7a9e;
+    height: 25px;
+}
+.cs-input-group.select-if-style .dropdown-item.active, .cs-input-group.select-if-style .dropdown-item:active {
+    background-color: #c15f83;
+    border-color: #c15f83;
+    color: #fff;
+}
+.cs-input-group.select-if-style .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 130px;
+}
+.cs-input-group.select-if-style .dropdown-menu {
+    height: auto;
+}
+.cs-if-script-box .cs-input-group {
+    padding: 6px 10px;
+    vertical-align: middle;
 }

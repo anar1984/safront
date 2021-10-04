@@ -1527,7 +1527,7 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
 
              $('.dataname').append("<a class='download-e-file'><span><i class='fas fa-download'></i></span> Download</a>");
              $('.dataname .download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
-             $('.dataname .download-e-file').attr('download', + res.kv.filename);
+             $('.dataname .download-e-file').attr('download', res.kv.filename);
             }else{
                 $('.dataname .progress').remove();
                 $('.dataname .cs-succsess-msg').remove();

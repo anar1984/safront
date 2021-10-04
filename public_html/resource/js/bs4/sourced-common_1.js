@@ -5565,8 +5565,12 @@ UserStory.prototype = {
             }
             
           });
+                $('.cs-if-script-box select').selectpicker();
                $(".select-api-box").selectpicker();
                loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
+
+             
+            
    
           return table;
     },
@@ -27682,4 +27686,3 @@ function setColoredToInputDesc(el, ids, color) {
         }
     });
 }
-
