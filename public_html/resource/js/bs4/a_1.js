@@ -6525,8 +6525,12 @@ function setValueOnCompAfterTriggerApi(el, data) {
                         if ($(this).attr('sa-type') === 'select' &&
                             $(this).attr('sa-load-ontrigger') === '1' &&
                             localSelectedField.includes(field)) {
+                        
+                            if(!el.hasAttr('sa-isloader')){
+                                 fillSelectBoxAfterSyncApiCall(this, data, field);
+                            }
 
-                            fillSelectBoxAfterSyncApiCall(this, data, field);
+                            
 
                             //select table list-de 1 setr cavab qayinda selectbox.value deyerini
                             //aldigi ucun bu field data-dan silinmelidir
