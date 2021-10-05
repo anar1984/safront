@@ -497,18 +497,19 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 .cs-if-script-box table tr td .cs-sum-inbox {
     background-color: transparent;
     box-shadow: none;
-    padding: 0;
+    padding: 7px;
     border-radius: 5px;
+    display: inherit;
 }
 .cs-if-script-box table tr td .cs-sum-inbox > div {
     background-color: #9395BD;
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
     padding: 0;
     border-radius: 5px;
-    float: left;
 }
 .cs-if-script-box table tr td .cs-sum-inbox > .cs-if-script-in-box {
     background-color: #f89cbe;
+    box-shadow: none;
 }
 .if-inc-tbody {
     width: 100%;
@@ -518,8 +519,9 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 0px 7px 4px 0px;
 }
 .cs-if-script-box {
-    background-color: #F89CBE;
-    padding: 10px 6px;
+    background-color: #F89CBE !important;
+    padding: 7px;
+    display: block !important;
 }
 .cs-if-script-box input.cs-if-input {
     background: rgb(193 95 131 / 55%);

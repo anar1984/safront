@@ -5521,7 +5521,7 @@ UserStory.prototype = {
                     .attr("pid", obj[n].id)
                 
                     .append($('<td>')
-                            .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                            .append('<span class="cs-move-tr" id="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
                             .append($('<input type="checkbox">')
                                     .val(obj[n].id)
                                     .addClass("pdescList"))
@@ -5558,21 +5558,28 @@ UserStory.prototype = {
 
 
         $(table).sortable({
-            handle:".cs-move-tr",
+            handle:"#cs-move-tr",
             update: function (e,ui) {
-              moveBacklogDescDrag(ui.item)
-              
+            moveBacklogDescDrag(ui.item)
             }
-            
           });
-                $('.cs-if-script-box select').selectpicker();
-               $(".select-api-box").selectpicker();
-               loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
 
-             
-            
-   
-          return table;
+          $('.if-inc-table tbody').sortable({
+            handle:"#inc_tr_move",
+            update: function (e,ui) {
+            inc_moveBacklogDescDrag(ui.item)
+            }
+          });
+
+          $('.if-inc-table tbody tr').each(function(i) {
+            $(this).attr('in_pid', +(i+1));
+          });
+               
+            $('.cs-if-script-box select').selectpicker();
+            $(".select-api-box").selectpicker();
+            loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
+
+           return table;
     },
     
     backlogProcessDescLineSubmenuItem:function(id){

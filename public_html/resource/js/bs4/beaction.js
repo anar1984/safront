@@ -3246,6 +3246,15 @@ var SAFN = {
             var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
             backlogName = (backlogName) ? backlogName : backlogId;
             var opt = loadSelecPickerOnChnageApiList(backlogId);
+
+
+            if ($(opt).val('')) {
+                var icon = 'fas fa-plus';
+            } else {
+                var icon = 'fas fa-share';
+            }
+
+
             var descBody = $('<div>')
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callapi")
@@ -3266,6 +3275,7 @@ var SAFN = {
                             .append($('<li>')
                                 .addClass("function-statement-input-common cs-select-box")
                                 .append($('<select>')
+                                    .attr('data-width', '600px')
                                     .attr('data-live-search', "true")
                                     .attr('title', "Select Api")
                                     .attr("id", 'get-callapi-select-box')
@@ -3279,7 +3289,7 @@ var SAFN = {
                             .append($("<li>")
                                 .addClass('cs-select-btn-box')
                                 .append($('<button>')
-                                    .append('<i class="fas fa-share"></i>')
+                                    .append('<i class="' + icon + '"></i>')
                                     .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
                                 )
                             )
@@ -3305,23 +3315,24 @@ var SAFN = {
             var bodyList = body.split(';');
             var table = $('<table><tbody>').addClass('if-inc-table').attr('border', 0);
             var tfoot = $('<tfoot>').addClass('if-inc-tfoot').attr('border', 0);
-            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control newinp add-description" placeholder="Add Process Description"></td>');
+            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="ifbacklogDescText" placeholder="Add Process Description"></td>');
 
-         
+            // $('.if-inc-table tr').attr('in_pid');
+
             for (var sti in bodyList) {
                 var lnSt = $('<tr>');
                 var fnShey = bodyList[sti].trim();
-               
+
                 lnSt.append($('<td>')
-                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-                .append($('<input type="checkbox">'))
-                 );
+                    .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
+                    .append($('<input type="checkbox">'))
+                );
                 if (fnShey.startsWith("__IF__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
                     lnSt.append($('<td>')
                         .html(SAFN.Convert.IfStatement(zdShey))
                     );
-                    
+
                 } else if (fnShey.startsWith("__FORLIST__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
                     lnSt.append($('<td>').append(SAFN.Convert.ForListStatement(zdShey)));
@@ -3330,13 +3341,13 @@ var SAFN = {
                     lnSt.append($('<td>').append(lnOut));
                 }
                 lnSt.append($('<td>')
-                        .append('<button class="btn btn-primary tr-remove-btn" id="if-tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-                    );
+                    .append('<button class="btn btn-primary tr-remove-btn" id="if-tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                );
 
-                    if(fnShey.length >0){
-                        table.append(lnSt);
-                    }
-            
+                if (fnShey.length > 0) {
+                    table.append(lnSt);
+                }
+
 
             }
 
@@ -3389,9 +3400,9 @@ var SAFN = {
                     )
                 )
                 .append($("<div>")
-                .append(table)
-                .append(tfoot.append($('<tr>').append(ftr)))
-            )
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -4958,26 +4969,25 @@ $(document).on('click', '.cs-copy-btn', function (e) {
     document.execCommand("copy");
     $temp.remove();
 });
-$(document).on('change', '#ifbacklogDescText', function (e) {
+// $(document).on('change', '#ifbacklogDescText', function (e) {
 
-    var div = $(this).closest('div.function-statement-container');
-    var pid = $(this).closest('.if-div-element').attr('ifpid');
-    var key = div.find(".fns-key-if").val();
-    var oper = div.find(".fns-oper-if").val();
-    var val = div.find(".fns-val-if").val();
+//     var div = $(this).closest('div.function-statement-container');
+//     var pid = $(this).closest('.if-div-element').attr('ifpid');
+//     var key = div.find(".fns-key-if").val();
+//     var oper = div.find(".fns-oper-if").val();
+//     var val = div.find(".fns-val-if").val();
 
-    var body = div.find(".if-inc-table tbody tr");
-    var bd = ''
-    body.each(function (p) {
-        bd += $(this).attr('idesc') + ";"
-    })
-    bd += $(this).val();
-    var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
-    new UserStory().updateBacklogDescDetailsZad(fnline, pid);
-    new UserStory().getBacklogDesc();
+//     var body = div.find(".if-inc-table");
+//     var bd = ''
+//     body.each(function (p) {
+//         bd += $(this).attr('idesc') + ";"
+//     })
+//     bd += $(this).val();
+//     var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
+//     new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+//     new UserStory().getBacklogDesc();
 
-});
-
+// });
 
 function loadSelecPickerOnChnageApiList(backlogId) {
     var prid = global_var.current_project_id;
@@ -5068,57 +5078,64 @@ function loadSelecPickerOnChnageFnList(element) {
 
 // if new scripts
 $(document).ready(function () {
-    $(document).on('keyup keydown click', '#backlogDescriptionText', function (e) {
-        var shortcodes = [
-            '@.if(){}',
-            '@.get()',
-            '@.getparamurl()',
-            '@.console()',
-            '@.consoledata()',
-            '@.deletekey()',
-            '@.alert()',
-            '@.alertdata()',
-            '@.set()',
-            '@.setvalue()',
-            '@.settext()',
-            '@.map()',
-            '@.showerror()',
-            '@.error()',
-            '@.sendemail()',
-            '@.sum()',
-            '@.dec()',
-            '@.concat()',
-            '@.show()',
-            '@.hide()',
-            '@.click()',
-            '@.change()',
-            '@.focus()',
-            '@.visible()',
-            '@.unvisible()',
-            '@.showmessage()',
-            '@.clear()',
-            '@.clearclass()',
-            '@.showparam()',
-            '@.hideparam()',
-            '@.visibleparam()',
-            '@.unvisibleparam()',
-            '@.callfn()',
-            '@.callapi()'
-        ];
-        $("#backlogDescriptionText").autocomplete({
+    var shortcodes = [
+        '@.if(){}',
+        '@.get()',
+        '@.getparamurl()',
+        '@.console()',
+        '@.consoledata()',
+        '@.deletekey()',
+        '@.alert()',
+        '@.alertdata()',
+        '@.set()',
+        '@.setvalue()',
+        '@.settext()',
+        '@.map()',
+        '@.showerror()',
+        '@.error()',
+        '@.sendemail()',
+        '@.sum()',
+        '@.dec()',
+        '@.concat()',
+        '@.show()',
+        '@.hide()',
+        '@.click()',
+        '@.change()',
+        '@.focus()',
+        '@.visible()',
+        '@.unvisible()',
+        '@.showmessage()',
+        '@.clear()',
+        '@.clearclass()',
+        '@.showparam()',
+        '@.hideparam()',
+        '@.visibleparam()',
+        '@.unvisibleparam()',
+        '@.callfn()',
+        '@.callapi()'
+    ];
+    $(document).on('keyup keydown click', '.add-description', function (e) {
+
+        $(this).autocomplete({
             minLength: 0,
             source: shortcodes,
             select: function (event, ui) {
-                $("#backlogDescriptionText").change();
+                $(this).change();
             },
             position: { my: "left bottom", at: "left top", collision: "flip" }
         }).autocomplete("widget").addClass("cs-function-list");
     });
+    // first table shortcode
     $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
         $("#backlogDescriptionText").change();
     });
-    $('.insert-funct-input').each(function () {
+    // in table shortcode
+    $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
+        $("#ifbacklogDescText").change();
+    });
 
+
+    $('.insert-funct-input').each(function () {
         var funcdata = [
             { "label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
             { "label": "GET", "fx": "@.get()", "desc": "GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
@@ -5188,6 +5205,25 @@ $(document).ready(function () {
         $('#insert-funct-input').focus();
         $('#insert-funct-input').val(' ').keydown();
     })
+    $(document).on('click', '#if-tr-remove-btn', function (e) {
+        $(this).closest('tr').remove();
+    });
+
+
+    $(document).on('change', '#ifbacklogDescText', function (e) {
+
+        var txt = $(this).val();
+        var comp = SAFN.InitConvention(txt);
+            .closest('div.function-statement-container')
+            .find('tbody')
+            .append($('<tr>')
+            .append($('<td>').append(comp))
+            
+            );
+            $('.cs-if-script-box select').selectpicker();
+    });
+
+
 });
 
 

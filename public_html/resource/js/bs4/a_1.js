@@ -5592,7 +5592,31 @@ function moveBacklogDescDrag(el) {
         }
     });
 
+}
+function inc_moveBacklogDescDrag(el) {
 
+    var sourcedId = $(el).closest('tr').attr('in_pid');
+
+    var after = $(el).closest('tr').prev('tr').attr('in_pid');
+    var before = $(el).closest('tr').next('tr').attr('in_pid');
+    console.log(after, before);
+    var json = initJSON();
+    json.kv.sourcedId = sourcedId;
+    json.kv.newOrderNo = (parseFloat(after) + parseFloat(before)) / 2;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            new UserStory().getBacklogDesc();
+        }
+    });
 
 }
 
