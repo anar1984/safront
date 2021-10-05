@@ -9092,6 +9092,7 @@ function addRelatedSourceCodeModal(el) {
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
+             loadCurrentBacklogProdDetails();
         }
     });
 }
@@ -10151,6 +10152,7 @@ function loadDatabaseList2ComboEntity() {
         async: false,
         success: function (res) {
             loadDatabaseList2ComboEntityDetails(res);
+            loadDatabaseList2Comboİmport(res) 
             $('#entityDatabaseList').change();
         }
     });
@@ -22755,8 +22757,9 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
 $(document).on('click', '.for-chewekk-new-chat-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
-    $.get("resource/child/" + f + ".html", function (html_string) {
+    $.get("resource/chat/public/index.html", function (html_string) {
         $(div).html(html_string);
+        
         sidebarGeneratecomment();
 
 
