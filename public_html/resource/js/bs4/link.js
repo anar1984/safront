@@ -6,7 +6,7 @@
  */
 
 
-var urlGl = "https://test.sourcedagile.com/";     
+var urlGl = "https://app.sourcedagile.com/";     
 
 //var urlGl = "http://192.168.1.3:8080/tsn3/";
 //var urlGl = ""
