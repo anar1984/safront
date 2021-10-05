@@ -1049,7 +1049,7 @@ input:checked + .slider:before {
 }
 .cs-task-main {
     margin-left: 30px;
-    margin-right: 23px;
+    margin-right: 30px;
 }
 .cs-task-panel-column {
     display: flex;
@@ -1214,7 +1214,7 @@ label.cs-file-upload:hover {
  display: inline-block;
 }
 .cs-task-card-prioritet {
-    margin-right: 4px;
+    margin-right: 1px;
 }
 .cs-task-card-prioritet .dropdown-toggle::after {
     color: #989898;
@@ -1252,9 +1252,6 @@ label.cs-file-upload:hover {
     border-color: transparent;
     font-size: 13px;
     padding: 2px 5px;
-    width: 100%;
-    min-width: 100px;
-    max-width: 120px;
 }
 .cs-task-card-prioritet .btn:hover {
     background-color: #f3f3f3;
@@ -1291,7 +1288,7 @@ label.cs-file-upload:hover {
     box-shadow: 0px 0px 0px 2px #6bb5f0 inset;
 }
 .maximize-large{
-    min-width: 100%;
+    min-width: 95vw;
 }
 .maximize-large .cs-task-item-in-box{
     max-width: 24.3%;
@@ -1305,6 +1302,7 @@ label.cs-file-upload:hover {
 }
 #taskModalBlock .stat-table-us td{
   width: 200px;
+<<<<<<< HEAD
 }
 .cs-taskManagement-filter-box .cs-card-ceckbox .slider {
     background-color: #9b9b9b;
@@ -1351,4 +1349,6 @@ label.cs-file-upload:hover {
 .cs-more-filter-box.show {
     display: -ms-flexbox !important;
     display: flex !important;
+=======
+>>>>>>> parent of 661154a (cheweek ui)
 }
