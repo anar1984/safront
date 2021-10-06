@@ -7880,7 +7880,89 @@
                     </div>
                 </div>
             </div>
+             <!-- DB Import Modal -->
+            <div class="cs-modal-box ExportImportBox modal fade" id="ExportImportBoxDB" tabindex="-1" role="dialog" aria-labelledby="ExportImportBoxModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h6 class="modal-title" id="ExportImportBoxModal">Export Data</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="cs-popup-body">
+                                <div class="flex-container">
+                                    <div class="row cs-flex-center-col">
+                                        <div class="flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">DB Name</div>
+                                                <select class="selectpicker" id="DB_list_for_export" data-live-search="true">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="flex-item">
+                                            <div class="cs-input-group mt-2">
+                                                <div class="input-group-addon">Select Store Card</div>
+                                                <select class="selectpicker" id='Table_list_for_export' data-actions-box="true" multiple data-live-search="true">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="flex-item">
+                                            <div class="cs-input-group mt-30px">
+                                                <button type="button" class="btn btn-light" id="inportexport-file-btn-db">Export</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row cs-flex-center-col">
+                                        <div class="dataname"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="ExportImportCloseBtn" class="ExportImportCloseBtn btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+
+            <div class="cs-modal-box modal fade" id="ImportBoxDB" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
+            aria-hidden="true">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title" id="">DB Import</h5>
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                   </div>
+                   <div class="modal-body">
+                  
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="sprintname" class="col-form-label control-label">File
+                                <span style="color:red">*</span>
+                            </label>
+                            <input id="DbTableUploadZipData" class="us-file-upload" type="file" file_type=".zip" accept=".zip" style="width:100%" value="">
+                            <output id="DbTableUploadZipDataFileOut"></output>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                   <div class="modal-footer">
+                       <button type="button" id="upload_data_file_btn_db" class="btn btn-primary">
+                           Import File
+                       </button>
+                       <button type="button" class="btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
+
+                   </div>
+               </div>
+           </div>
+       </div>
 
             <div class="cs-modal-box modal fade" id="ImportBox" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
             aria-hidden="true">

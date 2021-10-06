@@ -129,7 +129,7 @@
 </div>
 
 <div class="hidden" style="display: none;">
-    <div data-toggle="tooltip" orderno="1" style="" id="21052514504106703772" pid="21052514504106703772"
+    <div data-toggle="tooltip" orderno="1" id="21052514504106703772" pid="21052514504106703772"
         class="draggable resize1 tooltipMan component-class component-container-dashed col-lg-2 hover-prototype-selector"
       data-original-title="" title="">
           <input
@@ -139,3 +139,42 @@
             pdid="21052514504106703772" id="comp_id_21052514504106703772">
     </div>
 </div>
+
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4KWuhO42fiyTW1A9y-t8LFvN8DBSL8cI",
+      authDomain: "cheweek-message.firebaseapp.com",
+      projectId: "cheweek-message",
+      storageBucket: "cheweek-message.appspot.com",
+      messagingSenderId: "973244946853",
+      appId: "1:973244946853:web:162dab774115e6b9bc704c"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+
+    const myName1 = $("#userprofile_main_id").text();
+const id1 = $("#userprofile_main_id").attr('usrid');
+/// chat >>>>>>>>>>>>>>>>>>>>>>>
+function sendMessageCh(message) {
+  
+    // save in database
+    firebase.database().ref("messages").push().set({
+        "sender": myName1,
+        "message": message,
+        "id": id1
+    });
+
+    // prevent form from submitting
+    return false;
+}
+  </script>
