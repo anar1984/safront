@@ -71,6 +71,9 @@
     margin: 0 2px;
     padding: 6px 4px;
 }
+.cs-sum-inbox .select-if-style ul li {
+    display: block;
+}
 .cs-sum-inbox ul.dropdown-menu li {
     padding: 0;
     margin: 0;
@@ -256,9 +259,13 @@ background: rgb(39 43 124 / 100%);
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
 }
-.table-hover tbody tr:hover button#dropdownMenuLink, table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
+.table-hover tbody tr:hover button#dropdownMenuLink,  table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
     background-color: transparent;
     color: #272B7C;
+}
+table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select-if-style .btn:focus {
+    background-color: #da7a9e;
+    border-color: #da7a9e;
 }
 
 /* StoreCard  */
@@ -490,15 +497,19 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 .cs-if-script-box table tr td .cs-sum-inbox {
     background-color: transparent;
     box-shadow: none;
-    padding: 0;
+    padding: 7px;
     border-radius: 5px;
+    display: inherit;
 }
 .cs-if-script-box table tr td .cs-sum-inbox > div {
     background-color: #9395BD;
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
     padding: 0;
     border-radius: 5px;
-    float: left;
+}
+.cs-if-script-box table tr td .cs-sum-inbox > .cs-if-script-in-box {
+    background-color: #f89cbe;
+    box-shadow: none;
 }
 .if-inc-tbody {
     width: 100%;
@@ -508,13 +519,26 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 0px 7px 4px 0px;
 }
 .cs-if-script-box {
-    background-color: #F89CBE;
+    background-color: #F89CBE !important;
+    padding: 7px;
+    display: block !important;
 }
-.cs-if-script-box input {
+.cs-if-script-box input.cs-if-input {
     background: rgb(193 95 131 / 55%);
 }
-.cs-if-script-box input:hover {
+.cs-if-script-box input.cs-if-input:hover {
     background: rgb(193 95 131 / 100%);
+}
+.cs-if-script-box input {
+
+}
+.cs-if-script-box input:hover {
+
+}
+.cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-if-style .show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #c15f83;
+    border-color: #c15f83;
 }
 .ui-widget-content {
     max-height: 600px;
@@ -1417,7 +1441,7 @@ padding: 0 10px;
     color: #272B7C;
     padding: 7px 0;
     font-size: 14px;
-    height: 30px;
+    height: auto;
     line-height: 1;
 }
 .cs-input-group .dropdown-menu > li a {
@@ -1497,4 +1521,55 @@ padding: 0 10px;
     margin-top: 10px;
     margin-bottom: 0px;
     font-size: 14px;
+}
+.cs-input-group .function-statement-input-common-4-if .btn {
+    color: #ffffff;
+    background-color: #da7a9e;
+    border-color: #da7a9e;
+    height: 25px;
+}
+.cs-input-group.select-if-style .dropdown-item.active, .cs-input-group.select-if-style .dropdown-item:active {
+    background-color: #c15f83;
+    border-color: #c15f83;
+    color: #fff;
+}
+.cs-input-group.select-if-style .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 130px;
+}
+.cs-input-group.select-if-style .dropdown-menu {
+    height: auto;
+}
+.cs-if-script-box .cs-input-group {
+    padding: 6px 10px;
+    vertical-align: middle;
+}
+.table-hover tbody tr .tr-remove-btn {
+    font-size: 13px;
+    color: rgb(39 43 124 / 11%) !important;
+}
+table.if-inc-table tr:hover .tr-remove-btn :not(:disabled):not(.disabled):active, table.if-inc-table tr:hover .btn.tr-remove-btn  {
+    background-color: transparent;
+    border-color: transparent;
+    color: #272B7C !important;
+}
+.table-hover tbody tr:hover .tr-remove-btn {
+    background-color: transparent;
+    color: #212529;
+}
+.cs-if-script-box .if-inc-tfoot{
+    width: 100%;
+    display: block;
+}
+.cs-if-script-box .if-inc-tfoot tr, .cs-if-script-box tfoot tr{
+    width: 100%;
+}
+.cs-if-script-box .if-inc-tfoot tr td, .cs-if-script-box tfoot tr td{
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    /* align-items: center; */
+    align-self: stretch;
+    flex: 1 1 0%;
+    word-break: break-all;
+    text-align: left;
 }
