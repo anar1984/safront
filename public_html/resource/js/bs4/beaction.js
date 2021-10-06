@@ -3248,10 +3248,10 @@ var SAFN = {
             var opt = loadSelecPickerOnChnageApiList(backlogId);
 
 
-            if ($(opt).val('')) {
-                var icon = 'fas fa-plus';
-            } else {
+            if ($(opt).val() > 1) {
                 var icon = 'fas fa-share';
+            } else {
+                var icon = 'fas fa-plus';
             }
 
 
@@ -3325,7 +3325,6 @@ var SAFN = {
 
                 lnSt.append($('<td>')
                     .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
-                    .append($('<input type="checkbox">'))
                 );
                 if (fnShey.startsWith("__IF__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
@@ -3341,7 +3340,9 @@ var SAFN = {
                     lnSt.append($('<td>').append(lnOut));
                 }
                 lnSt.append($('<td>')
-                    .append('<button class="btn btn-primary tr-remove-btn" id="if-tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                    .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
+                ).append($('<td>')
+                    .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
                 );
 
                 if (fnShey.length > 0) {
@@ -3359,7 +3360,7 @@ var SAFN = {
 
                 .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
                     .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                        .append($('<span>').addClass('cs-funcname d-table-cell').text('IF'))
+                        .append($('<span>').addClass('cs-funcname d-table-cell').css('color','rgb(0 0 0 / 52%)').css('font-weight','bold').text('IF'))
                     )
                     .append($('<div>').addClass('row mr-0 ml-0')
                         .append($('<div>')
@@ -3420,38 +3421,56 @@ var SAFN = {
             body = SAFN.Function_If_Body_Statement_Replacement(body);
 
             var bodyList = body.split(';');
-            var lnSt = $('<div>');
+
+            var table = $('<table><tbody>').addClass('forlist-inc-table').attr('border', 0);
+            var tfoot = $('<tfoot>').addClass('forlist-inc-tfoot').attr('border', 0);
+            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="forlistBacklogDescText" placeholder="Add Process Description"></td>');
+
             for (var sti in bodyList) {
+                var lnSt = $('<tr>');
                 var fnShey = bodyList[sti].trim();
+
+                lnSt.append($('<td>')
+                    .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+                );
                 if (fnShey.startsWith("__FORLIST__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
-                    lnSt.append(SAFN.Convert.ForListStatement(zdShey));
+                    lnSt.append($('<td>')
+                        .html(SAFN.Convert.ForListStatement(zdShey))
+                    );
+
                 } else if (fnShey.startsWith("__IF__")) {
                     var zdShey = SAFN.IfStatementBody[fnShey];
-                    lnSt.append(SAFN.Convert.IfStatement(zdShey));
+                    lnSt.append($('<td>').append(SAFN.Convert.IfStatement(zdShey)));
                 } else {
                     var lnOut = SAFN.InitConvention(fnShey);
-                    lnSt.append(lnOut).append('<br>');
+                    lnSt.append($('<td>').append(lnOut));
+                }
+                lnSt.append($('<td>')
+                    .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
+                ).append($('<td>')
+                    .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                );
+
+                if (fnShey.length > 0) {
+                    table.append(lnSt);
                 }
 
             }
 
             var div = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container")
-                .css("background-color", "#33C0FF")
-                .css("box-shadow", "rgb(9 30 66 / 25%) 5px 8px 5px -4px")
-                .css("margin", '5px 10px')
-                .css("padding", '5px 10px')
-                .css("border-radius", "5px")
-                .css('float1', 'left')
+                .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
 
-                .append($('<span>').append($('<b>').text('For List () ')))
-                .append($('<br>'))
-                .append($('<div>')
-                    .attr('style', 'background-color:#dee2e6; padding:5px;margin:5px;font-color:white')
-                    .append(lnSt))
-
+                .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box').css('background-color','#f3caca').css('box-shadow','none')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell').css('color','rgb(0 0 0 / 52%)').css('font-weight','bold').text('FOR LIST ()'))
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -3472,8 +3491,7 @@ var SAFN = {
                     .append($("<div>")
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
-                            .addClass("cs-funcname d-table-cell")
-                            .text("Console")
+                            .addClass("cs-funcname d-table-cell").text("Console")
                         )
 
                     )
@@ -5205,22 +5223,69 @@ $(document).ready(function () {
         $('#insert-funct-input').focus();
         $('#insert-funct-input').val(' ').keydown();
     })
-    $(document).on('click', '#if-tr-remove-btn', function (e) {
+
+    $(document).on('click', '.tr-remove-btn', function (e) {
         $(this).closest('tr').remove();
     });
 
-
     $(document).on('change', '#ifbacklogDescText', function (e) {
-
         var txt = $(this).val();
         var comp = SAFN.InitConvention(txt);
+        $(this)
             .closest('div.function-statement-container')
-            .find('tbody')
+            .find('tbody').first()
             .append($('<tr>')
-            .append($('<td>').append(comp))
-            
+                .append($('<td>')
+                    .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
+                )
+                .append($('<td>').append(comp))
+
+                .append($('<td>')
+                    .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
+                )
+                .append($('<td>')
+                    .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                )
+
             );
-            $('.cs-if-script-box select').selectpicker();
+        $('.cs-if-script-box select').selectpicker();
+    });
+    $(document).on('keydown', '#ifbacklogDescText', function (e) {
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13 || code == 27) {
+            $(this).focus().val('');
+        }
+
+    });
+    $(document).on('change', '#forlistBacklogDescText', function (e) {
+        var txt = $(this).val();
+        var comp = SAFN.InitConvention(txt);
+        $(this)
+            .closest('div.function-statement-container')
+            .find('tbody').first()
+            .append($('<tr>')
+                .append($('<td>')
+                    .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
+                )
+                .append($('<td>').append(comp))
+
+                .append($('<td>')
+                    .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
+                )
+                .append($('<td>')
+                    .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
+                )
+
+            );
+    });
+    $(document).on('keydown', '#forlistBacklogDescText', function (e) {
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13 || code == 27) {
+            $(this).focus().val('');
+        }
+
     });
 
 

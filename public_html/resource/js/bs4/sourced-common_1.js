@@ -5564,19 +5564,35 @@ UserStory.prototype = {
             }
           });
 
-          $('.if-inc-table tbody').sortable({
-            handle:"#inc_tr_move",
-            update: function (e,ui) {
-            inc_moveBacklogDescDrag(ui.item)
-            }
+          $('.if-inc-table').each(function(i) {
+            $(this).find('tbody').first().sortable({
+                handle:".cs-move-tr",
+                update: function (e,ui) {
+                    if_inc_moveBacklogDescDrag(ui.item)
+                }
+              });
           });
 
-          $('.if-inc-table tbody tr').each(function(i) {
+        $('.forlist-inc-table').each(function(i) {
+            $(this).find('tbody').first().sortable({
+                handle:".cs-move-tr",
+                update: function (e,ui) {
+                    forlist_inc_moveBacklogDescDrag(ui.item)
+                }
+              });
+          });
+
+            $("div.function-statement-container table tr").hover(function(){
+                $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
+            });
+        
+          $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i+1));
           });
                
             $('.cs-if-script-box select').selectpicker();
             $(".select-api-box").selectpicker();
+
             loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
 
            return table;
