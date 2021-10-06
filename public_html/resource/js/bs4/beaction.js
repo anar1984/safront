@@ -1403,6 +1403,7 @@ var be = {
                     } catch (err) {
                     }
                     var dt = $.extend(res1, res2);
+                    dt = $.extend(dt,out);
                     for (var i = 0; i < SEND_TO_BACKLOG_ID.length; i++) {
                         if (SEND_TO_BACKLOG_ID[i]) {
                             try {
