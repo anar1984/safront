@@ -2736,7 +2736,7 @@ var SAFN = {
         })
         $(document).on("change", ".cs-select-box #get-callfn-select-box", function (e) {
             var val = $(this).val();
-            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')")
+            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')")
             SAFN.Reconvert.CallFnStatement(this);
         })
 
@@ -3194,7 +3194,25 @@ var SAFN = {
     Convert: {
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
-            console.log(fnId);
+     
+            if (fnId.length >0) {
+                
+                var but =$("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-share"></i>')
+                    .attr("onclick", "showJSModal('" + fnId + "')")
+                )
+            } else {
+            
+               
+                var but =$("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-plus"></i>')
+                    .attr("onclick", "addJsModalNewSt(this)")
+                )
+            }
             var descBody = $('<div>')
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callfn")
@@ -3224,12 +3242,7 @@ var SAFN = {
                                 )
                             )
 
-                            .append($("<li>")
-                                .addClass('cs-select-btn-box')
-                                .append($('<button>')
-                                    .append('<i class="fas fa-share"></i>')
-                                    .attr("onclick", "showJSModal('" + fnId + "')")
-                                )
+                            .append(but
                             )
                         )
                     )
@@ -3245,13 +3258,24 @@ var SAFN = {
             var pid = SACore.GetBacklogDetails(backlogId, 'fkProjectId');
             var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
             backlogName = (backlogName) ? backlogName : backlogId;
-            var opt = loadSelecPickerOnChnageApiList(backlogId);
-
-
-            if ($(opt).val() > 1) {
-                var icon = 'fas fa-share';
+        
+            if (backlogId.length >0) {
+                
+                var but =$("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-share"></i>')
+                    .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
+                )
             } else {
-                var icon = 'fas fa-plus';
+            
+               
+                var but =$("<li>")
+                .addClass('cs-select-btn-box')
+                .append($('<button>')
+                    .append('<i class="fas fa-plus"></i>')
+                    .attr("onclick", "addApiModal()")
+                )
             }
 
 
@@ -3280,19 +3304,13 @@ var SAFN = {
                                     .attr('title', "Select Api")
                                     .attr("id", 'get-callapi-select-box')
                                     .addClass("function-statement-input-common select-api-box fns-key ")
-                                    .html(opt)
+                                    .html(loadSelecPickerOnChnageApiList(backlogId))
 
 
                                 )
                             )
 
-                            .append($("<li>")
-                                .addClass('cs-select-btn-box')
-                                .append($('<button>')
-                                    .append('<i class="' + icon + '"></i>')
-                                    .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
-                                )
-                            )
+                            .append(but)
                         )
                     )
                 )
@@ -3315,7 +3333,7 @@ var SAFN = {
             var bodyList = body.split(';');
             var table = $('<table><tbody>').addClass('if-inc-table').attr('border', 0);
             var tfoot = $('<tfoot>').addClass('if-inc-tfoot').attr('border', 0);
-            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="ifbacklogDescText" placeholder="Add Process Description"></td>');
+            var ftr = $('<td><div data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="ifbacklogDescText" placeholder="Add Process Description"></td>');
 
             // $('.if-inc-table tr').attr('in_pid');
 
@@ -3424,7 +3442,7 @@ var SAFN = {
 
             var table = $('<table><tbody>').addClass('forlist-inc-table').attr('border', 0);
             var tfoot = $('<tfoot>').addClass('forlist-inc-tfoot').attr('border', 0);
-            var ftr = $('<td><div id="x-shortcodes-btn" data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="forlistBacklogDescText" placeholder="Add Process Description"></td>');
+            var ftr = $('<td><div data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description" id="forlistBacklogDescText" placeholder="Add Process Description"></td>');
 
             for (var sti in bodyList) {
                 var lnSt = $('<tr>');
@@ -3462,7 +3480,7 @@ var SAFN = {
                 .addClass("col-12")
                 .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
 
-                .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box').css('background-color','#f3caca').css('box-shadow','none')
+                .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box').css('background-color','rgb(170 192 197)').css('box-shadow','none')
                     .append($('<div>').addClass('col-cs-1 d-table mr-2')
                         .append($('<span>').addClass('cs-funcname d-table-cell').css('color','rgb(0 0 0 / 52%)').css('font-weight','bold').text('FOR LIST ()'))
                     )
@@ -5009,13 +5027,8 @@ $(document).on('click', '.cs-copy-btn', function (e) {
 
 function loadSelecPickerOnChnageApiList(backlogId) {
     var prid = global_var.current_project_id;
-
     var data = Object.keys(SACore.Backlogs);
-
-    console.log(prid);
     var tbl = $('<select>');
-
-
     for (var n = 0; n < data.length; n++) {
 
         var o = SACore.Backlogs[data[n]];
@@ -5084,7 +5097,7 @@ function loadSelecPickerOnChnageFnList(element) {
 
 
                 }
-                $(this).selectpicker();
+                $(this).selectpicker('refresh');
             })
 
         }
@@ -5153,6 +5166,13 @@ $(document).ready(function () {
     });
 
 
+
+    var globElementTbody
+
+    $(document).on('click', '.fx-shortcodes-btn', function (e) {
+        // $(this).closest('td').find('input').prop('id', 'csoff');
+        globElementTbody= $(this).closest('td').find('.add-description');
+    });
     $('.insert-funct-input').each(function () {
         var funcdata = [
             { "label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
@@ -5214,8 +5234,8 @@ $(document).ready(function () {
 
         $(document).on('keyup keydown click', '#ScInserFuncBtn', function (e) {
             var bdt = $('.sc-insert-func-help input').val();
-            $('#backlogDescriptionText').val(bdt);
-            $('#backlogDescriptionText').change();
+            $(globElementTbody).val(bdt);
+            $(globElementTbody).change();
         });
 
     });
@@ -5223,10 +5243,6 @@ $(document).ready(function () {
         $('#insert-funct-input').focus();
         $('#insert-funct-input').val(' ').keydown();
     })
-
-    $(document).on('click', '.tr-remove-btn', function (e) {
-        $(this).closest('tr').remove();
-    });
 
     $(document).on('change', '#ifbacklogDescText', function (e) {
         var txt = $(this).val();
@@ -5249,15 +5265,9 @@ $(document).ready(function () {
 
             );
         $('.cs-if-script-box select').selectpicker();
+        $(this).focus().val('');
     });
-    $(document).on('keydown', '#ifbacklogDescText', function (e) {
 
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 13 || code == 27) {
-            $(this).focus().val('');
-        }
-
-    });
     $(document).on('change', '#forlistBacklogDescText', function (e) {
         var txt = $(this).val();
         var comp = SAFN.InitConvention(txt);
@@ -5278,17 +5288,17 @@ $(document).ready(function () {
                 )
 
             );
-    });
-    $(document).on('keydown', '#forlistBacklogDescText', function (e) {
-
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 13 || code == 27) {
-            $(this).focus().val('');
-        }
-
+        $(this).focus().val('');
     });
 
+
+    $(document).on('click', '.tr-remove-btn', function (e) {
+        $(this).closest('tr').remove();
+    });
 
 });
 
-
+function addJsModalNewSt(elm){
+    var id = $(elm).closest("tr").attr("pid");
+    addRelatedSourceCode(elm,id);
+}
