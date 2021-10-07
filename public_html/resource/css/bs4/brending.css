@@ -454,6 +454,10 @@ table.if-inc-table tr {
 table.if-inc-table tr:hover {
     background-color: rgb(0 0 0 / 0%);
 }
+table.forlist-inc-table tr:hover {
+    background-color: rgb(255 255 255);
+    
+}
 table.if-inc-table tr td {
     
 }
@@ -507,15 +511,30 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 0;
     border-radius: 5px;
 }
+.cs-forlist-script-box table tr td .cs-sum-inbox > div {
+    padding: 0;
+    border-radius: 5px;
+}
 .cs-if-script-box table tr td .cs-sum-inbox > .cs-if-script-in-box {
     background-color: #f89cbe;
+    box-shadow: none;
+}
+.cs-forlist-script-box table tr td .cs-sum-inbox > .cs-forlist-script-in-box {
+    background-color: #f3caca;
+    box-shadow: none;
+}
+.cs-forlist-script-box table tr td .cs-sum-inbox > div {
+
+}
+.cs-forlist-script-box table tr td .cs-sum-inbox > .cs-forlist-script-in-box {
+    background-color: #f3caca;
     box-shadow: none;
 }
 .if-inc-tbody {
     width: 100%;
     display: block;
 }
-#description_table_body_id tfoot.if-inc-tbody tr, #description_table_body_id .if-inc-tbody tr {
+#description_table_body_id tfoot.if-inc-tbody tr, #description_table_body_id .if-inc-tbody tr, #description_table_body_id tfoot.forlist-inc-tbody tr, #description_table_body_id .forlist-inc-tbody tr {
     padding: 0px 7px 4px 0px;
 }
 .cs-if-script-box {
@@ -523,10 +542,21 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 7px;
     display: block !important;
 }
-.cs-if-script-box input.cs-if-input {
+.cs-forlist-script-box {
+    background-color: #f3caca !important;
+    padding: 7px;
+    display: block !important;
+}
+.cs-if-script-box input.cs-if-input  {
+    background: rgb(193 95 131 / 55%);
+}
+.cs-forlist-script-box input.cs-forlist-input  {
     background: rgb(193 95 131 / 55%);
 }
 .cs-if-script-box input.cs-if-input:hover {
+    background: rgb(193 95 131 / 100%);
+}
+.cs-forlist-script-box input.cs-forlist-input:hover {
     background: rgb(193 95 131 / 100%);
 }
 .cs-if-script-box input {
@@ -539,6 +569,11 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     color: #ffffff;
     background-color: #c15f83;
     border-color: #c15f83;
+}
+.cs-input-group.select-forlist-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-forlist-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-forlist-style .show>.btn-light.dropdown-toggle {
+    color: #000000;
+    background-color: #f3caca;
+    border-color: #f3caca;
 }
 .ui-widget-content {
     max-height: 600px;
@@ -1543,16 +1578,16 @@ padding: 0 10px;
     padding: 6px 10px;
     vertical-align: middle;
 }
-.table-hover tbody tr .tr-remove-btn {
+.table-hover tbody tr .tr-remove-btn, .table-hover tbody tr .cs-copy-btn {
     font-size: 13px;
     color: rgb(39 43 124 / 11%) !important;
 }
-table.if-inc-table tr:hover .tr-remove-btn :not(:disabled):not(.disabled):active, table.if-inc-table tr:hover .btn.tr-remove-btn  {
+table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, table tr .active-hover.btn.tr-remove-btn, table tr .active-hover.cs-copy-btn :not(:disabled):not(.disabled):active, table tr .active-hover.btn.cs-copy-btn  {
     background-color: transparent;
     border-color: transparent;
     color: #272B7C !important;
 }
-.table-hover tbody tr:hover .tr-remove-btn {
+.table-hover tbody tr:hover .tr-remove-btn, .table-hover tbody tr:hover .cs-copy-btn {
     background-color: transparent;
     color: #212529;
 }
@@ -1563,7 +1598,14 @@ table.if-inc-table tr:hover .tr-remove-btn :not(:disabled):not(.disabled):active
 .cs-if-script-box .if-inc-tfoot tr, .cs-if-script-box tfoot tr{
     width: 100%;
 }
-.cs-if-script-box .if-inc-tfoot tr td, .cs-if-script-box tfoot tr td{
+.cs-forlist-script-box .forlist-inc-tfoot{
+    width: 100%;
+    display: block;
+}
+.cs-forlist-script-box .forlist-inc-tfoot tr, .cs-forlist-script-box tfoot tr{
+    width: 100%;
+}
+.cs-if-script-box .if-inc-tfoot tr td, .cs-if-script-box tfoot tr td, .cs-forlist-script-box .forlist-inc-tfoot tr td, .cs-forlist-script-box tfoot tr td{
     width: 100%;
     display: flex;
     -webkit-box-align: center;
