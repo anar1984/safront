@@ -2274,12 +2274,20 @@ var Component = {
         comp.hasOnClickEvent = true;
         comp.showProperties = true;
         var div = Component.ContainerDiv(comp);
-
+        
         div.append(this.SectionAction.GetPropertiesSection(comp));
         div.append($('<div class="row">')
-            .addClass("component-section-row filedset-style-section")
-            .append($("<span>").addClass("section-legend").text(comp.label))
-            .append(innerHTML));
+            .addClass("component-section-row filedset-style-section modal-hide-btn-class").attr("data-section-title",comp.label)
+            .append(innerHTML))
+
+           if(cr_input_comp_attribute_kv[inputId]['sa-notClosedModal'])   {
+            div.append($("<span>")
+                 .append('<i class="fas fa-chevron-up"></i>')
+                  .addClass("open-modal-hide-modal-btn"));
+           }
+        
+        
+           
 
         //        div.append(innerHTML);
         return $('<div></div>').append(div).html();
