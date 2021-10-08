@@ -499,7 +499,7 @@ table.if-inc-table tr {
 table.if-inc-table tr:hover {
     background-color: rgb(0 0 0 / 0%);
 }
-table.forlist-inc-table tr:hover {
+table.forlist-inc-table tr:hover, table.fortable-inc-table tr:hover {
     background-color: rgb(255 255 255);
     
 }
@@ -1666,7 +1666,6 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     text-align: left;
 }
 .storycard_ipo {
-    margin-top: -70px;
     overflow: auto;
 }
 .descriptiontable {
@@ -1691,4 +1690,7 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
 }
 .cs-sum-inbox-callapi ul li.cs-select-api-info .api-info-synchrone {
 
-} 
+}
+.cs-forlist-class-name input.cs-forlist-cn-val {
+    background: rgb(113 151 160);
+}
