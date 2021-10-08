@@ -3222,7 +3222,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("CallFn")
+                            .text("Call Function")
                         )
 
                     )
@@ -3288,7 +3288,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("CallApi")
+                            .text("Call API")
                         )
 
                     )
@@ -4403,7 +4403,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("ClearClass")
+                            .text("Clear Class")
                         )
 
                     )
@@ -5207,7 +5207,7 @@ $(document).ready(function () {
             { "label": "HIDE PARAM", "fx": "@.hideparam()", "desc": "HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
             { "label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
             { "label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
-            { "label": "CALL FN", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
             { "label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." }
         ];
         $(this).autocomplete({
