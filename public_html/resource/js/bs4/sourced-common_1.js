@@ -5591,9 +5591,10 @@ UserStory.prototype = {
           });
                
             $('.cs-if-script-box select').selectpicker();
+            $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();
 
-            loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
+            loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
 
            return table;
     },
@@ -14998,10 +14999,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
 
-
+           
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
+            if(global_var.current_modal = 'loadStoryCard'){
 
+                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+                return
+            }
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;

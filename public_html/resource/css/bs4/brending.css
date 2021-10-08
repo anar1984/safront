@@ -55,6 +55,9 @@
     border-radius: 5px;
     float: left;
 }
+.cs-sum-inbox.cs-sum-inbox-callfn {
+    background-color: #dfdda8;
+}
 .cs-sum-inbox .cs-sumin, .cs-sum-inbox span.cs-sumin {
     color: #ffffff;
     vertical-align: middle;
@@ -91,6 +94,9 @@
 }
 .cs-sum-inbox input:hover {
     background: rgb(39 43 124 / 100%);
+}
+.cs-sum-inbox.cs-sum-inbox-callfn input:hover {
+    background: #dfdda8;
 }
 .cs-sum-inbox input:focus-visible {
     outline: none;
@@ -404,6 +410,9 @@ tbody .ifbacklogDescriptionText:hover{
     border-radius: 3px;
     background: rgb(39 43 124 / 55%);
 }
+.cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn, .cs-sum-inbox .get-callfn-select-box.select-api-box.bootstrap-select .btn {
+    background: rgb(168 166 112);
+}
 .cs-sum-inbox .cs-select-btn-box {
     padding: 0px 0px 0px 4px;
     display: inline-block;
@@ -419,6 +428,9 @@ tbody .ifbacklogDescriptionText:hover{
     width: 40px;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+}
+.cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button {
+    background: #a8a670
 }
 .cs-sum-inbox .cs-select-btn-box button:hover {
     background: rgb(39 43 124 / 100%);
@@ -436,6 +448,9 @@ tbody .ifbacklogDescriptionText:hover{
     color: #fff;
     text-decoration: none;
     background-color: #272b7c;
+}
+.cs-select-box .get-callfn-select-box .dropdown-item.active, .cs-select-box .get-callfn-select-box .dropdown-item:active {
+    background-color: rgb(168 166 112);
 }
 .cs-select-box .bootstrap-select .dropdown-menu li {
  display: block;
@@ -520,14 +535,14 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     box-shadow: none;
 }
 .cs-forlist-script-box table tr td .cs-sum-inbox > .cs-forlist-script-in-box {
-    background-color: #f3caca;
+    background-color: rgb(170 192 197);
     box-shadow: none;
 }
 .cs-forlist-script-box table tr td .cs-sum-inbox > div {
 
 }
 .cs-forlist-script-box table tr td .cs-sum-inbox > .cs-forlist-script-in-box {
-    background-color: #f3caca;
+    background-color: rgb(170 192 197);
     box-shadow: none;
 }
 .if-inc-tbody {
@@ -541,11 +556,13 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     background-color: #F89CBE !important;
     padding: 7px;
     display: block !important;
+    padding-top: 0;
 }
 .cs-forlist-script-box {
-    background-color: #f3caca !important;
+    background-color: rgb(170 192 197) !important;
     padding: 7px;
     display: block !important;
+    padding-top: 0;
 }
 .cs-if-script-box input.cs-if-input  {
     background: rgb(193 95 131 / 55%);
@@ -572,8 +589,8 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 }
 .cs-input-group.select-forlist-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-forlist-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-forlist-style .show>.btn-light.dropdown-toggle {
     color: #000000;
-    background-color: #f3caca;
-    border-color: #f3caca;
+    background-color: rgb(170 192 197);
+    border-color: rgb(170 192 197);
 }
 .ui-widget-content {
     max-height: 600px;
@@ -1614,4 +1631,13 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     flex: 1 1 0%;
     word-break: break-all;
     text-align: left;
+}
+.storycard_ipo {
+    margin-top: -70px;
+    overflow: auto;
+}
+.descriptiontable {
+    min-width: 100%;
+    width: max-content;
+    overflow: hidden;
 }
