@@ -1,4 +1,10 @@
 /* general */
+.orange-bg {
+    background-color: orange;
+}
+.yellow-bg {
+    background-color: yellow;
+}
 .cs-btn-secondary {
     color: #fff;
     background-color: #9395BD;
@@ -55,9 +61,15 @@
     border-radius: 5px;
     float: left;
 }
+.cs-sum-inbox.cs-sum-inbox-callapi {
+    background-color: #b98181;
+}
+.cs-sum-inbox.cs-sum-inbox-callfn .cs-funcname {
+    color: rgb(0 0 0 / 60%);
+}
 .cs-sum-inbox.cs-sum-inbox-callfn {
     background-color: #dfdda8;
-}
+} 
 .cs-sum-inbox .cs-sumin, .cs-sum-inbox span.cs-sumin {
     color: #ffffff;
     vertical-align: middle;
@@ -399,8 +411,9 @@ tbody .ifbacklogDescriptionText:hover{
 .cs-sum-inbox .cs-select-box .bootstrap-select.select-api-box {
 
 }
-.cs-sum-inbox .select-api-box .bs-searchbox input.form-control {
-
+.cs-sum-inbox .select-api-box .bs-searchbox input.form-control:focus {
+    background-color: #fff;
+    border-color: #b98181;
 }
 .cs-sum-inbox .cs-select-box .bootstrap-select .btn, .cs-sum-inbox .select-api-box.bootstrap-select .btn {
     font-size: 14px;
@@ -409,6 +422,9 @@ tbody .ifbacklogDescriptionText:hover{
     line-height: 23px;
     border-radius: 3px;
     background: rgb(39 43 124 / 55%);
+}
+.cs-sum-inbox .select-api-box.bootstrap-select .btn {
+    background: rgb(151 103 103);
 }
 .cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn, .cs-sum-inbox .get-callfn-select-box.select-api-box.bootstrap-select .btn {
     background: rgb(168 166 112);
@@ -429,11 +445,20 @@ tbody .ifbacklogDescriptionText:hover{
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 }
-.cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button {
-    background: #a8a670
+.cs-sum-inbox.cs-sum-inbox-callapi button {
+    background: #976767;
 }
-.cs-sum-inbox .cs-select-btn-box button:hover {
-    background: rgb(39 43 124 / 100%);
+.cs-sum-inbox.cs-sum-inbox-callapi button:hover {
+    background: #8d5252;
+}
+.cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button {
+    background: #a8a670;
+}
+.cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button:hover {
+    background: #8b8952;
+}
+.cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button:hover {
+    background: rgb(130 128 81) !important;
 }
 .cs-sum-inbox .cs-select-btn-box button:focus{
     outline: none;
@@ -448,6 +473,11 @@ tbody .ifbacklogDescriptionText:hover{
     color: #fff;
     text-decoration: none;
     background-color: #272b7c;
+}
+.cs-sum-inbox-callapi .dropdown-item.active, .cs-sum-inbox-callapi .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #976767;
 }
 .cs-select-box .get-callfn-select-box .dropdown-item.active, .cs-select-box .get-callfn-select-box .dropdown-item:active {
     background-color: rgb(168 166 112);
@@ -519,6 +549,9 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     padding: 7px;
     border-radius: 5px;
     display: inherit;
+}
+.cs-if-script-box table tr td .cs-sum-inbox.cs-if-script-box, .cs-if-script-box table tr td .cs-sum-inbox.cs-forlist-script-box {
+    padding-top: 0;
 }
 .cs-if-script-box table tr td .cs-sum-inbox > div {
     background-color: #9395BD;
@@ -1641,3 +1674,21 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     width: max-content;
     overflow: hidden;
 }
+.cs-sum-inbox-callapi ul li.cs-select-api-info {
+    margin: 0 0px;
+    margin-right: 5px;
+    padding: 0;
+    height: 40px;
+    vertical-align: middle;
+    font-size: 10px;
+}
+.cs-sum-inbox-callapi ul li.cs-select-api-info .api-inc-info {
+    padding: 1.5px 7px;
+    border: 1px solid #976767;
+}
+.cs-sum-inbox-callapi ul li.cs-select-api-info .api-info-container {
+
+}
+.cs-sum-inbox-callapi ul li.cs-select-api-info .api-info-synchrone {
+
+} 
