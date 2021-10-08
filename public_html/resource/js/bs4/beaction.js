@@ -2731,12 +2731,12 @@ var SAFN = {
 
         $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
             var val = $(this).val();
-            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')")
+            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
             SAFN.Reconvert.CallApiStatement(this);
         })
         $(document).on("change", ".cs-select-box #get-callfn-select-box", function (e) {
             var val = $(this).val();
-            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')")
+            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
             SAFN.Reconvert.CallFnStatement(this);
         })
 
@@ -3194,9 +3194,7 @@ var SAFN = {
     Convert: {
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
-     
             if (fnId.length >0) {
-                
                 var but =$("<li>")
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
@@ -3204,8 +3202,6 @@ var SAFN = {
                     .attr("onclick", "showJSModal('" + fnId + "')")
                 )
             } else {
-            
-               
                 var but =$("<li>")
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
@@ -3241,7 +3237,6 @@ var SAFN = {
 
                                 )
                             )
-
                             .append(but
                             )
                         )
@@ -3260,7 +3255,6 @@ var SAFN = {
             backlogName = (backlogName) ? backlogName : backlogId;
         
             if (backlogId.length >0) {
-                
                 var but =$("<li>")
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
@@ -3268,8 +3262,6 @@ var SAFN = {
                     .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
                 )
             } else {
-            
-               
                 var but =$("<li>")
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
@@ -3278,6 +3270,16 @@ var SAFN = {
                 )
             }
 
+            apiinfo = $("<li>")
+            .addClass('cs-select-api-info')
+            .append($('<div>')
+                .addClass('api-inc-info api-info-container orange-bg')
+                .text('Container')
+            )
+            .append($('<div>')
+                .addClass('api-inc-info api-info-synchrone yellow-bg')
+                .text('Synchrone')
+            )
 
             var descBody = $('<div>')
                 .addClass("col-12")
@@ -3309,7 +3311,8 @@ var SAFN = {
 
                                 )
                             )
-
+                            .append(apiinfo
+                                )
                             .append(but)
                         )
                     )
@@ -3396,12 +3399,12 @@ var SAFN = {
                                 .addClass("function-statement-input-common")
                                 .addClass("function-statement-input-common-4-if")
                                 .addClass("fns-oper")
-                                .append($('<option>').val('=').text('Equals').attr('selected', (oper === '=') ? true : false))
-                                .append($('<option>').val('!=').text('Not equals').attr('selected', (oper === '!=') ? true : false))
-                                .append($('<option>').val('>').text('Great').attr('selected', (oper === '>') ? true : false))
-                                .append($('<option>').val('>=').text('Great Equals').attr('selected', (oper === '>=') ? true : false))
-                                .append($('<option>').val('<').text('Less').attr('selected', (oper === '<') ? true : false))
-                                .append($('<option>').val('<=').text('Less Equals').attr('selected', (oper === '<=') ? true : false))
+                                .append($('<option>').val('=').text('=').attr('selected', (oper === '=') ? true : false))
+                                .append($('<option>').val('!=').text('!=').attr('selected', (oper === '!=') ? true : false))
+                                .append($('<option>').val('>').text('>').attr('selected', (oper === '>') ? true : false))
+                                .append($('<option>').val('>=').text('>=').attr('selected', (oper === '>=') ? true : false))
+                                .append($('<option>').val('<').text('<').attr('selected', (oper === '<') ? true : false))
+                                .append($('<option>').val('<=').text('<=').attr('selected', (oper === '<=') ? true : false))
                                 .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
                                 .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
                             )
