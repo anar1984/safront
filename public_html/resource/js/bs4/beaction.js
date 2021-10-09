@@ -4455,7 +4455,7 @@ var SAFN = {
                         .addClass("col-cs-1 d-table mr-2")
                         .append($("<span>")
                             .addClass("cs-funcname d-table-cell")
-                            .text("Sum")
+                            .text("Inc")
                         )
 
                     )
@@ -4488,7 +4488,7 @@ var SAFN = {
 
             $(ul).sortable({
                 update: function () {
-                    SAFN.Reconvert.SumStatement($(this).find("input"));
+                    SAFN.Reconvert.IncStatement($(this).find("input"));
                 }
             });
             return div;
