@@ -5564,25 +5564,6 @@ UserStory.prototype = {
             }
           });
 
-      
-
-    /*     $('.forlist-inc-table').each(function(i) {
-            $(this).find('tbody').first().sortable({
-                handle:".cs-move-tr",
-                update: function (e,ui) {
-                    forlist_inc_moveBacklogDescDrag(ui.item)
-                }
-              });
-          });
-        $('.fortable-inc-table').each(function(i) {
-            $(this).find('tbody').first().sortable({
-                handle:".cs-move-tr",
-                update: function (e,ui) {
-                    fortable_inc_moveBacklogDescDrag(ui.item)
-                }
-              });
-          }); */
-
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
             });
