@@ -446,10 +446,10 @@ tbody .ifbacklogDescriptionText:hover{
     border-bottom-right-radius: 6px;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi button {
-    background: #976767;
+    background: #976767 !important;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi button:hover {
-    background: #8d5252;
+    background: #8d5252 !important;
 }
 .cs-sum-inbox.cs-sum-inbox-callfn .cs-select-btn-box button {
     background: #a8a670;
@@ -477,7 +477,7 @@ tbody .ifbacklogDescriptionText:hover{
 .cs-sum-inbox-callapi .dropdown-item.active, .cs-sum-inbox-callapi .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #976767;
+    background-color: #976767 !important;
 }
 .cs-select-box .get-callfn-select-box .dropdown-item.active, .cs-select-box .get-callfn-select-box .dropdown-item:active {
     background-color: rgb(168 166 112);
@@ -499,9 +499,8 @@ table.if-inc-table tr {
 table.if-inc-table tr:hover {
     background-color: rgb(0 0 0 / 0%);
 }
-table.forlist-inc-table tr:hover, table.fortable-inc-table tr:hover {
-    background-color: rgb(255 255 255);
-    
+table.forlist-inc-table tr:hover, table.fortable-inc-table tr:hover, table.ifhasvalue-inc-table tr:hover, table.ifhasnotvalue-inc-table tr:hover {
+  background-color: rgb(255 255 255);
 }
 table.if-inc-table tr td {
     
@@ -558,6 +557,12 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
     padding: 0;
     border-radius: 5px;
+}
+table tr td .cs-sum-inbox.cs-sum-inbox-callapi > div {
+    background-color: #b98181;
+}
+table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
+    background-color: #dfdda8;
 }
 .cs-forlist-script-box table tr td .cs-sum-inbox > div {
     padding: 0;
