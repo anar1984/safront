@@ -2893,6 +2893,23 @@ var SAFN = {
             new UserStory().updateBacklogDescDetailsZad(fnline, pid);
 
         },
+        IfStatementNew: function (triggerEl) {
+            var div = $(triggerEl).closest('div.function-statement-container');
+            var pid = $(triggerEl).closest('tr').attr('pid');
+            var key = div.find(".fns-key").first().val();
+            var oper = div.find(".fns-oper").first().val();
+            var val = div.find(".fns-val").first().val();
+
+            var body = div.find(".if-inc-table tbody tr");
+            var bd = ''
+            body.each(function (p) {
+                bd += $(this).attr('idesc') + ";"
+            })
+
+            var fnline = "@.if(" + key + "," + oper + "," + val + "){" + bd + "}";
+            new UserStory().updateBacklogDescDetailsZad(fnline, pid);
+
+        },
         ForListStatement: function (triggerEl) {
             var div = $(triggerEl).closest('div.function-statement-container');
             var pid = $(triggerEl).closest('tr').attr('pid');
