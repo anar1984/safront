@@ -5564,20 +5564,38 @@ UserStory.prototype = {
             }
           });
 
-          $('.if-inc-table tbody').sortable({
-            handle:"#inc_tr_move",
-            update: function (e,ui) {
-            inc_moveBacklogDescDrag(ui.item)
-            }
-          });
+      
 
-          $('.if-inc-table tbody tr').each(function(i) {
+    /*     $('.forlist-inc-table').each(function(i) {
+            $(this).find('tbody').first().sortable({
+                handle:".cs-move-tr",
+                update: function (e,ui) {
+                    forlist_inc_moveBacklogDescDrag(ui.item)
+                }
+              });
+          });
+        $('.fortable-inc-table').each(function(i) {
+            $(this).find('tbody').first().sortable({
+                handle:".cs-move-tr",
+                update: function (e,ui) {
+                    fortable_inc_moveBacklogDescDrag(ui.item)
+                }
+              });
+          }); */
+
+            $("div.function-statement-container table tr").hover(function(){
+                $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
+            });
+        
+          $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i+1));
           });
                
             $('.cs-if-script-box select').selectpicker();
+            $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();
-            loadSelecPickerOnChnageFnList($(".get-callfn-select-box"));
+
+            loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
 
            return table;
     },
@@ -14982,10 +15000,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
 
-
+           
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
+            if(global_var.current_modal = 'loadStoryCard'){
 
+                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+                return
+            }
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;

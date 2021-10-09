@@ -2462,7 +2462,8 @@ label h6{
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     border-radius: 3px;
 }
- .sa-section-modal>.section-legend{
+ .sa-section-modal>.component-section-row::after{
+     content: attr(data-section-title);
     display: block;
     position: absolute;
     top: 10px;
@@ -2471,6 +2472,39 @@ label h6{
     /* padding: 3px; */
     font-weight: bold;
     font-size: 14px;
+}
+ .sa-section-modal>.component-section-row::after{
+     content: attr(data-section-title);
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 3%;
+    background-color: white;
+    /* padding: 3px; */
+    font-weight: bold;
+    font-size: 14px;
+}
+ .open-modal-hide-modal-btn{
+    display: none;
+}
+ .sa-section-modal>.open-modal-hide-modal-btn{
+    
+    display: block !important;
+    position: absolute;
+    top: 12px;
+    right: 0px;
+    border-radius: 50%;
+    font-size: 12px;
+    text-align: center;
+    background: white;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    box-shadow: rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px;
+}
+ .sa-section-modal>.component-section-row.closed-modal{
+   height: 0px;
+   overflow: hidden;
 }
 .absolute-div-row-table{
     position: fixed;
