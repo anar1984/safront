@@ -6647,12 +6647,12 @@ function setValueOnCompAfterTriggerApi(el, data) {
                             fillSelectBoxAfterSyncApiCall(this, data, field);
 
                         }
-
                         var keys = Object.keys(data);
                         if (keys.includes(field)) {
                             val = data[field];
-                            getComponentValueAfterTriggerApi(this, val);
+                            getComponentValueAfterTriggerApi(this, val, field);
                         }
+
                     }
                 } catch (err) {
                 }
@@ -6662,7 +6662,7 @@ function setValueOnCompAfterTriggerApi(el, data) {
     })
 }
 
-function getComponentValueAfterTriggerApi(el, val) {
+function getComponentValueAfterTriggerApi(el, val, selectedField) {
 
 
     if ($(el).attr('sa-type') === 'date') {
@@ -6700,9 +6700,10 @@ function getComponentValueAfterTriggerApi(el, val) {
 
     } else if ($(el).attr('sa-type') === 'select') {
 
-        $(el).val(val);
-        $(el).find('option[value="' + val + '"]').attr('selected', true);
-
+        if ($(el).attr('sa-item-setterfield')) {
+            $(el).val(val);
+            $(el).find('option[value="' + val + '"]').attr('selected', true);
+        }
 
 
 
@@ -9232,7 +9233,7 @@ function addRelatedSourceCodeModal(el) {
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
-             loadCurrentBacklogProdDetails();
+            loadCurrentBacklogProdDetails();
         }
     });
 }
@@ -10315,7 +10316,7 @@ function loadDatabaseList2ComboEntity() {
         async: false,
         success: function (res) {
             loadDatabaseList2ComboEntityDetails(res);
-            loadDatabaseList2Comboİmport(res) 
+            loadDatabaseList2Comboİmport(res)
             $('#entityDatabaseList').change();
         }
     });
@@ -23035,7 +23036,7 @@ $(document).on('click', '.for-chewekk-new-chat-link', function () {
     var f = $(this).attr("data-link")
     $.get("resource/chat/public/index.html", function (html_string) {
         $(div).html(html_string);
-        
+
         sidebarGeneratecomment();
 
 
@@ -23272,7 +23273,9 @@ $(document).on("click", ".open", function (e) {
         i1.classList.add('fa-ellipsis-h');
         $(this).html(i1);
     }
-})
+}
+)
+
 $(document).on("click", ".container-group-item", function (e) {
     var id = $(this).attr('id');
     var imgd = $(this).find('img').attr('src');

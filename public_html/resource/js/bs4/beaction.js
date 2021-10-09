@@ -2391,7 +2391,7 @@ var SAFN = {
                     var field = selectedFields[i].trim();
                     if (field.length > 0 && selectedFields.includes(field)) {
                         $(this).val('');
-                        $(this).empty();
+                        $(this).attr('sa-data-value','');
                     }
                 }
             });
