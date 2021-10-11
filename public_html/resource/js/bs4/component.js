@@ -2304,7 +2304,7 @@ var Component = {
         var div4  = $('<div class="row">');
         var div4Modal = '<i class="fas fa-chevron-up" aria-hidden="true"></i>'
         try {
-            if (cr_input_comp_attribute_kv[comp.id]['sa-not-closed-modal-passive']) {
+            if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-passive']) {
                 div4.addClass("closed-modal");
                 div4Modal = '<i class="fas fa-chevron-down" aria-hidden="true"></i>'
             }
@@ -2319,7 +2319,7 @@ var Component = {
                 .append(innerHTML))
 
         try {
-            if (cr_input_comp_attribute_kv[comp.id]['sa-not-closed-modal']) {
+            if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle']) {
                 div.append($("<span>")
                         .append(div4Modal)
                         .addClass("open-modal-hide-modal-btn"));
