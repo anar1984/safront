@@ -5514,12 +5514,22 @@ UserStory.prototype = {
             var descBody = MapTextAreaHtml((obj[n].description));
             descBody = this.getBacklogDescLineDetails(descBody);
             
-            var backlogProcessDescLineSubmenuItem = this.backlogProcessDescLineSubmenuItem(obj[n].id,);
+            var isCommand = 0;
+            var commandName = "";
+            try{
+                isCommand = SAFN.IsCommand(obj[n].description)?"1":"0";
+                commandName = SAFN.GetFunctionNameLine(obj[n].description);
+            }catch(err){}
+            
+            
+            var backlogProcessDescLineSubmenuItemVar = this.backlogProcessDescLineSubmenuItem(obj[n].id);
          
             var tr = $("<tr>")
+                    .addClass("esas-table-tr-for-zad")
                     .attr("orderno", obj[n].orderNo)
                     .attr("pid", obj[n].id)
-                
+                    .attr("isCommand",isCommand)
+                    .attr("cname",commandName)                
                     .append($('<td>')
                             .append('<span class="cs-move-tr" id="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
                             .append($('<input type="checkbox">')
@@ -5549,7 +5559,7 @@ UserStory.prototype = {
                                     )
                                 )
                     .append($('<td>')
-                            .append(backlogProcessDescLineSubmenuItem));
+                            .append(backlogProcessDescLineSubmenuItemVar));
 
             table.append(tr);
 
@@ -5625,28 +5635,7 @@ UserStory.prototype = {
                                                     .text('Remove  Comment')
                                                     .attr("onclick", "removeBacklogDescCommentType(this,'" + id + "')")
                                                     )
-                                           .append($('<hr>')  )
-                                             .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add If Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.If + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Set Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" +id + "','" + SAFN.FnStatements.Set + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Map Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.Map + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add SendEmail Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.SendEmail + "')")
-                                                    )
-                                            .append($('<button class="dropdown-item firstbut" >')
-                                                    .text('Add Show Arror Statement')
-                                                    .attr("onclick", "ADDtrafterAuto(this,'" + id + "','" + SAFN.FnStatements.ShowError + "')")
-                                                    )
-                                            .append($('<hr>')  )
+                                           .append($('<hr>')  )                                             
                                             .append($('<button class="dropdown-item firstbut" >')
                                                     .text('Delete')
                                                     .attr("onclick", "new UserStory().deleteBacklogDesc(this,'" + id + "')")

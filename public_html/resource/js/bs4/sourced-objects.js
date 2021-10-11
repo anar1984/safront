@@ -652,9 +652,6 @@ var SACore = {
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 this.updateEntireBacklog(o.id, o);
-
-
-
             }
         } catch (errr) {
         }

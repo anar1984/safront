@@ -6,13 +6,13 @@
  */
 
 
-var urlGl = "https://app.sourcedagile.com/";     
+//var urlGl = "https://app.sourcedagile.com/";     
 
-//var urlGl = "http://192.168.1.3:8080/tsn3/";
+var urlGl = "http://localhost:8079/tsn3/";
 //var urlGl = ""
 
-function getToken() { 
-    //return document.cookie;    
+function getToken() {
+   
     return localStorage.getItem('tk');
 }
 

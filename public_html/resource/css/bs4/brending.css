@@ -545,7 +545,7 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
 .cs-if-script-box table tr td .cs-sum-inbox {
     background-color: transparent;
     box-shadow: none;
-    padding: 7px;
+    padding: 1px;
     border-radius: 5px;
     display: inherit;
 }

@@ -216,6 +216,15 @@ $(function () {
 
 
     });
+    $(document).on("click", '.open-modal-hide-modal-btn', function (e) {
+
+     $(this).parent().find('.component-section-row').toggleClass('closed-modal');
+     $(this).find("i").toggleClass("fa-chevron-up");
+     $(this).find("i").toggleClass("fa-chevron-down");
+
+    
+
+    });
     $(document).on("click", '.tab-dash-trig', function (e) {
         var data = $(this).attr('data-link')
      
