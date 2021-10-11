@@ -2376,20 +2376,23 @@ function getRelatedStoryCardByApiId() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            var obj = res.tbl[0].r;
-            var div = $('<div>');
-            $('#storycard_dependentapi_span').html('');
-            for (var i = 0; i < obj.length; i++) {
-                var o = obj[i];
+            try {
+                var obj = res.tbl[0].r;
+                var div = $('<div>');
+                $('#storycard_dependentapi_span').html('');
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
 
-                div.append($('<a>')
-                        .text((i + 1) + ') ' + o.backlogName)
-                        .attr('is_api', '1')
-                        .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
-                        .append("<br>")
+                    div.append($('<a>')
+                            .text((i + 1) + ') ' + o.backlogName)
+                            .attr('is_api', '1')
+                            .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
+                            .append("<br>")
 
+                }
+                $('#storycard_dependentapi_span').append(div);
+            } catch (err) {
             }
-            $('#storycard_dependentapi_span').append(div);
         }
     });
 }
@@ -3047,57 +3050,7 @@ function manualProjectRefreshInit(fkManualProjectId) {
 }
 
 
-function loadFromIndexedDBtoRAM4LivePrototype() {
-    request = window.indexedDB.open("sa-db", 1);
-    request.onupgradeneeded = function (event) {
-        db = event.target.result;
-        objectStore = db.createObjectStore("subdb", {
-            keyPath: "bid",
-        });
-    }
-    request.onsuccess = function (event) {
-        db = request.result;
-
-        var transaction = db.transaction(["subdb"], "readwrite");
-        var objectStore = transaction.objectStore("subdb");
-
-
-
-        var ln = localStorage.length;
-        for (var i = 0, len = ln; i < len; i++) {
-            var key = localStorage.key(i);
-            //            var value = localStorage[key];
-            try {
-                if (key.startsWith('idb_')) {
-                    localStorage.removeItem(key);
-                }
-            } catch (err) {
-            }
-        }
-
-
-        objectStore.openCursor().onsuccess = function (event) {
-            var cursor = event.target.result;
-            if (cursor) {
-
-                var res = cursor.value.json;
-                localStorage.setItem(cursor.key, res.kv.modificationTime);
-                loadBacklogProductionDetailsById_resparams(res);
-                cursor.continue();
-            } else {
-                //                loadMissedBacklogsListFromStorage();
-                //                getUnloadedBacklogListOnInit();
-                //                loadMainProjectList4ManualZad();
-
-            }
-        }
-    };
-
-
-
-
-
-}
+ 
 
 
 function loadFromIndexedDBtoRAM() {
@@ -3151,6 +3104,7 @@ function loadFromIndexedDBtoRAM() {
 }
 
 function loadFromIndexedDBtoRAM4LivePrototype() {
+   
     request = window.indexedDB.open("sa-db", 1);
     request.onupgradeneeded = function (event) {
         db = event.target.result;
@@ -3182,11 +3136,14 @@ function loadFromIndexedDBtoRAM4LivePrototype() {
         objectStore.openCursor().onsuccess = function (event) {
             var cursor = event.target.result;
             if (cursor) {
-
                 var res = cursor.value.json;
                 localStorage.setItem(cursor.key, res.kv.modificationTime);
                 loadBacklogProductionDetailsById_resparams(res);
                 cursor.continue();
+            }else{
+                if (global_var.current_modal==='loadStoryCard'){
+                    new Project().loadMainProjectList();
+                }
             }
         }
     };
