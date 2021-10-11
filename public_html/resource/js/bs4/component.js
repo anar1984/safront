@@ -2280,11 +2280,11 @@ var Component = {
             .addClass("component-section-row filedset-style-section modal-hide-btn-class").attr("data-section-title",comp.label)
             .append(innerHTML))
 
-           if(cr_input_comp_attribute_kv[inputId]['sa-notClosedModal'])   {
+           /* if(cr_input_comp_attribute_kv[comp.id]['sa-notClosedModal'])   {
             div.append($("<span>")
                  .append('<i class="fas fa-chevron-up"></i>')
                   .addClass("open-modal-hide-modal-btn"));
-           }
+           } */
         
         
            

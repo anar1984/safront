@@ -11,7 +11,9 @@
 //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 //    });
 //});
-
+function clickMePlease(){
+    alert("hasgdjhaskdl;as")
+}
 
 var localstorage_prefix = {
     "JS": "js_",
@@ -15732,12 +15734,16 @@ function getProjectUsers() {
     });
 }
 
-function getProjectUserssync() {
+function getProjectUserssync(id) {
 
 
     var json = initJSON();
-
-    json.kv['fkProjectId'] = global_var.current_project_id;
+     if(global_var.current_project_id){
+        json.kv['fkProjectId'] = global_var.current_project_id
+     }else{
+        json.kv['fkProjectId'] = id;
+     }
+   
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -23017,13 +23023,15 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
 $(document).on('click', '.for-chewekk-new-chat-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
-    $.get("resource/chat/public/index.html", function (html_string) {
+  /*   $.get("resource/chat/public/index.html", function (html_string) {
         $(div).html(html_string);
 
         sidebarGeneratecomment();
 
 
-    });
+    }); */
+      
+    window.open('chat.html?current_modal=chat&current_ticker_id='+global_var.current_ticker_id, '_blank');
 
 
 })
@@ -23080,7 +23088,7 @@ function sideBarFirstClick(data) {
 }
 
 function sidebarGeneratecomment() {
-    var arr = be.callApi('21052516180701474362');
+    var arr = be.callApi('21052514335607055154');
 
     arr = arr._table.r;
     $("#list-wrap-container").empty();
@@ -23098,8 +23106,8 @@ function sideBarBlockgen(nm, id, isrc) {
     var div = document.createElement('div');
     div.classList.add('list');
     div.classList.add('container-group-item');
-    div.setAttribute('id', id);
-    div.setAttribute('onclick', 'triggerAPI(this,"21052611563704387613")');
+    div.setAttribute('id', id);/* 
+    div.setAttribute('onclick', 'triggerAPI(this,"21052611563704387613")'); */
 
     var img = document.createElement('img');
     img.setAttribute('src', isrc);
@@ -23127,7 +23135,7 @@ function sideBarBlockgen(nm, id, isrc) {
 }
 
 function Genblockmessage(data, el) {
-    $('#message-wrap-chat').empty();
+    $('#historyMsg').empty();
     var usImga = $(el).find('img').attr('src');
     var usNm = $(el).find('.info ').attr('src');
 
@@ -23148,14 +23156,14 @@ function Genblockmessage(data, el) {
                 var msg = document.createElement('div');
                 msg.classList.add('msg');
 
-                var imgUs = document.createElement("img");
-                imgUs.classList.add('image-mini-block')
-                var us = SAProjectUser.ProjectUsers[crtBy].userImage;
+                var imgUs = document.createElement("b");
+                //imgUs.classList.add('image-mini-block')
+                var us = SAProjectUser.ProjectUsers[crtBy].userName;
                 if (us === '') {
-                    imgUs.setAttribute('src', 'https://app.sourcedagile.com/api/get/files/userprofile.png');
+                    imgUs.innerText = 'Error User';
                 } else {
-                    imgUs.setAttribute('src', 'https://app.sourcedagile.com/api/get/files/' + us);
-                }
+                    imgUs.innerText = us;
+                 }
 
 
 
@@ -23179,11 +23187,11 @@ function Genblockmessage(data, el) {
 
 
 
-                $('#message-wrap-chat').prepend(dlv);
+                $('#historyMsg').prepend(dlv);
 
             }
 
-            const scrollContainer = document.getElementById('message-wrap-chat');
+            const scrollContainer = document.getElementById('historyMsg');
             scrollContainer.scrollTo({
                 top: scrollContainer.scrollHeight,
                 left: 0,
@@ -23192,7 +23200,7 @@ function Genblockmessage(data, el) {
         }
     } catch (err) {
 
-        $('#message-wrap-chat').append('Söhbət boşdur');
+        $('#historyMsg').append('Söhbət boşdur');
     }
 }
 
@@ -23202,43 +23210,21 @@ function commentsavedatabase(data) {
 
     $('#text-message-input').html("");
 }
-$(document).on("click", "#send_message_button", function (e) {
-    var txt = $('#text-message-input').html();
-    var today = new Date();
+$(document).on("click", "#add_user_button", function (e) {
+    var userId = $("#userListChatSelect").val();
+       var logo = SAProjectUser.ProjectUsers[userId].userImage;
+       var name = SAProjectUser.ProjectUsers[userId].userName;
+    
+     var ls  = {};
+      ls.groupImage = logo;
+      ls.nameGroup = name;
+      ls.fkUserId = userId;
+    be.callApi('21100815312700281008',ls);
+    $("#addUserChat").modal("hide");
+    sidebarGeneratecomment();
+    $("#list-wrap-container").find(".container-group-item").first("click")
+}) 
 
-    if (txt.trim().length > 0) {
-
-        var dp = document.createElement('div');
-        dp.classList.add('message-list');
-        dp.classList.add('me');
-
-        var txDiv = document.createElement('div');
-
-        txDiv.classList.add('msg');
-        var pd = document.createElement('p');
-
-        pd.innerHTML = txt;
-        txDiv.appendChild(pd)
-
-        var tm = document.createElement('div');
-
-        tm.innerHTML = today;
-
-        dp.appendChild(txDiv);
-        dp.appendChild(tm);
-
-
-        $('#message-wrap-chat').append(dp);
-
-        const scrollContainer = document.getElementById('message-wrap-chat');
-        scrollContainer.scrollTo({
-            top: scrollContainer.scrollHeight,
-            left: 0,
-            behavior: 'smooth'
-        });
-        triggerAPI(this, '21052614480303666321');
-    }
-})
 
 $(document).on("click", ".open", function (e) {
     const sidebar = $(".cst-cheweek-sidebar");
@@ -23260,11 +23246,22 @@ $(document).on("click", ".open", function (e) {
 )
 
 $(document).on("click", ".container-group-item", function (e) {
+    $(".container-group-item").removeClass("akitvec");
+    $(this).addClass("akitvec");
     var id = $(this).attr('id');
+    Utility.addParamToUrl("current_chat_gorup",id)
     var imgd = $(this).find('img').attr('src');
     var us = $(this).find('span.user').text();
 
     $('.-messagecontent').attr('id', id);
     $('.-messagecontent header img').attr('src', imgd);
     $('#user-header-bolean').text(us);
+    genChatMessagesRooms(this,id)
 })
+
+function genChatMessagesRooms(el,ids) {
+    var dt = {}
+         dt.fkGroupId =  ids
+    var els = be.callApi("21052615190704745176",dt);
+    Genblockmessage(els, el)
+}
