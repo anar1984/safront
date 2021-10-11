@@ -33,9 +33,9 @@ function ComponentInfo() {
     this.rowNo = "";
 }
 var masTab = {
-    "dependingID":{},
-    
-    addDeend: function (dependentBacklogId,inpUtid) {
+    "dependingID": {},
+
+    addDeend: function (dependentBacklogId, inpUtid) {
         this.dependingID[dependentBacklogId] = inpUtid;
     }
 }
@@ -85,9 +85,9 @@ var Component = {
         var tcnt = comp.content;
         comp.label = (comp.componentType !== 'hlink' && comp.isFromTable === true) ? '' : comp.label;
         comp.content = (comp.isFromTableNew === false) && (comp.isFromTable === true) && (comp.componentType !== 'txa') && (comp.componentType !== 'cmb') &&
-            (comp.componentType !== 'mcmb') && (comp.componentType !== 'rbtn') && (comp.componentType !== 'cbox') &&
-            (comp.componentType !== 'btn') && (comp.componentType !== 'hlink') ?
-            "cell_" + comp.tableRowId : comp.content;
+                (comp.componentType !== 'mcmb') && (comp.componentType !== 'rbtn') && (comp.componentType !== 'cbox') &&
+                (comp.componentType !== 'btn') && (comp.componentType !== 'hlink') ?
+                "cell_" + comp.tableRowId : comp.content;
         var st = '';
         if (comp.inputType === 'IN' || comp.inputType === 'GUI') {
             st += this.GetComponentHtlmByType(comp);
@@ -192,8 +192,8 @@ var Component = {
 
 
             $(el).addClass("component-input-class")
-                .attr('row-no', comp.rowNo)
-                .attr("pdid", comp.id);
+                    .attr('row-no', comp.rowNo)
+                    .attr("pdid", comp.id);
 
             Component.ComponentEvent.addId2Component(el, comp);
             Component.ComponentEvent.setPureEventByDescription(el, comp);
@@ -225,13 +225,14 @@ var Component = {
                         el.addClass(className);
 
                         if (global_var.current_modal === 'loadLivePrototype' &&
-                            (className === 'sa-onloadclick' || className === 'sa-onloadchange' ||
-                                className === 'sa-onloadclick-async' || className === 'sa-onloadchange-async')) {
+                                (className === 'sa-onloadclick' || className === 'sa-onloadchange' ||
+                                        className === 'sa-onloadclick-async' || className === 'sa-onloadchange-async')) {
                             el.addClass('init-on-loader')
                         }
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         addAttrToElement: function (el, comp) {
             try {
@@ -242,7 +243,8 @@ var Component = {
                     var val = kv[key];
                     el.attr(key, val);
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         addEventToElement: function (el, comp) {
             try {
@@ -255,7 +257,8 @@ var Component = {
                     el.attr(eventType + "_trigger_id", apiId);
                     el.attr(eventType, "triggerAPI(this,'" + apiId + "')");
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
         },
 
         setPureEventByDescription: function (el, comp) {
@@ -293,32 +296,37 @@ var Component = {
         getPopupEvent: function (el, comp) {
             try {
                 el.attr("onclick", "new UserStory().setGUIComponentButtonGUIModal('" + comp.relatedSUS + "',this)");
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         getRedirectEvent: function (el, comp) {
             try {
                 //                var ev = comp.event.length===0 ? "onclick" : comp.event;
                 el.attr("onclick", "new UserStory().setGUIComponentRedirectGUIModal(this,'" + comp.relatedSUS + "',event)");
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         getFillEvent: function (el, comp) {
             try {
                 //                var ev = comp.event.length===0 ? "onclick" : comp.event;
                 el.attr("onclick", "new UserStory().setGUIComponentFillGUIModal(this,'" +
-                    comp.relatedSUS + "','" + comp.inSection + "')");
-            } catch (err) {}
+                        comp.relatedSUS + "','" + comp.inSection + "')");
+            } catch (err) {
+            }
         },
         getSaveEvent: function (el) {
             try {
                 //                var ev = comp.event.length===0 ? "onclick" : comp.event;
                 //                el.attr("data-dismiss", 'modal');
                 el.attr("onclick", "new UserStory().setGUIComponentSaveGUIModal(this,event)");
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         getDeleteEvent: function (el) {
             try {
                 el.attr("onclick", "new UserStory().setGUIComponentDeleteGUIModal(this)");
-            } catch (err) {}
+            } catch (err) {
+            }
         }
 
     },
@@ -328,24 +336,24 @@ var Component = {
         }
         var div = $('<div></div>')
 
-            .attr('data-toggle', 'tooltip') //muveqqeti baglayaq
-            .attr("orderNo", comp.orderNo)
-            .attr('style', Component.ReplaceCSS(comp.containerCSS))
-            .attr('id', comp.id)
-            .attr('pid', comp.id)
+                .attr('data-toggle', 'tooltip') //muveqqeti baglayaq
+                .attr("orderNo", comp.orderNo)
+                .attr('style', Component.ReplaceCSS(comp.containerCSS))
+                .attr('id', comp.id)
+                .attr('pid', comp.id)
 
-            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'resize1' : "")
-            //                .addClass('popup')
-            .addClass(comp.addTooltip ? 'tooltipMan' : "") //muveqqeti baglayaq
-            .addClass('component-class')
-            .addClass('component-container-dashed')
-            .addClass('col-lg-' + comp.cellNo);
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'resize1' : "")
+                //                .addClass('popup')
+                .addClass(comp.addTooltip ? 'tooltipMan' : "") //muveqqeti baglayaq
+                .addClass('component-class')
+                .addClass('component-container-dashed')
+                .addClass('col-lg-' + comp.cellNo);
 
         if (global_var.current_modal === 'loadLivePrototype') {
             div.attr('ondragover', 'allowDrop(event)')
-                .attr('ondragstart', 'drag(event)')
-                .attr('ondrop', 'drop(event)')
+                    .attr('ondragstart', 'drag(event)')
+                    .attr('ondrop', 'drop(event)')
 
         }
 
@@ -371,14 +379,17 @@ var Component = {
                                     var val = r[j].split(':')[1];
                                     val = val.replace(";", "");
                                     div.css(key, val);
-                                } catch (err) {}
+                                } catch (err) {
+                                }
                             }
                         }
-                    } catch (err) {}
+                    } catch (err) {
+                    }
 
                 }
             }
-        } catch (err) {}
+        } catch (err) {
+        }
 
 
         //add attributes to container
@@ -390,7 +401,8 @@ var Component = {
                 var val = kv[key];
                 div.attr(key, val);
             }
-        } catch (err) {}
+        } catch (err) {
+        }
 
 
 
@@ -400,13 +412,13 @@ var Component = {
 
         if (comp.hasOnClickEvent) {
             div.attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
-                'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
-                "")
+                    'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
+                    "")
 
             if (global_var.current_modal === 'loadLivePrototype') {
 
                 div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
-                    .append(`<div style='display:inline-block;' class="dropdown">
+                        .append(`<div style='display:inline-block;' class="dropdown">
                         <span class="figureAddbtn" onclick="fillRelatedApi4InputEvent('${comp.id}')" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fab fa-asymmetrik" aria-hidden="true"></i>
                         </span>
@@ -450,7 +462,7 @@ var Component = {
                     </div>
                         </div>
                       </div>`)
-                    .append(`<div style='display:inline-block;' class="dropdown">
+                        .append(`<div style='display:inline-block;' class="dropdown">
                         <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-paint-brush"></i>
                         </span>
@@ -548,7 +560,7 @@ var Component = {
                     </div>
                         </div>
                       </div>`)
-                    .append(`<div style='display:inline-block;' class="dropdown">
+                        .append(`<div style='display:inline-block;' class="dropdown">
                         <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-key"></i>
                         </span>
@@ -628,31 +640,31 @@ var Component = {
                         </div>
                       </div>`)
 
-                    .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
+                        .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
 
-                    .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
-                    .append($("<select>").addClass('light-selectbox-custom')
-                        .attr("id", "gui-cell-selectbox-changed")
-                        .append('<option ' + (comp.cellNo == 1 ? 'selected=selected' : '') + ' value="1">1</option>')
-                        .append('<option ' + (comp.cellNo == 2 ? 'selected=selected' : '') + ' value="2">2</option>')
-                        .append('<option ' + (comp.cellNo == 3 ? 'selected=selected' : '') + ' value="3">3</option>')
-                        .append('<option ' + (comp.cellNo == 4 ? 'selected=selected' : '') + ' value="4">4</option>')
-                        .append('<option ' + (comp.cellNo == 5 ? 'selected=selected' : '') + ' value="5">5</option>')
-                        .append('<option ' + (comp.cellNo == 6 ? 'selected=selected' : '') + ' value="6">6</option>')
-                        .append('<option ' + (comp.cellNo == 7 ? 'selected=selected' : '') + ' value="7">7</option>')
-                        .append('<option ' + (comp.cellNo == 8 ? 'selected=selected' : '') + ' value="8">8</option>')
-                        .append('<option ' + (comp.cellNo == 9 ? 'selected=selected' : '') + ' value="9">9</option>')
-                        .append('<option ' + (comp.cellNo == 10 ? 'selected=selected' : '') + ' value="10">10</option>')
-                        .append('<option ' + (comp.cellNo == 11 ? 'selected=selected' : '') + ' value="11">11</option>')
-                        .append('<option ' + (comp.cellNo == 12 ? 'selected=selected' : '') + ' value="12">12</option>')
+                        .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
+                        .append($("<select>").addClass('light-selectbox-custom')
+                                .attr("id", "gui-cell-selectbox-changed")
+                                .append('<option ' + (comp.cellNo == 1 ? 'selected=selected' : '') + ' value="1">1</option>')
+                                .append('<option ' + (comp.cellNo == 2 ? 'selected=selected' : '') + ' value="2">2</option>')
+                                .append('<option ' + (comp.cellNo == 3 ? 'selected=selected' : '') + ' value="3">3</option>')
+                                .append('<option ' + (comp.cellNo == 4 ? 'selected=selected' : '') + ' value="4">4</option>')
+                                .append('<option ' + (comp.cellNo == 5 ? 'selected=selected' : '') + ' value="5">5</option>')
+                                .append('<option ' + (comp.cellNo == 6 ? 'selected=selected' : '') + ' value="6">6</option>')
+                                .append('<option ' + (comp.cellNo == 7 ? 'selected=selected' : '') + ' value="7">7</option>')
+                                .append('<option ' + (comp.cellNo == 8 ? 'selected=selected' : '') + ' value="8">8</option>')
+                                .append('<option ' + (comp.cellNo == 9 ? 'selected=selected' : '') + ' value="9">9</option>')
+                                .append('<option ' + (comp.cellNo == 10 ? 'selected=selected' : '') + ' value="10">10</option>')
+                                .append('<option ' + (comp.cellNo == 11 ? 'selected=selected' : '') + ' value="11">11</option>')
+                                .append('<option ' + (comp.cellNo == 12 ? 'selected=selected' : '') + ' value="12">12</option>')
 
-                    )
-                    .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + ' "data-add="false"><i class="fas fa-angle-left"></i></span>')
-                    .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + '  data-add="true"><i class="fas fa-angle-right"></i></span>')
-                    .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
+                                )
+                        .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + ' "data-add="false"><i class="fas fa-angle-left"></i></span>')
+                        .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + '  data-add="true"><i class="fas fa-angle-right"></i></span>')
+                        .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
 
-                    .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
-                )
+                        .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
+                        )
             }
 
         }
@@ -663,7 +675,7 @@ var Component = {
         return ((comp.pureDescription) &&
                 comp.pureDescription !== 'undefined' &&
                 comp.pureDescription.includes('fn_(ismandatory)')) ?
-            '<span style="color:red">*</span>' : ""
+                '<span style="color:red">*</span>' : ""
     },
     ReplaceCSS: function (arg) {
         try {
@@ -676,47 +688,47 @@ var Component = {
     InputTableAction: {
         GenAddColumn: function (comp) {
             return $('<i class="fa fa-plus">')
-                .css("font-size", "14px")
-                .attr("title", "Add new column")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .attr("onclick", "fillInputTableColumnsCombo('" + comp.fkInputTableId + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Add new column")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .attr("onclick", "fillInputTableColumnsCombo('" + comp.fkInputTableId + "')")
         },
         GenTableProperties: function (comp) {
             return $('<i class="fa fa-table">')
-                .css("font-size", "14px")
-                .attr("title", "Table Properties")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .addClass("component-class")
-                .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Table Properties")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .addClass("component-class")
+                    .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
         },
         GenReadFromContent: function (comp) {
             var color = SAInput.Tables[comp.fkInputTableId].readContent === '1' ?
-                '#2196F3' : '#d5d6da';
+                    '#2196F3' : '#d5d6da';
             return $('<i class="fa fa-inbox">')
-                .attr("title", "Read From Content")
-                .css("font-size", "14px")
-                .css("color", color)
-                .css("cursor", "pointer")
-                .attr("onclick", "setInputTableReadFromContent(this,'" + comp.fkInputTableId + "')")
+                    .attr("title", "Read From Content")
+                    .css("font-size", "14px")
+                    .css("color", color)
+                    .css("cursor", "pointer")
+                    .attr("onclick", "setInputTableReadFromContent(this,'" + comp.fkInputTableId + "')")
         },
         GenRemoveTable: function (comp) {
 
             return $('<i class="fa fa-trash-o">')
-                .attr("title", "Remove Table")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
-                .attr("onclick", "removeInputTable(this,'" + comp.id + "','" + comp.fkInputTableId + "')")
+                    .attr("title", "Remove Table")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
+                    .attr("onclick", "removeInputTable(this,'" + comp.id + "','" + comp.fkInputTableId + "')")
         },
         GenMoveDrag: function (comp) {
 
             return $('<i class="fa fa-arrows-alt">')
-                .attr("title", "Move Table with Drag and Drop")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
+                    .attr("title", "Move Table with Drag and Drop")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
 
         },
         RegenTableBody: function (el) {
@@ -733,11 +745,11 @@ var Component = {
             var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit);
             if ($('.component-table-class-for-zad-' + tid).attr("sa-tablenotempty") === '1') {
                 $('.component-table-class-for-zad-' + tid).find('tbody').append(body.html());
-            }else{
+            } else {
                 $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
-                 
+
             }
-           
+
 
             var el12 = document.getElementById("comp_id_" + inputId);
             loadSelectBoxesAfterGUIDesign(el12);
@@ -745,9 +757,9 @@ var Component = {
         GenRowCount: function (comp) {
             var rowCount = this.GetTableRowCount(comp.fkInputTableId);
             var select = $("<select>")
-                .attr("style", "font-size:11px;padding:1px 4px;border:none")
-                .attr("table-id", comp.fkInputTableId)
-                .attr("onchange", "Component.InputTableAction.RegenTableBody(this)");
+                    .attr("style", "font-size:11px;padding:1px 4px;border:none")
+                    .attr("table-id", comp.fkInputTableId)
+                    .attr("onchange", "Component.InputTableAction.RegenTableBody(this)");
             for (var i = 0; i <= 15; i++) {
                 var o = $('<option>').val(i).append(i);
                 if (i === parseInt(rowCount))
@@ -762,7 +774,8 @@ var Component = {
             try {
                 var rc = SAInput.Tables[tableId].rowCount;
                 rowCount = rc.length > 0 ? rc : rowCount;
-            } catch (err) {}
+            } catch (err) {
+            }
             return rowCount;
         },
         GenInputTableHtml: function (comp) {
@@ -775,13 +788,13 @@ var Component = {
             var backlogId = SAInput.getInputDetails(comp.id, "fkBacklogId");
 
             var rowCount = this.GetTableRowCount(tableId);
-            
+
             var table = $("<table>")
 
             var thead = this.GenInputTableHeaderHtml(tableId, comp);
-           // var showHide = this.GenInputTableShowHideHtml(tableId, comp);
+            // var showHide = this.GenInputTableShowHideHtml(tableId, comp);
             var tbody = this.GenInputTableBodyHtml(tableId, rowCount, backlogId);
-         
+
             table.append(thead).append(tbody);
             return table.html();
         },
@@ -813,7 +826,7 @@ var Component = {
 
             col = this.SetColumnsOrder(col);
 
-         
+
             var tr = $("<ul>").addClass('table-row-show-hide-ul')/* .append(thzad.append("")) */;
             for (var i = 0; i < col.length; i++) {
 
@@ -822,20 +835,20 @@ var Component = {
                     continue;
 
 
-                    var type = SAInput.getInputDetails(inputId, "componentType");
+                var type = SAInput.getInputDetails(inputId, "componentType");
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<label href="#">')
-                    .addClass('component-class-show-hide')
-                    .attr('id', inputId)
-                    .attr('pid', inputId)
-                    .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+                        .addClass('component-class-show-hide')
+                        .attr('id', inputId)
+                        .attr('pid', inputId)
+                        .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                    .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
-                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
-                        "")
-                        .append("<input data-check="+inputId+" checked='true' type='checkbox'>")
-                    .append(replaceTags(inputName))
+                        .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                                "")
+                        .append("<input data-check=" + inputId + " checked='true' type='checkbox'>")
+                        .append(replaceTags(inputName))
 
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
@@ -845,38 +858,38 @@ var Component = {
 
                 var showComp = "";
 
-                var showColumn ="";
+                var showColumn = "";
 
-                var showColumnName ="";
+                var showColumnName = "";
 
-     
-              if(a==""){
 
-              }else{
-                var th = $("<li>")                    //                        .css("min-width", "70px;")
-                .append(a)
-                .append(showComp, ' ')
-                .append(showColumn, ' ')
-                .append(showColumnName, ' ')
-                .append($("<div>")
-                           .addClass("editTools btn-group")
-                           .append('<span onclick="" id="group-data-table-btm"  class="btn btn-sm btn-light table-gorup-by-th" tbid='+comp.id+' data-order='+inputId+'><i class="fas fa-layer-group"></i></span>')
-                           )
-               
-              }
-           
+                if (a == "") {
+
+                } else {
+                    var th = $("<li>")                    //                        .css("min-width", "70px;")
+                            .append(a)
+                            .append(showComp, ' ')
+                            .append(showColumn, ' ')
+                            .append(showColumnName, ' ')
+                            .append($("<div>")
+                                    .addClass("editTools btn-group")
+                                    .append('<span onclick="" id="group-data-table-btm"  class="btn btn-sm btn-light table-gorup-by-th" tbid=' + comp.id + ' data-order=' + inputId + '><i class="fas fa-layer-group"></i></span>')
+                                    )
+
+                }
+
                 //                    .append(showInTree, ' ')
                 ;
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
-                    pairShowColumn[inputId].trim() === '1') {
+                        pairShowColumn[inputId].trim() === '1') {
                     th.empty().hide();
-                   
+
                 }
 
-                if (type==='icbox'||type==='cbox') {
+                if (type === 'icbox' || type === 'cbox') {
                     th.empty().hide();
-                   
+
                 }
 
                 //add attribute to th tag
@@ -887,9 +900,10 @@ var Component = {
                         var key = Object.keys(kv)[0];
                         var val = kv[key];
                         th.attr(key, val);
-                      
+
                     }
-                } catch (err) {}
+                } catch (err) {
+                }
 
                 //add class to th tag
                 try {
@@ -900,12 +914,13 @@ var Component = {
                             var classId = cl[iii];
                             var className = cr_gui_classes[classId].className;
                             className = className.replace(".", "");
-                          //  th.addClass(className);
+                            //  th.addClass(className);
                         }
                     }
-                } catch (err) {}
-        
-            $("#"+tableId).parents('.component-container-dashed').find('.groupBySelectBox4Table').append("<option>"+th+"</option>")
+                } catch (err) {
+                }
+
+                $("#" + tableId).parents('.component-container-dashed').find('.groupBySelectBox4Table').append("<option>" + th + "</option>")
                 tr.append(th);
             }
             thead.append(tr);
@@ -929,72 +944,72 @@ var Component = {
 
             col = this.SetColumnsOrder(col);
             var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
-            
+
             var thzad = $("<th>");
             var tr = $("<tr>").append(thzad.addClass("text-center").append($("<span>")
-            .addClass(" btn btn-sm")
-            .attr("id",'table-show-hide-button-id-a')
-            
-            .html('<i class="fas fa-chevron-right"></i>')));
+                    .addClass(" btn btn-sm")
+                    .attr("id", 'table-show-hide-button-id-a')
+
+                    .html('<i class="fas fa-chevron-right"></i>')));
             var trFilter = $("<tr>").addClass("filter-table-row-header-tr redirectClass").addClass("hide-filt-drag").append($("<th>"))
             for (var i = 0; i < col.length; i++) {
-                
+
                 var inputId = col[i].trim();
-                
+
                 var type = SAInput.getInputDetails(inputId, "componentType");
-             
+
                 if (inputId.length === 0)
                     continue;
 
 
                 var inputName = SAInput.GetInputName(inputId);
-                
-                if(type==="icbox"||type==="cbox"){
-                    var a =  $('<label href="#">')
-                    .addClass('component-class')
-                    .attr('id', inputId)
-                    .attr('pid', inputId)
-                    .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                    .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
-                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
-                        "")
-                         var checkAll 
-                      
-                        try {
+                if (type === "icbox" || type === "cbox") {
+                    var a = $('<label href="#">')
+                            .addClass('component-class')
+                            .attr('id', inputId)
+                            .attr('pid', inputId)
+                            .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                            checkAll = cr_input_comp_attribute_kv[inputId]['sa-checkAllNone'];
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                    "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                                    "")
+                    var checkAll
 
-                        if(!checkAll){
+                    try {
+
+                        checkAll = cr_input_comp_attribute_kv[inputId]['sa-checkAllNone'];
+
+                        if (!checkAll) {
 
                             a.append("<input type='checkbox' class='all-check-button-allTable'>")
 
-                        }else{
+                        } else {
                             a.append(replaceTags(inputName))
                         }
-                            
-                        } catch (error) {
-                            a.append("<input type='checkbox' class='all-check-button-allTable'>")
-                        }
-                        
-                }else{
 
-                var a = (pairShowColumnName[inputId].trim() === '1') ?
-                    "" :
-                    $('<label href="#">')
-                    .addClass('component-class')
-                    .attr('id', inputId)
-                    .attr('pid', inputId)
-                    .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+                    } catch (error) {
+                        a.append("<input type='checkbox' class='all-check-button-allTable'>")
+                    }
 
-                    .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
-                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
-                        "")
-                    .append(replaceTags(inputName))
+                } else {
+
+                    var a = (pairShowColumnName[inputId].trim() === '1') ?
+                            "" :
+                            $('<label href="#">')
+                            .addClass('component-class')
+                            .attr('id', inputId)
+                            .attr('pid', inputId)
+                            .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                    "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                                    "")
+                            .append(replaceTags(inputName))
                 }
-                    
+
                 var color = pair[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumn = pairShowColumn[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var colorColumnName = pairShowColumnName[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
@@ -1002,28 +1017,28 @@ var Component = {
 
 
                 var showComp = (global_var.current_modal === 'loadLivePrototype') ?
-                    $('<i class="fa fa-list-alt" aria-hidden="true">')
-                    .css("cursor", "pointer")
-                    .css('font-size', '8px')
-                    .css("color", color)
-                    .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
-                    "";
+                        $('<i class="fa fa-list-alt" aria-hidden="true">')
+                        .css("cursor", "pointer")
+                        .css('font-size', '8px')
+                        .css("color", color)
+                        .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
+                        "";
 
                 var showColumn = (global_var.current_modal === 'loadLivePrototype') ?
-                    $('<i class="fa fa-eye" aria-hidden="true">')
-                    .css("cursor", "pointer")
-                    .css('font-size', '8px')
-                    .css("color", colorColumn)
-                    .attr("onclick", "showInputTableColumnEntireComponent(this,'" + tableId + "','" + inputId + "')") :
-                    "";
+                        $('<i class="fa fa-eye" aria-hidden="true">')
+                        .css("cursor", "pointer")
+                        .css('font-size', '8px')
+                        .css("color", colorColumn)
+                        .attr("onclick", "showInputTableColumnEntireComponent(this,'" + tableId + "','" + inputId + "')") :
+                        "";
 
                 var showColumnName = (global_var.current_modal === 'loadLivePrototype') ?
-                    $('<i class="fa fa-cubes" aria-hidden="true">')
-                    .css("cursor", "pointer")
-                    .css('font-size', '8px')
-                    .css("color", colorColumnName)
-                    .attr("onclick", "showInputTableColumnItselfComponent(this,'" + tableId + "','" + inputId + "')") :
-                    "";
+                        $('<i class="fa fa-cubes" aria-hidden="true">')
+                        .css("cursor", "pointer")
+                        .css('font-size', '8px')
+                        .css("color", colorColumnName)
+                        .attr("onclick", "showInputTableColumnItselfComponent(this,'" + tableId + "','" + inputId + "')") :
+                        "";
 
                 //                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
                 //                    $('<i class="fa fa-folder-open" aria-hidden="true">')
@@ -1036,59 +1051,59 @@ var Component = {
 
 
                 var th = $("<th>")
-                    .addClass("text-center")
-                    //                        .css("min-width", "70px;")
-                    .append(a)
-                    .append(showComp, ' ')
-                    .append(showColumn, ' ')
-                    .append(showColumnName, ' ')
-                    if (global_var.current_modal !== 'loadLivePrototype') {
-                        th.append((a==='')?"":"<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
+                        .addClass("text-center")
+                        //                        .css("min-width", "70px;")
+                        .append(a)
+                        .append(showComp, ' ')
+                        .append(showColumn, ' ')
+                        .append(showColumnName, ' ')
+                if (global_var.current_modal !== 'loadLivePrototype') {
+                    th.append((a === '') ? "" : "<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
 
-                     }
+                }
 
                 //                    .append(showInTree, ' ')
                 var depId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
                 var newelSelect = $("<select>").addClass("form-control filter-table-row-select")
-                .attr("id","filter-table-row-"+inputId)
-                .attr("placeholder",inputName)
-                .attr("onchange","triggerAPI(this,'"+tabDepId+"')")
-                .attr("data-live-search","true")
-                .attr("sa-global-trigger",'1')
-                /* .attr("multiple","multiple") */
-                .attr("data-actions-box","true")
-                .attr('filter-id',inputId)
+                        .attr("id", "filter-table-row-" + inputId)
+                        .attr("placeholder", inputName)
+                        .attr("onchange", "triggerAPI(this,'" + tabDepId + "')")
+                        .attr("data-live-search", "true")
+                        .attr("sa-global-trigger", '1')
+                        /* .attr("multiple","multiple") */
+                        .attr("data-actions-box", "true")
+                        .attr('filter-id', inputId)
                 var newelInput = $("<input>").addClass("form-control filter-table-row-select")
-                .attr("id","filter-table-row-"+inputId)
-                .attr("placeholder",inputName)
-                .attr("data-live-search","true")
-                .attr("onchange","triggerAPI(this,'"+tabDepId+"')")
-                .attr("data-actions-box","true")
-                .attr("sa-global-trigger",'1')
-                .attr('filter-id',inputId)
-              
-                if(type==="lbl"||type==="hlink"){
-                    if(depId){
-                  
-                        var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":addAttrToElementSingileByR(newelSelect, SAInput.Inputs[inputId]))  
-                        
-                    
-                }else{
-                    var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":addAttrToElementSingileByR(newelInput, SAInput.Inputs[inputId])) 
+                        .attr("id", "filter-table-row-" + inputId)
+                        .attr("placeholder", inputName)
+                        .attr("data-live-search", "true")
+                        .attr("onchange", "triggerAPI(this,'" + tabDepId + "')")
+                        .attr("data-actions-box", "true")
+                        .attr("sa-global-trigger", '1')
+                        .attr('filter-id', inputId)
+
+                if (type === "lbl" || type === "hlink") {
+                    if (depId) {
+
+                        var thFilt = $("<th>").addClass("hide-filt-drag").append((a == "") ? "" : addAttrToElementSingileByR(newelSelect, SAInput.Inputs[inputId]))
+
+
+                    } else {
+                        var thFilt = $("<th>").addClass("hide-filt-drag").append((a == "") ? "" : addAttrToElementSingileByR(newelInput, SAInput.Inputs[inputId]))
+                    }
+
+                } else {
+                    var thFilt = $("<th>").addClass("hide-filt-drag").append((a == "") ? "" : $("<span>").addClass(" filter-table-row-select")
+                            .attr("id", "filter-table-row-" + inputId)
+                            .attr("placeholder", inputName)
+                            .attr('filter-id', inputId))
                 }
-              
-                }else{
-                    var thFilt = $("<th>").addClass("hide-filt-drag").append((a=="")?"":$("<span>").addClass(" filter-table-row-select")
-                    .attr("id","filter-table-row-"+inputId)
-                    .attr("placeholder",inputName)
-                    .attr('filter-id',inputId)) 
-                }
-               
-                
-                
+
+
+
 
                 if (global_var.current_modal !== 'loadLivePrototype' &&
-                    pairShowColumn[inputId].trim() === '1') {
+                        pairShowColumn[inputId].trim() === '1') {
                     th.hide();
                     thFilt.hide();
                 }
@@ -1103,7 +1118,8 @@ var Component = {
                         th.attr(key, val);
                         thFilt.attr(key, val);
                     }
-                } catch (err) {}
+                } catch (err) {
+                }
 
                 //add class to th tag
                 try {
@@ -1117,14 +1133,15 @@ var Component = {
                             th.addClass(className);
                         }
                     }
-                } catch (err) {}
+                } catch (err) {
+                }
 
 
 
-              
-               
+
+
                 tr.append(th);
-                if(global_var.current_modal !== 'loadLivePrototype'){
+                if (global_var.current_modal !== 'loadLivePrototype') {
                     trFilter.append(thFilt);
                 }
 
@@ -1135,8 +1152,8 @@ var Component = {
         },
         TableEmptyMessage: function (tableId) {
             var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
-                '<h5> No columns (inputs) have been entered on this table</h5>' +
-                '<i class="fa fa-plus" title="Add new column" onclick="fillInputTableColumnsCombo(\'' + tableId + '\')" \n\
+                    '<h5> No columns (inputs) have been entered on this table</h5>' +
+                    '<i class="fa fa-plus" title="Add new column" onclick="fillInputTableColumnsCombo(\'' + tableId + '\')" \n\
                     style="font-size: 30px; color: rgb(213, 214, 218); cursor: pointer;" aria-hidden="true"></i>'
             '</div>';
             return msg;
@@ -1145,7 +1162,8 @@ var Component = {
             var readContent = '0';
             try {
                 readContent = SAInput.Tables[tableId].readContent;
-            } catch (err) {}
+            } catch (err) {
+            }
             return readContent;
         },
         GetTableCellValue: function (tableId, inputId, index) {
@@ -1156,7 +1174,8 @@ var Component = {
                 try {
                     var cnt = SAInput.getInputDetails(inputId, "inputContent");
                     val = cnt.split(/\r*\n/)[index];
-                } catch (err) {}
+                } catch (err) {
+                }
             }
             return val;
         },
@@ -1185,7 +1204,7 @@ var Component = {
             return res;
         },
         GenInputTableBodyHtml: function (tableId, rowCount, backlogId, startLimit) {
-      
+
             var sLimit = (startLimit) ? startLimit : '0';
             var tbody = $('<tbody>');
             var col = SAInput.Tables[tableId].fkInputId.split(",");
@@ -1202,12 +1221,12 @@ var Component = {
 
             var idx = 0;
             for (var j = 1; j <= rowCount; j++) {
-                
+
                 var tr = $("<tr>")
-                    .addClass('redirectClass')
-                    .attr("bid", backlogId)
-                    //                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
-                    .append($("<td>").append((j + parseInt(sLimit))).addClass("text-center").css("min-width",'25px'));
+                        .addClass('redirectClass')
+                        .attr("bid", backlogId)
+                        //                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
+                        .append($("<td>").append((j + parseInt(sLimit))).addClass("text-center").css("min-width", '25px'));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();
                     if (inputId.length === 0)
@@ -1216,15 +1235,15 @@ var Component = {
 
                     idx++;
                     var val = this.GetTableCellValue(tableId, inputId, j - 1);
-                 
+
 
 
                     if (pair[inputId].trim() === '1') {
                         var comp = new ComponentInfo();
                         Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
-                
+
                         comp.secondContent = val;
-                      
+
                         comp.isFromTableNew = true;
                         comp.isFromTable = true;
                         comp.tableRowId = "1";
@@ -1234,9 +1253,9 @@ var Component = {
                         comp.showProperties = false;
                         comp.rowNo = j;
                         val = Component.GetComponentHtmlNew(comp);
-                      
+
                     }
-                       
+
 
 
 
@@ -1244,46 +1263,46 @@ var Component = {
                     val.find(".tool_element_edit").remove();
 
                     var td12 = $("<td>")
-                        //                            .css("min-width", "70px")
-                        .addClass("component-input-class")
-                        //                            .attr("sa-tableselectedfield", )
-                        .addClass("component-table-input-class")
-                        .attr("pdid", inputId)
-                        //                            .attr("sa-data-table-row-id","")
-                        .val(val)
-                        .append(val);
+                            //                            .css("min-width", "70px")
+                            .addClass("component-input-class")
+                            //                            .attr("sa-tableselectedfield", )
+                            .addClass("component-table-input-class")
+                            .attr("pdid", inputId)
+                            //                            .attr("sa-data-table-row-id","")
+                            .val(val)
+                            .append(val);
 
-                       
-                    
+
+
                     //manage input relation with API 
                     //add dependency for API Call classes and attributes
                     //as sa_data_table_col_rel_{apiId}_{inputId}
 
                     var dependentBacklogId = SAInput.getInputDetails(inputId, "fkDependentBacklogId");
                     var dependentInputId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
-                   
-                    masTab.addDeend(dependentBacklogId,inputId);
-                   
-                     
+
+                    masTab.addDeend(dependentBacklogId, inputId);
+
+
                     if (dependentBacklogId && dependentBacklogId.length > 0) {
                         loadBacklogInputsByIdIfNotExist(dependentBacklogId)
                         var inputSelectedField4Rel = SAInput.getInputDetails(dependentInputId, 'inputName');
                         td12.attr("rel_api", dependentBacklogId)
-                            .attr('rel_core_inputid', inputId)
-                            .attr('rel_core_selected_field', inputSelectedField4Rel)
-                            .addClass("has_table_relation_td")
-                            .addClass("sa_data_table_col_rel_" + dependentBacklogId + "_" + inputId);
+                                .attr('rel_core_inputid', inputId)
+                                .attr('rel_core_selected_field', inputSelectedField4Rel)
+                                .addClass("has_table_relation_td")
+                                .addClass("sa_data_table_col_rel_" + dependentBacklogId + "_" + inputId);
                     }
 
                     if (global_var.current_modal !== 'loadLivePrototype' &&
-                        pairShowColumn[inputId].trim() === '1') {
+                            pairShowColumn[inputId].trim() === '1') {
                         td12.hide();
                     }
 
 
                     tr.append(td12);
                 }
-    
+
                 tbody.append(tr);
             }
 
@@ -1291,30 +1310,30 @@ var Component = {
                 // tbody.append(this.TableEmptyMessage(tableId));
                 //tbody.html($("<tr>").append($("<td>").append(this.TableEmptyMessage(tableId))));
             }
-          
+
             loadTableFIlterInside();
             return tbody;
         }
     },
     InputTable: function (comp) {
         var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
-            $('<div class="col-lg-12 text-right">')
-            .attr("id", "comp_id_" + comp.id)
-            .css("padding-top", "15px")
-            .append(" &nbsp;")
-            .append(this.InputTableAction.GenAddColumn(comp))
-            .append(" &nbsp;")
-            .append(this.InputTableAction.GenTableProperties(comp))
-            .append(" &nbsp;")
-            .append(this.InputTableAction.GenReadFromContent(comp))
-            .append("  &nbsp;&nbsp;")
-            .append(this.InputTableAction.GenMoveDrag(comp))
-            .append("  &nbsp;&nbsp;&nbsp;&nbsp;")
-            .append(this.InputTableAction.GenRemoveTable(comp))
-            .append("  &nbsp;&nbsp;")
-            .append(this.InputTableAction.GenRowCount(comp))
-            .append(" ") :
-            "";
+                $('<div class="col-lg-12 text-right">')
+                .attr("id", "comp_id_" + comp.id)
+                .css("padding-top", "15px")
+                .append(" &nbsp;")
+                .append(this.InputTableAction.GenAddColumn(comp))
+                .append(" &nbsp;")
+                .append(this.InputTableAction.GenTableProperties(comp))
+                .append(" &nbsp;")
+                .append(this.InputTableAction.GenReadFromContent(comp))
+                .append("  &nbsp;&nbsp;")
+                .append(this.InputTableAction.GenMoveDrag(comp))
+                .append("  &nbsp;&nbsp;&nbsp;&nbsp;")
+                .append(this.InputTableAction.GenRemoveTable(comp))
+                .append("  &nbsp;&nbsp;")
+                .append(this.InputTableAction.GenRowCount(comp))
+                .append(" ") :
+                "";
 
 
         //get input selected fields
@@ -1329,93 +1348,94 @@ var Component = {
             try {
                 tblSelectedFields += cr_input_comp_attribute_kv[inputId]['sa-selectedfield']
                 tblSelectedFields += (i < col.length - 1) ? "," : "";
-            } catch (err) {}
+            } catch (err) {
+            }
         }
 
 
 
-        
+
         var el = $('<table class="table">')
-            .addClass("component-table-class-for-zad")
-            .addClass("component-table-class-for-zad-" + tableId)
-            .attr('table-id', tableId)
-            .attr('input-id', comp.id)
-            .attr("sa-tableselectedfield", tblSelectedFields)
-            .attr('style', gui_component.defaultCSS.InputTable + Component.ReplaceCSS(comp.css))
-            .append(elDiv)
-            .append(this.InputTableAction.GenInputTableHtml(comp));
+                .addClass("component-table-class-for-zad")
+                .addClass("component-table-class-for-zad-" + tableId)
+                .attr('table-id', tableId)
+                .attr('input-id', comp.id)
+                .attr("sa-tableselectedfield", tblSelectedFields)
+                .attr('style', gui_component.defaultCSS.InputTable + Component.ReplaceCSS(comp.css))
+                .append(elDiv)
+                .append(this.InputTableAction.GenInputTableHtml(comp));
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         div.removeClass("component-class")
-            .removeAttr("onclick")
+                .removeAttr("onclick")
 
         div.append($('<div>').addClass("progressloader loaderTable1"));
-       
+
         div.append(el);
         div.addClass("table-responsive");
-    
-                     
+
+
         div.append($("<div>")
-        .attr("data-tableId",comp.id)
-            .addClass("table-show-hide-row-div")
-             .append($("<span>")
-                         .attr("id",'table-show-hide-button-id-close')
-                         .addClass("table-show-hide-button-class-close")
-                         .html('<i class="fas fa-times"></i>')
-                         )
-                         .append($("<div>")
-                                  .addClass("col-10 p-2")
-                                  .append($("<div>").addClass("btn-group float-right")
-                                         .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
-                                         .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
-                                         .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
-                                         .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
-                                 )
-                
-                                  .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
-                                
-                                  )
-                         .append($("<div>")
-                                  .addClass('col-12 p-2 form-group')
-                                  .append($("<div>").hide()
-                                             .addClass('input-group date')
-                                             .attr("id",'datetimepicker10')
-                                             .append('<button  data-api-tabid="'+tableId+'" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
-                                             .append('<button  data-api-tabid="'+tableId+'" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
-                                             .append('<input type="file" data-api-tabid="'+tableId+'" class="form-control form-control-sm" id="file_excel_import">')
-                                             )
-                              
-                                  
-                         )
-                         .append($("<div>")
-                                  .addClass('col-12 p-2 form-group')
-                                  .append($("<div>")
-                                             .addClass('input-group date')
-                                             .attr("id",'datetimepicker6')
-                                             .append('<input type="text" data-api-tabid="'+tabDepId+'" class="form-control form-control-sm" id="date_timepicker_start_end">')
-                                             .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
-                                             )
-                              
-                                  
-                         )
-                         .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
+                .attr("data-tableId", comp.id)
+                .addClass("table-show-hide-row-div")
+                .append($("<span>")
+                        .attr("id", 'table-show-hide-button-id-close')
+                        .addClass("table-show-hide-button-class-close")
+                        .html('<i class="fas fa-times"></i>')
+                        )
+                .append($("<div>")
+                        .addClass("col-10 p-2")
+                        .append($("<div>").addClass("btn-group float-right")
+                                .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
+                                .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
+                                .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+                                )
 
-            )
+                        .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
 
-       
+                        )
+                .append($("<div>")
+                        .addClass('col-12 p-2 form-group')
+                        .append($("<div>").hide()
+                                .addClass('input-group date')
+                                .attr("id", 'datetimepicker10')
+                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
+                                .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
+                                )
+
+
+                        )
+                .append($("<div>")
+                        .addClass('col-12 p-2 form-group')
+                        .append($("<div>")
+                                .addClass('input-group date')
+                                .attr("id", 'datetimepicker6')
+                                .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
+                                .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
+                                )
+
+
+                        )
+                .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
+
+                )
+
+
         return $('<div></div>').append(div).html();
     },
     InputTab: function (comp) {
 
         var el = $("<div>")
 
-            .append(this.InputTabAction.GenPropertiesLine(comp))
-            .append(this.InputTabAction.GetBody(comp));
+                .append(this.InputTabAction.GenPropertiesLine(comp))
+                .append(this.InputTabAction.GetBody(comp));
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp)
-            .attr('style', Component.ReplaceCSS(comp.containerCSS));
+                .attr('style', Component.ReplaceCSS(comp.containerCSS));
         div.removeClass("component-class")
-            .removeAttr("onclick")
+                .removeAttr("onclick")
 
 
         div.append(el);
@@ -1423,15 +1443,16 @@ var Component = {
     },
     InputTabAction: {
         GenRedirectTo: function (backlogId) {
-            var rc = "";;
+            var rc = "";
+            ;
 
             if (global_var.current_modal === "loadLivePrototype") {
                 rc = $('<i class="fa fa-mail-forward">')
-                    .css("font-size", "11px")
-                    .attr("title", "Redirect to")
-                    .css("color", "#d5d6da !important")
-                    .css("cursor", "pointer")
-                    .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')");
+                        .css("font-size", "11px")
+                        .attr("title", "Redirect to")
+                        .css("color", "#d5d6da !important")
+                        .css("cursor", "pointer")
+                        .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')");
             }
             return rc;
         },
@@ -1439,10 +1460,11 @@ var Component = {
             var usList = [];
             try {
                 usList = SAInput.Tabs[comp.fkInputTableId].fkRelatedBacklogId.split(',');
-            } catch (err) {}
+            } catch (err) {
+            }
             var el = usList.length === 0 ?
-                this.TabEmptyMessage(comp.fkInputTableId) :
-                this.GetTabBody(comp, usList);
+                    this.TabEmptyMessage(comp.fkInputTableId) :
+                    this.GetTabBody(comp, usList);
             return el;
         },
         GetTabBody: function (comp, usList) {
@@ -1457,21 +1479,21 @@ var Component = {
             var idx = 0;
             for (var i in usList) {
                 var li = $('<li class="nav-item">')
-                    .addClass("sa-tab-action-zad");
+                        .addClass("sa-tab-action-zad");
                 var usId = usList[i].trim();
                 var usName = SACore.GetBacklogname(usId);
                 var active = (idx === 0) ? " active " : "";
                 idx++;
                 li.append($('<a class="nav-link">')
-                    .addClass(active)
-                    .css('font-size', "14px")
-                    .attr("href", "#" + "tab_" + comp.fkInputTableId + "_" + usId)
+                        .addClass(active)
+                        .css('font-size', "14px")
+                        .attr("href", "#" + "tab_" + comp.fkInputTableId + "_" + usId)
 
-                    .attr("data-toggle", "tab")
-                    .append(replaceTags(usName))
-                    .append(" ")
-                    .append(this.GenRedirectTo(usId))
-                )
+                        .attr("data-toggle", "tab")
+                        .append(replaceTags(usName))
+                        .append(" ")
+                        .append(this.GenRedirectTo(usId))
+                        )
                 ul.append(li);
             }
 
@@ -1490,8 +1512,8 @@ var Component = {
                 var active = (idx) ? " active " : "";
                 idx = false;
                 var divContent = $('<div class="container tab-pane">')
-                    .addClass(active)
-                    .attr("id", "tab_" + comp.fkInputTableId + "_" + usId)
+                        .addClass(active)
+                        .attr("id", "tab_" + comp.fkInputTableId + "_" + usId)
 
                 var jsonT = SAInput.toJSONByBacklog(usId);
                 //                new UserStory().hasSequence(comp.sequence, usId);
@@ -1504,58 +1526,58 @@ var Component = {
         },
         GenAddUserStory: function (comp) {
             return $('<i class="fa fa-plus">')
-                .css("font-size", "14px")
-                .attr("title", "Add User Story")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .attr("onclick", "addUserStoryToTabModal('" + comp.fkInputTableId + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Add User Story")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .attr("onclick", "addUserStoryToTabModal('" + comp.fkInputTableId + "')")
         },
         GenPropertiesLine: function (comp) {
             var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
-                $('<div class="col-lg-12 text-right">')
-                .attr("id", "comp_id_" + comp.id)
-                .css("padding-top", "15px")
-                .append(" &nbsp;")
-                .append(this.GenAddUserStory(comp))
-                .append(" &nbsp;")
-                .append(this.GenTableProperties(comp))
-                .append(" &nbsp;")
-                //                .append(this.InputTableAction.GenReadFromContent(comp))
-                //                .append("  &nbsp;&nbsp;")
-                .append(this.GenMoveDrag(comp))
-                .append("  &nbsp;&nbsp;&nbsp;&nbsp;")
-                .append(this.GenRemoveTable(comp))
-                .append("  &nbsp;&nbsp;")
+                    $('<div class="col-lg-12 text-right">')
+                    .attr("id", "comp_id_" + comp.id)
+                    .css("padding-top", "15px")
+                    .append(" &nbsp;")
+                    .append(this.GenAddUserStory(comp))
+                    .append(" &nbsp;")
+                    .append(this.GenTableProperties(comp))
+                    .append(" &nbsp;")
+                    //                .append(this.InputTableAction.GenReadFromContent(comp))
+                    //                .append("  &nbsp;&nbsp;")
+                    .append(this.GenMoveDrag(comp))
+                    .append("  &nbsp;&nbsp;&nbsp;&nbsp;")
+                    .append(this.GenRemoveTable(comp))
+                    .append("  &nbsp;&nbsp;")
 
-                :
-                "";
+                    :
+                    "";
             return elDiv;
         },
         GenTableProperties: function (comp) {
             return $('<i class="fa fa-table">')
-                .css("font-size", "14px")
-                .attr("title", "Table Properties")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .addClass("component-class")
-                .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Table Properties")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .addClass("component-class")
+                    .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
         },
         GenRemoveTable: function (comp) {
 
             return $('<i class="fa fa-trash-o">')
-                .attr("title", "Remove Table")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
-                .attr("onclick", "removeInputTable(this,'" + comp.id + "','" + comp.fkInputTableId + "')")
+                    .attr("title", "Remove Table")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
+                    .attr("onclick", "removeInputTable(this,'" + comp.id + "','" + comp.fkInputTableId + "')")
         },
         GenMoveDrag: function (comp) {
 
             return $('<i class="fa fa-arrows-alt">')
-                .attr("title", "Move Table with Drag and Drop")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
+                    .attr("title", "Move Table with Drag and Drop")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
 
         },
         GenInputTableHtml: function (comp) {
@@ -1586,33 +1608,33 @@ var Component = {
                     continue;
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<a href="#">')
-                    .addClass('component-class')
-                    .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
-                        "new UserStory().setInputByGUIComponent('" + inputId + "')" :
-                        "")
-                    .append(replaceTags(inputName))
+                        .addClass('component-class')
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                                "")
+                        .append(replaceTags(inputName))
 
                 var color = showComponent[i].trim() === '1' ? "#2196F3" : "#d5d6da";
                 var showComp = (global_var.current_modal === 'loadLivePrototype') ?
-                    $('<i class="fa fa-list-alt" aria-hidden="true">')
-                    .css("cursor", "pointer")
-                    .css('font-size', '8px')
-                    .css("color", color)
-                    .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
-                    "";
+                        $('<i class="fa fa-list-alt" aria-hidden="true">')
+                        .css("cursor", "pointer")
+                        .css('font-size', '8px')
+                        .css("color", color)
+                        .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
+                        "";
                 tr.append($("<th>")
-                    //                        .css("min-width", "70px;")
-                    .append(a)
-                    .append(showComp)
-                );
+                        //                        .css("min-width", "70px;")
+                        .append(a)
+                        .append(showComp)
+                        );
             }
             thead.append(tr);
             return thead;
         },
         TabEmptyMessage: function (tableId) {
             var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
-                '<h5> No User Stories have been entered on this tab</h5>' +
-                '<i class="fa fa-plus" title="Add new column" onclick="addUserStoryToTabModal(\'' + tableId + '\')" \n\
+                    '<h5> No User Stories have been entered on this tab</h5>' +
+                    '<i class="fa fa-plus" title="Add new column" onclick="addUserStoryToTabModal(\'' + tableId + '\')" \n\
                     style="font-size: 30px; color: rgb(213, 214, 218); cursor: pointer;" aria-hidden="true"></i>'
             '</div>';
             return msg;
@@ -1621,7 +1643,8 @@ var Component = {
             var readContent = '0';
             try {
                 readContent = SAInput.Tables[tableId].readContent;
-            } catch (err) {}
+            } catch (err) {
+            }
             return readContent;
         },
         GetTableCellValue: function (tableId, inputId, index) {
@@ -1632,7 +1655,8 @@ var Component = {
                 try {
                     var cnt = SAInput.getInputDetails(inputId, "inputContent");
                     val = cnt.split(/\r*\n/)[index];
-                } catch (err) {}
+                } catch (err) {
+                }
             }
             return val;
         },
@@ -1665,11 +1689,11 @@ var Component = {
                         val = Component.GetComponentHtmlNew(comp);
                     }
                     tr.append($("<td>")
-                        //                            .css("min-width", "70px")
-                        .addClass("component-input-class")
-                        .attr("pdid", inputId)
-                        .val(val)
-                        .append(val));
+                            //                            .css("min-width", "70px")
+                            .addClass("component-input-class")
+                            .attr("pdid", inputId)
+                            .val(val)
+                            .append(val));
                 }
                 tbody.append(tr);
             }
@@ -1686,16 +1710,16 @@ var Component = {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
-            .attr('type', 'text')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
+                .attr('type', 'text')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
                     .append(comp.label))
-                .append(star);
+                    .append(star);
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1707,17 +1731,17 @@ var Component = {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
-            .attr('type', 'text')
-            .css('border', '2px #e2dfd0  dashed')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
+                .attr('type', 'text')
+                .css('border', '2px #e2dfd0  dashed')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
                     .append(comp.label))
-                .append(star);
+                    .append(star);
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1733,10 +1757,10 @@ var Component = {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
-            .attr('type', 'hidden')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.EditBox + Component.ReplaceCSS(comp.css))
+                .attr('type', 'hidden')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
 
@@ -1748,9 +1772,9 @@ var Component = {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var div = Component.ContainerDiv(comp);
         var el = $('<input></input>')
-            .attr('style', gui_component.defaultCSS.InnerEditBox + Component.ReplaceCSS(comp.css))
-            .attr('type', 'text')
-            .attr('value', comp.content);
+                .attr('style', gui_component.defaultCSS.InnerEditBox + Component.ReplaceCSS(comp.css))
+                .attr('type', 'text')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
         return $('<div></div>').append(div).html();
@@ -1759,17 +1783,17 @@ var Component = {
         var div = Component.ContainerDiv(comp);
 
         var emptyMsg = $('<div class="col-lg-12 biyzad text-center">')
-            .css("border", "1px solid gray")
-            .append($('<h5>').append("No Image"))
-            .append((comp.showProperties) ? $("<i class='fa fa-plus'>")
-                .css("font-size", "20px")
-                .attr('onclick', 'new UserStory().setGUIComponentUploadImage()') :
-                "");
+                .css("border", "1px solid gray")
+                .append($('<h5>').append("No Image"))
+                .append((comp.showProperties) ? $("<i class='fa fa-plus'>")
+                        .css("font-size", "20px")
+                        .attr('onclick', 'new UserStory().setGUIComponentUploadImage()') :
+                        "");
 
         var el = $('<img></img>')
-            .attr("sa-type", 'image')
-            .attr('style', gui_component.defaultCSS.Image + Component.ReplaceCSS(comp.css))
-            .attr('src', comp.content);
+                .attr("sa-type", 'image')
+                .attr('style', gui_component.defaultCSS.Image + Component.ReplaceCSS(comp.css))
+                .attr('src', comp.content);
 
 
 
@@ -1785,8 +1809,8 @@ var Component = {
     Youtube: function (comp) {
         var div = Component.ContainerDiv(comp);
         var el = $('<iframe></iframe>')
-            .attr('style', gui_component.defaultCSS.Youtube + Component.ReplaceCSS(comp.css))
-            .attr('src', 'https://www.youtube.com/embed/' + comp.content);
+                .attr('style', gui_component.defaultCSS.Youtube + Component.ReplaceCSS(comp.css))
+                .attr('src', 'https://www.youtube.com/embed/' + comp.content);
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
         return $('<div></div>').append(div).html();
@@ -1794,18 +1818,18 @@ var Component = {
     FilePicker: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .addClass("form-control")
-            .attr("sa-type", "filepicker")
-            .attr('style', gui_component.defaultCSS.FilePicker + Component.ReplaceCSS(comp.css))
-            .attr('type', 'file')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr("sa-type", "filepicker")
+                .attr('style', gui_component.defaultCSS.FilePicker + Component.ReplaceCSS(comp.css))
+                .attr('type', 'file')
+                .attr('value', comp.content);
 
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1817,17 +1841,17 @@ var Component = {
     Date: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .attr('sa-type', "date")
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.Date + Component.ReplaceCSS(comp.css))
-            .attr('type', 'date')
-            .attr('value', comp.content);
+                .attr('sa-type', "date")
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.Date + Component.ReplaceCSS(comp.css))
+                .attr('type', 'date')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1837,17 +1861,17 @@ var Component = {
     Time: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<input></input>')
-            .addClass("form-control")
-            .attr('sa-type', "time")
-            .attr('style', gui_component.defaultCSS.Time + Component.ReplaceCSS(comp.css))
-            .attr('type', 'time')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr('sa-type', "time")
+                .attr('style', gui_component.defaultCSS.Time + Component.ReplaceCSS(comp.css))
+                .attr('type', 'time')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1857,16 +1881,16 @@ var Component = {
     TextArea: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var el = $('<textarea></textarea>')
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.TextArea + Component.ReplaceCSS(comp.css))
-            .attr('rows', '3')
-            .text(comp.content);
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.TextArea + Component.ReplaceCSS(comp.css))
+                .attr('rows', '3')
+                .text(comp.content);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
         div.append(el);
@@ -1875,12 +1899,12 @@ var Component = {
     SelectBox: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var select = $('<select></select>')
-            .addClass("form-control")
-            .addClass("sa-sct-full-width")
-            .attr("sa-type", 'select')
-            .attr('data-actions-box', "true")
-            .attr('data-live-search', "true")
-            .attr('style', gui_component.defaultCSS.SelectBox + Component.ReplaceCSS(comp.css));
+                .addClass("form-control")
+                .addClass("sa-sct-full-width")
+                .attr("sa-type", 'select')
+                .attr('data-actions-box', "true")
+                .attr('data-live-search', "true")
+                .attr('style', gui_component.defaultCSS.SelectBox + Component.ReplaceCSS(comp.css));
 
         Component.ComponentEvent.Init(select, comp);
 
@@ -1889,8 +1913,8 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -1924,17 +1948,17 @@ var Component = {
                 for (var i = 0; i < r.length; i++) {
                     var val = "";
                     var txt = "";
-                    try{
-                      if (r[i].includes("::")){
-                          val = r[i].split("::")[0];
-                          txt = r[i].split("::")[1];
-                      }else{
-                                                  val = r[i];
-                                                  txt = r[i];
+                    try {
+                        if (r[i].includes("::")) {
+                            val = r[i].split("::")[0];
+                            txt = r[i].split("::")[1];
+                        } else {
+                            val = r[i];
+                            txt = r[i];
 
-                      }
-                        
-                    }catch(err){
+                        }
+
+                    } catch (err) {
                         txt = r[i];
                     }
                     select.append($('<option></option>').val(val).text(txt));
@@ -1957,23 +1981,23 @@ var Component = {
     MultiSelectBox: function (comp) {
         var star = Component.AddMandatoryStar(comp);
         var select = $('<select></select>')
-            .addClass("form-control")
-            .attr('sa-type', 'multiselect')
-            .addClass('sa-selectpicker')
-            .attr('multiple', true)
-            .attr('data-actions-box', "true")
-            .attr('data-live-search', "true")
+                .addClass("form-control")
+                .attr('sa-type', 'multiselect')
+                .addClass('sa-selectpicker')
+                .attr('multiple', true)
+                .attr('data-actions-box', "true")
+                .attr('data-live-search', "true")
 
-            //                .attr('multiple', 'true')
-            .attr('row', '4')
-            .attr('style', gui_component.defaultCSS.MultiSelectBox + Component.ReplaceCSS(comp.css));
+                //                .attr('multiple', 'true')
+                .attr('row', '4')
+                .attr('style', gui_component.defaultCSS.MultiSelectBox + Component.ReplaceCSS(comp.css));
 
         Component.ComponentEvent.Init(select, comp);
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
 
@@ -2006,42 +2030,42 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span"></span>')
-                .append(comp.label)
-                .append(star));
+                    .append(comp.label)
+                    .append(star));
             div.append(comp.isLabelInTop ? "<br>" : "");
         }
         if (comp.content.length > 0) {
             var r = comp.content.split(/\r*\n/);
             for (var i = 0; i < r.length; i++) {
                 var el = $('<input></input>')
-                    .attr('type', 'radio')
-                    .attr('name', 'optradio')
-                    .attr('checked', true);
+                        .attr('type', 'radio')
+                        .attr('name', 'optradio')
+                        .attr('checked', true);
                 Component.ComponentEvent.Init(el, comp);
                 div.append($('<label></label>')
-                    .addClass('radio-inline')
-                    .append(el)
-                    .append($("<span class='comp-title-span'></span>")
-                        .attr('style', gui_component.defaultCSS.RadioButton + Component.ReplaceCSS(comp.css))
-                        .text(r[i])
-                        .append('&nbsp; '))
-                );
+                        .addClass('radio-inline')
+                        .append(el)
+                        .append($("<span class='comp-title-span'></span>")
+                                .attr('style', gui_component.defaultCSS.RadioButton + Component.ReplaceCSS(comp.css))
+                                .text(r[i])
+                                .append('&nbsp; '))
+                        );
             }
         } else {
             for (var i = 1; i <= 3; i++) {
                 var el = $('<input></input>')
-                    .attr('type', 'radio')
-                    .attr('name', 'optradio')
-                    .attr('checked', true);
+                        .attr('type', 'radio')
+                        .attr('name', 'optradio')
+                        .attr('checked', true);
                 Component.ComponentEvent.Init(el, comp);
                 div.append($('<label></label>')
-                    .addClass('radio-inline')
-                    .append(el)
-                    .append($("<span class='comp-title-span'></span>")
-                        .attr('style', gui_component.defaultCSS.RadioButton + Component.ReplaceCSS(comp.css))
-                        .text('Option ' + i + '   ')
-                        .append('&nbsp; '))
-                );
+                        .addClass('radio-inline')
+                        .append(el)
+                        .append($("<span class='comp-title-span'></span>")
+                                .attr('style', gui_component.defaultCSS.RadioButton + Component.ReplaceCSS(comp.css))
+                                .text('Option ' + i + '   ')
+                                .append('&nbsp; '))
+                        );
             }
         }
 
@@ -2052,7 +2076,7 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         if (comp.withLabel === true) {
             div.append($('<span class="comp-title-span></span>').append(comp.label)
-                .append(star))
+                    .append(star))
             div.append((comp.isLabelInTop ? "<br>" : ""))
         }
 
@@ -2060,35 +2084,35 @@ var Component = {
             var r = comp.content.split(/\r*\n/);
             for (var i = 0; i < r.length; i++) {
                 var el = $('<input></input>')
-                    .attr('sa-type', 'checkbox')
-                    .attr('type', 'checkbox')
-                    .attr('checked', true);
+                        .attr('sa-type', 'checkbox')
+                        .attr('type', 'checkbox')
+                        .attr('checked', true);
                 Component.ComponentEvent.Init(el, comp);
                 div.append($('<label></label>')
-                    .addClass('radio-inline')
-                    .append(el)
-                    .append($("<span class='comp-title-span'></span>")
-                        .attr('style', gui_component.defaultCSS.CheckBox + Component.ReplaceCSS(comp.css))
-                        .text(r[i])
-                        .append('&nbsp; '))
-                );
+                        .addClass('radio-inline')
+                        .append(el)
+                        .append($("<span class='comp-title-span'></span>")
+                                .attr('style', gui_component.defaultCSS.CheckBox + Component.ReplaceCSS(comp.css))
+                                .text(r[i])
+                                .append('&nbsp; '))
+                        );
             }
         } else {
             for (var i = 1; i <= 3; i++) {
                 var el = $('<input></input>')
-                    .attr('type', 'checkbox')
-                    .attr('sa-type', 'checkbox')
-                    .attr('name', 'optradio')
-                    .attr('checked', true);
+                        .attr('type', 'checkbox')
+                        .attr('sa-type', 'checkbox')
+                        .attr('name', 'optradio')
+                        .attr('checked', true);
                 Component.ComponentEvent.Init(el, comp);
                 div.append($('<label></label>')
-                    .addClass('radio-inline')
-                    .append(el)
-                    .append($("<span class='comp-title-span'></span>")
-                        .attr('style', gui_component.defaultCSS.CheckBox + Component.ReplaceCSS(comp.css))
-                        .text('Option ' + i + '   ')
-                        .append('&nbsp; '))
-                );
+                        .addClass('radio-inline')
+                        .append(el)
+                        .append($("<span class='comp-title-span'></span>")
+                                .attr('style', gui_component.defaultCSS.CheckBox + Component.ReplaceCSS(comp.css))
+                                .text('Option ' + i + '   ')
+                                .append('&nbsp; '))
+                        );
             }
         }
 
@@ -2100,9 +2124,9 @@ var Component = {
         var div = Component.ContainerDiv(comp);
         var label = (comp.content) ? comp.content : comp.label;
         var el = $('<span class="comp-title-span"></span>')
-            .attr('style', gui_component.defaultCSS.Label + Component.ReplaceCSS(comp.css))
-            .append(label)
-            .append(star);
+                .attr('style', gui_component.defaultCSS.Label + Component.ReplaceCSS(comp.css))
+                .append(label)
+                .append(star);
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
         return $('<div></div>').append(div).html();
@@ -2110,16 +2134,16 @@ var Component = {
     Hiperlink: function (comp) {
         comp.content = (comp.isFromTableNew === true) ? comp.secondContent : comp.content;
         var a = $('<a></a>')
-            .attr('style', gui_component.defaultCSS.Hiperlink + Component.ReplaceCSS(comp.css))
-            .text(comp.label)
-            .append('<br>');
+                .attr('style', gui_component.defaultCSS.Hiperlink + Component.ReplaceCSS(comp.css))
+                .text(comp.label)
+                .append('<br>');
         Component.ComponentEvent.Init(a, comp);
         (comp.param1) ?
-        a.attr('href', '#'): (comp.content) ?
-            a.attr('href', comp.content) :
-            a.attr('href', '#');
+                a.attr('href', '#') : (comp.content) ?
+                a.attr('href', comp.content) :
+                a.attr('href', '#');
         var div = Component.ContainerDiv(comp);
-        !(comp.isFromTable) ? div.append('<br>'): div.append("");
+        !(comp.isFromTable) ? div.append('<br>') : div.append("");
         div.append(a);
         return $('<div></div>').append(div).html();
     },
@@ -2128,14 +2152,14 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var div = Component.ContainerDiv(comp);
         var el = $('<input></input>')
-            .attr('type', 'radio');
+                .attr('type', 'radio');
         Component.ComponentEvent.Init(el, comp);
         div.append(el)
-            .append($("<span class='comp-title-span'></span>")
-                .attr('style', gui_component.defaultCSS.InnerRadioButton + Component.ReplaceCSS(comp.css))
-                .text((comp.content) ? comp.content : comp.label)
-                .append(star)
-                .append('<br>'));
+                .append($("<span class='comp-title-span'></span>")
+                        .attr('style', gui_component.defaultCSS.InnerRadioButton + Component.ReplaceCSS(comp.css))
+                        .text((comp.content) ? comp.content : comp.label)
+                        .append(star)
+                        .append('<br>'));
         return $('<div></div>').append(div).html();
     },
 
@@ -2144,21 +2168,21 @@ var Component = {
         var star = Component.AddMandatoryStar(comp);
         var div = Component.ContainerDiv(comp);
         var el = $('<input></input>')
-            .attr('sa-type', 'checkbox')
-            .attr('type', 'checkbox');
+                .attr('sa-type', 'checkbox')
+                .attr('type', 'checkbox');
         Component.ComponentEvent.Init(el, comp);
         div.append(el)
-            .append($("<span class='comp-title-span'></span>")
-                .attr('style', gui_component.defaultCSS.InnerCheckBox + Component.ReplaceCSS(comp.css))
-                .text((comp.content) ? comp.content : comp.label)
-                .append(star)
-                .append('<br>'));
+                .append($("<span class='comp-title-span'></span>")
+                        .attr('style', gui_component.defaultCSS.InnerCheckBox + Component.ReplaceCSS(comp.css))
+                        .text((comp.content) ? comp.content : comp.label)
+                        .append(star)
+                        .append('<br>'));
         return $('<div></div>').append(div).html();
     },
     InnerLine: function (comp) {
         var div = Component.ContainerDiv(comp);
         var el = $("<hr></hr>")
-            .attr('style', gui_component.defaultCSS.InnerLine + Component.ReplaceCSS(comp.css));
+                .attr('style', gui_component.defaultCSS.InnerLine + Component.ReplaceCSS(comp.css));
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
         return $('<div></div>').append(div).html();
@@ -2166,10 +2190,10 @@ var Component = {
     Icon: function (comp) {
         comp.content = (comp.content) ? comp.content : 'fa-user-circle';
         var div = Component.ContainerDiv(comp);
-        !(comp.isFromTable) ? div.append('<br>'): div.append("");
+        !(comp.isFromTable) ? div.append('<br>') : div.append("");
         var el = $('<i></i>')
-            .addClass('fa ' + comp.content)
-            .attr('style', Component.ReplaceCSS(comp.css));
+                .addClass('fa ' + comp.content)
+                .attr('style', Component.ReplaceCSS(comp.css));
         Component.ComponentEvent.Init(el, comp);
         div.append(el);
         return $('<div></div>').append(div).html();
@@ -2177,10 +2201,10 @@ var Component = {
     Button: function (comp) {
         comp.content = (comp.content) ? comp.content : comp.label;
         var btn = $('<input></input>')
-            .addClass("form-control")
-            .attr('style', gui_component.defaultCSS.Button + Component.ReplaceCSS(comp.css))
-            .attr('type', 'button')
-            .attr('value', comp.content);
+                .addClass("form-control")
+                .attr('style', gui_component.defaultCSS.Button + Component.ReplaceCSS(comp.css))
+                .attr('type', 'button')
+                .attr('value', comp.content);
         Component.ComponentEvent.Init(btn, comp);
         //        (comp.param1) ? btn.attr('onclick', "new UserStory().setGUIComponentButtonGUIModal(\'" + comp.param1 + "\')")
         //                .attr('data-toggle', "modal")
@@ -2188,7 +2212,7 @@ var Component = {
         //                : "";
 
         var div = Component.ContainerDiv(comp);
-        !(comp.isFromTable) ? div.append('<br>'): div.append("");
+        !(comp.isFromTable) ? div.append('<br>') : div.append("");
         div.append(btn);
         return $('<div></div>').append(div).html();
     },
@@ -2197,7 +2221,8 @@ var Component = {
         if (comp.content.length > 0) {
             try {
                 innerHTML = replaceTagsReverse(comp.content);
-            } catch (err) {}
+            } catch (err) {
+            }
         }
         var div = Component.ContainerDiv(comp);
         div.append(innerHTML);
@@ -2212,7 +2237,7 @@ var Component = {
             el = $(replaceTagsReverse(comp.content));
         }
         el.attr('style', Component.ReplaceCSS(comp.css))
-            .append(star);
+                .append(star);
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
 
@@ -2240,7 +2265,8 @@ var Component = {
                 carrier.setBacklogId(comp.param1);
                 _LoadSectionGuiContainer(carrier);
 
-            } catch (err) {}
+            } catch (err) {
+            }
         }
         comp.hasOnClickEvent = true;
         //        comp.showProperties = false;
@@ -2248,9 +2274,9 @@ var Component = {
 
         div.append(this.SectionAction.GetPropertiesSection(comp));
         div.append($('<div class="row">')
-            .addClass("component-section-row filedset-style-section")
-            .append($("<span>").addClass("section-legend").text("section"))
-            .append(innerHTML));
+                .addClass("component-section-row filedset-style-section")
+                .append($("<span>").addClass("section-legend").text("section"))
+                .append(innerHTML));
 
         //        div.append(innerHTML);
         return $('<div></div>').append(div).html();
@@ -2274,20 +2300,36 @@ var Component = {
         comp.hasOnClickEvent = true;
         comp.showProperties = true;
         var div = Component.ContainerDiv(comp);
-        
-        div.append(this.SectionAction.GetPropertiesSection(comp));
-        div.append($('<div class="row">')
-            .addClass("component-section-row filedset-style-section modal-hide-btn-class").attr("data-section-title",comp.label)
-            .append(innerHTML))
 
-           if(cr_input_comp_attribute_kv[inputId]['sa-notClosedModal'])   {
-            div.append($("<span>")
-                 .append('<i class="fas fa-chevron-up"></i>')
-                  .addClass("open-modal-hide-modal-btn"));
-           }
-        
-        
-           
+        var div4  = $('<div class="row">');
+        var div4Modal = '<i class="fas fa-chevron-up" aria-hidden="true"></i>'
+        try {
+            if (cr_input_comp_attribute_kv[comp.id]['sa-not-closed-modal-passive']) {
+                div4.addClass("closed-modal");
+                div4Modal = '<i class="fas fa-chevron-down" aria-hidden="true"></i>'
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+
+        div.append(this.SectionAction.GetPropertiesSection(comp));
+        div.append(div4
+                .addClass("component-section-row filedset-style-section modal-hide-btn-class").attr("data-section-title", comp.label)
+                .append(innerHTML))
+
+        try {
+            if (cr_input_comp_attribute_kv[comp.id]['sa-not-closed-modal']) {
+                div.append($("<span>")
+                        .append(div4Modal)
+                        .addClass("open-modal-hide-modal-btn"));
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+
+
 
         //        div.append(innerHTML);
         return $('<div></div>').append(div).html();
@@ -2295,92 +2337,92 @@ var Component = {
     SectionAction: {
         GetPropertiesSection: function (comp) {
             var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
-                $('<div class="col-lg-12 text-right">')
-                .addClass("live-prototype-component-properties")
-                //                    .css("display", "none")
-                .attr("id", "comp_id_" + comp.id)
-                .css("padding-top", "15px")
-                .append(" &nbsp;")
-                .append(this.GenAddUserStory(comp))
-                .append(" &nbsp;")
-                .append(this.GenRedirectTo(comp))
-                .append(" &nbsp;")
-                .append(this.GenTableProperties(comp))
-                .append("  &nbsp;&nbsp;")
-                .append(this.GenMoveDrag(comp))
-                .append("  &nbsp;&nbsp;&nbsp;")
-                .append(this.GenRemoveSection(comp))
+                    $('<div class="col-lg-12 text-right">')
+                    .addClass("live-prototype-component-properties")
+                    //                    .css("display", "none")
+                    .attr("id", "comp_id_" + comp.id)
+                    .css("padding-top", "15px")
+                    .append(" &nbsp;")
+                    .append(this.GenAddUserStory(comp))
+                    .append(" &nbsp;")
+                    .append(this.GenRedirectTo(comp))
+                    .append(" &nbsp;")
+                    .append(this.GenTableProperties(comp))
+                    .append("  &nbsp;&nbsp;")
+                    .append(this.GenMoveDrag(comp))
+                    .append("  &nbsp;&nbsp;&nbsp;")
+                    .append(this.GenRemoveSection(comp))
 
-                .append(" ") :
-                "";
+                    .append(" ") :
+                    "";
             return elDiv;
         },
         SectionEmptyMessage: function (tableId) {
             var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
-                '<h5> No User Story has been entered on this section</h5>' +
-                '<i class="fa fa-plus" title="Add User Story" onclick="fillSectionUserStory(\'' + tableId + '\')" \n\
+                    '<h5> No User Story has been entered on this section</h5>' +
+                    '<i class="fa fa-plus" title="Add User Story" onclick="fillSectionUserStory(\'' + tableId + '\')" \n\
                     style="font-size: 30px; color: rgb(213, 214, 218); cursor: pointer;" aria-hidden="true"></i>'
             '</div>';
             return msg;
         },
         FreeEmptyEmptyMessage: function () {
             var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
-                '<h5> No HTML Content has been entered on this component</h5>' +
-                '</div>';
+                    '<h5> No HTML Content has been entered on this component</h5>' +
+                    '</div>';
             return msg;
         },
         GenAddUserStory: function (comp) {
             return $('<i class="fa fa-plus">')
-                .css("font-size", "14px")
-                .attr("title", "Add User Story")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .attr("onclick", "fillSectionUserStory('" + comp.id + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Add User Story")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .attr("onclick", "fillSectionUserStory('" + comp.id + "')")
         },
         GenRedirectTo: function (comp) {
             return $('<i class="fa fa-mail-forward">')
-                .css("font-size", "14px")
-                .attr("title", "Redirect to")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .attr("onclick", "new UserStory().redirectUserStoryCore('" + comp.param1 + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Redirect to")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .attr("onclick", "new UserStory().redirectUserStoryCore('" + comp.param1 + "')")
         },
         GenTableProperties: function (comp) {
             return $('<i class="fa fa-table">')
-                .css("font-size", "14px")
-                .attr("title", "Table Properties")
-                .css("color", "#d5d6da !important")
-                .css("cursor", "pointer")
-                .addClass("component-class")
-                .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
+                    .css("font-size", "14px")
+                    .attr("title", "Table Properties")
+                    .css("color", "#d5d6da !important")
+                    .css("cursor", "pointer")
+                    .addClass("component-class")
+                    .attr("onclick", "readInputTableProperties(this,'" + comp.id + "')")
         },
         GenMoveDrag: function (comp) {
 
             return $('<i class="fa fa-arrows-alt">')
-                .attr("title", "Move Table with Drag and Drop")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
+                    .attr("title", "Move Table with Drag and Drop")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
 
         },
         GenReadFromContent: function (comp) {
             var color = SAInput.Tables[comp.fkInputTableId].readContent === '1' ?
-                '#2196F3' : '#d5d6da';
+                    '#2196F3' : '#d5d6da';
             return $('<i class="fa fa-inbox">')
-                .attr("title", "Read From Content")
-                .css("font-size", "14px")
-                .css("color", color)
-                .css("cursor", "pointer")
-                .attr("onclick", "setInputTableReadFromContent(this,'" + comp.fkInputTableId + "')")
+                    .attr("title", "Read From Content")
+                    .css("font-size", "14px")
+                    .css("color", color)
+                    .css("cursor", "pointer")
+                    .attr("onclick", "setInputTableReadFromContent(this,'" + comp.fkInputTableId + "')")
         },
         GenRemoveSection: function (comp) {
 
             return $('<i class="fa fa-trash-o">')
-                .attr("title", "Remove Table")
-                .css("font-size", "14px")
-                .css("color", '#d5d6da')
-                .css("cursor", "pointer")
-                .attr("onclick", "removeSection(this,'" + comp.id + "')")
+                    .attr("title", "Remove Table")
+                    .css("font-size", "14px")
+                    .css("color", '#d5d6da')
+                    .css("cursor", "pointer")
+                    .attr("onclick", "removeSection(this,'" + comp.id + "')")
         },
     },
     Tab: function (comp) {
@@ -2407,7 +2449,7 @@ var Component = {
         }
         var div = Component.ContainerDiv(comp);
         div.append($("<div class='row'></div>")
-            .append(innerHTML))
+                .append(innerHTML))
         return $('<div></div>').append(div).html();
     }
 }

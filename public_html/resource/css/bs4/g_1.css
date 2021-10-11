@@ -6440,7 +6440,7 @@ td.selected{
 	padding: 10px 5px;
 	margin-bottom: 10px;
 	border-radius: 5px;
-    display: flex;
+   
 }
 .message-wrap .message-list .time {
 	text-align: right;

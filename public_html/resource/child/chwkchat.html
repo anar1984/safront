@@ -29,152 +29,33 @@
         <header>
             <img src="https://app.sourcedagile.com/api/get/files/Emblem_person_blue_77A86106C28E7.png" alt="">
             <div class="info">
-                <span class="user" id="user-header-bolean">Suleyman</span>
+                <span class="user" id="user-header-bolean"></span>
 
             </div>
             <div class="open">
                 <i class="fas fa-ellipsis-h"></i>
             </div>
         </header>
-        <div class="message-wrap" id="message-wrap-chat">
-            <div class="message-list">
-                <div class="msg">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit minus minima quo corporis.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list me">
-                <div class="msg">
-                    <p>
-                        Lorem ipsum dolor sit amet.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list">
-                <div class="msg">
-                    <p>Odit minus minima quo corporis.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list me">
-                <div class="msg">
-                    <p>
-                        Lorem.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list">
-                <div class="msg">
-                    <p>
-                        Lorem, ipsum dolor.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list me">
-                <div class="msg">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad numquam laudantium illum quidem?
-                        Iste hic doloribus quos non iure libero excepturi, praesentium in, blanditiis repellat labore
-                        illo, voluptas sed fugit consequatur dolorum assumenda ea nesciunt. Pariatur.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list">
-                <div class="msg">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit minus minima quo corporis.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list me">
-                <div class="msg">
-                    <p>
-                        Lorem, ipsum.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list">
-                <div class="msg">
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime, nulla doloribus dolore impedit
-                        dolorem hic ex dolor quo illo tenetur ab exercitationem atque iusto, voluptatibus quos.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
-            <div class="message-list me">
-                <div class="msg">
-                    <p>
-                        Lorem dolor sit.
-                    </p>
-                </div>
-                <div class="time">now</div>
-            </div>
+        <div class="message-wrap" id="historyMsg">
+           
         </div>
         <div class="message-footer">
-            <div class="form-control" id="text-message-input" contenteditable="true"></div>
+            <div class="form-control" id="messageInput" contenteditable="true"></div>
+            <button class=" btn"  id="emoji" type="button"  title="emoji" ><i class="far fa-smile-beam"></i></button>
+            <label for="sendImage" class="imageLable">
+                <button type="button" class="btn btn-light btn-sm"><i class="fas fa-camera"></i></button>
+                <input id="sendImage" type="file" value="image"/>
+            </label>
             <button class="record_btn btn" id="button"></button>
-            <button class=" btn-outline-secondary   btn " type="button" id="send_message_button">Göndər</button>
+            <button class=" btn-outline-secondary   btn " type="button" id="sendBtn">Göndər</button>
         </div>
     </div>
 </div>
 
-<div class="hidden" style="display: none;">
-    <div data-toggle="tooltip" orderno="1" id="21052514504106703772" pid="21052514504106703772"
-        class="draggable resize1 tooltipMan component-class component-container-dashed col-lg-2 hover-prototype-selector"
-      data-original-title="" title="">
-          <input
-            class="form-control sa-onloadclick init-on-loader component-input-class"
-            style="border: 2px dashed rgb(226, 223, 208);" type="text" value=""
-            onclick_trigger_id="21052516180701474362" onclick="triggerAPI(this,'21052516180701474362')" row-no=""
-            pdid="21052514504106703772" id="comp_id_21052514504106703772">
+<div id="loginWrapper">
+    <p id="info">Qoşulur....</p>
+    <div id="nickWrapper">
+        <input type="text" placeHolder="nickname" id="nicknameInput" />
+        <input type="button" value="OK" id="loginBtn" />
     </div>
 </div>
-
-
-
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyC4KWuhO42fiyTW1A9y-t8LFvN8DBSL8cI",
-      authDomain: "cheweek-message.firebaseapp.com",
-      projectId: "cheweek-message",
-      storageBucket: "cheweek-message.appspot.com",
-      messagingSenderId: "973244946853",
-      appId: "1:973244946853:web:162dab774115e6b9bc704c"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
-
-    const myName1 = $("#userprofile_main_id").text();
-const id1 = $("#userprofile_main_id").attr('usrid');
-/// chat >>>>>>>>>>>>>>>>>>>>>>>
-function sendMessageCh(message) {
-  
-    // save in database
-    firebase.database().ref("messages").push().set({
-        "sender": myName1,
-        "message": message,
-        "id": id1
-    });
-
-    // prevent form from submitting
-    return false;
-}
-  </script>
