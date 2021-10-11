@@ -3662,7 +3662,6 @@ var SAFN = {
                                                     .addClass("function-statement-input-common cs-select-box")
                                                     .append($('<select>')
                                                             .addClass('function-statement-container-change-event')
-                                                            .attr('data-width', '600px')
                                                             .attr('data-live-search', "true")
                                                             .attr('title', "Select Api")
                                                             .attr("id", 'get-callapi-select-box')
@@ -3727,7 +3726,7 @@ var SAFN = {
                                     )
                             .append($('<div>').addClass('row mr-0 ml-0')
                                     .append($('<div>')
-                                            .addClass('cs-input-group col-md-4')
+                                            .addClass('cs-input-group')
                                             .append($('<input>')
                                                     .addClass('function-statement-container-change-event')
                                                     .addClass("cs-if-input")
@@ -3737,10 +3736,10 @@ var SAFN = {
                                                     .val(key)
                                                     )
                                             )
-                                    .append($('<div>').addClass('cs-input-group select-if-style col-md-4')
+                                    .append($('<div>').addClass('cs-input-group select-if-style')
                                             .append(SAFN.Convert.Common.IfStatementOperations(oper)))
                                     .append($('<div>')
-                                            .addClass('cs-input-group col-md-4')
+                                            .addClass('cs-input-group')
                                             .append($('<input>')
                                                     .addClass('function-statement-container-change-event')
                                                     .addClass("cs-if-input")
@@ -4175,7 +4174,6 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("col-12")
                     .addClass("function-statement-container")
                     .addClass("cs-sum-inbox")
                     .append($("<div>")
@@ -4505,7 +4503,6 @@ var SAFN = {
             }
 
             var div = $("<div>")
-                    .addClass("col-12")
                     .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-sum")
                     .append($("<div>")
                             .addClass("d-flex justify-content-start")
@@ -4647,7 +4644,7 @@ var SAFN = {
 
             $(ul).sortable({
                 update: function () {
-                    SAFN.Reconvert.SumStatement($(this).find("input"));
+                    SAFN.Reconvert.IncStatement($(this).find("input"));
                 }
             });
             return div;
@@ -5574,7 +5571,7 @@ var SAFN = {
 
 // Add fields
 $(document).on('click', '#description_table_id .cs-btn-sum', function (e) {
-    $(this).parents('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
+    $(this).closest('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
 
             .after($("<li>")
                     .addClass("ui-sortable-placeholder cs-addons-sum-name")
@@ -5599,7 +5596,7 @@ $(document).on('click', '#description_table_id .cs-btn-sum', function (e) {
 });
 
 $(document).on('click', '#description_table_id .cs-btn-concat', function (e) {
-    $(this).parents('.cs-sum-inbox-concat').find('ul#concat-sortable li:last-child')
+    $(this).closest('.cs-sum-inbox-concat').find('ul#concat-sortable li:last-child')
 
             .after($("<li>")
                     .addClass("ui-sortable-placeholder cs-addons-sum-name")
@@ -5624,7 +5621,7 @@ $(document).on('click', '#description_table_id .cs-btn-concat', function (e) {
 });
 
 $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
-    $(this).parents('.cs-sum-inbox-dec').find('ul#dec-sortable li:last-child')
+    $(this).closest('.cs-sum-inbox-dec').find('ul#dec-sortable li:last-child')
 
             .after($("<li>")
                     .addClass("ui-sortable-placeholder cs-addons-sum-name")
@@ -5816,17 +5813,18 @@ $(document).ready(function () {
         '@.callfn()',
         '@.callapi()'
     ];
-    $(document).on('keyup keydown click', '.add-description', function (e) {
-
+    $(document).on('keyup keydown', '.add-description', function (e) {
         $(this).autocomplete({
-            minLength: 0,
-            source: shortcodes,
-            select: function (event, ui) {
-                $(this).change();
-            },
-            position: {my: "left bottom", at: "left top", collision: "flip"}
-        }).autocomplete("widget").addClass("cs-function-list");
+                minLength: 0,
+                source: shortcodes,
+                select: function (event, ui) {
+                    $(this).change();
+                    $(this).val(''); return false;
+                },
+                position: {my: "left bottom", at: "left top", collision: "flip"}
+            }).autocomplete("widget").addClass("cs-function-list");
     });
+
     // first table shortcode
     $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
         $("#backlogDescriptionText").change();
@@ -5836,7 +5834,11 @@ $(document).ready(function () {
         $("#ifbacklogDescText").change();
         $("#ifbacklogDescText").val('');
     });
-
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            $(this).val(' ').change();
+        }
+    });
 
 
     var globElementTbody
@@ -5853,6 +5855,27 @@ $(document).ready(function () {
     })
 
     $(document).on("change", ".function-statement-input-common", function (e) {
+        $.fn.textWidth = function(text, font) {
+            if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
+            $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+            return $.fn.textWidth.ZadFakeEl.width();
+        };
+        
+        $(this).on('input', function() {
+            var inputWidth = $(this).textWidth();
+            $(this).css({
+                width: inputWidth + 15
+            })
+        }).trigger('input');
+        
+        function inputWidth(CSelem, minW, maxW) {
+            CSelem = $(this);
+        }
+        
+        var SheyTargetElem = $(this);
+        
+        inputWidth(SheyTargetElem);
+
         SAFN.Convert.Common.GetLineBody(this);
     })
 
@@ -5940,100 +5963,6 @@ $(document).ready(function () {
         $('#insert-funct-input').val(' ').keydown();
     })
 
-//    $(document).on('change', '#ifbacklogDescText', function (e) {
-//        var txt = $(this).val();
-//        $(this).val('');
-//        var comp = SAFN.InitConvention(txt);
-//        var tr = $('<tr>');
-//        SAFN.Convert.AddCommandInfoToTr(tr, txt);
-//
-//        $(this).closest('div.function-statement-container')
-//                .find('tbody').first()
-//                .append(tr
-//                        .append($('<td>')
-//                                .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
-//                                )
-//                        .append($('<td>').append(comp))
-//
-//                        .append($('<td>')
-//                                .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-//                                )
-//                        .append($('<td>')
-//                                .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-//                                )
-//
-//                        );
-//        $('.cs-if-script-box select').selectpicker();
-//        $(this).focus().val('');
-//    });
-//    $(document).on('change', '#forlistBacklogDescText', function (e) {
-//        var txt = $(this).val();
-//        var comp = SAFN.InitConvention(txt);
-//        $(this)
-//                .closest('div.function-statement-container')
-//                .find('tbody').first()
-//                .append($('<tr>')
-//                        .append($('<td>')
-//                                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-//                                )
-//                        .append($('<td>').append(comp))
-//
-//                        .append($('<td>')
-//                                .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-//                                )
-//                        .append($('<td>')
-//                                .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-//                                )
-//
-//                        );
-//        $(this).focus().val('');
-//    });
-//    $(document).on('change', '#fortableBacklogDescText', function (e) {
-//        var txt = $(this).val();
-//        var comp = SAFN.InitConvention(txt);
-//        $(this)
-//                .closest('div.function-statement-container')
-//                .find('tbody').first()
-//                .append($('<tr>')
-//                        .append($('<td>')
-//                                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-//                                )
-//                        .append($('<td>').append(comp))
-//
-//                        .append($('<td>')
-//                                .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-//                                )
-//                        .append($('<td>')
-//                                .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-//                                )
-//
-//                        );
-//        $(this).focus().val('');
-//    });
-//    $(document).on('change', '#ifhasvalueBacklogDescText', function (e) {
-//        var txt = $(this).val();
-//        var comp = SAFN.InitConvention(txt);
-//        $(this)
-//                .closest('div.function-statement-container')
-//                .find('tbody').first()
-//                .append($('<tr>')
-//                        .append($('<td>')
-//                                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
-//                                )
-//                        .append($('<td>').append(comp))
-//
-//                        .append($('<td>')
-//                                .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-//                                )
-//                        .append($('<td>')
-//                                .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-//                                )
-//
-//                        );
-//        $(this).focus().val('');
-//    });
-
-
 //    $(document).on('change', '#ifhasnotvalueBacklogDescText', function (e) {
     $(document).on('change', '.addGeneralProcessDescription', function (e) {
         var txt = $(this).val();
@@ -6082,20 +6011,6 @@ $(document).ready(function () {
         tr.remove();
         SAFN.Convert.Common.GetLineBody(fstEl);
     });
-
-
-//    $(document).on('change', '#ifbacklogDescText', function (e) {
-//
-//        var txt = $(this).val();
-//        var comp = SAFN.InitConvention(txt);
-//            .closest('div.function-statement-container')
-//            .find('tbody')
-//            .append($('<tr>')
-//            .append($('<td>').append(comp))
-//            
-//            );
-//            $('.cs-if-script-box select').selectpicker();
-//    });
 
 
 });

@@ -98,7 +98,7 @@
     padding: 3px 5px;
     height: 25px;
     border: none;
-    width: 130px;
+    min-width: 120px;
     vertical-align: middle;
     border-radius: 3px;
     background: rgb(39 43 124 / 55%);
@@ -592,13 +592,13 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
 }
 .cs-if-script-box {
     background-color: #F89CBE !important;
-    padding: 7px;
+    padding: 1px;
     display: block !important;
     padding-top: 0;
 }
 .cs-forlist-script-box {
     background-color: rgb(170 192 197) !important;
-    padding: 7px;
+    padding: 1px;
     display: block !important;
     padding-top: 0;
 }
@@ -1675,8 +1675,8 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
 }
 .descriptiontable {
     min-width: 100%;
-    width: max-content;
-    overflow: hidden;
+    /* width: max-content;
+    overflow: hidden; */
 }
 .cs-sum-inbox-callapi ul li.cs-select-api-info {
     margin: 0 0px;

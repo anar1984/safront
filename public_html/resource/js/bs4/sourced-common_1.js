@@ -5581,6 +5581,31 @@ UserStory.prototype = {
           $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i+1));
           });
+
+          $('.cs-sum-inbox input.function-statement-input-common').each(function(i) {
+                $.fn.textWidth = function(text, font) {
+                if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
+                $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+                return $.fn.textWidth.ZadFakeEl.width();
+            };
+            
+            $(this).on('input', function() {
+                var inputWidth = $(this).textWidth();
+                $(this).css({
+                    width: inputWidth + 15
+                })
+            }).trigger('input');
+            
+            function inputWidth(CSelem, minW, maxW) {
+                CSelem = $(this);
+            }
+            
+            var SheyTargetElem = $(this);
+            
+            inputWidth(SheyTargetElem);
+
+          });
+  
                
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();
