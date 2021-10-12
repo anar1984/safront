@@ -3707,10 +3707,11 @@ var SAFN = {
                     table.append(lnSt);
 
                     $(table).find('tbody').first().sortable({
+                        connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
                         }
-                    });
+                    }).disableSelection();
                     $(table).find('select').selectpicker();
                 }
             }
@@ -3788,11 +3789,12 @@ var SAFN = {
                     table.append(lnSt);
 
                     $(table).find('tbody').first().sortable({
+                        connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
 
                         }
-                    });
+                    }).disableSelection();
                     $(table).find('select').selectpicker();
                 }
 
@@ -3862,11 +3864,12 @@ var SAFN = {
                     table.append(lnSt);
 
                     $(table).find('tbody').first().sortable({
+                        connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
 
                         }
-                    });
+                    }).disableSelection();
                     $(table).find('select').selectpicker();
                 }
             }
@@ -3930,11 +3933,12 @@ var SAFN = {
                 if (fnShey.length > 0) {
                     table.append(lnSt);
                     $(table).find('tbody').first().sortable({
+                        connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
 
                         }
-                    });
+                    }).disableSelection();
                     $(table).find('select').selectpicker();
                 }
 
@@ -3998,11 +4002,12 @@ var SAFN = {
                 if (fnShey.length > 0) {
                     table.append(lnSt);
                     $(table).find('tbody').first().sortable({
+                        connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
 
                         }
-                    });
+                    }).disableSelection();
                     $(table).find('select').selectpicker();
                 }
 
@@ -5819,7 +5824,7 @@ $(document).ready(function () {
                 source: shortcodes,
                 select: function (event, ui) {
                     $(this).change();
-                    $(this).val(''); return false;
+                    $(".fx-shortcodes-btn .add-description").val(''); return false;
                 },
                 position: {my: "left bottom", at: "left top", collision: "flip"}
             }).autocomplete("widget").addClass("cs-function-list");
@@ -5834,16 +5839,15 @@ $(document).ready(function () {
         $("#ifbacklogDescText").change();
         $("#ifbacklogDescText").val('');
     });
-    $(document).on('keypress',function(e) {
+    $(document).on('change',function(e) {
         if(e.which == 13) {
+
             $(this).val(' ').change();
         }
     });
 
 
     var globElementTbody
-
-
 
     $(document).on("change", "select.function-statement-input-common.select-api-box", function (e) {
         var backlogId = $(this).val();
@@ -5854,7 +5858,7 @@ $(document).ready(function () {
         $(this).closest('ul').find('.api-info-synchrone ').text(apiSyncRequest);
     })
 
-    $(document).on("change", ".function-statement-input-common", function (e) {
+    $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
         $.fn.textWidth = function(text, font) {
             if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
             $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));

@@ -5568,11 +5568,12 @@ UserStory.prototype = {
 
 
         $(table).sortable({
+            connectWith: "tbody",
             handle:"#cs-move-tr",
             update: function (e,ui) {
             moveBacklogDescDrag(ui.item)
             }
-          });
+          }).disableSelection();
 
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
@@ -5606,7 +5607,11 @@ UserStory.prototype = {
 
           });
   
-               
+          $(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+            if (e.keyCode === 13) {
+                  new UserStory().insertNewBacklogDesc();
+            }
+         });
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();
