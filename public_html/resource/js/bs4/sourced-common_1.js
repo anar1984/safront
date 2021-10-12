@@ -5566,10 +5566,9 @@ UserStory.prototype = {
         }
         table.append(lasttr);
 
-
         $(table).sortable({
             connectWith: "tbody",
-            handle:"#cs-move-tr",
+            handle:".cs-move-tr",
             update: function (e,ui) {
             moveBacklogDescDrag(ui.item)
             }
@@ -5608,10 +5607,11 @@ UserStory.prototype = {
           });
   
           $(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
-            if (e.keyCode === 13) {
-                  new UserStory().insertNewBacklogDesc();
-            }
-         });
+                if (e.keyCode === 13) {
+                    new UserStory().insertNewBacklogDesc();
+                }
+            });
+
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();

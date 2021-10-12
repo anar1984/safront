@@ -3710,6 +3710,7 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
+                            SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
@@ -3772,11 +3773,9 @@ var SAFN = {
             body = SAFN.Function_For_Body_Statement_Replacement(body);
 
             var bodyList = body.split(';');
-            var table = $('<table><tbody>').addClass('ifhasvalue-inc-table').attr('border', 0);
+            var table = $('<table><tbody>').addClass('ifhasvalue-inc-table connectSort').attr('border', 0);
             var tfoot = $('<tfoot>').addClass('if-inc-tfoot').attr('border', 0);
             var ftr = $('<td><div data-toggle="modal" data-target="#storyCardFunctionInsertBox" class="fx-shortcodes-btn"><label for="inser-funct-input"><i class="agile-icon-fx"></i></label></div><input type="text" class="form-control add-description addGeneralProcessDescription" id="ifhasvalueBacklogDescText" placeholder="Add Process Description"></td>');
-
-            // $('.if-inc-table tr').attr('in_pid');
 
             for (var sti in bodyList) {
                 var lnSt = $('<tr>');
@@ -3792,7 +3791,7 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
-
+                            SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
@@ -3867,7 +3866,7 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
-
+                            SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
@@ -3936,7 +3935,7 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
-
+                            SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
@@ -4005,7 +4004,7 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
-
+                            SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
@@ -4619,7 +4618,7 @@ var SAFN = {
                                     .addClass("col-cs-1 d-table mr-2")
                                     .append($("<span>")
                                             .addClass("cs-funcname d-table-cell")
-                                            .text("Sum")
+                                            .text("Inc")
                                             )
                                     )
                             .append($("<div>").addClass('col-cs-2')
@@ -5781,6 +5780,8 @@ function loadSelecPickerOnChnageFnList(element) {
 $(document).ready(function () {
     var shortcodes = [
         '@.if(){}',
+        '@.ifhasvalue(){}',
+        '@.ifhasnotvalue(){}',
         '@.forlist(){}',
         '@.fortable(){}',
         '@.get()',

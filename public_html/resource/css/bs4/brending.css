@@ -489,7 +489,7 @@ tbody .ifbacklogDescriptionText:hover{
     outline: thin dotted #272b7c !important;
     outline: none;
 }
-table.if-inc-table {
+table.if-inc-table, table.ifhasnotvalue-inc-table, table.ifhasvalue-inc-table, table.fortable-inc-table, table.forlist-inc-table {
     background: #ffffff;
     width: 100%;
 }
@@ -1671,12 +1671,12 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     text-align: left;
 }
 .storycard_ipo {
-    overflow: auto;
+    /* overflow: auto; */
 }
 .descriptiontable {
-    min-width: 100%;
-    /* width: max-content;
-    overflow: hidden; */
+    width: 100%;
+    overflow: auto;
+    display: block;
 }
 .cs-sum-inbox-callapi ul li.cs-select-api-info {
     margin: 0 0px;
@@ -1698,4 +1698,30 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
 }
 .cs-forlist-class-name input.cs-forlist-cn-val {
     background: rgb(113 151 160);
+}
+tbody tr.sortbodyEmpty {
+    display: inline-block;
+    min-height: 35px;
+    width: 100%;
+}
+.vertical-alignment-helper {
+    display:table;
+    margin-top: 50px;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.vertical-align-center .modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+ max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching full width */
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events:all;
 }
