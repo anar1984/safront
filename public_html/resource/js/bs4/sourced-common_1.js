@@ -15000,6 +15000,38 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             }
 
 
+
+            var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
+            fillBacklogHistory4View(backlogId, isApi);
+
+            if (isApi === '1') {
+                callStoryCard(backlogId);
+                return;
+            }
+
+            $('#storyCardListSelectBox').val(backlogId);
+            $('#storyCardListSelectBox').change();
+
+            $('#container-us-body').find('tr[sid=' + backlogId + ']')
+                    .first().find('a').first().focus().click();
+        } catch (err) {
+            console.log(err)
+        }
+        
+        
+        
+        
+        
+        
+        
+        try {
+//            event.preventDefault();
+
+            if (backlogId.length === 0) {
+                return;
+            }
+
+
            
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
