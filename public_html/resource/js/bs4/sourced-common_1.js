@@ -5539,7 +5539,7 @@ UserStory.prototype = {
                     .append($('<td>')
                             .addClass('text-holder')
                             .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
-                            .attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
+                            //.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
                             .attr('idesc', Replace2Primes(obj[n].description))
                             .append($('<span>')
                                     .addClass("procDescTitleNewNowAfter")

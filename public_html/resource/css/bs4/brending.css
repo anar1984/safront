@@ -55,11 +55,14 @@
      word-break: keep-all;
 }
 .cs-sum-inbox {
+    padding: 0;
+    float: left;
+    border-radius: 5px;
+}
+.cs-sum-inbox > div {
     background-color: #9395BD;
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
-    padding: 0;
     border-radius: 5px;
-    float: left;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi {
     background-color: #b98181;
@@ -98,7 +101,8 @@
     padding: 3px 5px;
     height: 25px;
     border: none;
-    min-width: 120px;
+    min-width: auto;
+    max-width: 520px;
     vertical-align: middle;
     border-radius: 3px;
     background: rgb(39 43 124 / 55%);
@@ -262,7 +266,7 @@ background: rgb(39 43 124 / 100%);
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr {
     height: 100%;
-    width: 35px;
+    width: 26px;
     background: transparent;
     vertical-align: middle;
     display: inline-block;
@@ -542,7 +546,7 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     border-color: transparent;
     color: #272B7C !important;
 }
-.cs-if-script-box table tr td .cs-sum-inbox {
+.cs-if-script-box table tr td .cs-sum-inbox, .cs-forlist-script-box table tr td .cs-sum-inbox {
     background-color: transparent;
     box-shadow: none;
     padding: 1px;
@@ -719,7 +723,7 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
     margin: 0;
     width: 456px !important;
     height: 100%;
-    max-height: 130px;
+    max-height: 290px;
     position: relative;
     top: 8px !important;
     left: 0 !important;
@@ -1671,12 +1675,10 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     text-align: left;
 }
 .storycard_ipo {
-    /* overflow: auto; */
+
 }
 .descriptiontable {
     width: 100%;
-    overflow: auto;
-    display: block;
 }
 .cs-sum-inbox-callapi ul li.cs-select-api-info {
     margin: 0 0px;
@@ -1717,11 +1719,59 @@ tbody tr.sortbodyEmpty {
     vertical-align: middle;
 }
 .vertical-align-center .modal-content {
-    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
     width:inherit;
- max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching full width */
+    max-width:inherit;
     height:inherit;
-    /* To center horizontally */
     margin: 0 auto;
     pointer-events:all;
+}
+.cs-sum-inbox .btn.fa-cog {
+    font-size: 14px;
+    color: #d8d9e2 !important;
+    vertical-align: middle;
+}
+.cs-sum-inbox .btn.fa-cog:after {
+    font-size: 12px;
+    display: none;
+}
+.cs-sum-inbox .btn.fa-cog:hover {
+    background-color: transparent;
+}
+.cs-sum-inbox .btn.fa-cog:focus {
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn.fa-cog:not(:disabled):not(.disabled).active, .cs-sum-inbox .btn.fa-cog:not(:disabled):not(.disabled):active, .cs-sum-inbox .show>.btn.fa-cog.dropdown-toggle {
+    color: #fff;
+    background-color: transparent;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn.fa-cog:hover:before, .cs-sum-inbox .btn.fa-cog:hover:after {
+    color: #272b7c;
+}
+.cs-sum-inbox .btn.fa-cog .dropdown-menu.show {
+    min-width: 120px;
+    box-shadow: 0px 2px 6px rgb(0 0 0 / 18%);
+}
+.cs-sum-inbox .btn.fa-cog .dropdown-menu button {
+    vertical-align: middle;
+    color: #272b7c !important;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
+    height: 25px;
+    font-size: 12px;
+    line-height: inherit;
+    padding: 6px 10px;
+    border-radius: 0;
+}
+.cs-sum-inbox .btn.fa-cog .dropdown-menu button:hover, .cs-sum-inbox .btn.fa-cog .dropdown-menu button:focus {
+    background-color: #3c3f89 !important;
+    color: #fff !important;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn.fa-cog .dropdown-menu button i {
+    margin-right: 5px;
 }

@@ -30,8 +30,8 @@ var be = {
         }
 
         var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
-                ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
-                : 'sync';
+            ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+            : 'sync';
 
         if (async === 'sync')
             be.ShowOutData4Debug(apiId, data);
@@ -41,8 +41,8 @@ var be = {
 
     callBackendApi: function (apiId, coreData, element, asyncData) {
         var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
-                ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
-                : 'sync';
+            ? SACore.GetBacklogDetails(apiId, 'apiSyncRequest')
+            : 'sync';
 
         var isAsync = (async === 'async');
 
@@ -143,18 +143,18 @@ var be = {
     ShowInData4Debug: function (apiId, data) {
         try {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw1 .sa-api-cw1-block')
-                    //append($('<>').text(JSON.stringify(data)));
-                    .html($('<span class="sa-api-cw1-body">')
-                            .text(JSON.stringify(data, null, "  ")));
+                //append($('<>').text(JSON.stringify(data)));
+                .html($('<span class="sa-api-cw1-body">')
+                    .text(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
     ShowOutData4Debug: function (apiId, data) {
         try {
             $('[pid=core_api_' + apiId + ']').closest('div.sa-api-esas').find('.sa-cw3 .sa-api-cw3-block')
-                    //  .attr('data-content',"'"+JSON.stringify(data)+"'");
-                    .html($('<span class="sa-api-cw3-body">')
-                            .text(JSON.stringify(data, null, "  ")));
+                //  .attr('data-content',"'"+JSON.stringify(data)+"'");
+                .html($('<span class="sa-api-cw3-body">')
+                    .text(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
@@ -162,16 +162,16 @@ var be = {
     ShowDescriptionInData4Debug: function (apiId, descId, data) {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw1-block')
-                    .html($('<span class="sa-desc-in-data-body">')
-                            .html(JSON.stringify(data, null, "  ")));
+                .html($('<span class="sa-desc-in-data-body">')
+                    .html(JSON.stringify(data, null, "  ")));
         } catch (err) {
         }
     },
     ShowDescriptionOutData4Debug: function (apiId, descId, data) {
         try {
             $('[pid=core_api_desc_' + descId + ']').closest('div.sa-desc-item').find('.sa-api-cw3-block')
-                    .html($('<span class="sa-desc-out-data-body">')
-                            .html(JSON.stringify(data, null, "  ")));
+                .html($('<span class="sa-desc-out-data-body">')
+                    .html(JSON.stringify(data, null, "  ")));
 
         } catch (err) {
         }
@@ -665,8 +665,8 @@ var be = {
                             try {
 
                                 var rc = (output.tbl[0].r && output.tbl[0].r.length > 0)
-                                        ? output.tbl[0].r.length
-                                        : 0;
+                                    ? output.tbl[0].r.length
+                                    : 0;
 
                                 var rsOut = [];
                                 for (var k = 0; k < rc; k++) {
@@ -768,8 +768,8 @@ var be = {
         GetInputsOfExternalApiByCoreApi: function (apiId) {
             var inputList = [];
             var extApiList = (cr_project_desc_by_backlog[apiId])
-                    ? cr_project_desc_by_backlog[apiId]
-                    : [];
+                ? cr_project_desc_by_backlog[apiId]
+                : [];
             var f = true;
             for (var i in extApiList) {
                 try {
@@ -1033,8 +1033,8 @@ var be = {
         CallExternalApiServices: function (apiId, data, element, asyncData) {
             var outData = {};
             var extApiList = (cr_project_desc_by_backlog[apiId])
-                    ? cr_project_desc_by_backlog[apiId]
-                    : [];
+                ? cr_project_desc_by_backlog[apiId]
+                : [];
             var f = true;
             for (var i in extApiList) {
                 //                try {
@@ -1356,8 +1356,8 @@ var be = {
 
                     try {
                         var rc = (output.tbl[0].r && output.tbl[0].r.length > 0)
-                                ? output.tbl[0].r.length
-                                : 0;
+                            ? output.tbl[0].r.length
+                            : 0;
 
                         var rsOut = [];
                         for (var k = 0; k < rc; k++) {
@@ -1526,8 +1526,8 @@ var be = {
                             var descId = inputDescIds[j].trim();
                             var descBody = SAInputDesc.GetDetails(descId);
                             var inputName = (pairData[inputObj.inputName])
-                                    ? pairData[inputObj.inputName]
-                                    : inputObj.inputName;
+                                ? pairData[inputObj.inputName]
+                                : inputObj.inputName;
 
                             if (descBody.includes('fn_(iscurrentuser)')) {
                                 data['currentUserField'] = data['currentUserField'] + ',' + inputName;
@@ -1761,7 +1761,7 @@ var SAFN = {
 
             if (rcOpenParanteth !== rcCloseParanteth) {
                 functionBody = functionBody.substr(0, startIndex) + '__IFTMP__'
-                        + functionBody.substr(startIndex + 4, functionBody.length);
+                    + functionBody.substr(startIndex + 4, functionBody.length);
                 continue;
             }
 
@@ -1773,7 +1773,7 @@ var SAFN = {
             SAFN.IfStatementBody[idGen] = zadBody;
 
             functionBody = functionBody.substr(0, startIndex) + idGen + ';'
-                    + functionBody.substr(lastIndexOfParan, functionBody.length);
+                + functionBody.substr(lastIndexOfParan, functionBody.length);
         }
         functionBody = functionBody.replace(/__IFTMP__/g, '@.if');
         return functionBody;
@@ -1795,7 +1795,7 @@ var SAFN = {
 
             if (rcOpenParanteth !== rcCloseParanteth) {
                 functionBody = functionBody.substr(0, startIndex) + '__FORTMP__'
-                        + functionBody.substr(startIndex + 5, functionBody.length);
+                    + functionBody.substr(startIndex + 5, functionBody.length);
                 continue;
             }
 
@@ -1807,7 +1807,7 @@ var SAFN = {
             SAFN.IfStatementBody[idGen] = zadBody;
 
             functionBody = functionBody.substr(0, startIndex) + idGen + ';'
-                    + functionBody.substr(lastIndexOfParan, functionBody.length);
+                + functionBody.substr(lastIndexOfParan, functionBody.length);
         }
         functionBody = functionBody.replace(/__FORTMP__/g, '@.for');
         return functionBody;
@@ -1932,8 +1932,8 @@ var SAFN = {
 
 
             val = (valueCore.startsWith("'") && valueCore.endsWith("'"))
-                    ? valueCore.substring(1, valueCore.length - 1)
-                    : valueCore.startsWith('"') && valueCore.endsWith('"')
+                ? valueCore.substring(1, valueCore.length - 1)
+                : valueCore.startsWith('"') && valueCore.endsWith('"')
                     ? valueCore.substring(1, valueCore.length - 1)
                     : valueCore;
 
@@ -1960,7 +1960,7 @@ var SAFN = {
 
         },
         Java: function (fnName, outData, element, apiId, asyncData) {
-            var dataCore = {kv: {}};
+            var dataCore = { kv: {} };
             dataCore.kv = outData;
             try {
                 dataCore.kv.cookie = getToken();
@@ -2321,7 +2321,7 @@ var SAFN = {
             val = SAFN.GetArgumentPureValue(val);
 
             var data = SAFN.CoreData;
-            var res = {"_table": {}};
+            var res = { "_table": {} };
             res._table.r = [];
             try {
                 if (data._table) {
@@ -2346,7 +2346,7 @@ var SAFN = {
             col = SAFN.GetArgumentPureValue(col);
 
             var data = SAFN.CoreData;
-            var res = {"_table": {}};
+            var res = { "_table": {} };
             res._table.r = [];
             try {
                 if (data._table) {
@@ -2765,167 +2765,167 @@ var SAFN = {
     InitConversion: function () {
 
 
-//        $(document).on("change", ".function-statement-input-common-4-deletekey", function (e) {
-//            SAFN.Reconvert.DeleteKeyStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-console", function (e) {
-//            SAFN.Reconvert.ConsoleStatement(this);
-//        })
-//
-//        $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
-//            var val = $(this).val();
-//            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
-//            SAFN.Reconvert.CallApiStatement(this);
-//        })
-//        $(document).on("change", ".cs-select-box #get-callfn-select-box", function (e) {
-//            var val = $(this).val();
-//            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
-//            SAFN.Reconvert.CallFnStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-consoledata", function (e) {
-//            SAFN.Reconvert.ConsoleDataStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-get", function (e) {
-//            SAFN.Reconvert.GetStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-set", function (e) {
-//            SAFN.Reconvert.SetStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-setvalue", function (e) {
-//            SAFN.Reconvert.SetValueStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-settext", function (e) {
-//            SAFN.Reconvert.SetTextStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-setparamurl", function (e) {
-//            SAFN.Reconvert.SetParamUrlStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-getparamurl", function (e) {
-//            SAFN.Reconvert.GetParamUrlStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-alert", function (e) {
-//            SAFN.Reconvert.AlertStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-alertdata", function (e) {
-//            SAFN.Reconvert.AlertDataStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-map", function (e) {
-//            SAFN.Reconvert.MapStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-if", function (e) {
-//            SAFN.Reconvert.IfStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-ifhasvalue", function (e) {
-//            SAFN.Reconvert.IfHasValueStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-ifhasnotvalue", function (e) {
-//            SAFN.Reconvert.IfHasNotValueStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-forlist", function (e) {
-//            SAFN.Reconvert.ForListStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-fortable", function (e) {
-//            SAFN.Reconvert.ForTableStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-sendemail", function (e) {
-//            SAFN.Reconvert.SendEmailStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-showerror", function (e) {
-//            SAFN.Reconvert.ShowErrorStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-sum", function (e) {
-//            SAFN.Reconvert.SumStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-inc", function (e) {
-//            SAFN.Reconvert.IncStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-dec", function (e) {
-//            SAFN.Reconvert.DecStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-concat", function (e) {
-//            SAFN.Reconvert.ConcatStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-click", function (e) {
-//            SAFN.Reconvert.ClickStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-change", function (e) {
-//            SAFN.Reconvert.ChangeStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-focus", function (e) {
-//            SAFN.Reconvert.FocusStatement(this);
-//        })
-//        $(document).on("change", ".function-statement-input-common-4-showmessage", function (e) {
-//            SAFN.Reconvert.ShowMessageStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-hide", function (e) {
-//            SAFN.Reconvert.HideStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-show", function (e) {
-//            SAFN.Reconvert.ShowStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-visible", function (e) {
-//            SAFN.Reconvert.VisibleStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-unvisible", function (e) {
-//            SAFN.Reconvert.UnvisibleStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-clear", function (e) {
-//            SAFN.Reconvert.СlearStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-clearclass", function (e) {
-//            SAFN.Reconvert.ClearClassStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-showparam", function (e) {
-//            SAFN.Reconvert.ShowParamStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-hideparam", function (e) {
-//            SAFN.Reconvert.HideParamStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-visibleparam", function (e) {
-//            SAFN.Reconvert.VisibleParamStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-unvisibleparam", function (e) {
-//            SAFN.Reconvert.UnvisibleParamStatement(this);
-//        })
-//
-//        $(document).on("change", ".function-statement-input-common-4-error", function (e) {
-//            SAFN.Reconvert.ErrorStatement(this);
-//        })
+        //        $(document).on("change", ".function-statement-input-common-4-deletekey", function (e) {
+        //            SAFN.Reconvert.DeleteKeyStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-console", function (e) {
+        //            SAFN.Reconvert.ConsoleStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
+        //            var val = $(this).val();
+        //            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
+        //            SAFN.Reconvert.CallApiStatement(this);
+        //        })
+        //        $(document).on("change", ".cs-select-box #get-callfn-select-box", function (e) {
+        //            var val = $(this).val();
+        //            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
+        //            SAFN.Reconvert.CallFnStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-consoledata", function (e) {
+        //            SAFN.Reconvert.ConsoleDataStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-get", function (e) {
+        //            SAFN.Reconvert.GetStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-set", function (e) {
+        //            SAFN.Reconvert.SetStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-setvalue", function (e) {
+        //            SAFN.Reconvert.SetValueStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-settext", function (e) {
+        //            SAFN.Reconvert.SetTextStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-setparamurl", function (e) {
+        //            SAFN.Reconvert.SetParamUrlStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-getparamurl", function (e) {
+        //            SAFN.Reconvert.GetParamUrlStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-alert", function (e) {
+        //            SAFN.Reconvert.AlertStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-alertdata", function (e) {
+        //            SAFN.Reconvert.AlertDataStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-map", function (e) {
+        //            SAFN.Reconvert.MapStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-if", function (e) {
+        //            SAFN.Reconvert.IfStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-ifhasvalue", function (e) {
+        //            SAFN.Reconvert.IfHasValueStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-ifhasnotvalue", function (e) {
+        //            SAFN.Reconvert.IfHasNotValueStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-forlist", function (e) {
+        //            SAFN.Reconvert.ForListStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-fortable", function (e) {
+        //            SAFN.Reconvert.ForTableStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-sendemail", function (e) {
+        //            SAFN.Reconvert.SendEmailStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-showerror", function (e) {
+        //            SAFN.Reconvert.ShowErrorStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-sum", function (e) {
+        //            SAFN.Reconvert.SumStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-inc", function (e) {
+        //            SAFN.Reconvert.IncStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-dec", function (e) {
+        //            SAFN.Reconvert.DecStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-concat", function (e) {
+        //            SAFN.Reconvert.ConcatStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-click", function (e) {
+        //            SAFN.Reconvert.ClickStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-change", function (e) {
+        //            SAFN.Reconvert.ChangeStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-focus", function (e) {
+        //            SAFN.Reconvert.FocusStatement(this);
+        //        })
+        //        $(document).on("change", ".function-statement-input-common-4-showmessage", function (e) {
+        //            SAFN.Reconvert.ShowMessageStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-hide", function (e) {
+        //            SAFN.Reconvert.HideStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-show", function (e) {
+        //            SAFN.Reconvert.ShowStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-visible", function (e) {
+        //            SAFN.Reconvert.VisibleStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-unvisible", function (e) {
+        //            SAFN.Reconvert.UnvisibleStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-clear", function (e) {
+        //            SAFN.Reconvert.СlearStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-clearclass", function (e) {
+        //            SAFN.Reconvert.ClearClassStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-showparam", function (e) {
+        //            SAFN.Reconvert.ShowParamStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-hideparam", function (e) {
+        //            SAFN.Reconvert.HideParamStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-visibleparam", function (e) {
+        //            SAFN.Reconvert.VisibleParamStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-unvisibleparam", function (e) {
+        //            SAFN.Reconvert.UnvisibleParamStatement(this);
+        //        })
+        //
+        //        $(document).on("change", ".function-statement-input-common-4-error", function (e) {
+        //            SAFN.Reconvert.ErrorStatement(this);
+        //        })
     },
     Reconvert: {
         InitMapper: function (commandLine, triggerElm) {
@@ -3483,18 +3483,18 @@ var SAFN = {
             },
             IfStatementOperations: function (oper) {
                 var el = $('<select>')
-                        .addClass('function-statement-container-change-event')
-                        .addClass("function-statement-input-common")
-                        .addClass("function-statement-input-common-4-if")
-                        .addClass("fns-oper")
-                        .append($('<option>').val('=').text('=').attr('selected', (oper === '=') ? true : false))
-                        .append($('<option>').val('!=').text('!=').attr('selected', (oper === '!=') ? true : false))
-                        .append($('<option>').val('>').text('>').attr('selected', (oper === '>') ? true : false))
-                        .append($('<option>').val('>=').text('>=').attr('selected', (oper === '>=') ? true : false))
-                        .append($('<option>').val('<').text('<').attr('selected', (oper === '<') ? true : false))
-                        .append($('<option>').val('<=').text('<=').attr('selected', (oper === '<=') ? true : false))
-                        .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
-                        .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
+                    .addClass('function-statement-container-change-event')
+                    .addClass("function-statement-input-common")
+                    .addClass("function-statement-input-common-4-if")
+                    .addClass("fns-oper")
+                    .append($('<option>').val('=').text('=').attr('selected', (oper === '=') ? true : false))
+                    .append($('<option>').val('!=').text('!=').attr('selected', (oper === '!=') ? true : false))
+                    .append($('<option>').val('>').text('>').attr('selected', (oper === '>') ? true : false))
+                    .append($('<option>').val('>=').text('>=').attr('selected', (oper === '>=') ? true : false))
+                    .append($('<option>').val('<').text('<').attr('selected', (oper === '<') ? true : false))
+                    .append($('<option>').val('<=').text('<=').attr('selected', (oper === '<=') ? true : false))
+                    .append($('<option>').val('in').text('Contains').attr('selected', (oper === 'in') ? true : false))
+                    .append($('<option>').val('notin').text('Not contains').attr('selected', (oper === 'notin') ? true : false))
 
                 return el;
             },
@@ -3503,32 +3503,49 @@ var SAFN = {
             },
             ToggleIfAndForStatementBlock: function (el, description) {
                 el.append($('<td>')
-                        .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
-                        );
+                    .append('<span class="cs-move-tr" id="inc_tr_move"><i class="fas fa-grip-vertical"></i></span>')
+                );
 
 
                 if (description.startsWith("__IF__")) {
                     var zdShey = SAFN.IfStatementBody[description];
                     el.append($('<td>')
-                            .addClass("text-holder")
-                            .html(SAFN.InitConvention(zdShey))
-                            );
+                        .addClass("text-holder")
+                        .html(SAFN.InitConvention(zdShey))
+                    );
 
                 } else if (description.startsWith("__FORLIST__")) {
                     var zdShey = SAFN.IfStatementBody[description];
                     el.append($('<td>')
-                            .addClass("text-holder")
-                            .append(SAFN.InitConvention(zdShey)));
+                        .addClass("text-holder")
+                        .append(SAFN.InitConvention(zdShey)));
                 } else {
                     var lnOut = SAFN.InitConvention(description);
                     el.append($('<td>').addClass("text-holder").append(lnOut));
                 }
 
                 el.append($('<td>')
-                        .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-                        ).append($('<td>')
-                        .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-                        );
+                    .append($('<div>').addClass('btn-group')
+                        .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                            .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                    .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                )
+                                .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                    .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                )
+                                .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                    .html('<i class="fas fa-eye"></i> Remove Comment')
+                                )
+                                .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                    .html('<i class="fas fa-trash-alt"></i> Delete')
+                                )
+                            )
+
+                        )
+                    )
+
+                );
             },
         },
         AddCommandInfoToTr: function (element, commandLine) {
@@ -3537,8 +3554,8 @@ var SAFN = {
             var commandName = "";
             try {
                 var commandLineDesc = (fnShey.startsWith('__IF__') || fnShey.startsWith('__FORLIST__'))
-                        ? SAFN.IfStatementBody[fnShey]
-                        : fnShey;
+                    ? SAFN.IfStatementBody[fnShey]
+                    : fnShey;
 
                 isCommand = SAFN.IsCommand(commandLineDesc) ? "1" : "0";
                 commandName = SAFN.GetFunctionNameLine(commandLineDesc);
@@ -3546,58 +3563,59 @@ var SAFN = {
             }
 
             element.attr("isCommand", isCommand)
-                    .attr("cname", commandName)
+                .attr("cname", commandName)
+
         },
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
             var but = '';
             if (fnId.length > 0) {
                 but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-share"></i>')
-                                .attr("onclick", "showJSModal('" + fnId + "')")
-                                )
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-share"></i>')
+                        .attr("onclick", "showJSModal('" + fnId + "')")
+                    )
             } else {
                 but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-plus"></i>')
-                                .attr("onclick", "addJsModalNewSt(this)")
-                                )
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-plus"></i>')
+                        .attr("onclick", "addJsModalNewSt(this)")
+                    )
             }
             var descBody = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callfn")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callfn")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Call Function")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Call Function")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>").css('display', 'inline-block')
-                                            .css("padding", '0 0 0 0')
-                                            .append($('<li>')
-                                                    .addClass("function-statement-input-common cs-select-box")
-                                                    .append($('<select>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .attr('data-live-search', "true")
-                                                            .attr("id", 'get-callfn-select-box')
-                                                            .addClass("function-statement-input-common  get-callfn-select-box fns-key ")
-                                                            .append($("<option>").text(fnId).val(fnId))
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'inline-block')
+                            .css("padding", '0 0 0 0')
+                            .append($('<li>')
+                                .addClass("function-statement-input-common cs-select-box")
+                                .append($('<select>')
+                                    .addClass('function-statement-container-change-event')
+                                    .attr('data-live-search', "true")
+                                    .attr("id", 'get-callfn-select-box')
+                                    .addClass("function-statement-input-common  get-callfn-select-box fns-key ")
+                                    .append($("<option>").text(fnId).val(fnId))
 
-                                                            )
-                                                    )
-                                            .append(but)
-                                            )
-                                    )
+                                )
                             )
+                            .append(but)
+                        )
+                    )
+                )
 
             return descBody;
 
@@ -3612,18 +3630,18 @@ var SAFN = {
             var but = '';
             if (backlogId.length > 0) {
                 but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-share"></i>')
-                                .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
-                                )
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-share"></i>')
+                        .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
+                    )
             } else {
                 but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-plus"></i>')
-                                .attr("onclick", "addApiModal()")
-                                )
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                        .append('<i class="fas fa-plus"></i>')
+                        .attr("onclick", "addApiModal()")
+                    )
             }
 
             var apiListFull = loadSelecPickerOnChnageApiList(backlogId);
@@ -3631,49 +3649,49 @@ var SAFN = {
 
 
             var apiinfo = $("<li>")
-                    .addClass('cs-select-api-info')
-                    .append($('<div>')
-                            .addClass('api-inc-info api-info-container orange-bg')
-                            .text(GetApiActionTypeText(SACore.GetBacklogDetails(backlogId, 'apiAction')))
-                            )
-                    .append($('<div>')
-                            .addClass('api-inc-info api-info-synchrone yellow-bg')
-                            .text(MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest')))
-                            )
+                .addClass('cs-select-api-info')
+                .append($('<div>')
+                    .addClass('api-inc-info api-info-container orange-bg')
+                    .text(GetApiActionTypeText(SACore.GetBacklogDetails(backlogId, 'apiAction')))
+                )
+                .append($('<div>')
+                    .addClass('api-inc-info api-info-synchrone yellow-bg')
+                    .text(MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest')))
+                )
 
             var descBody = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callapi")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callapi")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Call API")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Call API")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>").css('display', 'inline-block')
-                                            .css("padding", '0 0 0 0')
-                                            .append($('<li>')
-                                                    .addClass("function-statement-input-common cs-select-box")
-                                                    .append($('<select>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .attr('data-live-search', "true")
-                                                            .attr('title', "Select Api")
-                                                            .attr("id", 'get-callapi-select-box')
-                                                            .addClass("function-statement-input-common select-api-box fns-key ")
-                                                            .html(apiListFull)
-                                                            )
-                                                    )
-                                            .append(apiinfo)
-                                            .append(but)
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'inline-block')
+                            .css("padding", '0 0 0 0')
+                            .append($('<li>')
+                                .addClass("function-statement-input-common cs-select-box")
+                                .append($('<select>')
+                                    .addClass('function-statement-container-change-event')
+                                    .attr('data-live-search', "true")
+                                    .attr('title', "Select Api")
+                                    .attr("id", 'get-callapi-select-box')
+                                    .addClass("function-statement-input-common select-api-box fns-key ")
+                                    .html(apiListFull)
+                                )
                             )
+                            .append(apiinfo)
+                            .append(but)
+                        )
+                    )
+                )
 
             return descBody;
 
@@ -3710,53 +3728,84 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
-                            SAFN.Convert.Common.GetLineBody(this);
+                            
+                             $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                    .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                                        )
+                                    )
+        
+                                )
+                            );
+                            $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
+                            SAFN.Convert.Common.GetLineBody(this);                            
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
+
                 }
             }
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
 
-                    .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
-                            .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                                    .append($('<span>').addClass('cs-funcname d-table-cell')
-                                            .css('color', 'rgb(0 0 0 / 52%)').css('font-weight', 'bold').text('IF'))
-                                    )
-                            .append($('<div>').addClass('row mr-0 ml-0')
-                                    .append($('<div>')
-                                            .addClass('cs-input-group')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("cs-if-input")
-                                                    .addClass("function-statement-input-common")
-                                                    .addClass("function-statement-input-common-4-if")
-                                                    .addClass("fns-key")
-                                                    .val(key)
-                                                    )
-                                            )
-                                    .append($('<div>').addClass('cs-input-group select-if-style')
-                                            .append(SAFN.Convert.Common.IfStatementOperations(oper)))
-                                    .append($('<div>')
-                                            .addClass('cs-input-group')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("cs-if-input")
-                                                    .addClass("fns-val")
-                                                    .addClass("function-statement-input-common")
-                                                    .addClass("function-statement-input-common-4-if")
-                                                    .val(val)
-                                                    )
-                                            )
-                                    )
+                .append($('<div>')
+                    .addClass('d-flex justify-content-start cs-if-script-in-box')
+                    .css('background-color', '#f89cbe')
+                    .css('box-shadow', 'rgb(0 0 0 / 16%) 0 3px')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell')
+                            .css('color', 'rgb(0 0 0 / 52%)').css('font-weight', 'bold').text('IF'))
+                    )
+                    .append($('<div>').addClass('row mr-0 ml-0')
+                        .append($('<div>')
+                            .addClass('cs-input-group')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("cs-if-input")
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-if")
+                                .addClass("fns-key")
+                                .attr('placeholder', 'Con')
+                                .val(key)
                             )
-                    .append($("<div>")
-                            .append(table)
-                            .append(tfoot.append($('<tr>').append(ftr)))
+                        )
+                        .append($('<div>').addClass('cs-input-group select-if-style')
+                            .append(SAFN.Convert.Common.IfStatementOperations(oper)))
+                        .append($('<div>')
+                            .addClass('cs-input-group')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("cs-if-input")
+                                .addClass("fns-val")
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-if")
+                                .attr('placeholder', 'Con')
+                                .val(val)
                             )
+                        )
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
             return div;
 
@@ -3802,34 +3851,36 @@ var SAFN = {
             // tfoot.append(ftr);
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
 
-                    .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
-                            .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                                    .append($('<span>').addClass('cs-funcname d-table-cell')
-                                            .css('color', 'rgb(0 0 0 / 52%)')
-                                            .css('font-weight', 'bold')
-                                            .text('IF HAS VALUE'))
-                                    )
-                            .append($('<div>').addClass('row mr-0 ml-0')
-                                    .append($('<div>')
-                                            .addClass('cs-input-group col-md-4')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("cs-if-input")
-                                                    .addClass("function-statement-input-common")
-                                                    .addClass("function-statement-input-common-4-ifhasvalue")
-                                                    .addClass("fns-key")
-                                                    .val(key)
-                                                    )
-                                            )
-                                    )
+                .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
+                    .css('background-color', '#f89cbe')
+                    .css('box-shadow', 'rgb(0 0 0 / 16%) 0 3px')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell')
+                            .css('color', 'rgb(0 0 0 / 52%)')
+                            .css('font-weight', 'bold')
+                            .text('IF HAS VALUE'))
+                    )
+                    .append($('<div>').addClass('row mr-0 ml-0')
+                        .append($('<div>')
+                            .addClass('cs-input-group col-md-4')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("cs-if-input")
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-ifhasvalue")
+                                .addClass("fns-key")
+                                .val(key)
                             )
-                    .append($("<div>")
-                            .append(table)
-                            .append(tfoot.append($('<tr>').append(ftr)))
-                            )
+                        )
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -3874,31 +3925,34 @@ var SAFN = {
             }
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-if-script-box")
 
-                    .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
-                            .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                                    .append($('<span>').addClass('cs-funcname d-table-cell').css('color', 'rgb(0 0 0 / 52%)').css('font-weight', 'bold').text('IF HAS NOT VALUE'))
-                                    )
-                            .append($('<div>').addClass('row mr-0 ml-0')
-                                    .append($('<div>')
-                                            .addClass('cs-input-group col-md-4')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("cs-if-input")
-                                                    .addClass("function-statement-input-common")
-                                                    .addClass("function-statement-input-common-4-ifhasnotvalue")
-                                                    .addClass("fns-key")
-                                                    .val(key)
-                                                    )
-                                            )
-                                    )
+                .append($('<div>').addClass('d-flex justify-content-start cs-if-script-in-box')
+                    .css('background-color', '#f89cbe')
+                    .css('box-shadow', 'rgb(0 0 0 / 16%) 0 3px')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell').css('color', 'rgb(0 0 0 / 52%)').css('font-weight', 'bold').text('IF HAS NOT VALUE'))
+                    )
+                    .append($('<div>').addClass('row mr-0 ml-0')
+                        .append($('<div>')
+                            .addClass('cs-input-group col-md-4')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("cs-if-input")
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-ifhasnotvalue")
+                                .addClass("fns-key")
+                                .attr('placeholder', 'ClassName')
+                                .val(key)
                             )
-                    .append($("<div>")
-                            .append(table)
-                            .append(tfoot.append($('<tr>').append(ftr)))
-                            )
+                        )
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -3944,36 +3998,36 @@ var SAFN = {
             }
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
 
-                    .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box')
-                            .css('background-color', 'rgb(170 192 197)')
-                            .css('box-shadow', 'none')
-                            .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                                    .append($('<span>').addClass('cs-funcname d-table-cell')
-                                            .css('color', 'rgb(0 0 0 / 52%)')
-                                            .css('font-weight', 'bold')
-                                            .text('FOR LIST '))
-                                    )
-                            .append($('<div>').addClass('d-table mr-2')
-                                    .append($('<div>').addClass('cs-forlist-class-name d-table-cell align-middle')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass('cs-forlist-cn-val')
-                                                    .addClass("function-statement-input-common")
-                                                    .addClass("function-statement-input-common-4-forlist")
-                                                    .addClass("fns-key")
-                                                    .attr('placeholder', 'ClassName')
-                                                    .val(ClassName)
-                                                    )
-                                            )
-                                    )
+                .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box')
+                    .css('background-color', 'rgb(170 192 197)')
+                    .css('box-shadow', 'none')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell')
+                            .css('color', 'rgb(0 0 0 / 52%)')
+                            .css('font-weight', 'bold')
+                            .text('FOR LIST '))
+                    )
+                    .append($('<div>').addClass('d-table mr-2')
+                        .append($('<div>').addClass('cs-forlist-class-name d-table-cell align-middle')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass('cs-forlist-cn-val')
+                                .addClass("function-statement-input-common")
+                                .addClass("function-statement-input-common-4-forlist")
+                                .addClass("fns-key")
+                                .attr('placeholder', 'ClassName')
+                                .val(ClassName)
                             )
-                    .append($("<div>")
-                            .append(table)
-                            .append(tfoot.append($('<tr>').append(ftr)))
-                            )
+                        )
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -4013,23 +4067,23 @@ var SAFN = {
             }
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-forlist-script-box")
 
-                    .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box')
-                            .css('background-color', 'rgb(170 192 197)')
-                            .css('box-shadow', 'none')
-                            .append($('<div>').addClass('col-cs-1 d-table mr-2')
-                                    .append($('<span>').addClass('cs-funcname d-table-cell')
-                                            .css('color', 'rgb(0 0 0 / 52%)')
-                                            .css('font-weight', 'bold')
-                                            .text('FOR TABLE '))
-                                    )
-                            )
-                    .append($("<div>")
-                            .append(table)
-                            .append(tfoot.append($('<tr>').append(ftr)))
-                            )
+                .append($('<div>').addClass('d-flex justify-content-start cs-forlist-script-in-box')
+                    .css('background-color', 'rgb(170 192 197)')
+                    .css('box-shadow', 'none')
+                    .append($('<div>').addClass('col-cs-1 d-table mr-2')
+                        .append($('<span>').addClass('cs-funcname d-table-cell')
+                            .css('color', 'rgb(0 0 0 / 52%)')
+                            .css('font-weight', 'bold')
+                            .text('FOR TABLE '))
+                    )
+                )
+                .append($("<div>")
+                    .append(table)
+                    .append(tfoot.append($('<tr>').append(ftr)))
+                )
 
 
             return div;
@@ -4043,47 +4097,47 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-console")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell").text("Console")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell").text("Console")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>").css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-console fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName"))
-                                            )
-                                    )
-                            )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-console fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
             return div;
         },
         ConsoleDataStatement: function () {
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-consoledata")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-consoledata")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Console Data")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Console Data")
+                        )
 
-                                    )
-                            )
+                    )
+                )
             return div;
         },
         DeleteKeyStatement: function (line) {
@@ -4092,32 +4146,32 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-deletekey")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-deletekey")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("DeleteKey")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("DeleteKey")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>").css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-deletekey fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>").css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-deletekey fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         AlertStatement: function (line) {
@@ -4126,49 +4180,49 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-alert")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-alert")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Alert")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Alert")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-alert fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "Key"))
-                                            )
-                                    )
-                            )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("function-statement-input-common function-statement-input-common-4-alert fns-key")
+                                .val(key)
+                                .attr("placeholder", "Key"))
+                        )
+                    )
+                )
             return div;
         },
         AlertDataStatement: function () {
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-alertledata")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-alertledata")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Alert Data")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Alert Data")
+                        )
 
-                                    )
-                            )
+                    )
+                )
             return div;
         },
         GetStatement: function (line) {
@@ -4178,40 +4232,40 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("function-statement-container")
-                    .addClass("cs-sum-inbox")
+                .addClass("function-statement-container")
+                .addClass("cs-sum-inbox")
+                .append($("<div>")
+                    .addClass("d-flex")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Get")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .append($("<li>")
-                                                    .css('display', 'initial')
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-get")
-                                                            .addClass("fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append($("<li>")
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("fns-val")
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-get")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")))
-                                            )
-                                    )
-                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Get")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .css('display', 'initial')
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-get")
+                                    .addClass("fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("fns-val")
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-get")
+                                    .val(val)
+                                    .attr("placeholder", "Value")))
+                        )
+                    )
+                )
 
             return div;
         },
@@ -4222,41 +4276,41 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container")
-                    .addClass("cs-sum-inbox")
+                .addClass("col-12")
+                .addClass("function-statement-container")
+                .addClass("cs-sum-inbox")
+                .append($("<div>")
+                    .addClass("d-flex")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Set")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .append($("<li>")
-                                                    .css('display', 'initial')
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-set")
-                                                            .addClass("fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append($("<li>")
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("fns-val")
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-set")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")))
-                                            )
-                                    )
-                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Set")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .css('display', 'initial')
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-set")
+                                    .addClass("fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("fns-val")
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-set")
+                                    .val(val)
+                                    .attr("placeholder", "Value")))
+                        )
+                    )
+                )
 
             return div;
         },
@@ -4267,37 +4321,37 @@ var SAFN = {
             var key = (argList[0]) ? argList[0] : '';
             var val = (argList[1]) ? argList[1] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-getparamurl")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-getparamurl")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("GetParamUrl")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-val")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")
-                                                            )
-                                                    )
-                                            )
-                                    )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("GetParamUrl")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-getparamurl fns-val")
+                                    .val(val)
+                                    .attr("placeholder", "Value")
+                                )
                             )
+                        )
+                    )
+                )
             return div;
         },
         SetValueStatement: function (line) {
@@ -4306,30 +4360,30 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-setvalue")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-setvalue")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Set Value")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-setvalue fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName"))
-                                            )
-                                    )
-                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Set Value")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-setvalue fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
             return div;
         },
         SetTextStatement: function (line) {
@@ -4338,32 +4392,32 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-settext")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-settext")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Set Text")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Set Text")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-settext fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-settext fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         SetParamUrlStatement: function (line) {
@@ -4373,38 +4427,38 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-setparamurl")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-setparamurl")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("SetParamUrl")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("SetParamUrl")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-setparamurl fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-setparamurl fns-val")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")
-                                                            )
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-setparamurl fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-setparamurl fns-val")
+                                    .val(val)
+                                    .attr("placeholder", "Value")
+                                )
                             )
+                        )
+                    )
+                )
 
             return div;
         },
@@ -4415,37 +4469,37 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-map")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-map")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Map")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Map")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-map fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append($("<li>")
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-map fns-val")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")))
-                                            )
-                                    )
-                            )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-map fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-map fns-val")
+                                    .val(val)
+                                    .attr("placeholder", "Value")))
+                        )
+                    )
+                )
 
             return div;
         },
@@ -4460,20 +4514,20 @@ var SAFN = {
                 if (argList.length < 2) {
                     var li1 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[1] ? argList[1] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[1] ? argList[1] : "")
+                            .attr("placeholder", "Value")
+                        )
                     var li2 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass('function-statement-container-change-event')
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
-                                    .val(argList[2] ? argList[2] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass('function-statement-container-change-event')
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                            .val(argList[2] ? argList[2] : "")
+                            .attr("placeholder", "Value")
+                        )
 
                     ul.append(li1);
                     ul.append(li2);
@@ -4481,22 +4535,22 @@ var SAFN = {
                     if (i > 0) {
 
                         var li = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
+                            .append($("<div>")
+                                .addClass("cs-value-trash-box")
                                 .append($("<div>")
-                                        .addClass("cs-value-trash-box")
-                                        .append($("<div>")
-                                                .addClass("cs-value-trash")
-                                                .append($("<i>")
-                                                        .addClass("fa fa-trash-o")
-                                                        .attr("aria-hidden", "true")
-                                                        )
-                                                .text(" Delete")
-                                                )
-                                        )
-                                .append($('<input>')
-                                        .addClass('function-statement-container-change-event')
-                                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
-                                        .val(argList[i])
-                                        .attr("placeholder", "Value"))
+                                    .addClass("cs-value-trash")
+                                    .append($("<i>")
+                                        .addClass("fa fa-trash-o")
+                                        .attr("aria-hidden", "true")
+                                    )
+                                    .text(" Delete")
+                                )
+                            )
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                                .val(argList[i])
+                                .attr("placeholder", "Value"))
 
                         ul.append(li);
 
@@ -4507,41 +4561,41 @@ var SAFN = {
             }
 
             var div = $("<div>")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-sum")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-sum")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Sum")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-sum fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append('<span class="cs-sumin">=</span>'))
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Sum")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-sum fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append('<span class="cs-sumin">=</span>'))
 
-                                    .append(ul)
-                                    )
+                        .append(ul)
+                    )
 
-                            .append($("<div>")
-                                    .addClass("col-cs-2 d-table cs-plus-btn")
-                                    .append($("<div>")
-                                            .addClass("d-table-cell align-middle")
-                                            .append($("<a>")
-                                                    .addClass("cs-btn-sum cs-add-input btn btn-primary")
-                                                    .text("+")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>")
+                        .addClass("col-cs-2 d-table cs-plus-btn")
+                        .append($("<div>")
+                            .addClass("d-table-cell align-middle")
+                            .append($("<a>")
+                                .addClass("cs-btn-sum cs-add-input btn btn-primary")
+                                .text("+")
                             )
+                        )
+                    )
+                )
 
             $(ul).sortable({
                 update: function () {
@@ -4563,20 +4617,20 @@ var SAFN = {
                 if (argList.length < 2) {
                     var li1 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[1] ? argList[1] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[1] ? argList[1] : "")
+                            .attr("placeholder", "Value")
+                        )
                     var li2 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[2] ? argList[2] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[2] ? argList[2] : "")
+                            .attr("placeholder", "Value")
+                        )
 
                     ul.append(li1);
                     ul.append(li2);
@@ -4584,22 +4638,22 @@ var SAFN = {
                     if (i > 0) {
 
                         var li = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
+                            .append($("<div>")
+                                .addClass("cs-value-trash-box")
                                 .append($("<div>")
-                                        .addClass("cs-value-trash-box")
-                                        .append($("<div>")
-                                                .addClass("cs-value-trash")
-                                                .append($("<i>")
-                                                        .addClass("fa fa-trash-o")
-                                                        .attr("aria-hidden", "true")
-                                                        )
-                                                .text(" Delete")
-                                                )
-                                        )
-                                .append($('<input>')
-                                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
-                                        .addClass('function-statement-container-change-event')
-                                        .val(argList[i])
-                                        .attr("placeholder", "Value"))
+                                    .addClass("cs-value-trash")
+                                    .append($("<i>")
+                                        .addClass("fa fa-trash-o")
+                                        .attr("aria-hidden", "true")
+                                    )
+                                    .text(" Delete")
+                                )
+                            )
+                            .append($('<input>')
+                                .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
+                                .addClass('function-statement-container-change-event')
+                                .val(argList[i])
+                                .attr("placeholder", "Value"))
 
                         ul.append(li);
 
@@ -4610,41 +4664,41 @@ var SAFN = {
             }
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-inc")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-inc")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Inc")
-                                            )
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-inc fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")))
-                                            .append('<span class="cs-sumin">=</span>'))
-                                    .append(ul)
-                                    )
-                            .append($("<div>")
-                                    .addClass("col-cs-2 d-table cs-plus-btn")
-                                    .append($("<div>")
-                                            .addClass("d-table-cell align-middle")
-                                            .append($("<a>")
-                                                    .addClass("cs-btn-sum cs-add-input btn btn-primary")
-                                                    .text("+")
-                                                    )
-                                            )
-                                    )
-
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Inc")
+                        )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-inc fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")))
+                            .append('<span class="cs-sumin">=</span>'))
+                        .append(ul)
+                    )
+                    .append($("<div>")
+                        .addClass("col-cs-2 d-table cs-plus-btn")
+                        .append($("<div>")
+                            .addClass("d-table-cell align-middle")
+                            .append($("<a>")
+                                .addClass("cs-btn-sum cs-add-input btn btn-primary")
+                                .text("+")
                             )
+                        )
+                    )
+
+                )
 
             $(ul).sortable({
                 update: function () {
@@ -4666,20 +4720,20 @@ var SAFN = {
                 if (argList.length < 2) {
                     var li1 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[1] ? argList[1] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[1] ? argList[1] : "")
+                            .attr("placeholder", "Value")
+                        )
                     var li2 = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[2] ? argList[2] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[2] ? argList[2] : "")
+                            .attr("placeholder", "Value")
+                        )
 
                     ul.append(li1);
                     ul.append(li2);
@@ -4688,24 +4742,24 @@ var SAFN = {
 
                         var li = $("<li>").addClass(' ui-sortable-placeholder cs-addons-sum-name')
 
+                            .append($("<div>")
+                                .addClass("cs-value-trash-box")
                                 .append($("<div>")
-                                        .addClass("cs-value-trash-box")
-                                        .append($("<div>")
-                                                .addClass("cs-value-trash")
-                                                .append($("<i>")
-                                                        .addClass("fa fa-trash-o")
-                                                        .attr("aria-hidden", "true")
-                                                        )
-                                                .text(" Delete")
-                                                )
-                                        )
+                                    .addClass("cs-value-trash")
+                                    .append($("<i>")
+                                        .addClass("fa fa-trash-o")
+                                        .attr("aria-hidden", "true")
+                                    )
+                                    .text(" Delete")
+                                )
+                            )
 
-                                .append($("<input>")
-                                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
-                                        .addClass('function-statement-container-change-event')
-                                        .val(argList[i])
-                                        .attr("placeholder", "Value")
-                                        )
+                            .append($("<input>")
+                                .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                                .addClass('function-statement-container-change-event')
+                                .val(argList[i])
+                                .attr("placeholder", "Value")
+                            )
 
                         ul.append(li);
 
@@ -4716,47 +4770,47 @@ var SAFN = {
             }
 
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-dec")
-                    .append($('<div>')
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Dec")
-                                            )
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-dec")
+                .append($('<div>')
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Dec")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css("display", "initial")
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-dec fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")
-                                                            )
-                                                    )
-                                            .append('<span class="cs-sumin">=</span>')
-                                            )
-                                    .append(ul)
-                                    )
-
-                            .append($("<div>")
-                                    .addClass("col-cs-2 d-table cs-plus-btn")
-                                    .append($("<div>")
-                                            .addClass("d-table-cell align-middle")
-                                            .append($("<a>")
-                                                    .addClass("cs-btn-dec cs-add-input btn btn-primary")
-                                                    .text("+")
-                                                    )
-                                            )
-                                    )
-
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css("display", "initial")
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-dec fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")
+                                )
                             )
+                            .append('<span class="cs-sumin">=</span>')
+                        )
+                        .append(ul)
+                    )
+
+                    .append($("<div>")
+                        .addClass("col-cs-2 d-table cs-plus-btn")
+                        .append($("<div>")
+                            .addClass("d-table-cell align-middle")
+                            .append($("<a>")
+                                .addClass("cs-btn-dec cs-add-input btn btn-primary")
+                                .text("+")
+                            )
+                        )
+                    )
+
+                )
 
             $(ul).sortable({
                 update: function () {
@@ -4778,20 +4832,20 @@ var SAFN = {
                 if (argList.length < 2) {
                     var li1 = $("<li>").addClass("ui-sortable-placeholder cs-addons-sum-name")
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[1] ? argList[1] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[1] ? argList[1] : "")
+                            .attr("placeholder", "Value")
+                        )
                     var li2 = $("<li>").addClass("ui-sortable-placeholder cs-addons-sum-name")
 
-                            .append($("<input>")
-                                    .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
-                                    .addClass('function-statement-container-change-event')
-                                    .val(argList[2] ? argList[2] : "")
-                                    .attr("placeholder", "Value")
-                                    )
+                        .append($("<input>")
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
+                            .addClass('function-statement-container-change-event')
+                            .val(argList[2] ? argList[2] : "")
+                            .attr("placeholder", "Value")
+                        )
 
                     ul.append(li1);
                     ul.append(li2);
@@ -4800,22 +4854,22 @@ var SAFN = {
 
                         var li = $("<li>").addClass("ui-sortable-placeholder cs-addons-sum-name")
 
+                            .append($("<div>")
+                                .addClass("cs-value-trash-box")
                                 .append($("<div>")
-                                        .addClass("cs-value-trash-box")
-                                        .append($("<div>")
-                                                .addClass("cs-value-trash")
-                                                .append($("<i>")
-                                                        .addClass("fa fa-trash-o")
-                                                        .attr("aria-hidden", "true")
-                                                        )
-                                                .text(" Delete")
-                                                )
-                                        )
-                                .append($("<input>")
-                                        .addClass('function-statement-container-change-event')
-                                        .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
-                                        .val(argList[i])
-                                        .attr("placeholder", "Value"))
+                                    .addClass("cs-value-trash")
+                                    .append($("<i>")
+                                        .addClass("fa fa-trash-o")
+                                        .attr("aria-hidden", "true")
+                                    )
+                                    .text(" Delete")
+                                )
+                            )
+                            .append($("<input>")
+                                .addClass('function-statement-container-change-event')
+                                .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
+                                .val(argList[i])
+                                .attr("placeholder", "Value"))
 
                         ul.append(li);
 
@@ -4826,46 +4880,46 @@ var SAFN = {
             }
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-concat")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-concat")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Concat")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Concat")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-concat fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")
-                                                            )
-                                                    )
-                                            .append('<span class="cs-sumin">=</span>')
-
-                                            )
-                                    .append(ul)
-                                    )
-                            .append($("<div>")
-                                    .addClass("col-cs-2 d-table cs-plus-btn")
-                                    .append($("<div>")
-                                            .addClass("d-table-cell align-middle")
-                                            .append($("<a>")
-                                                    .addClass("cs-btn-concat cs-add-input btn btn-primary")
-                                                    .text("+")
-                                                    )
-                                            )
-                                    )
-
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-concat fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")
+                                )
                             )
+                            .append('<span class="cs-sumin">=</span>')
+
+                        )
+                        .append(ul)
+                    )
+                    .append($("<div>")
+                        .addClass("col-cs-2 d-table cs-plus-btn")
+                        .append($("<div>")
+                            .addClass("d-table-cell align-middle")
+                            .append($("<a>")
+                                .addClass("cs-btn-concat cs-add-input btn btn-primary")
+                                .text("+")
+                            )
+                        )
+                    )
+
+                )
 
 
             $(ul).sortable({
@@ -4883,31 +4937,31 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $('<div>')
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-click")
-                    .append($('<div>')
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Click")
-                                            )
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-click")
+                .append($('<div>')
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Click")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-click fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName"))
-                                            )
-                                    )
-                            )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-click fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
             return div;
         },
         ChangeStatement: function (line) {
@@ -4916,33 +4970,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-change")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-change")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Change")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Change")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-change fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-change fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         FocusStatement: function (line) {
@@ -4951,32 +5005,32 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-focus")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-focus")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Focus")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Focus")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-focus fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-focus fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         ShowMessageStatement: function (line) {
@@ -4985,34 +5039,34 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-showmessage")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-showmessage")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Show Message")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Show Message")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-showmessage fns-key")
-                                                            .css("width", "300px")
-                                                            .val(key)
-                                                            .attr("placeholder", "Message")
-                                                            )
-                                                    )
-
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-showmessage fns-key")
+                                    .css("width", "300px")
+                                    .val(key)
+                                    .attr("placeholder", "Message")
+                                )
                             )
+
+                        )
+                    )
+                )
             return div;
         },
         ClearStatement: function (line) {
@@ -5021,33 +5075,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-clear")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-clear")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Clear")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Clear")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($("<input>")
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-clear fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($("<input>")
+                                .css("margin", '6px 0 0 0')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("function-statement-input-common function-statement-input-common-4-clear fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         ClearClassStatement: function (line) {
@@ -5056,33 +5110,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-clearclass")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-clearclass")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Clear Class")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Clear Class")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($("<input>")
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-clearclass fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($("<input>")
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-clearclass fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         ShowParamStatement: function (line) {
@@ -5091,33 +5145,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-showparam")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-showparam")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("ShowParam")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Show Param")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-showparam fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .css("margin", '6px 0 0 0')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("function-statement-input-common function-statement-input-common-4-showparam fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         HideParamStatement: function (line) {
@@ -5126,33 +5180,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-hideparam")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-hideparam")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("HideParam")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("HideParam")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-hideparam fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-hideparam fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         VisibleParamStatement: function (line) {
@@ -5161,33 +5215,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-visibleparam")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-visibleparam")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("VisibleParam")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("VisibleParam")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($("<input>")
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-visibleparam fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($("<input>")
+                                .css("margin", '6px 0 0 0')
+                                .addClass('function-statement-container-change-event')
+                                .addClass("function-statement-input-common function-statement-input-common-4-visibleparam fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         UnvisibleParamStatement: function (line) {
@@ -5196,33 +5250,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-unvisibleparam")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-unvisibleparam")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("UnvisibleParam")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("UnvisibleParam")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($("<input>")
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-unvisibleparam fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($("<input>")
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-unvisibleparam fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
             return div;
         },
         HideStatement: function (line) {
@@ -5230,33 +5284,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-hide")
-                    .append($('<div>')
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Hide")
-                                            )
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-hide")
+                .append($('<div>')
+                    .addClass("d-flex justify-content-start")
+                    .append($("<div>")
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Hide")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($("<input>")
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-hide fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($("<input>")
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-hide fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
 
             return div;
         },
@@ -5265,33 +5319,33 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-visible")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-visible")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Visible")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Visible")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-visible fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-visible fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
 
             return div;
         },
@@ -5300,32 +5354,32 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-unvisible")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-unvisible")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Unvisible")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Unvisible")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-unvisible fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName")
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-unvisible fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName")
                             )
+                        )
+                    )
+                )
 
             return div;
         },
@@ -5334,32 +5388,32 @@ var SAFN = {
             var argList = arg.split(",");
             var key = (argList[0]) ? argList[0] : '';
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-show")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-show")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Show")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Show")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .css("padding", '0 6px 0px 0')
-                                            .append($('<input>')
-                                                    .addClass('function-statement-container-change-event')
-                                                    .css("margin", '6px 0 0 0')
-                                                    .addClass("function-statement-input-common function-statement-input-common-4-show fns-key")
-                                                    .val(key)
-                                                    .attr("placeholder", "ClassName"))
-                                            )
-                                    )
-                            )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .css("padding", '0 6px 0px 0')
+                            .append($('<input>')
+                                .addClass('function-statement-container-change-event')
+                                .css("margin", '6px 0 0 0')
+                                .addClass("function-statement-input-common function-statement-input-common-4-show fns-key")
+                                .val(key)
+                                .attr("placeholder", "ClassName"))
+                        )
+                    )
+                )
 
             return div;
         },
@@ -5370,33 +5424,33 @@ var SAFN = {
 
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-fx-red-style cs-sum-inbox cs-sum-inbox-show")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-fx-red-style cs-sum-inbox cs-sum-inbox-show")
+                .append($("<div>")
+                    .addClass("d-flex ").css("background-color", "#f65c5c")
                     .append($("<div>")
-                            .addClass("d-flex ")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Show Error")
-                                            )
+                        .addClass("col-cs-1 mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Show Error")
+                        )
 
-                                    )
+                    )
 
-                            .append($("<div>")
-                                    .addClass('col-cs-2 flex-grow-1')
-                                    .append($("<ul>")
-                                            .append($("<li>")
-                                                    .append($('<input>')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-show fns-key")
-                                                            .css("width", "300px")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .val(message)
-                                                            .attr("placeholder", "Message"))
-                                                    )
-                                            )
-                                    )
+                    .append($("<div>")
+                        .addClass('col-cs-2 flex-grow-1')
+                        .append($("<ul>")
+                            .append($("<li>")
+                                .append($('<input>')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-show fns-key")
+                                    .css("width", "300px")
+                                    .addClass('function-statement-container-change-event')
+                                    .val(message)
+                                    .attr("placeholder", "Message"))
                             )
+                        )
+                    )
+                )
 
             return div;
 
@@ -5408,40 +5462,40 @@ var SAFN = {
             var val = (argList[1]) ? argList[1] : '';
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-error")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-error")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Error")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Error")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-error fns-key")
-                                                            .val(key)
-                                                            .attr("placeholder", "Key")
-                                                            )
-                                                    )
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common function-statement-input-common-4-error fns-val")
-                                                            .val(val)
-                                                            .attr("placeholder", "Value")
-                                                            )
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-error fns-key")
+                                    .val(key)
+                                    .attr("placeholder", "Key")
+                                )
                             )
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common function-statement-input-common-4-error fns-val")
+                                    .val(val)
+                                    .attr("placeholder", "Value")
+                                )
+                            )
+                        )
+                    )
+                )
 
             return div;
         },
@@ -5456,74 +5510,74 @@ var SAFN = {
 
 
             var div = $("<div>")
-                    .addClass("col-12")
-                    .addClass("function-statement-container cs-sum-inbox")
+                .addClass("col-12")
+                .addClass("function-statement-container cs-sum-inbox")
+                .append($("<div>")
+                    .addClass("d-flex justify-content-start")
                     .append($("<div>")
-                            .addClass("d-flex justify-content-start")
-                            .append($("<div>")
-                                    .addClass("col-cs-1 d-table mr-2")
-                                    .append($("<span>")
-                                            .addClass("cs-funcname d-table-cell")
-                                            .text("Send Email")
-                                            )
+                        .addClass("col-cs-1 d-table mr-2")
+                        .append($("<span>")
+                            .addClass("cs-funcname d-table-cell")
+                            .text("Send Email")
+                        )
 
-                                    )
-                            .append($("<div>").addClass('col-cs-2')
-                                    .append($("<ul>")
-                                            .css('display', 'initial')
-                                            .append($('<li>')
-                                                    .append($('<input>')
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-sendemail")
-                                                            .addClass("fns-to")
-                                                            .attr('placeholder', 'To')
-                                                            .val(to))
-                                                    )
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-sendemail")
-                                                            .addClass("fns-subject")
-                                                            .attr('placeholder', 'Subject')
-                                                            .val(subject)
-                                                            )
-                                                    )
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-sendemail")
-                                                            .addClass("fns-message")
-                                                            .attr('placeholder', 'Message Body')
-                                                            .val(message)
-                                                            )
-                                                    )
-
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-sendemail")
-                                                            .addClass("fns-cc")
-                                                            .attr('placeholder', 'CC')
-                                                            .val(cc)
-                                                            )
-                                                    )
-
-                                            .append($("<li>")
-                                                    .append($("<input>")
-                                                            .addClass('function-statement-container-change-event')
-                                                            .addClass("function-statement-input-common")
-                                                            .addClass("function-statement-input-common-4-sendemail")
-                                                            .addClass("fns-bb")
-                                                            .attr('placeholder', 'BB')
-                                                            .val(bb)
-                                                            )
-                                                    )
-                                            )
-                                    )
+                    )
+                    .append($("<div>").addClass('col-cs-2')
+                        .append($("<ul>")
+                            .css('display', 'initial')
+                            .append($('<li>')
+                                .append($('<input>')
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-sendemail")
+                                    .addClass("fns-to")
+                                    .attr('placeholder', 'To')
+                                    .val(to))
                             )
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-sendemail")
+                                    .addClass("fns-subject")
+                                    .attr('placeholder', 'Subject')
+                                    .val(subject)
+                                )
+                            )
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-sendemail")
+                                    .addClass("fns-message")
+                                    .attr('placeholder', 'Message Body')
+                                    .val(message)
+                                )
+                            )
+
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-sendemail")
+                                    .addClass("fns-cc")
+                                    .attr('placeholder', 'CC')
+                                    .val(cc)
+                                )
+                            )
+
+                            .append($("<li>")
+                                .append($("<input>")
+                                    .addClass('function-statement-container-change-event')
+                                    .addClass("function-statement-input-common")
+                                    .addClass("function-statement-input-common-4-sendemail")
+                                    .addClass("fns-bb")
+                                    .attr('placeholder', 'BB')
+                                    .val(bb)
+                                )
+                            )
+                        )
+                    )
+                )
             return div;
 
 
@@ -5577,76 +5631,76 @@ var SAFN = {
 $(document).on('click', '#description_table_id .cs-btn-sum', function (e) {
     $(this).closest('.cs-sum-inbox').find('ul#sum-sortable li:last-child')
 
-            .after($("<li>")
-                    .addClass("ui-sortable-placeholder cs-addons-sum-name")
-                    .append($("<div>")
-                            .addClass("cs-value-trash-box")
-                            .append($("<div>")
-                                    .addClass("cs-value-trash")
-                                    .append($("<i>")
-                                            .addClass("fa fa-trash-o")
-                                            .attr("aria-hidden", "true")
-                                            )
-                                    .text(" Delete")
-                                    )
-                            )
-                    .append($('<input>')
-                            .addClass('function-statement-container-change-event')
-                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
-                            .val('')
-                            .attr("placeholder", "Value")
-                            )
-                    );
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass('function-statement-container-change-event')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-sum")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 $(document).on('click', '#description_table_id .cs-btn-concat', function (e) {
     $(this).closest('.cs-sum-inbox-concat').find('ul#concat-sortable li:last-child')
 
-            .after($("<li>")
-                    .addClass("ui-sortable-placeholder cs-addons-sum-name")
-                    .append($("<div>")
-                            .addClass("cs-value-trash-box")
-                            .append($("<div>")
-                                    .addClass("cs-value-trash")
-                                    .append($("<i>")
-                                            .addClass("fa fa-trash-o")
-                                            .attr("aria-hidden", "true")
-                                            )
-                                    .text(" Delete")
-                                    )
-                            )
-                    .append($('<input>')
-                            .addClass('function-statement-container-change-event')
-                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
-                            .val('')
-                            .attr("placeholder", "Value")
-                            )
-                    );
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass('function-statement-container-change-event')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-concat")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
     $(this).closest('.cs-sum-inbox-dec').find('ul#dec-sortable li:last-child')
 
-            .after($("<li>")
-                    .addClass("ui-sortable-placeholder cs-addons-sum-name")
-                    .append($("<div>")
-                            .addClass("cs-value-trash-box")
-                            .append($("<div>")
-                                    .addClass("cs-value-trash")
-                                    .append($("<i>")
-                                            .addClass("fa fa-trash-o")
-                                            .attr("aria-hidden", "true")
-                                            )
-                                    .text(" Delete")
-                                    )
-                            )
-                    .append($('<input>')
-                            .addClass('function-statement-container-change-event')
-                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
-                            .val('')
-                            .attr("placeholder", "Value")
-                            )
-                    );
+        .after($("<li>")
+            .addClass("ui-sortable-placeholder cs-addons-sum-name")
+            .append($("<div>")
+                .addClass("cs-value-trash-box")
+                .append($("<div>")
+                    .addClass("cs-value-trash")
+                    .append($("<i>")
+                        .addClass("fa fa-trash-o")
+                        .attr("aria-hidden", "true")
+                    )
+                    .text(" Delete")
+                )
+            )
+            .append($('<input>')
+                .addClass('function-statement-container-change-event')
+                .addClass("fns-val function-statement-input-common function-statement-input-common-4-dec")
+                .val('')
+                .attr("placeholder", "Value")
+            )
+        );
 });
 
 
@@ -5681,15 +5735,14 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
     }
 });
 
-$(document).on('click', '.cs-copy-btn', function (e) {
+
+$(document).on('mousedown', '.cs-copy-btn', function (e) {
     var triggerEl = $(this).closest("tr");
     var commandName = triggerEl.attr('cname');
     var html = triggerEl.find('.text-holder');
     var pid = triggerEl.attr('pid');
 
     var txt = SAFN.Reconvert.InitMapper(commandName, triggerEl);
-
-
 
     var $temp = $("<input>");
     $("body").append($temp);
@@ -5706,19 +5759,19 @@ function loadSelecPickerOnChnageApiList(backlogId) {
     for (var n = 0; n < data.length; n++) {
 
         var o = SACore.Backlogs[data[n]];
-//        if (prid === o.fkProjectId) {
+        //        if (prid === o.fkProjectId) {
         if (o.isApi === '1') {
 
             var td = $('<option>')
-                    .text(o.backlogName)
-                    .val(o.id)
+                .text(o.backlogName)
+                .val(o.id)
 
             if (o.id === backlogId) {
                 td.attr('selected', 'selected')
             }
             tbl.append(td);
         }
-//        }
+        //        }
     }
 
     return tbl.html();
@@ -5751,8 +5804,8 @@ function loadSelecPickerOnChnageFnList(element) {
 
 
                     var td = $('<option>')
-                            .text(o.fnDescription)
-                            .val(o.id)
+                        .text(o.fnDescription)
+                        .val(o.id)
 
                     if (o.id === fnid) {
                         td.attr('selected', 'selected')
@@ -5821,14 +5874,14 @@ $(document).ready(function () {
     ];
     $(document).on('keyup keydown', '.add-description', function (e) {
         $(this).autocomplete({
-                minLength: 0,
-                source: shortcodes,
-                select: function (event, ui) {
-                    $(this).change();
-                    $(".fx-shortcodes-btn .add-description").val(''); return false;
-                },
-                position: {my: "left bottom", at: "left top", collision: "flip"}
-            }).autocomplete("widget").addClass("cs-function-list");
+            minLength: 0,
+            source: shortcodes,
+            select: function (event, ui) {
+                $(this).change();
+                $(".fx-shortcodes-btn .add-description").val(''); return false;
+            },
+            position: { my: "left bottom", at: "left top", collision: "flip" }
+        }).autocomplete("widget").addClass("cs-function-list");
     });
 
     // first table shortcode
@@ -5840,8 +5893,8 @@ $(document).ready(function () {
         $("#ifbacklogDescText").change();
         $("#ifbacklogDescText").val('');
     });
-    $(document).on('change',function(e) {
-        if(e.which == 13) {
+    $(document).on('change', function (e) {
+        if (e.which == 13) {
 
             $(this).val(' ').change();
         }
@@ -5860,25 +5913,25 @@ $(document).ready(function () {
     })
 
     $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
-        $.fn.textWidth = function(text, font) {
+        $.fn.textWidth = function (text, font) {
             if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
             $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
             return $.fn.textWidth.ZadFakeEl.width();
         };
-        
-        $(this).on('input', function() {
+
+        $(this).on('input', function () {
             var inputWidth = $(this).textWidth();
             $(this).css({
                 width: inputWidth + 15
             })
         }).trigger('input');
-        
+
         function inputWidth(CSelem, minW, maxW) {
             CSelem = $(this);
         }
-        
+
         var SheyTargetElem = $(this);
-        
+
         inputWidth(SheyTargetElem);
 
         SAFN.Convert.Common.GetLineBody(this);
@@ -5894,45 +5947,45 @@ $(document).ready(function () {
     });
     $('.insert-funct-input').each(function () {
         var funcdata = [
-            {"label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "IF HAS VALUE", "fx": "@.ifhasvalue(){}", "desc": "IF HAS VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "IF HAS NOT VALUE", "fx": "@.ifhasnotvalue(){}", "desc": "IF HAS NOT VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "FOR LIST", "fx": "@.forlist(){}", "desc": "FOR LIST It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "FOR TABLE", "fx": "@.fortable(){}", "desc": "FOR TABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "GET", "fx": "@.get()", "desc": "GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "GET PARAM URL", "fx": "@.getparamurl()", "desc": "GET PARAM URL long established fact that a reader will be distracted by the of a page when looking at its layout. The point of using"},
-            {"label": "CONSOLE", "fx": "@.console()", "desc": "CONSOLE is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of 4."},
-            {"label": "CONSOLE DATA", "fx": "@.consoledata()", "desc": "CONSOLE DATA established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "DELETE KEY", "fx": "@.deletekey()", "desc": "DELETE KEY established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "ALERT", "fx": "@.alert()", "desc": "ALERT is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label": "ALERT DATA", "fx": "@.alertdata()", "desc": "ALERT DATA is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point"},
-            {"label": "SET", "fx": "@.set()", "desc": "SUM is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label": "SET VALUE", "fx": "@.setvalue()", "desc": "SET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SET TEXT", "fx": "@.settext()", "desc": "SET TEXT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "MAP", "fx": "@.map()", "desc": "MAP It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW ERROR", "fx": "@.showerror()", "desc": "SHOW ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "ERROR", "fx": "@.error()", "desc": "ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"lanel": "SEND EMAIL", "fx": "@.sendemail()", "desc": "SED EMAIL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SUM", "fx": "@.sum()", "desc": "SUM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "INC", "fx": "@.inc()", "desc": "INC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "DEC", "fx": "@.dec()", "desc": "DEC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CONCAT", "fx": "@.concat()", "desc": "CONCAT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW", "fx": "@.show()", "desc": "SHOW It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "HIDE", "fx": "@.hide()", "desc": "HIDE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLICK", "fx": "@.click()", "desc": "CLICK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CHANGE", "fx": "@.change()", "desc": "CHANGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "FOCUS", "fx": "@.focus()", "desc": "FOCUS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "VISIBLE", "fx": "@.visible()", "desc": "VISABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "UNVISIBLE", "fx": "@.unvisible()", "desc": "UNVISIBLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW MESSAGE", "fx": "@.showmessage()", "desc": "SHOW MESSAGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLEAR", "fx": "@.clear()", "desc": "CLEAR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLEAR CLASS", "fx": "@.clearclass()", "desc": "CLEAR CLASS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW PARAM", "fx": "@.showparam()", "desc": "SHOW PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "HIDE PARAM", "fx": "@.hideparam()", "desc": "HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
+            { "label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "IF HAS VALUE", "fx": "@.ifhasvalue(){}", "desc": "IF HAS VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "IF HAS NOT VALUE", "fx": "@.ifhasnotvalue(){}", "desc": "IF HAS NOT VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "FOR LIST", "fx": "@.forlist(){}", "desc": "FOR LIST It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "FOR TABLE", "fx": "@.fortable(){}", "desc": "FOR TABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "GET", "fx": "@.get()", "desc": "GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "GET PARAM URL", "fx": "@.getparamurl()", "desc": "GET PARAM URL long established fact that a reader will be distracted by the of a page when looking at its layout. The point of using" },
+            { "label": "CONSOLE", "fx": "@.console()", "desc": "CONSOLE is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of 4." },
+            { "label": "CONSOLE DATA", "fx": "@.consoledata()", "desc": "CONSOLE DATA established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "DELETE KEY", "fx": "@.deletekey()", "desc": "DELETE KEY established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using." },
+            { "label": "ALERT", "fx": "@.alert()", "desc": "ALERT is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using" },
+            { "label": "ALERT DATA", "fx": "@.alertdata()", "desc": "ALERT DATA is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point" },
+            { "label": "SET", "fx": "@.set()", "desc": "SUM is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using" },
+            { "label": "SET VALUE", "fx": "@.setvalue()", "desc": "SET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SET TEXT", "fx": "@.settext()", "desc": "SET TEXT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "MAP", "fx": "@.map()", "desc": "MAP It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SHOW ERROR", "fx": "@.showerror()", "desc": "SHOW ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "ERROR", "fx": "@.error()", "desc": "ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "lanel": "SEND EMAIL", "fx": "@.sendemail()", "desc": "SED EMAIL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SUM", "fx": "@.sum()", "desc": "SUM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "INC", "fx": "@.inc()", "desc": "INC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "DEC", "fx": "@.dec()", "desc": "DEC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CONCAT", "fx": "@.concat()", "desc": "CONCAT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SHOW", "fx": "@.show()", "desc": "SHOW It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "HIDE", "fx": "@.hide()", "desc": "HIDE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CLICK", "fx": "@.click()", "desc": "CLICK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CHANGE", "fx": "@.change()", "desc": "CHANGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "FOCUS", "fx": "@.focus()", "desc": "FOCUS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "VISIBLE", "fx": "@.visible()", "desc": "VISABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "UNVISIBLE", "fx": "@.unvisible()", "desc": "UNVISIBLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SHOW MESSAGE", "fx": "@.showmessage()", "desc": "SHOW MESSAGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CLEAR", "fx": "@.clear()", "desc": "CLEAR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CLEAR CLASS", "fx": "@.clearclass()", "desc": "CLEAR CLASS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "SHOW PARAM", "fx": "@.showparam()", "desc": "SHOW PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "HIDE PARAM", "fx": "@.hideparam()", "desc": "HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." },
+            { "label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout." }
         ];
         $(this).autocomplete({
             source: funcdata,
@@ -5940,11 +5993,11 @@ $(document).ready(function () {
             create: function () {
                 $(this).autocomplete('instance')._renderItem = function (ul, item) {
                     return $('<li>').append('<a class="cs-fx-btn cs-fx-btn-shey-zad-33" fxShortcodeData="' + item.fx + '" fxhelpdata="' + item.desc + '">' + item.label + '</a>')
-                            .appendTo(ul);
+                        .appendTo(ul);
                 };
             }
         }).autocomplete("widget").addClass("cs-fc-shortcode").autocomplete({
-            position: {my: "left bottom", at: "left top", collision: "flip"}
+            position: { my: "left bottom", at: "left top", collision: "flip" }
         });
 
         $(".insert-funct-input").autocomplete("option", "appendTo", ".sc-insert-func-result");
@@ -5968,7 +6021,7 @@ $(document).ready(function () {
         $('#insert-funct-input').val(' ').keydown();
     })
 
-//    $(document).on('change', '#ifhasnotvalueBacklogDescText', function (e) {
+    //    $(document).on('change', '#ifhasnotvalueBacklogDescText', function (e) {
     $(document).on('change', '.addGeneralProcessDescription', function (e) {
         var txt = $(this).val();
 
@@ -5981,26 +6034,36 @@ $(document).ready(function () {
         SAFN.Convert.AddCommandInfoToTr(tr, txt);
 
         var tdTextContent = $('<td>').addClass('text-holder')
-                .append($('<span>')
-                        .addClass("procDescTitleNewNowAfter")
-                        .css("border-radius", "5px")
-                        .append(comp)
-                        )
+            .append($('<span>')
+                .addClass("procDescTitleNewNowAfter")
+                .css("border-radius", "5px")
+                .append(comp)
+            )
 
         $(this).closest('div.function-statement-container')
-                .find('tbody').first()
-                .append(tr.append($('<td>')
-                        .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+            .find('tbody').first()
+            .append(tr.append($('<td>')
+                .append('<span class="cs-move-tr"><i class="fas fa-grip-vertical"></i></span>')
+            ).append(tdTextContent)
+                .append($('<td>')
+                .append($('<div>').addClass('btn-group')
+                    .append($('<button>').addClass('btn dropdown-togglefas fas fa-cog')
+                    .attr('type', 'button').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'false')
+                        .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                            .append($('<button>').addClass('btn btn-primary cs-copy-btn')
+                                .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                            )
+                            .append($('<button>').addClass('btn btn-primary tr-remove-btn').attr('type', 'button')
+                                .html('<i class="fas fa-trash-alt"></i> Delete')
+                            )
                         )
-                        .append(tdTextContent)
-                        .append($('<td>')
-                                .append('<button class="btn cs-copy-btn"><i class="fas fa-copy" aria-hidden="true"></i></button>')
-                                )
-                        .append($('<td>')
-                                .append('<button class="btn btn-primary tr-remove-btn"><i class="fas fa-trash-alt"></i></button>')
-                                )
 
-                        );
+                    )
+                )
+
+        )
+
+            );
         $(this).focus().val('');
         SAFN.Convert.Common.GetLineBody(this);
     });
@@ -6008,16 +6071,21 @@ $(document).ready(function () {
     $(document).on('change', '.add-description', function (e) {
         $('.descriptiontable table').find('select').selectpicker();
     });
-
-    $(document).on('click', '.tr-remove-btn', function (e) {
-        var tr = $(this).closest('tr');
-        var fstEl = $(this).closest("tr.esas-table-tr-for-zad").children().first();
-//        alert(fstEl.html())
-        tr.remove();
-        SAFN.Convert.Common.GetLineBody(fstEl);
+    
+    $(document).on('mousedown', '.tr-remove-btn', function (e) {
+        var funcName = $(this).closest("tr").find('.cs-funcname').html();
+        var checkstr =  confirm("are you sure you want to delete <b> " + funcName + "</b> ?");
+        if(checkstr == true){
+            var tr = $(this).closest('tr');
+            var fstEl = $(this).closest("tr.esas-table-tr-for-zad").children().first();
+            //        alert(fstEl.html())
+            tr.remove();
+            SAFN.Convert.Common.GetLineBody(fstEl);
+        }else{
+        return false;
+        }
     });
-
-
+  
 });
 
 function addJsModalNewSt(elm) {
