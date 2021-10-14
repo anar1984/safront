@@ -6323,32 +6323,37 @@ td.selected{
  .cst-cheweek-sidebar .list-wrap {
      width: 100%;
      overflow: auto;
+     padding-left: 10px;
  }
  .cst-cheweek-sidebar .list-wrap .list {
-     border-bottom: 1px solid #ccc;
+ 
      background: #fff;
      display: flex;
      align-items: center;
      padding: 5px;
-     height: 70px;
+     height: 30px;
      cursor: pointer;
  }
  .cst-cheweek-sidebar .list-wrap .list:hover, .cst-cheweek-sidebar .list-wrap .list.active {
      background: #f4f7f9;
  }
  .cst-cheweek-sidebar .list-wrap .list img {
-     border-radius: 50%;
-     width: 50px;
-     height: 50px;
-     object-fit: cover;
-     margin-right: 10px;
-     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 10px;
+    box-shadow: 1px 2px 3px rgb(0 0 0 / 50%);
  }
  .cst-cheweek-sidebar .list-wrap .list .info {
      flex: 1;
+     width: 80%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
  }
  .cst-cheweek-sidebar .list-wrap .list .info .user {
-     font-weight: 700;
+     font-weight: 400;
  }
  .cst-cheweek-sidebar .list-wrap .list .info .text {
      display: flex;
