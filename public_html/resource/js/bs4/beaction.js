@@ -3199,9 +3199,10 @@ var SAFN = {
         },
         CallFnStatement: function (triggerEl) {
 
-            var div = triggerEl.find('div.function-statement-container');
-            var key = div.find("select.fns-key").val();
+            // var div = triggerEl.find('div.function-statement-container');
 
+            var div = $(triggerEl).find('div.function-statement-container');
+            var key = div.find("select.fns-key").val();
             var fnline = "@.callfn(" + key + ")";
             return fnline;
         },
@@ -3568,6 +3569,9 @@ var SAFN = {
         },
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
+            // var fnName = SACore.GetBacklogDetails(fnId, 'backlogName');
+            // fnName = (fnName) ? fnName : fnId;
+
             var but = '';
             if (fnId.length > 0) {
                 but = $("<li>")
@@ -3729,7 +3733,7 @@ var SAFN = {
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
                             
-                             $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
@@ -3757,7 +3761,7 @@ var SAFN = {
                         }
                     }).disableSelection();
                     $(table).find('select').selectpicker();
-
+                    
                 }
             }
 
@@ -5802,24 +5806,35 @@ function loadSelecPickerOnChnageFnList(element) {
 
                     var o = dt[n];
 
-
                     var td = $('<option>')
                         .text(o.fnDescription)
-                        .val(o.id)
+                        .val(o.fnDescription)
 
                     if (o.id === fnid) {
                         td.attr('selected', 'selected')
                     }
-
-
-
                     $(this).append(td);
-
-
-
-
                 }
                 $(this).selectpicker('refresh');
+                $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function() {
+                    let arrowWidth = 60;    
+                    let $this = $(this);
+                    let style = window.getComputedStyle(this)
+                    let { fontWeight, fontSize, fontFamily } = style
+                    let text = $this.find("option:selected").text();
+                    let $demo = $("<span>").html(text).css({
+                        "font-size": fontSize, 
+                        "font-weight": fontWeight, 
+                        "font-family": fontFamily,
+                        "visibility": "hidden"
+                    });
+                    $demo.appendTo($this.parent());
+                    let width = $demo.width();
+                    $demo.remove();
+                    
+                    $this.width(width + arrowWidth);
+        
+                });
             })
 
         }
@@ -5905,11 +5920,24 @@ $(document).ready(function () {
 
     $(document).on("change", "select.function-statement-input-common.select-api-box", function (e) {
         var backlogId = $(this).val();
+        var val = $(this).val();
+        $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
         var apiAction = GetApiActionTypeText(SACore.GetBacklogDetails(backlogId, 'apiAction'));
         var apiSyncRequest = MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest'));
 
         $(this).closest('ul').find('.api-info-container').text(apiAction);
         $(this).closest('ul').find('.api-info-synchrone ').text(apiSyncRequest);
+        SAFN.Convert.Common.GetLineBody(this);
+    })
+
+    $(document).on("change", "select.function-statement-input-common.get-callfn-select-box", function (e) {
+
+        var val = $(this).val();
+        $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
+        
+         SAFN.Convert.Common.GetLineBody(this);
+
+        // SAFN.Reconvert.CallFnStatement(val);
     })
 
     $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
@@ -5935,6 +5963,35 @@ $(document).ready(function () {
         inputWidth(SheyTargetElem);
 
         SAFN.Convert.Common.GetLineBody(this);
+    })
+    $(document).on("change", ".cs-sum-inbox select", function (e) {
+    
+        let arrowWidth = 60;
+
+        $.fn.resizeselect = function(settings) {  
+        return this.each(function() { 
+
+            $(this).change(function(){
+            let $this = $(this);
+            let style = window.getComputedStyle(this)
+            let { fontWeight, fontSize, fontFamily } = style
+            let text = $this.find("option:selected").text();
+            let $demo = $("<span>").html(text).css({
+                "font-size": fontSize, 
+                "font-weight": fontWeight, 
+                "font-family": fontFamily,
+                "visibility": "hidden"
+            });
+            $demo.appendTo($this.parent());
+            let width = $demo.width();
+            $demo.remove();
+            $this.width(width + arrowWidth);
+
+            }).change();
+
+        });
+        };
+        $(this).closest('.cs-sum-inbox .cs-select-box .bootstrap-select').resizeselect();
     })
 
     $(document).on("dblclick", "a.cs-fx-btn-shey-zad-33", function (e) {
@@ -6007,6 +6064,7 @@ $(document).ready(function () {
             $('.sc-insert-func-help p').append($(this).attr('fxhelpdata'));
             $('.sc-insert-func-help input').val('');
             $('.sc-insert-func-help input').val($(this).attr('fxshortcodedata'));
+
         });
 
         $(document).on('keyup keydown click', '#ScInserFuncBtn', function (e) {
@@ -6020,6 +6078,7 @@ $(document).ready(function () {
         $('#insert-funct-input').focus();
         $('#insert-funct-input').val(' ').keydown();
     })
+
 
     //    $(document).on('change', '#ifhasnotvalueBacklogDescText', function (e) {
     $(document).on('change', '.addGeneralProcessDescription', function (e) {

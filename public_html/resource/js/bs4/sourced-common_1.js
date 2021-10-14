@@ -5615,6 +5615,26 @@ UserStory.prototype = {
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();
+            
+          $('.cs-sum-inbox .bootstrap-select').each(function() {
+            let arrowWidth = 60;    
+            let $this = $(this);
+            let style = window.getComputedStyle(this)
+            let { fontWeight, fontSize, fontFamily } = style
+            let text = $this.find("option:selected").text();
+            let $demo = $("<span>").html(text).css({
+                "font-size": fontSize, 
+                "font-weight": fontWeight, 
+                "font-family": fontFamily,
+                "visibility": "hidden"
+            });
+            $demo.appendTo($this.parent());
+            let width = $demo.width();
+            $demo.remove();
+            
+            $this.width(width + arrowWidth);
+
+        });
 
             loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
 

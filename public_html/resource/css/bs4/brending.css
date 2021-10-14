@@ -1,4 +1,7 @@
 /* general */
+.cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn {
+    z-index: 0;
+}
 .orange-bg {
     background-color: orange;
 }
@@ -1754,6 +1757,7 @@ tbody tr.sortbodyEmpty {
 .cs-sum-inbox .btn.fa-cog .dropdown-menu.show {
     min-width: 120px;
     box-shadow: 0px 2px 6px rgb(0 0 0 / 18%);
+    z-index: 100 !important;
 }
 .cs-sum-inbox .btn.fa-cog .dropdown-menu button {
     vertical-align: middle;
