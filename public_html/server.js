@@ -33,11 +33,11 @@ io.sockets.on('connection', function(socket) {
         }
     });
     //new message get
-    socket.on('postMsg', function(msg, color) {
+    socket.on('postMsg', function(msg, color,fkGroupId,fkUserID) {
         socket.broadcast.emit('newMsg', socket.nickname,fkGroupId,fkUserID, msg, color);
     });
     //new image get
-    socket.on('img', function(imgData, color) {
+    socket.on('img', function(imgData, color,fkGroupId,fkUserID) {
         socket.broadcast.emit('newImg', socket.nickname,fkGroupId,fkUserID,imgData, color);
     });
 });

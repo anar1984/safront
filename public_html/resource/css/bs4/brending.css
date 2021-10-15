@@ -1,4 +1,13 @@
 /* general */
+.cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn {
+    z-index: 0;
+}
+.process-desc-as-comment, .process-fx-as-comment {
+    background: rgb(255 255 0 / 8%);
+    border: 4px dashed yellow !important;
+    border-radius: 5px;
+    margin: 5px;
+}
 .orange-bg {
     background-color: orange;
 }
@@ -55,11 +64,14 @@
      word-break: keep-all;
 }
 .cs-sum-inbox {
+    padding: 0;
+    float: left;
+    border-radius: 5px;
+}
+.cs-sum-inbox > div {
     background-color: #9395BD;
     box-shadow: rgb(0 0 0 / 16%) 0 3px 3px;
-    padding: 0;
     border-radius: 5px;
-    float: left;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi {
     background-color: #b98181;
@@ -98,7 +110,8 @@
     padding: 3px 5px;
     height: 25px;
     border: none;
-    width: 130px;
+    min-width: auto;
+    max-width: 520px;
     vertical-align: middle;
     border-radius: 3px;
     background: rgb(39 43 124 / 55%);
@@ -262,7 +275,7 @@ background: rgb(39 43 124 / 100%);
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr {
     height: 100%;
-    width: 35px;
+    width: 26px;
     background: transparent;
     vertical-align: middle;
     display: inline-block;
@@ -489,7 +502,7 @@ tbody .ifbacklogDescriptionText:hover{
     outline: thin dotted #272b7c !important;
     outline: none;
 }
-table.if-inc-table {
+table.if-inc-table, table.ifhasnotvalue-inc-table, table.ifhasvalue-inc-table, table.fortable-inc-table, table.forlist-inc-table {
     background: #ffffff;
     width: 100%;
 }
@@ -542,7 +555,7 @@ table.if-inc-table tr:hover .btn-primary:not(:disabled):not(.disabled):active, t
     border-color: transparent;
     color: #272B7C !important;
 }
-.cs-if-script-box table tr td .cs-sum-inbox {
+.cs-if-script-box table tr td .cs-sum-inbox, .cs-forlist-script-box table tr td .cs-sum-inbox {
     background-color: transparent;
     box-shadow: none;
     padding: 1px;
@@ -592,13 +605,13 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
 }
 .cs-if-script-box {
     background-color: #F89CBE !important;
-    padding: 7px;
+    padding: 1px;
     display: block !important;
     padding-top: 0;
 }
 .cs-forlist-script-box {
     background-color: rgb(170 192 197) !important;
-    padding: 7px;
+    padding: 1px;
     display: block !important;
     padding-top: 0;
 }
@@ -719,7 +732,7 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
     margin: 0;
     width: 456px !important;
     height: 100%;
-    max-height: 130px;
+    max-height: 290px;
     position: relative;
     top: 8px !important;
     left: 0 !important;
@@ -1675,9 +1688,8 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
 }
 .descriptiontable {
     width: 100%;
-/*    width: max-content;
-    overflow: visible;*/
 }
+
 .cs-sum-inbox-callapi ul li.cs-select-api-info {
     margin: 0 0px;
     margin-right: 5px;
@@ -1698,4 +1710,80 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
 }
 .cs-forlist-class-name input.cs-forlist-cn-val {
     background: rgb(113 151 160);
+}
+tbody tr.sortbodyEmpty {
+    display: inline-block;
+    min-height: 35px;
+    width: 100%;
+}
+.vertical-alignment-helper {
+    display:table;
+    margin-top: 50px;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.vertical-align-center .modal-content {
+    width:inherit;
+    max-width:inherit;
+    height:inherit;
+    margin: 0 auto;
+    pointer-events:all;
+}
+.cs-sum-inbox .btn.fa-cog {
+    font-size: 14px;
+    color: #d8d9e2 !important;
+    vertical-align: middle;
+}
+.cs-sum-inbox .btn.fa-cog:after {
+    font-size: 12px;
+    display: none;
+}
+.cs-sum-inbox .btn.fa-cog:hover {
+    background-color: transparent;
+}
+.cs-sum-inbox .btn.fa-cog:focus {
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn.fa-cog:not(:disabled):not(.disabled).active, .cs-sum-inbox .btn.fa-cog:not(:disabled):not(.disabled):active, .cs-sum-inbox .show>.btn.fa-cog.dropdown-toggle {
+    color: #fff;
+    background-color: transparent;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn.fa-cog:hover:before, .cs-sum-inbox .btn.fa-cog:hover:after {
+    color: #272b7c;
+}
+.cs-sum-inbox .btn-group.show .dropdown-menu.show {
+    min-width: 120px;
+    box-shadow: 0px 2px 6px rgb(0 0 0 / 18%);
+    z-index: 100 !important;
+}
+.cs-sum-inbox .btn-group.show  .dropdown-menu button {
+    vertical-align: middle;
+    color: #272b7c !important;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
+    height: 25px;
+    font-size: 12px;
+    line-height: inherit;
+    padding: 6px 10px;
+    border-radius: 0;
+}
+.cs-sum-inbox .btn-group.show .dropdown-menu button:hover, .cs-sum-inbox .btn-group.show .dropdown-menu button:focus {
+    background-color: #3c3f89 !important;
+    color: #fff !important;
+    border-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+.cs-sum-inbox .btn-group.show .dropdown-menu button i {
+    margin-right: 5px;
+    margin-top: 3px;
 }
