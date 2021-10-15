@@ -2,6 +2,12 @@
 .cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn {
     z-index: 0;
 }
+.process-desc-as-comment, .process-fx-as-comment {
+    background: rgb(255 255 0 / 8%);
+    border: 4px dashed yellow !important;
+    border-radius: 5px;
+    margin: 5px;
+}
 .orange-bg {
     background-color: orange;
 }

@@ -3844,6 +3844,30 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
+                            $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                    .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                                        )
+                                    )
+        
+                                )
+                            );
+                            $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
@@ -3921,6 +3945,30 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
+                            $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                    .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                                        )
+                                    )
+        
+                                )
+                            );
+                            $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
@@ -3993,6 +4041,30 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
+                            $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                    .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                                        )
+                                    )
+        
+                                )
+                            );
+                            $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
@@ -4062,6 +4134,30 @@ var SAFN = {
                         connectWith: "tbody",
                         handle: ".cs-move-tr",
                         update: function (e, ui) {
+                            $(table).find('tbody .esas-table-tr-for-zad input[type="checkbox"]').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').removeAttr('orderno').removeAttr('pid');
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
+                            $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                    .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                                        )
+                                        .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                                        )
+                                    )
+        
+                                )
+                            );
+                            $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
                         }
                     }).disableSelection();
