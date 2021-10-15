@@ -1760,12 +1760,12 @@ tbody tr.sortbodyEmpty {
 .cs-sum-inbox .btn.fa-cog:hover:before, .cs-sum-inbox .btn.fa-cog:hover:after {
     color: #272b7c;
 }
-.cs-sum-inbox .btn.fa-cog .dropdown-menu.show {
+.cs-sum-inbox .btn-group.show .dropdown-menu.show {
     min-width: 120px;
     box-shadow: 0px 2px 6px rgb(0 0 0 / 18%);
     z-index: 100 !important;
 }
-.cs-sum-inbox .btn.fa-cog .dropdown-menu button {
+.cs-sum-inbox .btn-group.show  .dropdown-menu button {
     vertical-align: middle;
     color: #272b7c !important;
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
@@ -1775,13 +1775,14 @@ tbody tr.sortbodyEmpty {
     padding: 6px 10px;
     border-radius: 0;
 }
-.cs-sum-inbox .btn.fa-cog .dropdown-menu button:hover, .cs-sum-inbox .btn.fa-cog .dropdown-menu button:focus {
+.cs-sum-inbox .btn-group.show .dropdown-menu button:hover, .cs-sum-inbox .btn-group.show .dropdown-menu button:focus {
     background-color: #3c3f89 !important;
     color: #fff !important;
     border-color: transparent;
     outline: none;
     box-shadow: none;
 }
-.cs-sum-inbox .btn.fa-cog .dropdown-menu button i {
+.cs-sum-inbox .btn-group.show .dropdown-menu button i {
     margin-right: 5px;
+    margin-top: 3px;
 }

@@ -5634,7 +5634,7 @@ UserStory.prototype = {
             
             $this.width(width + arrowWidth);
 
-        });
+            });
 
             loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
 

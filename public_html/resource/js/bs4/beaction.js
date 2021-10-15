@@ -1673,6 +1673,7 @@ var be = {
 
 var SAFN = {
     Prefix: '@.',
+    PrefixC: '@_.',
     CoreData: "",
     FunctionBody: "",
     Element: "",
@@ -3527,7 +3528,7 @@ var SAFN = {
 
                 el.append($('<td>')
                     .append($('<div>').addClass('btn-group')
-                        .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                        .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'false'))
                             .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                 .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                     .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -3538,12 +3539,12 @@ var SAFN = {
                                 .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
                                     .html('<i class="fas fa-eye"></i> Remove Comment')
                                 )
-                                .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                                .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('id', 'tr-remove-btn')
                                     .html('<i class="fas fa-trash-alt"></i> Delete')
                                 )
                             )
 
-                        )
+                        
                     )
 
                 );
@@ -3738,7 +3739,7 @@ var SAFN = {
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
-                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
                                     .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                         .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                             .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -3754,7 +3755,7 @@ var SAFN = {
                                         )
                                     )
         
-                                )
+                                
                             );
                             $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);                            
@@ -3849,7 +3850,7 @@ var SAFN = {
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
-                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
                                     .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                         .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                             .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -3865,7 +3866,7 @@ var SAFN = {
                                         )
                                     )
         
-                                )
+                                
                             );
                             $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
@@ -3950,7 +3951,7 @@ var SAFN = {
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
-                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
                                     .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                         .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                             .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -3966,7 +3967,7 @@ var SAFN = {
                                         )
                                     )
         
-                                )
+                                
                             );
                             $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
@@ -4046,7 +4047,7 @@ var SAFN = {
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
-                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
                                     .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                         .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                             .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -4062,7 +4063,7 @@ var SAFN = {
                                         )
                                     )
         
-                                )
+                                
                             );
                             $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
@@ -4139,7 +4140,7 @@ var SAFN = {
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad td:nth-child(3)').remove();
                             $(table).find('tbody .esas-table-tr-for-zad').append($('<div>').addClass('btn-group')
-                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true')
+                                .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
                                     .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
                                         .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                             .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
@@ -4155,7 +4156,7 @@ var SAFN = {
                                         )
                                     )
         
-                                )
+                                
                             );
                             $(table).find('tbody .esas-table-tr-for-zad').removeClass('esas-table-tr-for-zad');
                             SAFN.Convert.Common.GetLineBody(this);
@@ -5807,9 +5808,9 @@ $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
 // Field deletion warning
 $(document).on('click', '#description_table_id #sum-sortable .cs-value-trash', function (e) {
     if (confirm("Are you Sure??")) {
-        var th = $(this).parents("#sum-sortable")
-        $(this).parents('li').remove();
-        var f = $(th).find('.function-statement-input-common').first();
+        var th = $(this).closest("#sum-sortable")
+        $(this).closest('li').remove();
+        var f = $(this).closest('li').find('input.function-statement-input-common').first();
 
         SAFN.Reconvert.SumStatement(f);
     }
@@ -5835,8 +5836,14 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
     }
 });
 
+$(document).on('click', '.cs-addcomment-btn', function (e) {
+    $(this).closest("tr").find('td.text-holder').addClass('process-fx-as-comment');
+});
+$(document).on('click', '.cs-removecomment-btn', function (e) {
+    $(this).closest("tr").find('td.text-holder').removeClass('process-fx-as-comment');
+});
 
-$(document).on('mousedown', '.cs-copy-btn', function (e) {
+$(document).on('click', '.cs-copy-btn', function (e) {
     var triggerEl = $(this).closest("tr");
     var commandName = triggerEl.attr('cname');
     var html = triggerEl.find('.text-holder');
@@ -6176,7 +6183,6 @@ $(document).ready(function () {
     })
 
 
-    //    $(document).on('change', '#ifhasnotvalueBacklogDescText', function (e) {
     $(document).on('change', '.addGeneralProcessDescription', function (e) {
         var txt = $(this).val();
 
@@ -6203,17 +6209,23 @@ $(document).ready(function () {
                 .append($('<td>')
                 .append($('<div>').addClass('btn-group')
                     .append($('<button>').addClass('btn dropdown-togglefas fas fa-cog')
-                    .attr('type', 'button').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'false')
+                    .attr('type', 'button').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'false'))
                         .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
-                            .append($('<button>').addClass('btn btn-primary cs-copy-btn')
+                            .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                                .html('<i class="fas fas eye-slash" aria-hidden="true"></i> Set as Comment')
+                            )
+                            .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                                .html('<i class="fas fas fa-eye" aria-hidden="true"></i> Remove Comment')
+                            )
+                            .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
                                 .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
                             )
-                            .append($('<button>').addClass('btn btn-primary tr-remove-btn').attr('type', 'button')
+                            .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
                                 .html('<i class="fas fa-trash-alt"></i> Delete')
                             )
                         )
 
-                    )
+                    
                 )
 
         )
@@ -6227,7 +6239,8 @@ $(document).ready(function () {
         $('.descriptiontable table').find('select').selectpicker();
     });
     
-    $(document).on('mousedown', '.tr-remove-btn', function (e) {
+    $(document).on('click', '.tr-remove-btn', function (e) {
+
         var funcName = $(this).closest("tr").find('.cs-funcname').html();
         var checkstr =  confirm("are you sure you want to delete <b> " + funcName + "</b> ?");
         if(checkstr == true){
