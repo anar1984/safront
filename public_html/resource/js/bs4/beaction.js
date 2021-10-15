@@ -1673,7 +1673,6 @@ var be = {
 
 var SAFN = {
     Prefix: '@.',
-    PrefixC: '@_.',
     CoreData: "",
     FunctionBody: "",
     Element: "",
@@ -3409,7 +3408,7 @@ var SAFN = {
         },
         UnvisibleParamStatement: function (triggerEl) {
             var div = triggerEl.find('div.function-statement-container');
-
+            var cscomment = triggerEl.find('div.text-holder');
             var key = div.find(".fns-key").val();
             var fnline = "@.unvisibleparam(" + key + ")";
             return fnline;
@@ -3477,9 +3476,13 @@ var SAFN = {
             GetLineBody: function (triggerElMain) {
                 var triggerEl = $(triggerElMain).closest("tr.esas-table-tr-for-zad");
                 var commandName = triggerEl.attr('cname');
+                var isComment = triggerEl.attr('isComment');
                 var pid = triggerEl.attr('pid');
+                if ((isComment) && isComment!=undefined && isComment!=='1') {
+                    commandName = '';
+                }
                 var txt = SAFN.Reconvert.InitMapper(commandName, triggerEl);
-                if (pid) {
+                if (pid  ) {
                     new UserStory().updateBacklogDescDetailsZad(txt, pid)
                 }
             },
@@ -3553,6 +3556,7 @@ var SAFN = {
         AddCommandInfoToTr: function (element, commandLine) {
             var fnShey = commandLine;
             var isCommand = 0;
+            
             var commandName = "";
             try {
                 var commandLineDesc = (fnShey.startsWith('__IF__') || fnShey.startsWith('__FORLIST__'))
@@ -5808,11 +5812,11 @@ $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
 // Field deletion warning
 $(document).on('click', '#description_table_id #sum-sortable .cs-value-trash', function (e) {
     if (confirm("Are you Sure??")) {
-        var th = $(this).closest("#sum-sortable")
-        $(this).closest('li').remove();
-        var f = $(this).closest('li').find('input.function-statement-input-common').first();
+        var th = $(this).parents("#sum-sortable")
+        $(this).parents('li').remove();
+        var f = $(th).find('.function-statement-input-common').first();
 
-        SAFN.Reconvert.SumStatement(f);
+        SAFN.Convert.Common.GetLineBody(f);
     }
 });
 
@@ -5822,7 +5826,7 @@ $(document).on('click', '#description_table_id #concat-sortable .cs-value-trash'
         $(this).parents('li').remove();
         var noteConcat = $(id_noteConcat).find('.function-statement-input-common').first();
 
-        SAFN.Reconvert.ConcatStatement(noteConcat);
+        SAFN.Convert.Common.GetLineBody(noteConcat);
     }
 });
 
@@ -5832,15 +5836,42 @@ $(document).on('click', '#description_table_id #dec-sortable .cs-value-trash', f
         $(this).parents('li').remove();
         var noteDec = $(id_noteDec).find('.function-statement-input-common').first();
 
-        SAFN.Reconvert.DecStatement(noteDec);
+        SAFN.Convert.Common.GetLineBody(noteDec);
     }
 });
 
 $(document).on('click', '.cs-addcomment-btn', function (e) {
+    var triggerEl = $(this).closest("tr");
+    var commandName = triggerEl.attr('cname');
+    var html = triggerEl.find('.text-holder');
+    var pid = triggerEl.attr('pid');
+
+    var txt = SAFN.Reconvert.InitMapper(commandName, triggerEl);
+    txt = txt.replace('@.','#.');
+    triggerEl.attr('isComment','1')
+
+    html.html(txt); 
+    SAFN.Convert.Common.GetLineBody(triggerEl);
     $(this).closest("tr").find('td.text-holder').addClass('process-fx-as-comment');
 });
 $(document).on('click', '.cs-removecomment-btn', function (e) {
+
+    var triggerEl = $(this).closest("tr");
+    var commandName = triggerEl.attr('cname');
+    var html = triggerEl.find('.text-holder');
+    var pid = triggerEl.attr('pid');
+
+    var txt = SAFN.Reconvert.InitMapper(commandName, triggerEl);
+    txt = txt.replace('#.','@.');
+    triggerEl.attr('isComment','0')
+
+    html.html(txt); 
+    SAFN.Convert.Common.GetLineBody(triggerEl);
+
     $(this).closest("tr").find('td.text-holder').removeClass('process-fx-as-comment');
+
+
+    
 });
 
 $(document).on('click', '.cs-copy-btn', function (e) {
@@ -6039,8 +6070,6 @@ $(document).ready(function () {
         $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
         
          SAFN.Convert.Common.GetLineBody(this);
-
-        // SAFN.Reconvert.CallFnStatement(val);
     })
 
     $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
