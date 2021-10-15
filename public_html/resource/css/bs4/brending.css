@@ -1786,3 +1786,8 @@ tbody tr.sortbodyEmpty {
     margin-right: 5px;
     margin-top: 3px;
 }
+/***** DATABASE PAGE */
+.ShowDatabaseTable .modal-dialog {
+    max-width: 97vw;
+    overflow-y: auto;
+}
