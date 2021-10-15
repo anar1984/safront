@@ -5523,7 +5523,14 @@ UserStory.prototype = {
             
             
             var backlogProcessDescLineSubmenuItemVar = this.backlogProcessDescLineSubmenuItem(obj[n].id);
-         
+
+            var td34 = $('<td>');
+            
+            if (isCommand==='0'){
+                td34.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
+            }
+            
+
             var tr = $("<tr>")
                     .addClass("esas-table-tr-for-zad")
                     .attr("orderno", obj[n].orderNo)
@@ -5536,10 +5543,10 @@ UserStory.prototype = {
                                     .val(obj[n].id)
                                     .addClass("pdescList"))
                             )
-                    .append($('<td>')
+                    .append(td34
                             .addClass('text-holder all-holder')
                             .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
-                            //.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
+                           
                             .attr('idesc', Replace2Primes(obj[n].description))
                             .append($('<span>')
                                     .addClass("procDescTitleNewNowAfter")
