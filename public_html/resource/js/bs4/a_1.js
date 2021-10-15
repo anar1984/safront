@@ -117,7 +117,7 @@ function getUserFullInfo(fkUserId) {
 }
 
 function removeBacklogDescCommentType(el, descId) {
-    $(el).closest('tr').find('td.text-holder').removeClass("process-desc-as-comment");
+    $(el).closest('tr').find('td.text-holder.all-holder').removeClass("process-desc-as-comment");
 
 
     var json = initJSON();
@@ -147,7 +147,7 @@ function removeBacklogDescCommentType(el, descId) {
 
 
 function setBacklogDescCommentType(el, descId, commentType) {
-    $(el).closest('tr').find('td.text-holder').addClass("process-desc-as-comment");
+    $(el).closest('tr').find('td.text-holder.all-holder').addClass("process-desc-as-comment");
 
 
     var json = initJSON();

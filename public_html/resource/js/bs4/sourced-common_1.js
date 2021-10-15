@@ -5537,9 +5537,9 @@ UserStory.prototype = {
                                     .addClass("pdescList"))
                             )
                     .append($('<td>')
-                            .addClass('text-holder')
+                            .addClass('text-holder all-holder')
                             .addClass((obj[n].commentType==='comment')?'process-desc-as-comment':'')
-                            .attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
+                            //.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
                             .attr('idesc', Replace2Primes(obj[n].description))
                             .append($('<span>')
                                     .addClass("procDescTitleNewNowAfter")
@@ -5566,13 +5566,13 @@ UserStory.prototype = {
         }
         table.append(lasttr);
 
-
         $(table).sortable({
-            handle:"#cs-move-tr",
+            connectWith: "tbody",
+            handle:".cs-move-tr",
             update: function (e,ui) {
             moveBacklogDescDrag(ui.item)
             }
-          });
+          }).disableSelection();
 
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
@@ -5581,10 +5581,60 @@ UserStory.prototype = {
           $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i+1));
           });
-               
+
+          $('.cs-sum-inbox input.function-statement-input-common').each(function(i) {
+                $.fn.textWidth = function(text, font) {
+                if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
+                $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+                return $.fn.textWidth.ZadFakeEl.width();
+            };
+            
+            $(this).on('input', function() {
+                var inputWidth = $(this).textWidth();
+                $(this).css({
+                    width: inputWidth + 15
+                })
+            }).trigger('input');
+            
+            function inputWidth(CSelem, minW, maxW) {
+                CSelem = $(this);
+            }
+            
+            var SheyTargetElem = $(this);
+            
+            inputWidth(SheyTargetElem);
+
+          });
+  
+          $(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+                if (e.keyCode === 13) {
+                    new UserStory().insertNewBacklogDesc();
+                }
+            });
+
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();
             $(".select-api-box").selectpicker();
+            
+          $('.cs-sum-inbox .bootstrap-select').each(function() {
+            let arrowWidth = 60;    
+            let $this = $(this);
+            let style = window.getComputedStyle(this)
+            let { fontWeight, fontSize, fontFamily } = style
+            let text = $this.find("option:selected").text();
+            let $demo = $("<span>").html(text).css({
+                "font-size": fontSize, 
+                "font-weight": fontWeight, 
+                "font-family": fontFamily,
+                "visibility": "hidden"
+            });
+            $demo.appendTo($this.parent());
+            let width = $demo.width();
+            $demo.remove();
+            
+            $this.width(width + arrowWidth);
+
+            });
 
             loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
 
