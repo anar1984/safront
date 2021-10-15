@@ -11,7 +11,7 @@
 //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 //    });
 //});
-function clickMePlease(){
+function clickMePlease() {
     alert("hasgdjhaskdl;as")
 }
 
@@ -114,6 +114,25 @@ function getUserFullInfo(fkUserId) {
         }
     });
     return res1;
+}
+
+function convertDataToTableCheweek(data){
+    var keys = Object.keys(data);
+    var res = {};
+    res.selectedField = (data.selectedField) ? data.selectedField: keys.toString();        
+            
+    var _table = {};
+    var row = []; 
+    var kv = {};
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var val = data[key];        
+        kv[key+'1']  = val;         
+    }
+    row.push(kv);
+    _table.r = row;       
+    res._table = _table;    
+    return res;    
 }
 
 function removeBacklogDescCommentType(el, descId) {
@@ -3052,7 +3071,7 @@ function manualProjectRefreshInit(fkManualProjectId) {
 }
 
 
- 
+
 
 
 function loadFromIndexedDBtoRAM() {
@@ -3106,7 +3125,7 @@ function loadFromIndexedDBtoRAM() {
 }
 
 function loadFromIndexedDBtoRAM4LivePrototype() {
-   
+
     request = window.indexedDB.open("sa-db", 1);
     request.onupgradeneeded = function (event) {
         db = event.target.result;
@@ -3142,8 +3161,8 @@ function loadFromIndexedDBtoRAM4LivePrototype() {
                 localStorage.setItem(cursor.key, res.kv.modificationTime);
                 loadBacklogProductionDetailsById_resparams(res);
                 cursor.continue();
-            }else{
-                if (global_var.current_modal==='loadStoryCard'){
+            } else {
+                if (global_var.current_modal === 'loadStoryCard') {
                     new Project().loadMainProjectList();
                 }
             }
@@ -5836,10 +5855,10 @@ function _TriggerAPI(carrier) {
     finalRes = LeftMergeOfObjers(finalRes, res);
     finalRes.startLimit = 0;
 
-    var id = $(element).attr('id');
-    var el = document.getElementById(id);
+//    var id = $(element).attr('id');
+//    var el = document.getElementById(id);
 
-    //    var el = element;
+        var el = element;
 
     var out = be.callApi(apiId, finalRes, el);
 
@@ -5881,9 +5900,6 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
     $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
     })
-
-
-
 }
 
 
@@ -6259,8 +6275,9 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         var f = false;
         var elem = $(el).closest('div.redirectClass');
         elem.find('table.component-table-class-for-zad').each(function (ev) {
-            if (f)
+            if (f){
                 return false;
+            }
 
             var accessableApi = $(this).attr('sa-data-accessable-api');
             if ((accessableApi) && (accessableApi !== apiId)) {
@@ -6272,18 +6289,20 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             var selectedFieldTableList = selectedFieldTable.split(",");
 
             var diffArray = selectedFieldList.filter(function (el) {
-                return selectedFieldTableList.indexOf(el) != -1;
+                return selectedFieldTableList.indexOf(el) !== -1;
             });
 
             tableId = (diffArray.length > 0) ? $(this).attr('table-id') : '';
-            if (tableId)
+            if (tableId){
                 f = true;
+            }
             componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
             inpId = (diffArray.length > 0) ? $(this).attr('input-id') : '';
         })
 
-        if (!tableId)
-            return
+        if (!tableId){
+            return;
+        }
 
         var rc = 0;
         try {
@@ -6299,7 +6318,14 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
         // for filling table on dinamycally
         //        clearTableBodyAfterApiCall(el, apiId);
-        $('table#' + componentId).find('tbody').html('');
+        var addRow = false;
+        var tableOriginal = $('table#' + componentId);
+                if (!tableOriginal.attr('sa-table-noclear')){
+                    tableOriginal.find('tbody').html('');
+                }else{
+                    addRow = true;
+                    startLimit = tableOriginal.find('tbody tr').length;
+                }
 
         var hasRelatedApi01 = false;
         if (!hasRelatedApi01) {
@@ -6323,7 +6349,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
-                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId);
+                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId,addRow);
                 }
                 if (f) {
                     return;
@@ -6344,8 +6370,10 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                     var rowId = data._table.r[(j - 1)]['id'];
                 } catch (err) {
                 }
+                
+                var rowNoOrij = parseInt(startLimit)+parseInt(j)
 
-                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + j + '"]').each(function () {
+                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + rowNoOrij + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(c)) {
                         $(this).attr('sa-data-table-row-id', rowId);
@@ -6685,7 +6713,11 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
 
     } else if ($(el).attr('sa-type') === 'select') {
 
-        if ($(el).attr('sa-item-setterfield')) {
+        if ($(el).attr('sa-item-setterfield') &&
+                $(el).attr('sa-item-setterfield') === selectedField) {
+            $(el).val(val);
+            $(el).find('option[value="' + val + '"]').attr('selected', true);
+        } else {
             $(el).val(val);
             $(el).find('option[value="' + val + '"]').attr('selected', true);
         }
@@ -6693,14 +6725,29 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
 
 
     } else if ($(el).attr('sa-type') === 'multiselect') {
-        $(el).find("option:selected").prop("selected", false);
-        $(el).selectpicker('refresh');
 
-        $.each(val.split(","), function (i, e) {
-            var id = $(el).attr('id');
-            $(el).find("option[value='" + e + "']").prop("selected", true);
-        });
-        $(el).selectpicker('refresh');
+        if ($(el).attr('sa-item-setterfield') &&
+                $(el).attr('sa-item-setterfield') === selectedField) {
+            $(el).find("option:selected").prop("selected", false);
+            $(el).selectpicker('refresh');
+
+            $.each(val.split(","), function (i, e) {
+                var id = $(el).attr('id');
+                $(el).find("option[value='" + e + "']").prop("selected", true);
+            });
+            $(el).selectpicker('refresh');
+        } else {
+            $(el).find("option:selected").prop("selected", false);
+            $(el).selectpicker('refresh');
+
+            $.each(val.split(","), function (i, e) {
+                var id = $(el).attr('id');
+                $(el).find("option[value='" + e + "']").prop("selected", true);
+            });
+            $(el).selectpicker('refresh');
+        }
+
+
 
     } else if ($(el).attr('sa-type') === 'htmlviewer') {
         $(el).html(val);
@@ -15738,12 +15785,12 @@ function getProjectUserssync(id) {
 
 
     var json = initJSON();
-     if(global_var.current_project_id){
+    if (global_var.current_project_id) {
         json.kv['fkProjectId'] = global_var.current_project_id
-     }else{
+    } else {
         json.kv['fkProjectId'] = id;
-     }
-   
+    }
+
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -23023,15 +23070,15 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
 $(document).on('click', '.for-chewekk-new-chat-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
-  /*   $.get("resource/chat/public/index.html", function (html_string) {
-        $(div).html(html_string);
+    /*   $.get("resource/chat/public/index.html", function (html_string) {
+     $(div).html(html_string);
+     
+     sidebarGeneratecomment();
+     
+     
+     }); */
 
-        sidebarGeneratecomment();
-
-
-    }); */
-      
-    window.open('chat.html?current_modal=chat&current_ticker_id='+global_var.current_ticker_id, '_blank');
+    window.open('chat.html?current_modal=chat&current_ticker_id=' + global_var.current_ticker_id, '_blank');
 
 
 })
@@ -23107,7 +23154,7 @@ function sideBarBlockgen(nm, id, isrc) {
     div.classList.add('list');
     div.classList.add('container-group-item');
     div.setAttribute('id', id);/* 
-    div.setAttribute('onclick', 'triggerAPI(this,"21052611563704387613")'); */
+     div.setAttribute('onclick', 'triggerAPI(this,"21052611563704387613")'); */
 
     var img = document.createElement('img');
     img.setAttribute('src', isrc);
@@ -23163,7 +23210,7 @@ function Genblockmessage(data, el) {
                     imgUs.innerText = 'Error User';
                 } else {
                     imgUs.innerText = us;
-                 }
+                }
 
 
 
@@ -23212,18 +23259,18 @@ function commentsavedatabase(data) {
 }
 $(document).on("click", "#add_user_button", function (e) {
     var userId = $("#userListChatSelect").val();
-       var logo = SAProjectUser.ProjectUsers[userId].userImage;
-       var name = SAProjectUser.ProjectUsers[userId].userName;
-    
-     var ls  = {};
-      ls.groupImage = logo;
-      ls.nameGroup = name;
-      ls.fkUserId = userId;
-    be.callApi('21100815312700281008',ls);
+    var logo = SAProjectUser.ProjectUsers[userId].userImage;
+    var name = SAProjectUser.ProjectUsers[userId].userName;
+
+    var ls = {};
+    ls.groupImage = logo;
+    ls.nameGroup = name;
+    ls.fkUserId = userId;
+    be.callApi('21100815312700281008', ls);
     $("#addUserChat").modal("hide");
     sidebarGeneratecomment();
     $("#list-wrap-container").find(".container-group-item").first("click")
-}) 
+})
 
 
 $(document).on("click", ".open", function (e) {
@@ -23249,19 +23296,19 @@ $(document).on("click", ".container-group-item", function (e) {
     $(".container-group-item").removeClass("akitvec");
     $(this).addClass("akitvec");
     var id = $(this).attr('id');
-    Utility.addParamToUrl("current_chat_gorup",id)
+    Utility.addParamToUrl("current_chat_gorup", id)
     var imgd = $(this).find('img').attr('src');
     var us = $(this).find('span.user').text();
 
     $('.-messagecontent').attr('id', id);
     $('.-messagecontent header img').attr('src', imgd);
     $('#user-header-bolean').text(us);
-    genChatMessagesRooms(this,id)
+    genChatMessagesRooms(this, id)
 })
 
-function genChatMessagesRooms(el,ids) {
+function genChatMessagesRooms(el, ids) {
     var dt = {}
-         dt.fkGroupId =  ids
-    var els = be.callApi("21052615190704745176",dt);
+    dt.fkGroupId = ids
+    var els = be.callApi("21052615190704745176", dt);
     Genblockmessage(els, el)
 }

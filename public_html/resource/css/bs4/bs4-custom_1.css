@@ -3700,3 +3700,16 @@ img.sc-IbsAh.kqHqhS {
     }
   }
   
+  
+  .modal-dialog {
+    pointer-events: all;
+    background: #ffffffff !important;
+    max-width: 65%;
+    width: 100%;
+}
+
+.modal-dialog {
+ 
+    background: #ffffffff !important;
+   
+}

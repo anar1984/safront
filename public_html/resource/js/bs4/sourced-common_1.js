@@ -14973,6 +14973,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
+            
+            if(global_var.current_modal === 'loadStoryCard'){
+                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+                return;
+            }
 
             if (isApi === '1') {
                 callStoryCard(backlogId);
@@ -15000,16 +15005,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             if (backlogId.length === 0) {
                 return;
             }
-
-
            
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
-            if(global_var.current_modal = 'loadStoryCard'){
-
+            if(global_var.current_modal === 'loadStoryCard'){
                 $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
-                return
+                return;
             }
+            
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;
