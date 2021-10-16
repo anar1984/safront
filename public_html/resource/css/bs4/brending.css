@@ -1794,6 +1794,9 @@ tbody tr.sortbodyEmpty {
     overflow-y: auto;
 }
 /* DATABASE PAGE HEADER TOP & NAV MENU */
+.ShowDatabaseTable.modal {
+    z-index: 5000;
+}
 .cs-db-header-menu {
     background:#272B7C;
     padding-bottom:0px;
@@ -1932,4 +1935,8 @@ tbody tr.sortbodyEmpty {
   
   .cs-db-header-menu .navbar .form-inline .search-field:focus {
     border-bottom:1px solid #ccc;
+  }
+
+  .cs-db-header-menu .pagination-detail .page-list .btn.{
+      color: gainsboro;
   }

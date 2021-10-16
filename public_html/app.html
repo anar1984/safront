@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
-        <link rel="stylesheet" href="resource/css/bs4/bootstrap-table.min.css">
+        <!-- <link rel="stylesheet" href="resource/css/bs4/bootstrap-table.min.css"> -->
         <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
         <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
         <link rel="stylesheet" href="resource/css/bs4/g_1.css">
@@ -78,7 +78,8 @@
 
         <!--<script src="resource/js/bs4/bootstrap.bundle.min.js"></script>-->
         <script src="resource/js/bs4/bootstrap-select.min.js"></script>
-        <script src="resource/js/bs4/bootstrap-table.min.js"></script>
+        <!-- <script src="resource/js/bs4/bootstrap-table.min.js"></script>
+        <script src="resource/js/bs4/bootstrap-table-filter-control.min.js"></script> -->
         <script src="resource/js/bs4/data-base.js"></script>
         <script src="resource/js/bs4/entity.js"></script>
         <script src="resource/js/bs4/testCase.js"></script>
@@ -7936,7 +7937,7 @@
 
         <div class="cs-modal-box ShowDatabaseTable modal fade" id="ShowDatabaseTable" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="vertical-alignment-helper"><div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content vertical-align-center">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title">Database: meneger</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -7944,38 +7945,78 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <select class="cs-database-name-list" data-live-search="true">
+                            <option>Database Name 1</option>
+                            <option>Database Name 2</option>
+                            <option>Database Name 3</option>
+                            <option>Database Name 4</option>
+                            <option>Database Name 5</option>
+                            <option>Database Name 6</option> 
+                          </select>
+                          <select class="cs-database-table-list" data-live-search="true">
+                            <option>Table Name 1</option>
+                            <option>Table Name 2</option>
+                            <option>Table Name 3</option>
+                            <option>Table Name 4</option>
+                            <option>Table Name 5</option>
+                            <option>Table Name 6</option>
+                          </select>
                         <div class="cs-db-popup-body">
                             <div class="flex-container">
                                 <div class="cs-db-header-menu">
-                                    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-                                        <div class="container-fluid">
-                                            <!-- <a class="navbar-brand" href="#">Company Name</a> -->
-                                            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                                            <div class="collapse navbar-collapse"
-                                                id="navcol-1">
-                                                <ul class="nav navbar-nav">
-                                                    <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
-                                                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </nav>
+                                    
                                 </div>
 
                                 <div class="cs-db-main-container">
                                     <h4>Body Content</h4>
-                                    
-                                    <table id="livesql-table" data-url="resource/js/bs4/tableExport.json" data-filter-control="true" data-show-search-clear-button="true">
-                                        <thead>
-                                            <tr>
-                                            <th data-field="id">ID</th>
-                                            <th data-field="name" data-filter-control="input">Item Name</th>
-                                            <th data-field="price" data-filter-control="select">Item Price</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <p>Lorem Ipsum is simply dummy text of the printing</p>
+                                   <div class="livesql-table-boxes">
+                                <table class="table table-striped cs-table-database-table-zad-list">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                  <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end">
+                                      <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                      <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                      </li>
+                                    </ul>
+                                  </nav>
+
+                                   </div>
                                 </div>
 
                             </div>
