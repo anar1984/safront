@@ -1684,11 +1684,12 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     text-align: left;
 }
 .storycard_ipo {
-
+/*    overflow: auto;*/
 }
 .descriptiontable {
     width: 100%;
 }
+
 .cs-sum-inbox-callapi ul li.cs-select-api-info {
     margin: 0 0px;
     margin-right: 5px;

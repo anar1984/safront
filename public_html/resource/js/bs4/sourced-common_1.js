@@ -7,7 +7,7 @@
 
 /*global global_var, SAInput*/
 
-
+   var guiZadList4Ever = {};
 var filtUsm = {
     TableFields:{},
     SetTableFields: function (tableId, InputId) {
@@ -10569,6 +10569,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         return st;
     },
+    
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
         var carrier = new Carrier();
         carrier.setBacklogId(popupBacklogId);
@@ -10588,15 +10589,39 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         SourcedDispatcher.Exec(carrier);
 
     },
+    
+
+    getPopupHtmlBodyById4ProjectView:function(backlogId){
+        if (!backlogId){
+            return '';
+        }
+
+        var html = "";
+        try{
+           if (guiZadList4Ever[backlogId]){
+               html = guiZadList4Ever[backlogId];
+           }else{
+               var resTmp = SAInput.toJSONByBacklog(backlogId);
+               html = new UserStory().getGUIDesignHTMLPure(resTmp);
+           }
+        } catch (err){
+            var resTmp = SAInput.toJSONByBacklog(backlogId);
+            html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        }
+
+        return html;
+    },
+    
+    
     _SetGUIComponentButtonGUIModal: function (carrier) {
 
-        var popupBacklogId = carrier.getBacklogId();
+        var popupBacklogId = carrier.getBacklogId();        
+        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
         var el = carrier.getElement();
 
         closeModal('userstory-gui-input-component-res-sus-analytic');
         var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
-        var resTmp = SAInput.toJSONByBacklog(popupBacklogId);
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        
 
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;
@@ -15030,6 +15055,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
+            
+            if(global_var.current_modal === 'loadStoryCard'){
+                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+                return;
+            }
 
             if (isApi === '1') {
                 callStoryCard(backlogId);
@@ -15057,16 +15087,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             if (backlogId.length === 0) {
                 return;
             }
-
-
            
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
-            if(global_var.current_modal = 'loadStoryCard'){
-
+            if(global_var.current_modal === 'loadStoryCard'){
                 $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
-                return
+                return;
             }
+            
             if (isApi === '1') {
                 callStoryCard(backlogId);
                 return;

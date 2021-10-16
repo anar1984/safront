@@ -738,15 +738,19 @@ var Component = {
             $(el).parent().parent().find('tbody').html(body);
             updateRowCountInputTable(tid, rc);
         },
-        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit, inputId) {
+        RegenTableBodyDetails: function (tableId, rowCount, backlogId, startLimit, inputId, addRow) {
             var sLimit = (startLimit) ? startLimit : "0";
             var tid = tableId;
             var rc = rowCount;
-            var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit);
+            var body = this.GenInputTableBodyHtml(tid, rc, backlogId, sLimit, addRow);
             if ($('.component-table-class-for-zad-' + tid).attr("sa-tablenotempty") === '1') {
                 $('.component-table-class-for-zad-' + tid).find('tbody').append(body.html());
             } else {
-                $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
+                if (addRow) {
+                    $('.component-table-class-for-zad-' + tid).find('tbody').append(body.html());
+                } else {
+                    $('.component-table-class-for-zad-' + tid).find('tbody').html(body.html());
+                }
 
             }
 
@@ -1236,8 +1240,6 @@ var Component = {
                     idx++;
                     var val = this.GetTableCellValue(tableId, inputId, j - 1);
 
-
-
                     if (pair[inputId].trim() === '1') {
                         var comp = new ComponentInfo();
                         Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
@@ -1251,7 +1253,7 @@ var Component = {
                         comp.hasOnClickEvent = true;
                         comp.cellNo = "12";
                         comp.showProperties = false;
-                        comp.rowNo = j;
+                        comp.rowNo = parseInt(startLimit) + parseInt(j);
                         val = Component.GetComponentHtmlNew(comp);
 
                     }
@@ -1282,7 +1284,6 @@ var Component = {
                     var dependentInputId = SAInput.getInputDetails(inputId, "fkDependentOutputId");
 
                     masTab.addDeend(dependentBacklogId, inputId);
-
 
                     if (dependentBacklogId && dependentBacklogId.length > 0) {
                         loadBacklogInputsByIdIfNotExist(dependentBacklogId)
@@ -2301,12 +2302,23 @@ var Component = {
         comp.showProperties = true;
         var div = Component.ContainerDiv(comp);
 
-        var div4  = $('<div class="row">');
+        var div4 = $('<div class="row">');
         var div4Modal = '<i class="fas fa-chevron-up" aria-hidden="true"></i>'
         try {
             if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-passive']) {
                 div4.addClass("closed-modal");
                 div4Modal = '<i class="fas fa-chevron-down" aria-hidden="true"></i>'
+
+                var hg = '0px';
+
+                try {
+                    if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height']) {
+                        hg = cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height'];
+                    }
+
+                } catch (err) {
+                }
+                div4.css("height", hg);
             }
         } catch (err) {
             console.log(err);
