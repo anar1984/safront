@@ -7,6 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css">
+        <link rel="stylesheet" href="resource/css/bs4/bootstrap-table.min.css">
         <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
         <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
         <link rel="stylesheet" href="resource/css/bs4/g_1.css">
@@ -77,6 +78,7 @@
 
         <!--<script src="resource/js/bs4/bootstrap.bundle.min.js"></script>-->
         <script src="resource/js/bs4/bootstrap-select.min.js"></script>
+        <script src="resource/js/bs4/bootstrap-table.min.js"></script>
         <script src="resource/js/bs4/data-base.js"></script>
         <script src="resource/js/bs4/entity.js"></script>
         <script src="resource/js/bs4/testCase.js"></script>
@@ -85,6 +87,7 @@
         <script src="resource/js/bs4/serviceMag.js"></script>
         <script src="resource/js/bs4/swimlane2.js"></script>
         <script src="resource/js/bs4/beaction.js"></script>
+        <script src="resource/js/bs4/livesql.js"></script>
         <script src="resource/js/bs4/html2canvas.min.js"></script>
         <script src="resource/js/bs4/lzm.js"></script>
         <script src="resource/js/bs4/Source.js"></script>
@@ -7941,8 +7944,38 @@
                     <div class="modal-body">
                         <div class="cs-db-popup-body">
                             <div class="flex-container">
-                                table row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasas table row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasas
-                                table row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasastable row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasastable row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasastable row sasasas asasas asasas asasas asasas sasasasasasas asasasasa asasas
+                                <div class="cs-db-header-menu">
+                                    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+                                        <div class="container-fluid">
+                                            <!-- <a class="navbar-brand" href="#">Company Name</a> -->
+                                            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                                            <div class="collapse navbar-collapse"
+                                                id="navcol-1">
+                                                <ul class="nav navbar-nav">
+                                                    <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
+                                                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+
+                                <div class="cs-db-main-container">
+                                    <h4>Body Content</h4>
+                                    
+                                    <table id="livesql-table" data-url="resource/js/bs4/tableExport.json" data-filter-control="true" data-show-search-clear-button="true">
+                                        <thead>
+                                            <tr>
+                                            <th data-field="id">ID</th>
+                                            <th data-field="name" data-filter-control="input">Item Name</th>
+                                            <th data-field="price" data-filter-control="select">Item Price</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
 

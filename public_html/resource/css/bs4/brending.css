@@ -1788,6 +1788,147 @@ tbody tr.sortbodyEmpty {
 }
 /***** DATABASE PAGE */
 .ShowDatabaseTable .modal-dialog {
+    width: 97vw;
     max-width: 97vw;
     overflow-y: auto;
 }
+/* DATABASE PAGE HEADER TOP & NAV MENU */
+.cs-db-header-menu {
+    background:#272B7C;
+    padding-bottom:0px;
+    font-family:'Source Sans Pro', sans-serif;
+  }
+  
+  @media (min-width:768px) {
+    .cs-db-header-menu {
+      padding-bottom:0px;
+    }
+  }
+  
+  .cs-db-header-menu .navbar {
+    background:transparent;
+    padding-top:.75rem;
+    padding-bottom:.75rem;
+    color:#fff;
+    border-radius:0;
+    box-shadow:none;
+    border:none;
+  }
+  
+  @media (min-width:768px) {
+    .cs-db-header-menu .navbar {
+      padding-top:1rem;
+      padding-bottom:1rem;
+    }
+  }
+  
+  .cs-db-header-menu .navbar .navbar-brand {
+    font-weight:bold;
+    color:inherit;
+  }
+  
+  .cs-db-header-menu .navbar .navbar-brand:hover {
+    color:#f0f0f0;
+  }
+  
+  .cs-db-header-menu .navbar .navbar-collapse {
+    border-top:1px solid rgba(255,255,255,0.3);
+    margin-top:.5rem;
+  }
+  
+  @media (min-width:768px) {
+    .cs-db-header-menu .navbar .navbar-collapse {
+      border-color:transparent;
+      margin:0;
+    }
+  }
+  
+  .cs-db-header-menu .navbar .navbar-collapse span .login {
+    color:#d9d9d9;
+    margin-right:.5rem;
+    text-decoration:none;
+  }
+  
+  .cs-db-header-menu .navbar .navbar-collapse span .login:hover {
+    color:#fff;
+  }
+  
+  .cs-db-header-menu .navbar .navbar-toggler {
+    border-color:rgba(255,255,255,0.3);
+  }
+  
+  .cs-db-header-menu .navbar .navbar-toggler:hover, .cs-db-header-menu .navbar-toggler:focus {
+    background:none;
+  }
+  
+  .cs-db-header-menu .navbar .navbar-nav a.active, .cs-db-header-menu .navbar .navbar-nav > .show .dropdown-item {
+    background:none;
+    box-shadow:none;
+  }
+  
+  @media (min-width: 768px) {
+    .cs-db-header-menu .navbar-nav .nav-link {
+      padding-left:.7rem;
+      padding-right:.7rem;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .cs-db-header-menu .navbar-nav .nav-link {
+      padding-left:1.2rem;
+      padding-right:1.2rem;
+    }
+  }
+  
+  .cs-db-header-menu .navbar .navbar-nav > li > .dropdown-menu {
+    margin-top:-5px;
+    box-shadow:0 4px 8px rgba(0,0,0,.1);
+    background-color:#fff;
+    border-radius:2px;
+  }
+  
+  .cs-db-header-menu .navbar .dropdown-menu .dropdown-item:focus, .cs-db-header-menu .navbar .dropdown-menu .dropdown-item {
+    line-height:2;
+    color:#37434d;
+  }
+  
+  .cs-db-header-menu .navbar .dropdown-menu .dropdown-item:focus, .cs-db-header-menu .navbar .dropdown-menu .dropdown-item:hover {
+    background:#ebeff1;
+  }
+  
+  .cs-db-header-menu .action-button, .cs-db-header-menu .action-button:not(.disabled):active {
+    border:1px solid rgba(255,255,255,0.7);
+    border-radius:40px;
+    color:#ebeff1;
+    box-shadow:none;
+    text-shadow:none;
+    padding:.3rem .8rem;
+    background:transparent;
+    transition:background-color 0.25s;
+    outline:none;
+  }
+  
+  .cs-db-header-menu .action-button:hover {
+    color:#fff;
+  }
+  
+  .cs-db-header-menu .navbar .form-inline label {
+    color:#d9d9d9;
+  }
+  
+  .cs-db-header-menu .navbar .form-inline .search-field {
+    display:inline-block;
+    width:80%;
+    background:none;
+    border:none;
+    border-bottom:1px solid transparent;
+    border-radius:0;
+    color:#ccc;
+    box-shadow:none;
+    color:inherit;
+    transition:border-bottom-color 0.3s;
+  }
+  
+  .cs-db-header-menu .navbar .form-inline .search-field:focus {
+    border-bottom:1px solid #ccc;
+  }
