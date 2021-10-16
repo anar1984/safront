@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+ 
+
 function showGuiInputList4DebugView() {
     var tbody = $('#backlogInput4Debug');
     tbody.html('');
@@ -244,7 +246,7 @@ function getUnloadedBacklogListOnInit() {
         }
     }
 
-//    console.log('string=', toBeDownloadedBacklog.toString());
+    console.log('string=', toBeDownloadedBacklog.toString());
     loadMissedBacklogsListFromStorage(toBeDownloadedBacklog.toString());
 }
 
@@ -252,6 +254,16 @@ function getUnloadedBacklogListOnInit() {
 function loadMissedBacklogsListFromStorage(bid) {
 
     var bid1 = (bid) ? bid : global_var.current_backlog_id;
+    
+//    console.log('========================================')
+//     console.log('========================================')
+//console.log('missed backlog id=',bid)
+// console.log('========================================') 
+// console.log('========================================')
+ 
+    if (!bid1){
+        return;
+    }
 
     var json = initJSON();
     json.kv.fkBacklogId = bid1;
@@ -280,6 +292,15 @@ function loadMissedBacklogsListFromStorage(bid) {
                     localStorage.setItem('idb_' + idd, json.kv.modificationTime);
                     SAInput.LoadedBacklogs4Input.push(idd);
                     loadBacklogProductionDetailsById_resparams(json);
+                    
+                    try{
+                        //Bezen ele hallar olur ki, pr_xxx. faylindaki last modification ile
+                        //backlog modicationTime ferqli olur.Bu halda hemin backlog yeniden upload edilmelidir
+                        //
+                        if (backlog_last_modification[idd]!==json.kv.modificationTime){
+                            loadBacklogProductionDetailsById(idd);
+                        }
+                        }catch(err){}
                 } catch (err) {
                     console.log(err);
                 }
