@@ -3144,11 +3144,11 @@ function loadFromIndexedDBtoRAM() {
                     loadBacklogProductionDetailsById_resparams(res);
                     
                     //set GUI Design
-                    try{
-                        var resTmp = SAInput.toJSONByBacklog(key);
-                        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-                        guiZadList4Ever[key]=html;
-                    }catch(err){}
+//                    try{
+//                        var resTmp = SAInput.toJSONByBacklog(key);
+//                        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+//                        guiZadList4Ever[key]=html;
+//                    }catch(err){}
             
                     var ids = cursor.key.replace('idb_', '');
 //                console.log('backlog id = '+cursor.key+'; backlogname = '+SACore.GetBacklogname(ids))

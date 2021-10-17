@@ -1611,7 +1611,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     initSelectpickerComponent();
     $('#' + pageId).modal("show");
     $(document).on('hidden.bs.modal', '#' + pageId, function (evt) {
-        $('#' + pageId).remove();
+//        $('#' + pageId).remove();
         $('body').addClass('modal-open');
     });
     return pageId;
