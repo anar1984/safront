@@ -40,4 +40,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('img', function(imgData, color,fkGroupId,fkUserID) {
         socket.broadcast.emit('newImg', socket.nickname,fkGroupId,fkUserID,imgData, color);
     });
+    socket.on('voice', function(url, color,fkGroupId,fkUserID) {
+        socket.broadcast.emit('newVoice', socket.nickname,fkGroupId,fkUserID,url, color);
+    });
 });

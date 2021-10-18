@@ -105,53 +105,31 @@
 
 <body id="body_of_nature">
     <div id="body_of_toaster" class="position-absolute w-100 d-flex flex-column p-4">
-        <div id="f1sJxYNgyz" style="z-index: 50000;display: none; background: red!important"
-            class="toast ml-auto toast-error fade " role="alert" data-delay="300" data-autohide="false">
-            <div class="toast-header"><strong class="mr-auto text-primary">Error Message</strong><button
-                    class="ml-2 mb-1 close" type="button" data-dismiss="toast" aria-label="Close&quot;"><span
-                        aria-hidden="true">x</span></button></div>
-            <div class="toast-body">somethingww</div>
-        </div>
-        <div id="rz20cmnO43" style="z-index: 50000; background: red!important"
-            class="toast ml-auto toast-error fade hide" role="alert" data-delay="300" data-autohide="false">
-            <div class="toast-header"><strong class="mr-auto text-primary">Error Message</strong><button
-                    class="ml-2 mb-1 close" type="button" data-dismiss="toast" aria-label="Close&quot;"><span
-                        aria-hidden="true">x</span></button></div>
-            <div class="toast-body">somethingww</div>
-        </div>
-        <div id="nvJVVOgusY" style="z-index: 50000; background: red!important"
-            class="toast ml-auto toast-error fade hide" role="alert" data-delay="300" data-autohide="false">
-            <div class="toast-header"><strong class="mr-auto text-primary">Error Message</strong><button
-                    class="ml-2 mb-1 close" type="button" data-dismiss="toast" aria-label="Close&quot;"><span
-                        aria-hidden="true">x</span></button></div>
-            <div class="toast-body">somethingww</div>
-        </div>
 
+
+    </div>
+    <div id="preloader3" class="modal-backdrop fade text-center"
+        style="background-color: #fbfbfb!important;z-index: 100000;height: 10000px;">
     </div>
     <div class="container message-container ">
         <sidebar class="cst-cheweek-sidebar">
-            <div class="row logo">
-                <div class="" style="width: 80%;">
-                    <h1>Söhbət</h1>
+            <div class="logo">
+                <div class="" style="width: 90%;">
+                    <img src="" id="profile-logo-user-img" alt="">
                     <span style="display: none;" id="status"></span>
 
                 </div>
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i
-                            class="fas fa-ellipsis-v"></i>
+                <div class="">
+                    <button class="btn btn-light " type="button" data-toggle="dropdown"><i class="fas fa-home"></i>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a data-toggle="modal" data-target="#addGroupChat" class="dropdown-item"
-                                class="dropdown-item">Yeni Grup</a></li>
-                        <li><a data-toggle="modal" data-target="#addUserChat" class="dropdown-item">Yeni Söhbət</a></li>
 
-                    </ul>
                 </div>
             </div>
             <br>
             <div class="d-flex  align-items-baseline">
-                <h6  class="col-10">Kanal </h6>
-                <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#addGroupChat"><i class="fas fa-plus"></i></button>
+                <h6 class="col-10">Kanal</h6>
+                <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#addGroupChat"><i
+                        class="fas fa-plus"></i></button>
             </div>
             <div class="list-wrap" style="max-height: 50%; overflow: auto;" id="list-wrap-container">
 
@@ -159,19 +137,19 @@
             </div>
             <div class="dropdown-divider"></div>
             <div class="d-flex  align-items-baseline">
-                <h6  class="col-10">İstifadəçi </h6>
-                <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#addUserChat"><i class="fas fa-plus"></i></button>
+                <h6 class="col-10">İstifadəçi </h6>
+                <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#addUserChat"><i
+                        class="fas fa-plus"></i></button>
             </div>
-           
+
             <div class="list-wrap" style="max-height: 50%; overflow: auto;" id="list-wrap-container-user">
-              
+
             </div>
         </sidebar>
         <div class="-messagecontent">
-            <img sa-type="image" src="https://app.sourcedagile.com/api/get/files/elcom-logo_77A8F8486AD24.png"
-                class="bg-image-full-chat" row-no="" pdid="" id="">
+            <div class="banner-loader"></div>
             <header>
-                <img src="https://app.sourcedagile.com/api/get/files/Emblem_person_blue_77A86106C28E7.png" alt="">
+
                 <div class="info">
                     <span class="user" id="user-header-bolean"></span>
 
@@ -183,31 +161,65 @@
             <div class="message-wrap" id="historyMsg">
 
             </div>
-            <div class="message-footer">
-                <textarea class="form-control" id="messageInput" contenteditable="true"></textarea>
-                <button class="btn btn-light" id="emoji" type="button" title="emoji"><i
+            <div class="message-footer vac-col-messages">
+                <div class="vac-icon-textarea-left">
+                    <div class="vac-svg-button"><svg xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
+                            viewBox="0 0 512 512" class="vac-icon-microphone">
+                            <path id="vac-icon-microphone"
+                                d="M432.8,216.4v39.2c0,45.2-15.3,84.3-45.2,118.4c-29.8,33.2-67.3,52.8-111.6,57.9v40.9h78.4c5.1,0,10.2,1.7,13.6,6c4.3,4.3,6,8.5,6,13.6c0,5.1-1.7,10.2-6,13.6c-4.3,4.3-8.5,6-13.6,6H157.6c-5.1,0-10.2-1.7-13.6-6c-4.3-4.3-6-8.5-6-13.6c0-5.1,1.7-10.2,6-13.6c4.3-4.3,8.5-6,13.6-6H236v-40.9c-44.3-5.1-81.8-23.9-111.6-57.9s-45.2-73.3-45.2-118.4v-39.2c0-5.1,1.7-10.2,6-13.6c4.3-4.3,8.5-6,13.6-6s10.2,1.7,13.6,6c4.3,4.3,6,8.5,6,13.6v39.2c0,37.5,13.6,70.7,40,97.1s59.6,40,97.1,40s70.7-13.6,97.1-40c26.4-26.4,40-59.6,40-97.1v-39.2c0-5.1,1.7-10.2,6-13.6c4.3-4.3,8.5-6,13.6-6c5.1,0,10.2,1.7,13.6,6C430.2,206.2,432.8,211.3,432.8,216.4z M353.5,98v157.6c0,27.3-9.4,50.3-29,69c-19.6,19.6-42.6,29-69,29s-50.3-9.4-69-29c-19.6-19.6-29-42.6-29-69V98c0-27.3,9.4-50.3,29-69c19.6-19.6,42.6-29,69-29s50.3,9.4,69,29C344.2,47.7,353.5,71.6,353.5,98z">
+                            </path>
+                            <!---->
+                        </svg></div>
+
+                </div>
+
+                <textarea class="form-control vac-textarea-hl" id="messageInput" placeholder="Mesaj Yaz" contenteditable="true"></textarea>
+                <!-- <button class="btn btn-light" id="emoji" type="button" title="emoji"><i
                         class="far fa-smile-beam"></i></button>
                 <label for="sendImage" class="imageLable">
                     <button type="button" class="btn btn-light"><i class="fas fa-paperclip"></i></button>
                     <input id="sendImage" type="file" value="image" />
                 </label>
-                <label for="" class="imageLable">
-                    <button type="button" class="btn btn-light"><i class="fas fa-microphone"></i></button>
 
-                </label>
-
-                <button class=" btn-outline-secondary   btn " type="button" id="sendBtn">Göndər</button>
+                <button class=" btn-outline-secondary   btn " type="button" id="sendBtn">Göndər</button> -->
+                <div class="vac-icon-textarea">
+                    <!---->
+                    <div class="vac-emoji-wrapper">
+                        <div class="vac-svg-button"><svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
+                                viewBox="0 0 24 24">
+                                <path id="vac-icon-emoji"
+                                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z">
+                                </path>
+                                <!---->
+                            </svg></div>
+                        
+                    </div>
+                    <div class="vac-svg-button"> <label style="margin-bottom: 0px;" for="sendImage">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path id="vac-icon-paperclip"
+                            d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z">
+                        </path>
+                        <!---->
+                    </svg></div>
+                <!----><input type="file" id="sendImage" multiple="multiple" accept="*" style="display: none;">
+                    </label>
+                       
+                    <div class="vac-svg-button " id="vac-icon-send"><svg  xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
+                            viewBox="0 0 24 24">
+                            <path  d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
+                            <!---->
+                        </svg></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="loginWrapper">
-        <p id="info">Qoşulur....</p>
-        <div id="nickWrapper">
-            <input type="text" placeHolder="nickname" id="nicknameInput" />
-            <input type="button" value="OK" id="loginBtn" />
-        </div>
-    </div>
+
     <div id="emojiWrapper">
     </div>
     <input style="display: none;" id="colorStyle" type="color" placeholder="#000" title="font color">
@@ -222,11 +234,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                     <div class="col-12">
-                         <span>İstifadəçi seçin</span>
+                    <div class="col-12">
+                        <span>İstifadəçi seçin</span>
                         <select name="" class="form-control" data-live-search="true" id="userListChatSelect"></select>
-                     </div>
-                    
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="add_user_button" class="btn btn-primary">Əlavə et</button>
@@ -266,43 +278,68 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="updateGroupChat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateGroupChat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title col-9" id=""><input class="group-name-update form-control form-control-sm "></h5>
-          
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title col-9" id=""><input class="group-name-update form-control form-control-sm ">
+                    </h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        İstifadəçi siyahı
+                        <table class="table">
+
+                            <tbody id='groupEditTableList'>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr>
+                    <div class="col-12">
+                        <select name="" multiple data-live-search="true" id="gorup-add-user-update"></select>
+                        <button type="button" id="addUserGroupBtnUpdate" class="btn btn-light">Əlavə et</button>
+
+                    </div>
+                    <div class="col-12 pt-2"><button type="button" data-toggle="modal" data-target="#deleteTwoEtapGrup"
+                            id="removeGrupBtnDelete" class="btn col-12 btn-danger">Qrupu Sil</button></div>
+                </div>
+
             </div>
-            <div class="modal-body">
-                  <div class="col-12">
-                      İstifadəçi siyahı
-                    <table class="table">
-                  
-                        <tbody id='groupEditTableList'>
-                         
-                        </tbody>
-                      </table>
-                  </div>
-                 
-                  <hr>
-                  <div class="col-12">
-                    <select name="" multiple data-live-search="true" id="gorup-add-user-update"></select>
-                    <button type="button" id="addUserGroupBtnUpdate" class="btn btn-light">Əlavə et</button>
-                    
-                  </div>
-                  <div class="col-12 pt-2" ><button type="button" id="removeGrupBtnDelete" class="btn col-12 btn-danger">Qrupu Sil</button></div>
-            </div>
-            
-          </div>
         </div>
-      </div>
+    </div>
+
+    <div id="deleteTwoEtapGrup" class="modal fade" tabindex="1" role="dialog">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <div class="icon-box">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <h4 class="modal-title w-100">Əminsiniz?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Təsdiqlədiyiniz halda bütün mesajlar və fayllar silinəcəktir</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ləğv et</button>
+                    <button type="button" class="btn btn-danger" id="deleteGrup3Button">Yenədə sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="https://releases.transloadit.com/uppy/v2.2.0/uppy.min.js"></script>
 
+    <script src="chat/fgEmojiPicker.js"></script>
     <script src="resource/js/bs4/chat.js"></script>
 
 </body>
