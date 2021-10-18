@@ -10231,8 +10231,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                         && obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
                     continue;
                 }
-
-
+                
+            var selectedField = '';
+            try {
+                selectedField += cr_input_comp_attribute_kv[obj[n].id]['sa-selectedfield'];
+                selectedField = splitSelectedFieldAndGenHtml(selectedField,obj[n].id).html();
+            } catch (err) {
+            }
 
                 var tname = (obj[n].tableName) ? " (" + replaceTags(Replace2Primes(obj[n].tableName)) + ')' : "";
                 var isTableComp = obj[n].inputType === 'TBL' || obj[n].inputType === 'TAB' ? " hidden" : "";
@@ -10257,6 +10262,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 //                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
 //                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
 //                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
+                st += '<td ><span class="selectedfieldlistforzad">' + selectedField + '</span></td>';
+                st += '<td ><input class="okayPitchYourPathYourWay" style="width:20px" placeholder="Add Selected Field"></td>';
                 st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
                         + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
                 st += '</tr>';

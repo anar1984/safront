@@ -8815,13 +8815,7 @@ function addInputAttributes4Container(el) {
         return;
     }
 
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
 
     json.kv.attrName = attrName;
     json.kv.attrValue = attrVal;
