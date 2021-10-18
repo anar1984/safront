@@ -1984,11 +1984,41 @@ tbody tr.sortbodyEmpty {
     display: inline-block;
     padding: 0;
 }
-#live-sql-ditor { 
+.live-sql-ditor {
     position: relative;
     top: 0;
     left: 0;
     width: 100%;
-    height: 330px;
-    overflow: auto;
+    height: 100px;
+}
+.app_editor_dragbar {
+	background-color: #222222;
+	width: 100%;
+	height: 2px;
+	cursor: row-resize;
+	opacity: 1;
+}
+#col_code_resize {
+
+}
+#col_err_resize {
+    /* float: left;
+    border-left: 2px solid;
+    width: 2px;
+    z-index: 1000; */
+}
+#col_err_resize .draghandle {
+    position: absolute;
+    z-index: 100;
+    width: 8px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    cursor: col-resize;
+    float: right;
+    background: #222222;
+}
+.ShowDatabaseTable .pagination {
+    flex-wrap: wrap;
+    float: right;
 }
