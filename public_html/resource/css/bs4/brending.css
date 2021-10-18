@@ -2022,3 +2022,6 @@ tbody tr.sortbodyEmpty {
     flex-wrap: wrap;
     float: right;
 }
+.cs-db-main-container nav {
+    margin-top: 40px;
+}
