@@ -97,7 +97,13 @@
         <script src="resource/js/bs4/sa-rel.js"></script>
         <script src="resource/js/bs4/sa1.js"></script>
         <script src="resource/js/bs4/ra.js"></script>
-        
+        <script src="ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/javascript");
+        </script>
+        </body>
 
     </head>
 
@@ -7935,8 +7941,9 @@
         </div>
 
 
-        <div class="cs-modal-box ShowDatabaseTable modal fade" id="ShowDatabaseTable" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="vertical-alignment-helper"><div class="modal-dialog modal-xl" role="document">
+        <div class="cs-modal-box ShowDatabaseTable modal fade" id="ShowDatabaseTable" tabindex="-1" role="dialog" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title">Database: meneger</h6>
@@ -7945,22 +7952,28 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <select class="cs-database-name-list" data-live-search="true">
-                            <option>Database Name 1</option>
-                            <option>Database Name 2</option>
-                            <option>Database Name 3</option>
-                            <option>Database Name 4</option>
-                            <option>Database Name 5</option>
-                            <option>Database Name 6</option> 
-                          </select>
-                          <select class="cs-database-table-list" data-live-search="true">
-                            <option>Table Name 1</option>
-                            <option>Table Name 2</option>
-                            <option>Table Name 3</option>
-                            <option>Table Name 4</option>
-                            <option>Table Name 5</option>
-                            <option>Table Name 6</option>
-                          </select>
+                        <div class="d-flex flex-row mb-3">
+                            <div class="cs-nav-select">
+                                <!-- <select class="cs-database-name-list" data-live-search="true">
+                                    <option>Select Database</option>
+                                </select>
+                                <select class="cs-database-table-list" data-live-search="true">
+                                    <option>Select Table Name</option>
+                                </select> -->
+                            </div>
+                            <div class="cs-nav-buttons">
+                                <div class="cs-filter-td">
+                                    <div class="cs-input-group">
+                                         <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
+                                    </div>
+                                </div>
+                                <div class="cs-sql-edito">
+                                    <div class="cs-input-group">
+                                         <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Show Editor</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="cs-db-popup-body">
                             <div class="flex-container">
                                 <div class="cs-db-header-menu">
@@ -7970,38 +7983,22 @@
                                 <div class="cs-db-main-container">
                                     <h4>Body Content</h4>
                                     <p>Lorem Ipsum is simply dummy text of the printing</p>
-                                   <div class="livesql-table-boxes">
-                                <table class="table table-striped cs-table-database-table-zad-list">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-
+                                    <pre id="editor" class="live-sql-ditor" style="display:none;">
+                                        function foo(items) {
+                                            var i;
+                                            for (i = 0; i &lt; items.length; i++) {
+                                                alert("Ace Rocks " + items[i]);
+                                            }
+                                        }
+                                    </pre>
+                                    <div class="livesql-table-boxes">
+                                        <table class="table table-striped cs-table-database-table-zad-list">
+                                             <thead></thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <div class="live-sql-error"></div>
+                                   </div>
+                                   
                                   <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-end">
                                       <li class="page-item disabled">
@@ -8015,19 +8012,16 @@
                                       </li>
                                     </ul>
                                   </nav>
-
-                                   </div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="ShowDatabaseTableCloseBtn btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                    </div> -->
                 </div>
-            </div></div>
+            </div>
+        </div>
         </div>
 
 

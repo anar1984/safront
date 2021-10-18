@@ -1,30 +1,64 @@
+
 $(document).on("change", ".cs-database-name-list", function (e) {
-
+    // $('.cs-database-name-list').selectpicker('refresh');
     getTablesAndFields4Popup($(this).val())
-
+    // $('.cs-database-table-list').selectpicker('refresh');
 });
-
-
-$(document).on("change", ".th-header-filter-search-by-column", function (e) {
-    var data = getFilterDataLine();
-    getFieldByTableId4PopupContainer(data);
-
-});
-
-
 
 $(document).on("change", ".cs-database-table-list", function (e) {
     var tableId = $(this).val();
     getFieldByTableId4Popup(tableId);
 });
 
-$(document).on("click", "#ShowDatabaseTableBtn", function (e) {
-    cs_loadDatabaseList2ComboEntityDetails();
+$(document).on("change", ".th-header-filter-search-by-column", function (e) {
+    var data = getFilterDataLine();
+    getFieldByTableId4PopupContainer(data);
+
 });
-
-
+$(document).on("click", "#ShowDatabaseTableBtn", function (e) {
+    $('.cs-nav-select').html("");
+    $('.cs-nav-select').append($('<div>')
+        .addClass('cs-input-group')
+            .append($('<div>')
+            .attr('class','input-group-addon')
+                 .text('Project Name')
+            )
+            .append($('<select>')
+                .attr('class','cs-database-name-list')
+                .attr('data-live-search','true')
+                .append($('<option>')
+                    .text('Select Database')
+                )
+            )
+        
+        );
+        $('.cs-nav-select').append($('<div>')
+        .addClass('cs-input-group')
+            .append($('<div>')
+            .attr('class','input-group-addon')
+                 .text('Project Name')
+            )
+            .append($('<select>')
+                .attr('class','cs-database-table-list')
+                .attr('data-live-search','true')
+                .append($('<option>')
+                    .text('Select Database')
+                )
+            )
+        
+        );
+    // $('.cs-nav-select').append($('<select>')
+    //     .attr('class','cs-database-table-list')
+    //     .attr('data-live-search','true')
+    //     .append($('<option>')
+    //         .text('Select Database')
+    //     )
+    // );
+    cs_loadDatabaseList2ComboEntityDetails();
+    $('.cs-database-name-list, .cs-database-table-list').selectpicker('refresh');
+});
 function cs_loadDatabaseList2ComboEntityDetails() {
-    var el = $('.cs-database-name-list');
+    var el = $('select.cs-database-name-list');
     el.html("");
 
     var json = initJSON();
@@ -40,12 +74,13 @@ function cs_loadDatabaseList2ComboEntityDetails() {
             el.html("");
             try {
                 var obj = res.tbl[0].r;
+                el.append($('<option>').append('Select Database'))
                 for (var i in obj) {
                     var o = obj[i];
                     el.append($('<option>').val(o.id)
                         .append(o.dbName))
                 }
-                // el.selectpicker('refresh');
+                el.selectpicker('refresh');
             } catch (err) {
 
             }
@@ -53,16 +88,14 @@ function cs_loadDatabaseList2ComboEntityDetails() {
         }
     });
 
-
-
 }
 
 
 function getTablesAndFields4Popup(dbid) {
     if (!dbid) return;
-    var el = $('.cs-database-table-list');
+    var el = $('select.cs-database-table-list');
     el.html("");
-
+    el.append($('<option>').append('Select Database'))
     var json = initJSON();
 
     json.kv.dbId = dbid;
@@ -79,16 +112,16 @@ function getTablesAndFields4Popup(dbid) {
             el.html("");
             try {
                 var obj = res.tbl[0].r;
+                el.append($('<option>').append('Select Table Name'))
                 for (var i in obj) {
                     var o = obj[i];
-                    el.append($('<option>').val(o.id)
+                    el.append($('<option class="data-table-option">').val(o.id)
                         .append(o.tableName))
                 }
-                // el.selectpicker('refresh');
+                el.selectpicker('refresh');
             } catch (err) {
-
+                
             }
-
         }
     });
 }
@@ -122,7 +155,7 @@ function getFieldByTableId4Popup(tableId, dataCore) {
                 }
                 getDataTableRowListContainer(selectedField, dataCore);
             } catch (err) {
-
+                
             }
 
         }
@@ -152,6 +185,7 @@ function getDataTableRowListContainer(selectedField, data) {
 
 function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
     var el = $('.cs-table-database-table-zad-list');
+    $('.live-sql-error').text('');
     el.find('thead').html("");
     el.find('tbody').html("");
 
@@ -209,6 +243,25 @@ function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
                 el.find('tbody').append(tr);
             }
 
-        }
+        },
+        error: function () {
+            $('.live-sql-error').text('');
+            $('.live-sql-error').text('No data found');
+          }
     });
 }
+
+// SQL EDITOR SHOW
+
+$(document).on("click", ".cs-sql-editor-run-btn", function (e) {
+     $('.cs-sql-editor-run-btn').toggleClass('active');
+      $(".live-sql-ditor").show('slide', {
+        direction: 'up'
+      }, 200);
+    });
+        
+$(document).on("click", ".cs-sql-editor-run-btn.active", function (e) {
+      $('.live-sql-ditor').hide('slide', {
+        direction: 'up'
+      }, 200);
+    });
