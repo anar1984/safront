@@ -1,6 +1,8 @@
+let current_table_id = '';
+let current_db_id = '';
 
 $(document).on("change", ".cs-database-name-list", function (e) {
-    // $('.cs-database-name-list').selectpicker('refresh');
+    current_db_id = $(this).val();
     getTablesAndFields4Popup($(this).val())
     // $('.cs-database-table-list').selectpicker('refresh');
 });
@@ -15,6 +17,15 @@ $(document).on("change", ".th-header-filter-search-by-column", function (e) {
     getFieldByTableId4PopupContainer(data);
 
 });
+
+
+
+$(document).on("change", ".cs-database-table-list", function (e) {
+    var tableId = $(this).val();
+    current_table_id = tableId;
+    getFieldByTableId4Popup(tableId);
+});
+
 $(document).on("click", "#ShowDatabaseTableBtn", function (e) {
     $('.cs-nav-select').html("");
     $('.cs-nav-select').append($('<div>')
@@ -78,7 +89,7 @@ function cs_loadDatabaseList2ComboEntityDetails() {
                 for (var i in obj) {
                     var o = obj[i];
                     el.append($('<option>').val(o.id)
-                        .append(o.dbName))
+                            .append(o.dbName))
                 }
                 el.selectpicker('refresh');
             } catch (err) {
@@ -131,8 +142,48 @@ function getFieldByTableId4PopupContainer(data) {
     getFieldByTableId4Popup(tableId, data)
 }
 
+
+function getFieldListByTableId() {
+    var tableId = current_table_id;
+    if (!tableId)
+        return;
+    
+    var keys = [];
+
+    var json = initJSON();
+    json.kv.tableId = tableId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetFieldByTableId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            
+            try {
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    if (o.fieldName){
+                        var val = Utility.convertStringToCamelStyle(o.fieldName);
+                        keys.push(val);
+                    }
+                }
+            } catch (err) {
+            }
+        }
+    });
+    return keys;
+}
+
+
+
 function getFieldByTableId4Popup(tableId, dataCore) {
-    if (!tableId) return;
+    if (!tableId)
+        return;
 
     var json = initJSON();
     json.kv.tableId = tableId;
@@ -209,26 +260,38 @@ function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
         async: false,
         success: function (res) {
             AJAXCallFeedback(res);
-            var obj = res.tbl[0].r;
-            var keys = Object.keys(obj[0]);
+
+            var keys = [];
+            try {
+                var  keys = res.kv.selectedField.split(",");
+            } catch (err) {
+                keys = getFieldListByTableId();
+            }
 
             var tr_th = $('<tr>');
             for (var k in keys) {
                 var col = keys[k];
-                var valSt = ((dataCore) && (dataCore[col])) ? dataCore[col]:'';
+                var valSt = ((dataCore) && (dataCore[col])) ? dataCore[col] : '';
                 tr_th.append($('<th>')
-                    .text(keys[k])
-                    .append($('<br>'))
-                    .append($('<input>')
-                        .val(valSt)
-                        .addClass('th-header-filter-search-by-column')
-                        .attr('sa-data-name', col)));
+                        .text(keys[k])
+                        .append($('<br>'))
+                        .append($('<input>')
+                                .val(valSt)
+                                .addClass('th-header-filter-search-by-column')
+                                .attr('sa-data-name', col)));
 
             }
             el.find('thead').append(tr_th);
 
 
-            el.find('tbody').html('');
+            el.find('tbody')
+                    .html('');
+            var obj = [];
+            try{ obj = res.tbl[0].r;
+            }catch(err){
+                el.find('tbody')
+                    .html('No Data Found');
+            }
             for (var i in obj) {
                 var tr = $('<tr>');
                 var o = obj[i];

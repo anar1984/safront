@@ -2318,7 +2318,7 @@ var Component = {
 
                 } catch (err) {
                 }
-                div4.css("height", hg);
+                div4.css("height", hg);s
             }
         } catch (err) {
             console.log(err);
