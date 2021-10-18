@@ -138,7 +138,7 @@ function getTablesAndFields4Popup(dbid) {
 }
 
 function getFieldByTableId4PopupContainer(data) {
-    var tableId = $('.cs-database-table-list').val();
+    var tableId = $('select.cs-database-table-list').val();
     getFieldByTableId4Popup(tableId, data)
 }
 

@@ -97,12 +97,7 @@
         <script src="resource/js/bs4/sa-rel.js"></script>
         <script src="resource/js/bs4/sa1.js"></script>
         <script src="resource/js/bs4/ra.js"></script>
-        <script src="ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.session.setMode("ace/mode/javascript");
-        </script>
+        <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
         </body>
 
     </head>
@@ -7983,14 +7978,20 @@
                                 <div class="cs-db-main-container">
                                     <h4>Body Content</h4>
                                     <p>Lorem Ipsum is simply dummy text of the printing</p>
-                                    <pre id="editor" class="live-sql-ditor" style="display:none;">
-                                        function foo(items) {
-                                            var i;
-                                            for (i = 0; i &lt; items.length; i++) {
-                                                alert("Ace Rocks " + items[i]);
-                                            }
-                                        }
-                                    </pre>
+                                    <pre id="live-sql-ditor" class="live-sql-ditor" style="display:none;">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</pre>
+                                    <script>
+                                        var editor = ace.edit("live-sql-ditor");
+                                        editor.setTheme("ace/theme/sqlserver");
+                                        editor.session.setMode("ace/mode/sql");
+                                        ace.config.loadModule('ace/ext/language_tools', function () {
+                                            editor.setOptions({
+                                                enableBasicAutocompletion: true,
+                                                enableSnippets: true
+                                            })
+                                        });
+                                        // editor.autoIndent = false;
+                                        // editor.autoComplete = false;
+                                    </script>
                                     <div class="livesql-table-boxes">
                                         <table class="table table-striped cs-table-database-table-zad-list">
                                              <thead></thead>
