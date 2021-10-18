@@ -116,23 +116,23 @@ function getUserFullInfo(fkUserId) {
     return res1;
 }
 
-function convertDataToTableCheweek(data){
+function convertDataToTableCheweek(data) {
     var keys = Object.keys(data);
     var res = {};
-    res.selectedField = (data.selectedField) ? data.selectedField: keys.toString();        
-            
+    res.selectedField = (data.selectedField) ? data.selectedField : keys.toString();
+
     var _table = {};
-    var row = []; 
+    var row = [];
     var kv = {};
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        var val = data[key];        
-        kv[key+'1']  = val;         
+        var val = data[key];
+        kv[key + '1'] = val;
     }
     row.push(kv);
-    _table.r = row;       
-    res._table = _table;    
-    return res;    
+    _table.r = row;
+    res._table = _table;
+    return res;
 }
 
 function removeBacklogDescCommentType(el, descId) {
@@ -1430,7 +1430,8 @@ function getBacklogLastModificationDateAndTime(bid1) {
         success: function (res) {
             try {
                 backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.out));
-                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
+//                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
+
             } catch (err) {
 
             }
@@ -3072,9 +3073,36 @@ function manualProjectRefreshInit(fkManualProjectId) {
 
 
 
+function consoleDebugTime(title) {
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+
+    console.log('---------------------------------------------------');
+    console.log(title, ': ', datetime);
+    console.log("---------------------------------------------");
+}
+
+function getDebugTime() {
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+
+    return datetime;
+}
 
 
 function loadFromIndexedDBtoRAM() {
+    var idssheyList = Object.keys(backlog_last_modification);
+
     request = window.indexedDB.open("sa-db", 1);
     request.onupgradeneeded = function (event) {
         db = event.target.result;
@@ -3089,27 +3117,43 @@ function loadFromIndexedDBtoRAM() {
         var objectStore = transaction.objectStore("subdb");
 
 
+//        consoleDebugTime('umumi start');
 
-        var ln = localStorage.length;
-        for (var i = 0, len = ln; i < len; i++) {
-            var key = localStorage.key(i);
-            //            var value = localStorage[key];
-            try {
-                if (key.startsWith('idb_')) {
-                    localStorage.removeItem(key);
-                }
-            } catch (err) {
-            }
-        }
-
+//        var ln = localStorage.length;
+//        for (var i = 0, len = ln; i < len; i++) {
+//            var key = localStorage.key(i);
+//            //            var value = localStorage[key];
+//            try {
+//                if (key.startsWith('idb_')) {
+//                    localStorage.removeItem(key);
+//                }
+//            } catch (err) {
+//            }
+//        }
+//        consoleDebugTime(' local storage temizlendi');
 
         objectStore.openCursor().onsuccess = function (event) {
+//            consoleDebugTime('curcur started ')
             var cursor = event.target.result;
             if (cursor) {
+                var key = cursor.key.replace('idb_', '');
+                if ((key) && idssheyList.includes(key)) {
+                   localStorage.removeItem(cursor.key);
+                    var res = cursor.value.json;
+                    localStorage.setItem(cursor.key, res.kv.modificationTime);
+                    loadBacklogProductionDetailsById_resparams(res);
+                    
+                    //set GUI Design
+//                    try{
+//                        var resTmp = SAInput.toJSONByBacklog(key);
+//                        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+//                        guiZadList4Ever[key]=html;
+//                    }catch(err){}
+            
+                    var ids = cursor.key.replace('idb_', '');
+//                console.log('backlog id = '+cursor.key+'; backlogname = '+SACore.GetBacklogname(ids))
+                }
 
-                var res = cursor.value.json;
-                localStorage.setItem(cursor.key, res.kv.modificationTime);
-                loadBacklogProductionDetailsById_resparams(res);
                 cursor.continue();
             } else {
                 //                loadMissedBacklogsListFromStorage();
@@ -3117,6 +3161,7 @@ function loadFromIndexedDBtoRAM() {
                 loadMainProjectList4ManualZad();
 
             }
+//            consoleDebugTime('cursor ended');
         }
     };
 
@@ -5858,7 +5903,7 @@ function _TriggerAPI(carrier) {
 //    var id = $(element).attr('id');
 //    var el = document.getElementById(id);
 
-        var el = element;
+    var el = element;
 
     var out = be.callApi(apiId, finalRes, el);
 
@@ -6275,7 +6320,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         var f = false;
         var elem = $(el).closest('div.redirectClass');
         elem.find('table.component-table-class-for-zad').each(function (ev) {
-            if (f){
+            if (f) {
                 return false;
             }
 
@@ -6293,14 +6338,14 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             });
 
             tableId = (diffArray.length > 0) ? $(this).attr('table-id') : '';
-            if (tableId){
+            if (tableId) {
                 f = true;
             }
             componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
             inpId = (diffArray.length > 0) ? $(this).attr('input-id') : '';
         })
 
-        if (!tableId){
+        if (!tableId) {
             return;
         }
 
@@ -6320,12 +6365,12 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         //        clearTableBodyAfterApiCall(el, apiId);
         var addRow = false;
         var tableOriginal = $('table#' + componentId);
-                if (!tableOriginal.attr('sa-table-noclear')){
-                    tableOriginal.find('tbody').html('');
-                }else{
-                    addRow = true;
-                    startLimit = tableOriginal.find('tbody tr').length;
-                }
+        if (!tableOriginal.attr('sa-table-noclear')) {
+            tableOriginal.find('tbody').html('');
+        } else {
+            addRow = true;
+            startLimit = tableOriginal.find('tbody tr').length;
+        }
 
         var hasRelatedApi01 = false;
         if (!hasRelatedApi01) {
@@ -6349,7 +6394,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
-                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId,addRow);
+                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId, addRow);
                 }
                 if (f) {
                     return;
@@ -6370,8 +6415,8 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
                     var rowId = data._table.r[(j - 1)]['id'];
                 } catch (err) {
                 }
-                
-                var rowNoOrij = parseInt(startLimit)+parseInt(j)
+
+                var rowNoOrij = parseInt(startLimit) + parseInt(j)
 
                 elem.find('[sa-selectedfield*="' + c + '"][row-no="' + rowNoOrij + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
@@ -8770,13 +8815,7 @@ function addInputAttributes4Container(el) {
         return;
     }
 
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
 
     json.kv.attrName = attrName;
     json.kv.attrValue = attrVal;

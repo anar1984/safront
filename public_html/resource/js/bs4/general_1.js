@@ -519,6 +519,15 @@ var Utility = {
 
         }
     },
+    convertStringToCamelStyle:function(arg) {
+        var UNDERSCORE = "_";
+        var st = arg.split(UNDERSCORE);
+         var res = st[0].toLowerCase()
+        for (var i = 1; i <= st.length - 1; i++) {
+            res = res + st[i].substring(0, 1).toUpperCase() + st[i].substring(1, st[i].length).toLowerCase();
+        }
+        return res;
+    },
 }
 
 function getFilePath(fileName) {
@@ -1595,14 +1604,14 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     st += '      </div>';
     st += '   <div class="loaderModalInitiator"></div>';
     st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
-    st += '   <form>';
+//    st += '   <form>';
     st += '     <input type="hidden" id=popupTrigger pid="' + triggerId + '" value="nonenone">';
     st += '     <div class="row redirectClass" bid="' + backlogId + '"';
     st += '                     bcode="' + makeId(10) + '" ';
     st += '                     id="userstory-gui-input-component-res-sus-id">';
     st += modalBody;
     st += '     </div>';
-    st += '   </form>';
+//    st += '   </form>';
     st += '   </div>';
     st += '  </div>';
     st += '  </div>';

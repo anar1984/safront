@@ -7,7 +7,8 @@
 
 /*global global_var, SAInput*/
 
-
+   var guiZadList4Ever = {};
+   var popupSiyahiList = {};
 var filtUsm = {
     TableFields:{},
     SetTableFields: function (tableId, InputId) {
@@ -10230,8 +10231,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                         && obj[n].inputType !== 'TBL' && obj[n].inputType !== 'TAB') {
                     continue;
                 }
-
-
+                
+            var selectedField = '';
+            try {
+                selectedField += cr_input_comp_attribute_kv[obj[n].id]['sa-selectedfield'];
+                selectedField = splitSelectedFieldAndGenHtml(selectedField,obj[n].id).html();
+            } catch (err) {
+            }
 
                 var tname = (obj[n].tableName) ? " (" + replaceTags(Replace2Primes(obj[n].tableName)) + ')' : "";
                 var isTableComp = obj[n].inputType === 'TBL' || obj[n].inputType === 'TAB' ? " hidden" : "";
@@ -10256,6 +10262,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 //                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
 //                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
 //                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
+                st += '<td ><span class="selectedfieldlistforzad">' + selectedField + '</span></td>';
+                st += '<td ><input class="okayPitchYourPathYourWay" style="width:20px" placeholder="Add Selected Field"></td>';
                 st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
                         + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
                 st += '</tr>';
@@ -10569,6 +10577,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         }
         return st;
     },
+    
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
         var carrier = new Carrier();
         carrier.setBacklogId(popupBacklogId);
@@ -10588,22 +10597,64 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         SourcedDispatcher.Exec(carrier);
 
     },
+    
+
+    getPopupHtmlBodyById4ProjectView:function(backlogId){
+        if (!backlogId){
+            return '';
+        }
+
+        var html = "";
+        try{
+//           if (guiZadList4Ever[backlogId]){
+//               html = guiZadList4Ever[backlogId];
+//           }else{
+               var resTmp = SAInput.toJSONByBacklog(backlogId);
+               html = new UserStory().getGUIDesignHTMLPure(resTmp);
+               
+               //set GUI Design to cache
+                        guiZadList4Ever[backlogId]=html;
+//           }
+        } catch (err){
+            var resTmp = SAInput.toJSONByBacklog(backlogId);
+            html = new UserStory().getGUIDesignHTMLPure(resTmp);
+              //set GUI Design to cache
+                        guiZadList4Ever[backlogId]=html;
+        }
+
+        return html;
+    },
+    
+    showPopupforGUIComponent:function(html,popupBacklogId,bcode){
+        var padeId; 
+//        if (popupSiyahiList[popupBacklogId]){
+//            padeId =  popupSiyahiList[popupBacklogId];  
+//            $('#'+padeId).modal('show');
+//        }else{
+           var title = SACore.GetBacklogDetails(popupBacklogId, 'description');
+           var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
+           padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId, title);
+           popupSiyahiList[popupBacklogId] = padeId;
+//        }
+          
+       return padeId;
+    },
+    
+    
     _SetGUIComponentButtonGUIModal: function (carrier) {
 
-        var popupBacklogId = carrier.getBacklogId();
+        var popupBacklogId = carrier.getBacklogId();        
+        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
         var el = carrier.getElement();
 
         closeModal('userstory-gui-input-component-res-sus-analytic');
-        var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
-        var resTmp = SAInput.toJSONByBacklog(popupBacklogId);
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;
-
-        var title = SACore.GetBacklogDetails(popupBacklogId, 'description');
-        var padeId = generatePopupModalNew(html, canvasCSS, bcode, popupBacklogId, title);
-        //  click on first tab
+        
+        
+        var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
+        
+                //  click on first tab
         $('.activeTabClass').each(function (e) {
             $(this).click();
         });
@@ -20022,7 +20073,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#SUS_IPO_GUI_Design').val(SACore.GetCurrentBacklogParam1());
         this.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
         this.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
+       
         var st = this.getGUIDesignHTMLPure(res);
+        
         $('#SUS_IPO_GUI_Design').html(st);
         $('#SUS_IPO_GUI_Design').attr('bid', SACore.GetCurrentBacklogId());
         $('#SUS_IPO_GUI_Design').attr('bcode', makeId(10));
