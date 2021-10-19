@@ -924,6 +924,7 @@ function genUsTableNew(genText) {
                                             .append('<a class="dropdown-item CreateTableOnServer">Create Table in Server</a>')
 //                                            .append('<a class="dropdown-item">Move</a>')
 //                                            .append('<a class="dropdown-item">Copy</a>')
+                                            .append('<a class="dropdown-item ShowTableDetail">Show Table</a>')
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")

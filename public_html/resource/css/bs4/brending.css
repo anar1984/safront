@@ -1718,7 +1718,7 @@ tbody tr.sortbodyEmpty {
 }
 .vertical-alignment-helper {
     display:table;
-    margin-top: 50px;
+    margin-top: 0px;
     height: 100%;
     width: 100%;
     pointer-events:none;
@@ -1788,14 +1788,19 @@ tbody tr.sortbodyEmpty {
     margin-top: 3px;
 }
 /***** DATABASE PAGE */
-.ShowDatabaseTable .modal-dialog {
-    width: 97vw;
-    max-width: 97vw;
+.ShowDatabaseTable .modal-dialog, .ShowDatabaseBoard .modal-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
     overflow-y: auto;
+    margin: 0;
 }
 /* DATABASE PAGE HEADER TOP & NAV MENU */
-.ShowDatabaseTable.modal {
-    z-index: 5000;
+.ShowDatabaseTable.modal, .ShowDatabaseBoard.modal {
+    z-index: 55555;
+    overflow: visible;
+    padding-left: 0 !important;
+    background: #525596de;
 }
 .cs-db-header-menu {
     background:#272B7C;
@@ -1937,6 +1942,137 @@ tbody tr.sortbodyEmpty {
     border-bottom:1px solid #ccc;
   }
 
-  .cs-db-header-menu .pagination-detail .page-list .btn.{
+  .cs-db-header-menu .pagination-detail .page-list .btn {
       color: gainsboro;
   }
+  .cs-db-main-container {
+      margin-bottom: 100px;
+  }
+.livesql-table-boxes {
+    width: 100%;
+    height: 78%;
+    overflow: auto;
+    display: block;
+    bottom: 0;
+    position: relative;
+    top: 30px;
+}
+.ShowDatabaseTable table, .ShowDatabaseBoard table {
+    table-layout:auto;
+}
+.ShowDatabaseTable tbody, .ShowDatabaseBoard tbody {
+    position: relative;
+}
+.ShowDatabaseTable thead, .ShowDatabaseBoard thead {
+    width: 100%;
+}
+.ShowDatabaseTable thead th, .ShowDatabaseTable tbody td, .ShowDatabaseBoard thead th, .ShowDatabaseBoard tbody td {
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cs-nav-buttons {
+    display: inline-block;
+    float: left;
+}
+.cs-nav-select {
+    float: left;
+}
+.cs-nav-buttons>div {
+    margin-right: 0;
+    padding: 0;
+    line-height: normal;
+    vertical-align: middle;
+    display: table-cell;
+    padding-top: 24px;
+}
+.cs-nav-select>div {
+    margin-right: 10px;
+    display: inline-block;
+    padding: 0;
+}
+.live-sql-ditor {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+}
+.app_editor_dragbar {
+	background-color: #222222;
+	width: 100%;
+	height: 2px;
+	cursor: row-resize;
+	opacity: 1;
+}
+#col_code_resize {
+
+}
+#col_err_resize {
+    /* float: left;
+    border-left: 2px solid;
+    width: 2px;
+    z-index: 1000; */
+}
+#col_err_resize .draghandle {
+    position: absolute;
+    z-index: 100;
+    width: 8px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    cursor: col-resize;
+    float: right;
+    background: #222222;
+}
+.ShowDatabaseTable .pagination, .ShowDatabaseBoard .pagination {
+    flex-wrap: wrap;
+    float: right;
+}
+.cs-db-main-container nav {
+    margin-top: 40px;
+}
+.sql-result-box {
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
+}
+.live-sql-ditor {
+    border-right: 1px solid #ccc;
+}
+.cs-sql-run .cs-input-group {
+    background: #e9e9f1;
+    padding: 6px;
+    border: 1px solid #dbdbf3;
+}
+.app_editor_wrapper {
+    margin-top: 30px;
+}
+.th-header-filter-search-by-column {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #525596;
+    margin-left: 0px;
+    padding: 4px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+.cs-db-main-container .table-striped tbody tr:nth-of-type(odd) {
+    background: #e9e9f1 !important;
+}
+.cs-db-main-container .table-striped tbody tr:nth-of-type(odd) td {
+    border-left: 1px solid #d1d1e5;
+}
+.cs-db-main-container .table-striped tbody tr td {
+    border-left: 1px solid #e9e9f1;
+}
+.perpage-select {
+    display: inline-block;
+    margin: 0 10px;
+}
+.perpage-select i{
+    font-size: 13px;
+    color: #525596;
+    margin: 0 2px;
+}
