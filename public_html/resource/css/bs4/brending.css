@@ -1718,7 +1718,7 @@ tbody tr.sortbodyEmpty {
 }
 .vertical-alignment-helper {
     display:table;
-    margin-top: 50px;
+    margin-top: 0px;
     height: 100%;
     width: 100%;
     pointer-events:none;
@@ -1788,7 +1788,7 @@ tbody tr.sortbodyEmpty {
     margin-top: 3px;
 }
 /***** DATABASE PAGE */
-.ShowDatabaseTable .modal-dialog {
+.ShowDatabaseTable .modal-dialog, .ShowDatabaseBoard .modal-dialog {
     width: 100vw;
     max-width: 100vw;
     height: 100vh;
@@ -1796,10 +1796,11 @@ tbody tr.sortbodyEmpty {
     margin: 0;
 }
 /* DATABASE PAGE HEADER TOP & NAV MENU */
-.ShowDatabaseTable.modal {
-    z-index: 5000;
+.ShowDatabaseTable.modal, .ShowDatabaseBoard.modal {
+    z-index: 55555;
     overflow: visible;
     padding-left: 0 !important;
+    background: #525596de;
 }
 .cs-db-header-menu {
     background:#272B7C;
@@ -1954,17 +1955,18 @@ tbody tr.sortbodyEmpty {
     display: block;
     bottom: 0;
     position: relative;
+    top: 30px;
 }
-.ShowDatabaseTable table {
+.ShowDatabaseTable table, .ShowDatabaseBoard table {
     table-layout:auto;
 }
-.ShowDatabaseTable tbody {
+.ShowDatabaseTable tbody, .ShowDatabaseBoard tbody {
     position: relative;
 }
-.ShowDatabaseTable thead {
+.ShowDatabaseTable thead, .ShowDatabaseBoard thead {
     width: 100%;
 }
-.ShowDatabaseTable thead th, .ShowDatabaseTable tbody td {
+.ShowDatabaseTable thead th, .ShowDatabaseTable tbody td, .ShowDatabaseBoard thead th, .ShowDatabaseBoard tbody td {
     width: auto;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2024,7 +2026,7 @@ tbody tr.sortbodyEmpty {
     float: right;
     background: #222222;
 }
-.ShowDatabaseTable .pagination {
+.ShowDatabaseTable .pagination, .ShowDatabaseBoard .pagination {
     flex-wrap: wrap;
     float: right;
 }
@@ -2032,7 +2034,8 @@ tbody tr.sortbodyEmpty {
     margin-top: 40px;
 }
 .sql-result-box {
-    padding: 20px;
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
 }
 .live-sql-ditor {
     border-right: 1px solid #ccc;
@@ -2054,4 +2057,22 @@ tbody tr.sortbodyEmpty {
     margin-bottom: 5px;
     border-radius: 4px;
     margin-top: 2px;
+}
+.cs-db-main-container .table-striped tbody tr:nth-of-type(odd) {
+    background: #e9e9f1 !important;
+}
+.cs-db-main-container .table-striped tbody tr:nth-of-type(odd) td {
+    border-left: 1px solid #d1d1e5;
+}
+.cs-db-main-container .table-striped tbody tr td {
+    border-left: 1px solid #e9e9f1;
+}
+.perpage-select {
+    display: inline-block;
+    margin: 0 10px;
+}
+.perpage-select i{
+    font-size: 13px;
+    color: #525596;
+    margin: 0 2px;
 }
