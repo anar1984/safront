@@ -5614,11 +5614,7 @@ UserStory.prototype = {
 
           });
   
-          $(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
-                if (e.keyCode === 13) {
-                    new UserStory().insertNewBacklogDesc();
-                }
-            });
+         
 
             $('.cs-if-script-box select').selectpicker();
             $('.get-callfn-select-box ').selectpicker();

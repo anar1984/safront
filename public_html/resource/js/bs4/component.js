@@ -1483,6 +1483,8 @@ var Component = {
                         .addClass("sa-tab-action-zad");
                 var usId = usList[i].trim();
                 var usName = SACore.GetBacklogname(usId);
+               var titble = SACore.GetBacklogDetails(usId,'description');
+               titble = (titble) ? titble : usName;
                 var active = (idx === 0) ? " active " : "";
                 idx++;
                 li.append($('<a class="nav-link">')
@@ -1491,7 +1493,7 @@ var Component = {
                         .attr("href", "#" + "tab_" + comp.fkInputTableId + "_" + usId)
 
                         .attr("data-toggle", "tab")
-                        .append(replaceTags(usName))
+                        .append(replaceTags(titble))
                         .append(" ")
                         .append(this.GenRedirectTo(usId))
                         )

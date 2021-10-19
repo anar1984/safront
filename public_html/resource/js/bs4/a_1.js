@@ -63,6 +63,12 @@ var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
 
+$(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+    if (e.keyCode === 13) {
+        new UserStory().insertNewBacklogDesc();
+    }
+});
+
 function setApiIpoBlock() {
 
     var keys = Object.keys(SourcedActivityDiagram.CoreLines.SC2SC);
@@ -1391,9 +1397,19 @@ function AJAXCallFeedback(res) {
                 $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(err[i].code)) {
+                        var id = makeId(10);
+
+
                         f = true;
                         $(this).closest('div').find('.apd-form-error-msg').remove();
-                        $(this).after('<p class=\'apd-form-error-msg\'>' + err[i].val + '</p>');
+                        $(this).after('<p class=\'apd-form-error-msg\' id="' + id + '">' + err[i].val + '</p>');
+
+
+                        setTimeout(function () {
+                            $('#' + id).remove();
+                        }, 3000);
+
+
                     }
                 })
 
@@ -1799,8 +1815,8 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
                 } catch (err) {
                     console.log(err);
                 }
-
                 localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
                 SAInput.LoadedBacklogs4Input.push(bid);
                 loadBacklogProductionDetailsById_resparams(res);
 
@@ -2174,9 +2190,18 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
         crossDomain: true,
         async: true,
         success: function (res) {
-
-            //            localStorage.setItem("md_" + bid, res.kv.modificationTime);
-            //            localStorage.setItem(bid, JSON.stringify(res));
+            try {
+                var transaction = db.transaction(["subdb"], "readwrite");
+                var store = transaction.objectStore("subdb");
+                store.delete('idb_' + bid);
+                store.add({
+                    'bid': 'idb_' + bid,
+                    'json': res
+                });
+            } catch (err) {
+                console.log(err);
+            }
+            localStorage.setItem('idb_' + bid, res.kv.modificationTime);
 
             loadBacklogProductionDetailsById_resparams(res);
 
@@ -2258,31 +2283,24 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
     }
 
     var f = false;
+	
+    if (localStorage.getItem('idb_' + bid)) {
 
-    if (localStorage.getItem(bid)) {
-        var res = localStorage.getItem(bid);
-        var resObj = JSON.parse(res);
         var md = '';
         var mdUS = '-1';
-        try {
-            md = resObj.kv.lastModification;
-            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
 
-        } catch (err) {
-        }
-
-
-
+        md = (localStorage.getItem('idb_' + bid)) ? localStorage.getItem('idb_' + bid) : md;
+        mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : mdUS;
         if (md === mdUS) {
-            f = true;
-            loadBacklogProductionDetailsById_resparams(resObj);
-        } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+            f = true;             
+        }else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
             f = true;
         }
-    } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
+
+    }  else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
         f = true;
     }
-
+	
     return f;
 }
 
@@ -2322,6 +2340,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
                     console.log(err);
                 }
                 localStorage.setItem("idb_" + bid, res.kv.modificationTime);
+                
                 SAInput.LoadedBacklogs4Input.push(bid);
 
                 loadBacklogProductionDetailsById_resparams(res);
@@ -3064,11 +3083,14 @@ function manualProjectRefreshInit(fkManualProjectId) {
     getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
     getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
     getJsGlobalCodeByProject();
-
+//
     getBacklogLastModificationDateAndTime(fkManualProjectId);
-
+//
     loadFromIndexedDBtoRAM();
-    //loadMainProjectList4ManualZad();
+//    
+
+//    loadMainProjectList4ManualZad();
+
 }
 
 
@@ -3138,18 +3160,18 @@ function loadFromIndexedDBtoRAM() {
             if (cursor) {
                 var key = cursor.key.replace('idb_', '');
                 if ((key) && idssheyList.includes(key)) {
-                   localStorage.removeItem(cursor.key);
+                    localStorage.removeItem(cursor.key);
                     var res = cursor.value.json;
                     localStorage.setItem(cursor.key, res.kv.modificationTime);
                     loadBacklogProductionDetailsById_resparams(res);
-                    
+
                     //set GUI Design
 //                    try{
 //                        var resTmp = SAInput.toJSONByBacklog(key);
 //                        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
 //                        guiZadList4Ever[key]=html;
 //                    }catch(err){}
-            
+
                     var ids = cursor.key.replace('idb_', '');
 //                console.log('backlog id = '+cursor.key+'; backlogname = '+SACore.GetBacklogname(ids))
                 }
@@ -3157,7 +3179,7 @@ function loadFromIndexedDBtoRAM() {
                 cursor.continue();
             } else {
                 //                loadMissedBacklogsListFromStorage();
-                getUnloadedBacklogListOnInit();
+//                getUnloadedBacklogListOnInit();
                 loadMainProjectList4ManualZad();
 
             }
