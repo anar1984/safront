@@ -32,7 +32,7 @@ $(document).on("click", "#ShowDatabaseTableBtn", function (e) {
         .addClass('cs-input-group')
             .append($('<div>')
             .attr('class','input-group-addon')
-                 .text('Project Name')
+                 .text('Database Name')
             )
             .append($('<select>')
                 .attr('class','cs-database-name-list')
@@ -47,7 +47,7 @@ $(document).on("click", "#ShowDatabaseTableBtn", function (e) {
         .addClass('cs-input-group')
             .append($('<div>')
             .attr('class','input-group-addon')
-                 .text('Project Name')
+                 .text('Table Name')
             )
             .append($('<select>')
                 .attr('class','cs-database-table-list')
@@ -278,6 +278,7 @@ function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
                         .append($('<input>')
                                 .val(valSt)
                                 .addClass('th-header-filter-search-by-column')
+                                .attr('placeholder', keys[k])
                                 .attr('sa-data-name', col)));
 
             }
@@ -305,6 +306,28 @@ function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
                 }
                 el.find('tbody').append(tr);
             }
+            $('.livesql-table-boxes input').each(function (ev) {
+                $.fn.textWidth = function (text, font) {
+                    if (!$.fn.textWidth.ZadFakeEl) $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
+                    $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+                    return $.fn.textWidth.ZadFakeEl.width();
+                };
+        
+                $(this).on('input', function () {
+                    var inputWidth = $(this).textWidth();
+                    $(this).css({
+                        width: inputWidth + 15
+                    })
+                }).trigger('input');
+        
+                function inputWidth(CSelem, minW, maxW) {
+                    CSelem = $(this);
+                }
+        
+                var SheyTargetElem = $(this);
+        
+                inputWidth(SheyTargetElem);
+            })
 
         },
         error: function () {
@@ -414,8 +437,7 @@ $(document).on("click", ".cs-sql-editor-run-btn.active", function (e) {
     
         document.addEventListener("mouseup", action_mouseup);
     }
-        
-        
+       
     makeAceEditorResizable(aceEditorInstance);
 
     });

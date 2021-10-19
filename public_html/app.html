@@ -7947,27 +7947,46 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-row mb-3">
-                            <div class="cs-nav-select">
-                                <!-- <select class="cs-database-name-list" data-live-search="true">
-                                    <option>Select Database</option>
-                                </select>
-                                <select class="cs-database-table-list" data-live-search="true">
-                                    <option>Select Table Name</option>
-                                </select> -->
-                            </div>
-                            <div class="cs-nav-buttons">
-                                <div class="cs-filter-td">
-                                    <div class="cs-input-group">
-                                         <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="cs-nav-select"></div>
+                                
+                                <div class="cs-nav-buttons">
+                                    <div class="cs-filter-td">
+                                        <div class="cs-input-group">
+                                                <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="cs-sql-edito">
-                                    <div class="cs-input-group">
-                                         <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Show Editor</button>
+                                    <div class="cs-sql-edito">
+                                        <div class="cs-input-group">
+                                                <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Sql Editor</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <nav aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;">
+                                    <select class="cs-pagination-per-page selectpicker">
+                                        <option>10</option>
+                                        <option>25</option>
+                                        <option>50</option>
+                                        <option>250</option>
+                                        <option>500</option>
+                                    </select>
+                                <ul class="pagination justify-content-end">
+                                  <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                </ul>
+                              </nav>
+                            </div>
+                         
                         </div>
                         <div class="cs-db-popup-body">
                             <div class="flex-container">
@@ -7976,15 +7995,23 @@
                                 </div>
 
                                 <div class="cs-db-main-container">
-                                    <h4>Body Content</h4>
-                                    <p>Lorem Ipsum is simply dummy text of the printing</p>
+                                    <!-- <h4>Body Content</h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing</p> -->
                                     <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div id="livesqlditor" class="live-sql-ditor">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</div>
                                             </div>
                                             <div class="col-md-4">
-                                                Error Result
+                                                
+                                                <div class="cs-sql-run">
+                                                    <div class="cs-input-group">
+                                                        <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run debug</button>
+                                                    </div>
+                                                </div>
+                                                    <div class="sql-result-box cs-gray-bg">
+                                                    <p>Error Result</p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div id="livesqlditor_dragbar" class="app_editor_dragbar"></div>
@@ -7997,7 +8024,7 @@
                                         </table>
                                         <div class="live-sql-error"></div>
                                    </div>
-                                    <nav aria-label="Page navigation example">
+                                    <!-- <nav aria-label="Page navigation example">
                                         <select class="cs-pagination-per-page selectpicker">
                                             <option>10</option>
                                             <option>25</option>
@@ -8017,7 +8044,7 @@
                                         <a class="page-link" href="#">Next</a>
                                       </li>
                                     </ul>
-                                  </nav>
+                                  </nav> -->
                                 </div>
                             </div>
                         </div>
