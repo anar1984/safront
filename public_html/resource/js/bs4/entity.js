@@ -268,19 +268,6 @@ $(document).ready(function () {
 
     })
 
-    $(document).on("click", ".ShowTableDataEntry", function () {
-
-        var tableid = $(this).closest('td.tdSeqment').attr('pid');
-        var dbid = $('#entityDatabaseList').val();
-        
-        $('#ShowDatabaseTable').modal('show');
-        sqlEditorPageLoader();
-        $('.cs-database-name-list').val(dbid).change();
-        getTablesAndFields4Popup(dbid);
-        $('.cs-database-table-list').val(tableid).change();
-    })
-
-
 
     $(document).on("dblclick", ".tdHeader", function () {
         var nameValue = $(this).find(".TableNameH5").text();

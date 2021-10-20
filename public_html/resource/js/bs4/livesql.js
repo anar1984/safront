@@ -3,10 +3,11 @@ var current_db_id = '';
 var per_page_here = 25;
 var page_count_there = 1;
 
-$(document).on("change", ".cs-database-name-list", function (e) {
+$(document).on("change", "select.cs-database-name-list", function (e) {
+    // $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-table-list').html("");
     current_db_id = $(this).val();
     getTablesAndFields4Popup($(this).val())
-    // $('.cs-database-table-list').selectpicker('refresh');
+    $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-table-list').selectpicker('refresh');
 });
 
 $(document).on("change", ".th-header-filter-search-by-column", function (e) {
@@ -25,7 +26,7 @@ $(document).on("click", ".cs-sql-editor-debug-btn", function (e) {
 });
 
 
-$(document).on("change", ".cs-database-table-list", function (e) {
+$(document).on("change", "select.cs-database-table-list", function (e) {
     var tableId = $(this).val();
     current_table_id = tableId;
     getFieldByTableId4Popup(tableId);
@@ -39,6 +40,17 @@ $(document).on("click", ".cs-filter-table-btn", function (e) {
 $(document).on("change", "select.cs-pagination-page-count", function (e) {
     page_count_there = $(this).val();
     getDataList();
+    // sqlEditorPageLoader();
+});
+
+$(document).on("click", ".perpage-select .perpage-prev", function (e) {
+    $(this).closest('.perpage-select').find('.cs-pagination-page-count option:selected').prev().attr('selected', 'selected').selectpicker('refresh');
+    $(this).closest('.perpage-select').find('select.cs-pagination-page-count').change();
+});
+
+$(document).on("click", ".perpage-select .perpage-next", function (e) {
+    $(this).closest('.perpage-select').find('.cs-pagination-page-count option:selected').next().attr('selected', 'selected').selectpicker('refresh');
+    $(this).closest('.perpage-select').find('select.cs-pagination-page-count').change();
 });
 
 $(document).on("change", "select.cs-pagination-per-page", function (e) {
@@ -50,41 +62,29 @@ $(document).on("click", "#ShowDatabaseTableBtn", function (e) {
     sqlEditorPageLoader();
 });
 
+$(document).on("click", ".ShowTableDataEntry", function () {
 
+    var tableid = $(this).closest('td.tdSeqment').attr('pid');
+    var dbid = $('#entityDatabaseList').val();
+    
+    $('#ShowDatabaseTable').modal('show');
+    sqlEditorPageLoader();
+    $('.cs-database-name-list').val(dbid).change();
+    getTablesAndFields4Popup(dbid);
+    $('.cs-database-table-list').val(tableid).change();
+})
 
+$(document).on("click", ".cs-reset-live-sql", function (e) {
+    $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-name-list').html("");
+    $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-table-list').html("");
+    $(this).closest('.ShowDatabaseTable').find('select.cs-database-name-list, select.cs-database-table-list').selectpicker('refresh');
+    $(this).closest('.ShowDatabaseTable').find('.cs-table-database-table-zad-list').find('thead').html("");
+    $(this).closest('.ShowDatabaseTable').find('.cs-table-database-table-zad-list').find('tbody').html("");
+});
 
 function sqlEditorPageLoader() {
-    $('.ShowDatabaseTable .cs-nav-select').html("");
-    $('.ShowDatabaseTable .cs-nav-select').append($('<div>')
-            .addClass('cs-input-group')
-            .append($('<div>')
-                    .attr('class', 'input-group-addon')
-                    .text('Database Name')
-                    )
-            .append($('<select>')
-                    .attr('class', 'cs-database-name-list')
-                    .attr('data-live-search', 'true')
-                    .append($('<option>')
-                            .text('Select Database')
-                            )
-                    )
-
-            );
-    $('.ShowDatabaseTable .cs-nav-select').append($('<div>')
-            .addClass('cs-input-group')
-            .append($('<div>')
-                    .attr('class', 'input-group-addon')
-                    .text('Table Name')
-                    )
-            .append($('<select>')
-                    .attr('class', 'cs-database-table-list')
-                    .attr('data-live-search', 'true')
-                    .append($('<option>')
-                            .text('Select Database')
-                            )
-                    )
-
-            );
+    $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-name-list').html("");
+    $(this).closest('.ShowDatabaseTable').find('.cs-nav-select select.cs-database-table-list').html("");
     cs_loadDatabaseList2ComboEntityDetails();
     $('.cs-database-name-list, .cs-database-table-list').selectpicker('refresh');
 
