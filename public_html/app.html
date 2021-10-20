@@ -7942,7 +7942,7 @@
                 <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Database: meneger</h6>
+                        <h6 class="modal-title">Database Manager</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -7960,7 +7960,7 @@
                                     </div>
                                     <div class="cs-sql-edito">
                                         <div class="cs-input-group">
-                                                <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Sql Editor</button>
+                                                <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">SQL Editor</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7968,10 +7968,10 @@
                             <div class="col-4">
                                 <nav class="navigation" aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;text-align:right;">
                                     
-                                    <span>Total: 1370</span>
+                                    <span>Total: <b class='querydatarowcount'>0</b></span>
                                     <div class="perpage-select">
                                         <i class="fas fa-chevron-left"></i>
-                                        <select class="cs-pagination selectpicker">
+                                        <select class="cs-pagination-page-count selectpicker">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -7982,7 +7982,7 @@
                                     </div>
                                     <select class="cs-pagination-per-page selectpicker">
                                         <option>10</option>
-                                        <option>25</option>
+                                        <option selected>25</option>
                                         <option>50</option>
                                         <option>100</option>
                                         <option>250</option>
@@ -8009,11 +8009,11 @@
                                                 
                                                 <div class="cs-sql-run">
                                                     <div class="cs-input-group">
-                                                        <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run debug</button>
+                                                        <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run</button>
                                                     </div>
                                                 </div>
                                                     <div class="sql-result-box cs-gray-bg">
-                                                    <p>Error Result</p>
+                                                    <p id='sqlEditorRunResult'>Output</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -8035,9 +8035,9 @@
             </div>
         </div>
         </div>
-
-
-        <div class="cs-modal-box ShowDatabaseBoard modal fade" id="ShowDatabaseBoard" tabindex="-1" role="dialog" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+     
+   
+<!--        <div class="cs-modal-box ShowDatabaseBoard modal fade" id="ShowDatabaseBoard" tabindex="-1" role="dialog" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
             <div class="vertical-alignment-helper">
                 <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
@@ -8071,7 +8071,7 @@
                                     <span>Total: 1370</span>
                                     <div class="perpage-select">
                                         <i class="fas fa-chevron-left"></i>
-                                        <select class="cs-pagination selectpicker">
+                                        <select class="cs-pagination-table-zad selectpicker">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -8096,8 +8096,8 @@
                             <div class="flex-container">
                                 <div class="cs-db-header-menu"></div>
                                 <div class="cs-db-main-container">
-                                    <!-- <h4>Body Content</h4>
-                                    <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+                                     <h4>Body Content</h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing</p> 
                                     <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
                                         <div class="row">
                                             <div class="col-md-8">
@@ -8132,7 +8132,7 @@
                 </div>
             </div>
         </div>
-        </div>
+        </div>-->
 
 
         <div class="cs-modal-box modal fade" id="ImportBoxDB" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""

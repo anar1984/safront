@@ -258,12 +258,28 @@ $(document).ready(function () {
 
     $(document).on("click", ".EditTableName", function () {
 
+
         var nameValue = $(this).parents(".tdHeader").find("h5").text()
         $(this).parents(".tdHeader").find(".tableNameEditInput").css("display", "block")
         $(this).parents(".tdHeader").find(".tableNameEditInput").focus()
         $(this).parents(".tdHeader").find(".tableNameEditInput").val(nameValue)
 
+
+
     })
+
+    $(document).on("click", ".ShowTableDataEntry", function () {
+
+        var tableid = $(this).closest('td.tdSeqment').attr('pid');
+        var dbid = $('#entityDatabaseList').val();
+        
+        $('#ShowDatabaseTable').modal('show');
+        sqlEditorPageLoader();
+        $('.cs-database-name-list').val(dbid).change();
+        getTablesAndFields4Popup(dbid);
+        $('.cs-database-table-list').val(tableid).change();
+    })
+
 
 
     $(document).on("dblclick", ".tdHeader", function () {
@@ -730,15 +746,15 @@ $(document).ready(function () {
 
 
 
- /*    $(document).on("click", ".leader-line", function (e) {
-
-
-        $(".selectedLine").removeClass("selectedLine");
-        $(this).addClass("selectedLine");
-
-        e.stopPropagation()
-
-    }); */
+    /*    $(document).on("click", ".leader-line", function (e) {
+     
+     
+     $(".selectedLine").removeClass("selectedLine");
+     $(this).addClass("selectedLine");
+     
+     e.stopPropagation()
+     
+     }); */
 //    $(document).click(function () {
 //
 //
@@ -924,7 +940,7 @@ function genUsTableNew(genText) {
                                             .append('<a class="dropdown-item CreateTableOnServer">Create Table in Server</a>')
 //                                            .append('<a class="dropdown-item">Move</a>')
 //                                            .append('<a class="dropdown-item">Copy</a>')
-                                            .append('<a class="dropdown-item ShowTableDetail">Show Table</a>')
+                                            .append('<a class="dropdown-item ShowTableDataEntry">Show Data</a>')
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")
@@ -1043,25 +1059,25 @@ function alterFieldOnServer(el) {
 }
 
 function loadDatabaseList2Comboİmport(res) {
-    
-            $('#DB_list_for_export').empty();
-            try {
-                var obj = res.tbl[0].r;
-                for (var i in obj) {
-                    var o = obj[i];
-                    $('#DB_list_for_export')
-                        .append($('<option>').val(o.id)
+
+    $('#DB_list_for_export').empty();
+    try {
+        var obj = res.tbl[0].r;
+        for (var i in obj) {
+            var o = obj[i];
+            $('#DB_list_for_export')
+                    .append($('<option>').val(o.id)
                             .append(o.dbName))
-                }
+        }
 
 
-            } catch (err) {
+    } catch (err) {
 
-            }
-            $('#DB_list_for_export').selectpicker('refresh').change();
+    }
+    $('#DB_list_for_export').selectpicker('refresh').change();
 
-        
-   
+
+
 }
 
 
@@ -1071,7 +1087,7 @@ $(document).on("change", "#DB_list_for_export", function () {
 
 });
 $(document).on('click', '#inportexport-file-btn-db', function (event) {
-   
+
     var dtnm = $(this).closest('.modal-body');
     dtnm.find('.progress-bar').remove();
     dtnm.find(' .cs-succsess-msg').remove();
@@ -1092,17 +1108,17 @@ $(document).on('click', '#inportexport-file-btn-db', function (event) {
         success: function (res) {
             //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
 
-        
-            if( $("#DB_list_for_export option:selected").length) {
-                
-                dtnm.find('.cs-err-msg').remove();
-     
-             dtnm.append('<span class="cs-succsess-msg">File Successfully Exported!</span>');
 
-             dtnm.append("<a class='download-e-file'><span><i class='fas fa-download'></i></span> Download</a>");
-             dtnm.find('.download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
-             dtnm.find('.download-e-file').attr('download', + res.kv.filename);
-            }else{
+            if ($("#DB_list_for_export option:selected").length) {
+
+                dtnm.find('.cs-err-msg').remove();
+
+                dtnm.append('<span class="cs-succsess-msg">File Successfully Exported!</span>');
+
+                dtnm.append("<a class='download-e-file'><span><i class='fas fa-download'></i></span> Download</a>");
+                dtnm.find('.download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
+                dtnm.find('.download-e-file').attr('download', +res.kv.filename);
+            } else {
                 dtnm.find('.progress').remove();
                 dtnm.find('.cs-succsess-msg').remove();
                 dtnm.find('.download-e-file').remove();
@@ -1111,7 +1127,7 @@ $(document).on('click', '#inportexport-file-btn-db', function (event) {
         },
         error: function () {
             Toaster.showError(('Export error'));
-           
+
         }
     });
 
@@ -1119,10 +1135,10 @@ $(document).on('click', '#inportexport-file-btn-db', function (event) {
 
 $(document).on('click', '#upload_data_file_btn_db', function (event) {
     var elm = $("#DbTableUploadZipData");
-if ($(elm).val().trim().length > 0) {
-    uploadFile4IpoImportDB($(elm).attr('id'));
-      $('#ImportBoxDB').modal("hide");
-}
+    if ($(elm).val().trim().length > 0) {
+        uploadFile4IpoImportDB($(elm).attr('id'));
+        $('#ImportBoxDB').modal("hide");
+    }
 
 });
 function getDbTablesList4CodeDashExpo(el) {
@@ -1137,7 +1153,8 @@ function getDbTablesList4CodeDashExpo(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.dbId = dbid;
     var that = this;
     var data = JSON.stringify(json);
@@ -1154,8 +1171,8 @@ function getDbTablesList4CodeDashExpo(el) {
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#Table_list_for_export')
-                    .append($('<option>').val(obj[i].id)
-                        .append(obj[i].tableName))
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
             }
 
             $('#Table_list_for_export').selectpicker('refresh').change();
@@ -1228,12 +1245,12 @@ function uploadFile4IpoCoreImportDB(fileext, file_base_64, file_name, id) {
         async: true,
         beforeSend: function () {
             pbDiv.append('<br>').append($('<span>')
-                .attr('id', 'pro_zad_span' + idx)
-                .text(file_name)
-                .append($('<img>')
-                    .attr('id', 'pro_zad_' + idx)
-                    .attr('src', 'resource/img/loader.gif'))
-            )
+                    .attr('id', 'pro_zad_span' + idx)
+                    .text(file_name)
+                    .append($('<img>')
+                            .attr('id', 'pro_zad_' + idx)
+                            .attr('src', 'resource/img/loader.gif'))
+                    )
         },
         uploadProgress: function (event, position, total, percentComplete) {
             //            console.log('test')
@@ -1245,16 +1262,16 @@ function uploadFile4IpoCoreImportDB(fileext, file_base_64, file_name, id) {
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
-                .after($('<i class="fa fa-times">')
-                    .attr('pid', idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                    .after($('<i class="fa fa-times">')
+                            .attr('pid', idx)
+                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
 
 
             var st = $('#' + id).attr('fname');
             st = (st && st !== 'undefined') ? st : '';
             st += (st) ? global_var.vertical_seperator + finalname :
-                finalname;
+                    finalname;
 
             $('#' + id).attr('fname', st);
             console.log(finalname);
@@ -1272,7 +1289,8 @@ function importSendNameApiDB(filNm) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fileName = filNm;
     var that = this;
