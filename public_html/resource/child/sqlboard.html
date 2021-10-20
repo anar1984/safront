@@ -13,8 +13,7 @@ and open the template in the editor.
     <body>
         <div class="sqlboard-wrapper">
             <div class="sql-board-header">
-                <div class="sql-board-header">header mini info</div>
-                <div class="sql-table-tabs-box">selection tabs</div>
+                <div class="h4">header mini info</div>                
             </div>
             <div class="sqlboard-body">
                 <div class="sqlboard-sidebar">
@@ -30,24 +29,41 @@ and open the template in the editor.
                                 </select>
                             </div>
                         </div>
+                        <div class="sidebar-list-box">
+                            <ul class="sqlboard-table-list cs-list-group">
+                                <li><span>1.table-board-name</span></li>
+                                <li><span>2.table-board-name</span></li>
+                                <li><span>3.table-board-name</span></li>
+                                <li><span>4.table-board-name</span></li>
+                                <li><span>5.table-board-name</span></li>
+                                <li><span>6.table-board-name</span></li>
+                                <li><span>7.table-board-name</span></li>
+                                <li><span>8.table-board-name</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="sidebar-list-box">
-                        <ul class="sqlboard-table-list">
-                            <li><span>1.table-board-name</span></li>
-                            <li><span>2.table-board-name</span></li>
-                            <li><span>3.table-board-name</span></li>
-                            <li><span>4.table-board-name</span></li>
-                            <li><span>5.table-board-name</span></li>
-                            <li><span>6.table-board-name</span></li>
-                            <li><span>7.table-board-name</span></li>
-                            <li><span>8.table-board-name</span></li>
-                        </ul>
+                        
+                    <div class="sqlboard-main">
+                        <div class="sql-table-tabs-box">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">1 ...</div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">2 ...</div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">3 ...</div>
+                          </div>
                     </div>
                 </div> 
-                <div class="sqlboard-main">
-                    table details
-                </div>
             </div>
-        </div>
     </body>
 </html>
