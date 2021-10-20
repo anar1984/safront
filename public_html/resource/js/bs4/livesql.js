@@ -325,7 +325,6 @@ function loadPageCountSelectBox(rowCount) {
         el.append(opt);
         ctm++;
     }
-
     el.selectpicker('refresh');
 }
 

@@ -109,3 +109,58 @@ $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
         }
     });
 });
+
+
+var map;
+var markers = [];
+
+function initMap(latInit,lngInit) {
+    var lat = (latInit)?parseFloat(latInit) : 40.58511505605673;
+    var lng = (lngInit) ? parseFloat(lngInit) :49.66477990150452;
+    
+    var haightAshbury = {lat: lat, lng: lng};
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16.3, // Set the zoom level manually
+        center: haightAshbury,
+        mapTypeId: 'hybrid'
+    });
+
+    // This event listener will call addMarker() when the map is clicked.
+    map.addListener('click', function (event) {
+        if (markers.length >= 1) {
+            deleteMarkers();
+        }
+
+        addMarker(event.latLng);
+        document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('long').value = event.latLng.lng();
+    });
+}
+
+// Adds a marker to the map and push to the array.
+function addMarker(location) {
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+    markers.push(marker);
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+    setMapOnAll(null);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+    clearMarkers();
+    markers = [];
+}

@@ -2358,7 +2358,7 @@ label h6{
 }
 .draggablePopup{
 
-    width:250px;
+    /*width:250px;*/
     padding: 5px;
     height:300px;
     display:none;
