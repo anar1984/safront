@@ -12160,6 +12160,34 @@ $(document).on('click', '.redirectClass4CSS', function (evt) {
 });
 
 
+$(document).on('click', '.loadSqlBoard', function (evt) {
+    //    return;
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadSqlBoard";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    showToggleMain();
+
+     
+
+
+    $.get("resource/child/sqlboard.html", function (html_string) {
+
+
+ 
+        new UserStory().clearAll();
+        $('#mainBodyDivForAll').html(html_string);
+        
+
+        
+
+
+
+    });
+
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
+
+
+});
 
 $(document).on('click', '.loadLivePrototype', function (evt) {
     //    return;
