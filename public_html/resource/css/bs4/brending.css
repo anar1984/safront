@@ -2071,8 +2071,22 @@ tbody tr.sortbodyEmpty {
     display: inline-block;
     margin: 0 10px;
 }
-.perpage-select i{
+.perpage-select .perpage-prev, .perpage-select .perpage-next {
+    display: inline-block;
+    width: 37px;
+    height: 37px;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #f4f5f7;
+    background: #f4f5f7;
+    line-height: 32px;
+    cursor: pointer;
+} 
+.perpage-select i {
     font-size: 13px;
     color: #525596;
     margin: 0 2px;
+}
+.bootstrap-select.cs-pagination-page-count {
+    max-width: 80px;
 }

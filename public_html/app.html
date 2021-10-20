@@ -7954,15 +7954,28 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title">Database Manager</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close cs-reset-live-sql" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-8">
-                                <div class="cs-nav-select"></div>
-
+                                <div class="cs-nav-select">
+                                    <div class="cs-input-group">
+                                        <div class="input-group-addon">Database Name</div>
+                                        <select class="cs-database-name-list" data-live-search="true">
+                                             <option>Select Database</option>    
+                                        <select>
+                                    </div>
+                                    <div class="cs-input-group">
+                                        <div class="input-group-addon">Table Name</div>
+                                        <select class="cs-database-table-list" data-live-search="true">
+                                             <option>Select Table</option>    
+                                        <select>
+                                    </div>
+                                </div>
+                                
                                 <div class="cs-nav-buttons">
                                     <div class="cs-filter-td">
                                         <div class="cs-input-group">
@@ -7981,15 +7994,15 @@
 
                                     <span>Total: <b class='querydatarowcount'>0</b></span>
                                     <div class="perpage-select">
-                                        <i class="fas fa-chevron-left"></i>
-                                        <select class="cs-pagination-page-count selectpicker">
+                                        <div class="perpage-prev"><i class="fas fa-chevron-left"></i></div>
+                                        <select class="cs-pagination-page-count selectpicker" style="max-width: 40px;">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
                                             <option>3</option>
                                             <option>4</option>
                                         </select>
-                                        <i class="fas fa-chevron-right"></i>
+                                        <div class="perpage-next"><i class="fas fa-chevron-right"></i></div>
                                     </div>
                                     <select class="cs-pagination-per-page selectpicker">
                                         <option>10</option>
