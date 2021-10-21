@@ -1,4 +1,35 @@
 /* general */
+.cs-list-group {
+
+}
+.cs-list-group, ul.cs-list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.cs-list-group li, ul.cs-list-group li {
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+.cs-list-group li, ul.cs-list-group li {
+    color: #272b7c;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 3px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.cs-list-group li:hover, ul.cs-list-group li:hover {
+    background: #525596;
+    color: #ffffff;
+    cursor: pointer;
+}
+.cs-list-group li span, ul.cs-list-group li span {
+    
+}
 .cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn {
     z-index: 0;
 }
@@ -1702,12 +1733,6 @@ table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, tabl
     padding: 1.5px 7px;
     border: 1px solid #976767;
 }
-.cs-sum-inbox-callapi ul li.cs-select-api-info .api-info-container {
-
-}
-.cs-sum-inbox-callapi ul li.cs-select-api-info .api-info-synchrone {
-
-}
 .cs-forlist-class-name input.cs-forlist-cn-val {
     background: rgb(113 151 160);
 }
@@ -1966,11 +1991,24 @@ tbody tr.sortbodyEmpty {
 .ShowDatabaseTable thead, .ShowDatabaseBoard thead {
     width: 100%;
 }
-.ShowDatabaseTable thead th, .ShowDatabaseTable tbody td, .ShowDatabaseBoard thead th, .ShowDatabaseBoard tbody td {
-    width: auto;
+.ShowDatabaseTable thead th{
+    width: 100%;
+    max-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.ShowDatabaseTable tbody td, .ShowDatabaseBoard tbody td {
+    width: 100%;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+ .ShowDatabaseTable tbody td:hover, .ShowDatabaseBoard tbody td:hover {
+    text-overflow:clip;
+    width:auto;
+    white-space: normal;
 }
 .cs-nav-buttons {
     display: inline-block;
@@ -2089,4 +2127,29 @@ tbody tr.sortbodyEmpty {
 }
 .bootstrap-select.cs-pagination-page-count {
     max-width: 80px;
+}
+.sqlboard-wrapper {
+    margin: 0 30px;
+}
+.sqlboard-body {
+    width: 100%;
+    display: inline-block;
+}
+.sql-board-header {
+    padding: 0 12px;
+}
+.sqlboard-sidebar {
+    width: 290px;
+    float: left;
+    position: relative;
+    margin: 0 10px;
+}
+.sqlboard-main {
+    width: auto;
+    float: left;
+}
+.sidebar-list-box {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dfe0ee;
+    padding-bottom: 20px;
 }
