@@ -133,6 +133,7 @@ $(document).ready(function () {
             $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
             var storyCard = getPopup(html_string);
             $("#body_of_nature").append(storyCard);
+            $("#UserStoryPopupModal-Toggle").modal('show');
             global_var.current_backlog_id = backlogId;
             new UserStory().toggleSubmenuStoryCard();
 
@@ -234,6 +235,7 @@ function callStoryCard4Api(id, elId, backlogName) {
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
         $("#" + divId).append(storyCard);
+        $("#UserStoryPopupModal-Toggle").modal('show');
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
@@ -244,8 +246,8 @@ function callStoryCard4Api(id, elId, backlogName) {
 
 function callStoryCard(id, elId, backlogName) {
 
-    if ($(document).find(".StoryCardPanel").first().html()) {
-        $(document).find(".StoryCardPanel").remove();
+    if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
+        $(document).find("#UserStoryPopupModal-Toggle").remove();
     }
 
 
@@ -264,6 +266,7 @@ function callStoryCard(id, elId, backlogName) {
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
         var storyCard = getPopup(html_string);
         $("#" + divId).append(storyCard);
+        $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         global_var.current_backlog_id = id;
 
@@ -303,22 +306,16 @@ function loadStoryCardBodyInfo() {
 
 // content header text addd
 function getPopup(arg) {
-    return $("<div>")
-            .addClass("StoryCardPanel")
-            .append($("<div>")
-                    .addClass("storyBackGround")
-                    .css("z-index", "1001")
-                    .append($("<div>")
-                            .addClass("Card-story")
-                            .append($("<div>")
-                                    .append($("<header>")).addClass('Story-card-Header')
-                                    .append($('<div class="card-UserStory-name">')
-                                            .append($('<span>')))
-                                    .append($('<div class="card-UserStory-edit">')
-                                            .append($('<div class="card-UserStory-edit-exit">')
-                                                    .append($('<i class="fas fa-times"></i>')))))
-                            .append($("<div>")
-                                    .addClass("Card-story-body")
-                                    .html((arg))))
-                    )
+    return `
+    <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 90%">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                ${arg}
+            </div>
+            
+        </div>
+    </div>
+</div>`
 }
