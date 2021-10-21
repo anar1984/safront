@@ -2150,8 +2150,8 @@ tbody tr.sortbodyEmpty {
     margin: 0 0;
 }
 .sqlboard-body {
-    width: 100%;
-    display: inline-block;
+    /* width: 100%;
+    display: inline-block; */
     padding: 0 15px;
 }
 .sql-board-header {
@@ -2163,17 +2163,24 @@ tbody tr.sortbodyEmpty {
     height: 40px;
 }
 .sqlboard-sidebar {
-    width: 290px;
     height: 100vh;
     overflow: auto;
     float: left;
     position: relative;
-    margin: 0 10px;
+    margin: 0;
     background: #e9e9f1;
 }
+@media (max-width:991px) {
+    .sqlboard-sidebar {
+        height: 60vh;
+    }
+} 
 .sqlboard-main {
-    width: auto;
-    float: left;
+    /* width: auto;
+    float: left; */
+}
+.sidebar-list-box .cs-input-group {
+    padding: 0;
 }
 .sidebar-list-box {
     margin-bottom: 10px;
@@ -2185,7 +2192,6 @@ tbody tr.sortbodyEmpty {
 }
 .sidebar-list-box .bootstrap-select.sqlboard-database-select {
     width: 100% !important;
-    max-width: 270px;
 }
 .sql-table-tabs-box .nav-link {
     display: block;
@@ -2235,4 +2241,20 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
 }
 .nav-item .close-boardtab-btn i:before{
 
+}
+.nav-tabs.sql-board-tab-list {
+    border-bottom: none;
+}
+.add-boardtab-btn{
+    background: #272b7c;
+    height: 34px;
+    color: #fff;
+    font-size: 27px;
+    padding: 13px 6px;
+    line-height: 0;
+    font-weight: bold;
+    vertical-align: top;
+    display: inline-grid;
+    border-radius: 3px;
+    margin-left: 2px;
 }

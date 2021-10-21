@@ -708,6 +708,7 @@ function startSqlStory() {
     $('.sqlboard-wrapper').each(function (e) {
       $('.sql-board-tab-list').html('');
       $('.sql-board-tab-content').html('');
+      $('.sql-board-tab-list').append('<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
     });
 
  }
@@ -715,11 +716,12 @@ function startSqlStory() {
  $(document).on("dblclick", ".sqlboard-table-list>li", function(e) {
     getCreatedTabOnTheBoard(this);
     getCreatedTabContentOnTheBoard(this);
-    $('.sql-board-tab-list li:last-child a').click();
-}
-);
+    $('.sql-board-tab-list li:last-child.nav-item a').click();
+
+});
 
  function getCreatedTabOnTheBoard(elm) {
+     $('.list-add-boardtab').remove();
     var tab = $('.sql-board-tab-list');
     var tabid = $(elm).attr('navtableboard');
     var tabname = $(elm).find('span').text();
@@ -737,6 +739,7 @@ function startSqlStory() {
         )
     
     )
+    tab.append('<li class="nav-item list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
 }
 
 function getCreatedTabContentOnTheBoard(elm) {
@@ -755,9 +758,46 @@ function getCreatedTabContentOnTheBoard(elm) {
         )
 }
 
+// $(document).on("click", ".add-boardtab-btn", function(e) {
+//     empty_getCreatedTabOnTheBoard(this);
+//     empty_getCreatedTabContentOnTheBoard(this);
+// });
 
+// function empty_getCreatedTabOnTheBoard(elm) {
+//     $('.list-add-boardtab').remove();
+//    var tab = $('.sql-board-tab-list');
+//    tab.append($('<li>')
+//        .addClass('nav-item')
+//        .attr('role','presentation')
+//        .append($('<a>')
+//            .addClass('nav-link ')
+//            .attr('id', uniqId + '-tab')
+//            .attr('data-toggle', 'tab')
+//            .attr('href','#'+uniqId)
+//            .attr('role','tab')
+//            .append(uniqId)
+//            .append('<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>')
+//        )
+   
+//    )
+//    tab.append('<li class="nav-item list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
+// }
 
-
+// function empty_getCreatedTabContentOnTheBoard(elm) {
+   
+//    var tabcontent = $('.sql-board-tab-content');
+//    var ct = tabcontent.find("div").length;
+//    var tabname = $(elm).find("span").text();
+//    tabcontent.append($('<div>')
+//        .addClass('tab-pane fade')
+//        .addClass((ct===0?'active show':""))
+//        .attr('id', tabname)
+//        .attr('role','tabpanel')
+//        .append($('<div>')
+//                .html(tabname)    
+//            )
+//        )
+// }
 
 
 
