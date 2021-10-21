@@ -12172,12 +12172,12 @@ $(document).on('click', '.loadSqlBoard', function (evt) {
 
     $.get("resource/child/sqlboard.html", function (html_string) {
 
-
+           
  
         new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
         
-
+        startSqlStory();
         
 
 

@@ -150,9 +150,6 @@ function cs_loadDatabaseList2ComboEntityDetails() {
     });
 }
 
-
-
-
 function getTablesAndFields4Popup(dbid) {
     if (!dbid)
         return;
@@ -619,9 +616,144 @@ $(document).ready(function () {
 
 });
 
+// SQL BOARD
+function startSqlStory() {
+    $('select.sqlboard-database-select').selectpicker();
+    
+    function cs_loadDatabaseListBoardDetails() {
+        var el = $('select.sqlboard-database-select');
+        el.html("");
+    
+        var json = initJSON();
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetDbList",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                el.html("");
+                try {
+                    var obj = res.tbl[0].r;
+                    el.append($('<option>').append('Select Database'))
+                    for (var i in obj) {
+                        var o = obj[i];
+                        el.append($('<option>').val(o.id)
+                                .append(o.dbName))
+                    }
+                    el.selectpicker('refresh');
+                } catch (err) {
+    
+                }
+    
+            }
+        });
+    }
+    $('.sqlboard-wrapper').each(function (e) {
+        cs_loadDatabaseListBoardDetails(e);
+    });
 
+    $(document).on("change", "select.sqlboard-database-select", function (e) {
+        current_db_id = $(this).val();
+        getTablesAndFields4PopupBoard($(this).val())
+    });
 
+    function getTablesAndFields4PopupBoard(dbid) {
+        if (!dbid)
+            return;
+        var ul = $('.sqlboard-table-list');
+        ul.html("");
+        var json = initJSON();
+    
+        json.kv.dbId = dbid;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmGetDbTableListForPopup",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                ul.html("");
+                try {
+                    var obj = res.tbl[0].r;
+                    for (var i in obj) {
+                        var o = obj[i];
+                        ul.append($('<li>').attr('navtableboard', o.id)
+                                .append($('<span>').append(o.tableName)))
+                    }
+                } catch (err) {
+    
+                }
+            }
+        });
+    }
+    
+    $(".cs-search-table-board").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".sqlboard-table-list *").filter(function() {
+            let item = $(this).text().toLowerCase().indexOf(value) > -1;
+          $(this).toggle(item);
+        });
+      });
 
+      $('input.cs-search-table-board[type=search]').on('search', function () {
+        $(".sqlboard-table-list *").removeAttr('style');
+      });
+
+    $('.sqlboard-wrapper').each(function (e) {
+      $('.sql-board-tab-list').html('');
+      $('.sql-board-tab-content').html('');
+    });
+
+ }
+
+ $(document).on("dblclick", ".sqlboard-table-list>li", function(e) {
+    getCreatedTabOnTheBoard(this);
+    getCreatedTabContentOnTheBoard(this);
+    $('.sql-board-tab-list li:last-child a').click();
+}
+);
+
+ function getCreatedTabOnTheBoard(elm) {
+    var tab = $('.sql-board-tab-list');
+    var tabid = $(elm).attr('navtableboard');
+    var tabname = $(elm).find('span').text();
+    tab.append($('<li>')
+        .addClass('nav-item')
+        .attr('role','presentation')
+        .append($('<a>')
+            .addClass('nav-link ')
+            .attr('id', tabname + '-tab')
+            .attr('data-toggle', 'tab')
+            .attr('href','#'+tabname)
+            .attr('role','tab')
+            .append(tabname)
+            .append('<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>')
+        )
+    
+    )
+}
+
+function getCreatedTabContentOnTheBoard(elm) {
+    
+    var tabcontent = $('.sql-board-tab-content');
+    var ct = tabcontent.find("div").length;
+    var tabname = $(elm).find("span").text();
+    tabcontent.append($('<div>')
+        .addClass('tab-pane fade')
+        .addClass((ct===0?'active show':""))
+        .attr('id', tabname)
+        .attr('role','tabpanel')
+        .append($('<div>')
+                .html(tabname)    
+            )
+        )
+}
 
 
 
