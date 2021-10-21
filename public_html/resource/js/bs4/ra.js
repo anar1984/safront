@@ -82,7 +82,7 @@ $(document).on('click', '.ShowApiFieldRelations', function (ev) {
 //    entityApiRelationModal_main
 
 
-    var fieldId = $(this).closest('div.feildSection ').first().attr('pid');
+    var fieldId = $(this).closest('div.feildSection').first().attr('id');
 
     if (!fieldId)
         return;

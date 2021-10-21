@@ -2153,7 +2153,8 @@ var SAFN = {
                 var data = SAFN.CoreData;
                 var vlt = data[key];
                 var yuvarlanancaq_step = Math.pow(10, value);
-                data[key] = Math.round(vlt * yuvarlanancaq_step) / yuvarlanancaq_step;
+                var val= Math.round(vlt * yuvarlanancaq_step) / yuvarlanancaq_step;
+                data[key] = String(val);
                 return data;
             } catch (err) {
             }
