@@ -1687,7 +1687,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     let headerText = $(el).html();
     $(".card-UserStory-header-text").text("");
     $(".card-UserStory-header-text").append(headerText);
-    $(".TaskStoryCardPanel").css("display", "block")
+    $("#taskMgmtModal").modal("show");
     $('.comment-body').html("")
     $('.card-UserStory-edit-task').show();
 
