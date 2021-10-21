@@ -927,7 +927,8 @@ function genUsTableNew(genText) {
                                             .append('<a class="dropdown-item CreateTableOnServer">Create Table in Server</a>')
 //                                            .append('<a class="dropdown-item">Move</a>')
 //                                            .append('<a class="dropdown-item">Copy</a>')
-                                            .append('<a class="dropdown-item ShowTableDataEntry">Show Data</a>')
+                                            .append('<a class="dropdown-item ShowTableDataEntry">Show Data Entry</a>')
+                                            .append('<a class="dropdown-item ShowApiRelations">Show API Relations</a>')
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")
@@ -967,6 +968,7 @@ function genUsFeild(fieldId, fieldName, order) {
                             .append('<span class="editBtnFeild editFeildName" title="Edit Field Name"  ><i class="fa fa-edit"></i></span>')
                             .append('<span class="editBtnFeild removeFieldLink"  title="Remove Links" ><i class="fa fa-link"></i></span>')
                             .append('<span class="editBtnFeild deleteFeildSection" title="Delete Field" ><i class="fa fa-trash-alt"></i></span>')
+                            .append('<span class="editBtnFeild ShowApiFieldRelations" title="Show API Relation" ><i class="fa fa-box"></i></span>')
                             ))
 
 

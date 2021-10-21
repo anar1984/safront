@@ -218,7 +218,7 @@ $(function () {
     });
     $(document).on("click", '.open-modal-hide-modal-btn', function (e) {
         var elm = $(this).closest('.component-class');
-        var cntnt = elm.find('.component-section-row');
+        var cntnt = elm.find('.component-section-row').first();
         cntnt.toggleClass('closed-modal');
 
 
@@ -1373,16 +1373,24 @@ $(document).on('change', '.us-mngm-is-api', function (e) {
     labelOrSplitValuesUs();
 
 });
+
+
 $(document).on('dblclick', '.comp-title-span', function (e) {
-    e.stopPropagation();
-    var pid = $(this).parents(".component-class").attr("id")
-    var dt = $(this);
-    var txt = dt.text();
-    var input = $("<input>").addClass("edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
-    dt.html(input);
-    dt.find("input").focus();
+
+     if (global_var.current_modal === 'loadLivePrototype') {
+        e.stopPropagation();
+        var pid = $(this).parents(".component-class").attr("id")
+        var dt = $(this);
+        var txt = dt.text();
+        var input = $("<input>").addClass("edit-class-input-component").attr("id", "edit-name-input-component").val(txt).attr("pid", pid)
+        dt.html(input);
+        dt.find("input").focus();
+    }
+  
 
 });
+
+
 $(document).on('change', '#edit-name-input-component', function (event) {
     $(this).hide();
     var dt = $(this).val();

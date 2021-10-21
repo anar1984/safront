@@ -519,14 +519,23 @@ var Utility = {
 
         }
     },
-    convertStringToCamelStyle:function(arg) {
+    convertStringToCamelStyle: function (arg) {
         var UNDERSCORE = "_";
         var st = arg.split(UNDERSCORE);
-         var res = st[0].toLowerCase()
+        var res = st[0].toLowerCase()
         for (var i = 1; i <= st.length - 1; i++) {
             res = res + st[i].substring(0, 1).toUpperCase() + st[i].substring(1, st[i].length).toLowerCase();
         }
         return res;
+    },
+    addUnderScoreToCamalStyle: function (arg) {
+
+        arg = arg.replace(/\.?([0-9-A-Z])/g, function (x, y) {
+            return "_" + y.toLowerCase()
+        }).replace(/^_/, "");
+
+        return arg;
+
     },
 }
 
@@ -1709,7 +1718,7 @@ function GetConvertedDateByElement(element) {
     var date = new Date($(element).val());
     if (date) {
         var day = date.getDate();
-        if (!day || day===NaN || day === 'undefined'){
+        if (!day || day === NaN || day === 'undefined') {
             return '';
         }
         day = day.toString(10).length === 1 ? '0' + day : day;

@@ -4021,10 +4021,7 @@ function loadTableFIlterInside() {
     try {
 
         for (const [key, value] of Object.entries(se)) {
-
-
-
-            var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
+           var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
             var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');
             if (key) {
                 var dt1 = be.callApi(key);
@@ -4035,41 +4032,33 @@ function loadTableFIlterInside() {
 
                         $("#filter-table-row-" + value).append("<option value=" + dt[l].id + ">" + dt[l][ilk] + "</option>");
                     }
-
                 }
-
             }
-
-
-
-
-
-
         }
     } catch (error) {
 
     }
 
-
-
-    $(".filter-table-row-select").selectpicker("refresh")
-    $('.table').dragtable({
-        persistState: function (table) {
-
-            if (!window.sessionStorage)
-                return;
-            var ss = window.sessionStorage;
-            table.el.find('th').each(function (i) {
-                if (this.id != '') {
-                    table.sortOrder[this.id] = i;
-                }
-            });
-            ss.setItem('tableorder', JSON.stringify(table.sortOrder));
-        },
-        maxMovingRows: 1,
-        dragHandle: '.handle-drag',
-        restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
-    });
+    $(".filter-table-row-select").selectpicker("refresh");
+    if (global_var.current_modal !== 'loadLivePrototype') {
+        $('.table').dragtable({
+            persistState: function (table) {
+    
+                if (!window.sessionStorage)
+                    return;
+                var ss = window.sessionStorage;
+                table.el.find('th').each(function (i) {
+                    if (this.id != '') {
+                        table.sortOrder[this.id] = i;
+                    }
+                });
+                ss.setItem('tableorder', JSON.stringify(table.sortOrder));
+            },
+            maxMovingRows: 1,
+            dragHandle: '.handle-drag',
+            restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
+        });
+    }
 
     $('#date_timepicker_start_end').daterangepicker({
         /* ranges: {
@@ -4081,8 +4070,6 @@ function loadTableFIlterInside() {
          'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
          } */
     });
-
-
 }
 
 function copyJSCodeClassTo_loadProjectList() {

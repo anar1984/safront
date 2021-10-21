@@ -17,6 +17,8 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
     $(this).css('width', '120px');
 });
 
+
+
 $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
 
     var attrVal = $(this).val();
@@ -75,6 +77,92 @@ function splitSelectedFieldAndGenHtml(selectedField, fkInputId) {
     return div;
 }
 
+$(document).on('click', '.ShowApiFieldRelations', function (ev) {
+    $('#entityApiRelationModal').modal('show');
+//    entityApiRelationModal_main
+
+
+    var fieldId = $(this).closest('div.feildSection ').first().attr('pid');
+
+    if (!fieldId)
+        return;
+
+    var json = initJSON();
+    json.kv.fieldId = fieldId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetApiListByFieldId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var body = $('#entityApiRelationModal_table tbody');
+            body.empty();
+
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                body.append($('<tr>')
+                        .append($("<td>").text(i + 1))
+                        .append($("<td>").append($('<b>')
+                                .css('cursor', 'pointer')
+                                .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                .text(o.backlogName)))
+                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
+                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                        )
+            }
+        }
+    });
+
+});
+
+
+$(document).on('click', '.ShowApiRelations', function (ev) {
+    $('#entityApiRelationModal').modal('show');
+//    entityApiRelationModal_main
+
+
+    var tableid = $(this).closest('td.tdSeqment').first().attr('pid');
+
+    if (!tableid)
+        return;
+
+    var json = initJSON();
+    json.kv.tableId = tableid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetApiListByEntityId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var body = $('#entityApiRelationModal_table tbody');
+            body.empty();
+
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                body.append($('<tr>')
+                        .append($("<td>").text(i + 1))
+                        .append($("<td>").append($('<b>')
+                                .css('cursor', 'pointer')
+                                .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                .text(o.backlogName)))
+                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
+                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                        )
+            }
+        }
+    });
+
+});
 
 $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
 
@@ -114,10 +202,10 @@ $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
 var map;
 var markers = [];
 
-function initMap(latInit,lngInit) {
-    var lat = (latInit)?parseFloat(latInit) : 40.58511505605673;
-    var lng = (lngInit) ? parseFloat(lngInit) :49.66477990150452;
-    
+function initMap(latInit, lngInit) {
+    var lat = (latInit) ? parseFloat(latInit) : 40.58511505605673;
+    var lng = (lngInit) ? parseFloat(lngInit) : 49.66477990150452;
+
     var haightAshbury = {lat: lat, lng: lng};
 
     map = new google.maps.Map(document.getElementById('map'), {

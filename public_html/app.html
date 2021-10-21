@@ -7445,6 +7445,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="entityApiRelationModal" tabindex="-1" style="padding-top:50px;" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" style1="width: 60%;max-width: 90%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Table API Relation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style1="width: 60%;height: 80vh;">
+                <div class="" id="entityApiRelationModal_main">
+                    <table class="table table-hover project-table-list defaultTable sar-table" id="entityApiRelationModal_table">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>API name</th>
+                                <th>Action Type</th>
+                                <th>Request Type</th>
+
+                            </tr>
+                        </thead>
+                        <tbody style="cursor1:pointer">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby=""
      aria-hidden="true">
 
@@ -7965,650 +8002,653 @@
                                     <div class="cs-input-group">
                                         <div class="input-group-addon">Database Name</div>
                                         <select class="cs-database-name-list" data-live-search="true">
-                                             <option>Select Database</option>    
-                                        <select>
-                                    </div>
-                                    <div class="cs-input-group">
-                                        <div class="input-group-addon">Table Name</div>
-                                        <select class="cs-database-table-list" data-live-search="true">
-                                             <option>Select Table</option>    
-                                        <select>
-                                    </div>
-                                </div>
-                                
-                                <div class="cs-nav-buttons">
-                                    <div class="cs-filter-td">
-                                        <div class="cs-input-group">
-                                            <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
-                                        </div>
-                                    </div>
-                                    <div class="cs-sql-edito">
-                                        <div class="cs-input-group">
-                                            <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">SQL Editor</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <nav class="navigation" aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;text-align:right;">
-
-                                    <span>Total: <b class='querydatarowcount'>0</b></span>
-                                    <div class="perpage-select">
-                                        <div class="perpage-prev"><i class="fas fa-chevron-left"></i></div>
-                                        <select class="cs-pagination-page-count selectpicker" style="max-width: 40px;">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                        <div class="perpage-next"><i class="fas fa-chevron-right"></i></div>
-                                    </div>
-                                    <select class="cs-pagination-per-page selectpicker">
-                                        <option>10</option>
-                                        <option selected>25</option>
-                                        <option>50</option>
-                                        <option>100</option>
-                                        <option>250</option>
-                                        <option>500</option>
-                                    </select>
-
-
-                                </nav>
-                            </div>
-
-                        </div>
-                        <div class="cs-db-popup-body">
-                            <div class="flex-container">
-                                <div class="cs-db-header-menu"></div>
-                                <div class="cs-db-main-container">
-                                    <!-- <h4>Body Content</h4>
-                                    <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                    <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <div id="livesqlditor" class="live-sql-ditor">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</div>
-                                            </div>
-                                            <div class="col-md-4">
-
-                                                <div class="cs-sql-run">
-                                                    <div class="cs-input-group">
-                                                        <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run</button>
-                                                    </div>
+                                            <option>Select Database</option>    
+                                            <select>
                                                 </div>
-                                                <div class="sql-result-box cs-gray-bg">
-                                                    <p id='sqlEditorRunResult'>Output</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="livesqlditor_dragbar" class="app_editor_dragbar"></div>
-                                    </div>
+                                                <div class="cs-input-group">
+                                                    <div class="input-group-addon">Table Name</div>
+                                                    <select class="cs-database-table-list" data-live-search="true">
+                                                        <option>Select Table</option>    
+                                                        <select>
+                                                            </div>
+                                                            </div>
 
-                                    <div class="livesql-table-boxes">
-                                        <table class="table table-striped cs-table-database-table-zad-list">
-                                            <thead></thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        <div class="live-sql-error"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--        <div class="cs-modal-box ShowDatabaseBoard modal fade" id="ShowDatabaseBoard" tabindex="-1" role="dialog" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
-                <div class="vertical-alignment-helper">
-                    <div class="modal-dialog modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title">Database: meneger</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="cs-nav-select"></div>
-                                    
-                                    <div class="cs-nav-buttons">
-                                        <div class="cs-filter-td">
-                                            <div class="cs-input-group">
-                                                    <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
-                                            </div>
-                                        </div>
-                                        <div class="cs-sql-edito">
-                                            <div class="cs-input-group">
-                                                    <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Sql Editor</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <nav class="navigation" aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;text-align:right;">
-                                        
-                                        <span>Total: 1370</span>
-                                        <div class="perpage-select">
-                                            <i class="fas fa-chevron-left"></i>
-                                            <select class="cs-pagination-table-zad selectpicker">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                            </select>
-                                            <i class="fas fa-chevron-right"></i>
-                                        </div>
-                                        <select class="cs-pagination-per-page selectpicker">
-                                            <option>10</option>
-                                            <option>25</option>
-                                            <option>50</option>
-                                            <option>100</option>
-                                            <option>250</option>
-                                            <option>500</option>
-                                        </select>
-                                  </nav>
-                                </div>
-                             
-                            </div>
-                            <div class="cs-db-popup-body">
-                                <div class="flex-container">
-                                    <div class="cs-db-header-menu"></div>
-                                    <div class="cs-db-main-container">
-                                         <h4>Body Content</h4>
-                                        <p>Lorem Ipsum is simply dummy text of the printing</p> 
-                                        <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <div id="livesqlditor2" class="live-sql-ditor">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    
-                                                    <div class="cs-sql-run">
-                                                        <div class="cs-input-group">
-                                                            <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run debug</button>
-                                                        </div>
-                                                    </div>
-                                                        <div class="sql-result-box cs-gray-bg">
-                                                        <p>Error Result</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="livesqlditor_dragbar" class="app_editor_dragbar"></div>
-                                         </div>
-    
-                                        <div class="livesql-table-boxes">
-                                            <table class="table table-striped cs-table-database-table-zad-list">
-                                                 <thead></thead>
-                                                <tbody></tbody>
-                                            </table>
-                                            <div class="live-sql-error"></div>
-                                       </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>-->
-
-
-    <div class="cs-modal-box modal fade" id="ImportBoxDB" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">DB Import</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <label for="sprintname" class="col-form-label control-label">File
-                                <span style="color:red">*</span>
-                            </label>
-                            <input id="DbTableUploadZipData" class="us-file-upload" type="file" file_type=".zip" accept=".zip" style="width:100%" value="">
-                            <output id="DbTableUploadZipDataFileOut"></output>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="upload_data_file_btn_db" class="btn btn-primary">
-                        Import File
-                    </button>
-                    <button type="button" class="btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="cs-modal-box modal fade" id="ImportBox" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">Data Import</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <label for="sprintname" class="col-form-label control-label">File
-                                <span style="color:red">*</span>
-                            </label>
-                            <input id="setStoryCardUploadZipData" class="us-file-upload" type="file" file_type=".zip" accept=".zip" style="width:100%" value="">
-                            <output id="setStoryCardUploadZipFileOut"></output>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="upload_data_file_btn" class="btn btn-primary">
-                        Import File
-                    </button>
-                    <button type="button" class="btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby=""
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">Forward To</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-size: 12px;">
-                    <div class="row">
-                        <div class="col-12">
-                            <b>Assignee</b>
-                            <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
-                        </div>
-
-                        <div class="col-12">
-                            <b>Comment</b>
-                            <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="forwardTaskToAction()">
-                        Add
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="issue-managment-add-task"  tabindex="2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="max-width: 50%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class='col-12 row'>
-                        <div class="col-lg-4">
-                            <select class="form-control" data-live-search="true" data-actions-box="true"
-                                    style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
-                                    title="Project"></select>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control" data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_filter_assignee_id_add'
-                                    title="Assignee"></select>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_filter_backlog_id_add'
-                                    title="Story Card">
-
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_task_type_id_add'
-                                    title="Task Type">
-
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                    onchange=''  data-live-search="true" id='bug_task_nature_id_add'
-                                    title="Task Nature">
-                                <option value="bug" selected="">Bug</option>
-                                <option value="change" selected="">Change Request</option>
-                                <option value="new" selected="">New Request</option>
-
-                            </select>
-                        </div>
-                        <div class="col-lg-4 " >
-
-                            <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
-                                    data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
-                                <option value=''>None</option>
-                                <option value='1'>1- Lowest</option>
-                                <option value='2'>2</option>
-                                <option value='3'>3</option>
-                                <option value='4'>4</option>
-                                <option value='5'>5</option>
-                                <option value='6'>6</option>
-                                <option value='7'>7</option>
-                                <option value='8'>8</option>
-                                <option value='9'>9 - Highest</option>
-
-                            </select>
-                        </div>
-                        <div class="col-lg-12" style="padding-top: 20px;">
-                            <textarea type="text" class="form-control"
-                                      name="testCaseDescription" id="taskNameInputNew2" placeholder="Task Description"></textarea>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="task-ongoing-large-modal4backlog" style="z-index: 1045;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
-        <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
-            <div class="modal-content" style="width: 100%; height: 100%;">
-                <div class="modal-header" >
-                    <h5 class="modal-title" id="next-large-header-modal4backlog"></h5>
-                    <div class="float-right">
-
-                    </div>
-
-                    <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto;">
-                    <!--<form>-->
-                    <div id="body-large-modal-in-us4backlog" class="row" >
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="taskModalBlock"  tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
-        <div class="modal-dialog "  role="document">
-            <div class="modal-content">
-                <div class="modal-header" >
-                    <h5 class="modal-title" id="taskModalLongTitle"></h5>
-                    <div class="float-right">
-
-                    </div>
-
-                    <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="height: 90vh;overflow: auto;">
-                    <!--<form>-->
-                    <div id="body-large-modal-in-us4backlog" class="row" >
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="task-ongoing-large-modal" style="z-index: 1041;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
-        <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
-            <div class="modal-content" style="width: 100%; height: 100%;">
-                <div class="modal-header trigger-modal-us-header" >
-                    <h5 class="modal-title" id="next-large-header-modal"></h5>
-                    <h6 class=" status-large-menu-total ">Total Tasks-<b  class="status-total-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-new">New-<b data-backlogs='new' class="status-new-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-ongoing">Ongoing-<b data-backlogs='ongoing' class="status-ongoing-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-closed">Closed-<b data-backlogs='closed' class="status-closed-total">0</b> </h6>
-                    <h6 class="status-UAT-total status-large-menu-total us-item-status-UAT">UAT-<b data-backlogs='UAT' class="status-UAT-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-rejected">Rejected-<b data-backlogs='rejected' class="status-rejected-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-Canceled">Canceled-<b data-backlogs='Canceled' class="status-canceled-total">0</b></h6>
-                    <h6 class=" status-large-menu-total us-item-status-waiting">Waiting- <b data-backlogs='waiting' class="status-waiting-total">0</b></h6>
-                    <div class="float-right">
-                        <span class="countdown" id="countDown-larg"></span>
-                        <span class="btn btn-light btn-sm start pause-interval-butn"><i class="far fa-pause-circle"></i></span>
-                        <span class="btn btn-light btn-sm start refresh-interval-butn " ><i class="fas fa-sync"></i></span>
-
-                    </div>
-
-                    <button type="button" class="close" data-dismiss="modal" onclick="clearInterval(timeinterval)" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto;">
-                    <!--<form>-->
-                    <div id="body-large-modal-in-us" class="row" >
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index:50000;"   aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">Change User Story</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!--<form>-->
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <label for="sprintname" class="col-form-label control-label">User Story
-                                <span style="color:red">*</span>
-                            </label>
-                            <select class="form-control required msg-clear" id="task-user-story-id-change"><select>
-                                    </div>
-
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" onclick="assignUserStorytoTask()">
-                                            Assign
-                                        </button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-
-
-                                    <div class="modal fade" id="cloneTaskModal" tabindex="-1" role="dialog" aria-labelledby=""
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="">Copy to</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <!--<form>-->
-                                                    <div class="row">
-                                                        <div class="form-group col-12">
-                                                            <label for="sprintname" class="col-form-label control-label">User Story
-                                                                <span style="color:red">*</span>
-                                                            </label>
-                                                            <select class="form-control required msg-clear" id="cloneTask_backlog_id"><select>
+                                                            <div class="cs-nav-buttons">
+                                                                <div class="cs-filter-td">
+                                                                    <div class="cs-input-group">
+                                                                        <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
                                                                     </div>
+                                                                </div>
+                                                                <div class="cs-sql-edito">
+                                                                    <div class="cs-input-group">
+                                                                        <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">SQL Editor</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <nav class="navigation" aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;text-align:right;">
 
-
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-primary" onclick="cloneTask()">
-                                                                            Copy
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                                                    </div>
-                                                                    </div>
-                                                                    </div>
-                                                                    </div>
-                                                                    </div>
-                                                                    </div>
-
-                                                                    <!--
-                                                                                                    <footer>
-                                                                                                    <div class="row us-footer" style="text-align: center">
-                                                                                                    <div class="col-lg-12">
-                                                                                                    <p class="copyright text-center">&copy; 2019 <a href="http://www.sourcedagile.com">Sourced Agile</a>. All Rights Reserved. </p>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-12 text-centered">
-                                                                                                    info@sourcedagile.com
-                                                                                                    </div>
-                                                                                                    </div>
-                                                                                                    </footer>-->
-                                                                    <div class="absolute-div-row-table" style="display: none;">
-                                                                        <select class="custom-select-table-for" id="table-selected-row-details-info">
-                                                                            <option class="sum" ></option>
-                                                                            <option class="avarage"> </option>
-                                                                            <option class="min"></option>
-                                                                            <option class="max"></option>
-                                                                            <option class="count"> </option>
+                                                                    <span>Total: <b class='querydatarowcount'>0</b></span>
+                                                                    <div class="perpage-select">
+                                                                        <div class="perpage-prev"><i class="fas fa-chevron-left"></i></div>
+                                                                        <select class="cs-pagination-page-count selectpicker" style="max-width: 40px;">
+                                                                            <option>1</option>
+                                                                            <option>2</option>
+                                                                            <option>3</option>
+                                                                            <option>3</option>
+                                                                            <option>4</option>
                                                                         </select>
+                                                                        <div class="perpage-next"><i class="fas fa-chevron-right"></i></div>
                                                                     </div>
-                                                                    <nav id="context-menu" class="context-menu">
-                                                                        <ul class="context-menu__items">
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link" data-action="Delete This Photo"><i class="fa fa-empire"></i> Delete This Photo</a>
-                                                                            </li>
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link" data-action="Photo Option 2"><i class="fa fa-envira"></i> Photo Option 2</a>
-                                                                            </li>
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link" data-action="Photo Option 3"><i class="fa fa-first-order"></i> Photo Option 3</a>
-                                                                            </li>
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link" data-action="Photo Option 4"><i class="fa fa-gitlab"></i> Photo Option 4</a>
-                                                                            </li>
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link" data-action="Photo Option 5"><i class="fa fa-ioxhost"></i> Photo Option 5</a>
-                                                                            </li>
-                                                                            <li class="context-menu__item">
-                                                                                <a href="#" class="context-menu__link"><i class="fa fa-arrow-right"></i> Add Photo to</a>
-                                                                                <ul>
-                                                                                    <li><a href="#!" class="context-menu__link" data-action="album-one"><i class="fa fa-camera-retro"></i> Album One</a></li>
-                                                                                    <li><a href="#!" class="context-menu__link" data-action="album-two"><i class="fa fa-camera-retro"></i> Album Two</a></li>
-                                                                                    <li><a href="#!" class="context-menu__link" data-action="album-three"><i class="fa fa-camera-retro"></i> Album Three</a></li>
-                                                                                    <li><a href="#!" class="context-menu__link" data-action="album-four"><i class="fa fa-camera-retro"></i> Album Four</a></li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <input type="file">
-                                                                    </nav>
-
-                                                                    </body>
-
-                                                                    </html>
-                                                                    <script>
-                                                                        $('.nav-toggle').click(function (e) {
-                                                                            e.preventDefault();
-                                                                            $("html").toggleClass("openNav");
-                                                                            $(".nav-toggle").toggleClass("active");
-
-                                                                        });
-                                                                    </script>
-                                                                    <script>
-                                                                        $(document).ready(function () {
-                                                                            init();
-                                                                            Utility.setParamOnLoad();
+                                                                    <select class="cs-pagination-per-page selectpicker">
+                                                                        <option>10</option>
+                                                                        <option selected>25</option>
+                                                                        <option>50</option>
+                                                                        <option>100</option>
+                                                                        <option>250</option>
+                                                                        <option>500</option>
+                                                                    </select>
 
 
-                                                                            if (global_var.fkManualProjectId) {
-                                                                                manualProjectRefreshInit(global_var.fkManualProjectId);
+                                                                </nav>
+                                                            </div>
+
+                                                            </div>
+                                                            <div class="cs-db-popup-body">
+                                                                <div class="flex-container">
+                                                                    <div class="cs-db-header-menu"></div>
+                                                                    <div class="cs-db-main-container">
+                                                                        <!-- <h4>Body Content</h4>
+                                                                        <p>Lorem Ipsum is simply dummy text of the printing</p> -->
+                                                                        <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
+                                                                            <div class="row">
+                                                                                <div class="col-md-8">
+                                                                                    <div id="livesqlditor" class="live-sql-ditor">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+
+                                                                                    <div class="cs-sql-run">
+                                                                                        <div class="cs-input-group">
+                                                                                            <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="sql-result-box cs-gray-bg">
+                                                                                        <p id='sqlEditorRunResult'>Output</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="livesqlditor_dragbar" class="app_editor_dragbar"></div>
+                                                                        </div>
+
+                                                                        <div class="livesql-table-boxes">
+                                                                            <table class="table table-striped cs-table-database-table-zad-list">
+                                                                                <thead></thead>
+                                                                                <tbody></tbody>
+                                                                            </table>
+                                                                            <div class="live-sql-error"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
 
 
-                                                                            } else {
+                                                            <!--        <div class="cs-modal-box ShowDatabaseBoard modal fade" id="ShowDatabaseBoard" tabindex="-1" role="dialog" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+                                                                        <div class="vertical-alignment-helper">
+                                                                            <div class="modal-dialog modal-xl" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h6 class="modal-title">Database: meneger</h6>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-8">
+                                                                                            <div class="cs-nav-select"></div>
+                                                                                            
+                                                                                            <div class="cs-nav-buttons">
+                                                                                                <div class="cs-filter-td">
+                                                                                                    <div class="cs-input-group">
+                                                                                                            <button type="button" class="cs-filter-table-btn btn btn-secondary">Search</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="cs-sql-edito">
+                                                                                                    <div class="cs-input-group">
+                                                                                                            <button type="button" class="cs-sql-editor-run-btn btn btn-secondary">Sql Editor</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-4">
+                                                                                            <nav class="navigation" aria-label="Page navigation example" style="padding-top: 14px; vertical-align: bottom;text-align:right;">
+                                                                                                
+                                                                                                <span>Total: 1370</span>
+                                                                                                <div class="perpage-select">
+                                                                                                    <i class="fas fa-chevron-left"></i>
+                                                                                                    <select class="cs-pagination-table-zad selectpicker">
+                                                                                                        <option>1</option>
+                                                                                                        <option>2</option>
+                                                                                                        <option>3</option>
+                                                                                                        <option>3</option>
+                                                                                                        <option>4</option>
+                                                                                                    </select>
+                                                                                                    <i class="fas fa-chevron-right"></i>
+                                                                                                </div>
+                                                                                                <select class="cs-pagination-per-page selectpicker">
+                                                                                                    <option>10</option>
+                                                                                                    <option>25</option>
+                                                                                                    <option>50</option>
+                                                                                                    <option>100</option>
+                                                                                                    <option>250</option>
+                                                                                                    <option>500</option>
+                                                                                                </select>
+                                                                                          </nav>
+                                                                                        </div>
+                                                                                     
+                                                                                    </div>
+                                                                                    <div class="cs-db-popup-body">
+                                                                                        <div class="flex-container">
+                                                                                            <div class="cs-db-header-menu"></div>
+                                                                                            <div class="cs-db-main-container">
+                                                                                                 <h4>Body Content</h4>
+                                                                                                <p>Lorem Ipsum is simply dummy text of the printing</p> 
+                                                                                                <div id="livesqlditor_wrapper" class="app_editor_wrapper" style="display:none;">
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-md-8">
+                                                                                                            <div id="livesqlditor2" class="live-sql-ditor">SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</div>
+                                                                                                        </div>
+                                                                                                        <div class="col-md-4">
+                                                                                                            
+                                                                                                            <div class="cs-sql-run">
+                                                                                                                <div class="cs-input-group">
+                                                                                                                    <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run debug</button>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                                <div class="sql-result-box cs-gray-bg">
+                                                                                                                <p>Error Result</p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div id="livesqlditor_dragbar" class="app_editor_dragbar"></div>
+                                                                                                 </div>
+                                                            
+                                                                                                <div class="livesql-table-boxes">
+                                                                                                    <table class="table table-striped cs-table-database-table-zad-list">
+                                                                                                         <thead></thead>
+                                                                                                        <tbody></tbody>
+                                                                                                    </table>
+                                                                                                    <div class="live-sql-error"></div>
+                                                                                               </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>-->
 
-                                                                                //                                                                                    request = window.indexedDB.open("sa-db", 1);
-                                                                                //                                                                                    request.onupgradeneeded = function (event) {
-                                                                                //                                                                                        db = event.target.result;
-                                                                                //                                                                                        objectStore = db.createObjectStore("subdb", {
-                                                                                //                                                                                            keyPath: "bid",
-                                                                                //                                                                                        });
-                                                                                //                                                                                    }
-                                                                                //                                                                                    request.onsuccess = function (event) {
-                                                                                //                                                                                        db = request.result;
-                                                                                //                                                                                    }
 
-                                                                                loadFromIndexedDBtoRAM4LivePrototype();
-                                                                                init4Core();
-                                                                                if (global_var.current_modal !== 'loadStoryCard') {
-                                                                                    new Project().loadMainProjectList();
-                                                                                }
+                                                            <div class="cs-modal-box modal fade" id="ImportBoxDB" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="">DB Import</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+
+                                                                            <div class="row">
+                                                                                <div class="form-group col-12">
+                                                                                    <label for="sprintname" class="col-form-label control-label">File
+                                                                                        <span style="color:red">*</span>
+                                                                                    </label>
+                                                                                    <input id="DbTableUploadZipData" class="us-file-upload" type="file" file_type=".zip" accept=".zip" style="width:100%" value="">
+                                                                                    <output id="DbTableUploadZipDataFileOut"></output>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" id="upload_data_file_btn_db" class="btn btn-primary">
+                                                                                Import File
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="cs-modal-box modal fade" id="ImportBox" style="z-index: 40000" tabindex="-1" role="dialog" aria-labelledby=""
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="">Data Import</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+
+                                                                            <div class="row">
+                                                                                <div class="form-group col-12">
+                                                                                    <label for="sprintname" class="col-form-label control-label">File
+                                                                                        <span style="color:red">*</span>
+                                                                                    </label>
+                                                                                    <input id="setStoryCardUploadZipData" class="us-file-upload" type="file" file_type=".zip" accept=".zip" style="width:100%" value="">
+                                                                                    <output id="setStoryCardUploadZipFileOut"></output>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" id="upload_data_file_btn" class="btn btn-primary">
+                                                                                Import File
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secondary cs-btn-secondary" data-dismiss="modal">Close</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
 
-                                                                            }
+                                                            <div class="modal fade" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby=""
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="">Forward To</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body" style="font-size: 12px;">
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    <b>Assignee</b>
+                                                                                    <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
+                                                                                </div>
+
+                                                                                <div class="col-12">
+                                                                                    <b>Comment</b>
+                                                                                    <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-primary" onclick="forwardTaskToAction()">
+                                                                                Add
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal fade" id="issue-managment-add-task"  tabindex="2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" style="max-width: 50%;" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+
+                                                                            <div class='col-12 row'>
+                                                                                <div class="col-lg-4">
+                                                                                    <select class="form-control" data-live-search="true" data-actions-box="true"
+                                                                                            style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
+                                                                                            title="Project"></select>
+                                                                                </div>
+                                                                                <div class="col-lg-4">
+                                                                                    <select class="form-control" data-actions-box="true"
+                                                                                            onchange=''  data-live-search="true" id='bug_filter_assignee_id_add'
+                                                                                            title="Assignee"></select>
+                                                                                </div>
+
+                                                                                <div class="col-lg-4">
+                                                                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                                                                            onchange=''  data-live-search="true" id='bug_filter_backlog_id_add'
+                                                                                            title="Story Card">
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-lg-4">
+                                                                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                                                                            onchange=''  data-live-search="true" id='bug_task_type_id_add'
+                                                                                            title="Task Type">
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-lg-4">
+                                                                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                                                                            onchange=''  data-live-search="true" id='bug_task_nature_id_add'
+                                                                                            title="Task Nature">
+                                                                                        <option value="bug" selected="">Bug</option>
+                                                                                        <option value="change" selected="">Change Request</option>
+                                                                                        <option value="new" selected="">New Request</option>
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-lg-4 " >
+
+                                                                                    <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
+                                                                                            data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
+                                                                                        <option value=''>None</option>
+                                                                                        <option value='1'>1- Lowest</option>
+                                                                                        <option value='2'>2</option>
+                                                                                        <option value='3'>3</option>
+                                                                                        <option value='4'>4</option>
+                                                                                        <option value='5'>5</option>
+                                                                                        <option value='6'>6</option>
+                                                                                        <option value='7'>7</option>
+                                                                                        <option value='8'>8</option>
+                                                                                        <option value='9'>9 - Highest</option>
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-lg-12" style="padding-top: 20px;">
+                                                                                    <textarea type="text" class="form-control"
+                                                                                              name="testCaseDescription" id="taskNameInputNew2" placeholder="Task Description"></textarea>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal fade" id="task-ongoing-large-modal4backlog" style="z-index: 1045;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+                                                                    <div class="modal-content" style="width: 100%; height: 100%;">
+                                                                        <div class="modal-header" >
+                                                                            <h5 class="modal-title" id="next-large-header-modal4backlog"></h5>
+                                                                            <div class="float-right">
+
+                                                                            </div>
+
+                                                                            <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto;">
+                                                                            <!--<form>-->
+                                                                            <div id="body-large-modal-in-us4backlog" class="row" >
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="modal fade" id="taskModalBlock"  tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
+                                                                <div class="modal-dialog "  role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" >
+                                                                            <h5 class="modal-title" id="taskModalLongTitle"></h5>
+                                                                            <div class="float-right">
+
+                                                                            </div>
+
+                                                                            <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body" style="height: 90vh;overflow: auto;">
+                                                                            <!--<form>-->
+                                                                            <div id="body-large-modal-in-us4backlog" class="row" >
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal fade" id="task-ongoing-large-modal" style="z-index: 1041;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+                                                                    <div class="modal-content" style="width: 100%; height: 100%;">
+                                                                        <div class="modal-header trigger-modal-us-header" >
+                                                                            <h5 class="modal-title" id="next-large-header-modal"></h5>
+                                                                            <h6 class=" status-large-menu-total ">Total Tasks-<b  class="status-total-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-new">New-<b data-backlogs='new' class="status-new-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-ongoing">Ongoing-<b data-backlogs='ongoing' class="status-ongoing-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-closed">Closed-<b data-backlogs='closed' class="status-closed-total">0</b> </h6>
+                                                                            <h6 class="status-UAT-total status-large-menu-total us-item-status-UAT">UAT-<b data-backlogs='UAT' class="status-UAT-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-rejected">Rejected-<b data-backlogs='rejected' class="status-rejected-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-Canceled">Canceled-<b data-backlogs='Canceled' class="status-canceled-total">0</b></h6>
+                                                                            <h6 class=" status-large-menu-total us-item-status-waiting">Waiting- <b data-backlogs='waiting' class="status-waiting-total">0</b></h6>
+                                                                            <div class="float-right">
+                                                                                <span class="countdown" id="countDown-larg"></span>
+                                                                                <span class="btn btn-light btn-sm start pause-interval-butn"><i class="far fa-pause-circle"></i></span>
+                                                                                <span class="btn btn-light btn-sm start refresh-interval-butn " ><i class="fas fa-sync"></i></span>
+
+                                                                            </div>
+
+                                                                            <button type="button" class="close" data-dismiss="modal" onclick="clearInterval(timeinterval)" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto;">
+                                                                            <!--<form>-->
+                                                                            <div id="body-large-modal-in-us" class="row" >
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
 
 
-                                                                        });
 
-                                                                        function clearText() {
-                                                                            $('.add-bkl-line').val('');
-                                                                            $('.search-clear').css('display', 'none');
-                                                                            $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
-                                                                        }
-                                                                        ;
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                                            <div class="modal fade" id="change-user-story-task-modal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index:50000;"   aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="">Change User Story</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <!--<form>-->
+                                                                            <div class="row">
+                                                                                <div class="form-group col-12">
+                                                                                    <label for="sprintname" class="col-form-label control-label">User Story
+                                                                                        <span style="color:red">*</span>
+                                                                                    </label>
+                                                                                    <select class="form-control required msg-clear" id="task-user-story-id-change"><select>
+                                                                                            </div>
 
 
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-primary" onclick="assignUserStorytoTask()">
+                                                                                                    Assign
+                                                                                                </button>
+                                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                                                    </script>
+                                                                                            </div>
+                                                                                            </div>
+                                                                                            </div>
+                                                                                            </div>
+                                                                                            </div>
+                                                                                            </div>
+
+
+                                                                                            <div class="modal fade" id="cloneTaskModal" tabindex="-1" role="dialog" aria-labelledby=""
+                                                                                                 aria-hidden="true">
+                                                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                                                    <div class="modal-content">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h5 class="modal-title" id="">Copy to</h5>
+                                                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                                <span aria-hidden="true">&times;</span>
+                                                                                                            </button>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            <!--<form>-->
+                                                                                                            <div class="row">
+                                                                                                                <div class="form-group col-12">
+                                                                                                                    <label for="sprintname" class="col-form-label control-label">User Story
+                                                                                                                        <span style="color:red">*</span>
+                                                                                                                    </label>
+                                                                                                                    <select class="form-control required msg-clear" id="cloneTask_backlog_id"><select>
+                                                                                                                            </div>
+
+
+                                                                                                                            <div class="modal-footer">
+                                                                                                                                <button type="button" class="btn btn-primary" onclick="cloneTask()">
+                                                                                                                                    Copy
+                                                                                                                                </button>
+                                                                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                                                                                            </div>
+                                                                                                                            </div>
+                                                                                                                            </div>
+                                                                                                                            </div>
+                                                                                                                            </div>
+                                                                                                                            </div>
+
+                                                                                                                            <!--
+                                                                                                                                                            <footer>
+                                                                                                                                                            <div class="row us-footer" style="text-align: center">
+                                                                                                                                                            <div class="col-lg-12">
+                                                                                                                                                            <p class="copyright text-center">&copy; 2019 <a href="http://www.sourcedagile.com">Sourced Agile</a>. All Rights Reserved. </p>
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="col-lg-12 text-centered">
+                                                                                                                                                            info@sourcedagile.com
+                                                                                                                                                            </div>
+                                                                                                                                                            </div>
+                                                                                                                                                            </footer>-->
+                                                                                                                            <div class="absolute-div-row-table" style="display: none;">
+                                                                                                                                <select class="custom-select-table-for" id="table-selected-row-details-info">
+                                                                                                                                    <option class="sum" ></option>
+                                                                                                                                    <option class="avarage"> </option>
+                                                                                                                                    <option class="min"></option>
+                                                                                                                                    <option class="max"></option>
+                                                                                                                                    <option class="count"> </option>
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                            <nav id="context-menu" class="context-menu">
+                                                                                                                                <ul class="context-menu__items">
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link" data-action="Delete This Photo"><i class="fa fa-empire"></i> Delete This Photo</a>
+                                                                                                                                    </li>
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link" data-action="Photo Option 2"><i class="fa fa-envira"></i> Photo Option 2</a>
+                                                                                                                                    </li>
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link" data-action="Photo Option 3"><i class="fa fa-first-order"></i> Photo Option 3</a>
+                                                                                                                                    </li>
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link" data-action="Photo Option 4"><i class="fa fa-gitlab"></i> Photo Option 4</a>
+                                                                                                                                    </li>
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link" data-action="Photo Option 5"><i class="fa fa-ioxhost"></i> Photo Option 5</a>
+                                                                                                                                    </li>
+                                                                                                                                    <li class="context-menu__item">
+                                                                                                                                        <a href="#" class="context-menu__link"><i class="fa fa-arrow-right"></i> Add Photo to</a>
+                                                                                                                                        <ul>
+                                                                                                                                            <li><a href="#!" class="context-menu__link" data-action="album-one"><i class="fa fa-camera-retro"></i> Album One</a></li>
+                                                                                                                                            <li><a href="#!" class="context-menu__link" data-action="album-two"><i class="fa fa-camera-retro"></i> Album Two</a></li>
+                                                                                                                                            <li><a href="#!" class="context-menu__link" data-action="album-three"><i class="fa fa-camera-retro"></i> Album Three</a></li>
+                                                                                                                                            <li><a href="#!" class="context-menu__link" data-action="album-four"><i class="fa fa-camera-retro"></i> Album Four</a></li>
+                                                                                                                                        </ul>
+                                                                                                                                    </li>
+                                                                                                                                </ul>
+                                                                                                                                <input type="file">
+                                                                                                                            </nav>
+
+                                                                                                                            </body>
+
+                                                                                                                            </html>
+                                                                                                                            <script>
+                                                                                                                                $('.nav-toggle').click(function (e) {
+                                                                                                                                    e.preventDefault();
+                                                                                                                                    $("html").toggleClass("openNav");
+                                                                                                                                    $(".nav-toggle").toggleClass("active");
+
+                                                                                                                                });
+                                                                                                                            </script>
+                                                                                                                            <script>
+                                                                                                                                $(document).ready(function () {
+                                                                                                                                    init();
+                                                                                                                                    Utility.setParamOnLoad();
+
+
+                                                                                                                                    if (global_var.fkManualProjectId) {
+                                                                                                                                        manualProjectRefreshInit(global_var.fkManualProjectId);
+
+
+                                                                                                                                    } else {
+
+                                                                                                                                        //                                                                                    request = window.indexedDB.open("sa-db", 1);
+                                                                                                                                        //                                                                                    request.onupgradeneeded = function (event) {
+                                                                                                                                        //                                                                                        db = event.target.result;
+                                                                                                                                        //                                                                                        objectStore = db.createObjectStore("subdb", {
+                                                                                                                                        //                                                                                            keyPath: "bid",
+                                                                                                                                        //                                                                                        });
+                                                                                                                                        //                                                                                    }
+                                                                                                                                        //                                                                                    request.onsuccess = function (event) {
+                                                                                                                                        //                                                                                        db = request.result;
+                                                                                                                                        //                                                                                    }
+
+                                                                                                                                        loadFromIndexedDBtoRAM4LivePrototype();
+                                                                                                                                        init4Core();
+                                                                                                                                        if (global_var.current_modal !== 'loadStoryCard') {
+                                                                                                                                            new Project().loadMainProjectList();
+                                                                                                                                        }
+
+
+                                                                                                                                    }
+
+
+
+                                                                                                                                });
+
+                                                                                                                                function clearText() {
+                                                                                                                                    $('.add-bkl-line').val('');
+                                                                                                                                    $('.search-clear').css('display', 'none');
+                                                                                                                                    $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
+                                                                                                                                }
+                                                                                                                                ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                            </script>
 
 
 

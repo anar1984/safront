@@ -2106,7 +2106,7 @@ var SAFN = {
                 val = SAFN.GetArgumentValue(val);
                 out *= (val) ? parseFloat(val) : 1;
             }
-            outData[arguments[0]] = out;
+            outData[arguments[0]] = String(out);
             return outData;
         },
         Dec: function () {
@@ -2122,7 +2122,7 @@ var SAFN = {
                 val = SAFN.GetArgumentValue(val);
                 out = out / parseFloat(val);
             }
-            outData[arguments[0]] = out;
+            outData[arguments[0]] = String(out);
             return outData;
         },
 
