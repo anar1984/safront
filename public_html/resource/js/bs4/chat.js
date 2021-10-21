@@ -55,11 +55,12 @@ SAChat.prototype = {
             document.title = 'Cheweek Chat  ';
         });
         this.socket.on('error', function (err) {
-            if (document.getElementById('loginWrapper').style.display == 'none') {
+           /*  if (document.getElementById('loginWrapper').style.display == 'none') {
                 document.getElementById('status').textContent = '!fail to connect :(';
             } else {
                 document.getElementById('info').textContent = '!fail to connect :(';
-            }
+            } */
+            console.log(err);
         });
         this.socket.on('system', function (nickName, userCount, type) {
 
@@ -633,15 +634,20 @@ function sidebarGeneratecomment() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            res = res.tbl[0].r;
-            $("#list-wrap-container").empty();
-
-            for (let index = 0; index < res.length; index++) {
-                var nm = res[index].fkGroupId;
-
-                getGroupList(nm)
-
+            try {
+                res = res.tbl[0].r;
+                $("#list-wrap-container").empty();
+    
+                for (let index = 0; index < res.length; index++) {
+                    var nm = res[index].fkGroupId;
+    
+                    getGroupList(nm)
+    
+                }
+            } catch (error) {
+                $("#preloader3").hide();
             }
+           
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -721,11 +727,11 @@ function getGroupList(gorupId) {
                     $("#list-wrap-container").append(div);
 
                 }
-                $("#preloader3").hide();
+           
             } catch (error) {
-
+              
             }
-
+            $("#preloader3").hide();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -1166,8 +1172,8 @@ function genRelUserlistCreated() {
 function genChatMessagesRooms(el, ids, isGroup) {
     var dt = {}
     if (isGroup === "0") {
-        dt.fkUserId = ids;
-        dt.createdBy = ticker;
+        dt.fkUserId = ids +"%IN%" +ticker;
+        dt.createdBy = ids +"%IN%" +ticker;
     } else {
         dt.fkGroupId = ids;
     }
@@ -1240,7 +1246,9 @@ function ding() {
 
 function genUserListforIdChatSelf(list) {
     var json = initJSON();
-
+     if(!list){
+         return;
+     }
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['id'] = list;
     var that = this;
@@ -1280,12 +1288,6 @@ function genUserListforIdChatSelf(list) {
         }
     });
 };
-
-
-function uploadFile4IpoImportChat(id) {
-
-    return elm
-}
 
 function uploadFile4IpoCoreImportChat(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');

@@ -4048,7 +4048,7 @@ function loadTableFIlterInside() {
         dragHandle: '.handle-drag',
         restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
     });
-
+  
     $('#date_timepicker_start_end').daterangepicker({
         /* ranges: {
          'Bu Gün': [moment(), moment()],
@@ -4059,7 +4059,7 @@ function loadTableFIlterInside() {
          'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
          } */
     });
-
+           
 
 }
 
