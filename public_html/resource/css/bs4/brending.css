@@ -2278,5 +2278,22 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
     color: #2e3176;
     margin-bottom: 5px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+}
+.sql-editor-load-box  ol li:hover{
+    background: #e6e7f3;
+}
+.sql-editor-load-box  ol li .rsql {
     cursor: pointer;
+}
+.sql-editor-load-box  ol li .close_rsql {
+    cursor: pointer;
+    float: right;
+    margin-right: 1px;
+    display: none;
+}
+.sql-editor-load-box  ol li .close_rsql i{
+    
+}
+.sql-editor-load-box  ol li:hover .close_rsql{
+    display: block;
 }
