@@ -713,91 +713,88 @@ function startSqlStory() {
 
  }
 
+ var num=0;
  $(document).on("dblclick", ".sqlboard-table-list>li", function(e) {
-    getCreatedTabOnTheBoard(this);
-    getCreatedTabContentOnTheBoard(this);
-    $('.sql-board-tab-list li:last-child.nav-item a').click();
+    n = num++; 
+    var tabs_board_id = makeId(10);
+   var tabname = $(this).find('span').text();
+   $('.list-add-boardtab').remove();
+   
+   var tab = $('.sql-board-tab-list');
+   tab.append($('<li>')
+       .addClass('nav-item')
+       .attr('role','presentation')
+       .append($('<a>')
+           .addClass('nav-link ')
+           .attr('id', tabs_board_id + '-tab')
+           .attr('csid', tabs_board_id)
+           .attr('data-toggle', 'tab')
+           .attr('href','#'+tabs_board_id)
+           .attr('role','tab')
+           .append('Tab '+ i + '-' + tabs_board_id )
+           .append('<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>')
+       )
+   
+   )
+   tab.append('<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
+   var tabcontent = $('.sql-board-tab-content');
+   var ct = tabcontent.find("div").length;
+   tabcontent.append($('<div>')
+       .addClass('tab-pane fade')
+       .addClass((ct===0?'active show':""))
+       .attr('id', tabs_board_id)
+       .attr('role','tabpanel')
+       .append($('<div>')
+               .html('Content ' + tabname)    
+           )
+       );
+   $('.sql-board-tab-list li:nth-last-child(-n+2) a').click();
 
 });
 
- function getCreatedTabOnTheBoard(elm) {
-     $('.list-add-boardtab').remove();
+$(document).on("click", ".add-boardtab-btn", function(e) {
+  
+    n = num++; 
+    var tabs_board_id = makeId(10);
+    $('.list-add-boardtab').remove();
     var tab = $('.sql-board-tab-list');
-    var tabid = $(elm).attr('navtableboard');
-    var tabname = $(elm).find('span').text();
     tab.append($('<li>')
         .addClass('nav-item')
         .attr('role','presentation')
         .append($('<a>')
             .addClass('nav-link ')
-            .attr('id', tabname + '-tab')
+            .attr('id', tabs_board_id + '-tab')
+            .attr('csid', tabs_board_id)
             .attr('data-toggle', 'tab')
-            .attr('href','#'+tabname)
+            .attr('href','#'+tabs_board_id)
             .attr('role','tab')
-            .append(tabname)
             .append('<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>')
         )
     
     )
-    tab.append('<li class="nav-item list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
-}
-
-function getCreatedTabContentOnTheBoard(elm) {
-    
+    tab.append('<li class="list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
     var tabcontent = $('.sql-board-tab-content');
     var ct = tabcontent.find("div").length;
-    var tabname = $(elm).find("span").text();
     tabcontent.append($('<div>')
         .addClass('tab-pane fade')
         .addClass((ct===0?'active show':""))
-        .attr('id', tabname)
+        .attr('id', tabs_board_id)
         .attr('role','tabpanel')
         .append($('<div>')
-                .html(tabname)    
+                .html('Content ' + tabs_board_id)    
             )
-        )
-}
+        );
+    $('.sql-board-tab-list li:nth-last-child(-n+2) a').click();
+});
 
-// $(document).on("click", ".add-boardtab-btn", function(e) {
-//     empty_getCreatedTabOnTheBoard(this);
-//     empty_getCreatedTabContentOnTheBoard(this);
-// });
+$(document).on("click", ".close-boardtab-btn", function(e) {
+    var csid = $(this).closest('li a').attr('csid');
+    var elm = $(this).closest('li');
+    $(this).closest('.sqlboard-main').find('.sql-board-tab-content #'+csid).remove();
+       if(elm.find("a").hasClass("active")){
+        elm.prev().find("a").click();
+       }
 
-// function empty_getCreatedTabOnTheBoard(elm) {
-//     $('.list-add-boardtab').remove();
-//    var tab = $('.sql-board-tab-list');
-//    tab.append($('<li>')
-//        .addClass('nav-item')
-//        .attr('role','presentation')
-//        .append($('<a>')
-//            .addClass('nav-link ')
-//            .attr('id', uniqId + '-tab')
-//            .attr('data-toggle', 'tab')
-//            .attr('href','#'+uniqId)
-//            .attr('role','tab')
-//            .append(uniqId)
-//            .append('<span class="close-boardtab-btn"><i class="fas fa-times"></i></span>')
-//        )
-   
-//    )
-//    tab.append('<li class="nav-item list-add-boardtab"><button class="btn add-boardtab-btn">+</button></li>');
-// }
+    elm.remove();
 
-// function empty_getCreatedTabContentOnTheBoard(elm) {
-   
-//    var tabcontent = $('.sql-board-tab-content');
-//    var ct = tabcontent.find("div").length;
-//    var tabname = $(elm).find("span").text();
-//    tabcontent.append($('<div>')
-//        .addClass('tab-pane fade')
-//        .addClass((ct===0?'active show':""))
-//        .attr('id', tabname)
-//        .attr('role','tabpanel')
-//        .append($('<div>')
-//                .html(tabname)    
-//            )
-//        )
-// }
-
-
-
+});
