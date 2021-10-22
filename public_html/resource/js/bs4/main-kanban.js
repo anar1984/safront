@@ -247,7 +247,9 @@ function callStoryCard4Api(id, elId, backlogName) {
 function callStoryCard(id, elId, backlogName) {
 
     if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
-        $(document).find("#UserStoryPopupModal-Toggle").remove();
+        $(document).find("#UserStoryPopupModal-Toggle").modal("hide").remove();
+        $(document).find(".modal-backdrop").remove();
+       
     }
 
 
@@ -311,6 +313,7 @@ function getPopup(arg) {
     return `
     <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="min-width: 90%">
+    <div class="modal-header text-center" style="padding: 0px 10px;background: none;"><b class="modal-title" ></b> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
         <div class="modal-content">
 
             <div class="modal-body">
