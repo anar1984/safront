@@ -950,14 +950,19 @@ var Component = {
             var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
 
             var thzad = $("<th>");
-            var frstTh =thzad
-            if(cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']){
-                 frstTh.addClass("text-center").append($("<span>")
-                .addClass(" btn btn-sm")
-                .attr("id", 'table-show-hide-button-id-a')
-
-                .html('<i class="fas fa-chevron-right"></i>'))
+            var frstTh =thzad;
+            try {
+                if(cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']){
+                    frstTh.addClass("text-center").append($("<span>")
+                   .addClass(" btn btn-sm")
+                   .attr("id", 'table-show-hide-button-id-a')
+   
+                   .html('<i class="fas fa-chevron-right"></i>'))
+               }  
+            } catch (error) {
+                
             }
+            
                
             var tr = $("<tr>").append(frstTh);
 
@@ -1158,9 +1163,14 @@ var Component = {
 
             }
             thead.append(tr);
+        try {
             if(cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']){
                 thead.append(trFilter);
             }
+        } catch (error) {
+            
+        }
+           
 
            
             return thead;
@@ -1387,57 +1397,61 @@ var Component = {
         div.addClass("table-responsive");
 
 
-
-        if(cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']){
-            div.append($("<div>")
-            .attr("data-tableId", comp.id)
-            .addClass("table-show-hide-row-div")
-            .append($("<span>")
-                    .attr("id", 'table-show-hide-button-id-close')
-                    .addClass("table-show-hide-button-class-close")
-                    .html('<i class="fas fa-times"></i>')
-                    )
-            .append($("<div>")
-                    .addClass("col-10 p-2")
-                    .append($("<div>").addClass("btn-group float-right")
-                            .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
-                            .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
-                            .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
-                            .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
-                            )
-
-                    .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
-
-                    )
-            .append($("<div>")
-                    .addClass('col-12 p-2 form-group')
-                    .append($("<div>").hide()
-                            .addClass('input-group date')
-                            .attr("id", 'datetimepicker10')
-                            .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
-                            .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
-                            .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
-                            )
-
-
-                    )
-            .append($("<div>")
-                    .addClass('col-12 p-2 form-group')
-                    .append($("<div>")
-                            .addClass('input-group date')
-                            .attr("id", 'datetimepicker6')
-                            .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
-                            .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
-                            )
-
-
-                    )
-            .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
-
-            )
-
-        }
-      
+         try {
+            if(cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']){
+                div.append($("<div>")
+                .attr("data-tableId", comp.id)
+                .addClass("table-show-hide-row-div")
+                .append($("<span>")
+                        .attr("id", 'table-show-hide-button-id-close')
+                        .addClass("table-show-hide-button-class-close")
+                        .html('<i class="fas fa-times"></i>')
+                        )
+                .append($("<div>")
+                        .addClass("col-10 p-2")
+                        .append($("<div>").addClass("btn-group float-right")
+                                .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
+                                .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
+                                .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+                                )
+    
+                        .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
+    
+                        )
+                .append($("<div>")
+                        .addClass('col-12 p-2 form-group')
+                        .append($("<div>").hide()
+                                .addClass('input-group date')
+                                .attr("id", 'datetimepicker10')
+                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
+                                .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
+                                )
+    
+    
+                        )
+                .append($("<div>")
+                        .addClass('col-12 p-2 form-group')
+                        .append($("<div>")
+                                .addClass('input-group date')
+                                .attr("id", 'datetimepicker6')
+                                .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
+                                .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
+                                )
+    
+    
+                        )
+                .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
+    
+                )
+    
+            }
+          
+         } catch (error) {
+             
+         }
+    
 
         return $('<div></div>').append(div).html();
     },
@@ -2335,7 +2349,7 @@ var Component = {
 
                 } catch (err) {
                 }
-                div4.css("height", hg);
+                div4.css("height", hg);s
             }
         } catch (err) {
             console.log(err);
