@@ -8000,8 +8000,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
+                    <div class="modal-body" id='sqlTabBodyOriginal' >
+                        <div class="row sql-tab-body-container">
                             <div class="col-8">
                                 <div class="cs-nav-select">
                                     <div class="cs-input-group">
@@ -8076,10 +8076,25 @@
                                                                                     <div class="cs-sql-run">
                                                                                         <div class="cs-input-group">
                                                                                             <button type="button" class="cs-sql-editor-debug-btn btn btn-secondary">Run</button>
+                                                                                            <button type="button" class="cs-sql-editor-debug-save-btn btn btn-secondary">Save</button>
+                                                                                            <button type="button" class="cs-sql-editor-debug-load-btn btn btn-secondary">Load</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="sql-result-box cs-gray-bg">
                                                                                         <p id='sqlEditorRunResult'>Output</p>
+                                                                                    </div>
+                                                                                    <div class="sql-editor-load-box cs-gray-bg">
+                                                                                        <ol>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                            <li id='sqlEditorLoadResult'>SELECT `name`, `date`, `type`, `remark` FROM `event` WHERE 1</li>
+                                                                                        </ol>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

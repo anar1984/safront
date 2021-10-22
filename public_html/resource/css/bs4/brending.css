@@ -2093,6 +2093,10 @@ tbody tr.sortbodyEmpty {
     padding: 20px 20px 1px;
     margin-bottom: 20px;
 }
+.sql-editor-load-box {
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
+}
 .live-sql-ditor {
     border-right: 1px solid #ccc;
 }
@@ -2257,4 +2261,22 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
     display: inline-grid;
     border-radius: 3px;
     margin-left: 2px;
+}
+.sql-editor-load-box {
+    display: none;
+}
+.sql-editor-load-box ol {
+    padding: 0 0 0 20px;
+    height: 130px;
+    overflow: auto;
+    display: block;
+}
+.sql-editor-load-box  ol li {
+    font-size: 14px;
+    background: #ffffff;
+    padding: 1px 5px;
+    color: #2e3176;
+    margin-bottom: 5px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+    cursor: pointer;
 }
