@@ -322,7 +322,6 @@ function loadPageCountSelectBox(rowCount) {
         el.append(opt);
         ctm++;
     }
-
     el.selectpicker('refresh');
 }
 
@@ -441,14 +440,15 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res) {
 
     for (var k in keys) {
         var col = keys[k];
+        var _col = Utility.addUnderScoreToCamalStyle(col);
         var valSt = ((dataCore) && (dataCore[col])) ? dataCore[col] : '';
         tr_th.append($('<th>')
-                .text(keys[k])
+                .text(_col)
                 .append($('<br>'))
                 .append($('<input>')
                         .val(valSt)
                         .addClass('th-header-filter-search-by-column')
-                        .attr('placeholder', keys[k])
+                        .attr('placeholder', _col)
                         .attr('sa-data-name', col)));
 
     }

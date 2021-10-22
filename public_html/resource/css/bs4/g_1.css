@@ -2358,7 +2358,7 @@ label h6{
 }
 .draggablePopup{
 
-    width:250px;
+    /*width:250px;*/
     padding: 5px;
     height:300px;
     display:none;
@@ -5479,10 +5479,9 @@ span.ruby-c-content {
     background-color: #ffffffa3;
     border-radius: 6px;
     padding: 10px;
-  
     text-align:center;
     margin-top: 10px;
-    margin-right: 50px;
+    margin-right: 39px;
 }
 .sa-cw2 h6{
     width: 100%;
@@ -5551,7 +5550,7 @@ span.ruby-c-content {
 }
 .gui-design-is-apis .sa-main-c2{
     height: max-content;
-    margin-bottom: 100px;
+    padding-bottom: 200px;
 }
 .api_larged_block{
     position: absolute;
@@ -5729,16 +5728,14 @@ span.ruby-c-content {
 }
 
 .gui-design-is-apis .row-fixed-width2 .sa-desc-item{
-    background-color: #ea2d53;
+    background-color: gray;
     max-width: 20px;
     height: 100px;
-    
     color: white;
     border-radius: 3px;
     box-shadow: 2px 3px rgb(77 77 77 / 10%);
     position: relative;
     margin-top: 25px;
-    
 }
 .gui-design-is-apis .row-fixed-width2 .sa-desc-item-body:hover{
 
@@ -6612,4 +6609,14 @@ td.selected{
 	header .open {
 		display: block !important;
    }
+}
+
+#description_table_id tbody {
+    counter-reset: section;
+    content: counter();
+}
+#description_table_id tbody>tr::before{
+    counter-increment: section;        
+content: counters(section, ".") " "; 
+ color: #939292;
 }

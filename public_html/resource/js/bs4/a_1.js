@@ -4021,10 +4021,7 @@ function loadTableFIlterInside() {
     try {
 
         for (const [key, value] of Object.entries(se)) {
-
-
-
-            var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
+           var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
             var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');
             if (key) {
                 var dt1 = be.callApi(key);
@@ -4035,41 +4032,33 @@ function loadTableFIlterInside() {
 
                         $("#filter-table-row-" + value).append("<option value=" + dt[l].id + ">" + dt[l][ilk] + "</option>");
                     }
-
                 }
-
             }
-
-
-
-
-
-
         }
     } catch (error) {
 
     }
 
-
-
-    $(".filter-table-row-select").selectpicker("refresh")
-    $('.table').dragtable({
-        persistState: function (table) {
-
-            if (!window.sessionStorage)
-                return;
-            var ss = window.sessionStorage;
-            table.el.find('th').each(function (i) {
-                if (this.id != '') {
-                    table.sortOrder[this.id] = i;
-                }
-            });
-            ss.setItem('tableorder', JSON.stringify(table.sortOrder));
-        },
-        maxMovingRows: 1,
-        dragHandle: '.handle-drag',
-        restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
-    });
+    $(".filter-table-row-select").selectpicker("refresh");
+    if (global_var.current_modal !== 'loadLivePrototype') {
+        $('.table').dragtable({
+            persistState: function (table) {
+    
+                if (!window.sessionStorage)
+                    return;
+                var ss = window.sessionStorage;
+                table.el.find('th').each(function (i) {
+                    if (this.id != '') {
+                        table.sortOrder[this.id] = i;
+                    }
+                });
+                ss.setItem('tableorder', JSON.stringify(table.sortOrder));
+            },
+            maxMovingRows: 1,
+            dragHandle: '.handle-drag',
+            restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
+        });
+    }
 
     $('#date_timepicker_start_end').daterangepicker({
         /* ranges: {
@@ -4081,8 +4070,6 @@ function loadTableFIlterInside() {
          'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
          } */
     });
-
-
 }
 
 function copyJSCodeClassTo_loadProjectList() {
@@ -5687,31 +5674,62 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
-function moveBacklogDescDrag(el) {
-
-    var sourcedId = $(el).closest('tr').attr('pid');
-
-    var after = $(el).closest('tr').prev('tr').attr('orderno');
-    var before = $(el).closest('tr').next('tr').attr('orderno');
-    console.log(after, before);
+function deleteMoveOnDesc(id) {
     var json = initJSON();
-    json.kv.sourcedId = sourcedId;
-    json.kv.newOrderNo = (parseFloat(after) + parseFloat(before)) / 2;
-    var that = this;
-    var data = JSON.stringify(json);
+        json.kv.id = id;
+        json.kv.fkBacklogId = global_var.current_backlog_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmDeleteBacklogDescription",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                AJAXCallFeedback(res);
+                that.getBacklogDesc();
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
+            },
+            error: function () {
+                Toaster.showGeneralError();
+            }
+        });
+}
 
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            new UserStory().getBacklogDesc();
-        }
-    });
+function moveBacklogDescDrag(el) {
+   var list = $('#description_table_body_id>.esas-table-tr-for-zad');
 
+    for (let o = 0; o < list.length; o++) {
+        const k = list[o];
+
+        var sourcedId = $(k).attr('pid');
+        var json = initJSON();
+        json.kv.sourcedId = sourcedId;
+        json.kv.newOrderNo = $(k).index();
+        var data = JSON.stringify(json);
+    
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+         
+            }
+        });
+        
+    }
+    
+   
 }
 function if_inc_moveBacklogDescDrag(el) {
 
@@ -5886,6 +5904,7 @@ function triggerAPI_old(element, apiId, data) {
 }
 
 function triggerAPI(element, apiId, data) {
+    triggerApiDebugMode(element);
     var res = {};
     if (data) {
         res = data;
@@ -13138,6 +13157,14 @@ function clearLivePrototypeView42() {
     $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
 }
 
+function clearLivePrototypeViewForDebug() {
+    $(".leader-line").remove();
+//    $('#SUS_IPO_GUI_Design').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-gui-dept-rw').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c1').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
+}
+
 function loadGuiStoryCardsToAnimation() {
     var el = $('.us-gui-component-rel-sus-id');
 
@@ -14729,6 +14756,7 @@ function addUserStoryToTabList(backlogId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -14936,7 +14964,8 @@ function addTableAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+             highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15264,7 +15293,8 @@ function addTabAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+           highlightTheSameSelectedFieldsInInputList();
+              global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15617,7 +15647,8 @@ function removeInputTable(el, inputId, tableId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+            highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15673,7 +15704,8 @@ function removeSection(el, inputId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+            highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15739,7 +15771,8 @@ function addColumnsAsInputToTable() {
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
             global_var.current_us_input_id = res.kv.id;
-            $('#ipo_tr_' + res.kv.id).click();
+           highlightTheSameSelectedFieldsInInputList();
+              $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
             //generate GUI
