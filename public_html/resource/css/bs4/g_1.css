@@ -6610,3 +6610,13 @@ td.selected{
 		display: block !important;
    }
 }
+
+#description_table_id tbody {
+    counter-reset: section;
+    content: counter();
+}
+#description_table_id tbody>tr::before{
+    counter-increment: section;        
+content: counters(section, ".") " "; 
+ color: #939292;
+}
