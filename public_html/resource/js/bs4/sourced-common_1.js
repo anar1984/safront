@@ -5578,7 +5578,16 @@ UserStory.prototype = {
             connectWith: "tbody",
             handle:".cs-move-tr",
             update: function (e,ui) {
-            moveBacklogDescDrag(ui.item)
+                var itm = ui.item;                        
+                if($(itm).hasClass("esas-table-tr-for-zad")){
+                    if($(itm).closest("tbody").attr('id')==='description_table_body_id'){
+                        moveBacklogDescDrag(ui.item);
+                    }else{
+                        deleteMoveOnDesc($(itm).attr('pid'));
+                    }
+                }else{
+
+                }
             }
           }).disableSelection();
 

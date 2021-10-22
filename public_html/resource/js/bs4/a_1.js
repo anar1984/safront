@@ -5674,31 +5674,62 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
-function moveBacklogDescDrag(el) {
-
-    var sourcedId = $(el).closest('tr').attr('pid');
-
-    var after = $(el).closest('tr').prev('tr').attr('orderno');
-    var before = $(el).closest('tr').next('tr').attr('orderno');
-    console.log(after, before);
+function deleteMoveOnDesc(id) {
     var json = initJSON();
-    json.kv.sourcedId = sourcedId;
-    json.kv.newOrderNo = (parseFloat(after) + parseFloat(before)) / 2;
-    var that = this;
-    var data = JSON.stringify(json);
+        json.kv.id = id;
+        json.kv.fkBacklogId = global_var.current_backlog_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmDeleteBacklogDescription",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                AJAXCallFeedback(res);
+                that.getBacklogDesc();
+                loadCurrentBacklogProdDetailsSyncrone();
+                if (global_var.current_modal === 'loadLivePrototype') {
+                    callStoryCardAfterIPOAction();
+                } else if (global_var.current_modal === 'loadStoryCard') {
+                    reloadBacklogListOnStoryCard();
+                }
+            },
+            error: function () {
+                Toaster.showGeneralError();
+            }
+        });
+}
 
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            new UserStory().getBacklogDesc();
-        }
-    });
+function moveBacklogDescDrag(el) {
+   var list = $('#description_table_body_id>.esas-table-tr-for-zad');
 
+    for (let o = 0; o < list.length; o++) {
+        const k = list[o];
+
+        var sourcedId = $(k).attr('pid');
+        var json = initJSON();
+        json.kv.sourcedId = sourcedId;
+        json.kv.newOrderNo = $(k).index();
+        var data = JSON.stringify(json);
+    
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+         
+            }
+        });
+        
+    }
+    
+   
 }
 function if_inc_moveBacklogDescDrag(el) {
 
