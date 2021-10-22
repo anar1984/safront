@@ -6621,4 +6621,5 @@ td.selected{
 #description_table_id tbody>tr::before{
     counter-increment: section;        
 content: counters(section, ".") " "; 
+ color: #939292;
 }
