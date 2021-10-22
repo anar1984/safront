@@ -8438,7 +8438,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 //refresh input list
                 var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
                 $('#tblIPOList > tbody').html(st);
-                global_var.current_us_input_id = res.kv.id;
+                highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
                 $('#ipo_tr_' + res.kv.id).click();
 //                $('.us-ipo-input-tr').last().click();
 
@@ -8567,7 +8568,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
                 $('#tblIPOList > tbody').html(st);
-                global_var.current_us_input_id = id;
+                highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = id;
                 $('#ipo_tr_' + id).click();
 
                 that.genGUIDesign();
@@ -9569,7 +9571,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
-                $('.us-ipo-input-tr').first().click();
+                highlightTheSameSelectedFieldsInInputList();
+             $('.us-ipo-input-tr').first().click();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -10258,7 +10261,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 //                      st += '<td  ondblclick="new UserStory().toggleToEditITable(this)" \n\
 //                      class="us-ipo-input-table-tr"  pid="' + obj[n].id + '" itable="' + replaceTags(Replace2Primes(obj[n].tableName)) + '">'
 //                      + replaceTags(Replace2Primes(obj[n].tableName)) + '</td>';
-                st += '<td ><span class="selectedfieldlistforzad">' + selectedField + '</span></td>';
+                st += '<td ><span  class="selectedfieldlistforzad">' + selectedField + '</span></td>';
                 st += '<td ><input class="okayPitchYourPathYourWay" style="width:20px" placeholder="Add Selected Field"></td>';
                 st += '<td ><a href="#" onclick="new UserStory().deleteInputFromUSList(this, \''
                         + obj[n].id + '\')"><i class="fa fa-trash dust-bin" ></i></a></td>';
@@ -11901,7 +11904,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
-
+highlightTheSameSelectedFieldsInInputList();
+             
                 that.addSourcedIconToUserStory(res);
 //                that.genGUIDesign(res);
                 new Project().getProjectStatList();
@@ -20155,7 +20159,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('.inputdesc').attr("style", " pointer-events: none;opacity: 0.4;display:none;")
         var st = this.getHtmlGenIPOInputList(res);
         $('#tblIPOList > tbody').html(st);
-        $('.us-ipo-input-tr').first().click();
+        highlightTheSameSelectedFieldsInInputList();
+             $('.us-ipo-input-tr').first().click();
 //        $('#tblIPOOutputList > tbody').html('');
 //        var st = this.getHtmlGenIPOOutputList(res);
 //        $('#tblIPOOutputList > tbody').html(st);

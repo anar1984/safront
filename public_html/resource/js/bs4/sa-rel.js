@@ -128,20 +128,9 @@ SADebug = {
                 var oldLeft = $('#gui_component_main_view').scrollLeft();
                 $('#gui_component_main_view').scrollTop(0);
                 $('#gui_component_main_view').scrollLeft(0);
-                new LeaderLine(
-                        document.getElementById(from),
-                        document.getElementById(to),
-                        {
-                            color: 'rgb(41,146,210)',
-                            size: 2
-//                                    color: 'rgb(255,146,27)',
-//                                    dash: true,
-//                            startPlug: 'square',
-//                            endPlug: 'arrow',
-//                            startSocket: 'right',
-//                            endSocket: 'left',
 
-                        });
+                SADebug.IllustrateDrawLine(from, to, obj.relationType);
+
                 $('#gui_component_main_view').scrollTop(oldTop);
                 $('#gui_component_main_view').scrollLeft(oldLeft);
                 //  SADebug.GetLineDivId4Drawing(from, to,'right','left');
@@ -151,6 +140,29 @@ SADebug = {
         }
         $('#modal-prototypye .modal-header').css('display', 'block');
     },
+    IllustrateDrawLine: function (from, to, relationType) {
+        if (relationType === 'api_api_async') {
+            new LeaderLine(
+                    document.getElementById(from),
+                    document.getElementById(to),
+                    {
+                        color: 'rgb(41,146,210)',
+                        size: 2,
+                        startSocket: 'right',
+                        endSocket: 'left',
+
+                    });
+        } else {
+            new LeaderLine(
+                    document.getElementById(from),
+                    document.getElementById(to),
+                    {
+                        color: 'rgb(41,146,210)',
+                        size: 2
+
+                    });
+        }
+    },
     CallGUI: function (backlogId) {
         if (backlogId.length < 3)
             return;
@@ -158,7 +170,7 @@ SADebug = {
         SADebug.LoadedBacklogsFromPart = [];
         SADebug.LoadedBacklogsToPart = [];
         SADebug.GUIFunction.GenerateApiRelation(backlogId);
-        SADebug.GUIFunction.GenerateGuiRelation(backlogId);
+        //SADebug.GUIFunction.GenerateGuiRelation(backlogId);
         SADebug.RemoveAllDrawLine();
         SADebug.DrawLines();
 //        SADebug.DrawSelectedFieldLines();
@@ -183,28 +195,45 @@ SADebug = {
                 ? cr_project_desc_by_backlog[apiId]
                 : [];
         for (var i in  extApiList) {
-//                try {
-
             var extId = extApiList[i];
             var o = cr_project_desc[extId];
-            if (o.fkRelatedApiId) {
-                var dyncId = makeId(10);
-                var body = SADebug.Pattern.API.GetPattern(o.fkRelatedApiId, dyncId);
-                var div3 = $("<div class='sa-cwr'>").append(body);
-//                $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
-                $("#" + parentDivId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
-//                SADebug.SetDrawLine("core_api_" + apiId, "core_api_" + o.fkRelatedApiId, 'api_api');
-                SADebug.SetDrawLine("core_api_desc_" + parentDivId + '_' + o.id, dyncId, 'api_api');
-                var apiCallId = o.fkRelatedApiId;
-                SADebug.CallApiThread(apiCallId, dyncId);
+
+            if (o.commentType === 'comment') {
+                continue;
             }
 
+            if (o.fkRelatedApiId) {
+                SADebug.APIFunction.RelatedApi(o.id, o.fkRelatedApiId, parentDivId);
+            } else if (SAFN.IsCommandCallApi(o.description)) {
+                var apiIdZad = SAFN.GetCommandArgument(o.description);
+                if (apiIdZad) {
+                    apiIdZad = apiIdZad.trim();
+                    SADebug.APIFunction.RelatedApi(o.id, apiIdZad, parentDivId);
+                }
+
+            } else if (SAFN.IsCommandIf(o.description) || SAFN.IsCommandFor(o.description)) {
+                var apiList = getCallApiListFromProcessDescriptionLine(o.description);
+                for (var j = 0; j < apiList.length; j++) {
+                    var apiIdZad = apiList[j];
+                    if (apiIdZad) {
+                        apiIdZad = apiIdZad.trim();
+                        SADebug.APIFunction.RelatedApi(o.id, apiIdZad, parentDivId);
+                    }
+                }
+            }
         }
 
-
-
-
-
+        var outputList = SACore.GetBacklogDetails(apiId, "inputIds").split(',');
+        for (var i in outputList) {
+            try {
+                var oid = outputList[i].trim();
+                var newApiId = SAInput.getInputObject(oid).sendToBacklogId;
+                if (newApiId) {
+                    SADebug.APIFunction.RelatedApi(newApiId, parentDivId);
+                }
+            } catch (err) {
+            }
+        }
     },
     GetGuiDesign: function (backlogId) {
         if (backlogId.length < 3)
@@ -213,6 +242,27 @@ SADebug = {
         var canvasCSS = Component.ReplaceCSS(SACore.GetBacklogDetails(backlogId, 'param1'));
         var guiDesign = new UserStory().getGUIDesignHTMLPure(jsonZad);
         return guiDesign;
+    },
+    APIFunction: {
+        SendToBacklogId: function (apiId, parentDivId) {
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
+            var div3 = $("<div class='sa-cwr'>").append(body);
+            $("#" + parentDivId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+            SADebug.SetDrawLine(parentDivId, dyncId, 'api_api_async');
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId, dyncId);
+        },
+        RelatedApi: function (descriptionId, apiId, parentDivId) {
+            var dyncId = makeId(10);
+            var body = SADebug.Pattern.API.GetPattern(apiId, dyncId);
+            var div3 = $("<div class='sa-cwr'>").append(body);
+//                $("#core_api_" + apiId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+            $("#" + parentDivId).closest('div.sa-api-esas').find('.sa-dept-rww').first().append(div3);
+            SADebug.SetDrawLine("core_api_desc_" + parentDivId + '_' + descriptionId, dyncId, 'api_api');
+            var apiCallId = apiId;
+            SADebug.CallApiThread(apiCallId, dyncId);
+        },
     },
     GUIFunction: {
         SelectFromBacklogId: function (inputId, apiId, backlogId) {
@@ -303,8 +353,6 @@ SADebug = {
                     var obj = cr_input_action_rel_list[relId];
                     var apiId = obj.fkApiId;
                     if (apiId) {
-
-
                         var apiAction = SACore.GetBacklogDetails(apiId, "apiAction");
                         if (apiAction === 'R') {
                             SADebug.GUIFunction.GenerateInputActionRelation4Read(inputId, apiId, backlogId);
@@ -482,6 +530,10 @@ SADebug = {
         var divId = carrier.get("divId");
 //        var finalId = '#core_api_' + apiId;
         var finalId = '#' + divId;
+        
+        var requestType = SACore.GetBacklogDetails(apiId, 'apiSyncRequest');
+        var color  =(requestType==='async') ? "white" : "black";
+        var bg_color  = (requestType==='async') ? "green" : "yellow";
         var body = $('<div>')
                 .append($('<span>').text(apiName))
                 .append(" ")
@@ -495,8 +547,9 @@ SADebug = {
                 .append($('<span>')
                         .css("border-radius", "15px")
                         .css("padding", "2px 8px")
-                        .css("background-color", "yellow")
-                        .text(MapApiCallAsyncType(SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))))
+                        .css("background-color", bg_color)
+                        .css("color",color)
+                        .text(MapApiCallAsyncType(requestType)))
 
 
 
@@ -729,9 +782,9 @@ SADebug = {
                         divZad.append($('<div class="sa-desc-item-body">')
 
                                 .attr("pid", "core_api_desc_" + o.id)
-                                .attr("id", "core_api_desc_" + apiId + "_" + o.id)
+                                .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                 .append(o.description)
-                                .append(" (command)")
+//                                .append(" (command)")
                                 .append("<br>"));
                         div.append(divZad);
 //                        SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');
@@ -744,7 +797,7 @@ SADebug = {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
                                         .attr("pid", "core_api_desc_" + o.id)
-                                        .attr("id", "core_api_desc_" + apiId + "_" + o.id)
+                                        .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (JavaScript)")
                                         .append("<br>"));
@@ -755,7 +808,7 @@ SADebug = {
                                 divZad.append($("<span class='sa-desc-item-no'>").text(idx++));
                                 divZad.append($('<div class="sa-desc-item-body">')
                                         .attr("pid", "core_api_desc_" + o.id)
-                                        .attr("id", "core_api_desc_" + apiId + "_" + o.id)
+                                        .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                         .append(o.description)
                                         .append(" (Java)")
                                         .append("<br>"));
@@ -769,7 +822,7 @@ SADebug = {
                                     .attr("pid", "core_api_desc_" + o.id)
                                     .attr("id", "core_api_desc_" + parentDivId + "_" + o.id)
                                     .append(o.description)
-                                    .append(" (API)")
+//                                    .append(" (API)")
                                     .append("<br>"));
                             div.append(divZad);
 //                            SADebug.SetDrawLine("core_api_desc_" + o.id, "core_api_" + apiId, 'api_desc_send_to');

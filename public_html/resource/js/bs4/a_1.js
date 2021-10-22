@@ -5873,6 +5873,7 @@ function triggerAPI_old(element, apiId, data) {
 }
 
 function triggerAPI(element, apiId, data) {
+    triggerApiDebugMode(element);
     var res = {};
     if (data) {
         res = data;
@@ -13125,6 +13126,14 @@ function clearLivePrototypeView42() {
     $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
 }
 
+function clearLivePrototypeViewForDebug() {
+    $(".leader-line").remove();
+//    $('#SUS_IPO_GUI_Design').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-gui-dept-rw').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c1').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
+}
+
 function loadGuiStoryCardsToAnimation() {
     var el = $('.us-gui-component-rel-sus-id');
 
@@ -14716,6 +14725,7 @@ function addUserStoryToTabList(backlogId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -14923,7 +14933,8 @@ function addTableAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+             highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15251,7 +15262,8 @@ function addTabAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+           highlightTheSameSelectedFieldsInInputList();
+              global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15604,7 +15616,8 @@ function removeInputTable(el, inputId, tableId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+            highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15660,7 +15673,8 @@ function removeSection(el, inputId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
-            global_var.current_us_input_id = res.kv.id;
+            highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15726,7 +15740,8 @@ function addColumnsAsInputToTable() {
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
             global_var.current_us_input_id = res.kv.id;
-            $('#ipo_tr_' + res.kv.id).click();
+           highlightTheSameSelectedFieldsInInputList();
+              $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
             //generate GUI

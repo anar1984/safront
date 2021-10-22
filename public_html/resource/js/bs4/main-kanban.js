@@ -260,6 +260,8 @@ function callStoryCard(id, elId, backlogName) {
             return;
         }
         
+        loadBacklogDetailsByIdIfNotExist(id);
+        
         var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
         global_var.current_project_id = fkProjectId;
         

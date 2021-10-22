@@ -48,6 +48,7 @@ $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
             $(that).val('');
             var div = splitSelectedFieldAndGenHtml(res.kv.attrValue, global_var.current_us_input_id);
             $(that).closest('tr').find('.selectedfieldlistforzad').html('').append(div);
+            highlightTheSameSelectedFieldsInInputList();
         }
     });
 });
@@ -61,6 +62,8 @@ function splitSelectedFieldAndGenHtml(selectedField, fkInputId) {
             continue;
         }
         var span = $('<span>')
+                .addClass("inputSelectedFieldSingleCell")
+                .attr('pname', sf)
                 .text(sf)
                 .append($('<a>')
                         .attr('inputId', fkInputId)
@@ -194,6 +197,7 @@ $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
             $(that).val('');
             var div = splitSelectedFieldAndGenHtml(res.kv.attrValue, fkInputId);
             $(that).closest('tr').find('.selectedfieldlistforzad').html('').append(div);
+            highlightTheSameSelectedFieldsInInputList();
         }
     });
 });
@@ -251,4 +255,90 @@ function clearMarkers() {
 function deleteMarkers() {
     clearMarkers();
     markers = [];
+}
+
+function triggerApiDebugMode(el) {
+    if (!global_var.current_modal === 'loadLivePrototype') {
+        return;
+    }
+
+    if (!$('#livePrototypDebugMode').is(":checked")) {
+        return;
+    }
+
+
+    clearLivePrototypeViewForDebug();
+    $('.live-prototype-show-sourcedrelation').click();
+
+    //hide all api cards
+    toggleComponentBlock4Debug(el);
+
+}
+
+function toggleComponentBlock4Debug(el) {
+    var elementId = $(el).attr('id');
+    var ls = SADebug.Lines;
+    for (var i = 0; i < ls.length; i++) {
+
+        if (SADebug.Lines[i].actionId) {
+            if ('comp_id_' + SADebug.Lines[i].actionId === elementId) {
+                SADebug.Lines[i].active = "1";
+            } else {
+                SADebug.Lines[i].active = "0";
+            }
+        }
+    }
+    SADebug.RemoveAllDrawLine();
+    SADebug.DrawLines();
+}
+
+function getCallApiListFromProcessDescriptionLine(commandLine) {
+//    commandLine = '@.if(x,=,y){@.callapi(21062010245603843446);@.forlist(class){@.if(z,=,5){@.callapi(21071110441109806371);@.callapi(21062914173108442476);@.ifhasvalue(444){@.callapi(211010181551089210372);};};};}';
+    var cmdList = [];
+    commandLine = commandLine.toLowerCase();
+    commandLine = commandLine.replace(/@.callapi/g, '@.callapi@.fntemp');
+    var cmd = commandLine.split('@.callapi');
+    for (var i = 0; i < cmd.length; i++) {
+        var apiCmd = cmd[i].trim();
+        if (apiCmd && apiCmd.includes('@.fntemp')) {
+            apiCmd = apiCmd.replace(/@.fntemp/g, '@.callapi@');
+            var arg = SAFN.GetCommandArgument(apiCmd);
+            arg = arg.replace(/ /g, '').replace(/'/g, '').replace(/"/g, '');
+            cmdList.push(arg);
+        }
+    }
+
+    return cmdList;
+}
+
+function highlightTheSameSelectedFieldsInInputList() {
+    var saList = [];
+    $('#tblIPOList').find('.inputSelectedFieldSingleCell').each(function (e) {
+        var saName = $(this).attr('pname');
+        if (saName && !saList.includes(saName)) {
+            saList.push(saName);
+        }
+    })
+
+    for (var i = 0; i < saList.length; i++) {
+        var saName = saList[i];
+        if (saName) {
+            if ($('#tblIPOList').find('.inputSelectedFieldSingleCell[pname="' + saName + '"]').length > 1) {
+                $('#tblIPOList').find('.inputSelectedFieldSingleCell[pname="' + saName + '"]')
+                        .css("border-radius", "5px")
+                        .css('background-color', getRandomColor());
+            }
+        }
+    }
+
+    return saList;
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }

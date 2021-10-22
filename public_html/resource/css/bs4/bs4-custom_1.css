@@ -310,7 +310,7 @@ body{
 }
 
 .us-sub-menu-body{
-    font-size: 11px;
+    font-size: 13px;
     margin: 0px 0px 0px 0px;
     /*padding-top: 20px;*/
     /*padding-left:30px;*/
@@ -2039,7 +2039,7 @@ button#inline-proje-attr:focus {
     display: none;
 }*/
 /*label input[type="checkbox"] + .label-text:before {
-    content: "";
+    content: "ï‚–";
     color: #dddfe6;
     font-family: "fontAwesome";
     line-height: 1;
@@ -2066,12 +2066,12 @@ button#dropdownMenuLink:hover {
 
 
 /*label input[type="checkbox"]:checked + .label-text:before {
-    content: "";
+    content: "ï…Š";
     color: #05367f;
     animation: tick 150ms ease-in;
 }
 label input[type="checkbox"]:disabled + .label-text:before {
-    content: "";
+    content: "ïƒˆ";
     color: #dddfe6;
 }*/
 
@@ -2711,7 +2711,7 @@ img.sc-IbsAh.kqHqhS {
 }*/
 
 .us-ipo-input-name-tr{
-    font-size:11px;
+    font-size: 14px;
 }
 
 .sad-apicard{
@@ -3761,3 +3761,13 @@ img.sc-IbsAh.kqHqhS {
     border: 3px solid #cccccc;
     border-radius: 5px;
 }*/
+
+
+.debug-error-class{
+    border: 3px red dashed;
+}
+
+.debug-error-class-input{
+    background-color:red !important;
+    color:white !important;
+}
