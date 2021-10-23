@@ -82,6 +82,45 @@
     background-color: #3c3f89;
     border-color: #3c3f89;
 }
+
+/* NAV MENU */
+.sa-navmenu .first-side .toggler {
+    width: 40px;
+    height: 40px;
+}
+.sa-navmenu ul.main-nav > li ul.sub-menu-lists {
+    margin: auto 0;
+    padding: 1px 0;
+    list-style-type: none;
+    display: block;
+    flex-wrap: nowrap;
+}
+.sa-navmenu .project-item-zad a.btnplus {
+    color: #ffffff;
+}
+.sa-navmenu .project-item-zad a {
+    color: #ffffff;
+}
+ @media only screen and (min-width: 769px){
+   .sa-navmenu ul.main-nav > li > div.sub-menu-block, .sa-navmenu ul.main-nav > li:hover > div.sub-menu-block {
+        background-color: #525596;
+        opacity: 1;
+        visibility: visible;
+    }
+   .sa-navmenu ul.main-nav > li > div.sub-menu-block {
+      
+    }
+
+}
+.sa-navmenu .sub-menu-lists .left-menu-load {
+    padding: 0;
+    height: 25px;
+    width: auto;
+}
+.sa-navmenu ul.main-nav > li ul.sub-menu-lists > li, .sa-navmenu ul.main-nav > li ul.sub-menu-lists > li a {
+    color: #fff;
+}
+
 /* function */
 .cs-process-box {
     width: 100%;
@@ -2102,7 +2141,10 @@ tbody tr.sortbodyEmpty {
     margin-bottom: 20px;
 }
 .live-sql-ditor {
-    border-right: 1px solid #ccc;
+    border: 1px solid #ccc;
+    background: #F3F3F3;
+    outline: none;
+    color: #525596;
 }
 .cs-sql-run .cs-input-group {
     background: #e9e9f1;
