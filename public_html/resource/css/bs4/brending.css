@@ -18,9 +18,7 @@
     cursor: pointer;
     font-size: 14px;
     padding: 4px 12px;
-    border-radius: 3px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 0px;
 }
 .cs-list-group li:hover, ul.cs-list-group li:hover {
     background: #525596;
@@ -29,6 +27,12 @@
 }
 .cs-list-group li span, ul.cs-list-group li span {
     
+}
+.sidebar-list-box .disabled, .sidebar-list-box .disabled:hover {
+    color: #999;
+    text-decoration: none;
+    cursor: not-allowed;
+    background-color: transparent
 }
 .cs-sum-inbox .cs-select-box .get-callfn-select-box.bootstrap-select .btn {
     z-index: 0;
@@ -663,6 +667,20 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
 }
 .cs-if-script-box input:hover {
 
+}
+.cs-input-group input.cs-input{
+    font-size: 14px;
+    padding: 3px 12px;
+    height: 30px;
+    width: 100%;
+    min-width: auto;
+    max-width: 520px;
+    vertical-align: middle;
+    border-radius: 3px;
+    background: rgb(255 255 255);
+    border: 1px solid #525596;
+    color: #525596;
+    outline: none;
 }
 .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-if-style .show>.btn-light.dropdown-toggle {
     color: #ffffff;
@@ -2075,6 +2093,14 @@ tbody tr.sortbodyEmpty {
     padding: 20px 20px 1px;
     margin-bottom: 20px;
 }
+.sql-editor-load-box {
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
+}
+.sql-editor-save-input-box {
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
+}
 .live-sql-ditor {
     border-right: 1px solid #ccc;
 }
@@ -2129,27 +2155,161 @@ tbody tr.sortbodyEmpty {
     max-width: 80px;
 }
 .sqlboard-wrapper {
-    margin: 0 30px;
+    margin: 0 0;
 }
 .sqlboard-body {
-    width: 100%;
-    display: inline-block;
+    /* width: 100%;
+    display: inline-block; */
+    padding: 0 15px;
 }
 .sql-board-header {
-    padding: 0 12px;
+    font-size: 14px;
+    padding: 12px 1rem;
+    border-bottom-color: #E9E9F1;
+    background-color: #E9E9F1;
+    color: #272B7C;
+    height: 40px;
 }
 .sqlboard-sidebar {
-    width: 290px;
+    height: 100vh;
+    overflow: auto;
     float: left;
     position: relative;
-    margin: 0 10px;
+    margin: 0;
+    background: #e9e9f1;
 }
+@media (max-width:991px) {
+    .sqlboard-sidebar {
+        height: 60vh;
+    }
+} 
 .sqlboard-main {
-    width: auto;
-    float: left;
+    /* width: auto;
+    float: left; */
+}
+.sidebar-list-box .cs-input-group {
+    padding: 0;
 }
 .sidebar-list-box {
     margin-bottom: 10px;
-    border-bottom: 1px solid #dfe0ee;
+    border-bottom: 1px solid #d0d1e1;
     padding-bottom: 20px;
+}
+.sidebar-list-box:last-child{
+    border: none;
+}
+.sidebar-list-box .bootstrap-select.sqlboard-database-select {
+    width: 100% !important;
+}
+.sql-table-tabs-box .nav-link {
+    display: block;
+    padding: 6px 1rem;
+    padding-right: 0;
+    font-size: 14px;
+    color: #525596;
+}
+.sql-table-tabs-box .nav-tabs .nav-link:focus, .sql-table-tabs-box .nav-tabs .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+}
+.nav-tabs .nav-link {
+    border: 1px solid #e9e9f1;
+}
+.sql-table-tabs-box .nav-tabs .nav-item.show .nav-link, .sql-table-tabs-box .nav-tabs .nav-link.active {
+    color: #ffffff;
+    background-color: #525596;
+    border-color: #525596 #dee2e6 #fff;
+}
+input.hide-clear[type=text]::-ms-clear,
+input.hide-clear[type=text]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0; 
+}
+
+/* clears the 'X' from Chrome */
+input.hide-clear[type="text"]::-webkit-search-decoration,
+input.hide-clear[type="text"]::-webkit-search-cancel-button,
+input.hide-clear[type="text"]::-webkit-search-results-button,
+input.hide-clear[type="text"]::-webkit-search-results-decoration {
+  display: none; 
+}
+.nav-item .close-boardtab-btn {
+    margin-left: 10px;
+    margin-right: 13px;
+    padding-right: 20px;
+    position: relative;
+}
+.nav-item .close-boardtab-btn i{
+    position: absolute;
+    width: 33px;
+    height: 34px;
+    top: -8px;
+    vertical-align: middle;
+    padding: 10px 8px;
+}
+.nav-item .close-boardtab-btn i:before{
+
+}
+.nav-tabs.sql-board-tab-list {
+    border-bottom: none;
+}
+.add-boardtab-btn{
+    background: #272b7c;
+    height: 34px;
+    color: #fff;
+    font-size: 27px;
+    padding: 13px 6px;
+    line-height: 0;
+    font-weight: bold;
+    vertical-align: top;
+    display: inline-grid;
+    border-radius: 3px;
+    margin-left: 2px;
+}
+.sql-editor-load-box {
+    display: none;
+}
+.sql-editor-load-box ol {
+    padding: 0 0 0 20px;
+    height: 130px;
+    overflow: auto;
+    display: block;
+}
+.sql-editor-load-box  ol li {
+    font-size: 14px;
+    background: #ffffff;
+    padding: 1px 5px;
+    color: #2e3176;
+    margin-bottom: 5px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+}
+.sql-editor-load-box  ol li:hover{
+    background: #e6e7f3;
+}
+.sql-editor-load-box  ol li .rsql {
+    cursor: pointer;
+}
+.sql-editor-load-box  ol li .close_rsql {
+    cursor: pointer;
+    float: right;
+    margin-right: 1px;
+    display: none;
+}
+.sql-editor-load-box  ol li .close_rsql i{
+    
+}
+.sql-editor-load-box  ol li:hover .close_rsql{
+    display: block;
+}
+.cs-input-group input.sql-editor-save-input {
+    max-width: 220px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.cs-input-group .sql-editor-save-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.sql-editor-save-input-box {
+    display: none;
 }

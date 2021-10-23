@@ -12191,12 +12191,12 @@ $(document).on('click', '.loadSqlBoard', function (evt) {
 
     $.get("resource/child/sqlboard.html", function (html_string) {
 
-
+           
  
         new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
         
-
+        startSqlStory();
         
 
 
@@ -14888,6 +14888,17 @@ function loadSUSList4InputDetailsNew(res, backlogId) {
         $('#addUserStoryToSectionModal-userstory').change();
     } catch (err) {
     }
+}
+
+function sortSelectBoxByCoreElement(el) {
+    var sel = el;
+    var selected = sel.val(); // cache selected value, before reordering
+    var opts_list = sel.find('option');
+    opts_list.sort(function (a, b) {
+        return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
+    });
+    sel.html('').append(opts_list);
+    sel.val(selected); // set cached selected value
 }
 
 function sortSelectBoxByElement(el) {
