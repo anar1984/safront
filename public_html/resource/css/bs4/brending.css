@@ -2097,6 +2097,10 @@ tbody tr.sortbodyEmpty {
     padding: 20px 20px 1px;
     margin-bottom: 20px;
 }
+.sql-editor-save-input-box {
+    padding: 20px 20px 1px;
+    margin-bottom: 20px;
+}
 .live-sql-ditor {
     border-right: 1px solid #ccc;
 }
@@ -2296,4 +2300,16 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
 }
 .sql-editor-load-box  ol li:hover .close_rsql{
     display: block;
+}
+.cs-input-group input.sql-editor-save-input {
+    max-width: 220px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.cs-input-group .sql-editor-save-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.sql-editor-save-input-box {
+    display: none;
 }

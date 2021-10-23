@@ -579,14 +579,29 @@ $(document).on("click", ".cs-sql-editor-run-btn.active", function (e) {
 
 // LOAD SQL BUTTON
 $(document).on("click", ".cs-sql-editor-debug-load-btn", function (e) {
-    $(this).closest(".cs-modal-box").find(".cs-sql-editor-debug-load-btn")
-      .toggleClass("active");
+    $(this).closest(".cs-modal-box").find(".cs-sql-editor-debug-load-btn").toggleClass("active");
     $(this).closest(".cs-modal-box").find(".sql-editor-load-box").show();
   });
   
   $(document).on("click", ".cs-sql-editor-debug-load-btn.active", function (e) {
     $(this).closest(".cs-modal-box").find(".sql-editor-load-box").hide();
   });
+// SAVE SQL BUTTON
+$(document).on("click", ".cs-sql-editor-debug-save-btn", function (e) {
+    $(this).closest(".cs-modal-box").find(".cs-sql-editor-debug-save-btn").toggleClass("active");
+    $(this).closest(".cs-modal-box").find(".sql-editor-save-input-box").show();
+  });
+  
+  $(document).on("click", ".cs-sql-editor-debug-save-btn.active", function (e) {
+    $(this).closest(".cs-modal-box").find(".sql-editor-save-input-box").hide();
+  });
+
+  $(document).on("click", ".sql-editor-save-btn", function (e) {
+    var sql_name = $(".sql-editor-save-input").val();
+    var sql_command = $(".ace_text-input").val();
+    localStorage.setItem('sql_name',sql_name);
+    localStorage.setItem('sql_command',sql_command);
+ });
 
 
 $(document).ready(function () {
