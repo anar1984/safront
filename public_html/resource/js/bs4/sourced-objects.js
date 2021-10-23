@@ -1790,7 +1790,8 @@ var SAInput = {
                 var k = keys[n].trim();
                 var o = SAInput.Inputs[k];
                 if (!(o.inputType === 'IN' || o.inputType === 'GUI'
-                        || o.inputType === 'TBL' || o.inputType === 'TAB')) {
+                        || o.inputType === 'TBL' || o.inputType==='GRP'
+                        || o.inputType === 'TAB')) {
                     continue;
                 }
                 json.tbl[0].r.push(o);

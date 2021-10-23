@@ -14987,6 +14987,56 @@ function addTableAsInput() {
 }
 
 
+function addGroupAsInput() {
+
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+    
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddGroupAsInput",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SAInput.addInputByRes(res);
+            SAInput.addInputTableByRes(res);
+            SACore.updateBacklogByRes(res);
+
+            loadCurrentBacklogProdDetails();
+            //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
+
+
+            //refresh input list
+            var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
+            $('#tblIPOList > tbody').html(st);
+             highlightTheSameSelectedFieldsInInputList();
+             global_var.current_us_input_id = res.kv.id;
+            $('#ipo_tr_' + res.kv.id).click();
+            //                $('.us-ipo-input-tr').last().click();
+
+            //generate GUI
+            new UserStory().generateGUIGeneral();
+            new UserStory().insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
+            $('#us-ipo-inputname').val('');
+            $('#us-ipo-input-id').val('');
+            $('#us-ipo-inputname').focus();
+            dragResize();
+            global_var.input_insert_cellno = "";
+            global_var.input_insert_orderno = "";
+            global_var.input_insert_component = "";
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+
 function addUserStoryToTabModal(tabId) {
     if (!tabId) {
         return;

@@ -17,7 +17,7 @@
             <div class="col-3">
                 <span>Operation</span>
                 <div>
-                   
+
                     <button class="btn btn-outline-secondary inp_popUp_story_card_list_cl"><i class="fas fa-list"></i></button>    
                     <button class="btn btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
                     <button class="btn btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
@@ -594,7 +594,7 @@
 
                                             <input class="select_fell_check" type="checkbox">
                                         </td>
-                                       
+
 
                                     </tr>
                                     <tr>
@@ -609,7 +609,7 @@
 
 
                                     </tr>
-                                  
+
                                     <tr>
                                         <td style="padding:5px;">
                                             <span class="col-form-label control-label">sa-checkAllNone</span>
@@ -710,7 +710,7 @@
 
 
                                     </tr>
-                                  
+
                                     <tr>
                                         <td  style="padding:5px;">
                                             <span class="col-form-label control-label">sa-selectbox-changeafterload</span>
@@ -853,6 +853,9 @@
                 <li value="Tbl" title="Table"><a  onclick="addTableAsInput()"><img src="resource/img/table.png" alt="">
                         <span>Table</span>
                     </a></li>
+                <li value="Grp" title="Group"><a  onclick="addGroupAsInput()"><img src="resource/img/table.png" alt="">
+                        <span>Group</span>
+                    </a></li>
 
 
             </ul>
@@ -950,13 +953,15 @@
                                         <a href="#" class="home_icon_menu-item gooeyMenuDesc-2" onclick="addInputAsInput()"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Input</h6> </a>
 
                                         <a href="#" class="home_icon_menu-item gooeyMenuDesc-3" onclick="addTableAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Table</h6> </a>
+                                        
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-4" onclick="addGroupAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Group</h6> </a>
 
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-4" onclick="addSectionAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Section</h6> </a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-5" onclick="addSectionAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Section</h6> </a>
 
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-5" onclick="addTabAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Tab</h6> </a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-6" onclick="addTabAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Tab</h6> </a>
 
                                         <!-- /* start 17.08.2020 */ -->
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-6" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg></a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-7" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg></a>
                                         <!-- /* end 17.08.2020 */ -->
 
                                     </div>
@@ -1137,7 +1142,7 @@
                                                 <br><br>
                                             </div>
                                             <div class="col-12  us-gui-component-action-div "
-                                             
+
                                                  style=" padding:0px  1px">
                                                 <b><span
                                                         style="width: 100%;padding:0px;">Action:</span><br></b>
@@ -1364,7 +1369,7 @@
                                                      id="addComponentSelectBox"
                                                      style=" padding:4px 0px 0px 0px; display:none;">
                                                     <a href="#"data-toggle="modal" data-target="#addRelatedSourceModal"
-                                                       onclick="new UserStory().addRelationSourcedModal(this,'select','21072610414706712718')"
+                                                       onclick="new UserStory().addRelationSourcedModal(this, 'select', '21072610414706712718')"
                                                        class="col-form-label control-label">Select From
                                                         Api </a>
                                                 </div>
@@ -2911,27 +2916,27 @@
 <script src="resource/js/bs4/loadmonaco.js"></script>
 
 <script>
-                                                          $(document).ready(function(){
+                                                          $(document).ready(function () {
 
 
 
-                                                          $('#toolbar_cont_drag').draggable({
-                                                          containment: "parent"
-                                                          });
-                                                          $('.ipo_api_card_new').draggable({
-                                                          containment: "parent",
-                                                                  drag: function(event, ui) {
-                                                                  $('.leader-line').remove();
+                                                              $('#toolbar_cont_drag').draggable({
+                                                                  containment: "parent"
+                                                              });
+                                                              $('.ipo_api_card_new').draggable({
+                                                                  containment: "parent",
+                                                                  drag: function (event, ui) {
+                                                                      $('.leader-line').remove();
 //            addHeight()
                                                                   }
-                                                          });
-                                                          $('.ipo_dtb_card_new').draggable({
-                                                          containment: "parent",
-                                                                  drag: function(event, ui) {
-                                                                  $('.leader-line').remove();
+                                                              });
+                                                              $('.ipo_dtb_card_new').draggable({
+                                                                  containment: "parent",
+                                                                  drag: function (event, ui) {
+                                                                      $('.leader-line').remove();
 //            addHeight()
                                                                   }
-                                                          });
+                                                              });
                                                           })
 
 
