@@ -8145,27 +8145,32 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id='sqlTabBodyOriginal'>
-                        <div class="row sql-tab-body-container">
-                            <div class="col-8">
+                    <div class="modal-body sql-tab-body-container" id='sqlTabBodyOriginal'>
+                        <div class="row ">
+                            <div class="col-9">
                                 <div class="cs-nav-select">
                                     <div class="cs-input-group">
                                         <div class="input-group-addon">Database Name</div>
-                                        <select class="cs-database-name-list" data-live-search="true">
+                                        <select class="cs-database-name-list sa-sqlboard-selectpicker" 
+                                                data-live-search="true">
                                             <option>Select Database</option>
                                         </select>
                                         
                                     </div>
                                     <div class="cs-input-group">
                                         <div class="input-group-addon">Table Name</div>
-                                        <select class="cs-database-table-list" multiple data-actions-box="true" data-live-search="true">
+                                        <select class="cs-database-table-list sa-sqlboard-selectpicker" 
+                                                
+                                                data-live-search="true">
                                             <option>Select Table</option>
                                         </select>
                                     </div>
                                     <div class="cs-input-group">
                                         <div class="input-group-addon">Field Name</div>
-                                        <select class="cs-database-field-list" data-live-search="true">
-                                            <option>Select Table</option>
+                                        <select class="cs-database-field-list  sa-sqlboard-selectpicker" 
+                                                multiple data-actions-box="true"
+                                                data-live-search="true">
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -8185,23 +8190,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <nav class="navigation" aria-label="Page navigation example"
                                     style="padding-top: 14px; vertical-align: bottom;text-align:right;">
 
-                                    <span>Total: <b class='querydatarowcount'>0</b></span>
+                                    <span>#<b class='querydatarowcount'>0</b></span>
                                     <div class="perpage-select">
                                         <div class="perpage-prev"><i class="fas fa-chevron-left"></i></div>
-                                        <select class="cs-pagination-page-count selectpicker" style="max-width: 40px;">
+                                        <select class="cs-pagination-page-count " style="border:none; width: 40px;">
                                             <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>3</option>
-                                            <option>4</option>
+                                             
                                         </select>
                                         <div class="perpage-next"><i class="fas fa-chevron-right"></i></div>
                                     </div>
-                                    <select class="cs-pagination-per-page selectpicker">
+                                    <select class="cs-pagination-per-page " style="border:none;max-width: 50px;">
                                         <option>10</option>
                                         <option selected>25</option>
                                         <option>50</option>
