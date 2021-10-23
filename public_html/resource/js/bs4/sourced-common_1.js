@@ -8533,17 +8533,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#us-ipo-inputname-table').val('');
     },
     updateInputByAttr: function (e, type) {
-        var id = $(e).attr('pid');
+       var id = $(e).attr('pid');
         if (!id) {
             return;
         }
 
         var srv = "";
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.id = id;
         if (type == 'table') {
             json.kv.tableName = $(e).val();
@@ -8578,7 +8574,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 var st = that.getHtmlGenIPOInputList(SAInput.toJSON());
                 $('#tblIPOList > tbody').html(st);
                 highlightTheSameSelectedFieldsInInputList();
-             global_var.current_us_input_id = id;
+                global_var.current_us_input_id = id;
                 $('#ipo_tr_' + id).click();
 
                 that.genGUIDesign();
@@ -11289,6 +11285,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                         st += this.getGUIDesignHTMLBody4TabPart(comp, params, lbl, obj, n, param1, css)
                         continue;
                     }
+                    //kohne sistemden qalandir
                     if (tbl) {
                         st += this.getTableLine4GUI(params, comp, obj, n);
                         continue;
@@ -11304,10 +11301,12 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
                     console.log(err)
                 }
             }
+            //kohnet sistemden qalandir.
             var tableHtml = this.genGUIDesignTable(comp, params);
             var tabHtml = this.genGUITabHtmlDesign(comp, params);
             st = st.replace("@@tabOrderNo=" + params.tabOrderNo, tabHtml);
             st = st.replace("@@tableOrderNo=" + params.tableOrderNo, tableHtml);
+            //---kohne sistemden qalandir
         } catch (err) {
             console.log(err)
         }

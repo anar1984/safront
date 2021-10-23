@@ -131,8 +131,7 @@ $(document).ready(function () {
                 return;
             }
             $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
-            var storyCard = getPopup(html_string);
-            $("#body_of_nature").append(storyCard);
+            $("#UserStoryPopupModal-Toggle-modal").html(html_string);
             $("#UserStoryPopupModal-Toggle").modal('show');
             global_var.current_backlog_id = backlogId;
             new UserStory().toggleSubmenuStoryCard();
@@ -233,8 +232,7 @@ function callStoryCard4Api(id, elId, backlogName) {
             return;
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
-        var storyCard = getPopup(html_string);
-        $("#" + divId).append(storyCard);
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
         $("#UserStoryPopupModal-Toggle").modal('show');
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
@@ -246,9 +244,11 @@ function callStoryCard4Api(id, elId, backlogName) {
 
 function callStoryCard(id, elId, backlogName) {
 
-    if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
-        $(document).find("#UserStoryPopupModal-Toggle").remove();
-    }
+   /*  if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
+        $(document).find("#UserStoryPopupModal-Toggle").modal("hide");
+     
+       
+    } */
 
 
     var divId = (elId) ? elId : "body_of_nature";
@@ -265,9 +265,13 @@ function callStoryCard(id, elId, backlogName) {
         var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
         global_var.current_project_id = fkProjectId;
         
-        $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
+       /*  $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
+
         var storyCard = getPopup(html_string);
-        $("#" + divId).append(storyCard);
+       
+        $("#" + divId).append(storyCard); */
+
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
         $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         global_var.current_backlog_id = id;
@@ -311,6 +315,7 @@ function getPopup(arg) {
     return `
     <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="min-width: 90%">
+    <div class="modal-header text-center" style="padding: 0px 10px;background: none;"><b class="modal-title" ></b> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
         <div class="modal-content">
 
             <div class="modal-body">

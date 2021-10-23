@@ -95,6 +95,8 @@ var Component = {
             st += this.InputTable(comp);
         } else if (comp.inputType === 'TAB' || comp.inputType === 'tab') {
             st += this.InputTab(comp);
+        } else if (comp.inputType === 'GRP') {
+            st += this.Group(comp);
         }
         return st;
     },
@@ -950,11 +952,23 @@ var Component = {
             var tabDepId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
 
             var thzad = $("<th>");
-            var tr = $("<tr>").append(thzad.addClass("text-center").append($("<span>")
-                    .addClass(" btn btn-sm")
-                    .attr("id", 'table-show-hide-button-id-a')
+            var frstTh = thzad;
+            try {
+                if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
+                    frstTh.addClass("text-center").append($("<span>")
+                            .addClass(" btn btn-sm")
+                            .attr("id", 'table-show-hide-button-id-a')
 
-                    .html('<i class="fas fa-chevron-right"></i>')));
+                            .html('<i class="fas fa-chevron-right"></i>'))
+                }
+            } catch (error) {
+
+            }
+
+
+            var tr = $("<tr>").append(frstTh);
+
+
             var trFilter = $("<tr>").addClass("filter-table-row-header-tr redirectClass").addClass("hide-filt-drag").append($("<th>"))
             for (var i = 0; i < col.length; i++) {
 
@@ -1151,7 +1165,16 @@ var Component = {
 
             }
             thead.append(tr);
-            thead.append(trFilter);
+            try {
+                if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
+                    thead.append(trFilter);
+                }
+            } catch (error) {
+
+            }
+
+
+
             return thead;
         },
         TableEmptyMessage: function (tableId) {
@@ -1229,8 +1252,9 @@ var Component = {
                 var tr = $("<tr>")
                         .addClass('redirectClass')
                         .attr("bid", backlogId)
-                        //                    .append($("<td>").append("<button class='btn btn-light new-tr-add-btn btn-sm' data-pad-num='1'><i class='fas fa-chevron-right'></i></button>"))
-                        .append($("<td>").append((j + parseInt(sLimit))).addClass("text-center").css("min-width", '25px'));
+                        .append($("<td>").append((j + parseInt(sLimit)))
+                                .addClass("text-center")
+                                .css("min-width", '25px'));
                 for (var i = 0; i < col.length; i++) {
                     var inputId = col[i].trim();
                     if (inputId.length === 0)
@@ -1245,7 +1269,6 @@ var Component = {
                         Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
 
                         comp.secondContent = val;
-
                         comp.isFromTableNew = true;
                         comp.isFromTable = true;
                         comp.tableRowId = "1";
@@ -1317,7 +1340,8 @@ var Component = {
         }
     },
     InputTable: function (comp) {
-        var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
+        var elDiv = (global_var.current_modal === 'loadLivePrototype'
+                && comp.showProperties) ?
                 $('<div class="col-lg-12 text-right">')
                 .attr("id", "comp_id_" + comp.id)
                 .css("padding-top", "15px")
@@ -1354,8 +1378,6 @@ var Component = {
         }
 
 
-
-
         var el = $('<table class="table">')
                 .addClass("component-table-class-for-zad")
                 .addClass("component-table-class-for-zad-" + tableId)
@@ -1376,52 +1398,60 @@ var Component = {
         div.addClass("table-responsive");
 
 
-        div.append($("<div>")
-                .attr("data-tableId", comp.id)
-                .addClass("table-show-hide-row-div")
-                .append($("<span>")
-                        .attr("id", 'table-show-hide-button-id-close')
-                        .addClass("table-show-hide-button-class-close")
-                        .html('<i class="fas fa-times"></i>')
-                        )
-                .append($("<div>")
-                        .addClass("col-10 p-2")
-                        .append($("<div>").addClass("btn-group float-right")
-                                .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
-                                .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
-                                .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
-                                .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+        try {
+            if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
+                div.append($("<div>")
+                        .attr("data-tableId", comp.id)
+                        .addClass("table-show-hide-row-div")
+                        .append($("<span>")
+                                .attr("id", 'table-show-hide-button-id-close')
+                                .addClass("table-show-hide-button-class-close")
+                                .html('<i class="fas fa-times"></i>')
                                 )
-
-                        .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
-
-                        )
-                .append($("<div>")
-                        .addClass('col-12 p-2 form-group')
-                        .append($("<div>").hide()
-                                .addClass('input-group date')
-                                .attr("id", 'datetimepicker10')
-                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
-                                .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
-                                .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
-                                )
-
-
-                        )
-                .append($("<div>")
-                        .addClass('col-12 p-2 form-group')
                         .append($("<div>")
-                                .addClass('input-group date')
-                                .attr("id", 'datetimepicker6')
-                                .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
-                                .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
-                                )
+                                .addClass("col-10 p-2")
+                                .append($("<div>").addClass("btn-group float-right")
+                                        .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                        .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
+                                        .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
+                                        .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+                                        )
 
+                                .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
+
+                                )
+                        .append($("<div>")
+                                .addClass('col-12 p-2 form-group')
+                                .append($("<div>").hide()
+                                        .addClass('input-group date')
+                                        .attr("id", 'datetimepicker10')
+                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
+                                        .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
+                                        )
+
+
+                                )
+                        .append($("<div>")
+                                .addClass('col-12 p-2 form-group')
+                                .append($("<div>")
+                                        .addClass('input-group date')
+                                        .attr("id", 'datetimepicker6')
+                                        .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
+                                        .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
+                                        )
+
+
+                                )
+                        .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
 
                         )
-                .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
 
-                )
+            }
+
+        } catch (error) {
+
+        }
 
 
         return $('<div></div>').append(div).html();
@@ -1483,8 +1513,8 @@ var Component = {
                         .addClass("sa-tab-action-zad");
                 var usId = usList[i].trim();
                 var usName = SACore.GetBacklogname(usId);
-               var titble = SACore.GetBacklogDetails(usId,'description');
-               titble = (titble) ? titble : usName;
+                var titble = SACore.GetBacklogDetails(usId, 'description');
+                titble = (titble) ? titble : usName;
                 var active = (idx === 0) ? " active " : "";
                 idx++;
                 li.append($('<a class="nav-link">')
@@ -2292,63 +2322,139 @@ var Component = {
                 var jsonT = SAInput.toJSONByBacklog(comp.param1);
                 new UserStory().hasSequence(comp.sequence, comp.param1);
                 comp.sequence.push(comp.param1);
-                //                innerHTML = this.GetComponentHtmlNew(jsonT, 0, comp.sequence);
-
-
                 innerHTML = new UserStory().getGUIDesignHTMLBody(jsonT, 0, comp.sequence);
             } catch (err) {
-                console.log("Section is not loaded")
+                console.log("Section is not loaded");
             }
         }
         comp.hasOnClickEvent = true;
         comp.showProperties = true;
         var div = Component.ContainerDiv(comp);
 
-        var div4 = $('<div class="row">');
-        var div4Modal = '<i class="fas fa-chevron-up" aria-hidden="true"></i>'
-        try {
-            if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-passive']) {
-                div4.addClass("closed-modal");
-                div4Modal = '<i class="fas fa-chevron-down" aria-hidden="true"></i>'
-
-                var hg = '0px';
-
-                try {
-                    if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height']) {
-                        hg = cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height'];
-                    }
-
-                } catch (err) {
-                }
-                div4.css("height", hg);s
-            }
-        } catch (err) {
-            console.log(err);
-        }
-
-
         div.append(this.SectionAction.GetPropertiesSection(comp));
-        div.append(div4
-                .addClass("component-section-row filedset-style-section modal-hide-btn-class").attr("data-section-title", comp.label)
-                .append(innerHTML))
 
-        try {
-            if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle']) {
-                div.append($("<span>")
-                        .append(div4Modal)
-                        .addClass("open-modal-hide-modal-btn"));
-            }
-        } catch (err) {
-            console.log(err);
-        }
+        Component.SectionAction.AddSectionToggle.InitToogle(comp, div, innerHTML)
 
-
-
-
-        //        div.append(innerHTML);
         return $('<div></div>').append(div).html();
     },
+    Group: function (comp) {
+        var elDiv = this.GroupAction.GroupHeader(comp);
+
+        var innerHTML = this.GroupAction.GroupBody(comp.fkInputTableId);
+
+
+        comp.hasOnClickEvent = true;
+        comp.showProperties = true;
+        var div = Component.ContainerDiv(comp);
+
+        div.append(elDiv);
+//        div.append(innerHTML);
+
+        Component.SectionAction.AddSectionToggle.InitToogle(comp, div, innerHTML)
+
+
+        return $('<div></div>').append(div).html();
+    },
+
+    GroupAction: {
+        GroupBody: function (groupId) {
+            var div = $('<div>');
+            var col = SAInput.Tables[groupId].fkInputId.split(",");
+            col = Component.InputTableAction.SetColumnsOrder(col);
+
+
+            var f = false;
+            for (var i = 0; i < col.length; i++) {
+                var inputId = col[i].trim();
+                if (inputId.length === 0)
+                    continue;
+                f = true;
+
+                var comp = new ComponentInfo();
+                Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+                var val = Component.GetComponentHtmlNew(comp);
+                div.append(val);
+            }
+
+            if (!f) {
+                div.html(Component.GroupAction.GroupEmptyMessage());
+            }
+
+            return div.html();
+        },
+        GroupHeader: function (comp) {
+            return (global_var.current_modal === 'loadLivePrototype'
+                    && comp.showProperties) ?
+                    $('<div class="col-lg-12 text-right">')
+                    .attr("id", "comp_id_" + comp.id)
+                    .css("padding-top", "15px")
+                    .append(" &nbsp;")
+                    .append(Component.InputTableAction.GenAddColumn(comp))
+                    .append(" &nbsp;")
+                    .append(Component.InputTableAction.GenTableProperties(comp))
+                    .append(" &nbsp;")
+                    .append(Component.InputTableAction.GenRemoveTable(comp))
+                    .append(" ") :
+                    "";
+        },
+        GroupEmptyMessage: function () {
+            var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
+                    '<h5> No Input has been entered on this group</h5>' +
+                    '</div>';
+            return msg;
+        }
+    },
+
     SectionAction: {
+        AddSectionToggle: {
+            InitToogle: function (comp, div, innerHTML) {
+                var div4 = $('<div class="row">');
+                var div4Modal = $('<i class="fas fa-chevron-up">');
+                Component.SectionAction.AddSectionToggle.ControlSectionTogglePassive(comp, div4, div4Modal);
+                Component.SectionAction.AddSectionToggle.AddToogleBodyByInnerHtml(comp, div, div4, innerHTML);
+                Component.SectionAction.AddSectionToggle.AddSectionToogleIconButton(comp, div, div4Modal);
+            },
+            AddToogleBodyByInnerHtml: function (comp, div, div4, innerHTML) {
+                //set main div
+                div.append(div4
+                        .addClass("component-section-row")
+                        .addClass("filedset-style-section")
+                        .addClass("modal-hide-btn-class")
+                        .attr("data-section-title", comp.label)
+                        .append(innerHTML))
+            },
+            AddSectionToogleIconButton: function (comp, div, div4Modal) {
+                try {
+                    if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle']) {
+                        div.append($("<span>")
+                                .append(div4Modal)
+                                .addClass("open-modal-hide-modal-btn"));
+                    }
+                } catch (err) {
+                }
+            },
+            ControlSectionTogglePassive: function (comp, div4, div4Modal) {
+                //control toggle passive attribute
+                try {
+                    if (cr_input_comp_attribute_kv &&
+                            cr_input_comp_attribute_kv[comp.id] &&
+                            cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-passive']) {
+
+                        var hg = '0px';
+
+                        if (cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height']) {
+                            hg = cr_input_comp_attribute_kv[comp.id]['sa-section-toggle-height'];
+                        }
+
+                        div4Modal = $('<i class="fas fa-chevron-down">');
+                        div4.css("height", hg);
+                        div4.addClass("closed-modal");
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        },
         GetPropertiesSection: function (comp) {
             var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
@@ -2379,6 +2485,7 @@ var Component = {
             '</div>';
             return msg;
         },
+
         FreeEmptyEmptyMessage: function () {
             var msg = '<div class="col-lg-12" style="padding:30px;text-align:center">' +
                     '<h5> No HTML Content has been entered on this component</h5>' +
@@ -2438,7 +2545,8 @@ var Component = {
                     .css("cursor", "pointer")
                     .attr("onclick", "removeSection(this,'" + comp.id + "')")
         },
-    },
+    }
+    ,
     Tab: function (comp) {
         //        var innerHTML = new UserStory().genGUIDesignHtmlById(comp.param1);
         var innerHTML = "";
