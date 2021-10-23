@@ -84,7 +84,7 @@
 }
 
 /* NAV MENU */
-.sa-navmenu .first-side .toggler {
+.sa-navmenu .toggler {
     width: 40px;
     height: 40px;
 }
@@ -118,7 +118,7 @@
     width: auto;
 }
 .sa-navmenu ul.main-nav > li ul.sub-menu-lists > li, .sa-navmenu ul.main-nav > li ul.sub-menu-lists > li a {
-    color: #fff;
+    color: #fff
 }
 
 /* function */
