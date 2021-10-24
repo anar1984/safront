@@ -2176,5 +2176,25 @@ $(document).ready(function () {
         $('.cs-more-filter-box').toggleClass('show');
     });
 
-})
 
+    // MAIN NAV MENU
+    $('.sa-navmenu .sub-menu ul').hide();
+    $(document).on('click', ".sub-menu a", function (e) {
+        $(this).closest(".sub-menu").toggleClass("active");
+        $(this).closest(".sub-menu>a").toggleClass("url-active");
+        $(this).parent(".sub-menu").children("ul").slideToggle("100");
+        $(this).find(".right").toggleClass("fa-chevron-up fa-chevron-down");
+    });
+    
+    $(document).on('click', "label.menu__btn", function (e) {
+        $('.sa-navmenu').toggleClass('active');
+    });
+
+    $(document).on('click', ".sa-navmenu ul li div.project-item-zad a", function () {
+        $('.sa-navmenu.active').removeClass('active');
+    });
+
+    $(document).on('click', ".sa-navmenu.active label.menu__btn", function (e) {
+        $('.sub-menu a.url-active').click();
+    });
+})
