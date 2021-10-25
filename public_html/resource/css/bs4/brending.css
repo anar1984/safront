@@ -168,6 +168,9 @@
   .sa-navmenu.active nav.nav-navbar {
     visibility: visible;
     left: 0;
+    height: 100vh;
+    overflow: auto;
+    padding-bottom: 75px;
   }
 .sa-navmenu .project-item-zad a.btnplus {
     color: #ffffff;
@@ -183,6 +186,10 @@
     height: 100%;
     position: absolute;
     background: #525596;
+    border: 1px solid #3C4089;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
   }
 .sa-navmenu  nav.nav-navbar ul {
     list-style: none;
@@ -244,7 +251,7 @@
   .sa-navmenu .top-level-link  {
     position: fixed;
     bottom: 0;
-    width: 260px;
+    width: 258px;
   }
   .sa-navmenu .top-level-link .btn-group {
       display: block;
@@ -269,7 +276,7 @@
 }
 .sa-navmenu .top-level-link .dropdown-menu {
     width: 100%;
-    margin-left: -5px;
+    margin-left: 4px;
     border-top: 0;
 }
 /* function */
@@ -2414,7 +2421,7 @@ tbody tr.sortbodyEmpty {
 .sql-table-tabs-box .nav-tabs .nav-link:focus, .sql-table-tabs-box .nav-tabs .nav-link:hover {
     border-color: #e9ecef #e9ecef #dee2e6;
 }
-.nav-tabs .nav-link {
+.sql-table-tabs-box .nav-tabs .nav-link {
     border: 1px solid #e9e9f1;
 }
 .sql-table-tabs-box .nav-tabs .nav-item.show .nav-link, .sql-table-tabs-box .nav-tabs .nav-link.active {
@@ -2515,4 +2522,63 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
 }
 .sql-editor-save-input-box {
     display: none;
+}
+.cs-top-navbar {
+    display: table;
+    background-color: #525596;
+    width: 100%;
+    height: 40px;
+    vertical-align: middle;
+}
+.cs-top-navbar-profile-box {
+    float: right;
+    margin-right: 20px;
+    height: 40px;
+    vertical-align: middle;
+    display: table;
+}
+.cs-top-navbar-profile-box .dropdown-menu {
+    margin-top: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.cs-top-navbar-profile  {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.cs-top-navbar-profile img{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #3a3c74;
+}
+.cs-top-navbar-profile-box .dropdown-menu .dropdown-item {
+    font-size: 14px;
+    vertical-align: middle;
+    display: table-cell;
+    float: left;
+    width: 100%;
+    height: 35px;
+    padding: 6px 10px;
+    color: #525596;
+}
+.cs-top-navbar-profile-box .dropdown-menu .dropdown-item i {
+ font-size: 13px;
+ margin-right: 1px;
+}
+.cs-top-navbar-profile-box .dropdown-item.active, .cs-top-navbar-profile-box .dropdown-item:active {
+    color: #525596;
+    text-decoration: none;
+    background-color: #eeeeee;
+}
+.cs-top-navbar-profile .myaccountName {
+    color: #fff;
+}
+.cs-top-navbar-profile:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 40px;
+    background: transparent;
 }

@@ -12782,8 +12782,9 @@ highlightTheSameSelectedFieldsInInputList();
             var o = obj[i];
             if (o.showInMenu === '1') {
 
-                $('.sub-menu.clients ul.sub-menu-lists')
-                        .append($('<li>')
+                $('.sa-navmenu .project-item-zad').parent()
+                        .last()
+                        .after($('<li>')
                                 .append($('<div>')
                                         .addClass("project-item-zad")
                                                 
