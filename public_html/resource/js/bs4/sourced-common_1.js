@@ -9620,7 +9620,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 closeModal('copyMoveInputsModal');
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
-
+                loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true)
                 hideProgress();
             },
             error: function () {
@@ -9665,6 +9665,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 closeModal('copyMoveInputsModal');
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
+                loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true);
                 hideProgress();
             },
             error: function () {
@@ -9750,6 +9751,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
+                
                 hideProgress();
                 closeModal('copyMoveInputsModalNew');
             },
