@@ -1054,7 +1054,6 @@ var be = {
 
                 if (SAFN.IsCommand(o.description)) {
                     outData = SAFN.ExecCommand(o.description, outData, element, asyncData);
-
                 } else {
                     if (o.fkRelatedScId) {
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -1072,7 +1071,7 @@ var be = {
 
 
                 if (outData.err && outData.err.length > 0) {
-                    be.AJAXCallFeedback(outData.err, element, apiId, "process",o.id);
+                    be.AJAXCallFeedback(outData.err, element, apiId, "process", o.id);
                 }
 
 
@@ -1640,7 +1639,7 @@ var be = {
 
         }
     },
-    ShowErrorInGUIDuringDebugMode: function (apiId, senderPart, field,processId) {
+    ShowErrorInGUIDuringDebugMode: function (apiId, senderPart, field, processId) {
         try {
             $('[pid=core_api_' + apiId + ']').addClass('debug-error-class')
         } catch (err) {
@@ -1655,7 +1654,7 @@ var be = {
                 $('[pid=core_api_' + apiId + ']').find('.api-output-list').first()
                         .find('[idx=' + field.trim() + ']').addClass('debug-error-class-input')
             }
-            
+
             if (senderPart === 'process') {
                 $('[pid=core_api_desc_' + processId + ']').addClass('debug-error-class-input')
             }
@@ -1663,13 +1662,13 @@ var be = {
         }
 
     },
-    AJAXCallFeedback: function (err, element, apiId, senderPart,processId) {
+    AJAXCallFeedback: function (err, element, apiId, senderPart, processId) {
 
         var msgError = "";
         if ((err.length) && err.length > 0) {
             //there are/is errors
             for (var i in err) {
-                be.ShowErrorInGUIDuringDebugMode(apiId, senderPart, err[i].code,processId);
+                be.ShowErrorInGUIDuringDebugMode(apiId, senderPart, err[i].code, processId);
 
                 if (err[i].code === 'general') {
 
@@ -1727,6 +1726,7 @@ var SAFN = {
         'getparamurl': 'GetParamUrl',
         'alert': 'Alert',
         'alertdata': 'AlertData',
+        'break': 'Break',
         'console': 'Concole',
         'consoledata': 'ConcoleData',
         'deletekey': 'DeleteKey',
@@ -1867,7 +1867,7 @@ var SAFN = {
         }
         return f;
     },
-     IsCommandCallApi: function (fnName) {
+    IsCommandCallApi: function (fnName) {
         var f = false;
         try {
             f = (fnName.trim().toLowerCase().startsWith('@.callapi'));
@@ -1933,19 +1933,19 @@ var SAFN = {
         var res = {};
 
 
-        try {
-            if (argLine.length === 0) {
-                res = eval(fnName)();
-            } else {
-                var argLineList = argLine.split(",");
-                if (argLineList.length === 1) {
-                    res = eval(fnName)(argLine);
-                } else if (argLineList.length > 1) {
-                    res = eval(fnName).apply(null, argLineList);
-                }
+//        try {
+        if (argLine.length === 0) {
+            res = eval(fnName)();
+        } else {
+            var argLineList = argLine.split(",");
+            if (argLineList.length === 1) {
+                res = eval(fnName)(argLine);
+            } else if (argLineList.length > 1) {
+                res = eval(fnName).apply(null, argLineList);
             }
-        } catch (err) {
         }
+//        } catch (err) {
+//        }
 
 
 
@@ -2231,6 +2231,7 @@ var SAFN = {
 
             return data;
         },
+
         SetValue: function (className, value) {
             className = SAFN.GetArgumentPureValue(className);
             value = SAFN.GetArgumentValue(value);
@@ -2279,6 +2280,10 @@ var SAFN = {
             var data = SAFN.CoreData;
             var zadData = JSON.stringify(data);
             alert(zadData);
+        },
+        Break: function () {
+
+            throw "Break point handled!";
         },
         Console: function (arg) {
             var data = SAFN.CoreData;
@@ -3551,11 +3556,11 @@ var SAFN = {
                 var commandName = triggerEl.attr('cname');
                 var isComment = triggerEl.attr('isComment');
                 var pid = triggerEl.attr('pid');
-                if ((isComment) && isComment!=undefined && isComment!=='1') {
+                if ((isComment) && isComment != undefined && isComment !== '1') {
                     commandName = '';
                 }
                 var txt = SAFN.Reconvert.InitMapper(commandName, triggerEl);
-                  return txt
+                return txt
             },
             IfStatementOperations: function (oper) {
                 var el = $('<select>')
@@ -6221,24 +6226,24 @@ function updateDragDropTableTr(table) {
         handle: ".cs-move-tr",
         update: function (e, ui) {
             var itm = $(ui.item);
-             if($(itm).closest("tbody").attr('id')==='description_table_body_id'){
+            if ($(itm).closest("tbody").attr('id') === 'description_table_body_id') {
                 var idk = makeId('9')
-                itm.addClass('esas-table-tr-for-zad').attr('id',idk);
+                itm.addClass('esas-table-tr-for-zad').attr('id', idk);
                 var txt = SAFN.Convert.Common.GetLinePureBody(itm.find('td').first());
-                if(txt===undefined){
+                if (txt === undefined) {
                     txt = itm.find('text-holder').find('.procDescTitleNewNowAfter').text();
                 }
-               
-                genEsasTrForDrag(txt,idk);
-             }else{
+
+                genEsasTrForDrag(txt, idk);
+            } else {
                 itemConvertSubFUnc(itm);
-              
-             }
-             SAFN.Convert.Common.GetLineBody(this);
+
+            }
+            SAFN.Convert.Common.GetLineBody(this);
         }
     }).disableSelection();
-    
-   
+
+
 }
 
 
@@ -6246,32 +6251,33 @@ function updateDragDropTableTr(table) {
 
 function genEsasTrForDrag(desc, idk) {
 
-        var json = initJSON();
-        json.kv.fkBacklogId = global_var.current_backlog_id;
-        json.kv.fkProjectId = global_var.current_project_id;
-        json.kv.description = desc;
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmInsertNewBacklogDescription",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.description = desc;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewBacklogDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
 
-             $("#description_table_body_id>#"+idk+"").attr('pid',res.kv.id);
-             moveBacklogDescDrag();
+            $("#description_table_body_id>#" + idk + "").attr('pid', res.kv.id);
+            moveBacklogDescDrag();
 
-             new UserStory().getBacklogDesc();
-            },
-            error: function () {
-                Toaster.showGeneralError();
-            }
-        });
-    
-} ;
+            new UserStory().getBacklogDesc();
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
+
+}
+;
 function itemConvertSubFUnc(itm) {
 
     $(itm).find('input[type="checkbox"]').remove();
@@ -6279,23 +6285,24 @@ function itemConvertSubFUnc(itm) {
     $(itm).find('td:nth-child(3)').remove();
     $(itm).find('td:nth-child(3)').remove();
     $(itm).append($('<div>').addClass('btn-group')
-        .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
+            .append($('<button>').addClass('btn dropdown-toggle fas fa-cog').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'true').attr('aria-hidden', 'true'))
             .append($('<div>').addClass('dropdown-menu dropdown-menu-right')
-                .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
-                    .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
-                )
-                .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
-                    .html('<i class="fas fa-eye-slash"></i> Set as Comment')
-                )
-                .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
-                    .html('<i class="fas fa-eye"></i> Remove Comment')
-                )
-                .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
-                    .html('<i class="fas fa-trash-alt"></i> Delete')
-                )
-            )
+                    .append($('<button>').addClass('dropdown-item btn btn-primary cs-copy-btn')
+                            .html('<i class="fas fas fa-copy" aria-hidden="true"></i> Copy')
+                            )
+                    .append($('<button>').addClass('dropdown-item btn btn-primary cs-addcomment-btn')
+                            .html('<i class="fas fa-eye-slash"></i> Set as Comment')
+                            )
+                    .append($('<button>').addClass('dropdown-item btn btn-primary cs-removecomment-btn')
+                            .html('<i class="fas fa-eye"></i> Remove Comment')
+                            )
+                    .append($('<button>').addClass('dropdown-item btn btn-primary tr-remove-btn').attr('type', 'button')
+                            .html('<i class="fas fa-trash-alt"></i> Delete')
+                            )
+                    )
 
-        
-    );
+
+            );
     $(itm).removeClass('esas-table-tr-for-zad');
-} ;
+}
+;
