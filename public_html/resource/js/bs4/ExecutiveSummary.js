@@ -41,6 +41,23 @@ function loadDocEditor4BusinessCase(id) {
 //})
 
 
+$(document).on("dblclick", '.convertedTextAreaLines', function (e) {
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.figureTextarea')
+            .show();
+
+    $(this).hide();
+})
+
+$(document).on("click", '.figureTextarea', function (e) {
+    alert('zad')
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.convertedTextAreaLines')
+            .show();
+
+    $(this).hide();
+})
+
 $(document).on("click", '.addFinancialProjectionPeriod', function (e) {
 
     if (!activeBCId)
@@ -484,10 +501,30 @@ function getFinancialProjectionZoneListDetails(res) {
 
     var trSection = $('<tr>').append($('<td>').text('+ Add Section'));
     tbody.append(trSection);
-    
+
     table.append(thead);
     table.append(tbody)
 }
+
+function convertTextAreaToTdSectionBullet(txt) {
+    var ul = $('<ul>')
+            .addClass('convertedTextAreaLines');
+    try {
+        var r = txt.split(/\r*\n/);
+        for (var i = 0; i < r.length; i++) {
+            var ln = r[i];
+            if (!ln.trim()) {
+                continue;
+            }
+            ul.append($('<li>')
+                    .addClass('convertedTextAreaLinesItem')
+                    .text(ln))
+        }
+    } catch (err) {
+    }
+    return ul;
+}
+
 function createSingleFinancialProjectionZone() {
     if (!activeBCId)
         return;
@@ -2000,6 +2037,7 @@ function problemStatTable(res) {
                 .append($('<td>').append(i + 1))
                 .append($('<td>')
                         .attr("sa-bc-pr-key", "problemDesc")
+
                         .append($('<textarea>')
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
@@ -2036,7 +2074,11 @@ function problemStatTable(res) {
                                 .addClass("newProblemStateService")
                                 .text("Add Service")))
                 .append($('<td>')
+                        .addClass('convertedTextAreaLines')
+                        .append(convertTextAreaToTdSectionBullet(o.fkBcKeyResourceId))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "fkBcKeyResourceId")
