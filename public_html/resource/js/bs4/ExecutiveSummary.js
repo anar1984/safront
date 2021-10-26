@@ -41,6 +41,124 @@ function loadDocEditor4BusinessCase(id) {
 //})
 
 
+$(document).on("click", '.addFinancialProjectionPeriod', function (e) {
+
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateSingleFinancialProjectionZone",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getFinancialProjectionZoneList();
+        }
+    });
+})
+
+
+
+function getFinancialProjectionSectionList(financeId) {
+
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBcId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetFinancialProjectionSectionList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var table = getFinancialProjectionSectionListDetails(res);
+            $('.financialSectionDivZad[pid=' + financeId + ']').first().html(table);
+
+//           financialSectionDivZad
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function getFinancialProjectionSectionListDetails(res) {
+    var table = $('<table>');
+    table.html('');
+    table.addClass('table').addClass('table-hover')
+
+    var obj = res.tbl[0].r;
+    for (var i = 0; i < obj.length; i++) {
+        var o = obj[i];
+
+        table.append($('<tr>')
+                .append($('<th>').attr("pid", o.id)
+                        .text(o.sectionName)
+                        .append($('<a>')
+                                .attr("onclick", "deleteFinancialSection(this,'" + o.id + "')")
+                                .append($('<i>')
+                                        .addClass('fa fa-trash')
+                                        .attr('aria-hidden', 'true')
+                                        .addClass('summ-icon')))
+                        ))
+                .append($('<tr>')
+                        .append($('<td>').attr("pid", o.id)
+                                .append($('<textarea>')
+                                        .addClass("financialSectionBodyText")
+                                        .attr("pid", o.id)
+                                        .text(o.sectionBody))
+                                ))
+                ;
+    }
+    table.append($('<tr>')
+            .append($('<th>')
+                    .append($('<a>')
+                            .attr("onclick", "createFinancialProjectionSectionLine(this,'" + o.id + "')")
+                            .append($('<i>')
+                                    .addClass('fa fa-plus')
+                                    .attr('aria-hidden', 'true')
+                                    .addClass('summ-icon')))
+                    ))
+            ;
+    return table;
+}
+
+function createFinancialProjectionSectionLine(el, financeId) {
+    if (!financeId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkFinancialProjectionId = financeId;
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateFinancialProjectionSectionLine",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getFinancialProjectionSectionList(financeId);
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
 $(document).on("click", '.problemServiceListSingleDelete', function (e) {
     if (!confirm("Are you sure?")) {
         return;
@@ -278,8 +396,124 @@ function getBusinessServiceRelDetails(res) {
 }
 
 
+
+function getFinancialProjectionZoneList() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetFinancialProjectionZoneList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                getFinancialProjectionZoneListDetails(res);
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function getFinancialProjectionZoneListDetails(res) {
+    var table = $('#financialProjectionTable');
+    table.html('');
+    table.addClass('table').addClass('table-hover')
+
+    var obj = res.tbl[0].r;
+    var is_header_loaded = false;
+    var tbody = $('<tbody>');
+    var thead = $('<thead>');
+    var trHead = $('<tr>').append($('<th>').text('#'));
+    var trCurrency = $('<tr>').append($('<th>').text('Currency'));
+    var trCustomer = $('<tr>').append($('<th>').text('Assumtion # of Customer'));
+    var trRevenue = $('<tr>').append($('<th>').text('Revenue'));
+    var trExpences = $('<tr>').append($('<th>').text('Expenses'));
+    var trGrossProfit = $('<tr>').css('color', 'red').append($('<th>').text('Gross Profit'));
+    var trSection = $('<tr>').append($('<td>').text(''));
+
+    for (var i = 0; i < obj.length; i++) {
+        var o = obj[i];
+        trHead.append($('<th>').text(o.periodName));
+        trCurrency.append($('<td>').text(o.currency));
+        trCustomer.append($('<td>').text(o.customerCount));
+        trRevenue.append($('<td>').text(o.totalRevenue));
+        trExpences.append($('<td>').text(o.totalExpence));
+        trGrossProfit.append($('<th>').text(o.grossProfit));
+//        trSection.append($('<td>').append($('<div>')
+//                .addClass("financialSectionDivZad")
+//                .attr('pid', o.id)
+//                .text(o.periodName)))
+//        getFinancialProjectionSectionList(o.id);
+    }
+
+
+
+
+    thead.append(trHead);
+    tbody.append(trCurrency);
+    tbody.append(trCustomer);
+    tbody.append(trRevenue);
+    tbody.append(trExpences);
+    tbody.append(trGrossProfit);
+//    tbody.append(trSection);
+
+    var obj1 = res.tbl[1].r;
+    for (var i = 0; i < obj1.length; i++) {
+        var o1 = obj1[i];
+
+        var trSec = $('<tr>').append($('<th>').text(o1.sectionName));
+        var obj = res.tbl[0].r;
+        for (var j = 0; j < obj.length; j++) {
+            var o = obj[j];
+            trSec.append($('<td>').append($('<span>').text('zad')))
+        }
+        tbody.append(trSec);
+    }
+
+
+    var trSection = $('<tr>').append($('<td>').text('+ Add Section'));
+    tbody.append(trSection);
+    
+    table.append(thead);
+    table.append(tbody)
+}
+function createSingleFinancialProjectionZone() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateSingleFinancialProjectionZone",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+//            generateSectionDiv(res);
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
 function deleteCompetitor(competitorId) {
-     if (!confirm("Are you sure?")) {
+    if (!confirm("Are you sure?")) {
         return;
     }
 
@@ -1069,10 +1303,12 @@ function loadMainBusinesCaseBody(caseName) {
     $('#business_case_description').text("asdfasd")
     getProblemStatList();
     getBusinessProvidedServiceList();
-    getKeyPartner();
-    getKeyResource();
-    getBCSectionsList();
     generateCompetitorFeatureMatrix();
+    getFinancialProjectionZoneList();
+//    getKeyPartner();
+//    getKeyResource();
+    getBCSectionsList();
+
 }
 
 $(document).on("click", '.bc-tr', function (e) {
@@ -1834,10 +2070,13 @@ $(document).on('click', '.newProblemStateService', function (ev) {
 var problemStatementId4Adding = '';
 
 function generateCompetitorFeatureMatrix() {
-    var competitorList = generateCompetitorFeatureMatrix_CompetitorList();
-    var serviceList = generateCompetitorFeatureMatrix_ServiceList();
-    generateCompetitorFeatureMatrixBinderHeader(competitorList, serviceList);
-    generateCompetitorFeatureMatrixBinder(competitorList, serviceList);
+    try {
+        var competitorList = generateCompetitorFeatureMatrix_CompetitorList();
+        var serviceList = generateCompetitorFeatureMatrix_ServiceList();
+        generateCompetitorFeatureMatrixBinderHeader(competitorList, serviceList);
+        generateCompetitorFeatureMatrixBinder(competitorList, serviceList);
+    } catch (err) {
+    }
 }
 
 function generateCompetitorFeatureMatrixBinderHeader(compList, serviceList) {
