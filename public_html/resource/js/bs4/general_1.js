@@ -1938,7 +1938,7 @@ var global_var = {
     "lp_isdragging": 0,
     "ipo_gui_view": "single",
     "is_body_ctrl_pressed": "0",
-    "actual_zoom": 70,
+    "actual_zoom": 90,
     "doc_actual_zoom": 100,
     "previous_backlog_id": "",
     "previous_backlog_name": "",

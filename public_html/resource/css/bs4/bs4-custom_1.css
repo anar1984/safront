@@ -3723,7 +3723,7 @@ img.sc-IbsAh.kqHqhS {
     width: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
- 
+
 /*#floating-panel {
     position: absolute;
     top: 10px;
@@ -3770,4 +3770,8 @@ img.sc-IbsAh.kqHqhS {
 .debug-error-class-input{
     background-color:red !important;
     color:white !important;
+}
+
+.bc-probdesc-textarea{
+    border: 0px solid;
 }

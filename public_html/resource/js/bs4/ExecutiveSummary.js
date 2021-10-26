@@ -9,7 +9,7 @@ var lastSelectedGroupId = "";
 
 // 4__________________Provided Services as a Solution(s)--- PLUS Button to Click________________
 function loadDocEditor4BusinessCase(id) {
-    new FroalaEditor('textarea' + id,{
+    new FroalaEditor('textarea' + id, {
         toolbarInline: true
     }
 //            , {
@@ -24,7 +24,7 @@ function loadDocEditor4BusinessCase(id) {
 //                    }
 //                }
 //            }
-            );
+    );
 }
 
 
@@ -40,16 +40,160 @@ function loadDocEditor4BusinessCase(id) {
 //    $('#btn_section_' + id).show();
 //})
 
+
+$(document).on("click", '.addFinancialProjectionPeriod', function (e) {
+
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateSingleFinancialProjectionZone",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getFinancialProjectionZoneList();
+        }
+    });
+})
+
+
+
+function getFinancialProjectionSectionList(financeId) {
+
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBcId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetFinancialProjectionSectionList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var table = getFinancialProjectionSectionListDetails(res);
+            $('.financialSectionDivZad[pid=' + financeId + ']').first().html(table);
+
+//           financialSectionDivZad
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function getFinancialProjectionSectionListDetails(res) {
+    var table = $('<table>');
+    table.html('');
+    table.addClass('table').addClass('table-hover')
+
+    var obj = res.tbl[0].r;
+    for (var i = 0; i < obj.length; i++) {
+        var o = obj[i];
+
+        table.append($('<tr>')
+                .append($('<th>').attr("pid", o.id)
+                        .text(o.sectionName)
+                        .append($('<a>')
+                                .attr("onclick", "deleteFinancialSection(this,'" + o.id + "')")
+                                .append($('<i>')
+                                        .addClass('fa fa-trash')
+                                        .attr('aria-hidden', 'true')
+                                        .addClass('summ-icon')))
+                        ))
+                .append($('<tr>')
+                        .append($('<td>').attr("pid", o.id)
+                                .append($('<textarea>')
+                                        .addClass("financialSectionBodyText")
+                                        .attr("pid", o.id)
+                                        .text(o.sectionBody))
+                                ))
+                ;
+    }
+    table.append($('<tr>')
+            .append($('<th>')
+                    .append($('<a>')
+                            .attr("onclick", "createFinancialProjectionSectionLine(this,'" + o.id + "')")
+                            .append($('<i>')
+                                    .addClass('fa fa-plus')
+                                    .attr('aria-hidden', 'true')
+                                    .addClass('summ-icon')))
+                    ))
+            ;
+    return table;
+}
+
+function createFinancialProjectionSectionLine(el, financeId) {
+    if (!financeId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkFinancialProjectionId = financeId;
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateFinancialProjectionSectionLine",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getFinancialProjectionSectionList(financeId);
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+$(document).on("click", '.problemServiceListSingleDelete', function (e) {
+    if (!confirm("Are you sure?")) {
+        return;
+    }
+
+    var problemId = $(this).attr('problemId');
+    var serviceId = $(this).attr('serviceId');
+
+    if (!problemId || !serviceId)
+        return;
+
+    var json = initJSON();
+    json.kv.serviceId = serviceId;
+    json.kv.problemId = problemId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteServiceFromCaseProblem",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getProblemStatList();
+        }
+    });
+})
+
 function getBCSectionsBody(bcId, sectionId) {
 
     if (!bcId || !sectionId)
         return;
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
     json.kv.fkBcId = bcId;
     json.kv.fkBcSectionId = sectionId;
     var that = this;
@@ -71,9 +215,97 @@ function getBCSectionsBody(bcId, sectionId) {
     });
 }
 
-function getBusinessServiceRelDetails(res) {
+function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, competitorId, serviceId) {
+    var div = $('<div>');
+    try {
+        var srvList = arg.split(',');
 
-    var body = $('#addSerciveTbody');
+        for (var kk in srvList) {
+            var srv = srvList[kk];
+            if (srv.length === 0) {
+                continue;
+            }
+
+            var input = $("<input type='checkbox'>")
+                    .attr('competitorId', competitorId)
+                    .attr('serviceid', serviceId)
+                    .attr('feature', srv)
+                    .addClass('competitorFeatureAddRemove');
+
+            if (addFeatures[serviceId]) {
+                var srvT = srv.replace(/ /g, '');
+                var zad = addFeatures[serviceId];
+                zad = zad.replace(/ /g, '')
+                if (zad.split(",").includes(srvT)) {
+                    input.attr('checked', 'true');
+                }
+            }
+
+            var span = $('<span>')
+                    .css('border-radius', '10px')
+                    .css('padding', '1px 5px')
+                    .css('color', 'gray')
+                    .addClass('problemServiceListSingle')
+                    .text(srv)
+                    .append(input)
+
+            if (addFeatures[serviceId]) {
+                var srvT = srv.replace(/ /g, '');
+                var zad = addFeatures[serviceId];
+                zad = zad.replace(/ /g, '')
+                if (zad.split(",").includes(srvT)) {
+                    span.css('background-color', 'yellow');
+                }
+            }
+
+            div.append(span
+                    )
+        }
+    } catch (err) {
+    }
+
+    return div;
+}
+
+function convertProblemServicesToCircleFormat(res, arg, problemId) {
+    var div = $('<div>');
+    try {
+        var index = getIndexOfTable(res, 'serviceList');
+        var srvList = arg.split(',');
+
+        for (var kk in srvList) {
+            var srv = srvList[kk];
+            if (srv.length === 0) {
+                continue;
+            }
+
+            var obj = res.tbl[index].r;
+            for (let i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                if (o.id !== srv) {
+                    continue;
+                }
+                div.append($('<span>')
+                        .addClass('problemServiceListSingle')
+                        .text(o.serviceName)
+                        .append($('<a href="#">')
+                                .attr('problemid', problemId)
+                                .attr('serviceid', o.id)
+                                .css('color', 'red')
+                                .addClass('problemServiceListSingleDelete')
+                                .text('(x) '))
+                        )
+            }
+        }
+    } catch (err) {
+    }
+
+    return div;
+}
+
+function getBusinessServiceRelDetails4Problem(res) {
+
+    var body = $('#addServiceToProblemStatementModal_body');
     body.html('');
     var obj = res.tbl[0].r;
     var idx = 1;
@@ -84,8 +316,74 @@ function getBusinessServiceRelDetails(res) {
                 .addClass("bc-tr")
                 .addClass('testCaseListborder')
                 .append($('<td>').append(idx++))
-                .append($('<td>').append(o.groupName))
-                .append($('<td>').append(o.serviceName))
+                .append($('<td>')
+                        .append($('<input type="checkbox">')
+                                .attr("pid", o.id)
+                                .addClass('serviceListCheckbox')))
+                .append($('<td>').text(o.serviceName))
+        body.append(t);
+    }
+}
+
+
+function getBusinessServiceRelDetails(res) {
+
+    var body = $('#providedServicesListTable');
+    body.html('');
+    var obj = res.tbl[0].r;
+    var idx = 1;
+    for (var i in obj) {
+        var o = obj[i];
+
+        var t = $('<tr>')
+                .addClass("bc-tr")
+                .addClass('testCaseListborder')
+                .append($('<td>').append(idx++))
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('key', 'serviceName')
+                                .attr("onchange", "updateProvidedServices4Short(this)")
+                                .text(o.serviceName))
+                        )
+
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('key', 'advantage')
+                                .attr("onchange", "updateProvidedServices4Short(this)")
+                                .text(o.advantage))
+                        )
+
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('key', 'technicalAdvantage')
+                                .attr("onchange", "updateProvidedServices4Short(this)")
+                                .text(o.technicalAdvantage))
+                        )
+
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('key', 'valueProposition')
+                                .attr("onchange", "updateProvidedServices4Short(this)")
+                                .text(o.valueProposition))
+                        )
+
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('key', 'feature')
+                                .attr("onchange", "updateProvidedServices4Short(this)")
+                                .text(o.feature))
+                        )
+
                 .append($('<td>').addClass('tdCenter')
                         .append($('<a>')
                                 .attr("onclick", "deleteBusinessServiceRel('" + o.id + "')")
@@ -95,6 +393,151 @@ function getBusinessServiceRelDetails(res) {
                                         .addClass('summ-icon'))))
         body.append(t);
     }
+}
+
+
+
+function getFinancialProjectionZoneList() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetFinancialProjectionZoneList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                getFinancialProjectionZoneListDetails(res);
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function getFinancialProjectionZoneListDetails(res) {
+    var table = $('#financialProjectionTable');
+    table.html('');
+    table.addClass('table').addClass('table-hover')
+
+    var obj = res.tbl[0].r;
+    var is_header_loaded = false;
+    var tbody = $('<tbody>');
+    var thead = $('<thead>');
+    var trHead = $('<tr>').append($('<th>').text('#'));
+    var trCurrency = $('<tr>').append($('<th>').text('Currency'));
+    var trCustomer = $('<tr>').append($('<th>').text('Assumtion # of Customer'));
+    var trRevenue = $('<tr>').append($('<th>').text('Revenue'));
+    var trExpences = $('<tr>').append($('<th>').text('Expenses'));
+    var trGrossProfit = $('<tr>').css('color', 'red').append($('<th>').text('Gross Profit'));
+    var trSection = $('<tr>').append($('<td>').text(''));
+
+    for (var i = 0; i < obj.length; i++) {
+        var o = obj[i];
+        trHead.append($('<th>').text(o.periodName));
+        trCurrency.append($('<td>').text(o.currency));
+        trCustomer.append($('<td>').text(o.customerCount));
+        trRevenue.append($('<td>').text(o.totalRevenue));
+        trExpences.append($('<td>').text(o.totalExpence));
+        trGrossProfit.append($('<th>').text(o.grossProfit));
+//        trSection.append($('<td>').append($('<div>')
+//                .addClass("financialSectionDivZad")
+//                .attr('pid', o.id)
+//                .text(o.periodName)))
+//        getFinancialProjectionSectionList(o.id);
+    }
+
+
+
+
+    thead.append(trHead);
+    tbody.append(trCurrency);
+    tbody.append(trCustomer);
+    tbody.append(trRevenue);
+    tbody.append(trExpences);
+    tbody.append(trGrossProfit);
+//    tbody.append(trSection);
+
+    var obj1 = res.tbl[1].r;
+    for (var i = 0; i < obj1.length; i++) {
+        var o1 = obj1[i];
+
+        var trSec = $('<tr>').append($('<th>').text(o1.sectionName));
+        var obj = res.tbl[0].r;
+        for (var j = 0; j < obj.length; j++) {
+            var o = obj[j];
+            trSec.append($('<td>').append($('<span>').text('zad')))
+        }
+        tbody.append(trSec);
+    }
+
+
+    var trSection = $('<tr>').append($('<td>').text('+ Add Section'));
+    tbody.append(trSection);
+    
+    table.append(thead);
+    table.append(tbody)
+}
+function createSingleFinancialProjectionZone() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmcreateSingleFinancialProjectionZone",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+//            generateSectionDiv(res);
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function deleteCompetitor(competitorId) {
+    if (!confirm("Are you sure?")) {
+        return;
+    }
+
+    if (!competitorId)
+        return;
+
+    var json = initJSON();
+    json.kv.competitorId = competitorId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteCompetitor",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            generateCompetitorFeatureMatrix();
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
 }
 
 function getBCSectionsList(id) {
@@ -287,15 +730,66 @@ function deleteBusinessServiceRel(id) {
     });
 }
 
+function insertNewProvidedService() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertNewProvidedService",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                getBusinessProvidedServiceList();
+            } catch (err) {
+            }
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function getBusinessProvidedServiceList() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetProvidedServiceList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                getBusinessServiceRelDetails(res);
+            } catch (err) {
+            }
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
 function getBusinessServiceRel() {
     if (!activeBCId)
         return;
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
     json.kv.fkBcId = activeBCId;
 
     var that = this;
@@ -318,6 +812,9 @@ function getBusinessServiceRel() {
         }
     });
 }
+
+
+
 
 function addNewBusinessServiceModal() {
     $('#serviceModal').modal('show');
@@ -656,6 +1153,21 @@ function loadBCServiceGroupDetails(res) {
 }
 
 
+
+$(document).on("change", '.competitorFeatureAddRemove', function (e) {
+    var competitorId = $(this).attr('competitorId'),
+            serviceId = $(this).attr('serviceId'),
+            feature = $(this).attr('feature');
+    if ($(this).is(':checked')) {
+        $(this).closest('span').css('background-color', 'yellow')
+        insertNewBsCompetitorFeature(competitorId, serviceId, feature);
+    } else {
+        $(this).closest('span').css('background-color', '')
+        removeBsCompetitorFeature(competitorId, serviceId, feature);
+    }
+})
+
+
 $(document).on("change", '#serviceModal_service', function (e) {
     var val = $(this).val();
     if (val === '-2') {
@@ -676,6 +1188,63 @@ $(document).on("change", '#serviceModal_servicegroup', function (e) {
     }
 })
 
+function insertNewBsCompetitorFeature(competitorId, serviceId, feature) {
+
+
+    if (!(activeBCId) || !competitorId || !serviceId || !feature)
+        return;
+    var json = initJSON();
+
+    json.kv.fkBcId = activeBCId;
+    json.kv.competitorId = competitorId;
+    json.kv.serviceId = serviceId;
+    json.kv.feature = feature;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertNewBsCompetitorFeature",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            AJAXCallFeedback(res);
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
+}
+
+function removeBsCompetitorFeature(competitorId, serviceId, feature) {
+
+
+    if (!(activeBCId) || !competitorId || !serviceId || !feature)
+        return;
+    var json = initJSON();
+
+    json.kv.fkBcId = activeBCId;
+    json.kv.competitorId = competitorId;
+    json.kv.serviceId = serviceId;
+    json.kv.feature = feature;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmremoveBsCompetitorFeature",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            AJAXCallFeedback(res);
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
+}
 
 function loadBCService() {
     var srvGroupId = $('#serviceModal_servicegroup').val();
@@ -723,20 +1292,23 @@ function loadBCServiceDetails(res) {
 }
 
 
-$(document).on("change", 'select.executiveInsert', function (e) {
+$(document).on("click", '.main-bc-tr', function (e) {
     activeBCId = $(this).attr("id");
     var caseName = $(this).find('.main-bc-name').html();
     loadMainBusinesCaseBody(caseName)
 })
 
-function loadMainBusinesCaseBody(caseName){
-     $('#business_case_heading').html(caseName)
-     $('#business_case_description').text("asdfasd")
+function loadMainBusinesCaseBody(caseName) {
+    $('#business_case_heading').html(caseName)
+    $('#business_case_description').text("asdfasd")
     getProblemStatList();
-    getBusinessServiceRel();
-    getKeyPartner();
-    getKeyResource();
+    getBusinessProvidedServiceList();
+    generateCompetitorFeatureMatrix();
+    getFinancialProjectionZoneList();
+//    getKeyPartner();
+//    getKeyResource();
     getBCSectionsList();
+
 }
 
 $(document).on("click", '.bc-tr', function (e) {
@@ -894,26 +1466,32 @@ function insertNewBusinessCase(el) {
 // 2 E.S_______________________________________________________________  
 
 function ExecutiveSummaryTable(res) {
-    var select = $('#executiveInsert');
-    select.html('');
-    var t = select.addClass('cs-select-bc')
+    var table = $('#executiveInsert');
+    table.html('');
+    var t = table.addClass('table')
+            .addClass('table-hover')
 
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        var t = $('<option>')
+        var t = $('<tr>')
+                .css("cursor", "pointer")
                 .addClass('main-bc-tr')
                 .addClass('bc-tr')
                 .attr("id", o.id)
 //                .addClass('bug-tr')
                 .addClass('testCaseListborder')
-                .addClass("main-bc-name")
-                .attr('ondblclick', 'updateLineCaseName(this,"' + o.id + '")')
-                .val(o.id).append((replaceTags(o.caseName) + ' - ' + o.caseNo))
+                .append($('<td>').append(i + 1))
+                .append($('<td>')
+                        .addClass("main-bc-name")
+                        .attr('ondblclick', 'updateLineCaseName(this,"' + o.id + '")')
+                        .css("padding", "15px 10px")
+                        .append(replaceTags(o.caseName)))
+                .append($('<td>').append((o.caseNo)))
 
-        select.append(t);
+        table.append(t);
     }
-    $('.main-bc-tr').first().change();
+    $('.main-bc-tr').first().click();
 }
 
 function updateLineCaseName(el, caseId) {
@@ -926,7 +1504,7 @@ function updateLineCaseName(el, caseId) {
 }
 
 function updateCaseDesc(el) {
-    
+
     var caseDesc = $(el).val();
     if (!(caseDesc) || !activeBCId)
         return;
@@ -1377,16 +1955,12 @@ function getKeyPartnerDetails(res) {
 function addProblemStat() {
 
     var statDesc = $('#problemStatAddNew').val();
-    if (!(activeBCId) || !statDesc)
+    if (!(activeBCId))
         return;
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
 
     json.kv.fkBcId = activeBCId;
-    json.kv.problemDesc = statDesc;
+    json.kv.problemDesc = "";
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -1419,14 +1993,26 @@ function problemStatTable(res) {
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        console.log(obj[i])
+        var serviceDiv = convertProblemServicesToCircleFormat(res, o.fkBcServiceId, o.id);
         var t = $('<tr>')
                 .addClass('bc-tr')
                 .addClass('testCaseListborder')
                 .append($('<td>').append(i + 1))
                 .append($('<td>')
-                        .attr("ondblclick", "probStatHtml2TextArea(this,'" + o.id + "')")
-                        .append(replaceTags(o.problemDesc)))
+                        .attr("sa-bc-pr-key", "problemDesc")
+                        .append($('<textarea>')
+                                .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
+                                .attr("pid", o.id)
+                                .attr("ptype", "segment")
+                                .addClass('bc-probdesc-textarea')
+                                .val(o.segment)))
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
+                                .attr("pid", o.id)
+                                .attr("ptype", "problemDesc")
+                                .addClass('bc-probdesc-textarea')
+                                .val(o.problemDesc)))
                 .append($('<td>')
                         .append($('<input type="number">')
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
@@ -1441,6 +2027,28 @@ function problemStatTable(res) {
                                 .attr("ptype", "countRealCustomer")
                                 .addClass('bc-probdesc-counts')
                                 .val(o.countRealCustomer)))
+                .append($('<td>')
+                        .append(serviceDiv)
+//                        .append("<br>")
+                        .append($('<a href="#">')
+                                .attr('pid', o.id)
+                                .css("color", "blue")
+                                .addClass("newProblemStateService")
+                                .text("Add Service")))
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
+                                .attr("pid", o.id)
+                                .attr("ptype", "fkBcKeyResourceId")
+                                .addClass('bc-probdesc-textarea')
+                                .val(o.fkBcKeyResourceId)))
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
+                                .attr("pid", o.id)
+                                .attr("ptype", "fkBcKeyPartnerId")
+                                .addClass('bc-probdesc-textarea')
+                                .val(o.fkBcKeyPartnerId)))
                 .append($('<td>').addClass('tdCenter')
                         .append($('<a>')
                                 .attr('onclick', "deleteProbStat('" + o.id + "')")
@@ -1453,6 +2061,271 @@ function problemStatTable(res) {
         table.append(t);
     }
 }
+
+$(document).on('click', '.newProblemStateService', function (ev) {
+    var pid = $(this).attr('pid');
+    addServiceToProblemStatementModal(pid);
+});
+
+var problemStatementId4Adding = '';
+
+function generateCompetitorFeatureMatrix() {
+    try {
+        var competitorList = generateCompetitorFeatureMatrix_CompetitorList();
+        var serviceList = generateCompetitorFeatureMatrix_ServiceList();
+        generateCompetitorFeatureMatrixBinderHeader(competitorList, serviceList);
+        generateCompetitorFeatureMatrixBinder(competitorList, serviceList);
+    } catch (err) {
+    }
+}
+
+function generateCompetitorFeatureMatrixBinderHeader(compList, serviceList) {
+    var header = $('#competitorServicesListHeader');
+    header.empty();
+
+    var tr = $('<tr>')
+            .append($("<th>").text('#'))
+            .append($("<th>").text('Competitor'))
+            .append($("<th>").text('Competitor Description'))
+
+    var obj = serviceList.tbl[0].r;
+    for (let i = 0; i < obj.length; i++) {
+        var o = obj[i];
+        tr.append($("<th>").text(o.serviceName))
+    }
+    tr.append($("<th>").text());
+    header.append(tr);
+
+}
+
+function getCompetitorFeatureList(competitorId) {
+
+
+    if (!competitorId)
+        return;
+    var list = {};
+
+    var json = initJSON();
+    json.kv.fkCompetitorId = competitorId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetCompetitorFeatureList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                list[o.fkServiceId] = o.feature;
+            }
+
+        }
+    });
+    return list;
+}
+
+function generateCompetitorFeatureMatrixBinder(compList, serviceList) {
+//    var header = $('#competitorServicesListHeader');
+    var body = $('#competitorServicesFeature');
+    body.empty();
+//    header.empty();
+
+    var obj = compList.tbl[0].r;
+    for (let i = 0; i < obj.length; i++) {
+        var o = obj[i];
+        var competitorFeatureList = getCompetitorFeatureList(o.id);
+        var tr = $('<tr>')
+                .append($("<td>").text(i + 1))
+                .append($("<td>").append($('<textarea>')
+                        .attr('pid', o.id)
+                        .attr("key", "competitorName")
+                        .attr('onchange', 'updateCompetitorInfo4Short(this)')
+                        .val(o.competitorName)))
+                .append($("<td>").append($('<textarea>')
+                        .attr('pid', o.id)
+                        .attr("key", "competitorDescription")
+                        .attr('onchange', 'updateCompetitorInfo4Short(this)')
+                        .val(o.competitorDescription)))
+
+
+
+        var obj2 = serviceList.tbl[0].r;
+        for (let j = 0; j < obj2.length; j++) {
+            var oo = obj2[j];
+            var features = convertProblemServicesToCircleFormatForCompetitors(competitorFeatureList, oo.feature, o.id, oo.id)
+            tr.append($("<td>").append(features))
+        }
+
+        tr.append($('<td>').addClass('tdCenter')
+                .append($('<a>')
+                        .attr('onclick', "deleteCompetitor('" + o.id + "')")
+                        .append($('<i class="fa fa-trash">')
+//                                        .css("color", "blue")
+                                .attr('aria-hidden', 'true')
+                                .addClass('summ-icon')))
+                .css("custor", "pointer"))
+        body.append(tr);
+    }
+
+}
+
+function updateCompetitorInfo4Short(el) {
+    var id = $(el).attr("pid"),
+            key = $(el).attr('key'),
+            value = $(el).val();
+
+    if (!id || !key || !value)
+        return;
+
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.key = key;
+    json.kv.value = value;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateCompetitorInfo4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+
+        }
+    });
+}
+
+function generateCompetitorFeatureMatrix_ServiceList() {
+    if (!activeBCId)
+        return;
+    var list = [];
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetProvidedServiceList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+
+            list = res;
+        }
+    });
+    return list;
+}
+
+
+function generateCompetitorFeatureMatrix_CompetitorList() {
+    if (!activeBCId)
+        return;
+    var list = [];
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetCompetitorList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+
+            list = res;
+        }
+    });
+    return list;
+}
+
+
+
+function insertNewCompetitor(el) {
+    if (!activeBCId)
+        return;
+
+    var val = $(el).val();
+
+    if (!val.trim()) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    json.kv.competitorName = val;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertNewCompetitor",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $(el).val('');
+            try {
+                generateCompetitorFeatureMatrix();
+            } catch (err) {
+            }
+        }
+    });
+
+}
+
+function addServiceToProblemStatementModal(problemStatementId) {
+    if (!activeBCId || !problemStatementId)
+        return;
+
+    problemStatementId4Adding = problemStatementId;
+    $('#addServiceToProblemStatementModal').modal('show');
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetProvidedServiceList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                getBusinessServiceRelDetails4Problem(res);
+            } catch (err) {
+            }
+        }
+    });
+
+
+}
+
+
+function addServiceToProblemStatementAction(el) {
+    var val = "";
+    $('.serviceListCheckbox').each(function () {
+        val += $(this).is(':checked') ? $(this).attr('pid') + ',' : "";
+    })
+
+    addServiceToBusinessCaseProblem(problemStatementId4Adding, val);
+
+
+
+}
+
 
 function deleteProbStat(id) {
 
@@ -1746,7 +2619,44 @@ function updateCaseSection4ShortDesc(el) {
 
 function updateCaseProblemStat4ShortDesc(el) {
     updateCaseProblemStat4Short(el);
-    $(el).closest("td").html($(el).val());
+    // $(el).closest("td").html($(el).val());
+}
+
+
+
+
+function updateProvidedServices4Short(el) {
+    var id = $(el).attr('pid'),
+            key = $(el).attr('key'),
+            value = $(el).val();
+
+    if (!id || !key || !value) {
+        return;
+    }
+
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = id;
+    json.kv.key = key;
+    json.kv.value = value;
+    var that = true;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateProvidedServices4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+        },
+        error: function () {
+            Toaster.showError(('Something Happened'));
+        }
+    });
 }
 
 function updateCaseSection4Short(el) {
@@ -1784,20 +2694,42 @@ function updateCaseSection4Short(el) {
 }
 
 
-function updateCaseProblemStat4Short(el) {
-    var id = $(el).attr('pid');
-    var type = $(el).attr('ptype');
-    var val = $(el).val();
+function addServiceToBusinessCaseProblem(problemId, serviceId) {
+    if (!problemId || !serviceId) {
+        return;
+    }
 
+
+    var json = initJSON();
+    json.kv.problemId = problemId;
+    json.kv.serviceId = serviceId;
+    var that = true;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmaddServiceToBusinessCaseProblem",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getProblemStatList();
+            $('#addServiceToProblemStatementModal').modal('hide');
+        },
+        error: function () {
+            Toaster.showError(('Something Happened'));
+        }
+    });
+}
+
+function updateCaseProblemStat4ShortDetails(id, type, val, isAsync) {
     if (!id || !type || !val) {
         return;
     }
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var syncType = (isAsync) ? isAsync : true;
+
+    var json = initJSON();
     json.kv.id = id;
     json.kv.type = type;
     json.kv.value = val;
@@ -1809,7 +2741,7 @@ function updateCaseProblemStat4Short(el) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: syncType,
         success: function (res) {
         },
         error: function () {
@@ -1818,17 +2750,25 @@ function updateCaseProblemStat4Short(el) {
     });
 }
 
+function updateCaseProblemStat4Short(el) {
+    var id = $(el).attr('pid');
+    var type = $(el).attr('ptype');
+    var val = $(el).val();
+
+    if (!id || !type || !val) {
+        return;
+    }
+
+    updateCaseProblemStat4ShortDetails(id, type, val)
+}
+
 //3  P.S_______________________________________________________________  
 function getProblemStatList(e) {
     if (!activeBCId) {
         return;
     }
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
     json.kv.fkBcId = activeBCId;
     var that = this;
     var data = JSON.stringify(json);

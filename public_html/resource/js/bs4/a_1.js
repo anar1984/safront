@@ -12274,11 +12274,11 @@ function genToolbarStatus() {
 function loadStoryCardByProject4oIpo(e) {
 
     global_var.current_project_id = $(e).val();
-    getUnloadedBacklogListOnInit();
+//    getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
-    getBacklogLastModificationDateAndTime(global_var.current_project_id);
-    loadFromIndexedDBtoRAM4LivePrototype();
+//    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+//    loadFromIndexedDBtoRAM4LivePrototype();
     loadDetailsOnProjectSelect4Ipo(global_var.current_project_id);
 
 

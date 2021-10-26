@@ -9620,7 +9620,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 closeModal('copyMoveInputsModal');
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
-
+                loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true)
                 hideProgress();
             },
             error: function () {
@@ -9665,6 +9665,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 closeModal('copyMoveInputsModal');
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
+                loadBacklogProductionCoreDetailssById($('#us-list-4-copy-move-inputs').val(), true);
                 hideProgress();
             },
             error: function () {
@@ -9750,6 +9751,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
+                
                 hideProgress();
                 closeModal('copyMoveInputsModalNew');
             },
@@ -9988,7 +9990,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     getSelectedInputs: function () {
         var st = "";
-        $('.us-input-list-item-check-box-class').each(function (e) {
+        $('#inp_popUp_story_card_list .us-input-list-item-check-box-class').each(function (e) {
             if ($(this).is(':checked')) {
                 st += $(this).val() + "|";
             }
@@ -10216,10 +10218,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     toggleAllInput: function (e) {
+        var chk = $("#inp_popUp_story_card_list").find('.us-input-list-item-check-box-class');
         if ($('#us_input_list_check_all').is(':checked')) {
-            $('.us-input-list-item-check-box-class').prop("checked", true);
+            chk.prop("checked", true);
         } else {
-            $('.us-input-list-item-check-box-class').prop("checked", false);
+            chk.prop("checked", false);
         }
     },
 

@@ -3034,10 +3034,7 @@ ul.main-nav > li > div.sub-menu-block {
   
   
   :root {
-    --primary-color: rgba(13, 110, 139, 0.75);
-    --overlay-color: rgba(24, 39, 51 , 0.85);
-    --toggle-box: rgba(65, 75, 84 , .95);
-    --text-color: white;
+    
     font-family: 'Roboto', serif;
     font-size:100%;
     margin: 0; 
@@ -3085,8 +3082,7 @@ ul.main-nav > li > div.sub-menu-block {
     z-index: 1004;
     width: 40px;
     height: 40px;
-    padding: 0.5rem;
-    background: var(--toggle-box);
+    padding: 0.5rem; 
     display: flex;
     align-items: center;
     justify-content: center;
