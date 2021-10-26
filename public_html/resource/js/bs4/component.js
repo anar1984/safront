@@ -833,7 +833,8 @@ var Component = {
             col = this.SetColumnsOrder(col);
 
 
-            var tr = $("<ul>").addClass('table-row-show-hide-ul')/* .append(thzad.append("")) */;
+            var tr = $("<ul>").addClass('table-row-show-hide-ul')
+                              .append("<span class=''><input type='checkbox' checked='true' class='all-table-row-checked'>All</span>");
             for (var i = 0; i < col.length; i++) {
 
                 var inputId = col[i].trim();
@@ -959,7 +960,7 @@ var Component = {
                             .addClass(" btn btn-sm")
                             .attr("id", 'table-show-hide-button-id-a')
 
-                            .html('<i class="fas fa-chevron-right"></i>'))
+                            .html('<i class="fas fa-cog"></i>'))
                 }
             } catch (error) {
 
@@ -1076,7 +1077,22 @@ var Component = {
                         .append(showColumn, ' ')
                         .append(showColumnName, ' ')
                 if (global_var.current_modal !== 'loadLivePrototype') {
-                    th.append((a === '') ? "" : "<span class='handle-drag btn btn-sm btn-light'><i class='fas fa-arrows-alt'></i></span>")
+                     try {
+                        th.append((a === '') ? "" : "<span class='handle-drag'></span>");
+
+                         try {
+                            if (cr_input_comp_attribute_kv[inputId]['sa-column-filter-active']) {
+                                th.append((a === '') ? "" : "<span class=' btn btn-sm filter-handle-button btn-outline-secondary '><i class='fas fa-sort-down'></i></span>")
+    
+                            }
+                         } catch (error) {
+                             
+                         }
+                     
+
+                     } catch (error) {
+                         
+                     }
 
                 }
 
@@ -1337,7 +1353,152 @@ var Component = {
 
             loadTableFIlterInside();
             return tbody;
+        },
+        GenFilterBodyForInputTable: function (tableId, comp,tabDepId) {
+
+            try {
+                if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
+                    return $("<div>")
+           .addClass("modal fade")
+           .attr("id",'cheweek-modal-filter'+tableId)
+           .attr("tabindex",'-1')
+           .attr("role",'dialog')
+           .attr("aria-labelledby","cheweek-modal-filterLabel")
+           .attr("aria-hidden","true")
+           .append($("<div>")
+                         .addClass("modal-dialog")
+                         .attr('role','document')
+                         .attr('style',"max-width: 45% !important")
+                         .append($("<div>")
+                                     .attr("style",'padding: 5px 10px;')
+                                     .addClass('modal-header')
+                                     .append("<b>Ətraflı Filter")
+                                     .append('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>'))
+                        .append($("<div>")
+                                        .addClass('modal-body d-flex')
+                                        .append($("<div>")
+                                                     .addClass("col-3")
+                                                   .append($("<div>")
+                                                             .addClass("table-show-hide-row-div")
+                                                           .attr("data-tableId", comp.id)
+                                                       
+                                        .append($("<div>")
+                                                .addClass('col-12 p-2 form-group')
+                                                .append($("<div>").hide()
+                                                        .addClass('input-group date')
+                                                        .attr("id", 'datetimepicker10')
+                                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
+                                                        .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
+                                                        )
+                
+                
+                                                )
+                                        .append($("<div>")
+                                                .addClass('col-12 p-2 form-group')
+                                                .append($("<div>").addClass("btn-group")
+/*                                                 .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                                 .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>') */
+                                                .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
+                                                .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+                                                )
+                
+                
+                                                )
+                                        .append(this.GenInputTableShowHideHtml(tableId, comp)))
+                                        )
+                                        .append($("<div>")
+                                                         .addClass("col-9 table-advanced-filter-section-div")
+                                                         .attr("id",'table-advanced-filter-section-div'+tableId)
+                                                         .append($("<div>").addClass("component-section-row"))))
+                        
+                                     )
+                
+    
+                            
+    
+                }
+
+            
+            } catch (error) {
+    
+            }
+          
+        },
+        GenFilterBodyForTableColumn: function (tableId, comp,tabDepId) {
+
+            try {
+                if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
+                    return $("<div>")
+                            .attr("data-tableId", tableId)
+                            .attr("data-compIdTab", comp.id)
+                            .addClass("table-column-show-hide-row-div table-filter-block-draggable")
+                            .attr("id","table-column-filter-details-id")
+                            .append($("<span>")
+                                    .attr("id", 'table-column-filter-details-span')
+                                    .addClass("table-show-hide-button-class-close")
+                                    .html('<i class="fas fa-times"></i>')
+                                    )
+                            .append($("<div>")
+                                    .addClass("col-10 p-2")
+                                    .append($("<div>").addClass("btn-group float-right get-api-id")
+                                                  .append('<span class="btn btn-sm btn-light" id="group-data-table-btm-single"><i class="fas fa-layer-group"></i></span>')
+                                                  )
+    
+                                    .append("<span class='btn btn-sm nm-filed-column'></span>")
+    
+                                    )
+                                    .append("<hr>")
+                            .append($("<ul>")
+                                    .addClass('col-12  ms-ContextualMenu-list')
+                                    .append($('<li class="ms-ContextualMenu-item sort-by-az-fortable ">')
+                                             .append($("<button>")
+                                                     .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down"></i></span>')
+                                                     .append("A-dan Z-yə qədər çeşidləyin")))                                
+                                    .append($('<li class="ms-ContextualMenu-item sort-by-za-fortable ">')
+                                             .append($("<button>")
+                                                      .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down-alt"></i></span>')
+                                                     .append("Z-dən A-ya qədər çeşidləyin")))                                
+                                    .append($('<li class="ms-ContextualMenu-item ">')
+                                             .append($('<button type="button"  data-toggle="modal" data-target="#filter-for-table-modal-comp" >')
+                                                      .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-text-height"></i></span>')
+                                                     .append("Mətn Filtrləri")))                                
+                                    )
+                            .append("<hr>")
+                           /*  .append($("<div>")
+                                      .addClass('col-12 p-2 d-flex flex-wrap form-group')
+                                      .append("<span class='col-12'>Ətraflı filter</span>")
+                                      .append($("<select>").addClass("form-control form-control-sm col-6")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               )
+                                      .append($("<select>").addClass("form-control form-control-sm col-6")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               .append("<option>jkshfjhsdj</option>")
+                                               )
+                               )
+                               .append("<hr>") */
+                            .append($("<div>")
+                                    .addClass('col-12 p-2 form-group')
+                                    .append($("<div>")
+                                            .addClass('input-group ')
+                                            .attr("data-apiId",tabDepId)
+                                            .attr("id", 'filter-single-colmn-selectpicker')))
+                                                
+    
+                }
+
+            
+            } catch (error) {
+    
+            }
+          
         }
+
     },
     InputTable: function (comp) {
         var elDiv = (global_var.current_modal === 'loadLivePrototype'
@@ -1396,62 +1557,9 @@ var Component = {
 
         div.append(el);
         div.addClass("table-responsive");
-
-
-        try {
-            if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
-                div.append($("<div>")
-                        .attr("data-tableId", comp.id)
-                        .addClass("table-show-hide-row-div")
-                        .append($("<span>")
-                                .attr("id", 'table-show-hide-button-id-close')
-                                .addClass("table-show-hide-button-class-close")
-                                .html('<i class="fas fa-times"></i>')
-                                )
-                        .append($("<div>")
-                                .addClass("col-10 p-2")
-                                .append($("<div>").addClass("btn-group float-right")
-                                        .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
-                                        .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>')
-                                        .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
-                                        .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
-                                        )
-
-                                .append("<span class='btn btn-sm'><input type='checkbox' class='all-table-row-checked'>All</span>")
-
-                                )
-                        .append($("<div>")
-                                .addClass('col-12 p-2 form-group')
-                                .append($("<div>").hide()
-                                        .addClass('input-group date')
-                                        .attr("id", 'datetimepicker10')
-                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
-                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
-                                        .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
-                                        )
-
-
-                                )
-                        .append($("<div>")
-                                .addClass('col-12 p-2 form-group')
-                                .append($("<div>")
-                                        .addClass('input-group date')
-                                        .attr("id", 'datetimepicker6')
-                                        .append('<input type="text" data-api-tabid="' + tabDepId + '" class="form-control form-control-sm" id="date_timepicker_start_end">')
-                                        .append(`<span class="input-group-append" role="right-icon"><button  class="btn btn-light btn-sm  border-left-0" disabled type="button"><i class="fa fa-calendar"></i></button></span>`)
-                                        )
-
-
-                                )
-                        .append(this.InputTableAction.GenInputTableShowHideHtml(tableId, comp))
-
-                        )
-
-            }
-
-        } catch (error) {
-
-        }
+             
+         div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp,tabDepId));
+         div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp,tabDepId));
 
 
         return $('<div></div>').append(div).html();

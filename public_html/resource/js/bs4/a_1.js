@@ -62,6 +62,61 @@ var bhistorylist = [];
 var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
+(function ($) {
+    $.fn.tblToExcel = function () {
+        var elm = true;
+        if (this.length > 1) {
+            $('body').append('<div id="tbl-tnv-back" style="position: fixed; z-index: 1;padding-top: 100px;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);">' +
+            '<div id="tbl-tnv-excel" style="background-color: #fefefe;margin: auto;' +
+            'padding: 20px; ' +
+            'overflow: auto;' +
+            'border: 1px solid #888;' +
+            'width: 80%;" >  </div>' +
+            '</div>');
+            elm = false;
+        }
+        $('#tbl-tnv-back').click(function () {
+            $(this).remove();
+            $('#tbl-tnv-anch').remove();
+        });
+        var tableToExcel = (function () {
+            var i = 0;
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta charset="utf-8"/><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+                , format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
+            return function (table, name) {
+                if (!table.nodeType) table
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                if (elm) {
+                    window.location.href = uri + base64(format(template, ctx));
+                } else {
+                    i++;
+                    var xl = uri + base64(format(template, ctx));
+                    $('#tbl-tnv-excel').append('<a id="tbl-tnv-anch" style="background-color: #4CAF50;border: none;\n' +
+                        'color: white;' +
+                        'padding: 15px 32px;' +
+                        'text-align: center;' +
+                        'text-decoration: none;' +
+                        'display: inline-block; margin: 1px;' +
+                        'font-size: 16px;" href='+xl+' download>Download Excel-'+i+' </a>');
+                }
+            }
+        })();
+
+        return this.each(function () {
+            tableToExcel(this, 'W3C Example Table');
+        });
+    }
+
+}(jQuery));
+
 
 $(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
     if (e.keyCode === 13) {
@@ -523,8 +578,6 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
-
-        console.log(td);
         $.each(td, function (index, item) {
 
             sortableTable(tableId, sv, item);
@@ -538,7 +591,6 @@ function getGroupList4Table(elm) {
 $(function () {
     $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function () {
         var tbl = $(this).parents('.stat-table-us');
-        console.log(tbl);
         var index = $(this).index(),
                 rows = [],
                 thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
@@ -937,7 +989,23 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 }
 
 
-
+function DateRangePickerFormatValue(elm) {
+   
+    var val = $(elm).val();
+    if(!val){
+        return ''
+    }
+    var stTime
+    var endTime
+    val = val.split('-')
+    var dt = val[0].split('/');
+    var dt1 = val[1].split('/');
+    stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+    endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+    console.log(endTime, stTime);
+    var inns = stTime.trim() + '%BN%' + endTime.trim();
+    return inns
+}
 
 $(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
     var depID = $(this).attr('data-api-tabid');
@@ -4061,15 +4129,37 @@ function loadTableFIlterInside() {
     }
 
     $('#date_timepicker_start_end').daterangepicker({
-        /* ranges: {
-         'Bu Gün': [moment(), moment()],
-         'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-         'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-         'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-         'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-         'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-         } */
-    });
+        startDate: moment().subtract('days', 29),
+        endDate: moment(),
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: true,
+        ranges: {
+            'Bu Gün': [moment(), moment()],
+            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        opens: 'left',
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small btn-cancel-value-clear',
+        separator: ' to ',
+        locale: {
+
+            applyLabel: 'Axtar',
+            cancelLabel: 'ləğv et',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Xüsusi',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
+        }
+    }).val('').change();
 }
 
 function copyJSCodeClassTo_loadProjectList() {
@@ -6480,7 +6570,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
     tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
-    $('.table-show-hide-row-div').draggable({
+    $('.table-filter-block-draggable').draggable({
         containment: "body"
     });
 }
@@ -13404,6 +13494,10 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
+        $('#date_timepicker_start_end-usmn').daterangepicker({
+
+      
+        }).val('').change();
 
     });
 });
@@ -14296,6 +14390,36 @@ function labelOrSplitValuesUs() {
 }
 
 
+function getUpdateAssigneIDForBacklog(id) {
+
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv.fkAssigneeId = id;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmGetTaskBacklogListByStatusAndAssigneeId",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    backLogIdListForSearch = res.kv.fkBacklogId
+                    labelOrSplitValuesUs();
+
+                },
+                error: function () {
+                    Toaster.showError(('somethingww'));
+                }
+            });
+     
+
+}
 function setPrmFilterSprintValuesUs() {
     var st = ' ';
     $('.us-filter-checkbox-sprint').each(function () {
@@ -17043,7 +17167,27 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
     UsLabel = '';
     UsSprint = '';
     Utility.addParamToUrl('fk_assigne_id', $(this).val());
-    labelOrSplitValuesUs();
+   labelOrSplitValuesUs();
+ 
+
+});
+$(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
+
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+   labelOrSplitValuesUs();
+ 
+
+});
+$(document).on('change', '#story_mn_filter_updated_id', function (evt) {
+
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+   var id =  getProjectValueUsManageMultiByel(this)
+    getUpdateAssigneIDForBacklog(id);
+ 
 
 });
 
@@ -17073,12 +17217,14 @@ function loadAssigneesByProjectUSM(projectId) {
                 $('#story_mn_filter_assigne_id_mng').append(opt.clone());
                 $('#story_mn_filter_assigne_id').append(opt.clone());
                 $('#bug_filter_assignee_id_add').append(opt.clone());
+                $('#story_mn_filter_updated_id').append(opt.clone());
 
 
             }
             $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
+            $('#story_mn_filter_updated_id').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();

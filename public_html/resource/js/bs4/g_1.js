@@ -178,6 +178,27 @@ $(function () {
         setContainerStyleUpdate(elm);
 
     });
+    //project table import excel export excel
+    $(document).on("click", '#file_export_excel', function (e) {
+
+         var id =$(this).attr("data-api-tabid");
+         var table = $('[table-id="'+id+'"]').clone();
+             table.find('tbody').empty();
+             table.find("thead .filter-table-row-header-tr").remove();
+             var tr  = table.find("thead>tr>th");
+             tr.each(function () {
+                if($(this).css("display")==="none"){
+                    $(this).remove();
+                } 
+             })
+                 
+             table.find("thead tr td ").remove();
+             table.tblToExcel();
+
+
+
+
+    });
     $(document).on("change", '#gui-cell-selectbox-changed', function (e) {
         var lastCol = $(this).parents(".component-container-dashed")
         $("#us-gui-component-cell-no").val($(this).val());
@@ -428,10 +449,16 @@ $(function () {
 
 
     });
-    $(document).on("click", '#table-show-hide-button-id-close', function (e) {
+
+    ////////cheweekk start >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    $(document).on("click", '#table-column-filter-details-span', function (e) {
         var th = $(this);
 
-        th.parents('.table-show-hide-row-div').hide("fast")
+        th.parents('.table-column-show-hide-row-div').hide("fast")
+    });
+    $(document).on("click", '#group-data-table-btm-single', function (e) {
+        var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeindex");
+       $("ul.table-row-show-hide-ul li:nth-child("+index+") ").find("#group-data-table-btm").click();
     });
     $(document).on("click", '#group-data-table-btm', function (e) {
         var tableId = $(this).attr('tbid');
@@ -450,9 +477,47 @@ $(function () {
 
     $(document).on("click", '#table-show-hide-button-id-a', function (e) {
         var th = $(this);
-        th.parents(".component-container-dashed").find(".table-show-hide-row-div").toggle("fast")
+        var tbid = th.closest("table").attr("table-id");
+        var modal = th.parents(".component-container-dashed").find("#cheweek-modal-filter"+tbid);
+     
+            if(modal.length ===0){
+              modal = $("#cheweek-modal-filter"+tbid);
+            }else{
+                $("#mainBodyDivForAll").append(modal);
+               
+            }
+            modal.modal('show');
+            var sect = $("[table-id='"+tbid+"']").attr("sa-advanced-filter-sectionId");
+            new UserStory().setGUIComponentFillGUIModal(this,sect,'table-advanced-filter-section-div'+tbid);
+            modal.find(".table-advanced-filter-section-div")
+    });
+
+    $(document).on("click", '.input-group-append', function (e) {
+        var ths = $(this);
+         if (ths.hasClass("active-range-picker")) {
+            ths.parent().find("input").val('').change();
+         }else{
+            ths.parent().find("input").focus();
+         }
+          
+
 
     });
+    $(document).on("change", '.tame-range-picker-comp', function (e) {
+        var ths = $(this);
+            console.log();
+           if(ths.val().trim().length >0){
+            ths.parent().find(".input-group-append").addClass("active-range-picker").find("button").addClass("btn-danger").html('<i class="fas fa-times"></i>');
+
+           }else{
+            ths.parent().find(".input-group-append").removeClass("active-range-picker").find("button ").removeClass("btn-danger").html('<i class="fa fa-calendar" aria-hidden="true"></i>');
+ 
+           }
+
+
+
+    });
+    
     $(document).on("click", '#filter-show-hide-button-id-a', function (e) {
         var th = $(this);
 
@@ -466,7 +531,85 @@ $(function () {
         }
 
     });
+    $(document).on("click", '.filter-handle-button', function (e) {
+        
+        var block = $(this).closest('.table').parent().find('#table-column-filter-details-id');
+        var nmb = block.find(".nm-filed-column")
+         var index = $(this).closest("th").index();
+         var nm = $(this).closest("th").text();
+         var slpck  = $(this).closest('thead').find(".filter-table-row-header-tr th:eq("+index+")").html();
+         block.find("#filter-single-colmn-selectpicker").html(slpck);
+         block.attr("data-activeindex",index)
+         var top= $(this).offset().top+$(this).height();
+         var left= $(this).offset().left
+         block.css("top",top);
+         block.css("left",left);
+         nmb.text(nm);
+         block.toggle('fast');
+    });
+    $(document).on("click", '.sort-by-az-fortable', function (e) {
+        var tblID  = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
+        var tbl = $('#comp_id_'+tblID);
+        var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeindex"),
+            rows = []
+                /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
 
+      /*   $(tbl).find('.theader-table td').removeClass('asc desc');
+        $(this).addClass(thClass); */
+
+        $(tbl).find('tbody>tr').each(function (index, row) {
+            rows.push($(row).detach());
+        });
+
+        rows.sort(function (a, b) {
+            var aValue = $(a).find('td').eq(index).text(),
+                    bValue = $(b).find('td').eq(index).text();
+
+            return aValue > bValue ?
+                    1 :
+                    aValue < bValue ?
+                    -1 :
+                    0;
+        });
+
+        $.each(rows, function (index, row) {
+            $(tbl).append(row);
+        });
+    });
+    $(document).on("click", '.sort-by-za-fortable', function (e) {
+        var tblID  = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
+        var tbl = $('#comp_id_'+tblID);
+        var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeIndex"),
+            rows = []
+                /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
+
+      /*   $(tbl).find('.theader-table td').removeClass('asc desc');
+        $(this).addClass(thClass); */
+
+        $(tbl).find('tbody>tr').each(function (index, row) {
+            rows.push($(row).detach());
+        });
+
+        rows.sort(function (a, b) {
+            var aValue = $(a).find('td').eq(index).text(),
+                    bValue = $(b).find('td').eq(index).text();
+
+            return aValue > bValue ?
+                    1 :
+                    aValue < bValue ?
+                    -1 :
+                    0;
+        });
+
+         rows.reverse();
+
+        $.each(rows, function (index, row) {
+            $(tbl).append(row);
+        });
+    });
+
+
+    /// cheweekkk  end  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     $(document).on("click", '#user-story-delete-story', function (e) {
         if ($(this).is(":checked")) {
             $("#user-story-delete-story").prop("readonly", true);
@@ -483,7 +626,7 @@ $(function () {
         $("#live-prototype-show-key").toggle(600);
     });
     $(document).on("dblclick", '.bug-tr .bug-list-column-task-name', function (e) {
-        console.log('fdddddddddddd');
+
         var val = $(this).find("a").text();
         $(this).find(".task-name-issue").show().val(val);
 
@@ -503,7 +646,7 @@ $(function () {
         var prId = $(this).parents(".bug-tr").attr("projectid");
         global_var.current_issue_id = bugId;
         Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-        getProjectUsersById(prId)
+        getProjectUsersById(prId);
 
     });
 
@@ -558,13 +701,22 @@ $(function () {
             st.parents("thead").find(".filter-table-row-header-tr").find("th:eq(" + dex + ")").show();
         }
 
+
+        var lks  = $(this).closest("ul").find(".component-class-show-hide input");
+         var kls =$(this).closest("ul").find(".component-class-show-hide input:checked");
+         if (kls.length === lks.length) {
+            $(this).closest("ul").find('.all-table-row-checked').prop("checked",true);
+         }else{
+            $(this).closest("ul").find('.all-table-row-checked').prop("checked",false);
+ 
+         }
         tableShowHideRowSetItem(tbId);
 
     });
     $(document).on('click', '#show-table-row-btn', function (event) {
 
-        var li = $(this).parents('.table-show-hide-row-div').find(".table-row-show-hide-ul").find("li");
-        var tbId = $(this).parents('.table-show-hide-row-div').attr('data-tableId');
+        var li = $(this).closest('.table-show-hide-row-div').find(".table-row-show-hide-ul").find("li");
+        var tbId = $(this).closest('.table-show-hide-row-div').attr('data-tableId');
 
 
         for (let index = 0; index < li.length; index++) {

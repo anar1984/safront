@@ -375,16 +375,23 @@ body{
 
     position: relative;
 }
-.component-table-class-for-zad thead th .handle-drag{
+.component-table-class-for-zad thead th .filter-handle-button{
 
-    position: absolute;
+  /*   position: absolute;
     right: 2px;
-    top: 0px;
-
-    height: 23px;
+    top: 0px; */
+    height: 20px;
     font-size: 10px;
+    padding: 0px 5px;
 }
+.filter-handle-button{
+    visibility: hidden;
+    
+}
+.table thead th:hover .filter-handle-button{
+    visibility: visible;
 
+}
 .us-item-status-waiting{
     background-color: #FFFF00; 
     font-size:10px;
