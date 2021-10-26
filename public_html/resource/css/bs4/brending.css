@@ -1830,7 +1830,7 @@ padding: 0 10px;
 }
 .cs-button-group .dropdown-menu {
     color: #272B7C;
-    padding: 7px 0;
+    padding: 0 0;
     font-size: 14px;
     height: auto;
     line-height: 1;
