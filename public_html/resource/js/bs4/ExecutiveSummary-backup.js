@@ -723,7 +723,7 @@ function loadBCServiceDetails(res) {
 }
 
 
-$(document).on("click", '.main-bc-tr', function (e) {
+$(document).on("click", '.main-bc-btn', function (e) {
     activeBCId = $(this).attr("id");
     var caseName = $(this).find('.main-bc-name').html();
     loadMainBusinesCaseBody(caseName)
@@ -904,7 +904,7 @@ function ExecutiveSummaryTable(res) {
         var o = obj[i];
         var t = $('<tr>')
                 .css("cursor", "pointer")
-                .addClass('main-bc-tr')
+                .addClass('main-bc-btn')
                 .addClass('bc-tr')
                 .attr("id", o.id)
 //                .addClass('bug-tr')
@@ -919,7 +919,7 @@ function ExecutiveSummaryTable(res) {
 
         table.append(t);
     }
-    $('.main-bc-tr').first().click();
+    $('.main-bc-btn').first().click();
 }
 
 function updateLineCaseName(el, caseId) {

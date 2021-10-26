@@ -1805,6 +1805,52 @@ padding: 0 10px;
     font-size: 14px;
     margin-bottom: 3px;
 }
+.cs-button-group .dropdown-item.active, .cs-button-group a.dropdown-item:active {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
+}
+.cs-button-group .dropdown-item.active:hover, .cs-button-group a.dropdown-item:active:hover {
+   color: #fff;
+}
+.cs-button-group .btn:hover, .cs-button-group button:hover  {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
+}
+.cs-button-group .btn-light:not(:disabled):not(.disabled).active, .cs-button-group .btn-light:not(:disabled):not(.disabled):active, .cs-button-group .show>.btn-light.dropdown-toggle, .cs-button-group button {
+    color: #ffffff;
+    background-color: #525596;
+    border-color: #525596;
+}
+.cs-button-group button {
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-button-group .dropdown-menu {
+    color: #272B7C;
+    padding: 7px 0;
+    font-size: 14px;
+    height: auto;
+    line-height: 1;
+}
+.cs-button-group .dropdown-menu > li a, .cs-button-group .dropdown-menu a {
+    padding: 7px 20px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1;
+}
+.cs-input-flat-group input {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #525596;
+    margin-left: 0px;
+    padding: 4px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
 .cs-modal-box .modal-footer .btn {
     font-size: 14px;
     height: 30px;
@@ -2603,19 +2649,46 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
     z-index: -1;
 }
 .cs-headline-title {
-    background: #ffffff;
-    border: 1px solid #BEBFD7;
-    padding: 5px 5px;
+    padding: 15px 5px;
     width: 100%;
     display: inline-block;
-    max-width: 300px;
+    max-width: 600px;
     text-align: center;
     left: 50%;
+    background: white;
+    border: 1px solid #bebfd7;
 }
 .cs-headline-title #business_case_heading {
     margin-bottom: 0;
+    vertical-align: top;
+}
+.cs-headline-title .cs-es-col {
+    display: inline-block;
     vertical-align: middle;
-    font-size: 22px;
-    font-weight: bold;
+}
+.cs-headline-title .cs-input-flat-group input {
+    margin-bottom: 0;
+    border-radius: 4px;
+    margin-top: 0;
+    height: 30px;
+    vertical-align: middle;
+}
+.cs-headline-title .dropdown-menu .dropdown-item .main-bc-name {
+    padding: 0px 0px;
+    vertical-align: middle;
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid;
+}
+.cs-headline-by-content {
     color: #525596;
+    background: #E9E9F1;
+    border-left: 4px solid #525596;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+}
+.cs-headline-by-content .h1, .cs-headline-by-content .h2, .cs-headline-by-content .h3, .cs-headline-by-content .h4, .cs-headline-by-content .h5, .cs-headline-by-content .h6, .cs-headline-by-content h1, .cs-headline-by-content h2, .cs-headline-by-content h3, .cs-headline-by-content h4, .cs-headline-by-content h5, .cs-headline-by-content h6 {
+    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
 }

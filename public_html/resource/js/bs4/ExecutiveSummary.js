@@ -1312,7 +1312,7 @@ function loadMainBusinesCaseBody(caseName) {
 }
 
 $(document).on("click", '.bc-tr', function (e) {
-    $(this).closest('table').find('.bc-tr').removeClass("active");
+    $(this).closest('.dropdown-menu').find('.bc-tr').removeClass("active");
     $(this).toggleClass("active")
 
 })
@@ -1466,30 +1466,27 @@ function insertNewBusinessCase(el) {
 // 2 E.S_______________________________________________________________  
 
 function ExecutiveSummaryTable(res) {
-    var table = $('#executiveInsert');
-    table.html('');
-    var t = table.addClass('table')
-            .addClass('table-hover')
+    var dropdown = $('#executiveInsert');
+    dropdown.html('');
+    var t = dropdown.addClass('cs-et-hover')
 
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        var t = $('<tr>')
-                .css("cursor", "pointer")
+        var t = $('<a>')
+                 .addClass('dropdown-item')
                 .addClass('main-bc-tr')
                 .addClass('bc-tr')
                 .attr("id", o.id)
-//                .addClass('bug-tr')
+                .attr('ondblclick', 'updateLineCaseName(this,"' + o.id + '")')
                 .addClass('testCaseListborder')
-                .append($('<td>').append(i + 1))
-                .append($('<td>')
+                .append($('<span>')
                         .addClass("main-bc-name")
-                        .attr('ondblclick', 'updateLineCaseName(this,"' + o.id + '")')
-                        .css("padding", "15px 10px")
-                        .append(replaceTags(o.caseName)))
-                .append($('<td>').append((o.caseNo)))
+                        .append(replaceTags(o.caseName))
+                        )
+                .append($('<span>').append((o.caseNo)))
 
-        table.append(t);
+                dropdown.append(t);
     }
     $('.main-bc-tr').first().click();
 }

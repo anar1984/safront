@@ -1,59 +1,38 @@
-<div>
-    <div class="row">
-        <!--        <div class="col-12 text-center external-hidden-part" style="padding:10px 10px 20px 20px;">
-                                <h2>Business Case</h2>
-                </div>-->
-    </div>
-    <div class="row">
-        <div class="col-3 ExecutiveSummaryListStyle external-hidden-part tableFixed">
-            <table class="table table-hover spilted executiveTblStyle">
-                <thead  >
-                    <tr>
-                        <th style="width:1%"></th>   
-                        <th colspan="2"><input type="text" class="form-control  prerActionTableGeneralCls"  id="newBusinessCaseName" 
-                                               onchange="insertNewBusinessCase(this)" placeholder="+ Add New Business Case"></th>    
-                        <!--                        <th  style="width:1%" > </th> -->
-
-                    </tr>
-                </thead>
-                <tbody id="executiveInsert">
-
-                </tbody>
-            </table>
-        </div>
-        <div class="col-9 ExecutiveSummaryBodyStyle  " style="padding:10px 100px;">
-            <div class="col-12  top-menu">
-                <br class="external-hidden-part">
-                <div class="row text-center">
-                    <div class="col-11" style="padding-bottom: 20px;"> <h3 id="business_case_heading">   </h3></div>
-
-                    <div class="col-1" style="padding-right: 0px;">
-                        <button class="btn newin dropdown-toggle fa fa-ellipsis-h" id="newSectionDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>  
-
-                        <div class="dropdown-menu" aria-labelledby="newSectionDrop">
-                            <a class="dropdown-item" href="#" onclick="newSectionModal()">Editor</a>
-
-                            <a class="dropdown-item external-hidden-part"  onclick="deleteBusinessCase(this)" href="#">Delete</a>
-                        </div>
-                    </div>
-
 <div class="wrapper-business-case">
         <div class="row">
-            <div class="col-12 pt-3">
+           <div class="col-12 pt-3 mb-3">
                 <div class="cs-headline-box">
-                    <div class="cs-headline-title"><h3 id="business_case_heading"></h3></div>
+                    <div class="cs-headline-title">
+                        <div class="cs-es-col cs-input-flat-group">
+                            <input type="text" class="form-control"  id="newBusinessCaseName" onchange="insertNewBusinessCase(this)" placeholder="+ Add New Business Case">
+                        </div>
+                        <div class="cs-es-col cs-button-group">
+                            <button class="btn newin dropdown-toggle" id="dropExecutiveInsert" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="business_case_heading"></span></button>  
+                            <div id="executiveInsert" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropExecutiveInsert"></div> 
+                        </div>
+                        <div class="cs-es-col cs-button-group cs-es-settings">
+                            <button class="btn newin dropdown-toggle" id="newSectionDrop" data-toggle="dropdown"><i class="fas fa-cogs"></i> Settings</button>  
+        
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="newSectionDrop">
+                                <a class="dropdown-item" href="#" onclick="newSectionModal()">Editor</a>
+                                <a class="dropdown-item external-hidden-part"  onclick="deleteBusinessCase(this)" href="#">Delete</a>
+                            </div> 
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--General Description-->
-            <div class=" ">
-                <h4 style="padding-bottom:10px;">General Description</h4>
+            <div class="col-12 mt-5">
+                <div class="cs-headline-by-content">
+                    <h5>General Description</h5>
+                </div>
                 <textarea class="form-control" id="business_case_description" rows="7" onchange="updateCaseDesc(this)"></textarea>
             </div>
             <br>  <br>
 
             <!-- Problem Statement Section-->
 
-            <div class=" ">
+            <div class="col-12">
                 <h4 style="padding-bottom:10px;">Problem Statement</h4>
                 <table class="table table-hover spilted executiveTblStyle">
                     <thead>
@@ -86,7 +65,7 @@
             <br>  <br>  
 
             <!-- Provided Services as a Solution(s) section -->
-            <div class="">
+            <div class="col-12">
                 <h4 style="padding-bottom:10px;">Provided Services as a Solution(s)</h4>
                 <table class="table table-hover spilted executiveTblStyle">
                     <thead>
@@ -116,7 +95,7 @@
             </div>
             <br><br>
             <!-- Key Financial Projection section -->
-             <div class="">
+             <div class="col-12">
                 <h4 style="padding-bottom:10px;">Financial Projection 
                     <a href="#" style="font-size1: 14px"   class="addFinancialProjectionPeriod" title="Add Period">(+)</a> </h4>
                
@@ -148,7 +127,7 @@
             <br><br>
 
             <!-- competitor section -->
-            <div class="">
+            <div class="col-12">
                 <h4 style="padding-bottom:10px;">Competitor</h4>
                 <table class="table table-hover spilted executiveTblStyle">
                     <thead id='competitorServicesListHeader'>
@@ -206,7 +185,7 @@
                     </table>
                 </div>
                 <br>  <br>  
-    
+    -->
                 <!-- Provided Services as a Solution(s) section -->
                 <div class="">
                     <h4 style="padding-bottom:10px;">Provided Services as a Solution(s)</h4>
