@@ -2582,3 +2582,40 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
     height: 40px;
     background: transparent;
 }
+/****************** BUSINESS CASE  ***************
+*************************************************/
+
+.wrapper-business-case {
+    padding: 20px 30px 60px;
+}
+.cs-headline-box {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.cs-headline-box:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid #BEBFD7;
+    z-index: -1;
+}
+.cs-headline-title {
+    background: #ffffff;
+    border: 1px solid #BEBFD7;
+    padding: 5px 5px;
+    width: 100%;
+    display: inline-block;
+    max-width: 300px;
+    text-align: center;
+    left: 50%;
+}
+.cs-headline-title #business_case_heading {
+    margin-bottom: 0;
+    vertical-align: middle;
+    font-size: 22px;
+    font-weight: bold;
+    color: #525596;
+}
