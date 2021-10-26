@@ -9,6 +9,7 @@
 
    var guiZadList4Ever = {};
    var popupSiyahiList = {};
+   var backLogIdListForSearch ="";
 var filtUsm = {
     TableFields:{},
     SetTableFields: function (tableId, InputId) {
@@ -13908,7 +13909,9 @@ highlightTheSameSelectedFieldsInInputList();
         $('#kanban_view_'+stLm+'_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_'+stLm).html('');
         var priD =getProjectValueUsManageMulti();
-        var fkAsId = $("#story_mn_filter_assigne_id").val();
+        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+        var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
+
         var priorty = $("#priority-change-story-card-filter").val();
         var search = $("#search-us-managmenet").val();
         var startLimit = stLm;
@@ -13925,13 +13928,18 @@ highlightTheSameSelectedFieldsInInputList();
         }
         json.kv.fkProjectId = priD;
         if (UsSprint) {
-            json.kv.id = UsSprint;
+            json.kv.id = UsSprint + backLogIdListForSearch;
            
         } else if(UsLabel) {
-            json.kv.id = UsLabel;
+            json.kv.id = UsLabel + backLogIdListForSearch;
+        }else{
+            json.kv.id = backLogIdListForSearch;
         }
         if(fkAsId) {
-            json.kv.fkOwnerId = fkAsId;
+            json.kv.updatedBy = fkAsId;
+        }
+        if(timeM) {
+            json.kv.updatedDate = timeM;
         }
         if(priorty) {
             json.kv.priority = priorty;
@@ -14042,7 +14050,8 @@ highlightTheSameSelectedFieldsInInputList();
                $(".modal-header b.status-waiting-total").text(0)
                $(".modal-header b.status-total-total").text(0)
                 var priD =getProjectValueUsManageMulti();
-                var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+                var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
                 var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 var filtUs = $(".trigger-modal-us-header").find('.status-large-menu-total.gactive');
@@ -14059,17 +14068,23 @@ highlightTheSameSelectedFieldsInInputList();
                 }
                 json.kv.fkProjectId = priD;
                 if (UsSprint) {
-                    json.kv.id = UsSprint;
+                    json.kv.id = UsSprint + backLogIdListForSearch;
                    
                 } else if(UsLabel) {
-                    json.kv.id = UsLabel;
+                    json.kv.id = UsLabel + backLogIdListForSearch;
+                }else{
+                    json.kv.id = backLogIdListForSearch;
                 }
                 if(priorty) {
                     json.kv.priority = priorty;
                 }
                
                 if(fkAsId) {
-                    json.kv.fkOwnerId = fkAsId;
+                    json.kv.updatedBy = fkAsId;
+                }
+               
+                if(timeM) {
+                    json.kv.updatedDate = timeM;
                 }
                 if(search.length >2) {
                     json.kv.backlogName = "%%"+search +"%%";
@@ -14191,11 +14206,13 @@ highlightTheSameSelectedFieldsInInputList();
     },
     setUSLists4KanbanViewCore: function (stl) {
   
-                          $('#kanban_view_'+stl+'_count').html(0);
-                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
+             $('#kanban_view_'+stl+'_count').html(0);
+             $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                
                 var priD =getProjectValueUsManageMulti();
-                var fkAsId = $("#story_mn_filter_assigne_id").val();
+                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+                var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
+
                 var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
                 if(priD===''){
@@ -14210,16 +14227,21 @@ highlightTheSameSelectedFieldsInInputList();
                 }
                 json.kv.fkProjectId = priD;
                 if (UsSprint) {
-                    json.kv.id = UsSprint;
+                    json.kv.id = UsSprint + backLogIdListForSearch;
                    
                 } else if(UsLabel) {
-                    json.kv.id = UsLabel;
+                    json.kv.id = UsLabel + backLogIdListForSearch;
+                }else{
+                    json.kv.id = backLogIdListForSearch;
                 }
                 if(priorty) {
                     json.kv.priority = priorty;
                 }
                 if(fkAsId) {
-                    json.kv.fkOwnerId = fkAsId;
+                    json.kv.updatedBy = fkAsId;
+                }
+                if(timeM) {
+                    json.kv.updatedDate = timeM;
                 }
                 if(search.length >2) {
                     json.kv.backlogName = "%%"+search +"%%";
