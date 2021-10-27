@@ -13904,7 +13904,7 @@ highlightTheSameSelectedFieldsInInputList();
         $('#kanban_view_'+stLm+'_count').html(0);
         $('.main_div_of_backlog_info_kanban_view_table_'+stLm).html('');
         var priD =getProjectValueUsManageMulti();
-        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+        var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
         var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
 
         var priorty = $("#priority-change-story-card-filter").val();
@@ -14045,7 +14045,7 @@ highlightTheSameSelectedFieldsInInputList();
                $(".modal-header b.status-waiting-total").text(0)
                $(".modal-header b.status-total-total").text(0)
                 var priD =getProjectValueUsManageMulti();
-                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
                 var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
                 var priorty = $("#priority-change-story-card-filter").val();
                 var search = $("#search-us-managmenet").val();
@@ -14205,7 +14205,7 @@ highlightTheSameSelectedFieldsInInputList();
              $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                
                 var priD =getProjectValueUsManageMulti();
-                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_assigne_id"));
+                var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
                 var timeM = DateRangePickerFormatValue($("#date_timepicker_start_end-usmn"));
 
                 var priorty = $("#priority-change-story-card-filter").val();
