@@ -377,16 +377,16 @@ body{
 }
 .component-table-class-for-zad thead th .filter-handle-button{
 
-  /*   position: absolute;
-    right: 2px;
-    top: 0px; */
+    /*   position: absolute;
+      right: 2px;
+      top: 0px; */
     height: 20px;
     font-size: 10px;
     padding: 0px 5px;
 }
 .filter-handle-button{
     visibility: hidden;
-    
+
 }
 .table thead th:hover .filter-handle-button{
     visibility: visible;
@@ -3781,4 +3781,9 @@ img.sc-IbsAh.kqHqhS {
 
 .bc-probdesc-textarea{
     border: 0px solid;
+}
+
+.sa-debug-mode-input-api-selectedfield{
+    border: 2px green solid;
+    border-radius:5px;
 }

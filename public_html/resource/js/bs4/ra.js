@@ -265,6 +265,10 @@ function triggerApiDebugMode(el) {
     if (!$('#livePrototypDebugMode').is(":checked")) {
         return;
     }
+    
+    //input bildiren elemnentlerin classlarini silmek
+    $('.sa-debug-mode-input-api-selectedfield')
+            .removeClass('sa-debug-mode-input-api-selectedfield')
 
 
     clearLivePrototypeViewForDebug();
