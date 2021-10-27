@@ -9991,7 +9991,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
     getSelectedInputs: function () {
         var st = "";
-        $('#inp_popUp_story_card_list .us-input-list-item-check-box-class').each(function (e) {
+        $('#inp_popUp .us-input-list-item-check-box-class').each(function (e) {
             if ($(this).is(':checked')) {
                 st += $(this).val() + "|";
             }
@@ -10219,7 +10219,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     toggleAllInput: function (e) {
-        var chk = $("#inp_popUp_story_card_list").find('.us-input-list-item-check-box-class');
+        var chk = $("#inp_popUp").find('.us-input-list-item-check-box-class');
         if ($('#us_input_list_check_all').is(':checked')) {
             chk.prop("checked", true);
         } else {
