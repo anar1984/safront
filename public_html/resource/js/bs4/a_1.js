@@ -17180,13 +17180,25 @@ $(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
  
 
 });
+$(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
+
+   
+    if($(this).val().length > 0){
+        UsLabel = '';
+        UsSprint = '';
+       var id =  getProjectValueUsManageMultiByel(this)
+        getUpdateAssigneIDForBacklog(id);
+    }else{
+        backLogIdListForSearch = '';
+    }
+ 
+
+});
 $(document).on('change', '#story_mn_filter_updated_id', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    Utility.addParamToUrl('fk_assigne_id', $(this).val());
-   var id =  getProjectValueUsManageMultiByel(this)
-    getUpdateAssigneIDForBacklog(id);
+   labelOrSplitValuesUs();
  
 
 });
@@ -17228,7 +17240,6 @@ function loadAssigneesByProjectUSM(projectId) {
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
-                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
             }
         },
         error: function () {
