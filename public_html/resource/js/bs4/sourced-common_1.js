@@ -12786,32 +12786,27 @@ highlightTheSameSelectedFieldsInInputList();
             var o = obj[i];
             if (o.showInMenu === '1') {
 
-                $('.project-item-zad').parent()
+                $('.sa-navmenu .project-item-zad').parent()
                         .last()
                         .after($('<li>')
-                                .addClass('col-6')
                                 .append($('<div>')
-                                        .addClass("row row-style project-item-zad")
-                                        .append($('<a>')
-                                                .addClass('btnplus manualProject openNavhide left-menu-load')
-                                                .attr("title", o.projectName)
-                                                .attr('pid', o.id)
-                                                .attr('tid', o.fkTriggerBacklogId)
-                                                .append($("<i>")
-                                                        .addClass((o.menuIcon) ? "fa fa-" + o.menuIcon : "plus"))
-                                                )
+                                        .addClass("project-item-zad")
+                                                
                                         .append($('<a>')
                                                 .addClass('  manualProject openNavhide left-menu-load')
                                                 .attr('pid', o.id)
                                                 .attr('tid', o.fkTriggerBacklogId)
                                                 .attr("title", o.projectName)
+                                                .append($("<i>")
+                                                        .addClass((o.menuIcon) ? "fa fa-" + o.menuIcon : "plus"))
                                                 .append($("<span>")
                                                         .css("margin-top", "19px")
                                                         .addClass("description-main")
                                                         .addClass("fa fa-" + (o.menuIcon) ? o.menuIcon : "plus")
                                                         .text(o.projectName))
                                                 )
-                                        ))
+                                        )
+                         )
 
             }
 
