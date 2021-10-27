@@ -47,8 +47,6 @@ $(document).on("dblclick", '.convertedTextAreaLines', function (e) {
             .focus()
             .show();
 
-
-
     $(this).hide();
 
     $(this).closest('.hasTextAreaConverstion')
@@ -334,19 +332,15 @@ function convertProblemServicesToCircleFormat(res, arg, problemId) {
                 }
                 div.append($('<span>')
                         .css('border-radius', '5px')
-                        .css('background-color', '#04AA6D')
-                        .css('color', 'white')
-                        .css('padding', '2px 5px')
-                        .css('margin', '2px 5px')
                         .css('line-height', '25px')
+                        .css('background-color', '#32a086')
                         .addClass('problemServiceListSingle')
                         .text(o.serviceName)
                         .append($('<a href="#">')
                                 .attr('problemid', problemId)
                                 .attr('serviceid', o.id)
-                                .css('color', 'red')
                                 .addClass('problemServiceListSingleDelete')
-                                .text('(x) '))
+                                .html('<i class="far fa-times-circle"></i>'))
                         )
             }
         }
@@ -786,8 +780,7 @@ function convertTextAreaToTdSectionBulletEditbox(txt) {
 
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .css('color', 'green')
-                .text('Modify'))
+                .html('<i class="fas fa-edit"></i> Modify'))
     } catch (err) {
     }
     return ul;
@@ -808,23 +801,26 @@ function convertTextAreaToTdSectionBulletItem(txt) {
             ul.append($('<span>')
 
                     .css('border-radius', '5px')
-                    .css('padding', '2px 5px')
-                    .css('margin', '2px 5px')
-//                    .css('background-color', 'yellow')
+                    .css('background-color', '#ffd1d1')
+                    .css('border', '1px solid rgb(247 168 168)')
+                    .css('color', '#e14545')
+                    .css('padding','3px 7px 3px 7px')
+                    .css('margin-bottom','6px')
+                    .css('line-height','30px')
                     .addClass('convertedTextAreaLinesItem')
                     .text(ln)
                     .append('<br>')
                     .prepend($('<i class="fa fa-check">')
                             .css('font-size', '15px')
-                            .css('color', 'red'))
+                            .css('margin-right','10px')
+                            .css('color', '#e14545'))
                     .prepend('')
 
                     )
         }
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .css('color', 'green')
-                .text('Modify'))
+                .html('<i class="fas fa-edit"></i> Modify'))
     } catch (err) {
     }
     return ul;
@@ -835,7 +831,7 @@ function convertTextAreaToTdSectionBullet(txt) {
     var ul = $('<div>')
             .css('line-height', '25px')
             .css('list-style-type', 'none')
-            .addClass('convertedTextAreaLines');
+            .addClass('convertedTextAreaLines ProvidedServicesasaSolution');
     try {
         var r = txt.split(/\r*\n/);
         for (var i = 0; i < r.length; i++) {
@@ -846,21 +842,20 @@ function convertTextAreaToTdSectionBullet(txt) {
             ul.append($('<span>')
 
                     .css('border-radius', '5px')
-                    .css('padding', '2px 5px')
-                    .css('margin', '2px 5px')
-                    .css('background-color', 'yellow')
+                    .css('background-color', '#e2fb55')
+                    .css('border', '1px solid rgb(160 181 46 / 50%)')
+                    .css('color','#525596')
                     .addClass('convertedTextAreaLinesItem')
                     .text(ln)
                     .prepend($('<i class="fa fa-check">')
                             .css('font-size', '15px')
-                            .css('color', 'red'))
+                            .css('color', '#6a7a11'))
                     .prepend(' ')
                     )
         }
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .css('color', 'green')
-                .text('Modify'))
+                .html('<i class="fas fa-edit"></i> Modify'))
     } catch (err) {
     }
     return ul;
@@ -2433,9 +2428,9 @@ function problemStatTable(res) {
 //                        .append("<br>")
                         .append($('<a href="#">')
                                 .attr('pid', o.id)
-                                .css("color", "blue")
+                                .css("color", "#525596")
                                 .addClass("newProblemStateService")
-                                .text("Add Service")))
+                                .html('<i class="fas fa-user-cog"></i> Add Service')))
                 .append($('<td>')
                         .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBullet(o.fkBcKeyResourceId))
@@ -2509,7 +2504,7 @@ function generateCompetitorFeatureMatrixBinderHeader(compList, serviceList) {
         var o = obj[i];
         tr.append($("<th>").text(o.serviceName))
     }
-    tr.append($("<th>").text());
+    tr.append($("<th>").text(''));
     header.append(tr);
 
 }
