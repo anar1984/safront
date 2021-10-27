@@ -44,18 +44,49 @@ function loadDocEditor4BusinessCase(id) {
 $(document).on("dblclick", '.convertedTextAreaLines', function (e) {
     $(this).closest('.hasTextAreaConverstion')
             .find('.figureTextarea')
+            .focus()
             .show();
 
+
+
     $(this).hide();
+
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.figureTextarea')
+            .first()
+            .focus()
 })
 
-$(document).on("click", '.figureTextarea', function (e) {
-    alert('zad')
+$(document).on("click", '.convertedTextAreaLinesShey', function (e) {
     $(this).closest('.hasTextAreaConverstion')
-            .find('.convertedTextAreaLines')
+            .find('.figureTextarea')
+
             .show();
 
+    $(this).closest('.convertedTextAreaLines').hide();
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.figureTextarea')
+            .first()
+            .focus()
+})
+
+
+$(document).on("focusout", '.figureTextarea', function (e) {
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.convertedTextAreaLines')
+            .remove();
+
     $(this).hide();
+    var type = $(this).attr('data-type');
+    var el = '';
+    if (type === 'textarea') {
+        el = convertTextAreaToTdSectionBullet($(this).val());
+    } else if (type === 'editbox') {
+        el = convertTextAreaToTdSectionBulletEditbox($(this).val())
+    } else if (type === 'item') {
+        el = convertTextAreaToTdSectionBulletItem($(this).val())
+    }
+    $(this).closest('.hasTextAreaConverstion').prepend(el);
 })
 
 $(document).on("click", '.addFinancialProjectionPeriod', function (e) {
@@ -235,7 +266,7 @@ function getBCSectionsBody(bcId, sectionId) {
 function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, competitorId, serviceId) {
     var div = $('<div>');
     try {
-        var srvList = arg.split(',');
+        var srvList = arg.split(/\r*\n/);
 
         for (var kk in srvList) {
             var srv = srvList[kk];
@@ -250,10 +281,9 @@ function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, co
                     .addClass('competitorFeatureAddRemove');
 
             if (addFeatures[serviceId]) {
-                var srvT = srv.replace(/ /g, '');
+                var srvT = srv.trim();
                 var zad = addFeatures[serviceId];
-                zad = zad.replace(/ /g, '')
-                if (zad.split(",").includes(srvT)) {
+                if (zad.split('%IN%').includes(srvT)) {
                     input.attr('checked', 'true');
                 }
             }
@@ -261,22 +291,22 @@ function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, co
             var span = $('<span>')
                     .css('border-radius', '10px')
                     .css('padding', '1px 5px')
+                    .css('margin', '2px 5px')
+                    .css('line-height', '25px')
                     .css('color', 'gray')
                     .addClass('problemServiceListSingle')
                     .text(srv)
                     .append(input)
 
             if (addFeatures[serviceId]) {
-                var srvT = srv.replace(/ /g, '');
+                var srvT = srv.trim();
                 var zad = addFeatures[serviceId];
-                zad = zad.replace(/ /g, '')
-                if (zad.split(",").includes(srvT)) {
-                    span.css('background-color', 'yellow');
+                if (zad.split("%IN%").includes(srvT)) {
+                    span.css('background-color', 'greenyellow');
                 }
             }
 
-            div.append(span
-                    )
+            div.append(span);
         }
     } catch (err) {
     }
@@ -303,6 +333,12 @@ function convertProblemServicesToCircleFormat(res, arg, problemId) {
                     continue;
                 }
                 div.append($('<span>')
+                        .css('border-radius', '5px')
+                        .css('background-color', '#04AA6D')
+                        .css('color', 'white')
+                        .css('padding', '2px 5px')
+                        .css('margin', '2px 5px')
+                        .css('line-height', '25px')
                         .addClass('problemServiceListSingle')
                         .text(o.serviceName)
                         .append($('<a href="#">')
@@ -357,7 +393,13 @@ function getBusinessServiceRelDetails(res) {
                 .addClass('testCaseListborder')
                 .append($('<td>').append(idx++))
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.serviceName))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'editbox')
+
                                 .addClass("providedServicesTextareaZad")
                                 .attr('pid', o.id)
                                 .attr('key', 'serviceName')
@@ -366,7 +408,13 @@ function getBusinessServiceRelDetails(res) {
                         )
 
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.advantage))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'textarea')
+
                                 .addClass("providedServicesTextareaZad")
                                 .attr('pid', o.id)
                                 .attr('key', 'advantage')
@@ -375,7 +423,13 @@ function getBusinessServiceRelDetails(res) {
                         )
 
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.technicalAdvantage))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'textarea')
+
                                 .addClass("providedServicesTextareaZad")
                                 .attr('pid', o.id)
                                 .attr('key', 'technicalAdvantage')
@@ -384,7 +438,13 @@ function getBusinessServiceRelDetails(res) {
                         )
 
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.valueProposition))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'textarea')
+
                                 .addClass("providedServicesTextareaZad")
                                 .attr('pid', o.id)
                                 .attr('key', 'valueProposition')
@@ -393,7 +453,13 @@ function getBusinessServiceRelDetails(res) {
                         )
 
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.feature))
                         .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'textarea')
+
                                 .addClass("providedServicesTextareaZad")
                                 .attr('pid', o.id)
                                 .attr('key', 'feature')
@@ -461,12 +527,89 @@ function getFinancialProjectionZoneListDetails(res) {
 
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        trHead.append($('<th>').text(o.periodName));
-        trCurrency.append($('<td>').text(o.currency));
-        trCustomer.append($('<td>').text(o.customerCount));
-        trRevenue.append($('<td>').text(o.totalRevenue));
-        trExpences.append($('<td>').text(o.totalExpence));
-        trGrossProfit.append($('<th>').text(o.grossProfit));
+        trHead.append($('<th>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.periodName))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'periodName')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.periodName)))
+                ;
+
+        trCurrency.append($('<td>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.currency))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'currency')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.currency)))
+                ;
+
+        trCustomer.append($('<td>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.customerCount))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'customerCount')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.customerCount)));
+
+        trRevenue.append($('<td>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.totalRevenue))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'totalRevenue')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.totalRevenue)));
+        trExpences.append($('<td>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.totalExpence))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'totalExpence')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.totalExpence)));
+        trGrossProfit.append($('<th>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o.grossProfit))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o.id)
+                        .attr('key', 'grossProfit')
+                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                        .text(o.grossProfit)));
 //        trSection.append($('<td>').append($('<div>')
 //                .addClass("financialSectionDivZad")
 //                .attr('pid', o.id)
@@ -489,11 +632,41 @@ function getFinancialProjectionZoneListDetails(res) {
     for (var i = 0; i < obj1.length; i++) {
         var o1 = obj1[i];
 
-        var trSec = $('<tr>').append($('<th>').text(o1.sectionName));
+        var trSec = $('<tr>').append($('<th>')
+                .addClass('hasTextAreaConverstion')
+                .append(convertTextAreaToTdSectionBulletEditbox(o1.sectionName))
+                .append($('<textarea>')
+                        .addClass("figureTextarea")
+                        .css("display", "none")
+                        .attr('data-type', 'editbox')
+
+                        .addClass("providedServicesTextareaZad")
+                        .attr('pid', o1.id)
+                        .attr('key', 'sectionName')
+                        .attr("onchange", "updateFinancialProjectionSectionInfo4Short(this)")
+                        .text(o1.sectionName)));
         var obj = res.tbl[0].r;
         for (var j = 0; j < obj.length; j++) {
             var o = obj[j];
-            trSec.append($('<td>').append($('<span>').text('zad')))
+            trSec.append($('<td>')
+                    .addClass("hasFiancialSectionBodyList")
+                    .attr('sectionId', o.id)
+                    .attr('projectionId', o1.id)
+                    .addClass('hasTextAreaConverstion')
+                    .append(convertTextAreaToTdSectionBulletItem(''))
+                    .append($('<textarea>')
+                            .addClass("figureTextarea")
+                            .css("display", "none")
+                            .attr('data-type', 'item')
+
+                            .addClass("providedServicesTextareaZad")
+                            .attr('pid', o.id)
+                            .attr('sectionid', o.id)
+                            .attr('projectionid', o1.id)
+                            .attr('key', 'sectionBody')
+                            .attr("onchange", "addFinancialSectionDetails(this)")
+                            .text(''))
+                    );
         }
         tbody.append(trSec);
     }
@@ -504,10 +677,126 @@ function getFinancialProjectionZoneListDetails(res) {
 
     table.append(thead);
     table.append(tbody)
+
+    getFinancialSectionDetailList();
 }
 
-function convertTextAreaToTdSectionBullet(txt) {
-    var ul = $('<ul>')
+//
+
+function getFinancialSectionDetailList() {
+    if (!activeBCId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetFinancialSectionDetailList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                var sectionId = o.fkFinancialSectionId;
+                var projectionId = o.fkFinancialProjectionId;
+
+                $('.hasFiancialSectionBodyList[sectionid=' + sectionId + '][projectionid=' + projectionId + ']')
+                        .each(function () {
+
+                            $(this).html('')
+                                    .append(convertTextAreaToTdSectionBulletItem(o.sectionBody))
+                                    .append($('<textarea>')
+                                            .addClass("figureTextarea")
+                                            .css("display", "none")
+                                            .attr('data-type', 'item')
+
+                                            .addClass("providedServicesTextareaZad")
+                                            .attr('pid', o.id)
+                                            .attr('sectionid', sectionId)
+                                            .attr('projectionid', projectionId)
+                                            .attr('key', 'sectionBody')
+                                            .attr("onchange", "addFinancialSectionDetails(this)")
+                                            .text(o.sectionBody))
+
+                        })
+
+            }
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function addFinancialSectionDetails(el) {
+    var sectionid = $(el).attr('sectionid'),
+            projectiondId = $(el).attr('projectionid');
+
+    if (!activeBCId || !sectionid || !projectiondId)
+        return;
+
+    var json = initJSON();
+    json.kv.fkBcId = activeBCId;
+    json.kv.fkFinancialProjectionId = projectiondId;
+    json.kv.fkFinancialSectionId = sectionid;
+    json.kv.sectionBody = $(el).val();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmaddFinancialSectionDetails",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        },
+        error: function () {
+            Toaster.showError(('Something Went Wrong.'));
+        }
+    });
+}
+
+function convertTextAreaToTdSectionBulletEditbox(txt) {
+    var ul = $('<div>')
+            .css('line-height', '25px')
+            .css('list-style-type', 'none')
+            .addClass('convertedTextAreaLines');
+    try {
+
+        ul.append($('<span>')
+
+                .css('border-radius', '5px')
+                .css('padding', '2px 5px')
+                .css('margin', '2px 5px')
+//                .css('background-color', 'yellow')
+                .addClass('convertedTextAreaLinesItem')
+                .text(txt)
+//                .prepend($('<i class="fa fa-check">')
+//                        .css('font-size', '15px')
+//                        .css('color', 'red'))
+                .prepend(' ')
+                )
+
+        ul.append($('<a href="#">')
+                .addClass('convertedTextAreaLinesShey')
+                .css('color', 'green')
+                .text('Modify'))
+    } catch (err) {
+    }
+    return ul;
+}
+
+function convertTextAreaToTdSectionBulletItem(txt) {
+    var ul = $('<div>')
+            .css('line-height', '25px')
+            .css('list-style-type', 'none')
             .addClass('convertedTextAreaLines');
     try {
         var r = txt.split(/\r*\n/);
@@ -516,10 +805,62 @@ function convertTextAreaToTdSectionBullet(txt) {
             if (!ln.trim()) {
                 continue;
             }
-            ul.append($('<li>')
+            ul.append($('<span>')
+
+                    .css('border-radius', '5px')
+                    .css('padding', '2px 5px')
+                    .css('margin', '2px 5px')
+//                    .css('background-color', 'yellow')
                     .addClass('convertedTextAreaLinesItem')
-                    .text(ln))
+                    .text(ln)
+                    .append('<br>')
+                    .prepend($('<i class="fa fa-check">')
+                            .css('font-size', '15px')
+                            .css('color', 'red'))
+                    .prepend('')
+
+                    )
         }
+        ul.append($('<a href="#">')
+                .addClass('convertedTextAreaLinesShey')
+                .css('color', 'green')
+                .text('Modify'))
+    } catch (err) {
+    }
+    return ul;
+}
+
+
+function convertTextAreaToTdSectionBullet(txt) {
+    var ul = $('<div>')
+            .css('line-height', '25px')
+            .css('list-style-type', 'none')
+            .addClass('convertedTextAreaLines');
+    try {
+        var r = txt.split(/\r*\n/);
+        for (var i = 0; i < r.length; i++) {
+            var ln = r[i];
+            if (!ln.trim()) {
+                continue;
+            }
+            ul.append($('<span>')
+
+                    .css('border-radius', '5px')
+                    .css('padding', '2px 5px')
+                    .css('margin', '2px 5px')
+                    .css('background-color', 'yellow')
+                    .addClass('convertedTextAreaLinesItem')
+                    .text(ln)
+                    .prepend($('<i class="fa fa-check">')
+                            .css('font-size', '15px')
+                            .css('color', 'red'))
+                    .prepend(' ')
+                    )
+        }
+        ul.append($('<a href="#">')
+                .addClass('convertedTextAreaLinesShey')
+                .css('color', 'green')
+                .text('Modify'))
     } catch (err) {
     }
     return ul;
@@ -2037,29 +2378,54 @@ function problemStatTable(res) {
                 .append($('<td>').append(i + 1))
                 .append($('<td>')
                         .attr("sa-bc-pr-key", "problemDesc")
-
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.segment))
                         .append($('<textarea>')
+                                .attr('data-type', 'editbox')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "segment")
                                 .addClass('bc-probdesc-textarea')
                                 .val(o.segment)))
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.problemDesc))
                         .append($('<textarea>')
+                                .attr('data-type', 'editbox')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "problemDesc")
                                 .addClass('bc-probdesc-textarea')
                                 .val(o.problemDesc)))
                 .append($('<td>')
-                        .append($('<input type="number">')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.countPotentialCustomer))
+                        .append($('<textarea>')
+                                .attr('data-type', 'editbox')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "countPotentialCustomer")
                                 .addClass('bc-probdesc-counts')
                                 .val(o.countPotentialCustomer)))
                 .append($('<td>')
-                        .append($('<input type="number">')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.countRealCustomer))
+                        .append($('<textarea>')
+                                .attr('data-type', 'editbox')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "countRealCustomer")
@@ -2074,18 +2440,29 @@ function problemStatTable(res) {
                                 .addClass("newProblemStateService")
                                 .text("Add Service")))
                 .append($('<td>')
-                        .addClass('convertedTextAreaLines')
+                        .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBullet(o.fkBcKeyResourceId))
                         .append($('<textarea>')
                                 .addClass("figureTextarea")
                                 .css("display", "none")
+                                .attr('data-type', 'textarea')
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "fkBcKeyResourceId")
                                 .addClass('bc-probdesc-textarea')
-                                .val(o.fkBcKeyResourceId)))
+                                .val(o.fkBcKeyResourceId))
+
+                        )
+
                 .append($('<td>')
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.fkBcKeyPartnerId))
                         .append($('<textarea>')
+                                .css("display", "none")
+                                .addClass("figureTextarea")
+                                .attr('data-type', 'textarea')
+
                                 .attr('onchange', 'updateCaseProblemStat4ShortDesc(this,"' + o.id + '")')
                                 .attr("pid", o.id)
                                 .attr("ptype", "fkBcKeyPartnerId")
@@ -2182,16 +2559,30 @@ function generateCompetitorFeatureMatrixBinder(compList, serviceList) {
         var competitorFeatureList = getCompetitorFeatureList(o.id);
         var tr = $('<tr>')
                 .append($("<td>").text(i + 1))
-                .append($("<td>").append($('<textarea>')
-                        .attr('pid', o.id)
-                        .attr("key", "competitorName")
-                        .attr('onchange', 'updateCompetitorInfo4Short(this)')
-                        .val(o.competitorName)))
-                .append($("<td>").append($('<textarea>')
-                        .attr('pid', o.id)
-                        .attr("key", "competitorDescription")
-                        .attr('onchange', 'updateCompetitorInfo4Short(this)')
-                        .val(o.competitorDescription)))
+                .append($("<td>")
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBulletEditbox(o.competitorName))
+                        .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'editbox')
+
+                                .attr('pid', o.id)
+                                .attr("key", "competitorName")
+                                .attr('onchange', 'updateCompetitorInfo4Short(this)')
+                                .val(o.competitorName)))
+                .append($("<td>")
+                        .addClass('hasTextAreaConverstion')
+                        .append(convertTextAreaToTdSectionBullet(o.competitorDescription))
+                        .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'textarea')
+
+                                .attr('pid', o.id)
+                                .attr("key", "competitorDescription")
+                                .attr('onchange', 'updateCompetitorInfo4Short(this)')
+                                .val(o.competitorDescription)))
 
 
 
@@ -2784,6 +3175,70 @@ function updateCaseProblemStat4ShortDetails(id, type, val, isAsync) {
         contentType: "application/json",
         crossDomain: true,
         async: syncType,
+        success: function (res) {
+        },
+        error: function () {
+            Toaster.showError(('Something Happened'));
+        }
+    });
+}
+
+
+function updateFinancialProjectionSectionInfo4Short(el) {
+    var id = $(el).attr('pid'),
+            key = $(el).attr('key'),
+            value = $(el).val();
+
+    if (!id || !key || !value) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.key = key;
+    json.kv.value = value;
+    var that = true;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateFinancialProjectionSectionInfo4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+        },
+        error: function () {
+            Toaster.showError(('Something Happened'));
+        }
+    });
+}
+
+
+
+
+function updateFinancialProjectionInfo4Short(el) {
+    var id = $(el).attr('pid'),
+            key = $(el).attr('key'),
+            value = $(el).val();
+
+    if (!id || !key || !value) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.key = key;
+    json.kv.value = value;
+    var that = true;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmupdateFinancialProjectionInfo4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
         success: function (res) {
         },
         error: function () {
