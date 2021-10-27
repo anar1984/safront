@@ -3784,6 +3784,29 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .sa-debug-mode-input-api-selectedfield{
-    border: 2px green solid;
+    border: 3px blue  solid;
     border-radius:5px;
+}
+
+.sa-debug-mode-output-api-selectedfield{
+    background-color:yellow;
+    border-radius:5px;
+}
+.sa-debug-mode-input-api-selectedfield:hover:before{
+   content:"input:(" attr(sa-debug-input-attr)")";
+    background-color: #66c9ea;
+    border-radius: 3px;
+    padding: 5px;
+/*    position: absolute;*/
+    top: 0px;
+    right: 0px;
+}
+.sa-debug-mode-output-api-selectedfield:hover:after{
+    content: 'output:('attr(sa-debug-output-attr)")";
+    background-color: #e66937;
+    border-radius: 3px;
+    padding: 5px;
+/*    position: absolute;*/
+    bottom: 2px;
+    right: 0px;
 }

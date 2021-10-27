@@ -5994,7 +5994,7 @@ function triggerAPI_old(element, apiId, data) {
 }
 
 function triggerAPI(element, apiId, data) {
-    triggerApiDebugMode(element);
+    triggerApiDebugMode(element,apiId);
     var res = {};
     if (data) {
         res = data;
@@ -6852,7 +6852,7 @@ function setValueOnCompAfterTriggerApi(el, data) {
 }
 
 function getComponentValueAfterTriggerApi(el, val, selectedField) {
-
+triggerApiDebugMode4ApiOutput(el,selectedField);
 
     if ($(el).attr('sa-type') === 'date') {
         SetConvertedDateByElement(el, val);
@@ -6965,10 +6965,6 @@ function getComponentValueAfterTriggerApi(el, val, selectedField) {
     if ($(el).attr("sa-isselectpicker") === '1') {
         $(el).selectpicker('refresh');
     }
-
-
-
-
 }
 
 function initHtmlFroalaEditorByClass(className) {

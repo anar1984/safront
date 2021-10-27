@@ -257,7 +257,7 @@ function deleteMarkers() {
     markers = [];
 }
 
-function triggerApiDebugMode(el) {
+function triggerApiDebugMode(el, apiId) {
     if (!global_var.current_modal === 'loadLivePrototype') {
         return;
     }
@@ -265,11 +265,8 @@ function triggerApiDebugMode(el) {
     if (!$('#livePrototypDebugMode').is(":checked")) {
         return;
     }
-    
-    //input bildiren elemnentlerin classlarini silmek
-    $('.sa-debug-mode-input-api-selectedfield')
-            .removeClass('sa-debug-mode-input-api-selectedfield')
 
+    highlightInputFieldsForTriggerApi(el, apiId);
 
     clearLivePrototypeViewForDebug();
     $('.live-prototype-show-sourcedrelation').click();
@@ -277,6 +274,52 @@ function triggerApiDebugMode(el) {
     //hide all api cards
     toggleComponentBlock4Debug(el);
 
+}
+
+function triggerApiDebugMode4ApiOutput(el, selectedField) {
+    if (!global_var.current_modal === 'loadLivePrototype') {
+        return;
+    }
+
+    if (!$('#livePrototypDebugMode').is(":checked")) {
+        return;
+    }
+
+     highlightOutputFieldsForTriggerApi(el, selectedField);
+
+}
+
+
+function highlightOutputFieldsForTriggerApi(el, selectedField) {
+    $(el).closest('div.component-class')
+            .addClass('sa-debug-mode-output-api-selectedfield');
+    var attr = $(el).closest('div.component-class').attr('sa-debug-output-attr')
+    $(el).closest('div.component-class').attr('sa-debug-output-attr', attr + ',' + selectedField);
+}
+
+function highlightInputFieldsForTriggerApi(el, apiId) {
+    //input bildiren elemnentlerin classlarini silmek
+    $('.sa-debug-mode-input-api-selectedfield')
+            .removeClass('sa-debug-mode-input-api-selectedfield')
+
+    $('.sa-debug-mode-output-api-selectedfield')
+            .removeClass('sa-debug-mode-output-api-selectedfield');
+
+    var inputList = be.ExecAPI.GetInputsByAPI(apiId);
+
+    $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
+
+        var selectedFields = $(this).attr('sa-selectedfield').split(',');
+        for (var i in selectedFields) {
+            var field = selectedFields[i].trim();
+            if (inputList.includes(field)) {
+                $(this).closest('div.component-class')
+                        .addClass('sa-debug-mode-input-api-selectedfield');
+                var attr = $(this).closest('div.component-class').attr('sa-debug-input-attr')
+                $(this).closest('div.component-class').attr('sa-debug-input-attr', attr + ',' + field);
+            }
+        }
+    })
 }
 
 function toggleComponentBlock4Debug(el) {
