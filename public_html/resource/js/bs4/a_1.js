@@ -578,11 +578,12 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
-        $.each(td, function (index, item) {
+      //  $.each(td, function (index, item) {
 
-            sortableTable(tableId, sv, item);
+            sortableTable(tableId, sv, td);
 
-        })
+      //  })
+       
     } catch (error) {
         console.log(error)
     }
@@ -714,7 +715,7 @@ function sortableTable(tableId, sv, cls) {
 
     }
 
-
+    $('#' + tableId).find(".groupTrElement .bugChangegroupArrow").click();
 
 }
 /*********************************************** Context Menu Function Only ********************************/
@@ -4129,13 +4130,12 @@ function loadTableFIlterInside() {
     }
 
     $('#date_timepicker_start_end').daterangepicker({
-        startDate: moment().subtract('days', 29),
-        endDate: moment(),
         showDropdowns: true,
         showWeekNumbers: true,
         timePicker: false,
         timePickerIncrement: 1,
         timePicker12Hour: true,
+        defaultDate: false,
         ranges: {
             'Bu Gün': [moment(), moment()],
             'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -4159,7 +4159,7 @@ function loadTableFIlterInside() {
             daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
         }
-    }).val('').change();
+    });
 }
 
 function copyJSCodeClassTo_loadProjectList() {

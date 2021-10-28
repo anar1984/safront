@@ -6338,6 +6338,20 @@ font-weight: 600;
     font-size: 10px;
     padding: 2px;
 }
+.table>tbody>tr >td>.single-row-column-filter-button{
+    padding: 3px;
+    font-size: 10px;
+    position: absolute;
+    right: 1px;
+    top: 0px;
+    color: #9b9b9b;
+    visibility: hidden;
+}
+.table>tbody>tr >td:hover .single-row-column-filter-button{
+ 
+    visibility: visible;
+    color: #9b9b9b;
+}
 
 
 

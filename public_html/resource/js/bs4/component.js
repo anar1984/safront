@@ -834,7 +834,7 @@ var Component = {
 
 
             var tr = $("<ul>").addClass('table-row-show-hide-ul')
-                              .append("<span class=''><input type='checkbox' checked='true' class='all-table-row-checked'>All</span>");
+                              .append("<li><span class=''><input type='checkbox' style='margin-bottom20px' checked='true' class='all-table-row-checked'>All</span><li>");
             for (var i = 0; i < col.length; i++) {
 
                 var inputId = col[i].trim();
@@ -1338,7 +1338,14 @@ var Component = {
                             pairShowColumn[inputId].trim() === '1') {
                         td12.hide();
                     }
-
+                    try {
+                        if (cr_input_comp_attribute_kv[inputId]['sa-column-filter-active']) {
+                            td12.append("<span class='btn btn-light single-row-column-filter-button btn-sm'><i class='fas fa-filter'></i></span>");
+                            td12.addClass("position-relative");
+                        }
+                     } catch (error) {
+                         
+                     }
 
                     tr.append(td12);
                 }

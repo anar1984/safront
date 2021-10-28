@@ -457,14 +457,17 @@ $(function () {
         th.parents('.table-column-show-hide-row-div').hide("fast")
     });
     $(document).on("click", '#group-data-table-btm-single', function (e) {
+
+        var tbid = $(this).closest('.table-column-show-hide-row-div').attr("data-tableid");
         var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeindex");
-       $("ul.table-row-show-hide-ul li:nth-child("+index+") ").find("#group-data-table-btm").click();
+       $("#cheweek-modal-filter"+tbid+" .table-row-show-hide-ul li:eq("+(parseFloat(index)+1)+")").find("#group-data-table-btm").click();
     });
     $(document).on("click", '#group-data-table-btm', function (e) {
         var tableId = $(this).attr('tbid');
-
+        $('#' + tableId).find(".groupTrElement .bugChangegroupArrow").click();
         if ($(this).hasClass('active')) {
-
+               
+           
             $('#' + tableId).find(".groupTrElement").remove();
             $(this).removeClass('active');
 
@@ -492,6 +495,14 @@ $(function () {
             modal.find(".table-advanced-filter-section-div")
     });
 
+    $(document).on("click", '.table>tbody>tr>td>.single-row-column-filter-button', function (e) {
+        var ths = $(this);
+        var td  =ths.closest("td")
+         var val = td.find('.component-input-class').attr('sa-data-value');
+         var index = td.index()
+        $(this).closest(".table").find("thead>.filter-table-row-header-tr>th:eq("+index+")").find("select").val(val).change();
+    });
+
     $(document).on("click", '.input-group-append', function (e) {
         var ths = $(this);
          if (ths.hasClass("active-range-picker")) {
@@ -505,7 +516,6 @@ $(function () {
     });
     $(document).on("change", '.tame-range-picker-comp', function (e) {
         var ths = $(this);
-            console.log();
            if(ths.val().trim().length >0){
             ths.parent().find(".input-group-append").addClass("active-range-picker").find("button").addClass("btn-danger").html('<i class="fas fa-times"></i>');
 
