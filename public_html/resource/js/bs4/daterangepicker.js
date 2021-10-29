@@ -1888,7 +1888,7 @@
             "focus.daterangepicker": e.proxy(this.show, this),
             "keyup.daterangepicker": e.proxy(this.elementChanged, this),
             "keydown.daterangepicker": e.proxy(this.keydown, this)
-        }) : (this.element.on("click.daterangepicker", e.proxy(this.toggle, this)), this.element.on("keydown.daterangepicker", e.proxy(this.toggle, this))), this.updateElement()
+        }) : (this.element.on("click.daterangepicker", e.proxy(this.toggle, this)), this.element.on("keydown.daterangepicker", e.proxy(this.toggle, this)))/* , this.updateElement() */
     };
     return a.prototype = {
         constructor: a,

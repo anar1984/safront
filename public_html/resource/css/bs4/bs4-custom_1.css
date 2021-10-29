@@ -3503,7 +3503,10 @@ img.sc-IbsAh.kqHqhS {
 }
 
 .daterangepicker td.start-date.end-date {
+
     border-radius: 4px;
+    background: #c842425e;
+    color: black;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
