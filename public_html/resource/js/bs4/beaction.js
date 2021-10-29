@@ -1762,6 +1762,13 @@ var SAFN = {
         'sendemail': 'SendEmail',
         'abs': 'Abs',
         'throwerror': 'ThrowError',
+        'addclass':'AddClass',
+        'removeclass':'RemoveClass',
+        'addcss':'AddCss',
+        'removeCss':'RemoveCss',
+        'addattribute':'AddAttribute',
+        'removeAttribute':'RemoveAttribute',
+        'showform':'ShowForm',
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();
@@ -2180,7 +2187,12 @@ var SAFN = {
             outData[arguments[0]] = String(out);
             return outData;
         },
+        ShowForm: function (key) {
+            key = SAFN.GetArgumentsValue(key);
+            var element = SAFN.Element;
 
+            new UserStory().setGUIComponentButtonGUIModal(key, element);
+        },
         Concat: function () {
             var out = '';
             var outData = {};
@@ -2198,6 +2210,72 @@ var SAFN = {
 
             var data = SAFN.CoreData;
             data[key] = value;
+            return data;
+        },
+        RemoveAttribute: function (key) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+
+            key = SAFN.GetArgumentPureValue(key);
+
+            $(element).removeAttribute(key);
+
+            return data;
+        },
+
+        AddAttribute: function (key, value) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+
+            value = SAFN.GetArgumentValue(value);
+            key = SAFN.GetArgumentPureValue(key);
+
+            $(element).attr(key, value);
+
+            return data;
+        },
+        RemoveClass: function (key) {
+
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+            key = SAFN.GetArgumentPureValue(key);
+
+            $(element).removeClass(key);
+
+            return data;
+        },
+        AddClass: function (key) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+            key = SAFN.GetArgumentPureValue(key);
+
+            $(element).addClass(key);
+
+            return data;
+        },
+        removeCss: function (key) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+            key = SAFN.GetArgumentPureValue(key);
+            $(element).css(key, '');
+
+            return data;
+        },
+        AddCss: function (key, value) {
+            var data = SAFN.CoreData;
+            var element = SAFN.Element;
+
+
+            value = SAFN.GetArgumentValue(value);
+            key = SAFN.GetArgumentPureValue(key);
+
+            $(element).css(key, value);
+
             return data;
         },
         Abs: function (key, value) {
@@ -2248,6 +2326,7 @@ var SAFN = {
 
             return {};
         },
+
         Get: function (key, value) {
             value = SAFN.GetArgumentPureValue(value);
             key = SAFN.GetArgumentPureValue(key);
@@ -2264,8 +2343,8 @@ var SAFN = {
             Utility.addParamToUrl(key, value);
         },
         GetParamUrl: function (key, variable) {
-            variable = SAFN.GetArgumentValue(variable);
-            key = SAFN.GetArgumentPureValue(key);
+            variable = SAFN.GetArgumentPureValue(variable);
+            key = SAFN.GetArgumentValue(key);
             var data = SAFN.CoreData;
             data[variable] = Utility.getParamFromUrl(key);
             return data;

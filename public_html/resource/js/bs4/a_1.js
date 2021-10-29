@@ -13256,7 +13256,7 @@ function clearLivePrototypeViewForDebug() {
 
 function loadGuiStoryCardsToAnimation() {
     var el = $('select.us-gui-component-rel-sus-id');
-
+    
 
 }
 
