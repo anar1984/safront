@@ -834,7 +834,7 @@ var Component = {
 
 
             var tr = $("<ul>").addClass('table-row-show-hide-ul')
-                              .append("<li><span class=''><input type='checkbox' style='margin-bottom20px' checked='true' class='all-table-row-checked'>All</span><li>");
+                              .append("<li><span class=''><input type='checkbox' style='margin-bottom:20px' checked='true' class='all-table-row-checked'>All</span><li>");
             for (var i = 0; i < col.length; i++) {
 
                 var inputId = col[i].trim();
@@ -1082,7 +1082,7 @@ var Component = {
 
                          try {
                             if (cr_input_comp_attribute_kv[inputId]['sa-column-filter-active']) {
-                                th.append((a === '') ? "" : "<span class=' btn btn-sm filter-handle-button btn-outline-secondary '><i class='fas fa-sort-down'></i></span>")
+                                th.append((a === '') ? "" : "<span class=' btn btn-sm filter-handle-button btn-outline-secondary '><i class='fas fa-filter'></i></span>")
     
                             }
                          } catch (error) {
@@ -1379,7 +1379,7 @@ var Component = {
                          .append($("<div>")
                                      .attr("style",'padding: 5px 10px;')
                                      .addClass('modal-header')
-                                     .append("<b>Ətraflı Filter")
+                                     .append("<b>Ətraflı Filtr</b>")
                                      .append('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>'))
                         .append($("<div>")
                                         .addClass('modal-body d-flex')
@@ -1449,6 +1449,7 @@ var Component = {
                             .append($("<div>")
                                     .addClass("col-10 p-2")
                                     .append($("<div>").addClass("btn-group float-right get-api-id")
+                                                  .append('<span class="btn btn-sm btn-light table-show-hide-button-id-second" d data-tabid="'+tableId+'"><i class="fas fa-cog" aria-hidden="true"></i></span>')
                                                   .append('<span class="btn btn-sm btn-light" id="group-data-table-btm-single"><i class="fas fa-layer-group"></i></span>')
                                                   )
     
@@ -1558,7 +1559,7 @@ var Component = {
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         div.removeClass("component-class")
-                .removeAttr("onclick")
+                       .removeAttr("onclick");
 
         div.append($('<div>').addClass("progressloader loaderTable1"));
 
@@ -1567,7 +1568,12 @@ var Component = {
              
          div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp,tabDepId));
          div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp,tabDepId));
-
+         div.append($("<span>")
+                     .addClass("btn btn-sm btn-light modal-inside-table-expand position-absolute top-0 right-0") 
+                     .css("top",'0')
+                     .css("right",'0')
+                     .css("z-index",'22')
+                    .append('<i class="fas fa-expand"></i>'))
 
         return $('<div></div>').append(div).html();
     },

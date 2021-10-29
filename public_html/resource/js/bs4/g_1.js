@@ -478,6 +478,22 @@ $(function () {
         }
     });
 
+    $(document).on("click", '.table-show-hide-button-id-second', function (e) {
+           $(this).closest('.component-container-dashed').find(".table thead #table-show-hide-button-id-a" ).click();
+    });
+    $(document).on("click", '.modal-inside-table-expand', function (e) {
+           $(this).closest('.component-container-dashed').addClass("modal-table-large-mod");
+           $(this).html('<i class="fas fa-times"></i>');
+           $(this).addClass('modal-inside-table-close');
+           $(this).removeClass('modal-inside-table-expand');
+    });
+    $(document).on("click", '.modal-inside-table-close', function (e) {
+           $(this).closest('.component-container-dashed').removeClass("modal-table-large-mod");
+           $(this).html('<i class="fas fa-expand"></i>');
+           $(this).addClass('modal-inside-table-expand');
+           $(this).removeClass('modal-inside-table-close');
+    });
+  
     $(document).on("click", '#table-show-hide-button-id-a', function (e) {
         var th = $(this);
         var tbid = th.closest("table").attr("table-id");
