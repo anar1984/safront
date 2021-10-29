@@ -2631,10 +2631,19 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
 /****************** BUSINESS CASE  ***************
 *************************************************/
 
+.wrapper-business-case .bc-tr .summ-icon, .wrapper-business-case table tbody tr a .summ-icon {
+    color: #525596;
+    opacity: 0;
+}
+.wrapper-business-case .bc-tr:hover .summ-icon, .wrapper-business-case table tbody tr:hover  a .summ-icon {
+    color: #525596;
+    opacity: 1;
+}
+
 .wrapper-business-case {
     padding: 20px 100px 60px
 }
-.wrapper-business-case>.row>.col-12 {
+.wrapper-business-case .mt-90 {
     margin-top: 90px !important;
 }
 .cs-headline-box {
@@ -2710,6 +2719,7 @@ input.hide-clear[type="text"]::-webkit-search-results-decoration {
     border-top: 1px solid #dee2e6;
 }
 .wrapper-business-case .table thead th {
+    position: relative;
     height: 40px;
     vertical-align: middle;
     border-bottom: 1px solid #525596;
@@ -2742,6 +2752,14 @@ tr.testCaseListborder td:first-child {
     background: #fff;
     padding: 3px 10px;
     border-radius: 3px;
+    display: inline-block;
+    line-height: 1.5;
+}
+.wrapper-business-case .table tbody tr > th a.convertedTextAreaLinesShey {
+    opacity: 0;
+}
+.wrapper-business-case .table tbody tr > th:hover a.convertedTextAreaLinesShey {
+    opacity: 1;
 }
 .wrapper-business-case .spilted tr:nth-child(even) {
     background-color: #f6f6ff;
@@ -2763,14 +2781,19 @@ tr.testCaseListborder td:first-child {
 }
 .wrapper-business-case .table td, .wrapper-business-case .table th {
     border-top: none;
+    border-top: none;
+    min-width: 45px;
+    max-width: 300px
+;
 }
 .problemServiceListSingle {
-    background-color: #525596;
-    color: #fff;
+    background-color: transparent;
+    color: #525596 !important;
     border-radius: 5px;
-    line-height: 25px;
+    line-height: 1.5;
     padding: 3px 7px 3px 7px;
     margin-right: 5px;
+    display: inline-block;
 }
 .problemServiceListSingle .problemServiceListSingleDelete {
     color: #fff;
@@ -2780,7 +2803,10 @@ tr.testCaseListborder td:first-child {
     background-color: #525596;
     color: #fff;
     border-radius: 5px;
-    line-height: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    word-wrap: break-word;
+    line-height: 1;
     padding: 3px 7px 3px 7px;
     margin-right: 7px;
 }
@@ -2810,11 +2836,13 @@ a.newProblemStateService i {
     background: #ffffe5 !important;
     color: #525596 !important;
 }
-.wrapper-business-case .table tbody tr .convertedTextAreaLinesShey {
+.wrapper-business-case .table tbody tr td .convertedTextAreaLinesShey, .wrapper-business-case .table tbody tr td a.newProblemStateService {
     opacity: 0;
+    display: none;
 }
-.wrapper-business-case .table tbody tr:hover .convertedTextAreaLinesShey {
+.wrapper-business-case .table tbody tr td:hover .convertedTextAreaLinesShey, .wrapper-business-case .table tbody tr td:hover a.newProblemStateService {
     opacity: 1;
+    display: inline-block;
 }
 .wrapper-business-case .table tfoot a {
     border-left: none;
@@ -2845,8 +2873,77 @@ a.newProblemStateService i {
     background: #525596 !important;
     color: #ffffff !important;
 }
-.wrapper-business-case .figureTextarea:after {
-    content: "/f065";
-    width: 40px;
-    height: 40px;
+.figureTextarea-box {
+    position: relative;
+}
+.wrapper-business-case .figureTextarea-box:before {
+    content: "\f065";
+    width: 22px;
+    height: 22px;
+    z-index: 1;
+    font-family: 'Font Awesome 5 Free';
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    right: 0;
+    background: #525596;
+    padding: 3px 5px;
+    color: #fff;
+    border-radius: 50px;
+}
+span.convertedTextAreaLinesItem {
+    display: inline-block;
+    vertical-align: middle;
+    word-wrap: break-word;
+    line-height: 1;
+}
+.problemServiceListSingle span input, input.competitorFeatureAddRemove {
+    margin-right: 6px;
+}
+.wrapper-business-case table thead th .convertedTextAreaLines .convertedTextAreaLinesShey {
+    display: none;
+}
+.wrapper-business-case table thead th:hover .convertedTextAreaLines .convertedTextAreaLinesShey {
+    display: inline-block;
+}
+.wrapper-business-case table thead .removeColFinancialProjectBox {
+    position: absolute;
+    width: auto;
+    left: 0;
+    margin-left: 0;
+    font-weight: 400;
+    padding: 5px 10px;
+    line-height: 1;
+    border: 1px solid rgb(82 85 150);
+    color: rgb(255 255 255 / 84%);
+    top: -15px;
+    background-color: #525596;
+    text-decoration: none;
+}
+.wrapper-business-case table thead .removeColFinancialProjectBox a.removeColFinancialProject{
+    text-decoration: none !important;
+}
+.wrapper-business-case table thead th .removeColFinancialProjectBox {
+    display: none;
+}
+.wrapper-business-case table thead th:hover .removeColFinancialProjectBox {
+    display: block;
+}
+.cs-headline-title .cs-input-flat-group {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+.csGrossProfite th, .csGrossProfite {
+    color: red !important;
 }

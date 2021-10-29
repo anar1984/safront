@@ -287,20 +287,19 @@ function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, co
             }
 
             var span = $('<span>')
-                    .css('border-radius', '10px')
-                    .css('padding', '1px 5px')
-                    .css('margin', '2px 5px')
-                    .css('line-height', '25px')
-                    .css('color', 'gray')
+                    .css('padding', '3px 7px')
+                    .css('margin-bottom', '6px')
                     .addClass('problemServiceListSingle')
-                    .text(srv)
                     .append(input)
+                    .append(srv)
 
             if (addFeatures[serviceId]) {
                 var srvT = srv.trim();
                 var zad = addFeatures[serviceId];
                 if (zad.split("%IN%").includes(srvT)) {
-                    span.css('background-color', 'greenyellow');
+                    span.css({'background-color': 'greenyellow', 'color': '#525596'});
+                }else{
+                    span.css({'color': '#fff'});
                 }
             }
 
@@ -331,9 +330,11 @@ function convertProblemServicesToCircleFormat(res, arg, problemId) {
                     continue;
                 }
                 div.append($('<span>')
-                        .css('border-radius', '5px')
+                          .attr("style","border-radius: 5px;line-height: 25px;background-color: rgb(50, 160, 134);color:#fff !important;")
+                       /*  .css('border-radius', '5px')
                         .css('line-height', '25px')
                         .css('background-color', '#32a086')
+                        .css('color', 'red') */
                         .addClass('problemServiceListSingle')
                         .text(o.serviceName)
                         .append($('<a href="#">')
@@ -516,7 +517,7 @@ function getFinancialProjectionZoneListDetails(res) {
     var trCustomer = $('<tr>').append($('<th>').text('Assumtion # of Customer'));
     var trRevenue = $('<tr>').append($('<th>').text('Revenue'));
     var trExpences = $('<tr>').append($('<th>').text('Expenses'));
-    var trGrossProfit = $('<tr>').css('color', 'red').append($('<th>').text('Gross Profit'));
+    var trGrossProfit = $('<tr>').css('color', 'red').addClass('csGrossProfite').append($('<th>').text('Gross Profit'));
     var trSection = $('<tr>').append($('<td>').text(''));
 
     for (var i = 0; i < obj.length; i++) {
@@ -533,23 +534,33 @@ function getFinancialProjectionZoneListDetails(res) {
                         .attr('pid', o.id)
                         .attr('key', 'periodName')
                         .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.periodName)))
-                ;
+                        .text(o.periodName))
+                        .append($('<div class="removeColFinancialProjectBox">')
+                         .append($('<a href="#">')
+                         .addClass('removeColFinancialProject')
+                         .html('<i class="fa fa-trash"></i> Trash')
+                         )));
+
+     
 
         trCurrency.append($('<td>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.currency))
-                .append($('<textarea>')
-                        .addClass("figureTextarea")
-                        .css("display", "none")
-                        .attr('data-type', 'editbox')
+                .append($('<div>')
+                    .addClass('figureTextarea-box')
+                    .append($('<textarea>')
+                            .addClass("figureTextarea")
+                            .css("display", "none")
+                            .attr('data-type', 'editbox')
 
-                        .addClass("providedServicesTextareaZad")
-                        .attr('pid', o.id)
-                        .attr('key', 'currency')
-                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.currency)))
-                ;
+                            .addClass("providedServicesTextareaZad")
+                            .attr('pid', o.id)
+                            .attr('key', 'currency')
+                            .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                            .text(o.currency)
+                        )
+                    )
+                );
 
         trCustomer.append($('<td>')
                 .addClass('hasTextAreaConverstion')
@@ -610,8 +621,9 @@ function getFinancialProjectionZoneListDetails(res) {
 //                .text(o.periodName)))
 //        getFinancialProjectionSectionList(o.id);
     }
-
-
+    trHead.append($('<th>')
+    .addClass('hasTextAreaConverstion')
+    );
 
 
     thead.append(trHead);
@@ -663,6 +675,12 @@ function getFinancialProjectionZoneListDetails(res) {
                     );
         }
         tbody.append(trSec);
+        trSec.append($('<td>')
+        .addClass('tdCenter')
+            .append($('<a>')
+                .html('<i class="fa fa-trash summ-icon" aria-hidden="true"></i>')
+            )
+        );
     }
 
 
@@ -673,6 +691,7 @@ function getFinancialProjectionZoneListDetails(res) {
     table.append(tbody)
 
     getFinancialSectionDetailList();
+    
 }
 
 //
@@ -777,7 +796,6 @@ function convertTextAreaToTdSectionBulletEditbox(txt) {
 //                        .css('color', 'red'))
                 .prepend(' ')
                 )
-
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
                 .html('<i class="fas fa-edit"></i> Modify'))
@@ -806,7 +824,6 @@ function convertTextAreaToTdSectionBulletItem(txt) {
                     .css('color', '#e14545')
                     .css('padding','3px 7px 3px 7px')
                     .css('margin-bottom','6px')
-                    .css('line-height','30px')
                     .addClass('convertedTextAreaLinesItem')
                     .text(ln)
                     .append('<br>')
@@ -1532,7 +1549,7 @@ $(document).on("change", '.competitorFeatureAddRemove', function (e) {
             serviceId = $(this).attr('serviceId'),
             feature = $(this).attr('feature');
     if ($(this).is(':checked')) {
-        $(this).closest('span').css('background-color', 'yellow')
+        $(this).closest('span').css({'background-color': 'greenyellow', 'color': '#525596'});
         insertNewBsCompetitorFeature(competitorId, serviceId, feature);
     } else {
         $(this).closest('span').css('background-color', '')
