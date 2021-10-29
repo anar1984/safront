@@ -48,12 +48,12 @@ $(document).on("dblclick", '.convertedTextAreaLines', function (e) {
             .show();
 
     $(this).hide();
-
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box label.expander').addClass('active');
     $(this).closest('.hasTextAreaConverstion')
             .find('.figureTextarea')
             .first()
-            .focus()
-})
+            .focus();
+});
 
 $(document).on("click", '.convertedTextAreaLinesShey', function (e) {
     $(this).closest('.hasTextAreaConverstion')
@@ -62,18 +62,46 @@ $(document).on("click", '.convertedTextAreaLinesShey', function (e) {
             .show();
 
     $(this).closest('.convertedTextAreaLines').hide();
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box label.expander').addClass('active');
     $(this).closest('.hasTextAreaConverstion')
             .find('.figureTextarea')
             .first()
-            .focus()
-})
+            .focus();
+});
+$(document).on("click", '.figureTextarea-box label.expander', function (e) {
+    $(this).closest('.hasTextAreaConverstion').find('.textarea-full-blure-bg').toggleClass('textarea-blure-toggle');
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea').show();
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box').toggleClass('textarea-full');
+    $(this).closest('.convertedTextAreaLines').hide();
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box label.expander').addClass('active');
+    $(this).closest('.hasTextAreaConverstion')
+            .find('.figureTextarea')
+            .first()
+            .focus();
+});
+$(document).on("click", '.figureTextarea-box label.expander.active', function (e) {
+    // $(this).closest('.hasTextAreaConverstion').find('.textarea-full-blure-bg.textarea-blure-toggle').removeClass('textarea-blure-toggle');
+     //$(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box textarea-full').removeClass('textarea-full');
+});
 
+
+var mouse_is_inside = false;
+
+$(document).ready(function()
+{
+    $(document).on("mousedown", 'label.expander', function (e) {
+        return false
+     });
+
+});
 
 $(document).on("focusout", '.figureTextarea', function (e) {
     $(this).closest('.hasTextAreaConverstion')
             .find('.convertedTextAreaLines')
             .remove();
-
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box').removeClass('textarea-full');
+    $(this).closest('.hasTextAreaConverstion').find('.figureTextarea-box label.expander').removeClass('active');
+    $(this).closest('.hasTextAreaConverstion').find('.textarea-full-blure-bg.textarea-blure-toggle').removeClass('textarea-blure-toggle');
     $(this).hide();
     var type = $(this).attr('data-type');
     var el = '';
@@ -85,7 +113,7 @@ $(document).on("focusout", '.figureTextarea', function (e) {
         el = convertTextAreaToTdSectionBulletItem($(this).val())
     }
     $(this).closest('.hasTextAreaConverstion').prepend(el);
-})
+});
 
 $(document).on("click", '.addFinancialProjectionPeriod', function (e) {
 
@@ -107,8 +135,7 @@ $(document).on("click", '.addFinancialProjectionPeriod', function (e) {
             getFinancialProjectionZoneList();
         }
     });
-})
-
+});
 
 
 function getFinancialProjectionSectionList(financeId) {
@@ -525,21 +552,30 @@ function getFinancialProjectionZoneListDetails(res) {
         trHead.append($('<th>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.periodName))
-                .append($('<textarea>')
+                .append($('<div>')
+                    .addClass('figureTextarea-box')
+                    .append($('<textarea>')
                         .addClass("figureTextarea")
                         .css("display", "none")
                         .attr('data-type', 'editbox')
-
                         .addClass("providedServicesTextareaZad")
                         .attr('pid', o.id)
                         .attr('key', 'periodName')
                         .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
                         .text(o.periodName))
-                        .append($('<div class="removeColFinancialProjectBox">')
-                         .append($('<a href="#">')
-                         .addClass('removeColFinancialProject')
-                         .html('<i class="fa fa-trash"></i> Trash')
-                         )));
+                        .append($('<label>')
+                        .addClass('expander')
+                        )
+                    )
+                    .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                            )
+                    .append($('<div class="removeColFinancialProjectBox">')
+                        .append($('<a href="#">')
+                        .addClass('removeColFinancialProject')
+                        .html('<i class="fa fa-trash"></i> Trash')
+                        ))
+                );
 
      
 
@@ -559,27 +595,47 @@ function getFinancialProjectionZoneListDetails(res) {
                             .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
                             .text(o.currency)
                         )
+                        .append($('<label>')
+                        .addClass('expander')
+                      )
+                        
                     )
+                    .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                        )
                 );
 
         trCustomer.append($('<td>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.customerCount))
-                .append($('<textarea>')
-                        .addClass("figureTextarea")
-                        .css("display", "none")
-                        .attr('data-type', 'editbox')
+                .append($('<div>')
+                    .addClass('figureTextarea-box')
+                        .append($('<textarea>')
+                            .addClass("figureTextarea")
+                            .css("display", "none")
+                            .attr('data-type', 'editbox')
 
-                        .addClass("providedServicesTextareaZad")
-                        .attr('pid', o.id)
-                        .attr('key', 'customerCount')
-                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.customerCount)));
+                            .addClass("providedServicesTextareaZad")
+                            .attr('pid', o.id)
+                            .attr('key', 'customerCount')
+                            .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                            .text(o.customerCount)
+                        )
+                        .append($('<label>')
+                            .addClass('expander')
+                        )
+                      )
+                    .append($('<div>')
+                        .addClass('textarea-full-blure-bg')
+                    )
+                );
 
         trRevenue.append($('<td>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.totalRevenue))
-                .append($('<textarea>')
+                .append($('<div>')
+                    .addClass('figureTextarea-box')
+                        .append($('<textarea>')
                         .addClass("figureTextarea")
                         .css("display", "none")
                         .attr('data-type', 'editbox')
@@ -588,24 +644,46 @@ function getFinancialProjectionZoneListDetails(res) {
                         .attr('pid', o.id)
                         .attr('key', 'totalRevenue')
                         .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.totalRevenue)));
+                        .text(o.totalRevenue)
+                     )
+                     .append($('<label>')
+                         .addClass('expander')
+                    )
+                )
+                .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                            )
+            );
         trExpences.append($('<td>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.totalExpence))
-                .append($('<textarea>')
-                        .addClass("figureTextarea")
-                        .css("display", "none")
-                        .attr('data-type', 'editbox')
+                .append($('<div>')
+                .addClass('figureTextarea-box')
+                    .append($('<textarea>')
+                            .addClass("figureTextarea")
+                            .css("display", "none")
+                            .attr('data-type', 'editbox')
 
-                        .addClass("providedServicesTextareaZad")
-                        .attr('pid', o.id)
-                        .attr('key', 'totalExpence')
-                        .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.totalExpence)));
+                            .addClass("providedServicesTextareaZad")
+                            .attr('pid', o.id)
+                            .attr('key', 'totalExpence')
+                            .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
+                            .text(o.totalExpence)
+                            )
+                            .append($('<label>')
+                                .addClass('expander')
+                           )
+                       )
+                       .append($('<div>')
+                                   .addClass('textarea-full-blure-bg')
+                                   )
+            );
         trGrossProfit.append($('<th>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o.grossProfit))
-                .append($('<textarea>')
+                .append($('<div>')
+                    .addClass('figureTextarea-box')
+                        .append($('<textarea>')
                         .addClass("figureTextarea")
                         .css("display", "none")
                         .attr('data-type', 'editbox')
@@ -614,7 +692,16 @@ function getFinancialProjectionZoneListDetails(res) {
                         .attr('pid', o.id)
                         .attr('key', 'grossProfit')
                         .attr("onchange", "updateFinancialProjectionInfo4Short(this)")
-                        .text(o.grossProfit)));
+                        .text(o.grossProfit)
+                        )
+                        .append($('<label>')
+                            .addClass('expander')
+                       )
+                   )
+                   .append($('<div>')
+                               .addClass('textarea-full-blure-bg')
+                               )
+            );
 //        trSection.append($('<td>').append($('<div>')
 //                .addClass("financialSectionDivZad")
 //                .attr('pid', o.id)
@@ -623,6 +710,9 @@ function getFinancialProjectionZoneListDetails(res) {
     }
     trHead.append($('<th>')
     .addClass('hasTextAreaConverstion')
+        .append($('<a>').addClass('addFinancialProjectionCol')
+        .html('<i class="fas fa-plus-square"></i>')
+        )
     );
 
 
@@ -641,16 +731,26 @@ function getFinancialProjectionZoneListDetails(res) {
         var trSec = $('<tr>').append($('<th>')
                 .addClass('hasTextAreaConverstion')
                 .append(convertTextAreaToTdSectionBulletEditbox(o1.sectionName))
+                .append($('<div>')
+                .addClass('figureTextarea-box')
                 .append($('<textarea>')
                         .addClass("figureTextarea")
                         .css("display", "none")
                         .attr('data-type', 'editbox')
-
                         .addClass("providedServicesTextareaZad")
                         .attr('pid', o1.id)
                         .attr('key', 'sectionName')
                         .attr("onchange", "updateFinancialProjectionSectionInfo4Short(this)")
-                        .text(o1.sectionName)));
+                        .text(o1.sectionName)
+                        )
+                        .append($('<label>')
+                            .addClass('expander')
+                       )
+                   )
+                   .append($('<div>')
+                        .addClass('textarea-full-blure-bg')
+                        )
+            );
         var obj = res.tbl[0].r;
         for (var j = 0; j < obj.length; j++) {
             var o = obj[j];
@@ -660,18 +760,22 @@ function getFinancialProjectionZoneListDetails(res) {
                     .attr('projectionId', o1.id)
                     .addClass('hasTextAreaConverstion')
                     .append(convertTextAreaToTdSectionBulletItem(''))
-                    .append($('<textarea>')
-                            .addClass("figureTextarea")
-                            .css("display", "none")
-                            .attr('data-type', 'item')
+                    .append($('<div>')
+                        .addClass('figureTextarea-box')
+                        .append($('<textarea>')
+                                .addClass("figureTextarea")
+                                .css("display", "none")
+                                .attr('data-type', 'item')
 
-                            .addClass("providedServicesTextareaZad")
-                            .attr('pid', o.id)
-                            .attr('sectionid', o.id)
-                            .attr('projectionid', o1.id)
-                            .attr('key', 'sectionBody')
-                            .attr("onchange", "addFinancialSectionDetails(this)")
-                            .text(''))
+                                .addClass("providedServicesTextareaZad")
+                                .attr('pid', o.id)
+                                .attr('sectionid', o.id)
+                                .attr('projectionid', o1.id)
+                                .attr('key', 'sectionBody')
+                                .attr("onchange", "addFinancialSectionDetails(this)")
+                                .text('')
+                            )
+                        )
                     );
         }
         tbody.append(trSec);
@@ -723,6 +827,8 @@ function getFinancialSectionDetailList() {
 
                             $(this).html('')
                                     .append(convertTextAreaToTdSectionBulletItem(o.sectionBody))
+                                    .append($('<div>')
+                    .addClass('figureTextarea-box')
                                     .append($('<textarea>')
                                             .addClass("figureTextarea")
                                             .css("display", "none")
@@ -734,7 +840,7 @@ function getFinancialSectionDetailList() {
                                             .attr('projectionid', projectionId)
                                             .attr('key', 'sectionBody')
                                             .attr("onchange", "addFinancialSectionDetails(this)")
-                                            .text(o.sectionBody))
+                                            .text(o.sectionBody)))
 
                         })
 
@@ -798,7 +904,7 @@ function convertTextAreaToTdSectionBulletEditbox(txt) {
                 )
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .html('<i class="fas fa-edit"></i> Modify'))
+                .html('<i class="fas fa-edit"></i>'))
     } catch (err) {
     }
     return ul;
@@ -837,7 +943,7 @@ function convertTextAreaToTdSectionBulletItem(txt) {
         }
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .html('<i class="fas fa-edit"></i> Modify'))
+                .html('<i class="fas fa-edit"></i>'))
     } catch (err) {
     }
     return ul;
@@ -872,7 +978,7 @@ function convertTextAreaToTdSectionBullet(txt) {
         }
         ul.append($('<a href="#">')
                 .addClass('convertedTextAreaLinesShey')
-                .html('<i class="fas fa-edit"></i> Modify'))
+                .html('<i class="fas fa-edit"></i>'))
     } catch (err) {
     }
     return ul;
