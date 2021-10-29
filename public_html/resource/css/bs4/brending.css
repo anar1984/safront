@@ -2747,10 +2747,12 @@ tr.testCaseListborder td:first-child {
 }
 .wrapper-business-case .table tbody .testCaseListborder .convertedTextAreaLinesShey, .wrapper-business-case .table tbody .convertedTextAreaLinesShey {
     color: #525596;
+    width: 25px;
+    height: 25px;
     text-decoration: none;
     border: 1px solid #BEBFD7;
     background: #fff;
-    padding: 3px 10px;
+    padding: 2px 6px;
     border-radius: 3px;
     display: inline-block;
     line-height: 1.5;
@@ -2793,6 +2795,7 @@ tr.testCaseListborder td:first-child {
     line-height: 1.5;
     padding: 3px 7px 3px 7px;
     margin-right: 5px;
+    margin-bottom: 3px;
     display: inline-block;
 }
 .problemServiceListSingle .problemServiceListSingleDelete {
@@ -2876,8 +2879,7 @@ a.newProblemStateService i {
 .figureTextarea-box {
     position: relative;
 }
-.wrapper-business-case .figureTextarea-box:before {
-    content: "\f065";
+.wrapper-business-case .figureTextarea-box label:before {
     width: 22px;
     height: 22px;
     z-index: 1;
@@ -2896,6 +2898,18 @@ a.newProblemStateService i {
     padding: 3px 5px;
     color: #fff;
     border-radius: 50px;
+}
+.wrapper-business-case .figureTextarea-box label.expander:before {
+    content: "\f065";
+}
+.wrapper-business-case .figureTextarea-box label.shrinker:before {
+    content: "\f066";
+}
+.figureTextarea-box label {
+    display: none;
+}
+.figureTextarea-box label.active {
+    display: inline-block;
 }
 span.convertedTextAreaLinesItem {
     display: inline-block;
@@ -2946,4 +2960,41 @@ span.convertedTextAreaLinesItem {
 }
 .csGrossProfite th, .csGrossProfite {
     color: red !important;
+}
+
+.textarea-full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    margin-left: 0;
+    margin-right: 0;
+    filter: blur(0);
+    z-index: 10;
+}
+.textarea-full .figureTextarea {
+    padding: 15px;
+    width: 80%;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    display: block;
+    box-shadow: 0 2px 20px rgb(0 0 0 / 40%);
+    font-size: 16px;
+}
+
+.textarea-full-blure-bg.textarea-blure-toggle {
+    position: fixed;
+    background: rgb(255 255 255 / 90%);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+.addFinancialProjectionCol {
+    font-size: 20px;
+    padding: 8px;
 }
