@@ -780,6 +780,8 @@ var SACore = {
     SortFilledCombos: function () {
         sortCombo('us-gui-component-rel-sus-id');
         sortCombo('us-related-sus');
+        $('#us-related-sus').selectpicker('refresh');
+//        $('.us-gui-component-rel-sus-id').selectpicker('refresh');
     },
     FillAllCombobox: function (obj) {
         this.FillSUSCombobox(obj);

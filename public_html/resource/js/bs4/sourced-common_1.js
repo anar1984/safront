@@ -7763,17 +7763,19 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     loadSUSList4InputDetails: function (res) {
         try {
             console.log("Ascdvbnm,")
-            $('.event_details1 .us-gui-component-rel-sus-id').html("");
+           var slct= $('.event_details1 select.us-gui-component-rel-sus-id');
+                    slct.html("");
             var obj = res.tbl[0].r;
-            $('.event_details1 .us-gui-component-rel-sus-id').append($("<option></option>"));
+            slct.append($("<option></option>"));
             for (var n = 0; n < obj.length; n++) {
                 if (obj[n].id !== global_var.current_backlog_id) {
-                    $('.event_details1 .us-gui-component-rel-sus-id').append($("<option></option>")
+                   slct.append($("<option></option>")
                             .attr("value", obj[n].id)
                             .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " "));
                 }
             }
             // sortSelectBox('us-gui-component-rel-sus-id');
+            slct.selectpicker('refresh');
         } catch (err) {
         }
     },
@@ -9364,10 +9366,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInput(id, "orderNo", $('#us-gui-component-order-no').val());
         SAInput.updateInput(id, "cellNo", $('#us-gui-component-cell-no').val());
         SAInput.updateInput(id, "inputContent", $('#gui_input_content').val());
-        SAInput.updateInput(id, "param1", $('.us-gui-component-rel-sus-id').val());
+        SAInput.updateInput(id, "param1", $('select.us-gui-component-rel-sus-id').val());
         SAInput.updateInput(id, "param3", $('#gui_input_css_style').val());
         SAInput.updateInput(id, "param2", $('#gui_input_css_style_container').val());
-        SAInput.updateInput(id, "sectionBacklogId", $('.us-gui-component-rel-sus-id-section').val());
+        SAInput.updateInput(id, "sectionBacklogId", $('select.us-gui-component-rel-sus-id-section').val());
         SAInput.updateInput(id, "section", $('.us-gui-component-in-section').val());
         SAInput.updateInput(id, "param4", this.getInputCSS());
     },
@@ -9396,10 +9398,10 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         SAInput.updateInputList(checkedList, "orderNo", $('#us-gui-component-order-no').val());
         SAInput.updateInputList(checkedList, "cellNo", $('#us-gui-component-cell-no').val());
         SAInput.updateInputList(checkedList, "inputContent", $('#gui_input_content').val());
-        SAInput.updateInputList(checkedList, "param1", $('.us-gui-component-rel-sus-id').val());
+        SAInput.updateInputList(checkedList, "param1", $('select.us-gui-component-rel-sus-id').val());
         SAInput.updateInputList(checkedList, "param3", $('#gui_input_css_style').val());
         SAInput.updateInputList(checkedList, "param2", $('#gui_input_css_style_container').val());
-        SAInput.updateInputList(checkedList, "fkBacklogSectionId", $('.us-gui-component-rel-sus-id-section').val());
+        SAInput.updateInputList(checkedList, "fkBacklogSectionId", $('select.us-gui-component-rel-sus-id-section').val());
         SAInput.updateInputList(checkedList, "section", $('#us-gui-component-in-sectionn').val());
         SAInput.updateInputList(checkedList, "param4", this.getInputCSS());
 
@@ -11714,7 +11716,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
 
             $('.us-gui-component-rel-sus-div-class').show();
-            $('.us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
+            $('select.us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
+                        $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
+
             $('.us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
 
             $('.us-gui-component-action').val(res.tbl[0].r[0].action);
@@ -11723,8 +11727,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#us-gui-component-order-no').val(res.tbl[0].r[0].orderNo);
             $('#us-gui-component-cell-no').val(res.tbl[0].r[0].cellNo);
             // $('.tool_element_edit #gui-cell-selectbox-changed').val(res.tbl[0].r[0].cellNo);
-            $('.us-gui-component-rel-sus-id-section')
-                    .val(res.tbl[0].r[0].fkBacklogSectionId).change();
+            var selc1 = $('select.us-gui-component-rel-sus-id-section');
+            selcl.val(res.tbl[0].r[0].fkBacklogSectionId);
+            selcl.selectpicker('refresh');
+            selcl.change();
+                            
             $('.us-gui-component-in-section').val(res.tbl[0].r[0].section);
         } catch (err) {
         }
@@ -15092,9 +15099,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     redirectUserStory: function (backlogId) {
 
-        if ($('.' + backlogId).val()) {
+        if ($('select.' + backlogId).val()) {
 //            console.log('id=' + $('#us-gui-component-rel-sus-id').val())
-            this.redirectUserStoryCore($('.' + backlogId).val());
+            this.redirectUserStoryCore($('select.' + backlogId).val());
         }
     },
     redirectUserStoryCore: function (backlogId) {
@@ -15506,10 +15513,12 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("value", obj[n].id)
                     .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo));
         }
+        $('#us-related-sus').selectpicker('refresh');
     },
     loadSUS4Relation4SectionDetails: function (res) {
-        $('.us-gui-component-rel-sus-id-section').html("");
-        $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
+       var select = $('select.us-gui-component-rel-sus-id-section');
+               select.html("");
+        select.append($("<option></option>")
                 .attr("value", "")
                 .text(""));
         try {
@@ -15518,12 +15527,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 //                if (global_var.current_backlog_id === obj[n].id) {
 //                    continue;
 //                }
-                $('.us-gui-component-rel-sus-id-section').append($("<option></option>")
+                select.append($("<option></option>")
                         .attr("value", obj[n].id)
                         .text(obj[n].backlogName + "  #" + obj[n].orderNo));
             }
         } catch (e) {
         }
+        select.selectpicker('refresh');
     },
 //    bindTicketToSUSModal: function (id) {
 //        $('#bindTicketToSUSModal_id').val(id);
@@ -15792,7 +15802,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var outputList = SACore.GetBacklogDetails(storyCardId, "inputIds").split(',');
 
 
-        var select = $('.input_event_related_api');
+        var select = $('select.input_event_related_api');
         select.html('');
         var pushedList = [];
         for (var i in outputList) {
@@ -21413,6 +21423,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($("<option>").val('').append(('')))
                     .append($("<option>").val('-2').append(('New')))
                     .append($("<option disabled>").val('').append(('')))
+                       $('#us-related-apis').selectpicker('refresh');
+
             $('#us-related-apis').change();
         }
 

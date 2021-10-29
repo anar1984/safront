@@ -5188,6 +5188,7 @@
 
                                     <span style="width: 100%;" id="addRelatedSourceModal-apititle">APIs</span><br>
                                     <select id="us-related-apis" class='form-control' style="width:100%;padding:1px;  "
+                                            data-live-search='true'
                                             onchange="new UserStory().getOutputByAPI(this)">
                                     </select>
                                     <div class="row  create-new-storycard-4-select " style="display:none;">
@@ -5427,10 +5428,14 @@
                                 <input type="hidden" id="us-related-input-id">
                                 <span style="width: 100%;">Related SUS (Sourced User Story):</span><br>
                                 <select id="us-related-sus" style="width:100%;padding:1px;  "
+                                        data-live-search='true'
+                                        class='col-12'
                                         onchange="new UserStory().getOutputBySUSId(this)">
                                 </select>
                                 <span style="width: 100%;">Related SUS-Output:</span><br>
-                                <select id="sus-output-id" style="width:100%;padding:1px ;">
+                                <select id="sus-output-id"
+                                        class='col-12' 
+                                        style="width:100%;padding:1px ;">
                                 </select>
                             </div>
 
@@ -5685,6 +5690,7 @@
                         <div class="col-12">
                             <b><span style="width: 100%;">User Story</span><br></b>
                             <select type="number" id="addUserStoryToSectionModal-userstory" class="form-control"
+                                    data-live-search='true'
                                     onchange="toggleNewUserStory4Section(this)" style="width:100%;
                                     border-radius: 4px;
                                     border: 1px solid gray;">

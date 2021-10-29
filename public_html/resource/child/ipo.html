@@ -1181,6 +1181,7 @@
                                                 <b><span style="width1: 100%;">Related Sourced User Story</span><br></b>
                                                 <select type="number"
                                                         class="us-gui-component-rel-sus-id"
+                                                        data-live-search='true'
                                                         onchange="new UserStory().setGUIComponentRelSUS(this)"
                                                         style="width:90%;
                                                         border-radius: 4px;
@@ -1199,9 +1200,10 @@
                                                 <b><span
                                                         style="width: 100%;">In Section (User Story)</span><br></b>
                                                 <select type="number"
-                                                        class="us-gui-component-rel-sus-id-section"
+                                                        class="us-gui-component-rel-sus-id-section col-12" 
                                                         onchange="new UserStory().setGUIComponentRelSUSInSection(this)"
                                                         style="width:90%;
+                                                        data-live-search='true'
                                                         border-radius: 4px;
                                                         border: 1px solid gray;"></select>
                                                 <i class="fa fa-mail-forward us-gui-component-rel-sus-div-in-section"
@@ -1242,9 +1244,11 @@
 
                                                     Related API<br>
                                                     <select style="width:80%;padding: 0px;
+                                                            
                                                             border-radius: 4px;
                                                             border: 1px solid gray;"
-                                                            class="input_event_related_api">                                                        
+                                                            data-live-search='true'
+                                                            class="col-12 input_event_related_api">                                                        
                                                     </select>
 
                                                     <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
