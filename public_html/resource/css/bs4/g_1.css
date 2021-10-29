@@ -2479,7 +2479,7 @@ label h6{
 }
 .sa-section-modal>.filedset-style-section{
     margin-top: 20px;
-    padding: 15px;
+    padding: 5px;
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
     border-radius: 3px;
 }
@@ -6229,7 +6229,7 @@ td.selected{
     background: white;
    
     z-index: 5555;
-    width: 260px;
+    width: 300px;
 
     display: flex;
     flex-direction: column;
@@ -6688,4 +6688,27 @@ font-weight: 600;
     counter-increment: section;        
 content: counters(section, ".") " "; 
  color: #939292;
+}
+
+.modal-table-large-mod{
+    background: #ffff;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    overflow: scroll;
+    height: 100%;
+    z-index: 555;
+}
+.modal-table-large-mod .table thead{
+    position: sticky;
+    top: 0px;
+    left: 0px;
+    background: white;
+    z-index: 1;
+}
+.modal-inside-table-expand {
+    display: none;
+}
+.modal-body .modal-inside-table-expand {
+    display: block;
 }

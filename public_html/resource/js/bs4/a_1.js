@@ -636,7 +636,7 @@ function sortableTable(tableId, sv, cls) {
         switching = false;
         rows = $(table).find("tbody tr");
         console.log(rows.length);
-        for (i = 1; i < (rows.length - 1); i++) {
+        for (i = 0; i < (rows.length - 1); i++) {
             shouldSwitch = false;
 
 
