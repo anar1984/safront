@@ -11,11 +11,12 @@
                             <button class="btn newin dropdown-toggle" id="newSectionDrop" data-toggle="dropdown"><i class="fas fa-cogs"></i> Settings</button>  
         
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="newSectionDrop">
+                                <a class="dropdown-item newBusinessCase" href="#">New Business Case</a>
                                 <a class="dropdown-item" href="#" onclick="newSectionModal()">Editor</a>
                                 <a class="dropdown-item external-hidden-part"  onclick="deleteBusinessCase(this)" href="#">Delete</a>
                             </div> 
                         </div>
-                        <div class="cs-input-flat-group">
+                        <div class="cs-input-flat-group nbc-input-box" style="display: none;">
                             <input type="text" class="form-control"  id="newBusinessCaseName" onchange="insertNewBusinessCase(this)" placeholder="+ Add New Business Case">
                         </div>
                     </div>
