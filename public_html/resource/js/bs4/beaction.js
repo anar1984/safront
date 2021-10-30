@@ -2188,7 +2188,7 @@ var SAFN = {
             return outData;
         },
         ShowForm: function (key) {
-            key = SAFN.GetArgumentsValue(key);
+            key = SAFN.GetArgumentValue(key);
             var element = SAFN.Element;
 
             new UserStory().setGUIComponentButtonGUIModal(key, element);
@@ -2343,10 +2343,10 @@ var SAFN = {
             Utility.addParamToUrl(key, value);
         },
         GetParamUrl: function (key, variable) {
-            variable = SAFN.GetArgumentPureValue(variable);
-            key = SAFN.GetArgumentValue(key);
+            variable = SAFN.GetArgumentValue(variable);
+            key = SAFN.GetArgumentPureValue(key);
             var data = SAFN.CoreData;
-            data[variable] = Utility.getParamFromUrl(key);
+            data[key] = Utility.getParamFromUrl(variable);
             return data;
         },
         Alert: function (key) {
