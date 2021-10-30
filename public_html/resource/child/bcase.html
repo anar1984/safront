@@ -28,7 +28,10 @@
                     <h5>General Description</h5>
                 </div>
                 <div class="row">
-                    <div class="col-6"><textarea class="form-control" id="business_case_description" rows="9" onchange="updateCaseDesc(this)"></textarea></div>
+                    <div class="col-6">
+                        <textarea class="form-control" id="business_case_description" rows="9" onchange="updateCaseDesc(this)"></textarea>
+                        <button id="business_case_desc_btn" class="btn btn-primary business_case_desc_btn">SET CONTENT</button>
+                    </div>
                     <script src="resource/tinymce/tinymce.min.js"></script>
                     <script>
                         tinymce.init({
@@ -93,6 +96,7 @@
 
                             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                         });
+
                       </script>
 
                     <div class="col-6">

@@ -4112,4 +4112,9 @@ $(document).on("click", '.fbdetailtabs', function (e) {
     $(this).find('.fas').toggleClass('fa-chevron-up fa-chevron-down');
 });
 
+$(document).on("click", '#business_case_desc_btn', function (e) {
+    // alert(tinyMCE.get('#business_case_description').getContent());
+        var s = $('#business_case_description').val(); 
+        alert(tinyMCE.activeEditor.setContent(s));
 
+});
