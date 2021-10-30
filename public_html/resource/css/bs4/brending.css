@@ -901,6 +901,7 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
     padding: 3px 5px;
     border: none;
     background: #ffffff;
+    text-align: left;
 }
 .cs-function-list li.ui-menu-item:hover, .cs-function-list li.ui-menu-item.ui-state-focus {
     color: #ffffff;
@@ -2244,6 +2245,16 @@ tbody tr.sortbodyEmpty {
   .cs-db-main-container {
       margin-bottom: 100px;
   }
+  #description_table_id tbody>tr::before {
+    content:none;
+}
+  #description_table_id #description_table_body_id>tr::before, #description_table_id #description_table_body_id tbody>tr::before {
+    counter-increment: section;
+    content: counters(section, ".") " ";
+    color: #9395bd;
+    padding: 0px 0 0px 10px;
+    font-weight: bold;
+}
 .livesql-table-boxes {
     width: 100%;
     height: 78%;
@@ -2797,6 +2808,9 @@ tr.testCaseListborder td:first-child {
     margin-right: 5px;
     margin-bottom: 3px;
     display: inline-block;
+}
+.problemServiceListSingle label {
+    margin: 0;
 }
 .problemServiceListSingle .problemServiceListSingleDelete {
     color: #fff;

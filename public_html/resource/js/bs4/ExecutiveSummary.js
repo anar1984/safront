@@ -302,8 +302,11 @@ function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, co
             var input = $("<input type='checkbox'>")
                     .attr('competitorId', competitorId)
                     .attr('serviceid', serviceId)
+                    .attr('id', serviceId)
                     .attr('feature', srv)
+                    .attr('name', serviceId)
                     .addClass('competitorFeatureAddRemove');
+            //var label = $('<label>').attr('for',serviceId).text(srv);
 
             if (addFeatures[serviceId]) {
                 var srvT = srv.trim();
@@ -317,8 +320,12 @@ function convertProblemServicesToCircleFormatForCompetitors(addFeatures, arg, co
                     .css('padding', '3px 7px')
                     .css('margin-bottom', '6px')
                     .addClass('problemServiceListSingle')
-                    .append(input)
-                    .append(srv)
+                    .append($('<label>')
+                        .append(input)
+                        .append(srv)
+                    )
+                    //.append(label)
+                    // .append(srv)
 
             if (addFeatures[serviceId]) {
                 var srvT = srv.trim();
