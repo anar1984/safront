@@ -5985,6 +5985,8 @@ function loadSelecPickerOnChnageFnList(element) {
 
 // if new scripts
 $(document).ready(function () {
+
+
     var shortcodes = [
         '@.if(){}',
         '@.ifhasvalue(){}',
@@ -6036,8 +6038,10 @@ $(document).ready(function () {
                 return false;
             },
             position: {my: "left bottom", at: "left top", collision: "flip"}
-        }).autocomplete("widget").addClass("cs-function-list");
+        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
     });
+
+
 
     // first table shortcode
     $(document).on('click', '.cs-function-list li.ui-menu-item', function (e) {
