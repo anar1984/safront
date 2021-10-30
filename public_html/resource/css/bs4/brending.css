@@ -2811,6 +2811,7 @@ tr.testCaseListborder td:first-child {
 }
 .problemServiceListSingle label {
     margin: 0;
+    cursor: pointer;
 }
 .problemServiceListSingle .problemServiceListSingleDelete {
     color: #fff;
