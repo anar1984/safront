@@ -595,8 +595,13 @@ function getFinancialProjectionZoneListDetails(res) {
     var trHead = $('<tr>').append($('<th>').text('#'));
     var trCurrency = $('<tr>').append($('<th>').text('Currency'));
     var trCustomer = $('<tr>').append($('<th>').text('Assumtion # of Customer'));
-    var trRevenue = $('<tr>').append($('<th>').text('Revenue'));
-    var trExpences = $('<tr>').append($('<th>').text('Expenses'));
+
+    var DetailRevenue = $('<tr>').addClass('fp-detail-table-boxes');
+    // var DRTable = $('<table>');
+    
+    var trRevenue = $('<tr>').addClass('tr-revenue').append($('<th>').text('Revenue').append($('<div>').addClass('fpd-revenue fbdetailtabs').html('Details <i class="fas fa-chevron-down"></i>')));
+    var trExpences = $('<tr>').addClass('tr-expences').append($('<th>').text('Expenses').append($('<div>').addClass('fpd-expenses fbdetailtabs').html('Details <i class="fas fa-chevron-down"></i>')));
+
     var trGrossProfit = $('<tr>').css('color', 'red').addClass('csGrossProfite').append($('<th>').text('Gross Profit'));
     var trSection = $('<tr>').append($('<td>').text(''));
 
@@ -761,13 +766,14 @@ function getFinancialProjectionZoneListDetails(res) {
 //                .text(o.periodName)))
 //        getFinancialProjectionSectionList(o.id);
     }
+
+
     trHead.append($('<th>')
     .addClass('hasTextAreaConverstion')
         .append($('<a>').addClass('addFinancialProjectionCol')
         .html('<i class="fas fa-plus-square"></i>')
         )
     );
-
 
     thead.append(trHead);
     tbody.append(trCurrency);
@@ -847,12 +853,17 @@ function getFinancialProjectionZoneListDetails(res) {
     }
 
 
+// DetailRevenue and DetailExpences END
+
+
+
     var trSection = $('<tr>').append($('<td>').text('+ Add Section'));
     tbody.append(trSection);
 
     table.append(thead);
     table.append(tbody)
-
+    $('.tr-revenue').after($(DetailRevenue));
+    // DRTable.append($('<div>').addClass('close-fp-detail-btn-box').append($('<i class="fas fa-times"></i>')));
     getFinancialSectionDetailList();
     
 }
@@ -2642,8 +2653,15 @@ function problemStatTable(res) {
                                 .attr("ptype", "countRealCustomer")
                                 .addClass('bc-probdesc-counts')
                                 .val(o.countRealCustomer))
-                        )
+
+                                .append($('<label>')
+                                .addClass('expander')
+                              )
                             )
+                                .append($('<div>')
+                                .addClass('textarea-full-blure-bg')
+                            )
+                    )
                 .append($('<td>')
                         .append(serviceDiv)
 //                        .append("<br>")
@@ -2655,6 +2673,8 @@ function problemStatTable(res) {
                 .append($('<td>')
                         .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBullet(o.fkBcKeyResourceId))
+                        .append($('<div>')
+                    .addClass('figureTextarea-box')
                         .append($('<textarea>')
                                 .addClass("figureTextarea")
                                 .css("display", "none")
@@ -2665,12 +2685,20 @@ function problemStatTable(res) {
                                 .attr("ptype", "fkBcKeyResourceId")
                                 .addClass('bc-probdesc-textarea')
                                 .val(o.fkBcKeyResourceId))
-
+                                .append($('<label>')
+                                .addClass('expander')
+                              )
+                            )
+                            .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
                         )
+                    )
 
                 .append($('<td>')
                         .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBullet(o.fkBcKeyPartnerId))
+                        .append($('<div>')
+                    .addClass('figureTextarea-box')
                         .append($('<textarea>')
                                 .css("display", "none")
                                 .addClass("figureTextarea")
@@ -2680,7 +2708,16 @@ function problemStatTable(res) {
                                 .attr("pid", o.id)
                                 .attr("ptype", "fkBcKeyPartnerId")
                                 .addClass('bc-probdesc-textarea')
-                                .val(o.fkBcKeyPartnerId)))
+                                .val(o.fkBcKeyPartnerId))
+                                .append($('<label>')
+                                .addClass('expander')
+                              )
+                         )
+                         .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                        )
+                                
+                        )
                 .append($('<td>').addClass('tdCenter')
                         .append($('<a>')
                                 .attr('onclick', "deleteProbStat('" + o.id + "')")
@@ -2773,8 +2810,10 @@ function generateCompetitorFeatureMatrixBinder(compList, serviceList) {
         var tr = $('<tr>')
                 .append($("<td>").text(i + 1))
                 .append($("<td>")
-                        .addClass('hasTextAreaConverstion')
+                    .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBulletEditbox(o.competitorName))
+                        .append($('<div>')
+                    .addClass('figureTextarea-box')
                         .append($('<textarea>')
                                 .addClass("figureTextarea")
                                 .css("display", "none")
@@ -2783,10 +2822,20 @@ function generateCompetitorFeatureMatrixBinder(compList, serviceList) {
                                 .attr('pid', o.id)
                                 .attr("key", "competitorName")
                                 .attr('onchange', 'updateCompetitorInfo4Short(this)')
-                                .val(o.competitorName)))
+                                .val(o.competitorName))
+                                .append($('<label>')
+                                    .addClass('expander')
+                                )
+                        )
+                        .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                        )
+                    )
                 .append($("<td>")
                         .addClass('hasTextAreaConverstion')
                         .append(convertTextAreaToTdSectionBullet(o.competitorDescription))
+                        .append($('<div>')
+                    .addClass('figureTextarea-box')
                         .append($('<textarea>')
                                 .addClass("figureTextarea")
                                 .css("display", "none")
@@ -2795,9 +2844,15 @@ function generateCompetitorFeatureMatrixBinder(compList, serviceList) {
                                 .attr('pid', o.id)
                                 .attr("key", "competitorDescription")
                                 .attr('onchange', 'updateCompetitorInfo4Short(this)')
-                                .val(o.competitorDescription)))
-
-
+                                .val(o.competitorDescription))
+                                .append($('<label>')
+                                .addClass('expander')
+                              )
+                        )
+                        .append($('<div>')
+                            .addClass('textarea-full-blure-bg')
+                        )
+                )
 
         var obj2 = serviceList.tbl[0].r;
         for (let j = 0; j < obj2.length; j++) {
@@ -4045,29 +4100,93 @@ function getNewSummary(e) {
     });
 }
 
+$(document).on("click", '.newBusinessCase', function (e) {
+    $('.nbc-input-box').show();
+});
+
+$(document).on("change", '.nbc-input-box input', function (e) {
+    $('.nbc-input-box').hide();
+});
+
+$(document).on("click", '.fbdetailtabs', function (e) {
+    $(this).find('.fas').toggleClass('fa-chevron-up fa-chevron-down');
+});
 
 
+function setBCasescripts () {
+
+        tinymce.init({
+             selector: '#business_case_description',
+             height: 250,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                ],
+                convert_urls: false,
+
+            toolbar: 'undo redo | link image | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | fullscreen code',
+                /* enable title field in the Image dialog*/
+                image_title: true,
+                /* enable automatic uploads of images represented by blob or data URIs*/
+                automatic_uploads: true,
+                /*
+                    URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+                    images_upload_url: 'postAcceptor.php',
+                    here we add custom filepicker only to Image dialog
+                */
+                file_picker_types: 'image',
+                /* and here's our custom image picker*/
+                file_picker_callback: function (cb, value, meta) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+
+                    /*
+                    Note: In modern browsers input[type="file"] is functional without
+                    even adding it to the DOM, but that might not be the case in some older
+                    or quirky browsers like IE, so you might want to add it to the DOM
+                    just in case, and visually hide it. And do not forget do remove it
+                    once you do not need it anymore.
+                    */
+
+                    input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        /*
+                        Note: Now we need to register the blob in TinyMCEs image blob
+                        registry. In the next release this part hopefully won't be
+                        necessary, as we are looking to handle it internally.
+                        */
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        /* call the callback and populate the Title field with the file name */
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                    };
+
+                    input.click();
+                },
+
+                setup: function (editor) {
+                    editor.on('init', function () {
+                        this.setContent('Taleh Hasan<br>Anar Rüstəmov');
+                    });
+                },
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(document).on("click", '#business_case_desc_btn', function (e) {
+    var contents = tinyMCE.get('business_case_description').getContent();
+    alert(contents);
+});

@@ -3012,4 +3012,62 @@ span.convertedTextAreaLinesItem {
 .addFinancialProjectionCol {
     font-size: 20px;
     padding: 8px;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+.executiveTblStyle tbody {
+    position: relative;
+}
+.executiveTblStyle .fbdetailtabs {
+    display: block;
+    float: right;
+    color: #525596;
+    width: 100%;
+    max-width: 72px;
+    height: 25px;
+    text-decoration: none;
+    border: 1px solid #BEBFD7;
+    background: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+.fp-detail-table-boxes {
+    display: none;
+    width: 100%;
+    /* position: absolute;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 38%); */
+    border: 1px solid #5255966b;
+    /* padding: 4px; */
+}
+.fp-detail-table-boxes table {
+    /* width: 100%;
+    display: table; */
+}
+.fp-detail-table-boxes table tr{
+
+}
+.close-fp-detail-btn-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    font-size: 20px;
+    background: #525596;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-top: -15px;
+    margin-right: -15px;
+    box-shadow: 0 2px 5px #00000070;
+}
+.close-fp-detail-btn-box i {
+    vertical-align: middle;
+    margin-top: -17px;
 }

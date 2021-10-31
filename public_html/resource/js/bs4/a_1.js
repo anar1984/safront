@@ -13667,6 +13667,7 @@ $(document).on('click', '.loadBusinessCase', function (evt) {
         hideToggleMain();
         commmonOnloadAction(this);
         getNewExecutiveTable();
+        setBCasescripts();
     });
 });
 
