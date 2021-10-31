@@ -5528,9 +5528,9 @@ UserStory.prototype = {
 
             var td34 = $('<td>');
             
-            if (isCommand==='0'){
+//            if (isCommand!=='1'){
                 td34.attr("ondblclick", "new UserStory().toogleBacklogDescEdit(this,'" + obj[n].id + "')")
-            }
+//            }
             
 
             var tr = $("<tr>")

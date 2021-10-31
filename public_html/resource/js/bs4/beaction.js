@@ -842,7 +842,9 @@ var be = {
                 try {
                     if (inputList[i].trim().length > 0) {
                         var inputName = inputList[i].trim();
-                        res[inputName] = (data[inputName]) ? data[inputName] : "";
+                        var zad = data[inputName];
+                        
+                        res[inputName] = (zad) ? zad : "";
                     }
                 } catch (err) {
 
@@ -1053,7 +1055,7 @@ var be = {
                 be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
-                    outData = SAFN.ExecCommand(o.description, outData, element, asyncData);
+                    outData = SAFN.ExecCommand(o.description, outData, element, asyncData,apiId);
                 } else {
                     if (o.fkRelatedScId) {
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
@@ -1912,12 +1914,13 @@ var SAFN = {
         }
         return res;
     },
-    ExecCommand: function (description, outData, element, asyncData) {
+    ExecCommand: function (description, outData, element, asyncData,apiId) {
 
         //      description = description.trim().replace(/ /g, '');
         SAFN.FunctionBody = SAFN.GetFunctionBody(description);
         SAFN.Element = element;
         SAFN.AsyncData = asyncData;
+        SAFN.ApiId = apiId;
 
         var callDesc = description;
 
@@ -2190,6 +2193,10 @@ var SAFN = {
         ShowForm: function (key) {
             key = SAFN.GetArgumentValue(key);
             var element = SAFN.Element;
+            var apiId = SAFN.ApiId;
+            if ($(element).attr("onclick_trigger_id")===apiId ) {
+                $(element).removeAttr("onclick_trigger_id");
+            }
 
             new UserStory().setGUIComponentButtonGUIModal(key, element);
         },
@@ -5891,6 +5898,7 @@ $(document).on('click', '.cs-copy-btn', function (e) {
     $("body").append($temp);
     $temp.val(txt).select();
     document.execCommand("copy");
+    navigator.clipboard.writeText(txt);
     $temp.remove();
     Toaster.showMessage('Script Copied! <br>' + txt)
 });
