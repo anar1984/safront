@@ -7039,6 +7039,7 @@ function iDidItAction() {
         crossDomain: true,
         async: false,
         success: function (res) {
+            AJAXCallFeedback(res);
             getBugList();
             $('#iDidItModal_comment').html('');
             $('#iDidItModal').modal('hide');
@@ -14749,7 +14750,7 @@ function getBugList4UserStory(bgId, tbody) {
                     .append($("<td>").append("<b>Task Nature</b>"))
                     .append('<td><b>Task Type</b></td>')
                     .append('<td><b>Created</b></td>')
-                    .append('<td><b>Assigne</b></td>')
+                    .append('<td><b>Assignee</b></td>')
                     .append('<td><b>Date</b></td>')
                     )
 
@@ -14767,7 +14768,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assigne"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
                         )
 
