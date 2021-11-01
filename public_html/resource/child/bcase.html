@@ -1,161 +1,165 @@
 <div class="wrapper-business-case">
-        <div class="row">
-           <div class="col-12 pt-3 mb-3">
-                <div class="cs-headline-box">
-                    <div class="cs-headline-title">
-                        <div class="cs-es-col cs-button-group">
-                            <button class="btn newin dropdown-toggle" id="dropExecutiveInsert" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="business_case_heading"></span></button>  
-                            <div id="executiveInsert" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropExecutiveInsert"></div> 
-                        </div>
-                        <div class="cs-es-col cs-button-group cs-es-settings">
-                            <button class="btn newin dropdown-toggle" id="newSectionDrop" data-toggle="dropdown"><i class="fas fa-cogs"></i> Settings</button>  
-        
-                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="newSectionDrop">
-                                <a class="dropdown-item newBusinessCase" href="#">New Business Case</a>
-                                <a class="dropdown-item" href="#" onclick="newSectionModal()">Editor</a>
-                                <a class="dropdown-item external-hidden-part"  onclick="deleteBusinessCase(this)" href="#">Delete</a>
-                            </div> 
-                        </div>
-                        <div class="cs-input-flat-group nbc-input-box" style="display: none;">
-                            <input type="text" class="form-control"  id="newBusinessCaseName" onchange="insertNewBusinessCase(this)" placeholder="+ Add New Business Case">
-                        </div>
+    <div class="row">
+        <div class="col-12 pt-3 mb-3">
+            <div class="cs-headline-box">
+                <div class="cs-headline-title">
+                    <div class="cs-es-col cs-button-group">
+                        <button class="btn newin dropdown-toggle" id="dropExecutiveInsert" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="business_case_heading"></span></button>  
+                        <div id="executiveInsert" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropExecutiveInsert"></div> 
+                    </div>
+                    <div class="cs-es-col cs-button-group cs-es-settings">
+                        <button class="btn newin dropdown-toggle" id="newSectionDrop" data-toggle="dropdown"><i class="fas fa-cogs"></i> Settings</button>  
+
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="newSectionDrop">
+                            <a class="dropdown-item newBusinessCase" href="#">New Business Case</a>
+                            <a class="dropdown-item" href="#" onclick="newSectionModal()">Editor</a>
+                            <a class="dropdown-item external-hidden-part"  onclick="deleteBusinessCase(this)" href="#">Delete</a>
+                        </div> 
+                    </div>
+                    <div class="cs-input-flat-group nbc-input-box" style="display: none;">
+                        <input type="text" class="form-control"  id="newBusinessCaseName" onchange="insertNewBusinessCase(this)" placeholder="+ Add New Business Case">
                     </div>
                 </div>
             </div>
-            <!--General Description-->
-            <div class="col-12 mt-5">
-                <div class="cs-headline-by-content">
-                    <h5>General Description</h5>
-                </div>
-                <div class="row">
-                    <div class="col-6 business_case_description_box">
-                        <textarea class="form-control" id="business_case_description" rows="9" onchange="updateCaseDesc(this)"></textarea>
-                        <button id="business_case_desc_btn" class="btn btn-primary business_case_desc_btn">SET CONTENT</button>
-                    </div>
-                    <script src="resource/tinymce/tinymce.min.js"></script>
-            
-                    <div class="col-6">
-                        <img class="img-fluid" src="resource/img/start-up-business-goals-strategy.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-            <br>  <br>
-
-            <!-- Problem Statement Section-->
-
-            <div class="col-12 mt-5 mt-90">
-                <div class="cs-headline-by-content">
-                    <h5>Problem Statement <a href="#"  class="addFinancialProjectionPeriod"  id="problemStatAddNew" onclick="addProblemStat()"><i class="fas fa-plus-square"></i></a></h5>
-                </div>
-                <table class="table table-hover spilted executiveTblStyle">
-                    <thead>
-                        <tr>
-                            <th>#</th>   
-                            <th>Segment</th>    
-                            <th>Problem Description</th>    
-                            <th># Potential Customers</th> 
-                            <th># Real Customers</th>
-                            <th>Proviced Services</th>
-                            <th>Key Resources</th>
-                            <th>Key Partner</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <!-- <tfoot>
-                        <tr style="background:transparent;background-color:transparent;color:black">
-                            <td colspan="9">
-                                <a href="#" class="cs-insertNewtr" id="problemStatAddNew" onclick="addProblemStat()" >+ Add New Problem Statement</a>
-                            </td>
-                        </tr>
-                    </tfoot> -->
-                    <tbody id="problemStat">
-
-                    </tbody>
-                </table>
-            </div>
-            <br>  <br>  
-
-            <!-- Provided Services as a Solution(s) section -->
-            <div class="col-12 mt-5 mt-90">
-                <div class="cs-headline-by-content">
-                    <h5>Provided Services as a Solution(s) <a href="#"  class="addFinancialProjectionPeriod"  onclick="insertNewProvidedService()"><i class="fas fa-plus-square"></i></a></h5>
-                </div>
-                <table class="table table-hover spilted executiveTblStyle">
-                    <thead>
-                        <tr>
-                            <th>#</th>   
-                            <th>Service Name</th>   
-                            <th>Advantages</th>   
-                            <th>Technical Advantages</th>   
-                            <th>Value Proposition</th>   
-                            <th>Features</th>   
-                            <th></th> 
-                        </tr>
-                    </thead>
-                    <!-- <tfoot>
-                        <tr style="background:transparent;background-color:transparent;">
-                            <td colspan="4">
-                                <a class="cs-insertNewtr" onclick="insertNewProvidedService()">+ Add New Business Service</a>
-                            </td>   
-                        </tr>
-                    </tfoot> -->
-
-                    <tbody id="providedServicesListTable">
-
-                    </tbody>
-                </table>
-
-            </div>
-            <br><br>
-            <!-- Key Financial Projection section -->
-             <div class="col-12 mt-5 mt-90">
-                <div class="cs-headline-by-content">
-                    <h5>Financial Projection <a href="#"  class="addFinancialProjectionPeriod" title="Add Period"><i class="fas fa-plus-square"></i></a></h5>
-                </div>
-               
-                <table class="table table-hover spilted executiveTblStyle" id="financialProjectionTable">
-                    
-                </table>
-
-            </div>
-
-            <br><br>
-
-            <!-- competitor section -->
-            <div class="col-12 mt-90">
-                <div class="cs-headline-by-content">
-                    <h5>Competitor</h5>
-                </div>
-                <table class="table table-hover spilted executiveTblStyle">
-                    <thead id='competitorServicesListHeader'>
-                        <tr>
-                            <th></th>   
-                            <th>Competitor Name</th>   
-                            <th>Description</th> 
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr style="background:transparent; background-color:transparent;">
-                            <td colspan="4">
-                                <input type="text" 
-                                       class="form-control  prerActionTableGeneralCls"  
-                                       style="background:white !important;"
-                                       id="keyResourceNew" 
-                                       onchange="insertNewCompetitor(this)" placeholder="+ Add New Competitor"></td>
-                        </tr>
-                    </tfoot>
-                    <tbody id="competitorServicesFeature">
-
-                    </tbody>
-                </table>
-                               
-
-            <div class="row" id="caseSectionDivPart">
-
-            </div>
-            
         </div>
+        <!--General Description-->
+        <div class="col-12 mt-5">
+            <div class="cs-headline-by-content">
+                <h5>General Description</h5>
+            </div>
+            <div class="row">
+                <div class="col-6 business_case_description_box">
+                    <textarea class="form-control" id="business_case_description" rows="9" onchange="updateCaseDesc(this)"></textarea>
+                    <button id="business_case_desc_btn" class="btn btn-primary business_case_desc_btn">SET CONTENT</button>
+                </div>
+                <script src="resource/tinymce/tinymce.min.js"></script>
+
+                <div class="col-6">
+                    <img class="img-fluid" src="resource/img/start-up-business-goals-strategy.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        <br>  <br>
+
+        <!-- Problem Statement Section-->
+
+        <div class="col-12 mt-5 mt-90">
+            <div class="cs-headline-by-content">
+                <h5>Problem Statement <a href="#"  class="addFinancialProjectionPeriod"  id="problemStatAddNew" onclick="addProblemStat()"><i class="fas fa-plus-square"></i></a></h5>
+            </div>
+            <table class="table table-hover spilted executiveTblStyle">
+                <thead>
+                    <tr>
+                        <th>#</th>   
+                        <th>Segment</th>    
+                        <th>Problem Description</th>    
+                        <th># Potential Customers</th> 
+                        <th># Real Customers</th>
+                        <th>Proviced Services</th>
+                        <th>Key Resources</th>
+                        <th>Key Partner</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <!-- <tfoot>
+                    <tr style="background:transparent;background-color:transparent;color:black">
+                        <td colspan="9">
+                            <a href="#" class="cs-insertNewtr" id="problemStatAddNew" onclick="addProblemStat()" >+ Add New Problem Statement</a>
+                        </td>
+                    </tr>
+                </tfoot> -->
+                <tbody id="problemStat">
+
+                </tbody>
+            </table>
+        </div>
+        <br>  <br>  
+
+        <!-- Provided Services as a Solution(s) section -->
+        <div class="col-12 mt-5 mt-90">
+            <div class="cs-headline-by-content">
+                <h5>Provided Services as a Solution(s) <a href="#"  class="addFinancialProjectionPeriod"  onclick="insertNewProvidedService()"><i class="fas fa-plus-square"></i></a></h5>
+            </div>
+            <table class="table table-hover spilted executiveTblStyle">
+                <thead>
+                    <tr>
+                        <th>#</th>   
+                        <th>Service Name</th>   
+                        <th>Advantages</th>   
+                        <th>Technical Advantages</th>   
+                        <th>Value Proposition</th>   
+                        <th>Features</th>   
+                        <th></th> 
+                    </tr>
+                </thead>
+                <!-- <tfoot>
+                    <tr style="background:transparent;background-color:transparent;">
+                        <td colspan="4">
+                            <a class="cs-insertNewtr" onclick="insertNewProvidedService()">+ Add New Business Service</a>
+                        </td>   
+                    </tr>
+                </tfoot> -->
+
+                <tbody id="providedServicesListTable">
+
+                </tbody>
+            </table>
+
+        </div>
+        <br><br>
+        
+         <!-- competitor section -->
+        <div class="col-12 mt-90">
+            <div class="cs-headline-by-content">
+                <h5>Competitor</h5>
+            </div>
+            <table class="table table-hover spilted executiveTblStyle">
+                <thead id='competitorServicesListHeader'>
+                    <tr>
+                        <th></th>   
+                        <th>Competitor Name</th>   
+                        <th>Description</th> 
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr style="background:transparent; background-color:transparent;">
+                        <td colspan="4">
+                            <input type="text" 
+                                   class="form-control  prerActionTableGeneralCls"  
+                                   style="background:white !important;"
+                                   id="keyResourceNew" 
+                                   onchange="insertNewCompetitor(this)" placeholder="+ Add New Competitor"></td>
+                    </tr>
+                </tfoot>
+                <tbody id="competitorServicesFeature">
+
+                </tbody>
+            </table>
+
+
+           
+
+        </div>
+         <br>
+         <br>
+        <!-- Key Financial Projection section -->
+        <div class="col-12 mt-5 mt-90">
+            <div class="cs-headline-by-content">
+                <h5>Financial Projection <a href="#"  class="addFinancialProjectionPeriod" title="Add Period"><i class="fas fa-plus-square"></i></a></h5>
+            </div>
+
+            <table class="table table-hover spilted executiveTblStyle" id="financialProjectionTable">
+
+            </table>
+
+        </div>
+
+        <br><br>
+
+        <div class="row" id="caseSectionDivPart">
+
+            </div>
     </div>
 </div>
 
@@ -216,11 +220,11 @@
                                         </div>
                     
                                     </div>-->
-    
+
                 </div>
-                
+
                 <div class="row" id="caseSectionDivPart">
-                    
+
                 </div>
                 <!-- Key Resources -->
                 <!--            <div class="">
@@ -259,8 +263,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!-- *******************************Modals--Bunlar app.html-a elave olunmali***************************** -->
     <!-- Create new  summary modal-->
     <div class="modal fade" id="newSummaryModal" tabindex="-1" role="dialog" aria-labelledby="newSummaryModalLabel" aria-hidden="true">
@@ -274,7 +278,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="scrolDiv">
-    
+
                         <table class="table table-hover spilted executiveTblStyle">
                             <thead>
                                 <tr>
@@ -297,7 +301,7 @@
                                 </tr>
                             </tfoot>
                             <tbody id="newSummDiv">
-                                 
+
                             </tbody>
                         </table>
                     </div>
@@ -308,7 +312,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Service Modal (Provided Services as a Solution(s))-->
     <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="serviceModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -326,7 +330,7 @@
                             <select  class="form-control required addUS"
                                      id="serviceModal_servicegroup">
                             </select>
-    
+
                         </div>
                         <div class=" col-12 new-bc-service-group" style="display:none;padding-top:10px;">
                             <div class="row">
@@ -337,9 +341,9 @@
                                     <button  type="button" class="btn btn-light" onclick="addNewBCServiceGroup()">Add</button>
                                 </div>
                             </div>
-    
+
                         </div>
-    
+
                         <div class="form-group col-12">
                             <label class="col-form-label control-label"> Service</label>
                             <select  class="form-control required addUS"
@@ -355,10 +359,10 @@
                                     <button  type="button" class="btn btn-light" onclick="addNewBCService()">Add</button>
                                 </div>
                             </div>
-    
+
                         </div>
                     </div>
-    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="addBusinessServiceRel()">Add</button>
@@ -367,7 +371,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Key Partners Modal -->
     <div class="modal fade" id="keyPartnerseModal" tabindex="-1" role="dialog" aria-labelledby="keyPartnerseModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -379,17 +383,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-    
+
                     <div class="form-group">
                         <label for=""><h6>Action Name</h6></label>
                         <input type="text" name="" id="actionName" class="form-control">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="serviceAdd"><h6>Description</h6></label>
                         <textarea name="" id="actionDesc" cols="30" rows="3" class="form-control"></textarea>          
                     </div>
-    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="addKeyPartner()">Add</button>
@@ -398,7 +402,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Key Human Modal -->
     <div class="modal fade" id="keyHumaneModal" tabindex="-1" role="dialog" aria-labelledby="keyHumaneModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -410,17 +414,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-    
+
                     <div class="form-group">
                         <label for=""><h6>Action Name</h6></label>
                         <input type="text" name="" id="actionName2" class="form-control">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="serviceAdd"><h6>Description</h6></label>
                         <textarea name="" id="actionDesc2" cols="30" rows="3" class="form-control"></textarea>          
                     </div>
-    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="addKeyHuman()">Add</button>
@@ -461,7 +465,7 @@
                     </tfoot>
 
                     <tbody id="addServiceToProblemStatementModal_body">
-                       
+
                     </tbody>
                 </table>
 
