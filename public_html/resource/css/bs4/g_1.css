@@ -4377,7 +4377,7 @@ div.ruby-wrapper > ul {
 
 ul.ruby-menu > li {
     float: left;
-    font-size: 14px
+    font-size: 16px
 }
 
 ul.ruby-menu > li.ruby-menu-right {
@@ -4391,7 +4391,7 @@ ul.ruby-menu > li > a {
     color: #efefef;
     text-decoration: none;
     font-family: 'Open Sans',sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase
 }
 
