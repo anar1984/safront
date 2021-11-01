@@ -9,28 +9,97 @@ var lastSelectedGroupId = "";
 
 // 4__________________Provided Services as a Solution(s)--- PLUS Button to Click________________
 function loadDocEditor4BusinessCase(id) {
-    new FroalaEditor('textarea' + id, {
-        toolbarInline: true
-    }
-//            , {
-//                events: {
-//                    'contentChanged': function () {
-//                        var el =  this.html;
-//                        console.log(el )
-////
-////                        var id = this.html.get().closest("div.bc-section-main-div").attr("pid");
-////                        $('#btn_section_' + id).removeAttr("style").html("Save");
-////                        $('#btn_section_' + id).show();
-//                    }
-//                }
-//            }
-    );
+
+    tinymce.init({
+        selector: id,
+        height: 150,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        convert_urls: false,
+
+        toolbar: 'undo redo | link image | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | fullscreen code',
+        image_title: true,
+        automatic_uploads: true,
+        file_picker_types: 'image',
+        /* and here's our custom image picker*/
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function () {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                    /*
+                     Note: Now we need to register the blob in TinyMCEs image blob
+                     registry. In the next release this part hopefully won't be
+                     necessary, as we are looking to handle it internally.
+                     */
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+
+                    /* call the callback and populate the Title field with the file name */
+                    cb(blobInfo.blobUri(), {title: file.name});
+                };
+                reader.readAsDataURL(file);
+            };
+
+            input.click();
+        },
+        setup:function(ed) {
+            //    var idl = id.split("_");
+            ed.on('change', function(e) {
+
+                var sectionId = $(id).attr("pid");
+                      
+                var tinyBCSBody = tinyMCE.get('section_' + sectionId).getContent();
+                       
+                var bcId = activeBCId;
+                // var sectionId = $(idl[1]);
+            
+                if (!bcId || !sectionId)
+                    return;
+            
+                var json = {kv: {}};
+                try {
+                    json.kv.cookie = getToken();
+                } catch (err) {
+                }
+                json.kv.fkBcId = bcId;
+                json.kv.fkBcSectionId = sectionId;
+                json.kv.sectionBody = tinyBCSBody;
+                var that = this;
+                var data = JSON.stringify(json);
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceTmAddBcSectionRel",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                    },
+                    error: function () {
+                        Toaster.showError(('Something Went Wrong.'));
+                    }
+                });
+
+            });
+        },
+
+
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+   
 }
-
-
-
-
-
 
 
 
@@ -290,7 +359,8 @@ function getBCSectionsBody(bcId, sectionId) {
         async: true,
         success: function (res) {
 
-            $('#section_div_' + sectionId).find(".fr-element").html(res.kv.sectionBody);
+            //$('#section_div_' + sectionId).find(".fr-element").html(res.kv.sectionBody);
+            tinyMCE.get('section_' + sectionId).setContent(res.kv.sectionBody);
         },
         error: function () {
             Toaster.showError(('Something Went Wrong.'));
@@ -1334,17 +1404,19 @@ function getCaseSectionDivElement(obj) {
             .addClass("col-" + obj.gridNo)
             .append("<br><br>")
             .append($('<div class="row">')
-                    .append($('<div class="col-9">')
-                            .append($("<h4>")
+                    .append($('<div class="col-12">')
+            //         <div class="cs-headline-by-content">
+            //     <h5>General Description</h5>
+            // </div>
+                    .append($('<div>')
+                            .addClass('cs-headline-by-content')
+                                .append($("<h5>")
                                     .css('padding-bottom', '10px')
-                                    .text(replaceTags(obj.sectionName))))
-                    .append($('<div class="col-3 text-right">')
-                            .append($("<button>")
-                                    .attr('id', "btn_section_" + obj.id)
-                                    .addClass("btn btn-primary")
-//                                    .css("display", "none")
-                                    .attr("onclick", "saveSection(this)")
-                                    .append('Save'))))
+                                    .text(replaceTags(obj.sectionName))
+                                )
+                            )
+                        )
+                )
             .append($('<div class="bc-section-main-div-insection">')
                     .attr("id", "anar")
                     .append($('<textarea>')
@@ -2140,14 +2212,14 @@ function addAPIRelSetting() {
     });
 }
 
-$(document).on("click", function () {
-    new FroalaEditor(".exercusiveEditor", {
-        enter: FroalaEditor.ENTER_P,
-        height: 150,
-        toolbarInline: true
-    })
+// $(document).on("click", function () {
+//     new FroalaEditor(".exercusiveEditor", {
+//         enter: FroalaEditor.ENTER_P,
+//         height: 150,
+//         toolbarInline: true
+//     })
 
-})
+// })
 
 // list-group-item add active class
 
@@ -3695,6 +3767,7 @@ function updateCaseProblemStat4Short(el) {
     updateCaseProblemStat4ShortDetails(id, type, val)
 }
 
+
 //3  P.S_______________________________________________________________  
 function getProblemStatList(e) {
     if (!activeBCId) {
@@ -3714,7 +3787,8 @@ function getProblemStatList(e) {
         async: false,
         success: function (res) {
             try {
-                $('#business_case_description').text(res.kv.caseDesc)
+                tinyMCE.get('business_case_description').setContent(res.kv.caseDesc);
+                // $('#business_case_description').text(res.kv.caseDesc)
                 problemStatTable(res);
             } catch (err) {
             }
@@ -4311,13 +4385,11 @@ $(document).on("click", '.fbdetailtabs', function (e) {
 
 });
 
-
-
 function setBCasescripts() {
 
     tinymce.init({
         selector: '#business_case_description',
-        height: 250,
+        height: 200,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
@@ -4374,19 +4446,40 @@ function setBCasescripts() {
 
             input.click();
         },
-
-        setup: function (editor) {
-            editor.on('init', function () {
-                this.setContent('Taleh Hasan<br>Anar Rüstəmov');
+        setup:function(ed) {
+            ed.on('change', function(e) {
+                var caseDesc = tinyMCE.get('business_case_description').getContent();
+                if (!(caseDesc) || !activeBCId)
+                    return;
+            
+                var json = {kv: {}};
+                try {
+                    json.kv.cookie = getToken();
+                } catch (err) {
+                }
+            
+                json.kv.id = activeBCId;
+                json.kv.caseDescription = caseDesc;
+                var that = this;
+                var data = JSON.stringify(json);
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceTmUpdateBusinessCaseDesc",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
             });
         },
+
+
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
     });
-
+        
 }
-
-
-$(document).on("click", '#business_case_desc_btn', function (e) {
-    var contents = tinyMCE.get('business_case_description').getContent();
-    alert(contents);
-});
