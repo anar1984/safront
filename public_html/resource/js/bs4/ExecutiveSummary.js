@@ -693,7 +693,7 @@ function getFinancialProjectionZoneListDetails(res) {
 
     trHead.append($('<th>')
             .addClass('hasTextAreaConverstion')
-            .append($('<a>').addClass('addFinancialProjectionCol')
+            .append($('<a>').addClass('addFinancialProjectionPeriod addFinancialProjectionCol')
                     .html('<i class="fas fa-plus-square"></i>')
                     )
             );
@@ -826,9 +826,7 @@ function AddCommonFinancialSections(tbody, res) {
 
 
 
-        var trSection = $('<tr>').append($('<td>')
-                .attr("onclick", 'createFinancialProjectionSectionLine(this,"common")')
-                .text('+ Add Section'));
+       
         tbody.append(trSection);
     } catch (err) {
     }
@@ -868,7 +866,7 @@ function AddRevenueSectionList(tbody, res) {
             var o1 = obj1[i];
 
             var trSec = $('<tr>')
-                    .css("background-color", "#adebeb")
+                    .css("background-color", "#d8effb")
                     .css("display", (revenue_tab === 'fa-chevron-up') ? "" : "none")
                     .css("border", "2px white solid")
                     .addClass('revenueSectionListDetailsZadShey')
@@ -945,8 +943,12 @@ function AddRevenueSectionList(tbody, res) {
     tbody.append($('<tr>')
             .addClass('revenueSectionListDetailsZadShey')
             .css("display", (revenue_tab === 'fa-chevron-up') ? "" : "none")
-            .append('<td>')
-            .append('<a href="#" class="addFinancialProjectionRevenueLine" title="Add Period"><i class="fas fa-plus-square" style="color:green" aria-hidden="true"></i></a>'))
+            .css('text-align','right')
+            .append($('<th>').css('color','#525596')
+            .append('<a href="#" class="addFinancialProjectionRevenueLine" title="Add Period"  style="color: rgb(82, 85, 150);" >Add row <i class="fas fa-plus-square" style="color:green" aria-hidden="true"></i></a>')
+                )
+                
+            )
 }
 
 function AddExpenseSectionList(tbody, res) {
@@ -957,7 +959,7 @@ function AddExpenseSectionList(tbody, res) {
             var o1 = obj1[i];
 
             var trSec = $('<tr>')
-                    .css("background-color", "#ffbf80")
+                    .css("background-color", "#ffe0e0")
                     .css("display", (expense_tab === 'fa-chevron-up') ? "" : "none")
                     .css("border", "2px white solid")
                     .addClass('expenseSectionListDetailsZadShey')
@@ -1033,9 +1035,13 @@ function AddExpenseSectionList(tbody, res) {
     }
     tbody.append($('<tr>')
             .css("display", (expense_tab === 'fa-chevron-up') ? "" : "none")
+            .css('text-align','right')
             .addClass('expenseSectionListDetailsZadShey')
-            .append('<td>')
-            .append('<a href="#" class="addFinancialProjectionExpenseLine" title="Add Period"><i class="fas fa-plus-square" style="color:green" aria-hidden="true"></i></a>'))
+                .append($('<th>')
+                .css('color','#525596')
+                    .append('<a href="#" class="addFinancialProjectionExpenseLine" title="Add Period" style="color: rgb(82, 85, 150);">Add row <i class="fas fa-plus-square" style="color:green" aria-hidden="true"></i></a>')
+                )
+        )
 }
 
 
