@@ -9,6 +9,7 @@ var bug_filter = {
     backlog_id: '',
     assignee_id: '',
     created_by: '',
+    closed_by:'',
     status: '',
     priority: '',
     nature: '',
@@ -666,8 +667,10 @@ function setBugFilterAssignees() {
             var select2 = $('#bug_filter_created_by');
             var select3 = $('#bug_filter_assignee_id_add');
             var select4 = $('#bug_filter_assignee_id_multi');
+            var select5 = $('#bug_filter_closed_by');
             select.html('');
             select2.html('');
+            select5.html('');
             var obj = res.tbl[0].r;
             for (var id in obj) {
                 var o = obj[id];
@@ -675,10 +678,12 @@ function setBugFilterAssignees() {
                 var op2 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op3 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op4 = $("<option>").val(o.fkUserId).text(o.userName);
+                var op5 = $("<option>").val(o.fkUserId).text(o.userName);
                 select.append(op);
                 select2.append(op2);
                 select3.append(op3);
                 select4.append(op4);
+                select5.append(op5);
             }
 
             if (global_var.current_user_type === 'S') {
@@ -689,6 +694,7 @@ function setBugFilterAssignees() {
             select2.selectpicker('refresh');
             select3.selectpicker('refresh');
             select4.selectpicker('refresh');
+            select5.selectpicker('refresh');
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -1164,6 +1170,7 @@ function getBugList() {
     var json = initJSON();
     json.kv.fkProjectId = bug_filter.project_id;
     json.kv.fkAssigneeId = bug_filter.assignee_id;
+    json.kv.closedBy = bug_filter.closed_by;
     json.kv.createdBy = bug_filter.created_by;
     json.kv.fkBackogId = bug_filter.backlog_id;
     json.kv.taskStatus = bug_filter.status;
@@ -1278,7 +1285,7 @@ function getBugListDetailsHeader() {
                     .addClass('bug-list-column-created-date').append('Created Date'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-close-date').append('Closed On'))
-             .append($('<th>').addClass('bug-list-column')
+            .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-closed-by').append('Closed By'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-last-update').append('Last Update'))
@@ -1632,7 +1639,7 @@ function getBugListDetails(res) {
                                 : ""))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-closed-by')
-                        .append("<span class='get-data-group'>" +o.closedByName+ "</span>"))
+                        .append("<span class='get-data-group'>" + o.closedByName + "</span>"))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-last-update').append("<span class='get-data-group'>" + (o.lastUpdatedDate) ? Utility.convertDate(o.lastUpdatedDate) : "" + "</span>"))
                 .append($('<td>').addClass('bug-list-column')

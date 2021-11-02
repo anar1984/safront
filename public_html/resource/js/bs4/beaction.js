@@ -843,7 +843,7 @@ var be = {
                     if (inputList[i].trim().length > 0) {
                         var inputName = inputList[i].trim();
                         var zad = data[inputName];
-                        
+
                         res[inputName] = (zad) ? zad : "";
                     }
                 } catch (err) {
@@ -1055,9 +1055,10 @@ var be = {
                 be.ShowDescriptionInData4Debug(apiId, o.id, outData);
 
                 if (SAFN.IsCommand(o.description)) {
-                    outData = SAFN.ExecCommand(o.description, outData, element, asyncData,apiId);
+                    outData = SAFN.ExecCommand(o.description, outData, element, asyncData, apiId);
                 } else {
                     if (o.fkRelatedScId) {
+                        var fnId = cr_js_list[o.fkRelatedScId].id;
                         var fnType = cr_js_list[o.fkRelatedScId].fnType;
                         var fnName = cr_js_list[o.fkRelatedScId].fnCoreName;
 
@@ -1065,6 +1066,8 @@ var be = {
                             outData = SAFN.ConvertFunctions.CoreJS(fnName, outData, element, apiId, asyncData);
                         } else if (fnType === 'java') {
                             outData = SAFN.ConvertFunctions.Java(fnName, outData, element, apiId, asyncData);
+                        } else if (fnType === 'sql') {
+                            outData = SAFN.ConvertFunctions.SQL(fnId, outData, element, apiId, asyncData);
                         }
                     } else if (o.fkRelatedApiId) {
                         outData = SAFN.ConvertFunctions.ApiCall(o.fkRelatedApiId, outData, element, apiId, asyncData);
@@ -1090,6 +1093,30 @@ var be = {
             var dataCore = JSON.stringify(data);
             $.ajax({
                 url: urlGl + "api/post/srv/serviceIoRunFunction",
+                type: "POST",
+                data: dataCore,
+                contentType: "application/json",
+                crossDomain: true,
+                async: false,
+                success: function (res) {
+                    rs = res;
+                    return rs;
+                }
+            });
+            return rs;
+        },
+
+        CallBackendApiServiceForSql: function (fnId, data) {
+            if (!fnId){
+                return;
+            }
+
+            var rs = "";
+            data.kv.fnId = fnId;
+            var that = this;
+            var dataCore = JSON.stringify(data);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceIoRunFunctionForSql",
                 type: "POST",
                 data: dataCore,
                 contentType: "application/json",
@@ -1764,13 +1791,13 @@ var SAFN = {
         'sendemail': 'SendEmail',
         'abs': 'Abs',
         'throwerror': 'ThrowError',
-        'addclass':'AddClass',
-        'removeclass':'RemoveClass',
-        'addcss':'AddCss',
-        'removeCss':'RemoveCss',
-        'addattribute':'AddAttribute',
-        'removeAttribute':'RemoveAttribute',
-        'showform':'ShowForm',
+        'addclass': 'AddClass',
+        'removeclass': 'RemoveClass',
+        'addcss': 'AddCss',
+        'removeCss': 'RemoveCss',
+        'addattribute': 'AddAttribute',
+        'removeAttribute': 'RemoveAttribute',
+        'showform': 'ShowForm',
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();
@@ -1914,7 +1941,7 @@ var SAFN = {
         }
         return res;
     },
-    ExecCommand: function (description, outData, element, asyncData,apiId) {
+    ExecCommand: function (description, outData, element, asyncData, apiId) {
 
         //      description = description.trim().replace(/ /g, '');
         SAFN.FunctionBody = SAFN.GetFunctionBody(description);
@@ -2034,6 +2061,36 @@ var SAFN = {
 
 
             var resTemp = be.ExecAPI.CallBackendApiService(fnName, dataCore);
+            var res = resTemp.kv;
+
+            try {
+                if (resTemp.tbl[0].r && resTemp.tbl[0].r.length > 0) {
+                    res._table = resTemp.tbl[0];
+                }
+            } catch (err) {
+            }
+
+            try {
+                if (res._table) {
+                    var mergeData = mergeTableData(res._table, outData._table);
+                    res._table = mergeData;
+                }
+            } catch (err) {
+            }
+            var out = $.extend(outData, res);
+            outData = out;
+            return outData;
+        },
+        SQL: function (fnId, outData, element, apiId, asyncData) {
+            var dataCore = {kv: {}};
+            dataCore.kv = outData;
+            try {
+                dataCore.kv.cookie = getToken();
+            } catch (err) {
+            }
+
+
+            var resTemp = be.ExecAPI.CallBackendApiServiceForSql(fnId, dataCore);
             var res = resTemp.kv;
 
             try {
@@ -2194,7 +2251,7 @@ var SAFN = {
             key = SAFN.GetArgumentValue(key);
             var element = SAFN.Element;
             var apiId = SAFN.ApiId;
-            if ($(element).attr("onclick_trigger_id")===apiId ) {
+            if ($(element).attr("onclick_trigger_id") === apiId) {
                 $(element).removeAttr("onclick_trigger_id");
             }
 

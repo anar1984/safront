@@ -120,11 +120,18 @@
                 data-type="project_id" title="Project"></select>
         </div>
         <div class="col-lg-4">
-            <select class="form-control  bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+            <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
                 data-type="assignee_id" title="Assignee"></select>
         </div>
     
+        <div class="col-lg-4">
+            <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
+                data-type="closed_by" title="Closed By"></select>
+        </div>
+    
+        
         <div class="col-lg-4">
             <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
