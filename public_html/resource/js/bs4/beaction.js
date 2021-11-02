@@ -2833,6 +2833,9 @@ var SAFN = {
                     case '@.alertdata':
                         descLine = SAFN.Convert.AlertDataStatement(mainBody);
                         break;
+                    case '@.break':
+                        descLine = SAFN.Convert.BreakStatement(mainBody);
+                        break;
                     case '@.map':
                         descLine = SAFN.Convert.MapStatement(mainBody);
                         break;
@@ -3476,6 +3479,11 @@ var SAFN = {
         AlertDataStatement: function (triggerEl) {
 
             var fnline = "@.alertdata()";
+            return fnline;
+        },
+        BreakStatement: function (triggerEl) {
+
+            var fnline = "@.break()";
             return fnline;
         },
         GetParamUrlStatement: function (triggerEl) {
@@ -4341,6 +4349,23 @@ var SAFN = {
                             )
             return div;
         },
+        BreakStatement: function () {
+            var div = $("<div>")
+                    .addClass("col-12")
+                    .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-break")
+                    .append($("<div>")
+                            .addClass("d-flex justify-content-start")
+                            .append($("<div>")
+                                    .addClass("col-cs-1 d-table mr-2")
+                                    .append($("<span>")
+                                            .addClass("cs-funcname d-table-cell")
+                                            .text("Break")
+                                            )
+
+                                    )
+                            )
+            return div;
+        },
         GetStatement: function (line) {
             var arg = SAFN.GetCommandArgument(line);
             var argList = arg.split(",");
@@ -4808,7 +4833,7 @@ var SAFN = {
                                     .append($("<div>")
                                             .addClass("d-table-cell align-middle")
                                             .append($("<a>")
-                                                    .addClass("cs-btn-sum cs-add-input btn btn-primary")
+                                                    .addClass("cs-btn-inc cs-add-input btn btn-primary")
                                                     .text("+")
                                                     )
                                             )
@@ -5819,6 +5844,30 @@ $(document).on('click', '#description_table_id .cs-btn-dec', function (e) {
                             )
                     );
 });
+$(document).on('click', '#description_table_id .cs-btn-inc', function (e) {
+    $(this).closest('.cs-sum-inbox-inc').find('ul#inc-sortable li:last-child')
+
+            .after($("<li>")
+                    .addClass("ui-sortable-placeholder cs-addons-sum-name")
+                    .append($("<div>")
+                            .addClass("cs-value-trash-box")
+                            .append($("<div>")
+                                    .addClass("cs-value-trash")
+                                    .append($("<i>")
+                                            .addClass("fa fa-trash-o")
+                                            .attr("aria-hidden", "true")
+                                            )
+                                    .text(" Delete")
+                                    )
+                            )
+                    .append($('<input>')
+                            .addClass('function-statement-container-change-event')
+                            .addClass("fns-val function-statement-input-common function-statement-input-common-4-inc")
+                            .val('')
+                            .attr("placeholder", "Value")
+                            )
+                    );
+});
 
 
 // Field deletion warning
@@ -6034,12 +6083,16 @@ $(document).ready(function () {
         '@.visibleparam()',
         '@.unvisibleparam()',
         '@.callfn()',
-        '@.callapi()'
+        '@.callapi()',
+        '@.break()'
     ];
     $(document).on('keyup keydown', '.add-description', function (e) {
+        
         $(this).autocomplete({
             minLength: 0,
-            source: shortcodes,
+            // source: shortcodes,
+            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+            autoFocus:true,
             select: function (event, ui) {
                 $(this).change();
                 $(".fx-shortcodes-btn .add-description").val('');
@@ -6153,51 +6206,72 @@ $(document).ready(function () {
         // $(this).closest('td').find('input').prop('id', 'csoff');
         globElementTbody = $(this).closest('td').find('.add-description');
     });
-    $('.insert-funct-input').each(function () {
-        var funcdata = [
-            {"label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "IF HAS VALUE", "fx": "@.ifhasvalue(){}", "desc": "IF HAS VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "IF HAS NOT VALUE", "fx": "@.ifhasnotvalue(){}", "desc": "IF HAS NOT VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "FOR LIST", "fx": "@.forlist(){}", "desc": "FOR LIST It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "FOR TABLE", "fx": "@.fortable(){}", "desc": "FOR TABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "GET", "fx": "@.get()", "desc": "GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "GET PARAM URL", "fx": "@.getparamurl()", "desc": "GET PARAM URL long established fact that a reader will be distracted by the of a page when looking at its layout. The point of using"},
-            {"label": "CONSOLE", "fx": "@.console()", "desc": "CONSOLE is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of 4."},
-            {"label": "CONSOLE DATA", "fx": "@.consoledata()", "desc": "CONSOLE DATA established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "DELETE KEY", "fx": "@.deletekey()", "desc": "DELETE KEY established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
-            {"label": "ALERT", "fx": "@.alert()", "desc": "ALERT is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label": "ALERT DATA", "fx": "@.alertdata()", "desc": "ALERT DATA is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point"},
-            {"label": "SET", "fx": "@.set()", "desc": "SUM is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
-            {"label": "SET VALUE", "fx": "@.setvalue()", "desc": "SET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SET TEXT", "fx": "@.settext()", "desc": "SET TEXT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "MAP", "fx": "@.map()", "desc": "MAP It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW ERROR", "fx": "@.showerror()", "desc": "SHOW ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "ERROR", "fx": "@.error()", "desc": "ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"lanel": "SEND EMAIL", "fx": "@.sendemail()", "desc": "SED EMAIL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SUM", "fx": "@.sum()", "desc": "SUM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "INC", "fx": "@.inc()", "desc": "INC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "DEC", "fx": "@.dec()", "desc": "DEC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CONCAT", "fx": "@.concat()", "desc": "CONCAT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW", "fx": "@.show()", "desc": "SHOW It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "HIDE", "fx": "@.hide()", "desc": "HIDE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLICK", "fx": "@.click()", "desc": "CLICK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CHANGE", "fx": "@.change()", "desc": "CHANGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "FOCUS", "fx": "@.focus()", "desc": "FOCUS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "VISIBLE", "fx": "@.visible()", "desc": "VISABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "UNVISIBLE", "fx": "@.unvisible()", "desc": "UNVISIBLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW MESSAGE", "fx": "@.showmessage()", "desc": "SHOW MESSAGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLEAR", "fx": "@.clear()", "desc": "CLEAR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CLEAR CLASS", "fx": "@.clearclass()", "desc": "CLEAR CLASS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "SHOW PARAM", "fx": "@.showparam()", "desc": "SHOW PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "HIDE PARAM", "fx": "@.hideparam()", "desc": "HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
-            {"label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
-        ];
-        $(this).autocomplete({
-            source: funcdata,
+    var funcdata = [
+        {"label": "IF", "fx": "@.if(){}", "desc": "FX It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "IF HAS VALUE", "fx": "@.ifhasvalue(){}", "desc": "IF HAS VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "IF HAS NOT VALUE", "fx": "@.ifhasnotvalue(){}", "desc": "IF HAS NOT VALUE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "FOR LIST", "fx": "@.forlist(){}", "desc": "FOR LIST It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "FOR TABLE", "fx": "@.fortable(){}", "desc": "FOR TABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "GET", "fx": "@.get()", "desc": "GET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "GET PARAM URL", "fx": "@.getparamurl()", "desc": "GET PARAM URL long established fact that a reader will be distracted by the of a page when looking at its layout. The point of using"},
+        {"label": "CONSOLE", "fx": "@.console()", "desc": "CONSOLE is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of 4."},
+        {"label": "CONSOLE DATA", "fx": "@.consoledata()", "desc": "CONSOLE DATA established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "DELETE KEY", "fx": "@.deletekey()", "desc": "DELETE KEY established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using."},
+        {"label": "ALERT", "fx": "@.alert()", "desc": "ALERT is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
+        {"label": "ALERT DATA", "fx": "@.alertdata()", "desc": "ALERT DATA is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point"},
+        {"label": "SET", "fx": "@.set()", "desc": "SUM is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using"},
+        {"label": "SET VALUE", "fx": "@.setvalue()", "desc": "SET It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SET TEXT", "fx": "@.settext()", "desc": "SET TEXT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "MAP", "fx": "@.map()", "desc": "MAP It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SHOW ERROR", "fx": "@.showerror()", "desc": "SHOW ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "ERROR", "fx": "@.error()", "desc": "ERROR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SEND EMAIL", "fx": "@.sendemail()", "desc": "SED EMAIL It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SUM", "fx": "@.sum()", "desc": "SUM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "INC", "fx": "@.inc()", "desc": "INC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "DEC", "fx": "@.dec()", "desc": "DEC It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CONCAT", "fx": "@.concat()", "desc": "CONCAT It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SHOW", "fx": "@.show()", "desc": "SHOW It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "HIDE", "fx": "@.hide()", "desc": "HIDE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CLICK", "fx": "@.click()", "desc": "CLICK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CHANGE", "fx": "@.change()", "desc": "CHANGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "FOCUS", "fx": "@.focus()", "desc": "FOCUS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "VISIBLE", "fx": "@.visible()", "desc": "VISABLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "UNVISIBLE", "fx": "@.unvisible()", "desc": "UNVISIBLE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SHOW MESSAGE", "fx": "@.showmessage()", "desc": "SHOW MESSAGE It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CLEAR", "fx": "@.clear()", "desc": "CLEAR It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CLEAR CLASS", "fx": "@.clearclass()", "desc": "CLEAR CLASS It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "SHOW PARAM", "fx": "@.showparam()", "desc": "SHOW PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "HIDE PARAM", "fx": "@.hideparam()", "desc": "HIDE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "VISIBLE PARAM", "fx": "@.visibleparam()", "desc": "VISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "UNVISIBLE PARAM", "fx": "@.unvisibleparam()", "desc": "UNVISIBLE PARAM It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CALL FUNCTION", "fx": "@.callfn()", "desc": "CALL FN It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "CALL API", "fx": "@.callapi()", "desc": "CALL API It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."},
+        {"label": "BREAK", "fx": "@.break()", "desc": "BREACK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
+    ];
+
+   
+
+    $(document).on('click', '.cs-fc-shortcode .cs-fx-btn', function (e) {
+        $('.sc-insert-func-help p').text('');
+        $('.sc-insert-func-help p').append($(this).attr('fxhelpdata'));
+        $('.sc-insert-func-help input').val('');
+        $('.sc-insert-func-help input').val($(this).attr('fxshortcodedata'));
+
+    });
+
+    $(document).on('keyup keydown click', '#ScInserFuncBtn', function (e) {
+        var bdt = $('.sc-insert-func-help input').val();
+        $(globElementTbody).val(bdt);
+        $(globElementTbody).change();
+    });
+
+    $('#storyCardFunctionInsertBox').on('shown.bs.modal', function () {
+        $('#insert-funct-input').focus();
+        $('.insert-funct-input').autocomplete({
+            // source: funcdata,
             minLength: 0,
+            autoFocus:true,
+            source: funcdata.sort((a, b) => (a.label > b.label) ? 1 : -1),
             create: function () {
                 $(this).autocomplete('instance')._renderItem = function (ul, item) {
                     return $('<li>').append('<a class="cs-fx-btn cs-fx-btn-shey-zad-33" fxShortcodeData="' + item.fx + '" fxhelpdata="' + item.desc + '">' + item.label + '</a>')
@@ -6207,29 +6281,10 @@ $(document).ready(function () {
         }).autocomplete("widget").addClass("cs-fc-shortcode").autocomplete({
             position: {my: "left bottom", at: "left top", collision: "flip"}
         });
-
+    
         $(".insert-funct-input").autocomplete("option", "appendTo", ".sc-insert-func-result");
-
-        $(document).on('click', '.cs-fc-shortcode .cs-fx-btn', function (e) {
-            $('.sc-insert-func-help p').text('');
-            $('.sc-insert-func-help p').append($(this).attr('fxhelpdata'));
-            $('.sc-insert-func-help input').val('');
-            $('.sc-insert-func-help input').val($(this).attr('fxshortcodedata'));
-
-        });
-
-        $(document).on('keyup keydown click', '#ScInserFuncBtn', function (e) {
-            var bdt = $('.sc-insert-func-help input').val();
-            $(globElementTbody).val(bdt);
-            $(globElementTbody).change();
-        });
-
-    });
-    $('#storyCardFunctionInsertBox').on('shown.bs.modal', function () {
-        $('#insert-funct-input').focus();
-        $('#insert-funct-input').val(' ').keydown();
+        $('#insert-funct-input').val('').keydown();
     })
-
 
     $(document).on('change', '.addGeneralProcessDescription', function (e) {
         var txt = $(this).val();
