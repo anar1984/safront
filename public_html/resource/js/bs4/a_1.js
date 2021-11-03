@@ -21954,42 +21954,10 @@ function genFilterTapsiriq() {
 
     $("#taskTypeId-filter-tapsiriq").selectpicker("refresh");
 
-    $('#date_timepicker_start_end_tapsiriq').daterangepicker({
-        startDate: moment().subtract('days', 29),
-        endDate: moment(),
-        showDropdowns: true,
-        showWeekNumbers: true,
-        timePicker: false,
-        timePickerIncrement: 1,
-        timePicker12Hour: true,
-        ranges: {
-            'Bu Gün': [moment(), moment()],
-            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        opens: 'left',
-        buttonClasses: ['btn btn-default'],
-        applyClass: 'btn-small btn-primary',
-        cancelClass: 'btn-small btn-cancel-value-clear',
-        separator: ' to ',
-        locale: {
-
-            applyLabel: 'Axtar',
-            cancelLabel: 'ləğv et',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Xüsusi',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-        }
-    }).val('');
     getProjectUsers4Tapsiriq();
     getKontragent4Tapsiriq();
-
-    $("#reqeustModul-filter-tapsiriq").change();
+    getTapsiriqList();
+   // $("#reqeustModul-filter-tapsiriq").change();
 }
 
 function tapsiriqColStatement(prtNum, namePr) {
@@ -22195,23 +22163,14 @@ function getTapsiriqList(serach) {
     var chkAll = $("#show-all-colmn-tapsriq")
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    //var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-    var inns
-    if (val) {
-        val = val.split('-')
-        var dt = val[0].split('/');
-        var dt1 = val[1].split('/');
-        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
-
-        inns = stTime.trim() + '%BN%' + endTime.trim()
-    }
+  
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22235,10 +22194,10 @@ function getTapsiriqList(serach) {
             cl.reqeustDescription = serach ? serach : "";
 
         }
-        if (requestType.length > 0) {
+       /*  if (requestType.length > 0) {
             sl.requestType = requestType ? requestType : "";
             cl.requestType = requestType ? requestType : "";
-        }
+        } */
 
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
@@ -22252,9 +22211,9 @@ function getTapsiriqList(serach) {
             sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
             cl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
-            cl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
         }
         var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
         if (chkAll.prop("checked")) {
@@ -22324,9 +22283,9 @@ function getTapsiriqList(serach) {
             sl.createdBy = createdBy ? createdBy : "";
             cl.createdBy = createdBy ? createdBy : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
-            cl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
         }
         if (serach) {
             sl.taskNo = serach ? serach : "";
@@ -22721,7 +22680,7 @@ function genAktivPassiv(res, x, say) {
 function getTapListMore(elm, stmit, etmit) {
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+   // var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
@@ -22729,16 +22688,7 @@ function getTapListMore(elm, stmit, etmit) {
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-    var inns
-    if (val) {
-        val = val.split('-')
-        var dt = val[0].split('/');
-        var dt1 = val[1].split('/');
-        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
-
-        inns = stTime.trim() + '%BN%' + endTime.trim()
-    }
+    
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22759,9 +22709,9 @@ function getTapListMore(elm, stmit, etmit) {
             sl.reqeustDescription = serach ? '%%' + serach + "%%" : "";
             sl.reqeustCode = serach ? '%%' + serach + "%%" : ""
         }
-        if (requestType.length > 0) {
+       /*  if (requestType.length > 0) {
             sl.requestType = requestType ? requestType : "";
-        }
+        } */
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
 
@@ -22773,8 +22723,8 @@ function getTapListMore(elm, stmit, etmit) {
         if (fkKontragentId.length > 0) {
             sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
         }
 
         var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
@@ -22808,8 +22758,8 @@ function getTapListMore(elm, stmit, etmit) {
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
         }
         if (serach) {
             sl.taskNo = serach ? serach : "";
@@ -22976,12 +22926,7 @@ $(document).on("change", '#reqeustModul-filter-tapsiriq', function (params) {
     $("#reqeustType-filter-tapsiriq").selectpicker("refresh").change();
 
 })
-$(document).on("change", '.btn-cancel-value-clear', function (params) {
 
-    $('#date_timepicker_start_end_tapsiriq').val('');
-
-
-})
 $(document).on("click", '.cs-task-item-box .cs-task-card-body', function (params) {
 
     $('#taskModalBlock').modal('show');

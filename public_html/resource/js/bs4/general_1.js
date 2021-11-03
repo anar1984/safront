@@ -1602,11 +1602,22 @@ function GetTagLine(text, tag) {
 function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var pageId = makeId(15);
     var st = "";
+    var butnList = '';
+    var fkpr = Utility.getParamFromUrl("fkManualProjectId").length
+      if (global_var.current_domain==='48edh'&&fkpr > 0) {
+          butnList = `<div style="position: absolute;top: 0px;right: 40px;">
+                            <span><a class="taskListShowNewSorguBtnClickEvent" href="#" title="Tapşırıq" sa-data-link="21042817181209336901"><img width="23px" src="data:image/png;base64,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"></a></span> 
+                             <span>
+                             <a class="for-chewekk-new-chat-link" data-link="chwkchat" href="javascript:void" title="Show Chat"><img width="20px" src="data:image/png;base64,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"></a></span> 
+                             <span> </span> 
+                             </div>`
+      }
+      console.log(fkpr);
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
     st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>';
+    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>'+butnList;
     st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';
@@ -1638,6 +1649,13 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
 function generatePopupModal(modalBody) {
     var pageId = makeId(15);
     var st = "";
+    var butnList = '';
+    var fkpr = Utility.getParamFromUrl("fkManualProjectId")
+      if (global_var.current_domain===''&&fkpr > 0) {
+          butnList = $("<div>").addClass("float-right")
+                         .append("dkfhksdfksdfh")
+      }
+      console.log(fkpr);
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg" style="width: 80%;max-width: 80%" role="document">';
     st += '      <div class="modal-content">';
