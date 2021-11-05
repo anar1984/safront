@@ -17211,8 +17211,9 @@ function getBacklogListByProject4Element(projectId, elm) {
                     $(elm).append($('<option>').val(id).text(name))
                 }
 
-                $(elm).selectpicker("refresh")
+                $(elm).selectpicker("refresh");
             } catch (err) {
+                $(elm).selectpicker("refresh");
             }
         },
         error: function () {

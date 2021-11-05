@@ -1663,14 +1663,36 @@ $(document).on('click', '#HiostoryView', function (event) {
 
 
 });
-// import export start
+// import export copy start
 $(document).on('click', '#ExportImportView', function (event) {
 
     setProjectListByID('project_list_for_export');
     $('#project_list_for_export').change();
 
 });
+$(document).on('change', '#project_list_for_export', function (event) {
 
+    var elm = $("#backlog_list_for_export");
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
+
+});
+$(document).on('click', '#CopyView', function (event) {
+
+    setProjectListByID('project_list_for_copy');
+    $('#project_list_for_copy').change();
+
+    setProjectListByID('project_list_to_copy');
+    $('#project_list_to_copy').change();
+
+});
+$(document).on('change', '#project_list_for_copy', function (event) {
+
+    var elm = $("#backlog_list_for_copy");
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
+
+});
 $(document).on('click', '#upload_data_file_btn', function (event) {
     var elm = $("#setStoryCardUploadZipData");
     if ($(elm).val().trim().length > 0) {
@@ -1679,18 +1701,6 @@ $(document).on('click', '#upload_data_file_btn', function (event) {
     }
 
 });
-
-$(document).on('change', '#project_list_for_export', function (event) {
-
-    var elm = $("#backlog_list_for_export");
-    var val = $(this).val();
-    getBacklogListByProject4Element(val, elm);
-
-});
-
-// $('#backlog_list_for_export').each(function () {
-
-// });
 
 function getMultiSelectpickerValueByElementName(elementName) {
     var id = $('#' + elementName).val();
@@ -1744,6 +1754,45 @@ $(document).on('click', '#inportexport-file-btn', function (event) {
         },
         error: function () {
             Toaster.showError(('Export error'));
+
+        }
+    });
+
+});
+// copy projects
+$(document).on('click', '#ps-copy-file-btn', function (event) {
+    $('.dataname .progress-bar').remove();
+    $('.dataname .cs-succsess-msg').remove();
+
+    var json = initJSON();
+    json.kv.fkDestProjectId = $('#project_list_to_copy').val();
+  //  json.kv.projectName = $('#project_list_for_copy').find('option:selected').text();
+    json.kv.fkBacklogIds = getMultiSelectpickerValueByElementName('backlog_list_for_copy');
+    // json.kv.filename = zipfilename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsCopyBacklogToProject",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+            if ($("#backlog_list_for_copy option:selected").length) {
+
+                $('.dataname .cs-err-msg').remove();
+
+                $('.dataname').append('<span class="cs-succsess-msg">Card Successfully Copy!</span>');
+
+            } else {
+                $('.dataname .progress').remove();
+                $('.dataname .cs-succsess-msg').remove();
+                $('.dataname').html('<span class="cs-err-msg">Select any store card!</span>');
+            }
+        },
+        error: function () {
+            Toaster.showError(('Copy error'));
 
         }
     });
