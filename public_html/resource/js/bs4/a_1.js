@@ -13655,7 +13655,16 @@ $(document).on('click', '.loadTestCase', function (evt) {
     });
 });
 
-
+$(document).on('click', '.loadRunService', function (evt) {
+    var f = 'runservice';
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadRunService";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        loadDocEditorRunService();
+    });
+});
 
 $(document).on('click', '.loadBusinessCase', function (evt) {
     var f = 'bcase';

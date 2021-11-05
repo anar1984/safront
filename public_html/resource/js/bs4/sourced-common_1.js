@@ -5656,11 +5656,11 @@ UserStory.prototype = {
     },
     
     backlogProcessDescLineSubmenuItem:function(id){
-     var div =  $('<div class="dropdown" style="display: inline-block;">')
+     var div =  $('<div class="btn-group" style="display: inline-block;">')
                                     .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
                                             '</button>')
-                                    .append($('<div class="dropdown-menu uuu" aria-labelledby="dropdownMenuLink">')
+                                    .append($('<div class="dropdown-menu ropdown-menu-right  uuu" aria-labelledby="dropdownMenuLink">')
                                             .append($('<button class="dropdown-item firstbut" >')
                                                     .text('Move Up')
                                                     .attr("onclick", "moveBacklogDesc(this,'" +  id + "','up')")
@@ -19341,8 +19341,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
-        $('#user-story-status').val(SACore.GetCurrentBaklogStatus());
-        $('#user-story-priority').val(SACore.GetCurrentBaklogPriority());
+        $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
+        $('#user-story-priority').val(SACore.GetCurrentBaklogPriority()).selectpicker('refresh');
         $('#user-story-est-hours').val(SACore.GetCurrentBaklogEstimatedHours());
         $('#user-story-description').val(SACore.GetCurrentBaklogDescription());
         $('#user-story-spent-hours').val(SACore.GetCurrentBaklogSpentHours());

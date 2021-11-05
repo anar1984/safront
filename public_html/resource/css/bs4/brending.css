@@ -3071,3 +3071,236 @@ span.convertedTextAreaLinesItem {
     vertical-align: middle;
     margin-top: -17px;
 }
+/* StroryCard Sidebar */
+.storecard-sidebar-headline {
+
+}
+.storecard-sidebar-headline span{
+    background: #272B7C;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    color: #fff;
+    padding: 10px;
+    display: block;
+}
+.storecard-sidebarin {
+    background: #525596;
+}
+.cs-forum-group .bootstrap-select {
+    background: transparent;
+}
+.cs-forum-group .bootstrap-select > .btn {
+    background-color: #3a3d87;
+    color: #fff;
+    font-size: 14px;
+    height: 35px;
+    padding: 6px 8px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.cs-forum-group .bootstrap-select > .btn:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.cs-forum-group .btn-light:not(:disabled):not(.disabled).active:focus, .cs-forum-group .btn-light:not(:disabled):not(.disabled):active:focus, .cs-forum-group .show>.btn-light.dropdown-toggle:focus {
+    box-shadow: none;
+    box-shadow: none;
+}
+.cs-forum-group .cs-label-name {
+    color: #fff;
+}
+.cs-forum-group .cs-label-name span.s-status {
+
+}
+.cs-status-new {
+
+}
+.cs-status-ongoing {
+ 
+}
+.cs-status-close {
+ 
+}
+.cs-forum-group .dropdown-menu {
+   background: #3a3d87;
+   box-shadow: 0 2px 5px #272b7c;
+   margin: 0;
+}
+.cs-forum-group .bootstrap-select .dropdown-menu li {
+    height: 35px;
+    background: #3a3d87;
+}
+.cs-forum-group .dropdown-menu > li a {
+    padding: 5px 6px;
+    color: #fff;
+}
+.cs-forum-group .dropdown-item.active, .cs-forum-group .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #272b7c;
+}
+.storecard-sidebarin .cs-forum-group .dropdown-item:focus, .storecard-sidebarin .dropdown-item:hover, .storecard-sidebarin .cs-button-group a.dropdown-item:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #272b7c;
+}
+.cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+.cs-forum-group .cs-attach-a {
+    font-size: 14px;
+    text-decoration: none;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 10px;
+    display: block;
+    background: #3a3d87;
+    border: 1px solid #272B7C;
+    color: #fff;
+    border-radius: 3px;
+}
+.cs-forum-group .cs-attach-a i {
+    padding: 0;
+    text-align: center;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 6px;
+    opacity: 0.8;
+}
+.cs-forum-group .cs-attach-a span {
+    font-size: 14px;
+}
+.cs-textarea {
+
+}
+.cs-forum-group textarea {
+
+}
+/* Run Services */
+.run-services-wrapper {
+    padding: 20px 100px 60px;
+}
+.run-services-wrapper .table thead th {
+    position: relative;
+    height: 40px;
+    vertical-align: middle;
+    border-bottom: 1px solid #525596;
+    background: #525596;
+    border-top: 1px solid #525596;
+    color: #fff;
+}
+.run-services-wrapper .table td, .run-services-wrapper .table th {
+    border-left: 5px solid #fff;
+    padding: 5px 10px;
+}
+.run-services-wrapper table tbody tr:nth-child(odd) {
+    background-color: #E9E9F1;
+}
+.run-services-wrapper table tbody tr:nth-child(even) {
+    background-color: #f6f6ff;
+}
+.run-services-wrapper .table td:first-child, .run-services-wrapper .table th:first-child {
+    border-left: none;
+    font-weight: bold;
+    padding-left: 15px;
+}
+.run-services-wrapper .table thead th:first-child {
+    text-align: left;
+    padding-left: 15px;
+}
+.run-services-wrapper .table tbody td, .run-services-wrapper .table tbody th {
+    color: #525596;
+    border-left: 5px solid #fff;
+}
+.run-services-wrapper .bcr-EditRemove a, .run-services-wrapper table tbody tr .bcr-EditRemove a {
+    color: #525596;
+    opacity: 0.3;
+}
+.run-services-wrapper tr:hover .bcr-EditRemove a, .run-services-wrapper table tbody tr:hover .bcr-EditRemove a {
+    opacity: 1;
+}
+.run-services-wrapper .cs-headline-by-content a {
+    text-decoration: none;
+    color: #525596;
+    font-size: 20px;
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    background: #f6f6ff;
+    border: 1px solid #c6c6d6;
+    border-radius: 5px;
+    padding: 0px 9px;
+    height: 31px;
+    display: inline-block;
+    transition: color .15s ease-in-out;
+}
+.run-services-wrapper .cs-headline-by-content a.addNewBusinessRun:hover {
+ background: #525596;
+ color: #fff;
+ border-color: #525596;
+}
+.run-services-wrapper .cs-headline-by-content a span {
+    font-size: 14px;
+    vertical-align: middle;
+}
+.run-services-wrapper .table tbody td.Status span{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 60px;
+    vertical-align: middle;
+}
+.run-services-wrapper .table tbody td.Status span:after {
+    content: "";
+    background: #525596;
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    top: 5px;
+    right: 0;
+    position: absolute;
+}
+.run-services-wrapper .table tbody td.Status.cs-passive span:after {
+    background: #FF4747;
+}
+.run-services-wrapper .table tbody td.Status.cs-active span:after {
+    background: #5ACB2B;
+}
+.run-services-wrapper .cs-modal-box .modal-header {
+    font-size: 14px;
+    padding: 7px 18px 7px 18px;
+    border-bottom-color: #E9E9F1;
+    background-color: #E9E9F1;
+    color: #272B7C;
+    border-radius: 0;
+}
+.run-services-wrapper .cs-input-group input.form-control {
+    height: 30px;
+    border: 1px solid #BEBFD7;
+}
+.run-services-wrapper .cs-input-group textarea {
+    width: 100%;
+    border: 1px solid #BEBFD7;
+    padding: 5px;
+    font-size: 14px;
+}
+.run-services-wrapper .cs-input-group textarea:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+.run-services-wrapper .cs-input-group textarea .RunServiceJsonTextarea {
+
+}
+.run-services-wrapper .cs-input-group .input-group-addon {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #313582;
+}
+.run-services-wrapper .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    min-width: 195px;
+}
