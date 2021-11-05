@@ -1181,9 +1181,9 @@ function getBugList() {
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
-    if (global_var.current_issue_is_hide == '0') {
-        json.kv.fkTaskId = global_var.current_issue_id;
-    }
+//    if (global_var.current_issue_is_hide == '0') {
+//        json.kv.fkTaskId = global_var.current_issue_id;
+//    }
     json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
     var data = JSON.stringify(json);

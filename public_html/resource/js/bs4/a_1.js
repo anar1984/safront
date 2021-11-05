@@ -510,12 +510,6 @@ function exportExcelFile(workbook) {
     return XLSX.writeFile(workbook, "bookName.xlsx");
 }
 
-
-
-
-
-
-
 $(document).on("change", "#file_excel_import", function () {
     var tabID = $(this).attr('data-api-tabid');
     filePicked(this, tabID);
@@ -720,37 +714,7 @@ function sortableTable(tableId, sv, cls) {
 
 }
 /*********************************************** Context Menu Function Only ********************************/
-function clickInsideElementOp(e, className) {
-    var el = e.srcElement || e.target;
-    if (el.classList.contains(className)) {
-        return el;
-    } else {
-        while (el = el.parentNode) {
-            if (el.classList && el.classList.contains(className)) {
-                return el;
-            }
-        }
-    }
-    return false;
-}
 
-function getPositionOp(e) {
-    var posx = 0,
-            posy = 0;
-    if (!e)
-        var e = window.event;
-    if (e.pageX || e.pageY) {
-        posx = e.pageX;
-        posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-        posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    return {
-        x: posx,
-        y: posy
-    }
-}
 
 function addAttrToElementSingileByR(el, comp) {
     try {
@@ -765,142 +729,6 @@ function addAttrToElementSingileByR(el, comp) {
     } catch (err) {
     }
 }
-// Your Menu Class Name
-var taskItemClassName = "component-table-input-class";
-var contextMenuClassName = "context-menu",
-        contextMenuItemClassName = "context-menu__item",
-        contextMenuLinkClassName = "context-menu__link",
-        contextMenuActive = "context-menu--active";
-var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"),
-        menuItems = $(menu).find(".context-menu__item");
-var menuState = 0,
-        menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
-
-function initMenuFunctionOp() {
-    contextListenerOp();
-    clickListenerOp();
-    keyupListenerOp();
-    resizeListenerOp();
-
-}
-
-/**
- * Listens for contextmenu events.
- */
-function contextListenerOp() {
-    document.addEventListener("contextmenu", function (e) {
-        taskItemInContext = clickInsideElementOp(e, taskItemClassName);
-
-        if (taskItemInContext) {
-            e.preventDefault();
-            toggleMenuOnOp();
-            positionMenuOp(e);
-        } else {
-            taskItemInContext = null;
-            toggleMenuOffOp();
-        }
-    });
-}
-
-/**
- * Listens for click events.
- */
-function clickListenerOp() {
-    document.addEventListener("click", function (e) {
-        var clickeElIsLink = clickInsideElementOp(e, contextMenuLinkClassName);
-
-        if (clickeElIsLink) {
-            e.preventDefault();
-            menuItemListenerOp(clickeElIsLink);
-        } else {
-            var button = e.which || e.button;
-            if (button === 1) {
-                toggleMenuOffOp();
-            }
-        }
-    });
-}
-
-/**
- * Listens for keyup events.
- */
-function keyupListenerOp() {
-    window.onkeyup = function (e) {
-        if (e.keyCode === 27) {
-            toggleMenuOffOp();
-        }
-    }
-}
-
-/**
- * Window resize event listener
- */
-function resizeListenerOp() {
-    window.onresize = function (e) {
-        toggleMenuOffOp();
-    };
-}
-
-/**
- * Turns the custom context menu on.
- */
-function toggleMenuOnOp() {
-    if (menuState !== 1) {
-        menuState = 1;
-        $(menu).addClass(contextMenuActive);
-    }
-}
-
-/**
- * Turns the custom context menu off.
- */
-function toggleMenuOffOp() {
-    if (menuState !== 0) {
-        menuState = 0;
-        $(menu).removeClass(contextMenuActive);
-    }
-}
-
-function positionMenuOp(e) {
-    clickCoords = getPositionOp(e);
-    clickCoordsX = clickCoords.x;
-    clickCoordsY = clickCoords.y;
-    menuWidth = $(menu).offsetWidth + 4;
-    menuHeight = $(menu).offsetHeight + 4;
-
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-
-    if ((windowWidth - clickCoordsX) < menuWidth) {
-        $(menu).css("top", (windowWidth - menuWidth) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsX - 0 + "px");
-    }
-
-    // menu.style.top = clickCoordsY + "px";
-
-    if (Math.abs(windowHeight - clickCoordsY) < menuHeight) {
-        $(menu).css("top", (windowHeight - menuHeight) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsY - 0 + "px");
-    }
-}
-
-
-function menuItemListenerOp(link) {
-    var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
-
-    var moveToAlbumSelectedId = link.getAttribute("data-action");
-    if (moveToAlbumSelectedId == 'remove') {
-
-    } else if (moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7) {
-
-    }
-    toggleMenuOffOp();
-}
-initMenuFunctionOp();
-
-
 
 
 var isMouseDown = false;
@@ -22259,9 +22087,9 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
                                             .append($("<select>").addClass("selectpicker")
                                                     .attr("title", 'yoxdur')
                                                     .attr("id", 'task-us-prio-change')
-                                                    .append('<option value="1" data-icon="fas fa-flag text-info">Standart</option>')
-                                                    .append('<option value="2" data-icon="fas fa-flag text-warning">Təcili</option>')
-                                                    .append('<option value="3" data-icon="fas fa-flag text-danger">Çox təcili</option>')
+                                                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                                                    .append('<option value="tecili" data-icon="fas fa-flag text-warning">Təcili</option>')
+                                                    .append('<option value="xusui" data-icon="fas fa-flag text-primary">Xüsusi</option>')
                                                     .val(prorty)))
                                     .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
@@ -23358,18 +23186,25 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
                 }
 
             }
-
-
-            $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
+            var prt = $("<select>")
+                        .addClass("task-list-prt-change-select form-control-sm form-control")
+                       .attr("disabled",'disabled')
+                       .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                       .append('<option value="xususi" data-icon="fas fa-flag text-primary">Xüsusi</option>')
+                       .append('<option value="tecili" data-icon="fas fa-flag text-danger">Təcili</option>')
+                
+            $(tbody).append($("<tr>").addClass('task-tr-list redirectClass').attr('data-tr-status', ela[i].taskStatus)
                     .append('<td class="task-id-td">' + ela[i].taskNo + '</td>')
                     .append($('<td>').addClass('text-center')
-                            .append(st))
+                            .append(st)
+                            .append(prt.val(o.taskPriority)))
                     .append($("<td>")
                             .append(a))
                     .append($("<td>").append(date))
                     .append('<td>' + time + '</td>')
                     .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + img + '" data-trigger="hover" data-toggle="popover" data-content="' + userName + '" title="" data-original-title="Daxil Edən"></td>')
                     .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + img1 + '" data-trigger="hover" data-toggle="popover" data-content="' + userName1 + '" title="" data-original-title="İcraçı"></td>')
+                    .append()
 
                     )
 
@@ -23394,7 +23229,8 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
                 .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew tamamlanib" status="tamamlanib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Tamamlanıb"></span>-(' + tamamlanib + ')</td>')
                 .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew rejected" status="rejected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Ləğv edilib"></span>-(' + rejected + ')</td>')
                 .append('<td><span class="stat_group_title " pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Total"></span>Cəm-(' + total + ')</td>')
-
+     
+                $(".stat-div-task-content .task-list-prt-change-select").selectpicker()
 
     } catch (error) {
         $(tbody).parents(".stat-div-task-content").prepend("Məlumat Yoxdur")
@@ -23404,7 +23240,7 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
      }); */
 
 
-
+  
 }
 
 /// chat >>>>>

@@ -4288,7 +4288,7 @@ span.ruby-dropdown-toggle:after {
         transition: all .3s ease
     }
 
-    ul.ruby-menu > li:hover > ul,ul.ruby-menu > li:hover > div {
+    ul.ruby-menu > li:focus-within > ul,ul.ruby-menu > li:focus-within > div {
         transform: translateY(0)
     }
 
@@ -4377,7 +4377,7 @@ div.ruby-wrapper > ul {
 
 ul.ruby-menu > li {
     float: left;
-    font-size: 14px
+    font-size: 16px
 }
 
 ul.ruby-menu > li.ruby-menu-right {
@@ -4391,7 +4391,7 @@ ul.ruby-menu > li > a {
     color: #efefef;
     text-decoration: none;
     font-family: 'Open Sans',sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase
 }
 
@@ -4773,9 +4773,19 @@ ul.ruby-menu > li.ruby-menu-mega > div ul,ul.ruby-menu > li.ruby-menu-mega-shop 
 ul.ruby-menu > li.ruby-menu-mega > div ul li,ul.ruby-menu > li.ruby-menu-mega-shop > div > ul > li > div ul > li {
     position: relative;
     font-size: 14px;
-    line-height: 28px;
+    line-height: 20px;
     display: block;
-    width: 100%
+    width: 100%;
+    padding: 3px;
+  
+}
+
+.ruby-row ul li:hover  {
+    background-color: #9b9b9b;
+    border-radius: 3px;
+}
+.ruby-row ul li:hover a{
+   color: #fff !important;
 }
 
 ul.ruby-menu > li.ruby-menu-mega > div ul li > a,ul.ruby-menu > li.ruby-menu-mega-shop > div > ul > li > div ul > li > a {
@@ -4925,7 +4935,7 @@ span.ruby-c-content {
         opacity: 0
     }
 
-    ul.ruby-menu > li:hover > ul,ul.ruby-menu > li > ul > li:hover > ul,ul.ruby-menu > li > ul > li > ul > li:hover > ul {
+    ul.ruby-menu > li:focus-within > ul,ul.ruby-menu > li > ul > li:focus-within > ul,ul.ruby-menu > li > ul > li > ul > li:focus-within > ul {
         visibility: visible;
         opacity: 1
     }
@@ -4935,7 +4945,7 @@ span.ruby-c-content {
         opacity: 0
     }
 
-    ul.ruby-menu > li.ruby-menu-mega:hover > div,ul.ruby-menu > li.ruby-menu-mega-blog:hover > div,ul.ruby-menu > li.ruby-menu-mega-shop:hover > div {
+    ul.ruby-menu > li.ruby-menu-mega:focus-within > div,ul.ruby-menu > li.ruby-menu-mega-blog:focus-within > div,ul.ruby-menu > li.ruby-menu-mega-shop:focus-within > div {
         visibility: visible;
         opacity: 1
     }
@@ -4945,7 +4955,7 @@ span.ruby-c-content {
         opacity: 0
     }
 
-    ul.ruby-menu > li.ruby-menu-mega-blog:hover > div > ul.ruby-menu-mega-blog-nav > li.ruby-active-menu-item > div {
+    ul.ruby-menu > li.ruby-menu-mega-blog:focus-within > div > ul.ruby-menu-mega-blog-nav > li.ruby-active-menu-item > div {
         visibility: visible;
         opacity: 1
     }
@@ -4982,7 +4992,7 @@ span.ruby-c-content {
         margin-left: 5px
     }
 
-    ul.ruby-menu > li:hover > a:after {
+    ul.ruby-menu > li:focus-within > a:after {
         -webkit-transform: rotate(-180deg);
         -moz-transform: rotate(-180deg);
         -o-transform: rotate(-180deg);

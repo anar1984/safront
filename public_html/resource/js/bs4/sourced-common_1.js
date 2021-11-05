@@ -10730,17 +10730,19 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             crossDomain: true,
             async: true,
             success: function (res) {
-                var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
-                loadSelectBoxesAfterGUIDesign(tempEl1);
+                try{
+                    var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
+                    loadSelectBoxesAfterGUIDesign(tempEl1);
 
-                if ($(el).attr("onclick_trigger_id")) {
-                    that.callTriggerApiAfterGUIDesign(el, padeId);
-                } else {
-                    var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
-                    if (!$(tempEl).hasClass('sa-onloadclick')) {
-                        initOnloadActionOnGUIDesign4OnClick(tempEl);
+                    if ($(el).attr("onclick_trigger_id")) {
+                        that.callTriggerApiAfterGUIDesign(el, padeId);
+                    } else {
+                        var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+                        if (!$(tempEl).hasClass('sa-onloadclick')) {
+                            initOnloadActionOnGUIDesign4OnClick(tempEl);
+                        }
                     }
-                }
+                }catch(err){}
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
 //        
             },

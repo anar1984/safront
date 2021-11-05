@@ -2154,7 +2154,7 @@ var SAFN = {
                 cmd = SAFN.IfStatementBody[cmd];
             }
 
-            var res = SAFN.ExecCommand(cmd, data, element, asyncData);
+            var res = SAFN.ExecCommand(cmd, data, element, asyncData,SAFN.ApiId);
             var out = $.extend(outData, res);
             outData = out;
 
@@ -2188,7 +2188,7 @@ var SAFN = {
                 cmd = SAFN.IfStatementBody[cmd];
             }
 
-            var res = SAFN.ExecCommand(cmd, data, element, asyncData);
+            var res = SAFN.ExecCommand(cmd, data, element, asyncData,SAFN.ApiId);
             var out = $.extend(outData, res);
             outData = out;
 
@@ -2251,9 +2251,9 @@ var SAFN = {
             key = SAFN.GetArgumentValue(key);
             var element = SAFN.Element;
             var apiId = SAFN.ApiId;
-            if ($(element).attr("onclick_trigger_id") === apiId) {
+//            if ($(element).attr("onclick_trigger_id") === apiId) {
                 $(element).removeAttr("onclick_trigger_id");
-            }
+//            }
 
             new UserStory().setGUIComponentButtonGUIModal(key, element);
         },
