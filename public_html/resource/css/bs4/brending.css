@@ -1768,8 +1768,8 @@ padding: 0 10px;
     background-color: #525596;
     border-color: #525596;
     font-size: 14px;
-    height: 30px;
-    line-height: 1;
+    height: 35px;
+    line-height: initial;
 }
 .cs-input-group .dropdown-item.active, .cs-input-group .dropdown-item:active {
     background-color: #272B7C;
@@ -3279,7 +3279,7 @@ span.convertedTextAreaLinesItem {
     border-radius: 0;
 }
 .run-services-wrapper .cs-input-group input.form-control {
-    height: 30px;
+    height: 35px;
     border: 1px solid #BEBFD7;
 }
 .run-services-wrapper .cs-input-group textarea {
@@ -3303,4 +3303,186 @@ span.convertedTextAreaLinesItem {
 .run-services-wrapper .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
     min-width: 195px;
+}
+.run-services-wrapper .section-title {
+    font-size: 17px;
+    margin-left: 4px;
+    margin-top: 40px;
+    position: relative;
+    color: #525596;
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+.run-services-wrapper .section-title strong {
+    background: white;
+    position: absolute;
+    top: -16px;
+    display: block;
+    z-index: 1;
+    padding: 5px 10px 5px 0;
+    font-weight: 600;
+}
+.run-services-wrapper .section-title span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    width: 99%;
+    height: 1px;
+    border-top: 1px solid #bebfd7;
+}
+.run-services-wrapper .horizontal .checkcontainer {
+    display: inline-block;
+    font-size: 14px;
+    color: #525596;
+    margin-right: 25px;
+}
+.run-services-wrapper .checkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .run-services-wrapper .checkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .run-services-wrapper .radiobtn {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #9395bd;
+    background-color: #e9e9f1;
+    border-radius: 50%;
+  }
+  .run-services-wrapper .checkcontainer:hover input ~ .radiobtn {
+    background-color: #9395bd;
+  }
+  .run-services-wrapper .checkcontainer input:checked ~ .radiobtn {
+    background-color: #525596;
+  }
+  .run-services-wrapper .radiobtn:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .run-services-wrapper .checkcontainer input:checked ~ .radiobtn:after {
+    display: block;
+  }
+  .run-services-wrapper .checkcontainer .radiobtn:after {
+      top: 5px;
+      left: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+  }
+  .checkmarkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .checkmarkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #e9e9f1;
+    border-radius: 3px;
+  }
+  .checkmarkcontainer:hover input ~ .checkmark {
+    background-color: #9395bd;
+  }
+  .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #525596;
+  }
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .checkmarkcontainer input:checked ~ .checkmark:after {
+    display: block;
+  }
+  .checkmarkcontainer .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .horizontal .cs-input-group {
+      display: inline-block;
+  }
+  .cs-input-group .bootstrap-datetimepicker-widget .btn {
+    height: auto;
+    padding: 0;
+  }
+  .cs-input-group .bootstrap-datetimepicker-widget table td span:hover, .cs-input-group .bootstrap-datetimepicker-widget table td i:hover {
+    background: transparent;
+}
+.cs-input-group .bootstrap-datetimepicker-widget table td span,   .cs-input-group .bootstrap-datetimepicker-widget table td i {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 2px 1.5px;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+.cs-input-group .bootstrap-datetimepicker-widget table td {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+}
+.cs-input-group .bootstrap-datetimepicker-widget {
+    list-style: none;
+    max-width: 180px;
+}
+.run-intensive {
+    pointer-events:none;
+    display: none;
+}
+.run-intensive.run-enabled {
+    pointer-events:auto;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.run_spa {
+    pointer-events:none;
+    display: none;
+}
+.run_spa.spa_enable {
+    pointer-events:auto;
+    display: block;
 }
