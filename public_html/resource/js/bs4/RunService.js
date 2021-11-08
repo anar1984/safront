@@ -1,6 +1,9 @@
 
 function loadDocEditorRunService() {
     $('#run_service_project_name').selectpicker('refresh');
+    setProjectListByID('run_service_project_name');
+    $('#run_service_project_name').change();
+
     $('#run_service_name').selectpicker('refresh');
     $('#run_service_intensive_select').selectpicker('refresh');
     $('#run_service_repeat_select').selectpicker('refresh');
@@ -135,6 +138,13 @@ function run_service_valid(){
         $('#run_service_title').removeAttr('style');
     }
 
+    if ($('#run_service_name').val()=='-1'){
+        $('[data-id="run_service_name"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
+        return false;
+    }else{
+        $('[data-id="run_service_name"]').removeAttr('style');
+    }
+
     if ($.trim($('input:required#runServiceStartDate').val()).length == 0){
         $('input:required#runServiceStartDate').css('border', '1px solid red');
         return false;
@@ -190,3 +200,18 @@ $(document).on("click", "#newRunBbusinessServiceSaveBtn", function (e) {
         Toaster.showError(msgError);
     }
 });
+
+
+$(document).on('change', '#run_service_project_name', function (event) {
+
+    var elm = $("#run_service_name");
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
+
+});
+
+
+// $(document).on("click", "#newRunBbusinessServiceBox", function (e) {
+
+// });
+

@@ -3146,6 +3146,24 @@ span.convertedTextAreaLinesItem {
     text-decoration: none;
     background-color: #272b7c;
 }
+.storecard-sidebarin .switch {
+    width: 45px;
+    height: 18px;
+}
+.storecard-sidebarin .slider {
+    background-color: #3a3d8a;
+}
+.storecard-sidebarin input:checked + .slider {
+    background-color: #272B7C;
+}
+.storecard-sidebarin .slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 6px;
+    bottom: 3px;
+}
 .cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
