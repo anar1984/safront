@@ -349,7 +349,7 @@ function sprintAddAssignTaskType(elm) {
 
 }
 ;
-function sprintAddAssign(elm) {
+function sprintAddAssign(elm,actionType) {
 
 
 
@@ -367,7 +367,7 @@ function sprintAddAssign(elm) {
             ;
             var id = $(check[indx]).parents("tr").attr("id");
 
-            var checked = '1';
+            var checked = (actionType==='unassign')?'0':'1';
 
             sprintZadininSheyeidlmesi(id, projectId, backlogId, sprintId, checked);
 

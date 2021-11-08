@@ -1106,8 +1106,8 @@ function loadModulePermission() {
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
                     if (o.accessType === 'n') {
-                        if (o.relationId === 'loadPermission')
-                            continue;
+//                        if (o.relationId === 'loadPermission')
+//                            continue;
                         $('.' + o.relationId).closest('.project-item-zad').remove();
                     }
                 }
@@ -1933,6 +1933,7 @@ function fnExcelReport(tableId)
 }
 
 var global_var = {
+    us_is_not_4_generation: true,
     current_issue_id: "",
     current_issue_is_hide: "1",
     projectToggleWithSync: true,
