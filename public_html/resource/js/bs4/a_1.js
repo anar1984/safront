@@ -16127,7 +16127,7 @@ function getProjectUserssync(id) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 SAProjectUser.LoadProjectUser(res);

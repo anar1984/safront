@@ -530,7 +530,7 @@ var tbid= "comp_id_21010301052003928142"
         var div = $(".component-class#21041212141705702084 >.component-section-row ");
         var idbd = $(this).attr('sa-data-body');
         if(idbd==='21010300595707289233'){
-            $.get("child/tasklist.html", function (html_string) {
+            $.get("cheweek/child/tasklist.html", function (html_string) {
                 $(div).html(html_string);
         
                 cheweek.getTaskList();
