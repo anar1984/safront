@@ -4683,7 +4683,7 @@ div.ruby-grid > div.ruby-row [class^="ruby-col"] {
 }
 
 div.ruby-grid > div.ruby-row > [class^="ruby-col"] {
-    padding: 16px
+    padding: 5px
 }
 
 div.ruby-grid > div.ruby-row > [class^="ruby-col"] [class^="ruby-col"] {
@@ -4737,7 +4737,7 @@ div.ruby-grid > div.ruby-row div.ruby-col-12 {
     width: 100%
 }
 
-div.ruby-grid.ruby-grid-lined > div.ruby-row > div[class^="ruby-col"]:after {
+/* div.ruby-grid.ruby-grid-lined > div.ruby-row > div[class^="ruby-col"]:after {
     content: "";
     position: absolute;
     top: 0;
@@ -4745,7 +4745,7 @@ div.ruby-grid.ruby-grid-lined > div.ruby-row > div[class^="ruby-col"]:after {
     height: 100%;
     right: 0;
     background: -webkit-linear-gradient(top,rgba(204,204,204,0) 0%,rgba(204,204,204,0.48) 24%,rgba(204,204,204,1) 50%,rgba(204,204,204,0.42) 79%,rgba(204,204,204,0) 100%)
-}
+} */
 
 div.ruby-grid.ruby-grid-lined > div.ruby-row > div[class^="ruby-col"]:last-child:after {
     width: 0
@@ -4760,14 +4760,17 @@ div.ruby-grid img {
 
 h3.ruby-list-heading {
     font-size: 14px;
-    line-height: 24px;
+    line-height: 5px;
     font-weight: 700;
-    margin: 0
+    margin: 0;
+    text-align: center;
+    color: #173359;
 }
 
 ul.ruby-menu > li.ruby-menu-mega > div ul,ul.ruby-menu > li.ruby-menu-mega-shop > div > ul > li > div ul {
     margin: 0;
-    margin-top: 10px
+    margin-top: 10px;
+    border-top: 3px solid #173359;
 }
 
 ul.ruby-menu > li.ruby-menu-mega > div ul li,ul.ruby-menu > li.ruby-menu-mega-shop > div > ul > li > div ul > li {
@@ -4777,12 +4780,15 @@ ul.ruby-menu > li.ruby-menu-mega > div ul li,ul.ruby-menu > li.ruby-menu-mega-sh
     display: block;
     width: 100%;
     padding: 3px;
+    background: #e4ecf7;
+    margin-top: 2px;
+    cursor: pointer;
   
 }
 
 .ruby-row ul li:hover  {
-    background-color: #dde4ee;
-    border-radius: 3px;
+    background-color: #cfd8e7 !important;
+    
 }
 .ruby-row ul li:hover a{
    color: #173359 !important;
