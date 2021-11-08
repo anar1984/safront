@@ -1,5 +1,3 @@
- 
-
 function ComponentInfo() {
     this.showProperties = true;
     this.isFromTableNew = false;
@@ -2710,5 +2708,3 @@ var Component = {
         return $('<div></div>').append(div).html();
     }
 }
-
- 
