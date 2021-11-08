@@ -37,7 +37,7 @@ var cheweek = {
          if(aktivAll.prop("checked")){
 
          }else{
-            json.kv.aktivAllTemp="'new','ongoing','waiting'"
+            json.kv.aktivAll="('new','ongoing','waiting')"
 
          }
         json.kv.apiId = '21110215075107271040';
