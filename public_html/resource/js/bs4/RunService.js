@@ -1,7 +1,7 @@
 
 function loadDocEditorRunService() {
-    $('#project_list_for_export').selectpicker('refresh');
-    $('#backlog_list_for_export').selectpicker('refresh');
+    $('#run_service_project_name').selectpicker('refresh');
+    $('#run_service_name').selectpicker('refresh');
     $('#run_service_intensive_select').selectpicker('refresh');
     $('#run_service_repeat_select').selectpicker('refresh');
     $('#run_service_status_select').selectpicker('refresh');
@@ -24,11 +24,42 @@ function loadDocEditorRunService() {
         singleDatePicker: true
     });
     $('.hr_spa').hide();
+
+
+    
+$(document).ready(function() {
+
+        $("#notification-email").keyup(function(){
+
+            var email = $("#notification-email").val();
+
+            if(email != 0)
+            {
+                if(isValidEmailAddress(email))
+                {
+                    $("#notification-email").css({
+                        "border": "1px solid green", "background": "rgb(59 255 0 / 9%)"
+                    });
+                } else {
+                    $("#notification-email").css({
+                        "border": "1px solid red", "background": "rgb(255 0 0 / 9%)"
+                    });
+                }
+            } else {
+                $('#notification-email').removeAttr('style');        
+            }
+
+        });
+
+  });
+
+    function isValidEmailAddress(emailAddress) {
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        return pattern.test(emailAddress);
+    }
+
 }
 
-// function run_business_intensive() {
-  
-//     }
 $(document).on("change", "#run_service_intensive_select", function (e) {
     var run_intensive = $('#run_service_intensive_select').val();
     run_action = run_intensive;
@@ -39,7 +70,7 @@ $(document).on("change", "#run_service_intensive_select", function (e) {
             case 'monthly':
                 run_enabled = 'run-enabled';
             break;
-            case 'Yearly':
+            case 'yearly':
                 run_enabled = 'run-enabled';
             break;
         }
@@ -48,7 +79,6 @@ $(document).on("change", "#run_service_intensive_select", function (e) {
             $('.' + run_intensive + '-actions').addClass(run_enabled);
         }
 });
-
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
     if($('#specific-day-of-month').is(':checked')) {
         $('.run_spa').removeClass('spa_enable');
@@ -68,5 +98,95 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('.hr_spa').show();
         $('.spa_swofm_fl_action_select').addClass('spa_enable');
         $('.spa_swofm_weekday_select').addClass('spa_enable');
+    }
+});
+$(document).on("change", ".checkcontainer input[type='radio']", function (e) {
+    if($('#first-day-of-month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+    }
+    if($('#last-day-of-month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+    }
+});
+
+function run_service_valid(){
+    var em = $.trim($('input:required').val());
+    if( $('#sendnotification').is(':checked')) {
+        if ($.trim($('#notification-email').val()).length == 0){
+            $('#notification-email').css('border', '1px solid red');
+            if(em.length < 5){
+                msgError = 'Please enter email';
+                Toaster.showError(msgError);
+                return false;
+            }
+        }else{
+            $('#notification-email').removeAttr('style');
+        }
+    }else{
+        $('#notification-email').removeAttr('style');
+    }
+
+    if ($.trim($('input:required#run_service_title').val()).length == 0){
+        $('input:required#run_service_title').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#run_service_title').removeAttr('style');
+    }
+
+    if ($.trim($('input:required#runServiceStartDate').val()).length == 0){
+        $('input:required#runServiceStartDate').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#runServiceStartDate').removeAttr('style');
+    }
+
+    if ($.trim($('input:required#runServiceEndDate').val()).length == 0){
+        $('input:required#runServiceEndDate').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#runServiceEndDate').removeAttr('style');
+    }
+
+    if ($.trim($('input:required#runServiceTime').val()).length == 0){
+        $('input:required#runServiceTime').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#runServiceTime').removeAttr('style');
+    }
+    if ($('#run_service_intensive_select').val()=='monthly'){
+        if($('#before-last-fay-of-month').is(':checked')) {
+            if ($.trim($('input:required#days_before_last_day_of_month').val()).length == 0){
+                $('input:required#days_before_last_day_of_month').css('border', '1px solid red');
+                return false;
+            }else{
+                $('#days_before_last_day_of_month').removeAttr('style');
+            }
+        }
+    }
+    
+    if ($('#run_service_intensive_select').val()=='yearly'){
+        
+        if ($.trim($('input:required#runServiceExecutiveDate').val()).length == 0){
+            $('input:required#runServiceExecutiveDate').css('border', '1px solid red');
+            return false;
+        }else{
+            $('#runServiceExecutiveDate').removeAttr('style');
+        }
+    }
+    
+    return true;
+}
+
+$(document).on("click", "#newRunBbusinessServiceSaveBtn", function (e) {
+
+    if(run_service_valid()){
+        msgMessage = 'Run-Business alarm was successfully saved!';
+        Toaster.showMessage(msgMessage);
+    }
+    else{
+        msgError = 'Fill in the required fields';
+        Toaster.showError(msgError);
     }
 });
