@@ -37,14 +37,17 @@ var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
     "loadLivePrototype": "Live Prototype",
-    "loadStoryCardMgmt ": "Story Card Management",
-    "loadDashboard": "Dashboard",
-    "loadTaskManagement": "Task Management",
+    "loadStoryCardMgmt": "Story Card Management",
     "loadProjectManagement": "Project Management",
+    "loadDashboard": "Dashboard",
+    "loadStoryCardMgmt": "User Story Management",
+    "loadTaskManagement": "Task Management",
+    "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",
+    "loadSqlBoard": "SQL Board",
     "loadBusinessService": "Business Service",
     "loadSourceActivity": "Sourced-Activity Diagram",
     "loadEntityDiagram": "Entity Diagram",
@@ -53,6 +56,7 @@ var moduleList = {
     "loadTaskType": "Task Type",
     "loadTaskTypeManagment": "Task Type Management",
     "loadPermission": "Permission",
+    "loadRunService": "Run Service",
     "loadOldVersion": "Old Version",
 };
 var dgui = {};
@@ -573,12 +577,12 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
-      //  $.each(td, function (index, item) {
+        //  $.each(td, function (index, item) {
 
-            sortableTable(tableId, sv, td);
+        sortableTable(tableId, sv, td);
 
-      //  })
-       
+        //  })
+
     } catch (error) {
         console.log(error)
     }
@@ -1652,8 +1656,11 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-
     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+    global_var.us_is_not_4_generation = false;
+    setBacklogAsHtml(global_var.current_backlog_id);
+    global_var.us_is_not_4_generation = true;
+
 }
 
 function loadCurrentBacklogProdDetailsSyncrone() {
@@ -1680,6 +1687,81 @@ function callStoryCardAfterIPOAction() {
 }
 
 function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
+    var async = (isAsync) ? isAsync : false;
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+    
+   
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: false,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                } else {
+                    loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+            }
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+
+    
+//alert('yupi is ',$('#yupi777').val());;
+//    var dataZad  = $.get(urlGl + "api/get/dw/us/"+global_var.current_domain+"/"+bid, function(data) { 
+////        alert(data) 
+//       if(data){ 
+//           SAInput.LoadedBacklogs4Input.push(bid);
+//           loadBacklogProductionDetailsById_resparams(data);
+//       }else{
+//           loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//            loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//             loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//       }     
+//    }, "text");
+//    
+//    alert(dataZad);
+}
+
+function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
     var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
@@ -2080,6 +2162,68 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+
+                    var selectedField = SAInput.GetInputName(selectFromInputId);
+                    triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+                } else {
+                    loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+            }
+        }
+    });
+}
+
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId) {
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+
+    if (!bid)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
         //            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
         type: "POST",
@@ -2203,6 +2347,73 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
 }
 
 function _LoadBacklogInputsByIdIfNotExist(carrier) {
+    var bid = (carrier.getBacklogId()) ?
+            carrier.getBacklogId() :
+            global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+
+    showProgress5();
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                    carrier.I_am_Execwarder();
+                    SourcedDispatcher.Exec(carrier);
+                } else {
+                    _LoadBacklogInputsByIdIfNotExistPost(carrier);
+                }
+
+                hideProgress5();
+
+            } catch (err) {
+                hideProgress5();
+                _LoadBacklogInputsByIdIfNotExistPost(carrier);
+            }
+        },
+        error: function () {
+            hideProgress5();
+        }
+    });
+}
+
+
+function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
     var bid = (carrier.getBacklogId()) ?
             carrier.getBacklogId() :
             global_var.current_backlog_id;
@@ -2973,21 +3184,23 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
+    
     global_var.current_project_id = global_var.fkManualProjectId;
 
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
 
-    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
-    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
-    getJsGlobalCodeByProject();
+//    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+//    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+//    getJsGlobalCodeByProject();
 //
-    getBacklogLastModificationDateAndTime(fkManualProjectId);
+//    getBacklogLastModificationDateAndTime(fkManualProjectId);
 //
-    loadFromIndexedDBtoRAM();
+//    loadFromIndexedDBtoRAM();
 //    
 
-//    loadMainProjectList4ManualZad();
+    loadMainProjectList4ManualZad();
+//  i
 
 }
 
@@ -7083,12 +7296,15 @@ function fillRelatedApi4InputEvent(cls) {
     //    return;
 
     var apiList = SACore.GetBacklogKeyList();
-    var select = $('#' + cls).find('.input_event_related_api');
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
     if (!cls) {
-        select = $('#' + cls).find('.input_event_related_api');
+        select = $('#' + cls).find('select.input_event_related_api');
     }
 
     select.html('');
+    select1.html('');
 
 
     for (var i in apiList) {
@@ -7097,12 +7313,17 @@ function fillRelatedApi4InputEvent(cls) {
             select.append($('<option>')
                     .val(apiId)
                     .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+            select1.append($('<option>')
+                    .val(apiId)
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
 
         }
     }
 
     sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
     select.selectpicker('refresh');
+//    select1.selectpicker('refresh');
     $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
 
 }
@@ -13085,7 +13306,7 @@ function clearLivePrototypeViewForDebug() {
 
 function loadGuiStoryCardsToAnimation() {
     var el = $('select.us-gui-component-rel-sus-id');
-    
+
 
 }
 
@@ -16217,6 +16438,7 @@ function updateInput4SCDetails(inputId, val, ustype) {
         async: true,
         success: function (res) {
             SAInput.updateInputByRes(res);
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -16906,6 +17128,21 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
         $('.' + global_var.task_mgmt_group_by).click();
     } else if (global_var.current_modal === "loadBugChange") {
         sprintAddAssign(this);
+    } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
+        sprintAddAssignTaskType(this);
+    }
+});
+
+
+$(document).on('click', '.bug-task-sprint-unassign', function (evt) {
+    global_var.bug_task_sprint_assign_checked = 1;
+    global_var.bug_task_sprint_assign_name = $(this).attr('sname');
+    global_var.bug_task_sprint_assign_id = $(this).val();
+
+    if (global_var.current_modal === "loadTaskManagement") {
+        $('.' + global_var.task_mgmt_group_by).click();
+    } else if (global_var.current_modal === "loadBugChange") {
+        sprintAddAssign(this, 'unassign');
     } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
         sprintAddAssignTaskType(this);
     }
@@ -21959,7 +22196,7 @@ function genFilterTapsiriq() {
     getProjectUsers4Tapsiriq();
     getKontragent4Tapsiriq();
     getTapsiriqList();
-   // $("#reqeustModul-filter-tapsiriq").change();
+    // $("#reqeustModul-filter-tapsiriq").change();
 }
 
 function tapsiriqColStatement(prtNum, namePr) {
@@ -22172,7 +22409,7 @@ function getTapsiriqList(serach) {
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-  
+
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22196,10 +22433,10 @@ function getTapsiriqList(serach) {
             cl.reqeustDescription = serach ? serach : "";
 
         }
-       /*  if (requestType.length > 0) {
-            sl.requestType = requestType ? requestType : "";
-            cl.requestType = requestType ? requestType : "";
-        } */
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         cl.requestType = requestType ? requestType : "";
+         } */
 
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
@@ -22682,7 +22919,7 @@ function genAktivPassiv(res, x, say) {
 function getTapListMore(elm, stmit, etmit) {
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-   // var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    // var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
@@ -22690,7 +22927,7 @@ function getTapListMore(elm, stmit, etmit) {
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-    
+
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22711,9 +22948,9 @@ function getTapListMore(elm, stmit, etmit) {
             sl.reqeustDescription = serach ? '%%' + serach + "%%" : "";
             sl.reqeustCode = serach ? '%%' + serach + "%%" : ""
         }
-       /*  if (requestType.length > 0) {
-            sl.requestType = requestType ? requestType : "";
-        } */
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         } */
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
 
@@ -23133,12 +23370,12 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
 
             }
             var prt = $("<select>")
-                        .addClass("task-list-prt-change-select form-control-sm form-control")
-                       .attr("disabled",'disabled')
-                       .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
-                       .append('<option value="xususi" data-icon="fas fa-flag text-primary">Xüsusi</option>')
-                       .append('<option value="tecili" data-icon="fas fa-flag text-danger">Təcili</option>')
-                
+                    .addClass("task-list-prt-change-select form-control-sm form-control")
+                    .attr("disabled", 'disabled')
+                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                    .append('<option value="xususi" data-icon="fas fa-flag text-primary">Xüsusi</option>')
+                    .append('<option value="tecili" data-icon="fas fa-flag text-danger">Təcili</option>')
+
             $(tbody).append($("<tr>").addClass('task-tr-list redirectClass').attr('data-tr-status', ela[i].taskStatus)
                     .append('<td class="task-id-td">' + ela[i].taskNo + '</td>')
                     .append($('<td>').addClass('text-center')
@@ -23175,8 +23412,8 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
                 .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew tamamlanib" status="tamamlanib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Tamamlanıb"></span>-(' + tamamlanib + ')</td>')
                 .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew rejected" status="rejected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Ləğv edilib"></span>-(' + rejected + ')</td>')
                 .append('<td><span class="stat_group_title " pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Total"></span>Cəm-(' + total + ')</td>')
-     
-                $(".stat-div-task-content .task-list-prt-change-select").selectpicker()
+
+        $(".stat-div-task-content .task-list-prt-change-select").selectpicker()
 
     } catch (error) {
         $(tbody).parents(".stat-div-task-content").prepend("Məlumat Yoxdur")
@@ -23186,7 +23423,7 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
      }); */
 
 
-  
+
 }
 
 /// chat >>>>>
