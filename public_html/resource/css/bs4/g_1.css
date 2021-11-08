@@ -4781,16 +4781,16 @@ ul.ruby-menu > li.ruby-menu-mega > div ul li,ul.ruby-menu > li.ruby-menu-mega-sh
 }
 
 .ruby-row ul li:hover  {
-    background-color: #9b9b9b;
+    background-color: #dde4ee;
     border-radius: 3px;
 }
 .ruby-row ul li:hover a{
-   color: #fff !important;
+   color: #173359 !important;
 }
 
 ul.ruby-menu > li.ruby-menu-mega > div ul li > a,ul.ruby-menu > li.ruby-menu-mega-shop > div > ul > li > div ul > li > a {
     text-decoration: none;
-    color: #555;
+    color: #173359;
     display: inline-block
 }
 

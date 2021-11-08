@@ -4171,37 +4171,7 @@ function loadTableFIlterInside() {
         });
     }
 
-    $('#date_timepicker_start_end').daterangepicker({
-        showDropdowns: true,
-        showWeekNumbers: true,
-        timePicker: false,
-        timePickerIncrement: 1,
-        timePicker12Hour: true,
-        defaultDate: false,
-        ranges: {
-            'Bu Gün': [moment(), moment()],
-            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        opens: 'left',
-        buttonClasses: ['btn btn-default'],
-        applyClass: 'btn-small btn-primary',
-        cancelClass: 'btn-small btn-cancel-value-clear',
-        separator: ' to ',
-        locale: {
-
-            applyLabel: 'Axtar',
-            cancelLabel: 'ləğv et',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Xüsusi',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-        }
-    });
+  
 }
 
 function copyJSCodeClassTo_loadProjectList() {
