@@ -5,9 +5,10 @@ var cheweek = {
         Utility.addParamToUrl('current_project_id', this.cheweek_id);
         Utility.addParamToUrl('fkManualProjectId', this.cheweek_id);
         getProjectUserssync(this.cheweek_id);
-        this.genCountNotification();
+       
         genTimePickerById("date_timepicker_start_end");
         this.getLastMenuGenerate();
+   
 
     },
     getLastMenuGenerate: function () {
@@ -58,11 +59,13 @@ var cheweek = {
             crossDomain: true,
             async: true,
             success: function (res) {
-                cheweek.genPaginition(res.kv.countId)
-                cheweek.genTableTaskLIst(res,$('.startLimitNew').val())
+                cheweek.genPaginition(res.kv.countId);
+                cheweek.genTableTaskLIst(res,$('.startLimitNew').val());
+
             }
         });
     },
+    
     genPaginition:function (countId) {
          var stlm =$('.startLimitNew').val();
          var endlm= $('.endLimitNew').val();
@@ -475,6 +478,7 @@ var cheweek = {
                 global_var.current_user_type = res.tbl[0].r[0].liUserPermissionCode;
                 Utility.addParamToUrl('current_user_type', global_var.current_user_type);
                 new User().removeTagsByPermission();
+                cheweek.genCountNotification();
             },
             error: function () {
                 //bu hisse de error atmalidir. lakin atmir
@@ -620,7 +624,7 @@ $(document).on('click',".btn-plus-pag",function () {
         if(idbd==='21010300595707289233'){
             $.get("child/tasklist.html", function (html_string) {
                 $(div).html(html_string);
-        
+               
                 cheweek.getTaskList();
             });
         }else{
@@ -632,7 +636,12 @@ $(document).on('click',".btn-plus-pag",function () {
     });
 
     $(document).on('click','body',function() {
+        $("ul.ruby-menu > li.ruby-menu-mega > div").first().removeClass('active')
         $("#contextMenu").hide();
+    });
+    $(document).on('click','ul.ruby-menu > li.ruby-menu-mega > div i.dataFav',function(e) {
+           e.stopPropagation();
+           e.preventDefault();
     });
 function checkCheweek(params) {
     //    zoomOut

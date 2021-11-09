@@ -13,14 +13,14 @@
 }
 .modal-header{
     background-color: #173359 !important ;  
-    padding: 5px !important;
+    padding: 17px !important;
 }
 .modal-header .modal-title, .modal-header .close{
     color: #fff !important;  
     opacity: 1 !important;
 }
 .modal-header .close{
-    padding: 13px 20px !important;
+    padding: 0px 15px !important;
 }
 
 
