@@ -479,7 +479,7 @@ var cheweek = {
             error: function () {
                 //bu hisse de error atmalidir. lakin atmir
 
-                document.location = "../login.html";
+                document.location = "login.html";
                 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });
