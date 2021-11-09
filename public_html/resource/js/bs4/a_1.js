@@ -1692,8 +1692,8 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
     if (!bid)
         return;
-    
-   
+
+
 
     $.ajax({
         url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
@@ -1744,7 +1744,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
         }
     });
 
-    
+
 //alert('yupi is ',$('#yupi777').val());;
 //    var dataZad  = $.get(urlGl + "api/get/dw/us/"+global_var.current_domain+"/"+bid, function(data) { 
 ////        alert(data) 
@@ -3184,7 +3184,7 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
-    
+
     global_var.current_project_id = global_var.fkManualProjectId;
 
     new User().loadPersonalUserOnInit();
@@ -3198,7 +3198,7 @@ function manualProjectRefreshInit(fkManualProjectId) {
 //
 //    loadFromIndexedDBtoRAM();
 //    
-
+    initZadShey(fkManualProjectId);
     loadMainProjectList4ManualZad();
 //  i
 
@@ -4171,7 +4171,7 @@ function loadTableFIlterInside() {
         });
     }
 
-  
+
 }
 
 function copyJSCodeClassTo_loadProjectList() {
