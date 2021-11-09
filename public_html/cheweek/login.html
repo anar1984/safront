@@ -133,7 +133,7 @@
                                                             //console.log(data);
 
                                                             $.ajax({
-                                                                url: urlGl+"api/post/login",
+                                                                url: urlGl+"../api/post/login",
                                                                 type: "POST",
                                                                 data: data,
                                                                 contentType: "application/json",
@@ -145,7 +145,7 @@
                                                                     document.cookie = res.token;
                                                                     
                                                                     //                        progresBarStop();
-                                                                    document.location = "cheweek.html";
+                                                                    document.location = "app.html";
                                                                 },
                                                                 error: function (res, status) {
                                                                     //                        progresBarStop();

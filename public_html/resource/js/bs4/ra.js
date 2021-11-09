@@ -603,3 +603,13 @@ function getBacklogAsHtml(bid1, isAsync) {
     return out;
 
 }
+
+
+function initZadShey(projectId){
+//  alert('hole hole hoel')
+    $('#kelbetin2').after($('<script>').attr('src',urlGl+'api/get/script/js/'+global_var.current_domain +"/"+projectId+'.js'))
+   $('#kelbetin').after($('<link>')
+           .attr('rel','stylesheet')
+           .attr('href',urlGl+'api/get/script/css/'+global_var.current_domain+"/"+projectId+'.css'))
+  
+}

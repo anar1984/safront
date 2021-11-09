@@ -59,7 +59,10 @@ var SAFN = {
         'addattribute': 'AddAttribute',
         'removeAttribute': 'RemoveAttribute',
         'showform': 'ShowForm',
-        'getcurrentuserid':"GetCurrentUserId",
+        'getcurrentuserid': "GetCurrentUserId",
+        'setbackendcache': "SetBackendCache",
+        'setlocalcache': "SetLocalCache",
+        'setdata':"SetData"
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();
@@ -416,7 +419,7 @@ var SAFN = {
                 cmd = SAFN.IfStatementBody[cmd];
             }
 
-            var res = SAFN.ExecCommand(cmd, data, element, asyncData,SAFN.ApiId);
+            var res = SAFN.ExecCommand(cmd, data, element, asyncData, SAFN.ApiId);
             var out = $.extend(outData, res);
             outData = out;
 
@@ -450,7 +453,7 @@ var SAFN = {
                 cmd = SAFN.IfStatementBody[cmd];
             }
 
-            var res = SAFN.ExecCommand(cmd, data, element, asyncData,SAFN.ApiId);
+            var res = SAFN.ExecCommand(cmd, data, element, asyncData, SAFN.ApiId);
             var out = $.extend(outData, res);
             outData = out;
 
@@ -514,7 +517,7 @@ var SAFN = {
             var element = SAFN.Element;
             var apiId = SAFN.ApiId;
 //            if ($(element).attr("onclick_trigger_id") === apiId) {
-                $(element).removeAttr("onclick_trigger_id");
+            $(element).removeAttr("onclick_trigger_id");
 //            }
 
             new UserStory().setGUIComponentButtonGUIModal(key, element);
@@ -536,6 +539,12 @@ var SAFN = {
 
             var data = SAFN.CoreData;
             data[key] = value;
+            return data;
+        },
+         SetData: function (key) {
+            key = SAFN.GetArgumentPureValue(key);
+            var data = SAFN.CoreData;
+            data[key] = JSON.stringify(data);
             return data;
         },
         RemoveAttribute: function (key) {
@@ -618,10 +627,10 @@ var SAFN = {
             } catch (err) {
             }
         },
-         GetCurrentUserId: function (key) {
+        GetCurrentUserId: function (key) {
             try {
                 key = SAFN.GetArgumentPureValue(key);
-                var data = SAFN.CoreData;                
+                var data = SAFN.CoreData;
                 data[key] = String(global_var.current_ticker_id);
                 return data;
             } catch (err) {
@@ -946,6 +955,38 @@ var SAFN = {
 
 
 
+        },
+        SetBackendCache: function (key, value) {
+            key = SAFN.GetArgumentPureValue(key);
+            value = SAFN.GetArgumentValue(value);
+
+
+            if (!key)
+                return;
+
+            var json = initJSON();
+            json.kv.key = key;
+            json.kv.value = value;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmSetBackendSetKeyValueProperties",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true
+            });
+        },
+        SetLocalCache: function (key, value) {
+            key = SAFN.GetArgumentPureValue(key);
+            value = SAFN.GetArgumentValue(value);
+
+
+            if (!key)
+                return;
+
+            localStorage.setItem(key, value);
         },
 
         SendEmail: function (to, subject, message, cc, bb) {
@@ -4415,12 +4456,12 @@ $(document).ready(function () {
         '@.break()'
     ];
     $(document).on('keyup keydown', '.add-description', function (e) {
-        
+
         $(this).autocomplete({
             minLength: 0,
             // source: shortcodes,
             source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-            autoFocus:true,
+            autoFocus: true,
             select: function (event, ui) {
                 $(this).change();
                 $(".fx-shortcodes-btn .add-description").val('');
@@ -4577,7 +4618,7 @@ $(document).ready(function () {
         {"label": "BREAK", "fx": "@.break()", "desc": "BREACK It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
     ];
 
-   
+
 
     $(document).on('click', '.cs-fc-shortcode .cs-fx-btn', function (e) {
         $('.sc-insert-func-help p').text('');
@@ -4598,7 +4639,7 @@ $(document).ready(function () {
         $('.insert-funct-input').autocomplete({
             // source: funcdata,
             minLength: 0,
-            autoFocus:true,
+            autoFocus: true,
             source: funcdata.sort((a, b) => (a.label > b.label) ? 1 : -1),
             create: function () {
                 $(this).autocomplete('instance')._renderItem = function (ul, item) {
@@ -4609,7 +4650,7 @@ $(document).ready(function () {
         }).autocomplete("widget").addClass("cs-fc-shortcode").autocomplete({
             position: {my: "left bottom", at: "left top", collision: "flip"}
         });
-    
+
         $(".insert-funct-input").autocomplete("option", "appendTo", ".sc-insert-func-result");
         $('#insert-funct-input').val('').keydown();
     })

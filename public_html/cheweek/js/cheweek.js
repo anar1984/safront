@@ -460,7 +460,7 @@ var cheweek = {
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
             type: "POST",
             data: data,
-            async: true,
+            async: false,
             contentType: 'text/html',
             success: function (res) {
 
