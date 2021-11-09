@@ -163,7 +163,7 @@
                                 <div class="cs-flex-col flex-item">
                                     <div class="cs-input-group mt-2">
                                         <div class="input-group-addon">Service Name</div>
-                                        <select class="" id='run_service_name' name="run_service_name"
+                                        <select class="" id="run_service_name" name="run_service_name"
                                                 data-live-search="true" required>
                                         </select>
                                     </div>
@@ -248,10 +248,10 @@
                                 <div class="col-12">
                                     <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
                                 </div>
-                                <div class="cs-flex-col flex-item ml-2 mt-2">
+                                <div class="col-md-3 cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group mt-2">
                                        <div class="input-group-addon">Weekday</div>
-                                       <select class="" name="run_service_weekday_select" id="run_service_weekday_select" data-live-search="true">
+                                       <select class="" name="run_service_weekday_select" id="run_service_weekday_select" data-actions-box="true" multiple data-live-search="true">
                                                <option value="monday">Monday</option>
                                                <option value="tuesday">Tuesday</option>
                                                <option value="wednesday">Wednesday</option>
@@ -263,6 +263,10 @@
                                    </div>
                                </div>
                            </div>
+                           <div class="row" style="display: block;">
+                                <input type="text" id="hide_actions">
+                                <input type="text" id="hide_actions_param">
+                            </div>
                            <div class="row monthly-actions run-intensive">
                                 <div class="col-12">
                                     <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
@@ -271,23 +275,23 @@
                                    <div class="cs-input-group horizontal mt-2">
                                        <div class="input-group-addon">Specification</div>
                                         <label class="checkcontainer">Last day of month
-                                            <input type="radio" checked="checked" name="radio" id="last-day-of-month">
+                                            <input type="radio" checked="checked" name="radio" id="last_day_of_month">
                                             <span class="radiobtn"></span>
                                         </label>
                                         <label class="checkcontainer">First day of month
-                                            <input type="radio" name="radio" id="first-day-of-month">
+                                            <input type="radio" name="radio" id="first_day_of_month">
                                             <span class="radiobtn"></span>
                                         </label>
                                          <label class="checkcontainer spa">Specific day of month
-                                            <input type="radio" name="radio" id="specific-day-of-month">
+                                            <input type="radio" name="radio" id="specific_day_of_month">
                                             <span class="radiobtn"></span>
                                           </label>
-                                          <label class="checkcontainer spa">Before last fay of month
-                                            <input type="radio" name="radio" id="before-last-fay-of-month">
+                                          <label class="checkcontainer spa">Before last day of month
+                                            <input type="radio" name="radio" id="before_last_day_of_month">
                                             <span class="radiobtn"></span>
                                           </label>
                                           <label class="checkcontainer spa">Specific weekday of month 
-                                            <input type="radio" name="radio" id="specific-weekday-of-month">
+                                            <input type="radio" name="radio" id="specific_weekday_of_month">
                                             <span class="radiobtn"></span>
                                           </label>
                                    </div>

@@ -3154,7 +3154,7 @@ span.convertedTextAreaLinesItem {
     background-color: #3a3d8a;
 }
 .storecard-sidebarin input:checked + .slider {
-    background-color: #272B7C;
+    background-color: #a7acff;
 }
 .storecard-sidebarin .slider:before {
     position: absolute;
@@ -3163,6 +3163,9 @@ span.convertedTextAreaLinesItem {
     width: 12px;
     left: 6px;
     bottom: 3px;
+}
+.storecard-sidebarin input:checked + .slider:before {
+    background: #525596;
 }
 .cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;

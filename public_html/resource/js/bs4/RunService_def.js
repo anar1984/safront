@@ -54,14 +54,6 @@ $(document).ready(function() {
 
         });
 
-        $("#days_before_last_day_of_month").keyup(function(){
-            if($('#before_last_day_of_month').is(':checked')) {
-                var elm_param = $("#days_before_last_day_of_month").val();
-                $('#hide_actions_param').val(elm_param);
-                }
-        });
-        
-
   });
 
     function isValidEmailAddress(emailAddress) {
@@ -106,7 +98,7 @@ $(document).on("change", "#run_service_intensive_select", function (e) {
                 $('#hide_actions_param').val('');      
                 $('#hide_actions').val('first_day_of_month');
             }
-            if($('#last_day_of_month').is(':checked')) {
+            if($('#las_day_of_month').is(':checked')) {
                 $('#hide_actions').val('');
                 $('#hide_actions_param').val('');
                 $('#hide_actions').val('last_day_of_month');
