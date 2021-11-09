@@ -1606,9 +1606,9 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var fkpr = Utility.getParamFromUrl("fkManualProjectId").length
       if (global_var.current_domain==='48edh'&&fkpr > 0) {
           butnList = `<div style="position: absolute;top: 2px;right: 40px;">
-                            <span><a class="taskListShowNewSorguBtnClickEvent" href="#" title="Tapşırıq" sa-data-link="21042817181209336901"><img width="25px" class='rounded-circle' src="img/task.jpeg"></a></span> 
+                            <span><a class="taskListShowNewSorguBtnClickEvent" href="#" title="Tapşırıq" sa-data-link="21042817181209336901"><img width="25px" class='rounded-circle' src="cheweek/img/task.jpeg"></a></span> 
                              <span>
-                             <a class="for-chewekk-new-chat-link" data-link="chwkchat" href="javascript:void" title="Show Chat"><img width="25px" class='rounded-circle' src="img/chat.jpeg"></a></span> 
+                             <a class="for-chewekk-new-chat-link" data-link="chwkchat" href="javascript:void" title="Show Chat"><img width="25px" class='rounded-circle' src="cheweek/img/chat.jpeg"></a></span> 
                              <span> </span> 
                              </div>`
       }
