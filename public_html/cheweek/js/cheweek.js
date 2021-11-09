@@ -31,7 +31,7 @@ var cheweek = {
     },
     getTaskList: function () {
          var aktivAll = $("#comp_id_62102114283407028385");
-             
+            var createdDate = $("._testucunist").val()
         var json = initJSON();
         //json.kv.fkUserId ='21040211344601629324';
          if(aktivAll.prop("checked")){
@@ -40,9 +40,13 @@ var cheweek = {
             json.kv.aktivAll="('new','ongoing','waiting')"
 
          }
+         if(createdDate){
+            json.kv.createdDate = createdDate;
+         }
+
         json.kv.apiId = '21110215075107271040';
-        json.kv.startLimit = '0';
-        json.kv.endLimit = '50';
+        json.kv.startLimit = $('.startLimitNew').val();;
+        json.kv.endLimit = $('.endLimitNew').val();;
      //   json.kv.createdDate = $('._testucunist').val();
         var that = this;
         var data = JSON.stringify(json);
@@ -55,21 +59,49 @@ var cheweek = {
             async: true,
             success: function (res) {
                 cheweek.genPaginition(res.kv.countId)
-              cheweek.genTableTaskLIst(res)
+                cheweek.genTableTaskLIst(res,$('.startLimitNew').val())
             }
         });
     },
     genPaginition:function (countId) {
-        var btn = $(".pagination_btn").text('1-50/'+countId)
+         var stlm =$('.startLimitNew').val();
+         var endlm= $('.endLimitNew').val();
+         $(".pagination_btn").text((parseFloat(stlm)+1)+"-"+endlm+'/'+countId);
+         var page = Math.ceil(countId/50);
+         var elm =  $('#count-row-select-task');
+         var oldval = elm.val()
+         for (let i = 0; i < page; i++) {
+            elm.append($("<option>")
+                                .text(i+1)
+                                .val(i+1))            
+         }
+         if(oldval){
+            elm.val(oldval);
+         }
+       
+
     },
-    genTableTaskLIst: function (res) {
+    genTableTaskLIst: function (res,stlimt) {
     
         var stat = GetTaskStatusList();
         stat = stat._table.r;
         var tbid = $("#comp_id_21010301052003928142 tbody");
              tbid.html("")
+      
+           var stl = stlimt;
+        var list = res.tbl[0].r;
+        for (let i = 0; i < list.length; i++) {
+            stl++
+            const o = list[i];
+            for (let c = 0; c < stat.length; c++) {
+                if (stat[c].id == o.taskStatus) {
+                    statl = stat[c].taskStatusName;
+                }
+
+            }
         var select = $("<select>")
-            .attr("title",'. ')
+             .attr("data-value-id",o.fkTaskId)
+             .attr("title",'.')
             .addClass('task-list-prt-change-select form-control form-control-sm float-left')
             .append($("<option>")
                 .attr("value", "Standart")
@@ -83,23 +115,16 @@ var cheweek = {
                 .attr("value", "tecili")
                 .attr('data-icon', 'fas fa-bookmark tranform-rotate text-danger')
                 .text('Təcili'))
-
-        var list = res.tbl[0].r;
-        for (let i = 0; i < list.length; i++) {
-            const o = list[i];
-            for (let c = 0; c < stat.length; c++) {
-                if (stat[c].id == o.taskStatus) {
-                    statl = stat[c].taskStatusName;
-                }
-
-            }
-
+            
+    
+       
+        
             var tr = $("<tr>")
                 .addClass("redirectClass")
                 .append($("<td>")
                     .addClass("text-center brend-color")
                     .css("width", "20px")
-                    .append(i + 1))
+                    .append(stl))
                 .append($("<td>")
                     .addClass("text-center")
                     .append($("<input>")
@@ -117,7 +142,7 @@ var cheweek = {
                 .append($("<td>")
                      .css("width", "180px")
                     .addClass("text-center")
-                    .append(select.clone().val(o.taskPriority))
+                    .append(select.val(o.taskPriority))
                     .append($("<span>")
                         .addClass("issue_status_" + o.taskStatus + "")
                         .attr("sa-data-value", o.taskStatus)
@@ -172,7 +197,7 @@ var cheweek = {
                 .append($("<td>")
                     .addClass("d-none")
                     .append($("<input>")
-                        .val(o.id)
+                        .val(o.fkTaskId)
                         .attr("sa-selectedfield", 'id')
                     ))
                 .append($("<td>")
@@ -200,7 +225,7 @@ var cheweek = {
                                 .attr("href",'#')
                                 .attr("onclick_trigger_id",'21022123300700666582')
                                 .attr("id",'comp_id_21032107245505646337')
-                                .attr("sa-data-id",o.id)
+                                .attr("sa-data-id",o.fkTaskId)
                                 .attr("onclick","new UserStory().setGUIComponentButtonGUIModal('210321071837020910932',this)")
                                 .text("jdbfjsd")
                                 ))
@@ -515,6 +540,58 @@ function genTimePickerById(id) {
 var tbid= "comp_id_21010301052003928142"
 
 
+$(document).on('click',".btn-minus-pag",function () {
+    var vall = 'count-row-select-task';
+    $('#' + vall).val(1);
+   $('.startLimitNew').val(0);
+    $('.endLimitNew').val(50);
+    cheweek.getTaskList();
+  
+});
+
+$(document).on('click',".btn-plus-pag",function () {
+    var vall = 'count-row-select-task';
+
+    var pageComponentLast = $('#' + vall + ' option:last-child');
+    var txt = parseFloat(pageComponentLast.text())
+
+    $('#' + vall).val(txt)
+    var ol = Math.ceil(txt*50);
+    $('.startLimitNew').val(ol-50);
+    $('.endLimitNew').val(ol);
+    cheweek.getTaskList();
+})
+
+    $(document).on("click", ".pagination_btn_left_right", function(e) {
+        var stlm =$('.startLimitNew');
+        var endlm= $('.endLimitNew');
+        var clickedButton  = $(this).attr('data-page-icon');
+        var pageSelected   = $('#count-row-select-task option:selected');
+        var pageSelect     = $('#count-row-select-task');
+        var pageNumber     = null;
+    if(clickedButton == 'pageLeft') {
+        var current  = parseInt(pageSelected.text());
+        pageNumber   = current != 1?current - 1:1;
+          if(current != 1){
+            stlm.val(parseFloat(stlm.val()) -50);
+            endlm.val(parseFloat(endlm.val()) -50);
+          }
+    
+    }
+    else if(clickedButton == 'pageRight'){
+        var current  = parseInt(pageSelected.text());
+        
+        pageNumber   = current != parseInt($('#count-row-select-task option:last-child').text())? current + 1:current;
+        if(current != parseInt($('#count-row-select-task option:last-child').text())){
+            stlm.val(parseFloat(stlm.val()) +50);
+            endlm.val(parseFloat(endlm.val()) +50);
+          }
+    }
+
+        pageSelect.val(pageNumber);
+        cheweek.getTaskList();
+    });
+ 
     $(document).on("contextmenu", "#"+tbid+" tbody tr", function(e) {
         $(this).closest('tbody').find("tr").removeClass("last_click_class")
         $(this).addClass("last_click_class")
@@ -526,11 +603,22 @@ var tbid= "comp_id_21010301052003928142"
 
          return false;
     });
+
+
+    $(document).on("change", "select.task-list-prt-change-select", function(e) {
+        var id = $(this).attr("data-value-id");
+        var val = $(this).val();
+        var sl = {}
+              sl.taskPriority = val;
+              sl.id = id;
+
+          be.callApi("21092917070904357762",sl)
+    });
     $(document).on("click", ".filtSectReloadNew", function(e) {
         var div = $(".component-class#21041212141705702084 >.component-section-row ");
         var idbd = $(this).attr('sa-data-body');
         if(idbd==='21010300595707289233'){
-            $.get("cheweek/child/tasklist.html", function (html_string) {
+            $.get("child/tasklist.html", function (html_string) {
                 $(div).html(html_string);
         
                 cheweek.getTaskList();
