@@ -552,6 +552,7 @@ function setBacklogAsHtml(backlogId) {
     }
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
+    
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
 
 
@@ -631,7 +632,7 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
         async: true,
         success: function (res) {
              
-
+            global_var.current_modal=""; 
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
