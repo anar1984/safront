@@ -613,3 +613,38 @@ function initZadShey(projectId){
            .attr('href',urlGl+'api/get/script/css/'+global_var.current_domain+"/"+projectId+'.css'))
   
 }
+
+
+function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+             
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi !== '1') {
+                      setBacklogAsHtml(o.id);  
+                  
+                }  
+
+            }
+
+            //            cmd.val(global_var.current_backlog_id);
+             
+
+        }
+    });
+}

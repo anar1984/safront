@@ -1656,10 +1656,10 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
-    global_var.us_is_not_4_generation = false;
+    global_var.current_modal='';
     setBacklogAsHtml(global_var.current_backlog_id);
-    global_var.us_is_not_4_generation = true;
+    global_var.current_modal='loadLivePrototype';
+//    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
 }
 
@@ -7335,7 +7335,7 @@ function getJsCodeListByProject() {
             queue4ManulProject.getJsCodeListByProject = true;
 
             getGlobalJsCodeListByProject();
-            executeCoreOfManualProSelection();
+           
 
 
         }
@@ -7370,7 +7370,7 @@ function getGlobalJsCodeListByProject() {
             } catch (err) {
             }
             queue4ManulProject.getGlobalJsCodeListByProject = true;
-            executeCoreOfManualProSelection();
+            
 
         }
     });
@@ -8837,28 +8837,28 @@ function getAllGuiClassList() {
             } catch (ee) {
             }
 
-            try {
-                var obj = res.tbl[0].r;
-                for (var i = 0; i < obj.length; i++) {
-                    var o = obj[i];
-                    try {
-
-                        if (!o.className) {
-                            continue;
-                        }
-                        var st = '';
-                        st += o.className + "{" + o.classBody + "}";
-
-
-                        var sc = $('<style>').append(st);
-                        $('head').append(sc);
-
-
-                    } catch (err) {
-                    }
-                }
-            } catch (err) {
-            }
+//            try {
+//                var obj = res.tbl[0].r;
+//                for (var i = 0; i < obj.length; i++) {
+//                    var o = obj[i];
+//                    try {
+//
+//                        if (!o.className) {
+//                            continue;
+//                        }
+//                        var st = '';
+//                        st += o.className + "{" + o.classBody + "}";
+//
+//
+//                        var sc = $('<style>').append(st);
+//                        $('head').append(sc);
+//
+//
+//                    } catch (err) {
+//                    }
+//                }
+//            } catch (err) {
+//            }
 
             //            queue4ManulProject.getAllGuiClassList = true;
             //            executeCoreOfManualProSelection();
@@ -12066,6 +12066,7 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,false);
     $('#storyCardListSelectBox').change();
 
 });
@@ -12327,12 +12328,15 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     getProjectUsers();
     getUsers();
 
-
+    initZadShey(global_var.current_project_id);
+    
     $.get("resource/child/ipo.html", function (html_string) {
 
 
 
         getAllGuiClassList();
+        
+        
         getInputClassRelByProject();
         getInputAttributeByProject();
         getProjectDescriptionByProject();
@@ -12349,16 +12353,16 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         //callLivePrototype();
         //commmonOnloadAction(this);
         getGuiClassList();
-        getJsCodeByProject();
-        getInputActionRelByProjectMAnual2();
+//        getJsCodeByProject();
+//        getInputActionRelByProjectMAnual2();
         genToolbarStatus();
-        loadLivePrototypeCore(this);
+//        loadLivePrototypeCore(this);
 
 
 
     });
 
-    new UserStory().loadDetailsOnProjectSelect4Ipo();
+//    new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 
 });

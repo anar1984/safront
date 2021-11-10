@@ -5010,7 +5010,8 @@ UserStory.prototype = {
                                                 <i class="fas fa-times"></i>
                                             </div>
                                         </div>`)
-                    .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>'));
+//                    .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>')
+                    );
         }
 
 
@@ -8790,7 +8791,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 $('#userstory-gui-input-component-type-content').modal('hide');
-                that.genGUIDesign();
+//                that.genGUIDesign();
 //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
@@ -10595,6 +10596,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;       
         
+        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
         var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
         
                 //  click on first tab

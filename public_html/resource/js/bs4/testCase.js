@@ -775,6 +775,8 @@ function addUserStoryNewPopupBug() {
         crossDomain: true,
         async: true,
         success: function (res) {
+            Toaster.showMessage("Story Card added successfully");
+            $('#addUserStoryPopupModal-userstoryname1').val('');
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             loadCurrentBacklogProdDetails();
@@ -784,7 +786,7 @@ function addUserStoryNewPopupBug() {
             $('#bug_filter_project_id').change();
             // $('.projectList_activity').change();
             $('#addUserStoryPopupModal-userstoryname').val('');
-            $('#addUserStoryPopupModalwithProject').modal('hide');
+//            $('#addUserStoryPopupModalwithProject').modal('hide');
 
             if (global_var.current_modal === 'loadStoryCard') {
                 $('.projectList_liveprototype_storycard').change();
