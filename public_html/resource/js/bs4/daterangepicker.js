@@ -1888,7 +1888,7 @@
             "focus.daterangepicker": e.proxy(this.show, this),
             "keyup.daterangepicker": e.proxy(this.elementChanged, this),
             "keydown.daterangepicker": e.proxy(this.keydown, this)
-        }) : (this.element.on("click.daterangepicker", e.proxy(this.toggle, this)), this.element.on("keydown.daterangepicker", e.proxy(this.toggle, this))), this.updateElement()
+        }) : (this.element.on("click.daterangepicker", e.proxy(this.toggle, this)), this.element.on("keydown.daterangepicker", e.proxy(this.toggle, this)))/* , this.updateElement() */
     };
     return a.prototype = {
         constructor: a,
@@ -2095,7 +2095,7 @@
             }, this)), this.oldStartDate = this.startDate.clone(), this.oldEndDate = this.endDate.clone(), this.previousRightTime = this.endDate.clone(), this.updateView(), this.container.show(), this.move(), this.element.trigger("show.daterangepicker", this), this.isShowing = !0)
         },
         hide: function (t) {
-            this.isShowing && (this.endDate || (this.startDate = this.oldStartDate.clone(), this.endDate = this.oldEndDate.clone()), this.startDate.isSame(this.oldStartDate) && this.endDate.isSame(this.oldEndDate) || this.callback(this.startDate.clone(), this.endDate.clone(), this.chosenLabel), this.updateElement(), e(document).off(".daterangepicker"), e(window).off(".daterangepicker"), this.container.hide(), this.element.trigger("hide.daterangepicker", this), this.isShowing = !1)
+            this.isShowing && (this.endDate || (this.startDate = this.oldStartDate.clone(), this.endDate = this.oldEndDate.clone()), this.startDate.isSame(this.oldStartDate) && this.endDate.isSame(this.oldEndDate) || this.callback(this.startDate.clone(), this.endDate.clone(), this.chosenLabel), /*this.updateElement(),*/ e(document).off(".daterangepicker"), e(window).off(".daterangepicker"), this.container.hide(), this.element.trigger("hide.daterangepicker", this), this.isShowing = !1)
         },
         toggle: function (t) {
             this.isShowing ? this.hide() : this.show()
@@ -2196,6 +2196,7 @@
         },
         clickApply: function (t) {
             this.hide(), this.element.trigger("apply.daterangepicker", this)
+            this.updateElement()
         },
         clickCancel: function (t) {
             this.startDate = this.oldStartDate, this.endDate = this.oldEndDate, this.hide(), this.element.trigger("cancel.daterangepicker", this)

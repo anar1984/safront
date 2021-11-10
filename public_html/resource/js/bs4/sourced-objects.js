@@ -652,9 +652,6 @@ var SACore = {
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 this.updateEntireBacklog(o.id, o);
-
-
-
             }
         } catch (errr) {
         }
@@ -783,6 +780,8 @@ var SACore = {
     SortFilledCombos: function () {
         sortCombo('us-gui-component-rel-sus-id');
         sortCombo('us-related-sus');
+        $('#us-related-sus').selectpicker('refresh');
+//        $('.us-gui-component-rel-sus-id').selectpicker('refresh');
     },
     FillAllCombobox: function (obj) {
         this.FillSUSCombobox(obj);
@@ -1793,7 +1792,8 @@ var SAInput = {
                 var k = keys[n].trim();
                 var o = SAInput.Inputs[k];
                 if (!(o.inputType === 'IN' || o.inputType === 'GUI'
-                        || o.inputType === 'TBL' || o.inputType === 'TAB')) {
+                        || o.inputType === 'TBL' || o.inputType==='GRP'
+                        || o.inputType === 'TAB')) {
                     continue;
                 }
                 json.tbl[0].r.push(o);

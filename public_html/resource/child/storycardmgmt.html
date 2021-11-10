@@ -19,10 +19,15 @@
                                 style="text-overflow: ellipsis"  id='story_mn_filter_project_id'
                                 data-type="project_id" multiple title="Project"></select>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
+                            <select class="form-control " data-live-search="true" data-actions-box="true"
+                                style="text-overflow: ellipsis"  id='story_mn_filter_updated_id'
+                                data-type="updated_id" multiple title="Updated By"></select>
+                        </div>
+                        <div class="col-lg-3">
                             <select class="form-control " data-live-search="true" data-actions-box="true"
                                 style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
-                                data-type="assigne_id" title="Assigne"></select>
+                                data-type="assigne_id" multiple title="Assignee"></select>
                         </div>
                         <div class="col-lg-5">
                             <input type="text" placeholder="search"  class="form-control" name="" id="search-us-managmenet">
@@ -109,19 +114,10 @@
 
                         </div>
                         
-                        <div class="col-2">
-                            <select id="priority-change-story-card-filter" class="form-control" data-live-search="false" data-actions-box="true" data-type="project_id" title="Priority">
-                                <option  ></option>
-                                <option value="1">1- Lowest</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9 - Highest</option>
-                                </select>
+                        <div class="col-3">
+                        
+                            <div class="input-group date" id="datetimepicker6"><input type="text" placeholder="Update Time "  class="form-control form-control-sm   tame-range-picker-comp" id="date_timepicker_start_end-usmn"><span class="input-group-append" role="right-icon"><button
+                                class=" btn btn-sm  border-left-0" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button></span></div>
                         </div>
                        
                              

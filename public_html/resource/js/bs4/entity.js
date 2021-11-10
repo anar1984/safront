@@ -258,10 +258,13 @@ $(document).ready(function () {
 
     $(document).on("click", ".EditTableName", function () {
 
+
         var nameValue = $(this).parents(".tdHeader").find("h5").text()
         $(this).parents(".tdHeader").find(".tableNameEditInput").css("display", "block")
         $(this).parents(".tdHeader").find(".tableNameEditInput").focus()
         $(this).parents(".tdHeader").find(".tableNameEditInput").val(nameValue)
+
+
 
     })
 
@@ -730,15 +733,15 @@ $(document).ready(function () {
 
 
 
- /*    $(document).on("click", ".leader-line", function (e) {
-
-
-        $(".selectedLine").removeClass("selectedLine");
-        $(this).addClass("selectedLine");
-
-        e.stopPropagation()
-
-    }); */
+    /*    $(document).on("click", ".leader-line", function (e) {
+     
+     
+     $(".selectedLine").removeClass("selectedLine");
+     $(this).addClass("selectedLine");
+     
+     e.stopPropagation()
+     
+     }); */
 //    $(document).click(function () {
 //
 //
@@ -924,6 +927,8 @@ function genUsTableNew(genText) {
                                             .append('<a class="dropdown-item CreateTableOnServer">Create Table in Server</a>')
 //                                            .append('<a class="dropdown-item">Move</a>')
 //                                            .append('<a class="dropdown-item">Copy</a>')
+                                            .append('<a class="dropdown-item ShowTableDataEntry">Show Data Entry</a>')
+                                            .append('<a class="dropdown-item ShowApiRelations">Show API Relations</a>')
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")
@@ -963,6 +968,7 @@ function genUsFeild(fieldId, fieldName, order) {
                             .append('<span class="editBtnFeild editFeildName" title="Edit Field Name"  ><i class="fa fa-edit"></i></span>')
                             .append('<span class="editBtnFeild removeFieldLink"  title="Remove Links" ><i class="fa fa-link"></i></span>')
                             .append('<span class="editBtnFeild deleteFeildSection" title="Delete Field" ><i class="fa fa-trash-alt"></i></span>')
+                            .append('<span class="editBtnFeild ShowApiFieldRelations" title="Show API Relation" ><i class="fa fa-box"></i></span>')
                             ))
 
 
@@ -1037,6 +1043,260 @@ function alterFieldOnServer(el) {
         },
         error: function () {
             Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+function loadDatabaseList2Comboİmport(res) {
+
+    $('#DB_list_for_export').empty();
+    try {
+        var obj = res.tbl[0].r;
+        for (var i in obj) {
+            var o = obj[i];
+            $('#DB_list_for_export')
+                    .append($('<option>').val(o.id)
+                            .append(o.dbName))
+        }
+
+
+    } catch (err) {
+
+    }
+    $('#DB_list_for_export').selectpicker('refresh').change();
+
+
+
+}
+
+
+
+$(document).on("change", "#DB_list_for_export", function () {
+    getDbTablesList4CodeDashExpo(this)
+
+});
+$(document).on('click', '#inportexport-file-btn-db', function (event) {
+
+    var dtnm = $(this).closest('.modal-body');
+    dtnm.find('.progress-bar').remove();
+    dtnm.find(' .cs-succsess-msg').remove();
+    dtnm.find(' .download-e-file').remove();
+    var json = initJSON();
+    json.kv.fkDbId = $('#DB_list_for_export').val();
+    json.kv.dbName = $('#DB_list_for_export').find('option:selected').text();
+    json.kv.listFkTableIds = getMultiSelectpickerValueByElementName('Table_list_for_export');
+    // json.kv.filename = zipfilename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsExportDatabaseByTable",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+
+
+            if ($("#DB_list_for_export option:selected").length) {
+
+                dtnm.find('.cs-err-msg').remove();
+
+                dtnm.append('<span class="cs-succsess-msg">File Successfully Exported!</span>');
+
+                dtnm.append("<a class='download-e-file'><span><i class='fas fa-download'></i></span> Download</a>");
+                dtnm.find('.download-e-file').attr('href', urlGl + 'api/get/filed/' + res.kv.filename);
+                dtnm.find('.download-e-file').attr('download', +res.kv.filename);
+            } else {
+                dtnm.find('.progress').remove();
+                dtnm.find('.cs-succsess-msg').remove();
+                dtnm.find('.download-e-file').remove();
+                dtnm.html('<span class="cs-err-msg">Select any Data Base!</span>');
+            }
+        },
+        error: function () {
+            Toaster.showError(('Export error'));
+
+        }
+    });
+
+});
+
+$(document).on('click', '#upload_data_file_btn_db', function (event) {
+    var elm = $("#DbTableUploadZipData");
+    if ($(elm).val().trim().length > 0) {
+        uploadFile4IpoImportDB($(elm).attr('id'));
+        $('#ImportBoxDB').modal("hide");
+    }
+
+});
+function getDbTablesList4CodeDashExpo(el) {
+    var dbid = $(el).val();
+
+    if (!dbid) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.dbId = dbid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetDBTableList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#Table_list_for_export').html('');
+
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                $('#Table_list_for_export')
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
+            }
+
+            $('#Table_list_for_export').selectpicker('refresh').change();
+
+        }
+    });
+
+}
+
+
+function uploadFile4IpoImportDB(id) {
+    var r = "";
+    var that = this;
+    var files = document.getElementById(id).files;
+    var file_count = files.length;
+    var st = "";
+    var trc = 0;
+
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    pbDiv.html('');
+
+    $('#' + id).attr('fname', '');
+
+    for (var i = 0, f; f = files[i]; i++) {
+        //            var file = files[0];
+        var file = f;
+        var fileext = file['name'].split('.').pop();
+        var fname = file['name'].split('.')[0];
+        //            console.log('fname=' + fname);
+        if (files && file) {
+            var reader = new FileReader();
+            reader.fileName = fname;
+            reader.fileExt = fileext;
+            reader.fileNo = i;
+            reader.onload = function (readerEvt) {
+                trc++;
+                var fname1 = readerEvt.target.fileName;
+                var fileext1 = readerEvt.target.fileExt;
+                var fileNo = readerEvt.target.fileNo;
+                //                    console.log('trc no=' + trc);
+                var binaryString = readerEvt.target.result;
+                uploadFile4IpoCoreImportDB(fileext1, btoa(binaryString), fname1, id);
+
+            };
+            reader.readAsBinaryString(file, fname);
+        }
+    }
+}
+
+function uploadFile4IpoCoreImportDB(fileext, file_base_64, file_name, id) {
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+
+    var idx = makeId(10);
+
+    var d = new Object();
+    d.file_base_64 = file_base_64;
+    d.file_extension = fileext;
+    d.file_type = "general";
+    d.file_name = file_name;
+    conf = JSON.parse('{"kv":{}}');
+    conf['kv'] = d;
+    conf.kv.cookie = getToken();
+    var dat = JSON.stringify(conf);
+    var finalname = "";
+    $.ajax({
+        url: urlGl + "api/post/upload",
+        type: "POST",
+        data: dat,
+        contentType: "application/json",
+        async: true,
+        beforeSend: function () {
+            pbDiv.append('<br>').append($('<span>')
+                    .attr('id', 'pro_zad_span' + idx)
+                    .text(file_name)
+                    .append($('<img>')
+                            .attr('id', 'pro_zad_' + idx)
+                            .attr('src', 'resource/img/loader.gif'))
+                    )
+        },
+        uploadProgress: function (event, position, total, percentComplete) {
+            //            console.log('test')
+            var percentVal = percentComplete + '%';
+            pbDiv.text(percentVal);
+        },
+        success: function (data) {
+            finalname = data.kv.uploaded_file_name;
+
+            $('#pro_zad_' + idx).remove();
+            $('#pro_zad_span' + idx)
+                    .after($('<i class="fa fa-times">')
+                            .attr('pid', idx)
+                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+
+
+
+            var st = $('#' + id).attr('fname');
+            st = (st && st !== 'undefined') ? st : '';
+            st += (st) ? global_var.vertical_seperator + finalname :
+                    finalname;
+
+            $('#' + id).attr('fname', st);
+            console.log(finalname);
+            importSendNameApiDB(finalname)
+        },
+        error: function () {}
+    });
+    return finalname;
+}
+
+
+function importSendNameApiDB(filNm) {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+
+    json.kv.fileName = filNm;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsUnzipDatabaseAndImport",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+        },
+        error: function () {
+            Toaster.showGeneralError();
         }
     });
 }

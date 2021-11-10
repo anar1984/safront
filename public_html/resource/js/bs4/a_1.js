@@ -11,7 +11,9 @@
 //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 //    });
 //});
-
+function clickMePlease() {
+    alert("hasgdjhaskdl;as")
+}
 
 var localstorage_prefix = {
     "JS": "js_",
@@ -35,14 +37,17 @@ var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
     "loadLivePrototype": "Live Prototype",
-    "loadStoryCardMgmt ": "Story Card Management",
-    "loadDashboard": "Dashboard",
-    "loadTaskManagement": "Task Management",
+    "loadStoryCardMgmt": "Story Card Management",
     "loadProjectManagement": "Project Management",
+    "loadDashboard": "Dashboard",
+    "loadStoryCardMgmt": "User Story Management",
+    "loadTaskManagement": "Task Management",
+    "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",
+    "loadSqlBoard": "SQL Board",
     "loadBusinessService": "Business Service",
     "loadSourceActivity": "Sourced-Activity Diagram",
     "loadEntityDiagram": "Entity Diagram",
@@ -51,6 +56,7 @@ var moduleList = {
     "loadTaskType": "Task Type",
     "loadTaskTypeManagment": "Task Type Management",
     "loadPermission": "Permission",
+    "loadRunService": "Run Service",
     "loadOldVersion": "Old Version",
 };
 var dgui = {};
@@ -60,6 +66,68 @@ var bhistorylist = [];
 var saViewIsPressed = false;
 var saInputTagIsPressed = false;
 
+(function ($) {
+    $.fn.tblToExcel = function () {
+        var elm = true;
+        if (this.length > 1) {
+            $('body').append('<div id="tbl-tnv-back" style="position: fixed; z-index: 1;padding-top: 100px;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.4);">' +
+                    '<div id="tbl-tnv-excel" style="background-color: #fefefe;margin: auto;' +
+                    'padding: 20px; ' +
+                    'overflow: auto;' +
+                    'border: 1px solid #888;' +
+                    'width: 80%;" >  </div>' +
+                    '</div>');
+            elm = false;
+        }
+        $('#tbl-tnv-back').click(function () {
+            $(this).remove();
+            $('#tbl-tnv-anch').remove();
+        });
+        var tableToExcel = (function () {
+            var i = 0;
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                    template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta charset="utf-8"/><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                    , base64 = function (s) {
+                        return window.btoa(unescape(encodeURIComponent(s)))
+                    }
+            , format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                })
+            };
+            return function (table, name) {
+                if (!table.nodeType)
+                    table
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                if (elm) {
+                    window.location.href = uri + base64(format(template, ctx));
+                } else {
+                    i++;
+                    var xl = uri + base64(format(template, ctx));
+                    $('#tbl-tnv-excel').append('<a id="tbl-tnv-anch" style="background-color: #4CAF50;border: none;\n' +
+                            'color: white;' +
+                            'padding: 15px 32px;' +
+                            'text-align: center;' +
+                            'text-decoration: none;' +
+                            'display: inline-block; margin: 1px;' +
+                            'font-size: 16px;" href=' + xl + ' download>Download Excel-' + i + ' </a>');
+                }
+            }
+        })();
+
+        return this.each(function () {
+            tableToExcel(this, 'W3C Example Table');
+        });
+    }
+
+}(jQuery));
+
+
+$(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+    if (e.keyCode === 13) {
+        new UserStory().insertNewBacklogDesc();
+    }
+});
 
 function setApiIpoBlock() {
 
@@ -74,16 +142,16 @@ function setApiIpoBlock() {
             var to = toKeys[m];
             try {
                 new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        //                                    color: 'rgb(41,146,210)',
-                        color: 'rgb(255,146,27)',
-                        dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left',
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    //                                    color: 'rgb(41,146,210)',
+                    color: 'rgb(255,146,27)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left',
+                }
                 );
 
             } catch (err) {
@@ -114,8 +182,27 @@ function getUserFullInfo(fkUserId) {
     return res1;
 }
 
+function convertDataToTableCheweek(data) {
+    var keys = Object.keys(data);
+    var res = {};
+    res.selectedField = (data.selectedField) ? data.selectedField : keys.toString();
+
+    var _table = {};
+    var row = [];
+    var kv = {};
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var val = data[key];
+        kv[key + '1'] = val;
+    }
+    row.push(kv);
+    _table.r = row;
+    res._table = _table;
+    return res;
+}
+
 function removeBacklogDescCommentType(el, descId) {
-    $(el).closest('tr').find('td.text-holder').removeClass("process-desc-as-comment");
+    $(el).closest('tr').find('td.text-holder.all-holder').removeClass("process-desc-as-comment");
 
 
     var json = initJSON();
@@ -145,7 +232,7 @@ function removeBacklogDescCommentType(el, descId) {
 
 
 function setBacklogDescCommentType(el, descId, commentType) {
-    $(el).closest('tr').find('td.text-holder').addClass("process-desc-as-comment");
+    $(el).closest('tr').find('td.text-holder.all-holder').addClass("process-desc-as-comment");
 
 
     var json = initJSON();
@@ -188,8 +275,8 @@ function MapApiCallAsyncType(arg) {
 }
 (function ($, window) {
     var cols, dragSrcEl = null,
-        dragSrcEnter = null,
-        dragableColumns, _this;
+            dragSrcEnter = null,
+            dragableColumns, _this;
 
     function insertAfter(elem, refElem) {
         return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
@@ -321,7 +408,8 @@ function getTop(divObj, parentDivId) {
     var divId = "";
     try {
         divId = $(divObj).attr("id");
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var rc = $(divObj).position().top;
     console.log($(divObj).attr('class'), '-', rc);
@@ -337,7 +425,8 @@ function getLeft(divObj, parentDivId) {
     var divId = "";
     try {
         divId = $(divObj).attr("id");
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var rc = $(divObj).position().left;
     console.log($(divObj).attr('class'), '-', rc);
@@ -425,12 +514,6 @@ function exportExcelFile(workbook) {
     return XLSX.writeFile(workbook, "bookName.xlsx");
 }
 
-
-
-
-
-
-
 $(document).on("change", "#file_excel_import", function () {
     var tabID = $(this).attr('data-api-tabid');
     filePicked(this, tabID);
@@ -494,13 +577,12 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
+        //  $.each(td, function (index, item) {
 
-        console.log(td);
-        $.each(td, function (index, item) {
+        sortableTable(tableId, sv, td);
 
-            sortableTable(tableId, sv, item);
+        //  })
 
-        })
     } catch (error) {
         console.log(error)
     }
@@ -509,10 +591,9 @@ function getGroupList4Table(elm) {
 $(function () {
     $(document).on('click', '.stat-div-task-content .stat-table-us tbody .theader-table td', function () {
         var tbl = $(this).parents('.stat-table-us');
-        console.log(tbl);
         var index = $(this).index(),
-            rows = [],
-            thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
+                rows = [],
+                thClass = $(this).hasClass('asc') ? 'desc' : 'asc';
 
         $(tbl).find('.theader-table td').removeClass('asc desc');
         $(this).addClass(thClass);
@@ -523,13 +604,13 @@ $(function () {
 
         rows.sort(function (a, b) {
             var aValue = $(a).find('td').eq(index).text(),
-                bValue = $(b).find('td').eq(index).text();
+                    bValue = $(b).find('td').eq(index).text();
 
             return aValue > bValue ?
-                1 :
-                aValue < bValue ?
-                -1 :
-                0;
+                    1 :
+                    aValue < bValue ?
+                    -1 :
+                    0;
         });
 
         if ($(this).hasClass('desc')) {
@@ -553,7 +634,7 @@ function sortableTable(tableId, sv, cls) {
         switching = false;
         rows = $(table).find("tbody tr");
         console.log(rows.length);
-        for (i = 1; i < (rows.length - 1); i++) {
+        for (i = 0; i < (rows.length - 1); i++) {
             shouldSwitch = false;
 
 
@@ -588,13 +669,13 @@ function sortableTable(tableId, sv, cls) {
             }
 
             fTr.before($("<tr>")
-                .addClass("groupTrElement")
-                .append($("<td>")
-                    .addClass("groupTdElement")
-                    .append($("<div>")
-                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                        .append(tx)
-                        .addClass("groupTableDivInside"))))
+                    .addClass("groupTrElement")
+                    .append($("<td>")
+                            .addClass("groupTdElement")
+                            .append($("<div>")
+                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                                    .append(tx)
+                                    .addClass("groupTableDivInside"))))
         }
 
         var htm = $(trList[index]).find('[pdid=' + sv + ']').find(".component-container-dashed").html();
@@ -618,14 +699,14 @@ function sortableTable(tableId, sv, cls) {
                 $(trList[index]).attr("data-aid", tbl);
             }
             $(trList[index]).after($("<tr>")
-                .addClass("groupTrElement")
-                .append($("<td>")
-                    .addClass("groupTdElement")
+                    .addClass("groupTrElement")
+                    .append($("<td>")
+                            .addClass("groupTdElement")
 
-                    .append($("<div>")
-                        .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
-                        .append(htm1)
-                        .addClass("groupTableDivInside"))));
+                            .append($("<div>")
+                                    .append('<span data-closed="0" data-aidli=' + tbl + ' class="bugChangegroupArrow"><i class="fas fa-chevron-down"></i></span>')
+                                    .append(htm1)
+                                    .addClass("groupTableDivInside"))));
 
         }
 
@@ -633,41 +714,11 @@ function sortableTable(tableId, sv, cls) {
 
     }
 
-
+    $('#' + tableId).find(".groupTrElement .bugChangegroupArrow").click();
 
 }
 /*********************************************** Context Menu Function Only ********************************/
-function clickInsideElementOp(e, className) {
-    var el = e.srcElement || e.target;
-    if (el.classList.contains(className)) {
-        return el;
-    } else {
-        while (el = el.parentNode) {
-            if (el.classList && el.classList.contains(className)) {
-                return el;
-            }
-        }
-    }
-    return false;
-}
 
-function getPositionOp(e) {
-    var posx = 0,
-        posy = 0;
-    if (!e)
-        var e = window.event;
-    if (e.pageX || e.pageY) {
-        posx = e.pageX;
-        posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-        posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    return {
-        x: posx,
-        y: posy
-    }
-}
 
 function addAttrToElementSingileByR(el, comp) {
     try {
@@ -679,144 +730,9 @@ function addAttrToElementSingileByR(el, comp) {
             el.attr(key, val);
         }
         return el;
-    } catch (err) {}
-}
-// Your Menu Class Name
-var taskItemClassName = "component-table-input-class";
-var contextMenuClassName = "context-menu",
-    contextMenuItemClassName = "context-menu__item",
-    contextMenuLinkClassName = "context-menu__link",
-    contextMenuActive = "context-menu--active";
-var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"),
-    menuItems = $(menu).find(".context-menu__item");
-var menuState = 0,
-    menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
-
-function initMenuFunctionOp() {
-    contextListenerOp();
-    clickListenerOp();
-    keyupListenerOp();
-    resizeListenerOp();
-
-}
-
-/**
- * Listens for contextmenu events.
- */
-function contextListenerOp() {
-    document.addEventListener("contextmenu", function (e) {
-        taskItemInContext = clickInsideElementOp(e, taskItemClassName);
-
-        if (taskItemInContext) {
-            e.preventDefault();
-            toggleMenuOnOp();
-            positionMenuOp(e);
-        } else {
-            taskItemInContext = null;
-            toggleMenuOffOp();
-        }
-    });
-}
-
-/**
- * Listens for click events.
- */
-function clickListenerOp() {
-    document.addEventListener("click", function (e) {
-        var clickeElIsLink = clickInsideElementOp(e, contextMenuLinkClassName);
-
-        if (clickeElIsLink) {
-            e.preventDefault();
-            menuItemListenerOp(clickeElIsLink);
-        } else {
-            var button = e.which || e.button;
-            if (button === 1) {
-                toggleMenuOffOp();
-            }
-        }
-    });
-}
-
-/**
- * Listens for keyup events.
- */
-function keyupListenerOp() {
-    window.onkeyup = function (e) {
-        if (e.keyCode === 27) {
-            toggleMenuOffOp();
-        }
+    } catch (err) {
     }
 }
-
-/**
- * Window resize event listener
- */
-function resizeListenerOp() {
-    window.onresize = function (e) {
-        toggleMenuOffOp();
-    };
-}
-
-/**
- * Turns the custom context menu on.
- */
-function toggleMenuOnOp() {
-    if (menuState !== 1) {
-        menuState = 1;
-        $(menu).addClass(contextMenuActive);
-    }
-}
-
-/**
- * Turns the custom context menu off.
- */
-function toggleMenuOffOp() {
-    if (menuState !== 0) {
-        menuState = 0;
-        $(menu).removeClass(contextMenuActive);
-    }
-}
-
-function positionMenuOp(e) {
-    clickCoords = getPositionOp(e);
-    clickCoordsX = clickCoords.x;
-    clickCoordsY = clickCoords.y;
-    menuWidth = $(menu).offsetWidth + 4;
-    menuHeight = $(menu).offsetHeight + 4;
-
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-
-    if ((windowWidth - clickCoordsX) < menuWidth) {
-        $(menu).css("top", (windowWidth - menuWidth) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsX - 0 + "px");
-    }
-
-    // menu.style.top = clickCoordsY + "px";
-
-    if (Math.abs(windowHeight - clickCoordsY) < menuHeight) {
-        $(menu).css("top", (windowHeight - menuHeight) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsY - 0 + "px");
-    }
-}
-
-
-function menuItemListenerOp(link) {
-    var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
-
-    var moveToAlbumSelectedId = link.getAttribute("data-action");
-    if (moveToAlbumSelectedId == 'remove') {
-
-    } else if (moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7) {
-
-    }
-    toggleMenuOffOp();
-}
-initMenuFunctionOp();
-
-
 
 
 var isMouseDown = false;
@@ -907,7 +823,23 @@ function sumAvarMaxMinCount(sum, count, min, max) {
 }
 
 
+function DateRangePickerFormatValue(elm) {
 
+    var val = $(elm).val();
+    if (!val) {
+        return ''
+    }
+    var stTime
+    var endTime
+    val = val.split('-')
+    var dt = val[0].split('/');
+    var dt1 = val[1].split('/');
+    stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+    endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+    console.log(endTime, stTime);
+    var inns = stTime.trim() + '%BN%' + endTime.trim();
+    return inns
+}
 
 $(document).on("change", ".table-show-hide-row-div #date_timepicker_start_end", function (e) {
     var depID = $(this).attr('data-api-tabid');
@@ -1033,15 +965,15 @@ $(document).mouseup(function () {
                     column.addClass('resizable-column');
 
                     column.append(
-                        $('<div>', {
-                            class: 'resizable-column-handle resizable-column-handle-w',
-                            'data-is-west': 'true'
-                        }),
-                        $('<div>', {
-                            class: 'resizable-column-handle resizable-column-handle-e',
-                            'data-is-west': 'false'
-                        })
-                    );
+                            $('<div>', {
+                                class: 'resizable-column-handle resizable-column-handle-w',
+                                'data-is-west': 'true'
+                            }),
+                            $('<div>', {
+                                class: 'resizable-column-handle resizable-column-handle-e',
+                                'data-is-west': 'false'
+                            })
+                            );
                 });
             });
         },
@@ -1074,13 +1006,13 @@ $(document).mouseup(function () {
             if (resizingOffsetSize && (this.resizing.columnSize !== resizingOffsetSize)) {
                 if (resizingOffsetSize > this.resizing.columnSize) {
                     var widestColumn = this._getWidestColumn(this.resizing.siblings),
-                        widestColumnSize = this._getColumnSize(widestColumn);
+                            widestColumnSize = this._getColumnSize(widestColumn);
 
                     this._setColumnSize(widestColumn, (widestColumnSize - 1));
                     this._setColumnSize(this.resizing.column, resizingOffsetSize);
                 } else {
                     var narrowestColumn = this._getNarrowestColumn(this.resizing.siblings),
-                        narrowestColumnSize = this._getColumnSize(narrowestColumn);
+                            narrowestColumnSize = this._getColumnSize(narrowestColumn);
 
                     this._setColumnSize(narrowestColumn, (narrowestColumnSize + 1));
                     this._setColumnSize(this.resizing.column, resizingOffsetSize);
@@ -1129,7 +1061,7 @@ $(document).mouseup(function () {
 
         _getResizingOffsetSize: function (x) {
             var that = this,
-                resizingOffsetSize;
+                    resizingOffsetSize;
 
             $.each(this.resizing.offsets, function (index, offset) {
                 if ((that.resizing.directionIsWest && ((x <= offset.end) && (x >= offset.start))) || (!that.resizing.directionIsWest && ((x >= offset.start) && (x <= offset.end)))) {
@@ -1142,19 +1074,19 @@ $(document).mouseup(function () {
 
         _getResizingOffsets: function () {
             var that = this,
-                row = this.resizing.row.clone(),
-                css = {
-                    'height': '1px',
-                    'min-height': '1px',
-                    'max-height': '1px'
-                };
+                    row = this.resizing.row.clone(),
+                    css = {
+                        'height': '1px',
+                        'min-height': '1px',
+                        'max-height': '1px'
+                    };
 
             row.removeClass('resizable-row resizable-row-resizing').css(css);
             row.children().empty().removeClass('resizable-column resizable-column-resizing').css(css);
             this.resizing.row.parent().append(row);
 
             var column = row.children().eq(this.resizing.row.children().index(this.resizing.column)),
-                totalSize = this._getColumnSize(column);
+                    totalSize = this._getColumnSize(column);
 
             this._getResizingSiblings(column).each(function () {
                 totalSize += (that._getColumnSize($(this)) - 1);
@@ -1162,13 +1094,13 @@ $(document).mouseup(function () {
             });
 
             var size = ((this.resizing.handleIsWest) ? totalSize : 1),
-                sizeEnd = ((this.resizing.handleIsWest) ? 1 : totalSize),
-                sizeOperator = ((this.resizing.handleIsWest) ? -1 : 1),
-                offset = 0,
-                offsetOperator = ((this.resizing.handleIsWest) ? 1 : 0);
+                    sizeEnd = ((this.resizing.handleIsWest) ? 1 : totalSize),
+                    sizeOperator = ((this.resizing.handleIsWest) ? -1 : 1),
+                    offset = 0,
+                    offsetOperator = ((this.resizing.handleIsWest) ? 1 : 0);
 
             var columnGutter = ((column.outerWidth(true) - column.width()) / 2),
-                columnWidth = ((this.resizing.handleIsWest) ? false : true);
+                    columnWidth = ((this.resizing.handleIsWest) ? false : true);
 
             var resizingOffsets = [];
 
@@ -1199,7 +1131,7 @@ $(document).mouseup(function () {
 
         _getWidestColumn: function (columns) {
             var that = this,
-                widestColumn;
+                    widestColumn;
 
             columns.each(function () {
                 if (!widestColumn || (that._getColumnSize($(this)) > that._getColumnSize(widestColumn))) {
@@ -1212,7 +1144,7 @@ $(document).mouseup(function () {
 
         _getNarrowestColumn: function (columns) {
             var that = this,
-                narrowestColumn;
+                    narrowestColumn;
 
             columns.each(function () {
                 if (!narrowestColumn || (that._getColumnSize($(this)) < that._getColumnSize(narrowestColumn))) {
@@ -1255,7 +1187,7 @@ $(document).mouseup(function () {
 
         _setColumnOffset: function (column, offset) {
             var currentColumnOffset,
-                toggleClasses = [];
+                    toggleClasses = [];
 
             if ((currentColumnOffset = this._getColumnOffset(column)) !== undefined) {
                 toggleClasses.push(['col', 'xs', 'offset', currentColumnOffset].join('-'));
@@ -1367,9 +1299,19 @@ function AJAXCallFeedback(res) {
                 $('[sa-selectedfield*="' + err[i].code + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(err[i].code)) {
+                        var id = makeId(10);
+
+
                         f = true;
                         $(this).closest('div').find('.apd-form-error-msg').remove();
-                        $(this).after('<p class=\'apd-form-error-msg\'>' + err[i].val + '</p>');
+                        $(this).after('<p class=\'apd-form-error-msg\' id="' + id + '">' + err[i].val + '</p>');
+
+
+                        setTimeout(function () {
+                            $('#' + id).remove();
+                        }, 3000);
+
+
                     }
                 })
 
@@ -1406,7 +1348,8 @@ function getBacklogLastModificationDateAndTime(bid1) {
         success: function (res) {
             try {
                 backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.out));
-                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
+//                backlog_last_modification = $.extend(backlog_last_modification, JSON.parse(res.kv.outShared));
+
             } catch (err) {
 
             }
@@ -1680,7 +1623,8 @@ function loadBacklogDetailsByIdIfNotExist_old3(bid) {
                     console.log(err);
                 }
             }
-        } catch (err) {}
+        } catch (err) {
+        }
 
         if (md === mdUS) {
             loadBacklogProductionDetailsById_resparams(resObj);
@@ -1712,8 +1656,11 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-
     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+    global_var.us_is_not_4_generation = false;
+    setBacklogAsHtml(global_var.current_backlog_id);
+    global_var.us_is_not_4_generation = true;
+
 }
 
 function loadCurrentBacklogProdDetailsSyncrone() {
@@ -1740,6 +1687,81 @@ function callStoryCardAfterIPOAction() {
 }
 
 function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
+    var async = (isAsync) ? isAsync : false;
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+    
+   
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: false,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                } else {
+                    loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+            }
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+
+    
+//alert('yupi is ',$('#yupi777').val());;
+//    var dataZad  = $.get(urlGl + "api/get/dw/us/"+global_var.current_domain+"/"+bid, function(data) { 
+////        alert(data) 
+//       if(data){ 
+//           SAInput.LoadedBacklogs4Input.push(bid);
+//           loadBacklogProductionDetailsById_resparams(data);
+//       }else{
+//           loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//            loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//             loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//       }     
+//    }, "text");
+//    
+//    alert(dataZad);
+}
+
+function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
     var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
@@ -1773,8 +1795,8 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
                 } catch (err) {
                     console.log(err);
                 }
-
                 localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
                 SAInput.LoadedBacklogs4Input.push(bid);
                 loadBacklogProductionDetailsById_resparams(res);
 
@@ -1897,7 +1919,8 @@ function loadBacklogProductionDetailsById_csslist(res) {
 
             }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 function loadBacklogProductionDetailsById_setjslist(res) {
@@ -1950,7 +1973,8 @@ function loadBacklogProductionDetailsById_setjslist(res) {
                 Toaster.showError("Error on loading JavaScript File called " + o.fnCoreName);
             }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -1964,7 +1988,8 @@ function loadBacklogProductionDetailsById_jslist(res) {
             var o = obj[i];
             cr_js_list[o.id] = o;
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 
 }
 
@@ -1996,7 +2021,8 @@ function loadBacklogProductionDetailsById_inputDesc(res) {
 
 
 
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -2017,7 +2043,8 @@ function loadBacklogProductionDetailsById_loadInputActionRelation(res) {
                 cr_input_action_rel[o.fkInputId].push(o.id);
             cr_input_action_rel_list[o.id] = o;
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -2057,7 +2084,8 @@ function loadBacklogProductionDetailsById_loadInputAttribute(res) {
 
             }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -2073,15 +2101,16 @@ function loadBacklogProductionDetailsById_loadInputClassRelation(res) {
             var o = obj[i];
             if (o.relType === 'comp') {
                 cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId]) ?
-                    cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
-                    o.fkClassId;
+                        cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
+                        o.fkClassId;
             } else if (o.relType === 'cont') {
                 cr_cont_input_classes[o.fkInputId] = (cr_cont_input_classes[o.fkInputId]) ?
-                    cr_cont_input_classes[o.fkInputId] + "," + o.fkClassId :
-                    o.fkClassId;
+                        cr_cont_input_classes[o.fkInputId] + "," + o.fkClassId :
+                        o.fkClassId;
             }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 function searchFilterTable(el, tableId) {
@@ -2133,6 +2162,68 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+
+                    var selectedField = SAInput.GetInputName(selectFromInputId);
+                    triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+                } else {
+                    loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+            }
+        }
+    });
+}
+
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId) {
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+
+    if (!bid)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
         //            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
         type: "POST",
@@ -2141,9 +2232,18 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
         crossDomain: true,
         async: true,
         success: function (res) {
-
-            //            localStorage.setItem("md_" + bid, res.kv.modificationTime);
-            //            localStorage.setItem(bid, JSON.stringify(res));
+            try {
+                var transaction = db.transaction(["subdb"], "readwrite");
+                var store = transaction.objectStore("subdb");
+                store.delete('idb_' + bid);
+                store.add({
+                    'bid': 'idb_' + bid,
+                    'json': res
+                });
+            } catch (err) {
+                console.log(err);
+            }
+            localStorage.setItem('idb_' + bid, res.kv.modificationTime);
 
             loadBacklogProductionDetailsById_resparams(res);
 
@@ -2180,7 +2280,8 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader_old(bid, select, select
                 var selectedField = SAInput.GetInputName(selectFromInputId);
                 triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
                 //                hideProgressAlternative();
-            } catch (err) {}
+            } catch (err) {
+            }
         }
     });
 }
@@ -2200,7 +2301,8 @@ function ifBacklogInputs4LoaderExistById(bid) {
             md = localStorage.getItem('idb_' + bid);
             mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
 
-        } catch (err) {}
+        } catch (err) {
+        }
 
 
 
@@ -2224,25 +2326,19 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
 
     var f = false;
 
-    if (localStorage.getItem(bid)) {
-        var res = localStorage.getItem(bid);
-        var resObj = JSON.parse(res);
+    if (localStorage.getItem('idb_' + bid)) {
+
         var md = '';
         var mdUS = '-1';
-        try {
-            md = resObj.kv.lastModification;
-            mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : msUS;
 
-        } catch (err) {}
-
-
-
+        md = (localStorage.getItem('idb_' + bid)) ? localStorage.getItem('idb_' + bid) : md;
+        mdUS = (backlog_last_modification[bid]) ? backlog_last_modification[bid] : mdUS;
         if (md === mdUS) {
             f = true;
-            loadBacklogProductionDetailsById_resparams(resObj);
         } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
             f = true;
         }
+
     } else if (SAInput.LoadedBacklogs4Input.includes(bid)) {
         f = true;
     }
@@ -2252,8 +2348,75 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
 
 function _LoadBacklogInputsByIdIfNotExist(carrier) {
     var bid = (carrier.getBacklogId()) ?
-        carrier.getBacklogId() :
-        global_var.current_backlog_id;
+            carrier.getBacklogId() :
+            global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+
+    showProgress5();
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                    carrier.I_am_Execwarder();
+                    SourcedDispatcher.Exec(carrier);
+                } else {
+                    _LoadBacklogInputsByIdIfNotExistPost(carrier);
+                }
+
+                hideProgress5();
+
+            } catch (err) {
+                hideProgress5();
+                _LoadBacklogInputsByIdIfNotExistPost(carrier);
+            }
+        },
+        error: function () {
+            hideProgress5();
+        }
+    });
+}
+
+
+function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
+    var bid = (carrier.getBacklogId()) ?
+            carrier.getBacklogId() :
+            global_var.current_backlog_id;
 
     if (!bid)
         return;
@@ -2286,6 +2449,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
                     console.log(err);
                 }
                 localStorage.setItem("idb_" + bid, res.kv.modificationTime);
+
                 SAInput.LoadedBacklogs4Input.push(bid);
 
                 loadBacklogProductionDetailsById_resparams(res);
@@ -2325,7 +2489,8 @@ function loadJSByIdIfNotExist(bid) {
             md = resObj.kv.lastModification;
             mdDes = SACore.GetBacklogDetails(bid, "lastModification");
 
-        } catch (err) {}
+        } catch (err) {
+        }
 
         if (md.trim() !== mdUS.trim()) {
             localStorage.setItem(bid, '');
@@ -2361,19 +2526,23 @@ function getRelatedStoryCardByApiId() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            var obj = res.tbl[0].r;
-            var div = $('<div>');
-            for (var i = 0; i < obj.length; i++) {
-                var o = obj[i];
+            try {
+                var obj = res.tbl[0].r;
+                var div = $('<div>');
+                $('#storycard_dependentapi_span').html('');
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
 
-                div.append($('<a>')
-                        .text((i + 1) + ') ' + o.backlogName)
-                        .attr('is_api', '1')
-                        .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
-                    .append("<br>")
+                    div.append($('<a>')
+                            .text((i + 1) + ') ' + o.backlogName)
+                            .attr('is_api', '1')
+                            .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
+                            .append("<br>")
 
+                }
+                $('#storycard_dependentapi_span').append(div);
+            } catch (err) {
             }
-            $('#storycard_dependentapi_span').append(div);
         }
     });
 }
@@ -2516,15 +2685,15 @@ function setBacklogHistory4View() {
         }
 
         var d = $('<div>')
-            .addClass("col-lg-12")
+                .addClass("col-lg-12")
 
-            .append($('<a>')
-                .attr("href", "#")
-                .attr("pid", o.fkProjectId)
-                .attr('bid', o.fkBacklogId)
-                .attr('is_api', o.isApi)
-                .attr("onclick", "showBacklogHistoryClick(this)")
-                .text(o.backlogName))
+                .append($('<a>')
+                        .attr("href", "#")
+                        .attr("pid", o.fkProjectId)
+                        .attr('bid', o.fkBacklogId)
+                        .attr('is_api', o.isApi)
+                        .attr("onclick", "showBacklogHistoryClick(this)")
+                        .text(o.backlogName))
 
         temp.push(o.fkBacklogId);
 
@@ -2573,12 +2742,12 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) 
 
                 var t = o.inputType;
                 table.append($('<tr>')
-                    .attr('input-type', t)
-                    .append($('<td>')
-                        .addClass('apiListTd')
-                        .attr('pid', o.id)
-                        .attr('draggable', 'true')
-                        .text(o.inputName + ' (' + t + ')')))
+                        .attr('input-type', t)
+                        .append($('<td>')
+                                .addClass('apiListTd')
+                                .attr('pid', o.id)
+                                .attr('draggable', 'true')
+                                .text(o.inputName + ' (' + t + ')')))
 
             }
         }
@@ -2619,16 +2788,17 @@ function getParentTask() {
                     var nameFull = add3Dots2String(parentTaskName, 30) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") "
                     $('.task-mgmt-modal-parent-task').each(function () {
                         $(this).text(nameFull)
-                            .append(" ")
-                            .append($('<span>')
-                                .addClass('us-item-status-' + res.kv.taskStatus)
-                                .text(res.kv.taskStatus))
-                            .attr('pid', fkParentTaskId);
+                                .append(" ")
+                                .append($('<span>')
+                                        .addClass('us-item-status-' + res.kv.taskStatus)
+                                        .text(res.kv.taskStatus))
+                                .attr('pid', fkParentTaskId);
                     })
 
                 }
 
-            } catch (err) {}
+            } catch (err) {
+            }
         }
     });
 }
@@ -2665,16 +2835,17 @@ function getChildTasks() {
                                 .attr('pid', o.id)
                                 .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
                                 .text(nameFull))
-                            .append(" ")
-                            .append($('<span>')
-                                .addClass('us-item-status-' + o.taskStatus)
-                                .text(o.taskStatus))
-                            .append("<br>")
+                                .append(" ")
+                                .append($('<span>')
+                                        .addClass('us-item-status-' + o.taskStatus)
+                                        .text(o.taskStatus))
+                                .append("<br>")
                     })
 
                 }
 
-            } catch (err) {}
+            } catch (err) {
+            }
         }
     });
 }
@@ -2711,7 +2882,8 @@ function changeParentTaskModal() {
                     select.append($('<option>').val(o.id).text(nameFull))
                 }
                 sortSelectBoxByElement(select);
-            } catch (err) {}
+            } catch (err) {
+            }
         }
     });
 }
@@ -2769,52 +2941,53 @@ function generateFileLine(name, cell) {
         var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
         if (global_var.image_formats.includes(fileFormat)) {
             div12lik.append($('<img></img>')
-                .attr('src', fileUrl(name))
-                .addClass('comment_img')
-                .attr('data-toggle', "modal")
-                .attr('data-target', "#commentFileImageViewer")
-                .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
-                .attr('alt', name));
+                    .attr('src', fileUrl(name))
+                    .addClass('comment_img')
+                    .attr('data-toggle', "modal")
+                    .attr('data-target', "#commentFileImageViewer")
+                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                    .attr('alt', name));
             //                    
         } else if (global_var.video_formats.includes(fileFormat)) {
             fileUrlVar = videoFileURL(name);
 
             div12lik.append($('<a target="_blank"></a>')
-                .attr("href", videoFileURL(name))
-                .append($('<img></img>')
-                    .attr('src', fileUrlPrivate('video_player_logo.jpg'))
-                    .addClass('comment_img')
-                    .attr('alt', name)));
+                    .attr("href", videoFileURL(name))
+                    .append($('<img></img>')
+                            .attr('src', fileUrlPrivate('video_player_logo.jpg'))
+                            .addClass('comment_img')
+                            .attr('alt', name)));
             //                    
         } else if (fileFormat === 'pdf') {
             fileUrlVar = pdfFileURL(name);
 
             div12lik.append(
-                $('<a target="_blank"></a>')
-                .attr("href", pdfFileURL(name))
-                .append($('<img></img>')
-                    .attr('src', fileUrlPrivate('pdf-logo.png'))
-                    .addClass('comment_img')
-                    .attr('alt', name)));
+                    $('<a target="_blank"></a>')
+                    .attr("href", pdfFileURL(name))
+                    .append($('<img></img>')
+                            .attr('src', fileUrlPrivate('pdf-logo.png'))
+                            .addClass('comment_img')
+                            .attr('alt', name)));
         }
         div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
 
 
 
         div12lik.append($('<a target="_blank"></a>')
-            .attr("href", fileUrlVar)
-            .append($('<i class="fa fa-download"></i>'))
-            .append('  '))
+                .attr("href", fileUrlVar)
+                .append($('<i class="fa fa-download"></i>'))
+                .append('  '))
 
 
-        ;
+                ;
         div2.append(div12lik);
         div.append(div2);
 
         var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
         div_col.append(div);
         return div.html();
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -2976,7 +3149,8 @@ $(document).on('click', '.manualProject', function (evt) {
         //        var bid = $(this).attr('tid');
         //        var fkManualProjectId = $(this).attr("pid");
         //        loadManualProjectZad(fkManualProjectId, bid);
-    } catch (ee) {}
+    } catch (ee) {
+    }
 
     //    hideProgressAlternative();
 });
@@ -3010,75 +3184,126 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
+    
     global_var.current_project_id = global_var.fkManualProjectId;
 
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
 
-    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
-    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
-    getJsGlobalCodeByProject();
+//    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+//    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+//    getJsGlobalCodeByProject();
+//
+//    getBacklogLastModificationDateAndTime(fkManualProjectId);
+//
+//    loadFromIndexedDBtoRAM();
+//    
 
-    getBacklogLastModificationDateAndTime(fkManualProjectId);
+    loadMainProjectList4ManualZad();
+//  i
 
-    loadFromIndexedDBtoRAM();
-    //loadMainProjectList4ManualZad();
 }
 
 
-function loadFromIndexedDBtoRAM4LivePrototype() {
-    request = window.indexedDB.open("sa-db", 1);
-    request.onupgradeneeded = function (event) {
-        db = event.target.result;
-        objectStore = db.createObjectStore("subdb", {
-            keyPath: "bid",
-        });
-    }
-    request.onsuccess = function (event) {
-        db = request.result;
 
-        var transaction = db.transaction(["subdb"], "readwrite");
-        var objectStore = transaction.objectStore("subdb");
+function consoleDebugTime(title) {
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
 
+    console.log('---------------------------------------------------');
+    console.log(title, ': ', datetime);
+    console.log("---------------------------------------------");
+}
 
+function getDebugTime() {
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
 
-        var ln = localStorage.length;
-        for (var i = 0, len = ln; i < len; i++) {
-            var key = localStorage.key(i);
-            //            var value = localStorage[key];
-            try {
-                if (key.startsWith('idb_')) {
-                    localStorage.removeItem(key);
-                }
-            } catch (err) {}
-        }
-
-
-        objectStore.openCursor().onsuccess = function (event) {
-            var cursor = event.target.result;
-            if (cursor) {
-
-                var res = cursor.value.json;
-                localStorage.setItem(cursor.key, res.kv.modificationTime);
-                loadBacklogProductionDetailsById_resparams(res);
-                cursor.continue();
-            } else {
-                //                loadMissedBacklogsListFromStorage();
-                //                getUnloadedBacklogListOnInit();
-                //                loadMainProjectList4ManualZad();
-
-            }
-        }
-    };
-
-
-
-
-
+    return datetime;
 }
 
 
 function loadFromIndexedDBtoRAM() {
+    var idssheyList = Object.keys(backlog_last_modification);
+
+    request = window.indexedDB.open("sa-db", 1);
+    request.onupgradeneeded = function (event) {
+        db = event.target.result;
+        objectStore = db.createObjectStore("subdb", {
+            keyPath: "bid",
+        });
+    }
+    request.onsuccess = function (event) {
+        db = request.result;
+
+        var transaction = db.transaction(["subdb"], "readwrite");
+        var objectStore = transaction.objectStore("subdb");
+
+
+//        consoleDebugTime('umumi start');
+
+//        var ln = localStorage.length;
+//        for (var i = 0, len = ln; i < len; i++) {
+//            var key = localStorage.key(i);
+//            //            var value = localStorage[key];
+//            try {
+//                if (key.startsWith('idb_')) {
+//                    localStorage.removeItem(key);
+//                }
+//            } catch (err) {
+//            }
+//        }
+//        consoleDebugTime(' local storage temizlendi');
+
+        objectStore.openCursor().onsuccess = function (event) {
+//            consoleDebugTime('curcur started ')
+            var cursor = event.target.result;
+            if (cursor) {
+                var key = cursor.key.replace('idb_', '');
+                if ((key) && idssheyList.includes(key)) {
+                    localStorage.removeItem(cursor.key);
+                    var res = cursor.value.json;
+                    localStorage.setItem(cursor.key, res.kv.modificationTime);
+                    loadBacklogProductionDetailsById_resparams(res);
+
+                    //set GUI Design
+//                    try{
+//                        var resTmp = SAInput.toJSONByBacklog(key);
+//                        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+//                        guiZadList4Ever[key]=html;
+//                    }catch(err){}
+
+                    var ids = cursor.key.replace('idb_', '');
+//                console.log('backlog id = '+cursor.key+'; backlogname = '+SACore.GetBacklogname(ids))
+                }
+
+                cursor.continue();
+            } else {
+                //                loadMissedBacklogsListFromStorage();
+//                getUnloadedBacklogListOnInit();
+                loadMainProjectList4ManualZad();
+
+            }
+//            consoleDebugTime('cursor ended');
+        }
+    };
+
+
+
+}
+
+function loadFromIndexedDBtoRAM4LivePrototype() {
+
     request = window.indexedDB.open("sa-db", 1);
     request.onupgradeneeded = function (event) {
         db = event.target.result;
@@ -3102,28 +3327,25 @@ function loadFromIndexedDBtoRAM() {
                 if (key.startsWith('idb_')) {
                     localStorage.removeItem(key);
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
         }
 
 
         objectStore.openCursor().onsuccess = function (event) {
             var cursor = event.target.result;
             if (cursor) {
-
                 var res = cursor.value.json;
                 localStorage.setItem(cursor.key, res.kv.modificationTime);
                 loadBacklogProductionDetailsById_resparams(res);
                 cursor.continue();
             } else {
-                //                loadMissedBacklogsListFromStorage();
-                getUnloadedBacklogListOnInit();
-                loadMainProjectList4ManualZad();
-
+                if (global_var.current_modal === 'loadStoryCard') {
+                    new Project().loadMainProjectList();
+                }
             }
         }
     };
-
-
 
 
 
@@ -3136,7 +3358,8 @@ function loadMainProjectList4ManualZad() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.asc = "projectName";
     var that = this;
     var data = JSON.stringify(json);
@@ -3349,7 +3572,8 @@ function _LoadSectionGui(carrier) {
 }
 
 function genGUIDesignHtmlById(backlogId, hide) {
-    if (backlogId) {} else {
+    if (backlogId) {
+    } else {
         return "";
     }
 
@@ -3400,7 +3624,8 @@ function loadSelectBoxesAfterGUIDesign(element) {
                     $(this).attr("sa-isrunning", "1");
                     var selectedField = SAInput.GetInputName(selectFromInputId)
                     triggerAPI2Fill(this, selectFromBacmkogId, selectedField);
-                } catch (err) {}
+                } catch (err) {
+                }
 
             }
         }
@@ -3447,7 +3672,8 @@ function p() {
         var body = (dgui[bid]) ? dgui[bid] : new UserStory().genGUIDesignHtmlById(bid);
         $('#mainBodyDivForAll').html(body);
         initOnloadActionOnGUIDesign();
-    } catch (ee) {}
+    } catch (ee) {
+    }
 
     hideProgressAlternative();
 }
@@ -3516,6 +3742,7 @@ function uploadFile4Ipo(id) {
         }
     }
 }
+
 function uploadFile4IpoImport(id) {
     var r = "";
     var that = this;
@@ -3548,7 +3775,7 @@ function uploadFile4IpoImport(id) {
                 //                    console.log('trc no=' + trc);
                 var binaryString = readerEvt.target.result;
                 uploadFile4IpoCoreImport(fileext1, btoa(binaryString), fname1, id);
-               
+
             };
             reader.readAsBinaryString(file, fname);
         }
@@ -3578,12 +3805,12 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
         async: true,
         beforeSend: function () {
             pbDiv.append('<br>').append($('<span>')
-                .attr('id', 'pro_zad_span' + idx)
-                .text(file_name)
-                .append($('<img>')
-                    .attr('id', 'pro_zad_' + idx)
-                    .attr('src', 'resource/img/loader.gif'))
-            )
+                    .attr('id', 'pro_zad_span' + idx)
+                    .text(file_name)
+                    .append($('<img>')
+                            .attr('id', 'pro_zad_' + idx)
+                            .attr('src', 'resource/img/loader.gif'))
+                    )
         },
         uploadProgress: function (event, position, total, percentComplete) {
             //            console.log('test')
@@ -3595,20 +3822,20 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
-                .after($('<i class="fa fa-times">')
-                    .attr('pid', idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                    .after($('<i class="fa fa-times">')
+                            .attr('pid', idx)
+                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
 
 
             var st = $('#' + id).attr('fname');
             st = (st && st !== 'undefined') ? st : '';
             st += (st) ? global_var.vertical_seperator + finalname :
-                finalname;
+                    finalname;
 
             $('#' + id).attr('fname', st);
-             console.log(finalname);
-             importSendNameApi(finalname) 
+            console.log(finalname);
+            importSendNameApi(finalname)
         },
         error: function () {}
     });
@@ -3617,15 +3844,15 @@ function uploadFile4IpoCoreImport(fileext, file_base_64, file_name, id) {
 
 
 function importSendNameApi(filNm) {
-    var prId = global_var.current_project_id
     var json = {
         kv: {}
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
-    json.kv.fkProjectId = prId;
-    json.kv.projectName = filNm;
+    } catch (err) {
+    }
+
+    json.kv.fileName = filNm;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -3644,6 +3871,7 @@ function importSendNameApi(filNm) {
         }
     });
 }
+
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
 
@@ -3667,12 +3895,12 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         async: true,
         beforeSend: function () {
             pbDiv.append('<br>').append($('<span>')
-                .attr('id', 'pro_zad_span' + idx)
-                .text(file_name)
-                .append($('<img>')
-                    .attr('id', 'pro_zad_' + idx)
-                    .attr('src', 'resource/img/loader.gif'))
-            )
+                    .attr('id', 'pro_zad_span' + idx)
+                    .text(file_name)
+                    .append($('<img>')
+                            .attr('id', 'pro_zad_' + idx)
+                            .attr('src', 'resource/img/loader.gif'))
+                    )
         },
         uploadProgress: function (event, position, total, percentComplete) {
             //            console.log('test')
@@ -3684,16 +3912,16 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
-                .after($('<i class="fa fa-times">')
-                    .attr('pid', idx)
-                    .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
+                    .after($('<i class="fa fa-times">')
+                            .attr('pid', idx)
+                            .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
 
 
             var st = $('#' + id).attr('fname');
             st = (st && st !== 'undefined') ? st : '';
             st += (st) ? global_var.vertical_seperator + finalname :
-                finalname;
+                    finalname;
 
             $('#' + id).attr('fname', st);
 
@@ -3705,13 +3933,13 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
 function removeFilenameFromZad(el, filename) {
     var st = $(el).closest('div.component-class')
-        .find('.saTypeFilePicherUploadFile')
-        .attr('fname');
+            .find('.saTypeFilePicherUploadFile')
+            .attr('fname');
     st = st.replace(filename, '');
 
     $(el).closest('div.component-class')
-        .find('.saTypeFilePicherUploadFile')
-        .attr('fname', st);
+            .find('.saTypeFilePicherUploadFile')
+            .attr('fname', st);
 
     var id = $(el).attr("pid");
     $('#pro_zad_span' + id).remove();
@@ -3722,41 +3950,41 @@ function removeFilenameFromZad(el, filename) {
 function answerSect() {
 
     let arr = $('<div>')
-        .addClass('col-12 answerSection')
-        .append($('<div>')
-            .addClass('row component-section-row filedset-style-section')
+            .addClass('col-12 answerSection')
             .append($('<div>')
-                .attr('style', 'text-align:center;padding-top:20px;')
-                .addClass('col-1')
-                .append($('<div>')
-                    .addClass('form-check component-input-class')
-                    .attr('style', 'text-align:center;')
-                    .append('<input class="form-check-input" type="radio" value="" id="flexCheckDefault">')
-                    .append('<label class="form-check-label" for="flexCheckDefault"></label>')))
-            .append($('<div>')
-                .addClass('col-8')
-                .append('<span>cavab</span><br>')
-                .append('<input class="form-control answerInput inputStyleg " type="text" value="">'))
-            .append($('<div>')
-                .addClass('col-1')
-                .attr('style', 'padding-top:10px;')
-                .append('<div class="customIconBox"><i class="far fa-image" aria-hidden="true"></i></div>'))
-            .append($('<div>')
-                .addClass('col-1')
-                .attr('style', 'padding-top:10px;')
-                .append('<div class="customIconBox"><i class="far fa-edit" aria-hidden="true"></i></div>'))
-            .append($('<div>')
-                .addClass('col-1')
-                .attr('style', 'padding-top:10px;')
-                .append('<div class="deleteAnswer customIconBox"><i class="fas fa-times"></i></div>'))
-            .append($('<div>')
-                .addClass('col-1'))
-            .append($('<div>')
-                .addClass('col-6')
-                .attr('style', 'padding-top:10px;')
-                .append('<img style="width:100%;" src="api/get/files/entitym2_776E08098F694.png" class="answerImage">'))
+                    .addClass('row component-section-row filedset-style-section')
+                    .append($('<div>')
+                            .attr('style', 'text-align:center;padding-top:20px;')
+                            .addClass('col-1')
+                            .append($('<div>')
+                                    .addClass('form-check component-input-class')
+                                    .attr('style', 'text-align:center;')
+                                    .append('<input class="form-check-input" type="radio" value="" id="flexCheckDefault">')
+                                    .append('<label class="form-check-label" for="flexCheckDefault"></label>')))
+                    .append($('<div>')
+                            .addClass('col-8')
+                            .append('<span>cavab</span><br>')
+                            .append('<input class="form-control answerInput inputStyleg " type="text" value="">'))
+                    .append($('<div>')
+                            .addClass('col-1')
+                            .attr('style', 'padding-top:10px;')
+                            .append('<div class="customIconBox"><i class="far fa-image" aria-hidden="true"></i></div>'))
+                    .append($('<div>')
+                            .addClass('col-1')
+                            .attr('style', 'padding-top:10px;')
+                            .append('<div class="customIconBox"><i class="far fa-edit" aria-hidden="true"></i></div>'))
+                    .append($('<div>')
+                            .addClass('col-1')
+                            .attr('style', 'padding-top:10px;')
+                            .append('<div class="deleteAnswer customIconBox"><i class="fas fa-times"></i></div>'))
+                    .append($('<div>')
+                            .addClass('col-1'))
+                    .append($('<div>')
+                            .addClass('col-6')
+                            .attr('style', 'padding-top:10px;')
+                            .append('<img style="width:100%;" src="api/get/files/entitym2_776E08098F694.png" class="answerImage">'))
 
-        )
+                    )
 
 
     return arr;
@@ -3904,9 +4132,6 @@ function loadTableFIlterInside() {
     try {
 
         for (const [key, value] of Object.entries(se)) {
-
-
-
             var dependentInputId = SAInput.getInputDetails(value, "fkDependentOutputId");
             var ilk = SAInput.getInputDetails(dependentInputId, 'inputName');
             if (key) {
@@ -3918,54 +4143,35 @@ function loadTableFIlterInside() {
 
                         $("#filter-table-row-" + value).append("<option value=" + dt[l].id + ">" + dt[l][ilk] + "</option>");
                     }
-
                 }
-
             }
-
-
-
-
-
-
         }
     } catch (error) {
 
     }
 
+    $(".filter-table-row-select").selectpicker("refresh");
+    if (global_var.current_modal !== 'loadLivePrototype') {
+        $('.table').dragtable({
+            persistState: function (table) {
 
+                if (!window.sessionStorage)
+                    return;
+                var ss = window.sessionStorage;
+                table.el.find('th').each(function (i) {
+                    if (this.id != '') {
+                        table.sortOrder[this.id] = i;
+                    }
+                });
+                ss.setItem('tableorder', JSON.stringify(table.sortOrder));
+            },
+            maxMovingRows: 1,
+            dragHandle: '.handle-drag',
+            restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
+        });
+    }
 
-    $(".filter-table-row-select").selectpicker("refresh")
-    $('.table').dragtable({
-        persistState: function (table) {
-
-            if (!window.sessionStorage)
-                return;
-            var ss = window.sessionStorage;
-            table.el.find('th').each(function (i) {
-                if (this.id != '') {
-                    table.sortOrder[this.id] = i;
-                }
-            });
-            ss.setItem('tableorder', JSON.stringify(table.sortOrder));
-        },
-        maxMovingRows: 1,
-        dragHandle: '.handle-drag',
-        restoreState: eval('(' + window.sessionStorage.getItem('tableorder') + ')')
-    });
-
-    $('#date_timepicker_start_end').daterangepicker({
-        /* ranges: {
-         'Bu Gün': [moment(), moment()],
-         'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-         'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-         'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-         'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-         'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-         } */
-    });
-
-
+  
 }
 
 function copyJSCodeClassTo_loadProjectList() {
@@ -3981,13 +4187,13 @@ function copyJSCodeClassTo_loadProjectList() {
             continue;
 
         div.append($('<div>')
-            .addClass('col-12')
-            .append($("<input>")
-                .attr('type', 'checkbox')
-                .addClass('js4copy4Project')
-                .attr("pid", pid))
-            .append($('<span>')
-                .text(SACore.Project[pid])));
+                .addClass('col-12')
+                .append($("<input>")
+                        .attr('type', 'checkbox')
+                        .addClass('js4copy4Project')
+                        .attr("pid", pid))
+                .append($('<span>')
+                        .text(SACore.Project[pid])));
     }
 
 
@@ -4015,13 +4221,13 @@ function copyJSCodeClassTo_loadJSList() {
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 div.append($('<div>')
-                    .addClass('col-4')
-                    .append($("<input>")
-                        .attr('type', 'checkbox')
-                        .addClass('js4copy')
-                        .attr("pid", o.id))
-                    .append($('<span>')
-                        .text(o.fnDescription)));
+                        .addClass('col-4')
+                        .append($("<input>")
+                                .attr('type', 'checkbox')
+                                .addClass('js4copy')
+                                .attr("pid", o.id))
+                        .append($('<span>')
+                                .text(o.fnDescription)));
             }
 
         }
@@ -4051,13 +4257,13 @@ function copyClassCodeClassTo_loadProjectList() {
             continue;
 
         div.append($('<div>')
-            .addClass('col-12')
-            .append($("<input>")
-                .attr('type', 'checkbox')
-                .addClass('class4copy4Project')
-                .attr("pid", pid))
-            .append($('<span>')
-                .text(SACore.Project[pid])));
+                .addClass('col-12')
+                .append($("<input>")
+                        .attr('type', 'checkbox')
+                        .addClass('class4copy4Project')
+                        .attr("pid", pid))
+                .append($('<span>')
+                        .text(SACore.Project[pid])));
     }
 
 
@@ -4085,13 +4291,13 @@ function copyClassCodeClassTo_loadClassList() {
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 div.append($('<div>')
-                    .addClass('col-4')
-                    .append($("<input>")
-                        .attr('type', 'checkbox')
-                        .addClass('class4copy')
-                        .attr("pid", o.id))
-                    .append($('<span>')
-                        .text(o.className)));
+                        .addClass('col-4')
+                        .append($("<input>")
+                                .attr('type', 'checkbox')
+                                .addClass('class4copy')
+                                .attr("pid", o.id))
+                        .append($('<span>')
+                                .text(o.className)));
             }
 
         }
@@ -4307,15 +4513,15 @@ function getPermissionRoleByProject4List() {
             for (var i in obj) {
                 var o = obj[i];
                 el.append($('<div class="col-6">')
-                    .append($('<input>')
-                        .addClass("permission-role-list-item")
-                        .css("border", "0px")
-                        .attr('data-id', o.id)
-                        .val(o.roleName))
-                    .append($('<a>')
-                        .attr('href', "#")
-                        .attr('onclick', 'deletePermissionList("' + o.id + '")')
-                        .text('Delete')))
+                        .append($('<input>')
+                                .addClass("permission-role-list-item")
+                                .css("border", "0px")
+                                .attr('data-id', o.id)
+                                .val(o.roleName))
+                        .append($('<a>')
+                                .attr('href', "#")
+                                .attr('onclick', 'deletePermissionList("' + o.id + '")')
+                                .text('Delete')))
             }
         }
 
@@ -4561,8 +4767,8 @@ function getBodyOfBacklogPermissionByUser() {
                 var o = obj[n];
                 if (o.accessType === 'n') {
                     $('.permision_bystorycard_list_user[id="' + o.relationId + '"]')
-                        .attr("einputs", o.exceptInputs)
-                        .prop("checked", false);
+                            .attr("einputs", o.exceptInputs)
+                            .prop("checked", false);
                 }
             }
         }
@@ -4599,17 +4805,17 @@ function addStoryCardInputPermission(el) {
                 var o = obj[i];
 
                 el.append($('<div>')
-                    .addClass("col-4")
-                    .append($('<input>')
-                        .attr("type", "checkbox")
-                        .attr('id', o.id)
-                        .attr("pid", o.fkBacklogId)
-                        .attr("checked", true)
-                        .val(o.id)
-                        .addClass("permision_inputlistbystorycard"))
-                    .append(" ")
-                    .append($('<span>').text(o.inputName))
-                )
+                        .addClass("col-4")
+                        .append($('<input>')
+                                .attr("type", "checkbox")
+                                .attr('id', o.id)
+                                .attr("pid", o.fkBacklogId)
+                                .attr("checked", true)
+                                .val(o.id)
+                                .addClass("permision_inputlistbystorycard"))
+                        .append(" ")
+                        .append($('<span>').text(o.inputName))
+                        )
             }
 
             getInputPermissionInfoByStoryCard(backlogId);
@@ -4678,16 +4884,16 @@ $(document).on("change", "#permission_projectlist4api", function (e) {
 
 
                 el.append($('<div>')
-                    .addClass("col-4")
-                    .append($('<input>')
-                        .attr("type", "checkbox")
-                        .attr('id', o.id)
-                        .val(o.id)
-                        .addClass("permision_byapi_list_user"))
-                    .append(" ")
-                    .append($('<span>').text(o.backlogName))
+                        .addClass("col-4")
+                        .append($('<input>')
+                                .attr("type", "checkbox")
+                                .attr('id', o.id)
+                                .val(o.id)
+                                .addClass("permision_byapi_list_user"))
+                        .append(" ")
+                        .append($('<span>').text(o.backlogName))
 
-                )
+                        )
             }
             getBodyOfApiPermissionByUser();
         }
@@ -4724,26 +4930,26 @@ $(document).on("change", "#permission_projectlist4backlog", function (e) {
                 var o = obj[i];
 
                 var inputPermission = $('<i>')
-                    .addClass('fa fa-adjust')
-                    .css('font-size', '10px')
-                    .css('color', 'blue')
-                    .attr('pid', o.id)
-                    .css('cursor', 'pointer')
-                    .attr('onclick', 'addStoryCardInputPermission(this)')
-                    .attr('title', 'Input Permission')
+                        .addClass('fa fa-adjust')
+                        .css('font-size', '10px')
+                        .css('color', 'blue')
+                        .attr('pid', o.id)
+                        .css('cursor', 'pointer')
+                        .attr('onclick', 'addStoryCardInputPermission(this)')
+                        .attr('title', 'Input Permission')
 
                 el.append($('<div>')
-                    .addClass("col-4")
-                    .append($('<input>')
-                        .attr("type", "checkbox")
-                        .attr('id', o.id)
-                        .val(o.id)
-                        .addClass("permision_bystorycard_list_user"))
-                    .append(" ")
-                    .append($('<span>').text(o.backlogName))
-                    .append(" ")
-                    .append(inputPermission)
-                )
+                        .addClass("col-4")
+                        .append($('<input>')
+                                .attr("type", "checkbox")
+                                .attr('id', o.id)
+                                .val(o.id)
+                                .addClass("permision_bystorycard_list_user"))
+                        .append(" ")
+                        .append($('<span>').text(o.backlogName))
+                        .append(" ")
+                        .append(inputPermission)
+                        )
             }
             getBodyOfBacklogPermissionByUser();
         }
@@ -4800,14 +5006,14 @@ function getModuleList4Permission() {
         var key = keys[k];
         var module = moduleList[key];
         select.append($('<div>')
-            .addClass('col-4')
-            .append($('<input>')
-                .attr('type', 'checkbox')
-                .addClass("module-list-4-permission")
-                .attr('data-type', key))
-            .append(" ")
-            .append($('<span>').text(module))
-        )
+                .addClass('col-4')
+                .append($('<input>')
+                        .attr('type', 'checkbox')
+                        .addClass("module-list-4-permission")
+                        .attr('data-type', key))
+                .append(" ")
+                .append($('<span>').text(module))
+                )
 
     }
 }
@@ -5049,54 +5255,54 @@ function getProjectList4Permission() {
             var div = $('#permision_pinproject_body');
 
             div.html('')
-                .append($('<div class="col-5">'))
-                .append($('<div class="col-4">').append('<b>Trigger Story Card</b><br><br><br>'))
-                .append($('<div class="col-3">').append("<b>Logo</b>"));
+                    .append($('<div class="col-5">'))
+                    .append($('<div class="col-4">').append('<b>Trigger Story Card</b><br><br><br>'))
+                    .append($('<div class="col-3">').append("<b>Logo</b>"));
             select.html('');
 
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 select.append($('<div class="col-4">')
-                    .append($('<input>')
-                        .attr('type', 'checkbox')
-                        .addClass("project-permission-item-by-user")
-                        .attr("id", o.id)
-                    )
-                    .append(' ')
-                    .append($('<span>').text(o.projectName))
-                );
+                        .append($('<input>')
+                                .attr('type', 'checkbox')
+                                .addClass("project-permission-item-by-user")
+                                .attr("id", o.id)
+                                )
+                        .append(' ')
+                        .append($('<span>').text(o.projectName))
+                        );
 
                 //load project pin list for tab section
                 var checked = (o.showInMenu === '1') ? "checked" : "nome";
                 div.append($('<div class="col-5">')
                         .append($('<input>')
-                            .attr("onchange", "changeProjectShowInMenu(this)")
-                            .attr('type', 'checkbox')
-                            .attr(checked, checked)
-                            .addClass("project-pin-item")
-                            .attr("pid", o.id)
-                        )
+                                .attr("onchange", "changeProjectShowInMenu(this)")
+                                .attr('type', 'checkbox')
+                                .attr(checked, checked)
+                                .addClass("project-pin-item")
+                                .attr("pid", o.id)
+                                )
                         .append(' ')
                         .append($('<span>').text(o.projectName))
-                    )
-                    .append($('<div class="col-4">')
-                        .append($('<span>').text(o.backlogName).append(" "))
-                        .append($('<a href="#">')
-                            .attr('onclick', 'showPermissionProjectPinModal(this)')
-                            .attr('pid', o.id)
-                            .text("change"))
-                    )
-                    .append($('<div class="col-3">')
-                        .append($('<input>')
-                            .attr("onchange", "changeProjectIconInMenu(this)")
-                            .attr('type', 'text')
-                            .val(o.menuIcon)
-                            .addClass('form-control')
-                            .addClass("project-pin-logo")
-                            .attr("pid", o.id)
-                            .attr("id", o.id)
                         )
-                    );
+                        .append($('<div class="col-4">')
+                                .append($('<span>').text(o.backlogName).append(" "))
+                                .append($('<a href="#">')
+                                        .attr('onclick', 'showPermissionProjectPinModal(this)')
+                                        .attr('pid', o.id)
+                                        .text("change"))
+                                )
+                        .append($('<div class="col-3">')
+                                .append($('<input>')
+                                        .attr("onchange", "changeProjectIconInMenu(this)")
+                                        .attr('type', 'text')
+                                        .val(o.menuIcon)
+                                        .addClass('form-control')
+                                        .addClass("project-pin-logo")
+                                        .attr("pid", o.id)
+                                        .attr("id", o.id)
+                                        )
+                                );
             }
 
         }
@@ -5170,8 +5376,8 @@ function loadApisToComboOnJSCode() {
 
 
             var op = $("<option>")
-                .val(backlogId)
-                .append(replaceTags(backlogName));
+                    .val(backlogId)
+                    .append(replaceTags(backlogName));
 
             $('#jsCodeModal_apilist').append(op);
         }
@@ -5284,7 +5490,7 @@ function addBaklogListToInputAs() {
     var tr;
     for (var i = 0; i < obj.length; i++) {
         elm.append($('<option>').val(obj[i])
-            .append(SACore.GetBacklogname(obj[i])));
+                .append(SACore.GetBacklogname(obj[i])));
     }
     sortCombo('addStoryCardInputsAsModal-backlogid');
 
@@ -5321,16 +5527,16 @@ function getInputList4Code(el) {
                         .attr("checked", "true")
                         .attr('pid', obj[i].id))
 
-                    .append(' ')
-                    .append($('<input>')
-                        .css("border-color", "transparent")
-                        .attr('type', 'text')
-                        .val(addSpaceToCamelView(obj[i].inputName))
-                        .attr("checked", "true")
-                        .attr('pid', obj[i].id))
-                    .append(' < ')
-                    .append(obj[i].inputName)
-                    .append((obj[i].inputType === 'OUT') ? " (OUT)" : "")
+                        .append(' ')
+                        .append($('<input>')
+                                .css("border-color", "transparent")
+                                .attr('type', 'text')
+                                .val(addSpaceToCamelView(obj[i].inputName))
+                                .attr("checked", "true")
+                                .attr('pid', obj[i].id))
+                        .append(' < ')
+                        .append(obj[i].inputName)
+                        .append((obj[i].inputType === 'OUT') ? " (OUT)" : "")
 
                 elm.append(div);
 
@@ -5371,12 +5577,12 @@ function addStoryCardInputsAsAction() {
 
                     if ($('#addStoryCardInputsAsModal-actiontype').val() === 'send') {
                         addSourceOfRelationAsAPIDetails(res.kv.id, 'send',
-                            $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
+                                $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
                         //                        addSourceOfRelationAsAPI4SendDetails(res.kv.id,
                         //                                $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
                     } else if ($('#addStoryCardInputsAsModal-actiontype').val() === 'select') {
                         addSourceOfRelationAsAPIDetails(res.kv.id, 'select',
-                            $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
+                                $('#addStoryCardInputsAsModal-backlogid').val(), inputId);
                     }
 
                     //                    new UserStory().refreshCurrentBacklog();
@@ -5429,7 +5635,8 @@ function loadDatabaseList2FieldAsInput() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var that = this;
     var data = JSON.stringify(json);
@@ -5446,8 +5653,8 @@ function loadDatabaseList2FieldAsInput() {
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#addFieldsOfTableAsInputModal-dbid')
-                    .append($('<option>').val(obj[i].id)
-                        .append(obj[i].dbName))
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].dbName))
             }
 
             $('#addFieldsOfTableAsInputModal-dbid').change();
@@ -5468,7 +5675,8 @@ function getDbFiledList(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.tableId = tableId;
     var that = this;
     var data = JSON.stringify(json);
@@ -5493,16 +5701,16 @@ function getDbFiledList(el) {
                         .attr("checked", "true")
                         .attr('pid', obj[i].id))
 
-                    .append(' ')
+                        .append(' ')
 
-                    .append($('<input>')
-                        .addClass('fields-as-input')
-                        .css("border-color", "transparent")
-                        .attr('type', 'text')
-                        .val(firstLetterToLowercase(obj[i].fieldName.replace(/_/g, ' ')))
-                        .attr('pid', obj[i].id))
-                    .append(' < ')
-                    .append(obj[i].fieldName)
+                        .append($('<input>')
+                                .addClass('fields-as-input')
+                                .css("border-color", "transparent")
+                                .attr('type', 'text')
+                                .val(firstLetterToLowercase(obj[i].fieldName.replace(/_/g, ' ')))
+                                .attr('pid', obj[i].id))
+                        .append(' < ')
+                        .append(obj[i].fieldName)
                 elm.append(div);
             }
         }
@@ -5542,10 +5750,10 @@ function addFieldsOfTableAsInputAction() {
                     //                    loadCurrentBacklogProdDetails();
 
                     addDatabaseRelationDetails(res.kv.id,
-                        $('#addFieldsOfTableAsInputModal-actiontype').val(),
-                        $('#addFieldsOfTableAsInputModal-dbid').val(),
-                        $('#addFieldsOfTableAsInputModal-tableid').val(),
-                        fieldId, true)
+                            $('#addFieldsOfTableAsInputModal-actiontype').val(),
+                            $('#addFieldsOfTableAsInputModal-dbid').val(),
+                            $('#addFieldsOfTableAsInputModal-tableid').val(),
+                            fieldId, true)
 
                 }
             });
@@ -5568,12 +5776,69 @@ function addFieldsOfTableAsInputAction() {
     $('#addFieldsOfTableAsInputModal').modal('hide');
 }
 
+function deleteMoveOnDesc(id) {
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteBacklogDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            that.getBacklogDesc();
+            loadCurrentBacklogProdDetailsSyncrone();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                callStoryCardAfterIPOAction();
+            } else if (global_var.current_modal === 'loadStoryCard') {
+                reloadBacklogListOnStoryCard();
+            }
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
+}
+
 function moveBacklogDescDrag(el) {
+    var list = $('#description_table_body_id>.esas-table-tr-for-zad');
 
-    var sourcedId = $(el).closest('tr').attr('pid');
+    for (let o = 0; o < list.length; o++) {
+        const k = list[o];
 
-    var after = $(el).closest('tr').prev('tr').attr('orderno');
-    var before = $(el).closest('tr').next('tr').attr('orderno');
+        var sourcedId = $(k).attr('pid');
+        var json = initJSON();
+        json.kv.sourcedId = sourcedId;
+        json.kv.newOrderNo = $(k).index();
+        var data = JSON.stringify(json);
+
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+
+            }
+        });
+
+    }
+
+
+}
+function if_inc_moveBacklogDescDrag(el) {
+
+    var sourcedId = $(el).closest('tr').attr('in_pid');
+
+    var after = $(el).closest('tr').prev('tr').attr('in_pid');
+    var before = $(el).closest('tr').next('tr').attr('in_pid');
     console.log(after, before);
     var json = initJSON();
     json.kv.sourcedId = sourcedId;
@@ -5593,7 +5858,31 @@ function moveBacklogDescDrag(el) {
         }
     });
 
+}
+function forlist_inc_moveBacklogDescDrag(el) {
 
+    var sourcedId = $(el).closest('tr').attr('in_pid');
+
+    var after = $(el).closest('tr').prev('tr').attr('in_pid');
+    var before = $(el).closest('tr').next('tr').attr('in_pid');
+    console.log(after, before);
+    var json = initJSON();
+    json.kv.sourcedId = sourcedId;
+    json.kv.newOrderNo = (parseFloat(after) + parseFloat(before)) / 2;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateOrderNoBacklogDescNew",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            new UserStory().getBacklogDesc();
+        }
+    });
 
 }
 
@@ -5699,9 +5988,9 @@ function triggerAPI_old(element, apiId, data) {
     var out = be.callApi(apiId, finalRes, el);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
-        'sync';
-    if (async ==='sync') {
+            SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
+            'sync';
+    if (async === 'sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
     //call oncload action
@@ -5717,6 +6006,7 @@ function triggerAPI_old(element, apiId, data) {
 }
 
 function triggerAPI(element, apiId, data) {
+    triggerApiDebugMode(element, apiId);
     var res = {};
     if (data) {
         res = data;
@@ -5753,17 +6043,17 @@ function _TriggerAPI(carrier) {
     finalRes = LeftMergeOfObjers(finalRes, res);
     finalRes.startLimit = 0;
 
-    var id = $(element).attr('id');
-    var el = document.getElementById(id);
+//    var id = $(element).attr('id');
+//    var el = document.getElementById(id);
 
-    //    var el = element;
+    var el = element;
 
     var out = be.callApi(apiId, finalRes, el);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
-        'sync';
-    if (async ==='sync') {
+            SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
+            'sync';
+    if (async === 'sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
     //call oncload action
@@ -5783,24 +6073,21 @@ function triggerAPIAfter(el, apiId, data, finalRes) {
     setValueOnCompAfterTriggerApi(el, data);
 
     var startLimit = (finalRes && finalRes.startLimit) ?
-        finalRes.startLimit :
-        "0";
+            finalRes.startLimit :
+            "0";
 
     setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit);
 
     updateAttributeBasedOnData(el, data);
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
-        'sync';
+            SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
+            'sync';
 
 
     $(el).closest('.redirectClass').find('.sa-selectpicker').each(function () {
         $(this).selectpicker('refresh');
     })
-
-
-
 }
 
 
@@ -5836,9 +6123,11 @@ function updateAttributeBasedOnData(el, data) {
                     var newVal = data[key];
                     $(this).attr(attrName4Filter, newVal);
                 });
-            } catch (err) {}
+            } catch (err) {
+            }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 function updateStyleParamBasedOnKey(el, key, value) {
@@ -5854,7 +6143,8 @@ function updateStyleParamBasedOnKey(el, key, value) {
             $(this).attr('style', style);
         });
 
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 function updateAttributeBasedOnKey(el, key, value) {
@@ -5881,7 +6171,8 @@ function updateAttributeBasedOnKey(el, key, value) {
         });
 
         updateStyleParamBasedOnKey(el, key, value);
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 
@@ -5900,7 +6191,8 @@ function getDbTablesList4Code(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.dbId = dbid;
     var that = this;
     var data = JSON.stringify(json);
@@ -5917,8 +6209,8 @@ function getDbTablesList4Code(el) {
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#addFieldsOfTableAsInputModal-tableid')
-                    .append($('<option>').val(obj[i].id)
-                        .append(obj[i].tableName))
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
             }
 
             $('#addFieldsOfTableAsInputModal-tableid').change();
@@ -5935,16 +6227,16 @@ function triggerAPI2Fill(el, apiId, selectField, data) {
     }
 
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
-        SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
-        'sync';
+            SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
+            'sync';
 
-    if (async ==='sync') {
+    if (async === 'sync') {
         var out = be.callApi(apiId, res);
         fillSelectBoxAfterSyncApiCall(el, out, selectField);
 
 
 
-    } else if (async ==='async') {
+    } else if (async === 'async') {
         var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
         var asyncData = {};
         asyncData.defaultValue = '';
@@ -5963,7 +6255,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
     var out = data;
     var rows = ((out._table) && (out._table.r) && (out._table.r.length > 0)) ?
-        out._table.r : [];
+            out._table.r : [];
     $(el).html('');
     if ($(el).attr('sa-data-selectbox-hassnull') === '1') {
         $(el).append($('<option>').val('').text(''));
@@ -5991,7 +6283,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         val = (val) ? val.trim() : name.trim();
         $(el).append($('<option>').val(val).text(name));
     }
-    $(el).attr('sa-isrunning', 0);
+//    $(el).attr('sa-isrunning', 0);
 
 
     if ($(el).attr('sa-data-nosort') !== '1') {
@@ -6012,18 +6304,18 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
         }
 
         if ($(el).hasClass('sa-onloadclick-async')) {
-            if ($(el).attr("sa-isloaded") !== '1') {
-                $(el).attr("sa-isloaded", "1");
-                $(el).click();
-            }
+//            if ($(el).attr("sa-isloaded") !== '1') {
+//                $(el).attr("sa-isloaded", "1");
+            $(el).click();
+//            }
         }
 
 
         if ($(el).hasClass('sa-onloadchange-async')) {
-            if ($(el).attr("sa-isloaded") !== '1') {
-                $(el).attr("sa-isloaded", "1");
-                $(el).change();
-            }
+//            if ($(el).attr("sa-isloaded") !== '1') {
+//                $(el).attr("sa-isloaded", "1");
+            $(el).change();
+//            }
         }
 
 
@@ -6039,7 +6331,7 @@ function fillSelectBoxAfterSyncApiCall(el, data, selectField) {
 
 function fillComboInAPICall(el, data, asyncData) {
     var rows = ((data._table) && (data._table.r) && (data._table.r.length > 0)) ?
-        data._table.r : [];
+            data._table.r : [];
 
     var elem = $('.component-container-dashed #' + asyncData.compId);
     elem.html('');
@@ -6065,7 +6357,7 @@ function fillComboInAPICall(el, data, asyncData) {
         elem.append($('<option>').val(val).text(name));
     }
 
-    elem.attr("sa-isrunning", "0");
+//    elem.attr("sa-isrunning", "0");
 
 
     if (elem.length > 1) {
@@ -6094,18 +6386,18 @@ function fillComboInAPICall(el, data, asyncData) {
             elem.find('option[value="' + elem.attr('sa-data-value') + '"]').attr("selected", "selected");
 
             if (elem.hasClass('sa-onloadclick-async')) {
-                if (elem.attr("sa-isloaded") !== '1') {
-                    elem.attr("sa-isloaded", "1");
-                    elem.click();
-                }
+//                if (elem.attr("sa-isloaded") !== '1') {
+//                    elem.attr("sa-isloaded", "1");
+                elem.click();
+//                }
             }
 
 
             if (elem.hasClass('sa-onloadchange-async')) {
-                if (elem.attr("sa-isloaded") !== '1') {
-                    elem.attr("sa-isloaded", "1");
-                    elem.change();
-                }
+//                if (elem.attr("sa-isloaded") !== '1') {
+//                    elem.attr("sa-isloaded", "1");
+                elem.change();
+//                }
             }
         }
     }
@@ -6171,8 +6463,9 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         var f = false;
         var elem = $(el).closest('div.redirectClass');
         elem.find('table.component-table-class-for-zad').each(function (ev) {
-            if (f)
+            if (f) {
                 return false;
+            }
 
             var accessableApi = $(this).attr('sa-data-accessable-api');
             if ((accessableApi) && (accessableApi !== apiId)) {
@@ -6184,25 +6477,28 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
             var selectedFieldTableList = selectedFieldTable.split(",");
 
             var diffArray = selectedFieldList.filter(function (el) {
-                return selectedFieldTableList.indexOf(el) != -1;
+                return selectedFieldTableList.indexOf(el) !== -1;
             });
 
             tableId = (diffArray.length > 0) ? $(this).attr('table-id') : '';
-            if (tableId)
+            if (tableId) {
                 f = true;
+            }
             componentId = (diffArray.length > 0) ? $(this).attr('id') : '';
             inpId = (diffArray.length > 0) ? $(this).attr('input-id') : '';
         })
 
-        if (!tableId)
-            return
+        if (!tableId) {
+            return;
+        }
 
         var rc = 0;
         try {
             rc = (data._table.r && data._table.r.length > 0) ?
-                data._table.r.length :
-                0;
-        } catch (err) {}
+                    data._table.r.length :
+                    0;
+        } catch (err) {
+        }
 
         if (rc === 0) {
             //return;
@@ -6210,7 +6506,14 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
         // for filling table on dinamycally
         //        clearTableBodyAfterApiCall(el, apiId);
-        $('table#' + componentId).find('tbody').html('');
+        var addRow = false;
+        var tableOriginal = $('table#' + componentId);
+        if (!tableOriginal.attr('sa-table-noclear')) {
+            tableOriginal.find('tbody').html('');
+        } else {
+            addRow = true;
+            startLimit = tableOriginal.find('tbody tr').length;
+        }
 
         var hasRelatedApi01 = false;
         if (!hasRelatedApi01) {
@@ -6218,7 +6521,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         }
 
         var cols = (data._table.r && data._table.r.length > 0) ?
-            Object.keys(data._table.r[0]) : [];
+                Object.keys(data._table.r[0]) : [];
 
         var f = false;
         for (var i in cols) {
@@ -6234,7 +6537,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
                     var inputId = $(this).attr('input-id');
                     var backlogId = SAInput.getInputDetails(inputId, "fkBacklogId");
-                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId);
+                    Component.InputTableAction.RegenTableBodyDetails(tableId, rc, backlogId, startLimit, inputId, addRow);
                 }
                 if (f) {
                     return;
@@ -6253,9 +6556,12 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
                 try {
                     var rowId = data._table.r[(j - 1)]['id'];
-                } catch (err) {}
+                } catch (err) {
+                }
 
-                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + j + '"]').each(function () {
+                var rowNoOrij = parseInt(startLimit) + parseInt(j)
+
+                elem.find('[sa-selectedfield*="' + c + '"][row-no="' + rowNoOrij + '"]').each(function () {
                     var fieldList = $(this).attr('sa-selectedfield').split(',');
                     if (fieldList.includes(c)) {
                         $(this).attr('sa-data-table-row-id', rowId);
@@ -6276,7 +6582,7 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
     tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
-    $('.table-show-hide-row-div').draggable({
+    $('.table-filter-block-draggable').draggable({
         containment: "body"
     });
 }
@@ -6294,42 +6600,42 @@ function callTableRelationAPIs(elem, tableId) {
 
 
     elem.find('table[table-id="' + tableId + '"]')
-        .find('.has_table_relation_td')
-        .each(function () {
+            .find('.has_table_relation_td')
+            .each(function () {
 
 
 
-            var apiId = $(this).attr('rel_api');
-            var inputId = $(this).attr('rel_core_inputid');
-            var selectedfield = $(this).attr('rel_core_selected_field');
+                var apiId = $(this).attr('rel_api');
+                var inputId = $(this).attr('rel_core_inputid');
+                var selectedfield = $(this).attr('rel_core_selected_field');
 
-            var id = '';
-            var elem2 = $(this).find('.component-input-class').first();
-            if (elem2.attr('sa-type') === 'image') {
-                id = elem2.attr('sa-data-value');
-            } else {
-                id = elem2.text();
-            }
-            //                var selectedfield = $(this).find('.component-input-class').first().attr('sa-selectedfield');
-
-            //add dependency for API Call classes and attributes
-            //as sa_data_table_col_rel_{apiId}_{inputId}_{dataId}
-
-            $(this).addClass("sa_data_table_col_rel_" + apiId + "_" + inputId + "_" + id);
-
-            if (apiId && apiId.length > 0) {
-                if (!tableInputRel[apiId]) {
-                    tableInputRel[apiId] = {
-                        ids: [],
-                        i: {},
-                        s: {}
-                    };
-                    tableInputRel[apiId].i = inputId;
-                    tableInputRel[apiId].s = selectedfield;
+                var id = '';
+                var elem2 = $(this).find('.component-input-class').first();
+                if (elem2.attr('sa-type') === 'image') {
+                    id = elem2.attr('sa-data-value');
+                } else {
+                    id = elem2.text();
                 }
-                tableInputRel[apiId].ids.push(id);
-            }
-        });
+                //                var selectedfield = $(this).find('.component-input-class').first().attr('sa-selectedfield');
+
+                //add dependency for API Call classes and attributes
+                //as sa_data_table_col_rel_{apiId}_{inputId}_{dataId}
+
+                $(this).addClass("sa_data_table_col_rel_" + apiId + "_" + inputId + "_" + id);
+
+                if (apiId && apiId.length > 0) {
+                    if (!tableInputRel[apiId]) {
+                        tableInputRel[apiId] = {
+                            ids: [],
+                            i: {},
+                            s: {}
+                        };
+                        tableInputRel[apiId].i = inputId;
+                        tableInputRel[apiId].s = selectedfield;
+                    }
+                    tableInputRel[apiId].ids.push(id);
+                }
+            });
 
     //callApis
     var f = true;
@@ -6373,7 +6679,8 @@ function callTableRelationAPIs(elem, tableId) {
 
 
             be.callApi(apiId, data, elem, asyncData);
-        } catch (err) {}
+        } catch (err) {
+        }
     }
 
     $("table[table-id='" + tableId + "']").first().attr("is-loading", "0");
@@ -6395,18 +6702,18 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
     for (var i in obj) {
         var o = obj[i];
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
-            .each(function () {
+                .each(function () {
 
-                var elem2 = $(this).find('.component-input-class').first();
-                elem2.text(o[asyncData.selectedField]);
-                elem2.val(o[asyncData.selectedField]);
+                    var elem2 = $(this).find('.component-input-class').first();
+                    elem2.text(o[asyncData.selectedField]);
+                    elem2.val(o[asyncData.selectedField]);
 
-                if (elem2.attr('sa-type') === 'image') {
-                    elem2.attr('src', fileUrl(o[asyncData.selectedField]))
-                }
+                    if (elem2.attr('sa-type') === 'image') {
+                        elem2.attr('src', fileUrl(o[asyncData.selectedField]))
+                    }
 
-                updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
-            });
+                    updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
+                });
     }
 
     var el1 = $("table[table-id='" + tableId + "']");
@@ -6436,44 +6743,44 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
     for (var i in obj) {
         var o = obj[i];
         $(".sa_data_table_col_rel_" + asyncData.apiId + "_" + asyncData.inputId + "_" + o.id)
-            .each(function () {
+                .each(function () {
 
-                var finalVal = "";
+                    var finalVal = "";
 
 
-                var saItemValue = $(this).find('.component-input-class').first().attr('sa-item-value');
-                var saItemSaparator = $(this).find('.component-input-class').first().attr('sa-item-separator');
+                    var saItemValue = $(this).find('.component-input-class').first().attr('sa-item-value');
+                    var saItemSaparator = $(this).find('.component-input-class').first().attr('sa-item-separator');
 
-                if (!saItemValue) {
-                    finalVal = o[asyncData.selectedField];
-                }
-
-                try {
-                    var itemValueList = saItemValue.split(',');
-
-                    var idx = 1;
-                    for (var ii in itemValueList) {
-                        var sval = itemValueList[ii];
-                        finalVal += o[sval];
-                        finalVal += (idx < itemValueList.length) ? ' ' + saItemSaparator + ' ' : "";
-                        idx++;
+                    if (!saItemValue) {
+                        finalVal = o[asyncData.selectedField];
                     }
-                } catch (err) {
-                    finalVal = o[asyncData.selectedField];
-                }
+
+                    try {
+                        var itemValueList = saItemValue.split(',');
+
+                        var idx = 1;
+                        for (var ii in itemValueList) {
+                            var sval = itemValueList[ii];
+                            finalVal += o[sval];
+                            finalVal += (idx < itemValueList.length) ? ' ' + saItemSaparator + ' ' : "";
+                            idx++;
+                        }
+                    } catch (err) {
+                        finalVal = o[asyncData.selectedField];
+                    }
 
 
 
-                var elem2 = $(this).find('.component-input-class').first();
-                elem2.text(finalVal);
-                elem2.val(finalVal);
+                    var elem2 = $(this).find('.component-input-class').first();
+                    elem2.text(finalVal);
+                    elem2.val(finalVal);
 
-                if (elem2.attr('sa-type') === 'image') {
-                    elem2.attr('src', fileUrl(finalVal))
-                }
+                    if (elem2.attr('sa-type') === 'image') {
+                        elem2.attr('src', fileUrl(finalVal))
+                    }
 
-                updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
-            });
+                    updateStyleParamBasedOnKey(this, asyncData.selectedField, o[asyncData.selectedField]);
+                });
     }
 
     var el1 = $("table[table-id='" + tableId + "']");
@@ -6498,8 +6805,8 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
 
     var element = ($(el).attr('sa-global-trigger')) ?
-        $(el).closest('div.redirectClass') :
-        $(el).closest('.redirectClass');
+            $(el).closest('div.redirectClass') :
+            $(el).closest('.redirectClass');
 
     element.find('[sa-selectedfield]').each(function (e) {
         var isInTable = false;
@@ -6519,41 +6826,45 @@ function setValueOnCompAfterTriggerApi(el, data) {
                     try {
                         localSelectedField = data.selectedField.split(',');
                         // localSelectedField = Object.keys(data._table.r[0]);
-                    } catch (err) {}
+                    } catch (err) {
+                    }
 
 
                     if (field.length > 0) {
                         if ($(this).attr('sa-type') === 'select' &&
-                            $(this).attr('sa-load-ontrigger') === '1' &&
-                            localSelectedField.includes(field)) {
+                                $(this).attr('sa-load-ontrigger') === '1' &&
+                                localSelectedField.includes(field)) {
 
                             fillSelectBoxAfterSyncApiCall(this, data, field);
+
+
 
                             //select table list-de 1 setr cavab qayinda selectbox.value deyerini
                             //aldigi ucun bu field data-dan silinmelidir
 
                         } else if ($(this).attr('sa-type') === 'multiselect' &&
-                            $(this).attr('sa-load-ontrigger') === '1' &&
-                            localSelectedField.includes(field)) {
-
+                                $(this).attr('sa-load-ontrigger') === '1' &&
+                                localSelectedField.includes(field)) {
                             fillSelectBoxAfterSyncApiCall(this, data, field);
-                        }
 
+                        }
                         var keys = Object.keys(data);
                         if (keys.includes(field)) {
                             val = data[field];
-                            getComponentValueAfterTriggerApi(this, val);
+                            getComponentValueAfterTriggerApi(this, val, field);
                         }
+
                     }
-                } catch (err) {}
+                } catch (err) {
+                }
             }
         }
 
     })
 }
 
-function getComponentValueAfterTriggerApi(el, val) {
-
+function getComponentValueAfterTriggerApi(el, val, selectedField) {
+    triggerApiDebugMode4ApiOutput(el, selectedField);
 
     if ($(el).attr('sa-type') === 'date') {
         SetConvertedDateByElement(el, val);
@@ -6583,27 +6894,48 @@ function getComponentValueAfterTriggerApi(el, val) {
         for (var i = 0; i < res.length; i++) {
             try {
                 $(el).append(generateFileLine(res[i].trim(), "col-12"));
-            } catch (e) {}
+            } catch (e) {
+            }
         }
 
 
     } else if ($(el).attr('sa-type') === 'select') {
 
-        $(el).val(val);
-        $(el).find('option[value="' + val + '"]').attr('selected', true);
-
+        if ($(el).attr('sa-item-setterfield') &&
+                $(el).attr('sa-item-setterfield') === selectedField) {
+            $(el).val(val);
+            $(el).find('option[value="' + val + '"]').attr('selected', true);
+        } else {
+            $(el).val(val);
+            $(el).find('option[value="' + val + '"]').attr('selected', true);
+        }
 
 
 
     } else if ($(el).attr('sa-type') === 'multiselect') {
-        $(el).find("option:selected").prop("selected", false);
-        $(el).selectpicker('refresh');
 
-        $.each(val.split(","), function (i, e) {
-            var id = $(el).attr('id');
-            $(el).find("option[value='" + e + "']").prop("selected", true);
-        });
-        $(el).selectpicker('refresh');
+        if ($(el).attr('sa-item-setterfield') &&
+                $(el).attr('sa-item-setterfield') === selectedField) {
+            $(el).find("option:selected").prop("selected", false);
+            $(el).selectpicker('refresh');
+
+            $.each(val.split(","), function (i, e) {
+                var id = $(el).attr('id');
+                $(el).find("option[value='" + e + "']").prop("selected", true);
+            });
+            $(el).selectpicker('refresh');
+        } else {
+            $(el).find("option:selected").prop("selected", false);
+            $(el).selectpicker('refresh');
+
+            $.each(val.split(","), function (i, e) {
+                var id = $(el).attr('id');
+                $(el).find("option[value='" + e + "']").prop("selected", true);
+            });
+            $(el).selectpicker('refresh');
+        }
+
+
 
     } else if ($(el).attr('sa-type') === 'htmlviewer') {
         $(el).html(val);
@@ -6628,27 +6960,23 @@ function getComponentValueAfterTriggerApi(el, val) {
 
 
     if ($(el).hasClass('sa-onloadclick-async')) {
-        if ($(el).attr("sa-isloaded") !== '1') {
-            $(el).attr("sa-isloaded", "1");
-            $(el).click();
-        }
+//        if ($(el).attr("sa-isloaded") !== '1') {
+//            $(el).attr("sa-isloaded", "1");
+        $(el).click();
+//        }
     }
 
 
     if ($(el).hasClass('sa-onloadchange-async')) {
-        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-isrunning") !== '1') {
-            $(el).attr("sa-isloaded", "1");
-            $(el).change();
-        }
+//        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-isrunning") !== '1') {
+//            $(el).attr("sa-isloaded", "1");
+        $(el).change();
+//        }
     }
 
     if ($(el).attr("sa-isselectpicker") === '1') {
         $(el).selectpicker('refresh');
     }
-
-
-
-
 }
 
 function initHtmlFroalaEditorByClass(className) {
@@ -6663,37 +6991,37 @@ function initHtmlFroalaEditorByClass(className) {
 function initHtmlFroalaEditor(elementId, val) {
     var editor = new FroalaEditor('#' + elementId, {
 
-            tableStyles: {
-                class1: 'Dashed',
-                class2: 'None',
-            },
-
-            quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
-            toolbarInline: true,
-            charCounterCount: false,
-            fileUpload: false,
-            pastePlain: false,
-            toolbarButtons: {
-                'moreText': {
-                    'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
-                },
-                'moreParagraph': {
-                    'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
-                },
-                'moreRich': {
-                    'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
-                },
-                'moreMisc': {
-                    'buttons': ['undo', 'redo', 'selectAll', 'html', ],
-                    'align': 'right',
-                    'buttonsVisible': 2
-                }
-            }
+        tableStyles: {
+            class1: 'Dashed',
+            class2: 'None',
         },
-        function () {
 
-            editor.html.set(val);
+        quickInsertButtons: ['table', 'ol', 'ul', 'image', "video"],
+        toolbarInline: true,
+        charCounterCount: false,
+        fileUpload: false,
+        pastePlain: false,
+        toolbarButtons: {
+            'moreText': {
+                'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+            },
+            'moreParagraph': {
+                'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+            },
+            'moreRich': {
+                'buttons': ['insertVideo', 'insertImage', 'insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly']
+            },
+            'moreMisc': {
+                'buttons': ['undo', 'redo', 'selectAll', 'html', ],
+                'align': 'right',
+                'buttonsVisible': 2
+            }
         }
+    },
+            function () {
+
+                editor.html.set(val);
+            }
     )
 }
 
@@ -6722,6 +7050,7 @@ function iDidItAction() {
         crossDomain: true,
         async: false,
         success: function (res) {
+            AJAXCallFeedback(res);
             getBugList();
             $('#iDidItModal_comment').html('');
             $('#iDidItModal').modal('hide');
@@ -6807,7 +7136,8 @@ function getGUIDataByStoryCard(el) {
                 res[$(this).attr("sa-value-linkedfield")] = text1;
             }
         } else if ($(this).attr('sa-type') === 'htmleditor') {
-            val = $(this).closest('div').find('.fr-element').html();;
+            val = $(this).closest('div').find('.fr-element').html();
+            ;
         }
 
 
@@ -6829,14 +7159,14 @@ function getGUIDataByStoryCard(el) {
 function insertNewInputActionRel(el) {
 
     if (!global_var.current_project_id || !$(el).parents(".animation-block-for-find").find('.input_event_type').val() ||
-        !$(el).parents(".animation-block-for-find").find('.input_event_related_api').val())
+            !$(el).parents(".animation-block-for-find").find('select.input_event_related_api').val())
         return;
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.fkApiId = $(el).parents(".animation-block-for-find").find('.input_event_related_api').val();
+    json.kv.fkApiId = $(el).parents(".animation-block-for-find").find('select.input_event_related_api').val();
     json.kv.actionType = $(el).parents(".animation-block-for-find").find('.input_event_type').val();
     var that = this;
     var data = JSON.stringify(json);
@@ -6884,20 +7214,21 @@ function getInputActionRelList() {
                 for (var i in obj) {
                     var o = obj[i];
                     var tr = $('<tr>')
-                        .append($('<td>').text(o.actionType))
-                        .append($('<td>')
-                            .append($('<a>')
-                                .attr('href', '#')
-                                .attr("bid", o.fkApiId)
-                                .attr('pid', global_var.current_project_id)
-                                .attr('onclick', "showBacklogHistoryClick(this)")
-                                .text(SACore.GetBacklogname(o.fkApiId))))
-                        .append($('<td>').append($("<i>")
-                            .addClass('fa fa-trash')
-                            .attr('onclick', "deleteInputActionRel('" + o.id + "')")))
+                            .append($('<td>').text(o.actionType))
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .attr('href', '#')
+                                            .attr("bid", o.fkApiId)
+                                            .attr('pid', global_var.current_project_id)
+                                            .attr('onclick', "showBacklogHistoryClick(this)")
+                                            .text(SACore.GetBacklogname(o.fkApiId))))
+                            .append($('<td>').append($("<i>")
+                                    .addClass('fa fa-trash')
+                                    .attr('onclick', "deleteInputActionRel('" + o.id + "')")))
                     body.append(tr);
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
         }
     });
 }
@@ -6935,25 +7266,35 @@ function fillRelatedApi4InputEvent(cls) {
     //    return;
 
     var apiList = SACore.GetBacklogKeyList();
-    var select = $('#' + cls).find('.input_event_related_api');
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
     if (!cls) {
-        select = $('#' + cls).find('.input_event_related_api');
+        select = $('#' + cls).find('select.input_event_related_api');
     }
 
     select.html('');
+    select1.html('');
 
 
     for (var i in apiList) {
         var apiId = apiList[i];
         if (SACore.GetBacklogDetails(apiId, "isApi") === '1') {
             select.append($('<option>')
-                .val(apiId)
-                .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+                    .val(apiId)
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+            select1.append($('<option>')
+                    .val(apiId)
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
 
         }
     }
 
     sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
+    select.selectpicker('refresh');
+//    select1.selectpicker('refresh');
+    $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
 
 }
 
@@ -6988,7 +7329,8 @@ function getJsCodeListByProject() {
                     var o = obj[i];
                     cr_js_list[o.id] = o;
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
             queue4ManulProject.getJsCodeListByProject = true;
 
@@ -7025,7 +7367,8 @@ function getGlobalJsCodeListByProject() {
                     var o = obj[i];
                     cr_js_list[o.id] = o;
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ManulProject.getGlobalJsCodeListByProject = true;
             executeCoreOfManualProSelection();
 
@@ -7092,9 +7435,11 @@ function getJsGlobalCodeByProject() {
                             $('head').append(sc);
 
                         }
-                    } catch (err) {}
+                    } catch (err) {
+                    }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ManulProject.getJsGlobalCodeByProject = true;
             executeCoreOfManualProSelection();
 
@@ -7172,7 +7517,8 @@ function getJsCodeByProject() {
                         Toaster.showError("Error on loading JavaScript File called " + o.fnCoreName);
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
             queue4ManulProject.getJsCodeByProject = true;
 
@@ -7220,7 +7566,8 @@ function getProjectDescriptionByProject() {
 
                     cr_project_desc_by_backlog[o.fkBacklogId].push(o.id)
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
             queue4ManulProject.getProjectDescriptionByProject = true;
             executeCoreOfManualProSelection();
@@ -7268,7 +7615,8 @@ function getInputAttributeByProjectManual() {
                     }
 
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
 
         }
@@ -7326,7 +7674,8 @@ function getInputAttributeByProject() {
 
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ManulProject.getInputAttributeByProject = true;
             executeCoreOfManualProSelection();
 
@@ -7369,7 +7718,8 @@ function getInputActionRelByProjectMAnual2() {
                     cr_input_action_rel[o.fkInputId].push(o.id);
                     cr_input_action_rel_list[o.id] = o;
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
 
 
@@ -7413,7 +7763,8 @@ function getInputActionRelByProject() {
                     cr_input_action_rel[o.fkInputId].push(o.id);
                     cr_input_action_rel_list[o.id] = o;
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ManulProject.getInputActionRelByProject = true;
             executeCoreOfManualProSelection();
 
@@ -7452,11 +7803,12 @@ function getInputClassRelByProjectManual() {
                     var o = obj[i];
                     if (o.relType === 'comp') {
                         cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId]) ?
-                            cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
-                            o.fkClassId;
+                                cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
+                                o.fkClassId;
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
 
         }
@@ -7497,15 +7849,16 @@ function getInputClassRelByProject() {
                     var o = obj[i];
                     if (o.relType === 'comp') {
                         cr_comp_input_classes[o.fkInputId] = (cr_comp_input_classes[o.fkInputId]) ?
-                            cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
-                            o.fkClassId;
+                                cr_comp_input_classes[o.fkInputId] + "," + o.fkClassId :
+                                o.fkClassId;
                     } else if (o.relType === 'cont') {
                         cr_cont_input_classes[o.fkInputId] = (cr_cont_input_classes[o.fkInputId]) ?
-                            cr_cont_input_classes[o.fkInputId] + "," + o.fkClassId :
-                            o.fkClassId;
+                                cr_cont_input_classes[o.fkInputId] + "," + o.fkClassId :
+                                o.fkClassId;
                     }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ManulProject.getInputClassRelByProject = true;
             executeCoreOfManualProSelection();
 
@@ -7670,11 +8023,11 @@ function loadGlobalJsCode() {
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 var tr = $("<tr>")
-                    .addClass('jscode-row-tr')
-                    .attr("pid", o.id)
-                    .append($('<td>')
-                        .css("cursor", "pointer")
-                        .text(o.fnDescription))
+                        .addClass('jscode-row-tr')
+                        .attr("pid", o.id)
+                        .append($('<td>')
+                                .css("cursor", "pointer")
+                                .text(o.fnDescription))
                 table.append(tr);
             }
             if (current_js_code_id) {
@@ -7693,11 +8046,11 @@ function getAllJsCodeByProjectDetails(res) {
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
         var tr = $("<tr>")
-            .addClass('jscode-row-tr')
-            .attr("pid", o.id)
-            .append($('<td>')
-                .css("cursor", "pointer")
-                .text(o.fnDescription))
+                .addClass('jscode-row-tr')
+                .attr("pid", o.id)
+                .append($('<td>')
+                        .css("cursor", "pointer")
+                        .text(o.fnDescription))
         table.append(tr);
     }
     //    if (current_js_code_id) {
@@ -7935,11 +8288,11 @@ function getAllGuiClassByProjectDetails(res) {
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
         var tr = $("<tr>")
-            .addClass('gui-class-row-tr')
-            .attr("pid", o.id)
-            .append($('<td>')
-                .css("cursor", "pointer")
-                .text(o.className))
+                .addClass('gui-class-row-tr')
+                .attr("pid", o.id)
+                .append($('<td>')
+                        .css("cursor", "pointer")
+                        .text(o.className))
         table.append(tr);
     }
     if (current_clicked_class_id) {
@@ -8311,20 +8664,20 @@ function getInputCompClassListDetails(res) {
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];
             var tr = $("<tr>")
-                .append($('<td>')
-                    .append($('<a>')
-                        .attr("href", "#")
-                        .attr("onclick", "showClassDetails('" + o.fkClassId + "')")
-                        .attr("title", o.classBody)
-                        .text(o.className)
-                        .append((o.classBody) ? $('<span>')
-                            .css("color", "red")
-                            .text("*") : ""))
-                )
-                .append($('<td>').append($('<i>')
-                    .css("cursor", "pointer")
-                    .attr('onclick', 'removeInputClassRel(this,"' + o.id + '")')
-                    .addClass("fa fa-trash")));
+                    .append($('<td>')
+                            .append($('<a>')
+                                    .attr("href", "#")
+                                    .attr("onclick", "showClassDetails('" + o.fkClassId + "')")
+                                    .attr("title", o.classBody)
+                                    .text(o.className)
+                                    .append((o.classBody) ? $('<span>')
+                                            .css("color", "red")
+                                            .text("*") : ""))
+                            )
+                    .append($('<td>').append($('<i>')
+                            .css("cursor", "pointer")
+                            .attr('onclick', 'removeInputClassRel(this,"' + o.id + '")')
+                            .addClass("fa fa-trash")));
 
             table.append(tr);
         }
@@ -8371,16 +8724,16 @@ function getInputContainerClassListCoreDetailes(res) {
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];
             var tr = $("<tr>")
-                .append($('<td>')
-                    .append($('<a>')
-                        .attr("href", "#")
-                        .attr("onclick", "showClassDetails('" + o.fkClassId + "')")
-                        .attr("title", o.classBody)
-                        .text(o.className)))
-                .append($('<td>').append($('<i>')
-                    .css("cursor", "pointer")
-                    .attr('onclick', 'removeInputClassRel(this,"' + o.id + '")')
-                    .addClass("fa fa-trash")));
+                    .append($('<td>')
+                            .append($('<a>')
+                                    .attr("href", "#")
+                                    .attr("onclick", "showClassDetails('" + o.fkClassId + "')")
+                                    .attr("title", o.classBody)
+                                    .text(o.className)))
+                    .append($('<td>').append($('<i>')
+                            .css("cursor", "pointer")
+                            .attr('onclick', 'removeInputClassRel(this,"' + o.id + '")')
+                            .addClass("fa fa-trash")));
 
             table.append(tr);
         }
@@ -8481,7 +8834,8 @@ function getAllGuiClassList() {
 
             try {
                 setResArrayAsObject(res);
-            } catch (ee) {}
+            } catch (ee) {
+            }
 
             try {
                 var obj = res.tbl[0].r;
@@ -8500,9 +8854,11 @@ function getAllGuiClassList() {
                         $('head').append(sc);
 
 
-                    } catch (err) {}
+                    } catch (err) {
+                    }
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
 
             //            queue4ManulProject.getAllGuiClassList = true;
             //            executeCoreOfManualProSelection();
@@ -8534,7 +8890,8 @@ function getGuiClassList() {
                 getGuiClassListDetails(res);
                 getGuiClassListDetails4Container(res);
 
-            } catch (ee) {}
+            } catch (ee) {
+            }
         }
     });
 }
@@ -8550,7 +8907,8 @@ function setResArrayAsObject(res) {
             try {
                 var key = o.className;
                 key = key.replace(/\./g, '');
-                cr_gui_classes_by_name[key] = o.classBody;;
+                cr_gui_classes_by_name[key] = o.classBody;
+                ;
             } catch (err) {
 
             }
@@ -8572,10 +8930,10 @@ function getGuiClassListDetails(res) {
 
     sortSelectBox('gui_prop_in_gui_class_list');
     select.prepend($('<option disabled>').val('').text(''))
-        .prepend($('<option>').val('-2').text('New Class'))
-        .prepend($('<option>').val('').text(''))
+            .prepend($('<option>').val('-2').text('New Class'))
+            .prepend($('<option>').val('').text(''))
 
-    ;
+            ;
 }
 
 function getGuiClassListDetails4Container(res) {
@@ -8590,10 +8948,10 @@ function getGuiClassListDetails4Container(res) {
 
     sortSelectBox('gui_prop_cn_gui_class_list');
     select.prepend($('<option disabled>').val('').text(''))
-        .prepend($('<option>').val('-2').text('New Class'))
-        .prepend($('<option>').val('').text(''))
+            .prepend($('<option>').val('-2').text('New Class'))
+            .prepend($('<option>').val('').text(''))
 
-    ;
+            ;
 }
 
 
@@ -8607,12 +8965,7 @@ function addInputAttributes4Container(el) {
         return;
     }
 
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {}
+    var json = initJSON();
 
     json.kv.attrName = attrName;
     json.kv.attrValue = attrVal;
@@ -8653,7 +9006,8 @@ function getInputAttributeList4Container(inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkInputId = inputId;
     json.kv.attrType = "cont";
@@ -8681,12 +9035,12 @@ function getInputAttributeListDetails4Container(res) {
         for (var i = 0; i < obj.length; i++) {
             var o = obj[i];
             var tr = $("<tr>")
-                .append($('<td>').text(o.attrName))
-                .append($('<td>').text(o.attrValue))
-                .append($('<td>').append($('<i>')
-                    .css("cursor", "pointer")
-                    .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
-                    .addClass("fa fa-trash")));
+                    .append($('<td>').text(o.attrName))
+                    .append($('<td>').text(o.attrValue))
+                    .append($('<td>').append($('<i>')
+                            .css("cursor", "pointer")
+                            .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
+                            .addClass("fa fa-trash")));
 
             table.append(tr);
         }
@@ -8725,7 +9079,8 @@ function addInputAttributesCore(namval, val) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.attrName = attrName;
     json.kv.attrValue = attrVal;
@@ -8768,7 +9123,8 @@ function getInputAttributeList(inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkInputId = inputId;
     json.kv.attrType = "comp";
@@ -8807,27 +9163,28 @@ function getInputAttributeListDetails(res) {
             var o = obj[i];
             var temsp = o.attrValue.split(",");
             var tr = $("<tr>").attr('onclick', 'setInputAttributesReverse4Component(this)')
-                .attr('data-rmv-id', o.id);
+                    .attr('data-rmv-id', o.id);
 
             tr.append($('<td>').addClass('attr-name').text(o.attrName));
             var td = $('<td>').addClass('attr-value');
             for (var c = 0; c < temsp.length; c++) {
 
                 td.append($('<span>')
-                    .addClass('cstm_spn_attr')
-                    .attr('data-rmvc', '0')
-                    .text(temsp[c])
-                    .append('<i  class="removeAttrSingle fas fa-times"></i>'));
+                        .addClass('cstm_spn_attr')
+                        .attr('data-rmvc', '0')
+                        .text(temsp[c])
+                        .append('<i  class="removeAttrSingle fas fa-times"></i>'));
             }
             tr.append(td);
             tr.append($('<td>').append($('<i>')
-                .css("cursor", "pointer")
-                .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
-                .addClass("fa fa-trash attr_rmv_sabtn")));
+                    .css("cursor", "pointer")
+                    .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
+                    .addClass("fa fa-trash attr_rmv_sabtn")));
             table.append(tr);
 
         }
-    } catch (err) {}
+    } catch (err) {
+    }
     //    $('#input_attributes_list_in_component').html(table);
 }
 
@@ -8854,7 +9211,8 @@ function removeInputAttributeCore(inputAttrId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = inputAttrId;
     var that = this;
     var data = JSON.stringify(json);
@@ -8886,7 +9244,8 @@ function testIO(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.entity = "tmBacklog";
     json.kv.startLimit = "2";
@@ -8918,7 +9277,8 @@ function testIOInsert(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.entity = "tmBacklog";
     json.kv.backlogName = "kelbetino acseso"
@@ -8948,7 +9308,8 @@ function testIODelete(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.entity = "tmBacklog";
     json.kv.id = id;
@@ -8973,7 +9334,8 @@ function testIOUpdate(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.entity = "tmBacklog";
     json.kv.id = id;
@@ -8995,7 +9357,7 @@ function testIOUpdate(id) {
 
 $(document).on("keyup", ".Assigne-card-story-search", function (e) {
     var filter = $(this).val(),
-        count = 0;
+            count = 0;
     $(".Assigne-content-user").each(function () {
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
             $(this).fadeOut();
@@ -9039,7 +9401,8 @@ function addRelatedApiModal(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = descId;
     json.kv.apiId = apidId;
@@ -9091,6 +9454,7 @@ function addRelatedSourceCodeModal(el) {
             $('#addRelatedSourceCodeModal').modal('hide');
             getJsCodeListByProject();
             new UserStory().getBacklogDesc();
+            loadCurrentBacklogProdDetails();
         }
     });
 }
@@ -9109,7 +9473,8 @@ function removeRelatedSourceCodeFromDesc(descId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = descId;
     var that = this;
@@ -9141,7 +9506,8 @@ function removeRelatedApiFromDesc(descId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = descId;
     var that = this;
@@ -9187,7 +9553,8 @@ function addNewApiFromDesc() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['backlogName'] = val;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['isApi'] = "1";
@@ -9264,7 +9631,8 @@ function addNewSourceCodeFromDesc() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['fnDescription'] = val;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv.fnCoreName = convertToCamelView(val);
@@ -9324,16 +9692,16 @@ function loadRelatedSourceCode4Relation() {
                 var o = obj[i];
 
                 var op = $("<option>")
-                    .val(o.id)
-                    .text(o.fnDescription);
+                        .val(o.id)
+                        .text(o.fnDescription);
 
                 $('#addRelatedSourceCodeModal-api').append(op);
             }
             sortSelectBox('addRelatedSourceCodeModal-api');
             $('#addRelatedSourceCodeModal-api')
-                .prepend($("<option disabled>").val("").append("                   "));
+                    .prepend($("<option disabled>").val("").append("                   "));
             $('#addRelatedSourceCodeModal-api')
-                .prepend($("<option>").val("-2").append("New Function"));
+                    .prepend($("<option>").val("-2").append("New Function"));
 
             if (res.tbl.length === 0) {
                 $('#addRelatedSourceCodeModal-api').change();
@@ -9362,8 +9730,8 @@ function loadRelatedGlobalSourceCode4Relation() {
                 var o = obj[i];
 
                 var op = $("<option>")
-                    .val(o.id)
-                    .text(o.fnDescription);
+                        .val(o.id)
+                        .text(o.fnDescription);
 
                 $('#addRelatedSourceCodeModal-api').append(op);
             }
@@ -9391,8 +9759,8 @@ function loadRelatedAPI4Relation() {
         var backlogId = keys[i];
         var backlogName = SACore.GetBacklogname(backlogId);
         var op = $("<option>")
-            .val(backlogId)
-            .append(replaceTags(backlogName));
+                .val(backlogId)
+                .append(replaceTags(backlogName));
         if (keys[i] === global_var.last_select_from_us_id) {
             op.attr("selected", true);
         }
@@ -9400,9 +9768,9 @@ function loadRelatedAPI4Relation() {
     }
     sortSelectBox('addRelatedApiModal-api');
     $('#addRelatedApiModal-api')
-        .prepend($("<option disabled>").val("").append("                   "));
+            .prepend($("<option disabled>").val("").append("                   "));
     $('#addRelatedApiModal-api')
-        .prepend($("<option>").val("-2").append("New API"));
+            .prepend($("<option>").val("-2").append("New API"));
 }
 
 $(document).on("change", "#selectTableSize", function (e) {
@@ -9445,7 +9813,8 @@ function getFieldLink(fieldId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = fieldId;
     var that = this;
@@ -9471,7 +9840,8 @@ function deleteLinkFromFieldRel(fieldId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = fieldId;
     var that = this;
@@ -9495,9 +9865,9 @@ function getFieldLinkDetails(res) {
     $('#removeFieldLinkModal-tablelist').html("");
     var table = $('<table>').addClass("table table-hover");
     table.append($('<tr>')
-        .append($('<th>').append("From"))
-        .append($('<th>').append("To"))
-        .append($('<th>').append("")));
+            .append($('<th>').append("From"))
+            .append($('<th>').append("To"))
+            .append($('<th>').append("")));
 
     try {
         var idx1 = getIndexOfTable(res, "fromTable");
@@ -9505,18 +9875,19 @@ function getFieldLinkDetails(res) {
         for (var i in objFrom) {
             var o = objFrom[i];
             var tr = $('<tr>')
-                .append($('<td>')
-                    .css("color", "orange")
-                    .append(SAEntity.GetFieldDetails(o.fromFieldId, 'fieldName')))
-                .append($('<td>').append(SAEntity.GetFieldDetails(o.toFieldId, 'fieldName')))
-                .append($('<td>')
-                    .append($('<a href="#">')
-                        .attr("onclick", "deleteLinkFromFieldRel('" + o.id + "')")
-                        .append("Remove"))
-                )
+                    .append($('<td>')
+                            .css("color", "orange")
+                            .append(SAEntity.GetFieldDetails(o.fromFieldId, 'fieldName')))
+                    .append($('<td>').append(SAEntity.GetFieldDetails(o.toFieldId, 'fieldName')))
+                    .append($('<td>')
+                            .append($('<a href="#">')
+                                    .attr("onclick", "deleteLinkFromFieldRel('" + o.id + "')")
+                                    .append("Remove"))
+                            )
             table.append(tr);
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 
     try {
         var idx2 = getIndexOfTable(res, "toTable");
@@ -9524,18 +9895,19 @@ function getFieldLinkDetails(res) {
         for (var j in objTo) {
             var o = objTo[j];
             var tr = $('<tr>')
-                .append($('<td>').append(SAEntity.GetFieldDetails(o.fromFieldId, 'fieldName')))
-                .append($('<td>')
-                    .css("color", "orange")
-                    .append(SAEntity.GetFieldDetails(o.toFieldId, 'fieldName')))
-                .append($('<td>')
-                    .append($('<a href="#">')
-                        .attr("onclick", "deleteLinkFromFieldRel('" + o.id + "')")
-                        .append("Remove"))
-                )
+                    .append($('<td>').append(SAEntity.GetFieldDetails(o.fromFieldId, 'fieldName')))
+                    .append($('<td>')
+                            .css("color", "orange")
+                            .append(SAEntity.GetFieldDetails(o.toFieldId, 'fieldName')))
+                    .append($('<td>')
+                            .append($('<a href="#">')
+                                    .attr("onclick", "deleteLinkFromFieldRel('" + o.id + "')")
+                                    .append("Remove"))
+                            )
             table.append(tr);
         }
-    } catch (err) {}
+    } catch (err) {
+    }
 
     $('#removeFieldLinkModal-tablelist').html(table)
 
@@ -9553,9 +9925,9 @@ $(document).on("change", "#entityDatabaseList", function (e) {
     getFullEntityTdBody();
     entityDiagramInit();
     $(".dragFeildSection")
-        .arrangeable({
-            dragSelector: ".dargFeildBtn"
-        });
+            .arrangeable({
+                dragSelector: ".dargFeildBtn"
+            });
     $('.leader-line').remove();
     getFieldRel4Select();
     //    $('.tdHeader').draggable();
@@ -9567,8 +9939,8 @@ function getFullEntityTdBody() {
         var obj = ls[i];
         var order = obj.orderNo;
         var el = (order) ?
-            $('.table-segment-' + order) :
-            $('.table-segment-idle').first();
+                $('.table-segment-' + order) :
+                $('.table-segment-idle').first();
         if (order && el.attr('pid')) {
             el = $('.table-segment-idle').first();
         }
@@ -9593,16 +9965,17 @@ function getTableFieldFullBody(tableId) {
             div.append(genUsFeild(obj.id, obj.fieldName, obj.orderNo))
         }
 
-    } catch (err) {}
+    } catch (err) {
+    }
     div.append(AddNewFieldSpan())
     return div;
 }
 
 function AddNewFieldSpan() {
     return $('<span  class="feildSection">')
-        .append($('<button class="btn Addfiledbtn">')
-            .append($('<i class="fas fa-plus">'))
-            .append('Add Field'));
+            .append($('<button class="btn Addfiledbtn">')
+                    .append($('<i class="fas fa-plus">'))
+                    .append('Add Field'));
 }
 
 function getTablesAndFields(dbid) {
@@ -9611,7 +9984,8 @@ function getTablesAndFields(dbid) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.dbId = dbid;
     var that = this;
@@ -9637,7 +10011,8 @@ function addFieldRel(fkDbId, fromFieldId, toFieldId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     json.kv.fkDbId = fkDbId;
@@ -9671,7 +10046,8 @@ function getFieldRel4Select() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     json.kv.dbId = fkDbId;
@@ -9736,7 +10112,8 @@ function updateDbFieldOrderNo(fieldId, orderNo, tableId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     json.kv.id = fieldId;
@@ -9769,7 +10146,8 @@ function updateDbField(fieldId, fieldName) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     json.kv.id = fieldId;
@@ -9800,7 +10178,8 @@ function deleteDbField(fieldId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
 
     json.kv.id = fieldId;
@@ -9836,7 +10215,8 @@ function updateDbtableDesc(tableId, desc) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     if (!tableId)
         return;
@@ -9864,7 +10244,8 @@ function updateDbtableOrderNo(tableId, orderNo) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     if (!tableId || !orderNo)
         return;
@@ -9896,7 +10277,8 @@ function updateDbtable(tableId, tableName) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     if (!tableId || !tableName)
         return;
@@ -9936,7 +10318,7 @@ function createEntityCardMatrix() {
                     .addClass("table-segment-" + idx)
                     .attr("order", idx)
                     .append(GetSingleEntityCard(idx++)))
-                .append($('<td class="tdSeqmentEmpty">').append(""));
+                    .append($('<td class="tdSeqmentEmpty">').append(""));
             trEmpty.append('<td class="tdSeqmentEmpty">').append("")
         }
 
@@ -9947,9 +10329,9 @@ function createEntityCardMatrix() {
 
 function GetSingleEntityCard(orderNo) {
     var div = $('<div class="TableAdder">')
-        .attr('order', orderNo)
-        .append($('<button class="btn tdOpenedBtn">')
-            .append('<i class="fa fa-plus" aria-hidden="true">'));
+            .attr('order', orderNo)
+            .append($('<button class="btn tdOpenedBtn">')
+                    .append('<i class="fa fa-plus" aria-hidden="true">'));
     return div;
 }
 
@@ -9965,7 +10347,8 @@ function addNewTable(tableName, orderNo, el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.dbid = db;
     json.kv.tableName = tableName;
     json.kv.orderNo = orderNo;
@@ -10018,7 +10401,8 @@ function commitDatabaseOnServer() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.dbid = dbid;
     json.kv.dbname = dbname;
     var that = this;
@@ -10073,7 +10457,8 @@ function dropDatabase(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10108,7 +10493,8 @@ function createDatabase() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     json.kv.dbName = val;
     var that = this;
@@ -10137,7 +10523,8 @@ function loadDatabaseList2ComboEntity() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var that = this;
     var data = JSON.stringify(json);
@@ -10150,6 +10537,7 @@ function loadDatabaseList2ComboEntity() {
         async: false,
         success: function (res) {
             loadDatabaseList2ComboEntityDetails(res);
+            loadDatabaseList2Comboİmport(res)
             $('#entityDatabaseList').change();
         }
     });
@@ -10162,8 +10550,8 @@ function loadDatabaseList2ComboEntityDetails(res) {
         for (var i in obj) {
             var o = obj[i];
             $('#entityDatabaseList')
-                .append($('<option>').val(o.id)
-                    .append(o.dbName))
+                    .append($('<option>').val(o.id)
+                            .append(o.dbName))
         }
     } catch (err) {
 
@@ -10214,7 +10602,8 @@ function getDBStructure4Select() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var that = this;
     var data = JSON.stringify(json);
@@ -10228,7 +10617,8 @@ function getDBStructure4Select() {
         success: function (res) {
             try {
                 SAEntity.Load(res);
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getDBStructure4Select = true;
             executeCoreOfManualProSelection();
         }
@@ -10238,14 +10628,14 @@ function getDBStructure4Select() {
 
 function addDatabaseRelation() {
     if ($('#selectFromDbModal-actiontype').val() &&
-        $('#selectFromDbModal-input-id').val() && $('#selectFromDbModal-dbid').val() &&
-        $('#selectFromDbModal-tableid').val() && $('#selectFromDbModal-fieldid').val()) {
+            $('#selectFromDbModal-input-id').val() && $('#selectFromDbModal-dbid').val() &&
+            $('#selectFromDbModal-tableid').val() && $('#selectFromDbModal-fieldid').val()) {
         addDatabaseRelationDetails($('#selectFromDbModal-input-id').val(),
-            $('#selectFromDbModal-actiontype').val(),
-            $('#selectFromDbModal-dbid').val(),
-            $('#selectFromDbModal-tableid').val(),
-            $('#selectFromDbModal-fieldid').val()
-        )
+                $('#selectFromDbModal-actiontype').val(),
+                $('#selectFromDbModal-dbid').val(),
+                $('#selectFromDbModal-tableid').val(),
+                $('#selectFromDbModal-fieldid').val()
+                )
     }
 
 
@@ -10295,12 +10685,12 @@ function addDatabaseRelationDetails(id, action, dbId, tableId, fieldId, isRefres
 
 function addSourceOfRelationAsAPI4Send() {
     if ($('#sendDataToModal-us-related-api-input-id').val() &&
-        $('#sendDataToModal-us-related-apis').val() && $('#sendDataToModal-sus-api-output-id').val()) {
+            $('#sendDataToModal-us-related-apis').val() && $('#sendDataToModal-sus-api-output-id').val()) {
 
         addSourceOfRelationAsAPI4SendDetails($('#sendDataToModal-us-related-api-input-id').val(),
-            $('#sendDataToModal-us-related-apis').val(),
-            $('#sendDataToModal-sus-api-output-id').val()
-        );
+                $('#sendDataToModal-us-related-apis').val(),
+                $('#sendDataToModal-sus-api-output-id').val()
+                );
 
     }
 }
@@ -10351,13 +10741,13 @@ function addSourceOfRelationAsAPI4SendDetails(id, sendToBacklogId, sendToInputId
 
 function addSourceOfRelationAsAPI() {
     if ($('#us-related-api-input-actiontype').val() && $('#us-related-api-input-id').val() &&
-        $('#us-related-apis').val() && $('#sus-api-output-id').val()) {
+            $('#us-related-apis').val() && $('#sus-api-output-id').val()) {
 
         addSourceOfRelationAsAPIDetails($('#us-related-api-input-id').val(),
-            $('#us-related-api-input-actiontype').val(),
-            $('#us-related-apis').val(),
-            $('#sus-api-output-id').val()
-        )
+                $('#us-related-api-input-actiontype').val(),
+                $('#us-related-apis').val(),
+                $('#sus-api-output-id').val()
+                )
 
     }
 }
@@ -10365,7 +10755,7 @@ function addSourceOfRelationAsAPI() {
 function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, selectFromInputId) {
     var json = initJSON();
     json.kv.id = id,
-        json.kv.action = action;
+            json.kv.action = action;
     json.kv.selectFromBacklogId = selectFromBacklogId;
     json.kv.selectFromInputId = selectFromInputId;
     var that = this;
@@ -10404,7 +10794,8 @@ function deleteDocument() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = global_var.current_doc_id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10436,7 +10827,8 @@ function deleteForeverStoryCard(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10469,7 +10861,8 @@ function deleteForeverDocument(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10498,7 +10891,8 @@ function sendBackStoryCard(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10528,7 +10922,8 @@ function sendBackDocument(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10561,7 +10956,8 @@ function deleteDocument() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = global_var.current_doc_id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10590,7 +10986,8 @@ function getStoryCardTrashModal() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10613,22 +11010,22 @@ function getStoryCardTrashModalDetails(res) {
     try {
         var obj = res.tbl[0].r;
         var table = $('<table>')
-            .addClass("table table-hover");
+                .addClass("table table-hover");
         for (var n = 0; n < obj.length; n++) {
             var tr = $('<tr>')
-                .append($('<td>').append(obj[n].backlogName))
-                .append($('<td>')
-                    .css('width', '20%')
-                    .append($("<a>")
-                        .attr('href', '#')
-                        .attr('onclick', "sendBackStoryCard('" + obj[n].id + "')")
-                        .append("Send back")))
-                .append($('<td>')
-                    .css('width', '20%')
-                    .append($("<a>")
-                        .attr('href', '#')
-                        .attr('onclick', "deleteForeverStoryCard('" + obj[n].id + "')")
-                        .append("Delete forever")))
+                    .append($('<td>').append(obj[n].backlogName))
+                    .append($('<td>')
+                            .css('width', '20%')
+                            .append($("<a>")
+                                    .attr('href', '#')
+                                    .attr('onclick', "sendBackStoryCard('" + obj[n].id + "')")
+                                    .append("Send back")))
+                    .append($('<td>')
+                            .css('width', '20%')
+                            .append($("<a>")
+                                    .attr('href', '#')
+                                    .attr('onclick', "deleteForeverStoryCard('" + obj[n].id + "')")
+                                    .append("Delete forever")))
 
             table.append(tr);
         }
@@ -10652,7 +11049,8 @@ function getDocumentTrashModal() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
     var data = JSON.stringify(json);
@@ -10675,22 +11073,22 @@ function getDocumentTrashModalDetails(res) {
     try {
         var obj = res.tbl[0].r;
         var table = $('<table>')
-            .addClass("table table-hover");
+                .addClass("table table-hover");
         for (var n = 0; n < obj.length; n++) {
             var tr = $('<tr>')
-                .append($('<td>').append(obj[n].documentName))
-                .append($('<td>')
-                    .css('width', '20%')
-                    .append($("<a>")
-                        .attr('href', '#')
-                        .attr('onclick', "sendBackDocument('" + obj[n].id + "')")
-                        .append("Send back")))
-                .append($('<td>')
-                    .css('width', '20%')
-                    .append($("<a>")
-                        .attr('href', '#')
-                        .attr('onclick', "deleteForeverDocument('" + obj[n].id + "')")
-                        .append("Delete forever")))
+                    .append($('<td>').append(obj[n].documentName))
+                    .append($('<td>')
+                            .css('width', '20%')
+                            .append($("<a>")
+                                    .attr('href', '#')
+                                    .attr('onclick', "sendBackDocument('" + obj[n].id + "')")
+                                    .append("Send back")))
+                    .append($('<td>')
+                            .css('width', '20%')
+                            .append($("<a>")
+                                    .attr('href', '#')
+                                    .attr('onclick', "deleteForeverDocument('" + obj[n].id + "')")
+                                    .append("Delete forever")))
 
             table.append(tr);
         }
@@ -10712,7 +11110,8 @@ function updateDocumentName(name, id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     json.kv.name = name;
     var that = this;
@@ -10737,8 +11136,8 @@ function loadProjectListToEditor() {
     for (var n = 0; n < pid.length; n++) {
         var pname = SACore.GetProjectName(pid[n]);
         var o = $('<option></option')
-            .attr('value', pid[n])
-            .text(pname);
+                .attr('value', pid[n])
+                .text(pname);
 
 
 
@@ -10777,7 +11176,8 @@ function loadTablesDB(elId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.dbId = elId;
     var that = this;
@@ -10814,7 +11214,8 @@ function loadDetailsOnProjectSelect(projectId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = projectId;
     var that = this;
     var data = JSON.stringify(json);
@@ -10846,20 +11247,20 @@ function loadTables4EditorDetailsResult(res) {
     try {
         var obj = res.tbl[0].r;
         var main_li = $('<li>')
-            .append($('<i class="fa fa-minus" aria-hidden="true"></i>'))
-            .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
-                .append($('<input  id="xnode-0" data-id="custom-0" type="checkbox">'))
-                .append(" &nbsp; All Entities"))
+                .append($('<i class="fa fa-minus" aria-hidden="true"></i>'))
+                .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
+                        .append($('<input  id="xnode-0" data-id="custom-0" type="checkbox">'))
+                        .append(" &nbsp; All Entities"))
         var ul = $('<ul style="display: block;">');
         for (var n = 0; n < obj.length; n++) {
             var li = $('<li>')
-                .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
-                    .append($('<input  class="test181" type="checkbox">')
-                        .attr('pname', replaceTags(obj[n].tableName))
-                        .attr('pdesc', Replace2Primes(replaceTags(obj[n].description)))
-                        .attr('id', obj[n].id))
-                    .attr("data-id", obj[n].id)
-                    .append(" &nbsp; " + replaceTags(obj[n].tableName)));
+                    .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
+                            .append($('<input  class="test181" type="checkbox">')
+                                    .attr('pname', replaceTags(obj[n].tableName))
+                                    .attr('pdesc', Replace2Primes(replaceTags(obj[n].description)))
+                                    .attr('id', obj[n].id))
+                            .attr("data-id", obj[n].id)
+                            .append(" &nbsp; " + replaceTags(obj[n].tableName)));
             ul.append(li);
         }
         main_li.append(ul)
@@ -10874,18 +11275,18 @@ function loadStoryCards4EditorDetailsResult(res) {
     try {
         var obj = res.tbl[0].r;
         var main_li = $('<li>')
-            .append($('<i class="fa fa-minus" aria-hidden="true"></i>'))
-            .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
-                .append($('<input  id="xnode-0" data-id="custom-0" type="checkbox">'))
-                .append(" &nbsp; All Story Cards"))
+                .append($('<i class="fa fa-minus" aria-hidden="true"></i>'))
+                .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
+                        .append($('<input  id="xnode-0" data-id="custom-0" type="checkbox">'))
+                        .append(" &nbsp; All Story Cards"))
         var ul = $('<ul style="display: block;">');
         for (var n = 0; n < obj.length; n++) {
             var li = $('<li>')
-                .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
-                    .append($('<input  class="test181" type="checkbox">')
-                        .attr('id', obj[n].id))
-                    .attr("data-id", obj[n].id)
-                    .append(" &nbsp; " + obj[n].backlogName));
+                    .append($('<label style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">')
+                            .append($('<input  class="test181" type="checkbox">')
+                                    .attr('id', obj[n].id))
+                            .attr("data-id", obj[n].id)
+                            .append(" &nbsp; " + obj[n].backlogName));
             ul.append(li);
         }
         main_li.append(ul)
@@ -10913,9 +11314,9 @@ function documentOnwhile(event) {
 function setMainBodyCSS() {
     if (global_var.current_modal === 'loadDocEditor') {
         $('#mainPageContainer')
-            .attr("height", "2000px")
-            .css("height", "2000px")
-            .css("background-color", "#f8f9fa");
+                .attr("height", "2000px")
+                .css("height", "2000px")
+                .css("background-color", "#f8f9fa");
     } else {
         $('#mainBodyDivForAll').css("background-color", "");
     }
@@ -10974,7 +11375,8 @@ function showGeneralStatisticsDetailsModal(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = projectId;
     json.kv.actionType = actionType;
@@ -11024,7 +11426,8 @@ function showGeneralStatisticsDetailsModalByAssignee(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = projectId;
     json.kv.fkAssigneeId = assigneeId;
@@ -11130,23 +11533,23 @@ function showGeneralStatisticsDetailsModalByTask4SC(el) {
 function showGeneralStatisticsDetailsModalDetailsByTask4SC(res) {
     var obj = res.tbl[0].r;
     var table = $('<table>')
-        .addClass("table table-hover");
+            .addClass("table table-hover");
     var idx = 1;
     for (var i in obj) {
         var tr = $('<tr>')
-            .addClass("general-statistics-story-card-list")
-            .attr("pid", obj[i].id)
-            .css("cursor", "pointer")
+                .addClass("general-statistics-story-card-list")
+                .attr("pid", obj[i].id)
+                .css("cursor", "pointer")
 
-            .append($('<td>').append((idx++)))
-            .append($('<td>').append((obj[i].backlogName)));
+                .append($('<td>').append((idx++)))
+                .append($('<td>').append((obj[i].backlogName)));
         tr.attr("onclick", "showTaskDetails4Statistic(this)")
 
         table.append(tr);
     }
     $('#generalStatisticsDetailsModal-list').html(table);
     $('#generalStatisticsDetailsModal-list')
-        .find('.general-statistics-story-card-list').first().click();
+            .find('.general-statistics-story-card-list').first().click();
 }
 
 
@@ -11172,7 +11575,8 @@ function showGeneralStatisticsDetailsModalByTask(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = projectId;
     json.kv.actionType = actionType;
@@ -11274,24 +11678,24 @@ function showBacklogDetails4Statistic(el) {
 function showGeneralStatisticsDetailsModalDetailsByAssignee(res, projectId) {
     var obj = res.tbl[0].r;
     var table = $('<table>')
-        .addClass("table table-hover");
+            .addClass("table table-hover");
     var idx = 1;
     for (var i in obj) {
         var tr = $('<tr>')
-            .addClass("general-statistics-story-card-list")
-            .attr("projectId", projectId)
-            .attr("pid", obj[i].id)
-            .css("cursor", "pointer")
+                .addClass("general-statistics-story-card-list")
+                .attr("projectId", projectId)
+                .attr("pid", obj[i].id)
+                .css("cursor", "pointer")
 
-            .append($('<td>').append((idx++)))
-            .append($('<td>').append((obj[i].taskName)));
+                .append($('<td>').append((idx++)))
+                .append($('<td>').append((obj[i].taskName)));
         tr.attr("onclick", "showAssigneeTaskDetails4Statistic(this)")
 
         table.append(tr);
     }
     $('#generalStatisticsDetailsModal-list').html(table);
     $('#generalStatisticsDetailsModal-list')
-        .find('.general-statistics-story-card-list').first().click();
+            .find('.general-statistics-story-card-list').first().click();
 }
 
 function showAssigneeTaskDetails4Statistic(el) {
@@ -11342,9 +11746,9 @@ function showAssigneeTaskCardIn(taskId, divId) {
     loadTaskCardDetails(taskId);
 
     $("#" + divId).find('.Story-card-Header-task')
-        .css('padding', '0px');
+            .css('padding', '0px');
     $("#" + divId).find('.card-UserStory-header-text')
-        .css('font-size', '18px');
+            .css('font-size', '18px');
     $("#" + divId).find('.StorycardHeader').removeClass('sticky-top');
 
 
@@ -11354,39 +11758,39 @@ function showAssigneeTaskCardIn(taskId, divId) {
 function showGeneralStatisticsDetailsModalDetailsByTask(res) {
     var obj = res.tbl[0].r;
     var table = $('<table>')
-        .addClass("table table-hover");
+            .addClass("table table-hover");
     var idx = 1;
     for (var i in obj) {
         var tr = $('<tr>')
-            .addClass("general-statistics-story-card-list")
-            .attr("pid", obj[i].id)
-            .css("cursor", "pointer")
+                .addClass("general-statistics-story-card-list")
+                .attr("pid", obj[i].id)
+                .css("cursor", "pointer")
 
-            .append($('<td>').append((idx++)))
-            .append($('<td>').append((obj[i].backlogName)));
+                .append($('<td>').append((idx++)))
+                .append($('<td>').append((obj[i].backlogName)));
         tr.attr("onclick", "showTaskDetails4Statistic(this)")
 
         table.append(tr);
     }
     $('#generalStatisticsDetailsModal-list').html(table);
     $('#generalStatisticsDetailsModal-list')
-        .find('.general-statistics-story-card-list').first().click();
+            .find('.general-statistics-story-card-list').first().click();
 }
 
 function showGeneralStatisticsDetailsModalDetails(res, actionType) {
     var obj = res.tbl[0].r;
     var table = $('<table>')
-        .addClass("table table-hover");
+            .addClass("table table-hover");
     var idx = 1;
     var t = ["new", "change", "bug"]
     for (var i in obj) {
         var tr = $('<tr>')
-            .addClass("general-statistics-story-card-list")
-            .attr("pid", obj[i].id)
-            .css("cursor", "pointer")
+                .addClass("general-statistics-story-card-list")
+                .attr("pid", obj[i].id)
+                .css("cursor", "pointer")
 
-            .append($('<td>').append((idx++)))
-            .append($('<td>').append((obj[i].backlogName)));
+                .append($('<td>').append((idx++)))
+                .append($('<td>').append((obj[i].backlogName)));
         if (t.includes(actionType)) {
             tr.attr("onclick", "showTaskDetails4Statistic(this)")
         } else {
@@ -11396,7 +11800,7 @@ function showGeneralStatisticsDetailsModalDetails(res, actionType) {
     }
     $('#generalStatisticsDetailsModal-list').html(table);
     $('#generalStatisticsDetailsModal-list')
-        .find('.general-statistics-story-card-list').first().click();
+            .find('.general-statistics-story-card-list').first().click();
 }
 
 function loadStoryCard4SAD(fkProjectId) {
@@ -11410,7 +11814,8 @@ function loadStoryCard4SAD(fkProjectId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = fkProjectId;
     var that = this;
@@ -11437,8 +11842,8 @@ function loadStoryCard4SADDetails(res) {
                 continue;
             }
             el.prepend($('<option>')
-                .val(obj[n].id)
-                .text(obj[n].backlogName));
+                    .val(obj[n].id)
+                    .text(obj[n].backlogName));
         }
 
     } catch (err) {
@@ -11530,7 +11935,8 @@ function openDocument() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = "";
     var that = this;
@@ -11558,13 +11964,13 @@ function loadDocuments(res) {
         for (var n = 0; n < obj.length; n++) {
             var o = obj[n];
             var tr = $("<tr>")
-                .append($("<td>")
-                    .append($('<a>')
-                        .attr("href", "#")
-                        .css("cursor", "pointer")
-                        .attr("onclick", "loadDoc('" + o.id + "')")
-                        .append(o.documentName))
-                )
+                    .append($("<td>")
+                            .append($('<a>')
+                                    .attr("href", "#")
+                                    .css("cursor", "pointer")
+                                    .attr("onclick", "loadDoc('" + o.id + "')")
+                                    .append(o.documentName))
+                            )
             table.append(tr);
         }
 
@@ -11584,7 +11990,8 @@ function loadDoc(docId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = docId;
     var that = this;
@@ -11630,7 +12037,8 @@ function saveDocument() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = '';
     json.kv.id = global_var.current_doc_id;
@@ -11767,59 +12175,59 @@ function setInputListToInputRelation() {
 
             div.html('');
             var table = $('<table>')
-                .addClass('table table-hover');
+                    .addClass('table table-hover');
             var obj = res.tbl[0].r;
             for (var i in obj) {
                 var o = obj[i];
                 var selectFromApi = SACore.GetBacklogname(o.selectFromBacklogId);
                 var selectFromInput = SAInput.GetInputName(o.selectFromInputId);
                 var selectFromZad = (selectFromInput) ?
-                    $('<a>')
-                    .attr("href", "#")
-                    .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.selectFromBacklogId + "')")
-                    .append($('<span>')
-                        .text(selectFromApi + "." + selectFromInput)) :
-                    $('<i>').css('color', "white").text("Select from API");
+                        $('<a>')
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.selectFromBacklogId + "')")
+                        .append($('<span>')
+                                .text(selectFromApi + "." + selectFromInput)) :
+                        $('<i>').css('color', "white").text("Select from API");
 
                 var sendToApi = SACore.GetBacklogname(o.sendToBacklogId);
                 var sendToInput = SAInput.GetInputName(o.sendToInputId);
                 var sendToZad = (sendToInput) ?
-                    $('<a>')
-                    .attr("href", "#")
-                    .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.sendToBacklogId + "')")
-                    .append($('<span>')
-                        .text(sendToApi + "." + sendToInput)) :
-                    $('<i>').css('color', "gray").text("Send to API");
+                        $('<a>')
+                        .attr("href", "#")
+                        .attr("onclick", "new UserStory().refreshCurrentBacklogById('" + o.sendToBacklogId + "')")
+                        .append($('<span>')
+                                .text(sendToApi + "." + sendToInput)) :
+                        $('<i>').css('color', "gray").text("Send to API");
 
 
 
                 var tr = $('<tr>')
-                    .append($('<td>')
-                        .append($('<span>')
-                            .attr('pid', o.id)
-                            .addClass('ApiOutTDspan')
-                            .append(selectFromZad))
-                        .append($('<span>')
-                            .attr('onclick', "deleteSelectFromApiOnInputRelation(this,'" + o.id + "')")
-                            .addClass('DeleteOutAPi')
-                            .addClass('RemoveApiTD'))
-                    )
+                        .append($('<td>')
+                                .append($('<span>')
+                                        .attr('pid', o.id)
+                                        .addClass('ApiOutTDspan')
+                                        .append(selectFromZad))
+                                .append($('<span>')
+                                        .attr('onclick', "deleteSelectFromApiOnInputRelation(this,'" + o.id + "')")
+                                        .addClass('DeleteOutAPi')
+                                        .addClass('RemoveApiTD'))
+                                )
 
-                    .append($('<td>')
-                        .append($('<i class="fa fa-chevron-right">'))
-                        .append($('<span>').text(" " + o.inputName + " "))
-                        .append($('<i class="fa fa-chevron-right">')))
+                        .append($('<td>')
+                                .append($('<i class="fa fa-chevron-right">'))
+                                .append($('<span>').text(" " + o.inputName + " "))
+                                .append($('<i class="fa fa-chevron-right">')))
 
-                    .append($('<td>')
-                        .append($('<span>')
-                            .attr('pid', o.id)
-                            .addClass('ApiInTDspan')
-                            .append(sendToZad))
-                        .append($('<span>')
-                            .attr('onclick', "deleteSendToApiOnInputRelation(this,'" + o.id + "')")
-                            .addClass('DeleteINAPi')
-                            .addClass('RemoveApiTD'))
-                    )
+                        .append($('<td>')
+                                .append($('<span>')
+                                        .attr('pid', o.id)
+                                        .addClass('ApiInTDspan')
+                                        .append(sendToZad))
+                                .append($('<span>')
+                                        .attr('onclick', "deleteSendToApiOnInputRelation(this,'" + o.id + "')")
+                                        .addClass('DeleteINAPi')
+                                        .addClass('RemoveApiTD'))
+                                )
 
 
                 table.append(tr)
@@ -11880,6 +12288,34 @@ $(document).on('click', '.redirectClass4CSS', function (evt) {
 });
 
 
+$(document).on('click', '.loadSqlBoard', function (evt) {
+    //    return;
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadSqlBoard";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    showToggleMain();
+
+
+
+
+    $.get("resource/child/sqlboard.html", function (html_string) {
+
+
+
+        new UserStory().clearAll();
+        $('#mainBodyDivForAll').html(html_string);
+
+        startSqlStory();
+
+
+
+
+    });
+
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
+
+
+});
 
 $(document).on('click', '.loadLivePrototype', function (evt) {
     //    return;
@@ -11947,10 +12383,11 @@ function genToolbarStatus() {
 function loadStoryCardByProject4oIpo(e) {
 
     global_var.current_project_id = $(e).val();
-    getUnloadedBacklogListOnInit();
+//    getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
-    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+//    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+//    loadFromIndexedDBtoRAM4LivePrototype();
     loadDetailsOnProjectSelect4Ipo(global_var.current_project_id);
 
 
@@ -12014,8 +12451,8 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
 
                 var pname = o.backlogName;
                 var op = $('<option></option>')
-                    .attr('value', o.id)
-                    .text(pname);
+                        .attr('value', o.id)
+                        .text(pname);
                 if (f) {
                     op.attr("selected", true);
                     f = false;
@@ -12061,15 +12498,15 @@ function loadApiListOnProjectSelect4Ipo(fkProjectId) {
                 var o = obj[n];
                 if (o.isApi === '1') {
                     var td = $('<tr>')
-                        .append($('<td>')
-                            .append($('<a>')
-                                .text(o.backlogName)
-                                .attr("href", "#")
-                                .attr("pid", pid)
-                                .attr("bid", o.id)
-                                .attr('is_api', '1')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                            ))
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .text(o.backlogName)
+                                            .attr("href", "#")
+                                            .attr("pid", pid)
+                                            .attr("bid", o.id)
+                                            .attr('is_api', '1')
+                                            .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                            ))
                     tbl.append(td);
                 }
 
@@ -12100,7 +12537,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
             var cmd = $('#storyCardListSelectBox');
             cmd.html('');
 
-            var cmd2 = $('.us-gui-component-rel-sus-id');
+            var cmd2 = $('select.us-gui-component-rel-sus-id');
             cmd2.html('');
 
             new UserStory().setUSLists(res);
@@ -12128,15 +12565,15 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                     cmd.append(op);
                 } else if (o.isApi === '1') {
                     var td = $('<tr>')
-                        .append($('<td>')
-                            .append($('<a>')
-                                .text(o.backlogName)
-                                .attr("href", "#")
-                                .attr("pid", pid)
-                                .attr("bid", o.id)
-                                .attr('is_api', '1')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                            ))
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .text(o.backlogName)
+                                            .attr("href", "#")
+                                            .attr("pid", pid)
+                                            .attr("bid", o.id)
+                                            .attr('is_api', '1')
+                                            .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                            ))
                     tbl.append(td);
                 }
 
@@ -12189,8 +12626,8 @@ function loadDetailsOnProjectSelect4Dashboard(fkProjectId) {
                 //   if (o.isApi !== '1') {
                 var pname = o.backlogName;
                 var op = $('<option></option>')
-                    .attr('value', o.id)
-                    .text(pname);
+                        .attr('value', o.id)
+                        .text(pname);
                 if (f) {
                     op.attr("selected", true);
                     f = false;
@@ -12238,7 +12675,8 @@ var hstry = {
     setActionTypeTable: function (id, object) {
         try {
             this.pfActionType[id] = object;
-        } catch (e) {}
+        } catch (e) {
+        }
     },
     SetTableFields: function (inputId, hsId) {
         if (inputId in this.prfkInputId) {
@@ -12251,7 +12689,8 @@ var hstry = {
     setHistorList: function (id, object) {
         try {
             this.prListById[id] = object;
-        } catch (e) {}
+        } catch (e) {
+        }
     }
 }
 
@@ -12297,15 +12736,15 @@ function loadHistoryByTasksId(backlog_id) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-task tbody')
-                    .append($('<tr>')
-                        .append("<td>" + obj[i].taskName + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].taskName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12336,16 +12775,16 @@ function loadHistoryByCssId(project_id) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-css tbody')
-                    .append($('<tr>')
-                        .append("<td>" + obj[i].inputName + "</td>")
-                        .append("<td>" + obj[i].cssBody + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].inputName + "</td>")
+                                .append("<td>" + obj[i].cssBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12377,16 +12816,16 @@ function loadHistoryBysqlId(fkTableId) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-sql tbody')
-                    .append($('<tr>')
-                        .append("<td>" + obj[i].tableName + "</td>")
-                        .append("<td>" + obj[i].fieldName + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].tableName + "</td>")
+                                .append("<td>" + obj[i].fieldName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12418,16 +12857,16 @@ function loadHistoryByDBId(fkTableId) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-db tbody')
-                    .append($('<tr>')
-                        .append("<td>" + obj[i].tableName + "</td>")
-                        .append("<td>" + obj[i].fieldName + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].tableName + "</td>")
+                                .append("<td>" + obj[i].fieldName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12443,7 +12882,8 @@ function loadDatabaseList2ComboEntityDAsh() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var that = this;
     var data = JSON.stringify(json);
@@ -12461,8 +12901,8 @@ function loadDatabaseList2ComboEntityDAsh() {
                 for (var i in obj) {
                     var o = obj[i];
                     $('#database-tm-list')
-                        .append($('<option>').val(o.id)
-                            .append(o.dbName))
+                            .append($('<option>').val(o.id)
+                                    .append(o.dbName))
                 }
 
 
@@ -12486,7 +12926,8 @@ function getDbTablesList4CodeDash(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.dbId = dbid;
     var that = this;
     var data = JSON.stringify(json);
@@ -12503,8 +12944,8 @@ function getDbTablesList4CodeDash(el) {
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 $('#database-table-list')
-                    .append($('<option>').val(obj[i].id)
-                        .append(obj[i].tableName))
+                        .append($('<option>').val(obj[i].id)
+                                .append(obj[i].tableName))
             }
 
             $('#database-table-list').selectpicker('refresh').change();
@@ -12538,19 +12979,19 @@ function loadHistoryByBacklogStId(backlog_id) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-backlogst tbody')
-                    .append($('<tr>')
-                        .append("<td>" + SACore.GetProjectName(obj[i].fkProjectId) + "</td>")
-                        .append("<td>" + SACore.GetBacklogname(obj[i].fkBacklogId) + "</td>")
+                        .append($('<tr>')
+                                .append("<td>" + SACore.GetProjectName(obj[i].fkProjectId) + "</td>")
+                                .append("<td>" + SACore.GetBacklogname(obj[i].fkBacklogId) + "</td>")
 
-                        .append("<td>" + obj[i].inputName + "</td>")
-                        .append("<td>" + obj[i].descriptionName + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td>" + obj[i].inputName + "</td>")
+                                .append("<td>" + obj[i].descriptionName + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12582,8 +13023,8 @@ function getProjectUsersForElById(id, elm) {
                 for (var i in obj) {
                     var o = obj[i];
                     $(elm)
-                        .append($('<option>').val(o.fkUserId)
-                            .append(o.userName))
+                            .append($('<option>').val(o.fkUserId)
+                                    .append(o.userName))
                 }
 
 
@@ -12621,8 +13062,8 @@ function getProjectUsersForID(id) {
                 for (var i in obj) {
                     var o = obj[i];
                     $('#statistics-createdby-task')
-                        .append($('<option>').val(o.fkUserId)
-                            .append(o.userName))
+                            .append($('<option>').val(o.fkUserId)
+                                    .append(o.userName))
                 }
 
 
@@ -12660,16 +13101,16 @@ function loadHistoryByJsId(project_id) {
             var obj = res.tbl[0].r;
             for (let i = 0; i < obj.length; i++) {
                 $('#history-main-table-js tbody')
-                    .append($('<tr>')
-                        .append("<td>" + obj[i].jsName + "</td>")
-                        .append("<td>" + obj[i].jsBody + "</td>")
-                        .append("<td>" + obj[i].newValue + "</td>")
-                        .append("<td>" + obj[i].oldValue + "</td>")
-                        .append("<td>" + obj[i].historyType + "</td>")
-                        .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                        .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                        .append($('<tr>')
+                                .append("<td>" + obj[i].jsName + "</td>")
+                                .append("<td>" + obj[i].jsBody + "</td>")
+                                .append("<td>" + obj[i].newValue + "</td>")
+                                .append("<td>" + obj[i].oldValue + "</td>")
+                                .append("<td>" + obj[i].historyType + "</td>")
+                                .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
-                    )
+                                )
 
 
             }
@@ -12741,29 +13182,29 @@ function GenerateHistoryTable() {
         if (tAct === "output") {
 
             $("#history-main-table-output tbody").append($("<tr>")
-                .append("<td  class='name-td'>" + nm.inputName + "</td>")
-                .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
+                    .append("<td  class='name-td'>" + nm.inputName + "</td>")
+                    .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
         }
         if (tAct === "input") {
 
 
             $("#history-main-table-input tbody").append($("<tr>")
-                .append("<td  class='name-td'>" + nm.inputName + "</td>")
-                .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
+                    .append("<td  class='name-td'>" + nm.inputName + "</td>")
+                    .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
 
         }
         if (tAct === "process") {
 
             $("#history-main-table-process tbody").append($("<tr>")
-                .append("<td  class='name-td'>" + nm.historyType + "</td>")
-                .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
+                    .append("<td  class='name-td'>" + nm.historyType + "</td>")
+                    .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
 
         }
         if (tAct === "backlog") {
 
             $("#history-main-table-backlog tbody").append($("<tr>")
-                .append("<td  class='name-td'>" + nm.historyType + "</td>")
-                .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
+                    .append("<td  class='name-td'>" + nm.historyType + "</td>")
+                    .append($('<td>').append($("<div>").addClass("div-content-body-td").attr("id", 'body-id' + List[index]))))
 
         }
     }
@@ -12775,14 +13216,14 @@ function GenerateHistoryTable() {
             var obj = hstry.prListById[dt[i]];
 
             $("#body-id" + key).append($("<div>").addClass("history-body-content").append((i + 1) + "." + (obj.historyBody == "" ? "" : "<span class='desc-td'><b>Description:</b> " + obj.historyBody + " </span>"))
-                .append(obj.descriptionName == "" ? "" : "<span class='desc-td'><b>Description Name:</b> " + obj.descriptionName + " </span>")
-                .append(obj.newValue == "" ? "" : "<span class='desc-td-new'><b>New value:</b> " + obj.newValue + " </span>")
-                .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
-                .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
-                .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>")
-                .append("<img src='https://app.sourcedagile.com/api/get/files/" + obj.logoUrl + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
+                    .append(obj.descriptionName == "" ? "" : "<span class='desc-td'><b>Description Name:</b> " + obj.descriptionName + " </span>")
+                    .append(obj.newValue == "" ? "" : "<span class='desc-td-new'><b>New value:</b> " + obj.newValue + " </span>")
+                    .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
+                    .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
+                    .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>")
+                    .append("<img src='https://app.sourcedagile.com/api/get/files/" + obj.logoUrl + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
 
-            )
+                    )
         }
     }
 }
@@ -12825,8 +13266,16 @@ function clearLivePrototypeView42() {
     $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
 }
 
+function clearLivePrototypeViewForDebug() {
+    $(".leader-line").remove();
+//    $('#SUS_IPO_GUI_Design').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-gui-dept-rw').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c1').html('');
+    $('#SUS_IPO_GUI_Design1').find('.sa-c3').html('');
+}
+
 function loadGuiStoryCardsToAnimation() {
-    var el = $('.us-gui-component-rel-sus-id');
+    var el = $('select.us-gui-component-rel-sus-id');
 
 
 }
@@ -12888,12 +13337,14 @@ function mergeTableDataWithObject(sourceData, sourceColumn, destinationData, des
             try {
                 var relCol = o[sourceColumn];
                 valDes = destDataKV[relCol];
-            } catch (err) {}
+            } catch (err) {
+            }
             o = $.extend(o, valDes);
             sourceData[i] = o;
 
         }
-    } catch (err) {}
+    } catch (err) {
+    }
     return sourceData;
 }
 
@@ -12916,13 +13367,15 @@ function mergeTableDataWithFields(sourceData, sourceColumn, destinationData, des
             try {
                 var relCol = o[sourceColumn];
                 valDes = destDataKV[relCol][destinationRelCol];
-            } catch (err) {}
+            } catch (err) {
+            }
 
             o[finalColumnName] = valDes;
             sourceData[i] = o;
 
         }
-    } catch (err) {}
+    } catch (err) {
+    }
     return sourceData;
 }
 
@@ -12949,9 +13402,11 @@ function mergeTableData(sourceData, destinationData) {
                     o = $.extend(o, destDataKV[id]);
                 }
                 sourceData[i] = o;
-            } catch (err) {}
+            } catch (err) {
+            }
         }
-    } catch (err) {}
+    } catch (err) {
+    }
     return sourceData;
 }
 
@@ -13058,6 +13513,9 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
+        $('#date_timepicker_start_end-usmn').daterangepicker({
+
+        }).val('').change();
 
     });
 });
@@ -13081,7 +13539,7 @@ $(document).on('click', '.loadBugChange', function (evt) {
         getBugList();
 
         if (global_var.current_issue_is_hide !== '1' &&
-            (global_var.current_issue_id)) {
+                (global_var.current_issue_id)) {
             $('.issue_' + global_var.current_issue_id).click();
             global_var.current_issue_is_hide = "1";
             global_var.current_issue_id = "";
@@ -13229,6 +13687,7 @@ $(document).on('click', '.loadBusinessCase', function (evt) {
         hideToggleMain();
         commmonOnloadAction(this);
         getNewExecutiveTable();
+        setBCasescripts();
     });
 });
 
@@ -13287,7 +13746,7 @@ $(document).on('click', '.loadProjectManagement', function (evt) {
 
 
         if (global_var.current_issue_is_hide !== '1' &&
-            (global_var.current_issue_id)) {
+                (global_var.current_issue_id)) {
             $('.issue_' + global_var.current_issue_id).click();
             global_var.current_issue_is_hide = "1";
             global_var.current_issue_id = "";
@@ -13321,24 +13780,24 @@ function loadUsersAsAssignee() {
     $('.Assigne-card-story-select-content').html('');
     var keys = SAProjectUser.GetKeys();
     var div1 = $('<div class="Assigne-content-user">')
-        .attr('pid', "-1")
-        .append($('<img class="Assigne-card-story-select-img">')
-            .attr('src', fileUrl(new User().getDefaultUserprofileName())))
-        .append($('<span>').append(" Unassigned"));
+            .attr('pid', "-1")
+            .append($('<img class="Assigne-card-story-select-img">')
+                    .attr('src', fileUrl(new User().getDefaultUserprofileName())))
+            .append($('<span>').append(" Unassigned"));
     $('.Assigne-card-story-select-content').append(div1);
     for (var i = 0; i < keys.length; i++) {
         var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
         var userName = SAProjectUser.GetDetails(keys[i], "userName");
         var img = (userImage) ?
-            fileUrl(userImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
         var div = $('<div class="Assigne-content-user">')
-            .attr('pid', keys[i])
-            .append($('<img class="Assigne-card-story-select-img">')
-                .attr('src', img))
-            .append($('<span>')
-                .append(" ")
-                .append(userName));
+                .attr('pid', keys[i])
+                .append($('<img class="Assigne-card-story-select-img">')
+                        .attr('src', img))
+                .append($('<span>')
+                        .append(" ")
+                        .append(userName));
         $('.Assigne-card-story-select-content').append(div)
     }
 }
@@ -13347,24 +13806,24 @@ function loadUsersAsOwner() {
     $('#story-card-owner-list').html('');
     var keys = SAProjectUser.GetKeys();
     var div1 = $('<div class="owner-content-user">')
-        .attr('pid', "-1")
-        .append($('<img class="Assigne-card-story-select-img">')
-            .attr('src', fileUrl(new User().getDefaultUserprofileName())))
-        .append($('<span>').append(" Unassigned"));
+            .attr('pid', "-1")
+            .append($('<img class="Assigne-card-story-select-img">')
+                    .attr('src', fileUrl(new User().getDefaultUserprofileName())))
+            .append($('<span>').append(" Unassigned"));
     $('#story-card-owner-list').append(div1);
     for (var i = 0; i < keys.length; i++) {
         var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
         var userName = SAProjectUser.GetDetails(keys[i], "userName");
         var img = (userImage) ?
-            fileUrl(userImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
         var div = $('<div class="owner-content-user">')
-            .attr('pid', keys[i])
-            .append($('<img class="Assigne-card-story-select-img">')
-                .attr('src', img))
-            .append($('<span>')
-                .append(" ")
-                .append(userName));
+                .attr('pid', keys[i])
+                .append($('<img class="Assigne-card-story-select-img">')
+                        .attr('src', img))
+                .append($('<span>')
+                        .append(" ")
+                        .append(userName));
         $('#story-card-owner-list').append(div)
     }
 }
@@ -13481,11 +13940,11 @@ function setStoryCardOwner() {
     var userImage = SAProjectUser.GetDetails(fkOwnerId, "userImage");
     var userName = SAProjectUser.GetDetails(fkOwnerId, "userName");
     var img = (userImage) ?
-        fileUrl(userImage) :
-        fileUrl(new User().getDefaultUserprofileName());
+            fileUrl(userImage) :
+            fileUrl(new User().getDefaultUserprofileName());
     var userName1 = (userName) ?
-        userName :
-        ' Unassigned';
+            userName :
+            ' Unassigned';
     $('#story-card-owner').find('img').attr('src', img);
     $('#story-card-owner').find('span').html(' ' + userName1);
 }
@@ -13546,14 +14005,14 @@ function setProjectManagementFilterProject() {
     var select = $('#prMn_filter_project_id');
     var keys = Object.keys(SACore.Project);
     select.append($("<option>")
-        .val("")
-        .text("All Projects"))
+            .val("")
+            .text("All Projects"))
     for (var id in keys) {
         var pid = keys[id];
 
         select.append($("<option>")
-            .val(pid)
-            .text(SACore.Project[pid]))
+                .val(pid)
+                .text(SACore.Project[pid]))
     }
 
 }
@@ -13566,8 +14025,8 @@ function setProjectListByID(elid) {
         var pid = keys[id];
 
         select.append($("<option>")
-            .val(pid)
-            .text(SACore.Project[pid]))
+                .val(pid)
+                .text(SACore.Project[pid]))
     }
     select.selectpicker('refresh')
 }
@@ -13580,7 +14039,8 @@ function getStatisticList(idlist) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = idlist;
 
     var data = JSON.stringify(json);
@@ -13603,41 +14063,41 @@ function getStatisticList(idlist) {
                     var id = dt[index].r[0].fkBacklogId;
                     var le = dt[index].r[0];
                     $("#overall" + id).html($("<div>")
-                        .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b>Total</b>(' + le.overall + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
-                    )
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
                 }
                 if (ifle == "changes") {
                     var id = dt[index].r[0].fkBacklogId;
                     var le = dt[index].r[0];
                     $("#changes" + id).html($("<div>")
-                        .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b >Total</b>(' + le.overall + ')</span><br>')
-                        .append('<span class="task-for-backlog-event us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
-                        .append('<span class="task-for-backlog-event us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
-                    )
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b >Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
                 }
                 if (ifle == "bug") {
                     var id = dt[index].r[0].fkBacklogId;
                     var le = dt[index].r[0];
                     $("#bug" + id).html($("<div>")
-                        .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
-                    )
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
                 }
                 if (ifle == "new") {
                     var id = dt[index].r[0].fkBacklogId;
                     var le = dt[index].r[0];
                     $("#new" + id).html($("<div>")
-                        .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
-                        .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
-                    )
+                            .append('<span class="task-for-backlog-event-prm stat_group_title " action="overall" pid=' + le.fkBacklogId + ' status="total"><b>Total</b>(' + le.overall + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-ongoing"  pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span><br>')
+                            .append('<span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span>')
+                            )
                 }
 
             }
@@ -13663,7 +14123,8 @@ function getProjectManagementList() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = priD;
     json.kv.startLimit = bug_filter.page_no * 2;
 
@@ -13718,11 +14179,11 @@ function getProjectManagmentListDetails(res, stLimit) {
     table.append(getProjectManagementListDetailsHeader());
     // // thead to appaend----main header
     var sumEstHours = 0,
-        sumSpentHours = 0,
-        sumEstCount = 0,
-        sumExecCount = 0,
-        sumEstBudget = 0,
-        sumSpentBudget = 0;
+            sumSpentHours = 0,
+            sumEstCount = 0,
+            sumExecCount = 0,
+            sumEstBudget = 0,
+            sumSpentBudget = 0;
 
 
 
@@ -13741,8 +14202,8 @@ function getProjectManagmentListDetails(res, stLimit) {
 
         var rs = global_var.bug_task_sprint_assign_checked === 1
         /* ?
-                div.html() :
-                ""; */
+         div.html() :
+         ""; */
 
         sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
         sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
@@ -13756,82 +14217,82 @@ function getProjectManagmentListDetails(res, stLimit) {
 
         var userImage = SAProjectUser.GetDetails(o.fkOwnerId, "userImage");
         var img = (userImage) ?
-            fileUrl(userImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
 
         var createByImage = SAProjectUser.GetDetails(o.createdBy, "userImage");
         var proJectName = SACore.GetProjectName(o.fkProjectId);
         var createdByImg = (createByImage) ?
-            fileUrl(createByImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(createByImage) :
+                fileUrl(new User().getDefaultUserprofileName());
 
         var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.id + '\',this)">' + replaceTags(o.backlogName) + '</a>';
         var task_id = getTaskCode(o.id);
 
         var t = $('<tr>')
 
-            .attr("id", o.id)
-            .attr("projectId", o.fkProjectId)
-            .attr("stIdr", o.fkBacklogId)
-            .addClass('bug-tr')
-            .append($('<td>').attr("style", "min-width:50px;padding:5px;").append(row + '<input class="checkbox-issue-task" type="checkbox">'))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-status')
-                .append($('<span>')
-                    .addClass('us-item-status-' + o.backlogNo)
-                    .append(o.backlogNo)))
-            .append($('<td>')
-                .addClass('bug-list-column')
-                .addClass('bug-list-column-task-name')
-                .css("max-width", '400px')
-                .append(backlogName, ' ')
-                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                .attr("id", o.id)
+                .attr("projectId", o.fkProjectId)
+                .attr("stIdr", o.fkBacklogId)
+                .addClass('bug-tr')
+                .append($('<td>').attr("style", "min-width:50px;padding:5px;").append(row + '<input class="checkbox-issue-task" type="checkbox">'))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-status')
+                        .append($('<span>')
+                                .addClass('us-item-status-' + o.backlogNo)
+                                .append(o.backlogNo)))
+                .append($('<td>')
+                        .addClass('bug-list-column')
+                        .addClass('bug-list-column-task-name')
+                        .css("max-width", '400px')
+                        .append(backlogName, ' ')
+                        .append("<input type='text' class=' task-name-issue select-box-issue'>")
 
 
-            )
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id', 'overall' + o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id', 'bug' + o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id', 'changes' + o.id).append('No-task')))
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-task-nature')
-                .append($("<div>").attr('id', 'new' + o.id).append('No-task')))
+                        )
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'overall' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'bug' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'changes' + o.id).append('No-task')))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-task-nature')
+                        .append($("<div>").attr('id', 'new' + o.id).append('No-task')))
 
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-story-card')
-                .append("<span class='get-data-group'>" + proJectName + "</span>"))
-
-
-
-            .append($('<td>').addClass('bug-list-column')
-                .css('white-space', 'nowrap')
-                .addClass('bug-list-column-owner-by ')
-                .append($("<div>").addClass("get-data-group")
-                    .append((userName) ? $('<img class="Assigne-card-story-select-img">')
-                        .attr('src', img) : "")
-                    .append(" ")
-                    .append(userName))
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-story-card')
+                        .append("<span class='get-data-group'>" + proJectName + "</span>"))
 
 
-            )
-            .append($('<td>').addClass('bug-list-column')
-                .css('white-space', 'nowrap')
-                .addClass('bug-list-column-created-by ')
-                .append($("<div>").addClass("get-data-group")
-                    .append((createdName) ? $('<img class="Assigne-card-story-select-img">')
-                        .attr('src', createdByImg) : "")
-                    .append(" ")
-                    .append(createdName))
+
+                .append($('<td>').addClass('bug-list-column')
+                        .css('white-space', 'nowrap')
+                        .addClass('bug-list-column-owner-by ')
+                        .append($("<div>").addClass("get-data-group")
+                                .append((userName) ? $('<img class="Assigne-card-story-select-img">')
+                                        .attr('src', img) : "")
+                                .append(" ")
+                                .append(userName))
 
 
-            )
-            .append($('<td>').addClass('bug-list-column')
-                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                        )
+                .append($('<td>').addClass('bug-list-column')
+                        .css('white-space', 'nowrap')
+                        .addClass('bug-list-column-created-by ')
+                        .append($("<div>").addClass("get-data-group")
+                                .append((createdName) ? $('<img class="Assigne-card-story-select-img">')
+                                        .attr('src', createdByImg) : "")
+                                .append(" ")
+                                .append(createdName))
+
+
+                        )
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
 
 
         tbody.append(t);
@@ -13861,31 +14322,31 @@ function getProjectManagmentListDetails(res, stLimit) {
 function getProjectManagementListDetailsHeader() {
     var th = $('<tr>')
 
-        .append($('<th>').append('# <input type="checkbox" class="all-bug-list-check">'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-task-status')
-            .append('US No'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-task-name').css("min-width", '250px').append('Us name'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-task-nature').append('Total Task'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-assignee').append('Bug'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-tasktype').append('Chnage request'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-priority').append('New requset'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-project').append('Project'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-created-by').append('Owner'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-created-by').append('Created By'))
-        .append($('<th>').addClass('bug-list-column')
-            .addClass('bug-list-column-created-date').append('Created Date'))
+            .append($('<th>').append('# <input type="checkbox" class="all-bug-list-check">'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-task-status')
+                    .append('US No'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-task-name').css("min-width", '250px').append('Us name'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-task-nature').append('Total Task'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-assignee').append('Bug'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-tasktype').append('Chnage request'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-priority').append('New requset'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-project').append('Project'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-created-by').append('Owner'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-created-by').append('Created By'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-created-date').append('Created Date'))
 
 
-        .append($('<th>').append(''))
+            .append($('<th>').append(''))
 
 
 
@@ -13948,6 +14409,36 @@ function labelOrSplitValuesUs() {
 }
 
 
+function getUpdateAssigneIDForBacklog(id) {
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkAssigneeId = id;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskBacklogListByStatusAndAssigneeId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            backLogIdListForSearch = res.kv.fkBacklogId
+            labelOrSplitValuesUs();
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+
+}
 function setPrmFilterSprintValuesUs() {
     var st = ' ';
     $('.us-filter-checkbox-sprint').each(function () {
@@ -13958,7 +14449,8 @@ function setPrmFilterSprintValuesUs() {
             };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {}
+            } catch (err) {
+            }
             json.kv.fkSprintId = $(this).val();
             var data = JSON.stringify(json);
             $.ajax({
@@ -14005,7 +14497,8 @@ function setPrmFilterLabeValuesUs() {
             };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {}
+            } catch (err) {
+            }
             json.kv.fkLabelId = $(this).val();
             var data = JSON.stringify(json);
             $.ajax({
@@ -14048,7 +14541,8 @@ function getSTatsUserManagmentTableKanbanLargeMenu(id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = id;
 
     var data = JSON.stringify(json);
@@ -14143,7 +14637,8 @@ function getSTatsUserManagmentTableKanban(elm) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = $(elm).attr("data-bid");
 
     var data = JSON.stringify(json);
@@ -14166,32 +14661,32 @@ function getSTatsUserManagmentTableKanban(elm) {
 
                     var le = dt[index].r[0];
                     $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title " pid=' + le.fkBacklogId + ' action="overall" status="total"><b>Tasks</b>(' + le.overall + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid=' + le.fkBacklogId + ' action="overall" status="UAT">UAT(' + le.statusUat + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-new" pid=' + le.fkBacklogId + ' action="overall" status="new">new(' + le.statusNew + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing" pid=' + le.fkBacklogId + ' action="overall" status="ongoing">Ongoing(' + le.statusOngoing + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-closed" pid=' + le.fkBacklogId + ' action="overall" status="closed">Closed(' + le.statusClosed + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT" pid=' + le.fkBacklogId + ' action="overall" status="UAT">UAT(' + le.statusUat + ')</span></td>')
 
                     $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet text-center" pid=' + le.fkBacklogId + ' ><i class="fas fa-plus"></i></span>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid=' + le.fkBacklogId + ' action="overall" status="reject">rejected(' + le.statusRejected + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid=' + le.fkBacklogId + ' action="overall" status="Canceled">canceled(' + le.statusCanceled + ')</span></td>')
-                        .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
-                        .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected" pid=' + le.fkBacklogId + ' action="overall" status="reject">rejected(' + le.statusRejected + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled" pid=' + le.fkBacklogId + ' action="overall" status="Canceled">canceled(' + le.statusCanceled + ')</span></td>')
+                            .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting" pid=' + le.fkBacklogId + ' action="overall" status="waiting">waiting(' + le.statusWaiting + ')</span></td>')
+                            .append('<td class="text-center"><a href="#" pid=' + le.fkBacklogId + ' class=" more-table-details"  ><i class="fas fa-angle-double-right"></i></a></td>')
 
                 }
 
             }
             if (dt == '') {
                 $(div).find(".total").html("").append('<td><span class="task-for-backlog-event-prm stat_group_title "  action="overall" status="total"><b>Tasks</b>(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-new"  action="overall" status="new">new(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-new"  action="overall" status="new">new(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-ongoing"  action="overall" status="ongoing">Ongoing(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-closed"  action="overall" status="closed">Closed(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-UAT"  action="overall" status="UAT">UAT(0)</span></td>')
 
                 $(div).find(".bug").html("").append('<td class="text-center"><span class="add-task-us-card-managmenet "><i class="fas fa-plus"></i></span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
-                    .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
-                    .append('<td class="text-center"></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-rejected"  action="overall" status="reject">rejected(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-Canceled"  action="overall" status="Canceled">canceled(0)</span></td>')
+                        .append('<td><span class="task-for-backlog-event-prm us-item-status-waiting"  action="overall" status="waiting">waiting(0)</span></td>')
+                        .append('<td class="text-center"></td>')
 
             }
 
@@ -14246,7 +14741,8 @@ function getBugList4UserStory(bgId, tbody) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBackogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
@@ -14267,33 +14763,33 @@ function getBugList4UserStory(bgId, tbody) {
             var ela = res.tbl[0].r
             $(tbody).html('')
             $(tbody).append($("<tr>").addClass('theader-table')
-                .append('<td><b>Task Id</b></td>')
-                .append('<td class="trigger-status-filter"><b>Status</b></td>')
-                .append('<td><b>Description</b></td>')
-                .append($("<td>").append("<b>Task Nature</b>"))
-                .append('<td><b>Task Type</b></td>')
-                .append('<td><b>Created</b></td>')
-                .append('<td><b>Assigne</b></td>')
-                .append('<td><b>Date</b></td>')
-            )
+                    .append('<td><b>Task Id</b></td>')
+                    .append('<td class="trigger-status-filter"><b>Status</b></td>')
+                    .append('<td><b>Description</b></td>')
+                    .append($("<td>").append("<b>Task Nature</b>"))
+                    .append('<td><b>Task Type</b></td>')
+                    .append('<td><b>Created</b></td>')
+                    .append('<td><b>Assignee</b></td>')
+                    .append('<td><b>Date</b></td>')
+                    )
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
 
                 $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
-                    .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
-                    .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
-                    .append($("<td>")
-                        .append($("<a>")
-                            .attr('href', '#')
-                            .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
-                            .text(ela[i].taskName)))
-                    .append($("<td>").append(taskNature))
-                    .append('<td>' + ela[i].taskTypeName + '</td>')
-                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assigne"></td>')
-                    .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
-                )
+                        .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
+                        .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
+                        .append($("<td>")
+                                .append($("<a>")
+                                        .attr('href', '#')
+                                        .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .text(ela[i].taskName)))
+                        .append($("<td>").append(taskNature))
+                        .append('<td>' + ela[i].taskTypeName + '</td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                        .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
+                        )
 
             }
 
@@ -14314,11 +14810,11 @@ function setStoryCardCreatedBy() {
     var userImage = SAProjectUser.GetDetails(createdBy, "userImage");
     var userName = SAProjectUser.GetDetails(createdBy, "userName");
     var img = (userImage) ?
-        fileUrl(userImage) :
-        fileUrl(new User().getDefaultUserprofileName());
+            fileUrl(userImage) :
+            fileUrl(new User().getDefaultUserprofileName());
     var userName1 = (userName) ?
-        userName :
-        ' Unassigned';
+            userName :
+            ' Unassigned';
     $('#story-card-createdby').find('img').attr('src', img);
     $('#story-card-createdby').find('span').html(' ' + userName1);
 }
@@ -14382,7 +14878,8 @@ function addUserStoryToTabList(backlogId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkRelatedBacklogId = backlogId;
@@ -14402,6 +14899,7 @@ function addUserStoryToTabList(backlogId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -14434,7 +14932,8 @@ function insertNewBacklogShortQuich(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['backlogName'] = val;
     json.kv['fkProjectId'] = global_var.current_project_id;
     var that = this;
@@ -14475,7 +14974,8 @@ function insertNewBacklogShortQuich4InputTab(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['backlogName'] = val;
     json.kv['fkProjectId'] = global_var.current_project_id;
     var that = this;
@@ -14510,8 +15010,8 @@ function loadSUSList4InputDetailsNew(res, backlogId) {
         for (var n = 0; n < obj.length; n++) {
             if (obj[n].id !== global_var.current_backlog_id) {
                 var d = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " ");
+                        .attr("value", obj[n].id)
+                        .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " ");
                 if (backlogId === obj[n].id) {
                     d.attr("selected", "true");
                 }
@@ -14520,16 +15020,30 @@ function loadSUSList4InputDetailsNew(res, backlogId) {
         }
 
         sortSelectBox('addUserStoryToSectionModal-userstory');
+
         $('#addUserStoryToSectionModal-userstory')
-            .prepend($("<option disabled></option>")
-                .append('--------------------------'))
-            .prepend($("<option></option>").val("-2").append("New User Story"))
-            .prepend($("<option>None</option>"))
+                .prepend($("<option disabled></option>")
+                        .append('--------------------------'))
+                .prepend($("<option></option>").val("-2").append("New User Story"))
+                .prepend($("<option>None</option>"))
 
 
-        ;
+                ;
+        $('#addUserStoryToSectionModal-userstory').selectpicker('refresh');
         $('#addUserStoryToSectionModal-userstory').change();
-    } catch (err) {}
+    } catch (err) {
+    }
+}
+
+function sortSelectBoxByCoreElement(el) {
+    var sel = el;
+    var selected = sel.val(); // cache selected value, before reordering
+    var opts_list = sel.find('option');
+    opts_list.sort(function (a, b) {
+        return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
+    });
+    sel.html('').append(opts_list);
+    sel.val(selected); // set cached selected value
 }
 
 function sortSelectBoxByElement(el) {
@@ -14580,7 +15094,8 @@ function addTableAsInput() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.rowCount = global_var.component_table_default_row_count;
@@ -14605,6 +15120,57 @@ function addTableAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
+            global_var.current_us_input_id = res.kv.id;
+            $('#ipo_tr_' + res.kv.id).click();
+            //                $('.us-ipo-input-tr').last().click();
+
+            //generate GUI
+            new UserStory().generateGUIGeneral();
+            new UserStory().insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
+            $('#us-ipo-inputname').val('');
+            $('#us-ipo-input-id').val('');
+            $('#us-ipo-inputname').focus();
+            dragResize();
+            global_var.input_insert_cellno = "";
+            global_var.input_insert_orderno = "";
+            global_var.input_insert_component = "";
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+
+function addGroupAsInput() {
+
+    var json = initJSON();
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddGroupAsInput",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SAInput.addInputByRes(res);
+            SAInput.addInputTableByRes(res);
+            SACore.updateBacklogByRes(res);
+
+            loadCurrentBacklogProdDetails();
+            //                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
+
+
+            //refresh input list
+            var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
+            $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -14643,7 +15209,8 @@ function loadAddUserStoriesToTabList(tabId) {
     var usList = [];
     try {
         usList = SAInput.Tabs[tabId].fkRelatedBacklogId.split(',');
-    } catch (err) {}
+    } catch (err) {
+    }
 
     var table = $('<table  class="table table-hover spilted input-name-add-table">')
     var idx = 1;
@@ -14653,11 +15220,11 @@ function loadAddUserStoriesToTabList(tabId) {
         var usName = SACore.GetBacklogname(usId);
         var orderNo = SACore.GetBacklogOrderNo(usId);
         tr.append($('<td>').append(idx++))
-            .append($('<td>').append(replaceTags(usName) + " (#" + orderNo + ")"))
-            .append($('<td>').append($('<a>')
-                .attr('href', '#')
-                .attr("onclick", "removeBacklogFromTab('" + usId + "','" + tabId + "')")
-                .append($("<i class='fa fa-trash'>").css("color", "red"))))
+                .append($('<td>').append(replaceTags(usName) + " (#" + orderNo + ")"))
+                .append($('<td>').append($('<a>')
+                        .attr('href', '#')
+                        .attr("onclick", "removeBacklogFromTab('" + usId + "','" + tabId + "')")
+                        .append($("<i class='fa fa-trash'>").css("color", "red"))))
 
 
         table.append(tr);
@@ -14771,7 +15338,8 @@ function removeBacklogFromTab(relatedBacklogId, tabId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkTabId = tabId
     json.kv.fkRelatedBacklogId = relatedBacklogId;
     json.kv.fkProjectId = global_var.current_project_id;
@@ -14804,21 +15372,22 @@ function loadSUSList4InputTabDetailsNew(res) {
         $('#addUserStoryToTabModal-userstory').html("");
         var obj = res.tbl[0].r;
         $('#addUserStoryToTabModal-userstory')
-            .append($("<option></option>"))
+                .append($("<option></option>"))
 
-            .append($("<option></option>").val("-2").append("New User Story"))
-            .append($("<option disabled></option>")
-                .append('--------------------------'));
+                .append($("<option></option>").val("-2").append("New User Story"))
+                .append($("<option disabled></option>")
+                        .append('--------------------------'));
         for (var n = 0; n < obj.length; n++) {
             if (obj[n].id !== global_var.current_backlog_id) {
                 var d = $("<option></option>")
-                    .attr("value", obj[n].id)
-                    .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " ");
+                        .attr("value", obj[n].id)
+                        .text(replaceTags(obj[n].backlogName) + "  #" + obj[n].orderNo + " ");
                 $('#addUserStoryToTabModal-userstory').append(d);
             }
         }
         $('#addUserStoryToTabModal-userstory').change();
-    } catch (err) {}
+    } catch (err) {
+    }
 }
 
 function insertNewInputTotalDblClick(typ, nm, clNo, id) {
@@ -14828,7 +15397,8 @@ function insertNewInputTotalDblClick(typ, nm, clNo, id) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.tableName = $('#us-ipo-inputname-table').val();
@@ -14905,7 +15475,8 @@ function addTabAsInput() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
@@ -14928,6 +15499,7 @@ function addTabAsInput() {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -14969,7 +15541,8 @@ function setInputTableReadFromContent(el, tableId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     var that = this;
     var data = JSON.stringify(json);
@@ -15007,7 +15580,8 @@ function showInputTableColumnEntireComponent(el, tableId, inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     json.kv.fkInputId = inputId;
     var that = this;
@@ -15048,7 +15622,8 @@ function showInputTableColumnItselfComponent(el, tableId, inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     json.kv.fkInputId = inputId;
     var that = this;
@@ -15089,7 +15664,8 @@ function showInputTableColumnInTree(el, tableId, inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     json.kv.fkInputId = inputId;
     var that = this;
@@ -15130,7 +15706,8 @@ function showInputTableColumnComponent(el, tableId, inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     json.kv.fkInputId = inputId;
     var that = this;
@@ -15176,7 +15753,8 @@ function updateRowCountInputTable(tableId, rowCount) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputTableId = tableId;
     json.kv.rowCount = rowCount;
     var that = this;
@@ -15226,12 +15804,13 @@ function fillInputTableColumnsCombo(tableId) {
         var isChecked = "";
         try {
             isChecked = SAInput.Tables[tableId].fkInputId.includes(obj[n].id) ? " checked " : "";
-        } catch (err) {}
+        } catch (err) {
+        }
 
         st += '<td>'
         st += ' <input type="checkbox" class="input_table_columns_class"  id="in_tbl_' +
-            obj[n].id + '" value="' + obj[n].id + '" ' + isChecked + '> ' +
-            replaceTags(obj[n].inputName) + '</input>';
+                obj[n].id + '" value="' + obj[n].id + '" ' + isChecked + '> ' +
+                replaceTags(obj[n].inputName) + '</input>';
         st += '</td>';
     }
     st += '</table>';
@@ -15253,7 +15832,8 @@ function removeInputTable(el, inputId, tableId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkInputId = inputId;
     json.kv.fkInputTableId = tableId;
@@ -15273,6 +15853,7 @@ function removeInputTable(el, inputId, tableId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -15310,7 +15891,8 @@ function removeSection(el, inputId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.id = inputId;
     var that = this;
@@ -15328,6 +15910,7 @@ function removeSection(el, inputId) {
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
+            highlightTheSameSelectedFieldsInInputList();
             global_var.current_us_input_id = res.kv.id;
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
@@ -15365,7 +15948,8 @@ function addColumnsAsInputToTable() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkBacklogId = global_var.current_backlog_id;
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkInputId = inputId;
@@ -15386,12 +15970,14 @@ function addColumnsAsInputToTable() {
             try {
                 SAInput.addInputByRes(res);
                 SACore.updateBacklogByRes(res);
-            } catch (err) {}
+            } catch (err) {
+            }
             SAInput.addInputTableByRes(res);
             //refresh input list
             var st = new UserStory().getHtmlGenIPOInputList(SAInput.toJSON());
             $('#tblIPOList > tbody').html(st);
             global_var.current_us_input_id = res.kv.id;
+            highlightTheSameSelectedFieldsInInputList();
             $('#ipo_tr_' + res.kv.id).click();
             //                $('.us-ipo-input-tr').last().click();
 
@@ -15424,7 +16010,8 @@ function insertNewUserStory(el, storyStatus) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['backlogName'] = storyName;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['priority'] = "1";
@@ -15447,7 +16034,8 @@ function insertNewUserStory(el, storyStatus) {
             try {
                 $('.content-drag').arrangeable();
                 //                $('.content-drag').draggable();
-            } catch (e) {}
+            } catch (e) {
+            }
 
         },
         error: function () {
@@ -15476,7 +16064,8 @@ function getProjectUsersById(FkprojectId) {
                 SAProjectUser.LoadProjectUser(res);
                 loadUsersAsAssignee();
                 loadUsersAsOwner();
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getProjectUsers = true;
             executeCoreOfManualProSelection();
             ForwardTaskTo_loadAssignee();
@@ -15508,7 +16097,8 @@ function getProjectUsers() {
                 SAProjectUser.LoadProjectUser(res);
                 loadUsersAsAssignee();
                 loadUsersAsOwner();
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getProjectUsers = true;
             executeCoreOfManualProSelection();
 
@@ -15519,12 +16109,16 @@ function getProjectUsers() {
     });
 }
 
-function getProjectUserssync() {
+function getProjectUserssync(id) {
 
 
     var json = initJSON();
+    if (global_var.current_project_id) {
+        json.kv['fkProjectId'] = global_var.current_project_id
+    } else {
+        json.kv['fkProjectId'] = id;
+    }
 
-    json.kv['fkProjectId'] = global_var.current_project_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -15533,13 +16127,14 @@ function getProjectUserssync() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 SAProjectUser.LoadProjectUser(res);
                 loadUsersAsAssignee();
                 loadUsersAsOwner();
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getProjectUsers = true;
             executeCoreOfManualProSelection();
 
@@ -15570,7 +16165,8 @@ function getProjectUsers4ProjectManagment() {
                 SAProjectUser.LoadProjectUser(res);
                 loadUsersAsAssignee();
                 loadUsersAsOwner();
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getProjectUsers = true;
             executeCoreOfManualProSelection();
             getProjectManagementList();
@@ -15599,7 +16195,8 @@ function getUsers() {
         success: function (res) {
             try {
                 SAProjectUser.LoadUser(res);
-            } catch (err) {}
+            } catch (err) {
+            }
             queue4ProLoad.getUsers = true;
             executeCoreOfManualProSelection();
 
@@ -15622,7 +16219,8 @@ function loadAssignedLabel(backlogId, labelId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.fkBacklogId = backlogId;
     var that = this;
@@ -15648,9 +16246,9 @@ function loadAssignedLabelDetails(res) {
         $('#task-info-change-version').append($('<option></option>').text("Unassigned"));
         for (var n = 0; n < obj.length; n++) {
             $('#task-info-change-version')
-                .append($('<option></option>')
-                    .val(obj[n].id)
-                    .text(obj[n].name));
+                    .append($('<option></option>')
+                            .val(obj[n].id)
+                            .text(obj[n].name));
         }
     } catch (err) {
 
@@ -15673,7 +16271,8 @@ function updateTask4Status(id, backlogNo, status) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     json.kv.orderNo = backlogNo;
     json.kv.taskStatus = status;
@@ -15716,7 +16315,8 @@ function updateUS4Status(id, backlogNo, status) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = id;
     json.kv.backlogNo = backlogNo;
     json.kv.backlogStatus = status;
@@ -15748,7 +16348,8 @@ function updateUS4Status(id, backlogNo, status) {
 function contentArrangableUI() {
     try {
         $('.content-drag').arrangeable();
-    } catch (e) {}
+    } catch (e) {
+    }
 }
 
 function updateUS4ShortChange(el, ustype) {
@@ -15791,7 +16392,8 @@ function updateInput4SCDetails(inputId, val, ustype) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = inputId;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -15806,6 +16408,7 @@ function updateInput4SCDetails(inputId, val, ustype) {
         async: true,
         success: function (res) {
             SAInput.updateInputByRes(res);
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -15829,7 +16432,8 @@ function updateUS4ShortChangeDetailsUsMngm(val, ustype, usId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = usId;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -15877,7 +16481,8 @@ function updateUS4ShortChangeDetails(val, ustype) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = global_var.current_backlog_id;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -16008,7 +16613,8 @@ function updateTask4ShortChangePureWithSync(val, ustype, taskId, comment, change
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = taskId;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -16049,7 +16655,8 @@ function updateTask4ShortChangePure(val, ustype, taskId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = taskId;
     json.kv.type = ustype;
     json.kv.value = val;
@@ -16087,8 +16694,8 @@ function loadMainProjectList4Class() {
     for (var n = 0; n < pid.length; n++) {
         var pname = SACore.GetProjectName(pid[n]);
         var o = $('<option></option')
-            .attr('value', pid[n])
-            .html(replaceTags(pname));
+                .attr('value', pid[n])
+                .html(replaceTags(pname));
         $('.project-list-main').each(function (e) {
             $(this).append(o);
         });
@@ -16111,8 +16718,8 @@ function loadProjectList2SelectboxByClass(className) {
     for (var n = 0; n < pid.length; n++) {
         var pname = SACore.GetProjectName(pid[n]);
         var o = $('<option></option')
-            .attr('value', pid[n])
-            .text(pname);
+                .attr('value', pid[n])
+                .text(pname);
         if (f) {
             o.attr("selected", true);
             f = false;
@@ -16244,7 +16851,8 @@ function lableAddAssignUSerStoryManagement(elm) {
             };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {}
+            } catch (err) {
+            }
             json.kv['fkLabelId'] = labelId;
             json.kv['fkProjectId'] = projectId;
             json.kv['fkBacklogId'] = id;
@@ -16294,7 +16902,8 @@ function lableAddAssignProjectManagement(elm) {
             };
             try {
                 json.kv.cookie = getToken();
-            } catch (err) {}
+            } catch (err) {
+            }
             json.kv['fkLabelId'] = labelId;
             json.kv['fkProjectId'] = projectId;
             json.kv['fkBacklogId'] = id;
@@ -16321,7 +16930,8 @@ function lableAddAssignProjectManagement(elm) {
     }
 
 
-};
+}
+;
 
 
 function sprintAddAssignUSerStoryManagement(elm) {
@@ -16393,7 +17003,8 @@ function sprintAddAssignProjectManagement(elm) {
         if ($(check[indx]).prop('checked')) {
 
             var projectId = $(check[indx]).parents("tr").attr('projectid');
-            var backlogId = $(check[indx]).parents("tr").attr('stIdr') ? '-1' : "";;
+            var backlogId = $(check[indx]).parents("tr").attr('stIdr') ? '-1' : "";
+            ;
             var id = $(check[indx]).parents("tr").attr("id");
 
             var checked = '1';
@@ -16493,6 +17104,21 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
 });
 
 
+$(document).on('click', '.bug-task-sprint-unassign', function (evt) {
+    global_var.bug_task_sprint_assign_checked = 1;
+    global_var.bug_task_sprint_assign_name = $(this).attr('sname');
+    global_var.bug_task_sprint_assign_id = $(this).val();
+
+    if (global_var.current_modal === "loadTaskManagement") {
+        $('.' + global_var.task_mgmt_group_by).click();
+    } else if (global_var.current_modal === "loadBugChange") {
+        sprintAddAssign(this, 'unassign');
+    } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
+        sprintAddAssignTaskType(this);
+    }
+});
+
+
 $(document).on('click', '.bug-task-label-assign', function (evt) {
     global_var.bug_task_label_assign_checked = 1;
     global_var.bug_task_label_assign_name = $(this).attr('sname');
@@ -16518,7 +17144,8 @@ $(document).on('click', '.assign-split-story-card-item', function (evt) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['fkSprintId'] = sprintId;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['fkBacklogId'] = id;
@@ -16579,6 +17206,38 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
     Utility.addParamToUrl('fk_assigne_id', $(this).val());
     labelOrSplitValuesUs();
 
+
+});
+$(document).on('change', '#date_timepicker_start_end-usmn', function (evt) {
+
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+    labelOrSplitValuesUs();
+
+
+});
+$(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
+
+
+    if ($(this).val().length > 0) {
+        UsLabel = '';
+        UsSprint = '';
+        var id = getProjectValueUsManageMultiByel(this)
+        getUpdateAssigneIDForBacklog(id);
+    } else {
+        backLogIdListForSearch = '';
+    }
+
+
+});
+$(document).on('change', '#story_mn_filter_updated_id', function (evt) {
+
+    UsLabel = '';
+    UsSprint = '';
+    labelOrSplitValuesUs();
+
+
 });
 
 function loadAssigneesByProjectUSM(projectId) {
@@ -16607,16 +17266,17 @@ function loadAssigneesByProjectUSM(projectId) {
                 $('#story_mn_filter_assigne_id_mng').append(opt.clone());
                 $('#story_mn_filter_assigne_id').append(opt.clone());
                 $('#bug_filter_assignee_id_add').append(opt.clone());
+                $('#story_mn_filter_updated_id').append(opt.clone());
 
 
             }
             $('#story_mn_filter_assigne_id_mng').selectpicker('refresh');
             $('#story_mn_filter_assigne_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
+            $('#story_mn_filter_updated_id').selectpicker('refresh');
             var fkAssigneId = Utility.getParamFromUrl('fk_assigne_id');
             if (fkAssigneId) {
                 $('#story_mn_filter_assigne_id_mng').val(fkAssigneId).change();
-                $('#story_mn_filter_assigne_id').val(fkAssigneId).change();
             }
         },
         error: function () {
@@ -16651,7 +17311,8 @@ $(document).on('click', '.assign-label-story-card-item', function (evt) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv['fkLabelId'] = labelId;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['fkBacklogId'] = id;
@@ -16730,7 +17391,8 @@ function getBacklogListByProject4Element(projectId, elm) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = projectId;
     var that = this;
@@ -16756,8 +17418,10 @@ function getBacklogListByProject4Element(projectId, elm) {
                     $(elm).append($('<option>').val(id).text(name))
                 }
 
-                $(elm).selectpicker("refresh")
-            } catch (err) {}
+                $(elm).selectpicker("refresh");
+            } catch (err) {
+                $(elm).selectpicker("refresh");
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16772,7 +17436,8 @@ function getBacklogListByProject(projectId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
@@ -16798,7 +17463,8 @@ function getBacklogListByProject(projectId) {
                     $('#' + compId).append($('<option>').val(id).text(name))
                 }
 
-            } catch (err) {}
+            } catch (err) {
+            }
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -16810,8 +17476,8 @@ function assignUserStorytoTask() {
     updateTask4ShortChangeDetails($('#task-user-story-id-change').val(), "fkBacklogId")
     $('#change-user-story-task-modal').modal('hide');
     $('#task-mgmt-modal-user-story')
-        .attr('pid', $('#task-user-story-id-change').val())
-        .html($('#task-user-story-id-change option:selected').text());
+            .attr('pid', $('#task-user-story-id-change').val())
+            .html($('#task-user-story-id-change option:selected').text());
 }
 
 
@@ -16826,7 +17492,8 @@ function assignBacklogTaskTo_template() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid').val();
     json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid').val();
     json.kv.taskName = $('#addNewDetailedTaskModal_description').val();
@@ -16863,7 +17530,8 @@ function assignBacklogTaskTo() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.taskComment = $('#assignTaskToOthersModal_comment').val();
     json.kv.taskId = global_var.current_issue_id;
@@ -16909,7 +17577,8 @@ function cloneTask() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     json.kv.fkBacklogId = $('#cloneTask_backlog_id').val();
     json.kv.id = global_var.current_us_task_id;
@@ -16954,7 +17623,8 @@ function insertNewTaskDetailTaskTypeManagment(el) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     projectId = (projectId) ? projectId : global_var.current_project_id;
     if (!projectId) {
@@ -16996,7 +17666,8 @@ function insertNewTaskDetail(taskName, backlogId, assgineeId, taskStatus, projec
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
 
     projectId = (projectId) ? projectId : global_var.current_project_id;
     if (!projectId) {
@@ -17163,7 +17834,7 @@ function genTaskKanbanView4Group() {
             for (var k = 0; k < usIdList.length; k++) {
                 var lastId = usIdList[k];
                 if (lastId.length === 0 ||
-                    jQuery.inArray(lastId, addedUS) !== -1) {
+                        jQuery.inArray(lastId, addedUS) !== -1) {
                     continue;
                 }
 
@@ -17177,10 +17848,10 @@ function genTaskKanbanView4Group() {
 
                 var obj = SATask.toJSONObject(lastId);
                 var backlogId = global_var.task_mgmt_group_by === 'userStoryTab' ?
-                    obj.fkBacklogId :
-                    global_var.task_mgmt_group_by === 'assignee' ?
-                    obj.fkAssigneeId :
-                    "none";
+                        obj.fkBacklogId :
+                        global_var.task_mgmt_group_by === 'assignee' ?
+                        obj.fkAssigneeId :
+                        "none";
                 backlogId = (backlogId) ? backlogId : "-1";
                 if (jQuery.inArray(backlogId, addedBacklogs) === -1) {
                     addedBacklogs.push(backlogId);
@@ -17268,13 +17939,14 @@ function genTaskKanbanView4Group() {
         if (c4closed === 0) {
             closedDiv.append($('<div class="task-content content-drag">'));
         }
-    } catch (e) {}
+    } catch (e) {
+    }
 
     var bname0 = global_var.task_mgmt_group_by === 'userStoryTab' ?
-        "Tasks without User Story" :
-        global_var.task_mgmt_group_by === 'assignee' ?
-        "Tasks without Assignee" :
-        "none";
+            "Tasks without User Story" :
+            global_var.task_mgmt_group_by === 'assignee' ?
+            "Tasks without Assignee" :
+            "none";
     try {
         var divUserStory = TaskCard.UserStory.Get(bname0, "", "-1", r["-1"].count, r["-1"].bugCount, r["-1"].changeCount, r["-1"].newDiv, r["-1"].ongoingDiv, r["-1"].closedDiv, r["-1"].CanceledDiv, r["-1"].waitingDiv, r["-1"].UATDiv, r["-1"].rejectedDiv);
         $('.groupByUserstory').append(divUserStory);
@@ -17286,16 +17958,16 @@ function genTaskKanbanView4Group() {
         if (l === '-1')
             continue;
         var bname = global_var.task_mgmt_group_by === 'userStoryTab' ?
-            SACore.GetBacklogname(l) :
-            global_var.task_mgmt_group_by === 'assignee' ?
-            SAProjectUser.GetUserDetails(l, "userPersonName") :
-            "none";
+                SACore.GetBacklogname(l) :
+                global_var.task_mgmt_group_by === 'assignee' ?
+                SAProjectUser.GetUserDetails(l, "userPersonName") :
+                "none";
         if (!bname) {
             bname = global_var.task_mgmt_group_by === 'userStoryTab' ?
-                "Tasks without User Story" :
-                global_var.task_mgmt_group_by === 'assignee' ?
-                "Tasks without Assignee" :
-                "";
+                    "Tasks without User Story" :
+                    global_var.task_mgmt_group_by === 'assignee' ?
+                    "Tasks without Assignee" :
+                    "";
         }
 
 
@@ -17472,7 +18144,8 @@ function addProceccDescListToTaskNew_getLastValue(descId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputDescriptionId = descId;
     json.kv.asc = 'typeName';
     var that = this;
@@ -17549,7 +18222,8 @@ function addInputListToTaskNew_setComment() {
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));
                     st += "- " + desc + '\n';
                 }
-            } catch (err) {}
+            } catch (err) {
+            }
             st += '\n';
         }
     })
@@ -17587,7 +18261,8 @@ function addInputDescToTaskNew_getLastValue(descId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputDescriptionId = descId;
     json.kv.asc = 'typeName';
     var that = this;
@@ -17622,12 +18297,12 @@ function addInputDescToTaskNew_setComment(descId, inputId) {
     asisMsg = (asisMsg) ? "\n - " + asisMsg : "EMPTY";
 
     var st = "The following change(s) in the Input Description '" + inputDesc +
-        "' of Input '" + inputName + "' should be implemented. For the detailed information please check the related Story Card." +
-        "\n\n AS-IS: " +
-        asisMsg +
-        "\n\n" +
-        "EXPECTED:\n" +
-        " - " + inputDesc;
+            "' of Input '" + inputName + "' should be implemented. For the detailed information please check the related Story Card." +
+            "\n\n AS-IS: " +
+            asisMsg +
+            "\n\n" +
+            "EXPECTED:\n" +
+            " - " + inputDesc;
     $('#addNewDetailedTaskModal_comment').val(st);
 }
 
@@ -17656,7 +18331,7 @@ function addUserStoryToTask_setHeader() {
 function addUserStoryToTask_setComment() {
     var backlogName = SACore.GetCurrentBacklogname();
     var st = "Create a new form as given in a Story Card called '" + replaceTags(backlogName) + "'. " +
-        " Please check the related Story Card for detailed information ";
+            " Please check the related Story Card for detailed information ";
     $('#addNewDetailedTaskModal_comment').val(st);
 }
 
@@ -17668,19 +18343,19 @@ function assignTaskToOthersModal_addAssignees() {
 
     var tbody = $('#assignTaskToOthersModal_assigneelist');
     tbody.append($('<tr>').addClass("assignee-main-tr-4-assign")
-        .append($('<td>')
-            .addClass("assignee-td-4-assign")
-            .attr("pid", $('#assignTaskToOthersModal_assignee').val())
-            .text($('#assignTaskToOthersModal_assignee option:selected').text()))
-        .append($('<td>')
-            .attr("pid", $('#assignTaskToOthersModal_tasktype').val())
-            .addClass('tasktype-td-4-assign')
-            .text($('#assignTaskToOthersModal_tasktype option:selected').text()))
-        .append($('<i class="fa fa-trash">')
-            .attr("onclick", "assignTaskToOthersModal_removeAssignee(this)")
-            .attr("cursor", "pointer")
-            .css("color", "blue")
-        ))
+            .append($('<td>')
+                    .addClass("assignee-td-4-assign")
+                    .attr("pid", $('#assignTaskToOthersModal_assignee').val())
+                    .text($('#assignTaskToOthersModal_assignee option:selected').text()))
+            .append($('<td>')
+                    .attr("pid", $('#assignTaskToOthersModal_tasktype').val())
+                    .addClass('tasktype-td-4-assign')
+                    .text($('#assignTaskToOthersModal_tasktype option:selected').text()))
+            .append($('<i class="fa fa-trash">')
+                    .attr("onclick", "assignTaskToOthersModal_removeAssignee(this)")
+                    .attr("cursor", "pointer")
+                    .css("color", "blue")
+                    ))
 
 
 }
@@ -17693,19 +18368,19 @@ function addUserStoryToTask_addAssignees() {
 
     var tbody = $('#addNewDetailedTaskModal_assigneelist');
     tbody.append($('<tr>').addClass("assignee-main-tr")
-        .append($('<td>')
-            .addClass("assignee-td")
-            .attr("pid", $('#addNewDetailedTaskModal_assignee').val())
-            .text($('#addNewDetailedTaskModal_assignee option:selected').text()))
-        .append($('<td>')
-            .attr("pid", $('#addNewDetailedTaskModal_tasktype').val())
-            .addClass('tasktype-td')
-            .text($('#addNewDetailedTaskModal_tasktype option:selected').text()))
-        .append($('<i class="fa fa-trash">')
-            .attr("onclick", "addUserStoryToTask_removeAssignee(this)")
-            .attr("cursor", "pointer")
-            .css("color", "blue")
-        ))
+            .append($('<td>')
+                    .addClass("assignee-td")
+                    .attr("pid", $('#addNewDetailedTaskModal_assignee').val())
+                    .text($('#addNewDetailedTaskModal_assignee option:selected').text()))
+            .append($('<td>')
+                    .attr("pid", $('#addNewDetailedTaskModal_tasktype').val())
+                    .addClass('tasktype-td')
+                    .text($('#addNewDetailedTaskModal_tasktype option:selected').text()))
+            .append($('<i class="fa fa-trash">')
+                    .attr("onclick", "addUserStoryToTask_removeAssignee(this)")
+                    .attr("cursor", "pointer")
+                    .css("color", "blue")
+                    ))
 }
 
 function assignTaskToOthersModal_removeAssignee(el) {
@@ -17746,7 +18421,8 @@ function addUserStoryToTask_loadTaskType() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = global_var.current_project_id;
     json.kv.asc = 'typeName';
     var that = this;
@@ -17830,7 +18506,8 @@ function addInputDescToTaskDetailsNew(el, descId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkInputDescriptionId = descId;
     var that = this;
     var data = JSON.stringify(json);
@@ -17865,7 +18542,8 @@ function checkFilter4KanbanGroup(lastId) {
         } else {
             hasTaskFilterRes = false;
         }
-    } catch (e) {}
+    } catch (e) {
+    }
 
     //check the filter user story
     var hasUserStoryFilterRes = false;
@@ -17884,11 +18562,12 @@ function checkFilter4KanbanGroup(lastId) {
             hasUserStoryFilterRes = false;
         }
         //                    }
-    } catch (e) {}
+    } catch (e) {
+    }
 
 
     if (hasFilter4Task() && hasUserStoryFilterRes === true &&
-        hasFilter4UserStory() && hasTaskFilterRes === true) {
+            hasFilter4UserStory() && hasTaskFilterRes === true) {
         res = true;
     } else if (hasFilter4Task() === false && hasFilter4UserStory() && hasUserStoryFilterRes === true) {
         res = true;
@@ -17901,9 +18580,9 @@ function checkFilter4KanbanGroup(lastId) {
 function addRemainingUSOrTaskForKanbanViewGroup() {
     var r = global_var.task_mgmt_group_by_filled_list;
     var keys = global_var.task_mgmt_group_by === 'userStoryTab' ?
-        SACore.GetBacklogKeys() :
-        global_var.task_mgmt_group_by === 'assignee' ?
-        SAProjectUser.GetKeys() : [];
+            SACore.GetBacklogKeys() :
+            global_var.task_mgmt_group_by === 'assignee' ?
+            SAProjectUser.GetKeys() : [];
     for (var tk in keys) {
         var l = keys[tk];
         var objTask = SATask.toJSONObject(l);
@@ -17918,22 +18597,23 @@ function addRemainingUSOrTaskForKanbanViewGroup() {
                     continue;
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+        }
         var tkeys = Object.keys(r);
         if (l === '-1' || !l || jQuery.inArray(l, tkeys) !== -1)
             continue;
         //        try {
         var bname = global_var.task_mgmt_group_by === 'userStoryTab' ?
-            SACore.GetBacklogname(l) :
-            global_var.task_mgmt_group_by === 'assignee' ?
-            SAProjectUser.GetUserDetails(l, "userPersonName") :
-            "none";
+                SACore.GetBacklogname(l) :
+                global_var.task_mgmt_group_by === 'assignee' ?
+                SAProjectUser.GetUserDetails(l, "userPersonName") :
+                "none";
         if (!bname) {
             bname = global_var.task_mgmt_group_by === 'userStoryTab' ?
-                "Tasks without User Story" :
-                global_var.task_mgmt_group_by === 'assignee' ?
-                "Tasks without Assignee" :
-                "";
+                    "Tasks without User Story" :
+                    global_var.task_mgmt_group_by === 'assignee' ?
+                    "Tasks without Assignee" :
+                    "";
         }
 
 
@@ -18007,7 +18687,8 @@ function genTaskTypeManagmentView4None() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkProjectId = global_var.current_project_id;
 
     if (serachtx) {
@@ -18094,7 +18775,7 @@ function genTaskKanbanView4None() {
             for (var k = 0; k < usIdList.length; k++) {
                 var lastId = usIdList[k];
                 if (lastId.length === 0 ||
-                    jQuery.inArray(lastId, addedUS) !== -1) {
+                        jQuery.inArray(lastId, addedUS) !== -1) {
                     continue;
                 }
 
@@ -18146,33 +18827,34 @@ function genTaskKanbanView4None() {
 
         if (c4new === 0) {
             $('.task-kanban-view-new')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4ongoing === 0) {
             $('.task-kanban-view-ongoing')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4closed === 0) {
             $('.task-kanban-view-closed')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4Canceled === 0) {
             $('.task-kanban-view-Canceled')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4rejected === 0) {
             $('.task-kanban-view-rejected')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4UAT === 0) {
             $('.task-kanban-view-UAT')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
         if (c4waiting === 0) {
             $('.task-kanban-view-waiting')
-                .html($('<div class="task-content content-drag">'));
+                    .html($('<div class="task-content content-drag">'));
         }
-    } catch (e) {}
+    } catch (e) {
+    }
     global_var.story_card_sprint_assign_checked = 0;
     global_var.story_card_label_assign_checked = 0;
 
@@ -18200,8 +18882,8 @@ function genUSLine4KanbanView(o) {
     var div = '';
 
     var rs = global_var.bug_task_sprint_assign_checked === 1 ?
-        div.html() + " " :
-        "";
+            div.html() + " " :
+            "";
 
 
     var assigneeImg = $('<span>')
@@ -18210,18 +18892,18 @@ function genUSLine4KanbanView(o) {
         var userName = SAProjectUser.GetUserDetails(o.fkAssigneeId, "userPersonName");
 
         var img = (userImage) ?
-            fileUrl(userImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
         assigneeImg.append($('<img>')
-            //                        .css("width","24px")
-            //                        .css('height','24px')
-            .addClass('Assigne-card-story-select-img assigne')
-            .attr('src', img)
-            .attr('data-trigger', 'hover')
-            .attr('data-toggle', 'popover')
-            .attr('data-content', userName ? userName : "UnAssigned")
-            .attr("title", 'Owner')
-        )
+                //                        .css("width","24px")
+                //                        .css('height','24px')
+                .addClass('Assigne-card-story-select-img assigne')
+                .attr('src', img)
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr('data-content', userName ? userName : "UnAssigned")
+                .attr("title", 'Owner')
+                )
     }
     var createdByImg = $('<span>')
     if (o.createdBy) {
@@ -18231,103 +18913,104 @@ function genUSLine4KanbanView(o) {
 
 
         var img = (userImage) ?
-            fileUrl(userImage) :
-            fileUrl(new User().getDefaultUserprofileName());
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
         createdByImg.append($('<img>')
-            //                        .css("width","24px")
-            //                        .css('height','24px')
-            .addClass('Assigne-card-story-select-img created')
-            .attr('src', img)
-            .attr('data-trigger', 'hover')
-            .attr('data-toggle', 'popover')
-            .attr('data-content', userName)
-            .attr("title", 'Created By')
-        )
+                //                        .css("width","24px")
+                //                        .css('height','24px')
+                .addClass('Assigne-card-story-select-img created')
+                .attr('src', img)
+                .attr('data-trigger', 'hover')
+                .attr('data-toggle', 'popover')
+                .attr('data-content', userName)
+                .attr("title", 'Created By')
+                )
     }
 
     var taskImage = (o.lastImage) ?
-        "<img src='" + fileUrl(o.lastImage) + "' style='max-height:150px;width:100%'>" :
-        "";
+            "<img src='" + fileUrl(o.lastImage) + "' style='max-height:150px;width:100%'>" :
+            "";
     var taskName = (o.taskName) ? rs + replaceTags(o.taskName) : rs + " No Title ";
     var taskNature = o.taskNature === 'bug' ?
-        $('<i class="fa fa-bug" aria-hidden="true"></i>')
-        .css('color', "red")
-        .attr("title", " Bug")
-        .css("font-size", "11px") :
-        o.taskNature === 'change' ?
-        $('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>')
-        .css("color", "orange")
-        .css("font-size", "11px")
-        .attr("title", " Change Request") :
-        "";
+            $('<i class="fa fa-bug" aria-hidden="true"></i>')
+            .css('color', "red")
+            .attr("title", " Bug")
+            .css("font-size", "11px") :
+            o.taskNature === 'change' ?
+            $('<i class="fa fa-pencil-square-o" aria-hidden="true"></i>')
+            .css("color", "orange")
+            .css("font-size", "11px")
+            .attr("title", " Change Request") :
+            "";
     var taskVersion = ""
     try {
         taskVersion = (o.taskVersion) ?
-            $('<a class="ContentTextWithVersion">')
-            .attr('href', '#')
-            .attr('labelId', o.taskVersion)
-            .attr("backlogId", o.fkBacklogId)
-            .css("font-size", "12px")
-            .css("color", "rgb(170, 170, 170)")
-            .append('User Story Version')
-            .append('<br>') :
-            "";
-    } catch (e) {}
+                $('<a class="ContentTextWithVersion">')
+                .attr('href', '#')
+                .attr('labelId', o.taskVersion)
+                .attr("backlogId", o.fkBacklogId)
+                .css("font-size", "12px")
+                .css("color", "rgb(170, 170, 170)")
+                .append('User Story Version')
+                .append('<br>') :
+                "";
+    } catch (e) {
+    }
 
     var userStory = (o.fkBacklogId.length > 0 && o.fkBacklogId !== '-1') ?
-        $('<a class="ContentTextWithVersion">')
-        .attr('href', '#')
-        .css("font-size", "12px")
-        .css("color", "rgb(170, 170, 170)")
-        .attr("onclick", "callStoryCard('" + o.fkBacklogId + "')")
-        .append('#' + replaceTags(SACore.GetBacklogOrderNo(o.fkBacklogId) + ' '))
-        .append(replaceTags(SACore.GetBacklogname(o.fkBacklogId)))
-        .append('<br>') :
-        "";
+            $('<a class="ContentTextWithVersion">')
+            .attr('href', '#')
+            .css("font-size", "12px")
+            .css("color", "rgb(170, 170, 170)")
+            .attr("onclick", "callStoryCard('" + o.fkBacklogId + "')")
+            .append('#' + replaceTags(SACore.GetBacklogOrderNo(o.fkBacklogId) + ' '))
+            .append(replaceTags(SACore.GetBacklogname(o.fkBacklogId)))
+            .append('<br>') :
+            "";
 
     var s = $('<div >')
-        .addClass('task-content content-drag')
-        .append($('<div class="task-content-header">')
-            .append($('<div class="TaskContentText">')
-                .attr('bno', o.taskOrderNo)
-                .attr('pid', o.id)
-                .append('<input type="checkbox" tid="' + o.id + '"  stIdr="' + o.fkBacklogId + '"  class="checkbox-task-type-task">')
-                .append(taskImage)
-                .append($('<span class="headerContentText">')
-                    .attr('href', '#')
-                    .attr('onclick1', "new UserStory().redirectToDetailedView('" + o.id + "')")
-                    .append('' + taskName))
-                .append("<br>")
-                .append(userStory)
-            )
-        )
-        .append($('<div clas="taskContentBody">')
-            .append(taskVersion)
-            .append($('<span class="backlog-status">')
-                .append($('<div class="us-list-item">')
-                    .addClass('us-item-status-' + o.taskStatus)
-                    .append(o.taskStatus)
-                ))
+            .addClass('task-content content-drag')
+            .append($('<div class="task-content-header">')
+                    .append($('<div class="TaskContentText">')
+                            .attr('bno', o.taskOrderNo)
+                            .attr('pid', o.id)
+                            .append('<input type="checkbox" tid="' + o.id + '"  stIdr="' + o.fkBacklogId + '"  class="checkbox-task-type-task">')
+                            .append(taskImage)
+                            .append($('<span class="headerContentText">')
+                                    .attr('href', '#')
+                                    .attr('onclick1', "new UserStory().redirectToDetailedView('" + o.id + "')")
+                                    .append('' + taskName))
+                            .append("<br>")
+                            .append(userStory)
+                            )
+                    )
+            .append($('<div clas="taskContentBody">')
+                    .append(taskVersion)
+                    .append($('<span class="backlog-status">')
+                            .append($('<div class="us-list-item">')
+                                    .addClass('us-item-status-' + o.taskStatus)
+                                    .append(o.taskStatus)
+                                    ))
 
-            .append($('<span class="backlog-status">')
-                .append($('<div class="us-list-item us-item-date">')
-                    .append("&nbsp;" + getTaskCode(o.id))
-                ))
-            .append($('<span class="backlog-status">')
-                .append($('<div class="us-list-item us-item-date">')
-                    .append("&nbsp;" + Utility.convertDate(o.createdDate))
-                ))
-            .append($('<span class="backlog-status">')
-                .append("&nbsp;&nbsp;")
-                .append(taskNature))
-            .append($('<span class="backlog-status">')
-                .append("&nbsp;&nbsp;")
-                .append(assigneeImg))
-            .append($('<span class="backlog-status">')
-                .append("&nbsp;&nbsp;")
-                .append(createdByImg))
+                    .append($('<span class="backlog-status">')
+                            .append($('<div class="us-list-item us-item-date">')
+                                    .append("&nbsp;" + getTaskCode(o.id))
+                                    ))
+                    .append($('<span class="backlog-status">')
+                            .append($('<div class="us-list-item us-item-date">')
+                                    .append("&nbsp;" + Utility.convertDate(o.createdDate))
+                                    ))
+                    .append($('<span class="backlog-status">')
+                            .append("&nbsp;&nbsp;")
+                            .append(taskNature))
+                    .append($('<span class="backlog-status">')
+                            .append("&nbsp;&nbsp;")
+                            .append(assigneeImg))
+                    .append($('<span class="backlog-status">')
+                            .append("&nbsp;&nbsp;")
+                            .append(createdByImg))
 
-        )
+                    )
 
     return s;
 }
@@ -18358,7 +19041,8 @@ function deleteComment(commentId) {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.id = commentId;
     var that = this;
     var data = JSON.stringify(json);
@@ -18399,7 +19083,8 @@ function genCommentListOfTask() {
     };
     try {
         json.kv.cookie = getToken();
-    } catch (err) {}
+    } catch (err) {
+    }
     json.kv.fkTaskId = taskId;
     var that = this;
     var data = JSON.stringify(json);
@@ -18432,52 +19117,52 @@ function generateCommentListHtml4Task(res, taskId) {
 
 
             var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                .append("<br>");
+                    .append("<br>");
             var div_by_row = $('<div></div>')
-                .addClass("row")
-                .addClass("mangodb");
+                    .addClass("row")
+                    .addClass("mangodb");
             var img = obj[i].avatarUrl.length === 0 ?
-                fileUrl(new User().getDefaultUserprofileName()) :
-                fileUrl(obj[i].avatarUrl);
+                    fileUrl(new User().getDefaultUserprofileName()) :
+                    fileUrl(obj[i].avatarUrl);
             var div1 = $('<div></div>')
-                .addClass("col-1 comment-line1")
-                .append($('<img></img>')
-                    .addClass("figure-img img-fluid rounded-circle")
-                    .attr("style", "max-width:28px")
-                    .attr("src", img)
-                    .attr("alt", replaceTags(obj[i].username)));
+                    .addClass("col-1 comment-line1")
+                    .append($('<img></img>')
+                            .addClass("figure-img img-fluid rounded-circle")
+                            .attr("style", "max-width:28px")
+                            .attr("src", img)
+                            .attr("alt", replaceTags(obj[i].username)));
             //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
             var comment = replaceTags(obj[i].comment);
             var div2 = $('<div></div>')
-                .attr('style', "padding-left:0px;font-size:13px;")
-                .addClass("col-11")
-                .append($("<span>").append(obj[i].username)
-                    .addClass('comment-content-header-name')
-                    .append($("<span>")
-                        .addClass('comment-content-header-history')
-                        .append(Utility.convertDate(obj[i].commentDate))
-                        .append(", ")
-                        .append(Utility.convertTime(obj[i].commentTime))
-                        .append(" ")
-                    )
-                    .append('&nbsp;&nbsp;&nbsp;')
+                    .attr('style', "padding-left:0px;font-size:13px;")
+                    .addClass("col-11")
+                    .append($("<span>").append(obj[i].username)
+                            .addClass('comment-content-header-name')
+                            .append($("<span>")
+                                    .addClass('comment-content-header-history')
+                                    .append(Utility.convertDate(obj[i].commentDate))
+                                    .append(", ")
+                                    .append(Utility.convertTime(obj[i].commentTime))
+                                    .append(" ")
+                                    )
+                            .append('&nbsp;&nbsp;&nbsp;')
 
-                    //                            .append($('<a href="#" style="font-size:11px;">')
-                    //                                    .addClass('comment-content-header-name')
-                    //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                    //                                    .append("Delete"))
-                )
-                .append("<br><br>")
-                .append($("<span>")
-                    .css('padding-bottom', "5px")
-                    .attr("id", obj[i].id)
-                    //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
-                    .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
-                    .append(MapTextAreaHtml(comment)));
+                            //                            .append($('<a href="#" style="font-size:11px;">')
+                            //                                    .addClass('comment-content-header-name')
+                            //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
+                            //                                    .append("Delete"))
+                            )
+                    .append("<br><br>")
+                    .append($("<span>")
+                            .css('padding-bottom', "5px")
+                            .attr("id", obj[i].id)
+                            //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
+                            .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
+                            .append(MapTextAreaHtml(comment)));
             var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
             var div3 = $('<div></div>').addClass("col-12").append("");
             div2.append(div2_1)
-                .append("<br>")
+                    .append("<br>")
             //                    .append($('<a href="#" style="font-size:11px;">')
             //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
             //                            .append("Edit"))
@@ -18487,7 +19172,7 @@ function generateCommentListHtml4Task(res, taskId) {
             //                            .attr('onclick', "saveComment(this,'" + obj[i].id + "')")
             //                            .append("Save"));
             div_by_row.append(div1).append(div2)
-                .append(div3);
+                    .append(div3);
             div_by_col.append(div_by_row)
             div.append(div_by_col);
             //                        div.append(div1).append(div2).append(div3);
@@ -18495,7 +19180,8 @@ function generateCommentListHtml4Task(res, taskId) {
         //        return div.html();
 
         $('.comment-body').html(div.html());
-    } catch (e) {}
+    } catch (e) {
+    }
 }
 
 
@@ -18503,50 +19189,50 @@ var TaskCard = {
     UserStory: {
         Get: function (userStoryName, userStoryStatus, userStoryId, taskCount, bugCount, changeCount, newList, ongoingList, closedList, CanceledList, waitingList, UATlist, rejectedList) {
             return $('<div class="UserStory">')
-                .append(this.UserStoryHeader(userStoryName, userStoryStatus, userStoryId, taskCount, bugCount, changeCount))
-                .append(this.TaskColumn.Get('new', newList, userStoryId))
-                .append(this.TaskColumn.Get('ongoing', ongoingList, userStoryId))
-                .append(this.TaskColumn.Get('closed', closedList, userStoryId))
-                .append(this.TaskColumn.Get('Canceled', CanceledList, userStoryId))
-                .append(this.TaskColumn.Get('waiting', waitingList, userStoryId))
-                .append(this.TaskColumn.Get('rejected', rejectedList, userStoryId))
-                .append(this.TaskColumn.Get('UAT', UATlist, userStoryId))
+                    .append(this.UserStoryHeader(userStoryName, userStoryStatus, userStoryId, taskCount, bugCount, changeCount))
+                    .append(this.TaskColumn.Get('new', newList, userStoryId))
+                    .append(this.TaskColumn.Get('ongoing', ongoingList, userStoryId))
+                    .append(this.TaskColumn.Get('closed', closedList, userStoryId))
+                    .append(this.TaskColumn.Get('Canceled', CanceledList, userStoryId))
+                    .append(this.TaskColumn.Get('waiting', waitingList, userStoryId))
+                    .append(this.TaskColumn.Get('rejected', rejectedList, userStoryId))
+                    .append(this.TaskColumn.Get('UAT', UATlist, userStoryId))
 
         },
         UserStoryHeader: function (userStoryName, userStoryStatus, userStoryId, taskCount, bugCount, changeCount, ) {
             return $('<div class="userStory-header sticky-top1 col-12">')
-                .append($('<div class="downUser angle-right">')
-                    .css("display", "none")
-                    .append($('<i class="fas fa-angle-right"></i>')))
-                .append($('<div class="downUser angle-down">')
-                    .append($('<i class="fas fa-angle-down"></i>')))
+                    .append($('<div class="downUser angle-right">')
+                            .css("display", "none")
+                            .append($('<i class="fas fa-angle-right"></i>')))
+                    .append($('<div class="downUser angle-down">')
+                            .append($('<i class="fas fa-angle-down"></i>')))
 
-                .append($('<span  style="margin-right: 10px;">')
-                    .css("cursor", "pointer")
-                    .css("color", "rgb(94, 108, 132)")
-                    .append(this.GetAssignedLabelAndSprint(userStoryId))
-                    .append(userStoryName)
-                    .addClass("ContentTextTaskMgmt")
-                    .attr("pid", userStoryId)
-                )
-                .append($('<span class="backlog-status">')
-                    .append($('<div  class="us-list-item">')
-                        .addClass('us-item-status-' + userStoryStatus)
-                        .append(userStoryStatus))
-                )
-                .append($('<span>')
-                    .css("color", "rgb(170, 170, 170)")
-                    .css("font-size", "13px")
-                    .append("&nbsp;&nbsp; " + taskCount)
-                    .append(" task")
-                    .append(taskCount > 1 ? "(s)" : "")
-                    .append("&nbsp;&nbsp; " + bugCount)
-                    .append(" bug")
-                    .append(bugCount > 1 ? "(s)" : "")
-                    .append("&nbsp;&nbsp; " + changeCount)
-                    .append(" change request")
-                    .append(changeCount > 1 ? "(s)" : "")
-                )
+                    .append($('<span  style="margin-right: 10px;">')
+                            .css("cursor", "pointer")
+                            .css("color", "rgb(94, 108, 132)")
+                            .append(this.GetAssignedLabelAndSprint(userStoryId))
+                            .append(userStoryName)
+                            .addClass("ContentTextTaskMgmt")
+                            .attr("pid", userStoryId)
+                            )
+                    .append($('<span class="backlog-status">')
+                            .append($('<div  class="us-list-item">')
+                                    .addClass('us-item-status-' + userStoryStatus)
+                                    .append(userStoryStatus))
+                            )
+                    .append($('<span>')
+                            .css("color", "rgb(170, 170, 170)")
+                            .css("font-size", "13px")
+                            .append("&nbsp;&nbsp; " + taskCount)
+                            .append(" task")
+                            .append(taskCount > 1 ? "(s)" : "")
+                            .append("&nbsp;&nbsp; " + bugCount)
+                            .append(" bug")
+                            .append(bugCount > 1 ? "(s)" : "")
+                            .append("&nbsp;&nbsp; " + changeCount)
+                            .append(" change request")
+                            .append(changeCount > 1 ? "(s)" : "")
+                            )
         },
         GetAssignedLabelAndSprint: function (id) {
             if (!id) {
@@ -18554,62 +19240,62 @@ var TaskCard = {
             }
             var ischecked = (global_var.userStoryFilter.sprint.length > 1);
             var div = $('<div>')
-                .append($("<input type='checkbox'>")
-                    .addClass("assign-split-story-card-item")
-                    .attr("pid", id)
-                    .attr("checked", ischecked)
-                    .attr("sid", global_var.story_card_sprint_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
+                    .append($("<input type='checkbox'>")
+                            .addClass("assign-split-story-card-item")
+                            .attr("pid", id)
+                            .attr("checked", ischecked)
+                            .attr("sid", global_var.story_card_sprint_assign_id))
+                    .append($('<span>').append(" (" + global_var.story_card_sprint_assign_name + ") "));
             var ischecked4Lbl = (global_var.userStoryFilter.label.length > 1);
             var divLabel = $('<div>')
-                .append($("<input type='checkbox'>")
-                    .addClass("assign-label-story-card-item")
-                    .attr("pid", id)
-                    .attr("checked", ischecked4Lbl)
-                    .attr("sid", global_var.story_card_label_assign_id))
-                .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
+                    .append($("<input type='checkbox'>")
+                            .addClass("assign-label-story-card-item")
+                            .attr("pid", id)
+                            .attr("checked", ischecked4Lbl)
+                            .attr("sid", global_var.story_card_label_assign_id))
+                    .append($('<span>').append(" (" + global_var.story_card_label_assign_name + ") "));
             var rs = global_var.story_card_sprint_assign_checked === 1 ?
-                div.html() :
-                global_var.story_card_label_assign_checked === 1 ?
-                divLabel.html() : "";
+                    div.html() :
+                    global_var.story_card_label_assign_checked === 1 ?
+                    divLabel.html() : "";
             return rs;
         },
         TaskColumn: {
             Get: function (action, cardList, usId) {
                 return $('<div>')
-                    .addClass("task-column-mng")
-                    .addClass(action)
-                    .attr("us-id", usId)
-                    .attr("status", action)
-                    .append(this.TaskColumnBody(action, cardList))
-                    .append(this.NewTaskCard(action, usId))
-                    .append(this.PlusSign())
+                        .addClass("task-column-mng")
+                        .addClass(action)
+                        .attr("us-id", usId)
+                        .attr("status", action)
+                        .append(this.TaskColumnBody(action, cardList))
+                        .append(this.NewTaskCard(action, usId))
+                        .append(this.PlusSign())
             },
             PlusSign: function () {
                 return $('<div class="CardContentAdd">')
-                    .append($('<img class="contentAdImg" src="resource/img/plus-icon.png" alt="">'))
+                        .append($('<img class="contentAdImg" src="resource/img/plus-icon.png" alt="">'))
             },
             NewTaskCard: function (action, userStoryId) {
                 return $('<div class="TaskMiniStoryCard">')
-                    .append($('<h5>').append("New Task"))
-                    .append($('<input class="TaskMiniStoryInput form-control" type="text">'))
-                    .append($('<div class="TextHeader " id="TaskAcceptStory">')
-                        .attr('onclick', "insertNewTask(this, '" + action + "')")
-                        .attr('us-id', userStoryId)
-                        .css("color", "green")
-                        .append($('<i class="fas fa-check" ></i>'))
-                    )
-                    .append($('<div class="TextHeader " id="DeleteStory">')
-                        .css("color", "red")
-                        .append($('<i class="fas fa-times" ></i>'))
-                    )
+                        .append($('<h5>').append("New Task"))
+                        .append($('<input class="TaskMiniStoryInput form-control" type="text">'))
+                        .append($('<div class="TextHeader " id="TaskAcceptStory">')
+                                .attr('onclick', "insertNewTask(this, '" + action + "')")
+                                .attr('us-id', userStoryId)
+                                .css("color", "green")
+                                .append($('<i class="fas fa-check" ></i>'))
+                                )
+                        .append($('<div class="TextHeader " id="DeleteStory">')
+                                .css("color", "red")
+                                .append($('<i class="fas fa-times" ></i>'))
+                                )
 
             },
             TaskColumnBody: function (action, cardList) {
                 return $('<div class="task-column-body" id="new">')
-                    .addClass("task_group_kanban_view_" + action)
-                    .append($('<div draggable="true" class="content-drag">'))
-                    .append(cardList.html())
+                        .addClass("task_group_kanban_view_" + action)
+                        .append($('<div draggable="true" class="content-drag">'))
+                        .append(cardList.html())
 
             }
         }
@@ -18647,12 +19333,12 @@ var StoryCard = {
             divAttached = this.FileList();
         }
         var body = $("<div>")
-            .append(this.Header())
-            .append(divAttached)
-            .append(this.PinnedImage())
-            .append(this.MockUp())
-            .append(this.InputTable())
-            .append(this.ProcessDescription())
+                .append(this.Header())
+                .append(divAttached)
+                .append(this.PinnedImage())
+                .append(this.MockUp())
+                .append(this.InputTable())
+                .append(this.ProcessDescription())
 
 
 
@@ -18660,8 +19346,8 @@ var StoryCard = {
     },
     Header: function () {
         return $('<h4>')
-            .css("padding", "20px 0px")
-            .append(replaceTags(SACore.GetBacklogname(this.BacklogId)))
+                .css("padding", "20px 0px")
+                .append(replaceTags(SACore.GetBacklogname(this.BacklogId)))
     },
     InputTable: function () {
         var div = $("<div class='row'>")
@@ -18682,8 +19368,8 @@ var StoryCard = {
             });
             if (table) {
                 div.append($('<div class="col-12 text-left">')
-                    .css("padding", " 20px 0px 30px 30px")
-                    .append($('<h6>').append("Input Description List")))
+                        .css("padding", " 20px 0px 30px 30px")
+                        .append($('<h6>').append("Input Description List")))
 
                 div.append($('<div class="col-12 text-left">').append(table));
             }
@@ -18706,7 +19392,8 @@ var StoryCard = {
                     f = false;
                 }
                 div.append(this.FileListIcons(resId[i].trim(), res[i].trim(), "col-4"));
-            } catch (e) {}
+            } catch (e) {
+            }
         }
         return div;
     },
@@ -18729,15 +19416,16 @@ var StoryCard = {
                 var div4PinnedImage = $('<div>');
                 if (isPinned) {
                     div4PinnedImage.append($('<img></img>')
-                        .attr('src', fileUrl(name))
-                        //                            .addClass("pinned-image")
-                        .css("width", "100%")
-                        .css("padding-bottom", "20px")
-                        .attr('alt', name));
+                            .attr('src', fileUrl(name))
+                            //                            .addClass("pinned-image")
+                            .css("width", "100%")
+                            .css("padding-bottom", "20px")
+                            .attr('alt', name));
                     div.append(div4PinnedImage);
                 }
 
-            } catch (e) {}
+            } catch (e) {
+            }
         }
         return div;
     },
@@ -18746,40 +19434,42 @@ var StoryCard = {
             return "";
         }
         var div = $('<div class="row ">')
-            .css("padding", " 0px 0px 30px 30px");
+                .css("padding", " 0px 0px 30px 30px");
         try {
             var gui = new UserStory().getGUIDesignHTMLBody(SAInput.toJSONByBacklog(this.BacklogId), 0);
             if (gui) {
                 div.append($('<div class="col-12 text-left">')
-                    .css("padding", " 20px 0px 30px 30px")
-                    .append($('<h6>').append("Prototype")))
+                        .css("padding", " 20px 0px 30px 30px")
+                        .append($('<h6>').append("Prototype")))
 
                 var divGUI = $("<div>")
-                    .addClass(" col-12 redirectClass4CSS gv-gui-design")
-                    .attr('style', "background: white;border-color: #F4F5F7; border-style: solid; border-radius: 4px;" +
-                        Component.ReplaceCSS(SACore.GetBacklogParam1(this.BacklogId)))
-                    .append(gui);
+                        .addClass(" col-12 redirectClass4CSS gv-gui-design")
+                        .attr('style', "background: white;border-color: #F4F5F7; border-style: solid; border-radius: 4px;" +
+                                Component.ReplaceCSS(SACore.GetBacklogParam1(this.BacklogId)))
+                        .append(gui);
                 div.append(divGUI);
             }
-        } catch (err) {}
+        } catch (err) {
+        }
 
         return div;
     },
     ProcessDescription: function () {
         var div = $('<div class="row ">')
-            .css("padding", " 0px 0px 30px 30px");
+                .css("padding", " 0px 0px 30px 30px");
         try {
             var desc = this.ProcessDescriptionbody();
             if (desc) {
                 div.append($('<div class="col-12 text-left">')
-                    .css("padding", " 20px 0px 30px 30px")
-                    .append($('<h6>').append("Process Description")))
+                        .css("padding", " 20px 0px 30px 30px")
+                        .append($('<h6>').append("Process Description")))
 
                 var divGUI = $("<div class='col-12'>")
-                    .append(desc);
+                        .append(desc);
                 div.append(divGUI);
             }
-        } catch (err) {}
+        } catch (err) {
+        }
 
         return div;
     },
@@ -18794,7 +19484,8 @@ var StoryCard = {
         };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {}
+        } catch (err) {
+        }
         json.kv.fkBacklogId = this.BacklogId;
         var that = this;
         var data = JSON.stringify(json);
@@ -18818,25 +19509,25 @@ var StoryCard = {
     },
     ProcessDescriptionDetails: function (res) {
         var table = $('<table>')
-            .addClass('table table-hover project-table-list defaultTable sar-table');
+                .addClass('table table-hover project-table-list defaultTable sar-table');
         table.append($('<thead>')
-            .append($("<tr>")
-                .append($("<th>")
-                    .css("width", "1%"))
-                .append($('<th>')
-                    .append(""))))
+                .append($("<tr>")
+                        .append($("<th>")
+                                .css("width", "1%"))
+                        .append($('<th>')
+                                .append(""))))
 
         var obj = res.tbl[0].r;
         for (var n = 0; n < obj.length; n++) {
             var tr = $("<tr>")
-                .append($('<td>').append((n + 1)))
-                .append($('<td>')
-                    .addClass('text-holder')
-                    .append($('<span>')
-                        .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
-                        .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
-                        .css("border-radius", "5px")
-                        .append(MapTextAreaHtml(replaceTags(obj[n].description)))));
+                    .append($('<td>').append((n + 1)))
+                    .append($('<td>')
+                            .addClass('text-holder')
+                            .append($('<span>')
+                                    .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
+                                    .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
+                                    .css("border-radius", "5px")
+                                    .append(MapTextAreaHtml(replaceTags(obj[n].description)))));
             table.append(tr);
         }
         return table;
@@ -18857,42 +19548,43 @@ var StoryCard = {
             var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
             if (global_var.image_formats.includes(fileFormat)) {
                 div12lik.append($('<img></img>')
-                    .attr('src', fileUrl(name))
-                    .addClass('comment_img')
-                    .attr('data-toggle', "modal")
-                    .attr('data-target', "#commentFileImageViewer")
-                    .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
-                    .attr('alt', name));
+                        .attr('src', fileUrl(name))
+                        .addClass('comment_img')
+                        .attr('data-toggle', "modal")
+                        .attr('data-target', "#commentFileImageViewer")
+                        .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
+                        .attr('alt', name));
                 //                    
             } else if (global_var.video_formats.includes(fileFormat)) {
                 fileUrlVar = videoFileURL(name);
                 div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", videoFileURL(name))
-                    .append($('<img></img>')
-                        .attr('src', fileUrlPrivate('video_player_logo.jpg'))
-                        .addClass('comment_img')
-                        .attr('alt', name)));
+                        .attr("href", videoFileURL(name))
+                        .append($('<img></img>')
+                                .attr('src', fileUrlPrivate('video_player_logo.jpg'))
+                                .addClass('comment_img')
+                                .attr('alt', name)));
                 //                    
             } else if (fileFormat === 'pdf') {
                 fileUrlVar = pdfFileURL(name);
                 div12lik.append(
-                    $('<a target="_blank"></a>')
-                    .attr("href", pdfFileURL(name))
-                    .append($('<img></img>')
-                        .attr('src', fileUrlPrivate('pdf-logo.png'))
-                        .addClass('comment_img')
-                        .attr('alt', name)));
+                        $('<a target="_blank"></a>')
+                        .attr("href", pdfFileURL(name))
+                        .append($('<img></img>')
+                                .attr('src', fileUrlPrivate('pdf-logo.png'))
+                                .addClass('comment_img')
+                                .attr('alt', name)));
             }
             div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
             div12lik.append($('<a target="_blank"></a>')
-                .attr("href", fileUrlVar)
-                .append($('<i class="fa fa-download"></i>')));
+                    .attr("href", fileUrlVar)
+                    .append($('<i class="fa fa-download"></i>')));
             div2.append(div12lik);
             div.append(div2);
             var div_col = $('<div></div>').addClass("col").attr("style", "padding:0px;");
             div_col.append(div);
             return div.html();
-        } catch (err) {}
+        } catch (err) {
+        }
     },
 }
 
@@ -19030,7 +19722,8 @@ var SourcedActivityDiagram = {
         };
         try {
             json.kv.cookie = getToken();
-        } catch (err) {}
+        } catch (err) {
+        }
         json.kv.storyCardList = st;
         var data = JSON.stringify(json);
         $.ajax({
@@ -19184,16 +19877,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    color: 'rgb(41,146,210)',
-                                    //                                    color: 'rgb(255,146,27)',
-                                    //                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                color: 'rgb(41,146,210)',
+                                //                                    color: 'rgb(255,146,27)',
+                                //                                    dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19211,16 +19904,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: 'rgb(255,146,27)',
-                                    //                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: 'rgb(255,146,27)',
+                                //                                    dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19238,16 +19931,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: 'rgb(255,146,27)',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: 'rgb(255,146,27)',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19265,16 +19958,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    color: 'rgb(41,146,210)',
-                                    //                                    color: 'rgb(255,146,27)',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                color: 'rgb(41,146,210)',
+                                //                                    color: 'rgb(255,146,27)',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19292,16 +19985,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: 'rgb(255,146,27)',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: 'rgb(255,146,27)',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19319,16 +20012,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: 'rgb(255,146,27)',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: 'rgb(255,146,27)',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19346,16 +20039,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    color: 'rgb(41,146,210)',
-                                    //                                    color: 'rgb(255,146,27)',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                color: 'rgb(41,146,210)',
+                                //                                    color: 'rgb(255,146,27)',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19373,16 +20066,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    color: 'rgb(41,146,210)',
-                                    //                                    color: 'rgb(255,146,27)',
-                                    //                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                color: 'rgb(41,146,210)',
+                                //                                    color: 'rgb(255,146,27)',
+                                //                                    dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19400,16 +20093,16 @@ var SourcedActivityDiagram = {
                         var to = toKeys[m];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: 'rgb(255,146,27)',
-                                    //                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: 'rgb(255,146,27)',
+                                //                                    dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                            }
                             );
 
                         } catch (err) {
@@ -19428,18 +20121,18 @@ var SourcedActivityDiagram = {
                         var text = SourcedActivityDiagram.CoreLines.ShortNote4Api[from + '__' + to];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: '#68EB1C',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                    endLabel: LeaderLine.pathLabel(text)
-                                },
-                            );
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: '#68EB1C',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                                endLabel: LeaderLine.pathLabel(text)
+                            },
+                                    );
 
                         } catch (err) {
                             //                            console.log(err);
@@ -19457,17 +20150,17 @@ var SourcedActivityDiagram = {
                         var text = SourcedActivityDiagram.CoreLines.ShortNote4Api[from + '__' + to];
                         try {
                             new LeaderLine(
-                                document.getElementById(from),
-                                document.getElementById(to), {
-                                    //                                    color: 'rgb(41,146,210)',
-                                    color: '#68EB1C',
-                                    dash: true,
-                                    startPlug: 'square',
-                                    endPlug: 'arrow',
-                                    startSocket: 'right',
-                                    endSocket: 'left',
-                                    endLabel: LeaderLine.pathLabel(text)
-                                }
+                                    document.getElementById(from),
+                                    document.getElementById(to), {
+                                //                                    color: 'rgb(41,146,210)',
+                                color: '#68EB1C',
+                                dash: true,
+                                startPlug: 'square',
+                                endPlug: 'arrow',
+                                startSocket: 'right',
+                                endSocket: 'left',
+                                endLabel: LeaderLine.pathLabel(text)
+                            }
                             );
 
                         } catch (err) {
@@ -19587,8 +20280,9 @@ var SourcedActivityDiagram = {
         },
         ShowLeftApiInIteration: function () {
             var keys = (SourcedActivityDiagram.SelectedStoryCardByFiler.length === 0) ?
-                SourcedActivityDiagram.UsedLeftApisCore :
-                SourcedActivityDiagram.UsedLeftApisCore4Select;;
+                    SourcedActivityDiagram.UsedLeftApisCore :
+                    SourcedActivityDiagram.UsedLeftApisCore4Select;
+            ;
             for (var i in keys) {
                 try {
                     var list = [];
@@ -19599,7 +20293,8 @@ var SourcedActivityDiagram = {
             }
         },
         ShowRightApiInIteration: function () {
-            var keys = SourcedActivityDiagram.UsedRightApisCore;;
+            var keys = SourcedActivityDiagram.UsedRightApisCore;
+            ;
             for (var i in keys) {
                 try {
                     var list = [];
@@ -19794,7 +20489,7 @@ var SourcedActivityDiagram = {
             $('.sad-leftapicard').each(function () {
                 var bid = $(this).attr('pid');
                 if (SourcedActivityDiagram.SelectedStoryCardByFiler.length > 0 &&
-                    SourcedActivityDiagram.SelectedStoryCardByFiler.includes(bid)) {
+                        SourcedActivityDiagram.SelectedStoryCardByFiler.includes(bid)) {
                     //do somethink
                 } else {
                     $(this).hide();
@@ -19808,9 +20503,9 @@ var SourcedActivityDiagram = {
             $('.sad-storycard').each(function () {
                 var backlogId = $(this).attr('pid');
                 if (SourcedActivityDiagram.UsedBacklogs.length > 0 &&
-                    !SourcedActivityDiagram.UsedBacklogs.includes(backlogId)) {
+                        !SourcedActivityDiagram.UsedBacklogs.includes(backlogId)) {
                     if (SourcedActivityDiagram.SelectedStoryCardByFiler.length > 0 &&
-                        SourcedActivityDiagram.SelectedStoryCardByFiler.includes(backlogId)) {
+                            SourcedActivityDiagram.SelectedStoryCardByFiler.includes(backlogId)) {
                         //do something
                     } else {
                         $(this).remove();
@@ -19821,7 +20516,7 @@ var SourcedActivityDiagram = {
         HideLeftApi: function () {
             $('.sad-leftapicard').each(function () {
                 if (SourcedActivityDiagram.UsedLeftApisInner.length > 0 &&
-                    !SourcedActivityDiagram.UsedLeftApisInner.includes($(this).attr('pid'))) {
+                        !SourcedActivityDiagram.UsedLeftApisInner.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
             })
@@ -19830,7 +20525,7 @@ var SourcedActivityDiagram = {
             $('.sad-leftentitycard').each(function () {
                 //SourcedActivityDiagram.UsedLeftEntity.length > 0 &&
                 if (
-                    !SourcedActivityDiagram.UsedLeftEntity.includes($(this).attr('pid'))) {
+                        !SourcedActivityDiagram.UsedLeftEntity.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
             })
@@ -19839,7 +20534,7 @@ var SourcedActivityDiagram = {
             $('.sad-rightentitycard').each(function () {
                 //                SourcedActivityDiagram.UsedRightEntity.length > 0 &&
                 if (
-                    !SourcedActivityDiagram.UsedRightEntity.includes($(this).attr('pid'))) {
+                        !SourcedActivityDiagram.UsedRightEntity.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
             })
@@ -19847,7 +20542,7 @@ var SourcedActivityDiagram = {
         HideRightApi: function () {
             $('.sad-rightapicard').each(function () {
                 if (SourcedActivityDiagram.UsedRightApisInner.length > 0 &&
-                    !SourcedActivityDiagram.UsedRightApisInner.includes($(this).attr('pid'))) {
+                        !SourcedActivityDiagram.UsedRightApisInner.includes($(this).attr('pid'))) {
                     $(this).remove();
                 }
             })
@@ -19888,15 +20583,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.LinesFromTo[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(255,146,27)',
-                        dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left',
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(255,146,27)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left',
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -19912,15 +20607,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.LinesFromTo4Send[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(255,146,27)',
-                        dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(255,146,27)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -19936,14 +20631,14 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.Lines4EL2AL[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(41,146,210)',
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(41,146,210)',
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -19959,14 +20654,14 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.Lines4AR2ER[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(41,146,210)',
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(41,146,210)',
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -19982,15 +20677,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.Lines4SC2SC[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(255,146,27)',
-                        dash: false,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'left',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(255,146,27)',
+                    dash: false,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'left',
+                    endSocket: 'left'
+                }
                 );
             } catch (err) {
                 //                console.log(err);
@@ -20005,15 +20700,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.Lines4EL2SC[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(255,146,27)',
-                        dash: false,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(255,146,27)',
+                    dash: false,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
 
                 );
                 this.LineList.push(line);
@@ -20030,15 +20725,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.Lines4SC2ER[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(255,146,27)',
-                        dash: false,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(255,146,27)',
+                    dash: false,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -20054,15 +20749,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.LinesFromTo4ApiOutput[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(41,146,210)',
-                        dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(41,146,210)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -20078,15 +20773,15 @@ var SourcedActivityDiagram = {
             var to = SourcedActivityDiagram.LinesFromTo4RightApiOutput[from];
             try {
                 var line = new LeaderLine(
-                    document.getElementById(from),
-                    document.getElementById(to), {
-                        color: 'rgb(41,146,210)',
-                        dash: true,
-                        startPlug: 'square',
-                        endPlug: 'arrow',
-                        startSocket: 'right',
-                        endSocket: 'left'
-                    }
+                        document.getElementById(from),
+                        document.getElementById(to), {
+                    color: 'rgb(41,146,210)',
+                    dash: true,
+                    startPlug: 'square',
+                    endPlug: 'arrow',
+                    startSocket: 'right',
+                    endSocket: 'left'
+                }
                 );
                 this.LineList.push(line);
             } catch (err) {
@@ -20107,7 +20802,7 @@ var SourcedActivityDiagram = {
                     continue;
                 }
                 if (SourcedActivityDiagram.SelectedStoryCardByFiler.length > 0 &&
-                    !SourcedActivityDiagram.SelectedStoryCardByFiler.includes(keys[i])) {
+                        !SourcedActivityDiagram.SelectedStoryCardByFiler.includes(keys[i])) {
                     continue;
                 }
 
@@ -20134,28 +20829,28 @@ var SourcedActivityDiagram = {
         SingleCard: function (backlogId) {
             var bname = SACore.GetBacklogname(backlogId);
             var div = $("<div class='col-12 text-center'>")
-                .css("padding", "0px 3px 10px 3px")
-                .addClass('sad-storycard')
-                .attr("pid", backlogId)
-                .attr("id", "b_sc_" + backlogId)
-                .append($('<div class="col-12 text-right">')
-                    .css("padding", "0px")
-                    .css("margin", "0px")
-                    .css("font-size", "7px")
-                    .css("color", "grey")
-                    .append("<i>Story Card</i>")
-                )
-                .append($('<div class="col-12">')
-                    .css("padding", "10px 0px")
-                    .css("font-size", "14px")
+                    .css("padding", "0px 3px 10px 3px")
+                    .addClass('sad-storycard')
+                    .attr("pid", backlogId)
+                    .attr("id", "b_sc_" + backlogId)
+                    .append($('<div class="col-12 text-right">')
+                            .css("padding", "0px")
+                            .css("margin", "0px")
+                            .css("font-size", "7px")
+                            .css("color", "grey")
+                            .append("<i>Story Card</i>")
+                            )
+                    .append($('<div class="col-12">')
+                            .css("padding", "10px 0px")
+                            .css("font-size", "14px")
 
-                    .append($('<span href1="#">')
-                        .css('cursor', 'pointer')
-                        .css("color", "grey")
-                        .css("padding", "5px 0px")
-                        .attr('onclick', 'callStoryCard("' + backlogId + '")')
-                        .append(bname)
-                    ));
+                            .append($('<span href1="#">')
+                                    .css('cursor', 'pointer')
+                                    .css("color", "grey")
+                                    .css("padding", "5px 0px")
+                                    .attr('onclick', 'callStoryCard("' + backlogId + '")')
+                                    .append(bname)
+                                    ));
             this.Screen(div, backlogId);
             this.Inputs(div, backlogId);
             return div;
@@ -20173,19 +20868,19 @@ var SourcedActivityDiagram = {
             var showPro = SACore.GetBacklogDetails(backlogId, "showPrototype");
             if (showPro === '1') {
                 screenPgn.append($('<a>')
-                    .attr("pid", idx)
-                    .css("color", "blue")
-                    .css('cursor', 'pointer')
-                    .addClass('screen_pgn_count')
-                    .append(idx))
+                        .attr("pid", idx)
+                        .css("color", "blue")
+                        .css('cursor', 'pointer')
+                        .addClass('screen_pgn_count')
+                        .append(idx))
 
                 var gui = new UserStory().genGUIDesignHtmlById(backlogId);
                 div.append($('<div class="col-12">')
-                    .addClass('img_slider')
-                    .addClass('img_slider_' + idx)
-                    .css("display", "none")
-                    .css("padding", "10px 0px")
-                    .append(gui));
+                        .addClass('img_slider')
+                        .addClass('img_slider_' + idx)
+                        .css("display", "none")
+                        .css("padding", "10px 0px")
+                        .append(gui));
 
                 idx++;
             }
@@ -20200,25 +20895,25 @@ var SourcedActivityDiagram = {
                 }
 
                 screenPgn.append($('<a>')
-                    .attr("pid", idx)
-                    .css("color", "blue")
-                    .css('cursor', 'pointer')
-                    .addClass('screen_pgn_count')
-                    .append(idx))
+                        .attr("pid", idx)
+                        .css("color", "blue")
+                        .css('cursor', 'pointer')
+                        .addClass('screen_pgn_count')
+                        .append(idx))
 
                 var fname = fileUrlUS[i].trim();
                 var img = $('<img>')
-                    .addClass('img_slider')
-                    .addClass('img_slider_' + idx)
-                    .css("display", "none")
-                    .attr("src", fileUrl(fname))
-                    .css("max-width", "95%")
-                    .css("max-height", "300px")
+                        .addClass('img_slider')
+                        .addClass('img_slider_' + idx)
+                        .css("display", "none")
+                        .attr("src", fileUrl(fname))
+                        .css("max-width", "95%")
+                        .css("max-height", "300px")
 
                 div.append($('<div class="col-12">')
-                    .css("padding", "10px 0px")
-                    .append(img)
-                );
+                        .css("padding", "10px 0px")
+                        .append(img)
+                        );
 
                 idx++;
             }
@@ -20239,8 +20934,8 @@ var SourcedActivityDiagram = {
                     continue;
                 }
                 if (SAInput.getInputDetails(inId, "inputType") === 'IN' &&
-                    (SAInput.getInputDetails(inId, "componentType") === 'sctn' ||
-                        SAInput.getInputDetails(inId, "componentType") === 'tab')) {
+                        (SAInput.getInputDetails(inId, "componentType") === 'sctn' ||
+                                SAInput.getInputDetails(inId, "componentType") === 'tab')) {
                     continue;
                 }
                 if (SAInput.getInputDetails(inId, "selectFromInputId").length > 0) {
@@ -20278,8 +20973,8 @@ var SourcedActivityDiagram = {
                 if (SAInput.getInputDetails(inId, "sendToInputId").length > 0) {
                     var bid = SAInput.getInputDetails(inId, "sendToBacklogId");
                     var toId = SACore.GetBacklogDetails(bid, "isApi") === '1' ?
-                        "ar_" + SAInput.getInputDetails(inId, "sendToInputId") :
-                        "sc_" + SAInput.getInputDetails(inId, "sendToInputId");
+                            "ar_" + SAInput.getInputDetails(inId, "sendToInputId") :
+                            "sc_" + SAInput.getInputDetails(inId, "sendToInputId");
                     if (SACore.GetBacklogDetails(bid, "isApi") === '1') {
                         SourcedActivityDiagram.SetUsedRightApiInner(bid);
                         SourcedActivityDiagram.SetUsedRightApiCore(bid, 'storycard');
@@ -20314,10 +21009,10 @@ var SourcedActivityDiagram = {
         },
         InputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "sc_" + inputId)
-                .addClass("sad-story-card-input")
-                .append(SAInput.GetInputName(inputId));
+                    .addClass("text-left")
+                    .attr("id", "sc_" + inputId)
+                    .addClass("sad-story-card-input")
+                    .append(SAInput.GetInputName(inputId));
             return div;
         }
     },
@@ -20336,27 +21031,27 @@ var SourcedActivityDiagram = {
             var dbname = SAEntity.GetDBDetails(dbid, "dbName");
             var bname = SAEntity.GetTableDetails(tableId, "tableName");
             var div = $("<div class='col-12 text-center'>")
-                .css("padding", "0px 3px 10px 3px")
-                .addClass('sad-entitycard')
-                .addClass("sad-leftentitycard")
-                .attr("id", "p_el_" + tableId)
-                .attr("pid", tableId)
-                .append($('<div class="col-12 text-right">')
-                    .css("padding", "0px")
-                    .css("margin", "0px")
-                    .css("font-size", "7px")
-                    .css("color", "grey")
-                    .append("<i>Entity<i>")
-                )
-                .append($('<div class="col-12">')
-                    .css("padding", "10px 0px")
-                    .css("font-size", "14px")
-                    .append($('<a href1="#">')
-                        .css('cursor', 'pointer')
-                        .css("color", "black")
-                        .attr('onclick1', 'callStoryCard("' + tableId + '")')
-                        .append(bname + " (<i>from </i>" + dbname + ")")
-                    ));
+                    .css("padding", "0px 3px 10px 3px")
+                    .addClass('sad-entitycard')
+                    .addClass("sad-leftentitycard")
+                    .attr("id", "p_el_" + tableId)
+                    .attr("pid", tableId)
+                    .append($('<div class="col-12 text-right">')
+                            .css("padding", "0px")
+                            .css("margin", "0px")
+                            .css("font-size", "7px")
+                            .css("color", "grey")
+                            .append("<i>Entity<i>")
+                            )
+                    .append($('<div class="col-12">')
+                            .css("padding", "10px 0px")
+                            .css("font-size", "14px")
+                            .append($('<a href1="#">')
+                                    .css('cursor', 'pointer')
+                                    .css("color", "black")
+                                    .attr('onclick1', 'callStoryCard("' + tableId + '")')
+                                    .append(bname + " (<i>from </i>" + dbname + ")")
+                                    ));
             this.Inputs(div, tableId);
             return div;
         },
@@ -20377,10 +21072,10 @@ var SourcedActivityDiagram = {
         },
         InputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "el_" + inputId)
-                .addClass("sad-entity-input")
-                .append(SAEntity.GetFieldDetails(inputId, "fieldName"));
+                    .addClass("text-left")
+                    .attr("id", "el_" + inputId)
+                    .addClass("sad-entity-input")
+                    .append(SAEntity.GetFieldDetails(inputId, "fieldName"));
             return div;
         }
     },
@@ -20398,27 +21093,27 @@ var SourcedActivityDiagram = {
             var dbname = SAEntity.GetDBDetails(dbid, "dbName");
             var bname = SAEntity.GetTableDetails(tableId, "tableName");
             var div = $("<div class='col-12 text-center'>")
-                .css("padding", "0px 3px 10px 3px")
-                .addClass('sad-entitycard')
-                .addClass("sad-rightentitycard")
-                .attr("id", "p_er_" + tableId)
-                .attr("pid", tableId)
-                .append($('<div class="col-12 text-right">')
-                    .css("padding", "0px")
-                    .css("margin", "0px")
-                    .css("font-size", "7px")
-                    .css("color", "grey")
-                    .append("<i>Entity<i>")
-                )
-                .append($('<div class="col-12">')
-                    .css("padding", "10px 0px")
-                    .css("font-size", "14px")
-                    .append($('<a href1="#">')
-                        .css('cursor', 'pointer')
-                        .css("color", "black")
-                        .attr('onclick1', 'callStoryCard("' + tableId + '")')
-                        .append(bname + " (<i>from </i>" + dbname + ")")
-                    ));
+                    .css("padding", "0px 3px 10px 3px")
+                    .addClass('sad-entitycard')
+                    .addClass("sad-rightentitycard")
+                    .attr("id", "p_er_" + tableId)
+                    .attr("pid", tableId)
+                    .append($('<div class="col-12 text-right">')
+                            .css("padding", "0px")
+                            .css("margin", "0px")
+                            .css("font-size", "7px")
+                            .css("color", "grey")
+                            .append("<i>Entity<i>")
+                            )
+                    .append($('<div class="col-12">')
+                            .css("padding", "10px 0px")
+                            .css("font-size", "14px")
+                            .append($('<a href1="#">')
+                                    .css('cursor', 'pointer')
+                                    .css("color", "black")
+                                    .attr('onclick1', 'callStoryCard("' + tableId + '")')
+                                    .append(bname + " (<i>from </i>" + dbname + ")")
+                                    ));
             this.Inputs(div, tableId);
             return div;
         },
@@ -20439,10 +21134,10 @@ var SourcedActivityDiagram = {
         },
         InputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "er_" + inputId)
-                .addClass("sad-entity-input")
-                .append(SAEntity.GetFieldDetails(inputId, "fieldName"));
+                    .addClass("text-left")
+                    .attr("id", "er_" + inputId)
+                    .addClass("sad-entity-input")
+                    .append(SAEntity.GetFieldDetails(inputId, "fieldName"));
             return div;
         }
     },
@@ -20466,32 +21161,32 @@ var SourcedActivityDiagram = {
         SingleCard: function (backlogId) {
             var bname = SACore.GetBacklogname(backlogId);
             var div = $("<div class='row sad-apicard-col text-center'>")
-                .css("padding", "0px 3px 10px 3px")
-                .addClass('sad-apicard')
-                .addClass('sad-leftapicard')
-                .attr("id", "p_al_" + backlogId)
-                .attr("pid", backlogId)
-                .append($('<div class="col-12 text-right">')
-                    .css("padding", "0px")
-                    .css("margin", "0px")
-                    .css("font-size", "7px")
-                    .css("color", "grey")
-                    .append("<i>API</i>")
-                )
-                .append($("<div class='col-12'>")
-                    .css("padding", "10px 0px")
-                    .css("font-size", "14px")
-                    .append($('<span href1="#">')
-                        .css('cursor', 'pointer')
-                        .css("color", "black")
-                        .attr('onclick', 'callStoryCard("' + backlogId + '")')
-                        .append(bname)));
+                    .css("padding", "0px 3px 10px 3px")
+                    .addClass('sad-apicard')
+                    .addClass('sad-leftapicard')
+                    .attr("id", "p_al_" + backlogId)
+                    .attr("pid", backlogId)
+                    .append($('<div class="col-12 text-right">')
+                            .css("padding", "0px")
+                            .css("margin", "0px")
+                            .css("font-size", "7px")
+                            .css("color", "grey")
+                            .append("<i>API</i>")
+                            )
+                    .append($("<div class='col-12'>")
+                            .css("padding", "10px 0px")
+                            .css("font-size", "14px")
+                            .append($('<span href1="#">')
+                                    .css('cursor', 'pointer')
+                                    .css("color", "black")
+                                    .attr('onclick', 'callStoryCard("' + backlogId + '")')
+                                    .append(bname)));
             var divIn = $("<div class='col-6'>")
-                .css("padding", "0px")
-                .css("width", "130px");
+                    .css("padding", "0px")
+                    .css("width", "130px");
             var divOut = $("<div class='col-6'>")
-                .css("padding", "0px")
-                .css("width", "130px");
+                    .css("padding", "0px")
+                    .css("width", "130px");
             this.Inputs(divIn, backlogId);
             this.Outputs(divOut, backlogId);
             div.append(divIn).append(divOut);
@@ -20550,8 +21245,8 @@ var SourcedActivityDiagram = {
                     var fromId = "al_" + inId;
                     var bid = SAInput.getInputDetails(inId, "sendToBacklogId");
                     var toId = SACore.GetBacklogDetails(bid, "isApi") === '1' ?
-                        "al_" + SAInput.getInputDetails(inId, "sendToInputId") :
-                        "sc_" + SAInput.getInputDetails(inId, "sendToInputId")
+                            "al_" + SAInput.getInputDetails(inId, "sendToInputId") :
+                            "sc_" + SAInput.getInputDetails(inId, "sendToInputId")
 
                     SourcedActivityDiagram.LinesFromTo4ApiOutput[fromId] = toId;
                     if (SACore.GetBacklogDetails(bid, "isApi") === '1') {
@@ -20571,18 +21266,18 @@ var SourcedActivityDiagram = {
         },
         InputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "al_" + inputId)
-                .addClass("sad-api-card-input")
-                .append(SAInput.GetInputName(inputId));
+                    .addClass("text-left")
+                    .attr("id", "al_" + inputId)
+                    .addClass("sad-api-card-input")
+                    .append(SAInput.GetInputName(inputId));
             return div;
         },
         OutputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "al_" + inputId)
-                .addClass("sad-api-card-output")
-                .append(SAInput.GetInputName(inputId));
+                    .addClass("text-left")
+                    .attr("id", "al_" + inputId)
+                    .addClass("sad-api-card-output")
+                    .append(SAInput.GetInputName(inputId));
             return div;
         }
     },
@@ -20625,33 +21320,33 @@ var SourcedActivityDiagram = {
         SingleCard: function (backlogId) {
             var bname = SACore.GetBacklogname(backlogId);
             var div = $("<div class='row sad-apicard-col text-center'>")
-                .css("padding", "0px 3px 10px 3px")
-                .addClass('sad-apicard')
-                .addClass('sad-rightapicard')
-                .attr("pid", backlogId)
-                .attr("id", "p_ar_" + backlogId)
-                .append($('<div class="col-12 text-right">')
-                    .css("padding", "0px")
-                    .css("margin", "0px")
-                    .css("font-size", "7px")
-                    .css("color", "grey")
-                    .append("<i>API</i>")
-                )
-                .append($("<div class='col-12'>")
-                    .css("padding", "10px 0px")
-                    .css("font-size", "14px")
-                    .append($('<span href1="#">')
-                        .css("padding", "10px 0px")
-                        .css('cursor', 'pointer')
-                        .css("color", "black")
-                        .attr('onclick', 'callStoryCard("' + backlogId + '")')
-                        .append(bname)));
+                    .css("padding", "0px 3px 10px 3px")
+                    .addClass('sad-apicard')
+                    .addClass('sad-rightapicard')
+                    .attr("pid", backlogId)
+                    .attr("id", "p_ar_" + backlogId)
+                    .append($('<div class="col-12 text-right">')
+                            .css("padding", "0px")
+                            .css("margin", "0px")
+                            .css("font-size", "7px")
+                            .css("color", "grey")
+                            .append("<i>API</i>")
+                            )
+                    .append($("<div class='col-12'>")
+                            .css("padding", "10px 0px")
+                            .css("font-size", "14px")
+                            .append($('<span href1="#">')
+                                    .css("padding", "10px 0px")
+                                    .css('cursor', 'pointer')
+                                    .css("color", "black")
+                                    .attr('onclick', 'callStoryCard("' + backlogId + '")')
+                                    .append(bname)));
             var divIn = $("<div class='col-6'>")
-                .css("padding", "0px")
-                .css("width", "130px");
+                    .css("padding", "0px")
+                    .css("width", "130px");
             var divOut = $("<div class='col-6'>")
-                .css("padding", "0px")
-                .css("width", "130px");
+                    .css("padding", "0px")
+                    .css("width", "130px");
             this.Inputs(divIn, backlogId);
             this.Outputs(divOut, backlogId);
             div.append(divIn).append(divOut);
@@ -20696,8 +21391,8 @@ var SourcedActivityDiagram = {
                     var fromId = "ar_" + inId;
                     var bid = SAInput.getInputDetails(inId, "sendToBacklogId");
                     var toId = SACore.GetBacklogDetails(bid, "isApi") === '1' ?
-                        "ar_" + SAInput.getInputDetails(inId, "sendToInputId") :
-                        "";
+                            "ar_" + SAInput.getInputDetails(inId, "sendToInputId") :
+                            "";
                     if (toId.trim().length > 1) {
                         SourcedActivityDiagram.LinesFromTo4RightApiOutput[fromId] = toId;
                     }
@@ -20722,18 +21417,18 @@ var SourcedActivityDiagram = {
         },
         InputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "ar_" + inputId)
-                .addClass("sad-api-card-input")
-                .append(SAInput.GetInputName(inputId));
+                    .addClass("text-left")
+                    .attr("id", "ar_" + inputId)
+                    .addClass("sad-api-card-input")
+                    .append(SAInput.GetInputName(inputId));
             return div;
         },
         OutputLine: function (inputId) {
             var div = $("<div>")
-                .addClass("text-left")
-                .attr("id", "ar_" + inputId)
-                .addClass("sad-api-card-output")
-                .append(SAInput.GetInputName(inputId));
+                    .addClass("text-left")
+                    .attr("id", "ar_" + inputId)
+                    .addClass("sad-api-card-output")
+                    .append(SAInput.GetInputName(inputId));
             return div;
         }
     },
@@ -20771,27 +21466,27 @@ var SCSourceManagement = {
             var inputId = inputs[i].trim();
             var inputName = SAInput.GetInputName(inputId);
             var div = $('<div>')
-                .attr("pid", inputId)
-                .addClass('sc-source-mgmt-input-div')
-                .addClass("row")
-                .addClass("text-center")
-                .append($('<div>')
+                    .attr("pid", inputId)
+                    .addClass('sc-source-mgmt-input-div')
+                    .addClass("row")
+                    .addClass("text-center")
+                    .append($('<div>')
 
-                    .addClass('text-right')
-                    .addClass('sc-source-mgmt-div-4-field-left'))
+                            .addClass('text-right')
+                            .addClass('sc-source-mgmt-div-4-field-left'))
 
-                .append($('<div>')
-                    .addClass('col-lg-3')
-                    .addClass('sc-source-mgmt-div-4-input-list')
-                    .append($('<span>')
-                        .addClass('sc-source-mgmt-input-list')
-                        .addClass('sc-source-mgmt-input-list_' + inputId)
-                        .attr('pid', inputId)
-                        .text(inputName)))
-                .append($('<div>')
-                    .addClass('col-lg-12')
-                    .addClass('text-left')
-                    .addClass('sc-source-mgmt-div-4-field-right'))
+                    .append($('<div>')
+                            .addClass('col-lg-3')
+                            .addClass('sc-source-mgmt-div-4-input-list')
+                            .append($('<span>')
+                                    .addClass('sc-source-mgmt-input-list')
+                                    .addClass('sc-source-mgmt-input-list_' + inputId)
+                                    .attr('pid', inputId)
+                                    .text(inputName)))
+                    .append($('<div>')
+                            .addClass('col-lg-12')
+                            .addClass('text-left')
+                            .addClass('sc-source-mgmt-div-4-field-right'))
 
             el.append(div);
         }
@@ -20807,23 +21502,23 @@ var SCSourceManagement = {
 
 
             $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-by-' + inputName)
-                .append($('<span>')
-                    .addClass('sc-source-mgmt-attr-left-list-div-4-api-item')
-                    .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-' + fkSelectFromInputId)
-                    .attr('bid', fkSelectFromBacklogId)
-                    .attr('pid', fkSelectFromInputId)
-                    .attr('field', inputName)
-                    .text(backlogName + "." + inputName + " (OUT)"))
-                .append('<br>')
-                .append($('<span>')
-                    .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers')
-                    .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers-' + fkSelectFromInputId)
-                    .attr('bid', fkSelectFromBacklogId)
-                    .attr('pid', fkSelectFromInputId)
-                    .attr('field', inputName)
-                )
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-' + fkSelectFromInputId)
+                            .attr('bid', fkSelectFromBacklogId)
+                            .attr('pid', fkSelectFromInputId)
+                            .attr('field', inputName)
+                            .text(backlogName + "." + inputName + " (OUT)"))
+                    .append('<br>')
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers')
+                            .addClass('sc-source-mgmt-attr-left-list-div-4-api-item-triggers-' + fkSelectFromInputId)
+                            .attr('bid', fkSelectFromBacklogId)
+                            .attr('pid', fkSelectFromInputId)
+                            .attr('field', inputName)
+                            )
 
-            ;
+                    ;
 
 
         })
@@ -20839,23 +21534,23 @@ var SCSourceManagement = {
 
 
             $(this).closest('div.row').find('.sc-source-mgmt-attr-right-list-div-4-api-by-' + inputName)
-                .append($('<span>')
-                    .addClass('sc-source-mgmt-attr-right-list-div-4-api-item')
-                    .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-' + fkSendToInputId)
-                    .attr('bid', fkSendToBacklogId)
-                    .attr('pid', fkSendToInputId)
-                    .attr('field', inputName)
-                    .text(backlogName + "." + inputName + " (IN)"))
-                .append('<br>')
-                .append($('<span>')
-                    .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers')
-                    .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers-' + fkSendToInputId)
-                    .attr('bid', fkSendToBacklogId)
-                    .attr('pid', fkSendToInputId)
-                    .attr('field', inputName)
-                )
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-' + fkSendToInputId)
+                            .attr('bid', fkSendToBacklogId)
+                            .attr('pid', fkSendToInputId)
+                            .attr('field', inputName)
+                            .text(backlogName + "." + inputName + " (IN)"))
+                    .append('<br>')
+                    .append($('<span>')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers')
+                            .addClass('sc-source-mgmt-attr-right-list-div-4-api-item-triggers-' + fkSendToInputId)
+                            .attr('bid', fkSendToBacklogId)
+                            .attr('pid', fkSendToInputId)
+                            .attr('field', inputName)
+                            )
 
-            ;
+                    ;
 
 
         })
@@ -20879,15 +21574,15 @@ var SCSourceManagement = {
                 var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName : "";
 
                 $(this).closest('div.row').find('.sc-source-mgmt-attr-left-list-div-4-api-input-by-' + inputName)
-                    .append($('<span>')
-                        .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item')
-                        .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item-' + o.id)
-                        .attr('dbid', o.selectFromDbId)
-                        .attr('tableid', o.selectFromTableId)
-                        .attr('fieldid', o.selectFromFieldId)
-                        .attr('pid', o.id)
-                        .attr('field', inputName)
-                        .text(fieldZadi))
+                        .append($('<span>')
+                                .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item')
+                                .addClass('sc-source-mgmt-attr-left-list-div-4-api-entity-item-' + o.id)
+                                .attr('dbid', o.selectFromDbId)
+                                .attr('tableid', o.selectFromTableId)
+                                .attr('fieldid', o.selectFromFieldId)
+                                .attr('pid', o.id)
+                                .attr('field', inputName)
+                                .text(fieldZadi))
             }
         })
     },
@@ -20909,15 +21604,15 @@ var SCSourceManagement = {
                 var fieldZadi = (fiedlName) ? dbName + "." + tableName + "." + fiedlName : "";
 
                 $(this).closest('div.row').find('.sc-source-mgmt-attr-right-list-div-4-api-input-by-' + inputName)
-                    .append($('<span>')
-                        .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item')
-                        .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item-' + o.id)
-                        .attr('dbid', o.sendToDbId)
-                        .attr('tableid', o.sendToTableId)
-                        .attr('fieldid', o.sendToFieldId)
-                        .attr('pid', o.id)
-                        .attr('field', inputName)
-                        .text(fieldZadi))
+                        .append($('<span>')
+                                .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item')
+                                .addClass('sc-source-mgmt-attr-right-list-div-4-api-entity-item-' + o.id)
+                                .attr('dbid', o.sendToDbId)
+                                .attr('tableid', o.sendToTableId)
+                                .attr('fieldid', o.sendToFieldId)
+                                .attr('pid', o.id)
+                                .attr('field', inputName)
+                                .text(fieldZadi))
             }
         })
     },
@@ -20977,64 +21672,64 @@ var SCSourceManagement = {
                         var sf = selectedFields[j];
 
                         $('.sc-source-mgmt-input-list_' + o.fkInputId)
-                            .first()
-                            .closest('div.row')
-                            .find('div.sc-source-mgmt-div-4-field-right')
-                            .append($('<div class="row">')
+                                .first()
+                                .closest('div.row')
+                                .find('div.sc-source-mgmt-div-4-field-right')
+                                .append($('<div class="row">')
 
-                                .append($('<div>')
-                                    .addClass("col-lg-3")
-                                    .addClass("sc-source-mgmt-attr-right-list-div")
-                                    .append($('<span>')
-                                        .addClass('sc-source-mgmt-attr-right-list')
-                                        .addClass('sc-source-mgmt-attr-right-list_' + o.id)
-                                        .addClass('sc-source-mgmt-attr-right-list_field_' + sf)
-                                        .attr('pid', o.id)
-                                        .attr('field', sf)
-                                        .text(sf)))
+                                        .append($('<div>')
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-right-list-div")
+                                                .append($('<span>')
+                                                        .addClass('sc-source-mgmt-attr-right-list')
+                                                        .addClass('sc-source-mgmt-attr-right-list_' + o.id)
+                                                        .addClass('sc-source-mgmt-attr-right-list_field_' + sf)
+                                                        .attr('pid', o.id)
+                                                        .attr('field', sf)
+                                                        .text(sf)))
 
-                                .append($('<div>')
-                                    .addClass("col-lg-3")
-                                    .addClass("sc-source-mgmt-attr-right-list-div-4-api")
-                                    .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf))
+                                        .append($('<div>')
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-by-" + sf))
 
-                                .append($('<div>')
-                                    .addClass("col-lg-3")
-                                    .addClass("sc-source-mgmt-attr-right-list-div-4-api-input")
-                                    .addClass("sc-source-mgmt-attr-right-list-div-4-api-input-by-" + sf)
-                                )
+                                        .append($('<div>')
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-input")
+                                                .addClass("sc-source-mgmt-attr-right-list-div-4-api-input-by-" + sf)
+                                                )
 
-                            )
+                                        )
 
                         $('.sc-source-mgmt-input-list_' + o.fkInputId)
-                            .first()
-                            .closest('div.row')
-                            .find('div.sc-source-mgmt-div-4-field-left')
-                            .append($('<div class="row">')
+                                .first()
+                                .closest('div.row')
+                                .find('div.sc-source-mgmt-div-4-field-left')
+                                .append($('<div class="row">')
 
-                                .append($('<div>')
-                                    .addClass("col-lg-4")
-                                    .addClass("sc-source-mgmt-attr-left-list-div-4-api-input")
-                                    .addClass("sc-source-mgmt-attr-left-list-div-4-api-input-by-" + sf)
-                                )
+                                        .append($('<div>')
+                                                .addClass("col-lg-4")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-input")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-input-by-" + sf)
+                                                )
 
-                                .append($('<div>')
-                                    .addClass("col-lg-5")
-                                    .addClass("sc-source-mgmt-attr-left-list-div-4-api")
-                                    .addClass("sc-source-mgmt-attr-left-list-div-4-api-by-" + sf)
-                                )
+                                        .append($('<div>')
+                                                .addClass("col-lg-5")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api")
+                                                .addClass("sc-source-mgmt-attr-left-list-div-4-api-by-" + sf)
+                                                )
 
 
-                                .append($('<div>')
-                                    .addClass("col-lg-3")
-                                    .addClass("sc-source-mgmt-attr-left-list-div")
-                                    .append($('<span>')
-                                        .addClass('sc-source-mgmt-attr-left-list')
-                                        .addClass('sc-source-mgmt-attr-left-list_' + o.id)
-                                        .addClass('sc-source-mgmt-attr-left-list_field_' + sf)
-                                        .attr('pid', o.id)
-                                        .attr('field', sf)
-                                        .text(sf))))
+                                        .append($('<div>')
+                                                .addClass("col-lg-3")
+                                                .addClass("sc-source-mgmt-attr-left-list-div")
+                                                .append($('<span>')
+                                                        .addClass('sc-source-mgmt-attr-left-list')
+                                                        .addClass('sc-source-mgmt-attr-left-list_' + o.id)
+                                                        .addClass('sc-source-mgmt-attr-left-list_field_' + sf)
+                                                        .attr('pid', o.id)
+                                                        .attr('field', sf)
+                                                        .text(sf))))
                     }
 
                 }
@@ -21089,22 +21784,11 @@ var requestType = {
         },
     ]
 }
-$(document).on('click', '.for-chewekk-new-chat-link', function () {
-    var div = $(".component-class#21041212141705702084 >.component-section-row ");
-    var f = $(this).attr("data-link")
-    $.get("resource/child/" + f + ".html", function (html_string) {
-        $(div).html(html_string);
-       
 
-        $('#comp_id_21052514504106703772').click();
-    });
-
-  
-})
 $(document).on('click', '.for-chewekk-new-panel-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
-    $.get("resource/child/" + f + ".html", function (html_string) {
+    $.get("child/" + f + ".html", function (html_string) {
         $(div).html(html_string);
 
         $('.selectpicker').selectpicker({
@@ -21112,249 +21796,458 @@ $(document).on('click', '.for-chewekk-new-panel-link', function () {
             tickIcon: 'fa-chevron-down',
         });
 
-       
+
         genFilterTapsiriq();
     });
 
 })
 var modulListTap = {
-     'techizat-satinalma':[
-        {"id":"techizat","requestType":"Təchizat"},
-        {"id":"sayim","requestType":"Sayım"},
-        {"id":"transfer","requestType":"Transfer"},
-        {"id":"sifarishicra","requestType":"Sifariş İcra"},
-        {"id":"iade","requestType":"Alış İadə"},
+    'techizat-satinalma': [{
+            "id": "techizat",
+            "requestType": "Təchizat"
+        },
+        {
+            "id": "sayim",
+            "requestType": "Sayım"
+        },
+        {
+            "id": "transfer",
+            "requestType": "Transfer"
+        },
+        {
+            "id": "sifarishicra",
+            "requestType": "Sifariş İcra"
+        },
+        {
+            "id": "iade",
+            "requestType": "Alış İadə"
+        },
+    ],
+    'satis-marketing': [{
+            "id": "sorgu",
+            "requestType": "Sorğu"
+        },
+        {
+            "id": "Planlama",
+            "requestType": "Planlama"
+        },
+    ],
+    'maliyye-muhasibatliq': [{
+            "id": "forma",
+            "requestType": "Forma"
+        }, ],
+    'ir-karguzarliq': [
 
-     ],
-     'satis-marketing':[
-        {"id":"sorgu","requestType":"Sorğu"},
-        {"id":"Planlama","requestType":"Planlama"},
-     ],
-     'maliyye-muhasibatliq':[
-        {"id":"forma","requestType":"Forma"},
-     ],
-     'ir-karguzarliq':[
+    ],
+    'adminstrativ-inzibati': [{
+            "id": "catdirilma",
+            "requestType": "Çatdırılma"
+        },
+        {
+            "id": "tapsiriq",
+            "requestType": "Tapşırıq"
+        },
+    ]
+}
 
-     ],
-     'adminstrativ-inzibati':[
-        {"id":"catdirilma","requestType":"Çatdırılma"},
-        {"id":"tapsiriq","requestType":"Tapşırıq"},
-     ]
-    }
-function getreqeuest4Tapsiriq(){var res = {"_table":{}};
-res._table.r = [
-    {"id":"sorgu","requestType":"Sorğu"},
-    {"id":"catdirilma","requestType":"Çatdırılma"},
-    {"id":"techizat","requestType":"Təchizat"},
-    {"id":"sayim","requestType":"Sayım"},
-    {"id":"transfer","requestType":"Transfer"},
-    {"id":"Planlama","requestType":"Planlama"},
-    {"id":"sifarishicra","requestType":"Sifariş İcra"},
-    {"id":"iade","requestType":"Alış İadə"},
-    {"id":"forma","requestType":"Forma"},
-    {"id":"tapsiriq","requestType":"Tapşırıq"},
-
-
-]
-
-
-
-return res;}
-function getTaskTypeList4Tapsiriq(){var res = {"_table":{}};
-res._table.r = [
-{"id":"layihesorgusu","taskTypeName":"Layihə Sorğusu"},
-{"id":"xidmetlayihesorgusu","taskTypeName":"Xidmət Sorğusu"},
-{"id":"servissorgusu","taskTypeName":"Servis Sorğusu"},
-{"id":"mallayihesorgu","taskTypeName":"Mal Sorğusu"},
-{"id":"servisplanlamabolgu","taskTypeName":"Planlama Bölgü"},
-{"id":"layiheplanlamabolgu","taskTypeName":"Planlama Bölgü"},
-{"id":"xidmetplanlama","taskTypeName":"Planlama Bölgü"},
-{"id":"malplanlama","taskTypeName":"Planlama Bölgü"},
-{"id":"sorgucatdirma","taskTypeName":"Çatdırılma Tələbi"},
-{"id":"catdirmaicra","taskTypeName":"Çatdırılma İcra"},
-{"id":"eskizicra","taskTypeName":"Eskiz İcra"},
-{"id":"teklificra","taskTypeName":"Təklif İcra"},
-{"id":"elavexidmetbolgu","taskTypeName":"Ölçmə bölgü"},
-{"id":"olchmeicra","taskTypeName":"Ölçmə icra"},
-{"id":"olcmetesdiq","taskTypeName":"Ölçmə təsdiq"},
-{"id":"qiymetteklifi","taskTypeName":"Qiymət Təklifi"},
-{"id":"daxilitesdiq","taskTypeName":"Təklif daxili təsdiq"},
-{"id":"musteritesdiqi","taskTypeName":"Təklif muştəri təsdiq"},
-{"id":"istehsalanalizi","taskTypeName":"İstehsal analiz"},
-{"id":"musteridenmelumat","taskTypeName":"Müştəridən məlumat"},
-{"id":"rehberlikdenmelumat","taskTypeName":"Rəhbərlikdən məlumat"},
-{"id":"eskizmusteritesdiq","taskTypeName":"Eskiz müştəri təsdiq"},
-{"id":"eskizdaxilitesdiq","taskTypeName":"Eskiz daxili təsdiq"},
-{"id":"numunedaxilitesdiq","taskTypeName":"Nümunə daxili təsdiq"},
-{"id":"numunemusteritesdiq","taskTypeName":"Nümunə müştəri təsdiq"},
-{"id":"keyfiyyetyoxlama","taskTypeName":"Keyfiyyət yoxlama"},
-{"id":"smmdaxilitesdiq","taskTypeName":"SMM daxili təsdiq"},
-{"id":"teklifistehsal","taskTypeName":"Təklif istehsal"},
-{"id":"diger","taskTypeName":"Digər məlumatlar"},
-{"id":"sxemtesdiq","taskTypeName":"Sxem təsdiq"},
-{"id":"sxemicra","taskTypeName":"Sxem icra"},
-{"id":"satistesdiq","taskTypeName":"Satış təsdiq"},
-{"id":"satisiade","taskTypeName":"Satış iadə"},
-{"id":"techizattelebi","taskTypeName":"Təchizat tələbi"},
-{"id":"techizatsifarisi","taskTypeName":"Təchizat tələbi icra"},
-{"id":"techizatsifarisitesdiq","taskTypeName":"Təchizat sifarişi təsdiq"},
-{"id":"techizatalisi","taskTypeName":"Təchizat sifariş qeydiyyat"},
-{"id":"techizatalisitesdiq","taskTypeName":"Təchizat sifariş rəsmiyyət"},
-{"id":"catdirilmatelebi","taskTypeName":"Çatdırılma tələbi"},
-{"id":"catdirilmatelebibolgu","taskTypeName":"Çatdırılma bölgü"},
-{"id":"catdirilmaicra","taskTypeName":"Çatdırılma icra"},
-{"id":"catdirilmaicratesdiq","taskTypeName":"Çatdırılma təsdiq"},
-{"id":"catdirilmaqeyd","taskTypeName":"Çatdırılma qeyd"},
-{"id":"odemetelebi","taskTypeName":"Ödəmə tələbi"},
-{"id":"techizatanbarmedaxil","taskTypeName":"Anbar mədaxil"},
-{"id":"techizatanbarmedaxiltesdiq","taskTypeName":"Təchizat alış"},
-{"id":"techizatplanlama","taskTypeName":"Təchizat planlama"},
-{"id":"techizatplanlamatesdiq","taskTypeName":"Təchizat planlama təsdiq"},
-{"id":"techizatsifaristelebsiz","taskTypeName":"Təchizat tələbi icra"},
-{"id":"techizatalisiiade","taskTypeName":"Təchizat alışı iadə"},
-{"id":"anbarsayimi","taskTypeName":"Anbar sayımı"},
-{"id":"anbarsayimiTesdiq","taskTypeName":"Anbar sayımı təsdiq"},
-{"id":"anbarhereketi","taskTypeName":"Anbar hərəkəti"},
-{"id":"techizatiadetesdiq","taskTypeName":"Təchizat iadə təsdiq"},
-{"id":"mehsulbirleshme","taskTypeName":"Məhsul Birləşdirilməsi"},
-{"id":"mehsulbirleshmetesdiq","taskTypeName":"Məhsul Birləşdirilməsi Təsdiq"},
-{"id":"anbarhereketitesdiq","taskTypeName":"Anbar hərəkəti təsdiq"},
-{"id":"tapsiriqyeni","taskTypeName":"Tapşırıq"},
-{"id":"tapsiriqicra","taskTypeName":"Tapşırıq İcra"},
-{"id":"tapsiriqfinal","taskTypeName":"Tapşırıq Yerinə Yetirildi"},
-
-]
+function getreqeuest4Tapsiriq() {
+    var res = {
+        "_table": {}
+    };
+    res._table.r = [{
+            "id": "sorgu",
+            "requestType": "Sorğu"
+        },
+        {
+            "id": "catdirilma",
+            "requestType": "Çatdırılma"
+        },
+        {
+            "id": "techizat",
+            "requestType": "Təchizat"
+        },
+        {
+            "id": "sayim",
+            "requestType": "Sayım"
+        },
+        {
+            "id": "transfer",
+            "requestType": "Transfer"
+        },
+        {
+            "id": "Planlama",
+            "requestType": "Planlama"
+        },
+        {
+            "id": "sifarishicra",
+            "requestType": "Sifariş İcra"
+        },
+        {
+            "id": "iade",
+            "requestType": "Alış İadə"
+        },
+        {
+            "id": "forma",
+            "requestType": "Forma"
+        },
+        {
+            "id": "tapsiriq",
+            "requestType": "Tapşırıq"
+        },
+    ]
 
 
 
-return res;}
+    return res;
+}
+
+function getTaskTypeList4Tapsiriq() {
+    var res = {
+        "_table": {}
+    };
+    res._table.r = [{
+            "id": "layihesorgusu",
+            "taskTypeName": "Layihə Sorğusu"
+        },
+        {
+            "id": "xidmetlayihesorgusu",
+            "taskTypeName": "Xidmət Sorğusu"
+        },
+        {
+            "id": "servissorgusu",
+            "taskTypeName": "Servis Sorğusu"
+        },
+        {
+            "id": "mallayihesorgu",
+            "taskTypeName": "Mal Sorğusu"
+        },
+        {
+            "id": "servisplanlamabolgu",
+            "taskTypeName": "Planlama Bölgü"
+        },
+        {
+            "id": "layiheplanlamabolgu",
+            "taskTypeName": "Planlama Bölgü"
+        },
+        {
+            "id": "xidmetplanlama",
+            "taskTypeName": "Planlama Bölgü"
+        },
+        {
+            "id": "malplanlama",
+            "taskTypeName": "Planlama Bölgü"
+        },
+        {
+            "id": "sorgucatdirma",
+            "taskTypeName": "Çatdırılma Tələbi"
+        },
+        {
+            "id": "catdirmaicra",
+            "taskTypeName": "Çatdırılma İcra"
+        },
+        {
+            "id": "eskizicra",
+            "taskTypeName": "Eskiz İcra"
+        },
+        {
+            "id": "teklificra",
+            "taskTypeName": "Təklif İcra"
+        },
+        {
+            "id": "elavexidmetbolgu",
+            "taskTypeName": "Ölçmə bölgü"
+        },
+        {
+            "id": "olchmeicra",
+            "taskTypeName": "Ölçmə icra"
+        },
+        {
+            "id": "olcmetesdiq",
+            "taskTypeName": "Ölçmə təsdiq"
+        },
+        {
+            "id": "qiymetteklifi",
+            "taskTypeName": "Qiymət Təklifi"
+        },
+        {
+            "id": "daxilitesdiq",
+            "taskTypeName": "Təklif daxili təsdiq"
+        },
+        {
+            "id": "musteritesdiqi",
+            "taskTypeName": "Təklif muştəri təsdiq"
+        },
+        {
+            "id": "istehsalanalizi",
+            "taskTypeName": "İstehsal analiz"
+        },
+        {
+            "id": "musteridenmelumat",
+            "taskTypeName": "Müştəridən məlumat"
+        },
+        {
+            "id": "rehberlikdenmelumat",
+            "taskTypeName": "Rəhbərlikdən məlumat"
+        },
+        {
+            "id": "eskizmusteritesdiq",
+            "taskTypeName": "Eskiz müştəri təsdiq"
+        },
+        {
+            "id": "eskizdaxilitesdiq",
+            "taskTypeName": "Eskiz daxili təsdiq"
+        },
+        {
+            "id": "numunedaxilitesdiq",
+            "taskTypeName": "Nümunə daxili təsdiq"
+        },
+        {
+            "id": "numunemusteritesdiq",
+            "taskTypeName": "Nümunə müştəri təsdiq"
+        },
+        {
+            "id": "keyfiyyetyoxlama",
+            "taskTypeName": "Keyfiyyət yoxlama"
+        },
+        {
+            "id": "smmdaxilitesdiq",
+            "taskTypeName": "SMM daxili təsdiq"
+        },
+        {
+            "id": "teklifistehsal",
+            "taskTypeName": "Təklif istehsal"
+        },
+        {
+            "id": "diger",
+            "taskTypeName": "Digər məlumatlar"
+        },
+        {
+            "id": "sxemtesdiq",
+            "taskTypeName": "Sxem təsdiq"
+        },
+        {
+            "id": "sxemicra",
+            "taskTypeName": "Sxem icra"
+        },
+        {
+            "id": "satistesdiq",
+            "taskTypeName": "Satış təsdiq"
+        },
+        {
+            "id": "satisiade",
+            "taskTypeName": "Satış iadə"
+        },
+        {
+            "id": "techizattelebi",
+            "taskTypeName": "Təchizat tələbi"
+        },
+        {
+            "id": "techizatsifarisi",
+            "taskTypeName": "Təchizat tələbi icra"
+        },
+        {
+            "id": "techizatsifarisitesdiq",
+            "taskTypeName": "Təchizat sifarişi təsdiq"
+        },
+        {
+            "id": "techizatalisi",
+            "taskTypeName": "Təchizat sifariş qeydiyyat"
+        },
+        {
+            "id": "techizatalisitesdiq",
+            "taskTypeName": "Təchizat sifariş rəsmiyyət"
+        },
+        {
+            "id": "catdirilmatelebi",
+            "taskTypeName": "Çatdırılma tələbi"
+        },
+        {
+            "id": "catdirilmatelebibolgu",
+            "taskTypeName": "Çatdırılma bölgü"
+        },
+        {
+            "id": "catdirilmaicra",
+            "taskTypeName": "Çatdırılma icra"
+        },
+        {
+            "id": "catdirilmaicratesdiq",
+            "taskTypeName": "Çatdırılma təsdiq"
+        },
+        {
+            "id": "catdirilmaqeyd",
+            "taskTypeName": "Çatdırılma qeyd"
+        },
+        {
+            "id": "odemetelebi",
+            "taskTypeName": "Ödəmə tələbi"
+        },
+        {
+            "id": "techizatanbarmedaxil",
+            "taskTypeName": "Anbar mədaxil"
+        },
+        {
+            "id": "techizatanbarmedaxiltesdiq",
+            "taskTypeName": "Təchizat alış"
+        },
+        {
+            "id": "techizatplanlama",
+            "taskTypeName": "Təchizat planlama"
+        },
+        {
+            "id": "techizatplanlamatesdiq",
+            "taskTypeName": "Təchizat planlama təsdiq"
+        },
+        {
+            "id": "techizatsifaristelebsiz",
+            "taskTypeName": "Təchizat tələbi icra"
+        },
+        {
+            "id": "techizatalisiiade",
+            "taskTypeName": "Təchizat alışı iadə"
+        },
+        {
+            "id": "anbarsayimi",
+            "taskTypeName": "Anbar sayımı"
+        },
+        {
+            "id": "anbarsayimiTesdiq",
+            "taskTypeName": "Anbar sayımı təsdiq"
+        },
+        {
+            "id": "anbarhereketi",
+            "taskTypeName": "Anbar hərəkəti"
+        },
+        {
+            "id": "techizatiadetesdiq",
+            "taskTypeName": "Təchizat iadə təsdiq"
+        },
+        {
+            "id": "mehsulbirleshme",
+            "taskTypeName": "Məhsul Birləşdirilməsi"
+        },
+        {
+            "id": "mehsulbirleshmetesdiq",
+            "taskTypeName": "Məhsul Birləşdirilməsi Təsdiq"
+        },
+        {
+            "id": "anbarhereketitesdiq",
+            "taskTypeName": "Anbar hərəkəti təsdiq"
+        },
+        {
+            "id": "tapsiriqyeni",
+            "taskTypeName": "Tapşırıq"
+        },
+        {
+            "id": "tapsiriqicra",
+            "taskTypeName": "Tapşırıq İcra"
+        },
+        {
+            "id": "tapsiriqfinal",
+            "taskTypeName": "Tapşırıq Yerinə Yetirildi"
+        },
+    ]
+
+
+
+    return res;
+}
+
 function genFilterTapsiriq() {
-     
+
     var obj = getTaskTypeList4Tapsiriq()
-     obj = obj._table.r;
-     $("#taskTypeId-filter-tapsiriq").html('')
+    obj = obj._table.r;
+    $("#taskTypeId-filter-tapsiriq").html('')
     for (var n = 0; n < obj.length; n++) {
         $("#taskTypeId-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].taskTypeName));
     }
-    
+
     $("#taskTypeId-filter-tapsiriq").selectpicker("refresh");
-  
-    $('#date_timepicker_start_end_tapsiriq').daterangepicker({
-          startDate: moment().subtract('days', 29),
-          endDate: moment(),
-          showDropdowns: true,
-          showWeekNumbers: true,
-          timePicker: false,
-          timePickerIncrement: 1,
-          timePicker12Hour: true,
-          ranges: {
-              'Bu Gün': [moment(), moment()],
-              'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-              'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-              'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-              'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-              'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-         },
-          opens: 'left',
-          buttonClasses: ['btn btn-default'],
-          applyClass: 'btn-small btn-primary',
-          cancelClass: 'btn-small btn-cancel-value-clear',
-          separator: ' to ',
-        locale: {
-            
-            applyLabel: 'Axtar',
-            cancelLabel: 'ləğv et',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Xüsusi',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-        }
-    }).val('');
+
     getProjectUsers4Tapsiriq();
     getKontragent4Tapsiriq();
-
-    $("#reqeustModul-filter-tapsiriq").change();
+    getTapsiriqList();
+    // $("#reqeustModul-filter-tapsiriq").change();
 }
+
 function tapsiriqColStatement(prtNum, namePr) {
     return $("<div>")
-        .addClass("cs-task-col " + prtNum)
-        .append($("<div>")
-            .addClass("cs-task-boxes cs-gray-bg")
+            .addClass("cs-task-col " + prtNum)
             .append($("<div>")
-                .addClass("cs-task-status-header")
-                .append($("<div>")
-                    .addClass('d-flex bd-highlight cs-flex-align-middle')
-                    .append(`<div class="flex-fill bd-highlight">
+                    .addClass("cs-task-boxes cs-gray-bg")
+                    .append($("<div>")
+                            .addClass("cs-task-status-header")
+                            .append($("<div>")
+                                    .addClass('d-flex bd-highlight cs-flex-align-middle')
+                                    .append(`<div class="flex-fill bd-highlight">
                                                       <div class="cs-card-size cs-dark-gray-color">
                                                       <span><i class="fas fa-clipboard-list" aria-hidden="true"></i></span>
                                                       <span class='count-cs-${prtNum}' >0</span>
                                                   </div>
                                               </div>`)
-                    .append(`<div class="flex-fill bd-highlight">
+                                    .append(`<div class="flex-fill bd-highlight">
                                                   <h4 class="cs-status-box-name cs-dark-blue-color text-center">${namePr}</h4>
                                               </div>`)
-                    .append(`<div class="flex-fill bd-highlight">
+                                    .append(`<div class="flex-fill bd-highlight">
                                                   <div class="cs-card-fullview cs-dark-gray-color">
                                                       <a href="#"><i class="fas fa-columns" aria-hidden="true"></i></a>
                                                   </div>
                                               </div>`)
 
-                ))
+                                    ))
 
-            .append($("<div>")
-                .addClass('cs-task-item-box')
-                .append($("<div>")
-                      .attr("id", 'flex-col-' + prtNum)
-                      .addClass("cs-task-item-box-bg cs-gray-bg"))
-                ))
+                    .append($("<div>")
+                            .addClass('cs-task-item-box')
+                            .append($("<div>")
+                                    .attr("id", 'flex-col-' + prtNum)
+                                    .addClass("cs-task-item-box-bg cs-gray-bg"))
+                            ))
 }
 
-function getContentTapsiriq1(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,prorty) {
+function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, prorty) {
 
-    return  $("<div>")
-             .addClass('cs-task-item-in-box  cs-white-bg')
-             .attr('id',id)
-             .append($("<div>")
-                       .addClass('cs-task-cart-head')
-                       .append($("<div>")
-                                 .addClass('d-flex bd-highlight cs-flex-align-middle')
-                                  .append($("<div>")
-                                             .addClass('d-flex flex-fill bd-highlight')
-                                             .append(`<div class="cs-cart-head-col">
+    return $("<div>")
+            .addClass('cs-task-item-in-box  cs-white-bg')
+            .attr('id', id)
+            .append($("<div>")
+                    .addClass('cs-task-cart-head')
+                    .append($("<div>")
+                            .addClass('d-flex bd-highlight cs-flex-align-middle')
+                            .append($("<div>")
+                                    .addClass('d-flex flex-fill bd-highlight')
+                                    .append(`<div class="cs-cart-head-col">
                                              <div class="form-group m-0">
                                                  <input type="checkbox" pid='${id}' id="cs-checkbox">
                                                  <label for="cs-checkbox"></label>
                                              </div>                                            
                                          </div>`)
-                                             .append($("<div>")
-                                                         .addClass('cs-cart-head-col')
-                                                         .append($("<div>")
-                                                                      .addClass("cs-staturs-circle-note1")
-                                                                     .append(taskStatus))
-                                                        
-                                                                     
-                                                                     ))
-                                   .append(`<div class="flex-fill bd-highlight text-right">
+                                    .append($("<div>")
+                                            .addClass('cs-cart-head-col')
+                                            .append($("<div>")
+                                                    .addClass("cs-staturs-circle-note1")
+                                                    .append(taskStatus))
+
+
+                                            ))
+                            .append(`<div class="flex-fill bd-highlight text-right">
                                    <div class="cs-task-card-datatime" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
                                        <i class="fas fa-calendar-alt"></i>
                                        <span >${date}</span>
                                    </div>
                                </div>`)))
-             .append($("<div>")
-                               .addClass("cs-cart-head-title")
-                              .append(tasktype))
-             .append(`<div class="cs-task-card-body">
+            .append($("<div>")
+                    .addClass("cs-cart-head-title")
+                    .append(tasktype))
+            .append(`<div class="cs-task-card-body">
                        <div class="cs-task-card-desc">
 
                        <p class='bodyMezmun${mzmn}'>${mzmn}</p>
                        </div>
                        </div>`)
             .append($("<div>")
-                        .addClass('cs-task-card-bottom')
-                        .append($("<div>")
-                                  .addClass('d-flex  bd-highlight cs-flex-align-middle')
-                                  .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
+                    .addClass('cs-task-card-bottom')
+                    .append($("<div>")
+                            .addClass('d-flex  bd-highlight cs-flex-align-middle')
+                            .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
                                   <div class="cs-task-card-attachfile">
                                       <label for="cs-file-upload" class="cs-file-upload">
                                           <i class="fas fa-paperclip"></i>
@@ -21363,76 +22256,77 @@ function getContentTapsiriq1(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,
                                   </div>
                                  
                               </div>`)
-                                .append($('<div>')
-                                           .addClass("lex-fill bd-highlight text-right")
-                                            .append($("<div>")
-                                                       .addClass("cs-task-card-prioritet")
-                                                       .append($("<select>").addClass("selectpicker")
-                                                                     .attr("title",'yoxdur')
-                                                                     .attr("id",'task-us-prio-change')
-                                                                     .append('<option value="1" data-icon="fas fa-flag text-info">Standart</option>')
-                                                                     .append('<option value="2" data-icon="fas fa-flag text-warning">Təcili</option>')
-                                                                     .append('<option value="3" data-icon="fas fa-flag text-danger">Çox təcili</option>')
-                                                                     .val(prorty)))
-                                            .append(`<div class="cs-task-card-avatar-boxes">
+                            .append($('<div>')
+                                    .addClass("lex-fill bd-highlight text-right")
+                                    .append($("<div>")
+                                            .addClass("cs-task-card-prioritet")
+                                            .append($("<select>").addClass("selectpicker")
+                                                    .attr("title", 'yoxdur')
+                                                    .attr("id", 'task-us-prio-change')
+                                                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                                                    .append('<option value="tecili" data-icon="fas fa-flag text-warning">Təcili</option>')
+                                                    .append('<option value="xusui" data-icon="fas fa-flag text-primary">Xüsusi</option>')
+                                                    .val(prorty)))
+                                    .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
                                                 <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
                                             </ul>
                                         </div>`)
-                                             )))
+                                    )))
 
-         
-             
-    
-    
+
+
+
+
 
 }
-function getContentTapsiriq(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,hid) {
 
-    return  $("<div>")
-             .addClass('cs-task-item-in-box redirectClass cs-white-bg')
-             .attr('id',id)
-             .attr('pid',id)
-             .append($("<div>")
-                       .addClass('cs-task-cart-head')
-                       .append($("<div>")
-                                 .addClass('d-flex bd-highlight cs-flex-align-middle')
-                                  .append($("<div>")
-                                             .addClass('d-flex flex-fill bd-highlight')
-                                             .append(`<div class="cs-cart-head-col">
+function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid) {
+
+    return $("<div>")
+            .addClass('cs-task-item-in-box redirectClass cs-white-bg')
+            .attr('id', id)
+            .attr('pid', id)
+            .append($("<div>")
+                    .addClass('cs-task-cart-head')
+                    .append($("<div>")
+                            .addClass('d-flex bd-highlight cs-flex-align-middle')
+                            .append($("<div>")
+                                    .addClass('d-flex flex-fill bd-highlight')
+                                    .append(`<div class="cs-cart-head-col">
                                              <div class="form-group m-0">
                                                  <input type="checkbox" pid='${id}' id="cs-checkbox">
                                                  <label for="cs-checkbox"></label>
                                              </div>                                            
                                          </div>`)
-                                             .append($("<div>")
-                                                         .addClass('cs-cart-head-col')
-                                                         .append($("<div>")
-                                                                      .addClass("cs-staturs-circle-note1")
-                                                                     .append(taskStatus))
-                                                        
-                                                                     
-                                                                     ))
-                                   .append(`<div class="flex-fill bd-highlight text-right">
+                                    .append($("<div>")
+                                            .addClass('cs-cart-head-col')
+                                            .append($("<div>")
+                                                    .addClass("cs-staturs-circle-note1")
+                                                    .append(taskStatus))
+
+
+                                            ))
+                            .append(`<div class="flex-fill bd-highlight text-right">
                                    <div class="cs-task-card-datatime" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
                                        <i class="fas fa-calendar-alt"></i>
                                        <span >${date}</span>
                                    </div>
                                </div>`)))
-             .append($("<div>")
-                               .addClass("cs-cart-head-title")
-                              .append(tasktype))
-             .append(`<div class="cs-task-card-body">
+            .append($("<div>")
+                    .addClass("cs-cart-head-title")
+                    .append(tasktype))
+            .append(`<div class="cs-task-card-body">
                        <div class="cs-task-card-desc">
 
                        <p onclick_trigger_id="21031217414702167956" class=''>${mzmn}</p>
                        </div>
                        </div>`)
             .append($("<div>")
-                        .addClass('cs-task-card-bottom')
-                        .append($("<div>")
-                                  .addClass('d-flex  bd-highlight cs-flex-align-middle')
-                                  .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
+                    .addClass('cs-task-card-bottom')
+                    .append($("<div>")
+                            .addClass('d-flex  bd-highlight cs-flex-align-middle')
+                            .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
                                   <div class="cs-task-card-attachfile">
                                       <label for="cs-file-upload" class="cs-file-upload">
                                           <i class="fas fa-paperclip"></i>
@@ -21444,60 +22338,54 @@ function getContentTapsiriq(id,mzmn,image,nameUs,taskStatus,tasktype,time,date,h
                                       <span class="slider round hide-off "></span>
                                   </label>
                               </div>`)
-                                .append($('<div>')
-                                           .addClass("lex-fill bd-highlight text-right")
-                                            .append($("<div>")
-                                                       .addClass("cs-task-card-prioritet")
-                                                       .append(/* $("<select>").addClass("selectpicker")
-                                                                     .append('<option data-icon="fas fa-flag"> Standart</option>')
-                                                                      */))
-                                            .append(`<div class="cs-task-card-avatar-boxes">
+                            .append($('<div>')
+                                    .addClass("lex-fill bd-highlight text-right")
+                                    .append($("<div>")
+                                            .addClass("cs-task-card-prioritet")
+                                            .append(
+                                                    /* $("<select>").addClass("selectpicker")
+                                                     .append('<option data-icon="fas fa-flag"> Standart</option>')
+                                                     */
+                                                    ))
+                                    .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
                                                 <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
                                             </ul>
                                         </div>`)
-                                             )))
+                                    )))
 
-           .append($("<div>").addClass("stat-div-task-content")
-                        .append($('<table>').addClass("stat-table-us")
-                                                     .append($("<thead>")
-                                                         .append($("<tr class=total>"))
-                                                         .append($("<tr class='bug'>"))
-                                                         )
-                                                     .append($("<tbody>")))
-                                                    .css("display",'none'))
+            .append($("<div>").addClass("stat-div-task-content")
+                    .append($('<table>').addClass("stat-table-us")
+                            .append($("<thead>")
+                                    .append($("<tr class=total>"))
+                                    .append($("<tr class='bug'>"))
+                                    )
+                            .append($("<tbody>")))
+                    .css("display", 'none'))
 
-            .append(hid.hide())            
-            
+            .append(hid.hide())
+
 
 }
 
 function getTapsiriqList(serach) {
-      var chkAll =$("#show-all-colmn-tapsriq")
-      var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
-      var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-      var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
-      var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
-      var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
-      var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
-      var val = $("#date_timepicker_start_end_tapsiriq").val();
-      var stTime
-      var endTime
-       var inns 
-        if(val){
-          val = val.split('-')
-          var dt = val[0].split('/');
-           var dt1 = val[1].split('/');
-           stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-          endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
-     
-           inns = stTime.trim() + '%BN%' + endTime.trim()
-        }
+    var chkAll = $("#show-all-colmn-tapsriq")
+    var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
+    var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
+    //var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
+    var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
+    var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
+    var val = $("#date_timepicker_start_end_tapsiriq").val();
+    var stTime
+    var endTime
+
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
-    };
-         
+    }
+    ;
+
     if (type_view === 'aktiv_passiv') {
         $('.filter-section .aktiv_pasiv_filter').show();
         $('.filter-section .status_filter').hide();
@@ -21505,498 +22393,503 @@ function getTapsiriqList(serach) {
         var sl = {};
         var cl = {};
         sl.startLimit = 0;
-        sl.endLimit =25;
-       
-       
-        if(serach){
-           sl.reqeustDescription =serach?serach:"";
-           sl.reqeustCode =serach?serach:"";
-           cl.reqeustCode =serach?serach:"";
-           cl.reqeustDescription =serach?serach:"";
+        sl.endLimit = 25;
+
+
+        if (serach) {
+            sl.reqeustDescription = serach ? serach : "";
+            sl.reqeustCode = serach ? serach : "";
+            cl.reqeustCode = serach ? serach : "";
+            cl.reqeustDescription = serach ? serach : "";
 
         }
-        if(requestType.length > 0){
-            sl.requestType =requestType?requestType:"";
-            cl.requestType =requestType?requestType:"";
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         cl.requestType = requestType ? requestType : "";
+         } */
+
+        if (createdBy.length > 0) {
+            sl.createdBy = createdBy ? createdBy : "";
+            cl.createdBy = createdBy ? createdBy : "";
         }
-        
-       if(createdBy.length >0){
-           sl.createdBy =createdBy?createdBy:"";
-           cl.createdBy =createdBy?createdBy:"";
-       }
-        if(tasktypeId.length>0){
-           sl.fkTaskTypeId =tasktypeId?tasktypeId:"";
-           cl.fkTaskTypeId =tasktypeId?tasktypeId:"";
+        if (tasktypeId.length > 0) {
+            sl.fkTaskTypeId = tasktypeId ? tasktypeId : "";
+            cl.fkTaskTypeId = tasktypeId ? tasktypeId : "";
         }
-        if(fkKontragentId.length>0){
-           sl.fkKontragentId =fkKontragentId?fkKontragentId:"";
-           cl.fkKontragentId =fkKontragentId?fkKontragentId:"";
+        if (fkKontragentId.length > 0) {
+            sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
+            cl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
         }
-        if(inns){
-            sl.createdDate =inns?inns:"";
-            cl.createdDate =inns?inns:"";
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
         }
-        var db = ['new%IN%ongoing%IN%waiting','closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
-        if(chkAll.prop("checked")){
+        var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
+        if (chkAll.prop("checked")) {
             $(".cs-task-panel-column").empty()
-            .append(tapsiriqColStatement('aktiv', "Aktiv"))
-           .append(tapsiriqColStatement('passiv', "Passiv"));
+                    .append(tapsiriqColStatement('aktiv', "Aktiv"))
+                    .append(tapsiriqColStatement('passiv', "Passiv"));
 
-        for (let i = 0; i < db.length; i++) {
-            const g = db[i];
-            sl.requestStatus = g;
-            cl.requestStatus = g;
-            var res = be.callApi("21092513021300497192",sl);
-       
-           
-            var count = be.callApi('21092600043006221820',cl);
-            genAktivPassiv(res,i,count.id);
-            if(i===0){
-                $(".count-cs-aktiv").text(count.id);
-            }
-            
-            if(i===1){
-                $(".count-cs-passiv").text(count.id);
-            }
-            
-        }
-        
+            for (let i = 0; i < db.length; i++) {
+                const g = db[i];
+                sl.requestStatus = g;
+                cl.requestStatus = g;
+                var res = be.callApi("21092513021300497192", sl);
 
-        }else{
+
+                var count = be.callApi('21092600043006221820', cl);
+                genAktivPassiv(res, i, count.id);
+                if (i === 0) {
+                    $(".count-cs-aktiv").text(count.id);
+                }
+
+                if (i === 1) {
+                    $(".count-cs-passiv").text(count.id);
+                }
+
+            }
+
+
+        } else {
             $(".cs-task-panel-column").empty()
-            .append(tapsiriqColStatement('aktiv', "Aktiv"))
+                    .append(tapsiriqColStatement('aktiv', "Aktiv"))
 
             const g = db[0];
             sl.requestStatus = g;
             cl.requestStatus = g;
-            var res = be.callApi("21092513021300497192",sl);
-       
-           
-            var count = be.callApi('21092600043006221820',cl);
-            genAktivPassiv(res,0,count.id);
-            
-                $(".count-cs-aktiv").text(count.id);
-                       
-          $(".cs-task-col.aktiv").find('.cs-card-fullview').click();
+            var res = be.callApi("21092513021300497192", sl);
+
+
+            var count = be.callApi('21092600043006221820', cl);
+            genAktivPassiv(res, 0, count.id);
+
+            $(".count-cs-aktiv").text(count.id);
+
+            $(".cs-task-col.aktiv").find('.cs-card-fullview').click();
         }
-        
-     
-        
-        
-    }else if(type_view==='status'){
+
+
+
+
+    } else if (type_view === 'status') {
         $('.filter-section .aktiv_pasiv_filter').hide();
         $('.filter-section .status_filter').show();
         $('.filter-section .operation_filter').hide();
-   
+
         var sl = {};
         var cl = {};
         sl.startLimit = 0;
-        sl.endLimit =25;
-        if(executorİd.length>0){
-            sl.fkAssigneeId =executorİd?executorİd:"";
-            cl.fkAssigneeId =executorİd?executorİd:"";
-         }
-         if(fkTaskTypeId.length > 0){
-            sl.fkTaskTypeId =fkTaskTypeId?fkTaskTypeId:"";
-            cl.fkTaskTypeId =fkTaskTypeId?fkTaskTypeId:"";
+        sl.endLimit = 25;
+        if (executorİd.length > 0) {
+            sl.fkAssigneeId = executorİd ? executorİd : "";
+            cl.fkAssigneeId = executorİd ? executorİd : "";
         }
-         if(createdBy.length >0){
-            sl.createdBy =createdBy?createdBy:"";
-            cl.createdBy =createdBy?createdBy:"";
+        if (fkTaskTypeId.length > 0) {
+            sl.fkTaskTypeId = fkTaskTypeId ? fkTaskTypeId : "";
+            cl.fkTaskTypeId = fkTaskTypeId ? fkTaskTypeId : "";
         }
-         if(inns){
-            sl.createdDate =inns?inns:"";
-            cl.createdDate =inns?inns:"";
+        if (createdBy.length > 0) {
+            sl.createdBy = createdBy ? createdBy : "";
+            cl.createdBy = createdBy ? createdBy : "";
         }
-        if(serach){
-            sl.taskNo =serach?serach:"";
-            cl.taskNo =serach?serach:"";
- 
-         }
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
+        }
+        if (serach) {
+            sl.taskNo = serach ? serach : "";
+            cl.taskNo = serach ? serach : "";
 
-         var oper = getTaskTypeList();
-         oper = oper._table.r;
-            var stat = GetTaskStatusList();
-         stat = stat._table.r;
-         $(".cs-task-panel-column").empty();
-         if(chkAll.prop("checked")){
+        }
+
+        var oper = getTaskTypeList();
+        oper = oper._table.r;
+        var stat = GetTaskStatusList();
+        stat = stat._table.r;
+        $(".cs-task-panel-column").empty();
+        if (chkAll.prop("checked")) {
 
             for (let j = 0; j < stat.length; j++) {
                 const b = stat[j];
-   
+
                 $(".cs-task-panel-column")
-            
-            .append(tapsiriqColStatement(b.id, b.taskStatusName));
-            sl.taskStatus=b.id
-            cl.taskStatus=b.id
-            var res = be.callApi("210925130704092810098",sl);
-           
-         
-           
-             var count = be.callApi('21092620211609677313',cl);
-              $(".count-cs-"+b.id).text(count.id);
-              genstatustapsiriq(res,b.id,count.id);
+
+                        .append(tapsiriqColStatement(b.id, b.taskStatusName));
+                sl.taskStatus = b.id
+                cl.taskStatus = b.id
+                var res = be.callApi("210925130704092810098", sl);
+
+
+
+                var count = be.callApi('21092620211609677313', cl);
+                $(".count-cs-" + b.id).text(count.id);
+                genstatustapsiriq(res, b.id, count.id);
             }
-         }else{
-             var tbl = ['new','ongoing','waiting']
+        } else {
+            var tbl = ['new', 'ongoing', 'waiting']
             for (let j = 0; j < tbl.length; j++) {
                 const b = stat[j];
-   
+
                 $(".cs-task-panel-column")
-            
-            .append(tapsiriqColStatement(b.id, b.taskStatusName));
-            sl.taskStatus=b.id
-            cl.taskStatus=b.id
-            var res = be.callApi("210925130704092810098",sl);
-           
-         
-           
-             var count = be.callApi('21092620211609677313',cl);
-              $(".count-cs-"+b.id).text(count.id);
-              genstatustapsiriq(res,b.id,count.id);
+
+                        .append(tapsiriqColStatement(b.id, b.taskStatusName));
+                sl.taskStatus = b.id
+                cl.taskStatus = b.id
+                var res = be.callApi("210925130704092810098", sl);
+
+
+
+                var count = be.callApi('21092620211609677313', cl);
+                $(".count-cs-" + b.id).text(count.id);
+                genstatustapsiriq(res, b.id, count.id);
             }
-         }
-        
-      
-    }
-    else if(type_view==='operation'){
+        }
+
+
+    } else if (type_view === 'operation') {
         $('.filter-section .aktiv_pasiv_filter').hide();
         $('.filter-section .status_filter').hide();
         $('.filter-section .operation_filter').show();
-      
+
     }
-     
+
 }
-function getMezmunApiLisreplace(ids,trig) {
+
+function getMezmunApiLisreplace(ids, trig) {
     var ol = {}
     ol.id = ids
-   var bodys = be.callApi("21092311192302154896",ol);
-        bodys = bodys._table.r
-     for (let j = 0; j < bodys.length; j++) {
+    var bodys = be.callApi("21092311192302154896", ol);
+    bodys = bodys._table.r
+    for (let j = 0; j < bodys.length; j++) {
         const el = bodys[j];
-            console.log(el)
-              $("."+trig+el.id).text(el.requestBody+" ("+el.requestCode+")");
+        console.log(el)
+        $("." + trig + el.id).text(el.requestBody + " (" + el.requestCode + ")");
 
-      }
+    }
 }
-function genstatustapsiriq(res,x,say) {
+
+function genstatustapsiriq(res, x, say) {
     try {
         res = res._table.r
-    var oper = getTaskTypeList();
-         oper = oper._table.r;
-            var stat = GetTaskStatusList();
-         stat = stat._table.r;
-       var ids =''
-     
-    for (let l = 0; l < res.length; l++) {
-       
+        var oper = getTaskTypeList();
+        oper = oper._table.r;
+        var stat = GetTaskStatusList();
+        stat = stat._table.r;
+        var ids = ''
+
+        for (let l = 0; l < res.length; l++) {
+
             const o = res[l];
-           
-             
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if(o.createdBy){
-                     img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                     userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                }else{
-                    img = 'userprofile.png';
-                    userName ='Yoxdur'
+
+
+            var date = Utility.convertDate(o.createdDate);
+            var time = Utility.convertTime(o.createdTime);
+            var img
+            var userName
+            if (o.createdBy) {
+                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+            } else {
+                img = 'userprofile.png';
+                userName = 'Yoxdur'
+            }
+            var st = $('<span>').addClass('issue_status_' + o.taskStatus);
+            for (let c = 0; c < stat.length; c++) {
+                if (stat[c].id == o.taskStatus) {
+                    st.text(stat[c].taskStatusName);
                 }
-                var st = $('<span>').addClass('issue_status_'+o.taskStatus);        
-                 for (let c = 0; c < stat.length; c++) {
-                         if(stat[c].id==o.taskStatus){
-                           st.text(stat[c].taskStatusName);
-                         }
-                       
-                }
-                var a =$("<span>")
-                         .attr("href",'#')
-                         .addClass('operation')
-                         .addClass('_taskListTaskTypeIdField')
-                         .attr('sa-data-fktasktypeid',o.fkTaskTypeId);
-    
-                if(o.fkTaskTypeId){
-    
-                    for (let l = 0; l < oper.length; l++) {
-                             if(oper[l].id==o.fkTaskTypeId){
-                               a.text(oper[l].taskTypeName+"("+o.taskNo+")");
-                             }
-                           
+
+            }
+            var a = $("<span>")
+                    .attr("href", '#')
+                    .addClass('operation')
+                    .addClass('_taskListTaskTypeIdField')
+                    .attr('sa-data-fktasktypeid', o.fkTaskTypeId);
+
+            if (o.fkTaskTypeId) {
+
+                for (let l = 0; l < oper.length; l++) {
+                    if (oper[l].id == o.fkTaskTypeId) {
+                        a.text(oper[l].taskTypeName + "(" + o.taskNo + ")");
                     }
-    
-               }
-    
-               fkRequestId = o.fkRequestId
-               ids+= o.fkRequestId+"%IN%"
-                var html = getContentTapsiriq1(o.id,fkRequestId,img,userName,st,a,time,date,o.taskPriority);
-               $("#flex-col-"+o.taskStatus).append(html);
-            
-       
-    }
 
-    selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
-    if(say>25){
-        $("#flex-col-"+x).append($("<div>")
-                                      .addClass("more-button-fortapsiriq text-center ")
-                                      .text('Daha çox')
-                                      .attr("data-status",x)
-                                      .attr("start-limit",'25')
-                                      .attr("end-limit",'50')
-                                      )
-     }
-     getMezmunApiLisreplace(ids,'bodyMezmun');
-    $('[data-toggle="popover"]').popover({
-        html:true
-    });
-    } catch (error) {
-        
-    }
-    
-
-}
-function genstatustapsiriqmore(res,elm,count,etmit) {
-    try {
-        res = res._table.r
-    var oper = getTaskTypeList();
-         oper = oper._table.r;
-            var stat = GetTaskStatusList();
-         stat = stat._table.r;
-       
-     
-    for (let l = 0; l < res.length; l++) {
-       
-            const o = res[l];
-           
-             
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if(o.createdBy){
-                     img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                     userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                }else{
-                    img = 'userprofile.png';
-                    userName ='Yoxdur'
                 }
-                var st = $('<span>').addClass('issue_status_'+o.taskStatus);        
-                 for (let c = 0; c < stat.length; c++) {
-                         if(stat[c].id==o.taskStatus){
-                           st.text(stat[c].taskStatusName);
-                         }
-                       
-                }
-                var a =$("<span>")
-                         .attr("href",'#')
-                         .addClass('operation')
-                         .addClass('_taskListTaskTypeIdField')
-                         .attr('sa-data-fktasktypeid',o.fkTaskTypeId);
-    
-                if(o.fkTaskTypeId){
-    
-                    for (let l = 0; l < oper.length; l++) {
-                             if(oper[l].id==o.fkTaskTypeId){
-                               a.text(oper[l].taskTypeName);
-                             }
-                           
-                    }
-    
-               }
-    
-               taskDescription = o.taskDescription+"("+o.taskNo+")";
-               
-                var html = getContentTapsiriq1(o.id,taskDescription,img,userName,st,a,time,date,o.taskPriority);
-               $("#flex-col-"+o.taskStatus).append(html);
-            
-       
-    }
-    var say = parseFloat(etmit) +25 ;
 
-          $("#flex-col-"+elm).find('.more-button-fortapsiriq').remove();
-        if(count>etmit){
-           $("#flex-col-"+elm).append($("<div>")
-                                         .addClass("more-button-fortapsiriq text-center ")
-                                         .text('Daha çox')
-                                         .attr("data-status",elm)
-                                         .attr("start-limit",etmit)
-                                         .attr("end-limit",say)
-                                         )
+            }
+
+            fkRequestId = o.fkRequestId
+            ids += o.fkRequestId + "%IN%"
+            var html = getContentTapsiriq1(o.id, fkRequestId, img, userName, st, a, time, date, o.taskPriority);
+            $("#flex-col-" + o.taskStatus).append(html);
+
+
         }
-            
-  
-selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
-   
-    $('[data-toggle="popover"]').popover({
-        html:true
-    });
+
+        selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
+        if (say > 25) {
+            $("#flex-col-" + x).append($("<div>")
+                    .addClass("more-button-fortapsiriq text-center ")
+                    .text('Daha çox')
+                    .attr("data-status", x)
+                    .attr("start-limit", '25')
+                    .attr("end-limit", '50')
+                    )
+        }
+        getMezmunApiLisreplace(ids, 'bodyMezmun');
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
     } catch (error) {
-        
+
     }
-    
+
 
 }
+
+function genstatustapsiriqmore(res, elm, count, etmit) {
+    try {
+        res = res._table.r
+        var oper = getTaskTypeList();
+        oper = oper._table.r;
+        var stat = GetTaskStatusList();
+        stat = stat._table.r;
+
+
+        for (let l = 0; l < res.length; l++) {
+
+            const o = res[l];
+
+
+            var date = Utility.convertDate(o.createdDate);
+            var time = Utility.convertTime(o.createdTime);
+            var img
+            var userName
+            if (o.createdBy) {
+                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+            } else {
+                img = 'userprofile.png';
+                userName = 'Yoxdur'
+            }
+            var st = $('<span>').addClass('issue_status_' + o.taskStatus);
+            for (let c = 0; c < stat.length; c++) {
+                if (stat[c].id == o.taskStatus) {
+                    st.text(stat[c].taskStatusName);
+                }
+
+            }
+            var a = $("<span>")
+                    .attr("href", '#')
+                    .addClass('operation')
+                    .addClass('_taskListTaskTypeIdField')
+                    .attr('sa-data-fktasktypeid', o.fkTaskTypeId);
+
+            if (o.fkTaskTypeId) {
+
+                for (let l = 0; l < oper.length; l++) {
+                    if (oper[l].id == o.fkTaskTypeId) {
+                        a.text(oper[l].taskTypeName);
+                    }
+
+                }
+
+            }
+
+            taskDescription = o.taskDescription + "(" + o.taskNo + ")";
+
+            var html = getContentTapsiriq1(o.id, taskDescription, img, userName, st, a, time, date, o.taskPriority);
+            $("#flex-col-" + o.taskStatus).append(html);
+
+
+        }
+        var say = parseFloat(etmit) + 25;
+
+        $("#flex-col-" + elm).find('.more-button-fortapsiriq').remove();
+        if (count > etmit) {
+            $("#flex-col-" + elm).append($("<div>")
+                    .addClass("more-button-fortapsiriq text-center ")
+                    .text('Daha çox')
+                    .attr("data-status", elm)
+                    .attr("start-limit", etmit)
+                    .attr("end-limit", say)
+                    )
+        }
+
+
+        selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
+
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+    } catch (error) {
+
+    }
+
+
+}
+
 function selectPickerNewoldValuechnage(elm) {
     elm.each(function (e) {
-       var old = $(this).val();
-       $(this).selectpicker({
-        iconBase: 'fa',
-        tickIcon: 'fa-chevron-down',
-    });
-  $(this).val(old).selectpicker("refresh");
+        var old = $(this).val();
+        $(this).selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-chevron-down',
+        });
+        $(this).val(old).selectpicker("refresh");
     })
 }
-function genAktivPassiv(res,x,say) {
 
-   
+function genAktivPassiv(res, x, say) {
+
+
     try {
         res = res._table.r
-   
+
         var oper = getreqeuest4Tapsiriq();
         oper = oper._table.r;
-           var stat = GetTaskStatusList();
+        var stat = GetTaskStatusList();
         stat = stat._table.r;
-     
-        
-      
-    
-    for (let l = 0; l < res.length; l++) {
-       
+
+
+
+
+        for (let l = 0; l < res.length; l++) {
+
             const o = res[l];
-            if(o.requestStatus==='new'||o.requestStatus==='ongoing'||o.requestStatus==='waiting'){
-             
+            if (o.requestStatus === 'new' || o.requestStatus === 'ongoing' || o.requestStatus === 'waiting') {
+
                 var hid = $('<div>')
-                               .append($("<input>").val(o.id).attr("sa-selectedfield",'fkRequestId'))
-                
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if(o.createdBy){
-                     img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                     userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                }else{
-                    img = 'userprofile.png';
-                    userName ='Yoxdur'
-                }
-                var st = $('<span>').addClass('issue_status_'+o.requestStatus);        
-                 for (let c = 0; c < stat.length; c++) {
-                         if(stat[c].id==o.requestStatus){
-                           st.text(stat[c].taskStatusName);
-                         }
-                       
-                }
-                var a =$("<span>")
-                         .attr("href",'#')
-                         .addClass('operation')
-                         .addClass('_taskListTaskTypeIdField')
-                         .attr('sa-data-fktasktypeid',o.requestType);
-    
-                if(o.requestType){
-    
-                    for (let l = 0; l < oper.length; l++) {
-                             if(oper[l].id==o.requestType){
-                               a.text(oper[l].requestType);
-                             }
-                           
-                    }
-    
-               }
-    
-               reqeustDescription = o.reqeustDescription+"("+o.reqeustCode+")"
-                var html = getContentTapsiriq(o.id,reqeustDescription,img,userName,st,a,time,date,hid);
-               $("#flex-col-aktiv").append(html);
-            }else{
-                var hid = $('<div>')
-                .append($("<input>").val(o.id).attr("sa-selectedfield",'fkRequestId'))
+                        .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
 
                 var date = Utility.convertDate(o.createdDate);
                 var time = Utility.convertTime(o.createdTime);
                 var img
                 var userName
-                if(o.createdBy){
-                     img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                     userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                }else{
+                if (o.createdBy) {
+                    img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                    userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+                } else {
                     img = 'userprofile.png';
-                    userName ='Yoxdur'
+                    userName = 'Yoxdur'
                 }
-             
-                var st = $('<span>').addClass('issue_status_'+o.requestStatus);        
-                 for (let c = 0; c < stat.length; c++) {
-                         if(stat[c].id==o.requestStatus){
-                           st.text(stat[c].taskStatusName);
-                         }
-                       
-                }
-                var a =$("<span>")
-                         .attr("href",'#')
-                         .addClass('operation')
-                         .addClass('_taskListTaskTypeIdField')
-                         .attr('sa-data-fktasktypeid',o.requestType);
-    
-                if(o.requestType){
-    
-                    for (let l = 0; l < oper.length; l++) {
-                             if(oper[l].id==o.requestType){
-                               a.text(oper[l].requestType)
-                             }
-                           
+                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                for (let c = 0; c < stat.length; c++) {
+                    if (stat[c].id == o.requestStatus) {
+                        st.text(stat[c].taskStatusName);
                     }
-    
-               }
-    
-                reqeustDescription = o.reqeustDescription+"("+o.reqeustCode+")"
-                var html = getContentTapsiriq(o.id,reqeustDescription,img,userName,st,a,time,date,hid);
-               $("#flex-col-passiv").append(html);
+
+                }
+                var a = $("<span>")
+                        .attr("href", '#')
+                        .addClass('operation')
+                        .addClass('_taskListTaskTypeIdField')
+                        .attr('sa-data-fktasktypeid', o.requestType);
+
+                if (o.requestType) {
+
+                    for (let l = 0; l < oper.length; l++) {
+                        if (oper[l].id == o.requestType) {
+                            a.text(oper[l].requestType);
+                        }
+
+                    }
+
+                }
+
+                reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                $("#flex-col-aktiv").append(html);
+            } else {
+                var hid = $('<div>')
+                        .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
+
+                var date = Utility.convertDate(o.createdDate);
+                var time = Utility.convertTime(o.createdTime);
+                var img
+                var userName
+                if (o.createdBy) {
+                    img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                    userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+                } else {
+                    img = 'userprofile.png';
+                    userName = 'Yoxdur'
+                }
+
+                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                for (let c = 0; c < stat.length; c++) {
+                    if (stat[c].id == o.requestStatus) {
+                        st.text(stat[c].taskStatusName);
+                    }
+
+                }
+                var a = $("<span>")
+                        .attr("href", '#')
+                        .addClass('operation')
+                        .addClass('_taskListTaskTypeIdField')
+                        .attr('sa-data-fktasktypeid', o.requestType);
+
+                if (o.requestType) {
+
+                    for (let l = 0; l < oper.length; l++) {
+                        if (oper[l].id == o.requestType) {
+                            a.text(oper[l].requestType)
+                        }
+
+                    }
+
+                }
+
+                reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                $("#flex-col-passiv").append(html);
             }
-        
-       
-    }
-     
-    $('.cs-task-panel-column .selectpicker').selectpicker({
-        iconBase: 'fa',
-        tickIcon: 'fa-chevron-down',
-    });
-   
-    $('[data-toggle="popover"]').popover({
-        html:true
-    });
-    if(x===0){
-         if(say>25){
-            $("#flex-col-aktiv").append($("<div>")
-                                          .addClass("more-button-fortapsiriq text-center ")
-                                          .text('Daha çox')
-                                          .attr("data-status",'aktiv')
-                                          .attr("start-limit",'25')
-                                          .attr("end-limit",'50')
-                                          )
-         }
-        
-    }
-    
-    if(x===1){
-        if(say>25){
-            $("#flex-col-passiv").append($("<div>")
-                                          .addClass("more-button-fortapsiriq text-center ")
-                                          .text('Daha çox')
-                                          .attr("data-status",'passiv')
-                                          .attr("start-limit",'25')
-                                          .attr("end-limit",'50')
-                                          );
-         }
-    }
+
+
+        }
+
+        $('.cs-task-panel-column .selectpicker').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-chevron-down',
+        });
+
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+        if (x === 0) {
+            if (say > 25) {
+                $("#flex-col-aktiv").append($("<div>")
+                        .addClass("more-button-fortapsiriq text-center ")
+                        .text('Daha çox')
+                        .attr("data-status", 'aktiv')
+                        .attr("start-limit", '25')
+                        .attr("end-limit", '50')
+                        )
+            }
+
+        }
+
+        if (x === 1) {
+            if (say > 25) {
+                $("#flex-col-passiv").append($("<div>")
+                        .addClass("more-button-fortapsiriq text-center ")
+                        .text('Daha çox')
+                        .attr("data-status", 'passiv')
+                        .attr("start-limit", '25')
+                        .attr("end-limit", '50')
+                        );
+            }
+        }
     } catch (error) {
-       console.log(error);   
+        console.log(error);
     }
-  
+
 
 }
-function getTapListMore(elm,stmit,etmit) {
+
+function getTapListMore(elm, stmit, etmit) {
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    // var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
@@ -22004,295 +22897,284 @@ function getTapListMore(elm,stmit,etmit) {
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-     var inns 
-      if(val){
-        val = val.split('-')
-        var dt = val[0].split('/');
-         var dt1 = val[1].split('/');
-         stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
-   
-         inns = stTime.trim() + '%BN%' + endTime.trim()
-      }
-  var type_view = localStorage.getItem('tapsiriq_view');
-  if (!type_view) {
-      type_view = "aktiv_passiv";
-  };
-       
-  if (type_view === 'aktiv_passiv') {
 
-      var sl = {};
+    var type_view = localStorage.getItem('tapsiriq_view');
+    if (!type_view) {
+        type_view = "aktiv_passiv";
+    }
+    ;
 
-      sl.startLimit = stmit;
-      sl.endLimit = etmit;
-     
-     
-      if(serach){
-        
-       
-         sl.reqeustDescription =serach?'%%'+serach+"%%":"";
-         sl.reqeustCode =serach?'%%'+serach+"%%":""
-      }
-      if(requestType.length > 0){
-          sl.requestType =requestType?requestType:"";
-      }
-     if(createdBy.length >0){
-         sl.createdBy =createdBy?createdBy:"";
-     
-     }
-      if(tasktypeId.length>0){
-         sl.fkTaskTypeId =tasktypeId?tasktypeId:"";
-     
-      }
-      if(fkKontragentId.length>0){
-         sl.fkKontragentId =fkKontragentId?fkKontragentId:"";
-      }
-      if(inns){
-          sl.createdDate =inns?inns:"";
-      }
-     
-      var db = ['new%IN%ongoing%IN%waiting','closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
+    if (type_view === 'aktiv_passiv') {
 
-     
-           if(elm==='aktiv'){
-            sl.requestStatus = db[0];
-           }else{
-            sl.requestStatus = db[1];
-           }
-        
-         
-          var res = be.callApi("21092513021300497192",sl);
-          var count =$(".count-cs-"+elm).text();
-           count = parseFloat(count);
-          genAktivPassivMore(res,elm,count,etmit);
-         
-          
-  }else if(type_view==='status'){
+        var sl = {};
 
- 
-      var sl = {};
-      sl.startLimit = stmit;
-      sl.endLimit =etmit;
-      if(executorİd.length>0){
-          sl.fkAssigneeId =executorİd?executorİd:"";
-       }
-       if(fkTaskTypeId.length > 0){
-          sl.fkTaskTypeId =fkTaskTypeId?fkTaskTypeId:"";
-      }
-       if(createdBy.length >0){
-          sl.createdBy =createdBy?createdBy:"";
-       }
-       if(inns){
-          sl.createdDate =inns?inns:"";
-         }
-      if(serach){
-          sl.taskNo =serach?serach:"";
+        sl.startLimit = stmit;
+        sl.endLimit = etmit;
+
+
+        if (serach) {
+
+
+            sl.reqeustDescription = serach ? '%%' + serach + "%%" : "";
+            sl.reqeustCode = serach ? '%%' + serach + "%%" : ""
         }
-             
-       sl.taskStatus=elm
-    
-       var res = be.callApi("210925130704092810098",sl);
-       var count =$(".count-cs-"+elm).text();
-           count = parseFloat(count);
-       genstatustapsiriqmore(res,elm,count,etmit)
-    
-      
-       
-    
-  }
-  else if(type_view==='operation'){
-      $('.filter-section .aktiv_pasiv_filter').hide();
-      $('.filter-section .status_filter').hide();
-      $('.filter-section .operation_filter').show();
-    
-  }
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         } */
+        if (createdBy.length > 0) {
+            sl.createdBy = createdBy ? createdBy : "";
+
+        }
+        if (tasktypeId.length > 0) {
+            sl.fkTaskTypeId = tasktypeId ? tasktypeId : "";
+
+        }
+        if (fkKontragentId.length > 0) {
+            sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
+        }
+        if (val) {
+            sl.createdDate = val ? val : "";
+        }
+
+        var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
+
+
+        if (elm === 'aktiv') {
+            sl.requestStatus = db[0];
+        } else {
+            sl.requestStatus = db[1];
+        }
+
+
+        var res = be.callApi("21092513021300497192", sl);
+        var count = $(".count-cs-" + elm).text();
+        count = parseFloat(count);
+        genAktivPassivMore(res, elm, count, etmit);
+
+
+    } else if (type_view === 'status') {
+
+
+        var sl = {};
+        sl.startLimit = stmit;
+        sl.endLimit = etmit;
+        if (executorİd.length > 0) {
+            sl.fkAssigneeId = executorİd ? executorİd : "";
+        }
+        if (fkTaskTypeId.length > 0) {
+            sl.fkTaskTypeId = fkTaskTypeId ? fkTaskTypeId : "";
+        }
+        if (createdBy.length > 0) {
+            sl.createdBy = createdBy ? createdBy : "";
+        }
+        if (val) {
+            sl.createdDate = val ? val : "";
+        }
+        if (serach) {
+            sl.taskNo = serach ? serach : "";
+        }
+
+        sl.taskStatus = elm
+
+        var res = be.callApi("210925130704092810098", sl);
+        var count = $(".count-cs-" + elm).text();
+        count = parseFloat(count);
+        genstatustapsiriqmore(res, elm, count, etmit)
+
+
+
+
+    } else if (type_view === 'operation') {
+        $('.filter-section .aktiv_pasiv_filter').hide();
+        $('.filter-section .status_filter').hide();
+        $('.filter-section .operation_filter').show();
+
+    }
 }
-function genAktivPassivMore(res,elm,count,etmit) {
+
+function genAktivPassivMore(res, elm, count, etmit) {
 
     try {
         res = res._table.r
-   
+
         var oper = getreqeuest4Tapsiriq();
         oper = oper._table.r;
-           var stat = GetTaskStatusList();
+        var stat = GetTaskStatusList();
         stat = stat._table.r;
-     
-    for (let l = 0; l < res.length; l++) {
-       
+
+        for (let l = 0; l < res.length; l++) {
+
             const o = res[l];
-           
-             
-                var hid = $('<div>')
-                               .append($("<input>").val(o.id).attr("sa-selectedfield",'fkRequestId'))
-                
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if(o.createdBy){
-                     img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                     userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                }else{
-                    img = 'userprofile.png';
-                    userName ='Yoxdur'
+
+
+            var hid = $('<div>')
+                    .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
+
+            var date = Utility.convertDate(o.createdDate);
+            var time = Utility.convertTime(o.createdTime);
+            var img
+            var userName
+            if (o.createdBy) {
+                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+            } else {
+                img = 'userprofile.png';
+                userName = 'Yoxdur'
+            }
+            var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+            for (let c = 0; c < stat.length; c++) {
+                if (stat[c].id == o.requestStatus) {
+                    st.text(stat[c].taskStatusName);
                 }
-                var st = $('<span>').addClass('issue_status_'+o.requestStatus);        
-                 for (let c = 0; c < stat.length; c++) {
-                         if(stat[c].id==o.requestStatus){
-                           st.text(stat[c].taskStatusName);
-                         }
-                       
-                }
-                var a =$("<span>")
-                         .attr("href",'#')
-                         .addClass('operation')
-                         .addClass('_taskListTaskTypeIdField')
-                         .attr('sa-data-fktasktypeid',o.requestType);
-    
-                if(o.requestType){
-    
-                    for (let l = 0; l < oper.length; l++) {
-                             if(oper[l].id==o.requestType){
-                               a.text(oper[l].requestType);
-                             }
-                           
+
+            }
+            var a = $("<span>")
+                    .attr("href", '#')
+                    .addClass('operation')
+                    .addClass('_taskListTaskTypeIdField')
+                    .attr('sa-data-fktasktypeid', o.requestType);
+
+            if (o.requestType) {
+
+                for (let l = 0; l < oper.length; l++) {
+                    if (oper[l].id == o.requestType) {
+                        a.text(oper[l].requestType);
                     }
-    
-               }
-    
-               reqeustDescription = o.reqeustDescription+"("+o.reqeustCode+")"
-                var html = getContentTapsiriq(o.id,reqeustDescription,img,userName,st,a,time,date,hid);
-               $("#flex-col-"+elm).append(html);
-            
-    }
 
-          var say = parseFloat(etmit) +25 ;
+                }
 
-          $("#flex-col-"+elm).find('.more-button-fortapsiriq').remove();
-        if(count>etmit){
-           $("#flex-col-"+elm).append($("<div>")
-                                         .addClass("more-button-fortapsiriq text-center ")
-                                         .text('Daha çox')
-                                         .attr("data-status",elm)
-                                         .attr("start-limit",etmit)
-                                         .attr("end-limit",say)
-                                         )
+            }
+
+            reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
+            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+            $("#flex-col-" + elm).append(html);
+
         }
-       
 
-   
-    $('.cs-task-panel-column .selectpicker').selectpicker({
-        iconBase: 'fa',
-        tickIcon: 'fa-chevron-down',
-    });
-   
-    $('[data-toggle="popover"]').popover({
-        html:true
-    });
-    
+        var say = parseFloat(etmit) + 25;
+
+        $("#flex-col-" + elm).find('.more-button-fortapsiriq').remove();
+        if (count > etmit) {
+            $("#flex-col-" + elm).append($("<div>")
+                    .addClass("more-button-fortapsiriq text-center ")
+                    .text('Daha çox')
+                    .attr("data-status", elm)
+                    .attr("start-limit", etmit)
+                    .attr("end-limit", say)
+                    )
+        }
+
+
+
+        $('.cs-task-panel-column .selectpicker').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-chevron-down',
+        });
+
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+
     } catch (error) {
-       console.log(error);   
+        console.log(error);
     }
-  
+
 
 }
 
-$(document).on("click",'.more-button-fortapsiriq', function (params) {
-  var elm = $(this).attr('data-status');
-  var st = $(this).attr('start-limit');
-  var ent = $(this).attr('end-limit');
-  
-    getTapListMore(elm,st,ent);
-     
+$(document).on("click", '.more-button-fortapsiriq', function (params) {
+    var elm = $(this).attr('data-status');
+    var st = $(this).attr('start-limit');
+    var ent = $(this).attr('end-limit');
+
+    getTapListMore(elm, st, ent);
+
 })
-$(document).on("click",'.cs-card-fullview', function (params) {
+$(document).on("click", '.cs-card-fullview', function (params) {
     var col = $(this).closest('.cs-task-col');
-        if(!col.attr('data-trig')){
-          
-            col.attr('data-trig','true');
-            col.addClass('maximize-large')
-        }else{
+    if (!col.attr('data-trig')) {
 
-            col.removeAttr('data-trig')
-            col.removeClass('maximize-large')
-        }
-         
-        $( col ).scroll();
-     
-})
-$(document).on("click",'.task-view-button-group a', function (params) {
-    var view =  $(this).attr('data-view');
-     localStorage.setItem("tapsiriq_view",view);
-     getTapsiriqList();
+        col.attr('data-trig', 'true');
+        col.addClass('maximize-large')
+    } else {
 
-     
-})
-$(document).on("change",'#task-kanban-search-tapsiriq', function (params) {
- 
-    idk = "%%"+$(this).val()+"%%"
-   
+        col.removeAttr('data-trig')
+        col.removeClass('maximize-large')
+    }
 
-       getTapsiriqList(idk);
+    $(col).scroll();
+
 })
-$(document).on("change",'#reqeustModul-filter-tapsiriq', function (params) {
-     var val = $(this).val();
+$(document).on("click", '.task-view-button-group a', function (params) {
+    var view = $(this).attr('data-view');
+    localStorage.setItem("tapsiriq_view", view);
+    getTapsiriqList();
+
+
+})
+$(document).on("change", '#task-kanban-search-tapsiriq', function (params) {
+
+    idk = "%%" + $(this).val() + "%%"
+
+
+    getTapsiriqList(idk);
+})
+$(document).on("change", '#reqeustModul-filter-tapsiriq', function (params) {
+    var val = $(this).val();
     var obj1 = modulListTap[val];
     $("#reqeustType-filter-tapsiriq").html('')
-   for (var n = 0; n < obj1.length; n++) {
-       if(n===0){
-           $("#reqeustType-filter-tapsiriq").append($('<option>').attr("selected","selected").val(obj1[n].id).text(obj1[n].requestType));
-       }else{
-           $("#reqeustType-filter-tapsiriq").append($('<option>').val(obj1[n].id).text(obj1[n].requestType));
+    for (var n = 0; n < obj1.length; n++) {
+        if (n === 0) {
+            $("#reqeustType-filter-tapsiriq").append($('<option>').attr("selected", "selected").val(obj1[n].id).text(obj1[n].requestType));
+        } else {
+            $("#reqeustType-filter-tapsiriq").append($('<option>').val(obj1[n].id).text(obj1[n].requestType));
 
-       }
-      
-   }
-   $("#reqeustType-filter-tapsiriq").selectpicker("refresh").change();
-  
-})
-$(document).on("change",'.btn-cancel-value-clear', function (params) {
- 
-    $('#date_timepicker_start_end_tapsiriq').val('');
+        }
 
+    }
+    $("#reqeustType-filter-tapsiriq").selectpicker("refresh").change();
 
 })
-$(document).on("click",'.cs-task-item-box .cs-task-card-body', function (params) {
- 
+
+$(document).on("click", '.cs-task-item-box .cs-task-card-body', function (params) {
+
     $('#taskModalBlock').modal('show');
     var html1 = $(this).closest('.cs-task-item-in-box');
 
 
-          html = html1.clone();
-           html.removeClass('cs-white-bg');
-           html.css('box-shadow','none');
+    html = html1.clone();
+    html.removeClass('cs-white-bg');
+    html.css('box-shadow', 'none');
     $('#taskModalBlock .modal-body').html(html);
-    $("#taskModalBlock").find('#user-story-show-stat4tapsiriq').prop("checked",true).change().parent().hide();;
+    $("#taskModalBlock").find('#user-story-show-stat4tapsiriq').prop("checked", true).change().parent().hide();
+    ;
 
 })
 
 
 $(document).on('change', '#user-story-show-stat4tapsiriq', function (event) {
- 
 
-    if($(this).prop("checked")){
+
+    if ($(this).prop("checked")) {
         $(this).parents(".cs-task-item-in-box").find(".stat-div-task-content").show();
-        var tbody =  $(this).parents(".cs-task-item-in-box").find(".stat-div-task-content .stat-table-us tbody")
+        var tbody = $(this).parents(".cs-task-item-in-box").find(".stat-div-task-content .stat-table-us tbody")
         var pid = $(this).attr('data-bid')
-        getSTatsUserManagmentTableKanban4tapsiriq(tbody,pid)
-         
-    }else{
+        getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid)
+
+    } else {
         $(this).parents(".cs-task-item-in-box").find(".stat-div-task-content").hide();
     }
 
 });
 $(document).on('change', '#task-us-prio-change', function (event) {
-   
-      var ml ={};
-      ml.taskPriority = $(this).val();
-      ml.id = $(this).closest('.cs-task-item-in-box ').attr('id');
-   var elm = be.callApi("21092917070904357762",ml);
+
+    var ml = {};
+    ml.taskPriority = $(this).val();
+    ml.id = $(this).closest('.cs-task-item-in-box ').attr('id');
+    var elm = be.callApi("21092917070904357762", ml);
 
 });
+
 function getProjectUsers4Tapsiriq() {
 
 
@@ -22309,20 +23191,21 @@ function getProjectUsers4Tapsiriq() {
         crossDomain: true,
         async: true,
         success: function (res) {
-           
+
             obj = res.tbl[0].r;
             $("select.user-filter-tapsiriq").html('')
-           for (var n = 0; n < obj.length; n++) {
-               $("select.user-filter-tapsiriq").append($('<option>').val(obj[n].fkUserId).text(obj[n].userName));
-           }
+            for (var n = 0; n < obj.length; n++) {
+                $("select.user-filter-tapsiriq").append($('<option>').val(obj[n].fkUserId).text(obj[n].userName));
+            }
 
-           $("select.user-filter-tapsiriq").selectpicker("refresh");
+            $("select.user-filter-tapsiriq").selectpicker("refresh");
         },
         error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
+
 function getKontragent4Tapsiriq() {
 
 
@@ -22337,14 +23220,14 @@ function getKontragent4Tapsiriq() {
         crossDomain: true,
         async: false,
         success: function (res) {
-           
+
             obj = res.tbl[0].r;
             $("#kontragent-filter-tapsiriq").html('')
-           for (var n = 0; n < obj.length; n++) {
-               $("#kontragent-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].kaName));
-           }
+            for (var n = 0; n < obj.length; n++) {
+                $("#kontragent-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].kaName));
+            }
 
-           $("#kontragent-filter-tapsiriq").selectpicker("refresh");
+            $("#kontragent-filter-tapsiriq").selectpicker("refresh");
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -22352,137 +23235,411 @@ function getKontragent4Tapsiriq() {
     });
 }
 
-function getSTatsUserManagmentTableKanban4tapsiriq(tbody,pid) {
-      try {
+function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
+    try {
         var cl = {};
         cl.fkRequestId = pid;
-       var ela = be.callApi('210925130704092810098',cl);
-           ela =ela._table.r
+        var ela = be.callApi('210925130704092810098', cl);
+        ela = ela._table.r
         $(tbody).html('')
         $(tbody).append($("<tr>").addClass('theader-table')
-            .append('<td><b>No</b></td>')
-            .append('<td class="trigger-status-filter"><b>Status</b></td>')
-            .append('<td><b>Əməliyyat</b></td>')
-            .append($("<td>").append("<b>Tarix</b>"))
-            .append('<td><b>Saat</b></td>')
-            .append('<td><b>Daxil Edən</b></td>')
-            .append('<td><b>İcraçı</b></td>')
-        )
-         
+                .append('<td><b>No</b></td>')
+                .append('<td class="trigger-status-filter"><b>Status</b></td>')
+                .append('<td><b>Əməliyyat</b></td>')
+                .append($("<td>").append("<b>Tarix</b>"))
+                .append('<td><b>Saat</b></td>')
+                .append('<td><b>Daxil Edən</b></td>')
+                .append('<td><b>İcraçı</b></td>')
+                )
+
         var oper = getTaskTypeList();
-             oper = oper._table.r;
+        oper = oper._table.r;
         var stat = GetTaskStatusList();
-             stat = stat._table.r;
-         var new1 = 0
-         ,ongoing =0
-         ,closed = 0
-         ,waiting = 0
-         ,rejected =0
-         ,canceled =0
-         ,defected =0
-         ,tesdiqlenib =0
-         ,tamamlanib =0
-    
+        stat = stat._table.r;
+        var new1 = 0,
+                ongoing = 0,
+                closed = 0,
+                waiting = 0,
+                rejected = 0,
+                canceled = 0,
+                defected = 0,
+                tesdiqlenib = 0,
+                tamamlanib = 0
+
         for (let i = 0; i < ela.length; i++) {
             const o = ela[i];
-             if(o.taskStatus==='new'){new1++} 
-             if(o.taskStatus==='ongoing'){ongoing++} 
-             if(o.taskStatus==='closed'){closed++} 
-             if(o.taskStatus==='waiting'){waiting++} 
-             if(o.taskStatus==='rejected'){rejected++} 
-             if(o.taskStatus==='canceled'){canceled++} 
-             if(o.taskStatus==='defected'){defected++} 
-             if(o.taskStatus==='tesdiqlenib'){tesdiqlenib++} 
-             if(o.taskStatus==='tamamlanib'){tamamlanib++} 
-                 
+            if (o.taskStatus === 'new') {
+                new1++
+            }
+            if (o.taskStatus === 'ongoing') {
+                ongoing++
+            }
+            if (o.taskStatus === 'closed') {
+                closed++
+            }
+            if (o.taskStatus === 'waiting') {
+                waiting++
+            }
+            if (o.taskStatus === 'rejected') {
+                rejected++
+            }
+            if (o.taskStatus === 'canceled') {
+                canceled++
+            }
+            if (o.taskStatus === 'defected') {
+                defected++
+            }
+            if (o.taskStatus === 'tesdiqlenib') {
+                tesdiqlenib++
+            }
+            if (o.taskStatus === 'tamamlanib') {
+                tamamlanib++
+            }
+
             var date = Utility.convertDate(o.createdDate);
             var time = Utility.convertTime(o.createdTime);
             var img
             var userName
-            if(o.createdBy){
-                 img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                 userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-            }else{
+            if (o.createdBy) {
+                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
+            } else {
                 img = 'userprofile.png';
-                userName ='Yoxdur'
+                userName = 'Yoxdur'
             }
             var img1
             var userName1
-            if(o.createdBy){
-                 img1 = SAProjectUser.ProjectUsers[o.fkAssigneeId].userImage;
-                 userName1 = SAProjectUser.ProjectUsers[o.fkAssigneeId].userName;
-            }else{
+            if (o.createdBy) {
+                img1 = SAProjectUser.ProjectUsers[o.fkAssigneeId].userImage;
+                userName1 = SAProjectUser.ProjectUsers[o.fkAssigneeId].userName;
+            } else {
                 img1 = 'userprofile.png';
-                userName1 ='Yoxdur'
+                userName1 = 'Yoxdur'
             }
-            var st = $('<span>').addClass('issue_status_'+o.taskStatus);        
-             for (let c = 0; c < stat.length; c++) {
-                     if(stat[c].id== o.taskStatus){
-                       st.text(stat[c].taskStatusName);
-                     }
-                   
-            }
-            var a =$("<span>")
-                     .attr("href",'#')
-                     .addClass('operation')
-                     .addClass('_taskListTaskTypeIdField')
-                     .attr('sa-data-fktasktypeid',o.fkTaskTypeId);
-    
-            if(o.fkTaskTypeId){
-    
-                for (let l = 0; l < oper.length; l++) {
-                         if(oper[l].id==o.fkTaskTypeId){
-                           a.text(oper[l].taskTypeName);
-                         }
-                       
+            var st = $('<span>').addClass('issue_status_' + o.taskStatus);
+            for (let c = 0; c < stat.length; c++) {
+                if (stat[c].id == o.taskStatus) {
+                    st.text(stat[c].taskStatusName);
                 }
-    
-           }
-            
-    
-            $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
-                .append('<td class="task-id-td">' + ela[i].taskNo +'</td>')
-                .append($('<td>').addClass('text-center')
-                       .append(st))
-                .append($("<td>")
-                    .append(a))
-                .append($("<td>").append(date))
-                .append('<td>' + time + '</td>')
-                .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + img + '" data-trigger="hover" data-toggle="popover" data-content="' + userName+ '" title="" data-original-title="Daxil Edən"></td>')
-                .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + img1 + '" data-trigger="hover" data-toggle="popover" data-content="' + userName1 + '" title="" data-original-title="İcraçı"></td>')
-            
-            )
-    
+
+            }
+            var a = $("<span>")
+                    .attr("href", '#')
+                    .addClass('operation')
+                    .addClass('_taskListTaskTypeIdField')
+                    .attr('sa-data-fktasktypeid', o.fkTaskTypeId);
+
+            if (o.fkTaskTypeId) {
+
+                for (let l = 0; l < oper.length; l++) {
+                    if (oper[l].id == o.fkTaskTypeId) {
+                        a.text(oper[l].taskTypeName);
+                    }
+
+                }
+
+            }
+            var prt = $("<select>")
+                    .addClass("task-list-prt-change-select form-control-sm form-control")
+                    .attr("disabled", 'disabled')
+                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                    .append('<option value="xususi" data-icon="fas fa-flag text-primary">Xüsusi</option>')
+                    .append('<option value="tecili" data-icon="fas fa-flag text-danger">Təcili</option>')
+
+            $(tbody).append($("<tr>").addClass('task-tr-list redirectClass').attr('data-tr-status', ela[i].taskStatus)
+                    .append('<td class="task-id-td">' + ela[i].taskNo + '</td>')
+                    .append($('<td>').addClass('text-center')
+                            .append(st)
+                            .append(prt.val(o.taskPriority)))
+                    .append($("<td>")
+                            .append(a))
+                    .append($("<td>").append(date))
+                    .append('<td>' + time + '</td>')
+                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + img + '" data-trigger="hover" data-toggle="popover" data-content="' + userName + '" title="" data-original-title="Daxil Edən"></td>')
+                    .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + img1 + '" data-trigger="hover" data-toggle="popover" data-content="' + userName1 + '" title="" data-original-title="İcraçı"></td>')
+                    .append()
+
+                    )
+
         }
-    
+
         $('[data-toggle="popover"]').popover();
         $(tbody).find('.trigger-status-filter').click();
-    
-             var total = new1+ongoing+closed+rejected+canceled+tesdiqlenib+tamamlanib+waiting+defected
-                      var div  = $(tbody).parents('table')
-                  
-                        $(div).find(".total").html("")
-                            .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew new" status="new" pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Yeni"></span>-(' + new1 + ')</td>')
-                            .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew ongoing" status="ongoing" pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İcrada"></span>-(' + ongoing + ')</td>')
-                            .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew closed " status="closed"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İcra edilib"></span>-(' + closed + ')</td>')
-                            .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew tesdiqlenib" status="tesdiqlenib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Təsdiqlənib"></span>-(' + tesdiqlenib + ')</td>')
-                            .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew canceled " status="canceled"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İmtina edilib"></span>-(' + canceled + ')</td>')
-    
-                        $(div).find(".bug").html("")
-                        .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew defected " status="defected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Xəta!!!"></span>-(' + defected + ')</td>')
-                        .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew waiting" status="waiting"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Gözləmədə"></span>-(' + waiting + ')</td>')
-                        .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew tamamlanib" status="tamamlanib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Tamamlanıb"></span>-(' + tamamlanib + ')</td>')
-                        .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew rejected" status="rejected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Ləğv edilib"></span>-(' + rejected + ')</td>')
-                        .append('<td><span class="stat_group_title " pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Total"></span>Cəm-(' + total + ')</td>')
-             
-    
-      } catch (error) {
-          $(tbody).parents(".stat-div-task-content").prepend("Məlumat Yoxdur")
-      }
-/*       $('[data-toggle="popover"]').popover({
-        html:true
-    }); */
+
+        var total = new1 + ongoing + closed + rejected + canceled + tesdiqlenib + tamamlanib + waiting + defected
+        var div = $(tbody).parents('table')
+
+        $(div).find(".total").html("")
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew new" status="new" pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Yeni"></span>-(' + new1 + ')</td>')
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew ongoing" status="ongoing" pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İcrada"></span>-(' + ongoing + ')</td>')
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew closed " status="closed"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İcra edilib"></span>-(' + closed + ')</td>')
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew tesdiqlenib" status="tesdiqlenib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Təsdiqlənib"></span>-(' + tesdiqlenib + ')</td>')
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew canceled " status="canceled"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="İmtina edilib"></span>-(' + canceled + ')</td>')
+
+        $(div).find(".bug").html("")
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew defected " status="defected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Xəta!!!"></span>-(' + defected + ')</td>')
+                .append('<td><span class=" cs-staturs-circle-note new-tapsiriq-rew waiting" status="waiting"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Gözləmədə"></span>-(' + waiting + ')</td>')
+                .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew tamamlanib" status="tamamlanib"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Tamamlanıb"></span>-(' + tamamlanib + ')</td>')
+                .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew rejected" status="rejected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Ləğv edilib"></span>-(' + rejected + ')</td>')
+                .append('<td><span class="stat_group_title " pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Total"></span>Cəm-(' + total + ')</td>')
+
+        $(".stat-div-task-content .task-list-prt-change-select").selectpicker()
+
+    } catch (error) {
+        $(tbody).parents(".stat-div-task-content").prepend("Məlumat Yoxdur")
+    }
+    /*       $('[data-toggle="popover"]').popover({
+     html:true
+     }); */
 
 
 
+}
+
+/// chat >>>>>
+
+$(document).on('click', '.for-chewekk-new-chat-link', function () {
+    var div = $(".component-class#21041212141705702084 >.component-section-row ");
+    var f = $(this).attr("data-link")
+    /*   $.get("resource/chat/public/index.html", function (html_string) {
+     $(div).html(html_string);
+     
+     sidebarGeneratecomment();
+     
+     
+     }); */
+
+    window.open('chat.html?current_modal=chat&current_ticker_id=' + global_var.current_ticker_id, '_blank');
+
+
+})
+
+$(document).on("keypress", "#text-message-input", function (e) {
+    if (e.which == 13) {
+
+        var txt = $(this).text();
+        var today = new Date();
+
+        if (txt.trim().length > 0) {
+
+
+            var dp = document.createElement('div');
+            dp.classList.add('message-list');
+            dp.classList.add('me');
+
+            var txDiv = document.createElement('div');
+
+            txDiv.classList.add('msg');
+            var pd = document.createElement('p');
+
+            pd.innerHTML = txt;
+            txDiv.appendChild(pd)
+
+            var tm = document.createElement('div');
+
+            tm.innerHTML = today;
+
+            dp.appendChild(txDiv);
+            dp.appendChild(tm);
+
+
+            $('#message-wrap-chat').append(dp);
+
+
+            const scrollContainer = document.getElementById('message-wrap-chat');
+            scrollContainer.scrollTo({
+                top: scrollContainer.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+            triggerAPI(this, '21052614480303666321')
+        }
+
+
+    }
+})
+
+function sideBarFirstClick(data) {
+
+    $('#list-wrap-container .container-group-item').first().click();
+
+}
+
+function sidebarGeneratecomment() {
+    var arr = be.callApi('21052514335607055154');
+
+    arr = arr._table.r;
+    $("#list-wrap-container").empty();
+    for (let index = 0; index < arr.length; index++) {
+        var nm = arr[index].nameGroup;
+        var id = arr[index].id;
+        var src = fileUrl(arr[index].groupImage);
+        sideBarBlockgen(nm, id, src);
+
+
+    }
+}
+
+function sideBarBlockgen(nm, id, isrc) {
+    var div = document.createElement('div');
+    div.classList.add('list');
+    div.classList.add('container-group-item');
+    div.setAttribute('id', id);/* 
+     div.setAttribute('onclick', 'triggerAPI(this,"21052611563704387613")'); */
+
+    var img = document.createElement('img');
+    img.setAttribute('src', isrc);
+
+    var subDiv = document.createElement('div');
+    subDiv.classList.add('info');
+    var spn1 = document.createElement('span');
+    spn1.classList.add('user');
+    spn1.innerText = nm;
+    var spn2 = document.createElement('span');
+    spn2.classList.add('text');
+    spn2.innerText = "";
+    subDiv.appendChild(spn1);
+    subDiv.appendChild(spn2);
+
+    var spn3 = document.createElement('span');
+    spn3.classList.add('time');
+    spn3.innerText = "1 saat";
+
+    div.appendChild(img);
+    div.appendChild(subDiv);
+    div.appendChild(spn3);
+
+    $("#list-wrap-container").append(div);
+}
+
+function Genblockmessage(data, el) {
+    $('#historyMsg').empty();
+    var usImga = $(el).find('img').attr('src');
+    var usNm = $(el).find('.info ').attr('src');
+
+    try {
+        var mesList = data._table.r;
+
+        for (var index = 0; index < mesList.length; index++) {
+            if (index < 51) {
+
+                var bdy = mesList[index].body;
+                var crtBy = mesList[index].createdBy;
+                var idMs = mesList[index].id;
+                var tmie = mesList[index].insertDate;
+
+
+                var dlv = document.createElement('div');
+                dlv.classList.add('message-list')
+                var msg = document.createElement('div');
+                msg.classList.add('msg');
+
+                var imgUs = document.createElement("b");
+                //imgUs.classList.add('image-mini-block')
+                var us = SAProjectUser.ProjectUsers[crtBy].userName;
+                if (us === '') {
+                    imgUs.innerText = 'Error User';
+                } else {
+                    imgUs.innerText = us;
+                }
+
+
+
+                if (crtBy === global_var.current_ticker_id) {
+                    dlv.classList.add('me')
+                } else {
+                    msg.appendChild(imgUs);
+                }
+
+
+                var p = document.createElement("p")
+                p.innerHTML = bdy;
+
+                msg.appendChild(p);
+
+                var tm = document.createElement('div');
+                tm.innerText = tmie;
+
+                dlv.appendChild(msg);
+                dlv.appendChild(tm);
+
+
+
+                $('#historyMsg').prepend(dlv);
+
+            }
+
+            const scrollContainer = document.getElementById('historyMsg');
+            scrollContainer.scrollTo({
+                top: scrollContainer.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
+    } catch (err) {
+
+        $('#historyMsg').append('Söhbət boşdur');
+    }
+}
+
+function commentsavedatabase(data) {
+    data.body = $('#text-message-input').html();
+    data.fkGroupId = $('.-messagecontent').attr('id');
+
+    $('#text-message-input').html("");
+}
+$(document).on("click", "#add_user_button", function (e) {
+    var userId = $("#userListChatSelect").val();
+    var logo = SAProjectUser.ProjectUsers[userId].userImage;
+    var name = SAProjectUser.ProjectUsers[userId].userName;
+
+    var ls = {};
+    ls.groupImage = logo;
+    ls.nameGroup = name;
+    ls.fkUserId = userId;
+    be.callApi('21100815312700281008', ls);
+    $("#addUserChat").modal("hide");
+    sidebarGeneratecomment();
+    $("#list-wrap-container").find(".container-group-item").first("click")
+})
+
+
+$(document).on("click", ".open", function (e) {
+    const sidebar = $(".cst-cheweek-sidebar");
+    sidebar.toggleClass("opened");
+
+    if (sidebar.hasClass('opened')) {
+        var i = document.createElement('i');
+        i.classList.add('fas');
+        i.classList.add('fa-times');
+
+        $(this).html(i);
+    } else {
+        var i1 = document.createElement('i');
+        i1.classList.add('fas');
+        i1.classList.add('fa-ellipsis-h');
+        $(this).html(i1);
+    }
+}
+)
+
+$(document).on("click", ".container-group-item", function (e) {
+    $(".container-group-item").removeClass("akitvec");
+    $(this).addClass("akitvec");
+    var id = $(this).attr('id');
+    Utility.addParamToUrl("current_chat_gorup", id)
+    var imgd = $(this).find('img').attr('src');
+    var us = $(this).find('span.user').text();
+
+    $('.-messagecontent').attr('id', id);
+    $('.-messagecontent header img').attr('src', imgd);
+    $('#user-header-bolean').text(us);
+    genChatMessagesRooms(this, id)
+})
+
+function genChatMessagesRooms(el, ids) {
+    var dt = {}
+    dt.fkGroupId = ids
+    var els = be.callApi("21052615190704745176", dt);
+    Genblockmessage(els, el)
 }

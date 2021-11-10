@@ -131,8 +131,8 @@ $(document).ready(function () {
                 return;
             }
             $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
-            var storyCard = getPopup(html_string);
-            $("#body_of_nature").append(storyCard);
+            $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+            $("#UserStoryPopupModal-Toggle").modal('show');
             global_var.current_backlog_id = backlogId;
             new UserStory().toggleSubmenuStoryCard();
 
@@ -232,8 +232,8 @@ function callStoryCard4Api(id, elId, backlogName) {
             return;
         }
         $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
-        var storyCard = getPopup(html_string);
-        $("#" + divId).append(storyCard);
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        $("#UserStoryPopupModal-Toggle").modal('show');
         global_var.current_backlog_id = id;
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
@@ -244,9 +244,11 @@ function callStoryCard4Api(id, elId, backlogName) {
 
 function callStoryCard(id, elId, backlogName) {
 
-    if ($(document).find(".StoryCardPanel").first().html()) {
-        $(document).find(".StoryCardPanel").remove();
-    }
+   /*  if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
+        $(document).find("#UserStoryPopupModal-Toggle").modal("hide");
+     
+       
+    } */
 
 
     var divId = (elId) ? elId : "body_of_nature";
@@ -258,12 +260,19 @@ function callStoryCard(id, elId, backlogName) {
             return;
         }
         
+        loadBacklogDetailsByIdIfNotExist(id);
+        
         var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
         global_var.current_project_id = fkProjectId;
         
-        $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
+       /*  $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
+
         var storyCard = getPopup(html_string);
-        $("#" + divId).append(storyCard);
+       
+        $("#" + divId).append(storyCard); */
+
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
         global_var.current_backlog_id = id;
 
@@ -303,22 +312,17 @@ function loadStoryCardBodyInfo() {
 
 // content header text addd
 function getPopup(arg) {
-    return $("<div>")
-            .addClass("StoryCardPanel")
-            .append($("<div>")
-                    .addClass("storyBackGround")
-                    .css("z-index", "1001")
-                    .append($("<div>")
-                            .addClass("Card-story")
-                            .append($("<div>")
-                                    .append($("<header>")).addClass('Story-card-Header')
-                                    .append($('<div class="card-UserStory-name">')
-                                            .append($('<span>')))
-                                    .append($('<div class="card-UserStory-edit">')
-                                            .append($('<div class="card-UserStory-edit-exit">')
-                                                    .append($('<i class="fas fa-times"></i>')))))
-                            .append($("<div>")
-                                    .addClass("Card-story-body")
-                                    .html((arg))))
-                    )
+    return `
+    <div class="modal fade" id="UserStoryPopupModal-Toggle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 90%">
+    <div class="modal-header text-center" style="padding: 0px 10px;background: none;"><b class="modal-title" ></b> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+        <div class="modal-content">
+
+            <div class="modal-body">
+                ${arg}
+            </div>
+            
+        </div>
+    </div>
+</div>`
 }

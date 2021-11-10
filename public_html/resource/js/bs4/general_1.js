@@ -519,6 +519,24 @@ var Utility = {
 
         }
     },
+    convertStringToCamelStyle: function (arg) {
+        var UNDERSCORE = "_";
+        var st = arg.split(UNDERSCORE);
+        var res = st[0].toLowerCase()
+        for (var i = 1; i <= st.length - 1; i++) {
+            res = res + st[i].substring(0, 1).toUpperCase() + st[i].substring(1, st[i].length).toLowerCase();
+        }
+        return res;
+    },
+    addUnderScoreToCamalStyle: function (arg) {
+
+        arg = arg.replace(/\.?([0-9-A-Z])/g, function (x, y) {
+            return "_" + y.toLowerCase()
+        }).replace(/^_/, "");
+
+        return arg;
+
+    },
 }
 
 function getFilePath(fileName) {
@@ -1088,8 +1106,8 @@ function loadModulePermission() {
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
                     if (o.accessType === 'n') {
-                        if (o.relationId === 'loadPermission')
-                            continue;
+//                        if (o.relationId === 'loadPermission')
+//                            continue;
                         $('.' + o.relationId).closest('.project-item-zad').remove();
                     }
                 }
@@ -1584,25 +1602,35 @@ function GetTagLine(text, tag) {
 function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var pageId = makeId(15);
     var st = "";
+    var butnList = '';
+    var fkpr = Utility.getParamFromUrl("fkManualProjectId").length
+      if (global_var.current_domain==='48edh'&&fkpr > 0) {
+          butnList = `<div style="position: absolute;top: 2px;right: 40px;">
+                            <span class='mr-2' ><a class="taskListShowNewSorguBtnClickEvent" href="#" title="Tapşırıq" sa-data-link="21042817181209336901"><img width="25px" class='rounded-circle' src="img/task.jpeg"></a></span> 
+                             <span class='mr-2' ><a class="for-chewekk-new-chat-link" data-link="chwkchat" href="javascript:void" title="Show Chat"><img width="25px" class='rounded-circle' src="img/chat.jpeg"></a></span> 
+                             <span  class='mr-2'><img width="25px" class='rounded-circle' src="img/info.jpg"></a> </span> 
+                             </div>`
+      }
+      console.log(fkpr);
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
     st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>';
+    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>'+butnList;
     st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
     st += '           <span aria-hidden="true">&times;</span>';
     st += '             </button>';
     st += '      </div>';
     st += '   <div class="loaderModalInitiator"></div>';
     st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
-    st += '   <form>';
+//    st += '   <form>';
     st += '     <input type="hidden" id=popupTrigger pid="' + triggerId + '" value="nonenone">';
     st += '     <div class="row redirectClass" bid="' + backlogId + '"';
     st += '                     bcode="' + makeId(10) + '" ';
     st += '                     id="userstory-gui-input-component-res-sus-id">';
     st += modalBody;
     st += '     </div>';
-    st += '   </form>';
+//    st += '   </form>';
     st += '   </div>';
     st += '  </div>';
     st += '  </div>';
@@ -1620,6 +1648,13 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
 function generatePopupModal(modalBody) {
     var pageId = makeId(15);
     var st = "";
+    var butnList = '';
+    var fkpr = Utility.getParamFromUrl("fkManualProjectId")
+      if (global_var.current_domain===''&&fkpr > 0) {
+          butnList = $("<div>").addClass("float-right")
+                         .append("dkfhksdfksdfh")
+      }
+      console.log(fkpr);
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg" style="width: 80%;max-width: 80%" role="document">';
     st += '      <div class="modal-content">';
@@ -1700,7 +1735,7 @@ function GetConvertedDateByElement(element) {
     var date = new Date($(element).val());
     if (date) {
         var day = date.getDate();
-        if (!day || day===NaN || day === 'undefined'){
+        if (!day || day === NaN || day === 'undefined') {
             return '';
         }
         day = day.toString(10).length === 1 ? '0' + day : day;
@@ -1897,6 +1932,7 @@ function fnExcelReport(tableId)
 }
 
 var global_var = {
+    us_is_not_4_generation: true,
     current_issue_id: "",
     current_issue_is_hide: "1",
     projectToggleWithSync: true,
@@ -1920,7 +1956,7 @@ var global_var = {
     "lp_isdragging": 0,
     "ipo_gui_view": "single",
     "is_body_ctrl_pressed": "0",
-    "actual_zoom": 100,
+    "actual_zoom": 90,
     "doc_actual_zoom": 100,
     "previous_backlog_id": "",
     "previous_backlog_name": "",

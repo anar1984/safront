@@ -17,7 +17,7 @@
             <div class="col-3">
                 <span>Operation</span>
                 <div>
-                   
+
                     <button class="btn btn-outline-secondary inp_popUp_story_card_list_cl"><i class="fas fa-list"></i></button>    
                     <button class="btn btn-outline-secondary live-prototype-show-story-card-refresh"><i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;"></i></button>    
                     <button class="btn btn-outline-secondary live-prototype-show-story-card"><i class="live-prototype-show-story-card1 fa fa-window-maximize" style="font-size: 10px;cursor: pointer;"></i></button>    
@@ -27,6 +27,7 @@
                     <button class="btn btn-outline-secondary line_icon_line_list"><i class="fas fa-stream" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary line_icon_selectedfields" title="Input Selected Fields"><i class="fas fa-database" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary line_icon_mvp_create">MVP</button>  
+                    <input type='checkbox' id='livePrototypDebugMode'>Debug Mode
 
 
                 </div>
@@ -585,6 +586,30 @@
 
                                     </tr>
                                     <tr>
+                                        <td  style="padding:5px;">
+                                            <span class="col-form-label control-label">sa-advanced-filter-active</span>
+
+                                        </td>
+                                        <td style="padding:5px;">
+
+                                            <input class="select_fell_check" type="checkbox">
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td  style="padding:5px;">
+                                            <span class="col-form-label control-label">sa-column-filter-active</span>
+
+                                        </td>
+                                        <td style="padding:5px;">
+
+                                            <input class="select_fell_check" type="checkbox">
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
                                         <td style="padding:5px;">
                                             <span class="col-form-label control-label">sa-data-backlogid</span>
 
@@ -596,6 +621,7 @@
 
 
                                     </tr>
+
                                     <tr>
                                         <td style="padding:5px;">
                                             <span class="col-form-label control-label">sa-checkAllNone</span>
@@ -696,6 +722,7 @@
 
 
                                     </tr>
+
                                     <tr>
                                         <td  style="padding:5px;">
                                             <span class="col-form-label control-label">sa-selectbox-changeafterload</span>
@@ -838,6 +865,9 @@
                 <li value="Tbl" title="Table"><a  onclick="addTableAsInput()"><img src="resource/img/table.png" alt="">
                         <span>Table</span>
                     </a></li>
+                <li value="Grp" title="Group"><a  onclick="addGroupAsInput()"><img src="resource/img/table.png" alt="">
+                        <span>Group</span>
+                    </a></li>
 
 
             </ul>
@@ -936,12 +966,14 @@
 
                                         <a href="#" class="home_icon_menu-item gooeyMenuDesc-3" onclick="addTableAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Table</h6> </a>
 
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-4" onclick="addSectionAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Section</h6> </a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-4" onclick="addGroupAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Group</h6> </a>
 
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-5" onclick="addTabAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Tab</h6> </a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-5" onclick="addSectionAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Section</h6> </a>
+
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-6" onclick="addTabAsInput()" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg><h6>Add Tab</h6> </a>
 
                                         <!-- /* start 17.08.2020 */ -->
-                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-6" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg></a>
+                                        <a href="#" class="home_icon_menu-item gooeyMenuDesc-7" ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus-circle" class="svg-inline--fa fa-plus-circle fa-w-16 main-btn-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="main-btn-plus" fill="#2189E5" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"></path></svg></a>
                                         <!-- /* end 17.08.2020 */ -->
 
                                     </div>
@@ -994,7 +1026,7 @@
                                data-toggle="tab" href="#ipo-tab-setting-animation" >
                                 <i class="fab fa-asymmetrik"></i>
                                 <br>
-                                <span>Animation</span>
+                                <span>Action</span>
                             </a>
                         </li>
                         <li class="nav-item gui-design-is-api" id="component-btn-icon">
@@ -1122,7 +1154,7 @@
                                                 <br><br>
                                             </div>
                                             <div class="col-12  us-gui-component-action-div "
-                                             
+
                                                  style=" padding:0px  1px">
                                                 <b><span
                                                         style="width: 100%;padding:0px;">Action:</span><br></b>
@@ -1149,6 +1181,7 @@
                                                 <b><span style="width1: 100%;">Related Sourced User Story</span><br></b>
                                                 <select type="number"
                                                         class="us-gui-component-rel-sus-id"
+                                                        data-live-search='true'
                                                         onchange="new UserStory().setGUIComponentRelSUS(this)"
                                                         style="width:90%;
                                                         border-radius: 4px;
@@ -1167,7 +1200,7 @@
                                                 <b><span
                                                         style="width: 100%;">In Section (User Story)</span><br></b>
                                                 <select type="number"
-                                                        class="us-gui-component-rel-sus-id-section"
+                                                        class="us-gui-component-rel-sus-id-section col-12" 
                                                         onchange="new UserStory().setGUIComponentRelSUSInSection(this)"
                                                         style="width:90%;
                                                         border-radius: 4px;
@@ -1198,37 +1231,105 @@
                                                         Event Relation
                                                     </legend>
 
-                                                    Event<br>
+                                                    Event<br>  
                                                     <select style="width:100%;padding: 0px;
                                                             border-radius: 4px;
+                                                           
                                                             border: 1px solid gray;"
-                                                            class="input_event_type">
+                                                             key='actionType'
+                                                            class="input_event_type inputActionTypeChangeZadSheyOOO">
                                                         <option value="onclick">onclick</option>
                                                         <option value="onchange">onchange</option>
                                                         <option value="ondblclick">ondblclick</option>
                                                     </select><br>
+                                                    <select  key='sectionType' id="liveProActionType" class="inputActionTypeChangeZadSheyOOO">
+                                                        <option value='api'>Call API</option>
+                                                        <option value='toggle'>Toggle</option> 
 
-                                                    Related API<br>
-                                                    <select style="width:80%;padding: 0px;
-                                                            border-radius: 4px;
-                                                            border: 1px solid gray;"
-                                                            class="input_event_related_api">                                                        
                                                     </select>
+                                                    <div class='liveProActionTypeApi liveProActionTypeAll'>
+                                                        Related API<br>
+                                                        <select style="width:80%;padding: 0px;
 
-                                                    <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
-                                                    <br><br>
-                                                    <table style='border: 1px solid #dee2e6; width:100%;'>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Event</th>
-                                                                <th>API</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class='input_event_related_api_table_list_body'>
+                                                                border-radius: 4px;
+                                                                border: 1px solid gray;"
+                                                                data-live-search='true'
+                                                                class="col-12 input_event_related_api">                                                        
+                                                        </select>
 
-                                                        </tbody>
-                                                    </table>
+                                                        <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                                                        <br><br>
+                                                        <table style='border: 1px solid #dee2e6; width:100%;'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Event</th>
+                                                                    <th>API</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class='input_event_related_api_table_list_body'>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class='liveProActionTypeToggle liveProActionTypeAll' style='display:none;'>
+                                                        <div class='liveProActionTypeToggleItem'>
+                                                            IF <select  key='ifKey' id='liveProActionTypeToggleItemIfKey'
+                                                                       class='inputActionTypeChangeZadSheyOOO'>
+                                                                <option value='value'>Value</option>
+                                                                <option value='key'>Key</option>
+                                                               
+                                                            </select>
+                                                            <select  key='ifOperation'  
+                                                                class='inputActionTypeChangeZadSheyOOO'
+                                                                id='liveProActionTypeToggleItemIfOperation'>
+                                                                <option value="=">=</option>
+                                                                <option value="!=">!=</option>
+                                                                <option value=">">&gt;</option>
+                                                                <option value=">=">&gt;=</option>
+                                                                <option value="<">&lt;</option>
+                                                                <option value="<=">&lt;=</option>
+                                                                <option value="in">Contains</option>
+                                                                <option value="notin">Not contains</option>
+                                                            </select>
+                                                            <input  key='ifValue'  id='liveProActionTypeToggleItemIfValue' 
+                                                                   class='inputActionTypeChangeZadSheyOOO'
+                                                                   placeholder='value'>
+                                                            <br>
+                                                            THEN 
+                                                            <select  key='thenAction'  id='liveProActionTypeToggleItemIfActionOperation'
+                                                                     class='inputActionTypeChangeZadSheyOOO'>
+                                                                <option value="show">Show</option>
+                                                                <option value="hide">Hide</option>
+                                                                <option value="disable">Disable</option>
+                                                                <option value="enable">Enable</option>        
+                                                                <option value="callapi">Call API</option> 
+                                                            </select>
+                                                            <input  key='thenClassname' id='liveProActionTypeToggleItemIfThenClassname' 
+                                                                   class='inputActionTypeChangeZadSheyOOO' placeholder='class name'>
+                                                            <select  key='thenApiId' id='liveProActionTypeToggleItemIfThenApiList' 
+                                                                    class='inputActionTypeChangeZadSheyOOO liveProActionTypeToggleItemIfElseThenApiListClass 
+                                                                    liveProActionTypeToggleItemIfThenApiList' style='display:none;'>
+                                                            </select>
+
+                                                            <br>
+                                                            ELSE 
+                                                            <select  key='elseAction'  class='inputActionTypeChangeZadSheyOOO'
+                                                                    id='liveProActionTypeToggleItemIfElseActionOperation'>
+                                                                <option value="show">Show</option>
+                                                                <option value="hide">Hide</option>
+                                                                <option value="disable">Disable</option>
+                                                                <option value="enable">Enable</option>        
+                                                                <option value="callapi">Call API</option> 
+                                                            </select>
+                                                            <input  key='elseClassname'  class='inputActionTypeChangeZadSheyOOO' 
+                                                                   id='liveProActionTypeToggleItemIfElseThenClassname' placeholder='class name'>
+                                                            <select  key='elseApiId'   class='inputActionTypeChangeZadSheyOOO 
+                                                                      liveProActionTypeToggleItemIfElseThenApiListClass liveProActionTypeToggleItemIfElseThenApiList'
+                                                                      id='liveProActionTypeToggleItemIfElseThenApiList' style='display:none;'>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </fieldset>
                                             </div>
 
@@ -1349,7 +1450,7 @@
                                                      id="addComponentSelectBox"
                                                      style=" padding:4px 0px 0px 0px; display:none;">
                                                     <a href="#"data-toggle="modal" data-target="#addRelatedSourceModal"
-                                                       onclick="new UserStory().addRelationSourcedModal(this,'select','21072610414706712718')"
+                                                       onclick="new UserStory().addRelationSourcedModal(this, 'select', '21072610414706712718')"
                                                        class="col-form-label control-label">Select From
                                                         Api </a>
                                                 </div>
@@ -2893,30 +2994,30 @@
         </div>
     </div>
 </div>
-<script src="resource/js/bs4/loadmonaco.js"></script>
+
 
 <script>
-                                                          $(document).ready(function(){
+                                                          $(document).ready(function () {
 
 
 
-                                                          $('#toolbar_cont_drag').draggable({
-                                                          containment: "parent"
-                                                          });
-                                                          $('.ipo_api_card_new').draggable({
-                                                          containment: "parent",
-                                                                  drag: function(event, ui) {
-                                                                  $('.leader-line').remove();
+                                                              $('#toolbar_cont_drag').draggable({
+                                                                  containment: "parent"
+                                                              });
+                                                              $('.ipo_api_card_new').draggable({
+                                                                  containment: "parent",
+                                                                  drag: function (event, ui) {
+                                                                      $('.leader-line').remove();
 //            addHeight()
                                                                   }
-                                                          });
-                                                          $('.ipo_dtb_card_new').draggable({
-                                                          containment: "parent",
-                                                                  drag: function(event, ui) {
-                                                                  $('.leader-line').remove();
+                                                              });
+                                                              $('.ipo_dtb_card_new').draggable({
+                                                                  containment: "parent",
+                                                                  drag: function (event, ui) {
+                                                                      $('.leader-line').remove();
 //            addHeight()
                                                                   }
-                                                          });
+                                                              });
                                                           })
 
 
