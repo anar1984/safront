@@ -7262,6 +7262,41 @@ function deleteInputActionRel(relId) {
     });
 }
 
+function fillRelatedApi4InputEventNew(res) {
+    //    return;
+    var cls = 'ipo-tab-setting-animation'
+    var obj = res.tbl[0].r;
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
+    if (!cls) {
+        select = $('#' + cls).find('select.input_event_related_api');
+    }
+
+    select.html('');
+    select1.html('');
+
+
+    for (var i in obj) {
+        var o = obj[i];
+        if (o.isApi=== '1') {
+            select.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+            select1.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+
+        }
+    }
+
+    sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
+    select.selectpicker('refresh');
+    select1.selectpicker('refresh');
+    $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
+
+}
 function fillRelatedApi4InputEvent(cls) {
     //    return;
 
@@ -12546,7 +12581,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             new UserStory().setUSLists(res);
             var f = true;
-
+           fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];

@@ -2,9 +2,13 @@ var chDashboard = {
        init:function () {
               
               var block = this.genBlockHtml();
-              var content = this.genSinglePanelItem("revan",'6543');
-                   block.append(this.genSinglePanel("test",'tes22',content,"677"));
-                   $("")
+                 var div = $('<div>')
+                   div.append(this.genSinglePanelItem("HHDjsjsjd",'3596'))
+                   div.append(this.genSinglePanelItem("jdjgdfgd",'2564'))
+                   div.append(this.genSinglePanelItem("sdfsdf",'0816'))
+                   div.append(this.genSinglePanelItem("sdfsfsdf",'566'))
+                   block.append(this.genSinglePanel("test",'tes22',div.html(),"677"));
+                   $("#panelSecond1").html(block)
               
        },
        genBlockHtml: function () {
@@ -18,35 +22,36 @@ var chDashboard = {
            
         return $("<div>")
                    .attr("id",id)
-                   .addClass("d-flex col-4 m-2")
+                   .addClass("d-flex col-4 flex-wrap m-2 bg-e4ecf7 rounded")
                    .append($("<div>")
-                               .addClass("header-group col-12 text-center")
-                               .append($('<h3>').append(name)))
+                               .addClass("header-group col-12 p-3  text-center")
+                               .append($('<h3 class="brend-color">').append(name)))
                    .append($("<div>")
-                              .addClass("group-body col-12 d-flex")
+                              .addClass("group-body flex-wrap p-3 col-12 d-flex")
                               .append(content))
-                  .append($("<div>").addClass("footer-group col-12")
+                  .append($("<div>").addClass("footer-group p-2 col-12")
                                     .append($("<div>")
                                                  .addClass('text-center d-inline float-left')
                                                  .append($("<span>")
-                                                              .addClass("brend-color")
+                                                              .addClass("brend-color p-1")
                                                              .append('<i class="fas fa-clipboard-list"></i>'))
                                                   .append($("<span>")
-                                                              .addClass("brend-color")
+                                                              .addClass("brend-color p-1")
                                                              .append(count)))
                                     .append($("<div>")
-                                                .addClass("text-center d-inline")
+                                                .addClass("text-center d-inline p-1 float-right")
                                                  .append('<i class="far fa-window-maximize"></i>')))
 
        },
        genSinglePanelItem: function (itName, count) {
            return $("<div>")
-                       .addClass("col-6 d-flex")
+                       .addClass("col-6 d-flex mt-2")
+                       .css("font-size",'20px')
                        .append($("<div>")
-                                    .addClass("col-9 bg-8ca1c0 brend-color text-left")
+                                    .addClass("col-9 bg-dce3ed brend-color p-0 pl-2 rounded-left text-left")
                                    .append(itName))
                        .append($("<div>")
-                                    .addClass("col-3 brend-color text-center")
+                                    .addClass("col-3 brend-color text-center bg-fff p-0 rounded-right")
                                    .append(count))
        }
        
