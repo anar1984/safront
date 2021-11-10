@@ -27987,3 +27987,24 @@ function setColoredToInputDesc(el, ids, color) {
         }
     });
 }
+
+$(document).on("change", "#user-story-status", function (e) {
+    $('.all-cs-status span').removeClass();
+    var cs_status_select = $('#user-story-status').val();
+
+    run_status = cs_status_select;
+    switch (run_status) {
+            case 'new':
+                class_status = 'new';
+            break;
+            case 'ongoing':
+                class_status = 'ongoing';
+            break;
+            case 'closed':
+                class_status = 'closed';
+            break;
+        }
+        if (class_status){
+             $('.all-cs-status span').addClass("s-status cs-status-" + class_status);
+        }
+});
