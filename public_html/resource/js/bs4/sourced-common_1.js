@@ -19342,6 +19342,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
+        
+        $('.all-cs-status span').removeClass();
+        var def_status_select = $('#user-story-status').val();
+        $('.all-cs-status span').addClass("s-status cs-status-" + def_status_select);
+
         $('#user-story-priority').val(SACore.GetCurrentBaklogPriority()).selectpicker('refresh');
         $('#user-story-est-hours').val(SACore.GetCurrentBaklogEstimatedHours());
         $('#user-story-description').val(SACore.GetCurrentBaklogDescription());
@@ -19354,6 +19359,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-apirequesttype').val(SACore.GetCurrentBaklogApiSyncRequest());
         $('.user-story-is-shared').val(SACore.GetCurrentBaklogIsShared());
         $('.user-story-run-in-backend').val(SACore.GetBacklogDetails(global_var.current_backlog_id, "runInBackend"));
+        $('#user-story-apiaction').selectpicker('refresh');
+        $('#user-story-apirequesttype').selectpicker('refresh');
 
         if (SACore.GetCurrentBaklogShowPrototype() === '1') {
             $('#user-story-show-prototype').prop("checked", true);

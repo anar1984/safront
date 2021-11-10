@@ -1,45 +1,50 @@
-<div class="row header-userName" style="background-color: #f7f7f7;padding-bottom: 15px;">
-    <div class="col-1">
-
-    </div>
-    <div class="col-4">
-        <span>Project</span>
-        <select onchange="loadStoryCardByProject4StoryCard(this)" class="form-control projectList_liveprototype_storycard" 
+<div class="d-flex justify-content-center storecard-header-nav-section">
+   
+    <div class="d-flex justify-content-center cs-col-project">
+        <div class="mm-col">
+            <span class="mm-title">Project</span>
+        </div>
+        <div class="mm-col">
+            <select onchange="loadStoryCardByProject4StoryCard(this)" class="form-control projectList_liveprototype_storycard" 
                 data-live-search="true" name="" id="">
         </select>
+        </div>
     </div>
-    <div class="col-4">
-        <span>Story Card</span>
-        <select class="form-control"  onchange="loadStoryCardInfo4StoryCard(this)"
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Story Card</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control"  onchange="loadStoryCardInfo4StoryCard(this)"
                 name="" data-live-search="true" id="storyCardListSelectBox4StoryCard">
         </select>
+        </div>
     </div>
-    <!--    <div class="col-4 text-center">
-            <p id="generalview-us-header-name" ondblclick="new UserStory().username_editable(this, event)" iname="Create Payment" >User Story Name</p>
-        </div>-->
 
-    <div class="col-3 text-right copy-move-print">
-        <button class="btn newin dropdown-toggle fa fa-ellipsis-h" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>
-        <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
-            <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Story Card</a></button>  <!-- 20.08.2020 -->
-            <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
-            <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()"><a href="#" >Save as PDF</a></button>
-            <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()"> <a href="#" >Copy URL</a></button>
-            <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralPrototypeView()" ><a href="#" >Copy Prototype URL</a></button>
-            <button class="dropdown-item firstbut " id="shareGeneralView" pid="20042316073405409986" bid="20071210041301137431" lid="" onclick="new UserStory().shareGeneralView(this)" d="backlog"><a href="#" >View Story Card</a></button>
-            <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
-            <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
-            <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
-            <hr style="margin: 4px 0px;"> 
-            <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Export</a></button>
-            <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox"><a href="#" >Copy</a></button>
-            <button class="dropdown-item firstbut " id="ImportView" data-toggle="modal" data-target="#ImportBox"><a href="#" >Import</a></button>
-            <button class="dropdown-item firstbut " id="HiostoryView" ><a href="#" >History</a></button>
-         
-            <hr style="margin: 4px 0px;">
-            <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid=""  onclick="new UserStory().delete()"><a href="#" >Delete</a></button>
-            <br>
-            <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
+    <div class="cs-col-storecard-general-setting" style="display: none;">
+        <div class="copy-move-print">
+            <button class="btn newin dropdown-toggle fa fa-ellipsis-h" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>
+            <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
+                <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Story Card</a></button>  <!-- 20.08.2020 -->
+                <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
+                <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()"><a href="#" >Save as PDF</a></button>
+                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()"> <a href="#" >Copy URL</a></button>
+                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralPrototypeView()" ><a href="#" >Copy Prototype URL</a></button>
+                <button class="dropdown-item firstbut " id="shareGeneralView" pid="20042316073405409986" bid="20071210041301137431" lid="" onclick="new UserStory().shareGeneralView(this)" d="backlog"><a href="#" >View Story Card</a></button>
+                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
+                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
+                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
+                <hr style="margin: 4px 0px;"> 
+                <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Export</a></button>
+                <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox"><a href="#" >Copy</a></button>
+                <button class="dropdown-item firstbut " id="ImportView" data-toggle="modal" data-target="#ImportBox"><a href="#" >Import</a></button>
+                <button class="dropdown-item firstbut " id="HiostoryView" ><a href="#" >History</a></button>
+            
+                <hr style="margin: 4px 0px;">
+                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid=""  onclick="new UserStory().delete()"><a href="#" >Delete</a></button>
+                <br>
+                <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
+            </div>
         </div>
     </div>
 </div>
@@ -345,8 +350,8 @@
         </div>
         <div class="storecard-sidebarin">
             <div class="col-12">
-                <div class="cs-forum-group">
-                    <label class="cs-label-name">Status <span class="s-status cs-status-new"></span></label>
+                <div class="cs-forum-group pt-4">
+                    <label class="cs-label-name all-cs-status">Status <span class="s-status cs-status-new"></span></label>
                     <select class="user-status user-story-short-change" data-type="backlogStatus" id="user-story-status">
                         <option value="new"  selected>New</option>
                         <option value="ongoing">Ongoing</option>
@@ -355,9 +360,12 @@
                 </div>
             </div>
             <div class="col-12">
+                <hr class="hr-ss">
+            </div>
+            <div class="col-12">
                 <div class="row">
                     <div class="cs-forum-group col-6">
-                        <label class="cs-label-name">Priority <span class="s-status cs-status-new"></span></label>
+                        <label class="cs-label-name">Priority </label>
                         <select  class="user-story-short-change user-priority" id="user-story-priority" data-type="priority">
                             <option value="1" selected>Priority</option>
                             <option value="2"  >2</option>
@@ -371,7 +379,7 @@
                         </select>
                       </div>
                     <div class="cs-forum-group col-6">
-                        <label class="cs-label-name">Attach File <span class="s-status cs-status-new"></span></label>
+                        <label class="cs-label-name">Attach File </label>
                         <a href="#" class="cs-attach-a attachA" data-toggle="modal" data-target="#setStoryCardUploadImageModal" onclick="new UserStory().setStoryCardUploadImage()">
                             <i  class="fa fa-paperclip attach" aria-hidden="true"></i><span>Choose file</span>
                         </a>
@@ -379,51 +387,108 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="cs-forum-group">
-                            <label class="cs-label-name">Description <span class="s-status cs-status-new"></span></label>
+                        <div class="cs-forum-group mt-3">
+                            <label class="cs-label-name">Description</label>
                             <div class="cs-textarea">      
                                 <textarea rows='4' type="number" id="user-story-description" class="form-control user-story-short-change" data-type="description" step=any required></textarea>           
                             </div>
                         </div>
                     </div>
                 </div>
+               
             </div>
 
             <!-- switch on off  -->
             <div class="prototype-on-off col-12">
-                <h3>Is API</h3>
-                <label class="switch prototype-cls">
-                    <input type="checkbox" id="user-story-is-api" class="user-story-prototype-change1">
-                    <span class="slider round hide-off is-api-switch"></a></span>
-                </label>
+                <div>
+                    <h3>Is API</h3>
+                </div>
+                <div>
+                    <label class="switch prototype-cls">
+                        <input type="checkbox" id="user-story-is-api" class="user-story-prototype-change1">
+                        <span class="slider round hide-off is-api-switch"></a></span>
+                    </label>
+                </div>
             </div>
-        
-        
+            <!-- Finaly switch on off  -->
+
+            <div class="col-12">
+                <hr class="hr-ss">
+            </div>
+            
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6 is-api-dependence-verse cs-forum-group">
+                        <label class="cs-label-name">API Action</label>
+                        <select class="user-status user-story-short-change" data-type="apiAction" id="user-story-apiaction">
+                            <option value="-1"  selected >Container</option>
+                            <option value="C">Create</option>
+                            <option value="R">Read</option>
+                            <option value="U">Update</option>
+                            <option value="D">Delete</option>
+                        </select>
+                    </div>
+                
+                    <div class="col-6 is-api-dependence-verse cs-forum-group">
+                        <label class="cs-label-name">API Request Type </label>
+                        <select class="user-status user-story-short-change" data-type="apiSyncRequest" id="user-story-apirequesttype">
+                            <option value="sync"  selected >Synchronize</option>
+                            <option value="async">Asynchronize</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3 is-api-dependence-verse">
+                
+                    <div class="col-6">
+                        <div class="cs-forum-group">
+                            <input type="submit" class="btn btn-primary" onclick="runApiOnStoryCard()" value="Run API" accept=""id="user-story-execute" class="user-story-short-change">
+                        </div>    
+                    </div>
+                    <div class="col-6">      
+                        <div class="cs-forum-group">
+                            <input type="submit" class="btn btn-primary" onclick="testApiOnStoryCard()" value="Test API" accept=""id="user-story-execute" class="user-story-short-change">
+                        </div> 
+                    </div>
+                </div>
+            </div>
+                
             <div class="prototype-on-off col-12 is-api-dependence">
-                <h3>Show Prototype</h3>
-                <label class="switch prototype-cls">
-                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change">
-                    <span class="slider round hide-off live-prototype-switch"></a></span>
-        
-                </label>
+                <div>
+                    <h3>Show Prototype</h3>
+                </div>
+                <div>
+                    <label class="switch prototype-cls">
+                        <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change">
+                        <span class="slider round hide-off live-prototype-switch"></a></span>
+            
+                    </label>
+                </div>
             </div>
         
             <div class="prototype-on-off col-12  ">
-                <h3>Share for Projects</h3>
-                <label class="switch prototype-cls">
-                    <input type="checkbox" id="user-story-is-shared" class="user-story-is-shared">
-                    <span class="slider round hide-off is-shared-switch"></a></span>
-        
-                </label>
+                <div>
+                    <h3>Share for Projects</h3>
+                </div>
+                <div>
+                    <label class="switch prototype-cls">
+                        <input type="checkbox" id="user-story-is-shared" class="user-story-is-shared">
+                        <span class="slider round hide-off is-shared-switch"></a></span>
+            
+                    </label>
+                </div>
             </div>
         
             <div class="prototype-on-off col-12  ">
-                <h3>Run in Backend</h3>
-                <label class="switch prototype-cls">
-                    <input type="checkbox" id="user-story-run-in-backend" class="user-story-run-in-backend">
-                    <span class="slider round hide-off  run-in-backend-switch"></a></span>
-        
-                </label>
+                <div>
+                    <h3>Run in Backend</h3>
+                </div>
+                <div>
+                    <label class="switch prototype-cls">
+                        <input type="checkbox" id="user-story-run-in-backend" class="user-story-run-in-backend">
+                        <span class="slider round hide-off  run-in-backend-switch"></a></span>
+            
+                    </label>
+                </div>
             </div>    
         
                 
@@ -432,201 +497,195 @@
             <span><b>Hour(s) Spent:</b></span> <span style="font-size: 14px;color: #727d91;" id="generalview_spenthours"
                  class="us-priority"></span>
             </div> -->
-        
-            <div class="groups col-12 is-api-dependence-verse">
-        
-        
-                <div class="group">      
-                    <input type="submit" class="btn btn-light" 
-                           onclick="runApiOnStoryCard()" value="Run API" accept=""id="user-story-execute" class="user-story-short-change">
-        
-                </div>
-                <div class="group">      
-                    <input type="submit" class="btn btn-light" 
-                           onclick="testApiOnStoryCard()" value="Test API" accept=""id="user-story-execute" class="user-story-short-change">
-        
-                </div>
+            
+            <div class="col-12">
+                <hr class="hr-ss">
             </div>
         
-        
-            <div class="groups col-12">
-        
-                <div class="group">      
-                    <input type="number" id="user-story-est-hours" class="user-story-short-change" data-type="estimatedHours" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Estimated hour(s)</label>
-                </div>
-                <div class="group">      
-                    <input type="number" id="user-story-spent-hours" class="user-story-short-change" data-type="spentHours" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Hour(s) Spent</label>
-                </div>
-            </div>
-        
-        
-            <div class="col-12 Assigne-card-story1" style="z-index: 1000;">
-        
-                <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Created By</span>
-        
+            <div class="cs-forum-group col-12 Assigne-card-story1" style="z-index: 1000;">
+                <label class="cs-label-name">Created By </label>
                 <div class="Assigne-card-story-select form-control">
                     <div id='story-card-createdby'>
                         <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
                         <span id='story-card-createdby-name' class="Assigne-card-story-select-name">Unassigned</span>
                     </div>
-        
-        
-                </div>
+               </div>
             </div>
-        
-        
-            <div class="col-12 Assigne-card-story" style="z-index: 1000;">
-        
-        
-                <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Owner  </span>
-        
+            
+            <div class="cs-forum-group col-12 Assigne-card-story" style="z-index: 1000;">
+                <label class="cs-label-name">Owner </label>
                 <div class="Assigne-card-story-select form-control">
                     <div id='story-card-owner'>
                         <img id='story-card-owner-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
                         <span id='story-card-owner-name' class="Assigne-card-story-select-name">Unassigned</span>
                     </div>
                     <input type="search" class="Assigne-card-story-search form-control" >
-        
                     <div class="Assigne-card-story-select-content " id='story-card-owner-list'>
-        
                     </div>
-        
                 </div>
             </div>
-        
-        
-        
+                
             <div class="col-12">
-                <br>
-        
-                <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">Related Issue(s)</span>
-                <br>
-        
-        
-                <b pid="20112612464604063033"  
-                   class="task-for-backlog-event stat_group_title" 
-                   action='overall' status='total'
-                   style="cursor: pointer;">Total-<span id="backlog-task-stat-overall" class="xpclear" >0</span></b>
-                <div style="font-size:12px;">
-                    <span class="task-for-backlog-event us-item-status-new"   action='overall' status='new'>new</span>-<span id="backlog-task-stat-overall-new" class="xpclear" >0</span> &nbsp;
-                    <span class="task-for-backlog-event   us-item-status-ongoing"   action='overall' status='ongoing'>ongoing</span>-<span id="backlog-task-stat-overall-ongoing" class="xpclear" >0</span> &nbsp;
-                    <span class="task-for-backlog-event us-item-status-closed"   action='overall' status='closed'>closed</span>-<span id="backlog-task-stat-overall-closed" class="xpclear" >0</span>
-                </div>
-        
-                <b pid="20112612464604063033"  class="task-for-backlog-event stat_group_title" 
-                   action='bug' status='total'
-                   style="cursor: pointer;">Bug-<span id="backlog-task-stat-bug" class="xpclear" ></span></b>
-                <div style="font-size:12px;">
-                    <span class="task-for-backlog-event us-item-status-new"   action='bug' status='new'>new  </span>-<span  id="backlog-task-stat-bug-new" class="xpclear" >8</span> &nbsp;
-                    <span class="task-for-backlog-event   us-item-status-ongoing"   action='bug' status='ongoing'>ongoing</span >-<span  id="backlog-task-stat-bug-ongoing" class="xpclear" >0</span> &nbsp;
-                    <span class="task-for-backlog-event us-item-status-closed"   action='bug' status='closed'>closed</span>-<span id="backlog-task-stat-bug-closed" class="xpclear" >0</span>
-                </div>
-        
-                <b pid="20112612464604063033"  
-                   action='new' status='total'
-                   class="task-for-backlog-event stat_group_title" 
-                   style="cursor: pointer;">New Request-<span id="backlog-task-stat-new" class="xpclear" ></span></b>
-                <div style="font-size:12px;">
-                    <span class="task-for-backlog-event us-item-status-new" action='new' status='new'>new</span>-<span  id="backlog-task-stat-new-new" class="xpclear" >8</span> &nbsp;
-                    <span class="task-for-backlog-event   us-item-status-ongoing" action='new' status='ongoing'>ongoing</span>-<span  id="backlog-task-stat-new-ongoing" class="xpclear" >0</span> &nbsp;
-                    <span class="task-for-backlog-event us-item-status-closed" action='new' status='closed' >closed</span>-<span  id="backlog-task-stat-new-closed" class="xpclear" >0</span>
-                </div>
-        
-                <b pid="20112612464604063033"  
-                   class="task-for-backlog-event stat_group_title" 
-                   action='change' status='total'
-                   style="cursor: pointer;">Change Request-<span  class="xpclear" id="backlog-task-stat-change"></span></b>
-                <div style="font-size:12px;">
-                    <span class="task-for-backlog-event us-item-status-new" action='change' status='new'>new</span>-<span class="xpclear"   id="backlog-task-stat-change-new">8</span> &nbsp;
-                    <span class="task-for-backlog-event   us-item-status-ongoing" action='change' status='ongoing'>ongoing</span>-<span  class="xpclear"  id="backlog-task-stat-change-ongoing">0</span> &nbsp;
-                    <span class="task-for-backlog-event us-item-status-closed" action='change' status='closed'>closed</span>-<span  class="xpclear" id="backlog-task-stat-change-closed">0</span>
-                </div>
-        
-        
-        
-        
+                <div class="cs-forum-group mt-3">
+                  <label class="cs-label-name">Related Issue(s) </label>
+                    <div class="checkout-related-issues">
+                            <b pid="20112612464604063033" class="cs-all-task task-for-backlog-event stat_group_title mt-2" 
+                            action='overall' status='total'
+                            style="cursor: pointer;">Total-<span id="backlog-task-stat-overall" class="xpclear" >0</span></b>
+                        <div class="task-fbe-box">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-overall-new" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-new" action='overall' status='new'>new</span>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-overall-ongoing" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-ongoing" action='overall' status='ongoing'>ongoing</span>
+                                </div>
+    
+                                 <div class="col-4">
+                                    <div id="backlog-task-stat-overall-closed" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-closed" action='overall' status='closed'>closed</span>
+                                 </div>
+                            </div>
+                        </div>
+                
+                        <b pid="20112612464604063033"  class="cs-all-task task-for-backlog-event stat_group_title" 
+                            action='bug' status='total'
+                            style="cursor: pointer;">Bug-<span id="backlog-task-stat-bug" class="xpclear" ></span></b>
+                        <div class="task-fbe-box">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-bug-new" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-new" action='bug' status='new'>new</span>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-bug-ongoing" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-ongoing" action='bug' status='ongoing'>ongoing</span>
+                                </div>
+    
+                                 <div class="col-4">
+                                    <div id="backlog-task-stat-bug-closed" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-closed" action='bug' status='closed'>closed</span>
+                                 </div>
+                            </div>
+
+
+                            <!-- <span class="task-for-backlog-event us-item-status-new"   action='bug' status='new'>new  </span>-<span  id="backlog-task-stat-bug-new" class="xpclear" >8</span> &nbsp;
+                            <span class="task-for-backlog-event   us-item-status-ongoing"   action='bug' status='ongoing'>ongoing</span >-<span  id="backlog-task-stat-bug-ongoing" class="xpclear" >0</span> &nbsp;
+                            <span class="task-for-backlog-event us-item-status-closed"   action='bug' status='closed'>closed</span>-<span id="backlog-task-stat-bug-closed" class="xpclear" >0</span> -->
+                        </div>
+                
+                        <b pid="20112612464604063033"  
+                            action='new' status='total'
+                            class="cs-all-task task-for-backlog-event stat_group_title" 
+                            style="cursor: pointer;">New Request-<span id="backlog-task-stat-new" class="xpclear" ></span></b>
+                        <div class="task-fbe-box">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-new-new" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-new" action='new' status='new'>new</span>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-new-ongoing" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-ongoing" action='new' status='ongoing'>ongoing</span>
+                                </div>
+    
+                                 <div class="col-4">
+                                    <div id="backlog-task-stat-new-closed" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-closed" action='new' status='closed'>closed</span>
+                                 </div>
+                            </div>
+
+
+                            <!-- <span class="task-for-backlog-event us-item-status-new" action='new' status='new'>new</span>-<span  id="backlog-task-stat-new-new" class="xpclear" >8</span> &nbsp;
+                            <span class="task-for-backlog-event   us-item-status-ongoing" action='new' status='ongoing'>ongoing</span>-<span  id="backlog-task-stat-new-ongoing" class="xpclear" >0</span> &nbsp;
+                            <span class="task-for-backlog-event us-item-status-closed" action='new' status='closed' >closed</span>-<span  id="backlog-task-stat-new-closed" class="xpclear" >0</span> -->
+                        </div>
+                
+                        <b pid="20112612464604063033"  
+                            class="cs-all-task task-for-backlog-event stat_group_title" 
+                            action='change' status='total'
+                            style="cursor: pointer;">Change Request-<span  class="xpclear" id="backlog-task-stat-change"></span></b>
+                        <div class="task-fbe-box">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-change-new" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-new" action='change' status='new'>new</span>
+                                </div>
+                                
+                                <div class="col-4">
+                                    <div id="backlog-task-stat-change-ongoing" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-ongoing" action='change' status='ongoing'>ongoing</span>
+                                </div>
+    
+                                 <div class="col-4">
+                                    <div id="backlog-task-stat-change-closed" class="xpclear btso-title-name" >0</div>
+                                    <span class="task-for-backlog-event us-item-status-closed" action='change' status='closed'>closed</span>
+                                 </div>
+                            </div>
+                            <!-- <span class="task-for-backlog-event us-item-status-new" action='change' status='new'>new</span>-<span class="xpclear"   id="backlog-task-stat-change-new">8</span> &nbsp;
+                            <span class="task-for-backlog-event   us-item-status-ongoing" action='change' status='ongoing'>ongoing</span>-<span  class="xpclear"  id="backlog-task-stat-change-ongoing">0</span> &nbsp;
+                            <span class="task-for-backlog-event us-item-status-closed" action='change' status='closed'>closed</span>-<span  class="xpclear" id="backlog-task-stat-change-closed">0</span> -->
+                        </div>
+                   </div>
+                </div>                
             </div>
         
-            <div class="col-12 is-api-dependence-verse">
-                <!-- <span style="font-size: 14px;color: #727d91;" id="generalview_status" class="us-item-status-new"></span> -->
-        
-                <!-- status -->
-                <br>
-                <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">API Action</span><br>
-                <select class="browser-default custom-select user-status user-story-short-change"
-                        data-type="apiAction"
-                        id="user-story-apiaction">
-        
-                    <option value="-1"  selected >Container</option>
-                    <option value="C">Create</option>
-                    <option value="R">Read</option>
-                    <option value="U">Update</option>
-                    <option value="D">Delete</option>
-        
-                </select>
-        
-        
-            </div>
-        
-            <div class="col-12 is-api-dependence-verse">
-                <!-- <span style="font-size: 14px;color: #727d91;" id="generalview_status" class="us-item-status-new"></span> -->
-        
-                <!-- status -->
-                <br>
-                <span  style="font-size: 12px;color: rgb(23, 43, 77);  font-weight: 600;">API Request Type</span><br>
-                <select class="browser-default custom-select user-status user-story-short-change"
-                        data-type="apiSyncRequest"
-                        id="user-story-apirequesttype">
-                    <option value="sync"  selected >Synchronize</option>
-                    <option value="async">Asynchronize</option>
-        
-        
-                </select>
-        
-        
-            </div>
-            <div class="right-menu-description col-12" >
-        
-        
-                <div  id="storycard_dependentapi"><span><b>Dependencies</b></span> <br><span
-                        id="storycard_dependentapi_span" class="1us1-priority" style="font-size:11px;"></span></div>
-            </div>
-        
-            <div class="groups col-12">
-        
-                <div class="group">      
-                    <input type="number" id="user-story-est-counter" class="user-story-short-change" data-type="estimatedCounter" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Estimated Counter(s)</label>
-                </div>
-                <div class="group">      
-                    <input type="number" id="user-story-executed-counter" class="user-story-short-change" data-type="executedCounter" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Executed Counter(s)</label>
-                </div>
-        
-        
-                <div class="group">      
-                    <input type="number" id="user-story-est-budget" class="user-story-short-change" data-type="estimatedBudget" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Estimated Budget</label>
-                </div>
-                <div class="group">      
-                    <input type="number" id="user-story-spent-budget" class="user-story-short-change" data-type="spentBudget" step=any required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Spent Budget</label>
+            
+            <div class="right-menu-description col-12 mt-3">
+                <div id="storycard_dependentapi" class="cs-forum-group">
+                    <label class="cs-label-name">Dependencies </label> 
+                    <span id="storycard_dependentapi_span" class="1us1-priority" style="font-size:11px;"></span>
                 </div>
             </div>
+
+            <div class="col-12">
+                <div class="row mt-3">
+                    <div class="col-6 cs-forum-group">
+                        <label class="cs-label-name">Estimated hour(s) </label> 
+                        <input type="number" id="user-story-est-hours" class=" cs-input user-story-short-change" data-type="estimatedHours" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="col-6 cs-forum-group">
+                        <label class="cs-label-name">Hour(s) Spent </label> 
+                        <input type="number" id="user-story-spent-hours" class="cs-input user-story-short-change" data-type="spentHours" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="col-6 cs-forum-group"> 
+                        <label class="cs-label-name">Estimated Counter(s)</label>      
+                        <input type="number" id="user-story-est-counter" class="cs-input user-story-short-change" data-type="estimatedCounter" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="col-6 cs-forum-group">   
+                        <label class="cs-label-name">Executed Counter(s)</label>       
+                        <input type="number" id="user-story-executed-counter" class="cs-input user-story-short-change" data-type="executedCounter" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+            
+            
+                    <div class="col-6 cs-forum-group">
+                        <label class="cs-label-name">Estimated Budget </label>          
+                        <input type="number" id="user-story-est-budget" class="cs-input user-story-short-change" data-type="estimatedBudget" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="col-6 cs-forum-group">
+                        <label class="cs-label-name">Spent Budget </label>          
+                        <input type="number" id="user-story-spent-budget" class="cs-input user-story-short-change" data-type="spentBudget" step=any required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                </div>
+            </div>
+        
         
         
             <div class="right-menu-description col-12" >

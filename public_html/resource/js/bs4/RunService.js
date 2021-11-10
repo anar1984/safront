@@ -130,9 +130,25 @@ $(document).on("change", "#run_service_intensive_select", function (e) {
                 var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
                 $('#hide_actions_param').val(days_before_last_day_of_month);
             }
+            if($('#specific_weekday_of_month').is(':checked')) {
+                $('#hide_actions').val('');
+                $('#hide_actions_param').val('');
+                
+                $('#hide_actions').val('specific_weekday_of_month');
+                var swofm_a1 = $('#swofm_fl_action_select').val();
+                var swofm_a2 = $('#swofm_weekday_select').val();
+                $('#hide_actions_param').val(swofm_a1 + '_' + swofm_a2);
+            }
   
         }
         
+});
+
+$(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", function (e) {
+    $('#hide_actions_param').val('');
+    var swofm_a1 = $('#swofm_fl_action_select').val();
+    var swofm_a2 = $('#swofm_weekday_select').val();
+    $('#hide_actions_param').val(swofm_a1 + '_' + swofm_a2);
 });
 
 $(document).on("change", "#run_service_weekday_select", function (e) {
