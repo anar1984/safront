@@ -17751,7 +17751,7 @@ User.prototype = {
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
             type: "POST",
             data: data,
-            async: true,
+            async: false,
             contentType: 'text/html',
             success: function (res) {
                 var img = (res.tbl[0].r[0].userImage)
@@ -17762,6 +17762,7 @@ User.prototype = {
                 $('#myAccountModal_txtUsername').val((res.tbl[0].r[0].username));
                 $('#myAccountModal_txtUserFulname').val((res.tbl[0].r[0].userPersonName));
                 $('#myAccountModal_txtUserEmail').val((res.tbl[0].r[0].email1));
+                global_var.current_domain = res.kv.currentDomain;
             },
             error: function () {
 //                alert("Something went wrong. This might be caused by duplicate table.");
@@ -17790,6 +17791,8 @@ User.prototype = {
                 global_var.current_user_type = res.tbl[0].r[0].liUserPermissionCode;
                 Utility.addParamToUrl('current_user_type', global_var.current_user_type);
                 that.removeTagsByPermission();
+                
+                
             },
             error: function () {
 //                alert("Something went wrong. This might be caused by duplicate table.");

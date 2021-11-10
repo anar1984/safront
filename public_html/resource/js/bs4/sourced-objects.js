@@ -1145,10 +1145,12 @@ var SACore = {
         return this.GetDescriptionSourced(global_var.current_backlog_id);
     },
     GetBacklogname: function (backlogId) {
+        loadBacklogDetailsByIdIfNotExist(backlogId)
         var res = "";
         try {
             res = this.Backlogs[backlogId]['backlogName'];
             res = replaceTag(res);
+            
         } catch (err) {
         }
         return res;

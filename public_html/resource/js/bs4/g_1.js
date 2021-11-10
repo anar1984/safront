@@ -1591,7 +1591,7 @@ $(document).on('click', '.more-us-card-btn', function (event) {
 });
 $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     var bgid = $(this).parents('.task-content').attr("bid")
-    var prId = $("#story_mn_filter_project_id").val();
+    var prId = getProjectIdOfBacklog(bgid);//$("#story_mn_filter_project_id").val();
     $("#bug_filter_project_id_add").val(prId).change();
     $("#bug_filter_backlog_id_add").val(bgid).change();
     var dwlmt = $('#bug_task_type_id_add')

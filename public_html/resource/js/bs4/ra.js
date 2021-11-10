@@ -4,10 +4,165 @@
  * and open the template in the editor.
  */
 
+$(document).on('change', '#liveProActionType', function (ev) {
+    var val = $(this).val();
+    $('.liveProActionTypeAll').hide();
+    if (val === 'api') {
+        $('.liveProActionTypeApi').show();
+    } else if (val === 'toggle') {
+        $('.liveProActionTypeToggle').show();
+    }
+});
+
+$(document).on('change', '#liveProActionTypeToggleItemIfActionOperation', function (ev) {
+    var val = $(this).val();
+
+    if (val === 'callapi') {
+        $('#liveProActionTypeToggleItemIfThenApiList').show();
+        $('#liveProActionTypeToggleItemIfThenClassname').hide();
+    } else {
+        $('#liveProActionTypeToggleItemIfThenApiList').hide();
+        $('#liveProActionTypeToggleItemIfThenClassname').show();
+    }
+});
 
 
+$(document).on('change', '#liveProActionTypeToggleItemIfElseActionOperation', function (ev) {
+    var val = $(this).val();
+
+    if (val === 'callapi') {
+        $('#liveProActionTypeToggleItemIfElseThenApiList').show();
+        $('#liveProActionTypeToggleItemIfElseThenClassname').hide();
+    } else {
+        $('#liveProActionTypeToggleItemIfElseThenApiList').hide();
+        $('#liveProActionTypeToggleItemIfElseThenClassname').show();
+    }
+});
 
 
+$(document).on('change', '.inputActionTypeChangeZadSheyOOO', function (ev) {
+    updateCurrentInput4ShortChanges(this);
+});
+
+$(document).on('change', '.hasInputManualEventActionChange', function (ev) {
+    var inputId = $(this).attr('pdid');
+    var ifKey = SAInput.getInputDetails(inputId, 'ifKey');
+    var coreKey = $(this).val();
+    if (ifKey === 'key') {
+        coreKey = $(this).find('option:selected').text();
+    }
+
+    var ifOperation = SAInput.getInputDetails(inputId, 'ifOperation');
+    var ifValue = SAInput.getInputDetails(inputId, 'ifValue');
+    var thenAction = SAInput.getInputDetails(inputId, 'thenAction');
+    var thenClassname = SAInput.getInputDetails(inputId, 'thenClassname');
+    var thenApiId = SAInput.getInputDetails(inputId, 'thenApiId');
+    var elseAction = SAInput.getInputDetails(inputId, 'elseAction');
+    var elseClassname = SAInput.getInputDetails(inputId, 'elseClassname');
+    var elseApiId = SAInput.getInputDetails(inputId, 'elseApiId');
+
+
+    ifOperation = ifOperation.replace(/ /g, '');
+    var operation = ifOperation.toLowerCase();
+
+    var value = ifValue;
+    var key = coreKey;
+
+    key = key.trim();
+    value = value.trim();
+
+    var operRes = false;
+
+    if (operation === '=') {
+        operRes = (key === value)
+    } else if (operation === '!=') {
+        operRes = (key !== value)
+    } else if (operation === '>') {
+        operRes = (parseFloat(key) > parseFloat(value));
+    } else if (operation === '>') {
+        operRes = (parseFloat(key) > parseFloat(value));
+    } else if (operation === '<') {
+        operRes = (parseFloat(key) < parseFloat(value));
+    } else if (operation === '>=' || operation === '=>') {
+        operRes = (parseFloat(key) >= parseFloat(value));
+    } else if (operation === '<=' || operation === '=<') {
+        operRes = (parseFloat(key) <= parseFloat(value));
+    } else if (operation === 'in') {
+        operRes = (key.includes(value));
+    } else if (operation === 'notin') {
+        operRes = (!key.includes(value));
+    }
+
+
+    if (operRes) {
+        switch (thenAction) {
+            case 'hide':
+                $('.' + thenClassname).hide();
+                break;
+            case 'show':
+                $('.' + thenClassname).show();
+                break;
+            case 'disable':
+                $('.' + thenClassname).attr('disabled', true);
+                $('.' + thenClassname).attr('readonly', true);
+                break;
+            case 'enable':
+                $('.' + thenClassname).removeAttr('disabled');
+                $('.' + thenClassname).removeAttr('readonly');
+                break;
+            case 'callapi':
+                if (thenApiId) {
+                    triggerAPI(this, thenApiId)
+                }
+                break;
+
+            default:
+                var t = 1;
+        }
+    } else {
+        switch (elseAction) {
+            case 'hide':
+                $('.' + elseClassname).hide();
+                break;
+            case 'show':
+                $('.' + elseClassname).show();
+                break;
+            case 'disable':
+                $('.' + elseClassname).attr('disabled', true);
+                $('.' + elseClassname).attr('readonly', true);
+                break;
+            case 'enable':
+                $('.' + elseClassname).removeAttr('disabled');
+                $('.' + elseClassname).removeAttr('readonly');
+                break;
+            case 'callapi':
+                if (elseApiId) {
+                    triggerAPI(this, elseApiId)
+                }
+                break;
+
+            default:
+                var t = 1;
+        }
+    }
+
+
+});
+
+
+$(document).on('dblclick', '.hasInputManualEventActionDblClick', function (ev) {
+    alert('dblclick')
+});
+
+$(document).on('click', '.hasInputManualEventActionClick', function (ev) {
+    alert('click')
+});
+
+function updateCurrentInput4ShortChanges(el) {
+    var inputId = global_var.current_us_input_id;
+    var ustype = $(el).attr('key');
+    updateInput4SC(inputId, el, ustype);
+}
 
 $(document).on('focusout', '.okayPitchYourPathYourWay', function (ev) {
     $(this).css('width', '20px');
@@ -285,7 +440,7 @@ function triggerApiDebugMode4ApiOutput(el, selectedField) {
         return;
     }
 
-     highlightOutputFieldsForTriggerApi(el, selectedField);
+    highlightOutputFieldsForTriggerApi(el, selectedField);
 
 }
 
@@ -388,4 +543,108 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+
+function setBacklogAsHtml(backlogId) {
+    if (!backlogId) {
+        return;
+    }
+
+    var resTmp = SAInput.toJSONByBacklog(backlogId);
+    var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+
+
+    var json = initJSON();
+    json.kv.fkBacklogId = backlogId;
+    json.kv.backlogHtml = html;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmsetBacklogAsHtml",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
+}
+
+
+
+function getBacklogAsHtml(bid1, isAsync) {
+    var out = '';
+    var async = (isAsync) ? isAsync : false;
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+    if (!bid)
+        return out;
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/html/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: async,
+        success: function (res) { 
+            out = res;
+            if (out.length === 0) {
+                setBacklogAsHtml(bid);
+            }
+        }
+    });
+
+    return out;
+
+}
+
+
+function initZadShey(projectId){
+//  alert('hole hole hoel')
+    $('#kelbetin2').after($('<script>').attr('src',urlGl+'api/get/script/js/'+global_var.current_domain +"/"+projectId+'.js'))
+   $('#kelbetin').after($('<link>')
+           .attr('rel','stylesheet')
+           .attr('href',urlGl+'api/get/script/css/'+global_var.current_domain+"/"+projectId+'.css'))
+  
+}
+
+
+function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+             
+
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi !== '1') {
+                      setBacklogAsHtml(o.id);  
+                  
+                }  
+
+            }
+
+            //            cmd.val(global_var.current_backlog_id);
+             
+
+        }
+    });
 }

@@ -5010,7 +5010,8 @@ UserStory.prototype = {
                                                 <i class="fas fa-times"></i>
                                             </div>
                                         </div>`)
-                    .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>'));
+//                    .append('<div class="CardContentAdd"><img class="contentAdImg" src="resource/img/plus-icon.png" alt=""></div>')
+                    );
         }
 
 
@@ -7539,7 +7540,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             error: function () {
                 Toaster.showError(('somethingww'));
             }
-        });
+        }); 
     },
     insertNewInput: function () {
         if (global_var.current_backlog_id.length === 0) {
@@ -8790,14 +8791,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 $('#userstory-gui-input-component-type-content').modal('hide');
-                that.genGUIDesign();
+//                that.genGUIDesign();
 //                 that.toggleSubmenuIPO();   
                 loadCurrentBacklogProdDetails();
 
             },
             error: function () {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\
-                    After refresh it effect will be disappear.');
+                    After refresh this effect will be disappear.');
             }
         });
 
@@ -10589,20 +10590,69 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     },
     
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
+               
+        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
+        closeModal('userstory-gui-input-component-res-sus-analytic');
+        var bcode = $(el).closest('div.redirectClass').attr("bcode");
+        bcode = (bcode === undefined) ? "" : bcode;       
+        
+        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
+        var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
+        
+                //  click on first tab
+        $('.activeTabClass').each(function (e) {
+            $(this).click();
+        });
+
+        //call selectbox api
+//        new UserStory().callEmptyFunctionWithAjax(el, padeId);
+ 
+        var carrier = new Carrier();
+        carrier.set("padeId",padeId);
+        carrier.setBacklogId(popupBacklogId);
+        carrier.setElement(el);
+        carrier.setApplier("new UserStory()._ExecuteModalActionEvent");
+        carrier.I_am_Execwarder();
+        SourcedDispatcher.Exec(carrier);
+
+    },
+    _ExecuteModalActionEvent:function(carrier){
+        var padeId = carrier.get('padeId');        
+        var el = carrier.getElement();
+        
+        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
+        try{
+            var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
+            loadSelectBoxesAfterGUIDesign(tempEl1);
+            if ($(el).attr("onclick_trigger_id")) {
+                new UserStory().callTriggerApiAfterGUIDesign(el, padeId);
+            } else {
+                var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+                if (!$(tempEl).hasClass('sa-onloadclick')) {
+                    initOnloadActionOnGUIDesign4OnClick(tempEl);
+                }
+            }
+        } catch (err){}
+        
+        $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
+    },
+    
+    setGUIComponentButtonGUIModalOld30: function (popupBacklogId, el) {
         var carrier = new Carrier();
         carrier.setBacklogId(popupBacklogId);
         carrier.setElement(el);
+        
 
-        if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
-            carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
-            carrier.setApplier("new UserStory()._SetGUIComponentButtonGUIModal");
-            carrier.I_am_Requirer();
-
-        } else {
+//        if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
+//            carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+//            carrier.setApplier("new UserStory()._SetGUIComponentButtonGUIModal");
+//            carrier.I_am_Requirer();
+//
+//        } else {
             carrier.setApplier("new UserStory()._SetGUIComponentButtonGUIModal");
             carrier.I_am_Execwarder();
 
-        }
+//        }
 
         SourcedDispatcher.Exec(carrier);
 
@@ -10616,15 +10666,18 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
 
         var html = "";
         try{
-//           if (guiZadList4Ever[backlogId]){
-//               html = guiZadList4Ever[backlogId];
-//           }else{
-               var resTmp = SAInput.toJSONByBacklog(backlogId);
-               html = new UserStory().getGUIDesignHTMLPure(resTmp);
-               
-               //set GUI Design to cache
-                        guiZadList4Ever[backlogId]=html;
-//           }
+            var html = "";
+            if (global_var.current_modal!=='loadLivePrototype'){
+               html= getBacklogAsHtml(backlogId);
+               if (html.length<3){
+                    var resTmp = SAInput.toJSONByBacklog(backlogId);
+                    html = new UserStory().getGUIDesignHTMLPure(resTmp);
+               }
+            }else{
+                  var resTmp = SAInput.toJSONByBacklog(backlogId);
+                html = new UserStory().getGUIDesignHTMLPure(resTmp);
+            }
+           
         } catch (err){
             var resTmp = SAInput.toJSONByBacklog(backlogId);
             html = new UserStory().getGUIDesignHTMLPure(resTmp);
@@ -10670,7 +10723,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         });
 
         //call selectbox api
-        new UserStory().callEmptyFunctionWithAjax(el, padeId);
+//        new UserStory().callEmptyFunctionWithAjax(el, padeId);
     },
     setGUIComponentButtonGUIModal_old: function (popupBacklogId, el) {
         if (!ifBacklogInputs4LoaderExistById(popupBacklogId)) {
@@ -10730,17 +10783,19 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
             crossDomain: true,
             async: true,
             success: function (res) {
-                var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
-                loadSelectBoxesAfterGUIDesign(tempEl1);
+                try{
+                    var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
+                    loadSelectBoxesAfterGUIDesign(tempEl1);
 
-                if ($(el).attr("onclick_trigger_id")) {
-                    that.callTriggerApiAfterGUIDesign(el, padeId);
-                } else {
-                    var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
-                    if (!$(tempEl).hasClass('sa-onloadclick')) {
-                        initOnloadActionOnGUIDesign4OnClick(tempEl);
+                    if ($(el).attr("onclick_trigger_id")) {
+                        that.callTriggerApiAfterGUIDesign(el, padeId);
+                    } else {
+                        var tempEl = $('#' + padeId).find('.redirectClass').find('div').first();
+                        if (!$(tempEl).hasClass('sa-onloadclick')) {
+                            initOnloadActionOnGUIDesign4OnClick(tempEl);
+                        }
                     }
-                }
+                }catch(err){}
                 $('#' + padeId).find('.loaderModalInitiator').removeClass("loaderModal");
 //        
             },
@@ -11722,6 +11777,48 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
 
             $('.us-gui-component-action').val(res.tbl[0].r[0].action);
+            
+             $('.input_event_type').val(res.tbl[0].r[0].actionType);
+            $('#liveProActionType').val(res.tbl[0].r[0].sectionType);
+            $('.liveProActionTypeAll').hide();
+            var val24 = res.tbl[0].r[0].sectionType;
+            if (val24 === 'api') {
+                $('.liveProActionTypeApi').show();
+            } else if (val24 === 'toggle') {
+                $('.liveProActionTypeToggle').show();
+            }
+            
+            $('#liveProActionTypeToggleItemIfKey').val(res.tbl[0].r[0].ifKey);
+            $('#liveProActionTypeToggleItemIfOperation').val(res.tbl[0].r[0].ifOperation);
+            $('#liveProActionTypeToggleItemIfValue').val(res.tbl[0].r[0].ifValue);
+            
+            $('#liveProActionTypeToggleItemIfActionOperation').val(res.tbl[0].r[0].thenAction);
+            var val22 = res.tbl[0].r[0].thenAction;
+            if (val22 === 'callapi') {
+                $('#liveProActionTypeToggleItemIfThenApiList').show();
+                $('#liveProActionTypeToggleItemIfThenClassname').hide();
+            } else {
+                $('#liveProActionTypeToggleItemIfThenApiList').hide();
+                $('#liveProActionTypeToggleItemIfThenClassname').show();
+            }
+            
+            
+            $('#liveProActionTypeToggleItemIfThenClassname').val(res.tbl[0].r[0].thenClassname);
+            $('#liveProActionTypeToggleItemIfThenApiList').val(res.tbl[0].r[0].thenApiId);
+            $('#liveProActionTypeToggleItemIfElseActionOperation').val(res.tbl[0].r[0].elseAction);
+            var val33 = res.tbl[0].r[0].elseAction;
+            if (val33 === 'callapi') {
+                $('#liveProActionTypeToggleItemIfElseThenApiList').show();
+                $('#liveProActionTypeToggleItemIfElseThenClassname').hide();
+            } else {
+                $('#liveProActionTypeToggleItemIfElseThenApiList').hide();
+                $('#liveProActionTypeToggleItemIfElseThenClassname').show();
+            }
+            
+            $('#liveProActionTypeToggleItemIfElseThenClassname').val(res.tbl[0].r[0].elseClassname);
+            $('#liveProActionTypeToggleItemIfElseThenApiList').val(res.tbl[0].r[0].elseApiId);
+            
+             
             this.toggleSectionAndRelUS();
             this.toggleGUIComponentSelection();
             $('#us-gui-component-order-no').val(res.tbl[0].r[0].orderNo);
@@ -15802,7 +15899,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         var outputList = SACore.GetBacklogDetails(storyCardId, "inputIds").split(',');
 
 
-        var select = $('select.input_event_related_api');
+        var select = $('select.setGUIComponentOrderNo');
         select.html('');
         var pushedList = [];
         for (var i in outputList) {
@@ -23239,6 +23336,15 @@ Sprint.prototype = {
                     .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
 
             tr.append($('<td class="lbl-list-td"></td>')
+                    .append($('<button class="bug-task-sprint-unassign btn btn-secondary">')
+                            .css("padding", "0px 6px")
+                            .attr("sname", replaceTags(obj[n].sprintName))
+                            .css("display", "none")
+                            .val(obj[n].id)
+                            .append("Unassign")
+                            .attr('id', obj[n].id)));
+
+            tr.append($('<td class="lbl-list-td"></td>')
                     .append($('<button class="bug-task-sprint-assign btn btn-primary">')
                             .css("padding", "0px 6px")
                             .attr("sname", replaceTags(obj[n].sprintName))
@@ -23259,8 +23365,10 @@ Sprint.prototype = {
             tr.append(td);
             tr.hover(function () {
                 $(this).find('.lbl-action, .bug-task-sprint-assign').show();
+                 $(this).find('.lbl-action, .bug-task-sprint-unassign').show();
             }, function () {
                 $(this).find('.lbl-action ,.bug-task-sprint-assign').hide();
+                  $(this).find('.lbl-action ,.bug-task-sprint-unassign').hide();
             });
             tbl.append(tr);
         }
@@ -24444,7 +24552,7 @@ User.prototype = {
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
             type: "POST",
             data: data,
-            async: true,
+            async: false,
             contentType: 'text/html',
             success: function (res) {
                 var img = (res.tbl[0].r[0].userImage)
@@ -24456,6 +24564,7 @@ User.prototype = {
                 $('#myAccountModal_txtUserFulname').val((res.tbl[0].r[0].userPersonName));
                 $('#myAccountModal_txtUserEmail').val((res.tbl[0].r[0].email1));
                 global_var.current_user_id = res.tbl[0].r[0].id;
+                 global_var.current_domain = res.kv.currentDomain;
             },
             error: function () {
                 document.location = "login.html";
@@ -24475,7 +24584,7 @@ User.prototype = {
             url: urlGl + "api/post/srv/serviceCrGetAccountInfo",
             type: "POST",
             data: data,
-            async: true,
+            async: false,
             contentType: 'text/html',
             success: function (res) {
 

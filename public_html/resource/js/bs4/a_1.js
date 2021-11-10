@@ -37,14 +37,17 @@ var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
     "loadLivePrototype": "Live Prototype",
-    "loadStoryCardMgmt ": "Story Card Management",
-    "loadDashboard": "Dashboard",
-    "loadTaskManagement": "Task Management",
+    "loadStoryCardMgmt": "Story Card Management",
     "loadProjectManagement": "Project Management",
+    "loadDashboard": "Dashboard",
+    "loadStoryCardMgmt": "User Story Management",
+    "loadTaskManagement": "Task Management",
+    "loadActivityDiagram": "Activity Diagram",
     "loadBugChange": "Issue Management",
     "loadTestCase": "Test Case Management",
     "loadDocEditor": "Document Editor",
     "loadBusinessCase": "Business Case",
+    "loadSqlBoard": "SQL Board",
     "loadBusinessService": "Business Service",
     "loadSourceActivity": "Sourced-Activity Diagram",
     "loadEntityDiagram": "Entity Diagram",
@@ -53,6 +56,7 @@ var moduleList = {
     "loadTaskType": "Task Type",
     "loadTaskTypeManagment": "Task Type Management",
     "loadPermission": "Permission",
+    "loadRunService": "Run Service",
     "loadOldVersion": "Old Version",
 };
 var dgui = {};
@@ -510,12 +514,6 @@ function exportExcelFile(workbook) {
     return XLSX.writeFile(workbook, "bookName.xlsx");
 }
 
-
-
-
-
-
-
 $(document).on("change", "#file_excel_import", function () {
     var tabID = $(this).attr('data-api-tabid');
     filePicked(this, tabID);
@@ -579,12 +577,12 @@ function getGroupList4Table(elm) {
         var tableId = $(elm).attr('tbid');
         $('#' + tableId).find(".groupTrElement").remove();
         var td = $("#comp_id_" + tableId + " tbody tr").find("td[pdid=" + sv + "]")
-      //  $.each(td, function (index, item) {
+        //  $.each(td, function (index, item) {
 
-            sortableTable(tableId, sv, td);
+        sortableTable(tableId, sv, td);
 
-      //  })
-       
+        //  })
+
     } catch (error) {
         console.log(error)
     }
@@ -720,37 +718,7 @@ function sortableTable(tableId, sv, cls) {
 
 }
 /*********************************************** Context Menu Function Only ********************************/
-function clickInsideElementOp(e, className) {
-    var el = e.srcElement || e.target;
-    if (el.classList.contains(className)) {
-        return el;
-    } else {
-        while (el = el.parentNode) {
-            if (el.classList && el.classList.contains(className)) {
-                return el;
-            }
-        }
-    }
-    return false;
-}
 
-function getPositionOp(e) {
-    var posx = 0,
-            posy = 0;
-    if (!e)
-        var e = window.event;
-    if (e.pageX || e.pageY) {
-        posx = e.pageX;
-        posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-        posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-        posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    return {
-        x: posx,
-        y: posy
-    }
-}
 
 function addAttrToElementSingileByR(el, comp) {
     try {
@@ -765,142 +733,6 @@ function addAttrToElementSingileByR(el, comp) {
     } catch (err) {
     }
 }
-// Your Menu Class Name
-var taskItemClassName = "component-table-input-class";
-var contextMenuClassName = "context-menu",
-        contextMenuItemClassName = "context-menu__item",
-        contextMenuLinkClassName = "context-menu__link",
-        contextMenuActive = "context-menu--active";
-var taskItemInContext, clickCoords, clickCoordsX, clickCoordsY, menu = document.querySelector("#context-menu"),
-        menuItems = $(menu).find(".context-menu__item");
-var menuState = 0,
-        menuWidth, menuHeight, menuPosition, menuPositionX, menuPositionY, windowWidth, windowHeight;
-
-function initMenuFunctionOp() {
-    contextListenerOp();
-    clickListenerOp();
-    keyupListenerOp();
-    resizeListenerOp();
-
-}
-
-/**
- * Listens for contextmenu events.
- */
-function contextListenerOp() {
-    document.addEventListener("contextmenu", function (e) {
-        taskItemInContext = clickInsideElementOp(e, taskItemClassName);
-
-        if (taskItemInContext) {
-            e.preventDefault();
-            toggleMenuOnOp();
-            positionMenuOp(e);
-        } else {
-            taskItemInContext = null;
-            toggleMenuOffOp();
-        }
-    });
-}
-
-/**
- * Listens for click events.
- */
-function clickListenerOp() {
-    document.addEventListener("click", function (e) {
-        var clickeElIsLink = clickInsideElementOp(e, contextMenuLinkClassName);
-
-        if (clickeElIsLink) {
-            e.preventDefault();
-            menuItemListenerOp(clickeElIsLink);
-        } else {
-            var button = e.which || e.button;
-            if (button === 1) {
-                toggleMenuOffOp();
-            }
-        }
-    });
-}
-
-/**
- * Listens for keyup events.
- */
-function keyupListenerOp() {
-    window.onkeyup = function (e) {
-        if (e.keyCode === 27) {
-            toggleMenuOffOp();
-        }
-    }
-}
-
-/**
- * Window resize event listener
- */
-function resizeListenerOp() {
-    window.onresize = function (e) {
-        toggleMenuOffOp();
-    };
-}
-
-/**
- * Turns the custom context menu on.
- */
-function toggleMenuOnOp() {
-    if (menuState !== 1) {
-        menuState = 1;
-        $(menu).addClass(contextMenuActive);
-    }
-}
-
-/**
- * Turns the custom context menu off.
- */
-function toggleMenuOffOp() {
-    if (menuState !== 0) {
-        menuState = 0;
-        $(menu).removeClass(contextMenuActive);
-    }
-}
-
-function positionMenuOp(e) {
-    clickCoords = getPositionOp(e);
-    clickCoordsX = clickCoords.x;
-    clickCoordsY = clickCoords.y;
-    menuWidth = $(menu).offsetWidth + 4;
-    menuHeight = $(menu).offsetHeight + 4;
-
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-
-    if ((windowWidth - clickCoordsX) < menuWidth) {
-        $(menu).css("top", (windowWidth - menuWidth) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsX - 0 + "px");
-    }
-
-    // menu.style.top = clickCoordsY + "px";
-
-    if (Math.abs(windowHeight - clickCoordsY) < menuHeight) {
-        $(menu).css("top", (windowHeight - menuHeight) - 0 + "px");
-    } else {
-        $(menu).css("top", clickCoordsY - 0 + "px");
-    }
-}
-
-
-function menuItemListenerOp(link) {
-    var menuSelectedPhotoId = taskItemInContext.getAttribute("data-id");
-
-    var moveToAlbumSelectedId = link.getAttribute("data-action");
-    if (moveToAlbumSelectedId == 'remove') {
-
-    } else if (moveToAlbumSelectedId && moveToAlbumSelectedId.length > 7) {
-
-    }
-    toggleMenuOffOp();
-}
-initMenuFunctionOp();
-
-
 
 
 var isMouseDown = false;
@@ -1824,8 +1656,11 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
+    global_var.current_modal='';
+    setBacklogAsHtml(global_var.current_backlog_id);
+    global_var.current_modal='loadLivePrototype';
+//    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 }
 
 function loadCurrentBacklogProdDetailsSyncrone() {
@@ -1852,6 +1687,81 @@ function callStoryCardAfterIPOAction() {
 }
 
 function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
+    var async = (isAsync) ? isAsync : false;
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+
+
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: false,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                } else {
+                    loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
+            }
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+
+
+//alert('yupi is ',$('#yupi777').val());;
+//    var dataZad  = $.get(urlGl + "api/get/dw/us/"+global_var.current_domain+"/"+bid, function(data) { 
+////        alert(data) 
+//       if(data){ 
+//           SAInput.LoadedBacklogs4Input.push(bid);
+//           loadBacklogProductionDetailsById_resparams(data);
+//       }else{
+//           loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//            loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//             loadBacklogProductionCoreDetailssByIdPost(bid1,isAsync);
+//       }     
+//    }, "text");
+//    
+//    alert(dataZad);
+}
+
+function loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync) {
     var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
 
@@ -2252,6 +2162,68 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+
+                    var selectedField = SAInput.GetInputName(selectFromInputId);
+                    triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
+                } else {
+                    loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+                }
+
+                hideProgress4();
+
+            } catch (err) {
+                hideProgress4();
+                loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId);
+            }
+        }
+    });
+}
+
+function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selectFromInputId, selectFromBacmkogId) {
+    var bid = (bid1) ? bid1 : global_var.current_backlog_id;
+
+
+    if (!bid)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
         url: urlGl + "api/post/srv/serviceTmGetBacklogProductionDetailedInfo",
         //            url: urlGl + "api/post/srv/serviceTmGetProjectInputCount",
         type: "POST",
@@ -2375,6 +2347,73 @@ function ifBacklogInputs4LoaderExistByIdIfNotExist(bid) {
 }
 
 function _LoadBacklogInputsByIdIfNotExist(carrier) {
+    var bid = (carrier.getBacklogId()) ?
+            carrier.getBacklogId() :
+            global_var.current_backlog_id;
+
+    if (!bid)
+        return;
+
+    showProgress5();
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = bid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            ;
+//            alert(res);
+//            alert(JSON.stringify(res));
+            try {
+//                try {
+//                    var transaction = db.transaction(["subdb"], "readwrite");
+//                    var store = transaction.objectStore("subdb");
+//                    store.delete('idb_' + bid);
+//                    store.add({
+//                        'bid': 'idb_' + bid,
+//                        'json': res
+//                    });
+//                } catch (err) {
+//                    console.log(err);
+//                }
+                localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+
+                if (res) {
+//                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
+                    SAInput.LoadedBacklogs4Input.push(bid);
+                    loadBacklogProductionDetailsById_resparams(res);
+                    carrier.I_am_Execwarder();
+                    SourcedDispatcher.Exec(carrier);
+                } else {
+                    _LoadBacklogInputsByIdIfNotExistPost(carrier);
+                }
+
+                hideProgress5();
+
+            } catch (err) {
+                hideProgress5();
+                _LoadBacklogInputsByIdIfNotExistPost(carrier);
+            }
+        },
+        error: function () {
+            hideProgress5();
+        }
+    });
+}
+
+
+function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
     var bid = (carrier.getBacklogId()) ?
             carrier.getBacklogId() :
             global_var.current_backlog_id;
@@ -3145,21 +3184,23 @@ function loadManualProjectZadOld(fkManualProjectId, bid) {
 
 
 function manualProjectRefreshInit(fkManualProjectId) {
+
     global_var.current_project_id = global_var.fkManualProjectId;
 
     new User().loadPersonalUserOnInit();
     new Project().loadUserList4Combo();
 
-    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
-    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
-    getJsGlobalCodeByProject();
+//    getAllGuiClassList(); //CSS file formasi hazir olandan sonra silinecek
+//    getJsCodeByProject(); //JS file formasi hazir olandan sonra silinecek
+//    getJsGlobalCodeByProject();
 //
-    getBacklogLastModificationDateAndTime(fkManualProjectId);
+//    getBacklogLastModificationDateAndTime(fkManualProjectId);
 //
-    loadFromIndexedDBtoRAM();
+//    loadFromIndexedDBtoRAM();
 //    
-
-//    loadMainProjectList4ManualZad();
+    initZadShey(fkManualProjectId);
+    loadMainProjectList4ManualZad();
+//  i
 
 }
 
@@ -4130,37 +4171,7 @@ function loadTableFIlterInside() {
         });
     }
 
-    $('#date_timepicker_start_end').daterangepicker({
-        showDropdowns: true,
-        showWeekNumbers: true,
-        timePicker: false,
-        timePickerIncrement: 1,
-        timePicker12Hour: true,
-        defaultDate: false,
-        ranges: {
-            'Bu Gün': [moment(), moment()],
-            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        opens: 'left',
-        buttonClasses: ['btn btn-default'],
-        applyClass: 'btn-small btn-primary',
-        cancelClass: 'btn-small btn-cancel-value-clear',
-        separator: ' to ',
-        locale: {
 
-            applyLabel: 'Axtar',
-            cancelLabel: 'ləğv et',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Xüsusi',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-        }
-    });
 }
 
 function copyJSCodeClassTo_loadProjectList() {
@@ -7039,6 +7050,7 @@ function iDidItAction() {
         crossDomain: true,
         async: false,
         success: function (res) {
+            AJAXCallFeedback(res);
             getBugList();
             $('#iDidItModal_comment').html('');
             $('#iDidItModal').modal('hide');
@@ -7250,16 +7262,54 @@ function deleteInputActionRel(relId) {
     });
 }
 
+function fillRelatedApi4InputEventNew(res) {
+    //    return;
+    var cls = 'ipo-tab-setting-animation'
+    var obj = res.tbl[0].r;
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
+    if (!cls) {
+        select = $('#' + cls).find('select.input_event_related_api');
+    }
+
+    select.html('');
+    select1.html('');
+
+
+    for (var i in obj) {
+        var o = obj[i];
+        if (o.isApi=== '1') {
+            select.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+            select1.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+
+        }
+    }
+
+    sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
+    select.selectpicker('refresh');
+    select1.selectpicker('refresh');
+    $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
+
+}
 function fillRelatedApi4InputEvent(cls) {
     //    return;
 
     var apiList = SACore.GetBacklogKeyList();
-    var select = $('#' + cls).find('.input_event_related_api');
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
     if (!cls) {
-        select = $('#' + cls).find('.input_event_related_api');
+        select = $('#' + cls).find('select.input_event_related_api');
     }
 
     select.html('');
+    select1.html('');
 
 
     for (var i in apiList) {
@@ -7268,12 +7318,17 @@ function fillRelatedApi4InputEvent(cls) {
             select.append($('<option>')
                     .val(apiId)
                     .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
+            select1.append($('<option>')
+                    .val(apiId)
+                    .text(SACore.GetBacklogDetails(apiId, 'backlogName')));
 
         }
     }
 
     sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
     select.selectpicker('refresh');
+//    select1.selectpicker('refresh');
     $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
 
 }
@@ -7315,7 +7370,7 @@ function getJsCodeListByProject() {
             queue4ManulProject.getJsCodeListByProject = true;
 
             getGlobalJsCodeListByProject();
-            executeCoreOfManualProSelection();
+           
 
 
         }
@@ -7350,7 +7405,7 @@ function getGlobalJsCodeListByProject() {
             } catch (err) {
             }
             queue4ManulProject.getGlobalJsCodeListByProject = true;
-            executeCoreOfManualProSelection();
+            
 
         }
     });
@@ -8817,28 +8872,28 @@ function getAllGuiClassList() {
             } catch (ee) {
             }
 
-            try {
-                var obj = res.tbl[0].r;
-                for (var i = 0; i < obj.length; i++) {
-                    var o = obj[i];
-                    try {
-
-                        if (!o.className) {
-                            continue;
-                        }
-                        var st = '';
-                        st += o.className + "{" + o.classBody + "}";
-
-
-                        var sc = $('<style>').append(st);
-                        $('head').append(sc);
-
-
-                    } catch (err) {
-                    }
-                }
-            } catch (err) {
-            }
+//            try {
+//                var obj = res.tbl[0].r;
+//                for (var i = 0; i < obj.length; i++) {
+//                    var o = obj[i];
+//                    try {
+//
+//                        if (!o.className) {
+//                            continue;
+//                        }
+//                        var st = '';
+//                        st += o.className + "{" + o.classBody + "}";
+//
+//
+//                        var sc = $('<style>').append(st);
+//                        $('head').append(sc);
+//
+//
+//                    } catch (err) {
+//                    }
+//                }
+//            } catch (err) {
+//            }
 
             //            queue4ManulProject.getAllGuiClassList = true;
             //            executeCoreOfManualProSelection();
@@ -12046,6 +12101,7 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,false);
     $('#storyCardListSelectBox').change();
 
 });
@@ -12307,12 +12363,15 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     getProjectUsers();
     getUsers();
 
-
+    initZadShey(global_var.current_project_id);
+    
     $.get("resource/child/ipo.html", function (html_string) {
 
 
 
         getAllGuiClassList();
+        
+        
         getInputClassRelByProject();
         getInputAttributeByProject();
         getProjectDescriptionByProject();
@@ -12329,16 +12388,16 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
         //callLivePrototype();
         //commmonOnloadAction(this);
         getGuiClassList();
-        getJsCodeByProject();
-        getInputActionRelByProjectMAnual2();
+//        getJsCodeByProject();
+//        getInputActionRelByProjectMAnual2();
         genToolbarStatus();
-        loadLivePrototypeCore(this);
+//        loadLivePrototypeCore(this);
 
 
 
     });
 
-    new UserStory().loadDetailsOnProjectSelect4Ipo();
+//    new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 
 });
@@ -12522,7 +12581,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             new UserStory().setUSLists(res);
             var f = true;
-
+           fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -13256,7 +13315,7 @@ function clearLivePrototypeViewForDebug() {
 
 function loadGuiStoryCardsToAnimation() {
     var el = $('select.us-gui-component-rel-sus-id');
-    
+
 
 }
 
@@ -14758,7 +14817,7 @@ function getBugList4UserStory(bgId, tbody) {
                     .append($("<td>").append("<b>Task Nature</b>"))
                     .append('<td><b>Task Type</b></td>')
                     .append('<td><b>Created</b></td>')
-                    .append('<td><b>Assigne</b></td>')
+                    .append('<td><b>Assignee</b></td>')
                     .append('<td><b>Date</b></td>')
                     )
 
@@ -14776,7 +14835,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
                         .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assigne"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
                         )
 
@@ -16116,7 +16175,7 @@ function getProjectUserssync(id) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             try {
                 SAProjectUser.LoadProjectUser(res);
@@ -16397,6 +16456,7 @@ function updateInput4SCDetails(inputId, val, ustype) {
         async: true,
         success: function (res) {
             SAInput.updateInputByRes(res);
+            loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -17086,6 +17146,21 @@ $(document).on('click', '.bug-task-sprint-assign', function (evt) {
         $('.' + global_var.task_mgmt_group_by).click();
     } else if (global_var.current_modal === "loadBugChange") {
         sprintAddAssign(this);
+    } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
+        sprintAddAssignTaskType(this);
+    }
+});
+
+
+$(document).on('click', '.bug-task-sprint-unassign', function (evt) {
+    global_var.bug_task_sprint_assign_checked = 1;
+    global_var.bug_task_sprint_assign_name = $(this).attr('sname');
+    global_var.bug_task_sprint_assign_id = $(this).val();
+
+    if (global_var.current_modal === "loadTaskManagement") {
+        $('.' + global_var.task_mgmt_group_by).click();
+    } else if (global_var.current_modal === "loadBugChange") {
+        sprintAddAssign(this, 'unassign');
     } else if (global_var.current_modal === "loadTaskTypeManagment" || global_var.current_modal === "loadTaskManagment") {
         sprintAddAssignTaskType(this);
     }
@@ -21761,7 +21836,7 @@ var requestType = {
 $(document).on('click', '.for-chewekk-new-panel-link', function () {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
     var f = $(this).attr("data-link")
-    $.get("resource/child/" + f + ".html", function (html_string) {
+    $.get("child/" + f + ".html", function (html_string) {
         $(div).html(html_string);
 
         $('.selectpicker').selectpicker({
@@ -22136,42 +22211,10 @@ function genFilterTapsiriq() {
 
     $("#taskTypeId-filter-tapsiriq").selectpicker("refresh");
 
-    $('#date_timepicker_start_end_tapsiriq').daterangepicker({
-        startDate: moment().subtract('days', 29),
-        endDate: moment(),
-        showDropdowns: true,
-        showWeekNumbers: true,
-        timePicker: false,
-        timePickerIncrement: 1,
-        timePicker12Hour: true,
-        ranges: {
-            'Bu Gün': [moment(), moment()],
-            'Dünən': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Son 7 gün': [moment().subtract(6, 'days'), moment()],
-            'Son 30 gün': [moment().subtract(29, 'days'), moment()],
-            'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-            'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        opens: 'left',
-        buttonClasses: ['btn btn-default'],
-        applyClass: 'btn-small btn-primary',
-        cancelClass: 'btn-small btn-cancel-value-clear',
-        separator: ' to ',
-        locale: {
-
-            applyLabel: 'Axtar',
-            cancelLabel: 'ləğv et',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Xüsusi',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-        }
-    }).val('');
     getProjectUsers4Tapsiriq();
     getKontragent4Tapsiriq();
-
-    $("#reqeustModul-filter-tapsiriq").change();
+    getTapsiriqList();
+    // $("#reqeustModul-filter-tapsiriq").change();
 }
 
 function tapsiriqColStatement(prtNum, namePr) {
@@ -22268,9 +22311,9 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
                                             .append($("<select>").addClass("selectpicker")
                                                     .attr("title", 'yoxdur')
                                                     .attr("id", 'task-us-prio-change')
-                                                    .append('<option value="1" data-icon="fas fa-flag text-info">Standart</option>')
-                                                    .append('<option value="2" data-icon="fas fa-flag text-warning">Təcili</option>')
-                                                    .append('<option value="3" data-icon="fas fa-flag text-danger">Çox təcili</option>')
+                                                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                                                    .append('<option value="tecili" data-icon="fas fa-flag text-warning">Təcili</option>')
+                                                    .append('<option value="xusui" data-icon="fas fa-flag text-primary">Xüsusi</option>')
                                                     .val(prorty)))
                                     .append(`<div class="cs-task-card-avatar-boxes">
                                             <ul>
@@ -22377,23 +22420,14 @@ function getTapsiriqList(serach) {
     var chkAll = $("#show-all-colmn-tapsriq")
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    //var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-    var inns
-    if (val) {
-        val = val.split('-')
-        var dt = val[0].split('/');
-        var dt1 = val[1].split('/');
-        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
 
-        inns = stTime.trim() + '%BN%' + endTime.trim()
-    }
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22417,10 +22451,10 @@ function getTapsiriqList(serach) {
             cl.reqeustDescription = serach ? serach : "";
 
         }
-        if (requestType.length > 0) {
-            sl.requestType = requestType ? requestType : "";
-            cl.requestType = requestType ? requestType : "";
-        }
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         cl.requestType = requestType ? requestType : "";
+         } */
 
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
@@ -22434,9 +22468,9 @@ function getTapsiriqList(serach) {
             sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
             cl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
-            cl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
         }
         var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
         if (chkAll.prop("checked")) {
@@ -22506,9 +22540,9 @@ function getTapsiriqList(serach) {
             sl.createdBy = createdBy ? createdBy : "";
             cl.createdBy = createdBy ? createdBy : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
-            cl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
+            cl.createdDate = val ? val : "";
         }
         if (serach) {
             sl.taskNo = serach ? serach : "";
@@ -22903,7 +22937,7 @@ function genAktivPassiv(res, x, say) {
 function getTapListMore(elm, stmit, etmit) {
     var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
+    // var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
     var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
     var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
     var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
@@ -22911,16 +22945,7 @@ function getTapListMore(elm, stmit, etmit) {
     var val = $("#date_timepicker_start_end_tapsiriq").val();
     var stTime
     var endTime
-    var inns
-    if (val) {
-        val = val.split('-')
-        var dt = val[0].split('/');
-        var dt1 = val[1].split('/');
-        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
-        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
 
-        inns = stTime.trim() + '%BN%' + endTime.trim()
-    }
     var type_view = localStorage.getItem('tapsiriq_view');
     if (!type_view) {
         type_view = "aktiv_passiv";
@@ -22941,9 +22966,9 @@ function getTapListMore(elm, stmit, etmit) {
             sl.reqeustDescription = serach ? '%%' + serach + "%%" : "";
             sl.reqeustCode = serach ? '%%' + serach + "%%" : ""
         }
-        if (requestType.length > 0) {
-            sl.requestType = requestType ? requestType : "";
-        }
+        /*  if (requestType.length > 0) {
+         sl.requestType = requestType ? requestType : "";
+         } */
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
 
@@ -22955,8 +22980,8 @@ function getTapListMore(elm, stmit, etmit) {
         if (fkKontragentId.length > 0) {
             sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
         }
 
         var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
@@ -22990,8 +23015,8 @@ function getTapListMore(elm, stmit, etmit) {
         if (createdBy.length > 0) {
             sl.createdBy = createdBy ? createdBy : "";
         }
-        if (inns) {
-            sl.createdDate = inns ? inns : "";
+        if (val) {
+            sl.createdDate = val ? val : "";
         }
         if (serach) {
             sl.taskNo = serach ? serach : "";
@@ -23158,12 +23183,7 @@ $(document).on("change", '#reqeustModul-filter-tapsiriq', function (params) {
     $("#reqeustType-filter-tapsiriq").selectpicker("refresh").change();
 
 })
-$(document).on("change", '.btn-cancel-value-clear', function (params) {
 
-    $('#date_timepicker_start_end_tapsiriq').val('');
-
-
-})
 $(document).on("click", '.cs-task-item-box .cs-task-card-body', function (params) {
 
     $('#taskModalBlock').modal('show');
@@ -23367,18 +23387,25 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
                 }
 
             }
+            var prt = $("<select>")
+                    .addClass("task-list-prt-change-select form-control-sm form-control")
+                    .attr("disabled", 'disabled')
+                    .append('<option value="Standart" data-icon="fas fa-flag text-muted">Standart</option>')
+                    .append('<option value="xususi" data-icon="fas fa-flag text-primary">Xüsusi</option>')
+                    .append('<option value="tecili" data-icon="fas fa-flag text-danger">Təcili</option>')
 
-
-            $(tbody).append($("<tr>").addClass('task-tr-list').attr('data-tr-status', ela[i].taskStatus)
+            $(tbody).append($("<tr>").addClass('task-tr-list redirectClass').attr('data-tr-status', ela[i].taskStatus)
                     .append('<td class="task-id-td">' + ela[i].taskNo + '</td>')
                     .append($('<td>').addClass('text-center')
-                            .append(st))
+                            .append(st)
+                            .append(prt.val(o.taskPriority)))
                     .append($("<td>")
                             .append(a))
                     .append($("<td>").append(date))
                     .append('<td>' + time + '</td>')
                     .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + img + '" data-trigger="hover" data-toggle="popover" data-content="' + userName + '" title="" data-original-title="Daxil Edən"></td>')
                     .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + img1 + '" data-trigger="hover" data-toggle="popover" data-content="' + userName1 + '" title="" data-original-title="İcraçı"></td>')
+                    .append()
 
                     )
 
@@ -23404,6 +23431,7 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
                 .append('<td><span class="cs-staturs-circle-note new-tapsiriq-rew rejected" status="rejected"  pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Ləğv edilib"></span>-(' + rejected + ')</td>')
                 .append('<td><span class="stat_group_title " pid=' + pid + ' data-trigger="hover" data-toggle="popover" data-placement="bottom"  data-original-title="Total"></span>Cəm-(' + total + ')</td>')
 
+        $(".stat-div-task-content .task-list-prt-change-select").selectpicker()
 
     } catch (error) {
         $(tbody).parents(".stat-div-task-content").prepend("Məlumat Yoxdur")

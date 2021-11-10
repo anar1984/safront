@@ -197,6 +197,18 @@ var Component = {
                     .attr('row-no', comp.rowNo)
                     .attr("pdid", comp.id);
 
+            if (SAInput.getInputDetails(comp.id, "sectionType") === 'toggle') {
+                if (SAInput.getInputDetails(comp.id, "actionType") === 'change') {
+                    el.addClass('hasInputManualEventActionChange')
+                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick'){
+                     el.addClass('hasInputManualEventActionDblClick')
+                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'click'){
+                     el.addClass('hasInputManualEventActionClick')
+                }else{
+                     el.addClass('hasInputManualEventActionChange')
+                }
+            }
+
             Component.ComponentEvent.addId2Component(el, comp);
             Component.ComponentEvent.setPureEventByDescription(el, comp);
             if (comp.action === 'close') {
@@ -226,7 +238,7 @@ var Component = {
                         className = className.replace(".", "");
                         el.addClass(className);
 
-                        if (global_var.current_modal === 'loadLivePrototype' &&
+                        if (global_var.current_modal === 'loadLivePrototype'  && 
                                 (className === 'sa-onloadclick' || className === 'sa-onloadchange' ||
                                         className === 'sa-onloadclick-async' || className === 'sa-onloadchange-async')) {
                             el.addClass('init-on-loader')
@@ -344,15 +356,15 @@ var Component = {
                 .attr('id', comp.id)
                 .attr('pid', comp.id)
 
-                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'resize1' : "")
+                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
+                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'resize1' : "")
                 //                .addClass('popup')
                 .addClass(comp.addTooltip ? 'tooltipMan' : "") //muveqqeti baglayaq
                 .addClass('component-class')
                 .addClass('component-container-dashed')
                 .addClass('col-lg-' + comp.cellNo);
 
-        if (global_var.current_modal === 'loadLivePrototype') {
+        if (global_var.current_modal === 'loadLivePrototype'  ) {
             div.attr('ondragover', 'allowDrop(event)')
                     .attr('ondragstart', 'drag(event)')
                     .attr('ondrop', 'drop(event)')
@@ -408,16 +420,16 @@ var Component = {
 
 
 
-        //        div.append(global_var.current_modal === 'loadLivePrototype' && comp.showProperties
+        //        div.append(global_var.current_modal === 'loadLivePrototype'   && comp.showProperties
         //                ? $('<button type="button" class="btn fa fa-ellipsis-h popup-btn" data-toggle="modal" data-target="#exampleModal" id="popup-btn' + comp.id + '" ></button>')
         //                : "")
 
         if (comp.hasOnClickEvent) {
-            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
                     'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
                     "")
 
-            if (global_var.current_modal === 'loadLivePrototype') {
+            if (global_var.current_modal === 'loadLivePrototype'   ) {
 
                 div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
                         .append(`<div style='display:inline-block;' class="dropdown">
@@ -834,7 +846,7 @@ var Component = {
 
 
             var tr = $("<ul>").addClass('table-row-show-hide-ul')
-                              .append("<li><span class=''><input type='checkbox' style='margin-bottom:20px' checked='true' class='all-table-row-checked'>All</span><li>");
+                    .append("<li><span class=''><input type='checkbox' style='margin-bottom:20px' checked='true' class='all-table-row-checked'>All</span><li>");
             for (var i = 0; i < col.length; i++) {
 
                 var inputId = col[i].trim();
@@ -850,8 +862,8 @@ var Component = {
                         .attr('pid', inputId)
                         .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                        .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                        .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
                                 "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append("<input data-check=" + inputId + " checked='true' type='checkbox'>")
@@ -888,7 +900,7 @@ var Component = {
                 //                    .append(showInTree, ' ')
                 ;
 
-                if (global_var.current_modal !== 'loadLivePrototype' &&
+                if (global_var.current_modal !== 'loadLivePrototype'   &&
                         pairShowColumn[inputId].trim() === '1') {
                     th.empty().hide();
 
@@ -990,8 +1002,8 @@ var Component = {
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
                                     "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                     "")
                     var checkAll
@@ -1022,8 +1034,8 @@ var Component = {
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
                                     "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                     "")
                             .append(replaceTags(inputName))
@@ -1035,7 +1047,7 @@ var Component = {
                 //                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
 
 
-                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1043,7 +1055,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumn = (global_var.current_modal === 'loadLivePrototype') ?
+                var showColumn = (global_var.current_modal === 'loadLivePrototype'  ) ?
                         $('<i class="fa fa-eye" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1051,7 +1063,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnEntireComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumnName = (global_var.current_modal === 'loadLivePrototype') ?
+                var showColumnName = (global_var.current_modal === 'loadLivePrototype'  ) ?
                         $('<i class="fa fa-cubes" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1059,7 +1071,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnItselfComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                //                var showInTree = (global_var.current_modal === 'loadLivePrototype') ?
+                //                var showInTree = (global_var.current_modal === 'loadLivePrototype'  ) ?
                 //                    $('<i class="fa fa-folder-open" aria-hidden="true">')
                 //                    .css("cursor", "pointer")
                 //                    .css('font-size', '8px')
@@ -1076,23 +1088,23 @@ var Component = {
                         .append(showComp, ' ')
                         .append(showColumn, ' ')
                         .append(showColumnName, ' ')
-                if (global_var.current_modal !== 'loadLivePrototype') {
-                     try {
+                if (global_var.current_modal !== 'loadLivePrototype'   ) {
+                    try {
                         th.append((a === '') ? "" : "<span class='handle-drag'></span>");
 
-                         try {
+                        try {
                             if (cr_input_comp_attribute_kv[inputId]['sa-column-filter-active']) {
                                 th.append((a === '') ? "" : "<span class=' btn btn-sm filter-handle-button btn-outline-secondary '><i class='fas fa-filter'></i></span>")
-    
-                            }
-                         } catch (error) {
-                             
-                         }
-                     
 
-                     } catch (error) {
-                         
-                     }
+                            }
+                        } catch (error) {
+
+                        }
+
+
+                    } catch (error) {
+
+                    }
 
                 }
 
@@ -1136,7 +1148,7 @@ var Component = {
 
 
 
-                if (global_var.current_modal !== 'loadLivePrototype' &&
+                if (global_var.current_modal !== 'loadLivePrototype'   && 
                         pairShowColumn[inputId].trim() === '1') {
                     th.hide();
                     thFilt.hide();
@@ -1175,7 +1187,7 @@ var Component = {
 
 
                 tr.append(th);
-                if (global_var.current_modal !== 'loadLivePrototype') {
+                if (global_var.current_modal !== 'loadLivePrototype' ) {
                     trFilter.append(thFilt);
                 }
 
@@ -1343,9 +1355,9 @@ var Component = {
                             td12.append("<span class='btn btn-light single-row-column-filter-button btn-sm'><i class='fas fa-filter'></i></span>");
                             td12.addClass("position-relative");
                         }
-                     } catch (error) {
-                         
-                     }
+                    } catch (error) {
+
+                    }
 
                     tr.append(td12);
                 }
@@ -1361,78 +1373,78 @@ var Component = {
             loadTableFIlterInside();
             return tbody;
         },
-        GenFilterBodyForInputTable: function (tableId, comp,tabDepId) {
+        GenFilterBodyForInputTable: function (tableId, comp, tabDepId) {
 
             try {
                 if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
                     return $("<div>")
-           .addClass("modal fade")
-           .attr("id",'cheweek-modal-filter'+tableId)
-           .attr("tabindex",'-1')
-           .attr("role",'dialog')
-           .attr("aria-labelledby","cheweek-modal-filterLabel")
-           .attr("aria-hidden","true")
-           .append($("<div>")
-                         .addClass("modal-dialog")
-                         .attr('role','document')
-                         .attr('style',"max-width: 45% !important")
-                         .append($("<div>")
-                                     .attr("style",'padding: 5px 10px;')
-                                     .addClass('modal-header')
-                                     .append("<b>Ətraflı Filtr</b>")
-                                     .append('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>'))
-                        .append($("<div>")
-                                        .addClass('modal-body d-flex')
-                                        .append($("<div>")
-                                                     .addClass("col-3")
-                                                   .append($("<div>")
-                                                             .addClass("table-show-hide-row-div")
-                                                           .attr("data-tableId", comp.id)
-                                                       
-                                        .append($("<div>")
-                                                .addClass('col-12 p-2 form-group')
-                                                .append($("<div>").hide()
-                                                        .addClass('input-group date')
-                                                        .attr("id", 'datetimepicker10')
-                                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
-                                                        .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
-                                                        .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
-                                                        )
-                
-                
-                                                )
-                                        .append($("<div>")
-                                                .addClass('col-12 p-2 form-group')
-                                                .append($("<div>").addClass("btn-group")
-/*                                                 .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
-                                                 .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>') */
-                                                .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
-                                                .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
-                                                )
-                
-                
-                                                )
-                                        .append(this.GenInputTableShowHideHtml(tableId, comp)))
-                                        )
-                                        .append($("<div>")
-                                                         .addClass("col-9 table-advanced-filter-section-div")
-                                                         .attr("id",'table-advanced-filter-section-div'+tableId)
-                                                         .append($("<div>").addClass("component-section-row"))))
-                        
-                                     )
-                
-    
-                            
-    
+                            .addClass("modal fade")
+                            .attr("id", 'cheweek-modal-filter' + tableId)
+                            .attr("tabindex", '-1')
+                            .attr("role", 'dialog')
+                            .attr("aria-labelledby", "cheweek-modal-filterLabel")
+                            .attr("aria-hidden", "true")
+                            .append($("<div>")
+                                    .addClass("modal-dialog")
+                                    .attr('role', 'document')
+                                    .attr('style', "max-width: 45% !important")
+                                    .append($("<div>")
+                                            .attr("style", 'padding: 5px 10px;')
+                                            .addClass('modal-header')
+                                            .append("<b>Ətraflı Filtr</b>")
+                                            .append('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>'))
+                                    .append($("<div>")
+                                            .addClass('modal-body d-flex')
+                                            .append($("<div>")
+                                                    .addClass("col-3")
+                                                    .append($("<div>")
+                                                            .addClass("table-show-hide-row-div")
+                                                            .attr("data-tableId", comp.id)
+
+                                                            .append($("<div>")
+                                                                    .addClass('col-12 p-2 form-group')
+                                                                    .append($("<div>").hide()
+                                                                            .addClass('input-group date')
+                                                                            .attr("id", 'datetimepicker10')
+                                                                            .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel_new">New</button>')
+                                                                            .append('<button  data-api-tabid="' + tableId + '" class="btn col-6 btn-light" id="file_export_excel">Export</button>')
+                                                                            .append('<input type="file" data-api-tabid="' + tableId + '" class="form-control form-control-sm" id="file_excel_import">')
+                                                                            )
+
+
+                                                                    )
+                                                            .append($("<div>")
+                                                                    .addClass('col-12 p-2 form-group')
+                                                                    .append($("<div>").addClass("btn-group")
+                                                                            /*                                                 .append('<span class="btn btn-sm btn-light" id="filter-show-hide-button-id-a"><i class="fas fa-filter"></i></span>')
+                                                                             .append('<span class="btn btn-sm btn-light" id="import-excel-button-id-a"><i class="fas fa-file-excel"></i></span>') */
+                                                                            .append('<span class="btn btn-sm btn-light" id="show-table-row-btn"><i class="fas fa-eye"></i></span>')
+                                                                            .append('<span class="btn btn-sm btn-light " id="hide-table-row-btn"><i class="fas fa-eye-slash"></i></span>')
+                                                                            )
+
+
+                                                                    )
+                                                            .append(this.GenInputTableShowHideHtml(tableId, comp)))
+                                                    )
+                                            .append($("<div>")
+                                                    .addClass("col-9 table-advanced-filter-section-div")
+                                                    .attr("id", 'table-advanced-filter-section-div' + tableId)
+                                                    .append($("<div>").addClass("component-section-row"))))
+
+                                    )
+
+
+
+
                 }
 
-            
+
             } catch (error) {
-    
+
             }
-          
+
         },
-        GenFilterBodyForTableColumn: function (tableId, comp,tabDepId) {
+        GenFilterBodyForTableColumn: function (tableId, comp, tabDepId) {
 
             try {
                 if (cr_input_comp_attribute_kv[comp.id]['sa-advanced-filter-active']) {
@@ -1440,7 +1452,7 @@ var Component = {
                             .attr("data-tableId", tableId)
                             .attr("data-compIdTab", comp.id)
                             .addClass("table-column-show-hide-row-div table-filter-block-draggable")
-                            .attr("id","table-column-filter-details-id")
+                            .attr("id", "table-column-filter-details-id")
                             .append($("<span>")
                                     .attr("id", 'table-column-filter-details-span')
                                     .addClass("table-show-hide-button-class-close")
@@ -1449,67 +1461,67 @@ var Component = {
                             .append($("<div>")
                                     .addClass("col-10 p-2")
                                     .append($("<div>").addClass("btn-group float-right get-api-id")
-                                                  .append('<span class="btn btn-sm btn-light table-show-hide-button-id-second" d data-tabid="'+tableId+'"><i class="fas fa-cog" aria-hidden="true"></i></span>')
-                                                  .append('<span class="btn btn-sm btn-light" id="group-data-table-btm-single"><i class="fas fa-layer-group"></i></span>')
-                                                  )
-    
+                                            .append('<span class="btn btn-sm btn-light table-show-hide-button-id-second" d data-tabid="' + tableId + '"><i class="fas fa-cog" aria-hidden="true"></i></span>')
+                                            .append('<span class="btn btn-sm btn-light" id="group-data-table-btm-single"><i class="fas fa-layer-group"></i></span>')
+                                            )
+
                                     .append("<span class='btn btn-sm nm-filed-column'></span>")
-    
+
                                     )
-                                    .append("<hr>")
+                            .append("<hr>")
                             .append($("<ul>")
                                     .addClass('col-12  ms-ContextualMenu-list')
                                     .append($('<li class="ms-ContextualMenu-item sort-by-az-fortable ">')
-                                             .append($("<button>")
-                                                     .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down"></i></span>')
-                                                     .append("A-dan Z-yə qədər çeşidləyin")))                                
+                                            .append($("<button>")
+                                                    .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down"></i></span>')
+                                                    .append("A-dan Z-yə qədər çeşidləyin")))
                                     .append($('<li class="ms-ContextualMenu-item sort-by-za-fortable ">')
-                                             .append($("<button>")
-                                                      .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down-alt"></i></span>')
-                                                     .append("Z-dən A-ya qədər çeşidləyin")))                                
+                                            .append($("<button>")
+                                                    .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-sort-alpha-down-alt"></i></span>')
+                                                    .append("Z-dən A-ya qədər çeşidləyin")))
                                     .append($('<li class="ms-ContextualMenu-item ">')
-                                             .append($('<button type="button"  data-toggle="modal" data-target="#filter-for-table-modal-comp" >')
-                                                      .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-text-height"></i></span>')
-                                                     .append("Mətn Filtrləri")))                                
+                                            .append($('<button type="button"  data-toggle="modal" data-target="#filter-for-table-modal-comp" >')
+                                                    .append('<span style="padding: 0px 10px 0px 0px;"><i class="fas fa-text-height"></i></span>')
+                                                    .append("Mətn Filtrləri")))
                                     )
                             .append("<hr>")
-                           /*  .append($("<div>")
-                                      .addClass('col-12 p-2 d-flex flex-wrap form-group')
-                                      .append("<span class='col-12'>Ətraflı filter</span>")
-                                      .append($("<select>").addClass("form-control form-control-sm col-6")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               )
-                                      .append($("<select>").addClass("form-control form-control-sm col-6")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               .append("<option>jkshfjhsdj</option>")
-                                               )
-                               )
-                               .append("<hr>") */
+                            /*  .append($("<div>")
+                             .addClass('col-12 p-2 d-flex flex-wrap form-group')
+                             .append("<span class='col-12'>Ətraflı filter</span>")
+                             .append($("<select>").addClass("form-control form-control-sm col-6")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             )
+                             .append($("<select>").addClass("form-control form-control-sm col-6")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             .append("<option>jkshfjhsdj</option>")
+                             )
+                             )
+                             .append("<hr>") */
                             .append($("<div>")
                                     .addClass('col-12 p-2 form-group')
                                     .append($("<div>")
                                             .addClass('input-group ')
-                                            .attr("data-apiId",tabDepId)
+                                            .attr("data-apiId", tabDepId)
                                             .attr("id", 'filter-single-colmn-selectpicker')))
-                                                
-    
+
+
                 }
 
-            
+
             } catch (error) {
-    
+
             }
-          
+
         }
 
     },
     InputTable: function (comp) {
-        var elDiv = (global_var.current_modal === 'loadLivePrototype'
+        var elDiv = (global_var.current_modal === 'loadLivePrototype'  
                 && comp.showProperties) ?
                 $('<div class="col-lg-12 text-right">')
                 .attr("id", "comp_id_" + comp.id)
@@ -1559,21 +1571,21 @@ var Component = {
         Component.ComponentEvent.Init(el, comp);
         var div = Component.ContainerDiv(comp);
         div.removeClass("component-class")
-                       .removeAttr("onclick");
+                .removeAttr("onclick");
 
-        div.append($('<div>').addClass("progressloader loaderTable1"));
+//        div.append($('<div>').addClass("progressloader loaderTable1"));
 
         div.append(el);
         div.addClass("table-responsive");
-             
-         div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp,tabDepId));
-         div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp,tabDepId));
-         div.append($("<span>")
-                     .addClass("btn btn-sm btn-light modal-inside-table-expand position-absolute top-0 right-0") 
-                     .css("top",'0')
-                     .css("right",'0')
-                     .css("z-index",'22')
-                    .append('<i class="fas fa-expand"></i>'))
+
+        div.append(this.InputTableAction.GenFilterBodyForInputTable(tableId, comp, tabDepId));
+        div.append(this.InputTableAction.GenFilterBodyForTableColumn(tableId, comp, tabDepId));
+        div.append($("<span>")
+                .addClass("btn btn-sm btn-light modal-inside-table-expand position-absolute top-0 right-0")
+                .css("top", '0')
+                .css("right", '0')
+                .css("z-index", '22')
+                .append('<i class="fas fa-expand"></i>'))
 
         return $('<div></div>').append(div).html();
     },
@@ -1687,7 +1699,7 @@ var Component = {
                     .attr("onclick", "addUserStoryToTabModal('" + comp.fkInputTableId + "')")
         },
         GenPropertiesLine: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
                     .css("padding-top", "15px")
@@ -1763,13 +1775,13 @@ var Component = {
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<a href="#">')
                         .addClass('component-class')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
                                 "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append(replaceTags(inputName))
 
                 var color = showComponent[i].trim() === '1' ? "#2196F3" : "#d5d6da";
-                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -2504,7 +2516,7 @@ var Component = {
             return div.html();
         },
         GroupHeader: function (comp) {
-            return (global_var.current_modal === 'loadLivePrototype'
+            return (global_var.current_modal === 'loadLivePrototype'  
                     && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
@@ -2577,7 +2589,7 @@ var Component = {
             }
         },
         GetPropertiesSection: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .addClass("live-prototype-component-properties")
                     //                    .css("display", "none")
