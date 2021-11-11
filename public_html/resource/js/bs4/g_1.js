@@ -2404,7 +2404,7 @@ $(document).ready(function () {
     });
 
 
-    // MAIN NAV MENU
+    // MAIN NAV MENU ON
     $('.sa-navmenu .sub-menu ul').hide();
     $(document).on('click', ".sub-menu a", function (e) {
         $(this).closest(".sub-menu").toggleClass("active");
@@ -2424,4 +2424,46 @@ $(document).ready(function () {
     $(document).on('click', ".sa-navmenu.active label.menu__btn", function (e) {
         $('.sub-menu a.url-active').click();
     });
+ // MAIN NAV MENU OFF
+
+// STORE CARD RIGT SIDEBAR ON
+    $(document).on("change", "#user-story-status", function (e) {
+        $('.all-cs-status span').removeClass();
+        var cs_status_select = $('#user-story-status').val();
+    
+        run_status = cs_status_select;
+        switch (run_status) {
+                case 'new':
+                    class_status = 'new';
+                break;
+                case 'ongoing':
+                    class_status = 'ongoing';
+                break;
+                case 'closed':
+                    class_status = 'closed';
+                break;
+            }
+            if (class_status){
+                 $('.all-cs-status span').addClass("s-status cs-status-" + class_status);
+            }
+    });
+    // STORE CARD RIGT SIDEBAR OFF
+    $(document).on("change", "#user-story-sc-task-box", function (e) {
+        if($('#user-story-sc-task-box').is(':checked')) {
+            $('.checkout-related-issues').addClass('showTasks');
+            $('.checkout-related-issues').show();
+        }else{
+            $('.checkout-related-issues').removeClass('showTasks');
+            $('.checkout-related-issues').hide();
+        }
+    });
+    $(document).on("click", ".sc-close-sidebar-btn", function (e) {
+        $('#storyCardRightMenu').removeClass('isOpenSB');
+        $('#storyCardRightMenu').addClass('isCloseSB');
+    });
+    $(document).on("click", ".sc-open-sidebar-btn", function (e) {
+        $('#storyCardRightMenu').removeClass('isCloseSB');
+        $('#storyCardRightMenu').addClass('isOpenSB');
+    });
 })
+

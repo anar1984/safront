@@ -21,9 +21,9 @@
         </div>
     </div>
 
-    <div class="cs-col-storecard-general-setting" style="display: none;">
-        <div class="copy-move-print">
-            <button class="btn newin dropdown-toggle fa fa-ellipsis-h" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>
+    <div class="cs-col-storecard-general-setting">
+        <div class="scg-button-box form-control">
+            <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-wrench" style=" margin-right: 6px; color: #fff;"></i> Tools</button>
             <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
                 <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Story Card</a></button>  <!-- 20.08.2020 -->
                 <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
@@ -346,6 +346,8 @@
     <!-- old class name: storyCard-right-menu -->
     <div class="col-sm-3 col-lg-3 col-xl-3" id="storyCardRightMenu"> 
         <div class="storecard-sidebar-headline">
+            <div class="sc-close-sidebar-btn"><i class="fas fa-times"></i></div>
+            <div class="sc-open-sidebar-btn"><i class="fas fa-bars"></i></div>
             <span>Description Options</span>
         </div>
         <div class="storecard-sidebarin">
@@ -379,9 +381,9 @@
                         </select>
                       </div>
                     <div class="cs-forum-group col-6">
-                        <label class="cs-label-name">Attach File </label>
-                        <a href="#" class="cs-attach-a attachA" data-toggle="modal" data-target="#setStoryCardUploadImageModal" onclick="new UserStory().setStoryCardUploadImage()">
-                            <i  class="fa fa-paperclip attach" aria-hidden="true"></i><span>Choose file</span>
+                        <!-- <label class="cs-label-name">Attach File </label> -->
+                        <a href="#" class="cs-attach-a attachA" data-toggle="modal" data-target="#setStoryCardUploadImageModal" onclick="new UserStory().setStoryCardUploadImage()" style=" margin-top: 37px;">
+                            <i  class="fa fa-paperclip attach" aria-hidden="true"></i><span>Attach File</span>
                         </a>
                     </div>
                 </div>
@@ -503,7 +505,7 @@
             </div>
         
             <div class="cs-forum-group col-12 Assigne-card-story1" style="z-index: 1000;">
-                <label class="cs-label-name">Created By </label>
+                 <label class="cs-label-name">Created By: <span class="by-last-updated"><span class="story_card_created_date"></span> / <span class="story_card_created_time"></span></label>
                 <div class="Assigne-card-story-select form-control">
                     <div id='story-card-createdby'>
                         <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
@@ -511,8 +513,17 @@
                     </div>
                </div>
             </div>
+            <div class="cs-forum-group col-12 Assigne-card-story1 mt-3" style="z-index: 1000;">
+                <label class="cs-label-name">Updated By: <span class="by-last-updated"><span class="story_card_updated_updated"></span> / <span class="story_card_updated_time"></span></span></label>
+                <div class="Assigne-card-story-select form-control">
+                    <div id='story-card-updatedby'>
+                        <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
+                        <span id='story-card-createdby-name' class="Assigne-card-story-select-name">Unassigned</span>
+                    </div>
+               </div>
+            </div>
             
-            <div class="cs-forum-group col-12 Assigne-card-story" style="z-index: 1000;">
+            <div class="cs-forum-group col-12 Assigne-card-story mt-3" style="z-index: 1000;">
                 <label class="cs-label-name">Owner </label>
                 <div class="Assigne-card-story-select form-control">
                     <div id='story-card-owner'>
@@ -520,14 +531,25 @@
                         <span id='story-card-owner-name' class="Assigne-card-story-select-name">Unassigned</span>
                     </div>
                     <input type="search" class="Assigne-card-story-search form-control" >
-                    <div class="Assigne-card-story-select-content " id='story-card-owner-list'>
+                    <div class="Assigne-card-story-select-content pr-0 pl-0" id='story-card-owner-list'>
                     </div>
                 </div>
             </div>
-                
-            <div class="col-12">
-                <div class="cs-forum-group mt-3">
-                  <label class="cs-label-name">Related Issue(s) </label>
+
+             <div class="col-12 mt-4">
+                <hr class="hr-ss">
+                <div class="cs-forum-group">
+                    <div class="cs-sc-task-box">
+                        <div>
+                            <h3>Tasks | Related Issue(s)</h3>
+                        </div>
+                        <div>
+                            <label class="switch prototype-cls" style="right:0;">
+                                <input type="checkbox" id="user-story-sc-task-box" class="user-story-prototype-change1">
+                                <span class="slider round hide-off is-api-switch"></a></span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="checkout-related-issues">
                             <b pid="20112612464604063033" class="cs-all-task task-for-backlog-event stat_group_title mt-2" 
                             action='overall' status='total'
@@ -634,7 +656,10 @@
                    </div>
                 </div>                
             </div>
-        
+            
+            <div class="col-12">
+                <hr class="hr-ss">
+            </div>
             
             <div class="right-menu-description col-12 mt-3">
                 <div id="storycard_dependentapi" class="cs-forum-group">

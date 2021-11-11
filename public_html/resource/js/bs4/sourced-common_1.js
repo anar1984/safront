@@ -19439,6 +19439,18 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
+
+        var ido = SACore.GetCurrentBacklogId();
+
+        var created_date = SACore.GetBacklogDetails(ido,'createdDate')
+        $(".story_card_created_date").text(Utility.convertDate(created_date));
+        var created_time = SACore.GetBacklogDetails(ido,'createdTime')
+        $(".story_card_created_time").text(Utility.convertTime(created_time));
+
+        var updated_date = SACore.GetBacklogDetails(ido,'updatedDate')
+        $(".story_card_updated_updated").text(Utility.convertDate(updated_date));
+        var updated_time = SACore.GetBacklogDetails(ido,'updatedTime')
+        $(".story_card_updated_time").text(Utility.convertTime(updated_time));
         
         $('.all-cs-status span').removeClass();
         var def_status_select = $('#user-story-status').val();
@@ -27987,24 +27999,3 @@ function setColoredToInputDesc(el, ids, color) {
         }
     });
 }
-
-$(document).on("change", "#user-story-status", function (e) {
-    $('.all-cs-status span').removeClass();
-    var cs_status_select = $('#user-story-status').val();
-
-    run_status = cs_status_select;
-    switch (run_status) {
-            case 'new':
-                class_status = 'new';
-            break;
-            case 'ongoing':
-                class_status = 'ongoing';
-            break;
-            case 'closed':
-                class_status = 'closed';
-            break;
-        }
-        if (class_status){
-             $('.all-cs-status span').addClass("s-status cs-status-" + class_status);
-        }
-});

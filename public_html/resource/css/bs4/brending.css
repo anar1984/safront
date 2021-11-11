@@ -3073,12 +3073,12 @@ span.convertedTextAreaLinesItem {
 }
 /* StroryCard Sidebar */
 .storecard-sidebar-headline {
-
+    position: relative;
 }
 .storecard-sidebar-headline span{
     background: #272B7C;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
     color: #fff;
     padding: 10px;
     display: block;
@@ -3195,16 +3195,16 @@ hr.hr-ss {
     background: #525596;
 }
 
-.storecard-sidebarin .prototype-on-off, .storecard-sidebarin .history-on-off {
+.storecard-sidebarin .prototype-on-off, .storecard-sidebarin .history-on-off, .storecard-sidebarin .cs-sc-task-box {
    width: 100%;
    display: inline-block;
    margin-top: 20px;
 }
-.storecard-sidebarin .prototype-on-off>div, .storecard-sidebarin .history-on-off>div {
+.storecard-sidebarin .prototype-on-off>div, .storecard-sidebarin .history-on-off>div, .storecard-sidebarin .cs-sc-task-box>div {
    width: 50%;
    float: left;
 }
-.storecard-sidebarin .prototype-on-off h3, .storecard-sidebarin .history-on-off h3 {
+.storecard-sidebarin .prototype-on-off h3, .storecard-sidebarin .history-on-off h3, .storecard-sidebarin .cs-sc-task-box h3 {
     font-size: 14px;
     color: #E9E9F1;
     font-weight: 400;
@@ -3250,15 +3250,31 @@ hr.hr-ss {
     font-size: 14px;
     width: 100%;
 }
+.checkout-related-issues {
+    display: none;
+}
+.checkout-related-issues.showTasks {
+    display: block;
+}
 .storecard-sidebarin .cs-all-task {
-    color: #E9E9F1;
+    color: #E9E9F1 !important;
     font-size: 14px;
     width: 100%;
     font-weight: 400;
+    border: 1px solid #6264a0;
+    background: #6264a0;
+    padding: 0px 7px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+.storecard-sidebarin .cs-all-task:hover {
+    border-color: #6d6fb7;
+    background: #6d6fb7;
 }
 .storecard-sidebarin .task-fbe-box {
  background: rgb(190 191 215 / 15%);
  padding: 10px 10px;
+ margin-bottom: 15px;
 }
 .storecard-sidebarin .btso-title-name {
     color: #E9E9F1;
@@ -3300,12 +3316,24 @@ hr.hr-ss {
     color: #fff;
     border-radius: 3px;
 }
-
+.storecard-sidebarin .task-fbe-box .task-for-backlog-event:hover {
+    background: #272b7c;
+}
 .storecard-header-nav-section {
     background-color: #525596;
     border-bottom: 1px solid #272B7C;
     border-top: 1px solid #272B7C;
     color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+}
+.modal.show .storecard-header-nav-section {
+    z-index:auto;
+    position: relative;
+}
+.modal.show #storyCardRightMenu {
+    margin-top: 30px;
 }
 .storecard-header-nav-section .mm-title {
     font-size: 14px;
@@ -3344,11 +3372,61 @@ hr.hr-ss {
 .storecard-header-nav-section .cs-col-project {
   border-left: 1px solid #272b7c;
   border-right: 1px solid #272b7c;
-  padding-left: 18px;
+  padding-left: 12px;
+  padding-right: 0;
 }
 .storecard-header-nav-section .cs-col-storecard {
     border-right: 1px solid #272b7c;
-    padding-left: 10px;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+.cs-col-storecard-general-setting .scg-button-box {
+    padding:0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    height: 100%;
+}
+
+.storecard-header-nav-section .scg-button-box > button {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.storecard-header-nav-section .scg-button-box > button {
+    background-color: #525596;
+    border-color: #525596;
+    border-radius: 0;
+    color: rgb(255 255 255 / 70%);
+    font-size: 14px;
+    box-shadow: none !important;
+}
+.storecard-header-nav-section .scg-button-box > button:after {
+    font-weight: 400;
+    font-size: 11px;
+}
+.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #272b7c;
+    border-color: #272b7c;
+}
+.Assigne-card-story1 .by-last-updated {
+    float: right;
 }
 .cs-forum-group .cs-attach-a {
     font-size: 14px;
@@ -3422,8 +3500,62 @@ hr.hr-ss {
     padding: 10px;
     border-top: none;
 }
+.storecard-sidebarin .owner-content-user:hover {
+    background-color: #272b7c;
+}
 .storecard-sidebarin .Assigne-card-story-select > div {
     padding: 0 10px;
+}
+.storecard-sidebarin .right-menu-description span:nth-child(2) {
+    font-size: 14px;
+    color: rgb(255 255 255);
+}
+.print-container.page-content {
+ padding-top: 37px;
+ transition: margin-left .5s;
+}
+#storyCardRightMenu {
+    margin-top: 37px;
+    margin-right: 0;
+}
+#storyCardRightMenu.isCloseSB {
+    margin-right: -350px;
+}
+.sc-close-sidebar-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 0;
+    color: #fff;
+    width: 40px;
+    padding: 10px;
+    text-align: center;
+    border-left: 1px solid rgb(82 85 150 / 60%);
+    cursor: pointer;
+}
+.sc-open-sidebar-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: -40px;
+    color: #fff;
+    background: #272b7c;
+    width: 40px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: none;
+}
+.isCloseSB .sc-open-sidebar-btn {
+    display: block;
+}
+.sc-close-sidebar-btn i {
+
+}
+#storyCardRightMenu {
+    -ms-flex: 0 0 370px;
+    flex: 0 0 370px;
+    max-width: 370px;
 }
 /* Run Services */
 .run-services-wrapper {

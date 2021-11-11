@@ -13293,6 +13293,7 @@ function loadStoryCardInfo4StoryCard(el) {
     loadUsersAsOwner();
     setStoryCardOwner();
     setStoryCardCreatedBy();
+    setStoryCardUpdatedBy();
 }
 
 
@@ -14865,6 +14866,19 @@ function setStoryCardCreatedBy() {
             ' Unassigned';
     $('#story-card-createdby').find('img').attr('src', img);
     $('#story-card-createdby').find('span').html(' ' + userName1);
+}
+function setStoryCardUpdatedBy() {
+    var updatedBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "updatedBy");
+    var userImage = SAProjectUser.GetDetails(updatedBy, "userImage");
+    var userName = SAProjectUser.GetDetails(updatedBy, "userName");
+    var img = (userImage) ?
+            fileUrl(userImage) :
+            fileUrl(new User().getDefaultUserprofileName());
+    var userName1 = (userName) ?
+            userName :
+            ' Unassigned';
+    $('#story-card-updatedby').find('img').attr('src', img);
+    $('#story-card-updatedby').find('span').html(' ' + userName1);
 }
 
 function toggleNewUserStory4Section(el) {
