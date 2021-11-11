@@ -270,7 +270,13 @@ var cheweek = {
     genCountNotification: function () {
         try {
             var count = be.callApi("21092414280609718466");
-            $(".number_cst_elc").show().text(count.id);
+            if (count.id==="0") {
+                $(".number_cst_elc").hide();
+                return 
+            }else{
+                $(".number_cst_elc").show().text(count.id);
+            }
+           
         } catch (error) {
             $(".number_cst_elc").hide()
         }

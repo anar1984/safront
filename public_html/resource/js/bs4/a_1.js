@@ -12514,6 +12514,10 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
     });
 }
 
+
+
+
+
 function loadApiListOnProjectSelect4Ipo(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
 
@@ -22328,7 +22332,9 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
             .attr('pid', id)
             .append($("<div>")
                     .addClass("cs-cart-head-title p-2")
-                    .append(tasktype))
+                    .append(tasktype)
+                    .append($("<span class='brend-color large-blok-icon'>")
+                              .html('<i class="fas fa-columns"></i>')))
             .append(`<div class="cs-task-card-body pl-2 pr-2"">
                        <div class="cs-task-card-desc">
 
