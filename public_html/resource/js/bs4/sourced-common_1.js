@@ -11780,6 +11780,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             
              $('.input_event_type').val(res.tbl[0].r[0].actionType);
             $('#liveProActionType').val(res.tbl[0].r[0].sectionType);
+            $('#liveProSendApiType').val(res.tbl[0].r[0].sendApiType);
             $('.liveProActionTypeAll').hide();
             var val24 = res.tbl[0].r[0].sectionType;
             if (val24 === 'api') {

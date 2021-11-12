@@ -616,6 +616,8 @@ function initZadShey(projectId){
 }
 
 
+ 
+
 function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
 

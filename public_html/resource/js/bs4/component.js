@@ -200,12 +200,12 @@ var Component = {
             if (SAInput.getInputDetails(comp.id, "sectionType") === 'toggle') {
                 if (SAInput.getInputDetails(comp.id, "actionType") === 'change') {
                     el.addClass('hasInputManualEventActionChange')
-                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick'){
-                     el.addClass('hasInputManualEventActionDblClick')
-                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'click'){
-                     el.addClass('hasInputManualEventActionClick')
-                }else{
-                     el.addClass('hasInputManualEventActionChange')
+                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick') {
+                    el.addClass('hasInputManualEventActionDblClick')
+                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'click') {
+                    el.addClass('hasInputManualEventActionClick')
+                } else {
+                    el.addClass('hasInputManualEventActionChange')
                 }
             }
 
@@ -225,6 +225,9 @@ var Component = {
             } else if (comp.action === 'delete') {
                 Component.ComponentEvent.getDeleteEvent(el, comp);
             }
+
+            //add action send api type
+            el.attr('sendApiType', SAInput.getInputDetails(comp.id, "sendApiType"));
         },
         addClassToElement: function (el, comp) {
 
@@ -238,7 +241,7 @@ var Component = {
                         className = className.replace(".", "");
                         el.addClass(className);
 
-                        if (global_var.current_modal === 'loadLivePrototype'  && 
+                        if (global_var.current_modal === 'loadLivePrototype' &&
                                 (className === 'sa-onloadclick' || className === 'sa-onloadchange' ||
                                         className === 'sa-onloadclick-async' || className === 'sa-onloadchange-async')) {
                             el.addClass('init-on-loader')
@@ -356,15 +359,15 @@ var Component = {
                 .attr('id', comp.id)
                 .attr('pid', comp.id)
 
-                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'resize1' : "")
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'resize1' : "")
                 //                .addClass('popup')
                 .addClass(comp.addTooltip ? 'tooltipMan' : "") //muveqqeti baglayaq
                 .addClass('component-class')
                 .addClass('component-container-dashed')
                 .addClass('col-lg-' + comp.cellNo);
 
-        if (global_var.current_modal === 'loadLivePrototype'  ) {
+        if (global_var.current_modal === 'loadLivePrototype') {
             div.attr('ondragover', 'allowDrop(event)')
                     .attr('ondragstart', 'drag(event)')
                     .attr('ondrop', 'drop(event)')
@@ -425,11 +428,11 @@ var Component = {
         //                : "")
 
         if (comp.hasOnClickEvent) {
-            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
+            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                     'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
                     "")
 
-            if (global_var.current_modal === 'loadLivePrototype'   ) {
+            if (global_var.current_modal === 'loadLivePrototype') {
 
                 div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
                         .append(`<div style='display:inline-block;' class="dropdown">
@@ -862,8 +865,8 @@ var Component = {
                         .attr('pid', inputId)
                         .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                        .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
+                        .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                                 "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append("<input data-check=" + inputId + " checked='true' type='checkbox'>")
@@ -900,7 +903,7 @@ var Component = {
                 //                    .append(showInTree, ' ')
                 ;
 
-                if (global_var.current_modal !== 'loadLivePrototype'   &&
+                if (global_var.current_modal !== 'loadLivePrototype' &&
                         pairShowColumn[inputId].trim() === '1') {
                     th.empty().hide();
 
@@ -1001,9 +1004,10 @@ var Component = {
                             .attr('id', inputId)
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+                            
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                                     "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                     "")
                     var checkAll
@@ -1034,8 +1038,8 @@ var Component = {
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                                     "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                     "")
                             .append(replaceTags(inputName))
@@ -1047,7 +1051,7 @@ var Component = {
                 //                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
 
 
-                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1055,7 +1059,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumn = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showColumn = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-eye" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1063,7 +1067,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnEntireComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumnName = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showColumnName = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-cubes" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1079,16 +1083,27 @@ var Component = {
                 //                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
                 //                    "";
 
+                var selectedFieldTemp = "";
+                try {
+                    selectedFieldTemp = cr_input_comp_attribute_kv[inputId]['sa-selectedfield'];
+                } catch (err) {
+                }
 
-
+                var hascomponentclicked = pair[inputId].trim() === '1' ? "hascomponentclicked" :"";
+                var componentIsHeaden = pairShowColumn[inputId].trim() === '1' ? "componentisheaden" :"";
                 var th = $("<th>")
+                        .addClass('selectablezad')
+                        .addClass(hascomponentclicked)
+                        .addClass(componentIsHeaden)
                         .addClass("text-center")
+                        .attr('sa-selectedfield-header',selectedFieldTemp)
+                        .attr('pid',inputId)
                         //                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp, ' ')
                         .append(showColumn, ' ')
                         .append(showColumnName, ' ')
-                if (global_var.current_modal !== 'loadLivePrototype'   ) {
+                if (global_var.current_modal !== 'loadLivePrototype') {
                     try {
                         th.append((a === '') ? "" : "<span class='handle-drag'></span>");
 
@@ -1145,10 +1160,7 @@ var Component = {
                             .attr('filter-id', inputId))
                 }
 
-
-
-
-                if (global_var.current_modal !== 'loadLivePrototype'   && 
+                if (global_var.current_modal !== 'loadLivePrototype' &&
                         pairShowColumn[inputId].trim() === '1') {
                     th.hide();
                     thFilt.hide();
@@ -1182,12 +1194,8 @@ var Component = {
                 } catch (err) {
                 }
 
-
-
-
-
                 tr.append(th);
-                if (global_var.current_modal !== 'loadLivePrototype' ) {
+                if (global_var.current_modal !== 'loadLivePrototype') {
                     trFilter.append(thFilt);
                 }
 
@@ -1521,7 +1529,7 @@ var Component = {
 
     },
     InputTable: function (comp) {
-        var elDiv = (global_var.current_modal === 'loadLivePrototype'  
+        var elDiv = (global_var.current_modal === 'loadLivePrototype'
                 && comp.showProperties) ?
                 $('<div class="col-lg-12 text-right">')
                 .attr("id", "comp_id_" + comp.id)
@@ -1699,7 +1707,7 @@ var Component = {
                     .attr("onclick", "addUserStoryToTabModal('" + comp.fkInputTableId + "')")
         },
         GenPropertiesLine: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
                     .css("padding-top", "15px")
@@ -1775,13 +1783,13 @@ var Component = {
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<a href="#">')
                         .addClass('component-class')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
                                 "new UserStory().setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append(replaceTags(inputName))
 
                 var color = showComponent[i].trim() === '1' ? "#2196F3" : "#d5d6da";
-                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -2516,7 +2524,7 @@ var Component = {
             return div.html();
         },
         GroupHeader: function (comp) {
-            return (global_var.current_modal === 'loadLivePrototype'  
+            return (global_var.current_modal === 'loadLivePrototype'
                     && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
@@ -2589,7 +2597,7 @@ var Component = {
             }
         },
         GetPropertiesSection: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .addClass("live-prototype-component-properties")
                     //                    .css("display", "none")

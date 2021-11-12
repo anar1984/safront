@@ -1022,7 +1022,7 @@
                         </li>
                         <li class="nav-item gui-design-is-api" id="animation-icon" >
                             <a class="nav-link nav-link-custom tool-item" 
-                               onclick="fillRelatedApi4InputEvent('ipo-tab-setting-animation')" 
+                               onclick="" 
                                data-toggle="tab" href="#ipo-tab-setting-animation" >
                                 <i class="fab fa-asymmetrik"></i>
                                 <br>
@@ -1144,7 +1144,7 @@
                                                 <a href="#"   style="color:#000000;font-size:14px;padding:0px;"
                                                    data-toggle="modal" 
                                                    data-target="#addExistingRelationModal" 
-                                                   onclick="new UserStory().addExistingRelationByCurrentInput(this)">
+                                                   onclick=" addExistingRelationByCurrentInput(this)">
                                                     + Add Related Columns</a><br>
                                                 <span class="relatedSUSOutputName"></span>
                                                 <span class="relatedUserStory">(<a href="#" onclick="new UserStory().redirectUserStoryCore('')"></a>)</span>
@@ -1245,6 +1245,11 @@
                                                     <select  key='sectionType' id="liveProActionType" class="inputActionTypeChangeZadSheyOOO">
                                                         <option value='api'>Call API</option>
                                                         <option value='toggle'>Toggle</option> 
+
+                                                    </select>
+                                                     <select  key='sendApiType' id="liveProSendApiType" class="inputActionTypeChangeZadSheyOOO">
+                                                        <option value='front'>Call from Frontend</option>
+                                                        <option value='back'>Call from Backend</option> 
 
                                                     </select>
                                                     <div class='liveProActionTypeApi liveProActionTypeAll'>

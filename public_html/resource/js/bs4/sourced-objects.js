@@ -1145,10 +1145,12 @@ var SACore = {
         return this.GetDescriptionSourced(global_var.current_backlog_id);
     },
     GetBacklogname: function (backlogId) {
+        loadBacklogDetailsByIdIfNotExist(backlogId)
         var res = "";
         try {
             res = this.Backlogs[backlogId]['backlogName'];
             res = replaceTag(res);
+            
         } catch (err) {
         }
         return res;
@@ -1480,6 +1482,7 @@ var SAInput = {
     "DescriptionId": {},
     "ChildDependenceId": {},
     "LoadedBacklogs4Input": [],
+    "LoadedBacklogs4InputNew": [],
     "LoadedChildDependenceId4Input": [],
     updateInput: function (backlogId, key, value) {
         try {

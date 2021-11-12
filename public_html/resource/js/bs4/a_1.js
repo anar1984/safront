@@ -1529,6 +1529,18 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     }
 
 
+//    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
+        loadBacklogProductionCoreDetailssById(bid);
+//        SAInput.LoadedBacklogs4InputNew.push(bid);
+//    }
+}
+
+function loadBacklogDetailsByIdIfNotExist_old4(bid) {
+    if (!bid) {
+        return;
+    }
+
+
     if (localStorage.getItem('idb_' + bid)) {
 
         var md = '';
@@ -1656,9 +1668,9 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-    global_var.current_modal='';
+    global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
-    global_var.current_modal='loadLivePrototype';
+    global_var.current_modal = 'loadLivePrototype';
 //    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
 }
@@ -1726,7 +1738,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
                 } else {
                     loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
@@ -2192,7 +2204,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
 
                     var selectedField = SAInput.GetInputName(selectFromInputId);
@@ -2247,7 +2259,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selec
 
             loadBacklogProductionDetailsById_resparams(res);
 
-            SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+            SAInput.LoadedBacklogs4InputNew.push(selectFromBacmkogId);
             var selectedField = SAInput.GetInputName(selectFromInputId);
             triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
 
@@ -2391,7 +2403,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
                     carrier.I_am_Execwarder();
                     SourcedDispatcher.Exec(carrier);
@@ -2450,7 +2462,7 @@ function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
                 }
                 localStorage.setItem("idb_" + bid, res.kv.modificationTime);
 
-                SAInput.LoadedBacklogs4Input.push(bid);
+                SAInput.LoadedBacklogs4InputNew.push(bid);
 
                 loadBacklogProductionDetailsById_resparams(res);
 
@@ -4126,6 +4138,7 @@ function copyJsCodeClassTo() {
 }
 
 function loadTableFIlterInside() {
+    return;
 
     var se = masTab.dependingID;
 
@@ -6011,25 +6024,27 @@ function triggerAPI(element, apiId, data) {
     if (data) {
         res = data;
     }
+
     var carrier = new Carrier();
     carrier.setElement(element);
     carrier.setBacklogId(apiId);
     carrier.set("res", res);
 
 
-    if (!ifBacklogInputs4LoaderExistById(apiId)) {
-        showProgress5();
-        carrier.set("res", res);
-        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
-        carrier.setApplier("_TriggerAPI");
-        carrier.I_am_Requirer();
-    } else {
-        carrier.setApplier("_TriggerAPI");
-        carrier.I_am_Execwarder();
-
-    }
+//    if (!ifBacklogInputs4LoaderExistById(apiId)) {
+//        showProgress5();
+//        carrier.set("res", res);
+//        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+//        carrier.setApplier("_TriggerAPI");
+//        carrier.I_am_Requirer();
+//    } else {
+    carrier.setApplier("_TriggerAPI");
+    carrier.I_am_Execwarder();
+//
+//    }
 
     SourcedDispatcher.Exec(carrier);
+
 }
 
 function _TriggerAPI(carrier) {
@@ -6046,13 +6061,25 @@ function _TriggerAPI(carrier) {
 //    var id = $(element).attr('id');
 //    var el = document.getElementById(id);
 
-    var el = element;
-
-    var out = be.callApi(apiId, finalRes, el);
-
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
             SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
             'sync';
+
+    var el = element;
+    var out = "";
+
+    if ($(el).attr('sendapitype') === 'back') {
+        if ($(el).attr('sa-table-load-id')){
+            finalRes['fkRelatedTableId']= $(el).attr('sa-table-load-id');
+            
+        }
+        out = be.callBackendApi(apiId, finalRes, el);
+    } else {
+        out = be.callApi(apiId, finalRes, el);
+    }
+
+
+
     if (async === 'sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
@@ -6456,6 +6483,117 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
     var inpId;
+    var directTableLoaderId = $(el).attr('sa-table-load-id');
+
+    if (directTableLoaderId) {
+        loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit);
+    } else {
+        loadTableOnTriggerAsDefault(el, apiId, data, startLimit);
+
+    }
+}
+
+function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
+    var directTableLoaderId = $(el).attr('sa-table-load-id');
+    var table = $('table#' + directTableLoaderId);
+    var thead = table.find('thead');
+    var selectedfields = data.selectedField;//table.attr('sa-tableselectedfield').split(",");
+    table.find('tbody').html('');
+
+    var obj = data._table.r;
+
+    for (var j = 0; j < obj.length; j++) {
+        var o = obj[j];
+        var tr = $('<tr>').append($('<td>').text((parseInt(startLimit)+j + 1)));
+
+        thead.find("th.selectablezad").each(function (e) {
+            var sfield = $(this).attr("sa-selectedfield-header");
+            var inputId = $(this).attr("pid");
+            var flag = true;
+            var td = $('<td>');
+            var noActionHappened = true;
+            if (sfield){
+                var sfList = sfield.split(',');
+                for (var i in sfList) {
+                    var sf = sfList[i];
+                    if (sf.trim().length === 0) {
+                        continue;
+                    }
+                    if (flag && selectedfields.includes(sf)) {
+                        flag = false;
+
+                        var val = o[sf];
+
+                        if (global_var.current_modal !== 'loadLivePrototype' &&
+                                $(this).hasClass("componentisheaden")) {
+                            td.css('display', 'none');
+                        }
+
+                        if ($(this).hasClass("hascomponentclicked")) {
+                            var comp = new ComponentInfo();
+                            Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+
+                            comp.secondContent = val;
+                            comp.isFromTableNew = true;
+                            comp.isFromTable = true;
+                            comp.tableRowId = "1";
+                            comp.withLabel = false;
+                            comp.hasOnClickEvent = false;
+                            comp.cellNo = "12";
+                            comp.showProperties = false;
+                            comp.rowNo = parseInt(startLimit) + parseInt(j);
+                            val = Component.GetComponentHtmlNew(comp);
+
+                            td.append(val)
+                        } else {
+                            td.css("text-align", "center")
+                            td.text(val);
+                        }
+
+                        tr.append(td);
+                        noActionHappened = false;
+                        break;
+                    }
+                }
+            } else {
+                if ($(this).hasClass("hascomponentclicked")) {
+                    var comp = new ComponentInfo();
+                    Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+
+                    comp.secondContent ="";
+                    comp.isFromTableNew = true;
+                    comp.isFromTable = true;
+                    comp.tableRowId = "1";
+                    comp.withLabel = false;
+                    comp.hasOnClickEvent = false;
+                    comp.cellNo = "12";
+                    comp.showProperties = false;
+                    comp.rowNo = parseInt(startLimit) + parseInt(j);
+                    var val = Component.GetComponentHtmlNew(comp);
+
+                    td.append(val)
+                } else {
+                    td.css("text-align", "center")
+                    td.text("");
+                }
+
+                tr.append(td);
+                 noActionHappened = false;
+            }
+            
+            if ( noActionHappened){
+                tr.append(td);
+            }
+        })
+
+        table.find('tbody').append(tr);
+    }
+
+
+}
+
+
+function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
     try {
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
@@ -7262,6 +7400,41 @@ function deleteInputActionRel(relId) {
     });
 }
 
+function fillRelatedApi4InputEventNew(res) {
+    //    return;
+    var cls = 'ipo-tab-setting-animation'
+    var obj = res.tbl[0].r;
+    var select = $('#' + cls).find('select.input_event_related_api');
+    var select1 = $('#' + cls).find('select.liveProActionTypeToggleItemIfElseThenApiListClass');
+
+    if (!cls) {
+        select = $('#' + cls).find('select.input_event_related_api');
+    }
+
+    select.html('');
+    select1.html('');
+
+
+    for (var i in obj) {
+        var o = obj[i];
+        if (o.isApi === '1') {
+            select.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+            select1.append($('<option>')
+                    .val(o.id)
+                    .text(o.backlogName));
+
+        }
+    }
+
+    sortSelectBoxWithEl(select);
+    sortSelectBoxWithEl(select1);
+    select.selectpicker('refresh');
+    select1.selectpicker('refresh');
+    $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
+
+}
 function fillRelatedApi4InputEvent(cls) {
     //    return;
 
@@ -7335,7 +7508,7 @@ function getJsCodeListByProject() {
             queue4ManulProject.getJsCodeListByProject = true;
 
             getGlobalJsCodeListByProject();
-           
+
 
 
         }
@@ -7370,7 +7543,7 @@ function getGlobalJsCodeListByProject() {
             } catch (err) {
             }
             queue4ManulProject.getGlobalJsCodeListByProject = true;
-            
+
 
         }
     });
@@ -12066,7 +12239,7 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,false);
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
     $('#storyCardListSelectBox').change();
 
 });
@@ -12329,14 +12502,14 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     getUsers();
 
     initZadShey(global_var.current_project_id);
-    
+
     $.get("resource/child/ipo.html", function (html_string) {
 
 
 
         getAllGuiClassList();
-        
-        
+
+
         getInputClassRelByProject();
         getInputAttributeByProject();
         getProjectDescriptionByProject();
@@ -12402,10 +12575,10 @@ function loadStoryCardByProject4oIpo(e) {
 function loadStoryCardByProject4StoryCard(e) {
 
     global_var.current_project_id = $(e).val();
-    getUnloadedBacklogListOnInit();
+//    getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
-    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+//    getBacklogLastModificationDateAndTime(global_var.current_project_id);
     loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
@@ -12444,6 +12617,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
         success: function (res) {
 
 
+            var cmd = $('#storyCardListSelectBox4StoryCard');
             var cmd = $('#storyCardListSelectBox4StoryCard');
             cmd.html('');
             //            new UserStory().setUSLists(res);
@@ -12543,10 +12717,15 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             var cmd2 = $('select.us-gui-component-rel-sus-id');
             cmd2.html('');
+            
+            var cmd3 = $('select#us-related-sus');
+            cmd3.html('');
+
+           
 
             new UserStory().setUSLists(res);
             var f = true;
-
+            fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -12568,6 +12747,11 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                     }
                     cmd.append(op);
                 } else if (o.isApi === '1') {
+                     var pname = o.backlogName;
+                    var op2 = $('<option></option>').attr('value', o.id).text(pname);
+                     cmd3.append(op2);
+                     
+                    
                     var td = $('<tr>')
                             .append($('<td>')
                                     .append($('<a>')
@@ -12587,6 +12771,10 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
+            
+            sortSelectBoxByElement(cmd3);
+            cmd3.selectpicker('refresh');
+            
 
             //            sortSelectBoxByElement(cmd2);
             //            cmd2.selectpicker('refresh');

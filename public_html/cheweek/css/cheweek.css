@@ -7,6 +7,15 @@
 .brend-bg{
     background-color: #445c79;
 }
+.bg-dce3ed {
+    background-color: #dce3ed;
+}
+.bg-e4ecf7 {
+    background-color: #e4ecf7;
+}
+.bg-fff {
+    background-color: #fff;
+}
 .tranform-rotate{
     transform: rotate(-90deg);
     font-size: 16px;
