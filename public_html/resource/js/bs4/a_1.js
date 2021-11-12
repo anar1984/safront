@@ -12653,6 +12653,10 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
     });
 }
 
+
+
+
+
 function loadApiListOnProjectSelect4Ipo(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
 
@@ -22473,52 +22477,45 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
 
 }
 
-function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid) {
+function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid,statusID) {
 
     return $("<div>")
             .addClass('cs-task-item-in-box redirectClass cs-white-bg')
             .attr('id', id)
             .attr('pid', id)
             .append($("<div>")
-                    .addClass('cs-task-cart-head')
-                    .append($("<div>")
-                            .addClass('d-flex bd-highlight cs-flex-align-middle')
-                            .append($("<div>")
-                                    .addClass('d-flex flex-fill bd-highlight')
-                                    .append(`<div class="cs-cart-head-col">
-                                             <div class="form-group m-0">
-                                                 <input type="checkbox" pid='${id}' id="cs-checkbox">
-                                                 <label for="cs-checkbox"></label>
-                                             </div>                                            
-                                         </div>`)
-                                    .append($("<div>")
-                                            .addClass('cs-cart-head-col')
-                                            .append($("<div>")
-                                                    .addClass("cs-staturs-circle-note1")
-                                                    .append(taskStatus))
-
-
-                                            ))
-                            .append(`<div class="flex-fill bd-highlight text-right">
-                                   <div class="cs-task-card-datatime" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       <span >${date}</span>
-                                   </div>
-                               </div>`)))
-            .append($("<div>")
-                    .addClass("cs-cart-head-title")
-                    .append(tasktype))
-            .append(`<div class="cs-task-card-body">
+                    .addClass("cs-cart-head-title p-2")
+                    .append(tasktype)
+                    .append($("<span class='brend-color large-blok-icon'>")
+                              .html('<i class="fas fa-columns"></i>')))
+            .append(`<div class="cs-task-card-body pl-2 pr-2"">
                        <div class="cs-task-card-desc">
 
                        <p onclick_trigger_id="21031217414702167956" class=''>${mzmn}</p>
                        </div>
                        </div>`)
             .append($("<div>")
-                    .addClass('cs-task-card-bottom')
+                    .addClass('cs-task-card-bottom  bg-status-'+statusID)
                     .append($("<div>")
                             .addClass('d-flex  bd-highlight cs-flex-align-middle')
-                            .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
+                            .append($("<div>")
+                                        .addClass("d-flex flex-fill align-items-center bd-highlight")
+                                        .append(`<div class="cs-task-card-avatar-boxes"><ul>
+                                               <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
+                                                 </ul></div>`)
+                                       .append($("<div>")
+                                                 .addClass("cs-staturs-circle-note1 ml-2")
+                                                 .append(taskStatus))
+                                       )
+                            
+                           
+                           
+                            
+                            .append(` <div class="flex-fill bd-highlight text-right">
+                            <div class="cs-task-card-datatime pr-1 d-inline-block" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span >${date}</span>
+                        </div>
                                   <div class="cs-task-card-attachfile">
                                       <label for="cs-file-upload" class="cs-file-upload">
                                           <i class="fas fa-paperclip"></i>
@@ -22530,21 +22527,8 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
                                       <span class="slider round hide-off "></span>
                                   </label>
                               </div>`)
-                            .append($('<div>')
-                                    .addClass("lex-fill bd-highlight text-right")
-                                    .append($("<div>")
-                                            .addClass("cs-task-card-prioritet")
-                                            .append(
-                                                    /* $("<select>").addClass("selectpicker")
-                                                     .append('<option data-icon="fas fa-flag"> Standart</option>')
-                                                     */
-                                                    ))
-                                    .append(`<div class="cs-task-card-avatar-boxes">
-                                            <ul>
-                                                <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
-                                            </ul>
-                                        </div>`)
-                                    )))
+                           ))
+               
 
             .append($("<div>").addClass("stat-div-task-content")
                     .append($('<table>').addClass("stat-table-us")
@@ -22964,7 +22948,7 @@ function genAktivPassiv(res, x, say) {
                     img = 'userprofile.png';
                     userName = 'Yoxdur'
                 }
-                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                var st = $('<span>');
                 for (let c = 0; c < stat.length; c++) {
                     if (stat[c].id == o.requestStatus) {
                         st.text(stat[c].taskStatusName);
@@ -22989,7 +22973,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
                 $("#flex-col-aktiv").append(html);
             } else {
                 var hid = $('<div>')
@@ -23007,7 +22991,7 @@ function genAktivPassiv(res, x, say) {
                     userName = 'Yoxdur'
                 }
 
-                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                var st = $('<span>');
                 for (let c = 0; c < stat.length; c++) {
                     if (stat[c].id == o.requestStatus) {
                         st.text(stat[c].taskStatusName);
@@ -23032,7 +23016,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
                 $("#flex-col-passiv").append(html);
             }
 
@@ -23213,7 +23197,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
                 img = 'userprofile.png';
                 userName = 'Yoxdur'
             }
-            var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+            var st = $('<span>');
             for (let c = 0; c < stat.length; c++) {
                 if (stat[c].id == o.requestStatus) {
                     st.text(stat[c].taskStatusName);
@@ -23238,7 +23222,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
             }
 
             reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
             $("#flex-col-" + elm).append(html);
 
         }
