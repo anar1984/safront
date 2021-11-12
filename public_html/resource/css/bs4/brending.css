@@ -3600,6 +3600,13 @@ hr.hr-ss {
 .run-services-wrapper tr:hover .bcr-EditRemove a, .run-services-wrapper table tbody tr:hover .bcr-EditRemove a {
     opacity: 1;
 }
+.run-services-wrapper table.RunServicesTblStyle .StartEndDates span{
+    padding: 2px 4px;
+    background: #ffffff;
+    border: 1px solid #5255964a;
+    margin: 0 3px;
+    text-align: center;
+}
 .run-services-wrapper .cs-headline-by-content a {
     text-decoration: none;
     color: #525596;
