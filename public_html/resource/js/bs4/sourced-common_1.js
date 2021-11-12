@@ -19911,8 +19911,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.ipoTableVal = {};
         $('.relatedSUSOutputName').html('');
         $('.relatedUserStory').html('');
-//        this.loadSUSList4Input();
-//        this.loadSection4Input();
+       this.loadSUSList4Input();
+       this.loadSection4Input();
         this.toggleComponentEventDetails();
 //        this.loadSUS4Relation()
         this.loadSUS4Relation4Section();
@@ -20225,7 +20225,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         //init onload click and change events
         initOnloadActionOnGUIDesign4OnClick(elm);
         initOnloadActionOnGUIDesign4Onchange(elm);
-
+          this.toggleSubmenuIPO();
 
 
     },
