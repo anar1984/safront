@@ -13450,6 +13450,7 @@ function loadStoryCardInfo4StoryCard(el) {
     loadUsersAsOwner();
     setStoryCardOwner();
     setStoryCardCreatedBy();
+    setStoryCardUpdatedBy();
 }
 
 
@@ -13871,7 +13872,16 @@ $(document).on('click', '.loadTestCase', function (evt) {
     });
 });
 
-
+$(document).on('click', '.loadRunService', function (evt) {
+    var f = 'runservice';
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadRunService";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    $.get("resource/child/" + f + ".html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        loadDocEditorRunService();
+    });
+});
 
 $(document).on('click', '.loadBusinessCase', function (evt) {
     var f = 'bcase';
@@ -15013,6 +15023,19 @@ function setStoryCardCreatedBy() {
             ' Unassigned';
     $('#story-card-createdby').find('img').attr('src', img);
     $('#story-card-createdby').find('span').html(' ' + userName1);
+}
+function setStoryCardUpdatedBy() {
+    var updatedBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "updatedBy");
+    var userImage = SAProjectUser.GetDetails(updatedBy, "userImage");
+    var userName = SAProjectUser.GetDetails(updatedBy, "userName");
+    var img = (userImage) ?
+            fileUrl(userImage) :
+            fileUrl(new User().getDefaultUserprofileName());
+    var userName1 = (userName) ?
+            userName :
+            ' Unassigned';
+    $('#story-card-updatedby').find('img').attr('src', img);
+    $('#story-card-updatedby').find('span').html(' ' + userName1);
 }
 
 function toggleNewUserStory4Section(el) {

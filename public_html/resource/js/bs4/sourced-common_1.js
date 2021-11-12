@@ -5657,11 +5657,11 @@ UserStory.prototype = {
     },
     
     backlogProcessDescLineSubmenuItem:function(id){
-     var div =  $('<div class="dropdown" style="display: inline-block;">')
+     var div =  $('<div class="btn-group" style="display: inline-block;">')
                                     .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
                                             '</button>')
-                                    .append($('<div class="dropdown-menu uuu" aria-labelledby="dropdownMenuLink">')
+                                    .append($('<div class="dropdown-menu ropdown-menu-right  uuu" aria-labelledby="dropdownMenuLink">')
                                             .append($('<button class="dropdown-item firstbut" >')
                                                     .text('Move Up')
                                                     .attr("onclick", "moveBacklogDesc(this,'" +  id + "','up')")
@@ -19439,8 +19439,25 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
-        $('#user-story-status').val(SACore.GetCurrentBaklogStatus());
-        $('#user-story-priority').val(SACore.GetCurrentBaklogPriority());
+        $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
+
+        var ido = SACore.GetCurrentBacklogId();
+
+        var created_date = SACore.GetBacklogDetails(ido,'createdDate')
+        $(".story_card_created_date").text(Utility.convertDate(created_date));
+        var created_time = SACore.GetBacklogDetails(ido,'createdTime')
+        $(".story_card_created_time").text(Utility.convertTime(created_time));
+
+        var updated_date = SACore.GetBacklogDetails(ido,'updatedDate')
+        $(".story_card_updated_updated").text(Utility.convertDate(updated_date));
+        var updated_time = SACore.GetBacklogDetails(ido,'updatedTime')
+        $(".story_card_updated_time").text(Utility.convertTime(updated_time));
+        
+        $('.all-cs-status span').removeClass();
+        var def_status_select = $('#user-story-status').val();
+        $('.all-cs-status span').addClass("s-status cs-status-" + def_status_select);
+
+        $('#user-story-priority').val(SACore.GetCurrentBaklogPriority()).selectpicker('refresh');
         $('#user-story-est-hours').val(SACore.GetCurrentBaklogEstimatedHours());
         $('#user-story-description').val(SACore.GetCurrentBaklogDescription());
         $('#user-story-spent-hours').val(SACore.GetCurrentBaklogSpentHours());
@@ -19452,6 +19469,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-apirequesttype').val(SACore.GetCurrentBaklogApiSyncRequest());
         $('.user-story-is-shared').val(SACore.GetCurrentBaklogIsShared());
         $('.user-story-run-in-backend').val(SACore.GetBacklogDetails(global_var.current_backlog_id, "runInBackend"));
+        $('#user-story-apiaction').selectpicker('refresh');
+        $('#user-story-apirequesttype').selectpicker('refresh');
 
         if (SACore.GetCurrentBaklogShowPrototype() === '1') {
             $('#user-story-show-prototype').prop("checked", true);

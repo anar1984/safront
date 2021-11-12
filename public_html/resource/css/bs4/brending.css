@@ -1768,8 +1768,8 @@ padding: 0 10px;
     background-color: #525596;
     border-color: #525596;
     font-size: 14px;
-    height: 30px;
-    line-height: 1;
+    height: 35px;
+    line-height: initial;
 }
 .cs-input-group .dropdown-item.active, .cs-input-group .dropdown-item:active {
     background-color: #272B7C;
@@ -3070,4 +3070,796 @@ span.convertedTextAreaLinesItem {
 .close-fp-detail-btn-box i {
     vertical-align: middle;
     margin-top: -17px;
+}
+/* StroryCard Sidebar */
+.storecard-sidebar-headline {
+    position: relative;
+}
+.storecard-sidebar-headline span{
+    background: #272B7C;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    color: #fff;
+    padding: 10px;
+    display: block;
+}
+.storecard-sidebarin {
+    background: #525596;
+}
+.storecard-sidebarin .cs-forum-group .bootstrap-select {
+    width: 100% !important;
+}
+.cs-forum-group .bootstrap-select {
+    background: transparent;
+}
+.cs-forum-group .bootstrap-select > .btn {
+    background-color: #3a3d87;
+    color: #fff;
+    font-size: 14px;
+    height: 35px;
+    padding: 6px 8px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.cs-forum-group .bootstrap-select > .btn:not(:disabled):not(.disabled).active, .cs-forum-group .bootstrap-select > .btn:not(:disabled):not(.disabled):active {
+    color: #ffffff;
+    background-color: #272b7c;
+    border-color: #272b7c;
+}
+hr.hr-ss {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgb(39 43 124 / 40%);
+}
+.cs-forum-group .bootstrap-select > .btn:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.cs-forum-group .btn-light:not(:disabled):not(.disabled).active:focus, .cs-forum-group .btn-light:not(:disabled):not(.disabled):active:focus, .cs-forum-group .show>.btn-light.dropdown-toggle:focus {
+    box-shadow: none;
+    box-shadow: none;
+}
+.cs-forum-group .cs-label-name {
+    color: #fff;
+}
+.cs-forum-group .cs-label-name span.s-status {
+    background: rgb(180, 215, 255);
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    display: block;
+    float: right;
+    text-align: right;
+}
+.cs-status-new {
+    background: #f19c93 !important;
+}
+.cs-status-ongoing {
+    background: #f3c788 !important;
+}
+.cs-status-closed {
+    background: #8ad6a3 !important;
+}
+.cs-forum-group .dropdown-menu {
+   background: #3a3d87;
+   box-shadow: 0 2px 5px #272b7c;
+   margin: 0;
+}
+.cs-forum-group .bootstrap-select .dropdown-menu li {
+    height: 35px;
+    background: #3a3d87;
+}
+.cs-forum-group .dropdown-menu > li a {
+    padding: 5px 6px;
+    color: #fff;
+}
+.cs-forum-group .dropdown-item.active, .cs-forum-group .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #272b7c;
+}
+.storecard-sidebarin .cs-forum-group .dropdown-item:focus, .storecard-sidebarin .dropdown-item:hover, .storecard-sidebarin .cs-button-group a.dropdown-item:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #272b7c;
+}
+.storecard-sidebarin .switch {
+    width: 45px;
+    height: 18px;
+    float: right;
+    margin-top: 0;
+}
+.storecard-sidebarin .slider {
+    background-color: #3a3d8a;
+}
+.storecard-sidebarin input:checked + .slider {
+    background-color: #a7acff;
+}
+.storecard-sidebarin .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 2px;
+}
+.storecard-sidebarin input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+.storecard-sidebarin input:checked + .slider:before {
+    background: #525596;
+}
+
+.storecard-sidebarin .prototype-on-off, .storecard-sidebarin .history-on-off, .storecard-sidebarin .cs-sc-task-box {
+   width: 100%;
+   display: inline-block;
+   margin-top: 20px;
+}
+.storecard-sidebarin .prototype-on-off>div, .storecard-sidebarin .history-on-off>div, .storecard-sidebarin .cs-sc-task-box>div {
+   width: 50%;
+   float: left;
+}
+.storecard-sidebarin .prototype-on-off h3, .storecard-sidebarin .history-on-off h3, .storecard-sidebarin .cs-sc-task-box h3 {
+    font-size: 14px;
+    color: #E9E9F1;
+    font-weight: 400;
+}
+.storecard-sidebarin .cs-forum-group .cs-input {
+    width: 100%;
+    background-color: #3a3d87;
+    color: #fff;
+    font-size: 14px;
+    height: 35px;
+    padding: 6px 8px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.storecard-sidebarin textarea, .storecard-sidebarin .cs-forum-group .cs-input {
+    color: #f0f0f6 !important;
+    background-color: #3a3d87 !important;
+    border-color: #3a3d87 !important;
+}
+.cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+.storecard-sidebarin .cs-forum-group input.btn {
+    font-size: 14px;
+    text-decoration: none;
+    width: 100%;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 10px;
+    display: block;
+    background: #3a3d87;
+    border: 1px solid #272B7C;
+    color: #fff;
+    border-radius: 3px;
+}
+.storecard-sidebarin .cs-forum-group input.btn:hover {
+    background: #272B7C;
+    border: 1px solid #272B7C;
+}
+.storecard-sidebarin .cs-forum-group .cs-label-name {
+    color: #E9E9F1;
+    font-size: 14px;
+    width: 100%;
+}
+.checkout-related-issues {
+    display: none;
+}
+.checkout-related-issues.showTasks {
+    display: block;
+}
+.storecard-sidebarin .cs-all-task {
+    color: #E9E9F1 !important;
+    font-size: 14px;
+    width: 100%;
+    font-weight: 400;
+    border: 1px solid #6264a0;
+    background: #6264a0;
+    padding: 0px 7px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+.storecard-sidebarin .cs-all-task:hover {
+    border-color: #6d6fb7;
+    background: #6d6fb7;
+}
+.storecard-sidebarin .task-fbe-box {
+ background: rgb(190 191 215 / 15%);
+ padding: 10px 10px;
+ margin-bottom: 15px;
+}
+.storecard-sidebarin .btso-title-name {
+    color: #E9E9F1;
+    font-size: 14px;
+    width: 100%;
+    text-align: right;
+    position: relative;
+}
+.storecard-sidebarin .btso-title-name:before {
+    content: "";
+    height: 6px;
+    width: 30px;
+    background: #a7acff;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+.storecard-sidebarin #backlog-task-stat-overall-new.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-new-new.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-bug-new.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-change-new.btso-title-name:before {
+    background: #f19a91 !important;
+}
+.storecard-sidebarin #backlog-task-stat-overall-ongoing.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-new-ongoing.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-bug-ongoing.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-change-ongoing.btso-title-name:before {
+    background: #f3c788 !important;
+}
+.storecard-sidebarin #backlog-task-stat-overall-closed.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-new-closed.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-bug-closed.btso-title-name:before, .storecard-sidebarin #backlog-task-stat-change-closed.btso-title-name:before {
+    background: #8ad6a3 !important;
+}
+.storecard-sidebarin .task-fbe-box .task-for-backlog-event {
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 10px;
+    display: block;
+    background: #3a3d87;
+    border: 1px solid #272B7C;
+    color: #fff;
+    border-radius: 3px;
+}
+.storecard-sidebarin .task-fbe-box .task-for-backlog-event:hover {
+    background: #272b7c;
+}
+.storecard-header-nav-section {
+    background-color: #525596;
+    border-bottom: 1px solid #272B7C;
+    border-top: 1px solid #272B7C;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+}
+.modal.show .storecard-header-nav-section {
+    z-index:auto;
+    position: relative;
+}
+.modal.show #storyCardRightMenu {
+    margin-top: 30px;
+}
+.storecard-header-nav-section .mm-title {
+    font-size: 14px;
+    color: #fff;
+}
+.storecard-header-nav-section .bootstrap-select {
+    border-radius: 0;
+}
+.storecard-header-nav-section .bootstrap-select > button{
+    background-color: #525596;
+    border-color: #525596;
+    border-radius: 0;
+    color: rgb(255 255 255 / 70%);
+    font-size: 14px;
+    box-shadow: none !important;
+}
+.storecard-header-nav-section .bootstrap-select>.dropdown-toggle:after {
+    font-size: 10px;
+}
+.storecard-header-nav-section .btn-light:not(:disabled):not(.disabled).active, .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled):active, .storecard-header-nav-section .show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #272b7c;
+    border-color: #272b7c;
+}
+.storecard-header-nav-section .mm-col {
+    display: table;
+}
+.storecard-header-nav-section .mm-col .mm-title{
+    display: table-cell;
+    vertical-align: middle;
+}
+.storecard-header-nav-section .cs-col-project, .storecard-header-nav-section .cs-col-storecard {
+    padding: 0 5px;
+    margin: 0 5px;
+}
+.storecard-header-nav-section .cs-col-project {
+  border-left: 1px solid #272b7c;
+  border-right: 1px solid #272b7c;
+  padding-left: 12px;
+  padding-right: 0;
+}
+.storecard-header-nav-section .cs-col-storecard {
+    border-right: 1px solid #272b7c;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+.cs-col-storecard-general-setting .scg-button-box {
+    padding:0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    height: 100%;
+}
+
+.storecard-header-nav-section .scg-button-box > button {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.storecard-header-nav-section .scg-button-box > button {
+    background-color: #525596;
+    border-color: #525596;
+    border-radius: 0;
+    color: rgb(255 255 255 / 70%);
+    font-size: 14px;
+    box-shadow: none !important;
+}
+.storecard-header-nav-section .scg-button-box > button:after {
+    font-weight: 400;
+    font-size: 11px;
+}
+.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle {
+    color: #ffffff;
+    background-color: #272b7c;
+    border-color: #272b7c;
+}
+.Assigne-card-story1 .by-last-updated {
+    float: right;
+}
+.cs-forum-group .cs-attach-a {
+    font-size: 14px;
+    text-decoration: none;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 10px;
+    display: block;
+    background: #3a3d87;
+    border: 1px solid #272B7C;
+    color: #fff;
+    border-radius: 3px;
+}
+.cs-forum-group .cs-attach-a i {
+    padding: 0;
+    text-align: center;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 6px;
+    opacity: 0.8;
+}
+.cs-forum-group .cs-attach-a span {
+    font-size: 14px;
+}
+.cs-textarea {
+
+}
+.cs-forum-group textarea {
+
+}
+.storecard-sidebarin .Assigne-card-story-select {
+    text-decoration: none;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 0;
+    display: block;
+    background: #3a3d87;
+    border: 1px solid #272B7C;
+    color: #fff;
+    border-radius: 3px;
+    width: 100%;
+}
+.storecard-sidebarin .Assigne-card-story-search {
+    text-decoration: none;
+    height: 35px;
+    margin-top: 5px;
+    padding: 4px 10px;
+    background: rgb(58, 61, 135);
+    border: 1px solid rgb(39, 43, 124);
+    color: rgb(255, 255, 255);
+    border-radius: 3px;
+    width: 100%;
+    margin-left: 0;
+}
+.storecard-sidebarin .Assigne-card-story-select-content {
+    width: 100%;
+    border-radius: 0;
+    border-top: none;
+    border: 1px solid rgb(39 43 124);
+    margin: 0px;
+    position: absolute;
+    margin-top: -1px;
+    margin-left: 0;
+    background-color: #3a3d87;
+    transition: display 0.5s ease-in 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+    display: none;
+}
+.storecard-sidebarin .owner-content-user {
+    padding: 10px;
+    border-top: none;
+}
+.storecard-sidebarin .owner-content-user:hover {
+    background-color: #272b7c;
+}
+.storecard-sidebarin .Assigne-card-story-select > div {
+    padding: 0 10px;
+}
+.storecard-sidebarin .right-menu-description span:nth-child(2) {
+    font-size: 14px;
+    color: rgb(255 255 255);
+}
+.print-container.page-content {
+ padding-top: 37px;
+ transition: margin-left .5s;
+}
+#storyCardRightMenu {
+    margin-top: 37px;
+    margin-right: 0;
+}
+#storyCardRightMenu.isCloseSB {
+    margin-right: -350px;
+}
+.sc-close-sidebar-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 0;
+    color: #fff;
+    width: 40px;
+    padding: 10px;
+    text-align: center;
+    border-left: 1px solid rgb(82 85 150 / 60%);
+    cursor: pointer;
+}
+.sc-open-sidebar-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: -40px;
+    color: #fff;
+    background: #272b7c;
+    width: 40px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: none;
+}
+.isCloseSB .sc-open-sidebar-btn {
+    display: block;
+}
+.sc-close-sidebar-btn i {
+
+}
+#storyCardRightMenu {
+    -ms-flex: 0 0 370px;
+    flex: 0 0 370px;
+    max-width: 370px;
+}
+/* Run Services */
+.run-services-wrapper {
+    padding: 20px 100px 60px;
+}
+.run-services-wrapper .table thead th {
+    position: relative;
+    height: 40px;
+    vertical-align: middle;
+    border-bottom: 1px solid #525596;
+    background: #525596;
+    border-top: 1px solid #525596;
+    color: #fff;
+}
+.run-services-wrapper .table td, .run-services-wrapper .table th {
+    border-left: 5px solid #fff;
+    padding: 5px 10px;
+}
+.run-services-wrapper table tbody tr:nth-child(odd) {
+    background-color: #E9E9F1;
+}
+.run-services-wrapper table tbody tr:nth-child(even) {
+    background-color: #f6f6ff;
+}
+.run-services-wrapper .table td:first-child, .run-services-wrapper .table th:first-child {
+    border-left: none;
+    font-weight: bold;
+    padding-left: 15px;
+}
+.run-services-wrapper .table thead th:first-child {
+    text-align: left;
+    padding-left: 15px;
+}
+.run-services-wrapper .table tbody td, .run-services-wrapper .table tbody th {
+    color: #525596;
+    border-left: 5px solid #fff;
+}
+.run-services-wrapper .bcr-EditRemove a, .run-services-wrapper table tbody tr .bcr-EditRemove a {
+    color: #525596;
+    opacity: 0.3;
+}
+.run-services-wrapper tr:hover .bcr-EditRemove a, .run-services-wrapper table tbody tr:hover .bcr-EditRemove a {
+    opacity: 1;
+}
+.run-services-wrapper .cs-headline-by-content a {
+    text-decoration: none;
+    color: #525596;
+    font-size: 20px;
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    background: #f6f6ff;
+    border: 1px solid #c6c6d6;
+    border-radius: 5px;
+    padding: 0px 9px;
+    height: 31px;
+    display: inline-block;
+    transition: color .15s ease-in-out;
+}
+.run-services-wrapper .cs-headline-by-content a.addNewBusinessRun:hover {
+ background: #525596;
+ color: #fff;
+ border-color: #525596;
+}
+.run-services-wrapper .cs-headline-by-content a span {
+    font-size: 14px;
+    vertical-align: middle;
+}
+.run-services-wrapper .table tbody td.Status span{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 60px;
+    vertical-align: middle;
+}
+.run-services-wrapper .table tbody td.Status span:after {
+    content: "";
+    background: #525596;
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    top: 5px;
+    right: 0;
+    position: absolute;
+}
+.run-services-wrapper .table tbody td.Status.cs-passive span:after {
+    background: #FF4747;
+}
+.run-services-wrapper .table tbody td.Status.cs-active span:after {
+    background: #5ACB2B;
+}
+.run-services-wrapper .cs-modal-box .modal-header {
+    font-size: 14px;
+    padding: 7px 18px 7px 18px;
+    border-bottom-color: #E9E9F1;
+    background-color: #E9E9F1;
+    color: #272B7C;
+    border-radius: 0;
+}
+.run-services-wrapper .cs-input-group input.form-control {
+    height: 35px;
+    border: 1px solid #BEBFD7;
+}
+.run-services-wrapper .cs-input-group textarea {
+    width: 100%;
+    border: 1px solid #BEBFD7;
+    padding: 5px;
+    font-size: 14px;
+}
+.run-services-wrapper .cs-input-group textarea:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+.run-services-wrapper .cs-input-group textarea .RunServiceJsonTextarea {
+
+}
+.run-services-wrapper .cs-input-group .input-group-addon {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #313582;
+}
+.run-services-wrapper .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    min-width: 195px;
+}
+.run-services-wrapper .section-title {
+    font-size: 17px;
+    margin-left: 4px;
+    margin-top: 40px;
+    position: relative;
+    color: #525596;
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+.run-services-wrapper .section-title strong {
+    background: white;
+    position: absolute;
+    top: -16px;
+    display: block;
+    z-index: 1;
+    padding: 5px 10px 5px 0;
+    font-weight: 600;
+}
+.run-services-wrapper .section-title span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    width: 99%;
+    height: 1px;
+    border-top: 1px solid #bebfd7;
+}
+.run-services-wrapper .horizontal .checkcontainer {
+    display: inline-block;
+    font-size: 14px;
+    color: #525596;
+    margin-right: 25px;
+}
+.run-services-wrapper .checkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .run-services-wrapper .checkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .run-services-wrapper .radiobtn {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #9395bd;
+    background-color: #e9e9f1;
+    border-radius: 50%;
+  }
+  .run-services-wrapper .checkcontainer:hover input ~ .radiobtn {
+    background-color: #9395bd;
+  }
+  .run-services-wrapper .checkcontainer input:checked ~ .radiobtn {
+    background-color: #525596;
+  }
+  .run-services-wrapper .radiobtn:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .run-services-wrapper .checkcontainer input:checked ~ .radiobtn:after {
+    display: block;
+  }
+  .run-services-wrapper .checkcontainer .radiobtn:after {
+      top: 5px;
+      left: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+  }
+  .checkmarkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .checkmarkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #e9e9f1;
+    border-radius: 3px;
+  }
+  .checkmarkcontainer:hover input ~ .checkmark {
+    background-color: #9395bd;
+  }
+  .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #525596;
+  }
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .checkmarkcontainer input:checked ~ .checkmark:after {
+    display: block;
+  }
+  .checkmarkcontainer .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .horizontal .cs-input-group {
+      display: inline-block;
+  }
+  .cs-input-group .bootstrap-datetimepicker-widget .btn {
+    height: auto;
+    padding: 0;
+  }
+  .cs-input-group .bootstrap-datetimepicker-widget table td span:hover, .cs-input-group .bootstrap-datetimepicker-widget table td i:hover {
+    background: transparent;
+}
+.cs-input-group .bootstrap-datetimepicker-widget table td span,   .cs-input-group .bootstrap-datetimepicker-widget table td i {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 2px 1.5px;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+.cs-input-group .bootstrap-datetimepicker-widget table td {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+}
+.cs-input-group .bootstrap-datetimepicker-widget {
+    list-style: none;
+    max-width: 180px;
+}
+.run-intensive {
+    pointer-events:none;
+    display: none;
+}
+.run-intensive.run-enabled {
+    pointer-events:auto;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.run_spa {
+    pointer-events:none;
+    display: none;
+}
+.run_spa.spa_enable {
+    pointer-events:auto;
+    display: block;
 }
