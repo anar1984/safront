@@ -12535,7 +12535,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
     });
 
-//    new UserStory().loadDetailsOnProjectSelect4Ipo();
+  new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 
 });
@@ -12652,10 +12652,6 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
         }
     });
 }
-
-
-
-
 
 function loadApiListOnProjectSelect4Ipo(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
