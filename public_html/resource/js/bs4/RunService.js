@@ -79,6 +79,16 @@ $(document).ready(function() {
         $('#hide_actions_param').val(runSEDate);
     });
 
+      $(document).on("change",'#sendnotification',function () { 
+          
+            if($(this).is(':checked')) {
+                $(this).val('1');
+            }else{
+                $(this).val('0');
+            }
+       
+       })
+   
 }
 
 $(document).on("change", "#run_service_intensive_select", function (e) {
@@ -151,7 +161,8 @@ $(document).on("change", "#run_service_intensive_select", function (e) {
                 $('#hide_actions').val('specific_weekday_of_month');
                 var swofm_a1 = $('#swofm_fl_action_select').val();
                 var swofm_a2 = $('#swofm_weekday_select').val();
-                $('#hide_actions_param').val(swofm_a1 + '_' + swofm_a2);
+                $('#hide_actions_param').val(swofm_a1);
+                $('#hide_actions_param_2').val(swofm_a2);
             }
   
         }
@@ -168,7 +179,8 @@ $(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", funct
     $('#hide_actions_param').val('');
     var swofm_a1 = $('#swofm_fl_action_select').val();
     var swofm_a2 = $('#swofm_weekday_select').val();
-    $('#hide_actions_param').val(swofm_a1 + '_' + swofm_a2);
+    $('#hide_actions_param').val(swofm_a1);
+    $('#hide_actions_param_2').val(swofm_a2);
 });
 
 $(document).on("change", "#run_service_weekday_select", function (e) {
@@ -248,7 +260,8 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions').val('specific_weekday_of_month');
         var swofm_a1 = $('#swofm_fl_action_select').val();
         var swofm_a2 = $('#swofm_weekday_select').val();
-        $('#hide_actions_param').val(swofm_a1 + '_' + swofm_a2);
+        $('#hide_actions_param').val(swofm_a1);
+        $('#hide_actions_param_2').val(swofm_a2);
     }
 });
 
@@ -353,6 +366,16 @@ function converDatePicker(val) {
     }
   
 }
+function reconverDatePicker(val) {
+    try {
+        val = val.split('-')
+        stTime = val[2].trim() +"/"+ val[0].trim() +"/"+ val[1].trim();
+            return stTime
+    } catch (error) {
+        return
+    }
+  
+}
 
 function createdRunServiceData() {
     var json = initJSON();
@@ -369,11 +392,12 @@ function createdRunServiceData() {
     json.kv.repeatInterval = $('#run_service_repeat_select').val();
     json.kv.scheduleStatus = $('#run_service_status_select').val();
     json.kv.description = $('#RunServiceDescTextarea').val();
-    json.kv.sendNotification = $('#sendNotification').val();
+    json.kv.sendNotification = $('#sendnotification').val();
     json.kv.notificationMail = $('#notification-email').val();
 
     json.kv.action = $('#hide_actions').val();
     json.kv.actionParam = $('#hide_actions_param').val();
+    json.kv.actionParam2 = $('#hide_actions_param_2').val();
 
     // json.kv.filename = zipfilename;
     var data = JSON.stringify(json);
@@ -405,30 +429,34 @@ function createdRunServiceData() {
     });
 }
 
-function resetRunServiceDataDetails() {
-    // var table = $('.RunServicesTblStyle');
-    // var tbody = table.find("tbody#RunServiceTrlist");
-    // tbody.html("")
+function resetRunServiceList() {
+    var table = $('.RunServicesTblStyle');
+    var tbody = table.find("tbody#RunServiceTrlist");
+    tbody.html("")
+}
+function resetRunServicePopUp() {
+    $('#newRunBbusinessServiceBox select').val('');
+    $('#newRunBbusinessServiceBox input').val('');
 }
 
 $(document).on("click", "#newRunBbusinessServiceSaveBtn", function (e) {
 
     if(run_service_valid()){
-
+        resetRunServiceList();
         createdRunServiceData();
         getRunServiceList();
-        msgMessage = 'Cool!!!!';
+        msgMessage = 'Gool!!!!';
         Toaster.showMessage(msgMessage);
     }
     else{
         msgError = 'Fill in the required fields';
         Toaster.showError(msgError);
     }
+    
 });
 
 
 function getRunServiceList() {
-
     var json = initJSON();
     var data = JSON.stringify(json);
     $.ajax({
@@ -538,30 +566,172 @@ function deleteRunBusinessServace(id) {
         }
     });
 }
-function editRunBusinessServace(id) {
-    if (!confirm("Are you sure?")) {
-        return;
-    }
 
-    if (!(id))
-        return;
+function detailRunBusinessServace() {
+    //  $('#newRunBbusinessServiceBox').addClass('detailRBS-');
+}
+
+function editRunBusinessServace(id) {
 
     var json = initJSON();
 
     json.kv.id = id;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceRsDeleteSchedule",
+        url: urlGl + "api/post/srv/serviceRsGetScheduleById",
         type: "POST",
         data: data,
         contentType: "application/json",
         crossDomain: true,
         async: true,
         success: function (res) {
-            getRunServiceList(res);
+            var obj = res.tbl[0].r[0];
+
+            $('#newRunServiceModalTitle').text('');
+            $('#newRunServiceModalTitle').text('Update Auto Run Service');
+       
+            $('#run_service_title').val(obj.title);
+            $('#run_service_title').change();
+
+            $('#run_service_project_name').val(obj.projectId);
+            $('#run_service_project_name').change();
+
+            $('#run_service_name').val(obj.apiId);
+            $('#run_service_name').change();
+
+            $('#RunServiceJsonTextarea').val(obj.json);
+            $('#RunServiceJsonTextarea').change();
+
+            $('#runServiceStartDate').val(reconverDatePicker(obj.startDate));
+            $('#runServiceStartDate').change();
+
+            $('#runServiceEndDate').val(reconverDatePicker(obj.endDate));
+            $('#runServiceEndDate').change();
+
+            $('#runServiceTime').val(obj.runTime);
+            $('#runServiceTime').change();
+
+            $('#run_service_intensive_select').val(obj.intensive);
+            $('#run_service_intensive_select').change();
+
+            $('#run_service_repeat_select').val(obj.repeatInterval);
+            $('#run_service_repeat_select').change();
+
+            $('#run_service_status_select').val(obj.scheduleStatus);
+            $('#run_service_status_select').change();
+
+            $('#RunServiceDescTextarea').val(obj.description);
+            $('#RunServiceDescTextarea').change();
+
+             $("#"+obj.action).prop("checked",true);
+             $("#"+obj.action).change();
+                var tm = obj.actionParam;
+                   try {
+                       tm =  tm.split(",")
+                   } catch (error) {}
+             $("#run_service_weekday_select").val(tm);
+             $("#run_service_weekday_select").change();
+             
+             $("#sdofm_day_of_Month_select").val(obj.actionParam);
+             $("#sdofm_day_of_Month_select").change();
+
+             $("#days_before_last_day_of_month").val(obj.actionParam);
+             $("#days_before_last_day_of_month").change();
+
+             $("#runServiceExecutiveDate").val(reconverDatePicker(obj.actionParam));
+             $("#runServiceExecutiveDate").change();
+             
+             $("#swofm_fl_action_select").val(obj.actionParam);
+             $("#swofm_fl_action_select").change();
+
+             $("#swofm_weekday_select").val(obj.actionParam2);
+             $("#swofm_weekday_select").change();
+             
+             if((obj.sendNotification) == '1') {
+                $("#sendnotification").prop('checked', true);
+                $("#sendnotification").change();
+              }
+             $('#notification-email').val(obj.notificationMail);
+             $('#notification-email').change();
+             
+             $('.newRunBbusinessServiceSaveBtn').prop('id','newRunBbusinessServiceUpdateBtn');
+             $('.newRunBbusinessServiceSaveBtn').text('Update');
+             $('#newRunBbusinessServiceBox').attr('detail-runid', obj.id);
         },
         error: function () {
             Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+$(document).on("click", "#newRunBbusinessServiceUpdateBtn", function (e) {
+
+    if(run_service_valid()){
+        updatedRunServiceData();
+        resetRunServiceList();
+        getRunServiceList();
+        msgMessage = 'Gool!!!!';
+        Toaster.showMessage(msgMessage);
+
+        resetRunServicePopUp();
+    }
+    else{
+        msgError = 'Fill in the required fields';
+        Toaster.showError(msgError);
+    }
+
+
+});
+
+function updatedRunServiceData(id) {
+    var json = initJSON();
+    json.kv.id = $('#newRunBbusinessServiceBox').attr('detail-runid');
+    json.kv.title = $('#run_service_title').val();
+    json.kv.projectId = $('#run_service_project_name').val();
+    json.kv.projectName = $('#run_service_project_name option:selected').text();
+    json.kv.apiId = $('#run_service_name').val();
+    json.kv.serviceName = $('#run_service_name option:selected').text();
+    json.kv.json = $('#RunServiceJsonTextarea').val();
+    json.kv.startDate = converDatePicker($('#runServiceStartDate').val());
+    json.kv.endDate = converDatePicker($('#runServiceEndDate').val());
+    json.kv.runTime =$('#runServiceTime').val();
+    json.kv.intensive = $('#run_service_intensive_select').val();
+    json.kv.repeatInterval = $('#run_service_repeat_select').val();
+    json.kv.scheduleStatus = $('#run_service_status_select').val();
+    json.kv.description = $('#RunServiceDescTextarea').val();
+    json.kv.sendNotification = $('#sendnotification').val();
+    json.kv.notificationMail = $('#notification-email').val();
+
+    json.kv.action = $('#hide_actions').val();
+    json.kv.actionParam = $('#hide_actions_param').val();
+    json.kv.actionParam2 = $('#hide_actions_param_2').val();
+
+    // json.kv.filename = zipfilename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsUpdateSchedule",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+            try {
+               var err=  res.err.message;
+               if(err){
+                Toaster.showError(err);
+               }
+
+            } catch (error) {
+                msgMessage = 'API successfully saved!';
+                Toaster.showMessage(msgMessage);
+            }
+          
+        },
+        error: function () {
+            Toaster.showError(('API error'));
+
         }
     });
 }
