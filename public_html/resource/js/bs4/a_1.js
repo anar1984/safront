@@ -1529,10 +1529,10 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     }
 
 
-//    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
+    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
         loadBacklogProductionCoreDetailssById(bid);
-//        SAInput.LoadedBacklogs4InputNew.push(bid);
-//    }
+        SAInput.LoadedBacklogs4InputNew.push(bid);
+    }
 }
 
 function loadBacklogDetailsByIdIfNotExist_old4(bid) {
@@ -6595,6 +6595,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
 
 function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
     try {
+        var tableId = "";
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
@@ -6655,7 +6656,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
         var hasRelatedApi01 = false;
         if (!hasRelatedApi01) {
-            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+//            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
         }
 
         var cols = (data._table.r && data._table.r.length > 0) ?
@@ -6715,10 +6716,10 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
         callTableRelationAPIs(elem, tableId);
     } catch (err) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
-    tableShowHideRowGetItem(inpId);
+//    tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
     $('.table-filter-block-draggable').draggable({
         containment: "body"
@@ -6728,7 +6729,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 function callTableRelationAPIs(elem, tableId) {
 
     if (!tableId) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
         return;
     }
 
@@ -6788,7 +6789,7 @@ function callTableRelationAPIs(elem, tableId) {
 
         var tableInputId = keys[i];
         if (!hasRelatedApi) {
-            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+//            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
             $("table[table-id='" + tableId + "']").first().attr("is-loading", "1");
             hasRelatedApi = true;
         }
@@ -6824,7 +6825,7 @@ function callTableRelationAPIs(elem, tableId) {
     $("table[table-id='" + tableId + "']").first().attr("is-loading", "0");
 
     if (!hasRelatedApi) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 }
 
@@ -6860,7 +6861,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
     var callCount = $(el1).attr('call-count');
     if ((parseInt(currentCallCount) + 1) >= callCount) {
-        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
     } else {
         $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
     }
@@ -6927,7 +6928,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
     var callCount = $(el1).attr('call-count');
     if ((parseInt(currentCallCount) + 1) >= callCount) {
-        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
     } else {
         $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
     }
