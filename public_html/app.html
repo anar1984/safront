@@ -85,6 +85,7 @@
         <script src="resource/js/bs4/sa1.js"></script>
         <script src="resource/js/bs4/ra.js"></script>
         <script src="resource/js/bs4/bc.js"></script>
+        <script src="resource/js/bs4/prototype_new.js"></script>
         <!--<script src="https://app.sourcedagile.com/api/get/script/js/48edh/210102102810037910965.js"></script>-->
         <script src="resource/js/bs4/bc.js"></script>
         <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -5206,7 +5207,7 @@
                                 <input type="hidden" id="us-related-api-input-actiontype">
 
                                 <span style="width: 100%;" id="addRelatedSourceModal-apititle">APIs</span><br>
-                                <select id="us-related-apis" class='form-control' style="width:100%;padding:1px;  "
+                                <select id="us-related-apis" class='form-control ' style="width:100%;padding:1px;  "
                                         data-live-search='true'
                                         onchange="new UserStory().getOutputByAPI(this)">
                                 </select>
@@ -6307,38 +6308,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="addApiPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="exampleModal-properties-tab" class="container tab-pane active"
-                             style=" max-height: 76vh;overflow: auto;">
-                            <div class="col-12" style="font-size:11px;">
-                                <br>
-                                <label>API name</label>
-                                <input type="text" class="form-control" id="addApiPopupModal-userstoryname" pid="">
-                                <br>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer" style="display1:block;">
-                <button type="button" class="btn btn-primary" onclick="addApiNewPopup()">
-                    Add
-                </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="addNewComponentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -6535,15 +6504,17 @@
 
 
                     <div class="col-12">
-                        <label for="sprintname" class="col-form-label control-label">APIs
+                        <label for="sprintname" style="width: 100%;" class="col-form-label control-label">APIs
                         </label>
-                        <select id="addRelatedApiModal-api" class="form-control "
-                                onchange="toggleRelatedApi4Desc(this)" style="width:100%;padding: 0px;
+                        <select id="addRelatedApiModal-api" data-live-search="true" class="form-control col-10 "
+                                 style="width:100%;padding: 0px;
                                 border-radius: 4px;
                                 border: 1px solid gray;">
                             <option value="txt"></option>
 
                         </select>
+                        <button class="btn btn-light" onclick="toggleRelatedApi4Desc()">New Api</button>
+                    
                         <div class="row  toggleRelatedApi4DescClass" style="display: none;">
                             <div class="form-group col-9">
                                 <label for="addRelatedApiModal-shortdesc" class="col-form-label control-label">New
@@ -6554,7 +6525,7 @@
                             <div class=" col-2">
                                 <br>
                                 <button class=" btn btn-primary toggleRelatedApi4DescClass "
-                                        onclick="new addNewApiFromDesc()" style="">Add</button>
+                                        onclick="new addNewApiFromDesc()">Add</button>
                             </div>
                         </div>
                     </div>
@@ -8842,6 +8813,38 @@
                                                                     </div>
                                                                     </div>
                                                                     </div>
+<div class="modal fade" id="addApiPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width1: 60%">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="exampleModal-properties-tab" class="container tab-pane active"
+                             style=" max-height: 76vh;overflow: auto;">
+                            <div class="col-12" style="font-size:11px;">
+                                <br>
+                                <label>API name</label>
+                                <input type="text" class="form-control" id="addApiPopupModal-userstoryname" pid="">
+                                <br>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer" style="display1:block;">
+                <button type="button" class="btn btn-primary" onclick="addApiNewPopup()">
+                    Add
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
                                                                     <!--
                                                                                                                                                                                                     <footer>

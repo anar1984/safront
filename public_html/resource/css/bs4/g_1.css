@@ -5875,7 +5875,7 @@ span.ruby-c-content {
    
     visibility: visible;
 }
-.hover-prototype-selector:hover{
+#SUS_IPO_GUI_Design>.hover-prototype-selector:hover{
  
      border-radius: 3px;
     border-color: #80bdff;

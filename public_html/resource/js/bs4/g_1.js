@@ -1458,65 +1458,6 @@ $(document).on("click", ".openNavhide", function () {
 
 
 
-$(document).keydown(function (event) {
-    if (event.which == "17")
-        cntrlIsPressed = true;
-});
-
-
-$(document).keyup(function () {
-    cntrlIsPressed = false;
-});
-
-var cntrlIsPressed = false;
-
-
-var idggdd = 4868347683787384609;
-
-$(document).on("click", ".cf li .inptadd", function () {
-
-
-    if (cntrlIsPressed === false) {
-        idggdd++
-        let valin = $(this).parent().attr('value');
-        let nm = $(this).parent().attr('title');
-
-        var comp = new ComponentInfo();
-
-        comp.id = idggdd;
-        comp.inputType = "IN";
-        comp.cellNo = "6";
-        comp.componentType = valin;
-        comp.label = nm;
-        comp.description = "";
-
-        var st = Component.GetComponentHtmlNew(comp);
-        var ldoa = `<div class="box-loader shimmer"></div>`
-
-        $("#SUS_IPO_GUI_Design .empty-message-block").remove();
-        $("#SUS_IPO_GUI_Design").append(st);
-        $("#" + idggdd).append(ldoa);
-        insertNewInputTotalDblClick(valin, nm, "6", idggdd);
-
-
-    } else {
-        let valin = $(this).parent().attr('value');
-
-
-
-        addInputAsInput();
-
-
-        setTimeout(function () {
-            $('#addNewComponentModal').find('#exampleModal-new-input-name').focus();
-
-        }, 700);
-        $('#addNewComponentModal').find('#exampleModal-new-component-type').val(valin);
-    }
-    $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
-
-})
-
 
 
 

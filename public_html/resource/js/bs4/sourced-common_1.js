@@ -7762,8 +7762,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     },
     loadSUSList4InputDetails: function (res) {
+        return
         try {
-            console.log("Ascdvbnm,")
+        
            var slct= $('.event_details1 select.us-gui-component-rel-sus-id');
                     slct.html("");
             var obj = res.tbl[0].r;
@@ -7859,7 +7860,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
                 $('.create-new-storycard-4-select').hide();
-                that.loadApisToCombo('select');
+                Prototype.ApiContainer.Init();
                 $('#us-related-apis').val(res.kv.id);
                 $('#sus-api-output-id').html("");
                 $('#sus-api-output-id')
@@ -9462,6 +9463,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#tblInputDescriptionList > tbody').html(st);
         this.setRelatedSUS(res);
         this.generateHtmlParentDependenceInputListTable(res);
+        
     },
 
     getResultOfgenerateHtmlParentDependenceInputListTable: function () {
@@ -11769,7 +11771,6 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('#us-gui-component-id').val(res.tbl[0].r[0].componentType);
 //                        that.setGUI_CSS(res.tbl[0].r[0].param4);
 
-
             $('.us-gui-component-rel-sus-div-class').show();
             $('select.us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
                         $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
@@ -11862,7 +11863,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             async: global_var.projectToggleWithSync,
             success: function (res) {
                 try {
-                    that.loadSUS4Relation4SectionDetails(res);
+                   // that.loadSUS4Relation4SectionDetails(res);
                 } catch (err) {
                 }
 //                queue4ProLoad.loadSUS4Relation4Section = true;
@@ -15752,13 +15753,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     getStoryInfo: function (id, e) {
 
+        clearLivePrototypeView42();
+
         if (!id) {
             return;
         }
         global_var.current_backlog_id = id;
-        global_var.current_backlog_name = $(e).html();
+        global_var.current_backlog_name = $(e).find('option[selected]').text();
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
-
+        loadBacklogDetailsByIdIfNotExist(id);
         fillBacklogHistory4View(id, $(e).attr("is_api"));
 
         if ($(e).attr("is_api") === '1') {
@@ -21519,20 +21522,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         $('#us-related-api-input-id').val(id);
         $('#us-related-api-input-actiontype').val(action);
 
-        $('#us-related-apis').html('');
+       // $('#us-related-apis').html('');
         if (!global_var.last_select_from_us_id) {
             $('#sus-api-output-id').html('');
         }
 
 
 
-        this.loadApisToCombo(action);
-
-        $('#us-related-apis')
-                .append($("<option>").val('').append(('')))
-                .append($("<option>").val('-2').append(('New User Story (API)')))
-                .append($("<option disabled>").val('').append(('')))
-                ;
+       // this.loadApisToCombo(action);
 
         if (f) {
             $('#sus-api-output-id').html('');
@@ -21540,7 +21537,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     .append($("<option>").val('').append(('')))
                     .append($("<option>").val('-2').append(('New')))
                     .append($("<option disabled>").val('').append(('')))
-                       $('#us-related-apis').selectpicker('refresh');
+                
 
             $('#us-related-apis').change();
         }
@@ -21548,6 +21545,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     },
 
     loadApisToCombo: function (action) {
+        return
         try {
             var keys = SACore.GetBacklogKeys();
             for (var i in keys) {

@@ -1529,10 +1529,10 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     }
 
 
-//    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
+    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
         loadBacklogProductionCoreDetailssById(bid);
-//        SAInput.LoadedBacklogs4InputNew.push(bid);
-//    }
+        SAInput.LoadedBacklogs4InputNew.push(bid);
+   }
 }
 
 function loadBacklogDetailsByIdIfNotExist_old4(bid) {
@@ -6715,10 +6715,10 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
         callTableRelationAPIs(elem, tableId);
     } catch (err) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+      //  $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
-    tableShowHideRowGetItem(inpId);
+  //  tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
     $('.table-filter-block-draggable').draggable({
         containment: "body"
@@ -9104,9 +9104,7 @@ function getGuiClassListDetails(res) {
     sortSelectBox('gui_prop_in_gui_class_list');
     select.prepend($('<option disabled>').val('').text(''))
             .prepend($('<option>').val('-2').text('New Class'))
-            .prepend($('<option>').val('').text(''))
-
-            ;
+            .prepend($('<option>').val('').text(''));
 }
 
 function getGuiClassListDetails4Container(res) {
@@ -9699,12 +9697,10 @@ function removeRelatedApiFromDesc(descId) {
     });
 }
 
-function toggleRelatedApi4Desc(el) {
-    if ($(el).val() === '-2') {
-        $('.toggleRelatedApi4DescClass').show();
-    } else {
-        $('.toggleRelatedApi4DescClass').hide();
-    }
+function toggleRelatedApi4Desc() {
+  
+        $('div.toggleRelatedApi4DescClass').toggle();
+    
 }
 
 function toggleRelatedSourceCode4Desc(el) {
@@ -9745,7 +9741,8 @@ function addNewApiFromDesc() {
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
             $('.toggleRelatedApi4DescClass').hide();
-            loadRelatedAPI4Relation();
+           // loadRelatedAPI4Relation();
+           Prototype.ApiContainer.Init()
             $('#addRelatedApiModal-api').val(res.kv.id);
             $('#addRelatedApiModal-newapi').val('');
             //                
@@ -9920,6 +9917,7 @@ function loadRelatedGlobalSourceCode4Relation() {
 
 function loadRelatedAPI4Relation() {
     //    addRelatedApiModal-api
+    return
     $('#addRelatedApiModal-api').html('');
     var keys = SACore.GetBacklogKeys();
     for (var i in keys) {
@@ -12239,8 +12237,8 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
-    $('#storyCardListSelectBox').change();
+   /*  loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
+    $('#storyCardListSelectBox').change(); */
 
 });
 
@@ -12496,40 +12494,29 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    showToggleMain();
+  /*   showToggleMain();
 
     getProjectUsers();
-    getUsers();
+    getUsers(); */
 
-    initZadShey(global_var.current_project_id);
+   // initZadShey(global_var.current_project_id);
 
     $.get("resource/child/ipo.html", function (html_string) {
 
 
+      
+      //  getAllGuiClassList();
 
-        getAllGuiClassList();
 
+       // getInputClassRelByProject();
+       // getInputAttributeByProject();
+       // getProjectDescriptionByProject();
+       // getJsCodeListByProject();
 
-        getInputClassRelByProject();
-        getInputAttributeByProject();
-        getProjectDescriptionByProject();
-        getJsCodeListByProject();
-
-        new UserStory().clearAll();
+       // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
-        SACore.FillAllSelectBox();
-        $('#show_ipo_toggle').prop("checked", true) //show input list
-        showNavBar();
-
-        loadProjectList2SelectboxByClass('projectList_liveprototype');
-
-        //callLivePrototype();
-        //commmonOnloadAction(this);
-        getGuiClassList();
-//        getJsCodeByProject();
-//        getInputActionRelByProjectMAnual2();
-        genToolbarStatus();
-//        loadLivePrototypeCore(this);
+        Prototype.Init();
+       
 
 
 
@@ -12699,6 +12686,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
     var json = initJSON();
     json.kv.fkProjectId = pid;
+    json.kv.isApi = 'NE%1';
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -12725,6 +12713,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             new UserStory().setUSLists(res);
             var f = true;
+           new UserStory().loadSUS4Relation4SectionDetails(res)
             fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
@@ -15528,7 +15517,8 @@ function addApiNewPopup() {
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
 
             //$('.projectList_liveprototype').change();
-            loadApiListOnProjectSelect4Ipo();
+           // loadApiListOnProjectSelect4Ipo();
+           Prototype.ApiContainer.Init()
             $('#addApiPopupModal-userstoryname').val('');
             $('#addApiPopupModal').modal('hide');
 
@@ -15642,7 +15632,7 @@ function insertNewInputTotalDblClick(typ, nm, clNo, id) {
 
 
             el.attr("pid", dt.id);
-            el.attr("onclick", "new UserStory().setInputByGUIComponent('" + dt.id + "')");
+            el.attr("onclick", "Prototype.InputContainer.setInputByGUIComponent('" + dt.id + "')");
             el.find(".tool_element_edit").attr("comp-id", dt.id)
             el.find(".tool_element_edit").find(".delete-btn-inp").attr("comp-id", "new UserStory().deleteInputFromUSList(this,'" + dt.id + "')")
             el.find(".component-input-class").attr("pdid", dt.id).attr("id", "comp_id_" + dt.id);
