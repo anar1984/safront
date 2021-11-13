@@ -434,7 +434,7 @@ var Component = {
 
             if (global_var.current_modal === 'loadLivePrototype') {
 
-                div.addClass("hover-prototype-selector");
+                div.addClass("hover-prototype-selector").attr("cellNo",comp.cellNo);
             }
 
         }

@@ -445,11 +445,11 @@ var Prototype = {
             global_var.current_us_input_id = id;
             Utility.addParamToUrl('current_us_input_id', global_var.current_us_input_id);
             //  $('.inputdesc').attr('style', ' pointer-events: block;opacity: 1;')
-           // new UserStory().genIPOInputDescList4Select();
+            // new UserStory().genIPOInputDescList4Select();
             this.setGUIComponentValues4Select();
-         //   this.getInputAttributeList(id);
-         //   this.getInputCompClassList();
-         //   this.getInputActionRelList();
+              this.getInputAttributeList(id);
+               this.getInputCompClassList();
+              this.getInputActionRelList();
         },
         setGUIComponentValues4Select: function () {
             $('#us-related-sus').val('');
@@ -466,16 +466,17 @@ var Prototype = {
         },
         setGUIComponentValues4Selec: function (res) {
             try {
-                $('#gui_input_content').val((res.tbl[0].r[0].inputContent));//Content load
-                $('#gui_input_css_style_container').val((res.tbl[0].r[0].param2));//Load Conatiner Css textarea
-                $('#gui_input_css_style').val((res.tbl[0].r[0].param3));//Load Input Css textarea
-                $('#u_userstory_input_id').val((res.tbl[0].r[0].id));//set id input 
+                $('#gui_input_content').val((res.tbl[0].r[0].inputContent)); //Content load
+                $('#gui_input_css_style_container').val((res.tbl[0].r[0].param2)); //Load Conatiner Css textarea
+                $('#gui_input_css_style').val((res.tbl[0].r[0].param3)); //Load Input Css textarea
+                $('#u_userstory_input_id').val((res.tbl[0].r[0].id)); //set id input 
                 ComponentDesign.read();
                 ContainerDesign.read();
                 $('#us-gui-component-id').val(res.tbl[0].r[0].componentType);
-              
+
                 $('.us-gui-component-rel-sus-div-class').show();
                 $('select.us-gui-component-rel-sus-id').val(res.tbl[0].r[0].param1);
+                $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
                 $('.us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
                 $('.us-gui-component-action').val(res.tbl[0].r[0].action);
                 $('.input_event_type').val(res.tbl[0].r[0].actionType);
@@ -706,6 +707,39 @@ var cntrlIsPressed = false;
 
 var idggdd = 4868347683787384609;
 
+$(document).on("mouseenter", "#SUS_IPO_GUI_Design >.hover-prototype-selector", function () {
+         var trg = $(this).find(".tool_element_edit").first();
+       
+      var id = $(this).attr("id")
+      var cellNo = $(this).attr("cellNo")
+      var select =$("<select>").addClass('light-selectbox-custom')
+            .attr("id", "gui-cell-selectbox-changed")
+            .append('<option  value="1">1</option>')
+            .append('<option  value="2">2</option>')
+            .append('<option  value="3">3</option>')
+            .append('<option  value="4">4</option>')
+            .append('<option  value="5">5</option>')
+            .append('<option  value="6">6</option>')
+            .append('<option  value="7">7</option>')
+            .append('<option  value="8">8</option>')
+            .append('<option  value="9">9</option>')
+            .append('<option  value="10">10</option>')
+            .append('<option  value="11">11</option>')
+            .append('<option  value="12">12</option>')
+            select.val(cellNo);
+    var html = $("<div>").addClass("tool_element_edit").attr("comp-Id", id)
+        .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
+        .append(select)
+        .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
+        if(trg.length>0){
+            trg.find('#gui-cell-selectbox-changed').val(cellNo);
+
+        }else{
+            $(this).append(html);
+        }
+        
+       
+})
 $(document).on("click", ".cf li .inptadd", function () {
 
 

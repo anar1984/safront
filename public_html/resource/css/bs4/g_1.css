@@ -5843,19 +5843,13 @@ span.ruby-c-content {
     right: 0;
     visibility: hidden;
     border-radius: 3px;
-    /* width: 100%; */
     z-index: 50000;
     text-align: right;
-    width: 170px;
+    width: max-content;
     background: white;
     border: 1px solid lightgrey;
     padding: 5px;
  
-}
-.tool_element_edit .figureAddbtn{
-   
-    margin-bottom: 5px;
-    
 }
 .edit-class-input-component{
     position: absolute;
