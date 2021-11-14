@@ -196,8 +196,6 @@ $(function () {
         table.tblToExcel();
 
 
-
-
     });
     $(document).on("change", '#gui-cell-selectbox-changed', function (e) {
         var lastCol = $(this).parents(".component-container-dashed")

@@ -17,10 +17,10 @@
                       <th>Repeat Every</th>
                       <th>Run Time</th>
                       <th>Status</th>
-                      <th></th>
+                      <th>OPTIONS</th>
                    </tr>
                 </thead>
-                <tbody id="RunServiceTrlist" class="table">
+                <tbody id="RunServiceTrlist" >
                    <tr>
                       <td>1</td>
                       <td class="RunServiceTitleName">
@@ -137,7 +137,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="ExportImportBoxModal">New Auto Run Service</h6>
+                    <h6 class="modal-title" id="newRunServiceModalTitle">New Auto Run Service</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -263,9 +263,10 @@
                                    </div>
                                </div>
                            </div>
-                           <div class="row" style="display: block;">
-                                <input type="text" id="hide_actions">
-                                <input type="text" id="hide_actions_param">
+                           <div class="row" style="display: none;">
+                                <input type="hide" id="hide_actions">
+                                <input type="hide" id="hide_actions_param">
+                                <input type="hide" id="hide_actions_param_2">
                             </div>
                            <div class="row monthly-actions run-intensive">
                                 <div class="col-12">
@@ -407,7 +408,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="newRunBbusinessServiceSaveBtn"
-                                class="newRunBbusinessServiceSaveBtn btn btn-primary" type="submit">Save</button>
+                                class="newRunBbusinessServiceSaveBtn btn btn-primary" type="submit" data-dismiss="modal">Save</button>
                         <button type="button" id="newRunBbusinessServiceCloseBtn"
                                 class="newRunBbusinessServiceCloseBtn btn btn-secondary cs-btn-secondary"
                                 data-dismiss="modal">Close</button>
