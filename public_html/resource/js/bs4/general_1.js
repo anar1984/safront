@@ -22,7 +22,7 @@ var gui_component = {
         "InnerCheckBox": "",
         "InnerEditBox": "",
         "InnerLine": "",
-        "Button": "background-color:#4CAF50;color:white; ",
+        "Button": "background-color:#272B7C;color:white; ",
         "Hidden": "",
         "Section": "width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;",
         "Icon": "",
