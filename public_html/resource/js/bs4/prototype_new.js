@@ -28,6 +28,8 @@ var Prototype = {
         this.BacklogContainer.Init(pid);
         this.ApiContainer.Init(pid);
         this.JsContainer.Init(pid);
+        this.BacklogContainer.getBacklogFile(pid);
+        this.CssContainer.getGuiClassList();
     },
     getProjectList: function () {
         var cmd = $('select.projectList_liveprototype');
@@ -57,9 +59,10 @@ var Prototype = {
         cmd.selectpicker('refresh');
         var pid = cmd.val()
         this.BacklogContainer.Init();
-        this.ApiContainer.Init(pid)
+        this.ApiContainer.Init(pid);
         this.JsContainer.Init(pid);
-        this.BacklogContainer.getBacklogFile(pid)
+        this.BacklogContainer.getBacklogFile(pid);
+        this.CssContainer.getGuiClassList();
 
     },
     ApiContainer: {
