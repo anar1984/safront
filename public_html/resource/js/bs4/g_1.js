@@ -1075,6 +1075,8 @@ var ch = 0,
         ch4 = 0,
         ch5 = 0,
         ch6 = 0;
+        ch7 = 0;
+        ch8 = 0;
 $(document).on("click", "#general-btn-icon", function () {
 
     $('#ipo-tab-setting-general').addClass('active');
@@ -1084,6 +1086,8 @@ $(document).on("click", "#general-btn-icon", function () {
     ch4 = 0;
     ch5 = 0;
     ch6 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('#guid-desigin-main-div-id').removeClass('col-12');
     $('#guid-desigin-main-div-id').addClass('col-9');
@@ -1113,6 +1117,8 @@ $(document).on("click", "#component-btn-icon", function () {
     ch4 = 0;
     ch5 = 0;
     ch6 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('#guid-desigin-main-div-id').removeClass('col-12');
     $('#guid-desigin-main-div-id').addClass('col-9');
@@ -1140,6 +1146,8 @@ $(document).on("click", "#apis-list-btn-icon", function () {
     ch4 = 0;
     ch5 = 0;
     ch6 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('#guid-desigin-main-div-id').removeClass('col-12');
     $('#guid-desigin-main-div-id').addClass('col-9');
@@ -1168,6 +1176,8 @@ $(document).on("click", "#container-btn-icon", function () {
     ch4 = 0;
     ch5 = 0;
     ch6 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('#guid-desigin-main-div-id').removeClass('col-12');
     $('#guid-desigin-main-div-id').addClass('col-9');
@@ -1196,6 +1206,8 @@ $(document).on("click", "#canvas-btn-icon", function () {
     ch3 = 0;
     ch5 = 0;
     ch6 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('#guid-desigin-main-div-id').removeClass('col-12');
     $('#guid-desigin-main-div-id').addClass('col-9');
@@ -1254,13 +1266,7 @@ $(document).on("click", ".inp_popUp_story_card_list_cl", function () {
     });
 
 })
-$(document).on("dblclick", ".component-container-dashed", function () {
-    $('#edit_component_inp_popUp').toggle('fast');
-    $('#edit_component_inp_popUp').draggable({
-        containment: "parent"
-    });
 
-})
 $(document).on("change", "#userStory-taskList-us", function () {
     var id = $(this).parents(".bug-tr").attr('id')
     updateTask4ShortChangePure($(this).val(), "fkBacklogId", id);
@@ -1269,10 +1275,7 @@ $(document).on("focusout", "#userStory-taskList-us", function () {
 
     $(this).hide();
 })
-$(document).on("click", ".component-container-button", function () {
-    $(this).parents(".component-container-dashed").dblclick();
 
-})
 
 var popUpt = `<div   class="popup-Elements" data-toggle="modal" data-target="#exampleModal" id="popup-btn" >
   <span class="editBtnLVSect deleteBTn" title="Delete Input"><i class="fas fa-trash-alt"></i></span>
@@ -1318,13 +1321,15 @@ $(document).on("click", ".viewbtnIpo", function () {
 
 //  6. tool panel-animation
 $(document).on("click", "#animation-icon", function () {
-    $('#ipo-tab-setting-animation').addClass('active');
+ 
     ch6++;
     ch = 0;
     ch2 = 0;
     ch3 = 0;
     ch4 = 0;
     ch5 = 0;
+    ch7 = 0;
+    ch8 = 0;
     $('#gui-desigin-component-view-main-div-id').css('display', 'block');
     $('.home_icon_menu-item').css('right', '27%');
     $('.home_icon_menu-open-button').css('right', '27%');
@@ -1334,7 +1339,6 @@ $(document).on("click", "#animation-icon", function () {
         ch6 = 0;
 
         $('#gui-desigin-component-view-main-div-id').css('display', 'none');
-        $('#ipo-tab-setting-inputAdd').removeClass('active');
         $('.home_icon_menu-item').css('right', '7%');
         $('.home_icon_menu-open-button').css('right', '7%');
         $('.tool-item').removeClass('active');
@@ -1346,14 +1350,58 @@ $(document).on("click", "#animation-icon", function () {
 //  7. tool panel-input-add
 
 $(document).on("click", "#currentAll-btn-icon", function () {
-    $('.current').toggle();
-    $('.all').toggle();
+  
+    ch7++;
+    ch = 0;
+    ch2 = 0;
+    ch3 = 0;
+    ch4 = 0;
+    ch5 = 0;
+    ch6 = 0;
+    ch8 = 0;
+    $('#gui-desigin-component-view-main-div-id').css('display', 'block');
+    $('.home_icon_menu-item').css('right', '27%');
+    $('.home_icon_menu-open-button').css('right', '27%');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
+    if (ch7 == 2) {
+        ch7 = 0;
+
+        $('#gui-desigin-component-view-main-div-id').css('display', 'none');
+        $('.home_icon_menu-item').css('right', '7%');
+        $('.home_icon_menu-open-button').css('right', '7%');
+        $('.tool-item').removeClass('active');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
+    }
 })
 
 // draggable checkbok
-$(document).on("click", ".dragCheckbox", function () {
-    $('.togglemark1').toggle();
-    $('.togglemark2').toggle();
+$(document).on("click", "#dragCheckbox", function () {
+
+    ch8++;
+    ch = 0;
+    ch2 = 0;
+    ch3 = 0;
+    ch4 = 0;
+    ch5 = 0;
+    ch7 = 0;
+    ch6 = 0;
+    $('#gui-desigin-component-view-main-div-id').css('display', 'block');
+    $('.home_icon_menu-item').css('right', '27%');
+    $('.home_icon_menu-open-button').css('right', '27%');
+    $('#guid-desigin-main-div-id').removeClass('col-12');
+    $('#guid-desigin-main-div-id').addClass('col-9');
+    if (ch8 == 2) {
+        ch8 = 0;
+
+        $('#gui-desigin-component-view-main-div-id').css('display', 'none');
+        $('.home_icon_menu-item').css('right', '7%');
+        $('.home_icon_menu-open-button').css('right', '7%');
+        $('.tool-item').removeClass('active');
+        $('#guid-desigin-main-div-id').removeClass('col-9');
+        $('#guid-desigin-main-div-id').addClass('col-12');
+    }
 
 })
 
