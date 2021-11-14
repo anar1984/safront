@@ -21,17 +21,49 @@
     font-size: 16px;
 }
 .modal-header{
-    background-color: #173359 !important ;  
-    padding: 17px !important;
+    background-color: #173359 !important;
+    padding: 5px !important;
+    height: 35px;
 }
+.bg-shadow-3 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
 .modal-header .modal-title, .modal-header .close{
     color: #fff !important;  
     opacity: 1 !important;
 }
 .modal-header .close{
-    padding: 0px 15px !important;
+    padding: 12px 20px !important;
 }
-
+/* status color */
+.bg-status-new{
+   background-color: #fbf8d5;
+}
+.bg-status-ongoing{
+   background-color: #fee6cc;
+}
+.bg-status-waiting{
+   background-color: #f9cdd2;
+}
+.bg-status-closed{
+    background-color: #cdead0;
+  
+}
+.bg-status-rejected{
+   background-color: #d0b79e;
+}
+.bg-status-canceled{
+   background-color: #a7c6d7;
+}
+.bg-status-defected{
+   background-color: #d0d9ea;
+}
+.bg-status-tesdiqlenib{
+   background-color: #dce2ee;
+}
+.bg-status-tamamlanib{
+    background-color: #a8dff4;
+}
 
 
 /* cheweeek>>>>>>>>>>>>>>>> Revan */
@@ -384,7 +416,7 @@ input:checked + .slider:before {
     pointer-events: none;
     color: #aaa;
 }
-.dropdown-toggle::after {
+button.dropdown-toggle::after {
     font-family: "Font Awesome 5 Pro";
     font-size: 12px;
     display: inline-block;
@@ -420,10 +452,11 @@ input:checked + .slider:before {
     border-bottom-right-radius:5px;
 }
 /* task card section */
-.cs-task-cart-head {
-    border-bottom: 1px solid #EEEEEE;
-    padding-bottom: 6px;
-    margin-bottom: 6px;
+.cs-task-card-bottom{
+    border-top: 1px solid #EEEEEE;
+    padding-top: 6px;
+    margin-top: 6px;
+    padding: 5px;
 }
 .cs-task-main {
     margin-left: 10px;
@@ -515,7 +548,7 @@ label.cs-file-upload {
     padding: 0;
     cursor: pointer;
     margin: 0;
-    color: #CECECE;
+    color: #173359;
     font-size: 14px;
 }
 label.cs-file-upload:hover {
@@ -530,6 +563,8 @@ label.cs-file-upload:hover {
     bottom: 1px;
     right: 0;
     margin-bottom: 0;
+    margin-top: 2px;
+
 }
 .cs-card-ceckbox .slider:before{
     height: 12px;
@@ -538,13 +573,13 @@ label.cs-file-upload:hover {
     bottom: 1px;
 }
 .cs-card-ceckbox .slider {
-    background-color: #EEEEEE;
+    background-color: #e4ecf7;
 }
 .cs-card-ceckbox .slider:before {
-    background-color: #CECECE;
+    background-color: #173359;
 }
 .cs-card-ceckbox input:checked + .slider:before {
-    background-color: #ffffff;
+    background-color: #e4ecf7;
 }
 .cs-card-ceckbox input:checked + .slider:before {
     -webkit-transform: translateX(12px);
@@ -565,6 +600,7 @@ label.cs-file-upload:hover {
 .cs-cart-head-title {
     font-size: 13px;
     font-weight: bold;
+    position: relative;
 }
 .cs-task-card-attachfile {
     display: inline-block;
@@ -574,14 +610,22 @@ label.cs-file-upload:hover {
 }
 .cs-task-item-in-box {
     margin-bottom: 8px;
-    padding: 8px;
+  /*   padding: 8px; */
+     overflow: hidden;
     border-radius: 5px;
     box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
     -moz-box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
     -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
 }
 .cs-task-card-body {
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
+}
+.cs-task-card-body p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 40px;
 }
 .cs-task-card-body .cs-task-card-desc {
     color: #737373;
@@ -643,6 +687,7 @@ label.cs-file-upload:hover {
 }
 .cs-task-card-datatime {
     color: #173359;
+    font-size: 10px;
 }
 .cs-task-card-datatime span {
     color: #173359;
@@ -677,6 +722,19 @@ label.cs-file-upload:hover {
     min-width: 19.66%;
     margin-right: 5px;
 
+}
+.cs-task-item-in-box:hover .large-blok-icon{
+     
+    visibility: visible;
+     
+}
+.cs-task-item-in-box .large-blok-icon{
+     
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+     
 }
 .maximize-large .cs-task-item-box-bg {
     display: flex;
@@ -862,8 +920,8 @@ padding: 0 10px;
     border-color: #525596;
 }
 .cs-task-card-avatar-boxes .Assigne-card-story-select-img {
-    width: 25px;
-    height: 25px;
+    width: 23px;
+    height: 23px;
     border-radius: 50%;
     padding: 1px;
 }
@@ -987,4 +1045,124 @@ padding: 0 10px;
     -moz-user-select: none!important;
     -ms-user-select: none!important;
     user-select: none!important;
+}
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+div.user-filter-tapsiriq{
+    width: 100% !important;
+}
+
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 230px;
+    max-width: 230px;
+    background: #e4ecf7;
+
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -230px;
+}
+
+
+
+#sidebar ul.components {
+    padding: 20px 0;
+  
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+#sidebar .list-unstyled>li>ul>li {
+    margin-left: 30px;
+    width: 80%;
+}
+
+#sidebar ul li a {
+    padding: 5px;
+        font-size: 14px;
+        display: block;
+        color: #173359;
+        font-weight: 700;
+}
+
+#sidebar ul li a:hover {
+
+    background: #cfd8e7;
+    border-radius: 3px ;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #e4ecf7;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+a.dropdown-toggle::before {
+    font-family: "Font Awesome 5 Pro";
+    font-size: 12px;
+    display: inline-block;
+    content: '\f078';
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 0px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
 }

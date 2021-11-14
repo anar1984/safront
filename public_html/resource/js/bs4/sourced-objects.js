@@ -1482,6 +1482,7 @@ var SAInput = {
     "DescriptionId": {},
     "ChildDependenceId": {},
     "LoadedBacklogs4Input": [],
+    "LoadedBacklogs4InputNew": [],
     "LoadedChildDependenceId4Input": [],
     updateInput: function (backlogId, key, value) {
         try {

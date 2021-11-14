@@ -143,7 +143,7 @@ var cheweek = {
                         .append(o.taskNo)
                     ))
                 .append($("<td>")
-                     .css("width", "180px")
+                     .css("width", "160px")
                     .addClass("text-center")
                     .append(select.val(o.taskPriority))
                     .append($("<span>")
@@ -155,6 +155,7 @@ var cheweek = {
                     ))
                 .append($("<td>")
                     .addClass("text-center")
+                    .css("width", "210px")
                     .append($("<a href='#'>")
                         .addClass("_taskListTaskTypeIdField brend-color")
                         .attr("sa-data-value", o.fkTaskTypeId)
@@ -247,8 +248,8 @@ var cheweek = {
             var user = SAProjectUser.ProjectUsers[id];
             return $('<img>')
                 .addClass("rounded-circle")
-                .css("width", '28px')
-                .css("height", '28px')
+                .css("width", '25px')
+                .css("height", '25px')
                 .css("border", '1px dashed #17335996')
                 .attr("src", fileUrl(user.userImage))
                 .attr('data-trigger', "hover")
@@ -269,7 +270,13 @@ var cheweek = {
     genCountNotification: function () {
         try {
             var count = be.callApi("21092414280609718466");
-            $(".number_cst_elc").show().text(count.id);
+            if (count.id==="0") {
+                $(".number_cst_elc").hide();
+                return 
+            }else{
+                $(".number_cst_elc").show().text(count.id);
+            }
+           
         } catch (error) {
             $(".number_cst_elc").hide()
         }

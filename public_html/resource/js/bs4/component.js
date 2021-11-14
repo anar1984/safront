@@ -200,12 +200,12 @@ var Component = {
             if (SAInput.getInputDetails(comp.id, "sectionType") === 'toggle') {
                 if (SAInput.getInputDetails(comp.id, "actionType") === 'change') {
                     el.addClass('hasInputManualEventActionChange')
-                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick'){
-                     el.addClass('hasInputManualEventActionDblClick')
-                }else if (SAInput.getInputDetails(comp.id, "actionType") === 'click'){
-                     el.addClass('hasInputManualEventActionClick')
-                }else{
-                     el.addClass('hasInputManualEventActionChange')
+                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick') {
+                    el.addClass('hasInputManualEventActionDblClick')
+                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'click') {
+                    el.addClass('hasInputManualEventActionClick')
+                } else {
+                    el.addClass('hasInputManualEventActionChange')
                 }
             }
 
@@ -225,6 +225,9 @@ var Component = {
             } else if (comp.action === 'delete') {
                 Component.ComponentEvent.getDeleteEvent(el, comp);
             }
+
+            //add action send api type
+            el.attr('sendApiType', SAInput.getInputDetails(comp.id, "sendApiType"));
         },
         addClassToElement: function (el, comp) {
 
@@ -238,7 +241,7 @@ var Component = {
                         className = className.replace(".", "");
                         el.addClass(className);
 
-                        if (global_var.current_modal === 'loadLivePrototype'  && 
+                        if (global_var.current_modal === 'loadLivePrototype' &&
                                 (className === 'sa-onloadclick' || className === 'sa-onloadchange' ||
                                         className === 'sa-onloadclick-async' || className === 'sa-onloadchange-async')) {
                             el.addClass('init-on-loader')
@@ -356,15 +359,15 @@ var Component = {
                 .attr('id', comp.id)
                 .attr('pid', comp.id)
 
-                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'resize1' : "")
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                .addClass(global_var.current_modal === 'loadLivePrototype' ? 'resize1' : "")
                 //                .addClass('popup')
                 .addClass(comp.addTooltip ? 'tooltipMan' : "") //muveqqeti baglayaq
                 .addClass('component-class')
                 .addClass('component-container-dashed')
                 .addClass('col-lg-' + comp.cellNo);
 
-        if (global_var.current_modal === 'loadLivePrototype'  ) {
+        if (global_var.current_modal === 'loadLivePrototype') {
             div.attr('ondragover', 'allowDrop(event)')
                     .attr('ondragstart', 'drag(event)')
                     .attr('ondrop', 'drop(event)')
@@ -425,260 +428,13 @@ var Component = {
         //                : "")
 
         if (comp.hasOnClickEvent) {
-            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
-                    'new UserStory().setInputByGUIComponent(\'' + comp.id + '\')' :
+            div.attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                    'Prototype.InputContainer.setInputByGUIComponent(\'' + comp.id + '\')' :
                     "")
 
-            if (global_var.current_modal === 'loadLivePrototype'   ) {
+            if (global_var.current_modal === 'loadLivePrototype') {
 
-                div.addClass("hover-prototype-selector").append($("<div>").addClass("tool_element_edit").attr("comp-Id", comp.id)
-                        .append(`<div style='display:inline-block;' class="dropdown">
-                        <span class="figureAddbtn" onclick="fillRelatedApi4InputEvent('${comp.id}')" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fab fa-asymmetrik" aria-hidden="true"></i>
-                        </span>
-                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton">
-                        <div class="row animation-block-for-find">                      
-                        <div class="col-12">
-                            <fieldset class="border p-2">
-                                <legend class="w-auto w-auto-man">
-                                    Event Relation
-                                </legend>
-                    
-                                Event<br>
-                                <select class=" form-control input_event_type">
-                                    <option value="onclick">onclick</option>
-                                    <option value="onchange">onchange</option>
-                                    <option value="ondblclick">ondblclick</option>
-                                </select><br>
-                    
-                                Related API<br>
-                                <select  class="form-control input_event_related_api">                                                        
-                                </select>
-                    
-                                <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
-                                <br><br>
-                                <table style='border: 1px solid #dee2e6; width:100%;'>
-                                    <thead>
-                                        <tr>
-                                            <th>Event</th>
-                                            <th>API</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class='input_event_related_api_table_list_body'>
-                    
-                                    </tbody>
-                                </table>
-                            </fieldset>
-                        </div>
-                    
-                    
-                    </div>
-                        </div>
-                      </div>`)
-                        .append(`<div style='display:inline-block;' class="dropdown">
-                        <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-paint-brush"></i>
-                        </span>
-                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton1">
-                        <div class="row animation-block-for-find">                      
-                        <div class="col-12 "  style="display:flex;flex-wrap:wrap">
-                            <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                background-color
-                            </legend>
-                            <div class="figureBgSelectOption">
-                            <button data-bgcolorspan="transparent" style="background-color: transparent;" class="ColopickerSpanLine  change-color-component gactive"><i class="fas fa-times"></i></button>
-                            <button data-bgcolorspan="#007bff" style="background-color: #007bff;" class="ColopickerSpanLine  change-color-component "></button>
-                            <button data-bgcolorspan="#6c757d" style="background-color: #6c757d;" class="ColopickerSpanLine change-color-component "></button>
-                            <button data-bgcolorspan="#28a745" style="background-color: #28a745;" class="ColopickerSpanLine change-color-component"></button>
-                            <button data-bgcolorspan="#dc3545" style="background-color: #dc3545;" class="ColopickerSpanLine change-color-component"></button>
-                            <button data-bgcolorspan="#ffc107" style="background-color: #ffc107;" class="ColopickerSpanLine change-color-component"></button>
-                            <button data-bgcolorspan="#17a2b8" style="background-color: #17a2b8;" class="ColopickerSpanLine change-color-component "></button>
-                            <button data-bgcolorspan="#343a40" style="background-color: #343a40;" class="ColopickerSpanLine change-color-component"></button>
-                 
-                            </div>
-                            </fieldset>
-                            <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                font-color
-                            </legend>
-                            <div class="figureBgSelectOption">
-                            <button data-bgcolorspan="black" style="background-color: transparent;" class="ColopickerSpanLine  change-font-component gactive"><i class="fas fa-times"></i></button>
-                            <button data-bgcolorspan="#007bff" style="background-color: #007bff;" class="ColopickerSpanLine  change-font-component "></button>
-                            <button data-bgcolorspan="#6c757d" style="background-color: #6c757d;" class="ColopickerSpanLine change-font-component "></button>
-                            <button data-bgcolorspan="#28a745" style="background-color: #28a745;" class="ColopickerSpanLine change-font-component"></button>
-                            <button data-bgcolorspan="#dc3545" style="background-color: #dc3545;" class="ColopickerSpanLine change-font-component"></button>
-                            <button data-bgcolorspan="#ffc107" style="background-color: #ffc107;" class="ColopickerSpanLine change-font-component"></button>
-                            <button data-bgcolorspan="#17a2b8" style="background-color: #17a2b8;" class="ColopickerSpanLine change-font-component "></button>
-                            <button data-bgcolorspan="#343a40" style="background-color: #343a40;" class="ColopickerSpanLine change-font-component"></button>
-                 
-                            </div>
-                            </fieldset>
-                            <fieldset class=" col-6 border p-2">
-                            <legend class="w-auto w-auto-man">
-                            text-align
-                        </legend>
-                            <div class="figureBgSelectOption">
-                           
-                            <button data-bgalign="left"  class="ColopickerSpanLine  change-align-component "><i class="fas fa-align-left"></i></button>
-                            <button data-bgalign="center"  class="ColopickerSpanLine  change-align-component "><i class="fas fa-align-center"></i></button>
-                            <button data-bgalign="right"  class="ColopickerSpanLine change-align-component "><i class="fas fa-align-right"></i></button>
-                           
-                 
-                            </div>
-                            </fieldset>
-                            <fieldset class=" col-6 border p-2">
-                            <legend class="w-auto w-auto-man">
-                            font-style
-                        </legend>
-                            <div class="figureBgSelectOption">
-                           
-                            <button data-key="font-weight" data-bgalign="bold"  class="ColopickerSpanLine  change-fstyle-component "><i class="fas fa-bold"></i></button>
-                            <button data-key="font-style" data-bgalign="italic"  class="ColopickerSpanLine  change-fstyle-component "><i class="fas fa-italic"></i></button>
-                            <button data-key="text-decoration" data-bgalign="underline"  class="ColopickerSpanLine change-fstyle-component "><i class="fas fa-underline"></i></button>
-                           
-                 
-                            </div>
-                            </fieldset>
-                            <fieldset class=" col-6 border p-2">
-                            <legend class="w-auto w-auto-man">
-                            width
-                        </legend>
-                            <div class="figureBgSelectOption">
-                            <input class="form-control col-6" type="number" name="" id="widthComponent">
-                            <select name="" class="form-control bg-light form-control-sm col-6" id="getStyleVah1d1">
-                       <option value="px">px</option>
-                       <option value="px">rem</option>
-                       <option value="px">cm</option>
-                   </select>
-                            </div>
-                            </fieldset>
-                            <fieldset class=" col-6 border p-2">
-                            <legend class="w-auto w-auto-man">
-                            height
-                        </legend>
-                            <div class="figureBgSelectOption">
-                           
-                            <input class="form-control col-6" type="number" name="" id="heightComponent">
-                            <select name="" class="form-control bg-light form-control-sm col-6" id="getStyleVah1d2">
-                       <option value="px">px</option>
-                       <option value="px">rem</option>
-                       <option value="px">cm</option>
-                   </select>
-                            </div>
-                            </fieldset>
-                        </div>
-                    
-                    
-                    </div>
-                        </div>
-                      </div>`)
-                        .append(`<div style='display:inline-block;' class="dropdown">
-                        <span class="figureAddbtn"  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-key"></i>
-                        </span>
-                        <div class="dropdown-menu dropdown-menu-large-btn" aria-labelledby="dropdownMenuButton1">
-                        <div class="row animation-block-for-find">                      
-                        <div class="col-12">
-                        <fieldset class="border p-2">
-                        <legend class="w-auto w-auto-man">
-                            Class
-                        </legend>
-                        <table style="width:100%">
-                            <tbody>
-                                <tr>
-                                    <td style="padding:5px;">
-
-                                        <select id="gui_prop_in_gui_class_list" class="classListOnChange" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
-                                    </td>
-                                    <td style="width: 1%">
-                                        <i class="fa fa-plus" onclick="addGuiClassToInput(this)" style="  font-size:16px;cursor:pointer;" aria-hidden="true"></i>
-
-                                    </td>
-                                    <td style="width: 1%">
-                                        <i class="fa fa-bars" onclick="guiClassModal(this)" style="  font-size:16px;cursor:pointer;" aria-hidden="true"></i>
-
-                                    </td>
-                                </tr>
-                                <tr class="input4NewClassAdding" style="display:none">
-                                    <td style="padding:5px;" colspan="2">
-
-                                        <input id="gui_prop_in_gui_class_new" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                    </td>
-                                    <td style="width: 1%">
-                                        <button class="buttons" onclick="insertNewClassDirect2(this)" style="   cursor:pointer;">Add</button>
-
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                            <tbody class="input_class_list_in_component"></tbody>
-                        </table>
-
-                    </fieldset>
-                    <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                Attributes
-                            </legend>
-                            <table style="width:100%">
-                                <tbody>
-                                    <tr>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">Name:</span>
-                                            <input type="text" id="gui_prop_in_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">Value:</span>
-                                            <input type="text" id="gui_prop_in_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-plus" onclick="addInputAttributes2(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
-
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                                <tbody class="input_attributes_list_in_component"></tbody>
-                            </table>
-
-                        </fieldset>
-                        </div>
-                    
-                    
-                    </div>
-                        </div>
-                      </div>`)
-
-                        .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
-
-                        .append('<span class="figureAddbtn " id="element-edit-button-hover"><i class="far fa-edit"></i></span>')
-                        .append($("<select>").addClass('light-selectbox-custom')
-                                .attr("id", "gui-cell-selectbox-changed")
-                                .append('<option ' + (comp.cellNo == 1 ? 'selected=selected' : '') + ' value="1">1</option>')
-                                .append('<option ' + (comp.cellNo == 2 ? 'selected=selected' : '') + ' value="2">2</option>')
-                                .append('<option ' + (comp.cellNo == 3 ? 'selected=selected' : '') + ' value="3">3</option>')
-                                .append('<option ' + (comp.cellNo == 4 ? 'selected=selected' : '') + ' value="4">4</option>')
-                                .append('<option ' + (comp.cellNo == 5 ? 'selected=selected' : '') + ' value="5">5</option>')
-                                .append('<option ' + (comp.cellNo == 6 ? 'selected=selected' : '') + ' value="6">6</option>')
-                                .append('<option ' + (comp.cellNo == 7 ? 'selected=selected' : '') + ' value="7">7</option>')
-                                .append('<option ' + (comp.cellNo == 8 ? 'selected=selected' : '') + ' value="8">8</option>')
-                                .append('<option ' + (comp.cellNo == 9 ? 'selected=selected' : '') + ' value="9">9</option>')
-                                .append('<option ' + (comp.cellNo == 10 ? 'selected=selected' : '') + ' value="10">10</option>')
-                                .append('<option ' + (comp.cellNo == 11 ? 'selected=selected' : '') + ' value="11">11</option>')
-                                .append('<option ' + (comp.cellNo == 12 ? 'selected=selected' : '') + ' value="12">12</option>')
-
-                                )
-                        .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + ' "data-add="false"><i class="fas fa-angle-left"></i></span>')
-                        .append('<span class="figureAddbtn cellWitdhAdd" cell-num=' + comp.cellNo + '  data-add="true"><i class="fas fa-angle-right"></i></span>')
-                        .append('<span class="figureAddbtn drag-areas-comp " ><i class="fas fa-arrows-alt"></i></span>')
-
-                        .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + comp.id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
-                        )
+                div.addClass("hover-prototype-selector").attr("cellNo",comp.cellNo);
             }
 
         }
@@ -862,9 +618,9 @@ var Component = {
                         .attr('pid', inputId)
                         .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                        .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
-                                "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                        .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                "Prototype.InputContainer.setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append("<input data-check=" + inputId + " checked='true' type='checkbox'>")
                         .append(replaceTags(inputName))
@@ -900,7 +656,7 @@ var Component = {
                 //                    .append(showInTree, ' ')
                 ;
 
-                if (global_var.current_modal !== 'loadLivePrototype'   &&
+                if (global_var.current_modal !== 'loadLivePrototype' &&
                         pairShowColumn[inputId].trim() === '1') {
                     th.empty().hide();
 
@@ -1001,10 +757,11 @@ var Component = {
                             .attr('id', inputId)
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
+                            
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
-                                    "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                    "Prototype.InputContainer.setInputByGUIComponent('" + inputId + "')" :
                                     "")
                     var checkAll
 
@@ -1034,9 +791,9 @@ var Component = {
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
 
-                            .addClass(global_var.current_modal === 'loadLivePrototype'   ? 'draggable' : '')
-                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
-                                    "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                            .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
+                            .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                    "Prototype.InputContainer.setInputByGUIComponent('" + inputId + "')" :
                                     "")
                             .append(replaceTags(inputName))
                 }
@@ -1047,7 +804,7 @@ var Component = {
                 //                var colorInTree = pairShowInTree[inputId].trim() === '1' ? "#2196F3" : "#d5d6da";
 
 
-                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1055,7 +812,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumn = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showColumn = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-eye" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1063,7 +820,7 @@ var Component = {
                         .attr("onclick", "showInputTableColumnEntireComponent(this,'" + tableId + "','" + inputId + "')") :
                         "";
 
-                var showColumnName = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showColumnName = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-cubes" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -1079,16 +836,27 @@ var Component = {
                 //                    .attr("onclick", "showInputTableColumnInTree(this,'" + tableId + "','" + inputId + "')") :
                 //                    "";
 
+                var selectedFieldTemp = "";
+                try {
+                    selectedFieldTemp = cr_input_comp_attribute_kv[inputId]['sa-selectedfield'];
+                } catch (err) {
+                }
 
-
+                var hascomponentclicked = pair[inputId].trim() === '1' ? "hascomponentclicked" :"";
+                var componentIsHeaden = pairShowColumn[inputId].trim() === '1' ? "componentisheaden" :"";
                 var th = $("<th>")
+                        .addClass('selectablezad')
+                        .addClass(hascomponentclicked)
+                        .addClass(componentIsHeaden)
                         .addClass("text-center")
+                        .attr('sa-selectedfield-header',selectedFieldTemp)
+                        .attr('pid',inputId)
                         //                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp, ' ')
                         .append(showColumn, ' ')
                         .append(showColumnName, ' ')
-                if (global_var.current_modal !== 'loadLivePrototype'   ) {
+                if (global_var.current_modal !== 'loadLivePrototype') {
                     try {
                         th.append((a === '') ? "" : "<span class='handle-drag'></span>");
 
@@ -1145,10 +913,7 @@ var Component = {
                             .attr('filter-id', inputId))
                 }
 
-
-
-
-                if (global_var.current_modal !== 'loadLivePrototype'   && 
+                if (global_var.current_modal !== 'loadLivePrototype' &&
                         pairShowColumn[inputId].trim() === '1') {
                     th.hide();
                     thFilt.hide();
@@ -1182,12 +947,8 @@ var Component = {
                 } catch (err) {
                 }
 
-
-
-
-
                 tr.append(th);
-                if (global_var.current_modal !== 'loadLivePrototype' ) {
+                if (global_var.current_modal !== 'loadLivePrototype') {
                     trFilter.append(thFilt);
                 }
 
@@ -1521,7 +1282,7 @@ var Component = {
 
     },
     InputTable: function (comp) {
-        var elDiv = (global_var.current_modal === 'loadLivePrototype'  
+        var elDiv = (global_var.current_modal === 'loadLivePrototype'
                 && comp.showProperties) ?
                 $('<div class="col-lg-12 text-right">')
                 .attr("id", "comp_id_" + comp.id)
@@ -1699,7 +1460,7 @@ var Component = {
                     .attr("onclick", "addUserStoryToTabModal('" + comp.fkInputTableId + "')")
         },
         GenPropertiesLine: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
                     .css("padding-top", "15px")
@@ -1775,13 +1536,13 @@ var Component = {
                 var inputName = SAInput.GetInputName(inputId);
                 var a = $('<a href="#">')
                         .addClass('component-class')
-                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype'  ) ?
-                                "new UserStory().setInputByGUIComponent('" + inputId + "')" :
+                        .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
+                                "Prototype.InputContainer.setInputByGUIComponent('" + inputId + "')" :
                                 "")
                         .append(replaceTags(inputName))
 
                 var color = showComponent[i].trim() === '1' ? "#2196F3" : "#d5d6da";
-                var showComp = (global_var.current_modal === 'loadLivePrototype'  ) ?
+                var showComp = (global_var.current_modal === 'loadLivePrototype') ?
                         $('<i class="fa fa-list-alt" aria-hidden="true">')
                         .css("cursor", "pointer")
                         .css('font-size', '8px')
@@ -2516,7 +2277,7 @@ var Component = {
             return div.html();
         },
         GroupHeader: function (comp) {
-            return (global_var.current_modal === 'loadLivePrototype'  
+            return (global_var.current_modal === 'loadLivePrototype'
                     && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .attr("id", "comp_id_" + comp.id)
@@ -2589,7 +2350,7 @@ var Component = {
             }
         },
         GetPropertiesSection: function (comp) {
-            var elDiv = (global_var.current_modal === 'loadLivePrototype'   && comp.showProperties) ?
+            var elDiv = (global_var.current_modal === 'loadLivePrototype' && comp.showProperties) ?
                     $('<div class="col-lg-12 text-right">')
                     .addClass("live-prototype-component-properties")
                     //                    .css("display", "none")

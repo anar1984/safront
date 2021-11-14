@@ -62,7 +62,7 @@ var SAFN = {
         'getcurrentuserid': "GetCurrentUserId",
         'setbackendcache': "SetBackendCache",
         'setlocalcache': "SetLocalCache",
-        'setdata':"SetData"
+        'setdata': "SetData"
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();
@@ -402,6 +402,7 @@ var SAFN = {
         var outData = {};
 
         var body = SAFN.FunctionBody;
+
         body = SAFN.Function_If_Body_Statement_Replacement(body);
         body = SAFN.Function_For_Body_Statement_Replacement(body);
         var commands = body.split(";");
@@ -541,7 +542,7 @@ var SAFN = {
             data[key] = value;
             return data;
         },
-         SetData: function (key) {
+        SetData: function (key) {
             key = SAFN.GetArgumentPureValue(key);
             var data = SAFN.CoreData;
             data[key] = JSON.stringify(data);

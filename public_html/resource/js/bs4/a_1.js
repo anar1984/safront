@@ -1529,6 +1529,18 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     }
 
 
+    if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
+        loadBacklogProductionCoreDetailssById(bid);
+        SAInput.LoadedBacklogs4InputNew.push(bid);
+   }
+}
+
+function loadBacklogDetailsByIdIfNotExist_old4(bid) {
+    if (!bid) {
+        return;
+    }
+
+
     if (localStorage.getItem('idb_' + bid)) {
 
         var md = '';
@@ -1656,9 +1668,9 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-    global_var.current_modal='';
+    global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
-    global_var.current_modal='loadLivePrototype';
+    global_var.current_modal = 'loadLivePrototype';
 //    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
 }
@@ -1726,7 +1738,7 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
                 } else {
                     loadBacklogProductionCoreDetailssByIdPost(bid1, isAsync);
@@ -2192,7 +2204,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoader(bid1, select, selectFro
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
 
                     var selectedField = SAInput.GetInputName(selectFromInputId);
@@ -2247,7 +2259,7 @@ function loadBacklogInputsByIdIfNotExist4SelectBoxLoaderPost(bid1, select, selec
 
             loadBacklogProductionDetailsById_resparams(res);
 
-            SAInput.LoadedBacklogs4Input.push(selectFromBacmkogId);
+            SAInput.LoadedBacklogs4InputNew.push(selectFromBacmkogId);
             var selectedField = SAInput.GetInputName(selectFromInputId);
             triggerAPI2Fill(select, selectFromBacmkogId, selectedField);
 
@@ -2391,7 +2403,7 @@ function _LoadBacklogInputsByIdIfNotExist(carrier) {
 
                 if (res) {
 //                     localStorage.setItem('idb_' + bid, res.kv.modificationTime);
-                    SAInput.LoadedBacklogs4Input.push(bid);
+                    SAInput.LoadedBacklogs4InputNew.push(bid);
                     loadBacklogProductionDetailsById_resparams(res);
                     carrier.I_am_Execwarder();
                     SourcedDispatcher.Exec(carrier);
@@ -2450,7 +2462,7 @@ function _LoadBacklogInputsByIdIfNotExistPost(carrier) {
                 }
                 localStorage.setItem("idb_" + bid, res.kv.modificationTime);
 
-                SAInput.LoadedBacklogs4Input.push(bid);
+                SAInput.LoadedBacklogs4InputNew.push(bid);
 
                 loadBacklogProductionDetailsById_resparams(res);
 
@@ -4126,6 +4138,7 @@ function copyJsCodeClassTo() {
 }
 
 function loadTableFIlterInside() {
+    return;
 
     var se = masTab.dependingID;
 
@@ -6011,25 +6024,27 @@ function triggerAPI(element, apiId, data) {
     if (data) {
         res = data;
     }
+
     var carrier = new Carrier();
     carrier.setElement(element);
     carrier.setBacklogId(apiId);
     carrier.set("res", res);
 
 
-    if (!ifBacklogInputs4LoaderExistById(apiId)) {
-        showProgress5();
-        carrier.set("res", res);
-        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
-        carrier.setApplier("_TriggerAPI");
-        carrier.I_am_Requirer();
-    } else {
-        carrier.setApplier("_TriggerAPI");
-        carrier.I_am_Execwarder();
-
-    }
+//    if (!ifBacklogInputs4LoaderExistById(apiId)) {
+//        showProgress5();
+//        carrier.set("res", res);
+//        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
+//        carrier.setApplier("_TriggerAPI");
+//        carrier.I_am_Requirer();
+//    } else {
+    carrier.setApplier("_TriggerAPI");
+    carrier.I_am_Execwarder();
+//
+//    }
 
     SourcedDispatcher.Exec(carrier);
+
 }
 
 function _TriggerAPI(carrier) {
@@ -6046,13 +6061,25 @@ function _TriggerAPI(carrier) {
 //    var id = $(element).attr('id');
 //    var el = document.getElementById(id);
 
-    var el = element;
-
-    var out = be.callApi(apiId, finalRes, el);
-
     var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest')) ?
             SACore.GetBacklogDetails(apiId, 'apiSyncRequest') :
             'sync';
+
+    var el = element;
+    var out = "";
+
+    if ($(el).attr('sendapitype') === 'back') {
+        if ($(el).attr('sa-table-load-id')){
+            finalRes['fkRelatedTableId']= $(el).attr('sa-table-load-id');
+            
+        }
+        out = be.callBackendApi(apiId, finalRes, el);
+    } else {
+        out = be.callApi(apiId, finalRes, el);
+    }
+
+
+
     if (async === 'sync') {
         triggerAPIAfter(el, apiId, out, finalRes)
     }
@@ -6456,6 +6483,117 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
     var tableId;
     var componentId;
     var inpId;
+    var directTableLoaderId = $(el).attr('sa-table-load-id');
+
+    if (directTableLoaderId) {
+        loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit);
+    } else {
+        loadTableOnTriggerAsDefault(el, apiId, data, startLimit);
+
+    }
+}
+
+function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
+    var directTableLoaderId = $(el).attr('sa-table-load-id');
+    var table = $('table#' + directTableLoaderId);
+    var thead = table.find('thead');
+    var selectedfields = data.selectedField;//table.attr('sa-tableselectedfield').split(",");
+    table.find('tbody').html('');
+
+    var obj = data._table.r;
+
+    for (var j = 0; j < obj.length; j++) {
+        var o = obj[j];
+        var tr = $('<tr>').append($('<td>').text((parseInt(startLimit)+j + 1)));
+
+        thead.find("th.selectablezad").each(function (e) {
+            var sfield = $(this).attr("sa-selectedfield-header");
+            var inputId = $(this).attr("pid");
+            var flag = true;
+            var td = $('<td>');
+            var noActionHappened = true;
+            if (sfield){
+                var sfList = sfield.split(',');
+                for (var i in sfList) {
+                    var sf = sfList[i];
+                    if (sf.trim().length === 0) {
+                        continue;
+                    }
+                    if (flag && selectedfields.includes(sf)) {
+                        flag = false;
+
+                        var val = o[sf];
+
+                        if (global_var.current_modal !== 'loadLivePrototype' &&
+                                $(this).hasClass("componentisheaden")) {
+                            td.css('display', 'none');
+                        }
+
+                        if ($(this).hasClass("hascomponentclicked")) {
+                            var comp = new ComponentInfo();
+                            Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+
+                            comp.secondContent = val;
+                            comp.isFromTableNew = true;
+                            comp.isFromTable = true;
+                            comp.tableRowId = "1";
+                            comp.withLabel = false;
+                            comp.hasOnClickEvent = false;
+                            comp.cellNo = "12";
+                            comp.showProperties = false;
+                            comp.rowNo = parseInt(startLimit) + parseInt(j);
+                            val = Component.GetComponentHtmlNew(comp);
+
+                            td.append(val)
+                        } else {
+                            td.css("text-align", "center")
+                            td.text(val);
+                        }
+
+                        tr.append(td);
+                        noActionHappened = false;
+                        break;
+                    }
+                }
+            } else {
+                if ($(this).hasClass("hascomponentclicked")) {
+                    var comp = new ComponentInfo();
+                    Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
+
+                    comp.secondContent ="";
+                    comp.isFromTableNew = true;
+                    comp.isFromTable = true;
+                    comp.tableRowId = "1";
+                    comp.withLabel = false;
+                    comp.hasOnClickEvent = false;
+                    comp.cellNo = "12";
+                    comp.showProperties = false;
+                    comp.rowNo = parseInt(startLimit) + parseInt(j);
+                    var val = Component.GetComponentHtmlNew(comp);
+
+                    td.append(val)
+                } else {
+                    td.css("text-align", "center")
+                    td.text("");
+                }
+
+                tr.append(td);
+                 noActionHappened = false;
+            }
+            
+            if ( noActionHappened){
+                tr.append(td);
+            }
+        })
+
+        table.find('tbody').append(tr);
+    }
+
+
+}
+
+
+function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
     try {
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
@@ -6577,10 +6715,10 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
 
         callTableRelationAPIs(elem, tableId);
     } catch (err) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+      //  $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
-    tableShowHideRowGetItem(inpId);
+  //  tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
     $('.table-filter-block-draggable').draggable({
         containment: "body"
@@ -7279,7 +7417,7 @@ function fillRelatedApi4InputEventNew(res) {
 
     for (var i in obj) {
         var o = obj[i];
-        if (o.isApi=== '1') {
+        if (o.isApi === '1') {
             select.append($('<option>')
                     .val(o.id)
                     .text(o.backlogName));
@@ -7370,7 +7508,7 @@ function getJsCodeListByProject() {
             queue4ManulProject.getJsCodeListByProject = true;
 
             getGlobalJsCodeListByProject();
-           
+
 
 
         }
@@ -7405,7 +7543,7 @@ function getGlobalJsCodeListByProject() {
             } catch (err) {
             }
             queue4ManulProject.getGlobalJsCodeListByProject = true;
-            
+
 
         }
     });
@@ -8966,9 +9104,7 @@ function getGuiClassListDetails(res) {
     sortSelectBox('gui_prop_in_gui_class_list');
     select.prepend($('<option disabled>').val('').text(''))
             .prepend($('<option>').val('-2').text('New Class'))
-            .prepend($('<option>').val('').text(''))
-
-            ;
+            .prepend($('<option>').val('').text(''));
 }
 
 function getGuiClassListDetails4Container(res) {
@@ -9561,12 +9697,10 @@ function removeRelatedApiFromDesc(descId) {
     });
 }
 
-function toggleRelatedApi4Desc(el) {
-    if ($(el).val() === '-2') {
-        $('.toggleRelatedApi4DescClass').show();
-    } else {
-        $('.toggleRelatedApi4DescClass').hide();
-    }
+function toggleRelatedApi4Desc() {
+  
+        $('div.toggleRelatedApi4DescClass').toggle();
+    
 }
 
 function toggleRelatedSourceCode4Desc(el) {
@@ -9607,7 +9741,8 @@ function addNewApiFromDesc() {
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
             $('.toggleRelatedApi4DescClass').hide();
-            loadRelatedAPI4Relation();
+           // loadRelatedAPI4Relation();
+           Prototype.ApiContainer.Init()
             $('#addRelatedApiModal-api').val(res.kv.id);
             $('#addRelatedApiModal-newapi').val('');
             //                
@@ -9782,6 +9917,7 @@ function loadRelatedGlobalSourceCode4Relation() {
 
 function loadRelatedAPI4Relation() {
     //    addRelatedApiModal-api
+    return
     $('#addRelatedApiModal-api').html('');
     var keys = SACore.GetBacklogKeys();
     for (var i in keys) {
@@ -12101,8 +12237,8 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,false);
-    $('#storyCardListSelectBox').change();
+   /*  loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
+    $('#storyCardListSelectBox').change(); */
 
 });
 
@@ -12358,46 +12494,35 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    showToggleMain();
+  /*   showToggleMain();
 
     getProjectUsers();
-    getUsers();
+    getUsers(); */
 
-    initZadShey(global_var.current_project_id);
-    
+   // initZadShey(global_var.current_project_id);
+
     $.get("resource/child/ipo.html", function (html_string) {
 
 
+      
+      //  getAllGuiClassList();
 
-        getAllGuiClassList();
-        
-        
-        getInputClassRelByProject();
-        getInputAttributeByProject();
-        getProjectDescriptionByProject();
-        getJsCodeListByProject();
 
-        new UserStory().clearAll();
+       // getInputClassRelByProject();
+       // getInputAttributeByProject();
+       // getProjectDescriptionByProject();
+       // getJsCodeListByProject();
+
+       // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
-        SACore.FillAllSelectBox();
-        $('#show_ipo_toggle').prop("checked", true) //show input list
-        showNavBar();
-
-        loadProjectList2SelectboxByClass('projectList_liveprototype');
-
-        //callLivePrototype();
-        //commmonOnloadAction(this);
-        getGuiClassList();
-//        getJsCodeByProject();
-//        getInputActionRelByProjectMAnual2();
-        genToolbarStatus();
-//        loadLivePrototypeCore(this);
+        Prototype.Init();
+       
 
 
 
     });
 
-//    new UserStory().loadDetailsOnProjectSelect4Ipo();
+  new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 
 });
@@ -12437,10 +12562,10 @@ function loadStoryCardByProject4oIpo(e) {
 function loadStoryCardByProject4StoryCard(e) {
 
     global_var.current_project_id = $(e).val();
-    getUnloadedBacklogListOnInit();
+//    getUnloadedBacklogListOnInit();
     Utility.addParamToUrl('current_project_id', global_var.current_project_id);
 
-    getBacklogLastModificationDateAndTime(global_var.current_project_id);
+//    getBacklogLastModificationDateAndTime(global_var.current_project_id);
     loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
@@ -12479,6 +12604,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
         success: function (res) {
 
 
+            var cmd = $('#storyCardListSelectBox4StoryCard');
             var cmd = $('#storyCardListSelectBox4StoryCard');
             cmd.html('');
             //            new UserStory().setUSLists(res);
@@ -12560,6 +12686,7 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
     var json = initJSON();
     json.kv.fkProjectId = pid;
+    json.kv.isApi = 'NE%1';
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -12578,10 +12705,16 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             var cmd2 = $('select.us-gui-component-rel-sus-id');
             cmd2.html('');
+            
+            var cmd3 = $('select#us-related-sus');
+            cmd3.html('');
+
+           
 
             new UserStory().setUSLists(res);
             var f = true;
-           fillRelatedApi4InputEventNew(res);
+           new UserStory().loadSUS4Relation4SectionDetails(res)
+            fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
@@ -12603,6 +12736,11 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                     }
                     cmd.append(op);
                 } else if (o.isApi === '1') {
+                     var pname = o.backlogName;
+                    var op2 = $('<option></option>').attr('value', o.id).text(pname);
+                     cmd3.append(op2);
+                     
+                    
                     var td = $('<tr>')
                             .append($('<td>')
                                     .append($('<a>')
@@ -12622,6 +12760,10 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
+            
+            sortSelectBoxByElement(cmd3);
+            cmd3.selectpicker('refresh');
+            
 
             //            sortSelectBoxByElement(cmd2);
             //            cmd2.selectpicker('refresh');
@@ -15375,7 +15517,8 @@ function addApiNewPopup() {
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
 
             //$('.projectList_liveprototype').change();
-            loadApiListOnProjectSelect4Ipo();
+           // loadApiListOnProjectSelect4Ipo();
+           Prototype.ApiContainer.Init()
             $('#addApiPopupModal-userstoryname').val('');
             $('#addApiPopupModal').modal('hide');
 
@@ -15489,7 +15632,7 @@ function insertNewInputTotalDblClick(typ, nm, clNo, id) {
 
 
             el.attr("pid", dt.id);
-            el.attr("onclick", "new UserStory().setInputByGUIComponent('" + dt.id + "')");
+            el.attr("onclick", "Prototype.InputContainer.setInputByGUIComponent('" + dt.id + "')");
             el.find(".tool_element_edit").attr("comp-id", dt.id)
             el.find(".tool_element_edit").find(".delete-btn-inp").attr("comp-id", "new UserStory().deleteInputFromUSList(this,'" + dt.id + "')")
             el.find(".component-input-class").attr("pdid", dt.id).attr("id", "comp_id_" + dt.id);
@@ -22343,52 +22486,45 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
 
 }
 
-function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid) {
+function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid,statusID) {
 
     return $("<div>")
             .addClass('cs-task-item-in-box redirectClass cs-white-bg')
             .attr('id', id)
             .attr('pid', id)
             .append($("<div>")
-                    .addClass('cs-task-cart-head')
-                    .append($("<div>")
-                            .addClass('d-flex bd-highlight cs-flex-align-middle')
-                            .append($("<div>")
-                                    .addClass('d-flex flex-fill bd-highlight')
-                                    .append(`<div class="cs-cart-head-col">
-                                             <div class="form-group m-0">
-                                                 <input type="checkbox" pid='${id}' id="cs-checkbox">
-                                                 <label for="cs-checkbox"></label>
-                                             </div>                                            
-                                         </div>`)
-                                    .append($("<div>")
-                                            .addClass('cs-cart-head-col')
-                                            .append($("<div>")
-                                                    .addClass("cs-staturs-circle-note1")
-                                                    .append(taskStatus))
-
-
-                                            ))
-                            .append(`<div class="flex-fill bd-highlight text-right">
-                                   <div class="cs-task-card-datatime" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       <span >${date}</span>
-                                   </div>
-                               </div>`)))
-            .append($("<div>")
-                    .addClass("cs-cart-head-title")
-                    .append(tasktype))
-            .append(`<div class="cs-task-card-body">
+                    .addClass("cs-cart-head-title p-2")
+                    .append(tasktype)
+                    .append($("<span class='brend-color large-blok-icon'>")
+                              .html('<i class="fas fa-columns"></i>')))
+            .append(`<div class="cs-task-card-body pl-2 pr-2"">
                        <div class="cs-task-card-desc">
 
                        <p onclick_trigger_id="21031217414702167956" class=''>${mzmn}</p>
                        </div>
                        </div>`)
             .append($("<div>")
-                    .addClass('cs-task-card-bottom')
+                    .addClass('cs-task-card-bottom  bg-status-'+statusID)
                     .append($("<div>")
                             .addClass('d-flex  bd-highlight cs-flex-align-middle')
-                            .append(` <div class="d-flex flex-fill align-items-center bd-highlight">
+                            .append($("<div>")
+                                        .addClass("d-flex flex-fill align-items-center bd-highlight")
+                                        .append(`<div class="cs-task-card-avatar-boxes"><ul>
+                                               <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
+                                                 </ul></div>`)
+                                       .append($("<div>")
+                                                 .addClass("cs-staturs-circle-note1 ml-2")
+                                                 .append(taskStatus))
+                                       )
+                            
+                           
+                           
+                            
+                            .append(` <div class="flex-fill bd-highlight text-right">
+                            <div class="cs-task-card-datatime pr-1 d-inline-block" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span >${date}</span>
+                        </div>
                                   <div class="cs-task-card-attachfile">
                                       <label for="cs-file-upload" class="cs-file-upload">
                                           <i class="fas fa-paperclip"></i>
@@ -22400,21 +22536,8 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
                                       <span class="slider round hide-off "></span>
                                   </label>
                               </div>`)
-                            .append($('<div>')
-                                    .addClass("lex-fill bd-highlight text-right")
-                                    .append($("<div>")
-                                            .addClass("cs-task-card-prioritet")
-                                            .append(
-                                                    /* $("<select>").addClass("selectpicker")
-                                                     .append('<option data-icon="fas fa-flag"> Standart</option>')
-                                                     */
-                                                    ))
-                                    .append(`<div class="cs-task-card-avatar-boxes">
-                                            <ul>
-                                                <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
-                                            </ul>
-                                        </div>`)
-                                    )))
+                           ))
+               
 
             .append($("<div>").addClass("stat-div-task-content")
                     .append($('<table>').addClass("stat-table-us")
@@ -22834,7 +22957,7 @@ function genAktivPassiv(res, x, say) {
                     img = 'userprofile.png';
                     userName = 'Yoxdur'
                 }
-                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                var st = $('<span>');
                 for (let c = 0; c < stat.length; c++) {
                     if (stat[c].id == o.requestStatus) {
                         st.text(stat[c].taskStatusName);
@@ -22859,7 +22982,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
                 $("#flex-col-aktiv").append(html);
             } else {
                 var hid = $('<div>')
@@ -22877,7 +23000,7 @@ function genAktivPassiv(res, x, say) {
                     userName = 'Yoxdur'
                 }
 
-                var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+                var st = $('<span>');
                 for (let c = 0; c < stat.length; c++) {
                     if (stat[c].id == o.requestStatus) {
                         st.text(stat[c].taskStatusName);
@@ -22902,7 +23025,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
                 $("#flex-col-passiv").append(html);
             }
 
@@ -23083,7 +23206,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
                 img = 'userprofile.png';
                 userName = 'Yoxdur'
             }
-            var st = $('<span>').addClass('issue_status_' + o.requestStatus);
+            var st = $('<span>');
             for (let c = 0; c < stat.length; c++) {
                 if (stat[c].id == o.requestStatus) {
                     st.text(stat[c].taskStatusName);
@@ -23108,7 +23231,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
             }
 
             reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid);
+            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
             $("#flex-col-" + elm).append(html);
 
         }

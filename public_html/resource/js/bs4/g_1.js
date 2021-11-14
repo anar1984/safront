@@ -181,19 +181,19 @@ $(function () {
     //project table import excel export excel
     $(document).on("click", '#file_export_excel', function (e) {
 
-         var id =$(this).attr("data-api-tabid");
-         var table = $('[table-id="'+id+'"]').clone();
-             table.find('tbody').empty();
-             table.find("thead .filter-table-row-header-tr").remove();
-             var tr  = table.find("thead>tr>th");
-             tr.each(function () {
-                if($(this).css("display")==="none"){
-                    $(this).remove();
-                } 
-             })
-                 
-             table.find("thead tr td ").remove();
-             table.tblToExcel();
+        var id = $(this).attr("data-api-tabid");
+        var table = $('[table-id="' + id + '"]').clone();
+        table.find('tbody').empty();
+        table.find("thead .filter-table-row-header-tr").remove();
+        var tr = table.find("thead>tr>th");
+        tr.each(function () {
+            if ($(this).css("display") === "none") {
+                $(this).remove();
+            }
+        })
+
+        table.find("thead tr td ").remove();
+        table.tblToExcel();
 
 
     });
@@ -243,7 +243,7 @@ $(function () {
 
         elm.parent().attr("sa-section-toggle-height");
         if (cntnt.hasClass('closed-modal')) {
-           
+
             var hg = '0px';
             var ids = elm.attr('id');
             try {
@@ -251,16 +251,16 @@ $(function () {
                     hg = cr_input_comp_attribute_kv[ids]['sa-section-toggle-height'];
                 }
 
-            } catch (err) {               
+            } catch (err) {
             }
             cntnt.css("height", hg);
         } else {
             cntnt.removeAttr("style");
-          
+
         }
 
-             $(this).find("i").toggleClass("fa-chevron-down");
-            $(this).find("i").toggleClass("fa-chevron-up");
+        $(this).find("i").toggleClass("fa-chevron-down");
+        $(this).find("i").toggleClass("fa-chevron-up");
 
 
 
@@ -458,14 +458,14 @@ $(function () {
 
         var tbid = $(this).closest('.table-column-show-hide-row-div').attr("data-tableid");
         var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeindex");
-       $("#cheweek-modal-filter"+tbid+" .table-row-show-hide-ul li:eq("+(parseFloat(index)+1)+")").find("#group-data-table-btm").click();
+        $("#cheweek-modal-filter" + tbid + " .table-row-show-hide-ul li:eq(" + (parseFloat(index) + 1) + ")").find("#group-data-table-btm").click();
     });
     $(document).on("click", '#group-data-table-btm', function (e) {
         var tableId = $(this).attr('tbid');
         $('#' + tableId).find(".groupTrElement .bugChangegroupArrow").click();
         if ($(this).hasClass('active')) {
-               
-           
+
+
             $('#' + tableId).find(".groupTrElement").remove();
             $(this).removeClass('active');
 
@@ -477,71 +477,71 @@ $(function () {
     });
 
     $(document).on("click", '.table-show-hide-button-id-second', function (e) {
-           $(this).closest('.component-container-dashed').find(".table thead #table-show-hide-button-id-a" ).click();
+        $(this).closest('.component-container-dashed').find(".table thead #table-show-hide-button-id-a").click();
     });
     $(document).on("click", '.modal-inside-table-expand', function (e) {
-           $(this).closest('.component-container-dashed').addClass("modal-table-large-mod");
-           $(this).html('<i class="fas fa-times"></i>');
-           $(this).addClass('modal-inside-table-close');
-           $(this).removeClass('modal-inside-table-expand');
+        $(this).closest('.component-container-dashed').addClass("modal-table-large-mod");
+        $(this).html('<i class="fas fa-times"></i>');
+        $(this).addClass('modal-inside-table-close');
+        $(this).removeClass('modal-inside-table-expand');
     });
     $(document).on("click", '.modal-inside-table-close', function (e) {
-           $(this).closest('.component-container-dashed').removeClass("modal-table-large-mod");
-           $(this).html('<i class="fas fa-expand"></i>');
-           $(this).addClass('modal-inside-table-expand');
-           $(this).removeClass('modal-inside-table-close');
+        $(this).closest('.component-container-dashed').removeClass("modal-table-large-mod");
+        $(this).html('<i class="fas fa-expand"></i>');
+        $(this).addClass('modal-inside-table-expand');
+        $(this).removeClass('modal-inside-table-close');
     });
-  
+
     $(document).on("click", '#table-show-hide-button-id-a', function (e) {
         var th = $(this);
         var tbid = th.closest("table").attr("table-id");
-        var modal = th.parents(".component-container-dashed").find("#cheweek-modal-filter"+tbid);
-     
-            if(modal.length ===0){
-              modal = $("#cheweek-modal-filter"+tbid);
-            }else{
-                $("#mainBodyDivForAll").append(modal);
-               
-            }
-            modal.modal('show');
-            var sect = $("[table-id='"+tbid+"']").attr("sa-advanced-filter-sectionId");
-            new UserStory().setGUIComponentFillGUIModal(this,sect,'table-advanced-filter-section-div'+tbid);
-            modal.find(".table-advanced-filter-section-div")
+        var modal = th.parents(".component-container-dashed").find("#cheweek-modal-filter" + tbid);
+
+        if (modal.length === 0) {
+            modal = $("#cheweek-modal-filter" + tbid);
+        } else {
+            $("#mainBodyDivForAll").append(modal);
+
+        }
+        modal.modal('show');
+        var sect = $("[table-id='" + tbid + "']").attr("sa-advanced-filter-sectionId");
+        new UserStory().setGUIComponentFillGUIModal(this, sect, 'table-advanced-filter-section-div' + tbid);
+        modal.find(".table-advanced-filter-section-div")
     });
 
     $(document).on("click", '.table>tbody>tr>td>.single-row-column-filter-button', function (e) {
         var ths = $(this);
-        var td  =ths.closest("td")
-         var val = td.find('.component-input-class').attr('sa-data-value');
-         var index = td.index()
-        $(this).closest(".table").find("thead>.filter-table-row-header-tr>th:eq("+index+")").find("select").val(val).change();
+        var td = ths.closest("td")
+        var val = td.find('.component-input-class').attr('sa-data-value');
+        var index = td.index()
+        $(this).closest(".table").find("thead>.filter-table-row-header-tr>th:eq(" + index + ")").find("select").val(val).change();
     });
 
     $(document).on("click", '.input-group-append', function (e) {
         var ths = $(this);
-         if (ths.hasClass("active-range-picker")) {
+        if (ths.hasClass("active-range-picker")) {
             ths.parent().find("input").val('').change();
-         }else{
+        } else {
             ths.parent().find("input").focus();
-         }
-          
+        }
+
 
 
     });
     $(document).on("change", '.tame-range-picker-comp', function (e) {
         var ths = $(this);
-           if(ths.val().trim().length >0){
+        if (ths.val().trim().length > 0) {
             ths.parent().find(".input-group-append").addClass("active-range-picker").find("button").addClass("btn-danger").html('<i class="fas fa-times"></i>');
 
-           }else{
+        } else {
             ths.parent().find(".input-group-append").removeClass("active-range-picker").find("button ").removeClass("btn-danger").html('<i class="fa fa-calendar" aria-hidden="true"></i>');
- 
-           }
+
+        }
 
 
 
     });
-    
+
     $(document).on("click", '#filter-show-hide-button-id-a', function (e) {
         var th = $(this);
 
@@ -556,30 +556,30 @@ $(function () {
 
     });
     $(document).on("click", '.filter-handle-button', function (e) {
-        
+
         var block = $(this).closest('.table').parent().find('#table-column-filter-details-id');
         var nmb = block.find(".nm-filed-column")
-         var index = $(this).closest("th").index();
-         var nm = $(this).closest("th").text();
-         var slpck  = $(this).closest('thead').find(".filter-table-row-header-tr th:eq("+index+")").html();
-         block.find("#filter-single-colmn-selectpicker").html(slpck);
-         block.attr("data-activeindex",index)
-         var top= $(this).offset().top+$(this).height();
-         var left= $(this).offset().left
-         block.css("top",top);
-         block.css("left",left);
-         nmb.text(nm);
-         block.toggle('fast');
+        var index = $(this).closest("th").index();
+        var nm = $(this).closest("th").text();
+        var slpck = $(this).closest('thead').find(".filter-table-row-header-tr th:eq(" + index + ")").html();
+        block.find("#filter-single-colmn-selectpicker").html(slpck);
+        block.attr("data-activeindex", index)
+        var top = $(this).offset().top + $(this).height();
+        var left = $(this).offset().left
+        block.css("top", top);
+        block.css("left", left);
+        nmb.text(nm);
+        block.toggle('fast');
     });
     $(document).on("click", '.sort-by-az-fortable', function (e) {
-        var tblID  = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
-        var tbl = $('#comp_id_'+tblID);
+        var tblID = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
+        var tbl = $('#comp_id_' + tblID);
         var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeindex"),
-            rows = []
-                /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
+                rows = []
+        /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
 
-      /*   $(tbl).find('.theader-table td').removeClass('asc desc');
-        $(this).addClass(thClass); */
+        /*   $(tbl).find('.theader-table td').removeClass('asc desc');
+         $(this).addClass(thClass); */
 
         $(tbl).find('tbody>tr').each(function (index, row) {
             rows.push($(row).detach());
@@ -601,14 +601,14 @@ $(function () {
         });
     });
     $(document).on("click", '.sort-by-za-fortable', function (e) {
-        var tblID  = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
-        var tbl = $('#comp_id_'+tblID);
+        var tblID = $(this).closest('#table-column-filter-details-id').attr("data-compidtab")
+        var tbl = $('#comp_id_' + tblID);
         var index = $(this).closest('.table-column-show-hide-row-div').attr("data-activeIndex"),
-            rows = []
-                /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
+                rows = []
+        /* thClass = $(this).hasClass('asc') ? 'desc' : 'asc'; */
 
-      /*   $(tbl).find('.theader-table td').removeClass('asc desc');
-        $(this).addClass(thClass); */
+        /*   $(tbl).find('.theader-table td').removeClass('asc desc');
+         $(this).addClass(thClass); */
 
         $(tbl).find('tbody>tr').each(function (index, row) {
             rows.push($(row).detach());
@@ -625,7 +625,7 @@ $(function () {
                     0;
         });
 
-         rows.reverse();
+        rows.reverse();
 
         $.each(rows, function (index, row) {
             $(tbl).append(row);
@@ -726,14 +726,14 @@ $(function () {
         }
 
 
-        var lks  = $(this).closest("ul").find(".component-class-show-hide input");
-         var kls =$(this).closest("ul").find(".component-class-show-hide input:checked");
-         if (kls.length === lks.length) {
-            $(this).closest("ul").find('.all-table-row-checked').prop("checked",true);
-         }else{
-            $(this).closest("ul").find('.all-table-row-checked').prop("checked",false);
- 
-         }
+        var lks = $(this).closest("ul").find(".component-class-show-hide input");
+        var kls = $(this).closest("ul").find(".component-class-show-hide input:checked");
+        if (kls.length === lks.length) {
+            $(this).closest("ul").find('.all-table-row-checked').prop("checked", true);
+        } else {
+            $(this).closest("ul").find('.all-table-row-checked').prop("checked", false);
+
+        }
         tableShowHideRowSetItem(tbId);
 
     });
@@ -1456,65 +1456,6 @@ $(document).on("click", ".openNavhide", function () {
 
 
 
-$(document).keydown(function (event) {
-    if (event.which == "17")
-        cntrlIsPressed = true;
-});
-
-
-$(document).keyup(function () {
-    cntrlIsPressed = false;
-});
-
-var cntrlIsPressed = false;
-
-
-var idggdd = 4868347683787384609;
-
-$(document).on("click", ".cf li .inptadd", function () {
-
-
-    if (cntrlIsPressed === false) {
-        idggdd++
-        let valin = $(this).parent().attr('value');
-        let nm = $(this).parent().attr('title');
-
-        var comp = new ComponentInfo();
-
-        comp.id = idggdd;
-        comp.inputType = "IN";
-        comp.cellNo = "6";
-        comp.componentType = valin;
-        comp.label = nm;
-        comp.description = "";
-
-        var st = Component.GetComponentHtmlNew(comp);
-        var ldoa = `<div class="box-loader shimmer"></div>`
-
-        $("#SUS_IPO_GUI_Design .empty-message-block").remove();
-        $("#SUS_IPO_GUI_Design").append(st);
-        $("#" + idggdd).append(ldoa);
-        insertNewInputTotalDblClick(valin, nm, "6", idggdd);
-
-
-    } else {
-        let valin = $(this).parent().attr('value');
-
-
-
-        addInputAsInput();
-
-
-        setTimeout(function () {
-            $('#addNewComponentModal').find('#exampleModal-new-input-name').focus();
-
-        }, 700);
-        $('#addNewComponentModal').find('#exampleModal-new-component-type').val(valin);
-    }
-    $('.component-class').arrangeable({dragSelector: '.drag-areas-comp'});
-
-})
-
 
 
 
@@ -1553,7 +1494,7 @@ $(document).on('change', '.us-mngm-is-api', function (e) {
 
 $(document).on('dblclick', '.comp-title-span', function (e) {
 
-     if (global_var.current_modal === 'loadLivePrototype') {
+    if (global_var.current_modal === 'loadLivePrototype') {
         e.stopPropagation();
         var pid = $(this).parents(".component-class").attr("id")
         var dt = $(this);
@@ -1562,7 +1503,7 @@ $(document).on('dblclick', '.comp-title-span', function (e) {
         dt.html(input);
         dt.find("input").focus();
     }
-  
+
 
 });
 
@@ -1678,9 +1619,11 @@ $(document).on('change', '#project_list_for_export', function (event) {
 $(document).on('click', '#CopyView', function (event) {
 
     setProjectListByID('project_list_for_copy');
+    $('#project_list_for_copy').val($('select.projectList_liveprototype_storycard').val())
     $('#project_list_for_copy').change();
 
     setProjectListByID('project_list_to_copy');
+    $('#project_list_to_copy').val($('select.projectList_liveprototype_storycard').val())
     $('#project_list_to_copy').change();
 
 });
@@ -1689,6 +1632,9 @@ $(document).on('change', '#project_list_for_copy', function (event) {
     var elm = $("#backlog_list_for_copy");
     var val = $(this).val();
     getBacklogListByProject4Element(val, elm);
+     $(elm).val(global_var.current_backlog_id);
+     $(elm).find('option[text="'+global_var.current_backlog_id+'"]').attr('selected','selected');
+     $(elm).selectpicker("refresh")
 
 });
 $(document).on('click', '#upload_data_file_btn', function (event) {
@@ -1764,7 +1710,7 @@ $(document).on('click', '#ps-copy-file-btn', function (event) {
 
     var json = initJSON();
     json.kv.fkDestProjectId = $('#project_list_to_copy').val();
-  //  json.kv.projectName = $('#project_list_for_copy').find('option:selected').text();
+    //  json.kv.projectName = $('#project_list_for_copy').find('option:selected').text();
     json.kv.fkBacklogIds = getMultiSelectpickerValueByElementName('backlog_list_for_copy');
     // json.kv.filename = zipfilename;
     var data = JSON.stringify(json);
@@ -2410,7 +2356,7 @@ $(document).ready(function () {
         $(this).parent(".sub-menu").children("ul").slideToggle("100");
         $(this).find(".right").toggleClass("fa-chevron-up fa-chevron-down");
     });
-    
+
     $(document).on('click', "label.menu__btn", function (e) {
         $('.sa-navmenu').toggleClass('active');
     });

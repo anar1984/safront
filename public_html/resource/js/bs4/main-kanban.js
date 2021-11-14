@@ -282,7 +282,7 @@ function callStoryCard(id, elId, backlogName) {
 
         loadUsersAsOwner();
         setStoryCardOwner();
-         setStoryCardCreatedBy();
+        setStoryCardCreatedBy();
     });
 }
 
