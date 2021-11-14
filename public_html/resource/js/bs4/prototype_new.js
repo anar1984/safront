@@ -450,9 +450,10 @@ var Prototype = {
             //  $('.inputdesc').attr('style', ' pointer-events: block;opacity: 1;')
             // new UserStory().genIPOInputDescList4Select();
             this.setGUIComponentValues4Select();
-              this.getInputAttributeList(id);
-               this.getInputCompClassList();
-              this.getInputActionRelList();
+            this.getInputAttributeList(id);
+            this.getInputCompClassList();
+            this.getInputActionRelList();
+            this.getInputContainerClassListCore();
         },
         setGUIComponentValues4Select: function () {
             $('#us-related-sus').val('');
@@ -684,6 +685,52 @@ var Prototype = {
 
                 }
             } catch (err) {}
+        },
+        getInputContainerClassListCore: function () {
+            var inputId = global_var.current_us_input_id;
+            if (!inputId)
+                return;
+            var json = initJSON();
+            json.kv.fkInputId = inputId;
+            json.kv.relType = "cont";
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmGetInputCompClassList",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    that.getInputContainerClassListCoreDetailes(res);
+                }
+            });
+        },
+        getInputContainerClassListCoreDetailes: function (res) {
+            var table = $('#input_class_list_cn_component');
+            table.html('');
+            try {
+                var obj = res.tbl[0].r;
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    var tr = $("<tr>")
+                            .append($('<td>')
+                                    .append($('<a>')
+                                            .attr("href", "#")
+                                            .attr("onclick", "showClassDetails('" + o.fkClassId + "')")
+                                            .attr("title", o.classBody)
+                                            .text(o.className)))
+                            .append($('<td>').append($('<i>')
+                                    .css("cursor", "pointer")
+                                    .attr('onclick', 'removeInputClassRel(this,"' + o.id + '")')
+                                    .addClass("fa fa-trash")));
+        
+                    table.append(tr);
+                }
+            } catch (err) {
+        
+            }
         }
 
     },
@@ -711,37 +758,39 @@ var cntrlIsPressed = false;
 var idggdd = 4868347683787384609;
 
 $(document).on("mouseenter", "#SUS_IPO_GUI_Design >.hover-prototype-selector", function () {
-         var trg = $(this).find(".tool_element_edit").first();
-       
-      var id = $(this).attr("id")
-      var cellNo = $(this).attr("cellNo")
-      var select =$("<select>").addClass('light-selectbox-custom')
-            .attr("id", "gui-cell-selectbox-changed")
-            .append('<option  value="1">1</option>')
-            .append('<option  value="2">2</option>')
-            .append('<option  value="3">3</option>')
-            .append('<option  value="4">4</option>')
-            .append('<option  value="5">5</option>')
-            .append('<option  value="6">6</option>')
-            .append('<option  value="7">7</option>')
-            .append('<option  value="8">8</option>')
-            .append('<option  value="9">9</option>')
-            .append('<option  value="10">10</option>')
-            .append('<option  value="11">11</option>')
-            .append('<option  value="12">12</option>')
-            select.val(cellNo);
+    var trg = $(this).find(".tool_element_edit").first();
+
+    var id = $(this).attr("id")
+    var cellNo = $(this).attr("cellNo")
+    var select = $("<select>").addClass('light-selectbox-custom')
+        .attr("id", "gui-cell-selectbox-changed")
+        .append('<option  value="1">1</option>')
+        .append('<option  value="2">2</option>')
+        .append('<option  value="3">3</option>')
+        .append('<option  value="4">4</option>')
+        .append('<option  value="5">5</option>')
+        .append('<option  value="6">6</option>')
+        .append('<option  value="7">7</option>')
+        .append('<option  value="8">8</option>')
+        .append('<option  value="9">9</option>')
+        .append('<option  value="10">10</option>')
+        .append('<option  value="11">11</option>')
+        .append('<option  value="12">12</option>')
+    select.val(cellNo);
     var html = $("<div>").addClass("tool_element_edit").attr("comp-Id", id)
         .append('<span class="figureAddbtn component-container-button" ><i class="fas fa-bars"></i></span>')
+        .append('<span class="figureAddbtn component-develop-button" ><i class="fas fa-code"></i></span>')
+        .append('<span class="figureAddbtn component-class-button" ><i class="far fa-plus-square"></i></span>')
         .append(select)
         .append($("<span>").attr("onclick", 'new UserStory().deleteInputFromUSList(this,"' + id + '")').addClass("figureAddbtn delete-btn-inp").css("color", "red").append("<i class='fas fa-trash-alt'></i>"))
-        if(trg.length>0){
-            trg.find('#gui-cell-selectbox-changed').val(cellNo);
+    if (trg.length > 0) {
+        trg.find('#gui-cell-selectbox-changed').val(cellNo);
 
-        }else{
-            $(this).append(html);
-        }
-        
-       
+    } else {
+        $(this).append(html);
+    }
+
+
 })
 $(document).on("click", ".cf li .inptadd", function () {
 
@@ -788,3 +837,39 @@ $(document).on("click", ".cf li .inptadd", function () {
     });
 
 })
+
+$(document).on('dblclick', '.component-class', function (evt) {
+    $('#ipo-tab-setting-input-description-general').click();
+
+});
+$(document).on('click', '.component-class', function (evt) {
+    if (global_var.current_modal !== 'loadLivePrototype') {
+        return;
+    }
+    openComponentPropertiesModal(this);
+
+
+});
+$(document).on("click", ".component-container-button", function () {
+    $('#ipo-tab-setting-input-description-general').click();
+
+})
+$(document).on("click", ".component-class-button", function () {
+    $('#currentAll-btn-icon a').click();
+
+})
+$(document).on("click", ".component-develop-button", function () {
+    $('#dragCheckbox a').click();
+
+})
+
+function openComponentPropertiesModal(el) {
+    if (global_var.current_modal !== 'loadLivePrototype') {
+        return;
+    }
+
+    $('#exampleModal-input-componentid').val('comp_id_' + $(el).attr('id'));
+    $('#exampleModal-input-name').val(SAInput.GetInputName(global_var.current_us_input_id));
+    $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
+
+}
