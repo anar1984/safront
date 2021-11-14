@@ -8665,7 +8665,7 @@ function insertNewGuiClassModalCore(val) {
         async: false,
         success: function (res) {
 
-            addGuiClassToInputCore(res.kv.id);
+//            addGuiClassToInputCore(res.kv.id);//bu sehvdir
             getAllGuiClassByProject();
 
         }
