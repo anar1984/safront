@@ -454,6 +454,7 @@ var Prototype = {
             this.getInputCompClassList();
             this.getInputActionRelList();
             this.getInputContainerClassListCore();
+            this.getInputAttributeList4Container();
         },
         setGUIComponentValues4Select: function () {
             $('#us-related-sus').val('');
@@ -731,6 +732,109 @@ var Prototype = {
             } catch (err) {
         
             }
+        },
+        getInputAttributeList4Container: function (){
+           var  inputId = global_var.current_us_input_id;
+            if (!inputId) {
+                return;
+            }
+        
+            var json = {
+                kv: {}
+            };
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+        
+            json.kv.fkInputId = inputId;
+            json.kv.attrType = "cont";
+        
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmGetInputAttributeList",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: true,
+                success: function (res) {
+                    that.getInputAttributeListDetails4Container(res);
+                }
+            });
+        },
+        getInputAttributeListDetails4Container:function (res) {
+            var table = $('#input_attributes_list_cn_component');
+            table.html('');
+            try {
+                var obj = res.tbl[0].r;
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    var tr = $("<tr>")
+                            .append($('<td>').text(o.attrName))
+                            .append($('<td>').text(o.attrValue))
+                            .append($('<td>').append($('<i>')
+                                    .css("cursor", "pointer")
+                                    .attr('onclick', 'removeInputAttribute(this,"' + o.id + '")')
+                                    .addClass("fa fa-trash")));
+        
+                    table.append(tr);
+                }
+            } catch (err) {
+        
+            }
+        },
+        inputDelete: function (id) {
+            if (!confirm("Are you sure?")) {
+                return;
+            } 
+
+            this.inputDeleteCore()
+        },
+        inputDeleteCore: function (id) {
+            if (!confirm("Are you sure?")) {
+                return;
+            }
+            if (!id) {
+                return;
+            }
+    
+            var json = {kv: {}};
+            try {
+                json.kv.cookie = getToken();
+            } catch (err) {
+            }
+            json.kv.id = id;
+            var that = this;
+            var data = JSON.stringify(json);
+            $.ajax({
+                url: urlGl + "api/post/srv/serviceTmDeleteInput",
+                type: "POST",
+                data: data,
+                contentType: "application/json",
+                crossDomain: true,
+                async: false,
+                success: function (res) {
+                    try {
+                        SAInput.addInputTableByRes(res);
+                    } catch (err) {
+                        console.log(err)
+                    }
+                    SAInput.deleteInput(id);
+                    SACore.updateBacklogByRes(res);
+    
+                    var st = that.getHtmlGenIPOInputList(res);
+                    $('#tblIPOList > tbody').html(st);
+                     highlightTheSameSelectedFieldsInInputList();
+                 
+                    that.addSourcedIconToUserStory(res);
+  
+                },
+                error: function () {
+                    Toaster.showError(('somethingww'));
+                }
+            });
         }
 
     },
@@ -873,3 +977,8 @@ function openComponentPropertiesModal(el) {
     $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
 
 }
+$(document).on("keyup","#search-function-gui-modal-js",function () {
+  
+    searchFilterTable(this, "jsCodeModal_fnlist")
+
+})

@@ -12022,7 +12022,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
-highlightTheSameSelectedFieldsInInputList();
+                 highlightTheSameSelectedFieldsInInputList();
              
                 that.addSourcedIconToUserStory(res);
 //                that.genGUIDesign(res);
