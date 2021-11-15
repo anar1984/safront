@@ -3666,6 +3666,9 @@ hr.hr-ss {
     height: 35px;
     border: 1px solid #BEBFD7;
 }
+.run-services-wrapper .RunServiceJson, .run-services-wrapper .RunServiceName {
+    max-width: 270px;
+}
 .run-services-wrapper .cs-input-group textarea {
     width: 100%;
     border: 1px solid #BEBFD7;
