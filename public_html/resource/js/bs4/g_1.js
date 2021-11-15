@@ -911,7 +911,7 @@ $(function () {
 
 
     // search api list
-    $(document).on('keypress', "#search-api_list", function () {
+    $(document).on('keyup', "#search-api_list", function () {
         searchFilterTable(this, 'api_list_side_bar');
     })
 
