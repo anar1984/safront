@@ -198,16 +198,16 @@ var Prototype = {
             this.getBacklogList(pid);
         },
         getBacklogFile: function (projectId) {
-            $('#kelbetin2').after($('<script>').attr('src', urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + ''))
+          /*   $('#kelbetin2').after($('<script>').attr('src', urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + ''))
             $('#kelbetin').after($('<link>')
                 .attr('rel', 'stylesheet')
                 .attr('href', urlGl + 'api/get/script/css/' + global_var.current_domain + "/" + projectId + '.css'))
-
-            $.get(urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + '.js', function (html_string) {
+ */
+           /*  $.get(urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + '.js', function (html_string) {
 
                 console.log(html_string);
 
-            });
+            }); */
 
         },
         getBacklogList: function (fkProjectId) {
@@ -301,7 +301,7 @@ var Prototype = {
         },
     },
     CssContainer: {
-        getGuiClassList: function () {
+        getGuiClassList: function (resid) {
             if (!global_var.current_project_id) {
                 return;
             }
@@ -319,14 +319,14 @@ var Prototype = {
                 async: false,
                 success: function (res) {
                     try {
-                        that.getGuiClassListDetails(res);
-                        that.getGuiClassListDetails4Container(res);
+                        that.getGuiClassListDetails(res,resid);
+                        that.getGuiClassListDetails4Container(res,resid);
 
                     } catch (ee) {}
                 }
             });
         },
-        getGuiClassListDetails: function (res) {
+        getGuiClassListDetails: function (res,resid) {
             var select = $('#gui_prop_in_gui_class_list');
             select.html('');
 
@@ -337,11 +337,12 @@ var Prototype = {
             }
 
             sortSelectBox('gui_prop_in_gui_class_list');
-            select.prepend($('<option disabled>').val('').text(''))
-                .prepend($('<option>').val('-2').text('New Class'))
-                .prepend($('<option>').val('').text(''));
+            select.val(resid);
+            select.selectpicker();
+            
+           
         },
-        getGuiClassListDetails4Container: function (res) {
+        getGuiClassListDetails4Container: function (res,resid) {
 
             var select = $('#gui_prop_cn_gui_class_list');
 
@@ -353,9 +354,9 @@ var Prototype = {
             }
 
             sortSelectBox('gui_prop_cn_gui_class_list');
-            select.prepend($('<option disabled>').val('').text(''))
-                .prepend($('<option>').val('-2').text('New Class'))
-                .prepend($('<option>').val('').text(''));
+            select.val(resid);
+            select.selectpicker();
+               
         },
 
     },
@@ -477,6 +478,7 @@ var Prototype = {
                 $('#u_userstory_input_id').val((res.tbl[0].r[0].id)); //set id input 
                 ComponentDesign.read();
                 ContainerDesign.read();
+                var val24 = res.tbl[0].r[0].sectionType;
                 $('#us-gui-component-id').val(res.tbl[0].r[0].componentType);
 
                 $('.us-gui-component-rel-sus-div-class').show();
@@ -484,12 +486,13 @@ var Prototype = {
                 $('select.us-gui-component-rel-sus-id').selectpicker('refresh');
                 $('.us-gui-component-event').val(res.tbl[0].r[0].inputEvent);
                 $('.us-gui-component-action').val(res.tbl[0].r[0].action);
-                $('.input_event_type').val(res.tbl[0].r[0].actionType);
-                $('#liveProActionType').val(res.tbl[0].r[0].sectionType);
+                $('.input_event_type').val(res.tbl[0].r[0].actionType?res.tbl[0].r[0].actionType:"onclick");
+
+                $('#liveProActionType').val(val24?val24:"api");
                 $('#liveProSendApiType').val(res.tbl[0].r[0].sendApiType);
                 $('.liveProActionTypeAll').hide();
-                var val24 = res.tbl[0].r[0].sectionType;
-                if (val24 === 'api') {
+               
+                if (val24 === 'api'||!val24) {
                     $('.liveProActionTypeApi').show();
                 } else if (val24 === 'toggle') {
                     $('.liveProActionTypeToggle').show();
@@ -980,5 +983,11 @@ function openComponentPropertiesModal(el) {
 $(document).on("keyup","#search-function-gui-modal-js",function () {
   
     searchFilterTable(this, "jsCodeModal_fnlist")
+
+})
+$(document).on("click","#add-new-apidirect-relation-add",function () {
+  
+    addApiModal();
+   $("#addApiPopupModal-userstoryname").attr("data-trig-rel",'true');
 
 })

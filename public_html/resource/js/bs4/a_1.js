@@ -7325,6 +7325,36 @@ function insertNewInputActionRel(el) {
         }
     });
 }
+function directRelationAddApi(el,ids) {
+             var dif = $(el).val()
+    if (!global_var.current_project_id || !dif||
+            !ids)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkInputId = global_var.current_us_input_id;
+    json.kv.fkApiId = ids;
+    json.kv.actionType = dif;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewInputActionRel",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            getInputActionRelList();
+            getInputAttributeByProject();
+          
+            loadCurrentBacklogProdDetails();
+        }
+    });
+}
 
 
 function getInputActionRelList() {
@@ -8506,7 +8536,7 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
     });
 })
 
-$(document).on("change", ".classListOnChange", function (e) {
+/* $(document).on("change", ".classListOnChange", function (e) {
     var val = $(this).val();
     if (val === '-2') {
         $('.input4NewClassAdding').show();
@@ -8514,15 +8544,15 @@ $(document).on("change", ".classListOnChange", function (e) {
         $('.input4NewClassAdding').hide();
     }
 })
-
-$(document).on("change", ".classListOnChange4Container", function (e) {
+ */
+/* $(document).on("change", ".classListOnChange4Container", function (e) {
     var val = $(this).val();
     if (val === '-2') {
         $('.input4NewClassAdding4Container').show();
     } else {
         $('.input4NewClassAdding4Container').hide();
     }
-})
+}) */
 
 
 function insertNewClassDirect(el) {
@@ -8533,7 +8563,7 @@ function insertNewClassDirect(el) {
     className = "." + className;
     className = className.replace(/ /g, '');
     insertNewGuiClass(className);
-    $(".input4NewClassAdding").hide();
+
 }
 
 function insertNewClassDirect2(el) {
@@ -8555,7 +8585,7 @@ function insertNewClassDirect4Container(el) {
     className = "." + className;
     className = className.replace(/ /g, '');
     insertNewGuiClass4Container(className);
-    $(".input4NewClassAdding4Container").hide();
+
 }
 
 
@@ -8613,8 +8643,8 @@ function insertNewGuiClass4Container(className) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            getGuiClassList();
-            $("#gui_prop_cn_gui_class_list").val(res.kv.id);
+          
+            addGuiClassToInput4ContainerCore(res.kv.id)
             $('#gui_prop_cn_gui_class_new').val('');
         }
     });
@@ -8639,10 +8669,9 @@ function insertNewGuiClass(className) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            getGuiClassList();
-            getAllGuiClassList();
-            $("#gui_prop_in_gui_class_list").val(res.kv.id);
+            Prototype.CssContainer.getGuiClassList(res.kv.id);
             $('#gui_prop_in_gui_class_new').val('');
+            addGuiClassToInputCore(res.kv.id)
         }
     });
 }
@@ -8651,27 +8680,32 @@ function addGuiClassToInput4Container(el) {
     var classId = $("#gui_prop_cn_gui_class_list").val();
     if (!classId)
         return;
+        addGuiClassToInput4ContainerCore(classId)
+    
+}
+function addGuiClassToInput4ContainerCore(classId) {
+    if (!classId)
+    return;
 
-    var json = initJSON();
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.fkClassId = classId;
-    json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.relType = "cont";
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            getInputContaierClassList();
-            getInputClassRelByProject();
-            new UserStory().genGUIDesign();
-        }
-    });
+var json = initJSON();
+json.kv.fkProjectId = global_var.current_project_id;
+json.kv.fkClassId = classId;
+json.kv.fkInputId = global_var.current_us_input_id;
+json.kv.relType = "cont";
+var that = this;
+var data = JSON.stringify(json);
+$.ajax({
+    url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
+    type: "POST",
+    data: data,
+    contentType: "application/json",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+           Prototype.CssContainer.getGuiClassList(classId);
+        new UserStory().genGUIDesign();
+    }
+});
 }
 
 function addGuiClassToInput(el) {
@@ -8701,8 +8735,6 @@ function addGuiClassToInputCore(el) {
         async: true,
         success: function (res) {
             loadCurrentBacklogProdDetailsSyncrone();
-
-            //            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
@@ -15409,7 +15441,8 @@ function addUserStoryNewPopup() {
 }
 
 function addApiNewPopup() {
-    var usName = $('#addApiPopupModal-userstoryname').val();
+    var nameInput=$('#addApiPopupModal-userstoryname')
+    var usName = nameInput.val();
     if (!usName)
         return;
 
@@ -15428,6 +15461,7 @@ function addApiNewPopup() {
         crossDomain: true,
         async: true,
         success: function (res) {
+         
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             loadCurrentBacklogProdDetails();
@@ -15437,13 +15471,24 @@ function addApiNewPopup() {
 
             //$('.projectList_liveprototype').change();
            // loadApiListOnProjectSelect4Ipo();
-           Prototype.ApiContainer.Init()
-            $('#addApiPopupModal-userstoryname').val('');
+           var trig = nameInput.attr("data-trig-rel",'true');
+           Prototype.ApiContainer.Init();
+           
+           nameInput.val('');
+         
+            
             $('#addApiPopupModal').modal('hide');
 
+          
+          
+            if (trig) {
+                directRelationAddApi($(".animation-block-for-find .input_event_type"),res.kv.id);
+            }else{
+                global_var.current_backlog_id = res.kv.id;
+                callStoryCard(res.kv.id);
 
-            global_var.current_backlog_id = res.kv.id;
-            callStoryCard(res.kv.id);
+            }
+            nameInput.removeAttr('data-trig-rel');
         }
     });
 }
