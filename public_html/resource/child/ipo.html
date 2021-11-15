@@ -765,21 +765,19 @@
                                                         <option value="ondblclick">ondblclick</option>
                                                     </select><br>
                                                     <select  key='sectionType' id="liveProActionType" class="inputActionTypeChangeZadSheyOOO">
-                                                        <option value='api'>Call API</option>
+                                                        <option value='api' >Call API</option>
                                                         <option value='toggle'>Toggle</option> 
 
                                                     </select>
                                                     <div class='liveProActionTypeApi liveProActionTypeAll'>
                                                         Related API<br>
-                                                        <select style="width:80%;padding: 0px;
-
-                                                                border-radius: 4px;
-                                                                border: 1px solid gray;"
+                                                        <select 
                                                                 data-live-search='true'
-                                                                class="col-12 input_event_related_api">                                                        
+                                                                class="input_event_related_api form-control-sm col-7 p-0">                                                        
                                                         </select>
-
-                                                        <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                                                           <button onclick='insertNewInputActionRel(this)' class="btn col-2 btn-light btn-sm"><i  class="fa fa-plus"></i></button>
+                                                           <button  id="add-new-apidirect-relation-add" class="btn btn-light col-2 btn-sm">New</button>
+                                                        
                                                         <br><br>
                                                         <table style='border: 1px solid #dee2e6; width:100%;'>
                                                             <thead>
@@ -1308,32 +1306,33 @@
                                                             <td style="padding:5px;">
                     
                                                                 <select   id="gui_prop_in_gui_class_list" 
-                                                                          class="classListOnChange"
+                                                                          class="classListOnChange form-control-sm p-0 col-12"
+                                                                           data-live-search="true"
                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
                                                             </td>
                                                             <td style="width: 1%">
-                                                                <i class="fa fa-plus" 
-                                                                   onclick="addGuiClassToInput(this)"
-                                                                   style="  font-size:16px;cursor:pointer;"></i>
+                                                                <button   onclick="addGuiClassToInput(this)" class="btn btn-light btn-sm">
+                                                                    <i class="fa fa-plus" ></i>
+                                                                </button>
+                                                             
                     
                                                             </td>
                                                             <td style="width: 1%">
-                                                                <i class="fa fa-bars" 
-                                                                   onclick="guiClassModal(this)"
-                                                                   style="  font-size:16px;cursor:pointer;"></i>
-                    
+                                                                <button    onclick="guiClassModal(this)" class="btn btn-light btn-sm">
+                                                                    <i class="fa fa-bars" ></i>
+                                                                </button>
+                                                                                    
                                                             </td>
                                                         </tr>
-                                                        <tr  class="input4NewClassAdding" style="display:none">
+                                                        <tr  class="input4NewClassAdding" >
                                                             <td style="padding:5px;" colspan="2">
                     
-                                                                <input   id="gui_prop_in_gui_class_new" 
-                                                                         style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                <input placeholder="Add class"  id="gui_prop_in_gui_class_new" class="form-control form-control-sm">
                                                             </td>
                                                             <td style="width: 1%">
-                                                                <button class="buttons" 
+                                                                <button class="btn btn-light btn-sm " 
                                                                         onclick="insertNewClassDirect(this)"
-                                                                        style="   cursor:pointer;">Add</button>
+                                                                        >Add</button>
                     
                                                             </td>
                     
@@ -1863,6 +1862,86 @@
                                                onclick="new UserStory().showContainerCustomCssDD()"
                                                style="cursor: pointer"></i>
                                             <div>
+                                                
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Attributes
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Name:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Value:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fa fa-plus" onclick="addInputAttributes4Container(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_attributes_list_cn_component"></tbody>
+                                                    </table>
+
+                                                </fieldset>
+
+
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Class
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+
+                                                                    <select   id="gui_prop_cn_gui_class_list" 
+                                                                              class="classListOnChange4Container col-12 form-control-sm p-0"
+                                                                              style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button  onclick="addGuiClassToInput4Container(this)" class="btn-sm btn btn-light"> <i class="fa fa-plus" 
+                                                                       
+                                                                        ></i></button>
+                                                                   
+
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button   onclick="guiClassModal(this)" class="btn btn-light btn-sm">
+                                                                        <i class="fa fa-bars" ></i>
+                                                                    </button>
+                                                                 
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr  class="input4NewClassAdding4Container" >
+                                                                <td style="padding:5px;" colspan="2">
+
+                                                                    <input   id="gui_prop_cn_gui_class_new" placeholder="Add new class"  class="form-control form-control-sm">
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button class="btn btn-light btn-sm"   onclick="insertNewClassDirect4Container(this)">Add</button>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_class_list_cn_component">
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </fieldset>
                                                 <fieldset class="border p-2">
                                                     <legend class="w-auto w-auto-man">General
                                                     </legend>
@@ -2285,86 +2364,6 @@
                                                     </table>
                                                 </fieldset>
 
-                                                <fieldset class="border p-2">
-                                                    <legend class="w-auto w-auto-man">
-                                                        Attributes
-                                                    </legend>
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="padding:5px;">
-                                                                    <span class="col-form-label control-label">Name:</span>
-                                                                    <input type="text" id="gui_prop_cn_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td style="padding:5px;">
-                                                                    <span class="col-form-label control-label">Value:</span>
-                                                                    <input type="text" id="gui_prop_cn_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td>
-                                                                    <i class="fa fa-plus" onclick="addInputAttributes4Container(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table style="width:100%;font-size: 11px; ">
-                                                        <tbody id="input_attributes_list_cn_component"></tbody>
-                                                    </table>
-
-                                                </fieldset>
-
-
-
-                                                <fieldset class="border p-2">
-                                                    <legend class="w-auto w-auto-man">
-                                                        Class
-                                                    </legend>
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="padding:5px;">
-
-                                                                    <select   id="gui_prop_cn_gui_class_list" 
-                                                                              class="classListOnChange4Container"
-                                                                              style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <i class="fa fa-plus" 
-                                                                       onclick="addGuiClassToInput4Container(this)"
-                                                                       style="  font-size:16px;cursor:pointer;"></i>
-
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <i class="fa fa-bars" 
-                                                                       onclick="guiClassModal(this)"
-                                                                       style="  font-size:16px;cursor:pointer;"></i>
-
-                                                                </td>
-                                                            </tr>
-                                                            <tr  class="input4NewClassAdding4Container" style="display:none">
-                                                                <td style="padding:5px;" colspan="2">
-
-                                                                    <input   id="gui_prop_cn_gui_class_new" 
-                                                                             style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <button class="buttons" 
-                                                                            onclick="insertNewClassDirect4Container(this)"
-                                                                            style="   cursor:pointer;">Add</button>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table style="width:100%;font-size: 11px; ">
-                                                        <tbody id="input_class_list_cn_component">
-
-                                                        </tbody>
-                                                    </table>
-
-                                                </fieldset>
 
 
 
