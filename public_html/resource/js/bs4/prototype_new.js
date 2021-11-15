@@ -57,12 +57,7 @@ var Prototype = {
         //    cmd.val(global_var.current_project_id);
         sortSelectBoxByElement(cmd);
         cmd.selectpicker('refresh');
-        var pid = cmd.val()
-        this.BacklogContainer.Init();
-        this.ApiContainer.Init(pid);
-        this.JsContainer.Init(pid);
-        this.BacklogContainer.getBacklogFile(pid);
-        this.CssContainer.getGuiClassList();
+         cmd.change();
 
     },
     ApiContainer: {

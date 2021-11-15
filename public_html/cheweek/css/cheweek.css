@@ -1166,3 +1166,10 @@ ul.CTAs a {
         display: none;
     }
 }
+
+#sidebar .user-filter-tapsiriq>button{
+    border: none;
+    background: none;
+    color: #173359;
+    font-weight: 600;
+}

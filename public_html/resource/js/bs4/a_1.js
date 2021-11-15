@@ -12448,10 +12448,10 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-  /*   showToggleMain();
+     showToggleMain();
 
     getProjectUsers();
-    getUsers(); */
+    getUsers(); 
 
    // initZadShey(global_var.current_project_id);
 
@@ -12462,10 +12462,10 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
       //  getAllGuiClassList();
 
 
-       // getInputClassRelByProject();
-       // getInputAttributeByProject();
-       // getProjectDescriptionByProject();
-       // getJsCodeListByProject();
+       /*  getInputClassRelByProject();
+         getInputAttributeByProject();
+        getProjectDescriptionByProject();
+        getJsCodeListByProject(); */
 
        // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
