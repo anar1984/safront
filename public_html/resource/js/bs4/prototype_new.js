@@ -337,9 +337,10 @@ var Prototype = {
             }
 
             sortSelectBox('gui_prop_in_gui_class_list');
-            select.val(resid);
-            select.selectpicker();
             
+            select.selectpicker();
+            select.val(resid);
+            select.selectpicker('refresh');
            
         },
         getGuiClassListDetails4Container: function (res,resid) {
@@ -354,8 +355,9 @@ var Prototype = {
             }
 
             sortSelectBox('gui_prop_cn_gui_class_list');
-            select.val(resid);
             select.selectpicker();
+            select.val(resid);
+            select.selectpicker('refresh');
                
         },
 

@@ -8300,6 +8300,7 @@ function guiClassModal(el) {
 
 
 function jsEditorGenerate() {
+    $("#jsCodeModal_fnbody").empty();
 
     window.editor1 =CodeMirror(document.querySelector('#jsCodeModal_fnbody'), {
         lineNumbers: true,
@@ -8333,7 +8334,7 @@ function jsEditorFullGenerate(val3) {
 }
 
 function cssEditorGenerate() {
-
+        $("#guiClassModal_classbody").empty()
     window.editor = CodeMirror(document.querySelector('#guiClassModal_classbody'), {
         lineNumbers: true,
         tabSize: 2,
@@ -8530,6 +8531,7 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
         success: function (res) {
             $('#guiClassModal_classname').val(res.kv.className);
             $('#guiClassModal_classbody').val(res.kv.classBody);
+            cssEditorGenerate();
 
             window.editor.setValue(res.kv.classBody);
         }
