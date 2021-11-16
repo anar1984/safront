@@ -13712,7 +13712,7 @@ $(document).on('click', '.loadBugChange', function (evt) {
         commmonOnloadAction(this);
         setBugFilterProject();
         setBugFilterAssignees();
-
+        loadBugChangeCustomScripts();
 
         $('.bug-mgmt-filter-select').selectpicker();
         new Sprint().load4Task();
@@ -17557,7 +17557,7 @@ function changeUserStoryOfTaskModal() {
     } else if (global_var.current_modal === 'loadTaskManagement') {
         SACore.FillInCombo('task-user-story-id-change');
     }
-
+    
 
 }
 

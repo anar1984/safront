@@ -3873,3 +3873,77 @@ hr.hr-ss {
     pointer-events:auto;
     display: block;
 }
+.cs-core-issue-management .task-header-filter {
+    background: rgb(233,233,241);
+    background: -moz-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e9e9f1",endColorstr="#ffffff",GradientType=1);
+}
+.cs-core-issue-management .task-header-filter {
+    padding: 10px 6px;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
+    height: 40px;
+    padding: 5px 5px;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
+    position: sticky;
+    top: -1px;
+    background: #525596;
+    color: white;
+    border-top: 4px solid #fff;
+    border-right: 4px solid #fff;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(20n) {
+    border-right: none;
+}
+.cs-core-issue-management .bugListTable th:nth-child(1), .cs-core-issue-management .bugListTable th:nth-child(2), .cs-core-issue-management .bugListTable th:nth-child(3), .cs-core-issue-management .bugListTable th:nth-child(4), .cs-core-issue-management .bugListTable th:nth-child(5), .cs-core-issue-management .bugListTable th:nth-child(6), .cs-core-issue-management .bugListTable th:nth-child(7) {
+    border-right: 4px solid #ffffff;
+}
+.task-header-filter .cs-group-by {
+    color: #525596;
+    vertical-align: middle;
+    font-size: 14px;
+    display: block;
+    margin-top: 6px;
+}
+.task-header-filter .task-skin-btn .btn {
+    padding: 0 5px;
+    height: 34px;
+    width: 34px;
+    background: #525596;
+    color: #fff;
+    margin-right: 5px;
+}
+.task-header-filter .bcs-col-btn .btn {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    
+}
+.task-header-filter .bcs-col-btn .btn i{
+    padding: 10px 10px;
+    height: 34px;
+    width: 34px;
+    background: #525596;
+    color: #fff;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+.task-header-filter .bcs-col-btn .btn span{
+    
+}
+.cs-pagination-limit .bootstrap-select {
+    width: 70px !important;
+}
+.cs-pagination-group-by .bootstrap-select {
+    width: 120px !important;
+}
