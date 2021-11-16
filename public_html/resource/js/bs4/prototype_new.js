@@ -826,6 +826,8 @@ var Prototype = {
             } catch (err) {
             }
             json.kv.id = id;
+                json.kv.fkBacklogId= global_var.current_backlog_id;
+
             var that = this;
             var data = JSON.stringify(json);
             $.ajax({
@@ -969,7 +971,9 @@ $(document).on("click", ".cf li .inptadd", function () {
 })
 
 $(document).on('dblclick', '.component-class', function (evt) {
-    $('#ipo-tab-setting-input-description-general').click();
+   if(!$('#ipo-tab-setting-input-description-general').hasClass('active')){
+       $('#ipo-tab-setting-input-description-general').click();
+   }
 
 });
 $(document).on('click', '.component-class', function (evt) {

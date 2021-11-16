@@ -221,7 +221,7 @@ function removeBacklogDescCommentType(el, descId) {
         async: true,
         success: function (res) {
             AJAXCallFeedback(res);
-            //            that.getBacklogDesc();
+                        that.getBacklogDesc();
             loadCurrentBacklogProdDetails();
         },
         error: function () {
@@ -1671,7 +1671,7 @@ function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
     global_var.current_modal = 'loadLivePrototype';
-//    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
 }
 
@@ -5838,7 +5838,7 @@ function moveBacklogDescDrag(el) {
             crossDomain: true,
             async: true,
             success: function (res) {
-
+                new UserStory().getBacklogDesc();
             }
         });
 
@@ -16067,6 +16067,7 @@ function removeSection(el, inputId) {
     }
 
     json.kv.id = inputId;
+    json.kv.fkBacklogId= global_var.current_backlog_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
