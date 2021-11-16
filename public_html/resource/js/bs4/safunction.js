@@ -55,9 +55,9 @@ var SAFN = {
         'addclass': 'AddClass',
         'removeclass': 'RemoveClass',
         'addcss': 'AddCss',
-        'removeCss': 'RemoveCss',
+        'removecss': 'RemoveCss',
         'addattribute': 'AddAttribute',
-        'removeAttribute': 'RemoveAttribute',
+        'removeattribute': 'RemoveAttribute',
         'showform': 'ShowForm',
         'getcurrentuserid': "GetCurrentUserId",
         'setbackendcache': "SetBackendCache",
@@ -555,7 +555,7 @@ var SAFN = {
 
             key = SAFN.GetArgumentPureValue(key);
 
-            $(element).removeAttribute(key);
+            $(element).removeAttr(key);
 
             return data;
         },
