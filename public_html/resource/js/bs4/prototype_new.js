@@ -1004,8 +1004,10 @@ function openComponentPropertiesModal(el) {
     if (global_var.current_modal !== 'loadLivePrototype') {
         return;
     }
+      var id = $(el).attr('id')
+         var tbid = $(el).closest(".component-container-dashed").attr("id");
+    $('#exampleModal-input-componentid').val('comp_id_' + (id!==undefined?id:tbid));
 
-    $('#exampleModal-input-componentid').val('comp_id_' + $(el).attr('id'));
     $('#exampleModal-input-name').val(SAInput.GetInputName(global_var.current_us_input_id));
     $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
 
