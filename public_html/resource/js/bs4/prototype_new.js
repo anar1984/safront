@@ -985,14 +985,17 @@ $(document).on('click', '.component-class', function (evt) {
 
 });
 $(document).on("click", ".component-container-button", function () {
+    clearBtnClickTool();
     $('#ipo-tab-setting-input-description-general').click();
 
 })
 $(document).on("click", ".component-class-button", function () {
+    clearBtnClickTool();
     $('#currentAll-btn-icon a').click();
 
 })
 $(document).on("click", ".component-develop-button", function () {
+    clearBtnClickTool();
     $('#dragCheckbox a').click();
 
 })
@@ -1012,6 +1015,16 @@ $(document).on("keyup","#search-function-gui-modal-js",function () {
     searchFilterTable(this, "jsCodeModal_fnlist")
 
 })
+function clearBtnClickTool() {
+        ch = 0,
+        ch2 = 0,
+        ch3 = 0,
+        ch4 = 0,
+        ch5 = 0,
+        ch6 = 0;
+        ch7 = 0;
+        ch8 = 0;
+}
 $(document).on("click","#add-new-apidirect-relation-add",function () {
   
     addApiModal();

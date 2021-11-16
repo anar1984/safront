@@ -2500,7 +2500,7 @@ label h6{
     position: absolute;
     top: 10px;
     left: 3%;
-    background-color: white;
+    background-color: initial;
     /* padding: 3px; */
     font-weight: bold;
     font-size: 14px;
@@ -5850,6 +5850,12 @@ span.ruby-c-content {
     border: 1px solid lightgrey;
     padding: 5px;
  
+}
+.tool_element_edit .figureAddbtn {
+    height: 25px !important;
+    width: 30px !important;
+    font-size: 16px !important;
+    vertical-align: middle;
 }
 .edit-class-input-component{
     position: absolute;
