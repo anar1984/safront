@@ -2658,12 +2658,13 @@ function showBacklogHistoryClick(el) {
     }
 
     if (pid === global_var.current_project_id) {
-        new UserStory().refreshCurrentBacklogById(bid);
+        $("#storyCardListSelectBox").val(bid)
+        $("#storyCardListSelectBox").change();
     } else {
         global_var.current_backlog_id = bid;
         Utility.addParamToUrl('current_backlog_id', bid);
-        $('#projectList').val(pid);
-        $('#projectList').change();
+        $('select.projectList_liveprototype').val(pid);
+        $('select.projectList_liveprototype').change();
     }
 }
 
@@ -2686,16 +2687,31 @@ function setBacklogHistory4View() {
 
     var div = $('#history_inp_popUp_zadsiyahisi');
     div.html('');
-
+    var block = $("#backBacklogBtn-block")
+        block.html('')
     var temp = [];
-
+        var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
         var o = bhistory[i];
 
         if (temp.includes(o.fkBacklogId)) {
             continue;
         }
+        
+        if(ct===1){
+       var btn = $("<button>") 
+            .attr("href", "#")
+            .addClass("btn btn-primary btn-lg")
+            .attr("pid", o.fkProjectId)
+            .attr('bid', o.fkBacklogId)
+            .attr('is_api', o.isApi)
+            .attr("onclick", "showBacklogHistoryClick(this)")
+            .attr("title",o.backlogName)
+            .html('<i class="fas fa-arrow-left"></i>');
 
+            block.append('<div>Back<div>')
+            block.append(btn)
+        }
         var d = $('<div>')
                 .addClass("col-lg-12")
 
@@ -2710,6 +2726,8 @@ function setBacklogHistory4View() {
         temp.push(o.fkBacklogId);
 
         div.append(d);
+        ct++
+        
     }
 }
 
