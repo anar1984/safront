@@ -8624,6 +8624,32 @@ function insertNewGuiClassModalCore(val) {
     });
 
 }
+function insertNewGuiClassModalCoreFor(val) {
+    var className = val;
+    if (!className)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.className = className;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewGuiClass",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            addGuiClassToInputCore(res.kv.id);
+            getAllGuiClassByProject();
+
+        }
+    });
+
+}
 
 
 
