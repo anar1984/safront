@@ -2233,7 +2233,8 @@ $(document).ready(function () {
     $(document).on('click', '.addInputClassPlus', function () {
 
         var val = $(this).parents('tr').find('.clsLbVal').text();
-        insertNewGuiClassModalCore(val);
+        insertNewGuiClassModalCoreFor(val);
+        addGuiClassToInputCore(res.kv.id);//bu sehvdir
 
 
     })

@@ -8,6 +8,18 @@
     
         <ul class="list-unstyled components">
             <li class="">
+                <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Bölmələr</a>
+                <ul class="list-unstyled collapse task-view-button-group" id="homeSubmenu2" >
+                    <li>
+                        <a href="#" data-view="aktiv_passiv">Məzmunlar</a>
+                    </li>
+                    <li>
+                        <a href="#" data-view="status">Sorğular</a>
+                    </li>
+                   
+                </ul>
+            </li>
+            <li class="">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Görünüş</a>
                 <ul class="list-unstyled collapse" id="homeSubmenu" >
                     <li>
@@ -116,12 +128,17 @@
                 </div>
                 <div class="p-1 bd-highlight  d-table right-radius-5px cursor-pointer">
                     <div class="filter-layaout-box d-table-cell align-middle">
-                        <label class="cs-card-ceckbox switch">
-                            <input type="checkbox" id="show-all-colmn-tapsriq" onchange="getTapsiriqList()" data-bid="21092419581001883141" class="user-story-prototype-change1">
-                            <span class="slider round hide-off "></span>
-                        </label>
+                         <div data-toggle="tooltip" orderno="0.4" style="padding-top:4px;text-align: center;" id="210414110627034510148" pid="210414110627034510148" class="tooltipMan component-class component-container-dashed col" onclick="">
+                   
+                            <div class="box-1">
+                                <input sa-type="checkbox" type="checkbox"  onchange="getTapsiriqList()" id="show-all-colmn-tapsriq" >
+                                <span data-after="Hamısı" data-before="Aktiv" class="toogle"></span>
+                            </div>
+                         </div>
+                       
+                       
                     </div>
-                    <div class="filter-layaout-box d-table-cell align-middle">
+                  <!--   <div class="filter-layaout-box d-table-cell align-middle">
     
                         <div class="dropdown">
                             <span class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -131,12 +148,12 @@
                             <div class="dropdown-menu  task-view-button-group" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" data-view='aktiv_passiv' href="#">Aktiv Passiv</a>
                                 <a class="dropdown-item" data-view='status' href="#">Status</a>
-                         <!--        <a class="dropdown-item" data-view='operation' href="#">Əməliyyat</a> -->
+                        
                             </div>
     
                         </div>
                       
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

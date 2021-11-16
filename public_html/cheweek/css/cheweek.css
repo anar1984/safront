@@ -33,7 +33,19 @@
     opacity: 1 !important;
 }
 .modal-header .close{
-    padding: 12px 20px !important;
+    padding: 5px 20px !important;
+    font-size: 35px;
+}
+.component-class>.comp-title-span {
+    color: #173359;
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-thickness: 3px;
+    text-decoration-color: #8ba1bf;
+    display: inline-block;
+}
+.sa-section-modal>.component-section-row::after{
+    color: #173359;
 }
 /* status color */
 .bg-status-new{
@@ -90,7 +102,7 @@
 .cs-staturs-circle-note {
      width: 20px !important;
      height: 20px !important;
-    background: #9ED2F6;
+    background: #DCE3ED;
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;  
@@ -718,8 +730,8 @@ label.cs-file-upload:hover {
     min-width: 100%;
 }
 .maximize-large .cs-task-item-in-box{
-    max-width: 19.66%;
-    min-width: 19.66%;
+    max-width: 19.586%;
+    min-width: 19.586%;
     margin-right: 5px;
 
 }
@@ -1173,3 +1185,23 @@ ul.CTAs a {
     color: #173359;
     font-weight: 600;
 }
+::-webkit-scrollbar {
+    width: 5px;
+    position: absolute;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #DCE3ED; 
+    border-radius: 2px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #173359; 
+  }
