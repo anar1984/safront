@@ -3666,6 +3666,9 @@ hr.hr-ss {
     height: 35px;
     border: 1px solid #BEBFD7;
 }
+.run-services-wrapper .RunServiceJson, .run-services-wrapper .RunServiceName {
+    max-width: 270px;
+}
 .run-services-wrapper .cs-input-group textarea {
     width: 100%;
     border: 1px solid #BEBFD7;
@@ -3869,4 +3872,355 @@ hr.hr-ss {
 .run_spa.spa_enable {
     pointer-events:auto;
     display: block;
+}
+.cs-core-issue-management .task-header-filter {
+    background: rgb(233,233,241);
+    background: -moz-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e9e9f1",endColorstr="#ffffff",GradientType=1);
+}
+.cs-core-issue-management .task-header-filter {
+    padding: 10px 6px;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
+    height: 40px;
+    padding: 5px 5px;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
+    position: sticky;
+    top: -1px;
+    background: #525596;
+    color: white;
+    border-top: 4px solid #fff;
+    border-right: 4px solid #fff;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.cs-core-issue-management .tableFixHead tbody th:nth-child(20n) {
+    border-right: none;
+}
+.cs-core-issue-management .bugListTable th:nth-child(1), .cs-core-issue-management .bugListTable th:nth-child(2), .cs-core-issue-management .bugListTable th:nth-child(3), .cs-core-issue-management .bugListTable th:nth-child(4), .cs-core-issue-management .bugListTable th:nth-child(5), .cs-core-issue-management .bugListTable th:nth-child(6), .cs-core-issue-management .bugListTable th:nth-child(7) {
+    border-right: 4px solid #ffffff;
+}
+.task-header-filter .cs-group-by {
+    color: #525596;
+    vertical-align: middle;
+    font-size: 14px;
+    display: block;
+    margin-top: 6px;
+}
+.task-header-filter .task-skin-btn .btn {
+    padding: 0 5px;
+    height: 34px;
+    width: 34px;
+    background: #525596;
+    color: #fff;
+    margin-right: 5px;
+}
+.task-header-filter .bcs-col-btn .btn {
+    box-shadow: none !important;
+    border: none !important;
+}
+.task-header-filter .bcs-col-btn .btn {
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 34px;
+    width: 100%;
+    background: #525596;
+    color: #fff;
+    margin-right: 0;
+    border-radius: 3px;
+}
+.task-header-filter .bcs-col-btn .btn:not(:disabled):not(.disabled).active,
+.task-header-filter .bcs-col-btn .btn:not(:disabled):not(.disabled):active, .task-header-filter .bcs-col-btn .btn:hover {
+    color: #fff;
+    background-color: #272B7C;
+    border-color: #272B7C;
+}
+.task-header-filter .bcs-col-btn .btn span{
+    
+}
+.cs-pagination-limit .bootstrap-select {
+    width: 70px !important;
+}
+.cs-pagination-group-by .bootstrap-select {
+    width: 120px !important;
+}
+.cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(even) {
+    background-color: #E9E9F1;
+}
+.cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(odd) {
+    background-color: #F6F6FF;
+}
+.cs-core-issue-management .bugListTable td:nth-child(1), .cs-core-issue-management .bugListTable th:nth-child(1) {
+    width: 25px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td{
+    padding: 3px 10px;
+    color: #525596;
+}
+.cs-core-issue-management .bugListTable .bug-tr td input[type=checkbox], .cs-core-issue-management .bugListTable .bug-tr td input[type=radio], .cs-core-issue-management .tableFixHead tbody th:nth-child(n+1) input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+.cs-input-group .bug-mgmt-filter-select .dropdown-menu {
+    min-width: 216px;
+}
+.cs-core-issue-management .task-name-editdrop button {
+    background-color: #525596;
+    border-color: #525596;
+    color: #fff;
+    font-size: 14px;
+    height: 100%;
+    max-height: 80px;
+    line-height: initial;
+    border-radius: 0px;
+    width: 20px;
+    padding: 3px 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.bug-list-column-task-name {
+    padding-right: 25px;
+}
+.bugListTable tbody .bug-tr td>a {
+    font-size: 14px;
+}
+.cs-core-issue-management .bug-list-column-assignee {
+    font-size: 14px;
+}
+.bug-list-column-task-status .dropdown-toggle {
+    color: #ffffff;
+    background-color: #525596 !important;
+    border-color: #525596;
+    font-size: 14px;
+    height: 30px;
+    line-height: initial;
+    border-radius: 3px;
+    padding: 0 10px;
+    padding-left: 0;
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    text-align: left;
+}
+.cst-dropwdown-toggle-bug:hover:after {
+    font-family: "Font Awesome 5 Pro";
+    font-size: 12px;
+    display: inline-block;
+    content: '\f078';
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    margin-right: 2px;
+    margin-left: 10px;
+    height: auto;
+    justify-content: normal;
+    position: inherit;
+    top: auto;
+}
+.bug-list-column-task-status [class*="us-item-status-"] {
+  padding: 0 0;
+  background-color: transparent !important;
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
+  font-size: 14px;
+  border-left: 10px solid;
+  padding-left: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 0;
+}
+.bug-list-column-task-status .dropdown-toggle:after{
+    margin-top: 8px;
+    vertical-align: middle;
+}
+.bug-list-column-task-status .us-item-status-new {
+ border-color: #f19a91;
+}
+.bug-list-column-task-status .us-item-status-ongoing {
+    border-color: #f3c788;
+}
+.bug-list-column-task-status .us-item-status-closed {
+    border-color: #8ad6a3;
+}
+.bug-list-column-task-status .us-item-status-waiting {
+    border-color: #FFFF00;
+}
+
+.bug-list-column-task-nature .get-data-group [class*="im-"] {
+    height: 14px;
+    width: 14px;
+    background: #525596;
+    position: absolute;
+    border-radius: 50px;
+    vertical-align: middle;
+    top: 3px;
+}
+.bug-list-column-task-nature .get-data-group .im-new {
+    background-color: #525596;
+}
+.bug-list-column-task-nature .get-data-group .im-change {
+    background-color: #FF7F50;
+}
+.bug-list-column-task-nature .get-data-group .im-bug {
+    background-color: red;
+}
+.bug-list-column-task-nature .get-data-group {
+    position: relative;
+    vertical-align: middle;
+}
+.bug-list-column-task-nature .dropdown-toggle {
+ display: inline-flex;
+ width: 100%;
+}
+.bug-list-column-task-nature .get-data-group .text {
+ margin-left: 18px;
+}
+.bug-list-column-story-card .set-filter-box {
+    right: 0;
+    position: absolute;    
+    display: inline-block;    
+    top: 50%;
+}
+.bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
+    color: #ffff;
+    height: 30px;
+    width: 30px;
+    background-color: #525596;
+    border: none;
+    border-radius: 4px;
+    margin: 0 2px;
+    position: relative;
+    top: inherit;
+    float: right;
+    right: auto;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px;
+}
+.bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept {
+    position: absolute;
+    top: 50%;
+    right: -12px;
+}
+.bug-list-column-story-card .hpYuyept {
+    margin-right: 0;
+}
+.bug-list-column-story-card .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: #525596;
+    background-color: #eaeaff;
+    border: none;
+    border-radius: 0;
+    height: 100%;
+    vertical-align: middle;
+}
+.bug-list-column-story-card .bootstrap-select>.dropdown-toggle.bs-placeholder, .bug-list-column-story-card .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bug-list-column-story-card .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bug-list-column-story-card .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: #525596;
+    background-color: #eaeaff;
+    border: none;
+    border-radius: 0;
+    height: 100%;
+    vertical-align: middle;
+    box-shadow: none;
+}
+.cs-core-issue-management table tr.active {
+    background: #dadbff!important;
+    color: white;
+}
+.bug-list-column-story-card button {
+    color: #525596 !important;
+    background-color: #e9e9f1;
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: 6px;
+    float: right;
+    right: 0;
+}
+.bigCheck label:before, .bigCheck label:after {
+    content: none;
+}
+.bigCheck label {
+    background-color: #525596;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 3px 5px rgb(0 0 0 / 50%);
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    height: 3.5em;
+    position: relative;
+    width: 3.5em;
+    padding: 16px;
+    -webkit-transition: -webkit-transform 200ms;
+    transition: transform 200ms;
+}
+.bigCheck:hover label{
+    background-color: #272B7C;
+}
+.groupTableDivInside{
+    color: #525596;
+    background: #c7d6ed;
+}
+.Assigne-card-story-select-img {
+    margin-right: 4px;
+}
+.bcs-more-filter-btns {
+    width: 100%;
+    max-width: 230px;
+}
+.bcs-more-filter-btns .btn {
+    width: 50% !important;
+    float: left;
+}
+.bcs-more-filter-btns .multi-edit-menu-btn {
+ margin-left: 5px;
+ width: 35px !important;
+}
+.tasklabellist4Task .lbl-list-tr {
+    background: #e9e9f1;
+    height: 30px;
+}
+.tasklabellist4Task .lbl-list-tr:nth-child(odd) {
+ background: #f6f6ff;
+}
+.tasklabellist4Task .lbl-list-tr .lbl-list-td .btn {
+    font-size: 14px;
+    height: 30px;
+    margin-right: 3px;
+}
+.tasklabellist4Task .lbl-list-tr .lbl-list-td .lbl-action{
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    color: #fff;
+    background: #525596;
+    border-radius: 3px;
+    padding: 7px 7px;
+    display: inline-block;
+    margin-right: 2px;
+}
+.tasklabellist4Task .lbl-list-tr .lbl-list-td.cs-edit-delet{
+    width: 66px;
+}
+table.lbl-list-table tr td {
+    padding: 0;
+}
+.tasklabellist4Task .lbl-list-table tr td input[type=checkbox], .tasklabellist4Task .lbl-list-table tr td input[type=radio] {
+    margin-left: 7px;
+    text-align: center;
+}
+.drop-label-menu.label-show-4-task {
+    box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
+    border-color: #fff;
 }
