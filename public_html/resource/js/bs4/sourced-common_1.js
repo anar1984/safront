@@ -5419,11 +5419,7 @@ UserStory.prototype = {
 
     getBacklogDesc: function () {
         $('#generalview_backlog_proc_desc_list').html('');
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -5436,6 +5432,8 @@ UserStory.prototype = {
             async: true,
             success: function (res) {
                 try {
+                    cr_project_desc_by_backlog[global_var.current_backlog_id]=[];
+                    SACore.updateBacklogDescriptionByRes(res);
                     that.getBacklogDescDetails(res);
                 } catch (e) {
                 }
@@ -5591,7 +5589,7 @@ UserStory.prototype = {
 
                 }
             }
-          }).disableSelection();
+          })/* .disableSelection(); */
 
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
@@ -5736,7 +5734,7 @@ UserStory.prototype = {
             success: function (res) {
                 AJAXCallFeedback(res);
                 that.getBacklogDesc();
-                loadCurrentBacklogProdDetailsSyncrone();
+//                loadCurrentBacklogProdDetailsSyncrone();
                 if (global_var.current_modal === 'loadLivePrototype') {
                     callStoryCardAfterIPOAction();
                 } else if (global_var.current_modal === 'loadStoryCard') {
@@ -5779,16 +5777,16 @@ UserStory.prototype = {
             async: true,
             success: function (res) {
                 AJAXCallFeedback(res);
-
-                loadCurrentBacklogProdDetails();
-                // .removeClass('activetr');
+                that.getBacklogDesc();
+                loadCurrentBacklogProdDetails();                
+                loadBacklogProductionCoreDetailssById(global_var.current_backlog_id,true);
             },
             error: function () {
                 Toaster.showGeneralError();
             }
         });
     },
-
+                   
     toogleBacklogDescEdit: function (e, id) {
         $(".descriptiontable tr").removeClass("activetr");
         var inp = $('<textarea type="text" class="form-control newinp1" style="border:white;" >')
@@ -7433,7 +7431,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                             + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
-<button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew(this,\'' + obj[i].id + '\')">Delete</button>\n\
+<button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew4StoryCard(this,\'' + obj[i].id + '\')">Delete</button>\n\
 \n\
 <hr style="margin:0px">\n\
 \n\<button class="dropdown-item" style="color:#000000"  onclick="new UserStory().selectDataFromDbModal(this,\'select\',\'' + obj[i].id + '\')">Select Data From Database</button>\n\
@@ -8271,7 +8269,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             crossDomain: true,
             async: false,
             success: function (res) {
-
+                                AJAXCallFeedback(res);
+                                loadBacklogProductionDetailsById_inputDesc(res);
+                loadBacklogProductionCoreDetailssByIdPost( global_var.current_backlog_id,true);
                 loadCurrentBacklogProdDetailsSyncrone();
                 //  refreshLiveProtytypeView();
                 //if current modal is live prototype
@@ -9694,7 +9694,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (err) {
         }
         json.kv.fkInputId = ids;
-
+        json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
 
@@ -9829,7 +9829,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (err) {
         }
         json.kv.fkInputId = ids;
-
+json.kv.fkBacklogId = global_var.current_backlog_id;
+        
         var that = this;
         var data = JSON.stringify(json);
 
@@ -9840,13 +9841,11 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             contentType: "application/json",
             crossDomain: true,
             async: true,
-            beforeSend: function (msg) {
-                showProgress();
-            },
+             
             success: function (res) {
                 SACore.updateBacklogByRes(res);
 
-
+  loadBacklogProductionCoreDetailssByIdPost( global_var.current_backlog_id, true);
                 loadCurrentBacklogProdDetailsSyncrone();
                 //  refreshLiveProtytypeView();
                 //if current modal is live prototype
@@ -9860,6 +9859,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 that.toggleSubmenuIPO();
                 that.refreshCurrentBacklog();
                 hideProgress();
+                
+                $('.us-input-list-item-check-box-class-new').each(function (e) {
+            if ($(this).is(':checked')) {
+                 $(this).closest('tr').remove();
+            }
+        });
             },
             error: function () {
                 Toaster.showGeneralError();
@@ -11920,6 +11925,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         } catch (err) {
         }
         json.kv.id = id;
+            json.kv.fkBacklogId= global_var.current_backlog_id;
+
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -12000,6 +12007,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         } catch (err) {
         }
         json.kv.id = id;
+            json.kv.fkBacklogId= global_var.current_backlog_id;
+
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -12022,7 +12031,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
                 var st = that.getHtmlGenIPOInputList(res);
                 $('#tblIPOList > tbody').html(st);
-highlightTheSameSelectedFieldsInInputList();
+                 highlightTheSameSelectedFieldsInInputList();
              
                 that.addSourcedIconToUserStory(res);
 //                that.genGUIDesign(res);
@@ -20888,7 +20897,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
 <button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addExistingRelationModal" onclick="new UserStory().inputExistModal(this,\'' + obj[i].id + '\')">Exist</button>\n\
-<button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew(this,\'' + obj[i].id + '\')">Delete</button>\n\
+<button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew4StoryCard(this,\'' + obj[i].id + '\')">Delete</button>\n\
 <hr style="margin:0px">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="new UserStory().selectDataFromDbModal(this,\'select\',\'' + obj[i].id + '\')">Select Data From Database</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().removeDBRelation(this,\'' + obj[i].id + '\')">Remove Database Relation</button>\n\
@@ -21744,6 +21753,45 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
     },
+    
+    
+    
+     deleteInputNew4StoryCard: function (el, inputId) {
+        if (!confirm("Are you sure?")) {
+            return;
+        }
+
+        if (!inputId) {
+            return;
+        }
+
+        var json = initJSON();
+        json.kv.id = inputId;
+            json.kv.fkBacklogId= global_var.current_backlog_id;
+
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmDeleteInput",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+               $(el).closest("tr").remove();
+                AJAXCallFeedback(res);
+                 SAInput.deleteInput(inputId);
+               
+                loadCurrentBacklogProdDetails();
+                  loadBacklogProductionCoreDetailssByIdPost( global_var.current_backlog_id, true);
+                 
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+    },
 
     deleteInputNew: function (el, inputId) {
         if (!confirm("Are you sure?")) {
@@ -21756,6 +21804,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
         var json = initJSON();
         json.kv.id = inputId;
+            json.kv.fkBacklogId= global_var.current_backlog_id;
+
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -22013,6 +22063,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetailsSyncrone();
+                  loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
                 //refreshLiveProtytypeView();
                 $(el).closest('div.span-button-div').remove();
 

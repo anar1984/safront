@@ -1289,167 +1289,7 @@ var SAFN = {
     InitConversion: function () {
 
 
-        //        $(document).on("change", ".function-statement-input-common-4-deletekey", function (e) {
-        //            SAFN.Reconvert.DeleteKeyStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-console", function (e) {
-        //            SAFN.Reconvert.ConsoleStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".cs-select-box #get-callapi-select-box", function (e) {
-        //            var val = $(this).val();
-        //            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
-        //            SAFN.Reconvert.CallApiStatement(this);
-        //        })
-        //        $(document).on("change", ".cs-select-box #get-callfn-select-box", function (e) {
-        //            var val = $(this).val();
-        //            $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
-        //            SAFN.Reconvert.CallFnStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-consoledata", function (e) {
-        //            SAFN.Reconvert.ConsoleDataStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-get", function (e) {
-        //            SAFN.Reconvert.GetStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-set", function (e) {
-        //            SAFN.Reconvert.SetStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-setvalue", function (e) {
-        //            SAFN.Reconvert.SetValueStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-settext", function (e) {
-        //            SAFN.Reconvert.SetTextStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-setparamurl", function (e) {
-        //            SAFN.Reconvert.SetParamUrlStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-getparamurl", function (e) {
-        //            SAFN.Reconvert.GetParamUrlStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-alert", function (e) {
-        //            SAFN.Reconvert.AlertStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-alertdata", function (e) {
-        //            SAFN.Reconvert.AlertDataStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-map", function (e) {
-        //            SAFN.Reconvert.MapStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-if", function (e) {
-        //            SAFN.Reconvert.IfStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-ifhasvalue", function (e) {
-        //            SAFN.Reconvert.IfHasValueStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-ifhasnotvalue", function (e) {
-        //            SAFN.Reconvert.IfHasNotValueStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-forlist", function (e) {
-        //            SAFN.Reconvert.ForListStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-fortable", function (e) {
-        //            SAFN.Reconvert.ForTableStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-sendemail", function (e) {
-        //            SAFN.Reconvert.SendEmailStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-showerror", function (e) {
-        //            SAFN.Reconvert.ShowErrorStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-sum", function (e) {
-        //            SAFN.Reconvert.SumStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-inc", function (e) {
-        //            SAFN.Reconvert.IncStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-dec", function (e) {
-        //            SAFN.Reconvert.DecStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-concat", function (e) {
-        //            SAFN.Reconvert.ConcatStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-click", function (e) {
-        //            SAFN.Reconvert.ClickStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-change", function (e) {
-        //            SAFN.Reconvert.ChangeStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-focus", function (e) {
-        //            SAFN.Reconvert.FocusStatement(this);
-        //        })
-        //        $(document).on("change", ".function-statement-input-common-4-showmessage", function (e) {
-        //            SAFN.Reconvert.ShowMessageStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-hide", function (e) {
-        //            SAFN.Reconvert.HideStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-show", function (e) {
-        //            SAFN.Reconvert.ShowStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-visible", function (e) {
-        //            SAFN.Reconvert.VisibleStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-unvisible", function (e) {
-        //            SAFN.Reconvert.UnvisibleStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-clear", function (e) {
-        //            SAFN.Reconvert.СlearStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-clearclass", function (e) {
-        //            SAFN.Reconvert.ClearClassStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-showparam", function (e) {
-        //            SAFN.Reconvert.ShowParamStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-hideparam", function (e) {
-        //            SAFN.Reconvert.HideParamStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-visibleparam", function (e) {
-        //            SAFN.Reconvert.VisibleParamStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-unvisibleparam", function (e) {
-        //            SAFN.Reconvert.UnvisibleParamStatement(this);
-        //        })
-        //
-        //        $(document).on("change", ".function-statement-input-common-4-error", function (e) {
-        //            SAFN.Reconvert.ErrorStatement(this);
-        //        })
+   
     },
     Reconvert: {
         InitMapper: function (commandLine, triggerElm) {
@@ -4456,20 +4296,27 @@ $(document).ready(function () {
         '@.callapi()',
         '@.break()'
     ];
-    $(document).on('keyup keydown', '.add-description', function (e) {
-
-        $(this).autocomplete({
-            minLength: 0,
-            // source: shortcodes,
-            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-            autoFocus: true,
-            select: function (event, ui) {
-                $(this).change();
-                $(".fx-shortcodes-btn .add-description").val('');
-                return false;
-            },
-            position: {my: "left bottom", at: "left top", collision: "flip"}
-        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    $(document).on('keydown', '.add-description', function (e) {
+        var done =  $(this).attr("auto-done");
+           if(done!==true){
+            $(this).autocomplete({
+                position: {my: "left bottom", at: "left top", collision: "flip"},
+                minLength: 2,
+                // source: shortcodes,
+                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+                autoFocus: true,
+                select: function (event, ui) {
+                    $(this).change();
+                
+                    $(".fx-shortcodes-btn .add-description").val('');
+                    return false;
+                },
+             
+            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    
+           }
+     
+        $(this).attr("auto-done",true);
     });
 
 
@@ -4513,6 +4360,31 @@ $(document).ready(function () {
         SAFN.Convert.Common.GetLineBody(this);
     })
 
+    $(document).on("change", ".cs-sum-inbox select.function-statement-input-common", function (e) {
+        $.fn.textWidth = function (text, font) {
+            if (!$.fn.textWidth.ZadFakeEl)
+                $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
+            $.fn.textWidth.ZadFakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+            return $.fn.textWidth.ZadFakeEl.width();
+        };
+
+        $(this).on('input', function () {
+            var inputWidth = $(this).textWidth();
+            $(this).css({
+                width: inputWidth + 15
+            })
+        }).trigger('input');
+
+        function inputWidth(CSelem, minW, maxW) {
+            CSelem = $(this);
+        }
+
+        var SheyTargetElem = $(this);
+
+        inputWidth(SheyTargetElem);
+
+        SAFN.Convert.Common.GetLineBody(this);
+    })
     $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
         $.fn.textWidth = function (text, font) {
             if (!$.fn.textWidth.ZadFakeEl)
@@ -4751,13 +4623,14 @@ function updateDragDropTableTr(table) {
                 }
 
                 genEsasTrForDrag(txt, idk);
+                itm.remove();
             } else {
                 itemConvertSubFUnc(itm);
 
             }
             SAFN.Convert.Common.GetLineBody(this);
         }
-    }).disableSelection();
+    })
 
 
 }
@@ -4784,16 +4657,15 @@ function genEsasTrForDrag(desc, idk) {
 
             $("#description_table_body_id>#" + idk + "").attr('pid', res.kv.id);
             moveBacklogDescDrag();
-
-            new UserStory().getBacklogDesc();
+            
+         
         },
         error: function () {
             Toaster.showGeneralError();
         }
     });
 
-}
-;
+};
 function itemConvertSubFUnc(itm) {
 
     $(itm).find('input[type="checkbox"]').remove();
@@ -4820,5 +4692,4 @@ function itemConvertSubFUnc(itm) {
 
             );
     $(itm).removeClass('esas-table-tr-for-zad');
-}
-;
+};

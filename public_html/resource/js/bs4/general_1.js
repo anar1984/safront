@@ -22,7 +22,7 @@ var gui_component = {
         "InnerCheckBox": "",
         "InnerEditBox": "",
         "InnerLine": "",
-        "Button": "background-color:#4CAF50;color:white; ",
+        "Button": "background-color:#272B7C;color:white; ",
         "Hidden": "",
         "Section": "width:100%;border: 1px solid #D2691E;border-radius:4px; padding: 5px;",
         "Icon": "",
@@ -1878,26 +1878,7 @@ $(document).on('click', '.popup-btn', function (evt) {
 $(document).on('hide.bs.modal', '#exampleModal', function () {
     $('#ipo-tab-setting-general').html(global_var.input_general_content_tab);
 });
-$(document).on('dblclick', '.component-class', function (evt) {
-    openComponentPropertiesModal(this);
-    $(this).click();
-});
-function openComponentPropertiesModal(el) {
-    if (global_var.current_modal !== 'loadLivePrototype') {
-        return;
-    }
 
-    global_var.input_general_content_tab = (global_var.input_general_content_tab)
-            ? global_var.input_general_content_tab :
-            $('#ipo-tab-setting-general').html()
-    var rs = global_var.input_general_content_tab;
-    $('#component-info-popup').html(rs);
-    $('#exampleModal-input-componentid').val('comp_id_' + $(el).attr('id'));
-    $('#exampleModal-input-name').val(SAInput.GetInputName(global_var.current_us_input_id));
-    $('#exampleModal-input-name').attr("pid", global_var.current_us_input_id);
-    $('#ipo-tab-setting-general').html('')
-    $('#exampleModal').modal('show');
-}
 
 function fnExcelReport(tableId)
 {

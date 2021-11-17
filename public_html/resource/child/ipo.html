@@ -1,7 +1,7 @@
 <div class="row us-sub-menu-body us-sm-detail"  style="display: block;" id="smb-details-ipo">
     <div class="col-lg-12 porjectNameProto">
         <div class="col-12 row  ">
-            <div class="col-1"></div>
+           
             <div class="col-3">
                 <span>Project</span>
                 <select onchange="Prototype.loadStoryCardByProject4oIpo(this)" class="form-control projectList_liveprototype" 
@@ -15,7 +15,7 @@
                         name="" data-live-search="true" id="storyCardListSelectBox">
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <span>Operation</span>
                 <div>
 
@@ -33,7 +33,10 @@
 
                 </div>
             </div>
-
+            <div class="col-1" >
+            
+                <div id="backBacklogBtn-block"></div>
+            </div>
 
         </div>
         <div class="col-7 text-left" style="display: none;">
@@ -307,485 +310,12 @@
                 </div>
             </div>
         </div>
-        <div class="draggablePopup_v2 " id="edit_component_inp_popUp" >
+       <!--  <div class="draggablePopup_v2 " id="edit_component_inp_popUp" >
             <div class="closePopupIn">
                 <button><i class="fas fa-times"></i></button>
             </div>
-            <div class="tab-content">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item ">
-                        <a class="nav-link active" href="#exampleModal-properties-tab2" data-toggle="tab" style="font-size: 14px;">Prop </a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#exampleModal-properties-tab3" data-toggle="tab" style="font-size: 14px;">Class </a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#exampleModal-properties-tab4" data-toggle="tab" style="font-size: 14px;">Development </a></li>
-                </ul>
-
-                <div class="tab-content">
-                    <div id="exampleModal-properties-tab2" class="tab-pane active"
-                         style=" max-height: 76vh;overflow: auto;">
-                        <div class="col-12"    style="font-size:11px;">
-                            <br>
-                            <input type="text" class="form-control" id="exampleModal-input-name" 
-                                   onchange="new UserStory().updateInputByAttr(this, 'name')"
-                                   pid="">
-                            <br>
-                        </div>
-                        <div class="col-12"    style="font-size:11px;">
-                            <label>Component Id</label>
-                            <input type="text" class="form-control" readonly disable id="exampleModal-input-componentid"              >
-                            <br>
-                        </div>
-
-                        <div class="col-12" id="component-info-popup" style="font-size:11px;">
-                        </div>
-                        <div class="col-12"    style="font-size:11px;">
-                            <br>
-                            <a href="#" onclick="new UserStory().deleteCurrentInputFromUSList(this)"
-                               pid="">Delete Current Input</a>
-                            <br>
-                        </div>
-                    </div>
-                    <div id="exampleModal-properties-tab3" class="tab-pane "
-                         style=" max-height: 76vh;overflow: auto;">
-
-                        <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                Class
-                            </legend>
-                            <table style="width:100%">
-                                <tbody>
-                                    <tr>
-                                        <td style="padding:5px;">
-
-                                            <select   id="gui_prop_in_gui_class_list" 
-                                                      class="classListOnChange"
-                                                      style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
-                                        </td>
-                                        <td style="width: 1%">
-                                            <i class="fa fa-plus" 
-                                               onclick="addGuiClassToInput(this)"
-                                               style="  font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-                                        <td style="width: 1%">
-                                            <i class="fa fa-bars" 
-                                               onclick="guiClassModal(this)"
-                                               style="  font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-                                    </tr>
-                                    <tr  class="input4NewClassAdding" style="display:none">
-                                        <td style="padding:5px;" colspan="2">
-
-                                            <input   id="gui_prop_in_gui_class_new" 
-                                                     style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td style="width: 1%">
-                                            <button class="buttons" 
-                                                    onclick="insertNewClassDirect(this)"
-                                                    style="   cursor:pointer;">Add</button>
-
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                                <tbody class="input_class_list_in_component">
-
-                                </tbody>
-                            </table>
-
-                        </fieldset>
-                        <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                Attributes
-                            </legend>
-                            <table style="width:100%">
-                                <tbody>
-                                    <tr>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">Name:</span>
-                                            <input type="text" id="gui_prop_in_attr_name" 
-                                                   style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">Value:</span>
-                                            <input type="text" id="gui_prop_in_attr_value" 
-                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-plus" 
-                                               onclick="addInputAttributes(this)"
-                                               style="padding-top:20px; font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                                <tbody  class="input_attributes_list_in_component">
-
-                                </tbody>
-                            </table>
-
-                        </fieldset>
-                    </div>
-                    <div id="exampleModal-properties-tab4" class="tab-pane "
-                         style=" max-height: 76vh;overflow: auto;">
-                        <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                Ready class
-                            </legend>
-                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                                <tbody class="input_class_list_in_component">
-
-                                </tbody>
-                            </table>
-                            <table class="cst_tb_124 table  table-bordered table-hover table-responsive" style="width:100%">
-
-                                <tbody >
-                                    <tr >
-                                        <td >
-                                            <span  class="clsLbVal col-form-label control-label"> <b>.sa-onloadclick</b></span>
-                                        </td>
-
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class=" clsLbVal col-form-label control-label"> <b>.sa-onloadchange</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.sa-onloadclick-async</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.sa-onloadchange
-                                                    -async</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.saTypeFilePicherUploadFile</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.sa-closemodal</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.sa-selectpicker</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <span class="clsLbVal col-form-label control-label"> <b>.sa-section-modal</b></span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
-                                                <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </fieldset>
-                        <fieldset class="border p-2">
-                            <legend class="w-auto w-auto-man">
-                                Ready Attributes
-                            </legend>
-                            <table class="cst_table123" style="width:100%;font-size: 11px; ">
-                                <tbody  class="input_attributes_list_in_component">
-
-                                </tbody>
-                            </table>
-                            <table style="width:100%">
-                                <tbody>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-selectedfield</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input type="text" class="select_fell" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                        </td>
-                                        <td >
-                                            <i  class="addInputAttrPlus fa fa-plus" 
-
-                                                style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-advanced-filter-active</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-column-filter-active</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-data-backlogid</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-
-                                    <tr>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-checkAllNone</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-tableNotEmpty</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-data-selectbox-hassnull</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-type</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <select class="select_fell" style="width:100%;padding: 0px;
-                                                    border-radius: 4px;
-                                                    border: 1px solid gray;" >
-                                                <option value="date">date</option>
-
-
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-load-ontrigger</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-value-linkedfield</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-                                            <input type="text" class="select_fell" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-
-                                        </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-selectbox-clickafterload</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-selectbox-changeafterload</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-                                        <td>
-                                            <i class="addInputAttrPlus fa fa-plus" 
-
-                                               style="font-size:16px;cursor:pointer;"></i>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-data-nosort</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-data-hasreplace</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                    <tr>
-                                        <td  style="padding:5px;">
-                                            <span class="col-form-label control-label">sa-loadonetime</span>
-
-                                        </td>
-                                        <td style="padding:5px;">
-                                            <input class="select_fell_check" type="checkbox">
-                                        </td>
-
-
-                                    </tr>
-                                </tbody>
-                            </table>
-
-
-                        </fieldset>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
+           
+        </div> -->
         <div class="toolbar ui-draggable" id="toolbar_cont_drag">
             <ul class=" cf">
                 <li value="cbox" title="checkbox">
@@ -1061,30 +591,24 @@
                                 <span>Canvas</span>
                             </a>
                         </li>
-                        <br>
+            
                         <li class="nav-item gui-design-is-api" id="currentAll-btn-icon">
-                            <a class="nav-link nav-link-custom tool-item all"  onclick="new UserStory().showAllGUI()"   >
-                                <i class="far fa-bookmark"></i>
+                        
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#exampleModal-properties-tab3">
+
+                                <i class="far fa-plus-square"></i>
                                 <br>
-                                <span >All </span>
+                                <span>Class</span>
                             </a>
 
-                            <a class="nav-link nav-link-custom tool-item current"  onclick="new UserStory().showCurrentGUI()" style="display: none;" >
-                                <i class="fas fa-bookmark"></i>
-                                <br>
-                                <span >Current </span>
-
-                            </a>
                         </li>
 
-                        <li class="nav-item gui-design-is-api" id="drag-btn-icon">
-                            <a class="nav-link nav-link-custom tool-item"  >
-                                <label class="containerA">
-                                    <input type="checkbox" id="lp-draggable-mode" class="dragCheckbox">
-                                    <span class="checkmark1 togglemark1 "><i class="far fa-stop-circle"></i> <br> Draggable</span>
-                                    <span class="checkmark2 togglemark2 "><i class="fas fa-stop-circle"></i><br> Undraggable</span>
-                                </label>
+                        <li class="nav-item gui-design-is-api" id="dragCheckbox">
+                            <a class="nav-link nav-link-custom tool-item"  data-toggle="tab" href="#exampleModal-properties-tab4">
 
+                                <i class="fas fa-code"></i>
+                                <br>
+                                <span>Development</span>
                             </a>
                         </li>
 
@@ -1093,7 +617,7 @@
                             <a class="nav-link nav-link-custom tool-item" onclick="guiClassModal(this)" >
                                 <label class="containerA">
                                     <input type="checkbox"  class="classModalWizard">
-                                    <span class="checkmark1"><i class="fab fa-css3-alt"></i> <br> Class</span>
+                                    <span class="checkmark1"><i class="fab fa-css3-alt"></i> <br> Css</span>
                                 </label>
 
                             </a>
@@ -1244,21 +768,19 @@
                                                         <option value="ondblclick">ondblclick</option>
                                                     </select><br>
                                                     <select  key='sectionType' id="liveProActionType" class="inputActionTypeChangeZadSheyOOO">
-                                                        <option value='api'>Call API</option>
+                                                        <option value='api' >Call API</option>
                                                         <option value='toggle'>Toggle</option> 
 
                                                     </select>
                                                     <div class='liveProActionTypeApi liveProActionTypeAll'>
                                                         Related API<br>
-                                                        <select style="width:80%;padding: 0px;
-
-                                                                border-radius: 4px;
-                                                                border: 1px solid gray;"
+                                                        <select 
                                                                 data-live-search='true'
-                                                                class="col-12 input_event_related_api">                                                        
+                                                                class="input_event_related_api form-control-sm col-7 p-0">                                                        
                                                         </select>
-
-                                                        <i onclick='insertNewInputActionRel(this)' class="fa fa-plus"></i>
+                                                           <button onclick='insertNewInputActionRel(this)' class="btn col-2 btn-light btn-sm"><i  class="fa fa-plus"></i></button>
+                                                           <button  id="add-new-apidirect-relation-add" class="btn btn-light col-2 btn-sm">New</button>
+                                                        
                                                         <br><br>
                                                         <table style='border: 1px solid #dee2e6; width:100%;'>
                                                             <thead>
@@ -1342,408 +864,422 @@
                             <div id="ipo-tab-setting-general"  class="container tab-pane" style="height: 100%;overflow: auto; padding-top: 20px;">
 
                                 <!-- gulbahar--ipo-1-hisse-setting -->
+                       
                                 <div class="col " id="ipo-1-hisse-setting">
-                                    <div class="row" >
-                                        <div class="col">
+                                           
+                        <div class="col-12"    style="font-size:11px;">
+                            <br>
+                            <input type="text" class="form-control" id="exampleModal-input-name" 
+                                   onchange="new UserStory().updateInputByAttr(this, 'name')"
+                                   pid="">
+                            <br>
+                        </div>
+                        <div class="col-12"    style="font-size:11px;">
+                            <label>Component Id</label>
+                            <input type="text" class="form-control" readonly disable id="exampleModal-input-componentid"              >
+                            <br>
+                        </div>
+
+                        <div class="col-12" id="component-info-popup" style="font-size:11px;">
+                            <div class="row" >
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <i class="fa fa-crosshairs  input-css-opt" id="us-gui-component-content" style="cursor: pointer;font-size:15px;display: none;" onclick="new UserStory().setGUIComponentContentModal(this)" title="Show Input and Input Descriptions"></i>
+                                        </div>
+                                        <div class="form-group col-12" hidden>
+                                            <input type="hidden" class="form-control required msg-clear"  id="u_userstory_input_id">
+                                        </div>
+                                        <div class="col-12" style=" padding:0px  1px">
+                                            <b><span style="width: 100%;padding:0px;">Component Type:</span><br></b>
+                                            <select id="us-gui-component-id"
+                                                    style="width:100%;padding: 0px;
+                                                    border-radius: 4px;
+                                                    border: 1px solid gray;"
+                                                    onchange="new UserStory().setGUIComponent(this)">
+                                                <option value="txt">Edit Line</option>
+                                                <option value="cmb">Select Box</option>
+                                                <option value="mcmb">Multi Select Box
+                                                </option>
+                                                <option value="txa">Textarea</option>
+                                                <option value="rbtn">Radio Button</option>
+                                                <option value="cbox">Check Box</option>
+                                                <option value="file">File Picker</option>
+                                                <option value="date">Date</option>
+                                                <option value="time">Time</option>
+                                                <option value="lbl">Label</option>
+                                                <option value="img">Image</option>
+                                                <option value="ytube">Youtube</option>
+                                                <option value="irbtn">Inner Radio Button</option>
+                                                <option value="icbox">Inner Check Box</option>
+                                                <option value="iedit">Inner Edit</option>
+                                                <option value="hr">Inner Line</option>
+                                                <option value="hlink">Hiperlink</option>
+                                                <option value="icon">Icon</option>
+                                                <option value="btn">Button</option>
+                                                <option value="hdn">Hidden</option>
+                                                <option value="fhtml">Free HTML</option>
+                                                <option value="fcomp">Free Component</option>
+                                                <option value="sctn">Section</option>
+                                                <option value="tab">Tab</option>
+                                                <option value="hcrr">Hidden Carrier</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-6" style=" padding:0px 1px">
+                                            <b><span style="width: 100%;padding:0px">Order No</span><br></b>
+                                            <input type="number"  id="us-gui-component-order-no"     style="width:100%;padding: 0px;
+                                                   border-radius: 4px; border: 1px solid gray;"
+                                                   onchange="new UserStory().setGUIComponentOrderNo(this)"
+                                                   step='0.1' min="0" value="">
+
+                                        </div>
+                                        <div class="col-6" style=" padding:0px 1px">
+                                            <b><span style="width: 100%;padding:0px">Cell/Grid</span><br></b>
+                                            <select 
+                                                id="us-gui-component-cell-no"
+                                                style="width:100%;padding: 0px;
+                                                border-radius: 4px;
+                                                border: 1px solid gray;"
+                                                onchange="new UserStory().setGUIComponentCellNo(this)"
+                                                step='0.1' min="0" value="">
+                                                <option valF="1">1</option>
+                                                <option val="2">2</option>
+                                                <option val="3">3</option>
+                                                <option val="4">4</option>
+                                                <option val="5">5</option>
+                                                <option val="6">6</option>
+                                                <option val="7">7</option>
+                                                <option val="8">8</option>
+                                                <option val="9">9</option>
+                                                <option val="10">10</option>
+                                                <option val="11">11</option>
+                                                <option val="12">12</option>
+                                            </select>
+                                        </div>
+
+
+
+
+                                        <div class="form-group col-6"
+                                             style=" padding:0px 1px">
+                                            <label for="sprintname"
+                                                   class="col-form-label control-label">Content
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-6 text-right"
+                                             id="addComponentImageUpload"
+                                             style=" padding:4px 0px 0px 0px;display:none;">
+                                            <a href="#"
+                                               onclick="new UserStory().setGUIComponentUploadImage()"
+                                               class="col-form-label control-label">Add
+                                                Image </a>
+                                        </div>
+
+                                        <div class="form-group col-6 text-right"
+                                             id="addComponentIconUpload"
+                                             style=" padding:4px 0px 0px 0px; display:none;">
+                                            <a href="#"
+                                               onclick="new UserStory().setGUIComponentUploadIcon()"
+                                               class="col-form-label control-label">Add
+                                                Icon </a>
+                                        </div>
+
+                                        <div class="form-group col-6 text-right"
+                                             id="addComponentSelectBox"
+                                             style=" padding:4px 0px 0px 0px; display:none;">
+                                            <a href="#"data-toggle="modal" data-target="#addRelatedSourceModal"
+                                               onclick="new UserStory().addRelationSourcedModal(this, 'select', '21072610414706712718')"
+                                               class="col-form-label control-label">Select From
+                                                Api </a>
+                                        </div>
+
+                                        <div class="form-group col-12"
+                                             style=" padding:0px 1px">
+                                            <textarea rows="3"
+                                                      style="font-size:12px"
+                                                      class="form-control required msg-clear"
+                                                      onchange=" new UserStory().setGUIComponentContent()"
+                                                      id="gui_input_content"></textarea>
+                                        </div>
+
+
+                                        <div class="col" style=" padding:0px 1px"><br></div>
+
+                                        <div class="form-group col-12 text-left"
+                                             id="gui_design_component_custom_style_4_general"
+                                             style=" padding:0px 1px;font-size:11px;">
                                             <div class="row">
                                                 <div class="form-group col-12">
-                                                    <i class="fa fa-crosshairs  input-css-opt" id="us-gui-component-content" style="cursor: pointer;font-size:15px;display: none;" onclick="new UserStory().setGUIComponentContentModal(this)" title="Show Input and Input Descriptions"></i>
-                                                </div>
-                                                <div class="form-group col-12" hidden>
-                                                    <input type="hidden" class="form-control required msg-clear"  id="u_userstory_input_id">
-                                                </div>
-                                                <div class="col-12" style=" padding:0px  1px">
-                                                    <b><span style="width: 100%;padding:0px;">Component Type:</span><br></b>
-                                                    <select id="us-gui-component-id"
-                                                            style="width:100%;padding: 0px;
-                                                            border-radius: 4px;
-                                                            border: 1px solid gray;"
-                                                            onchange="new UserStory().setGUIComponent(this)">
-                                                        <option value="txt">Edit Line</option>
-                                                        <option value="cmb">Select Box</option>
-                                                        <option value="mcmb">Multi Select Box
-                                                        </option>
-                                                        <option value="txa">Textarea</option>
-                                                        <option value="rbtn">Radio Button</option>
-                                                        <option value="cbox">Check Box</option>
-                                                        <option value="file">File Picker</option>
-                                                        <option value="date">Date</option>
-                                                        <option value="time">Time</option>
-                                                        <option value="lbl">Label</option>
-                                                        <option value="img">Image</option>
-                                                        <option value="ytube">Youtube</option>
-                                                        <option value="irbtn">Inner Radio Button</option>
-                                                        <option value="icbox">Inner Check Box</option>
-                                                        <option value="iedit">Inner Edit</option>
-                                                        <option value="hr">Inner Line</option>
-                                                        <option value="hlink">Hiperlink</option>
-                                                        <option value="icon">Icon</option>
-                                                        <option value="btn">Button</option>
-                                                        <option value="hdn">Hidden</option>
-                                                        <option value="fhtml">Free HTML</option>
-                                                        <option value="fcomp">Free Component</option>
-                                                        <option value="sctn">Section</option>
-                                                        <option value="tab">Tab</option>
-                                                        <option value="hcrr">Hidden Carrier</option>
-                                                    </select>
-                                                </div>
+                                                    <div>
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">
+                                                            </legend>
 
-                                                <div class="col-6" style=" padding:0px 1px">
-                                                    <b><span style="width: 100%;padding:0px">Order No</span><br></b>
-                                                    <input type="number"  id="us-gui-component-order-no"     style="width:100%;padding: 0px;
-                                                           border-radius: 4px; border: 1px solid gray;"
-                                                           onchange="new UserStory().setGUIComponentOrderNo(this)"
-                                                           step='0.1' min="0" value="">
+                                                            <table style="width:100%">
+                                                                <tbody>
 
-                                                </div>
-                                                <div class="col-6" style=" padding:0px 1px">
-                                                    <b><span style="width: 100%;padding:0px">Cell/Grid</span><br></b>
-                                                    <select 
-                                                        id="us-gui-component-cell-no"
-                                                        style="width:100%;padding: 0px;
-                                                        border-radius: 4px;
-                                                        border: 1px solid gray;"
-                                                        onchange="new UserStory().setGUIComponentCellNo(this)"
-                                                        step='0.1' min="0" value="">
-                                                        <option valF="1">1</option>
-                                                        <option val="2">2</option>
-                                                        <option val="3">3</option>
-                                                        <option val="4">4</option>
-                                                        <option val="5">5</option>
-                                                        <option val="6">6</option>
-                                                        <option val="7">7</option>
-                                                        <option val="8">8</option>
-                                                        <option val="9">9</option>
-                                                        <option val="10">10</option>
-                                                        <option val="11">11</option>
-                                                        <option val="12">12</option>
-                                                    </select>
-                                                </div>
+
+                                                                    <tr id="dv_gui_prop_cn_generalwidth">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Width </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" step="0.1"
+                                                                                   min="0"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                   onchange="new UserStory().setGUIContainerStyle()"
+                                                                                   class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
+                                                                                   id="gui_prop_cn_generalwidth">px
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr id="dv_gui_prop_cn_generalheight">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Height</span>
+                                                                        </td>
+                                                                        <td><input type="number" step="0.1"
+                                                                                   min="0"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
+                                                                                   onchange="new UserStory().setGUIContainerStyle()"
+                                                                                   class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
+                                                                                   id="gui_prop_cn_generalheight">px
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr id="dv_gui_prop_in_backgroundcolor">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                            <input type="checkbox"
+                                                                                   onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                   id="cb_gui_prop_in_backgroundcolor">
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="col-form-label control-label">Background-Color</span>
+                                                                        </td>
+                                                                        <td><input type="color"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_backgroundcolor"
+                                                                                   id="gui_prop_in_backgroundcolor">
+                                                                        </td>
+                                                                    </tr>
 
 
 
+                                                                    <tr id="dv_gui_prop_in_fontcolor">
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                            <input type="checkbox"
+                                                                                   onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                   id="cb_gui_prop_in_fontcolor">
+                                                                        </td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Font Color</span>
+                                                                        </td>
+                                                                        <td><input type="color"
+                                                                                   style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_fontcolor"
+                                                                                   id="gui_prop_in_fontcolor">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_fontstylebold">
 
-                                                <div class="form-group col-6"
-                                                     style=" padding:0px 1px">
-                                                    <label for="sprintname"
-                                                           class="col-form-label control-label">Content
-                                                    </label>
-                                                </div>
-                                                <div class="form-group col-6 text-right"
-                                                     id="addComponentImageUpload"
-                                                     style=" padding:4px 0px 0px 0px;display:none;">
-                                                    <a href="#"
-                                                       onclick="new UserStory().setGUIComponentUploadImage()"
-                                                       class="col-form-label control-label">Add
-                                                        Image </a>
-                                                </div>
-
-                                                <div class="form-group col-6 text-right"
-                                                     id="addComponentIconUpload"
-                                                     style=" padding:4px 0px 0px 0px; display:none;">
-                                                    <a href="#"
-                                                       onclick="new UserStory().setGUIComponentUploadIcon()"
-                                                       class="col-form-label control-label">Add
-                                                        Icon </a>
-                                                </div>
-
-                                                <div class="form-group col-6 text-right"
-                                                     id="addComponentSelectBox"
-                                                     style=" padding:4px 0px 0px 0px; display:none;">
-                                                    <a href="#"data-toggle="modal" data-target="#addRelatedSourceModal"
-                                                       onclick="new UserStory().addRelationSourcedModal(this, 'select', '21072610414706712718')"
-                                                       class="col-form-label control-label">Select From
-                                                        Api </a>
-                                                </div>
-
-                                                <div class="form-group col-12"
-                                                     style=" padding:0px 1px">
-                                                    <textarea rows="3"
-                                                              style="font-size:12px"
-                                                              class="form-control required msg-clear"
-                                                              onchange=" new UserStory().setGUIComponentContent()"
-                                                              id="gui_input_content"></textarea>
-                                                </div>
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                            <input type="checkbox"
+                                                                                   onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                   id="cb_gui_prop_in_fontstylebold">
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="col-form-label control-label"> Bold</span>
+                                                                        </td>
 
 
-                                                <div class="col" style=" padding:0px 1px"><br></div>
+                                                                        <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
+                                                                            <input type="checkbox"
+                                                                                   onchange="new UserStory().setGUIComponentStyleEnable(this)"
+                                                                                   id="cb_gui_prop_in_fontstyleitalic">
 
-                                                <div class="form-group col-12 text-left"
-                                                     id="gui_design_component_custom_style_4_general"
-                                                     style=" padding:0px 1px;font-size:11px;">
-                                                    <div class="row">
-                                                        <div class="form-group col-12">
-                                                            <div>
-                                                                <fieldset class="border p-2">
-                                                                    <legend class="w-auto w-auto-man">
-                                                                    </legend>
+                                                                            <span class="col-form-label control-label"> Italic</span>
+                                                                        </td>
+                                                                        <td></td>
 
-                                                                    <table style="width:100%">
-                                                                        <tbody>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_horizontalposition">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Align </span>
+                                                                        </td>
+                                                                        <td><select type="color"
+                                                                                    style="padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                    onchange="new UserStory().setGUIComponentStyle()"
+                                                                                    class="cs_gui_prop_in cs_gui_prop_in_horizontalposition"
+                                                                                    id="gui_prop_in_horizontalposition">
+                                                                                <option value="left">
+                                                                                    left
+                                                                                </option>
+                                                                                <option value="center" selected>
+                                                                                    center
+                                                                                </option>
+                                                                                <option value="right">
+                                                                                    right
+                                                                                </option>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="dv_gui_prop_in_font">
+                                                                        <td></td>
+                                                                        <td style="padding:0px;">
+                                                                            <span class="col-form-label control-label">Font </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select type="color"
+                                                                                    style="width:51px; padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                    onchange="new UserStory().setGUIComponentStyle()"
+                                                                                    class="cs_gui_prop_in cs_gui_prop_in_font"
+                                                                                    id="gui_prop_in_font">
+                                                                                <option></option>
+                                                                                <option>
+                                                                                    Helvetica
+                                                                                </option>
+                                                                                <option>
+                                                                                    Verdana
+                                                                                </option>
+                                                                                <option>
+                                                                                    Calibri
+                                                                                </option>
+                                                                                <option>Noto
+                                                                                </option>
+                                                                                <option>Lucida
+                                                                                    Sans
+                                                                                </option>
+                                                                                <option>Century
+                                                                                    Gothic
+                                                                                </option>
+                                                                                <option>
+                                                                                    Candara
+                                                                                </option>
+                                                                                <option>Futara
+                                                                                </option>
+                                                                                <option>Franklin
+                                                                                    Gothic
+                                                                                    Medium
+                                                                                </option>
+                                                                                <option>Geneva
+                                                                                </option>
+                                                                                <option>Segoe
+                                                                                    UI
+                                                                                </option>
+                                                                                <option>Optima
+                                                                                </option>
+                                                                                <option>Avanta
+                                                                                    Garde
+                                                                                </option>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
 
-
-                                                                            <tr id="dv_gui_prop_cn_generalwidth">
-                                                                                <td></td>
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Width </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="number" step="0.1"
-                                                                                           min="0"
-                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
-                                                                                           onchange="new UserStory().setGUIContainerStyle()"
-                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
-                                                                                           id="gui_prop_cn_generalwidth">px
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr id="dv_gui_prop_cn_generalheight">
-                                                                                <td></td>
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Height</span>
-                                                                                </td>
-                                                                                <td><input type="number" step="0.1"
-                                                                                           min="0"
-                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;width: 50px;"
-                                                                                           onchange="new UserStory().setGUIContainerStyle()"
-                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_borderround"
-                                                                                           id="gui_prop_cn_generalheight">px
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr id="dv_gui_prop_in_backgroundcolor">
-                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
-                                                                                    <input type="checkbox"
-                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
-                                                                                           id="cb_gui_prop_in_backgroundcolor">
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span class="col-form-label control-label">Background-Color</span>
-                                                                                </td>
-                                                                                <td><input type="color"
-                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                           onchange="new UserStory().setGUIComponentStyle()"
-                                                                                           class="cs_gui_prop_in cs_gui_prop_in_backgroundcolor"
-                                                                                           id="gui_prop_in_backgroundcolor">
-                                                                                </td>
-                                                                            </tr>
-
-
-
-                                                                            <tr id="dv_gui_prop_in_fontcolor">
-                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
-                                                                                    <input type="checkbox"
-                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
-                                                                                           id="cb_gui_prop_in_fontcolor">
-                                                                                </td>
-                                                                                <td style="padding:0px;">
-                                                                                    <span class="col-form-label control-label">Font Color</span>
-                                                                                </td>
-                                                                                <td><input type="color"
-                                                                                           style="padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                           onchange="new UserStory().setGUIComponentStyle()"
-                                                                                           class="cs_gui_prop_in cs_gui_prop_in_fontcolor"
-                                                                                           id="gui_prop_in_fontcolor">
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr id="dv_gui_prop_in_fontstylebold">
-
-                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
-                                                                                    <input type="checkbox"
-                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
-                                                                                           id="cb_gui_prop_in_fontstylebold">
-                                                                                </td>
-                                                                                <td>
-                                                                                    <span class="col-form-label control-label"> Bold</span>
-                                                                                </td>
-
-
-                                                                                <td style="border-color:#5181B8;width:0.1%; white-space:nowrap;">
-                                                                                    <input type="checkbox"
-                                                                                           onchange="new UserStory().setGUIComponentStyleEnable(this)"
-                                                                                           id="cb_gui_prop_in_fontstyleitalic">
-
-                                                                                    <span class="col-form-label control-label"> Italic</span>
-                                                                                </td>
-                                                                                <td></td>
-
-                                                                            </tr>
-                                                                            <tr id="dv_gui_prop_in_horizontalposition">
-                                                                                <td></td>
-                                                                                <td style="padding:0px;">
-                                                                                    <span class="col-form-label control-label">Align </span>
-                                                                                </td>
-                                                                                <td><select type="color"
-                                                                                            style="padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                            onchange="new UserStory().setGUIComponentStyle()"
-                                                                                            class="cs_gui_prop_in cs_gui_prop_in_horizontalposition"
-                                                                                            id="gui_prop_in_horizontalposition">
-                                                                                        <option value="left">
-                                                                                            left
-                                                                                        </option>
-                                                                                        <option value="center" selected>
-                                                                                            center
-                                                                                        </option>
-                                                                                        <option value="right">
-                                                                                            right
-                                                                                        </option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr id="dv_gui_prop_in_font">
-                                                                                <td></td>
-                                                                                <td style="padding:0px;">
-                                                                                    <span class="col-form-label control-label">Font </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <select type="color"
-                                                                                            style="width:51px; padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                            onchange="new UserStory().setGUIComponentStyle()"
-                                                                                            class="cs_gui_prop_in cs_gui_prop_in_font"
-                                                                                            id="gui_prop_in_font">
-                                                                                        <option></option>
-                                                                                        <option>
-                                                                                            Helvetica
-                                                                                        </option>
-                                                                                        <option>
-                                                                                            Verdana
-                                                                                        </option>
-                                                                                        <option>
-                                                                                            Calibri
-                                                                                        </option>
-                                                                                        <option>Noto
-                                                                                        </option>
-                                                                                        <option>Lucida
-                                                                                            Sans
-                                                                                        </option>
-                                                                                        <option>Century
-                                                                                            Gothic
-                                                                                        </option>
-                                                                                        <option>
-                                                                                            Candara
-                                                                                        </option>
-                                                                                        <option>Futara
-                                                                                        </option>
-                                                                                        <option>Franklin
-                                                                                            Gothic
-                                                                                            Medium
-                                                                                        </option>
-                                                                                        <option>Geneva
-                                                                                        </option>
-                                                                                        <option>Segoe
-                                                                                            UI
-                                                                                        </option>
-                                                                                        <option>Optima
-                                                                                        </option>
-                                                                                        <option>Avanta
-                                                                                            Garde
-                                                                                        </option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr id="dv_gui_prop_in_fontsize">
-                                                                                <td></td>
-                                                                                <td>
-                                                                                    <span class="col-form-label control-label">Font Size </span>
-                                                                                </td>
-                                                                                <td><input type="number"
-                                                                                           step="1"
-                                                                                           min="0"
-                                                                                           style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                           onchange="new UserStory().setGUIComponentStyle()"
-                                                                                           class="cs_gui_prop_in cs_gui_prop_in_fontsize"
-                                                                                           id="gui_prop_in_fontsize">px
-                                                                                </td>
-                                                                            </tr>
+                                                                    <tr id="dv_gui_prop_in_fontsize">
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <span class="col-form-label control-label">Font Size </span>
+                                                                        </td>
+                                                                        <td><input type="number"
+                                                                                   step="1"
+                                                                                   min="0"
+                                                                                   style="width:50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIComponentStyle()"
+                                                                                   class="cs_gui_prop_in cs_gui_prop_in_fontsize"
+                                                                                   id="gui_prop_in_fontsize">px
+                                                                        </td>
+                                                                    </tr>
 
 
 
 
-                                                                        </tbody>
-                                                                    </table>
-                                                                </fieldset>
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
 
 
 
 
-                                                                <fieldset class="border p-2">
-                                                                    <legend class="w-auto w-auto-man">Position
-                                                                    </legend>
-                                                                    <table style="width:100%">
-                                                                        <tbody>
+                                                        <fieldset class="border p-2">
+                                                            <legend class="w-auto w-auto-man">Position
+                                                            </legend>
+                                                            <table style="width:100%">
+                                                                <tbody>
 
-                                                                            <tr id="dv_gui_prop_cn_position">
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Type </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <select type="color"
-                                                                                            style=" padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                            onchange="new UserStory().setGUIContainerStyle()"
-                                                                                            class="cs_gui_prop_cn cs_gui_prop_cn_positiontype"
-                                                                                            id="gui_prop_cn_positiontype">
-                                                                                        <option value="">none</option>
-                                                                                        <option value="absolute">absolute</option>
-                                                                                        <option value="relative">relative</option>
-                                                                                        <option value="fixed">fixed</option>
-                                                                                        <option value="sticky">sticky</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
+                                                                    <tr id="dv_gui_prop_cn_position">
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Type </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select type="color"
+                                                                                    style=" padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                    onchange="new UserStory().setGUIContainerStyle()"
+                                                                                    class="cs_gui_prop_cn cs_gui_prop_cn_positiontype"
+                                                                                    id="gui_prop_cn_positiontype">
+                                                                                <option value="">none</option>
+                                                                                <option value="absolute">absolute</option>
+                                                                                <option value="relative">relative</option>
+                                                                                <option value="fixed">fixed</option>
+                                                                                <option value="sticky">sticky</option>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                            <tr id="dv_gui_prop_cn_positiontop">
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Z-index</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="number" step="1"
-                                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                           onchange="new UserStory().setGUIContainerStyle()"
-                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_zindex"
-                                                                                           id="gui_prop_cn_zindex">
-                                                                                </td>
+                                                                    <tr id="dv_gui_prop_cn_positiontop">
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Z-index</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" step="1"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIContainerStyle()"
+                                                                                   class="cs_gui_prop_cn cs_gui_prop_cn_zindex"
+                                                                                   id="gui_prop_cn_zindex">
+                                                                        </td>
 
-                                                                            </tr>
+                                                                    </tr>
 
 
 
 
 
-                                                                            <tr id="dv_gui_prop_cn_positiontop">
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Top</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="number" step="1"
-                                                                                           min="0"
-                                                                                           style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
-                                                                                           onchange="new UserStory().setGUIContainerStyle()"
-                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_positiontop"
-                                                                                           id="gui_prop_cn_positiontop">px
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
+                                                                    <tr id="dv_gui_prop_cn_positiontop">
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Top</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" step="1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border-radius:4px;border:1px solid gray;"
+                                                                                   onchange="new UserStory().setGUIContainerStyle()"
+                                                                                   class="cs_gui_prop_cn cs_gui_prop_cn_positiontop"
+                                                                                   id="gui_prop_cn_positiontop">px
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
 
-                                                                                <td style="padding:0px;"><span
-                                                                                        class="col-form-label control-label">Left</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="number" step="1"
-                                                                                           min="0"
-                                                                                           style="width: 50px;padding:0px;border:1px solid gray;border-radius:4px;"
-                                                                                           onchange="new UserStory().setGUIContainerStyle()"
-                                                                                           class="cs_gui_prop_cn cs_gui_prop_cn_positionleft"
-                                                                                           id="gui_prop_cn_positionleft">px
-                                                                                </td>
-                                                                            </tr>
+                                                                        <td style="padding:0px;"><span
+                                                                                class="col-form-label control-label">Left</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" step="1"
+                                                                                   min="0"
+                                                                                   style="width: 50px;padding:0px;border:1px solid gray;border-radius:4px;"
+                                                                                   onchange="new UserStory().setGUIContainerStyle()"
+                                                                                   class="cs_gui_prop_cn cs_gui_prop_cn_positionleft"
+                                                                                   id="gui_prop_cn_positionleft">px
+                                                                        </td>
+                                                                    </tr>
 
 
-                                                                        </tbody>
-                                                                    </table>
-                                                                </fieldset>
-                                                            </div>
-                                                        </div>
+                                                                </tbody>
+                                                            </table>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1751,7 +1287,456 @@
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="col-12"    style="font-size:11px;">
+                            <br>
+                            <a href="#" onclick="new UserStory().deleteCurrentInputFromUSList(this)"
+                               pid="">Delete Current Input</a>
+                            <br>
+                        </div>
+                                </div>
+                            </div>
+                            <div id="exampleModal-properties-tab3" class="tab-pane "
+                            style=" max-height: 76vh;">
+                                        <div class="col">
+                                            <fieldset class="border p-2">
+                                                <legend class="w-auto w-auto-man">
+                                                    Class
+                                                </legend>
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding:5px;">
+                    
+                                                                <select   id="gui_prop_in_gui_class_list" 
+                                                                          class="classListOnChange form-control-sm p-0 col-12"
+                                                                           data-live-search="true"
+                                                                          style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                                            </td>
+                                                            <td style="width: 1%">
+                                                                <button   onclick="addGuiClassToInput(this)" class="btn btn-light btn-sm">
+                                                                    <i class="fa fa-plus" ></i>
+                                                                </button>
+                                                             
+                    
+                                                            </td>
+                                                            <td style="width: 1%">
+                                                                <button    onclick="guiClassModal(this)" class="btn btn-light btn-sm">
+                                                                    <i class="fa fa-bars" ></i>
+                                                                </button>
+                                                                                    
+                                                            </td>
+                                                        </tr>
+                                                        <tr  class="input4NewClassAdding" >
+                                                            <td style="padding:5px;" colspan="2">
+                    
+                                                                <input placeholder="Add class"  id="gui_prop_in_gui_class_new" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td style="width: 1%">
+                                                                <button class="btn btn-light btn-sm " 
+                                                                        onclick="insertNewClassDirect(this)"
+                                                                        >Add</button>
+                    
+                                                            </td>
+                    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                                                    <tbody class="input_class_list_in_component">
+                    
+                                                    </tbody>
+                                                </table>
+                    
+                                            </fieldset>
+                                            <fieldset class="border p-2">
+                                                <legend class="w-auto w-auto-man">
+                                                    Attributes
+                                                </legend>
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding:5px;">
+                                                                <span class="col-form-label control-label">Name:</span>
+                                                                <input type="text" id="gui_prop_in_attr_name" 
+                                                                       style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                            </td>
+                                                            <td style="padding:5px;">
+                                                                <span class="col-form-label control-label">Value:</span>
+                                                                <input type="text" id="gui_prop_in_attr_value" 
+                                                                       style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-plus" 
+                                                                   onclick="addInputAttributes(this)"
+                                                                   style="padding-top:20px; font-size:16px;cursor:pointer;"></i>
+                    
+                                                            </td>
+                    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                                                    <tbody  class="input_attributes_list_in_component">
+                    
+                                                    </tbody>
+                                                </table>
+                    
+                                            </fieldset>
+                                        </div>
+                       
+                               </div>
+                               <div id="exampleModal-properties-tab4" class="tab-pane "
+                               style=" max-height: 76vh;overflow: auto;">
+                               <div class="col">
+                                <fieldset class="border p-2">
+                                    <legend class="w-auto w-auto-man">
+                                        Ready class
+                                    </legend>
+                                    <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                                        <tbody class="input_class_list_in_component">
+        
+                                        </tbody>
+                                    </table>
+                                    <table class="cst_tb_124 table  table-bordered table-hover table-responsive" style="width:100%">
+        
+                                        <tbody >
+                                            <tr >
+                                                <td >
+                                                    <span  class="clsLbVal col-form-label control-label"> <b>.sa-onloadclick</b></span>
+                                                </td>
+        
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+        
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class=" clsLbVal col-form-label control-label"> <b>.sa-onloadchange</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.sa-onloadclick-async</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.sa-onloadchange
+                                                            -async</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.saTypeFilePicherUploadFile</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.sa-closemodal</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.sa-selectpicker</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <span class="clsLbVal col-form-label control-label"> <b>.sa-section-modal</b></span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button>
+                                                        <button type="button" class="btn btn-outline-dark"><i class="fa addInputClassPlus fa-plus"></i></button>
+                                                    </div>
+        
+                                                </td>
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        
+                                </fieldset>
+                                <fieldset class="border p-2">
+                                    <legend class="w-auto w-auto-man">
+                                        Ready Attributes
+                                    </legend>
+                                    <table class="cst_table123" style="width:100%;font-size: 11px; ">
+                                        <tbody  class="input_attributes_list_in_component">
+        
+                                        </tbody>
+                                    </table>
+                                    <table style="width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-selectedfield</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input type="text" class="select_fell" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                </td>
+                                                <td >
+                                                    <i  class="addInputAttrPlus fa fa-plus" 
+        
+                                                        style="font-size:16px;cursor:pointer;"></i>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-advanced-filter-active</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-column-filter-active</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-data-backlogid</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+        
+                                            <tr>
+                                                <td style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-checkAllNone</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-tableNotEmpty</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-data-selectbox-hassnull</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-type</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <select class="select_fell" style="width:100%;padding: 0px;
+                                                            border-radius: 4px;
+                                                            border: 1px solid gray;" >
+                                                        <option value="date">date</option>
+        
+        
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <i class="addInputAttrPlus fa fa-plus" 
+        
+                                                       style="font-size:16px;cursor:pointer;"></i>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-load-ontrigger</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-value-linkedfield</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+                                                    <input type="text" class="select_fell" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+        
+                                                </td>
+                                                <td>
+                                                    <i class="addInputAttrPlus fa fa-plus" 
+        
+                                                       style="font-size:16px;cursor:pointer;"></i>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-selectbox-clickafterload</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+        
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-selectbox-changeafterload</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+                                                <td>
+                                                    <i class="addInputAttrPlus fa fa-plus" 
+        
+                                                       style="font-size:16px;cursor:pointer;"></i>
+        
+                                                </td>
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-data-nosort</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+        
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-data-hasreplace</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                            <tr>
+                                                <td  style="padding:5px;">
+                                                    <span class="col-form-label control-label">sa-loadonetime</span>
+        
+                                                </td>
+                                                <td style="padding:5px;">
+                                                    <input class="select_fell_check" type="checkbox">
+                                                </td>
+        
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        
+        
+                                </fieldset>
+                               </div>
+                             
+                          </div>
 
                             <div id="ipo-tab-setting-canvas"  class="container tab-pane"   style="padding:0px;height: 100%; overflow-y: scroll; overflow-x: hidden">
                                 <br>
@@ -1880,6 +1865,86 @@
                                                onclick="new UserStory().showContainerCustomCssDD()"
                                                style="cursor: pointer"></i>
                                             <div>
+                                                
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Attributes
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Name:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td style="padding:5px;">
+                                                                    <span class="col-form-label control-label">Value:</span>
+                                                                    <input type="text" id="gui_prop_cn_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fa fa-plus" onclick="addInputAttributes4Container(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_attributes_list_cn_component"></tbody>
+                                                    </table>
+
+                                                </fieldset>
+
+
+
+                                                <fieldset class="border p-2">
+                                                    <legend class="w-auto w-auto-man">
+                                                        Class
+                                                    </legend>
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:5px;">
+
+                                                                    <select   id="gui_prop_cn_gui_class_list" 
+                                                                              class="classListOnChange4Container col-12 form-control-sm p-0"
+                                                                              style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button  onclick="addGuiClassToInput4Container(this)" class="btn-sm btn btn-light"> <i class="fa fa-plus" 
+                                                                       
+                                                                        ></i></button>
+                                                                   
+
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button   onclick="guiClassModal(this)" class="btn btn-light btn-sm">
+                                                                        <i class="fa fa-bars" ></i>
+                                                                    </button>
+                                                                 
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr  class="input4NewClassAdding4Container" >
+                                                                <td style="padding:5px;" colspan="2">
+
+                                                                    <input   id="gui_prop_cn_gui_class_new" placeholder="Add new class"  class="form-control form-control-sm">
+                                                                </td>
+                                                                <td style="width: 1%">
+                                                                    <button class="btn btn-light btn-sm"   onclick="insertNewClassDirect4Container(this)">Add</button>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width:100%;font-size: 11px; ">
+                                                        <tbody id="input_class_list_cn_component">
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </fieldset>
                                                 <fieldset class="border p-2">
                                                     <legend class="w-auto w-auto-man">General
                                                     </legend>
@@ -2302,86 +2367,6 @@
                                                     </table>
                                                 </fieldset>
 
-                                                <fieldset class="border p-2">
-                                                    <legend class="w-auto w-auto-man">
-                                                        Attributes
-                                                    </legend>
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="padding:5px;">
-                                                                    <span class="col-form-label control-label">Name:</span>
-                                                                    <input type="text" id="gui_prop_cn_attr_name" style=" padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td style="padding:5px;">
-                                                                    <span class="col-form-label control-label">Value:</span>
-                                                                    <input type="text" id="gui_prop_cn_attr_value" style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td>
-                                                                    <i class="fa fa-plus" onclick="addInputAttributes4Container(this)" style="padding-top:20px; font-size:16px;cursor:pointer;" aria-hidden="true"></i>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table style="width:100%;font-size: 11px; ">
-                                                        <tbody id="input_attributes_list_cn_component"></tbody>
-                                                    </table>
-
-                                                </fieldset>
-
-
-
-                                                <fieldset class="border p-2">
-                                                    <legend class="w-auto w-auto-man">
-                                                        Class
-                                                    </legend>
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="padding:5px;">
-
-                                                                    <select   id="gui_prop_cn_gui_class_list" 
-                                                                              class="classListOnChange4Container"
-                                                                              style="padding:0px;border-radius:4px;border:1px solid gray;width:100%"></select>
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <i class="fa fa-plus" 
-                                                                       onclick="addGuiClassToInput4Container(this)"
-                                                                       style="  font-size:16px;cursor:pointer;"></i>
-
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <i class="fa fa-bars" 
-                                                                       onclick="guiClassModal(this)"
-                                                                       style="  font-size:16px;cursor:pointer;"></i>
-
-                                                                </td>
-                                                            </tr>
-                                                            <tr  class="input4NewClassAdding4Container" style="display:none">
-                                                                <td style="padding:5px;" colspan="2">
-
-                                                                    <input   id="gui_prop_cn_gui_class_new" 
-                                                                             style="padding:0px;border-radius:4px;border:1px solid gray;width:100%">
-                                                                </td>
-                                                                <td style="width: 1%">
-                                                                    <button class="buttons" 
-                                                                            onclick="insertNewClassDirect4Container(this)"
-                                                                            style="   cursor:pointer;">Add</button>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <table style="width:100%;font-size: 11px; ">
-                                                        <tbody id="input_class_list_cn_component">
-
-                                                        </tbody>
-                                                    </table>
-
-                                                </fieldset>
 
 
 

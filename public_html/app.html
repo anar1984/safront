@@ -6,6 +6,10 @@
         <link rel="shortcut icon" href="api/get/files/favicon.png" type="image/x-icon">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+      </link>
+      
         <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css"> 
         <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
         <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
@@ -31,7 +35,13 @@
         <link rel="stylesheet" id='kelbetin' href="resource/css/bs4/brending.css" />
         <!--<link rel="stylesheet" href="https://app.sourcedagile.com/api/get/script/css/48edh/210102102810037910965.css" />-->
 
-
+     
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+      </script>
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/3.24.0/addon/display/fullscreen.js">
+      </script>
 
        <script src="resource/js/bs4/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script> 
@@ -7605,7 +7615,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index: 40001;" aria-hidden="true">
 
     <div class="modal-dialog modal-lg" style="width: 90%;max-width: 90%" role="document">
         <div class="modal-content">
@@ -7628,7 +7638,15 @@
                                 onclick="insertNewJsFuncionDesc()">Add</button>
                     </div>
                     <div class="col-7"><br><br></div>
-                    <div class="col-12"><br><br></div>
+                    <div class="col-12">
+                        <br><br>
+                         <div class="col-3 p-0">
+                            <input type="search" placeholder="search function"  class="form-control" id="search-function-gui-modal-js" >
+
+                         </div>
+                         <br>
+                      
+                    </div>
 
                     <div class="col-3" style="height: 60vh; 
                          overflow-y: scroll; overflow-x: hidden;">
@@ -7718,8 +7736,8 @@
 
                             <div class="col-12 text-left">
 
-                                <span class="btn btn-secondary editor_full_screenBt"><i
-                                        class="fas fa-expand"></i></span>
+                               <!--  <span class="btn btn-secondary editor_full_screenBt"><i
+                                        class="fas fa-expand"></i></span> -->
                                 <div onchange='' placeholder="Function Body" rows=15
                                      style="height: 200px; width: 100%;" id="jsCodeModal_fnbody"></div>
 
@@ -8904,7 +8922,7 @@
                                                                         </ul>
                                                                         <input type="file">
                                                                     </nav>
-                                                                    <script src="resource/js/bs4/loadmonaco.js"></script>
+                                                    
                                                                     </body>
 
                                                                     </html>

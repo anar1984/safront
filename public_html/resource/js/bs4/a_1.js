@@ -221,7 +221,7 @@ function removeBacklogDescCommentType(el, descId) {
         async: true,
         success: function (res) {
             AJAXCallFeedback(res);
-            //            that.getBacklogDesc();
+                        that.getBacklogDesc();
             loadCurrentBacklogProdDetails();
         },
         error: function () {
@@ -1532,7 +1532,7 @@ function loadBacklogDetailsByIdIfNotExist(bid) {
     if (!SAInput.LoadedBacklogs4InputNew.includes(bid)) {
         loadBacklogProductionCoreDetailssById(bid);
         SAInput.LoadedBacklogs4InputNew.push(bid);
-   }
+    }
 }
 
 function loadBacklogDetailsByIdIfNotExist_old4(bid) {
@@ -1671,7 +1671,7 @@ function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
     global_var.current_modal = 'loadLivePrototype';
-//    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
 
 }
 
@@ -2658,12 +2658,13 @@ function showBacklogHistoryClick(el) {
     }
 
     if (pid === global_var.current_project_id) {
-        new UserStory().refreshCurrentBacklogById(bid);
+        $("#storyCardListSelectBox").val(bid)
+        $("#storyCardListSelectBox").change();
     } else {
         global_var.current_backlog_id = bid;
         Utility.addParamToUrl('current_backlog_id', bid);
-        $('#projectList').val(pid);
-        $('#projectList').change();
+        $('select.projectList_liveprototype').val(pid);
+        $('select.projectList_liveprototype').change();
     }
 }
 
@@ -2686,16 +2687,31 @@ function setBacklogHistory4View() {
 
     var div = $('#history_inp_popUp_zadsiyahisi');
     div.html('');
-
+    var block = $("#backBacklogBtn-block")
+        block.html('')
     var temp = [];
-
+        var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
         var o = bhistory[i];
 
         if (temp.includes(o.fkBacklogId)) {
             continue;
         }
+        
+        if(ct===1){
+       var btn = $("<button>") 
+            .attr("href", "#")
+            .addClass("btn btn-primary btn-lg")
+            .attr("pid", o.fkProjectId)
+            .attr('bid', o.fkBacklogId)
+            .attr('is_api', o.isApi)
+            .attr("onclick", "showBacklogHistoryClick(this)")
+            .attr("title",o.backlogName)
+            .html('<i class="fas fa-arrow-left"></i>');
 
+            block.append('<div>Back<div>')
+            block.append(btn)
+        }
         var d = $('<div>')
                 .addClass("col-lg-12")
 
@@ -2710,6 +2726,8 @@ function setBacklogHistory4View() {
         temp.push(o.fkBacklogId);
 
         div.append(d);
+        ct++
+        
     }
 }
 
@@ -5838,12 +5856,13 @@ function moveBacklogDescDrag(el) {
             crossDomain: true,
             async: true,
             success: function (res) {
-
+            //new UserStory().getBacklogDesc();
             }
         });
 
     }
 
+   
 
 }
 function if_inc_moveBacklogDescDrag(el) {
@@ -6595,6 +6614,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
 
 function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
     try {
+        var tableId = "";
         var selectedField = data.selectedField;
         selectedField = selectedField.replace(/ /g, '');
         var selectedFieldList = selectedField.split(",");
@@ -6655,7 +6675,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
         var hasRelatedApi01 = false;
         if (!hasRelatedApi01) {
-            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+//            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
         }
 
         var cols = (data._table.r && data._table.r.length > 0) ?
@@ -6715,10 +6735,10 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 
         callTableRelationAPIs(elem, tableId);
     } catch (err) {
-      //  $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 
-  //  tableShowHideRowGetItem(inpId);
+//    tableShowHideRowGetItem(inpId);
     $(".filter-table-row-select").selectpicker("refresh");
     $('.table-filter-block-draggable').draggable({
         containment: "body"
@@ -6728,7 +6748,7 @@ function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
 function callTableRelationAPIs(elem, tableId) {
 
     if (!tableId) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
         return;
     }
 
@@ -6788,7 +6808,7 @@ function callTableRelationAPIs(elem, tableId) {
 
         var tableInputId = keys[i];
         if (!hasRelatedApi) {
-            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
+//            $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').addClass("loaderTable");
             $("table[table-id='" + tableId + "']").first().attr("is-loading", "1");
             hasRelatedApi = true;
         }
@@ -6824,7 +6844,7 @@ function callTableRelationAPIs(elem, tableId) {
     $("table[table-id='" + tableId + "']").first().attr("is-loading", "0");
 
     if (!hasRelatedApi) {
-        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $("table[table-id='" + tableId + "']").closest('div').find('div.progressloader').removeClass("loaderTable");
     }
 }
 
@@ -6860,7 +6880,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
     var callCount = $(el1).attr('call-count');
     if ((parseInt(currentCallCount) + 1) >= callCount) {
-        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
     } else {
         $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
     }
@@ -6927,7 +6947,7 @@ function setTableAsyncValueOnApiCall(el, data, asyncData) {
 
     var callCount = $(el1).attr('call-count');
     if ((parseInt(currentCallCount) + 1) >= callCount) {
-        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
+//        $(el1).closest('div').find('div.progressloader').removeClass("loaderTable");
     } else {
         $(el1).attr('current-call-count', (parseInt(currentCallCount) + 1));
     }
@@ -7321,6 +7341,36 @@ function insertNewInputActionRel(el) {
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
 
+            loadCurrentBacklogProdDetails();
+        }
+    });
+}
+function directRelationAddApi(el,ids) {
+             var dif = $(el).val()
+    if (!global_var.current_project_id || !dif||
+            !ids)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkInputId = global_var.current_us_input_id;
+    json.kv.fkApiId = ids;
+    json.kv.actionType = dif;
+    var that = this;
+    var data = JSON.stringify(json);
+
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewInputActionRel",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            getInputActionRelList();
+            getInputAttributeByProject();
+          
             loadCurrentBacklogProdDetails();
         }
     });
@@ -8245,24 +8295,15 @@ var cdnh2 = true;
 function showJsCodeModal() {
 
     $('#jsCodeModal').modal('show');
-    //    console.log('sdfsdf')
-
-
-
-    if ($('#jsCodeModal_fnbody .monaco-editor').html() === undefined) {
-
-    }
 
     if (cdnh) {
 
 
         cdnh = false;
         jsEditorGenerate();
-    } else {
-
-        getAllJsCodeByProject();
-        loadApisToComboOnJSCode();
-    }
+    } 
+    getAllJsCodeByProject();
+    //loadApisToComboOnJSCode();
 }
 
 function guiClassModal(el) {
@@ -8279,120 +8320,49 @@ function guiClassModal(el) {
 
 
 function jsEditorGenerate() {
-    //    console.log('asdfafasf');
-    $('#jsCodeModal').modal('show');
+    $("#jsCodeModal_fnbody").empty();
 
-
-
-    require.config({
-        paths: {
-            'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'
-        }
-    });
-    window.MonacoEnvironment = {
-        getWorkerUrl: () => proxy
-    };
-
-    let proxy = URL.createObjectURL(new Blob([`
-        self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
-        };
-        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], {
-        type: 'text/javascript'
-    }));
-
-    require(["vs/editor/editor.main"], function () {
-        window.editor1 = monaco.editor.create(document.getElementById('jsCodeModal_fnbody'), {
-
-            language: 'javascript',
-            theme: 'vs-dark'
-        });
-        getAllJsCodeByProject();
-        loadApisToComboOnJSCode();
-    });
-
-
-
-
-
+    window.editor1 =CodeMirror(document.querySelector('#jsCodeModal_fnbody'), {
+        lineNumbers: true,
+        tabSize: 2,
+        mode: 'javascript',
+        theme: 'blackboard',
+        extraKeys: {
+            "F11": function(cm) {
+              cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+            },
+            "Esc": function(cm) {
+              if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+            }
+          }
+      });
 
 
 }
 
+
 function jsEditorFullGenerate(val3) {
 
-    setTimeout(function () {
-
-
-        require.config({
-            paths: {
-                'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'
-            }
-        });
-        window.MonacoEnvironment = {
-            getWorkerUrl: () => proxy
-        };
-
-        let proxy = URL.createObjectURL(new Blob([`
-        self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
-        };
-        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], {
-            type: 'text/javascript'
-        }));
-
-        require(["vs/editor/editor.main"], function () {
-            window.editor3 = monaco.editor.create(document.getElementById('edit_full_screen'), {
-
-                language: 'javascript',
-                theme: 'vs-dark'
-            });
-            window.editor3.setValue(val3);
-        });
-
-
-    }, 200);
-
+    window.editor3=  CodeMirror(document.querySelector('#edit_full_screen'), {
+        lineNumbers: true,
+        tabSize: 2,
+        mode: 'javascript',
+        theme: 'blackboard'
+      });
 
 
 }
 
 function cssEditorGenerate() {
+        $("#guiClassModal_classbody").empty()
+    window.editor = CodeMirror(document.querySelector('#guiClassModal_classbody'), {
+        lineNumbers: true,
+        tabSize: 2,
+        mode: 'css',
+        theme: 'blackboard'
+      });
 
-    setTimeout(function () {
-
-
-
-        require.config({
-            paths: {
-                'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'
-            }
-        });
-        window.MonacoEnvironment = {
-            getWorkerUrl: () => proxy
-        };
-
-        let proxy = URL.createObjectURL(new Blob([`
-        self.MonacoEnvironment = {
-            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
-        };
-        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
-    `], {
-            type: 'text/javascript'
-        }));
-
-        require(["vs/editor/editor.main"], function () {
-            window.editor = monaco.editor.create(document.getElementById('guiClassModal_classbody'), {
-
-                language: 'css',
-                theme: 'vs-dark'
-            });
-
-        });
-
-    }, 200);
+    
 }
 $(document).on('focusout', '#guiClassModal_classbody', function () {
 
@@ -8581,13 +8551,14 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
         success: function (res) {
             $('#guiClassModal_classname').val(res.kv.className);
             $('#guiClassModal_classbody').val(res.kv.classBody);
+            cssEditorGenerate();
 
             window.editor.setValue(res.kv.classBody);
         }
     });
 })
 
-$(document).on("change", ".classListOnChange", function (e) {
+/* $(document).on("change", ".classListOnChange", function (e) {
     var val = $(this).val();
     if (val === '-2') {
         $('.input4NewClassAdding').show();
@@ -8595,15 +8566,15 @@ $(document).on("change", ".classListOnChange", function (e) {
         $('.input4NewClassAdding').hide();
     }
 })
-
-$(document).on("change", ".classListOnChange4Container", function (e) {
+ */
+/* $(document).on("change", ".classListOnChange4Container", function (e) {
     var val = $(this).val();
     if (val === '-2') {
         $('.input4NewClassAdding4Container').show();
     } else {
         $('.input4NewClassAdding4Container').hide();
     }
-})
+}) */
 
 
 function insertNewClassDirect(el) {
@@ -8614,7 +8585,7 @@ function insertNewClassDirect(el) {
     className = "." + className;
     className = className.replace(/ /g, '');
     insertNewGuiClass(className);
-    $(".input4NewClassAdding").hide();
+
 }
 
 function insertNewClassDirect2(el) {
@@ -8636,7 +8607,7 @@ function insertNewClassDirect4Container(el) {
     className = "." + className;
     className = className.replace(/ /g, '');
     insertNewGuiClass4Container(className);
-    $(".input4NewClassAdding4Container").hide();
+
 }
 
 
@@ -8663,6 +8634,32 @@ function insertNewGuiClassModalCore(val) {
         contentType: "application/json",
         crossDomain: true,
         async: false,
+        success: function (res) {
+
+//            addGuiClassToInputCore(res.kv.id);//bu sehvdir
+            getAllGuiClassByProject();
+
+        }
+    });
+
+}
+function insertNewGuiClassModalCoreFor(val) {
+    var className = val;
+    if (!className)
+        return;
+
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.className = className;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewGuiClass",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
         success: function (res) {
 
             addGuiClassToInputCore(res.kv.id);
@@ -8694,8 +8691,8 @@ function insertNewGuiClass4Container(className) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            getGuiClassList();
-            $("#gui_prop_cn_gui_class_list").val(res.kv.id);
+          
+            addGuiClassToInput4ContainerCore(res.kv.id)
             $('#gui_prop_cn_gui_class_new').val('');
         }
     });
@@ -8720,10 +8717,9 @@ function insertNewGuiClass(className) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            getGuiClassList();
-            getAllGuiClassList();
-            $("#gui_prop_in_gui_class_list").val(res.kv.id);
+            Prototype.CssContainer.getGuiClassList(res.kv.id);
             $('#gui_prop_in_gui_class_new').val('');
+            addGuiClassToInputCore(res.kv.id)
         }
     });
 }
@@ -8732,27 +8728,32 @@ function addGuiClassToInput4Container(el) {
     var classId = $("#gui_prop_cn_gui_class_list").val();
     if (!classId)
         return;
+        addGuiClassToInput4ContainerCore(classId)
+    
+}
+function addGuiClassToInput4ContainerCore(classId) {
+    if (!classId)
+    return;
 
-    var json = initJSON();
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.fkClassId = classId;
-    json.kv.fkInputId = global_var.current_us_input_id;
-    json.kv.relType = "cont";
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            getInputContaierClassList();
-            getInputClassRelByProject();
-            new UserStory().genGUIDesign();
-        }
-    });
+var json = initJSON();
+json.kv.fkProjectId = global_var.current_project_id;
+json.kv.fkClassId = classId;
+json.kv.fkInputId = global_var.current_us_input_id;
+json.kv.relType = "cont";
+var that = this;
+var data = JSON.stringify(json);
+$.ajax({
+    url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
+    type: "POST",
+    data: data,
+    contentType: "application/json",
+    crossDomain: true,
+    async: true,
+    success: function (res) {
+           Prototype.CssContainer.getGuiClassList(classId);
+        new UserStory().genGUIDesign();
+    }
+});
 }
 
 function addGuiClassToInput(el) {
@@ -8782,8 +8783,6 @@ function addGuiClassToInputCore(el) {
         async: true,
         success: function (res) {
             loadCurrentBacklogProdDetailsSyncrone();
-
-            //            console.log('ok');
             getInputCompClassList();
             getInputClassRelByProjectManual();
             new UserStory().genGUIDesign();
@@ -12237,8 +12236,8 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
-   /*  loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
-    $('#storyCardListSelectBox').change(); */
+     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
+    $('#storyCardListSelectBox').change(); 
 
 });
 
@@ -12494,10 +12493,10 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-  /*   showToggleMain();
+     showToggleMain();
 
     getProjectUsers();
-    getUsers(); */
+    getUsers(); 
 
    // initZadShey(global_var.current_project_id);
 
@@ -12508,10 +12507,10 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
       //  getAllGuiClassList();
 
 
-       // getInputClassRelByProject();
-       // getInputAttributeByProject();
-       // getProjectDescriptionByProject();
-       // getJsCodeListByProject();
+       /*  getInputClassRelByProject();
+         getInputAttributeByProject();
+        getProjectDescriptionByProject();
+        getJsCodeListByProject(); */
 
        // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
@@ -15437,6 +15436,7 @@ function loadAddUserStoriesToTabList(tabId) {
 }
 
 function addApiModal() {
+    $("#addApiPopupModal-userstoryname").removeAttr("data-trig-rel");
     $('#addApiPopupModal').modal('show');
     $('#addApiPopupModal-userstoryname').focus();
 }
@@ -15490,7 +15490,8 @@ function addUserStoryNewPopup() {
 }
 
 function addApiNewPopup() {
-    var usName = $('#addApiPopupModal-userstoryname').val();
+    var nameInput=$('#addApiPopupModal-userstoryname')
+    var usName = nameInput.val();
     if (!usName)
         return;
 
@@ -15509,22 +15510,34 @@ function addApiNewPopup() {
         crossDomain: true,
         async: true,
         success: function (res) {
+         
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             loadCurrentBacklogProdDetails();
 
-            global_var.current_backlog_id = res.kv.id;
-            Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+      
 
             //$('.projectList_liveprototype').change();
            // loadApiListOnProjectSelect4Ipo();
-           Prototype.ApiContainer.Init()
-            $('#addApiPopupModal-userstoryname').val('');
+           var trig = nameInput.attr("data-trig-rel");
+           Prototype.ApiContainer.Init();
+           
+           nameInput.val('');
+         
+            
             $('#addApiPopupModal').modal('hide');
 
+          
+          
+            if (trig) {
+                directRelationAddApi($(".animation-block-for-find .input_event_type"),res.kv.id);
+            }else{
+                global_var.current_backlog_id = res.kv.id;
+                Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+                callStoryCard(res.kv.id);
 
-            global_var.current_backlog_id = res.kv.id;
-            callStoryCard(res.kv.id);
+            }
+            nameInput.removeAttr('data-trig-rel');
         }
     });
 }
@@ -16100,6 +16113,7 @@ function removeSection(el, inputId) {
     }
 
     json.kv.id = inputId;
+    json.kv.fkBacklogId= global_var.current_backlog_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
