@@ -4623,13 +4623,14 @@ function updateDragDropTableTr(table) {
                 }
 
                 genEsasTrForDrag(txt, idk);
+                itm.remove();
             } else {
                 itemConvertSubFUnc(itm);
 
             }
             SAFN.Convert.Common.GetLineBody(this);
         }
-    }).disableSelection();
+    })
 
 
 }
@@ -4656,16 +4657,15 @@ function genEsasTrForDrag(desc, idk) {
 
             $("#description_table_body_id>#" + idk + "").attr('pid', res.kv.id);
             moveBacklogDescDrag();
-
-            new UserStory().getBacklogDesc();
+            
+         
         },
         error: function () {
             Toaster.showGeneralError();
         }
     });
 
-}
-;
+};
 function itemConvertSubFUnc(itm) {
 
     $(itm).find('input[type="checkbox"]').remove();
@@ -4692,5 +4692,4 @@ function itemConvertSubFUnc(itm) {
 
             );
     $(itm).removeClass('esas-table-tr-for-zad');
-}
-;
+};

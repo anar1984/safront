@@ -5856,12 +5856,13 @@ function moveBacklogDescDrag(el) {
             crossDomain: true,
             async: true,
             success: function (res) {
-                new UserStory().getBacklogDesc();
+            //new UserStory().getBacklogDesc();
             }
         });
 
     }
 
+   
 
 }
 function if_inc_moveBacklogDescDrag(el) {
@@ -15435,6 +15436,7 @@ function loadAddUserStoriesToTabList(tabId) {
 }
 
 function addApiModal() {
+    $("#addApiPopupModal-userstoryname").removeAttr("data-trig-rel");
     $('#addApiPopupModal').modal('show');
     $('#addApiPopupModal-userstoryname').focus();
 }
@@ -15518,7 +15520,7 @@ function addApiNewPopup() {
 
             //$('.projectList_liveprototype').change();
            // loadApiListOnProjectSelect4Ipo();
-           var trig = nameInput.attr("data-trig-rel",'true');
+           var trig = nameInput.attr("data-trig-rel");
            Prototype.ApiContainer.Init();
            
            nameInput.val('');

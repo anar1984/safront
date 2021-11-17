@@ -5589,7 +5589,7 @@ UserStory.prototype = {
 
                 }
             }
-          }).disableSelection();
+          })/* .disableSelection(); */
 
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
