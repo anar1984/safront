@@ -22820,7 +22820,7 @@ Label.prototype = {
                             .val(obj[n].id)
                             .append("Assign")
                             .attr('id', obj[n].id)));
-            var td = $('<td class="lbl-list-td"></td>')
+            var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
                     .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                             .attr('id', obj[n].id)
                             .attr('data-toggle', "modal")
@@ -23415,7 +23415,7 @@ Sprint.prototype = {
                             .append("Assign")
                             .attr('id', obj[n].id)));
 
-            var td = $('<td class="lbl-list-td"></td>')
+            var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
                     .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                             .attr('id', obj[n].id)
                             .attr('data-toggle', "modal")
@@ -23476,7 +23476,7 @@ Sprint.prototype = {
                             .append("Assign")
                             .attr('id', obj[n].id)));
 
-            var td = $('<td class="lbl-list-td"></td>')
+            var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
                     .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
                             .attr('id', obj[n].id)
                             .attr('data-toggle', "modal")
@@ -28048,4 +28048,9 @@ function setColoredToInputDesc(el, ids, color) {
             Toaster.showError(('somethingww'));
         }
     });
+}
+
+function loadBugChangeCustomScripts() {
+    $("#bug_filter_limit").selectpicker('refresh');
+    $("#inputGroupSelect01").selectpicker('refresh');
 }

@@ -13711,7 +13711,7 @@ $(document).on('click', '.loadBugChange', function (evt) {
         commmonOnloadAction(this);
         setBugFilterProject();
         setBugFilterAssignees();
-
+        loadBugChangeCustomScripts();
 
         $('.bug-mgmt-filter-select').selectpicker();
         new Sprint().load4Task();
@@ -15515,8 +15515,7 @@ function addApiNewPopup() {
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             loadCurrentBacklogProdDetails();
 
-            global_var.current_backlog_id = res.kv.id;
-            Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+      
 
             //$('.projectList_liveprototype').change();
            // loadApiListOnProjectSelect4Ipo();
@@ -15534,6 +15533,7 @@ function addApiNewPopup() {
                 directRelationAddApi($(".animation-block-for-find .input_event_type"),res.kv.id);
             }else{
                 global_var.current_backlog_id = res.kv.id;
+                Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
                 callStoryCard(res.kv.id);
 
             }
@@ -17572,7 +17572,7 @@ function changeUserStoryOfTaskModal() {
     } else if (global_var.current_modal === 'loadTaskManagement') {
         SACore.FillInCombo('task-user-story-id-change');
     }
-
+    
 
 }
 
