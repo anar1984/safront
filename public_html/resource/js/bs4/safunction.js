@@ -4296,20 +4296,27 @@ $(document).ready(function () {
         '@.callapi()',
         '@.break()'
     ];
-    $(document).on('keyup keydown', '.add-description', function (e) {
-
-        $(this).autocomplete({
-            minLength: 0,
-            // source: shortcodes,
-            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-            autoFocus: true,
-            select: function (event, ui) {
-                $(this).change();
-                $(".fx-shortcodes-btn .add-description").val('');
-                return false;
-            },
-            position: {my: "left bottom", at: "left top", collision: "flip"}
-        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    $(document).on('keydown', '.add-description', function (e) {
+        var done =  $(this).attr("auto-done");
+           if(done!==true){
+            $(this).autocomplete({
+                position: {my: "left bottom", at: "left top", collision: "flip"},
+                minLength: 2,
+                // source: shortcodes,
+                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+                autoFocus: true,
+                select: function (event, ui) {
+                    $(this).change();
+                
+                    $(".fx-shortcodes-btn .add-description").val('');
+                    return false;
+                },
+             
+            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    
+           }
+     
+        $(this).attr("auto-done",true);
     });
 
 
@@ -4616,13 +4623,14 @@ function updateDragDropTableTr(table) {
                 }
 
                 genEsasTrForDrag(txt, idk);
+                itm.remove();
             } else {
                 itemConvertSubFUnc(itm);
 
             }
             SAFN.Convert.Common.GetLineBody(this);
         }
-    }).disableSelection();
+    })
 
 
 }
@@ -4649,16 +4657,15 @@ function genEsasTrForDrag(desc, idk) {
 
             $("#description_table_body_id>#" + idk + "").attr('pid', res.kv.id);
             moveBacklogDescDrag();
-
-            new UserStory().getBacklogDesc();
+            
+         
         },
         error: function () {
             Toaster.showGeneralError();
         }
     });
 
-}
-;
+};
 function itemConvertSubFUnc(itm) {
 
     $(itm).find('input[type="checkbox"]').remove();
@@ -4685,5 +4692,4 @@ function itemConvertSubFUnc(itm) {
 
             );
     $(itm).removeClass('esas-table-tr-for-zad');
-}
-;
+};
