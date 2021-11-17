@@ -16716,7 +16716,8 @@ function updateUS4ShortChangeDetails(val, ustype) {
             AJAXCallFeedback(res);
             SACore.addBacklogByRes(res);
 
-            loadCurrentBacklogProdDetailsSyncrone();
+            loadCurrentBacklogProdDetails();
+             loadCurrentBacklogProdDetailsSyncrone();
             //            if (global_var.current_modal === 'loadLivePrototype') {
             //                callStoryCardAfterIPOAction();
             //            } else if (global_var.current_modal === 'loadStoryCard') {

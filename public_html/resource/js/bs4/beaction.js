@@ -189,8 +189,9 @@ var be = {
             data = {};
         }
 
-        var inputList = be.ExecAPI.GetInputsByAPI(apiId);
-        var pureData = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
+//        var inputList = be.ExecAPI.GetInputsByAPI(apiId);
+//        var pureData = be.ExecAPI.SetInputValuesOnStoryCard(inputList, data);
+        var pureData = data;
 
         var res = this.ExecAPI.CallContainerServices(apiId, pureData, element, asyncData);
 
@@ -1107,7 +1108,7 @@ var be = {
         },
 
         CallBackendApiServiceForSql: function (fnId, data) {
-            if (!fnId){
+            if (!fnId) {
                 return;
             }
 
