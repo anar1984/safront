@@ -4296,20 +4296,27 @@ $(document).ready(function () {
         '@.callapi()',
         '@.break()'
     ];
-    $(document).on('keyup keydown', '.add-description', function (e) {
-
-        $(this).autocomplete({
-            minLength: 0,
-            // source: shortcodes,
-            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-            autoFocus: true,
-            select: function (event, ui) {
-                $(this).change();
-                $(".fx-shortcodes-btn .add-description").val('');
-                return false;
-            },
-            position: {my: "left bottom", at: "left top", collision: "flip"}
-        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    $(document).on('keydown', '.add-description', function (e) {
+        var done =  $(this).attr("auto-done");
+           if(done!==true){
+            $(this).autocomplete({
+                position: {my: "left bottom", at: "left top", collision: "flip"},
+                minLength: 2,
+                // source: shortcodes,
+                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+                autoFocus: true,
+                select: function (event, ui) {
+                    $(this).change();
+                
+                    $(".fx-shortcodes-btn .add-description").val('');
+                    return false;
+                },
+             
+            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+    
+           }
+     
+        $(this).attr("auto-done",true);
     });
 
 
