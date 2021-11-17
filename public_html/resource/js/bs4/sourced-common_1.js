@@ -7431,6 +7431,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                             + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
+\n\
+\n\<button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addExistingRelationModal" onclick="new UserStory().inputExistModal(this,\'' + obj[i].id + '\')">Exist</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew4StoryCard(this,\'' + obj[i].id + '\')">Delete</button>\n\
 \n\
 <hr style="margin:0px">\n\
