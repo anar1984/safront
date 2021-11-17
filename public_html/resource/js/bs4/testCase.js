@@ -1278,7 +1278,7 @@ function getBugListDetailsHeader() {
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-priority').append('Priority'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-story-card').append('Story Card').append("<button style='color:lightgreen;' onclick='addUserStoryNewModalWithProject()' class='btn btn-sm'><i class='fas fa-plus-circle'></i></button>"))
+                    .addClass('bug-list-column-story-card').append('Story Card').append("<button onclick='addUserStoryNewModalWithProject()' class='btn btn-sm'><i class='fas fa-plus'></i></button>"))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-project').append('Project'))
             .append($('<th>').addClass('bug-list-column')
@@ -1326,17 +1326,14 @@ function CompareRowOfText(a, b) {
 function getBugListTaskNatureValue(taskNature) {
     var res = '';
     if (taskNature === 'new') {
-        res = $('<span>').addClass("get-data-group")
-                .css("color", "grey")
-                .append("New Request");
+        res = $('<div>').addClass("get-data-group")
+                .append("<span class='im-new'></span> <span class='text'>New Request</span>");
     } else if (taskNature === 'bug') {
         res = $('<span>').addClass("get-data-group")
-                .css("color", "red")
-                .append("Bug");
+                .append("<span class='im-bug'></span> <span class='text'>Bug</span>");
     } else if (taskNature === 'change') {
         res = $('<span>').addClass("get-data-group")
-                .css("color", "#FF7F50")
-                .append("Change Request");
+                .append("<span class='im-change'></span> <span class='text'>Change Request</span>");
     }
     return res;
 }
@@ -1448,7 +1445,7 @@ function getBugListDetails(res) {
                 .addClass('bug-tr')
                 .append($('<td>').attr("style", "min-width:50px;padding:5px;").append(row + '<input class="checkbox-issue-task" type="checkbox">'))
                 .append($('<td>').addClass('bug-list-column')
-                        .addClass('bug-list-column-task-status')
+                        .addClass('bug-list-column-task-status cs-input-group')
                         .append($("<div>")
                                 .addClass("dropdown")
                                 .append($("<div>")
@@ -1478,7 +1475,7 @@ function getBugListDetails(res) {
                                         .attr("aria-expanded", "false")
                                         .attr("data-toggle", "dropdown")
                                         .attr("id", "bug-taskName-dropdown")
-                                        .append('<i class="fas fa-ellipsis-h"></i>'))
+                                        .append('<i class="fas fa-ellipsis-v"></i>'))
 
                                 .append($("<div>")
                                         .addClass("dropdown-menu")
@@ -1582,14 +1579,16 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-story-card')
                         .append("<span class='get-data-group'>" + backlogName + "</span>")
                         .append(' <select dataPid=' + o.fkProjectId + ' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
+                        .append($('<div>').addClass('set-filter-box')
                         .append($('<i class="fa fa-filter">')
-                                .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
-                                .css("display", "none")
-                                .addClass("hpYuyept"))
-                        .append($('<i class="fas fa-sort-down">')
+                        .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
+                        .css("display", "none")
+                        .addClass("hpYuyept"))
+                        .append($('<i class="fas fa-chevron-down">')
                                 .attr('onclick', 'setChnageUserStoryCard("' + o.fkProjectId + '",this)')
                                 .css("display", "none")
                                 .addClass("hpYuyept1"))
+                        )
                         .mouseover(function () {
                             $(this).find(".hpYuyept").show();
                             $(this).find(".hpYuyept1").show();

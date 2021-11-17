@@ -136,9 +136,9 @@
                     onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
                     data-type="closed_by" title="Closed By"></select>
                 </div>
-                <div class="bcs-col-btn">
+                <div class="bcs-col-btn bcs-more-filter-btns">
                     <button class="btn btn-light" data-toggle="modal" data-target="#filterPopUp" > <i class="fas fa-plus"></i> <span>More Filter</span></button>
-                    <button id="multi-edit-menu-btn" class="btn btn-light" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
+                    <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
                 </div>
                
               
@@ -432,7 +432,7 @@
     
     <div  type="button" class="bigCheck" data-toggle="modal" id="addNewTaskButton" data-target="#issue-managment-add-task" >
     
-        <label for="sb"></label>
+        <label for="sb"><i class="fas fa-plus" aria-hidden="true"></i></label>
     </div>
     
     
