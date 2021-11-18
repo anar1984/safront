@@ -9345,7 +9345,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 SAInput.updateInputByRes(res);
                 loadCurrentBacklogProdDetails();
-                that.genGUIDesign();
+              
             },
             error: function (res) {
                 Toaster.showError('"' + json.kv.componentTypeName + '" didn\'t updated. \n\

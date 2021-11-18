@@ -36,14 +36,14 @@
     padding: 5px 20px !important;
     font-size: 35px;
 }
-.component-class>.comp-title-span {
+/* .component-class>.comp-title-span {
     color: #173359;
     text-decoration: underline;
     text-underline-position: under;
     text-decoration-thickness: 3px;
     text-decoration-color: #8ba1bf;
     display: inline-block;
-}
+} */
 .sa-section-modal>.component-section-row::after{
     color: #173359;
 }
