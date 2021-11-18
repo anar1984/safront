@@ -569,7 +569,7 @@ function setBacklogAsHtml(backlogId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-
+            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
