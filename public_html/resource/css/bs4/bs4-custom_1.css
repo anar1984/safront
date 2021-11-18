@@ -2047,7 +2047,7 @@ button#inline-proje-attr:focus {
     display: none;
 }*/
 /*label input[type="checkbox"] + .label-text:before {
-    content: "ï‚–";
+    content: "Ã¯â€šâ€“";
     color: #dddfe6;
     font-family: "fontAwesome";
     line-height: 1;
@@ -2074,12 +2074,12 @@ button#dropdownMenuLink:hover {
 
 
 /*label input[type="checkbox"]:checked + .label-text:before {
-    content: "ï…Š";
+    content: "Ã¯â€¦Å ";
     color: #05367f;
     animation: tick 150ms ease-in;
 }
 label input[type="checkbox"]:disabled + .label-text:before {
-    content: "ïƒˆ";
+    content: "Ã¯Æ’Ë†";
     color: #dddfe6;
 }*/
 
@@ -2690,7 +2690,7 @@ img.sc-IbsAh.kqHqhS {
     padding: 6px;
 }
 .form-control{
-    font-size: 13px !important;
+    /* font-size: 14px !important; */
 }
 .form-control.newinp:hover{
     background-color: #ffffff;

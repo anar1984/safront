@@ -7431,6 +7431,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                             + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
         will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">\n\
 <button class="dropdown-item" style="color:#000000"  onclick="editInputName(this)">Edit</button>\n\
+\n\
+\n\<button class="dropdown-item" style="color:#000000" data-toggle="modal" data-target="#addExistingRelationModal" onclick="new UserStory().inputExistModal(this,\'' + obj[i].id + '\')">Exist</button>\n\
 <button class="dropdown-item" style="color:#000000" onclick="new UserStory().deleteInputNew4StoryCard(this,\'' + obj[i].id + '\')">Delete</button>\n\
 \n\
 <hr style="margin:0px">\n\
@@ -11987,7 +11989,6 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     deleteCurrentInputFromUSList: function (e) {
         $('#exampleModal').modal('hide');
-
         this.deleteInputFromUSList(e, global_var.current_us_input_id);
 
 
@@ -12001,11 +12002,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             return;
         }
 
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.id = id;
             json.kv.fkBacklogId= global_var.current_backlog_id;
 
@@ -12028,24 +12025,27 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 SACore.updateBacklogByRes(res);
 
                 loadCurrentBacklogProdDetails();
+                highlightTheSameSelectedFieldsInInputList();
+                $('#comp_id_'+id).closest('div.component-class').remove();
+                   loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
 
-                var st = that.getHtmlGenIPOInputList(res);
-                $('#tblIPOList > tbody').html(st);
-                 highlightTheSameSelectedFieldsInInputList();
-             
-                that.addSourcedIconToUserStory(res);
-//                that.genGUIDesign(res);
-                new Project().getProjectStatList();
-
-                $('.us-ipo-input-tr').first().click();
-//                //generate GUI
-//                $('#SUS_GUI_header').text((res.kv.backlogName));
-//                $('#userstory-gui-input-component-res-sus-label').text((res.kv.backlogName));
-//                $('#generalview_SUS_GUI_header').text((res.kv.backlogName));
-                var ind = getIndexOfTable(res, 'inputListTable')
-                var st = that.getGUIDesignHTMLBody(res, ind);
-                $('#SUS_IPO_GUI_Design').html(st);
-                new UserStory().setGeneralGUIDesign(st);
+//                var st = that.getHtmlGenIPOInputList(res);
+//                $('#tblIPOList > tbody').html(st);
+//                 
+//             
+//                that.addSourcedIconToUserStory(res);
+////                that.genGUIDesign(res);
+//                new Project().getProjectStatList();
+//
+//                $('.us-ipo-input-tr').first().click();
+////                //generate GUI
+////                $('#SUS_GUI_header').text((res.kv.backlogName));
+////                $('#userstory-gui-input-component-res-sus-label').text((res.kv.backlogName));
+////                $('#generalview_SUS_GUI_header').text((res.kv.backlogName));
+//                var ind = getIndexOfTable(res, 'inputListTable')
+//                var st = that.getGUIDesignHTMLBody(res, ind);
+//                $('#SUS_IPO_GUI_Design').html(st);
+//                new UserStory().setGeneralGUIDesign(st);
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -28048,4 +28048,9 @@ function setColoredToInputDesc(el, ids, color) {
             Toaster.showError(('somethingww'));
         }
     });
+}
+
+function loadBugChangeCustomScripts() {
+    $("#bug_filter_limit").selectpicker('refresh');
+    $("#inputGroupSelect01").selectpicker('refresh');
 }
