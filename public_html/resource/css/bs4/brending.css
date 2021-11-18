@@ -4320,6 +4320,7 @@ table.lbl-list-table tr td {
 }
     .issue-managment-add-task .nav-pills .nav-item{
         margin-right: 5px;
+        margin-bottom: 5px;
     }
     .issue-managment-add-task .nav-pills .nav-item:first-child {
         margin-left: 0;
@@ -4389,3 +4390,19 @@ table.lbl-list-table tr td {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
+.cs-core-issue-management .bigCheck {
+    z-index: 1000;
+}
+@media only screen and (max-width: 1370px) {
+    .issue-managment-add-task .modal-dialog {
+        max-width: 70% !important;
+        margin-top: 40px;
+    }
+  }
+@media only screen and (max-width: 1024px) {
+    .issue-managment-add-task .modal-dialog {
+        max-width: 100% !important;
+        margin-top: 40px;
+        margin-left: 0;
+    }
+  }
