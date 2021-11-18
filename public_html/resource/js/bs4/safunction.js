@@ -851,7 +851,7 @@ var SAFN = {
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {
-                    res._table.r[r][sa - global - trigger] = val;
+                    res._table.r[r][col] = val;
                 } else {
                     var kv = {};
                     kv[col] = val;
