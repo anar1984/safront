@@ -11,6 +11,36 @@ var cheweek = {
    
 
     },
+    getDynamicMenu:function (params) {
+      
+        var json = initJSON();
+        json.kv.apiId = '21111812174901276705';
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              var tbid  = res.tbl[0].r;
+              var modulId  = [];
+
+              for (let i = 0; i < tbid.length; i++) {
+                  const o = tbid[i];
+                    var bolme = fkBolmeId
+                    var mdl = {
+                        
+                    }
+                  modulId.push()
+                  
+              }
+
+            }
+        }); 
+    },
     getLastMenuGenerate: function () {
 
         try {

@@ -1671,7 +1671,7 @@ function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
     global_var.current_modal = 'loadLivePrototype';
-    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+    
 
 }
 
