@@ -28049,8 +28049,3 @@ function setColoredToInputDesc(el, ids, color) {
         }
     });
 }
-
-function loadBugChangeCustomScripts() {
-    $("#bug_filter_limit").selectpicker('refresh');
-    $("#inputGroupSelect01").selectpicker('refresh');
-}

@@ -13711,7 +13711,7 @@ $(document).on('click', '.loadBugChange', function (evt) {
         commmonOnloadAction(this);
         setBugFilterProject();
         setBugFilterAssignees();
-        loadBugChangeCustomScripts();
+        loadBugTaskDeadlineScripts();
 
         $('.bug-mgmt-filter-select').selectpicker();
         new Sprint().load4Task();
