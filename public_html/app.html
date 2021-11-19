@@ -5919,7 +5919,7 @@
     </div>
 </div>
 
-<div class="modal fade TaskStoryCardPanel" id="taskMgmtModal" tabindex="-1" role="dialog"
+<div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog Card-story-taskmanager" role="document" style="min-width: 80%" id="taskMgmtModal-body">
         <div class="modal-content">
@@ -5928,7 +5928,7 @@
                     <div class="card-UserStory-header">
                         <div class="card-UserStory-header-text-code"></div>
                         <div class="card-UserStory-header-text"></div>
-                        <div class="card-UserStory-header-edit" style="display: none;">
+                        <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
                             <input class="card-UserStory-header-input form-control" type="text">
                             <div class=" card-UserStory-header-accept TextHeader "
                                  onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: green;">
@@ -5945,8 +5945,8 @@
 
                     </div>
 
-                    <div class="card-UserStory-edit-task">
-                        <div class="dropdown-task show">
+                    <div class="card-UserStory-edit-task cs-input-group">
+                        <div class="dropdown-task show dropright">
                             <a class="btn dropdown-toggle-task" href="#" role="button" id="dropdownMenuLink"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-h"></i>
@@ -5972,36 +5972,36 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body card-Userstory-body col-12">
-                <div class="comment-seqment col-8">
+            <div class="modal-body card-Userstory-body col-12 pt-0 pr-0">
+                <div class="comment-seqment pr-3">
 
                     <div class="commentwritepanel ">
-                        <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                  placeholder="Add a comment.." rows="1"></textarea>
-                        <br>
-                        <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
-                             style="width:97%;display: none; padding:0px;margin:0px;">
-                            <div class="col-12 text-center canvas_canvas_msg "
-                                 style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
-                                <h5>Copy and Paste Image Here</h5>
+                        <div class="cs-input-group mb-3">
+                            <div class="input-group-addon">Description</div>
+                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
+                            placeholder="Add a comment.." rows="1"></textarea>
+                       
+                            <br>
+                            <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
+                                style="width:100%;display: none; padding:0px;margin:0px;">
+                                <div class="col-12 text-center canvas_canvas_msg "
+                                    style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
+                                    <h5>Copy and Paste Image Here</h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="commentsubmit-seqment" style="display: none;">
+                            <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
 
-                            <div class="acceptcomment">
-                                <button class="btn btn-primary" type="submit"
-                                        onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
-                            </div> &nbsp;
-                            <div class="deletecomment">
-                                <button class="btn " type="submit">Cancel</button>
+                                <div class="acceptcomment flex-fill mr-1">
+                                    <button class="btn btn-primary" type="submit"
+                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
+                                </div>
+                                <div class="deletecomment flex-fill mr-1">
+                                    <button class="btn " type="submit">Cancel</button>
+                                </div>
+                                <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill" multiple="" type="file" file_type="general" value="" onchange="new UserStory().addFileForTaskComment()">
+
                             </div>
-                            <input id="file11" class="us-file-upload commentsubmit-seqment"
-                                   style="display: none;margin:0px;padding:0px;margin: 5px 0px 0px 0px;" multiple=""
-                                   type="file" file_type="general" value=""
-                                   onchange="new UserStory().addFileForTaskComment()">
-
-                        </div>
-
+                         </div>
                         <!--                    <output id="tasklistcomment"></output>-->
 
 
@@ -6013,9 +6013,15 @@
                     </div>
 
                 </div>
-                <div class="col-4 card-Userstory-rightbody ">
-                    <div class="statusCardStory">
-                        <span class="comment-content-header-history" style="margin-left: 0px;">Status</span>
+                <div class="card-Userstory-rightbody isOpen card-userstory-navmenu">
+                    <div class="card-userstory-navmenu-headline">
+                        <div class="sc-close-sidebar-btn"><i class="fas fa-times" aria-hidden="true"></i></div>
+                        <div class="sc-open-sidebar-btn"><i class="fas fa-bars" aria-hidden="true"></i></div>
+                        <span>Task Options</span>
+                    </div>
+                    <div class="statusCardStory cs-forum-group">
+                        <label class="cs-label-name">Status</label>
+                        <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
                         <div class="form-group statusSelectSelect">
 
                             <select class="form-control task-info-modal-status" style="width:auto"
@@ -6048,8 +6054,9 @@
 
 
 
-                    <div class="statusCardStory">
-                        <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span>
+                    <div class="statusCardStory cs-forum-group">
+                        <label class="cs-label-name">Task Nature</label>
+                        <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
                         <div class="form-group statusSelectSelect">
                             <select class="form-control task-info-modal-nature" style="width:auto"
                                     onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
@@ -6066,8 +6073,9 @@
                         </div>
                     </div>
 
-                    <div class="statusCardStory task-mgmt-tasktype" id='task-mgmt-tasktype'>
-                        <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span>
+                    <div class="statusCardStory task-mgmt-tasktype cs-forum-group" id='task-mgmt-tasktype'>
+                        <label class="cs-label-name">Task Type</label>
+                        <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
                         <div class="form-group statusSelectSelect">
 
                             <select class="form-control task-info-modal-tasktype" style="width:auto"
@@ -6080,8 +6088,9 @@
 
                     </div>
 
-                    <div class="statusCardStory">
-                        <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span>
+                    <div class="statusCardStory cs-forum-group">
+                        <label class="cs-label-name">Priority</label>
+                        <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
                         <div class="form-group statusSelectSelect">
                             <select class="form-control task-info-modal-priority" style="width:auto"
                                     onchange="updateTask4ShortChange(this, 'taskPriority')"
@@ -8625,7 +8634,7 @@
                                         <h5>Copy and Paste Image Here</h5>
                                     </div>
                                 </div>
-                                <div class="commentsubmit-seqment ml-0 mr-0" style="display: none;">
+                                <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" style="display: none;">
                                     <div class="acceptcomment">
                                         <button class="btn btn-primary" type="submit"
                                                 onclick="new UserStory().addTaskCommentToTask(this)">Add</button>

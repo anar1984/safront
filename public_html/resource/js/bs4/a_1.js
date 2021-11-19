@@ -11942,7 +11942,7 @@ function showAssigneeTaskCardIn(taskId, divId) {
 
     $("#" + divId).find('.Story-card-Header-task')
             .css('padding', '0px');
-    $("#" + divId).find('.card-UserStory-header-text')
+    $("#" + divId).find('#taskTitleInput3')
             .css('font-size', '18px');
     $("#" + divId).find('.StorycardHeader').removeClass('sticky-top');
 

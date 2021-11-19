@@ -3072,10 +3072,10 @@ span.convertedTextAreaLinesItem {
     margin-top: -17px;
 }
 /* StroryCard Sidebar */
-.storecard-sidebar-headline {
+.storecard-sidebar-headline, .card-userstory-navmenu-headline {
     position: relative;
 }
-.storecard-sidebar-headline span{
+.storecard-sidebar-headline span, .card-userstory-navmenu-headline span{
     background: #272B7C;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
@@ -3546,7 +3546,7 @@ hr.hr-ss {
     cursor: pointer;
     display: none;
 }
-.isCloseSB .sc-open-sidebar-btn {
+.isCloseSB .sc-open-sidebar-btn, .isClose .sc-open-sidebar-btn {
     display: block;
 }
 .sc-close-sidebar-btn i {
@@ -4224,7 +4224,7 @@ table.lbl-list-table tr td {
     box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
     border-color: #fff;
 }
-.issue-managment-add-task.cs-modal-box .modal-header {
+.issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header {
     font-size: 14px;
     padding: 7px 18px 7px 18px;
     border-bottom-color: #E9E9F1;
@@ -4232,17 +4232,17 @@ table.lbl-list-table tr td {
     color: #272B7C;
     border-radius: 0;
 }
-.issue-managment-add-task .cs-input-group textarea {
+.issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
     border: 1px solid #BEBFD7;
     padding: 5px;
     font-size: 14px;
 }
-.issue-managment-add-task .cs-input-group input.form-control {
+.issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
     height: 35px;
     border: 1px solid #BEBFD7;
 }
-.issue-managment-add-task .cs-input-group .input-group-addon {
+.issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
     font-size: 14px;
     margin-bottom: 3px;
     color: #313582;
@@ -4360,7 +4360,7 @@ table.lbl-list-table tr td {
     height: 1px;
     border-top: 1px solid #bebfd7;
 }
-.issue-managment-add-task .us-file-upload {
+.issue-managment-add-task .us-file-upload, .card-Userstory-detail .us-file-upload {
     border: 1px solid #525596;
     display: inline-block !important;
     text-align: left;
@@ -4371,7 +4371,7 @@ table.lbl-list-table tr td {
     font-size: 15px;
     width: 100%;
 }
-.issue-managment-add-task .us-file-upload::before {
+.issue-managment-add-task .us-file-upload::before, .card-Userstory-detail .us-file-upload::before {
     content: 'Chose file';
     display: inline-block;
     background: #525596;
@@ -4394,15 +4394,159 @@ table.lbl-list-table tr td {
     z-index: 1000;
 }
 @media only screen and (max-width: 1370px) {
-    .issue-managment-add-task .modal-dialog {
+    .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
+        width: 70% !important;
         max-width: 70% !important;
         margin-top: 40px;
     }
   }
 @media only screen and (max-width: 1024px) {
-    .issue-managment-add-task .modal-dialog {
+    .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog{
+        width: 100% !important;
         max-width: 100% !important;
         margin-top: 40px;
         margin-left: 0;
     }
   }
+@media only screen and (max-width: 992px) {
+    .cm-file-upload-box {
+        display: block !important;
+    }
+    .cm-file-upload-box .acceptcomment, .cm-file-upload-box .deletecomment {
+        display: inline-block;
+        margin-bottom: 7px;
+    }
+    .issue-managment-add-task .us-file-upload, .card-Userstory-detail .us-file-upload {
+        text-align: left;
+        display: flex !important;
+        text-align: left;
+    }
+    .Story-card-Header-task {
+        display: block;
+        width: 96%;
+    }
+    .card-UserStory-header {
+        width: auto;
+        float: left;
+    }
+    .card-UserStory-edit-task {
+        width: auto;
+        display: block;
+        padding-left: 0;
+        float: left;
+    }
+    .card-Userstory-detail .card-UserStory-header-text-code {
+        float: left;
+        display: inline-block;
+        font-size: 14px;
+        width: auto;
+        margin-right: 10px;
+    }
+    .card-Userstory-detail .card-UserStory-header-text {
+        display: block;
+        padding: 0;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 70%;
+    }
+  }
+  .card-Userstory-detail .commentsubmit-seqment {
+    display: flex;
+ }
+ .Story-card-Header-task {
+     padding: 0;
+ }
+ .card-UserStory-edit-task .btn.dropdown-toggle-task {
+    height: 24px;
+    width: 24px;
+    margin-left: 5px;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 21px;
+ }
+ .card-Userstory-detail .card-UserStory-header-text-code {
+    display: inline-block;
+    font-size: 14px;
+ }
+ .card-Userstory-detail .card-UserStory-header-text {
+     display: inline-block;
+     padding: 0;
+     font-size: 14px;
+ }
+ .card-Userstory-detail .card-Userstory-body {
+  height: 100vh;
+  margin-top: 0;
+ }
+ .card-Userstory-detail .comment-seqment {
+    width: 100%;
+    margin-left: 0;
+ }
+ .card-Userstory-detail .card-userstory-navmenu {
+    display: block;
+    width: 270px;
+    position: relative;
+    right: 0;
+}
+.card-Userstory-detail .card-userstory-navmenu {
+    background: #525596;
+}
+ .card-Userstory-detail .isOpen.card-userstory-navmenu {
+    margin-right: 0;
+}
+ .card-Userstory-detail .isClose.card-userstory-navmenu {
+     margin-right: -270px;
+    right: 0px;
+}
+@media only screen and (max-width: 768px) {
+    .card-Userstory-detail .card-userstory-navmenu {
+        position: absolute;
+        right: 0;
+    }
+    .card-Userstory-detail .isOpen.card-userstory-navmenu {
+        margin-right: 0;
+    }
+     .card-Userstory-detail .isClose.card-userstory-navmenu {
+        right: 0;
+    }
+    .card-Userstory-detail .card-UserStory-header-text {
+        width: 50%;
+    }
+    .card-UserStory-header {
+        width: 80%;
+    }
+}
+.card-UserStory-header-input {
+    width: 100%;
+    height: 28px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: #525596;
+    background-color: #f7f7f7;
+    font-size: 14px;
+}
+.card-UserStory-header-accept {
+    top: 3px;
+    left: auto;
+    right: 25px;
+    position: absolute;
+    height: 21px;
+    width: 21px;
+    font-size: 13px;
+}
+.card-UserStory-header-delete {
+    left: auto;
+    top: 3px;
+    right: 0;
+    position: absolute;
+    height: 21px;
+    width: 21px;
+    font-size: 13px;
+}
+.card-Userstory-detail .cs-forum-group .cs-label-name {
+    color: #E9E9F1;
+    font-size: 14px;
+    width: 100%;
+}
