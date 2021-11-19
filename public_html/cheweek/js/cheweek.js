@@ -136,7 +136,7 @@ var cheweek = {
                     const o = ite[i];
                     $("#" + o.fkCategoryId1).closest("[sa-kate-empty='0']").removeAttr('sa-kate-empty')
                     $("#" + o.fkBolmeId1).closest("[sa-menu-empty='0']").removeAttr('sa-menu-empty')
-                    if (o.actionType1 === 'P') {
+                    if (o.actionType1 === 'E') {
                         $("#" + o.fkCategoryId1).append($("<li>")
                             .css("order", o.orderNo1)
                             .append($("<a href='#'>")
@@ -145,7 +145,7 @@ var cheweek = {
                                 .text(o.itemName1)
                             )
                             .append('<i data-add-to-favorite="' + o.id1 + '" class="dataFav fa fa-star" aria-hidden="true"></i>'))
-                    } else if (o.actionType1 === 'E') {
+                    } else if (o.actionType1 === 'P') {
                         $("#" + o.fkCategoryId1).append($("<li>")
                             .css("order", o.orderNo1)
                             .append($("<a href='#'>")
