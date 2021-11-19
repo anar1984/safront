@@ -8350,36 +8350,38 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
         });
     },
-    deleteInputBySUSOutputId: function (e) {
-        if (global_var.current_us_input_id.length === 0) {
+    deleteInputBySUSOutputId: function (fkInputId,el) {
+        
+        var inputId = (fkInputId) ? fkInputId
+        :global_var.current_us_input_id;
+        
+        if (inputId.length === 0) {
             Toaster.showError("User Story Input is not selected!");
             return;
         }
 
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.id = global_var.current_us_input_id;
+        var json = initJSON();
+        json.kv.id = inputId;
         json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmDeleteInputByDependentBacklogOutput",
             type: "POST",
+            data:data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
-                SAInput.updateInputByRes(res);
-                data: data,
-                        loadCurrentBacklogProdDetails();
+               
+                loadCurrentBacklogProdDetails();
+                  loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
 
                 closeModal('addRelatedSUSOutputModal');
-                that.genIPOInputDescList();
+                //that.genIPOInputDescList();
                 $('.relatedSUSOutputName').text("");
                 $('.relatedUserStory').html("");
+                $(el).closest('span').remove();
             },
             error: function () {
                 Toaster.showError(('somethingww'));
@@ -21917,12 +21919,14 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 st += "<hr style='margin:3px 1px;'>";
 
             if (backlogNameRelated) {
-                st += '<u>' + inputNameRelated + " (" + backlogNameRelated + ")</u>:<br>";
+                st += '<span>';
+                st+='<u>' + inputNameRelated + " (<a href='#' style='color:#007bff' onclick='new UserStory().redirectUserStoryCore('"+object.fkDependentBacklogId+"')>" + backlogNameRelated + "</a>)</u>";
+                st += '<a style="color:#007bff" href="#" onclick="new UserStory().deleteInputBySUSOutputId(\''+object.id.trim()+'\',this)"><i class="fa fa-remove" aria-hidden="true"></i></a>'
+                 st += "<hr style='margin:0px;'>";
+                 st += '</span>'
             }
 
-            if (backlogNameRelated) {
-                st += "<hr style='margin:0px;'>";
-            }
+             
 
 //            var obj = desc.split('%IN%');
             var obj = SAInput.GetInputDescription(object.id);
