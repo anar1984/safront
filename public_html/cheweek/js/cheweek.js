@@ -58,13 +58,15 @@ var cheweek = {
                 for (let i = 0; i < ite.length; i++) {
                     const o = ite[i];
                     elm.append($("<li>")
+                         .attr("sa-menu-empty",'0')
                         .css("order", o.orderNo1)
                         .addClass('ruby-menu-mega')
                         .append($("<a href='#'>").text(o.bolmeName1))
                         .append($("<div>")
                             .addClass("ruby-grid ruby-grid-lined")
                             .append($("<div class='ruby-row'>")
-                                .attr("id", o.id1))))
+                                .attr("id", o.id1)
+                                )))
 
                 }
 
@@ -96,7 +98,8 @@ var cheweek = {
                 var ite = res.tbl[0].r;
                 for (let i = 0; i < ite.length; i++) {
                     const o = ite[i];
-                    $("#" + o.fkMenuBolmeId1).append($("<div>")
+                   
+                    $("#" + o.fkMenuBolmeId1).append($("<div>").attr("sa-kate-empty",'0')
                         .css("order", o.orderNo1)
                         .addClass('ruby-col-1 hidden-md')
                         .append($("<h3 class='ruby-list-heading'>").text(o.categoryName1))
@@ -105,7 +108,7 @@ var cheweek = {
                         ))
 
                 }
-
+             
                 that.getMenuItemList();
             }
         });
@@ -130,7 +133,9 @@ var cheweek = {
                 var ite = res.tbl[0].r;
                 for (let i = 0; i < ite.length; i++) {
                     const o = ite[i];
-                    if (o.actionType1 === '') {
+                    $("#" + o.fkCategoryId1).closest("[sa-kate-empty='0']").removeAttr('sa-kate-empty')
+                    $("#" + o.fkBolmeId1).closest("[sa-menu-empty='0']").removeAttr('sa-menu-empty')
+                    if (o.actionType1 === 'P') {
                         $("#" + o.fkCategoryId1).append($("<li>")
                             .css("order", o.orderNo1)
                             .append($("<a href='#'>")
@@ -150,10 +155,12 @@ var cheweek = {
                             .append('<i data-add-to-favorite="' + o.id1 + '" class="dataFav fa fa-star" aria-hidden="true"></i>'))
                     }
 
-
-
+              
 
                 }
+                  
+                $("[sa-menu-empty='0']").remove();
+                $("[sa-kate-empty='0']").remove();
 
                 that.getLastMenuGenerate();
             }
