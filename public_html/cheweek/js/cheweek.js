@@ -2,17 +2,165 @@ var cheweek = {
     cheweek_id: "210102102810037910965",
     init: function () {
         this.genUserInfoAccount();
+        this.getBolmeList();
         Utility.addParamToUrl('current_project_id', this.cheweek_id);
         Utility.addParamToUrl('fkManualProjectId', this.cheweek_id);
         getProjectUserssync(this.cheweek_id);
-       
+
         genTimePickerById("date_timepicker_start_end");
-        this.getLastMenuGenerate();
-   
+       
+
 
     },
-    getDynamicMenu:function (params) {
-      
+    getBolmeList: function () {
+
+        var json = initJSON();
+        json.kv.apiId = '21111215003309421861';
+
+        //   json.kv.createdDate = $('._testucunist').val();
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                var elm = $("#menu-conatiner-ruby");
+                elm.html('')
+                
+                var homeButton = ` <li><a href="#" sa-data-body="21010300595707289233"
+                class="filtSectReloadNew"><i class="fas fa-home"
+                style="font-size: 20px;" aria-hidden="true"></i></a>
+                <ul class="" id="favoritesBlockId"></ul>
+                <span class="ruby-dropdown-toggle"></span>
+               </li>`
+               var paneller = `<li style="order: 1000;"><a href="#">Panellər</a>
+                                <ul class="">
+                   <li><a href="#" class="for-chewekk-new-panel-link"
+                           data-link="chwkusmngmt"> Tapşırıq Paneli</a>
+                   </li>
+                   <li><a href="#" class="filtSectReloadNew" sa-data-body='staticlist-modul' onclick=""> Cari vəziyyət</a></li>
+                   <li><a href="#"> Maliyyə Vəziyyəti</a></li>
+                   <li><a href="#"> Keyfiyyət dəyərləri</a></li>
+                   <li><a href="#"> Performans dəyərləri</a></li>
+                   <li><a href="#"> Hesabatlar (Məlumat)</a></li>
+                   <li><a href="#"> Hesabatlar (Analiz)</a></li>
+                   <li><a href="#"> Sənəd Dövriyyəsi</a></li>
+
+               </ul>
+               <span class="ruby-dropdown-toggle"></span>
+           </li>`
+               elm.append(homeButton);
+                var ite = res.tbl[0].r;
+                for (let i = 0; i < ite.length; i++) {
+                    const o = ite[i];
+                    elm.append($("<li>")
+                        .css("order", o.orderNo1)
+                        .addClass('ruby-menu-mega')
+                        .append($("<a href='#'>").text(o.bolmeName1))
+                        .append($("<div>")
+                            .addClass("ruby-grid ruby-grid-lined")
+                            .append($("<div class='ruby-row'>")
+                                .attr("id", o.id1))))
+
+                }
+
+                elm.append(paneller);
+                that.getKategoriyaList();
+
+            }
+        });
+    },
+    getKategoriyaList: function () {
+
+        var json = initJSON();
+        json.kv.apiId = '211112162212096210296';
+
+        //   json.kv.createdDate = $('._testucunist').val();
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+
+            
+
+                var ite = res.tbl[0].r;
+                for (let i = 0; i < ite.length; i++) {
+                    const o = ite[i];
+                    $("#" + o.fkMenuBolmeId1).append($("<div>")
+                        .css("order", o.orderNo1)
+                        .addClass('ruby-col-1 hidden-md')
+                        .append($("<h3 class='ruby-list-heading'>").text(o.categoryName1))
+                        .append($("<ul>")
+                            .attr("id", o.id1)
+                        ))
+
+                }
+
+                that.getMenuItemList();
+            }
+        });
+    },
+    getMenuItemList: function () {
+
+        var json = initJSON();
+        json.kv.apiId = '21111421002404495926';
+
+        //   json.kv.createdDate = $('._testucunist').val();
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+
+                var ite = res.tbl[0].r;
+                for (let i = 0; i < ite.length; i++) {
+                    const o = ite[i];
+                    if (o.actionType1 === '') {
+                        $("#" + o.fkCategoryId1).append($("<li>")
+                            .css("order", o.orderNo1)
+                            .append($("<a href='#'>")
+                                .addClass("filtSectReloadNew")
+                                .attr('sa-data-body', o.fkStorycardId1)
+                                .text(o.itemName1)
+                            )
+                            .append('<i data-add-to-favorite="' + o.id1 + '" class="dataFav fa fa-star" aria-hidden="true"></i>'))
+                    } else if (o.actionType1 === 'E') {
+                        $("#" + o.fkCategoryId1).append($("<li>")
+                            .css("order", o.orderNo1)
+                            .append($("<a href='#'>")
+                                .addClass("taskListShowNewSorguBtnClickEvent")
+                                .attr('sa-data-link', o.fkStorycardId1)
+                                .text(o.itemName1)
+                            )
+                            .append('<i data-add-to-favorite="' + o.id1 + '" class="dataFav fa fa-star" aria-hidden="true"></i>'))
+                    }
+
+
+
+
+                }
+
+                that.getLastMenuGenerate();
+            }
+        });
+    },
+    getDynamicMenu: function (params) {
+
         var json = initJSON();
         json.kv.apiId = '21111812174901276705';
         var that = this;
@@ -25,60 +173,60 @@ var cheweek = {
             crossDomain: true,
             async: true,
             success: function (res) {
-              var tbid  = res.tbl[0].r;
-              var modulId  = [];
+                var tbid = res.tbl[0].r;
+                var modulId = [];
 
-              for (let i = 0; i < tbid.length; i++) {
-                  const o = tbid[i];
+                for (let i = 0; i < tbid.length; i++) {
+                    const o = tbid[i];
                     var bolme = fkBolmeId
                     var mdl = {
-                        
+
                     }
-                  modulId.push()
-                  
-              }
+                    modulId.push()
+
+                }
 
             }
-        }); 
+        });
     },
     getLastMenuGenerate: function () {
 
         try {
-            var bdy  =Utility.getParamFromUrl('lastMenuId'); 
+            var bdy = Utility.getParamFromUrl('lastMenuId');
             if (bdy) {
-                $('[sa-data-body='+bdy+']').click(); 
- 
-            }else{
-                $("[sa-data-body='21010300595707289233']").click(); 
+                $('[sa-data-body=' + bdy + ']').click();
+
+            } else {
+                $("[sa-data-body='21010300595707289233']").click();
 
             }
-          
-    
+
+
         } catch (error) {
-            
+
         }
-       
+
 
     },
     getTaskList: function () {
-         var aktivAll = $("#comp_id_62102114283407028385");
-            var createdDate = $("._testucunist").val()
+        var aktivAll = $("#comp_id_62102114283407028385");
+        var createdDate = $("._testucunist").val()
         var json = initJSON();
         //json.kv.fkUserId ='21040211344601629324';
-         if(aktivAll.prop("checked")){
+        if (aktivAll.prop("checked")) {
 
-         }else{
-            json.kv.aktivAll="('new','ongoing','waiting')"
+        } else {
+            json.kv.aktivAll = "('new','ongoing','waiting')"
 
-         }
-         if(createdDate){
+        }
+        if (createdDate) {
             json.kv.createdDate = createdDate;
-         }
+        }
 
         json.kv.apiId = '21110215075107271040';
         json.kv.startLimit = $('.startLimitNew').val();;
         json.kv.endLimit = $('.endLimitNew').val();;
-     //   json.kv.createdDate = $('._testucunist').val();
+        //   json.kv.createdDate = $('._testucunist').val();
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -90,38 +238,43 @@ var cheweek = {
             async: true,
             success: function (res) {
                 cheweek.genPaginition(res.kv.countId);
-                cheweek.genTableTaskLIst(res,$('.startLimitNew').val());
+                cheweek.genTableTaskLIst(res, $('.startLimitNew').val());
 
             }
         });
     },
-    
-    genPaginition:function (countId) {
-         var stlm =$('.startLimitNew').val();
-         var endlm= $('.endLimitNew').val();
-         $(".pagination_btn").text((parseFloat(stlm)+1)+"-"+endlm+'/'+countId);
-         var page = Math.ceil(countId/50);
-         var elm =  $('#count-row-select-task');
-         var oldval = elm.val()
-         for (let i = 0; i < page; i++) {
-            elm.append($("<option>")
-                                .text(i+1)
-                                .val(i+1))            
-         }
-         if(oldval){
-            elm.val(oldval);
-         }
-       
+
+    genPaginition: function (countId) {
+        if (countId) {
+            var stlm = $('.startLimitNew').val();
+            var endlm = $('.endLimitNew').val();
+            $(".pagination_btn").text((parseFloat(stlm) + 1) + "-" + endlm + '/' + countId);
+            var page = Math.ceil(countId / 50);
+            var elm = $('#count-row-select-task');
+            var oldval = elm.val()
+            for (let i = 0; i < page; i++) {
+                elm.append($("<option>")
+                    .text(i + 1)
+                    .val(i + 1))
+            }
+            if (oldval) {
+                elm.val(oldval);
+            }
+        } else {
+            $(".pagination_btn").text('0-0/0')
+        }
+
+
 
     },
-    genTableTaskLIst: function (res,stlimt) {
-    
+    genTableTaskLIst: function (res, stlimt) {
+
         var stat = GetTaskStatusList();
         stat = stat._table.r;
         var tbid = $("#comp_id_21010301052003928142 tbody");
-             tbid.html("")
-      
-           var stl = stlimt;
+        tbid.html("")
+
+        var stl = stlimt;
         var list = res.tbl[0].r;
         for (let i = 0; i < list.length; i++) {
             stl++
@@ -132,26 +285,26 @@ var cheweek = {
                 }
 
             }
-        var select = $("<select>")
-             .attr("data-value-id",o.fkTaskId)
-             .attr("title",'.')
-            .addClass('task-list-prt-change-select form-control form-control-sm float-left')
-            .append($("<option>")
-                .attr("value", "Standart")
-                .attr('data-icon', 'fas fa-bookmark tranform-rotate text-muted')
-                .text("Standart"))
-            .append($("<option>")
-                .attr("value", "xususi")
-                .attr('data-icon', 'fas fa-bookmark tranform-rotate text-primary')
-                .text('Xüsusi'))
-            .append($("<option>")
-                .attr("value", "tecili")
-                .attr('data-icon', 'fas fa-bookmark tranform-rotate text-danger')
-                .text('Təcili'))
-            
-    
-       
-        
+            var select = $("<select>")
+                .attr("data-value-id", o.fkTaskId)
+                .attr("title", '.')
+                .addClass('task-list-prt-change-select form-control form-control-sm float-left')
+                .append($("<option>")
+                    .attr("value", "Standart")
+                    .attr('data-icon', 'fas fa-bookmark tranform-rotate text-muted')
+                    .text("Standart"))
+                .append($("<option>")
+                    .attr("value", "xususi")
+                    .attr('data-icon', 'fas fa-bookmark tranform-rotate text-primary')
+                    .text('Xüsusi'))
+                .append($("<option>")
+                    .attr("value", "tecili")
+                    .attr('data-icon', 'fas fa-bookmark tranform-rotate text-danger')
+                    .text('Təcili'))
+
+
+
+
             var tr = $("<tr>")
                 .addClass("redirectClass")
                 .append($("<td>")
@@ -173,7 +326,7 @@ var cheweek = {
                         .append(o.taskNo)
                     ))
                 .append($("<td>")
-                     .css("width", "160px")
+                    .css("width", "160px")
                     .addClass("text-center")
                     .append(select.val(o.taskPriority))
                     .append($("<span>")
@@ -253,16 +406,16 @@ var cheweek = {
                         .attr("sa-selectedfield", 'fkRequestLineId')
                     ))
                 .append($("<td>")
-                  .addClass("d-none")
+                    .addClass("d-none")
                     .append($("<a>")
-                                  .addClass(' clickNovbeti sa-data-status-type-novbeti')
-                                .attr("href",'#')
-                                .attr("onclick_trigger_id",'21022123300700666582')
-                                .attr("id",'comp_id_21032107245505646337')
-                                .attr("sa-data-id",o.fkTaskId)
-                                .attr("onclick","new UserStory().setGUIComponentButtonGUIModal('210321071837020910932',this)")
-                                .text("jdbfjsd")
-                                ))
+                        .addClass(' clickNovbeti sa-data-status-type-novbeti')
+                        .attr("href", '#')
+                        .attr("onclick_trigger_id", '21022123300700666582')
+                        .attr("id", 'comp_id_21032107245505646337')
+                        .attr("sa-data-id", o.fkTaskId)
+                        .attr("onclick", "new UserStory().setGUIComponentButtonGUIModal('210321071837020910932',this)")
+                        .text("jdbfjsd")
+                    ))
 
             tbid.append(tr);
             $('[data-toggle="popover"]').popover({
@@ -274,7 +427,7 @@ var cheweek = {
     },
     genUSerImageBlock: function (id, filed) {
 
-          try {
+        try {
             var user = SAProjectUser.ProjectUsers[id];
             return $('<img>')
                 .addClass("rounded-circle")
@@ -289,10 +442,10 @@ var cheweek = {
                 .attr('data-toggle', 'popover')
                 .attr('data-content', '<img width="50px" class="rounded-circle" height="50px" src="' + fileUrl(user.userImage) + '" ><b> ' + user.userName + '</b>')
                 .attr('sa-selectedfield', filed)
-       
-          } catch (error) {
-              return ''
-          }
+
+        } catch (error) {
+            return ''
+        }
 
 
 
@@ -300,13 +453,13 @@ var cheweek = {
     genCountNotification: function () {
         try {
             var count = be.callApi("21092414280609718466");
-            if (count.id==="0") {
+            if (count.id === "0") {
                 $(".number_cst_elc").hide();
-                return 
-            }else{
+                return
+            } else {
                 $(".number_cst_elc").show().text(count.id);
             }
-           
+
         } catch (error) {
             $(".number_cst_elc").hide()
         }
@@ -578,112 +731,111 @@ function genTimePickerById(id) {
     });
 }
 
-var tbid= "comp_id_21010301052003928142"
+var tbid = "comp_id_21010301052003928142"
 
 
-$(document).on('click',".btn-minus-pag",function () {
+$(document).on('click', ".btn-minus-pag", function () {
     var vall = 'count-row-select-task';
     $('#' + vall).val(1);
-   $('.startLimitNew').val(0);
+    $('.startLimitNew').val(0);
     $('.endLimitNew').val(50);
     cheweek.getTaskList();
-  
+
 });
 
-$(document).on('click',".btn-plus-pag",function () {
+$(document).on('click', ".btn-plus-pag", function () {
     var vall = 'count-row-select-task';
 
     var pageComponentLast = $('#' + vall + ' option:last-child');
     var txt = parseFloat(pageComponentLast.text())
 
     $('#' + vall).val(txt)
-    var ol = Math.ceil(txt*50);
-    $('.startLimitNew').val(ol-50);
+    var ol = Math.ceil(txt * 50);
+    $('.startLimitNew').val(ol - 50);
     $('.endLimitNew').val(ol);
     cheweek.getTaskList();
 })
 
-    $(document).on("click", ".pagination_btn_left_right", function(e) {
-        var stlm =$('.startLimitNew');
-        var endlm= $('.endLimitNew');
-        var clickedButton  = $(this).attr('data-page-icon');
-        var pageSelected   = $('#count-row-select-task option:selected');
-        var pageSelect     = $('#count-row-select-task');
-        var pageNumber     = null;
-    if(clickedButton == 'pageLeft') {
-        var current  = parseInt(pageSelected.text());
-        pageNumber   = current != 1?current - 1:1;
-          if(current != 1){
-            stlm.val(parseFloat(stlm.val()) -50);
-            endlm.val(parseFloat(endlm.val()) -50);
-          }
-    
-    }
-    else if(clickedButton == 'pageRight'){
-        var current  = parseInt(pageSelected.text());
-        
-        pageNumber   = current != parseInt($('#count-row-select-task option:last-child').text())? current + 1:current;
-        if(current != parseInt($('#count-row-select-task option:last-child').text())){
-            stlm.val(parseFloat(stlm.val()) +50);
-            endlm.val(parseFloat(endlm.val()) +50);
-          }
-    }
-
-        pageSelect.val(pageNumber);
-        cheweek.getTaskList();
-    });
- 
-    $(document).on("contextmenu", "#"+tbid+" tbody tr", function(e) {
-        $(this).closest('tbody').find("tr").removeClass("last_click_class")
-        $(this).addClass("last_click_class")
-        $("#contextMenu").css({
-              display: "block",
-              left: e.pageX,
-              top: e.pageY
-         });
-
-         return false;
-    });
-
-
-    $(document).on("change", "select.task-list-prt-change-select", function(e) {
-        var id = $(this).attr("data-value-id");
-        var val = $(this).val();
-        var sl = {}
-              sl.taskPriority = val;
-              sl.id = id;
-
-          be.callApi("21092917070904357762",sl)
-    });
-    $(document).on("click", ".filtSectReloadNew", function(e) {
-        var div = $(".component-class#21041212141705702084 >.component-section-row ");
-        var idbd = $(this).attr('sa-data-body');
-        if(idbd==='21010300595707289233'){
-            $.get("child/tasklist.html", function (html_string) {
-                $(div).html(html_string);
-               
-                cheweek.getTaskList();
-            });
+$(document).on("click", ".pagination_btn_left_right", function (e) {
+    var stlm = $('.startLimitNew');
+    var endlm = $('.endLimitNew');
+    var clickedButton = $(this).attr('data-page-icon');
+    var pageSelected = $('#count-row-select-task option:selected');
+    var pageSelect = $('#count-row-select-task');
+    var pageNumber = null;
+    if (clickedButton == 'pageLeft') {
+        var current = parseInt(pageSelected.text());
+        pageNumber = current != 1 ? current - 1 : 1;
+        if (current != 1) {
+            stlm.val(parseFloat(stlm.val()) - 50);
+            endlm.val(parseFloat(endlm.val()) - 50);
         }
-        else if(idbd==='staticlist-modul'){
-            cheweek_group.getModulList();
-        }else {
-            new UserStory().setGUIComponentFillGUIModal(this,idbd,'21041212141705702084');
 
+    } else if (clickedButton == 'pageRight') {
+        var current = parseInt(pageSelected.text());
+
+        pageNumber = current != parseInt($('#count-row-select-task option:last-child').text()) ? current + 1 : current;
+        if (current != parseInt($('#count-row-select-task option:last-child').text())) {
+            stlm.val(parseFloat(stlm.val()) + 50);
+            endlm.val(parseFloat(endlm.val()) + 50);
         }
-        
-      
-        Utility.addParamToUrl('lastMenuId',idbd);
+    }
+
+    pageSelect.val(pageNumber);
+    cheweek.getTaskList();
+});
+
+$(document).on("contextmenu", "#" + tbid + " tbody tr", function (e) {
+    $(this).closest('tbody').find("tr").removeClass("last_click_class")
+    $(this).addClass("last_click_class")
+    $("#contextMenu").css({
+        display: "block",
+        left: e.pageX,
+        top: e.pageY
     });
 
-    $(document).on('click','body',function() {
-        $("ul.ruby-menu > li.ruby-menu-mega > div").first().removeClass('active')
-        $("#contextMenu").hide();
-    });
-    $(document).on('click','ul.ruby-menu > li.ruby-menu-mega > div i.dataFav',function(e) {
-           e.stopPropagation();
-           e.preventDefault();
-    });
+    return false;
+});
+
+
+$(document).on("change", "select.task-list-prt-change-select", function (e) {
+    var id = $(this).attr("data-value-id");
+    var val = $(this).val();
+    var sl = {}
+    sl.taskPriority = val;
+    sl.id = id;
+
+    be.callApi("21092917070904357762", sl)
+});
+$(document).on("click", ".filtSectReloadNew", function (e) {
+    var div = $(".component-class#21041212141705702084 >.component-section-row ");
+    var idbd = $(this).attr('sa-data-body');
+    if (idbd === '21010300595707289233') {
+        $.get("child/tasklist.html", function (html_string) {
+            $(div).html(html_string);
+
+            cheweek.getTaskList();
+        });
+    } else if (idbd === 'staticlist-modul') {
+        cheweek_group.getModulList();
+    } else {
+        new UserStory().setGUIComponentFillGUIModal(this, idbd, '21041212141705702084');
+
+    }
+
+
+    Utility.addParamToUrl('lastMenuId', idbd);
+});
+
+$(document).on('click', 'body', function () {
+    $("ul.ruby-menu > li.ruby-menu-mega > div").first().removeClass('active')
+    $("#contextMenu").hide();
+});
+$(document).on('click', 'ul.ruby-menu > li.ruby-menu-mega > div i.dataFav', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+});
+
 function checkCheweek(params) {
     //    zoomOut
     hideAlert();
