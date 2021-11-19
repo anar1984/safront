@@ -29,6 +29,7 @@ var cheweek = {
             async: true,
             success: function (res) {
                 var elm = $("#menu-conatiner-ruby");
+                elm.css('visibility','hidden');
                 elm.html('')
                 
                 var homeButton = ` <li><a href="#" sa-data-body="21010300595707289233"
@@ -161,7 +162,7 @@ var cheweek = {
                   
                 $("[sa-menu-empty='0']").remove();
                 $("[sa-kate-empty='0']").remove();
-
+                $("#menu-conatiner-ruby").css('visibility','visible');
                 that.getLastMenuGenerate();
             }
         });
