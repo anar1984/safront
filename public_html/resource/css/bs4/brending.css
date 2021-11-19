@@ -4224,3 +4224,185 @@ table.lbl-list-table tr td {
     box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
     border-color: #fff;
 }
+.issue-managment-add-task.cs-modal-box .modal-header {
+    font-size: 14px;
+    padding: 7px 18px 7px 18px;
+    border-bottom-color: #E9E9F1;
+    background-color: #E9E9F1;
+    color: #272B7C;
+    border-radius: 0;
+}
+.issue-managment-add-task .cs-input-group textarea {
+    width: 100%;
+    border: 1px solid #BEBFD7;
+    padding: 5px;
+    font-size: 14px;
+}
+.issue-managment-add-task .cs-input-group input.form-control {
+    height: 35px;
+    border: 1px solid #BEBFD7;
+}
+.issue-managment-add-task .cs-input-group .input-group-addon {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #313582;
+}
+.issue-managment-add-task .horizontal .checkcontainer {
+    display: inline-block;
+    font-size: 14px;
+    color: #525596;
+    margin-right: 25px;
+}
+.issue-managment-add-task .checkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .issue-managment-add-task .checkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .issue-managment-add-task .radiobtn {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #9395bd;
+    background-color: #e9e9f1;
+    border-radius: 50%;
+  }
+  .issue-managment-add-task .checkcontainer:hover input ~ .radiobtn {
+    background-color: #9395bd;
+  }
+  .issue-managment-add-task .checkcontainer input:checked ~ .radiobtn {
+    background-color: #525596;
+  }
+  .issue-managment-add-task .radiobtn:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .issue-managment-add-task .checkcontainer input:checked ~ .radiobtn:after {
+    display: block;
+  }
+  .issue-managment-add-task .checkcontainer .radiobtn:after {
+      top: 5px;
+      left: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: white;
+  }
+  .issue-managment-add-task .task-tab1 .cs-input-group {
+      padding: 15px;
+  }
+  .issue-managment-add-task .task-tab2 .cs-input-group {
+      padding: 0;
+  }
+  .issue-managment-add-task .cs-input-group .bootstrap-select{
+      width: 100% !important;
+  }
+  .issue-managment-add-task .horizontal .checkcontainer {
+      margin-right: 20px;
+  }
+  .issue-managment-add-task .nav-pills .nav-link {
+    color: #525596;
+    background-color: #e9e9f1;
+}
+    .issue-managment-add-task .nav-pills .nav-item{
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    .issue-managment-add-task .nav-pills .nav-item:first-child {
+        margin-left: 0;
+    }
+    .issue-managment-add-task .nav-pills .nav-item:last-child {
+        margin-right: 0;
+    }
+  .issue-managment-add-task .nav-pills .nav-link.active,   .issue-managment-add-task .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #525596;
+}
+.issue-managment-add-task .section-title {
+    font-size: 17px;
+    margin-left: 4px;
+    margin-top: 40px;
+    position: relative;
+    color: #525596;
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+.issue-managment-add-task .section-title strong {
+    background: white;
+    position: absolute;
+    top: -16px;
+    display: block;
+    z-index: 1;
+    padding: 5px 10px 5px 0;
+    font-weight: 600;
+}
+.issue-managment-add-task .section-title span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    width: 99%;
+    height: 1px;
+    border-top: 1px solid #bebfd7;
+}
+.issue-managment-add-task .us-file-upload {
+    border: 1px solid #525596;
+    display: inline-block !important;
+    text-align: left;
+    margin: 0;
+    margin-left: 4px;
+    border-radius: 4px;
+    color: #525596 !important;
+    font-size: 15px;
+    width: 100%;
+}
+.issue-managment-add-task .us-file-upload::before {
+    content: 'Chose file';
+    display: inline-block;
+    background: #525596;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: none;
+    font-weight: 400;
+    height: 100%;
+    font-size: 14px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.cs-core-issue-management .bigCheck {
+    z-index: 1000;
+}
+@media only screen and (max-width: 1370px) {
+    .issue-managment-add-task .modal-dialog {
+        max-width: 70% !important;
+        margin-top: 40px;
+    }
+  }
+@media only screen and (max-width: 1024px) {
+    .issue-managment-add-task .modal-dialog {
+        max-width: 100% !important;
+        margin-top: 40px;
+        margin-left: 0;
+    }
+  }

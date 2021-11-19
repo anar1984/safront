@@ -221,7 +221,7 @@ function removeBacklogDescCommentType(el, descId) {
         async: true,
         success: function (res) {
             AJAXCallFeedback(res);
-                        that.getBacklogDesc();
+            that.getBacklogDesc();
             loadCurrentBacklogProdDetails();
         },
         error: function () {
@@ -2689,7 +2689,7 @@ function setBacklogHistory4View() {
     div.html('');
     var block = $("#backBacklogBtn-block");   
     var temp = [];
-        var ct = 0;
+    var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
         var o = bhistory[i];
 
@@ -2724,7 +2724,7 @@ function setBacklogHistory4View() {
 
         div.append(d);
         ct++
-        
+
     }
 }
 
@@ -5510,19 +5510,43 @@ function addInputOfStoryCardAs(el) {
     addBaklogListToInputAs();
 }
 
-function addBaklogListToInputAs() {
+function addBaklogListToInputAs(fkProjectId) {
     var elm = $('#addStoryCardInputsAsModal-backlogid');
     elm.html('');
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
 
-    var obj = SACore.GetBacklogKeyList();
-    var tr;
-    for (var i = 0; i < obj.length; i++) {
-        elm.append($('<option>').val(obj[i])
-                .append(SACore.GetBacklogname(obj[i])));
-    }
-    sortCombo('addStoryCardInputsAsModal-backlogid');
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    json.kv.isApi = '1';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r;
+            for (var i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                if (o.isApi === '1') {
+                   elm.append($('<option>').val(o.id)
+                        .text(o.backlogName));
+                      
+                }
+            }
+            sortCombo('addStoryCardInputsAsModal-backlogid');
+                        $('#addStoryCardInputsAsModal-backlogid').selectpicker('refresh');
 
-    $('#addStoryCardInputsAsModal-backlogid').change();
+            
+
+            $('#addStoryCardInputsAsModal-backlogid').change();
+        }
+    });
+
+
 
 
 }
@@ -5853,13 +5877,13 @@ function moveBacklogDescDrag(el) {
             crossDomain: true,
             async: true,
             success: function (res) {
-            //new UserStory().getBacklogDesc();
+                //new UserStory().getBacklogDesc();
             }
         });
 
     }
 
-   
+
 
 }
 function if_inc_moveBacklogDescDrag(el) {
@@ -6085,9 +6109,9 @@ function _TriggerAPI(carrier) {
     var out = "";
 
     if ($(el).attr('sendapitype') === 'back') {
-        if ($(el).attr('sa-table-load-id')){
-            finalRes['fkRelatedTableId']= $(el).attr('sa-table-load-id');
-            
+        if ($(el).attr('sa-table-load-id')) {
+            finalRes['fkRelatedTableId'] = $(el).attr('sa-table-load-id');
+
         }
         out = be.callBackendApi(apiId, finalRes, el);
     } else {
@@ -6520,7 +6544,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
 
     for (var j = 0; j < obj.length; j++) {
         var o = obj[j];
-        var tr = $('<tr>').append($('<td>').text((parseInt(startLimit)+j + 1)));
+        var tr = $('<tr>').append($('<td>').text((parseInt(startLimit) + j + 1)));
 
         thead.find("th.selectablezad").each(function (e) {
             var sfield = $(this).attr("sa-selectedfield-header");
@@ -6528,7 +6552,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
             var flag = true;
             var td = $('<td>');
             var noActionHappened = true;
-            if (sfield){
+            if (sfield) {
                 var sfList = sfield.split(',');
                 for (var i in sfList) {
                     var sf = sfList[i];
@@ -6576,7 +6600,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
                     var comp = new ComponentInfo();
                     Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
 
-                    comp.secondContent ="";
+                    comp.secondContent = "";
                     comp.isFromTableNew = true;
                     comp.isFromTable = true;
                     comp.tableRowId = "1";
@@ -6594,10 +6618,10 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
                 }
 
                 tr.append(td);
-                 noActionHappened = false;
+                noActionHappened = false;
             }
-            
-            if ( noActionHappened){
+
+            if (noActionHappened) {
                 tr.append(td);
             }
         })
@@ -7342,9 +7366,9 @@ function insertNewInputActionRel(el) {
         }
     });
 }
-function directRelationAddApi(el,ids) {
-             var dif = $(el).val()
-    if (!global_var.current_project_id || !dif||
+function directRelationAddApi(el, ids) {
+    var dif = $(el).val()
+    if (!global_var.current_project_id || !dif ||
             !ids)
         return;
 
@@ -7367,7 +7391,7 @@ function directRelationAddApi(el,ids) {
         success: function (res) {
             getInputActionRelList();
             getInputAttributeByProject();
-          
+
             loadCurrentBacklogProdDetails();
         }
     });
@@ -8298,7 +8322,7 @@ function showJsCodeModal() {
 
         cdnh = false;
         jsEditorGenerate();
-    } 
+    }
     getAllJsCodeByProject();
     //loadApisToComboOnJSCode();
 }
@@ -8319,20 +8343,21 @@ function guiClassModal(el) {
 function jsEditorGenerate() {
     $("#jsCodeModal_fnbody").empty();
 
-    window.editor1 =CodeMirror(document.querySelector('#jsCodeModal_fnbody'), {
+    window.editor1 = CodeMirror(document.querySelector('#jsCodeModal_fnbody'), {
         lineNumbers: true,
         tabSize: 2,
         mode: 'javascript',
         theme: 'blackboard',
         extraKeys: {
-            "F11": function(cm) {
-              cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+            "F11": function (cm) {
+                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
             },
-            "Esc": function(cm) {
-              if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+            "Esc": function (cm) {
+                if (cm.getOption("fullScreen"))
+                    cm.setOption("fullScreen", false);
             }
-          }
-      });
+        }
+    });
 
 
 }
@@ -8340,26 +8365,26 @@ function jsEditorGenerate() {
 
 function jsEditorFullGenerate(val3) {
 
-    window.editor3=  CodeMirror(document.querySelector('#edit_full_screen'), {
+    window.editor3 = CodeMirror(document.querySelector('#edit_full_screen'), {
         lineNumbers: true,
         tabSize: 2,
         mode: 'javascript',
         theme: 'blackboard'
-      });
+    });
 
 
 }
 
 function cssEditorGenerate() {
-        $("#guiClassModal_classbody").empty()
+    $("#guiClassModal_classbody").empty()
     window.editor = CodeMirror(document.querySelector('#guiClassModal_classbody'), {
         lineNumbers: true,
         tabSize: 2,
         mode: 'css',
         theme: 'blackboard'
-      });
+    });
 
-    
+
 }
 $(document).on('focusout', '#guiClassModal_classbody', function () {
 
@@ -8556,22 +8581,22 @@ $(document).on("click", ".gui-class-row-tr", function (e) {
 })
 
 /* $(document).on("change", ".classListOnChange", function (e) {
-    var val = $(this).val();
-    if (val === '-2') {
-        $('.input4NewClassAdding').show();
-    } else {
-        $('.input4NewClassAdding').hide();
-    }
-})
+ var val = $(this).val();
+ if (val === '-2') {
+ $('.input4NewClassAdding').show();
+ } else {
+ $('.input4NewClassAdding').hide();
+ }
+ })
  */
 /* $(document).on("change", ".classListOnChange4Container", function (e) {
-    var val = $(this).val();
-    if (val === '-2') {
-        $('.input4NewClassAdding4Container').show();
-    } else {
-        $('.input4NewClassAdding4Container').hide();
-    }
-}) */
+ var val = $(this).val();
+ if (val === '-2') {
+ $('.input4NewClassAdding4Container').show();
+ } else {
+ $('.input4NewClassAdding4Container').hide();
+ }
+ }) */
 
 
 function insertNewClassDirect(el) {
@@ -8688,7 +8713,7 @@ function insertNewGuiClass4Container(className) {
         crossDomain: true,
         async: true,
         success: function (res) {
-          
+
             addGuiClassToInput4ContainerCore(res.kv.id)
             $('#gui_prop_cn_gui_class_new').val('');
         }
@@ -8725,32 +8750,32 @@ function addGuiClassToInput4Container(el) {
     var classId = $("#gui_prop_cn_gui_class_list").val();
     if (!classId)
         return;
-        addGuiClassToInput4ContainerCore(classId)
-    
+    addGuiClassToInput4ContainerCore(classId)
+
 }
 function addGuiClassToInput4ContainerCore(classId) {
     if (!classId)
-    return;
+        return;
 
-var json = initJSON();
-json.kv.fkProjectId = global_var.current_project_id;
-json.kv.fkClassId = classId;
-json.kv.fkInputId = global_var.current_us_input_id;
-json.kv.relType = "cont";
-var that = this;
-var data = JSON.stringify(json);
-$.ajax({
-    url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
-    type: "POST",
-    data: data,
-    contentType: "application/json",
-    crossDomain: true,
-    async: true,
-    success: function (res) {
-           Prototype.CssContainer.getGuiClassList(classId);
-        new UserStory().genGUIDesign();
-    }
-});
+    var json = initJSON();
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fkClassId = classId;
+    json.kv.fkInputId = global_var.current_us_input_id;
+    json.kv.relType = "cont";
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddGuiClassToInput",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            Prototype.CssContainer.getGuiClassList(classId);
+            new UserStory().genGUIDesign();
+        }
+    });
 }
 
 function addGuiClassToInput(el) {
@@ -9694,9 +9719,9 @@ function removeRelatedApiFromDesc(descId) {
 }
 
 function toggleRelatedApi4Desc() {
-  
-        $('div.toggleRelatedApi4DescClass').toggle();
-    
+
+    $('div.toggleRelatedApi4DescClass').toggle();
+
 }
 
 function toggleRelatedSourceCode4Desc(el) {
@@ -9737,8 +9762,8 @@ function addNewApiFromDesc() {
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
 
             $('.toggleRelatedApi4DescClass').hide();
-           // loadRelatedAPI4Relation();
-           Prototype.ApiContainer.Init()
+            // loadRelatedAPI4Relation();
+            Prototype.ApiContainer.Init()
             $('#addRelatedApiModal-api').val(res.kv.id);
             $('#addRelatedApiModal-newapi').val('');
             //                
@@ -12233,8 +12258,8 @@ function saveDocument() {
 }
 
 $(document).on('click', '.live-prototype-show-story-card-refresh', function (evt) {
-     loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
-    $('#storyCardListSelectBox').change(); 
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, false);
+    $('#storyCardListSelectBox').change();
 
 });
 
@@ -12490,35 +12515,35 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadLivePrototype";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-     showToggleMain();
+    showToggleMain();
 
     getProjectUsers();
-    getUsers(); 
+    getUsers();
 
-   // initZadShey(global_var.current_project_id);
+    // initZadShey(global_var.current_project_id);
 
     $.get("resource/child/ipo.html", function (html_string) {
 
 
-      
-      //  getAllGuiClassList();
+
+        //  getAllGuiClassList();
 
 
-       /*  getInputClassRelByProject();
+        /*  getInputClassRelByProject();
          getInputAttributeByProject();
-        getProjectDescriptionByProject();
-        getJsCodeListByProject(); */
+         getProjectDescriptionByProject();
+         getJsCodeListByProject(); */
 
-       // new UserStory().clearAll();
+        // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
         Prototype.Init();
-       
+
 
 
 
     });
 
-  new UserStory().loadDetailsOnProjectSelect4Ipo();
+    new UserStory().loadDetailsOnProjectSelect4Ipo();
 
 
 });
@@ -12701,15 +12726,15 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
 
             var cmd2 = $('select.us-gui-component-rel-sus-id');
             cmd2.html('');
-            
+
             var cmd3 = $('select#us-related-sus');
             cmd3.html('');
 
-           
+
 
             new UserStory().setUSLists(res);
             var f = true;
-           new UserStory().loadSUS4Relation4SectionDetails(res)
+            new UserStory().loadSUS4Relation4SectionDetails(res)
             fillRelatedApi4InputEventNew(res);
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
@@ -12732,11 +12757,11 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
                     }
                     cmd.append(op);
                 } else if (o.isApi === '1') {
-                     var pname = o.backlogName;
+                    var pname = o.backlogName;
                     var op2 = $('<option></option>').attr('value', o.id).text(pname);
-                     cmd3.append(op2);
-                     
-                    
+                    cmd3.append(op2);
+
+
                     var td = $('<tr>')
                             .append($('<td>')
                                     .append($('<a>')
@@ -12756,10 +12781,10 @@ function loadDetailsOnProjectSelect4Ipo(fkProjectId) {
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
-            
+
             sortSelectBoxByElement(cmd3);
             cmd3.selectpicker('refresh');
-            
+
 
             //            sortSelectBoxByElement(cmd2);
             //            cmd2.selectpicker('refresh');
@@ -13708,7 +13733,7 @@ $(document).on('click', '.loadBugChange', function (evt) {
         commmonOnloadAction(this);
         setBugFilterProject();
         setBugFilterAssignees();
-        loadBugChangeCustomScripts();
+        loadBugTaskDeadlineScripts();
 
         $('.bug-mgmt-filter-select').selectpicker();
         new Sprint().load4Task();
@@ -15487,7 +15512,7 @@ function addUserStoryNewPopup() {
 }
 
 function addApiNewPopup() {
-    var nameInput=$('#addApiPopupModal-userstoryname')
+    var nameInput = $('#addApiPopupModal-userstoryname')
     var usName = nameInput.val();
     if (!usName)
         return;
@@ -15507,28 +15532,28 @@ function addApiNewPopup() {
         crossDomain: true,
         async: true,
         success: function (res) {
-         
+
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
             loadCurrentBacklogProdDetails();
 
-      
+
 
             //$('.projectList_liveprototype').change();
-           // loadApiListOnProjectSelect4Ipo();
-           var trig = nameInput.attr("data-trig-rel");
-           Prototype.ApiContainer.Init();
-           
-           nameInput.val('');
-         
-            
+            // loadApiListOnProjectSelect4Ipo();
+            var trig = nameInput.attr("data-trig-rel");
+            Prototype.ApiContainer.Init();
+
+            nameInput.val('');
+
+
             $('#addApiPopupModal').modal('hide');
 
-          
-          
+
+
             if (trig) {
-                directRelationAddApi($(".animation-block-for-find .input_event_type"),res.kv.id);
-            }else{
+                directRelationAddApi($(".animation-block-for-find .input_event_type"), res.kv.id);
+            } else {
                 global_var.current_backlog_id = res.kv.id;
                 Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
                 callStoryCard(res.kv.id);
@@ -16110,7 +16135,7 @@ function removeSection(el, inputId) {
     }
 
     json.kv.id = inputId;
-    json.kv.fkBacklogId= global_var.current_backlog_id;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -16715,6 +16740,7 @@ function updateUS4ShortChangeDetails(val, ustype) {
             AJAXCallFeedback(res);
             SACore.addBacklogByRes(res);
 
+            loadCurrentBacklogProdDetails();
             loadCurrentBacklogProdDetailsSyncrone();
             //            if (global_var.current_modal === 'loadLivePrototype') {
             //                callStoryCardAfterIPOAction();
@@ -17568,7 +17594,7 @@ function changeUserStoryOfTaskModal() {
     } else if (global_var.current_modal === 'loadTaskManagement') {
         SACore.FillInCombo('task-user-story-id-change');
     }
-    
+
 
 }
 
@@ -22497,7 +22523,7 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
 
 }
 
-function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid,statusID) {
+function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid, statusID) {
 
     return $("<div>")
             .addClass('cs-task-item-in-box redirectClass cs-white-bg')
@@ -22507,7 +22533,7 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
                     .addClass("cs-cart-head-title p-2")
                     .append(tasktype)
                     .append($("<span class='brend-color large-blok-icon'>")
-                              .html('<i class="fas fa-columns"></i>')))
+                            .html('<i class="fas fa-columns"></i>')))
             .append(`<div class="cs-task-card-body pl-2 pr-2"">
                        <div class="cs-task-card-desc">
 
@@ -22515,22 +22541,22 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
                        </div>
                        </div>`)
             .append($("<div>")
-                    .addClass('cs-task-card-bottom  bg-status-'+statusID)
+                    .addClass('cs-task-card-bottom  bg-status-' + statusID)
                     .append($("<div>")
                             .addClass('d-flex  bd-highlight cs-flex-align-middle')
                             .append($("<div>")
-                                        .addClass("d-flex flex-fill align-items-center bd-highlight")
-                                        .append(`<div class="cs-task-card-avatar-boxes"><ul>
+                                    .addClass("d-flex flex-fill align-items-center bd-highlight")
+                                    .append(`<div class="cs-task-card-avatar-boxes"><ul>
                                                <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
                                                  </ul></div>`)
-                                       .append($("<div>")
-                                                 .addClass("cs-staturs-circle-note1 ml-2")
-                                                 .append(taskStatus))
-                                       )
-                            
-                           
-                           
-                            
+                                    .append($("<div>")
+                                            .addClass("cs-staturs-circle-note1 ml-2")
+                                            .append(taskStatus))
+                                    )
+
+
+
+
                             .append(` <div class="flex-fill bd-highlight text-right">
                             <div class="cs-task-card-datatime pr-1 d-inline-block" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
                             <i class="fas fa-calendar-alt"></i>
@@ -22547,8 +22573,8 @@ function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time,
                                       <span class="slider round hide-off "></span>
                                   </label>
                               </div>`)
-                           ))
-               
+                            ))
+
 
             .append($("<div>").addClass("stat-div-task-content")
                     .append($('<table>').addClass("stat-table-us")
@@ -22993,7 +23019,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid, o.requestStatus);
                 $("#flex-col-aktiv").append(html);
             } else {
                 var hid = $('<div>')
@@ -23036,7 +23062,7 @@ function genAktivPassiv(res, x, say) {
                 }
 
                 reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
+                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid, o.requestStatus);
                 $("#flex-col-passiv").append(html);
             }
 
@@ -23242,7 +23268,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
             }
 
             reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid,o.requestStatus);
+            var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid, o.requestStatus);
             $("#flex-col-" + elm).append(html);
 
         }

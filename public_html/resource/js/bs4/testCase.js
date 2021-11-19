@@ -1421,7 +1421,7 @@ function getBugListDetails(res) {
         var createByImage = o.createByImage;
         var createdByImg = (createByImage) ?
                 fileUrl(createByImage) :
-                fileUrl(new User().getDefaultUserprofileName());
+                " ";
 
         var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
         var taskName = '<a class="issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
@@ -1528,8 +1528,10 @@ function getBugListDetails(res) {
                                         .attr("aria-expanded", "false")
                                         .attr("id", "bug-listassigne-dropdown")
                                         .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                                                .attr('src', img) : "<img class='Assigne-card-story-select-img' src='https://app.sourcedagile.com/api/get/files/userprofile.png'> Unassigned")
-                                        .append(o.userName))
+                                                .attr('src', img) 
+                                        : " ")
+//                                        .append(o.userName)
+                                        )
 
                                 .append($("<div>")
                                         .addClass("dropdown-menu")
@@ -1618,7 +1620,8 @@ function getBugListDetails(res) {
                                 .append((o.createByName) ? $('<img class="Assigne-card-story-select-img">')
                                         .attr('src', createdByImg) : "")
                                 .append(" ")
-                                .append(o.createByName))
+//                                .append(o.createByName)
+                                )
 
                         .append($('<i class="fa fa-filter">')
                                 .attr('onclick', 'setFilter4IssueMgmtAsCreatedBy("' + o.createdBy + '")')
@@ -2092,6 +2095,14 @@ $(document).on("click", '#addIssueButtonId', function (e) {
         addNewTask4BugMulti(lines[index])
 
     }
+    if(run_task_valid()){
+        msgMessage = 'Gool!!!!';
+        Toaster.showMessage(msgMessage);
+    }
+    else{
+        msgError = 'Fill in the required fields';
+        Toaster.showError(msgError);
+    }
     $("#issue-managment-add-task").modal('hide');
 
 
@@ -2483,3 +2494,321 @@ $(document).on('click', function (e) {
         }
     })
 })
+function loadBugTaskDeadlineScripts() {
+    $("#bug_filter_limit").selectpicker('refresh');
+    $("#inputGroupSelect01").selectpicker('refresh');
+    $('#run_task_project_name').selectpicker('refresh');
+    setProjectListByID('run_task_project_name');
+    $('#run_task_project_name').change();
+
+    $('#run_task_name').selectpicker('refresh');
+    $('#run_task_intensive_select').selectpicker('refresh');
+    $('#run_task_repeat_select').selectpicker('refresh');
+    $('#run_task_status_select').selectpicker('refresh');
+    $('#run_task_weekday_select').selectpicker('refresh');
+    $('#sdofm_day_of_Month_select').selectpicker('refresh');
+    $('#swofm_fl_action_select').selectpicker('refresh');
+    $('#swofm_weekday_select').selectpicker('refresh');
+    $('#run_task_reminder_select').selectpicker('refresh');
+
+    $( "#runTaskStartDate" ).daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $( "#runTaskEndDate" ).daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    }); 
+    $('#runTaskTime').datetimepicker({
+        format: 'HH:mm'
+        // sideBySide: true
+    });
+    $('#runTaskExecutiveDate').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+
+    $(document).on("change", "#runTaskExecutiveDate", function (e) {
+        $('#hide_actions').val('');
+        $('#hide_actions_param').val('');
+        var runSEDate = $(this).val();
+        $('#hide_actions_param').val(runSEDate);
+    });
+
+      $(document).on("change",'#sendnotification',function () { 
+          
+            if($(this).is(':checked')) {
+                $(this).val('1');
+            }else{
+                $(this).val('0');
+            }
+       
+       })
+}
+
+$(document).on("change", "#run_task_intensive_select", function (e) {
+    $('#hide_actions').val();
+    $('#hide_actions_param').val();
+    var run_intensive = $('#run_task_intensive_select').val();
+    run_action = run_intensive;
+    switch (run_action) {
+            case 'weekly':
+                run_enabled = 'run-enabled';
+            break;
+            case 'monthly':
+                run_enabled = 'run-enabled';
+            break;
+            case 'yearly':
+                run_enabled = 'run-enabled';
+            break;
+        }
+        if (run_enabled){
+            $('.run-intensive').removeClass('run-enabled');
+            $('.' + run_intensive + '-actions').addClass(run_enabled);
+        }
+        if (run_intensive == 'yearly'){
+            $('#hide_actions').val('');
+            $('#hide_actions_param').val('');           
+        }
+        if (run_intensive == 'weekly'){
+            $('#hide_actions').val('');
+            $('#hide_actions_param').val('');
+            var run_sw_select = $('#run_task_weekday_select').val();
+            $('#hide_actions_param').val(run_sw_select);
+        }
+        if (run_intensive == 'monthly'){
+            $('#hide_actions').val('');
+            $('#hide_actions_param').val('');
+            
+            if($('#first_day_of_month').is(':checked')) {
+                $('#hide_actions').val('');
+                $('#hide_actions_param').val('');      
+                $('#hide_actions').val('first_day_of_month');
+            }
+            if($('#last_day_of_month').is(':checked')) {
+                $('#hide_actions').val('');
+                $('#hide_actions_param').val('');
+                $('#hide_actions').val('last_day_of_month');
+            }
+
+            if($('#specific_day_of_month').is(':checked')) {
+                $('.run_spa').removeClass('spa_enable');
+                $('.hr_spa').hide();
+                $('.hr_spa').show();
+
+                $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
+                $('#hide_actions').val('specific_day_of_month');
+                var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
+                $('#hide_actions_param').val(sdofm_day_of_Month_select);
+            }
+            if($('#before_last_day_of_month').is(':checked')) {
+                $('#hide_actions').val('');
+                $('#hide_actions_param').val('');
+
+                $('#hide_actions').val('before_last_day_of_month');
+                var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
+                $('#hide_actions_param').val(days_before_last_day_of_month);
+            }
+            if($('#specific_weekday_of_month').is(':checked')) {
+                $('#hide_actions').val('');
+                $('#hide_actions_param').val('');
+                
+                $('#hide_actions').val('specific_weekday_of_month');
+                var swofm_a1 = $('#swofm_fl_action_select').val();
+                var swofm_a2 = $('#swofm_weekday_select').val();
+                $('#hide_actions_param').val(swofm_a1);
+                $('#hide_actions_param_2').val(swofm_a2);
+            }
+  
+        }
+        
+});
+
+$(document).on("change", "#swofm_fl_action_select, #swofm_weekday_select", function (e) {
+    $('#hide_actions_param').val('');
+    var swofm_a1 = $('#swofm_fl_action_select').val();
+    var swofm_a2 = $('#swofm_weekday_select').val();
+    $('#hide_actions_param').val(swofm_a1);
+    $('#hide_actions_param_2').val(swofm_a2);
+});
+
+$(document).on("change", "#run_task_weekday_select", function (e) {
+    $('#hide_actions').val('');
+    $('#hide_actions_param').val('');
+    var run_task_weekday_select = $('#run_task_weekday_select').val();
+    $('#hide_actions_param').val(run_task_weekday_select);
+
+    if ($('#run_task_weekday_select').val()== 0){
+        $('[data-id="run_task_weekday_select"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
+        return false;
+    }else{
+        $('[data-id="run_task_weekday_select"]').removeAttr('style');
+    }
+});
+
+$(document).on("change", "#sdofm_day_of_Month_select", function (e) {
+    $('#hide_actions_param').val();
+    var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
+    $('#hide_actions_param').val(sdofm_day_of_Month_select);
+});
+
+$(document).on("change", ".checkcontainer input[type='radio']", function (e) {
+    if($('#first_day_of_month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+
+        $('#hide_actions').val('');      
+        $('#hide_actions').val('first_day_of_month');
+        $('#hide_actions_param').val('');
+    }
+    if($('#last_day_of_month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+
+        $('#hide_actions').val('');
+        $('#hide_actions_param').val('');
+
+        $('#hide_actions').val('last_day_of_month');
+    }
+});
+
+$(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
+    if($('#specific_day_of_month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+        $('.hr_spa').show();
+        $('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
+
+        $('#hide_actions').val('');
+        $('#hide_actions_param').val('');
+
+        $('#hide_actions').val('specific_day_of_month');
+        var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
+        $('#hide_actions_param').val(sdofm_day_of_Month_select);
+    }
+    if($('#before_last_day_of_month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+        $('.hr_spa').show();
+        $('.spa_days_before_last_day_of_month').addClass('spa_enable');
+        $('#hide_actions').val('');
+        $('#hide_actions_param').val('');
+
+        $('#hide_actions').val('before_last_day_of_month');
+        var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
+        $('#hide_actions_param').val(days_before_last_day_of_month);
+    }
+    if($('#specific_weekday_of_month').is(':checked')) {
+        $('.run_spa').removeClass('spa_enable');
+        $('.hr_spa').hide();
+        $('.hr_spa').show();
+        $('.spa_swofm_fl_action_select').addClass('spa_enable');
+        $('.spa_swofm_weekday_select').addClass('spa_enable');
+        $('#hide_actions').val('');
+        $('#hide_actions_param').val('');      
+        $('#hide_actions').val('specific_weekday_of_month');
+        var swofm_a1 = $('#swofm_fl_action_select').val();
+        var swofm_a2 = $('#swofm_weekday_select').val();
+        $('#hide_actions_param').val(swofm_a1);
+        $('#hide_actions_param_2').val(swofm_a2);
+    }
+});
+
+function run_task_valid(){
+    if ($.trim($('input#taskNameInputNew2').val()).length == 0){
+        $('input#taskNameInputNew2').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#taskNameInputNew2').removeAttr('style');
+    }
+
+    if ($('#run_task_name').val()=='-1'){
+        $('[data-id="run_task_name"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
+        return false;
+    }else{
+        $('[data-id="run_task_name"]').removeAttr('style');
+    }
+
+    // if ($.trim($('input:required#runTaskStartDate').val()).length == 0){
+    //     $('input:required#runTaskStartDate').css('border', '1px solid red');
+    //     return false;
+    // }else{
+    //     $('#runTaskStartDate').removeAttr('style');
+    // }
+
+    if ($.trim($('input:required#runTaskEndDate').val()).length == 0){
+        $('input:required#runTaskEndDate').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#runTaskEndDate').removeAttr('style');
+    }
+
+    if ($.trim($('input:required#runTaskTime').val()).length == 0){
+        $('input:required#runTaskTime').css('border', '1px solid red');
+        return false;
+    }else{
+        $('#runTaskTime').removeAttr('style');
+    }
+
+    var val_sw_select = $('#run_task_intensive_select').val();
+    if (val_sw_select == 'weekly'){
+        if ($('#run_task_weekday_select').val()== 0){
+            $('[data-id="run_task_weekday_select"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
+            return false;
+        }else{
+            $('[data-id="run_task_weekday_select"]').removeAttr('style');
+        }
+    }
+
+    if ($('#run_task_intensive_select').val()=='monthly'){
+        if($('#before_last_day_of_month').is(':checked')) {
+            if ($.trim($('input:required#days_before_last_day_of_month').val()).length == 0){
+                $('input:required#days_before_last_day_of_month').css('border', '1px solid red');
+                return false;
+            }else{
+                $('#days_before_last_day_of_month').removeAttr('style');
+            }
+        }
+    }
+    
+    if ($('#run_task_intensive_select').val()=='yearly'){
+        
+        if ($.trim($('input:required#runTaskExecutiveDate').val()).length == 0){
+            $('input:required#runTaskExecutiveDate').css('border', '1px solid red');
+            return false;
+        }else{
+            $('#runTaskExecutiveDate').removeAttr('style');
+        }
+    }
+    
+    return true;
+}
+
+$(document).on('change', '#run_task_project_name', function (event) {
+    var elm = $("#run_task_name").selectpicker('refresh');
+    var val = $(this).val();
+    getBacklogListByProject4Element(val, elm);
+});
+function converDatePicker(val) {
+    try {
+        val = val.split('/')
+        stTime = val[2].trim() +"-"+ val[0].trim() +"-"+ val[1].trim();
+            return stTime
+    } catch (error) {
+        return
+    }
+  
+}
+function reconverDatePicker(val) {
+    try {
+        val = val.split('-')
+        stTime = val[2].trim() +"/"+ val[0].trim() +"/"+ val[1].trim();
+            return stTime
+    } catch (error) {
+        return
+    }
+  
+}

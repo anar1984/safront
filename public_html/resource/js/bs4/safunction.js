@@ -55,9 +55,9 @@ var SAFN = {
         'addclass': 'AddClass',
         'removeclass': 'RemoveClass',
         'addcss': 'AddCss',
-        'removeCss': 'RemoveCss',
+        'removecss': 'RemoveCss',
         'addattribute': 'AddAttribute',
-        'removeAttribute': 'RemoveAttribute',
+        'removeattribute': 'RemoveAttribute',
         'showform': 'ShowForm',
         'getcurrentuserid': "GetCurrentUserId",
         'setbackendcache': "SetBackendCache",
@@ -555,7 +555,7 @@ var SAFN = {
 
             key = SAFN.GetArgumentPureValue(key);
 
-            $(element).removeAttribute(key);
+            $(element).removeAttr(key);
 
             return data;
         },
@@ -851,7 +851,7 @@ var SAFN = {
 
                 var r = parseInt(row);
                 if (res._table.r.length > 0 && res._table.r.length > r) {
-                    res._table.r[r][sa - global - trigger] = val;
+                    res._table.r[r][col] = val;
                 } else {
                     var kv = {};
                     kv[col] = val;
