@@ -552,7 +552,7 @@ function setBacklogAsHtml(backlogId) {
     }
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
-    
+
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
 
 
@@ -593,7 +593,7 @@ function getBacklogAsHtml(bid1, isAsync) {
         contentType: "application/json",
         crossDomain: true,
         async: async,
-        success: function (res) { 
+        success: function (res) {
             out = res;
             if (out.length === 0) {
                 setBacklogAsHtml(bid);
@@ -606,17 +606,17 @@ function getBacklogAsHtml(bid1, isAsync) {
 }
 
 
-function initZadShey(projectId){
+function initZadShey(projectId) {
 //  alert('hole hole hoel')
-    $('#kelbetin2').after($('<script>').attr('src',urlGl+'api/get/script/js/'+global_var.current_domain +"/"+projectId+'.js'))
-   $('#kelbetin').after($('<link>')
-           .attr('rel','stylesheet')
-           .attr('href',urlGl+'api/get/script/css/'+global_var.current_domain+"/"+projectId+'.css'))
-  
+    $('#kelbetin2').after($('<script>').attr('src', urlGl + 'api/get/script/js/' + global_var.current_domain + "/" + projectId + '.js'))
+    $('#kelbetin').after($('<link>')
+            .attr('rel', 'stylesheet')
+            .attr('href', urlGl + 'api/get/script/css/' + global_var.current_domain + "/" + projectId + '.css'))
+
 }
 
 
- 
+
 
 function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
@@ -633,21 +633,260 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-             
-            global_var.current_modal=""; 
+
+            global_var.current_modal = "";
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
-                      setBacklogAsHtml(o.id);  
-                  
-                }  
+                    setBacklogAsHtml(o.id);
+
+                }
 
             }
 
             //            cmd.val(global_var.current_backlog_id);
-             
+
 
         }
     });
+}
+
+
+function getClasswordAndUserList(fkClassId) {
+    var res1 = '';
+    var json = initJSON();
+    json.kv.fkClassId = fkClassId;
+    json.kv.apiId = '21111923082206581653';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCallActionApi",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            try {
+                res1 = res;
+
+                var obj = res.tbl[0].r;
+
+                for (var i in obj) {
+                    var o = obj[i];
+                    var key = o.fkClassworkId + "_" + o.fkUserId;
+                    res1[key] = o;
+                }
+            } catch (err) {
+            }
+
+        }
+    });
+
+    return res1;
+
+}
+
+function getClassworkList(fkClassId) {
+    var res1 = '';
+    var json = initJSON();
+    json.kv.fkClassId = fkClassId;
+    json.kv.apiId = '21111917574404721010';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCallActionApi",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            res1 = res;
+        }
+    });
+
+    return res1;
+
+}
+
+function getClassEnrolledUserkList(fkClassId) {
+    var res1 = '';
+    var json = initJSON();
+    json.kv.fkClassId = fkClassId;
+    json.kv.apiId = '21111917513206074975';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCallActionApi",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            res1 = res;
+        }
+    });
+    return res1;
+}
+
+function genClassworkAndUserMatrix(fkClassId) {
+    $('._teacherGradingSystem').html("No Data Found");
+    if (!fkClassId) {
+
+        return;
+    }
+
+    var classwork = getClassworkList(fkClassId);
+    var participants = getClassEnrolledUserkList(fkClassId);
+    var grading = getClasswordAndUserList(fkClassId);
+
+    var clworkObj = classwork.tbl[0].r;
+    var partObj = participants.tbl[0].r;
+
+    var table = $('<table>')
+            .addClass('table table-hover')
+
+
+    var thead = $('<thead>')
+    var trh = $('<tr>').append($('<th>').text(''))
+    for (var i in clworkObj) {
+        var cObj = clworkObj[i];
+        trh.append($('<th>').text(cObj.title))
+    }
+    thead.append(trh);
+    table.append(thead);
+
+    var tbody = $('<tbody>')
+    for (var j in partObj) {
+        var pObj = partObj[j];
+        var tr = $('<tr>');
+        tr.append($('<td>').text(pObj.userName));
+        for (var i in clworkObj) {
+            var cObj = clworkObj[i];
+
+            var cnt = "-";
+            var key = cObj.fkClassworkId + "_" + pObj.fkUserId;
+            if (grading && grading[key]) {
+                cnt = $("<a href='#'>")
+                        .append($('<spen>').text('Open'))
+                        .append(GradingBlock());
+            }
+            tr.append($('<td>').append(cnt))
+
+        }
+        tbody.append(tr);
+    }
+    table.append(tbody);
+    $('._teacherGradingSystem').html(table);
+}
+
+function GradingBlock() {
+    return $('<select>')
+            .addClass('gradingblock')
+            .append($('<option>').val('5').text('Correct'))
+            .append($('<option>').val('4').text('Almost Corrent'))
+            .append($('<option>').val('3').text('Half Correct'))
+            .append($('<option>').val('2').text('Almost Wrong'))
+            .append($('<option>').val('1').text('Wrong'));
+}
+
+
+function genClassworkAndUserMatrixStudent(fkClassId) {
+    $('._teacherGradingSystem').html("No Data Found");
+    if (!fkClassId) {
+
+        return;
+    }
+
+    var classwork = getClassworkList(fkClassId);
+    var grading = getClasswordAndUserList(fkClassId);
+
+    var clworkObj = classwork.tbl[0].r;
+
+    var table = $('<table>')
+            .addClass('table table-hover')
+
+
+    var thead = $('<thead>')
+    var trh = $('<tr>');
+
+    trh.append($('<th>').text('#'))
+            .append($('<th>').text('Title'))
+            .append($('<th>').text('Created Date'))
+            .append($('<th>').text('Due Date'))
+            .append($('<th>').text('Type'))
+            .append($('<th>').text('Grade'))
+            .append($('<th>').text(''))
+
+
+    thead.append(trh);
+    table.append(thead);
+
+    var tbody = $('<tbody>')
+
+    var idx = 1;
+    for (var i in clworkObj) {
+        var cObj = clworkObj[i];
+
+        var tr = $('<tr>').addClass("redirectClass");
+        tr.append($('<td>').text(idx))
+                .append($('<td>').append($('<a href="#">')
+                        .val(cObj.id)
+                        .attr('sa-selectedfield', 'fkClassworkId')
+                        .attr('onclick_trigger_id', "21111819514900624174")
+                        .attr('fkClassworkId', cObj.id)
+                        .attr('onclick', 'showClassworkInfo(this)')
+                        .text(cObj.title)))
+                .append($('<td>').text(Utility.convertDate(cObj.createdDate)))
+                .append($('<td>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
+                .append($('<td>').text(cObj.typeName))
+                .append($('<td>').text(cObj.grade))
+
+
+                ;
+        idx++;
+
+        var key = cObj.id + "_" + global_var.current_ticker_id;
+        if (grading && grading[key]) {
+            tr.append($('<td>').append($('<a href="#">').text("Open")))
+                    .append($('<td>').text(grading[key]));
+        } else {
+            tr.append($('<td>')
+                    .append($('<a href="#">')
+                            .attr("fkClassworkId", cObj.id)
+                            .attr("fkUserId", global_var.current_ticker_id)
+                            .attr("classworkType", cObj.classworkType)
+                            .attr("fkClassId", fkClassId)
+                            .attr('onclick', 'startBusinessCaseClasswork(this)')
+                            .text("Submit")))
+        }
+        tbody.append(tr);
+    }
+
+    table.append(tbody);
+    $('._teacherGradingSystem').html(table);
+}
+
+function startBusinessCaseClasswork(el) {
+    var fkUserId = $(el).attr('fkUserId')
+            , fkClassworkId = $(el).attr('fkClassworkId')
+            , classworkType = $(el).attr('classworkType')
+            , fkClassId = $(el).attr('fkClassId');
+
+    var fkActionId = '';
+
+//            21112007581103583541 startNewClasswork
+}
+
+function showClassworkInfo(el) {
+    new UserStory().setGUIComponentButtonGUIModal('21111723482809628427', el);
+    $('._save').remove();
+    $('._update').remove();
+    $('#21111723495201831388').remove();
+    $('#comp_id_21111822572801867649').remove();
+
+
 }

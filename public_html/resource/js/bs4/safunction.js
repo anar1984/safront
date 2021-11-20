@@ -846,7 +846,7 @@ var SAFN = {
 
             for (var i = 1; i < arguments.length; i++) {
                 var val = arguments[i];
-                val = SAFN.GetArgumentValue(val);
+                val = SAFN.GetArgumentPureValue(val);
                 var row = i - 1;
 
                 var r = parseInt(row);

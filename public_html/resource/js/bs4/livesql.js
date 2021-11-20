@@ -14,6 +14,16 @@ $(document).on("click", ".rsql", function (e) {
     getCoreContainer(this).find('#livesqlditor').val(title);
 });
 
+$(document).on("click", ".insertnewlinetodb", function (e) {
+
+    setCoreContainer(this);
+    var dbname = getDatabaseName();
+    var tablename = getTableName();
+    var data = getFilterDataLine();
+     insertNewRecord(dbname, tablename, data) 
+});
+
+
 $(document).on("click", ".close_rsql", function (e) {
 
 
@@ -256,7 +266,7 @@ function loadSqlEditorDatabaseListCombo(el) {
                 el.selectpicker("refresh");
             } catch (err) {
             }
-            if (dbid){
+            if (dbid) {
                 el.change();
             }
         },
@@ -290,22 +300,22 @@ function getTablesAndFields4Popup(parentEl, dbid) {
                 el.append($("<option>").append("Select Table Name"));
                 for (var i in obj) {
                     var o = obj[i];
-                    var op =$('<option class="data-table-option">')
+                    var op = $('<option class="data-table-option">')
                             .val(o.id)
                             .append(o.tableName)
-                    ;
-                    
-                    if (sql_board_clicked_table_id===o.id){
-                        op.attr("selected",'selected');
-                       
+                            ;
+
+                    if (sql_board_clicked_table_id === o.id) {
+                        op.attr("selected", 'selected');
+
                     }
-                    
+
                     el.append(op);
                 }
                 el.selectpicker("refresh");
-                if ( sql_board_clicked_table_id ){
+                if (sql_board_clicked_table_id) {
                     el.change();
-                     sql_board_clicked_table_id = '';
+                    sql_board_clicked_table_id = '';
                 }
             } catch (err) {
             }
@@ -554,6 +564,43 @@ function runSql() {
     });
 }
 
+
+function insertNewRecord(dbname, tablename, dataCore) {
+
+    if (!dataCore) {
+        Toaster.showError("No data entered!");
+        return;
+    }
+
+    var json = initJSON();
+    if (dataCore) {
+        json.kv = $.extend(json.kv, dataCore);
+    }
+ 
+
+    json.kv.entity = tablename;
+    json.kv.entityDb = dbname;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCoreInsert",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            getCoreContainerLast().find('.cs-filter-table-btn').click();
+             
+        },
+        error: function () {
+            $(".live-sql-error").text("");
+            $(".live-sql-error").text("No data found");
+        },
+    });
+}
+
 function getDataTableRowList(dbname, tablename, selectedField, dataCore) {
     var el = getCoreContainerLast().find(".cs-table-database-table-zad-list");
     getCoreContainerLast().find(".live-sql-error").text("");
@@ -602,7 +649,9 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
         keys = getFieldListByTableId();
     }
 
-    var tr_th = $("<tr>").append($("<th>"));
+    var tr_th = $("<tr>")
+            .addClass("coretr")
+            .append($("<th>"));
 
     for (var k in keys) {
         var col = keys[k];
@@ -626,6 +675,11 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
 
                 );
     }
+    tr_th.append($("<th>")
+            .append($('<button>')
+                    .addClass("insertnewlinetodb")
+                    .addClass("form-control")
+                    .text("insert")));
     el.find("thead").append(tr_th);
     el.find("tbody").html("");
 
@@ -968,7 +1022,7 @@ function startSqlStory() {
     });
 }
 
-var sql_board_clicked_table_id='';
+var sql_board_clicked_table_id = '';
 var num = 0;
 $(document).on("dblclick", ".sqlboard-table-list>li", function (e) {
 
@@ -976,9 +1030,9 @@ $(document).on("dblclick", ".sqlboard-table-list>li", function (e) {
     var tabname = $(this).find("span").text();
     var id = $(this).attr('navtableboard');
     sql_board_clicked_table_id = id;
-    
+
     $('.add-boardtab-btn').click();
-    
+
 
 });
 
