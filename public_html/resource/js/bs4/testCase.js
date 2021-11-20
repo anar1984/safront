@@ -1082,7 +1082,6 @@ function getProjectList4TaskInfo(currentProjectId) {
     var select = $('<select>')
             .attr('id', 'task-card-project-id')
             .addClass('form-control')
-            .css('width', 'auto')
             .attr('onchange', "updateTask4ShortChange(this, 'fkProjectId')");
     var keys = Object.keys(SACore.Project);
     for (var id in keys) {
@@ -1093,8 +1092,10 @@ function getProjectList4TaskInfo(currentProjectId) {
         if (pid === currentProjectId) {
             td.attr("selected", "selected")
         }
-        select.append(td)
+        select.append(td);
+        
     }
+    select.selectpicker('refresh');
     return select;
 }
 
@@ -1730,8 +1731,8 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //add project list to task
     $('.task-card-project-div-id').remove();
     $('.task-mgmt-tasktype').each(function () {
-        $(this).after($('<div class="task-card-project-div-id statusCardStory" id="task-card-project-div-id">')
-                .append($('<span>').addClass('comment-content-header-history').css('margin-left', '0px').append('Project'))
+        $(this).after($('<div class="task-card-project-div-id statusCardStory cs-forum-group" id="task-card-project-div-id">')
+                .append($('<label>').addClass('cs-label-name').append('Project'))
                 .append(getProjectList4TaskInfo(projectId)))
     })
 
@@ -2495,6 +2496,11 @@ $(document).on('click', function (e) {
     })
 })
 function loadBugTaskDeadlineScripts() {
+    $("#task-info-modal-status").selectpicker('refresh');
+    $("#task-info-modal-nature").selectpicker('refresh');
+    $("#task-info-modal-tasktype").selectpicker('refresh');
+    
+
     $("#bug_filter_limit").selectpicker('refresh');
     $("#inputGroupSelect01").selectpicker('refresh');
     $('#run_task_project_name').selectpicker('refresh');
@@ -2812,3 +2818,12 @@ function reconverDatePicker(val) {
     }
   
 }
+
+$(document).on("click", ".sc-close-sidebar-btn", function (e) {
+    $('.card-userstory-navmenu').removeClass('isOpen');
+    $('.card-userstory-navmenu').addClass('isClose');
+});
+$(document).on("click", ".sc-open-sidebar-btn", function (e) {
+    $('.card-userstory-navmenu').removeClass('isClose');
+    $('.card-userstory-navmenu').addClass('isOpen');
+});
