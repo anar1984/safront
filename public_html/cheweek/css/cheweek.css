@@ -4,8 +4,11 @@
 .brend-color{
     color: #173359;
 }
+.white-color{
+    color: #fff;
+}
 .brend-bg{
-    background-color: #445c79;
+    background-color: #173359;
 }
 .bg-dce3ed {
     background-color: #dce3ed;
@@ -44,6 +47,12 @@
     text-decoration-color: #8ba1bf;
     display: inline-block;
 } */
+.modul-content-panel>div{
+   height: max-content;
+}
+.modul-content-panel>.footer-group{
+    align-self: self-end;
+}
 .sa-section-modal>.component-section-row::after{
     color: #173359;
 }
