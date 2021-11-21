@@ -14,7 +14,8 @@ window.onload = function () {
     Utility.addParamToUrl("current_chat_user", '')
     Utility.addParamToUrl("current_chat_gorup", "")
     global_var.current_ticker_id = ticker;
-    global_var.current_project_id = '210102102810037910965'
+    global_var.current_project_id = '210102102810037910965';
+    global_var.current_domain = '48edh';
     getProjectUserssync('210102102810037910965');
     getProjectUsersForElById4Chat(global_var.current_project_id)
     sidebarGeneratecomment();
