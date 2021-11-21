@@ -444,7 +444,7 @@ function convertProblemServicesToCircleFormat(res, arg, problemId) {
                     continue;
                 }
                 div.append($('<span>')
-                        .attr("style", "border-radius: 5px;line-height: 25px;background-color: rgb(50, 160, 134);color:#fff !important;")
+                        .attr("style", "border-radius: 5px;line-height: 15px;background-color: rgb(50, 160, 134);color:#fff !important;")
                         /*  .css('border-radius', '5px')
                          .css('line-height', '25px')
                          .css('background-color', '#32a086')
@@ -2242,16 +2242,23 @@ $(document).on("click", '.rotate-icon', function (e) {
 // 1 Executive Summary
 function insertNewBusinessCase(el) {
     var caseName = $('#newBusinessCaseName').val();
+    insertNewBusinessCaseDetails(caseName);   
+    $('#newBusinessCaseName').val('');
+}
+
+
+function insertNewBusinessCaseDetails(caseName,isAsync,status) {
+   
     if (!(caseName))
         return;
+    
+    var stat = (status) ? status : "A"
+    
+    var sync = (isAsync) ? isAsync : true;
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-
-    json.kv.caseName = caseName;
+    var json = initJSON();
+      json.kv.caseName = caseName;
+      json.kv.status=stat;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2260,9 +2267,9 @@ function insertNewBusinessCase(el) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: sync,
         success: function (res) {
-            getNewExecutiveTable()
+            getNewExecutiveTable();
             $('#newBusinessCaseName').val('')
 
         },
@@ -2271,6 +2278,36 @@ function insertNewBusinessCase(el) {
         }
     });
     $('#newBusinessCaseName').val('')
+}
+
+
+function insertNewBusinessCaseDetailsForTraining(caseName) {
+   
+    if (!(caseName))
+        return;
+    
+    var res1  = "";
+
+    var json = initJSON();
+    json.kv.caseName = caseName;
+    json.kv.status='L';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewBusinessCase",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            res1 = res;
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+    return res1;
 }
 
 // 2 E.S_______________________________________________________________  
@@ -2428,11 +2465,7 @@ function deleteBusinessCase() {
     if (!(caseId))
         return;
 
-    var json = {kv: {}};
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
+    var json = initJSON();
 
     json.kv.id = caseId;
     var that = this;
@@ -3792,9 +3825,13 @@ function getProblemStatList(e) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            try {
+             try {
                 tinyMCE.get('business_case_description').setContent(res.kv.caseDesc);
-                // $('#business_case_description').text(res.kv.caseDesc)
+                 
+            } catch (err) {
+            }
+            try {
+                
                 problemStatTable(res);
             } catch (err) {
             }

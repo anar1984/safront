@@ -62,7 +62,9 @@ var SAFN = {
         'getcurrentuserid': "GetCurrentUserId",
         'setbackendcache': "SetBackendCache",
         'setlocalcache': "SetLocalCache",
-        'setdata': "SetData"
+        'setdata': "SetData",
+        'copytable':'CopyTable'
+        
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();

@@ -851,8 +851,14 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
 
         var key = cObj.id + "_" + global_var.current_ticker_id;
         if (grading && grading[key]) {
-            tr.append($('<td>').append($('<a href="#">').text("Open")))
-                    .append($('<td>').text(grading[key]));
+            tr.append($('<td>')
+                    .append($('<a href="#">')
+                            .addClass("openClassworkbody")
+
+                            .attr('fkActionId', grading[key].fkActionId)
+                            .attr('classworkType', grading[key].classworkType)
+                            .text("Open")))
+                    ;
         } else {
             tr.append($('<td>')
                     .append($('<a href="#">')
@@ -873,10 +879,31 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
 function startBusinessCaseClasswork(el) {
     var fkUserId = $(el).attr('fkUserId')
             , fkClassworkId = $(el).attr('fkClassworkId')
+            , fkActionId = $(el).attr('fkActionId')
             , classworkType = $(el).attr('classworkType')
             , fkClassId = $(el).attr('fkClassId');
 
-    var fkActionId = '';
+    if (fkActionId) {
+         openBusinessCaseModal(fkActionId);
+        return;
+    }
+
+    var bs = insertNewBusinessCaseDetailsForTraining("Business Case for Classwork: ");
+    if (!bs.kv.id) {
+        Toaster.showError("Classwork didn't submitted!");
+    }
+    $(el).attr('fkActionId', bs.kv.id);
+
+    var dt = {};
+    dt.fkUserId = fkUserId;
+    dt.fkClassworkId = fkClassworkId;
+    dt.fkActionId = bs.kv.id;
+    dt.fkClassId = fkClassId;
+    dt.classworkType = classworkType;
+
+    CallActionApi('21112007581103583541', dt);
+    openBusinessCaseModal(bs.kv.id);
+
 
 //            21112007581103583541 startNewClasswork
 }
@@ -887,6 +914,114 @@ function showClassworkInfo(el) {
     $('._update').remove();
     $('#21111723495201831388').remove();
     $('#comp_id_21111822572801867649').remove();
+}
+
+
+function CallActionApi(apiId, dataCore, isAsync, fn) {
+    if (!apiId) {
+        Toaster.showError('API ID is not entered');
+    }
+
+    var synch = (isAsync) ? isAsync : true;
+
+    var res1 = '';
+    var json = initJSON();
+    if (dataCore) {
+        json.kv = $.extend(json.kv, dataCore);
+    }
+    json.kv.apiId = apiId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceIoCallActionApi",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: synch,
+        success: function (res) {
+            res1 = res;
+            if (fn) {
+                fn(res);
+            }
+        }
+    });
+    return res1;
+}
+
+
+
+
+
+$(document).on('click', '.openClassworkbody', function (ev) {
+    var fkActionId = $(this).attr('fkActionId');
+    openBusinessCaseModal(fkActionId);
+});
+
+function openBusinessCaseModal(fkBusinessCaseId) {
+    if (!fkBusinessCaseId) {
+        return;
+    }
+
+    $.get("resource/child/bcase.html", function (html_string) {
+        $('#trainingGeneralModal').modal('show');
+        $('#trainingGeneralModal_body').html(html_string);
+        $('#trainingGeneralModal_title').html('Business Case');
+//        getNewExecutiveTable();
+
+        activeBCId = fkBusinessCaseId;
+        var caseName = "";
+        loadMainBusinesCaseBody(caseName);
+        setBCasescripts();
+        $('#trainingGeneralModal_body').find('.cs-headline-box').hide();
+
+    });
 
 
 }
+
+
+$(document).on('click', '.ShowApiRelations', function (ev) {
+    $('#entityApiRelationModal').modal('show');
+//    entityApiRelationModal_main
+
+
+    var tableid = $(this).closest('td.tdSeqment').first().attr('pid');
+
+    if (!tableid)
+        return;
+
+    var json = initJSON();
+    json.kv.tableId = tableid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetApiListByEntityId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var body = $('#entityApiRelationModal_table tbody');
+            body.empty();
+
+            var obj = res.tbl[0].r;
+            for (let i = 0; i < obj.length; i++) {
+                var o = obj[i];
+                body.append($('<tr>')
+                        .append($("<td>").text(i + 1))
+                        .append($("<td>").append($('<b>')
+                                .css('cursor', 'pointer')
+                                .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                .text(o.backlogName)))
+                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
+                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                        )
+            }
+        }
+    });
+
+});
+
+

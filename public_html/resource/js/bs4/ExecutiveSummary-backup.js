@@ -731,7 +731,7 @@ $(document).on("click", '.main-bc-btn', function (e) {
 
 function loadMainBusinesCaseBody(caseName){
      $('#business_case_heading').html(caseName)
-     $('#business_case_description').text("asdfasd")
+//     $('#business_case_description').text("asdfasd")
     getProblemStatList();
     getBusinessServiceRel();
     getKeyPartner();
