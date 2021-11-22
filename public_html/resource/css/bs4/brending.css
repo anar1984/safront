@@ -4486,6 +4486,7 @@ table.lbl-list-table tr td {
  .card-Userstory-detail .card-userstory-navmenu {
     display: block;
     width: 270px;
+    min-width: 270px;
     position: relative;
     right: 0;
 }
@@ -4498,7 +4499,7 @@ table.lbl-list-table tr td {
     margin-right: 0;
 }
  .card-Userstory-detail .isClose.card-userstory-navmenu {
-     margin-right: -295px;
+     margin-right: -315px;
     right: 0px;
 }
 @media only screen and (max-width: 768px) {
@@ -4555,4 +4556,26 @@ table.lbl-list-table tr td {
 .task-header-filter :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
     width: 100%;
     max-width: 220px;
+}
+.card-Userstory-rightbody .statusSelectSelect {
+    width: auto;
+    max-width: 100%;
+}
+.card-Userstory-rightbody>div{
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+.card-Userstory-rightbody .card-userstory-navmenu-headline {
+    padding: 0;
+}
+.card-Userstory-rightbody .nav-pills .nav-link {
+    color: #fff;
+    background-color: #3a3d87;
+    margin-right: 5px;
+    border: 1px solid #272b7c;
+}
+.card-Userstory-rightbody .nav-pills .nav-link.active, .card-Userstory-rightbody .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #272b7c;
+    box-shadow: inset 1px 1px 0px 0px rgb(0 0 0 / 20%);
 }
