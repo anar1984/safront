@@ -1081,9 +1081,9 @@ function getProjectList4TaskInfo(currentProjectId) {
     $('#task-card-project-id').remove();
     var select = $('<select>')
             .attr('id', 'task-card-project-id')
-            .addClass('form-control')
             .attr('onchange', "updateTask4ShortChange(this, 'fkProjectId')");
     var keys = Object.keys(SACore.Project);
+    select.selectpicker('refresh');
     for (var id in keys) {
         var pid = keys[id];
         var td = $("<option>")
@@ -1095,7 +1095,7 @@ function getProjectList4TaskInfo(currentProjectId) {
         select.append(td);
         
     }
-    select.selectpicker('refresh');
+    
     return select;
 }
 

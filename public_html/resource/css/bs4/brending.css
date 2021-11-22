@@ -4491,12 +4491,14 @@ table.lbl-list-table tr td {
 }
 .card-Userstory-detail .card-userstory-navmenu {
     background: #525596;
+    height: 100%;
+    display: inline-table;
 }
  .card-Userstory-detail .isOpen.card-userstory-navmenu {
     margin-right: 0;
 }
  .card-Userstory-detail .isClose.card-userstory-navmenu {
-     margin-right: -270px;
+     margin-right: -295px;
     right: 0px;
 }
 @media only screen and (max-width: 768px) {
@@ -4549,4 +4551,8 @@ table.lbl-list-table tr td {
     color: #E9E9F1;
     font-size: 14px;
     width: 100%;
+}
+.task-header-filter :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
+    width: 100%;
+    max-width: 220px;
 }

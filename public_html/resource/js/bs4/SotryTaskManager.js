@@ -657,6 +657,7 @@ function loadTaskCardDetails(taskId) {
     $('.task-info-modal-priority').each(function () {
         $(this).val(replaceTags(SATask.GetDetails(id, 'taskPriority')));
     })
+    $('#task-info-modal-priority').selectpicker('refresh');
 
     $('.taskEstimationHoursInput').val(replaceTags(SATask.GetDetails(id, 'estimatedHours')));
     $('.taskSpentHoursInput').val(replaceTags(SATask.GetDetails(id, 'spentHours')));
