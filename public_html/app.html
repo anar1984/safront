@@ -6123,7 +6123,7 @@
                                 </div>
                             </div>
 
-                            <div class="addEpicTask">
+                            <div class="addEpicTask cs-forum-group">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history"
                                         onclick="changeUserStoryOfTaskModal()">
@@ -6131,13 +6131,13 @@
                                     </span>
 
                                     <span class="comment-content-header-history"
-                                        onclick="showUserStoryOfTaskCardModal(this)" style="color:black;"
+                                        onclick="showUserStoryOfTaskCardModal(this)" style="color:#a4a8ff;"
                                         id='task-mgmt-modal-user-story'>
                                     </span>
                                 </div>
                             </div>
 
-                            <div class="addEpicTask">
+                            <div class="addEpicTask cs-forum-group">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history" onclick="changeParentTaskModal()">
                                         Parent Task<br>
@@ -6151,7 +6151,7 @@
                             </div>
 
 
-                            <div class="addEpicTask" style="padding-bottom: 20px;">
+                            <div class="addEpicTask cs-forum-group" style="padding-bottom: 20px;">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history">
                                         Child Task<br>
@@ -6163,9 +6163,10 @@
                                 </div>
                             </div>
 
+                            <hr class="hr-ss">
 
-                            <div class="Assigne-card-story">
-                                <span class="comment-content-header-history">Assignee</span>
+                            <div class="cs-forum-group Assigne-card-story">
+                                <label class="cs-label-name">Assignee</label>
 
                                 <div class="Assigne-card-story-select form-control">
                                     <div id='task-mgmt-assignee'>
@@ -6182,7 +6183,33 @@
                                 </div>
                             </div>
 
-                            <div class="addEpicTask" style="padding-bottom: 20px;">
+                            <div class="cs-forum-group Assigne-card-story">
+                                <label class="cs-label-name">Created by</label>
+
+                                <div class="Assigne-card-story-select form-control">
+                                    <div id='task-mgmt-create-by'>
+                                        <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
+                                            srcset="">
+                                        <span class="Assigne-card-story-select-name">Unassigned</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cs-forum-group Assigne-card-story">
+                                <label class="cs-label-name">Created By: <span class="by-last-updated"><span class="task_detail_created_date"></span> / <span class="task_detail_created_time"></span></label>
+
+                                <div class="Assigne-card-story-select form-control">
+                                    <div id='task-mgmt-closed-by'>
+                                        <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
+                                            srcset="">
+                                        <span class="Assigne-card-story-select-name">Unassigned</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="hr-ss">
+
+                            <div class="cs-forum-group addEpicTask" style="padding-bottom: 20px;">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history">
                                         Sprint<br>
@@ -6195,43 +6222,55 @@
                                 </div>
                             </div>
 
-                            <div class="estimateHours">
-                                <span class="comment-content-header-history">Estimated Hour(s)</span>
-                                <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
-                                    class="taskEstimationHoursInput estimateHourseInput form-control" type="number" name=""
-                                    id="">
-                            </div>
-                            <div class="spentHours">
-                                <span href="#" class="comment-content-header-history">Spent Hour(s)</span>
-                                <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control"
-                                    onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
+                            <div class="row mt-3">
+                                <div class="col-6 cs-forum-group estimateHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Estimated Hour(s)</label>
+                                        <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
+                                            class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
+                                            id="">
+                                    </div>
+                                </div>
+                                <div class="col-6 cs-forum-group spentHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Spent Hour(s)</label>
+                                        <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
+                                            onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
+                                    </div>
+                                </div>
+                                <div class="col-6 cs-forum-group estimateHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Estimated Counter</label>
+                                        <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
+                                            class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
+                                            id="">
+                                    </div>
+                                </div>
+                                <div class="col-6 cs-forum-group spentHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Executed Counter</label>
+                                        <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
+                                            onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
+                                    </div>
+                                </div>
+                                <div class="col-6 cs-forum-group estimateHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Estimated Budget</label>
+                                        <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
+                                            class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
+                                            id="">
+                                    </div>
+                                </div>
+                                <div class="col-6 cs-forum-group spentHours">
+                                    <div class="">
+                                        <label class="cs-label-name">Spent Budget</label>
+                                        <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
+                                            onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
+                                    </div>
+                                </div>
                             </div>
 
-
-                            <div class="estimateHours " hidden style="display:none">
-                                <span class="comment-content-header-history">Estimated Counter</span>
-                                <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
-                                    class="taskEstimatedCounterInput estimateHourseInput form-control" type="number" name=""
-                                    id="">
-                            </div>
-                            <div class="spentHours">
-                                <span href="#" class="comment-content-header-history">Executed Counter</span>
-                                <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control"
-                                    onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
-                            </div>
-                            <div class="estimateHours">
-                                <span class="comment-content-header-history">Estimated Budget</span>
-                                <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
-                                    class="taskEstimatedBudgetInput estimateHourseInput form-control" type="number" name=""
-                                    id="">
-                            </div>
-                            <div class="spentHours">
-                                <span href="#" class="comment-content-header-history">Spent Budget</span>
-                                <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control"
-                                    onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
-                            </div>
-
-
+                        
                                 <!-- <div class="statusCardStory">
                                     <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
                                     <div class="form-group statusSelectSelect">
@@ -6247,37 +6286,26 @@
                 
                                 </div>-->
 
-                            <div class="Assigne-card-story">
-                                <br>
-                                <span class="comment-content-header-history">Created by</span>
-
-                                <div class="Assigne-card-story-select form-control">
-                                    <div id='task-mgmt-created-by'>
-                                        <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
-                                            srcset="">
-                                        <span class="Assigne-card-story-select-name">Unassigned</span>
-                                    </div>
-                                </div>
-                            </div>
+                           
                 </div>
                 <div class="tab-pane fade" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
                     <div class="row">
                                         <div class="col-lg-6 cs-flex-col flex-item mt-2">
                                             <div class="cs-forum-group">
                                                 <label class="cs-label-name">Start Date</label>
-                                                <input class="form-control" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
+                                                <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 cs-flex-col flex-item mt-2">
                                             <div class="cs-forum-group">
                                                 <label class="cs-label-name">End Date</label>
-                                                <input class="form-control" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
+                                                <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 cs-flex-col flex-item mt-2">
                                             <div class="cs-forum-group">
                                                 <label class="cs-label-name">Run Time</label>
-                                                <input class="form-control" name="runTaskTime" id="runTaskTime_detail" type="text" required>
+                                                <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
                                             </div>
                                         </div>
                                        
@@ -6320,11 +6348,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row weekly-actions run-intensive run-enabled">
+                                    <div class="row weekly-actions run-intensive run-enabled mt-3">
                                         <div class="col-12">
                                             <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
                                         </div>
-                                        <div class="col-md-3 cs-flex-col flex-item mt-2">
+                                        <div class="col-md-12 cs-flex-col flex-item mt-2">
                                            <div class="cs-forum-group">
                                                <label class="cs-label-name">Weekday</label>
                                                <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
@@ -6344,7 +6372,7 @@
                                         <input type="hide" id="hide_actions_param_detail">
                                         <input type="hide" id="hide_actions_param_2_detail">
                                     </div>
-                                   <div class="row monthly-actions run-intensive">
+                                   <div class="row monthly-actions run-intensive mt-3">
                                         <div class="col-12">
                                             <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
                                         </div>
@@ -6446,7 +6474,7 @@
                                             </div>
                                         </div>
                                    </div>
-                                   <div class="row yearly-actions run-intensive">
+                                   <div class="row yearly-actions run-intensive mt-3">
                                     <div class="col-12">
                                         <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
                                     </div>
