@@ -664,8 +664,12 @@ $(document).on('click',".btn-plus-pag",function () {
                
                 cheweek.getTaskList();
             });
-        }else{
+        }
+        else if(idbd==='staticlist-modul'){
+            cheweek_group.getModulList();
+        }else {
             new UserStory().setGUIComponentFillGUIModal(this,idbd,'21041212141705702084');
+
         }
         
       

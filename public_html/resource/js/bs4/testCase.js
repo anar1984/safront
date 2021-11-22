@@ -1422,7 +1422,7 @@ function getBugListDetails(res) {
         var createByImage = o.createByImage;
         var createdByImg = (createByImage) ?
                 fileUrl(createByImage) :
-                fileUrl(new User().getDefaultUserprofileName());
+                " ";
 
         var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
         var taskName = '<a class="issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
@@ -1529,8 +1529,10 @@ function getBugListDetails(res) {
                                         .attr("aria-expanded", "false")
                                         .attr("id", "bug-listassigne-dropdown")
                                         .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                                                .attr('src', img) : "<img class='Assigne-card-story-select-img' src='https://app.sourcedagile.com/api/get/files/userprofile.png'> Unassigned")
-                                        .append(o.userName))
+                                                .attr('src', img) 
+                                        : " ")
+//                                        .append(o.userName)
+                                        )
 
                                 .append($("<div>")
                                         .addClass("dropdown-menu")
@@ -1619,7 +1621,8 @@ function getBugListDetails(res) {
                                 .append((o.createByName) ? $('<img class="Assigne-card-story-select-img">')
                                         .attr('src', createdByImg) : "")
                                 .append(" ")
-                                .append(o.createByName))
+//                                .append(o.createByName)
+                                )
 
                         .append($('<i class="fa fa-filter">')
                                 .attr('onclick', 'setFilter4IssueMgmtAsCreatedBy("' + o.createdBy + '")')

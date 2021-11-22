@@ -2685,10 +2685,9 @@ function fillBacklogHistory4View(backlogId, isApi) {
 
 function setBacklogHistory4View() {
 
-    var div = $('#history_inp_popUp_zadsiyahisi');
+    var div = $('#item-history-list');
     div.html('');
-    var block = $("#backBacklogBtn-block")
-    block.html('')
+    var block = $("#backBacklogBtn-block");   
     var temp = [];
     var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
@@ -2697,25 +2696,23 @@ function setBacklogHistory4View() {
         if (temp.includes(o.fkBacklogId)) {
             continue;
         }
+        
+        if(ct===1){
+           $(block) 
+            .attr("pid", o.fkProjectId)
+            .attr('bid', o.fkBacklogId)
+            .attr('is_api', o.isApi)
+            .attr("onclick", "showBacklogHistoryClick(this)")
+            .attr("title",o.backlogName)
+            .html('<i class="fas fa-arrow-left"></i>');
 
-        if (ct === 1) {
-            var btn = $("<button>")
-                    .attr("href", "#")
-                    .addClass("btn btn-primary btn-lg")
-                    .attr("pid", o.fkProjectId)
-                    .attr('bid', o.fkBacklogId)
-                    .attr('is_api', o.isApi)
-                    .attr("onclick", "showBacklogHistoryClick(this)")
-                    .attr("title", o.backlogName)
-                    .html('<i class="fas fa-arrow-left"></i>');
-
-            block.append('<div>Back<div>')
-            block.append(btn)
+                
         }
         var d = $('<div>')
                 .addClass("col-lg-12")
 
                 .append($('<a>')
+                         .addClass("dropdown-item")
                         .attr("href", "#")
                         .attr("pid", o.fkProjectId)
                         .attr('bid', o.fkBacklogId)
