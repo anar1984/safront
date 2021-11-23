@@ -5988,134 +5988,141 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
 
-                            <div class="statusCardStory cs-forum-group">
-                                <label class="cs-label-name">Status</label>
-                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
-                                <div class="form-group statusSelectSelect">
-
-                                    <select class="form-control task-info-modal-status" style="width:auto"
-                                            onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
-                                        <option value='new'><span
-                                            class="us-item-status-new comment-content-header-status">New</span></option>
-                                        <option value='ongoing'> <span
-                                            class="us-item-status-ongoing comment-content-header-status"
-                                            id="">Ongoing</span></option>
-                                        <option value='closed'><span
-                                            class="us-item-status-closed comment-content-header-status"
-                                            id="">Closed</span></option>
-                                        <option value='waiting'><span
-                                            class="us-item-status-waiting comment-content-header-status"
-                                            id="">Waiting</span></option>
-                                        <option value='canceled'><span
-                                            class="us-item-status-canceled comment-content-header-status"
-                                            id="">Canceled</span></option>
-                                        <option value='rejected'><span
-                                            class="us-item-status-rejected comment-content-header-status"
-                                            id="">Rejected</span></option>
-                                        <option value='UAT'><span
-                                            class="us-item-status-rejected comment-content-header-status"
-                                            id="">UAT</span></option>
-
-                                    </select>
+                            <div class="row">
+                                <div class="col-lg-4 statusCardStory cs-input-group mb-3">
+                                    <label class="input-group-addon">Status</label>
+                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
+                                    <div class="form-group ">
+    
+                                        <select class="form-control task-info-modal-status" style="width:auto"
+                                                onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
+                                            <option value='new'><span
+                                                class="us-item-status-new comment-content-header-status">New</span></option>
+                                            <option value='ongoing'> <span
+                                                class="us-item-status-ongoing comment-content-header-status"
+                                                id="">Ongoing</span></option>
+                                            <option value='closed'><span
+                                                class="us-item-status-closed comment-content-header-status"
+                                                id="">Closed</span></option>
+                                            <option value='waiting'><span
+                                                class="us-item-status-waiting comment-content-header-status"
+                                                id="">Waiting</span></option>
+                                            <option value='canceled'><span
+                                                class="us-item-status-canceled comment-content-header-status"
+                                                id="">Canceled</span></option>
+                                            <option value='rejected'><span
+                                                class="us-item-status-rejected comment-content-header-status"
+                                                id="">Rejected</span></option>
+                                            <option value='UAT'><span
+                                                class="us-item-status-rejected comment-content-header-status"
+                                                id="">UAT</span></option>
+    
+                                        </select>
+                                    </div>
+    
                                 </div>
-
+    
+    
+    
+                                <div class="col-lg-4 statusCardStory cs-input-group mb-3">
+                                    <label class="input-group-addon">Task Nature</label>
+                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
+                                    <div class="form-group">
+                                        <select class="form-control task-info-modal-nature" style="width:auto"
+                                                onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
+                                            <option value='new'><span
+                                                class="us-item-status-new comment-content-header-status">New Request</span>
+                                            </option>
+                                            <option value='change'> <span
+                                                class="us-item-status-ongoing comment-content-header-status" id="">Change
+                                                Request</span></option>
+                                            <option value='bug'><span
+                                                class="us-item-status-closed comment-content-header-status" id="">Bug</span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                                <div class="col-lg-4 statusCardStory task-mgmt-tasktype cs-input-group mb-3" id='task-mgmt-tasktype'>
+                                    <label class="input-group-addon">Task Type</label>
+                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
+                                    <div class="form-group">
+    
+                                        <select class="form-control task-info-modal-tasktype" style="width:auto"
+                                                onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
+                                                id="task-info-modal-tasktype">
+    
+    
+                                        </select>
+                                    </div>
+    
+                                </div>
+                                <div class="col-lg-4 statusCardStory cs-input-group">
+                                    <label class="input-group-addon">Priority</label>
+                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
+                                    <div class="form-group ">
+                                        <select class="form-control task-info-modal-priority" style="width:auto"
+                                                onchange="updateTask4ShortChange(this, 'taskPriority')"
+                                                id="task-info-modal-priority">
+                                            <option value='1' selected>1- Lowest</option>
+                                            <option value='2'>2</option>
+                                            <option value='3'>3</option>
+                                            <option value='4'>4</option>
+                                            <option value='5'>5</option>
+                                            <option value='6'>6</option>
+                                            <option value='7'>7</option>
+                                            <option value='8'>8</option>
+                                            <option value='9'>9 - Highest</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
-
-
-                            <div class="statusCardStory cs-input-group">
-                                <label class="input-group-addon">Task Nature</label>
-                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
-                                <div class="form-group statusSelectSelect">
-                                    <select class="form-control task-info-modal-nature" style="width:auto"
-                                            onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
-                                        <option value='new'><span
-                                            class="us-item-status-new comment-content-header-status">New Request</span>
-                                        </option>
-                                        <option value='change'> <span
-                                            class="us-item-status-ongoing comment-content-header-status" id="">Change
-                                            Request</span></option>
-                                        <option value='bug'><span
-                                            class="us-item-status-closed comment-content-header-status" id="">Bug</span>
-                                        </option>
-                                    </select>
+                            <div class="row">
+                            
+    
+                                <div class="col-lg-4 addEpicTask cs-input-group">
+                                    <div class="dropdown-task show">
+                                        <a href="#" class="btn comment-content-header-history"
+                                              onclick="changeUserStoryOfTaskModal()">
+                                            User Story<br>
+                                    </a>
+    
+                                    <a  href="#" class="btn comment-content-header-history"
+                                              onclick="showUserStoryOfTaskCardModal(this)"
+                                              id='task-mgmt-modal-user-story'>
+                                    </a>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="statusCardStory task-mgmt-tasktype cs-input-group" id='task-mgmt-tasktype'>
-                                <label class="input-group-addon">Task Type</label>
-                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
-                                <div class="form-group statusSelectSelect">
-
-                                    <select class="form-control task-info-modal-tasktype" style="width:auto"
-                                            onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
-                                            id="task-info-modal-tasktype">
-
-
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="statusCardStory cs-input-group">
-                                <label class="input-group-addon">Priority</label>
-                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
-                                <div class="form-group statusSelectSelect">
-                                    <select class="form-control task-info-modal-priority" style="width:auto"
-                                            onchange="updateTask4ShortChange(this, 'taskPriority')"
-                                            id="task-info-modal-priority">
-                                        <option value='1' selected>1- Lowest</option>
-                                        <option value='2'>2</option>
-                                        <option value='3'>3</option>
-                                        <option value='4'>4</option>
-                                        <option value='5'>5</option>
-                                        <option value='6'>6</option>
-                                        <option value='7'>7</option>
-                                        <option value='8'>8</option>
-                                        <option value='9'>9 - Highest</option>
-                                    </select>
-                                </div>
-                            </div>
+                           
 
                             <div class="addEpicTask cs-input-group">
                                 <div class="dropdown-task show">
-                                    <span href="#" class="comment-content-header-history"
-                                          onclick="changeUserStoryOfTaskModal()">
-                                        User Story<br>
-                                    </span>
-
-                                    <span class="comment-content-header-history"
-                                          onclick="showUserStoryOfTaskCardModal(this)" style="color:#a4a8ff;"
-                                          id='task-mgmt-modal-user-story'>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="addEpicTask cs-input-group">
-                                <div class="dropdown-task show">
-                                    <span href="#" class="comment-content-header-history" onclick="changeParentTaskModal()">
+                                    <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
                                         Parent Task<br>
-                                    </span>
+                                    </a>
 
-                                    <span class="comment-content-header-history task-mgmt-modal-parent-task"
-                                          onclick="shiftTaskInfoOnTaskInfoModal(this)" style="color:black;"
+                                    <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                          onclick="shiftTaskInfoOnTaskInfoModal(this)"
                                           id='task-mgmt-modal-parent-task'>
-                                    </span>
+                                </a>
                                 </div>
                             </div>
 
 
                             <div class="addEpicTask cs-input-group" style="padding-bottom: 20px;">
                                 <div class="dropdown-task show">
-                                    <span href="#" class="comment-content-header-history">
+                                    <a href="#" class="btn comment-content-header-history">
                                         Child Task<br>
-                                    </span>
+                                    </a>
 
-                                    <span class="comment-content-header-history task-mgmt-modal-child-task"
-                                          style="color:black;" id='task-mgmt-modal-child-task'>
-                                    </span>
+                                    <a class="btn comment-content-header-history task-mgmt-modal-child-task"
+                                          id='task-mgmt-modal-child-task'>
+                                </a>
                                 </div>
                             </div>
+
+                    </div>
 
                             <hr class="hr-ss">
 
