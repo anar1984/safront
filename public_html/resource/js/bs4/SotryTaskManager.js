@@ -657,6 +657,7 @@ function loadTaskCardDetails(taskId) {
     $('.task-info-modal-priority').each(function () {
         $(this).val(replaceTags(SATask.GetDetails(id, 'taskPriority')));
     })
+    $('#task-info-modal-priority').selectpicker('refresh');
 
     $('.taskEstimationHoursInput').val(replaceTags(SATask.GetDetails(id, 'estimatedHours')));
     $('.taskSpentHoursInput').val(replaceTags(SATask.GetDetails(id, 'spentHours')));
@@ -685,6 +686,13 @@ function loadTaskCardDetails(taskId) {
 
 
     $('.descriptonBody').html(MapTextAreaHtml(replaceTags(SATask.GetDetails(id, 'taskDescription'))));
+
+
+    var created_date = SATask.GetDetails(id,'closeStatusDate')
+    $(".task_detail_created_date").text(Utility.convertDate(created_date));
+    var created_time = SATask.GetDetails(id,'closeStatusTime')
+    $(".task_detail_created_time").text(Utility.convertTime(created_time));
+
 
     var userStoryNo = SACore.GetBacklogKey(SATask.GetDetails(id, 'fkBacklogId'), "orderNo");
     var userStoryName = SACore.GetBacklogKey(SATask.GetDetails(id, 'fkBacklogId'), "backlogName");
@@ -723,6 +731,21 @@ function loadTaskCardDetails(taskId) {
 
     $('#task-mgmt-created-by').find('img').attr('src', img4);
     $('#task-mgmt-created-by').find('span').html(' ' + userName4);
+
+
+    var updateBy = SATask.GetDetails(id, 'updatedBy')
+    var userImage4updateBy = SAProjectUser.GetUserDetails(updateBy, "userImage");
+    var userName4updateBy = SAProjectUser.GetUserDetails(updateBy, "userPersonName");
+
+    var img5 = (userImage4updateBy)
+            ? fileUrl(userImage4updateBy)
+            : fileUrl(new User().getDefaultUserprofileName());
+    var userName5 = (userName4updateBy)
+            ? userName4updateBy
+            : ' Unassigned';
+
+    $('#task-mgmt-update-by').find('img').attr('src', img5);
+    $('#task-mgmt-update-by').find('span').html(' ' + userName5);
 
 
 

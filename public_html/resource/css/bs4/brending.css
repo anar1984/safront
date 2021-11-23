@@ -3220,10 +3220,13 @@ hr.hr-ss {
     outline: none;
     box-shadow: none;
 }
-.storecard-sidebarin textarea, .storecard-sidebarin .cs-forum-group .cs-input {
+.storecard-sidebarin textarea, .storecard-sidebarin .cs-forum-group .cs-input, .card-Userstory-rightbody .cs-forum-group .cs-input{
     color: #f0f0f6 !important;
     background-color: #3a3d87 !important;
     border-color: #3a3d87 !important;
+}
+.storecard-sidebarin textarea::placeholder, .storecard-sidebarin .cs-forum-group .cs-input::placeholder, .card-Userstory-rightbody .cs-forum-group .cs-input::placeholder {
+    color: rgb(235 235 240 / 38%) !important;
 }
 .cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
@@ -3241,11 +3244,11 @@ hr.hr-ss {
     color: #fff;
     border-radius: 3px;
 }
-.storecard-sidebarin .cs-forum-group input.btn:hover {
+.storecard-sidebarin .cs-forum-group input.btn:hover, .card-Userstory-rightbody .cs-forum-group input.btn:hover{
     background: #272B7C;
     border: 1px solid #272B7C;
 }
-.storecard-sidebarin .cs-forum-group .cs-label-name {
+.storecard-sidebarin .cs-forum-group .cs-label-name, .card-Userstory-rightbody .cs-forum-group .cs-label-name{
     color: #E9E9F1;
     font-size: 14px;
     width: 100%;
@@ -3425,7 +3428,7 @@ hr.hr-ss {
     background-color: #272b7c;
     border-color: #272b7c;
 }
-.Assigne-card-story1 .by-last-updated {
+.Assigne-card-story1 .by-last-updated, .cs-label-name .by-last-updated {
     float: right;
 }
 .cs-forum-group .cs-attach-a {
@@ -3459,7 +3462,7 @@ hr.hr-ss {
 .cs-forum-group textarea {
 
 }
-.storecard-sidebarin .Assigne-card-story-select {
+.storecard-sidebarin .Assigne-card-story-select, .card-Userstory-rightbody .Assigne-card-story-select{
     text-decoration: none;
     height: 35px;
     margin-top: 5px;
@@ -3471,7 +3474,7 @@ hr.hr-ss {
     border-radius: 3px;
     width: 100%;
 }
-.storecard-sidebarin .Assigne-card-story-search {
+.storecard-sidebarin .Assigne-card-story-search, .card-Userstory-rightbody .Assigne-card-story-search{
     text-decoration: none;
     height: 35px;
     margin-top: 5px;
@@ -3483,7 +3486,7 @@ hr.hr-ss {
     width: 100%;
     margin-left: 0;
 }
-.storecard-sidebarin .Assigne-card-story-select-content {
+.storecard-sidebarin .Assigne-card-story-select-content, .card-Userstory-rightbody .Assigne-card-story-select-content{
     width: 100%;
     border-radius: 0;
     border-top: none;
@@ -3496,15 +3499,16 @@ hr.hr-ss {
     transition: display 0.5s ease-in 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
     display: none;
 }
-.storecard-sidebarin .owner-content-user {
+.storecard-sidebarin .owner-content-user, .card-Userstory-rightbody .owner-content-user{
     padding: 10px;
     border-top: none;
 }
-.storecard-sidebarin .owner-content-user:hover {
+.storecard-sidebarin .owner-content-user:hover, .card-Userstory-rightbody .owner-content-user:hover{
     background-color: #272b7c;
 }
-.storecard-sidebarin .Assigne-card-story-select > div {
+.storecard-sidebarin .Assigne-card-story-select > div, .card-Userstory-rightbody .Assigne-card-story-select > div{
     padding: 0 10px;
+    z-index: 10;
 }
 .storecard-sidebarin .right-menu-description span:nth-child(2) {
     font-size: 14px;
@@ -4485,18 +4489,29 @@ table.lbl-list-table tr td {
  }
  .card-Userstory-detail .card-userstory-navmenu {
     display: block;
-    width: 270px;
+    width: 370px;
+    min-width: 370px;
     position: relative;
     right: 0;
 }
 .card-Userstory-detail .card-userstory-navmenu {
+    height: 100%;
+    display: inline-table;
+}
+.card-Userstory-detail .card-userstory-navmenu:before {
+    content: "";
+    position: absolute;
     background: #525596;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
 }
  .card-Userstory-detail .isOpen.card-userstory-navmenu {
     margin-right: 0;
 }
  .card-Userstory-detail .isClose.card-userstory-navmenu {
-     margin-right: -270px;
+     margin-right: -375px;
     right: 0px;
 }
 @media only screen and (max-width: 768px) {
@@ -4549,4 +4564,55 @@ table.lbl-list-table tr td {
     color: #E9E9F1;
     font-size: 14px;
     width: 100%;
+}
+.task-header-filter :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
+    width: 100%;
+    max-width: 220px;
+}
+.card-Userstory-rightbody .statusSelectSelect {
+    width: auto;
+    max-width: 100%;
+}
+.card-Userstory-rightbody>div{
+    padding: 0 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.card-Userstory-rightbody .nav.nav-pills{
+    position: relative;
+}
+.card-Userstory-rightbody .card-userstory-navmenu-headline {
+    padding: 0;
+}
+.card-Userstory-rightbody .nav-pills .nav-link {
+    color: #fff;
+    background-color: #3a3d87;
+    margin-right: 5px;
+    border: 1px solid #272b7c;
+}
+.card-Userstory-rightbody .nav-pills .nav-link.active, .card-Userstory-rightbody .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #272b7c;
+    box-shadow: inset 1px 1px 0px 0px rgb(0 0 0 / 20%);
+}
+.card-Userstory-rightbody .cs-flex-col {
+
+}
+.card-Userstory-rightbody .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+.card-Userstory-rightbody .cs-forum-group .cs-input {
+    width: 100% !important;
+}
+.cs-forum-group .comment-content-header-history {
+    color: #fff;
+}
+.card-Userstory-rightbody .section-title strong {
+    color: #fff;
+}
+.card-Userstory-rightbody .checkmarkcontainer{
+    color: #fff;
+}
+.card-Userstory-rightbody .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #3a3d87;
 }
