@@ -458,8 +458,6 @@ function addNewTask4BugMultiZad() {
         files += $(this).attr('fname') + "|";
     })
 
-
-
     var sprintList = "";
     $('.bug-task-filter-checkbox-sprint').each(function () {
         if ($(this).is(":checked")) {
@@ -477,6 +475,32 @@ function addNewTask4BugMultiZad() {
     data.taskPriority = $("#bug_filter_priority_add").val();
     data.taskNature = $("#bug_filter_project_id_add").val();
     data.sprintList = sprintList;
+
+
+    data.startDate = toDate("runTaskStartDate");
+    data.endDate = toDate("runTaskEndDate");
+    data.runTime = GetConvertedTime("runTaskTime");
+    data.intensive = $("#run_task_intensive_select").val();
+    data.repeatInterval = $("#run_task_repeat_select").val();
+    data.scheduleStatus = $("#run_task_status_select").val();
+// data.description = $("#bug_filter_project_id_add").val();
+    data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
+    data.action = $("#bug_filter_project_id_add").val();
+    data.weekdays = $("#swofm_weekday_select").val();
+    data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+    data.notificationMail = $("#bug_filter_project_id_add").val();
+    data.remindMeParam = $("#bug_filter_project_id_add").val();
+    data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+
+
+    data.monthlyAction = $("#monthlyAction:checked").val();
+    data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
+    data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
+    data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
+    data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
+
+
+
 
     insertNewTaskDetail4BugZad(data);
 
@@ -619,7 +643,7 @@ function insertNewTaskDetail4BugZad(dataCore) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            
+
             getBugList();
             Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
         },
@@ -2750,14 +2774,14 @@ $(document).on("change", "#sdofm_day_of_Month_select", function (e) {
     $('#hide_actions_param').val(sdofm_day_of_Month_select);
 });
 $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
-    if ($('#first_day_of_month').is(':checked')) {
+    var val = $("#monthlyAction:checked").val();
+    if (val === 'first_day_of_month') {
         $('.run_spa').removeClass('spa_enable');
         $('.hr_spa').hide();
         $('#hide_actions').val('');
         $('#hide_actions').val('first_day_of_month');
         $('#hide_actions_param').val('');
-    }
-    if ($('#last_day_of_month').is(':checked')) {
+    } else if (val === 'last_day_of_month') {
         $('.run_spa').removeClass('spa_enable');
         $('.hr_spa').hide();
         $('#hide_actions').val('');
@@ -2766,7 +2790,8 @@ $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
     }
 });
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
-    if ($('#specific_day_of_month').is(':checked')) {
+    var val = $("#monthlyAction:checked").val();
+    if (val === 'specific_day_of_month') {
         $('.run_spa').removeClass('spa_enable');
         $('.hr_spa').hide();
         $('.hr_spa').show();
@@ -2776,8 +2801,7 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions').val('specific_day_of_month');
         var sdofm_day_of_Month_select = $('#sdofm_day_of_Month_select').val();
         $('#hide_actions_param').val(sdofm_day_of_Month_select);
-    }
-    if ($('#before_last_day_of_month').is(':checked')) {
+    } else if (val === 'before_last_day_of_month') {
         $('.run_spa').removeClass('spa_enable');
         $('.hr_spa').hide();
         $('.hr_spa').show();
@@ -2787,8 +2811,7 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions').val('before_last_day_of_month');
         var days_before_last_day_of_month = $('#days_before_last_day_of_month').val();
         $('#hide_actions_param').val(days_before_last_day_of_month);
-    }
-    if ($('#specific_weekday_of_month').is(':checked')) {
+    } else if (val === 'specific_weekday_of_month') {
         $('.run_spa').removeClass('spa_enable');
         $('.hr_spa').hide();
         $('.hr_spa').show();

@@ -560,402 +560,26 @@ function toDate(id) {
 }
 
 
-
-
-
-
-var ComponentOld = {
-    EditBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<input style='width:100%;" + css + "' type='text' value='" + content + "'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    InnerEditBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-        //        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<input style='width:100%;" + css + "' type='text' value='" + content + "'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    Image: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<img src='" + content + "' style='width:100%;" + css + "'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    Youtube: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<iframe   style='width:100%;" + css + "' src='https://www.youtube.com/embed/" + content + "'>";
-        st += "</iframe>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    FilePicker: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<input style='width:100%;" + css + "' type='file'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    Date: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<input style='width:100%;" + css + "' type='date'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    Time: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<input style='width:100%;" + css + "' type='time'>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    TextArea: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<textarea style='width:100%;" + css + "' rows='3'>" + content + "</textarea>";
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    SelectBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-
-        var cnt = '';
-        if (content) {
-            var r = content.split(/\r*\n/);
-            for (var i = 0; i < r.length; i++) {
-                cnt += "<option>" + r[i] + "</option>";
-            }
-        } else {
-            cnt += "<option>Value 1</option>";
-            cnt += "<option>Value 2</option>";
-            cnt += "<option>Value 3</option>";
-            cnt += "<option>Value 4</option>";
-        }
-
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<select style='width:100%;padding:4px 0 4px 0;" + css + "' type='text'>";
-        st += cnt;
-        st += "</select>"
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    MultiSelectBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var cnt = '';
-        if (content) {
-            var r = content.split(/\r*\n/);
-            for (var i = 0; i < r.length; i++) {
-                cnt += "<option>" + r[i] + "</option>";
-            }
-        } else {
-            cnt += "<option>Value 1</option>";
-            cnt += "<option>Value 2</option>";
-            cnt += "<option>Value 3</option>";
-            cnt += "<option>Value 4</option>";
-        }
-
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span>";
-        st += "<select style='width:100%;padding:4px 0 4px 0;'" + css + "' type='text' multiple>";
-        st += cnt;
-        st += "</select>"
-        st += "</div>";
-        st += "";
-        st += "";
-        return  st;
-    },
-    RadioButton: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var cnt = '';
-        if (content) {
-            var r = content.split(/\r*\n/);
-            for (var i = 0; i < r.length; i++) {
-                cnt += '<label class="radio-inline">'
-                cnt += '<input type="radio" name="optradio" checked><span style="width:100%;' + css + '">' + r[i] + ' </span>&nbsp;'
-                cnt += '</label>'
-            }
-        } else {
-            cnt += '<label class="radio-inline">'
-            cnt += '<input type="radio" name="optradio" checked> <span style="width:100%;' + css + '">Option 1 &nbsp;&nbsp;&nbsp;</span>'
-            cnt += '</label>'
-            cnt += '<label class="radio-inline">'
-            cnt += ' <input type="radio" name="optradio"> <span  style="width:100%;' + css + '">Option 2 &nbsp;&nbsp;&nbsp;</span>'
-            cnt += '</label>'
-            cnt += '<label class="radio-inline">'
-            cnt += ' <input type="radio" name="optradio"> <span  style="width:100%;' + css + '">Option 3&nbsp;&nbsp;&nbsp;</span> '
-            cnt += '</label>'
-        }
-
-
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span><br>";
-        st += cnt;
-        st += "</div>";
-        return  st;
-    },
-    CheckBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var cnt = '';
-        if (content) {
-            var r = content.split(/\r*\n/);
-            for (var i = 0; i < r.length; i++) {
-                cnt += '<label class="radio-inline">'
-                cnt += '<input type="checkbox" checked><span  style="width:100%;' + css + '">' + r[i] + '</span> &nbsp;&nbsp;&nbsp;'
-                cnt += '</label>'
-            }
-        } else {
-            cnt += '<input type="checkbox" name="vehicle1" value="Bike"><span style="width:100%;' + css + '"> Check Option  1 </span><br>';
-            cnt += '<input type="checkbox" name="vehicle2" value="Car"><span style="width:100%;' + css + '"> Check Option 2 </span><br>';
-            cnt += '<input type="checkbox" name="vehicle3" value="Boat"><span checked style="width:100%;' + css + '"> Check Option 3</span><br><br>';
-        }
-
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span>" + label + "</span><br>";
-        st += cnt;
-        st += "</div>";
-        return  st;
-    },
-    Label: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        label = (content) ? content : label;
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += "<span style='width:100%;" + css + "'>" + label + "</span><br>";
-        st += "</div>";
-        return  st;
-    },
-    Hiperlink: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-
-        var modal = (param1)
-                ? 'onclick="new UserStory().setGUIComponentButtonGUIModal(\'' + param1 + '\')"\n\
-                data-toggle="modal" \n\
-                data-target="#userstory-gui-input-component-res-sus1"'
-                : "";
-        var href = (modal)
-                ? ' href="#"'
-                : (content)
-                ? ' href="' + content + '"'
-                : ' href="#"';
-        var st = "";
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += !(fromTable) ? '<br>' : "";
-        st += "<a " + href + "  " + modal + " style='width:100%;" + css + "'>" + label + "</a><br>";
-        st += "</div>";
-        return  st;
-    },
-    InnerRadioButton: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += '<input type="radio" ><span style="width:100%;' + css + '">' + label + "<span> <br>";
-        st += "</div>";
-        return  st;
-    },
-    Hidden: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += '<input type="hidden"> ' + "" + " <br>";
-        st += "</div>";
-        return  st;
-    },
-    InnerCheckBox: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += '<input type="checkbox" ><span style="width:100%;' + css + '">' + label + "<span> <br>";
-        st += "</div>";
-        return  st;
-    },
-    InnerLine: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += '<hr style="' + css + '">';
-        st += "</div>";
-        return  st;
-    },
-    Icon: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        content = (content) ? content : 'user-circle';
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += !(fromTable) ? '<br>' : "";
-        st += '<i class="fa fa-' + content + '" style="' + css + '"></i>';
-        st += "</div>";
-        content = "";
-        return  st;
-    },
-    Button: function (comp) {
-        if (!cell) {
-            cell = 2;
-        }
-
-        content = (content) ? content : label;
-        var modal = (param1)
-                ? 'onclick="new UserStory().setGUIComponentButtonGUIModal(\'' + param1 + '\')"\n\
-                data-toggle="modal" \n\
-                data-target="#userstory-gui-input-component-res-sus1"'
-                : "";
-        var st = ""
-        var lid = $("[iname*='" + label + "']").attr('pid');
-        st += '<div style="' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='" + containercss + "'>";
-        st += !(fromTable) ? '<br>' : "";
-        st += '<input style="width:100%;' + css + '" type="button" ' + modal + ' value="' + content + '"> <br>';
-        st += "</div>";
-        return  st;
-    },
-    Section: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var innerHTML = new UserStory().genGUIDesignHtmlById(param1);
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='width:100%;" + css + "'>";
-        st += "<div class='row'>";
-        st += innerHTML;
-        st += "</div></div>";
-        return  st;
-    },
-    Tab: function (comp) {
-        if (!cell) {
-            cell = 12;
-        }
-        var innerHTML = new UserStory().genGUIDesignHtmlById(param1);
-        var st = ""
-        var lid = $("[iname*='" + "label" + "']").attr('pid');
-        st += '<div style="width:100%;' + containercss + '"  class="component-class  col-' + cell + '" id="' + comp.id + '" ondragover="allowDrop(event)"  ondragstart="drag(event)" ondrop="drop(event)">';
-//        st += "<div class=col-" + cell + " style='width:100%;" + css + "'>";
-        st += "<div class='row'>";
-        st += innerHTML;
-        st += "</div></div>";
-        return  st;
+function toTime(id) {
+    var st = "";
+    if ($('#' + id).val()) {
+        var date = new Date($('#' + id).val());
+        var day = date.getHours();
+        day = day.toString(10).length === 1 ? '0' + day : day;
+        var month = date.getMonth() + 1;
+        month = month.toString(10).length === 1 ? '0' + month : month;
+        var year = date.getFullYear();
+        st = year + "" + month + '' + day;
     }
+    return st;
 }
-// Start upload preview image
 
+
+
+
+
+
+ 
 function fileUrl(fname) {
     return urlGl + 'api/get/files/' + fname;
 }
@@ -1726,6 +1350,16 @@ function GetTagLineVal(text, tag) {
     return st;
 }
 
+function GetConvertedTime(elementId) {
+    var date = new Date($('#'+elementId).val());
+    var day = date.getHours();
+    day = day.toString(10).length === 1 ? '0' + day : day;
+    var month = date.getSeconds() + 1;
+    month = month.toString(10).length === 1 ? '0' + month : month;
+    var year = date.getMilliseconds();
+    var d = day + "" + month + '' + year;
+    return d;
+}
 
 function GetConvertedTimeByElement(element) {
     var date = new Date($(element).val());
