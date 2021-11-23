@@ -5921,7 +5921,7 @@
 
 <div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog Card-story-taskmanager" role="document" style="min-width: 80%" id="taskMgmtModal-body">
+    <div class="modal-dialog Card-story-taskmanager" role="document" style="max-width: 50%" id="taskMgmtModal-body">
         <div class="modal-content">
             <div class="modal-header StorycardHeader">
                 <header class="Story-card-Header-task">
@@ -5972,76 +5972,68 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body card-Userstory-body col-12 pt-0 pr-0">
-                <div class="comment-seqment pr-3">
-
-                    <div class="commentwritepanel ">
-                        <div class="cs-input-group mb-3">
-                            <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                      placeholder="Add a comment.." rows="1"></textarea>
-
-                            <br>
-                            <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
-                                 style="width:100%;display: none; padding:0px;margin:0px;">
-                                <div class="col-12 text-center canvas_canvas_msg "
-                                     style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
-                                    <h5>Copy and Paste Image Here</h5>
-                                </div>
-                            </div>
-                            <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
-
-                                <div class="acceptcomment flex-fill mr-1">
-                                    <button class="btn btn-primary" type="submit"
-                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
-                                </div>
-                                <div class="deletecomment flex-fill mr-1">
-                                    <button class="btn " type="submit">Cancel</button>
-                                </div>
-                                <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
-                                       multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
-
-
-                            </div>
-
-
-
-
-                        </div>
-                        <!--                    <output id="tasklistcomment"></output>-->
-
-
-                    </div>
-                    <br>
-                    <span class="commentswordtext">Comments</span><br>
-                    <div class="comment-body">
-
-                    </div>
-
-                </div>
-                <div class="card-Userstory-rightbody isOpen card-userstory-navmenu">
-                    <div class="card-userstory-navmenu-headline">
-                        <div class="sc-close-sidebar-btn"><i class="fas fa-times" aria-hidden="true"></i></div>
-                        <div class="sc-open-sidebar-btn"><i class="fas fa-bars" aria-hidden="true"></i></div>
-                        <span>Task Options</span>
-                    </div>
-
-                    <ul class="nav nav-pills mb-3 p-2" id="pills-tab" role="tablist">
+            <div class="modal-body issue-managment-add-task col-12 pt-0 pr-0">
+                <div class="comment-seqment">
+                    <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link active" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
+                          <a class="nav-link active" id="d-details-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab0" aria-selected="true">Comment</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
                         </li>
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="d-reminder-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Reminder</a>
+                          <a class="nav-link" id="d-checklist-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Check List</a>
                         </li>
                       </ul>
                       <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
+                        <div class="tab-pane fade show active" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab0">
                             
-                            <div class="statusCardStory cs-forum-group">
-                                <label class="cs-label-name">Status</label>
+                            <div class="commentwritepanel ">
+                                    <div class="cs-input-group mb-3">
+                                    <div class="input-group-addon">Description</div>
+                                    <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
+                                            placeholder="Add a comment.." rows="1"></textarea>
+
+                                    <br>
+                                    <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
+                                        style="width:100%;display: none; padding:0px;margin:0px;">
+                                        <div class="col-12 text-center canvas_canvas_msg "
+                                            style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
+                                            <h5>Copy and Paste Image Here</h5>
+                                        </div>
+                                    </div>
+                                    <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
+
+                                        <div class="acceptcomment flex-fill mr-1">
+                                            <button class="btn btn-primary" type="submit"
+                                                    onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
+                                        </div>
+                                        <div class="deletecomment flex-fill mr-1">
+                                            <button class="btn " type="submit">Cancel</button>
+                                        </div>
+                                        <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
+                                            multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
+
+                                    </div>
+
+                              </div>
+                               <!--  <output id="tasklistcomment"></output>-->
+
+
+                            </div>
+                            <br>
+                            <span class="commentswordtext">Comments</span><br>
+                            <div class="comment-body">
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
+                            
+                            <div class="statusCardStory cs-input-group">
+                                <label class="input-group-addon">Status</label>
                                 <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
                                 <div class="form-group statusSelectSelect">
 
@@ -6075,8 +6067,8 @@
 
 
 
-                            <div class="statusCardStory cs-forum-group">
-                                <label class="cs-label-name">Task Nature</label>
+                            <div class="statusCardStory cs-input-group">
+                                <label class="input-group-addon">Task Nature</label>
                                 <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
                                 <div class="form-group statusSelectSelect">
                                     <select class="form-control task-info-modal-nature" style="width:auto"
@@ -6094,8 +6086,8 @@
                                 </div>
                             </div>
 
-                            <div class="statusCardStory task-mgmt-tasktype cs-forum-group" id='task-mgmt-tasktype'>
-                                <label class="cs-label-name">Task Type</label>
+                            <div class="statusCardStory task-mgmt-tasktype cs-input-group" id='task-mgmt-tasktype'>
+                                <label class="input-group-addon">Task Type</label>
                                 <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
                                 <div class="form-group statusSelectSelect">
 
@@ -6109,8 +6101,8 @@
 
                             </div>
 
-                            <div class="statusCardStory cs-forum-group">
-                                <label class="cs-label-name">Priority</label>
+                            <div class="statusCardStory cs-input-group">
+                                <label class="input-group-addon">Priority</label>
                                 <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
                                 <div class="form-group statusSelectSelect">
                                     <select class="form-control task-info-modal-priority" style="width:auto"
@@ -6129,7 +6121,7 @@
                                 </div>
                             </div>
 
-                            <div class="addEpicTask cs-forum-group">
+                            <div class="addEpicTask cs-input-group">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history"
                                         onclick="changeUserStoryOfTaskModal()">
@@ -6143,7 +6135,7 @@
                                 </div>
                             </div>
 
-                            <div class="addEpicTask cs-forum-group">
+                            <div class="addEpicTask cs-input-group">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history" onclick="changeParentTaskModal()">
                                         Parent Task<br>
@@ -6157,7 +6149,7 @@
                             </div>
 
 
-                            <div class="addEpicTask cs-forum-group" style="padding-bottom: 20px;">
+                            <div class="addEpicTask cs-input-group" style="padding-bottom: 20px;">
                                 <div class="dropdown-task show">
                                     <span href="#" class="comment-content-header-history">
                                         Child Task<br>
@@ -6172,7 +6164,7 @@
                             <hr class="hr-ss">
 
                             <div class="cs-forum-group Assigne-card-story">
-                                <label class="cs-label-name">Assignee</label>
+                                <label class="input-group-addon">Assignee</label>
 
                                 <div class="Assigne-card-story-select form-control">
                                     <div id='task-mgmt-assignee'>
@@ -6229,47 +6221,47 @@
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col-6 cs-forum-group estimateHours">
+                                <div class="col-6 cs-input-group estimateHours">
                                     <div class="">
-                                        <label class="cs-label-name">Estimated Hour(s)</label>
+                                        <label class="input-group-addon">Estimated Hour(s)</label>
                                         <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
                                             class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
                                             id="">
                                     </div>
                                 </div>
-                                <div class="col-6 cs-forum-group spentHours">
+                                <div class="col-6 cs-input-group spentHours">
                                     <div class="">
-                                        <label class="cs-label-name">Spent Hour(s)</label>
+                                        <label class="input-group-addon">Spent Hour(s)</label>
                                         <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
                                             onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
                                     </div>
                                 </div>
-                                <div class="col-6 cs-forum-group estimateHours">
+                                <div class="col-6 cs-input-group estimateHours">
                                     <div class="">
-                                        <label class="cs-label-name">Estimated Counter</label>
+                                        <label class="input-group-addon">Estimated Counter</label>
                                         <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
                                             class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
                                             id="">
                                     </div>
                                 </div>
-                                <div class="col-6 cs-forum-group spentHours">
+                                <div class="col-6 cs-input-group spentHours">
                                     <div class="">
-                                        <label class="cs-label-name">Executed Counter</label>
+                                        <label class="input-group-addon">Executed Counter</label>
                                         <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
                                             onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
                                     </div>
                                 </div>
-                                <div class="col-6 cs-forum-group estimateHours">
+                                <div class="col-6 cs-input-group estimateHours">
                                     <div class="">
-                                        <label class="cs-label-name">Estimated Budget</label>
+                                        <label class="input-group-addon">Estimated Budget</label>
                                         <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
                                             class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
                                             id="">
                                     </div>
                                 </div>
-                                <div class="col-6 cs-forum-group spentHours">
+                                <div class="col-6 cs-input-group spentHours">
                                     <div class="">
-                                        <label class="cs-label-name">Spent Budget</label>
+                                        <label class="input-group-addon">Spent Budget</label>
                                         <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
                                             onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
                                     </div>
@@ -6292,8 +6284,9 @@
                 
                                 </div>-->
 
-                           
+
                 </div>
+           
                 <div class="tab-pane fade" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
                     <div class="row">
                                         <div class="col-lg-12 cs-flex-col flex-item mt-2">
@@ -6499,32 +6492,33 @@
                                         </div>
                                    </div>
                                  </div>
+                                 <div class="row">
+                                    <div class="col-lg-12 cs-flex-col flex-item mt-2">
+                                        <div class="cs-forum-group">
+                                            <label class="cs-label-name">Select Reminder</label>
+                                            <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
+                                                    <option value="at_start_time">At start time</option>
+                                                    <option value="5_minutes_before">5 minutes before</option>
+                                                    <option value="10_minutes_before">10 minutes before</option>
+                                                    <option value="15_minutes_before">15 minutes before</option>
+                                                    <option value="20_minutes_before">20 minutes before</option>
+                                                    <option value="25_minutes_before">25 minutes before</option>
+                                                    <option value="30_minutes_before">30 minutes before</option>
+                                                    <option value="45_minutes_before">45 minutes before</option>
+                                                    <option value="1_hour_before">1 hour before</option>
+                                                    <option value="2_hours_before">2 hours before</option>
+                                                    <option value="3_hours_before">3 hours before</option>
+                                                    <option value="12_hours_before">12 hours before</option>
+                                                    <option value="24_hours_before">24 hour before</option>
+                                                    <option value="2_days_before">2 days before</option>
+                                                    <option value="1_week_before">1 week before</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                 </div>
                 <div class="tab-pane fade" id="d-task-tab3" role="tabpanel" aria-labelledby="pills-d-task-tab3">
-                    <div class="row">
-                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                            <div class="cs-forum-group">
-                                <label class="cs-label-name">Select Reminder</label>
-                                <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
-                                        <option value="at_start_time">At start time</option>
-                                        <option value="5_minutes_before">5 minutes before</option>
-                                        <option value="10_minutes_before">10 minutes before</option>
-                                        <option value="15_minutes_before">15 minutes before</option>
-                                        <option value="20_minutes_before">20 minutes before</option>
-                                        <option value="25_minutes_before">25 minutes before</option>
-                                        <option value="30_minutes_before">30 minutes before</option>
-                                        <option value="45_minutes_before">45 minutes before</option>
-                                        <option value="1_hour_before">1 hour before</option>
-                                        <option value="2_hours_before">2 hours before</option>
-                                        <option value="3_hours_before">3 hours before</option>
-                                        <option value="12_hours_before">12 hours before</option>
-                                        <option value="24_hours_before">24 hour before</option>
-                                        <option value="2_days_before">2 days before</option>
-                                        <option value="1_week_before">1 week before</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    ...
                 </div>
                 </div>
                 <div class="row">
