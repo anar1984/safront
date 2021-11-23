@@ -4,6 +4,25 @@
  * and open the template in the editor.
  */
 
+
+
+//$(document).on('focusout', '#addComment4Task_comment_new', function (ev) {
+//    var val = $(this).val();
+//    
+//    var fname = $('#addComment4Task_addnewfile').attr('fname');
+//
+//    if (!val && !fname) {
+//        $("#cke_commentinput").remove()
+//        $(".commentinput").css("display", "block")
+//        $(".commentinput").css("visibility", "visible")
+//
+//        setTimeout(function () {
+//            $(".commentsubmit-seqment").css("display", "none")
+//            $(".commentinput").css("height", "")
+//        }, 300)
+//    }
+//});
+
 $(document).on('change', '#liveProActionType', function (ev) {
     var val = $(this).val();
     $('.liveProActionTypeAll').hide();
@@ -884,7 +903,7 @@ function startBusinessCaseClasswork(el) {
             , fkClassId = $(el).attr('fkClassId');
 
     if (fkActionId) {
-         openBusinessCaseModal(fkActionId);
+        openBusinessCaseModal(fkActionId);
         return;
     }
 

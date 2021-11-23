@@ -1671,7 +1671,7 @@ function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
     setBacklogAsHtml(global_var.current_backlog_id);
     global_var.current_modal = 'loadLivePrototype';
-    
+
 
 }
 
@@ -2687,7 +2687,7 @@ function setBacklogHistory4View() {
 
     var div = $('#item-history-list');
     div.html('');
-    var block = $("#backBacklogBtn-block");   
+    var block = $("#backBacklogBtn-block");
     var temp = [];
     var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
@@ -2696,23 +2696,23 @@ function setBacklogHistory4View() {
         if (temp.includes(o.fkBacklogId)) {
             continue;
         }
-        
-        if(ct===1){
-           $(block) 
-            .attr("pid", o.fkProjectId)
-            .attr('bid', o.fkBacklogId)
-            .attr('is_api', o.isApi)
-            .attr("onclick", "showBacklogHistoryClick(this)")
-            .attr("title",o.backlogName)
-            .html('<i class="fas fa-arrow-left"></i>');
 
-                
+        if (ct === 1) {
+            $(block)
+                    .attr("pid", o.fkProjectId)
+                    .attr('bid', o.fkBacklogId)
+                    .attr('is_api', o.isApi)
+                    .attr("onclick", "showBacklogHistoryClick(this)")
+                    .attr("title", o.backlogName)
+                    .html('<i class="fas fa-arrow-left"></i>');
+
+
         }
         var d = $('<div>')
                 .addClass("col-lg-12")
 
                 .append($('<a>')
-                         .addClass("dropdown-item")
+                        .addClass("dropdown-item")
                         .attr("href", "#")
                         .attr("pid", o.fkProjectId)
                         .attr('bid', o.fkBacklogId)
@@ -3770,6 +3770,56 @@ function uploadFile4Ipo(id) {
     }
 }
 
+function uploadFile4CanvasZadShey(id) {
+
+    var binaryString = document.getElementById(id).toDataURL("image/png;base64");
+    binaryString = binaryString.replace(/data:image\/png;base64,/, ''); 
+//    var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
+      uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id );
+ 
+}
+
+function uploadFile4CanvasZad(id) {
+    alert('salam aye');
+    var r = "";
+    var that = this;
+    var files = document.getElementById(id).files;
+    var file_count = files.length;
+    var st = "";
+    var trc = 0;
+
+    var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    pbDiv.html('');
+
+    $('#' + id).attr('fname', '');
+
+    for (var i = 0, f; f = files[i]; i++) {
+        //            var file = files[0];
+        var file = f;
+        var fileext = file['name'].split('.').pop();
+        var fname = file['name'].split('.')[0];
+        //            console.log('fname=' + fname);
+        if (files && file) {
+            var reader = new FileReader();
+            reader.fileName = fname;
+            reader.fileExt = fileext;
+            reader.fileNo = i;
+            reader.onload = function (readerEvt) {
+                trc++;
+                var fname1 = readerEvt.target.fileName;
+                var fileext1 = readerEvt.target.fileExt;
+                var fileNo = readerEvt.target.fileNo;
+                //                    console.log('trc no=' + trc);
+                var binaryString = readerEvt.target.result;
+                uploadFile4IpoCore(fileext1, btoa(binaryString), fname1, id);
+
+            };
+            reader.readAsBinaryString(file, fname);
+        }
+    }
+}
+
+
 function uploadFile4IpoImport(id) {
     var r = "";
     var that = this;
@@ -3952,6 +4002,52 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
             $('#' + id).attr('fname', st);
 
+        },
+        error: function () {}
+    });
+    return finalname;
+}
+
+function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
+    var pbDiv = $('#' + id);
+
+    var idx = makeId(10);
+
+    var d = new Object();
+    d.file_base_64 = file_base_64;
+    d.file_extension = fileext;
+    d.file_type = "general";
+    d.file_name = file_name;
+    conf = JSON.parse('{"kv":{}}');
+    conf['kv'] = d;
+    conf.kv.cookie = getToken();
+    var dat = JSON.stringify(conf);
+    var finalname = "";
+    $.ajax({
+        url: urlGl + "api/post/upload",
+        type: "POST",
+        data: dat,
+        contentType: "application/json",
+        async: true,
+        beforeSend: function () {
+            pbDiv.after('<br>').after($('<span>')
+                    .attr('id', 'pro_zad_span_' + idx)
+                    .text(file_name)
+                    .append($('<img>')
+                            .attr('id', 'pro_zad_' + idx)
+                            .attr('src', 'resource/img/loader.gif'))
+                    )
+        },
+        uploadProgress: function (event, position, total, percentComplete) {
+            //            console.log('test')
+            var percentVal = percentComplete + '%';
+            pbDiv.text(percentVal);
+        },
+        success: function (data) {
+            $('#pro_zad_span_' + idx).remove();
+            pbDiv.attr('fname',data.kv.uploaded_file_name);
+           
+            
         },
         error: function () {}
     });
@@ -5532,15 +5628,15 @@ function addBaklogListToInputAs(fkProjectId) {
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
                 if (o.isApi === '1') {
-                   elm.append($('<option>').val(o.id)
-                        .text(o.backlogName));
-                      
+                    elm.append($('<option>').val(o.id)
+                            .text(o.backlogName));
+
                 }
             }
             sortCombo('addStoryCardInputsAsModal-backlogid');
-                        $('#addStoryCardInputsAsModal-backlogid').selectpicker('refresh');
+            $('#addStoryCardInputsAsModal-backlogid').selectpicker('refresh');
 
-            
+
 
             $('#addStoryCardInputsAsModal-backlogid').change();
         }
@@ -16368,7 +16464,7 @@ function getProjectUserssync(id) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             try {
                 SAProjectUser.LoadProjectUser(res);

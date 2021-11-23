@@ -63,7 +63,8 @@ var SAFN = {
         'setbackendcache': "SetBackendCache",
         'setlocalcache': "SetLocalCache",
         'setdata': "SetData",
-        'copytable':'CopyTable'
+        'copytable':'CopyTable',
+         'maptotable':'MapToTable'
         
     },
     IsCommand: function (fnName) {

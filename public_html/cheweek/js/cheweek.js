@@ -32,27 +32,33 @@ var cheweek = {
                 elm.css('visibility','hidden');
                 elm.html('')
                 
-                var homeButton = ` <li><a href="#" sa-data-body="21010300595707289233"
+                var homeButton = ` <li style='position:relative;'><a href="#" sa-data-body="21010300595707289233"
                 class="filtSectReloadNew"><i class="fas fa-home"
                 style="font-size: 20px;" aria-hidden="true"></i></a>
                 <ul class="" id="favoritesBlockId"></ul>
                 <span class="ruby-dropdown-toggle"></span>
                </li>`
-               var paneller = `<li style="order: 1000;"><a href="#">Panellər</a>
-                                <ul class="">
-                   <li><a href="#" class="for-chewekk-new-panel-link"
-                           data-link="chwkusmngmt"> Tapşırıq Paneli</a>
-                   </li>
-                   <li><a href="#" class="filtSectReloadNew" sa-data-body='staticlist-modul' onclick=""> Cari vəziyyət</a></li>
-                   <li><a href="#"> Maliyyə Vəziyyəti</a></li>
-                   <li><a href="#"> Keyfiyyət dəyərləri</a></li>
-                   <li><a href="#"> Performans dəyərləri</a></li>
-                   <li><a href="#"> Hesabatlar (Məlumat)</a></li>
-                   <li><a href="#"> Hesabatlar (Analiz)</a></li>
-                   <li><a href="#"> Sənəd Dövriyyəsi</a></li>
+               var paneller = `<li class="ruby-menu-mega" style="order: 1000;position:relative">
+           <a href="#">Panellər</a>
+           <div class="ruby-grid ruby-grid-lined">
+           <div class="ruby-row" >
+           <div class="ruby-col-1 hidden-md" style="order: 5;">
+           <ul class="">
+           <li><a href="#" class="for-chewekk-new-panel-link"
+                   data-link="chwkusmngmt"> Tapşırıq Paneli</a>
+           </li>
+           <li><a href="#" class="filtSectReloadNew" sa-data-body='staticlist-modul' onclick=""> Cari vəziyyət</a></li>
+           <li><a href="#"> Maliyyə Vəziyyəti</a></li>
+           <li><a href="#"> Keyfiyyət dəyərləri</a></li>
+           <li><a href="#"> Performans dəyərləri</a></li>
+           <li><a href="#"> Hesabatlar (Məlumat)</a></li>
+           <li><a href="#"> Hesabatlar (Analiz)</a></li>
+           <li><a href="#"> Sənəd Dövriyyəsi</a></li>
 
-               </ul>
-               <span class="ruby-dropdown-toggle"></span>
+       </ul>
+           </div>
+           </div>
+           </div>
            </li>`
                elm.append(homeButton);
                 var ite = res.tbl[0].r;
