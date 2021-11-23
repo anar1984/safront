@@ -3134,3 +3134,8 @@ $(document).on("click", ".sc-open-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isClose');
     $('.card-userstory-navmenu').addClass('isOpen');
 });
+
+$(document).on("click", ".task-skin-btn", function (e) {
+   $(this).toggleClass('navIcon');
+   $('.bugListNavMenu').toggleClass('task-menu-open');
+});
