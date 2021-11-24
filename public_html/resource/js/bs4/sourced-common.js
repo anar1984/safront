@@ -12615,7 +12615,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             data: data,
             contentType: "application/json",
             crossDomain: true,
-            async: false,
+            async: true,
             success: function (res) {
 //                console.log(JSON.stringify(res))
 //                $('#backlogComment').val('');

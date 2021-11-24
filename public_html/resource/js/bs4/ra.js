@@ -968,6 +968,41 @@ function CallActionApi(apiId, dataCore, isAsync, fn) {
     return res1;
 }
 
+function callService(api, dataCore, isAsync, callback) {
+    if (!api) {
+        Toaster.showError('API ID is not entered');
+    }
+
+    var synch = (isAsync) ? isAsync : true;
+
+    var res1 = '';
+    var json = initJSON();
+    if (dataCore) {
+        json.kv = $.extend(json.kv, dataCore);
+    }
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/"+api,
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: synch,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            res1 = res;
+            if (callback) {
+                callback(res);
+            }
+        },
+        error: function () {
+            Toaster.showError(api+' ----> Something went wrong!!!');
+        }
+    });
+    return res1;
+}
+
 
 
 

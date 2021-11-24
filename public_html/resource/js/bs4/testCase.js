@@ -43,7 +43,7 @@ function getSprintNamesByTask() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            var obj = res.tbl[0].r;
+            var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[0].r : [];
             for (var i in obj) {
                 var o = obj[i];
                 var d = ((o.sprintStartDate) && (o.sprintEndDate)) ?
@@ -498,7 +498,7 @@ function addNewTask4BugMultiZad() {
     data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
     data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
     data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
-
+    data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
 
 
 
@@ -1842,7 +1842,8 @@ function callTaskCard4BugTask(el, projectId, taskId) {
                 .html(coreBugKV[taskId].backlogName);
     }
 
-
+    getTaskCheckList(taskId);
+     getTaskkObserverList(taskId);
 
     //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
 
@@ -3157,3 +3158,306 @@ $(document).on("click", ".sc-open-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isClose');
     $('.card-userstory-navmenu').addClass('isOpen');
 });
+
+
+function getTaskCheckList(taskId) {
+    if (!taskId && !global_var.current_task_id_4_comment) {
+        return;
+    }
+
+    global_var.current_task_id_4_comment = (taskId)
+            ? taskId
+            : global_var.current_task_id_4_comment;
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_task_id_4_comment;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskCheckList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            getTaskCheckListDetails(res)
+        },
+        error: function () {
+//                alert("error");
+        }
+    });
+}
+
+function  getTaskCheckListDetails(res) {
+    var userList = {};
+    try {
+        var idx = getIndexOfTable(res, "userList");
+        var objUser = res.tbl[idx].r;
+        for (var k in objUser) {
+            var o2 = objUser[k];
+            userList[o2.id] = o2;
+        }
+    } catch (err) {
+    }
+
+
+
+    $('.task-check-list').html('')
+    var table = $('<table>')
+            .addClass('table table-hover project-table-list defaultTable sar-table');
+    table.append($('<thead>')
+            .append($("<tr>")
+                    .append($("<th>")
+                            .css("width", "1%")
+                            .text("#"))
+                    .append($('<th>')
+                            .text(""))
+                    .append($('<th>')
+                            .text("Item Name"))
+                    .append($('<th>')
+                            .text(""))
+                    .append($('<th>')
+                            .text(""))
+                    )
+            )
+
+ var idy= getIndexOfTable(res, "tmBacklogTaskCheckList");
+    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    for (var n = 0; n < obj.length; n++) {
+        var o = obj[n];
+
+        var createdBySpan = (o.createdBy && userList[o.createdBy])
+                ? $('<span>')
+                .attr('title', 'Created By')
+                .append($('<img>')
+                        .attr('width', '40px')
+                        .attr('src', fileUrl(userList[o.createdBy].userImage)))
+                .append($('<span>').text(userList[o.createdBy].userPersonName))
+                .append($('<span>').text(' '))
+                .append($('<span>').text(Utility.convertDate(o.createdDate)))
+                .append($('<span>').text(' '))
+                .append($('<span>').text(Utility.convertTime(o.createdTime)))
+                : '';
+
+        var updatedBySpan = (o.updatedBy && userList[o.updatedBy])
+                ? $('<span>')
+                .attr('title', 'Updated By')
+                .append($('<img>')
+                        .attr('width', '40px')
+                        .attr('src', fileUrl(userList[o.updatedBy].userImage)))
+                .append($('<span>').text(userList[o.updatedBy].userPersonName))
+                .append($('<span>').text(' '))
+                .append($('<span>').text(Utility.convertDate(o.updatedDate)))
+                .append($('<span>').text(' '))
+                .append($('<span>').text(Utility.convertTime(o.updatedTime)))
+                : '';
+
+        var tr = $("<tr>")
+                .append($('<td>').text((n + 1)))
+                .append($('<td>').append($('<input>')
+                        .addClass("taskCheckListItemToggle")
+                        .attr("oid", o.id)
+                        .attr('type', 'checkbox')
+                        .attr("checked", (o.isChecked === '1') ? true : false)))
+                .append($('<td>')
+                        .append($('<textarea>')
+                                .attr('rows', '1')
+                                .addClass('form-control')
+                                .attr("oid", o.id)
+                                .addClass("updateTaskcheckListItemName")
+                                .val(o.itemName)))
+                .append($('<td>')
+                        .append(createdBySpan))
+                .append($('<td>')
+                        .append(updatedBySpan))
+
+                .append($('<td>')
+                        .append($('<a href="#">')
+                                .attr('oid', o.id)
+                                .addClass("taskCheckListItemDelete")
+                                .text('Delete')))
+                ;
+        table.append(tr);
+    }
+    $('.task-check-list').html(table);
+}
+
+
+$(document).on("change", ".taskCheckListItemToggle", function (e) {
+    var res = '0';
+    if ($(this).is(":checked")) {
+        res = '1';
+    }
+
+    callService('serviceTmupdateTaskCheckListItemCheck',
+            {"isChecked": res,
+                "id": $(this).attr('oid')}
+    , true);
+
+})
+
+
+
+$(document).on("click", ".taskObserverDelete", function (e) {
+    if (!confirm("Are you sure?")) {
+        return;
+    }
+    var that = this;
+    callService('serviceTmDeleteTaskObserver',
+            {"id": $(this).attr('oid')}, true
+            , function () {
+                $(that).closest('tr').remove();
+            });
+
+})
+
+$(document).on("click", ".taskCheckListItemDelete", function (e) {
+    if (!confirm("Are you sure?")) {
+        return;
+    }
+    var that = this;
+    callService('serviceTmDeleteTaskCheckListItemCheck',
+            {"id": $(this).attr('oid')}, true
+            , function () {
+                $(that).closest('tr').remove();
+            });
+
+})
+
+
+$(document).on("click", ".addCheckListToTask", function (e) {
+    var itemName = $('#updatetask_checklist').val();
+    var that = this;
+
+    callService('serviceTminsertSingleTaskCheckListCumulative',
+            {"fkTaskId": global_var.current_task_id_4_comment,
+                "itemName": itemName}, true
+            , function () {
+                getTaskCheckList(global_var.current_task_id_4_comment);
+                ;
+                $('#updatetask_checklist').val('');
+            });
+
+})
+
+
+$(document).on("change", ".updateTaskcheckListItemName", function (e) {
+    var itemName = $(this).val();
+    var that = this;
+
+    callService('serviceTmupdateTaskCheckListItemCheckName',
+            {"id": $(this).attr('oid'),
+                "itemName": itemName}, true
+            , function () {
+
+            });
+
+})
+
+$(document).on("click", ".addObserverToTAsk", function (e) {
+
+
+    callService('serviceTminsertTaskObserver',
+            {"fkTaskId": global_var.current_task_id_4_comment,
+                "fkUserId": $('#updatetask_oblerverlist').val()}, true
+            , function () {
+                getTaskkObserverList(global_var.current_task_id_4_comment)
+            });
+
+})
+
+
+$(document).on("click", ".loadUserForObserver", function (e) {
+
+    var that = this;
+    var cmb = $('#updatetask_oblerverlist');
+    cmb.html('');
+
+    callService('serviceTmLoadAssigneeByProject',
+            {}, true
+            , function (res) {
+                var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[0].r : [];
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
+                    cmb.append(opt);
+                }
+            });
+
+})
+
+
+function getTaskkObserverList(fkTaskId) {
+    $('.task-observer-list').html('')
+    callService('serviceTmgetTaskkObserverList',
+            {"fkTaskId": fkTaskId}, true
+            , function (res) {
+                getTaskkObserverListDetaisl(res);
+            });
+}
+
+
+function  getTaskkObserverListDetaisl(res) {
+    var userList = {};
+    try {
+        var idx = getIndexOfTable(res, "userList");
+        var objUser = res.tbl[idx].r;
+        for (var k in objUser) {
+            var o2 = objUser[k];
+            userList[o2.id] = o2;
+        }
+    } catch (err) {
+    }
+
+
+
+    var div = $('.task-observer-list');
+    div.html('')
+    
+    var table = $('<table>')
+            .addClass('table table-hover project-table-list defaultTable sar-table');
+    table.append($('<thead>')
+            .append($("<tr>")
+                    .append($("<th>")
+                            .css("width", "1%")
+                            .text("#"))                    
+                    .append($('<th>')
+                            .text("Observer"))                    
+                    )
+            )
+
+  var idy= getIndexOfTable(res, "tmBacklogTaskObserver");
+    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    for (var n = 0; n < obj.length; n++) {
+        var o = obj[n];
+
+        var userSpan = (o.fkUserId && userList[o.fkUserId])
+                ? $('<span>')
+                .attr('title', 'Observer ')
+                .append($('<img>')
+                        .attr('width', '40px')
+                        .attr('src', fileUrl(userList[o.fkUserId].userImage)))
+                .append($('<span>').text(userList[o.fkUserId].userPersonName))
+                
+                : '';
+
+        
+
+        var tr = $("<tr>")
+                .append($('<td>').text((n + 1)))
+                .append($('<td>')
+                        .append(userSpan))
+                .append($('<td>')
+                        .append($('<a href="#">')
+                                .attr('oid', o.id)
+                                .addClass("taskObserverDelete")
+                                .text('Delete')))
+                ;
+        table.append(tr);
+    }
+    div.html(table);
+}

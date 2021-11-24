@@ -6014,6 +6014,23 @@
                     </div>
                     <br>
                     <span class="commentswordtext">Comments</span><br>
+                    <div class="task-check-list-textarea">
+                        <textarea class="form-control" id="updatetask_checklist"></textarea>
+                        <button class='addCheckListToTask'>Add Check List</button>
+
+                    </div>
+                    <div class="task-check-list">
+
+                    </div>
+                    <div class="task-check-list-observer">
+                         <button class='loadUserForObserver'>Load User</button>
+                        <select class="form-control" id="updatetask_oblerverlist"></select>
+                        <button class='addObserverToTAsk'>Add Observer</button>
+
+                    </div>
+                    <div class="task-observer-list">
+
+                    </div>
                     <div class="comment-body">
 
                     </div>
@@ -8933,6 +8950,10 @@
                             <div class="cs-input-group">
                                 <div class="input-group-addon">Description</div>
                                 <textarea name="commentinput_for_taskcreate" id="addComment4Task_comment_new" class="commentinput form-control" placeholder="Add a description.." rows="1"></textarea>
+                                <br>
+                                <div class="input-group-addon">Check List</div>
+                                <textarea name="commentinput_for_taskcreatechecklist" id="commentinput_for_taskcreatechecklist" 
+                                          class=" form-control" placeholder="Add a check list.." rows="4"></textarea>
 
                                 <br>
                                 <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
