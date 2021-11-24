@@ -1828,9 +1828,12 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //add project list to task
     $('.task-card-project-div-id').remove();
     $('.task-mgmt-tasktype').each(function () {
-        $(this).after($('<div class="task-card-project-div-id statusCardStory cs-input-group" id="task-card-project-div-id">')
-                .append($('<label>').addClass('cs-label-name').append('Project'))
-                .append(getProjectList4TaskInfo(projectId)));
+        $(this).after($('<div class="col-lg-4 task-card-project-div-id statusCardStory" id="task-card-project-div-id">')
+                .append($('<div>').addClass('cs-input-group')
+                    .append($('<label>').addClass('input-group-addon').append('Project'))
+                    .append(getProjectList4TaskInfo(projectId))
+                    )
+                );
         $('#task-card-project-id').selectpicker('refresh');
     });
 
@@ -2608,6 +2611,7 @@ function loadBugTaskDeadlineScripts() {
     $('#swofm_fl_action_select_detail').selectpicker('refresh');
     $('#swofm_weekday_select_detail').selectpicker('refresh');
     $('#run_task_reminder_select_detail').selectpicker('refresh');
+    $('#updatetask_oblerverlist').selectpicker('refresh');
 
     $("#runTaskStartDate_detail").daterangepicker({
         format: 'YYYY/MM/DD',
@@ -2628,11 +2632,20 @@ function loadBugTaskDeadlineScripts() {
     });
     $('.hr_spa').hide();
 
-
-
+    $('.shedule-elements').addClass('el-disabled');
+    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+    $('.run-shedule-elements').addClass('el-disabled');
+    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     // TASK DETAILS OFF
 
 }
+
 $(document).on("change", "#runTaskExecutiveDate", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
@@ -2999,16 +3012,16 @@ $(document).on("change", "#sdofm_day_of_Month_select_detail", function (e) {
 
 $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
     if ($('#first_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
 
         $('#hide_actions_detail').val('');
         $('#hide_actions_detail').val('first_day_of_month');
         $('#hide_actions_param_detail').val('');
     }
     if ($('#last_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
 
         $('#hide_actions').val('');
         $('#hide_actions_param').val('');
@@ -3019,10 +3032,10 @@ $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
 
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
     if ($('#specific_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
 
         $('#hide_actions_detail').val('');
         $('#hide_actions_param_detail').val('');
@@ -3032,11 +3045,11 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions_param_detail').val(sdofm_day_of_Month_select);
     }
     if ($('#before_last_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_days_before_last_day_of_month').addClass('spa_enable');
-        $(this).assets('.tab-pane').find('#hide_actions').val('');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_days_before_last_day_of_month').addClass('spa_enable');
+        $('.shedule-elements').find('#hide_actions').val('');
         $('#hide_actions_param_detail').val('');
 
         $('#hide_actions_detail').val('before_last_day_of_month');
@@ -3044,11 +3057,11 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions_param_detail').val(days_before_last_day_of_month);
     }
     if ($('#specific_weekday_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_swofm_fl_action_select').addClass('spa_enable');
-        $(this).assets('.tab-pane').find('.spa_swofm_weekday_select').addClass('spa_enable');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_swofm_fl_action_select').addClass('spa_enable');
+        $('.shedule-elements').find('.spa_swofm_weekday_select').addClass('spa_enable');
         $('#hide_actions_detail').val('');
         $('#hide_actions_param_detail').val('');
         $('#hide_actions_detail').val('specific_weekday_of_month');
@@ -3056,6 +3069,35 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         var swofm_a2 = $('#swofm_weekday_select_detail').val();
         $('#hide_actions_param_detail').val(swofm_a1);
         $('#hide_actions_param_2_detail').val(swofm_a2);
+    }
+});
+
+$(document).on("change", ".checkmarkcontainer input[type='checkbox']", function (e) {
+    if ($('#runTaskStartDate_activateschedule').is(':checked')) {
+        $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
+        $('.shedule-elements.el-disabled .soon').css("opacity", "1");
+        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
+        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
+        $('.shedule-elements').removeClass('el-disabled');
+    }else{
+        $('.shedule-elements').addClass('el-disabled');
+        $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+        $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+        $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+        $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+    }
+    if ($('#runTaskAvtivateSchedule').is(':checked')) {
+        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
+        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
+        $('.run-shedule-elements').removeClass('el-disabled');
+    }else{
+        $('.run-shedule-elements').addClass('el-disabled');
+        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 
@@ -3390,6 +3432,7 @@ $(document).on("click", ".loadUserForObserver", function (e) {
                     var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
                     var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
                     cmb.append(opt);
+                    cmb.selectpicker('refresh');
                 }
             });
 
