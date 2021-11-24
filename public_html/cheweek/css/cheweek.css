@@ -120,37 +120,37 @@
     
 }
 .cs-staturs-circle-note.new{
-background-color:#f0f07a80 ;
+background-color:#f9fad5 ;
 }
 .cs-staturs-circle-note.closed{
-background-color:#39b656a8 ;
+background-color:#ccedd2 ;
 }
 .cs-staturs-circle-note.ongoing{
-background-color:#ad863ead ;
+background-color:#ffe7c7 ;
 }
 .cs-staturs-circle-note.canceled{
-background-color:#5e9de0d3 ;
-color: yellow;
+background-color:#a7c4d2 ;
+
 }
 .cs-staturs-circle-note.defected{
-background-color:#dc3545 ;
-color: black;
+background-color:#cdb9a0 ;
+
 }
 .cs-staturs-circle-note.waiting{
-background-color:#45adbda6 ;
+background-color:#fcddde ;
 color: white;
 }
 .cs-staturs-circle-note.rejected{
 background-color:#6c757d ;
-color: orange;
+
 }
 .cs-staturs-circle-note.tesdiqlenib{
 background-color:#376e37 ;
-color: white;
+
 }
 .cs-staturs-circle-note.tamamlanib{
-background-color:#007bff ;
-color: white;
+background-color:#aadef4 ;
+
 }
 .cs-filter-col {
     margin-right: 15px;
@@ -1193,6 +1193,12 @@ ul.CTAs a {
     background: none;
     color: #173359;
     font-weight: 600;
+}
+#sidebar>ul>li>ul>li>a{
+
+    color: #173359;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
 }
 ::-webkit-scrollbar {
     width: 5px;
