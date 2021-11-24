@@ -3918,11 +3918,13 @@ hr.hr-ss {
 }
 .task-header-filter .task-skin-btn .btn {
     padding: 0 5px;
-    height: 34px;
-    width: 34px;
+    height: 31px;
+    width: 31px;
     background: #525596;
     color: #fff;
     margin-right: 5px;
+    margin-left: -3px;
+    margin-top: 0;
 }
 .task-header-filter .bcs-col-btn .btn {
     box-shadow: none !important;
@@ -4180,11 +4182,11 @@ hr.hr-ss {
 }
 .bcs-more-filter-btns {
     width: 100%;
-    max-width: 230px;
+    max-width: 100%;
+    
 }
 .bcs-more-filter-btns .btn {
-    width: 50% !important;
-    float: left;
+    width: 100% !important;
 }
 .bcs-more-filter-btns .multi-edit-menu-btn {
  margin-left: 5px;
@@ -4615,4 +4617,33 @@ table.lbl-list-table tr td {
 }
 .card-Userstory-rightbody .checkmarkcontainer input:checked ~ .checkmark {
     background-color: #3a3d87;
+}
+.bugListNavMenu {
+    background: white;
+    -ms-flex: 0 0 370px;
+    flex: 0 0 300px;
+    max-width: 300px;
+    width: 300px;
+    height: 100%;
+    padding: 20px 0px 20px 0;
+    margin-right: 20px;
+    border-right: 1px solid #e8e8e8;
+    box-shadow: 0 10px 10px rgb(0 0 0 / 18%);
+    position: absolute;
+    left: -300px;
+    top: 58px;
+    z-index: 10000;
+    transition-duration: .25s;
+}
+.bugListNavMenu.task-menu-open {
+ left: 0;
+}
+.task-skin-btn.navIcon .fa-th-list {
+    display: none;
+}
+.task-skin-btn .fa-times {
+    display: none;
+}
+.task-skin-btn.navIcon .fa-times {
+    display: block;
 }

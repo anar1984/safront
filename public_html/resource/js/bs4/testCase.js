@@ -1828,8 +1828,8 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //add project list to task
     $('.task-card-project-div-id').remove();
     $('.task-mgmt-tasktype').each(function () {
-        $(this).after($('<div class="task-card-project-div-id statusCardStory cs-forum-group" id="task-card-project-div-id">')
-                .append($('<label>').addClass('cs-label-name').append('Project'))
+        $(this).after($('<div class="col-lg-4 task-card-project-div-id statusCardStory cs-input-group" id="task-card-project-div-id">')
+                .append($('<label>').addClass('input-group-addon').append('Project'))
                 .append(getProjectList4TaskInfo(projectId)));
         $('#task-card-project-id').selectpicker('refresh');
     });
@@ -3295,6 +3295,11 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
     , true);
 
 })
+
+$(document).on("click", ".task-skin-btn", function (e) {
+   $(this).toggleClass('navIcon');
+   $('.bugListNavMenu').toggleClass('task-menu-open');
+});
 
 
 
