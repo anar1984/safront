@@ -2645,7 +2645,7 @@ function loadBugTaskDeadlineScripts() {
     // TASK DETAILS OFF
 
 }
-
+ 
 $(document).on("change", "#runTaskExecutiveDate", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
@@ -3191,7 +3191,6 @@ function reconverDatePicker(val) {
     }
 
 }
-
 $(document).on("click", ".sc-close-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isOpen');
     $('.card-userstory-navmenu').addClass('isClose');
@@ -3199,6 +3198,22 @@ $(document).on("click", ".sc-close-sidebar-btn", function (e) {
 $(document).on("click", ".sc-open-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isClose');
     $('.card-userstory-navmenu').addClass('isOpen');
+});
+
+$(document).on("click", ".task-skin-btn", function (e) {
+    $(this).toggleClass('navIcon');
+    $('.bugListNavMenu').toggleClass('task-menu-open');
+ });
+$(document).on("mouseup", "html", function (e) 
+{
+    var container = $(".bugListNavMenu");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.removeClass("task-menu-open");
+         $('.task-skin-btn').removeClass('navIcon');
+    }
 });
 
 
@@ -3247,18 +3262,24 @@ function  getTaskCheckListDetails(res) {
     $('.task-check-list').html('')
     var table = $('<table>')
             .addClass('table table-hover project-table-list defaultTable sar-table');
-    table.append($('<thead>')
+    table.append($('<thead>').addClass('task-checklist-thead')
             .append($("<tr>")
                     .append($("<th>")
                             .css("width", "1%")
                             .text("#"))
                     .append($('<th>')
+                            .css("width", "20px")
                             .text(""))
                     .append($('<th>')
-                            .text("Item Name"))
-                    .append($('<th>')
                             .text(""))
                     .append($('<th>')
+                            .css("width", "40px")
+                            .text(""))
+                    .append($('<th>')
+                             .css("width", "40px")
+                            .text(""))
+                    .append($('<th>')
+                            .css("width", "40px")
                             .text(""))
                     )
             )
@@ -3267,18 +3288,19 @@ function  getTaskCheckListDetails(res) {
     var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
-
-        var createdBySpan = (o.createdBy && userList[o.createdBy])
+         var createdBySpan = (o.createdBy && userList[o.createdBy])
                 ? $('<span>')
                 .attr('title', 'Created By')
                 .append($('<img>')
                         .attr('width', '40px')
-                        .attr('src', fileUrl(userList[o.createdBy].userImage)))
-                .append($('<span>').text(userList[o.createdBy].userPersonName))
-                .append($('<span>').text(' '))
-                .append($('<span>').text(Utility.convertDate(o.createdDate)))
-                .append($('<span>').text(' '))
-                .append($('<span>').text(Utility.convertTime(o.createdTime)))
+                        .addClass('Assigne-card-story-select-img')
+                        .attr('src', fileUrl(userList[o.createdBy].userImage))
+                        .attr('data-placement','top')
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', Utility.convertDate(o.createdDate) + '  '+ Utility.convertTime(o.createdTime))
+                        .attr('data-title', userList[o.createdBy].userPersonName)
+                        )
                 : '';
 
         var updatedBySpan = (o.updatedBy && userList[o.updatedBy])
@@ -3286,15 +3308,18 @@ function  getTaskCheckListDetails(res) {
                 .attr('title', 'Updated By')
                 .append($('<img>')
                         .attr('width', '40px')
-                        .attr('src', fileUrl(userList[o.updatedBy].userImage)))
-                .append($('<span>').text(userList[o.updatedBy].userPersonName))
-                .append($('<span>').text(' '))
-                .append($('<span>').text(Utility.convertDate(o.updatedDate)))
-                .append($('<span>').text(' '))
-                .append($('<span>').text(Utility.convertTime(o.updatedTime)))
+                        .addClass('Assigne-card-story-select-img')
+                        .attr('src', fileUrl(userList[o.updatedBy].userImage))
+                        .attr('data-placement','top')
+                        .attr('data-trigger', 'hover')
+                        .attr('data-toggle', 'popover')
+                        .attr('data-content', Utility.convertDate(o.updatedDate) + '  '+ Utility.convertTime(o.updatedTime))
+                        .attr('data-title', userList[o.updatedBy].userPersonName)
+                        )
                 : '';
 
         var tr = $("<tr>")
+                .addClass((o.isChecked === '1') ? 'on-checked' : '')
                 .append($('<td>').text((n + 1)))
                 .append($('<td>').append($('<input>')
                         .addClass("taskCheckListItemToggle")
@@ -3302,7 +3327,8 @@ function  getTaskCheckListDetails(res) {
                         .attr('type', 'checkbox')
                         .attr("checked", (o.isChecked === '1') ? true : false)))
                 .append($('<td>')
-                        .append($('<textarea>')
+                .addClass((o.isChecked === '1') ? 'text-checked' : '')
+                                .append($('<textarea>')
                                 .attr('rows', '1')
                                 .addClass('form-control')
                                 .attr("oid", o.id)
@@ -3317,13 +3343,30 @@ function  getTaskCheckListDetails(res) {
                         .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskCheckListItemDelete")
-                                .text('Delete')))
+                                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
                 ;
         table.append(tr);
+        
     }
     $('.task-check-list').html(table);
+    
+    $('[data-toggle=popover]').popover({
+        html: true,
+        trigger: "hover"
+      });
 }
 
+$(document).on("change", '.taskCheckListItemToggle', function () {
+
+    if ($(this).is(':checked')) {
+        $(this).closest('tr').addClass('on-checked');
+        $(this).closest('tr').find('td:nth-child(3)').addClass('text-checked');
+    } else {
+        $(this).closest('tr').removeClass('on-checked');
+        $(this).closest('tr').find('td:nth-child(3)').removeClass('text-checked');
+    }
+
+})
 
 $(document).on("change", ".taskCheckListItemToggle", function (e) {
     var res = '0';
@@ -3337,12 +3380,6 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
     , true);
 
 })
-
-$(document).on("click", ".task-skin-btn", function (e) {
-   $(this).toggleClass('navIcon');
-   $('.bugListNavMenu').toggleClass('task-menu-open');
-});
-
 
 
 $(document).on("click", ".taskObserverDelete", function (e) {

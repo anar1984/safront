@@ -57,7 +57,9 @@
                     <input data-type='search_text' type="text" class='bug-filter form-control' onchange="" id='bug_filter_search_text'
                     placeholder="Search . . ." required="" style="height:33px;">
                 </div>
-                
+                <div class="cs-input-group bcs-col-btn">
+                      <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
+                </div>
                
               
             </div>
@@ -373,10 +375,94 @@
                 onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
                 data-type="closed_by" title="Closed By"></select>
             </div>
-            <div class="cs-input-group bcs-col-btn bcs-more-filter-btns mt-3">
-                <button class="btn btn-light" data-toggle="modal" data-target="#filterPopUp" > <i class="fas fa-plus"></i> <span>More Filter</span></button>
-                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
+            
+
+            <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                    title="Status">
+                    <option value='new' selected>New</option>
+                    <option value='ongoing' selected>Ongoing</option>
+                    <option value='closed'>Closed</option>
+                    <option value='waiting'>Waiting</option>
+                    <option value='canceled'>Canceled</option>
+                    <option value='rejected' selected>Rejected</option>
+                    <option value='UAT' selected> UAT</option>
+        
+                </select>
             </div>
+            <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                    <option value='bug' selected>Bug</option>
+                    <option value='change' selected>Change Request</option>
+                    <option value='new' selected>New Request</option>
+                </select>
+            </div>
+            <div class="cs-input-group mt-3">
+                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                    data-type="created_by" title="Created by"></select>
+            </div>
+          
+        
+            <div class="cs-input-group mt-3">
+
+                <label class="checkmarkcontainer">Show Child Tasks
+                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
+                    <span class="checkmark"></span>
+                </label>
+
+                
+            </div>
+        
+            <div class="cs-input-group mt-3">
+        
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                    data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                    <option value=''>None</option>
+                    <option value='1'>1- Lowest</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9 - Highest</option>
+        
+                </select>
+            </div>
+        
+        
+            <div class="cs-input-group mt-3">
+        
+                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                    id='bug_filter_columns' title="Columns">
+                    <option value='task-status' selected>Status</option>
+                    <option value='task-id' selected>Task ID</option>
+                    <option value='task-name' selected>Description</option>
+                    <option value='task-nature' selected>Task Nature</option>
+                    <option value='assignee' selected>Assignee</option>
+                    <option value='tasktype' selected>Task Type</option>
+                    <option value='close-date'>Status Close Date</option> 
+                    <option value='closed-by'>Status Closed By</option> 
+                    <option value='priority'>Priority</option>
+                    <option value='story-card' selected>Story Card</option>
+                    <option value='project' selected>Project</option>
+                    <option value='created-by' selected>Create By</option>
+                    <option value='created-date' selected>Create Date</option>
+                    <option value='last-update'>Late Update</option>
+                    <option value='estimated-hours'>Estimated Hours</option>
+                    <option value='spent-hours'>Spent Hours</option>
+                    <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                    <option value='executed-counter'>Executed Counter</option>
+                    <option value='estimated-budget'>Estimated Budget</option>
+                    <option value='spent-budget'>Spent Budget</option>
+        
+                </select>
+            </div>
+
         </div>
         <div class="col" id="addBuglist" style="zoom: 95%;">
             <div class="row" style="margin: 0;">

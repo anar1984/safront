@@ -4659,3 +4659,65 @@ table.lbl-list-table tr td {
 .issue-managment-add-task .Assigne-card-story-select-content {
     z-index: 10;
 }
+
+/* task update Checklist */
+.task-check-list table tr td, .task-check-list table textarea {
+    font-size: 14px;
+}
+.task-check-list table {
+ border: none !important;
+}
+.task-check-list thead tr th {
+    background: transparent;
+    color: transparent;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+.task-check-list tr:nth-child(odd) {
+    background-color: #fff;
+}
+.task-check-list tr:nth-child(even) {
+    background-color: #fff;
+}
+.task-check-list .task-checklist-thead{
+    background-color: transparent;
+    border: none;
+}
+.task-check-list .task-checklist-thead tr {
+    background-color: transparent;
+    border: none;
+}
+.task-check-list td input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+.task-check-list td {
+    border-right: 1px solid #ffff !important;
+}
+.task-check-list .taskCheckListItemDelete i {
+ color: #d4d4fd;
+}
+.task-check-list .project-table-list tr:hover a i{
+    color: #525596;
+}
+.task-check-list .on-checked .updateTaskcheckListItemName{
+    text-decoration: line-through;
+}
+.task-check-list .text-checked, .task-check-list .on-checked {
+    position: relative;
+}
+.task-check-list .text-checked:after{
+    content: "";
+    top: 17px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: #d4ff0070;
+    position: absolute;
+}
