@@ -5,6 +5,94 @@
  */
 
 
+var StoryCardPanel = {
+    StoryCardId: "",
+    Init: function (storyCardId) {
+        StoryCardId = storyCardId;
+        loadBacklogDetailsByIdIfNotExist(StoryCardPanel.StoryCardId);
+        this.LoadContent();
+
+    },
+    LoadContent: function () {
+        var res = "";
+        $.ajax({
+            url: "resource/child/storycard.html",
+            type: "GET",
+            contentType: "text/html",
+            crossDomain: true,
+            async: false,
+            success: function (html) {
+                res = html;
+            },
+            error: function () {
+                hideProgress4();
+            }
+        })
+        return res;
+    },
+    LoadProjectList: function () {
+        var fkProjectId = SACore.GetBacklogDetails(StoryCardPanel.StoryCardId, "fkProjectId");
+        global_var.current_project_id = fkProjectId;
+        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+        $('select.projectList_liveprototype_storycard').val(fkProjectId);
+
+    },
+    LoadStoryCardList: function () {
+        global_var.current_backlog_id = StoryCardPanel.StoryCardId;
+        var backlogName = SACore.GetCurrentBacklogname();
+        $('#storyCardListSelectBox4StoryCard')
+                .append($('<option>').text(backlogName))
+                .append($('<option>')
+                        .val('-2')
+                        .text("Load All Story Cards"));
+        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+    },
+    FillBacklogHistory: function () {
+        fillBacklogHistory4View(StoryCardPanel.StoryCardId, "0");
+    }
+}
+
+
+function callStoryCard(id, elId, backlogName) {
+
+
+
+    var divId = (elId) ? elId : "body_of_nature";
+    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
+    StoryCardPanel.Init(id);
+//    $.get("resource/child/storycard.html", function (html_string)
+//    {
+//        if (!id || id === '-1') {
+//            return;
+//        }
+//
+//        loadBacklogDetailsByIdIfNotExist(id);
+//        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+//        global_var.current_project_id = fkProjectId;
+//
+//        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+//        $("#UserStoryPopupModal-Toggle").modal('show');
+//        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+//        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+//
+//        global_var.current_backlog_id = id;
+//        var backlogName = SACore.GetCurrentBacklogname();
+//        $('#storyCardListSelectBox4StoryCard')
+//                .append($('<option>').text(backlogName))
+//                .append($('<option>')
+//                        .val('-2')
+//                        .text("Load All Story Cards"));
+//        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+//
+//        fillBacklogHistory4View(id, "0");
+//        new UserStory().toggleSubmenuStoryCard();
+////        loadStoryCardBodyInfo();
+//
+//        loadUsersAsOwner();
+//        setStoryCardOwner();
+//        setStoryCardCreatedBy();
+//    });
+}
 
 //$(document).on('focusout', '#addComment4Task_comment_new', function (ev) {
 //    var val = $(this).val();
@@ -22,6 +110,40 @@
 //        }, 300)
 //    }
 //});
+
+$(document).on('change', 'select.user-story-backlog-type', function (ev) {
+    var backlogType = $('#user-story-type').val();
+    storyCardTypeChangeEvent(backlogType);
+    var isApi = (backlogType === 'api') ? "1" : "0";
+    updateUS4ShortChangeDetails(isApi, "isApi");
+});
+
+
+
+function loadStoryCardInfo4StoryCard(el) {
+    var id = $(el).val();
+    if (id === '-2') {
+        $('select.projectList_liveprototype_storycard').change();
+    } else {
+        global_var.current_backlog_id = id;
+        Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
+        fillBacklogHistory4View(id, "0");
+        new UserStory().toggleSubmenuStoryCard();
+        loadUsersAsOwner();
+        setStoryCardOwner();
+        setStoryCardCreatedBy();
+        setStoryCardUpdatedBy();
+    }
+}
+
+
+function storyCardTypeChangeEvent(backlogType) {
+    //hide all story card side by panels
+    $('.story-card-right-menu-panels').hide();
+    $('.story-card-right-menu-panels-' + backlogType).show();
+}
+
+
 
 $(document).on('change', '#liveProActionType', function (ev) {
     var val = $(this).val();
@@ -983,7 +1105,7 @@ function callService(api, dataCore, isAsync, callback) {
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/"+api,
+        url: urlGl + "api/post/srv/" + api,
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -997,7 +1119,7 @@ function callService(api, dataCore, isAsync, callback) {
             }
         },
         error: function () {
-            Toaster.showError(api+' ----> Something went wrong!!!');
+            Toaster.showError(api + ' ----> Something went wrong!!!');
         }
     });
     return res1;

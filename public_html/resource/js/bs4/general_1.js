@@ -1393,12 +1393,18 @@ function GetConvertedDateByElement(element) {
 
 function GetConvertedDate(componentId) {
     var date = new Date($('#' + componentId).val());
+    if (!date) return "";
     var day = date.getDate();
     day = day.toString(10).length === 1 ? '0' + day : day;
     var month = date.getMonth() + 1;
     month = month.toString(10).length === 1 ? '0' + month : month;
     var year = date.getFullYear();
     var d = year + "" + month + '' + day;
+    try{
+        d = parseInt(d);
+    }catch(err){
+        d = "";
+    }
     return d;
 }
 

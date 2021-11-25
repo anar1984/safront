@@ -581,6 +581,9 @@ var Statistics = {
                         .append(this.StatusDivByAssignee(obj.statusNew, assigneeId, actiontype, "new"))
                         .append(this.StatusDivByAssignee(obj.statusOngoing, assigneeId, actiontype, "ongoing"))
                         .append(this.StatusDivByAssignee(obj.statusClosed, assigneeId, actiontype, "closed"))
+                        .append(this.StatusDivByAssignee(obj.statusWaiting, assigneeId, actiontype, "waiting"))
+                        .append(this.StatusDivByAssignee(obj.statusCanceled, assigneeId, actiontype, "canceled"))
+                        .append(this.StatusDivByAssignee(obj.statusRejected, assigneeId, actiontype, "rejected"))
                         ;
                 return div;
             } catch (err) {
@@ -602,6 +605,9 @@ var Statistics = {
                         .append(this.StatusDivByTask(obj.statusNew, projectId, actiontype, "new"))
                         .append(this.StatusDivByTask(obj.statusOngoing, projectId, actiontype, "ongoing"))
                         .append(this.StatusDivByTask(obj.statusClosed, projectId, actiontype, "closed"))
+                        .append(this.StatusDivByTask(obj.statusWaiting, projectId, actiontype, "waiting"))
+                        .append(this.StatusDivByTask(obj.statusCanceled, projectId, actiontype, "canceled"))
+                        .append(this.StatusDivByTask(obj.statusRejected, projectId, actiontype, "rejected"))
                         ;
                 return div;
             } catch (err) {

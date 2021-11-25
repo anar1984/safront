@@ -218,7 +218,7 @@ function showStoryCardIn(id, elId) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
-         setStoryCardCreatedBy();
+        setStoryCardCreatedBy();
     });
 }
 
@@ -238,53 +238,11 @@ function callStoryCard4Api(id, elId, backlogName) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
-         setStoryCardCreatedBy();
-    });
-}
-
-function callStoryCard(id, elId, backlogName) {
-
-   /*  if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
-        $(document).find("#UserStoryPopupModal-Toggle").modal("hide");
-     
-       
-    } */
-
-
-    var divId = (elId) ? elId : "body_of_nature";
-    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
-
-    $.get("resource/child/storycard.html", function (html_string)
-    {
-        if (!id || id === '-1') {
-            return;
-        }
-        
-        loadBacklogDetailsByIdIfNotExist(id);
-        
-        var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
-        global_var.current_project_id = fkProjectId;
-        
-       /*  $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
-
-        var storyCard = getPopup(html_string);
-       
-        $("#" + divId).append(storyCard); */
-
-        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
-        $("#UserStoryPopupModal-Toggle").modal('show');
-        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
-        global_var.current_backlog_id = id;
-
-        fillBacklogHistory4View(id, "0");
-        new UserStory().toggleSubmenuStoryCard();
-//        loadStoryCardBodyInfo();
-
-        loadUsersAsOwner();
-        setStoryCardOwner();
         setStoryCardCreatedBy();
     });
 }
+
+
 
 function loadStoryCardBodyInfo() {
     try {

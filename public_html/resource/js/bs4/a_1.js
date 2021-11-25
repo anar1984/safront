@@ -3773,10 +3773,10 @@ function uploadFile4Ipo(id) {
 function uploadFile4CanvasZadShey(id) {
 
     var binaryString = document.getElementById(id).toDataURL("image/png;base64");
-    binaryString = binaryString.replace(/data:image\/png;base64,/, ''); 
+    binaryString = binaryString.replace(/data:image\/png;base64,/, '');
 //    var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
-      uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id );
- 
+    uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id);
+
 }
 
 function uploadFile4CanvasZad(id) {
@@ -4045,9 +4045,9 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
         },
         success: function (data) {
             $('#pro_zad_span_' + idx).remove();
-            pbDiv.attr('fname',data.kv.uploaded_file_name);
-           
-            
+            pbDiv.attr('fname', data.kv.uploaded_file_name);
+
+
         },
         error: function () {}
     });
@@ -6636,7 +6636,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
     var selectedfields = data.selectedField;//table.attr('sa-tableselectedfield').split(",");
     table.find('tbody').html('');
 
-    var obj = data._table.r;
+    var obj = (data && data._table && data._table.r) ? data._table.r : [];
 
     for (var j = 0; j < obj.length; j++) {
         var o = obj[j];
@@ -13542,18 +13542,7 @@ function loadStoryCardInfo4Ipo(el) {
 
 
 
-function loadStoryCardInfo4StoryCard(el) {
-    var id = $(el).val();
 
-    global_var.current_backlog_id = id;
-    Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
-    fillBacklogHistory4View(id, "0");
-    new UserStory().toggleSubmenuStoryCard();
-    loadUsersAsOwner();
-    setStoryCardOwner();
-    setStoryCardCreatedBy();
-    setStoryCardUpdatedBy();
-}
 
 
 
@@ -13605,7 +13594,7 @@ $(document).on('click', '.loadDashboard', function (evt) {
         $('#mainBodyDivForAll').html(html_string);
         new UserStory().pureClearAll(this);
         commmonOnloadAction(this);
-        Statistics.Dashboard.GetProjectSummary();
+//        Statistics.Dashboard.GetProjectSummary();
         Statistics.GelGeneralLabels();
         Statistics.GelGeneralSprints();
         Statistics.GetGeneralUsers();
@@ -13743,8 +13732,25 @@ $(document).on('click', '.loadStoryCard', function (evt) {
 function callLoadStoryCard() {
     SAFN.InitConversion();
     showToggleMain();
-    var f = 'storycard';
-    loadHtml(f);
+
+    $.get("resource/child/storycard.html", function (html_string) {
+
+
+        //        new UserStory().pureClearAll(this);
+        new UserStory().clearAndShowAll(this)
+        $('#mainBodyDivForAll').html(html_string);
+//        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+//        new UserStory().refreshCurrentBacklog();
+//        SACore.FillAllSelectBox();
+//        $('#show_ipo_toggle').prop("checked", true) //show input list
+//        showNavBar();
+//        loadUsersAsOwner();
+//        commmonOnloadAction(this);
+//        getJsCodeListByProject();
+
+
+
+    });
 }
 
 $(document).on('change', '.user-story-is-shared', function (evt) {
@@ -17073,7 +17079,35 @@ function loadProjectList2SelectboxByClass(className) {
     sortSelectBoxByElement(cmd);
     cmd.selectpicker('refresh');
     cmd.change();
+}
 
+function loadProjectList2SelectboxByClassWithoutCallAction(className) {
+
+    var cmd = $('.' + className);
+    cmd.html('');
+
+    var f = true;
+
+    var pid = SACore.GetProjectKeys();
+    for (var n = 0; n < pid.length; n++) {
+        var pname = SACore.GetProjectName(pid[n]);
+        var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+        if (f) {
+            o.attr("selected", true);
+            f = false;
+        }
+
+        if (pid[n] === global_var.current_project_id) {
+            o.attr("selected", true);
+        }
+        cmd.append(o);
+    }
+
+    //    cmd.val(global_var.current_project_id);
+    sortSelectBoxByElement(cmd);
+    cmd.selectpicker('refresh');
 
 }
 

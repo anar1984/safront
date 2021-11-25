@@ -597,10 +597,10 @@ function addNewTask4BugInput(el) {
     var tskNature = $("#bug_add_nature").val();
     var taskName = $(el).val().trim();
     var projectList = $('#bug_filter_project_id').val();
-    if (projectList.length === 0) {
-        Toaster.showError("Please select project(s).")
-        return;
-    }
+//    if (projectList.length === 0) {
+//        Toaster.showError("Please select project(s).")
+//        return;
+//    }
 
     var backlogList = ($('#bug_filter_backlog_id').val().length > 0) ?
             $('#bug_filter_backlog_id').val() : ['-1'];
@@ -665,10 +665,10 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
     } catch (err) {
     }
 
-    projectId = (projectId) ? projectId : global_var.current_project_id;
-    if (!projectId) {
-        return;
-    }
+//    projectId = (projectId) ? projectId : global_var.current_project_id;
+//    if (!projectId) {
+//        return;
+//    }
 
     var id = "";
 
@@ -758,7 +758,7 @@ function setBugFilterAssignees() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             var select = $('#bug_filter_assignee_id');
             var select2 = $('#bug_filter_created_by');
@@ -776,6 +776,10 @@ function setBugFilterAssignees() {
                 var op3 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op4 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op5 = $("<option>").val(o.fkUserId).text(o.userName);
+                
+                if (o.fkUserId===global_var.current_ticker_id){
+                    op.attr('selected','true')
+                }
                 select.append(op);
                 select2.append(op2);
                 select3.append(op3);
@@ -783,11 +787,8 @@ function setBugFilterAssignees() {
                 select5.append(op5);
             }
 
-            if (global_var.current_user_type === 'S') {
-                select.val(global_var.current_ticker_id)
-            }
-
             select.selectpicker('refresh');
+            select.change();
             select2.selectpicker('refresh');
             select3.selectpicker('refresh');
             select4.selectpicker('refresh');
@@ -993,88 +994,62 @@ $(document).on("click", '#update_multi_bug_change_btn', function (e) {
     var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
     var taskPriority = $("#bug_filter_priority_add").val();
     var taskNature = $("#bug_task_nature_id_multi").val();
+    var taskStatus = $("#bug_task_status_id_zad").val();
 
     var check = $("#bugListTable .bug-tr .checkbox-issue-task");
 
     if (!fkAssigneeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkAssigneeId, "fkAssigneeId", taskId);
-
             }
-
         }
     }
     if (!fkTaskTypeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkTaskTypeId, "fkTaskTypeId", taskId);
-
             }
-
         }
     }
     if (!fkBacklogId == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkBacklogId, "fkBacklogId", taskId);
-
             }
-
         }
     }
     if (!taskPriority == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(taskPriority, "taskPriority", taskId);
-
             }
-
         }
     }
     if (!taskNature == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(taskNature, "taskNature", taskId);
-
             }
-
         }
     }
-
-
+    if (taskStatus) {
+        for (var indx = 0; indx < check.length; indx++) {
+            if ($(check[indx]).prop('checked')) {
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                multiUpdateTask4ShortChangePure(taskStatus, "taskStatus", taskId);
+            }
+        }
+    }
     $("#multieditpopUp").modal("hide");
-
+    getBugList();
 })
 
 
@@ -1259,14 +1234,23 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 // ______________________________________________________________
 
-
-
-function getBugList() {
+function setBugListInitialData() {
     setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
+
+    bug_filter.sortBy = $('#bug_filter_sortby').val();
+    bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
+    bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
+    bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
+    ;
+}
+
+function getBugList() {
+    setBugListInitialData();
+
     var json = initJSON();
     json.kv.fkProjectId = bug_filter.project_id;
     json.kv.fkAssigneeId = bug_filter.assignee_id;
@@ -1281,33 +1265,22 @@ function getBugList() {
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
-//    if (global_var.current_issue_is_hide == '0') {
-//        json.kv.fkTaskId = global_var.current_issue_id;
-//    }
+    json.kv.sortBy = bug_filter.sortBy;
+    json.kv.sortByAsc = bug_filter.sortByAsc;
+    json.kv.closedDateFrom = bug_filter.closed_date_from;
+    json.kv.closedDateTo = bug_filter.closed_date_to;
     json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            AJAXCallFeedback(res);
-            coreBugList = res;
-            setKV4CoreBugList();
-            getBugListDetails(res);
-            toggleColumns();
-            setPagination(res.kv.tableCount, res.kv.limit);
-            getGroupList();
+    callService('serviceTmGetTaskList4Table', json.kv, true,
+            function (res) {
+                coreBugList = res;
+                setKV4CoreBugList();
+                getBugListDetails(res);
+                toggleColumns();
+                setPagination(res.kv.tableCount, res.kv.limit);
+                getGroupList();
+            })
 
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
 
 }
 
@@ -1828,8 +1801,8 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //add project list to task
     $('.task-card-project-div-id').remove();
     $('.task-mgmt-tasktype').each(function () {
-        $(this).after($('<div class="col-lg-4 task-card-project-div-id statusCardStory cs-input-group" id="task-card-project-div-id">')
-                .append($('<label>').addClass('input-group-addon').append('Project'))
+        $(this).after($('<div class="task-card-project-div-id statusCardStory cs-input-group" id="task-card-project-div-id">')
+                .append($('<label>').addClass('cs-label-name').append('Project'))
                 .append(getProjectList4TaskInfo(projectId)));
         $('#task-card-project-id').selectpicker('refresh');
     });
@@ -1843,7 +1816,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     }
 
     getTaskCheckList(taskId);
-     getTaskkObserverList(taskId);
+    getTaskkObserverList(taskId);
 
     //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
 
@@ -2790,6 +2763,14 @@ $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
         $('#hide_actions').val('last_day_of_month');
     }
 });
+
+
+
+$(document).on("change", ".issue-mgmt-general-filter", function (e) {
+    getBugList();
+})
+
+
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
     var val = $("#monthlyAction:checked").val();
     if (val === 'specific_day_of_month') {
@@ -3221,8 +3202,8 @@ function  getTaskCheckListDetails(res) {
                     )
             )
 
- var idy= getIndexOfTable(res, "tmBacklogTaskCheckList");
-    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    var idy = getIndexOfTable(res, "tmBacklogTaskCheckList");
+    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
 
@@ -3297,8 +3278,8 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
 })
 
 $(document).on("click", ".task-skin-btn", function (e) {
-   $(this).toggleClass('navIcon');
-   $('.bugListNavMenu').toggleClass('task-menu-open');
+    $(this).toggleClass('navIcon');
+    $('.bugListNavMenu').toggleClass('task-menu-open');
 });
 
 
@@ -3422,21 +3403,21 @@ function  getTaskkObserverListDetaisl(res) {
 
     var div = $('.task-observer-list');
     div.html('')
-    
+
     var table = $('<table>')
             .addClass('table table-hover project-table-list defaultTable sar-table');
     table.append($('<thead>')
             .append($("<tr>")
                     .append($("<th>")
                             .css("width", "1%")
-                            .text("#"))                    
+                            .text("#"))
                     .append($('<th>')
-                            .text("Observer"))                    
+                            .text("Observer"))
                     )
             )
 
-  var idy= getIndexOfTable(res, "tmBacklogTaskObserver");
-    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
+    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
 
@@ -3447,10 +3428,10 @@ function  getTaskkObserverListDetaisl(res) {
                         .attr('width', '40px')
                         .attr('src', fileUrl(userList[o.fkUserId].userImage)))
                 .append($('<span>').text(userList[o.fkUserId].userPersonName))
-                
+
                 : '';
 
-        
+
 
         var tr = $("<tr>")
                 .append($('<td>').text((n + 1)))
