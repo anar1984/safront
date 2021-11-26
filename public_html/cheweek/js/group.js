@@ -27,12 +27,12 @@ var cheweek_group = {
                                if(bl.length>0){
                                       var ct = bl.find(".count-modul").text();
                                       bl.find(".count-modul").text(parseFloat(ct)+parseFloat(o.rowCount));
-                                   bl.find('.group-body').append(that.genSinglePanelItem(o.etapName,o.rowCount));
+                                   bl.find('.group-body').append(that.genSinglePanelItem(o.etapName,o.rowCount,o.etapCode));
                                }else{
                                       block.append(that.genSinglePanel(o.modulName,o.modulKey,"0"))  
                                       var ct = block.find("#"+o.modulKey).find(".count-modul").text();
                                       block.find("#"+o.modulKey).find(".count-modul").text(parseFloat(ct)+parseFloat(o.rowCount));
-                                      block.find("#"+o.modulKey).find('.group-body').append(that.genSinglePanelItem(o.etapName,o.rowCount));
+                                      block.find("#"+o.modulKey).find('.group-body').append(that.genSinglePanelItem(o.etapName,o.rowCount,o.etapCode));
 
                                }
                                 
@@ -99,15 +99,16 @@ var cheweek_group = {
                                                                 .addClass("brend-color count-modul p-1")
                                                                .append(count)))
                                       .append($("<div>")
-                                                  .addClass("text-center d-inline brend-color  p-1 float-right")
+                                                  .addClass("text-center link-memzun-list-byetapId d-inline brend-color  p-1 float-right")
                                                    .append('<i class="far fa-window-maximize"></i>')))
                 )
          
 
        },
-       genSinglePanelItem: function (itName, count) {
+       genSinglePanelItem: function (itName, count,id) {
            return  $("<div>")
-           .addClass('col-6 p-0')
+           .addClass('col-6 p-0 etap-block-mini-for-modul')
+           .attr("data-etap",id)
            .append(
               $("<div>")
               .addClass(" d-flex m-1  bg-shadow-3 p-0 rounded")
@@ -130,6 +131,7 @@ var  seconds = 59,
     timer;
 
 function buildTimer() {
+       var bl = $("#modul-list-timer")
   seconds--
   if (seconds <= 0) {
        if(minutes <= 0&&seconds <= 0){
@@ -144,8 +146,12 @@ function buildTimer() {
     }
     
   }
-  
-  $("#modul-list-timer").html((minutes < 10 ? "0" + minutes.toString(): minutes)+":"+(seconds < 10 ? "0" + seconds.toString(): seconds));
+  if(bl.length>0){
+       $("#modul-list-timer").html((minutes < 10 ? "0" + minutes.toString(): minutes)+":"+(seconds < 10 ? "0" + seconds.toString(): seconds));
+
+  }else{
+       stopTimer();   
+  }
  
 }
 
@@ -174,4 +180,15 @@ $(document).on("click","#startstop_group", function () {
                  $(this).html('<i class="fas fa-play" aria-hidden="true"></i>');
               stopTimer();
         } 
+})
+$(document).on("click",".link-memzun-list-byetapId", function () {
+     var list = $(this).closest(".modul-content-panel").find('.etap-block-mini-for-modul')
+     var codeList =[]
+           
+          list.each(function (e) {
+
+              codeList.push($(this).attr("data-etap"));
+              
+          }) 
+      
 })
