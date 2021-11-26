@@ -5990,7 +5990,7 @@
                                     <a class="nav-link" id="d-cheklist-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Check List</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Observer</a>
+                                    <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Observer</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Subtask</a>
@@ -6143,52 +6143,24 @@
                                     </div>
                                     <hr>
                                     <div class="row">           
-                                        <div class="col-lg-4 addEpicTask">
+                                        <div class="col-lg-12 addEpicTask">
                                           <div class="cs-input-group">
-                                            <div class="dropdown-task show">
-                                                <a href="#" class="btn comment-content-header-history mb-1"
-                                                    onclick="changeUserStoryOfTaskModal()">
-                                                    User Story<br>
-                                            </a>
-            
-                                            <a  href="#" class="btn comment-content-header-history"
+                                            <label>
+                                               Story Card
+                                        </label>
+                                       <span>
+                                            <a  href="#" class=" comment-content-header-history"
                                                     onclick="showUserStoryOfTaskCardModal(this)"
                                                     id='task-mgmt-modal-user-story'>
                                             </a>
+                                            <a href="#" class=" comment-content-header-history mb-1"
+                                            onclick="changeUserStoryOfTaskModal()">
+                                            Change Story Card
+                                    </a>
+                                        </span>
                                             </div>
                                           </div>
-                                        </div>
                                 
-                                    <div class="col-lg-4 addEpicTask">
-                                       <div class="cs-input-group">
-                                            <div class="dropdown-task show">
-                                                <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
-                                                    Parent Task<br>
-                                                </a>
-
-                                                <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                    onclick="shiftTaskInfoOnTaskInfoModal(this)"
-                                                    id='task-mgmt-modal-parent-task'>
-                                            </a>
-                                            </div>
-                                       </div>
-                                    </div>
-
-
-                                    <div class="col-lg-4 addEpicTask">
-                                       <div class="cs-input-group">
-                                        <div class="dropdown-task show">
-                                            <a href="#" class="btn comment-content-header-history">
-                                                Child Task<br>
-                                            </a>
-
-                                            <a class="btn comment-content-header-history task-mgmt-modal-child-task"
-                                                id='task-mgmt-modal-child-task'>
-                                        </a>
-                                        </div>
-                                       </div>
-                                    </div>
-
                                     </div>
 
                                     <hr>
@@ -6569,14 +6541,12 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
-                                    <div class="cs-input-group mb-3">
+                                    <div class="cs-input-group mb-3 ml-2">
                                         <div class="input-group-addon">Description</div>
-                                              <div class="task-check-list-observer">
-                                                <button class='btn loadUserForObserver'>Load User</button>
-                                                <div class="col-lg-4 p-0 mt-1">
-                                                    <select class="form-control" id="updatetask_oblerverlist"></select>
-                                                </div>
-                                                <button class='btn addObserverToTAsk mt-1'>Add Observer</button>
+                                              <div class="task-check-list-observer p-0 mt-1 mb-3">
+                                                <!-- <button class='btn loadUserForObserver'>Load User</button> -->
+                                                <select class="form-control" id="updatetask_oblerverlist"></select>
+                                                <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
                                             </div>
                                             <div class="task-observer-list">
                         
@@ -6584,7 +6554,88 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab5" role="tabpanel" aria-labelledby="pills-d-task-tab5">
-                                    ... Subtask
+                                    
+                                    <div class="col-lg-12">
+                                        <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Select Task</th>
+                                                    <th>Parent Task</th>
+                                                    <th>Task Name</th>
+                                                    <th>Task ID</th>
+                                                    <th>Task Status</th>
+                                                    <!-- <th>Description</th>
+                                                    <th>Created By</th>
+                                                    <th>Updated By</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    </a></td>
+                                                    <td class="move-to-child">
+                                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                                        onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
+                                                        </a>
+                                                    </td>
+                                                    <td><div class="task-mgmt-modal-parent-task"></div></td>
+                                                    <td><div class="task-id-modal-parent-task"></div></td>
+                                                    <td><div class="task-status-modal-parent-task"></div></td>
+                                                  </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <!-- <div class="cs-input-group">
+                                             <div class="dropdown-task show">
+                                                 <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                     Parent Task<br>
+                                                 </a>
+ 
+                                                 <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                                     onclick="shiftTaskInfoOnTaskInfoModal(this)"
+                                                     id='task-mgmt-modal-parent-task'>
+                                             </a>
+                                             </div>
+                                        </div> -->
+                                     </div>
+ 
+ 
+                                     <div class="col-lg-12 mt-5">
+
+                                        <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Click</th>
+                                                    <th>Child Task</th>
+                                                    <th>Task Name</th>
+                                                    <th>Task ID</th>
+                                                    <th>Task Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <!-- <div class="cs-input-group">
+                                         <div class="dropdown-task show">
+                                             <a href="#" class="btn comment-content-header-history">
+                                                 Child Task<br>
+                                             </a>
+ 
+                                             <a class="btn comment-content-header-history task-mgmt-modal-child-task"
+                                                 id='task-mgmt-modal-child-task'>
+                                         </a>
+                                         </div>
+                                        </div> -->
+                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab6" role="tabpanel" aria-labelledby="pills-d-task-tab6">
                                     Ivents

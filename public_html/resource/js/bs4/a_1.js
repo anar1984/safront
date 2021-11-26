@@ -2812,14 +2812,20 @@ function getParentTask() {
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
                     var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(parentTaskName, 30) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") "
+                    var nameFull = add3Dots2String(parentTaskName, 30) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                    var taskName = add3Dots2String(parentTaskName, 30);
+                    var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
                     $('.task-mgmt-modal-parent-task').each(function () {
-                        $(this).text(nameFull)
-                                .append(" ")
-                                .append($('<span>')
-                                        .addClass('us-item-status-' + res.kv.taskStatus)
-                                        .text(res.kv.taskStatus))
-                                .attr('pid', fkParentTaskId);
+                        $(this).text(taskName)
+                        .attr('pid', fkParentTaskId);
+                    })
+                    $('.task-id-modal-parent-task').each(function () {
+                        $(this).text(taskCodeID)
+                    })
+                    $('.task-status-modal-parent-task').each(function () {
+                        $(this).html($('<span>')
+                        .addClass('us-item-status-' + res.kv.taskStatus)
+                        .text(res.kv.taskStatus))
                     })
 
                 }
@@ -2831,8 +2837,8 @@ function getParentTask() {
 }
 
 function getChildTasks() {
-    var select = $('.task-mgmt-modal-child-task');
-    select.html('');
+    var tbody = $('.task-mgmt-modal-child-task tbody');
+    tbody.html('');
 
     var json = initJSON();
     json.kv.fkTaskId = global_var.current_us_task_id;
@@ -2857,16 +2863,36 @@ function getChildTasks() {
                     var fkProjectId4 = o.fkProjectId;
                     var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
                     var nameFull = add3Dots2String(o.taskName, 30) + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
-                    select.each(function () {
-                        $(this).append($('<a>')
-                                .attr('pid', o.id)
-                                .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
-                                .text(nameFull))
-                                .append(" ")
-                                .append($('<span>')
+                    tbody.each(function () {
+                        $(this).append($('<tr>')
+                                .append($('<td>')
+                                  .text(n)
+                                 )
+                                .append($('<td>')
+                                  .html(' <a href="#" class="btn comment-content-header-history">Child Task<br></a>')
+                                 )
+                                 .append($('<td>')
+                                    .append($('<a>')
+                                        .addClass('btn')
+                                        .attr('pid', o.id)
+                                        .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
+                                        .text(add3Dots2String(o.taskName, 30))
+                                    )
+                                 )
+                                 .append($('<td>')
+                                 .text(add3Dots2String(o.taskName, 30))
+                                )
+                                 .append($('<td>')
+                                     .text(+ " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                )
+                                .append($('<td>')
+                                        .append($('<span>')
                                         .addClass('us-item-status-' + o.taskStatus)
-                                        .text(o.taskStatus))
-                                .append("<br>")
+                                        .text(o.taskStatus)
+                                    )
+                                )
+                            )
+
                     })
 
                 }

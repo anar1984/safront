@@ -3293,13 +3293,13 @@ function  getTaskCheckListDetails(res) {
                 .attr('title', 'Created By')
                 .append($('<img>')
                         .attr('width', '40px')
-                        .addClass('Assigne-card-story-select-img')
+                        .addClass('Assigne-card-story-select-img created')
                         .attr('src', fileUrl(userList[o.createdBy].userImage))
                         .attr('data-placement','top')
                         .attr('data-trigger', 'hover')
                         .attr('data-toggle', 'popover')
-                        .attr('data-content', Utility.convertDate(o.createdDate) + '  '+ Utility.convertTime(o.createdTime))
-                        .attr('data-title', userList[o.createdBy].userPersonName)
+                        .attr('data-content', userList[o.createdBy].userPersonName + ' / ' + Utility.convertDate(o.createdDate) + '  '+ Utility.convertTime(o.createdTime))
+                        .attr('data-title', 'Created By')
                         )
                 : '';
 
@@ -3308,13 +3308,13 @@ function  getTaskCheckListDetails(res) {
                 .attr('title', 'Updated By')
                 .append($('<img>')
                         .attr('width', '40px')
-                        .addClass('Assigne-card-story-select-img')
+                        .addClass('Assigne-card-story-select-img updated')
                         .attr('src', fileUrl(userList[o.updatedBy].userImage))
                         .attr('data-placement','top')
                         .attr('data-trigger', 'hover')
                         .attr('data-toggle', 'popover')
-                        .attr('data-content', Utility.convertDate(o.updatedDate) + '  '+ Utility.convertTime(o.updatedTime))
-                        .attr('data-title', userList[o.updatedBy].userPersonName)
+                        .attr('data-content', userList[o.updatedBy].userPersonName + ' | ' + Utility.convertDate(o.updatedDate) + '  '+ Utility.convertTime(o.updatedTime))
+                        .attr('data-title', 'Updated By')
                         )
                 : '';
 
@@ -3523,7 +3523,9 @@ function  getTaskkObserverListDetaisl(res) {
         var userSpan = (o.fkUserId && userList[o.fkUserId])
                 ? $('<span>')
                 .attr('title', 'Observer ')
+                .addClass('peronal-info')
                 .append($('<img>')
+                        .addClass('Assigne-card-story-select-img')
                         .attr('width', '40px')
                         .attr('src', fileUrl(userList[o.fkUserId].userImage)))
                 .append($('<span>').text(userList[o.fkUserId].userPersonName))
@@ -3540,7 +3542,7 @@ function  getTaskkObserverListDetaisl(res) {
                         .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskObserverDelete")
-                                .text('Delete')))
+                                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
                 ;
         table.append(tr);
     }
