@@ -597,10 +597,10 @@ function addNewTask4BugInput(el) {
     var tskNature = $("#bug_add_nature").val();
     var taskName = $(el).val().trim();
     var projectList = $('#bug_filter_project_id').val();
-//    if (projectList.length === 0) {
-//        Toaster.showError("Please select project(s).")
-//        return;
-//    }
+    if (projectList.length === 0) {
+        Toaster.showError("Please select project(s).")
+        return;
+    }
 
     var backlogList = ($('#bug_filter_backlog_id').val().length > 0) ?
             $('#bug_filter_backlog_id').val() : ['-1'];
@@ -665,10 +665,10 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
     } catch (err) {
     }
 
-//    projectId = (projectId) ? projectId : global_var.current_project_id;
-//    if (!projectId) {
-//        return;
-//    }
+    projectId = (projectId) ? projectId : global_var.current_project_id;
+    if (!projectId) {
+        return;
+    }
 
     var id = "";
 
@@ -758,7 +758,7 @@ function setBugFilterAssignees() {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             var select = $('#bug_filter_assignee_id');
             var select2 = $('#bug_filter_created_by');
@@ -776,10 +776,6 @@ function setBugFilterAssignees() {
                 var op3 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op4 = $("<option>").val(o.fkUserId).text(o.userName);
                 var op5 = $("<option>").val(o.fkUserId).text(o.userName);
-                
-                if (o.fkUserId===global_var.current_ticker_id){
-                    op.attr('selected','true')
-                }
                 select.append(op);
                 select2.append(op2);
                 select3.append(op3);
@@ -787,8 +783,11 @@ function setBugFilterAssignees() {
                 select5.append(op5);
             }
 
+            if (global_var.current_user_type === 'S') {
+                select.val(global_var.current_ticker_id)
+            }
+
             select.selectpicker('refresh');
-            select.change();
             select2.selectpicker('refresh');
             select3.selectpicker('refresh');
             select4.selectpicker('refresh');
@@ -994,62 +993,88 @@ $(document).on("click", '#update_multi_bug_change_btn', function (e) {
     var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
     var taskPriority = $("#bug_filter_priority_add").val();
     var taskNature = $("#bug_task_nature_id_multi").val();
-    var taskStatus = $("#bug_task_status_id_zad").val();
 
     var check = $("#bugListTable .bug-tr .checkbox-issue-task");
 
     if (!fkAssigneeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
+
+
             if ($(check[indx]).prop('checked')) {
+
                 var taskId = $(check[indx]).parents("tr").attr("id");
+
                 multiUpdateTask4ShortChangePure(fkAssigneeId, "fkAssigneeId", taskId);
+
             }
+
         }
     }
     if (!fkTaskTypeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
+
+
             if ($(check[indx]).prop('checked')) {
+
                 var taskId = $(check[indx]).parents("tr").attr("id");
+
                 multiUpdateTask4ShortChangePure(fkTaskTypeId, "fkTaskTypeId", taskId);
+
             }
+
         }
     }
     if (!fkBacklogId == 0) {
+
         for (var indx = 0; indx < check.length; indx++) {
+
+
             if ($(check[indx]).prop('checked')) {
+
                 var taskId = $(check[indx]).parents("tr").attr("id");
+
                 multiUpdateTask4ShortChangePure(fkBacklogId, "fkBacklogId", taskId);
+
             }
+
         }
     }
     if (!taskPriority == 0) {
+
         for (var indx = 0; indx < check.length; indx++) {
+
+
             if ($(check[indx]).prop('checked')) {
+
                 var taskId = $(check[indx]).parents("tr").attr("id");
+
                 multiUpdateTask4ShortChangePure(taskPriority, "taskPriority", taskId);
+
             }
+
         }
     }
     if (!taskNature == 0) {
+
         for (var indx = 0; indx < check.length; indx++) {
+
+
             if ($(check[indx]).prop('checked')) {
+
                 var taskId = $(check[indx]).parents("tr").attr("id");
+
                 multiUpdateTask4ShortChangePure(taskNature, "taskNature", taskId);
+
             }
+
         }
     }
-    if (taskStatus) {
-        for (var indx = 0; indx < check.length; indx++) {
-            if ($(check[indx]).prop('checked')) {
-                var taskId = $(check[indx]).parents("tr").attr("id");
-                multiUpdateTask4ShortChangePure(taskStatus, "taskStatus", taskId);
-            }
-        }
-    }
+
+
     $("#multieditpopUp").modal("hide");
-    getBugList();
+
 })
 
 
@@ -1234,23 +1259,14 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 // ______________________________________________________________
 
-function setBugListInitialData() {
+
+
+function getBugList() {
     setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
-
-    bug_filter.sortBy = $('#bug_filter_sortby').val();
-    bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
-    bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
-    bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
-    ;
-}
-
-function getBugList() {
-    setBugListInitialData();
-
     var json = initJSON();
     json.kv.fkProjectId = bug_filter.project_id;
     json.kv.fkAssigneeId = bug_filter.assignee_id;
@@ -1265,22 +1281,33 @@ function getBugList() {
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
-    json.kv.sortBy = bug_filter.sortBy;
-    json.kv.sortByAsc = bug_filter.sortByAsc;
-    json.kv.closedDateFrom = bug_filter.closed_date_from;
-    json.kv.closedDateTo = bug_filter.closed_date_to;
+//    if (global_var.current_issue_is_hide == '0') {
+//        json.kv.fkTaskId = global_var.current_issue_id;
+//    }
     json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
-    callService('serviceTmGetTaskList4Table', json.kv, true,
-            function (res) {
-                coreBugList = res;
-                setKV4CoreBugList();
-                getBugListDetails(res);
-                toggleColumns();
-                setPagination(res.kv.tableCount, res.kv.limit);
-                getGroupList();
-            })
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            coreBugList = res;
+            setKV4CoreBugList();
+            getBugListDetails(res);
+            toggleColumns();
+            setPagination(res.kv.tableCount, res.kv.limit);
+            getGroupList();
 
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
 
 }
 
@@ -1801,9 +1828,12 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //add project list to task
     $('.task-card-project-div-id').remove();
     $('.task-mgmt-tasktype').each(function () {
-        $(this).after($('<div class="task-card-project-div-id statusCardStory cs-input-group" id="task-card-project-div-id">')
-                .append($('<label>').addClass('cs-label-name').append('Project'))
-                .append(getProjectList4TaskInfo(projectId)));
+        $(this).after($('<div class="col-lg-4 task-card-project-div-id statusCardStory" id="task-card-project-div-id">')
+                .append($('<div>').addClass('cs-input-group')
+                    .append($('<label>').addClass('input-group-addon').append('Project'))
+                    .append(getProjectList4TaskInfo(projectId))
+                    )
+                );
         $('#task-card-project-id').selectpicker('refresh');
     });
 
@@ -1816,7 +1846,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     }
 
     getTaskCheckList(taskId);
-    getTaskkObserverList(taskId);
+     getTaskkObserverList(taskId);
 
     //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
 
@@ -2581,6 +2611,7 @@ function loadBugTaskDeadlineScripts() {
     $('#swofm_fl_action_select_detail').selectpicker('refresh');
     $('#swofm_weekday_select_detail').selectpicker('refresh');
     $('#run_task_reminder_select_detail').selectpicker('refresh');
+    $('#updatetask_oblerverlist').selectpicker('refresh');
 
     $("#runTaskStartDate_detail").daterangepicker({
         format: 'YYYY/MM/DD',
@@ -2601,11 +2632,20 @@ function loadBugTaskDeadlineScripts() {
     });
     $('.hr_spa').hide();
 
-
-
+    $('.shedule-elements').addClass('el-disabled');
+    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+    $('.run-shedule-elements').addClass('el-disabled');
+    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     // TASK DETAILS OFF
 
 }
+ 
 $(document).on("change", "#runTaskExecutiveDate", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
@@ -2763,14 +2803,6 @@ $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
         $('#hide_actions').val('last_day_of_month');
     }
 });
-
-
-
-$(document).on("change", ".issue-mgmt-general-filter", function (e) {
-    getBugList();
-})
-
-
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
     var val = $("#monthlyAction:checked").val();
     if (val === 'specific_day_of_month') {
@@ -2980,16 +3012,16 @@ $(document).on("change", "#sdofm_day_of_Month_select_detail", function (e) {
 
 $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
     if ($('#first_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
 
         $('#hide_actions_detail').val('');
         $('#hide_actions_detail').val('first_day_of_month');
         $('#hide_actions_param_detail').val('');
     }
     if ($('#last_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
 
         $('#hide_actions').val('');
         $('#hide_actions_param').val('');
@@ -3000,10 +3032,10 @@ $(document).on("change", ".checkcontainer input[type='radio']", function (e) {
 
 $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e) {
     if ($('#specific_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_sdofm_day_of_Month_select').addClass('spa_enable');
 
         $('#hide_actions_detail').val('');
         $('#hide_actions_param_detail').val('');
@@ -3013,11 +3045,11 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions_param_detail').val(sdofm_day_of_Month_select);
     }
     if ($('#before_last_day_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_days_before_last_day_of_month').addClass('spa_enable');
-        $(this).assets('.tab-pane').find('#hide_actions').val('');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_days_before_last_day_of_month').addClass('spa_enable');
+        $('.shedule-elements').find('#hide_actions').val('');
         $('#hide_actions_param_detail').val('');
 
         $('#hide_actions_detail').val('before_last_day_of_month');
@@ -3025,11 +3057,11 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         $('#hide_actions_param_detail').val(days_before_last_day_of_month);
     }
     if ($('#specific_weekday_of_month_detail').is(':checked')) {
-        $(this).assets('.tab-pane').find('.run_spa').removeClass('spa_enable');
-        $(this).assets('.tab-pane').find('.hr_spa').hide();
-        $(this).assets('.tab-pane').find('.hr_spa').show();
-        $(this).assets('.tab-pane').find('.spa_swofm_fl_action_select').addClass('spa_enable');
-        $(this).assets('.tab-pane').find('.spa_swofm_weekday_select').addClass('spa_enable');
+        $('.shedule-elements').find('.run_spa').removeClass('spa_enable');
+        $('.shedule-elements').find('.hr_spa').hide();
+        $('.shedule-elements').find('.hr_spa').show();
+        $('.shedule-elements').find('.spa_swofm_fl_action_select').addClass('spa_enable');
+        $('.shedule-elements').find('.spa_swofm_weekday_select').addClass('spa_enable');
         $('#hide_actions_detail').val('');
         $('#hide_actions_param_detail').val('');
         $('#hide_actions_detail').val('specific_weekday_of_month');
@@ -3037,6 +3069,35 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
         var swofm_a2 = $('#swofm_weekday_select_detail').val();
         $('#hide_actions_param_detail').val(swofm_a1);
         $('#hide_actions_param_2_detail').val(swofm_a2);
+    }
+});
+
+$(document).on("change", ".checkmarkcontainer input[type='checkbox']", function (e) {
+    if ($('#runTaskStartDate_activateschedule').is(':checked')) {
+        $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
+        $('.shedule-elements.el-disabled .soon').css("opacity", "1");
+        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
+        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
+        $('.shedule-elements').removeClass('el-disabled');
+    }else{
+        $('.shedule-elements').addClass('el-disabled');
+        $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+        $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+        $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+        $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+    }
+    if ($('#runTaskAvtivateSchedule').is(':checked')) {
+        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
+        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
+        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
+        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
+        $('.run-shedule-elements').removeClass('el-disabled');
+    }else{
+        $('.run-shedule-elements').addClass('el-disabled');
+        $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+        $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
     }
 });
 
@@ -3130,7 +3191,6 @@ function reconverDatePicker(val) {
     }
 
 }
-
 $(document).on("click", ".sc-close-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isOpen');
     $('.card-userstory-navmenu').addClass('isClose');
@@ -3138,6 +3198,22 @@ $(document).on("click", ".sc-close-sidebar-btn", function (e) {
 $(document).on("click", ".sc-open-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isClose');
     $('.card-userstory-navmenu').addClass('isOpen');
+});
+
+$(document).on("click", ".task-skin-btn", function (e) {
+    $(this).toggleClass('navIcon');
+    $('.bugListNavMenu').toggleClass('task-menu-open');
+ });
+$(document).on("mouseup", "html", function (e) 
+{
+    var container = $(".bugListNavMenu");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.removeClass("task-menu-open");
+         $('.task-skin-btn').removeClass('navIcon');
+    }
 });
 
 
@@ -3186,28 +3262,33 @@ function  getTaskCheckListDetails(res) {
     $('.task-check-list').html('')
     var table = $('<table>')
             .addClass('table table-hover project-table-list defaultTable sar-table');
-    table.append($('<thead>')
+    table.append($('<thead>').addClass('task-checklist-thead')
             .append($("<tr>")
                     .append($("<th>")
                             .css("width", "1%")
                             .text("#"))
                     .append($('<th>')
+                            .css("width", "20px")
                             .text(""))
                     .append($('<th>')
-                            .text("Item Name"))
-                    .append($('<th>')
                             .text(""))
                     .append($('<th>')
+                            .css("width", "40px")
+                            .text(""))
+                    .append($('<th>')
+                             .css("width", "40px")
+                            .text(""))
+                    .append($('<th>')
+                            .css("width", "40px")
                             .text(""))
                     )
             )
 
-    var idy = getIndexOfTable(res, "tmBacklogTaskCheckList");
-    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
+ var idy= getIndexOfTable(res, "tmBacklogTaskCheckList");
+    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
-
-        var createdBySpan = (o.createdBy && userList[o.createdBy])
+         var createdBySpan = (o.createdBy && userList[o.createdBy])
                 ? $('<span>')
                 .attr('title', 'Created By')
                 .append($('<img>')
@@ -3238,6 +3319,7 @@ function  getTaskCheckListDetails(res) {
                 : '';
 
         var tr = $("<tr>")
+                .addClass((o.isChecked === '1') ? 'on-checked' : '')
                 .append($('<td>').text((n + 1)))
                 .append($('<td>').append($('<input>')
                         .addClass("taskCheckListItemToggle")
@@ -3245,7 +3327,8 @@ function  getTaskCheckListDetails(res) {
                         .attr('type', 'checkbox')
                         .attr("checked", (o.isChecked === '1') ? true : false)))
                 .append($('<td>')
-                        .append($('<textarea>')
+                .addClass((o.isChecked === '1') ? 'text-checked' : '')
+                                .append($('<textarea>')
                                 .attr('rows', '1')
                                 .addClass('form-control')
                                 .attr("oid", o.id)
@@ -3260,13 +3343,30 @@ function  getTaskCheckListDetails(res) {
                         .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskCheckListItemDelete")
-                                .text('Delete')))
+                                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
                 ;
         table.append(tr);
+        
     }
     $('.task-check-list').html(table);
+    
+    $('[data-toggle=popover]').popover({
+        html: true,
+        trigger: "hover"
+      });
 }
 
+$(document).on("change", '.taskCheckListItemToggle', function () {
+
+    if ($(this).is(':checked')) {
+        $(this).closest('tr').addClass('on-checked');
+        $(this).closest('tr').find('td:nth-child(3)').addClass('text-checked');
+    } else {
+        $(this).closest('tr').removeClass('on-checked');
+        $(this).closest('tr').find('td:nth-child(3)').removeClass('text-checked');
+    }
+
+})
 
 $(document).on("change", ".taskCheckListItemToggle", function (e) {
     var res = '0';
@@ -3280,12 +3380,6 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
     , true);
 
 })
-
-$(document).on("click", ".task-skin-btn", function (e) {
-    $(this).toggleClass('navIcon');
-    $('.bugListNavMenu').toggleClass('task-menu-open');
-});
-
 
 
 $(document).on("click", ".taskObserverDelete", function (e) {
@@ -3375,6 +3469,7 @@ $(document).on("click", ".loadUserForObserver", function (e) {
                     var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
                     var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
                     cmb.append(opt);
+                    cmb.selectpicker('refresh');
                 }
             });
 
@@ -3407,21 +3502,21 @@ function  getTaskkObserverListDetaisl(res) {
 
     var div = $('.task-observer-list');
     div.html('')
-
+    
     var table = $('<table>')
             .addClass('table table-hover project-table-list defaultTable sar-table');
     table.append($('<thead>')
             .append($("<tr>")
                     .append($("<th>")
                             .css("width", "1%")
-                            .text("#"))
+                            .text("#"))                    
                     .append($('<th>')
-                            .text("Observer"))
+                            .text("Observer"))                    
                     )
             )
 
-    var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
-    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
+  var idy= getIndexOfTable(res, "tmBacklogTaskObserver");
+    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
 
@@ -3434,10 +3529,10 @@ function  getTaskkObserverListDetaisl(res) {
                         .attr('width', '40px')
                         .attr('src', fileUrl(userList[o.fkUserId].userImage)))
                 .append($('<span>').text(userList[o.fkUserId].userPersonName))
-
+                
                 : '';
 
-
+        
 
         var tr = $("<tr>")
                 .append($('<td>').text((n + 1)))

@@ -6045,125 +6045,46 @@
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
 
-                    <div class="commentwritepanel ">
-                        <div class="cs-input-group mb-3">
-                            <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                      placeholder="Add a comment.." rows="1"></textarea>
-
-                            <br>
-                            <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
-                                 style="width:100%;display: none; padding:0px;margin:0px;">
-                                <div class="col-12 text-center canvas_canvas_msg "
-                                     style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
-                                    <h5>Copy and Paste Image Here</h5>
-                                </div>
-                            </div>
-                            <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
-
-                                <div class="acceptcomment flex-fill mr-1">
-                                    <button class="btn btn-primary" type="submit"
-                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
-                                </div>
-                                <div class="deletecomment flex-fill mr-1">
-                                    <button class="btn " type="submit">Cancel</button>
-                                </div>
-                                <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
-                                       multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
-
-
-                            </div>
-
-
-
-
-                        </div>
-                        <!--                    <output id="tasklistcomment"></output>-->
-
-
-                    </div>
-                    <br>
-                    <span class="commentswordtext">Comments</span><br>
-                    <div class="task-check-list-textarea">
-                        <textarea class="form-control" id="updatetask_checklist"></textarea>
-                        <button class='addCheckListToTask'>Add Check List</button>
-
-                    </div>
-                    <div class="task-check-list">
-
-                    </div>
-                    <div class="task-check-list-observer">
-                         <button class='loadUserForObserver'>Load User</button>
-                        <select class="form-control" id="updatetask_oblerverlist"></select>
-                        <button class='addObserverToTAsk'>Add Observer</button>
-
-                    </div>
-                    <div class="task-observer-list">
-
-                    </div>
-                    <div class="comment-body">
-   
-                    </div>
-
-                </div>
-                <div class="card-Userstory-rightbody isOpen card-userstory-navmenu">
-                    <div class="card-userstory-navmenu-headline">
-                        <div class="sc-close-sidebar-btn"><i class="fas fa-times" aria-hidden="true"></i></div>
-                        <div class="sc-open-sidebar-btn"><i class="fas fa-bars" aria-hidden="true"></i></div>
-                        <span>Task Options</span>
-                    </div>
-
-                    <ul class="nav nav-pills mb-3 p-2" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="d-reminder-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Reminder</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
-
-                            <div class="row">
-                                <div class="col-lg-4 statusCardStory cs-input-group mb-3">
-                                    <label class="input-group-addon">Status</label>
-                                    <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
-                                    <div class="form-group ">
-    
-                                        <select class="form-control task-info-modal-status" style="width:auto"
-                                                onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
-                                            <option value='new'><span
-                                                class="us-item-status-new comment-content-header-status">New</span></option>
-                                            <option value='ongoing'> <span
-                                                class="us-item-status-ongoing comment-content-header-status"
-                                                id="">Ongoing</span></option>
-                                            <option value='closed'><span
-                                                class="us-item-status-closed comment-content-header-status"
-                                                id="">Closed</span></option>
-                                            <option value='waiting'><span
-                                                class="us-item-status-waiting comment-content-header-status"
-                                                id="">Waiting</span></option>
-                                            <option value='canceled'><span
-                                                class="us-item-status-canceled comment-content-header-status"
-                                                id="">Canceled</span></option>
-                                            <option value='rejected'><span
-                                                class="us-item-status-rejected comment-content-header-status"
-                                                id="">Rejected</span></option>
-                                            <option value='UAT'><span
-                                                class="us-item-status-rejected comment-content-header-status"
-                                                id="">UAT</span></option>
-    
-                                        </select>
-                                    </div>
-
+                                   <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-4 statusCardStorymb-3">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Status</label>
+                                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
+                                                <div class="form-group ">
+                
+                                                    <select class="form-control task-info-modal-status" style="width:auto"
+                                                            onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
+                                                        <option value='new'><span
+                                                            class="us-item-status-new comment-content-header-status">New</span></option>
+                                                        <option value='ongoing'> <span
+                                                            class="us-item-status-ongoing comment-content-header-status"
+                                                            id="">Ongoing</span></option>
+                                                        <option value='closed'><span
+                                                            class="us-item-status-closed comment-content-header-status"
+                                                            id="">Closed</span></option>
+                                                        <option value='waiting'><span
+                                                            class="us-item-status-waiting comment-content-header-status"
+                                                            id="">Waiting</span></option>
+                                                        <option value='canceled'><span
+                                                            class="us-item-status-canceled comment-content-header-status"
+                                                            id="">Canceled</span></option>
+                                                        <option value='rejected'><span
+                                                            class="us-item-status-rejected comment-content-header-status"
+                                                            id="">Rejected</span></option>
+                                                        <option value='UAT'><span
+                                                            class="us-item-status-rejected comment-content-header-status"
+                                                            id="">UAT</span></option>
+                
+                                                    </select>
                                                 </div>
-                
-                
-                
-                                            <div class="col-lg-4 statusCardStory cs-input-group mb-3">
+                                            </div>            
+                                        </div>
+            
+            
+            
+                                        <div class="col-lg-4 statusCardStory mb-3">
+                                            <div class="cs-input-group">
                                                 <label class="input-group-addon">Task Nature</label>
                                                 <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
                                                 <div class="form-group">
@@ -6181,40 +6102,43 @@
                                                     </select>
                                                 </div>
                                             </div>
-                
-                                            <div class="col-lg-4 statusCardStory task-mgmt-tasktype cs-input-group mb-3" id='task-mgmt-tasktype'>
-                                                <label class="input-group-addon">Task Type</label>
-                                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
-                                                <div class="form-group">
-                
-                                                    <select class="form-control task-info-modal-tasktype" style="width:auto"
-                                                            onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
-                                                            id="task-info-modal-tasktype">
-                
-                
-                                                    </select>
-                                                </div>
-                
+                                        </div>
+            
+                                        <div class="col-lg-4 statusCardStory task-mgmt-tasktype mb-3" id='task-mgmt-tasktype'>
+                                          <div class="cs-input-group">
+                                            <label class="input-group-addon">Task Type</label>
+                                            <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
+                                            <div class="form-group">
+            
+                                                <select class="form-control task-info-modal-tasktype" style="width:auto"
+                                                        onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
+                                                        id="task-info-modal-tasktype">
+            
+            
+                                                </select>
                                             </div>
-                                            <div class="col-lg-4 statusCardStory cs-input-group">
-                                                <label class="input-group-addon">Priority</label>
-                                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
-                                                <div class="form-group ">
-                                                    <select class="form-control task-info-modal-priority" style="width:auto"
-                                                            onchange="updateTask4ShortChange(this, 'taskPriority')"
-                                                            id="task-info-modal-priority">
-                                                        <option value='1' selected>1- Lowest</option>
-                                                        <option value='2'>2</option>
-                                                        <option value='3'>3</option>
-                                                        <option value='4'>4</option>
-                                                        <option value='5'>5</option>
-                                                        <option value='6'>6</option>
-                                                        <option value='7'>7</option>
-                                                        <option value='8'>8</option>
-                                                        <option value='9'>9 - Highest</option>
-                                                    </select>
-                                                </div>
+                                          </div>            
+                                        </div>
+                                        <div class="col-lg-4 statusCardStory">
+                                          <div class="cs-input-group">
+                                            <label class="input-group-addon">Priority</label>
+                                            <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
+                                            <div class="form-group ">
+                                                <select class="form-control task-info-modal-priority" style="width:auto"
+                                                        onchange="updateTask4ShortChange(this, 'taskPriority')"
+                                                        id="task-info-modal-priority">
+                                                    <option value='1' selected>1- Lowest</option>
+                                                    <option value='2'>2</option>
+                                                    <option value='3'>3</option>
+                                                    <option value='4'>4</option>
+                                                    <option value='5'>5</option>
+                                                    <option value='6'>6</option>
+                                                    <option value='7'>7</option>
+                                                    <option value='8'>8</option>
+                                                    <option value='9'>9 - Highest</option>
+                                                </select>
                                             </div>
+                                          </div>
                                         </div>
                                     </div>
                                     <hr>
@@ -6239,23 +6163,10 @@
                                 
                                     </div>
 
-                                        <div class="addEpicTask cs-input-group" style="padding-bottom: 20px;">
-                                            <div class="dropdown-task show">
-                                                <a href="#" class="btn comment-content-header-history">
-                                                    Child Task<br>
-                                                </a>
+                                    <hr>
 
-                                                <a class="btn comment-content-header-history task-mgmt-modal-child-task"
-                                                    id='task-mgmt-modal-child-task'>
-                                            </a>
-                                            </div>
-                                        </div>
-
-                                </div>
-
-                                        <hr>
-
-                                        <div class="cs-forum-group Assigne-card-story">
+                                    <div class="row">
+                                        <div class="cs-input-group Assigne-card-story">
                                             <label class="input-group-addon">Assignee</label>
 
                                             <div class="Assigne-card-story-select form-control">
@@ -6273,8 +6184,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="cs-forum-group Assigne-card-story">
-                                            <label class="cs-label-name">Created by</label>
+                                        <div class="cs-input-group Assigne-card-story">
+                                            <label class="input-group-addon">Created by</label>
 
                                             <div class="Assigne-card-story-select form-control">
                                                 <div id='task-mgmt-create-by'>
@@ -6285,8 +6196,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="cs-forum-group Assigne-card-story">
-                                            <label class="cs-label-name">Created By: <span class="by-last-updated"><span class="task_detail_created_date"></span> / <span class="task_detail_created_time"></span></label>
+                                        <div class="cs-input-group Assigne-card-story">
+                                            <label class="input-group-addon">Updated By: <span class="by-last-updated" style="float:right"><span class="task_detail_created_date"></span> / <span class="task_detail_created_time"></span></span></label>
 
                                             <div class="Assigne-card-story-select form-control">
                                                 <div id='task-mgmt-closed-by'>
@@ -6296,66 +6207,286 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <hr>
+                                    <hr>
 
-                                        <div class="cs-forum-group addEpicTask" style="padding-bottom: 20px;">
-                                            <div class="dropdown-task show">
-                                                <span href="#" class="comment-content-header-history">
-                                                    Sprint<br>
-                                                </span>
+                                <div class="row">
+                                    <div class="cs-forum-group addEpicTask">
+                                        <div class="dropdown-task show">
+                                            <span href="#" class="comment-content-header-history">
+                                                Sprint<br>
+                                            </span>
 
-                                                <span class="comment-content-header-history task-mgmt-modal-sprintname"
-                                                    style="color:black;" id="task-mgmt-modal-sprintname">
+                                            <span class="comment-content-header-history task-mgmt-modal-sprintname"
+                                                style="color:black;" id="task-mgmt-modal-sprintname">
 
-                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-4 estimateHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Estimated Hour(s)</label>
+                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
+                                                class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
+                                                id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 spentHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Spent Hour(s)</label>
+                                            <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
+                                                onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 estimateHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Estimated Counter</label>
+                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
+                                                class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
+                                                id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 spentHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Executed Counter</label>
+                                            <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
+                                                onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 estimateHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Estimated Budget</label>
+                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
+                                                class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
+                                                id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-4 spentHours">
+                                        <div class="cs-input-group">
+                                            <label class="input-group-addon">Spent Budget</label>
+                                            <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
+                                                onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="statusCardStory">
+                                    <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
+                                    <div class="form-group statusSelectSelect">
+                
+                                        <select class="form-control" 
+                                                style="width:auto"
+                                                onchange="updateTask4ShortChange(this, 'taskVersion')"
+                                                id="task-info-change-version">
+                
+                
+                                        </select>
+                                    </div>
+                
+                                </div>-->
+                                   </div>
+                                </div>
+                                <div class="tab-pane fade shedule-elements" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
+                                    <div class="row">
+                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <!-- <label class="input-group-addon">Activate
+                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
+                                                </label>     -->
+                                                
+                                                <label class="checkmarkcontainer">Activate
+                                                    <input type="checkbox" name="activateSchedule" id="runTaskStartDate_activateschedule">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row soon">
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Start Date</label>
+                                                <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">End Date</label>
+                                                <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Run Time</label>
+                                                <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
                                             </div>
                                         </div>
 
-                                        <div class="row mt-3">
-                                            <div class="col-4 cs-input-group estimateHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Estimated Hour(s)</label>
-                                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
-                                                        class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                        id="">
-                                                </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Intensive</label>
+                                                <select class="" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
+                                                    <option value="weekly">Weekly</option>
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="yearly">Yearly</option>
+                                                </select>
                                             </div>
-                                            <div class="col-4 cs-input-group spentHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Spent Hour(s)</label>
-                                                    <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
-                                                        onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
-                                                </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Repeat every</label>
+                                                <select class="" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
                                             </div>
-                                            <div class="col-4 cs-input-group estimateHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Estimated Counter</label>
-                                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
-                                                        class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                        id="">
-                                                </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Status</label>
+                                                <select class="" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
+                                                    <option value="active">Active</option>
+                                                    <option value="passive">Passive</option>
+                                                </select>
                                             </div>
-                                            <div class="col-4 cs-input-group spentHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Executed Counter</label>
-                                                    <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
-                                                        onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="row soon weekly-actions run-intensive run-enabled mt-3">
+                                        <div class="col-12">
+                                            <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
+                                        </div>
+                                        <div class="col-md-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Weekday</label>
+                                                <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
+                                                    <option value="monday">Monday</option>
+                                                    <option value="tuesday">Tuesday</option>
+                                                    <option value="wednesday">Wednesday</option>
+                                                    <option value="thursday">Thursday</option>
+                                                    <option value="friday">Friday</option>
+                                                    <option value="saturday">Saturday</option>
+                                                    <option value="sunday">Sunday</option>
+                                                </select>
                                             </div>
-                                            <div class="col-4 cs-input-group estimateHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Estimated Budget</label>
-                                                    <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
-                                                        class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                        id="">
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="row soon" style="display: none;">
+                                        <input type="hide" id="hide_actions_detail">
+                                        <input type="hide" id="hide_actions_param_detail">
+                                        <input type="hide" id="hide_actions_param_2_detail">
+                                    </div>
+                                    <div class="row soon monthly-actions run-intensive mt-3">
+                                        <div class="col-12">
+                                            <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
+                                        </div>
+                                        <div class="cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group horizontal ml-3 mt-2">
+                                                <div class="input-group-addon">Specification</div>
+                                                <label class="checkcontainer">Last day of month
+                                                    <input type="radio" checked="checked" name="radio" id="last_day_of_month_detail">
+                                                    <span class="radiobtn"></span>
+                                                </label>
+                                                <label class="checkcontainer">First day of month
+                                                    <input type="radio" name="radio" id="first_day_of_month_detail">
+                                                    <span class="radiobtn"></span>
+                                                </label>
+                                                <label class="checkcontainer spa">Specific day of month
+                                                    <input type="radio" name="radio" id="specific_day_of_month_detail">
+                                                    <span class="radiobtn"></span>
+                                                </label>
+                                                <label class="checkcontainer spa">Before last day of month
+                                                    <input type="radio" name="radio" id="before_last_day_of_month_detail">
+                                                    <span class="radiobtn"></span>
+                                                </label>
+                                                <label class="checkcontainer spa">Specific weekday of month 
+                                                    <input type="radio" name="radio" id="specific_weekday_of_month_detail">
+                                                    <span class="radiobtn"></span>
+                                                </label>
                                             </div>
-                                            <div class="col-4 cs-input-group spentHours">
-                                                <div class="">
-                                                    <label class="input-group-addon">Spent Budget</label>
-                                                    <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
-                                                        onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="hr_spa">
+                                            <div class="row">
+                                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                                    <div class="cs-input-group ml-3">
+                                                        <label class="input-group-addon">Day of Month</label>
+                                                        <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
+                                                            <option value="1">1</option>
+                                                            <option value="2">3</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                            <option value="24">24</option>
+                                                            <option value="25">25</option>
+                                                            <option value="26">26</option>
+                                                            <option value="27">27</option>
+                                                            <option value="28">28</option>
+                                                            <option value="29">29</option>
+                                                            <option value="30">30</option>
+                                                            <option value="31">31</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
+                                                    <div class="cs-input-group">
+                                                        <label class="input-group-addon">Day(s) before last day of month</label>
+                                                        <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month_detail" type="number" required>
+                                                    </div>
+                                                </div>
+                                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
+                                                    <div class="cs-input-group">
+                                                        <label class="input-group-addon">Action</label>
+                                                        <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
+                                                            <option value="first">First</option>
+                                                            <option value="last">Last</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
+                                                    <div class="cs-input-group">
+                                                        <label class="input-group-addon">Weekdays</label>
+                                                        <select name="swofm_weekday_select" id="swofm_weekday_select_detail" data-live-search="true">
+                                                            <option value="monday">Monday</option>
+                                                            <option value="tuesday">Tuesday</option>
+                                                            <option value="wednesday">Wednesday</option>
+                                                            <option value="thursday">Thursday</option>
+                                                            <option value="friday">Friday</option>
+                                                            <option value="saturday">Saturday</option>
+                                                            <option value="sunday">Sunday</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6419,250 +6550,7 @@
                                             </div>
                                             <div class="task-observer-list">
                         
-                                                <select class="form-control" 
-                                                        style="width:auto"
-                                                        onchange="updateTask4ShortChange(this, 'taskVersion')"
-                                                        id="task-info-change-version">
-                        
-                        
-                                                </select>
                                             </div>
-                        
-                                        </div>-->
-
-
-                                    </div>
-                                    <div class="tab-pane fade" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
-                                        <div class="row">
-                                            <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <input class="form-control cs-input" name="activateSchedule" id="runTaskStartDate_activateschedule" type="checkbox" required>
-                                                    <label class="cs-label-name">Activate</label>                                               
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Start Date</label>
-                                                    <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">End Date</label>
-                                                    <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Run Time</label>
-                                                    <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Intensive</label>
-                                                    <select class="" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
-                                                        <option value="weekly">Weekly</option>
-                                                        <option value="monthly">Monthly</option>
-                                                        <option value="yearly">Yearly</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Repeat every</label>
-                                                    <select class="" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Status</label>
-                                                    <select class="" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
-                                                        <option value="active">Active</option>
-                                                        <option value="passive">Passive</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row weekly-actions run-intensive run-enabled mt-3">
-                                            <div class="col-12">
-                                                <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
-                                            </div>
-                                            <div class="col-md-12 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Weekday</label>
-                                                    <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
-                                                        <option value="monday">Monday</option>
-                                                        <option value="tuesday">Tuesday</option>
-                                                        <option value="wednesday">Wednesday</option>
-                                                        <option value="thursday">Thursday</option>
-                                                        <option value="friday">Friday</option>
-                                                        <option value="saturday">Saturday</option>
-                                                        <option value="sunday">Sunday</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="display: none;">
-                                            <input type="hide" id="hide_actions_detail">
-                                            <input type="hide" id="hide_actions_param_detail">
-                                            <input type="hide" id="hide_actions_param_2_detail">
-                                        </div>
-                                        <div class="row monthly-actions run-intensive mt-3">
-                                            <div class="col-12">
-                                                <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
-                                            </div>
-                                            <div class="cs-flex-col flex-item mt-2">
-                                                <div class="cs-input-group horizontal ml-3 mt-2">
-                                                    <div class="input-group-addon">Specification</div>
-                                                    <label class="checkcontainer">Last day of month
-                                                        <input type="radio" checked="checked" name="radio" id="last_day_of_month_detail">
-                                                        <span class="radiobtn"></span>
-                                                    </label>
-                                                    <label class="checkcontainer">First day of month
-                                                        <input type="radio" name="radio" id="first_day_of_month_detail">
-                                                        <span class="radiobtn"></span>
-                                                    </label>
-                                                    <label class="checkcontainer spa">Specific day of month
-                                                        <input type="radio" name="radio" id="specific_day_of_month_detail">
-                                                        <span class="radiobtn"></span>
-                                                    </label>
-                                                    <label class="checkcontainer spa">Before last day of month
-                                                        <input type="radio" name="radio" id="before_last_day_of_month_detail">
-                                                        <span class="radiobtn"></span>
-                                                    </label>
-                                                    <label class="checkcontainer spa">Specific weekday of month 
-                                                        <input type="radio" name="radio" id="specific_weekday_of_month_detail">
-                                                        <span class="radiobtn"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <hr class="hr_spa">
-                                                <div class="row">
-                                                    <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                        <div class="cs-forum-group ml-3">
-                                                            <label class="cs-label-name">Day of Month</label>
-                                                            <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
-                                                                <option value="1">1</option>
-                                                                <option value="2">3</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4</option>
-                                                                <option value="5">5</option>
-                                                                <option value="6">6</option>
-                                                                <option value="7">7</option>
-                                                                <option value="8">8</option>
-                                                                <option value="9">9</option>
-                                                                <option value="10">10</option>
-                                                                <option value="11">11</option>
-                                                                <option value="12">12</option>
-                                                                <option value="13">13</option>
-                                                                <option value="14">14</option>
-                                                                <option value="15">15</option>
-                                                                <option value="16">16</option>
-                                                                <option value="17">17</option>
-                                                                <option value="18">18</option>
-                                                                <option value="19">19</option>
-                                                                <option value="20">20</option>
-                                                                <option value="21">21</option>
-                                                                <option value="22">22</option>
-                                                                <option value="23">23</option>
-                                                                <option value="24">24</option>
-                                                                <option value="25">25</option>
-                                                                <option value="26">26</option>
-                                                                <option value="27">27</option>
-                                                                <option value="28">28</option>
-                                                                <option value="29">29</option>
-                                                                <option value="30">30</option>
-                                                                <option value="31">31</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                        <div class="cs-forum-group">
-                                                            <label class="cs-label-name">Day(s) before last day of month</label>
-                                                            <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month_detail" type="number" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                        <div class="cs-forum-group">
-                                                            <label class="cs-label-name">Action</label>
-                                                            <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
-                                                                <option value="first">First</option>
-                                                                <option value="last">Last</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                        <div class="cs-forum-group">
-                                                            <label class="cs-label-name">Weekdays</label>
-                                                            <select name="swofm_weekday_select" id="swofm_weekday_select_detail" data-live-search="true">
-                                                                <option value="monday">Monday</option>
-                                                                <option value="tuesday">Tuesday</option>
-                                                                <option value="wednesday">Wednesday</option>
-                                                                <option value="thursday">Thursday</option>
-                                                                <option value="friday">Friday</option>
-                                                                <option value="saturday">Saturday</option>
-                                                                <option value="sunday">Sunday</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row yearly-actions run-intensive mt-3">
-                                            <div class="col-12">
-                                                <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
-                                            </div>
-                                            <div class="cs-flex-col flex-item ml-3 mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Execution Data</label>
-                                                    <input class="form-control" id="runTaskExecutiveDate_detail" type="text" name="runTaskExecutiveDate" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="d-task-tab3" role="tabpanel" aria-labelledby="pills-d-task-tab3">
-                                        <div class="row">
-                                            <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                                                <div class="cs-forum-group">
-                                                    <label class="cs-label-name">Select Reminder</label>
-                                                    <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
-                                                        <option value="at_start_time">At start time</option>
-                                                        <option value="5_minutes_before">5 minutes before</option>
-                                                        <option value="10_minutes_before">10 minutes before</option>
-                                                        <option value="15_minutes_before">15 minutes before</option>
-                                                        <option value="20_minutes_before">20 minutes before</option>
-                                                        <option value="25_minutes_before">25 minutes before</option>
-                                                        <option value="30_minutes_before">30 minutes before</option>
-                                                        <option value="45_minutes_before">45 minutes before</option>
-                                                        <option value="1_hour_before">1 hour before</option>
-                                                        <option value="2_hours_before">2 hours before</option>
-                                                        <option value="3_hours_before">3 hours before</option>
-                                                        <option value="12_hours_before">12 hours before</option>
-                                                        <option value="24_hours_before">24 hour before</option>
-                                                        <option value="2_days_before">2 days before</option>
-                                                        <option value="1_week_before">1 week before</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab5" role="tabpanel" aria-labelledby="pills-d-task-tab5">
@@ -6768,6 +6656,10 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
 
                 </div>
             </div>
@@ -9208,46 +9100,52 @@
                                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Reminder</a>
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Tab 3</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade task-tab1" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                                     <div class='row'>
-                                        <div class="col-lg-4 cs-input-group mt-2">
-                                            <select class="form-control" data-live-search="true" data-actions-box="true"
-                                                    style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
-                                                    title="Project"></select>
+                                        <div class="col-lg-4  mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control" data-live-search="true" data-actions-box="true"
+                                                style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
+                                                title="Project"></select>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4 cs-input-group mt-2">
-                                            <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                                    id='bug_filter_assignee_id_add' title="Assignee"></select>
+                                        <div class="col-lg-4 mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
+                                                id='bug_filter_assignee_id_add' title="Assignee"></select>
+                                            </div>
                                         </div>
 
-                                        <div class="col-lg-4 cs-input-group mt-2">
-                                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                    data-live-search="true" id='bug_filter_backlog_id_add' title="Story Card">
-
-                                            </select>
+                                        <div class="col-lg-4 mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                                data-live-search="true" id='bug_filter_backlog_id_add' title="Story Card">
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4 cs-input-group mt-2">
-                                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                    data-live-search="true" id='bug_task_type_id_add' title="Task Type">
-
-                                            </select>
+                                        <div class="col-lg-4 mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                                data-live-search="true" id='bug_task_type_id_add' title="Task Type"></select>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4 cs-input-group mt-2">
-                                            <select class="form-control   bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                    data-live-search="true" id='bug_task_nature_id_add' title="Task Nature">
-                                                <option value="bug" selected="">Bug</option>
-                                                <option value="change" selected="">Change Request</option>
-                                                <option value="new" selected="">New Request</option>
-
-                                            </select>
+                                        <div class="col-lg-4 mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                                    id='bug_task_nature_id_add' title="Task Nature">
+                                                    <option value="bug" selected="">Bug</option>
+                                                    <option value="change" selected="">Change Request</option>
+                                                    <option value="new" selected="">New Request</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4 cs-input-group mt-2">
-
-                                            <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
+                                        <div class="col-lg-4 mt-2">
+                                            <div class="cs-input-group">
+                                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
                                                     data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
                                                 <option value=''>None</option>
                                                 <option value='1'>1- Lowest</option>
@@ -9261,20 +9159,23 @@
                                                 <option value='9'>9 - Highest</option>
 
                                             </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade task-tab2" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                <div class="tab-pane fade run-shedule-elements task-tab2" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
                                     <div class="row">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
-                                                <input class="" name="runTaskStartDate" id="runTaskAvtivateSchedule" type="checkbox" required> 
-                                                <label>Activate</label>
+                                                <label class="checkmarkcontainer">Activate
+                                                    <input type="checkbox" id="runTaskAvtivateSchedule">
+                                                    <span class="checkmark"></span>
+                                                </label>
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row rsoon">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
                                                 <div class="input-group-addon">Start Date</div>
@@ -9333,7 +9234,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row weekly-actions run-intensive run-enabled">
+                                    <div class="row rsoon weekly-actions run-intensive run-enabled">
                                         <div class="col-12">
                                             <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
                                         </div>
@@ -9352,12 +9253,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="display: none;">
+                                    <div class="row rsoon" style="display: none;">
                                         <input type="hide" id="hide_actions">
                                         <input type="hide" id="hide_actions_param">
                                         <input type="hide" id="hide_actions_param_2">
                                     </div>
-                                    <div class="row monthly-actions run-intensive">
+                                    <div class="row rsoon monthly-actions run-intensive">
                                         <div class="col-12">
                                             <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
                                         </div>
@@ -9459,7 +9360,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row yearly-actions run-intensive">
+                                    <div class="row rsoon yearly-actions run-intensive">
                                         <div class="col-12">
                                             <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
                                         </div>
@@ -9471,9 +9372,7 @@
                                         </div>
                                     </div>
 
-                                </div>
-                                <div class="tab-pane fade" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
-                                    <div class="row">
+                                    <div class="row rsoon">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
                                                 <div class="input-group-addon">Select Reminder</div>
@@ -9497,6 +9396,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                    ...
                                 </div>
                             </div>
                         </div>
