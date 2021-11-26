@@ -4,22 +4,22 @@
 
 
         <div class="col-3 text-right">
-
-
+            
+          
         </div>
-
+    
         <!-- <div class="col-6  text-center">
             <br>
             <h4>Issue Management</h4>
             <br>
         </div> -->
         <div  class="col-3 row text-right">
-            <!-- Example split danger button -->
-
-
+          <!-- Example split danger button -->
+          
+    
         </div>
     </div>
-
+    
     <!--<div class="row"   style="padding:20px 10px 0px 10px;">
         <div class="col-lg-4"></div>
         <div class="col-lg-8 col-bug-status updateBugList" style="z-index:1000;visibility: hidden;background-color:white;display1:none;" >
@@ -43,295 +43,296 @@
             </div>
         </div>
     </div>-->
-
+    
     <div class="task-header-filter m-0">
-
+        
         <div class="d-flex bd-highlight">
-            <div class="cs-flex-item flex-fill">
-                <div class="d-flex justify-content-start">
-                    <div class="task-skin-btn">
-                        <button class="btn btn-light"> <i class="fas fa-th-list"></i>
-                            <i class="fa fa-times"></i></button>
+          <div class="cs-flex-item flex-fill">
+            <div class="d-flex justify-content-start">
+                <div class="task-skin-btn">
+                    <button class="btn btn-light"> <i class="fas fa-th-list"></i>
+                        <i class="fa fa-times"></i></button>
+                </div>
+                <div>
+                    <input data-type='search_text' type="text" class='bug-filter form-control' onchange="" id='bug_filter_search_text'
+                    placeholder="Search . . ." required="" style="height:33px;">
+                </div>
+                <div class="cs-input-group bcs-col-btn">
+                      <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
+                </div>
+                             
+            </div>
+          </div>
+          <!-- flex-item -->
+
+          <div class="cs-flex-item flex-fill">
+            <div class="d-flex justify-content-end">
+                <div>
+                    <div class="cs-input-group cs-pagination-limit">
+                        <span>Closed Dates</span>
+                        <input class="  issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='date'>
+                        <input class=" issue-mgmt-general-filter bug-mgmt-filter-closed-date-to" id ='issue_management_closed_date_to' type='date'>
+
                     </div>
-                    <div>
-                        <input data-type='search_text' type="text" class='bug-filter form-control' onchange="" id='bug_filter_search_text'
-                               placeholder="Search . . ." required="" style="height:33px;">
-                    </div>
 
+                </div>  <span>Sort by</span>
 
-
+                <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
+                        id='bug_filter_sortby' title="Columns">
+                    <option value='task_status' selected>Status</option>
+                    <option value='id' selected>Task ID</option>
+                    <option value='task_name'  accesskey="">Description</option>
+                    <option value='task_nature'  >Task Nature</option>
+                    <option value='fk_assignee_id' >Assignee</option>
+                    <option value='fk_task_type_id' >Task Type</option>
+                    <option value='close_status_date'>Closed Date</option> 
+                    <option value='closed_by'>Closed By</option> 
+                    <option value='task_priority'>Priority</option>  
+                    <option value='created_by'  >Create By</option>
+                    <option value='created_date'  >Create Date</option>  
+                </select>
+                <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                        id='bug_filter_sortby_asc' title="Columns">
+                    <option value='asc' >ASC</option>
+                    <option value='desc' selected>Desc</option>
+                </select>
+                <div>
+                     <div class="cs-input-group cs-pagination-limit">
+                        <select data-type='limit' class="bug-filter" id="bug_filter_limit">
+                            <option value='10'>10</option>
+                            <option value='25' selected> 25</option>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='200'>200</option>
+                            <option value='300'>300</option>
+                        </select>
+                      </div>
+                        <b id="table-row-count"> </b>
+                  </div>
+                <div><span class="cs-group-by">Group By </span></div>
+                <div class="cs-input-group cs-pagination-group-by">
+                    <select id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='4' >Task Nature</option>
+                        <option value='5' >Assignee</option>
+                        <option value='6' >Task Type</option>
+                        <option value='7'>Priority</option>
+                        <option value='8' >Story Card</option>
+                        <option value='9' >Project</option>
+                        <option value='10' >Create By</option>
+                        <option value='11' >Create Date</option>
+                        <option value='12'>Last Update</option>
+            
+                    </select>
                 </div>
             </div>
-            <!-- flex-item -->
-
-            <div class="cs-flex-item flex-fill">
-                <div class="d-flex justify-content-end">
-                    <div>
-                        <div class="cs-input-group cs-pagination-limit">
-                            <span>Closed Dates</span>
-                            <input class="  issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='date'>
-                            <input class=" issue-mgmt-general-filter bug-mgmt-filter-closed-date-to" id ='issue_management_closed_date_to' type='date'>
-
-                        </div>
-
-                    </div>  <span>Sort by</span>
-
-                    <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
-                            id='bug_filter_sortby' title="Columns">
-                        <option value='task_status' selected>Status</option>
-                        <option value='id' selected>Task ID</option>
-                        <option value='task_name'  accesskey="">Description</option>
-                        <option value='task_nature'  >Task Nature</option>
-                        <option value='fk_assignee_id' >Assignee</option>
-                        <option value='fk_task_type_id' >Task Type</option>
-                        <option value='close_status_date'>Closed Date</option> 
-                        <option value='closed_by'>Closed By</option> 
-                        <option value='task_priority'>Priority</option>  
-                        <option value='created_by'  >Create By</option>
-                        <option value='created_date'  >Create Date</option>  
-                    </select>
-                    <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
-                            id='bug_filter_sortby_asc' title="Columns">
-                        <option value='asc' >ASC</option>
-                        <option value='desc' selected>Desc</option>
-                    </select>
-                    <div>
-                        <div class="cs-input-group cs-pagination-limit">
-                            <select data-type='limit' class="bug-filter" id="bug_filter_limit">
-                                <option value='10'>10</option>
-                                <option value='25' selected> 25</option>
-                                <option value='50'>50</option>
-                                <option value='100'>100</option>
-                                <option value='200'>200</option>
-                                <option value='300'>300</option>
-                            </select>
-                        </div>
-                        <b id="table-row-count"> </b>
+        </div>
+        <!-- flex-item -->
+        
+    </div>
+           
+        
+    
+      <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body  row" >
+                 <div class='col-12 row'>
+                    <div class="col-lg-4">
+                        <select class="form-control" data-live-search="true" data-actions-box="true"
+                            style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_multi'
+                             title="Project"></select>
                     </div>
-                    <div><span class="cs-group-by">Group By </span></div>
-                    <div class="cs-input-group cs-pagination-group-by">
-                        <select id="inputGroupSelect01">
-                            <option value='0' >None</option>
-                            <option value='4' >Task Nature</option>
-                            <option value='5' >Assignee</option>
-                            <option value='6' >Task Type</option>
-                            <option value='7'>Priority</option>
-                            <option value='8' >Story Card</option>
-                            <option value='9' >Project</option>
-                            <option value='10' >Create By</option>
-                            <option value='11' >Create Date</option>
-                            <option value='12'>Last Update</option>
+                    <div class="col-lg-4">
+                        <select class="form-control" data-actions-box="true"
+                            onchange=''  data-live-search="true" id='bug_filter_assignee_id_multi'
+                             title="Assignee"></select>
+                    </div>
+                
+                    <div class="col-lg-4">
+                        <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            onchange=''  data-live-search="true" id='bug_filter_backlog_id_multi'
+                            title="Story Card">
+                
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            onchange=''  data-live-search="true" id='bug_task_type_id_multi'
+                            title="Task Type">
+                
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            onchange=''  data-live-search="true" id='bug_task_nature_id_multi'
+                            title="Task Nature">
+                            <option value="" ></option>
+                            <option value="bug" >Bug</option>
+                            <option value="change" >Change Request</option>
+                            <option value="new" >New Request</option>
+                
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                onchange=''   id='bug_task_status_id_zad'
+                                title="Task Status">
+                            <option value="" ></option>
+                            <option value="new" >New</option>
+                            <option value="ongoing" >Ongoing</option>
+                            <option value="waiting" >Waiting</option>
+                            <option value="canceled" >Canceled</option>
 
                         </select>
                     </div>
-                </div>
+                    <div class="col-lg-4 " >
+    
+                        <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
+                            data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
+                            <option value=''>None</option>
+                            <option value='1'>1- Lowest</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                            <option value='6'>6</option>
+                            <option value='7'>7</option>
+                            <option value='8'>8</option>
+                            <option value='9'>9 - Highest</option>
+                
+                        </select>
+                    </div>
+                   
+                      </div>
+               
             </div>
-            <!-- flex-item -->
-
-        </div>
-
-
-
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body  row" >
-                        <div class='col-12 row'>
-                            <div class="col-lg-4">
-                                <select class="form-control" data-live-search="true" data-actions-box="true"
-                                        style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_multi'
-                                        title="Project"></select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select class="form-control" data-actions-box="true"
-                                        onchange=''  data-live-search="true" id='bug_filter_assignee_id_multi'
-                                        title="Assignee"></select>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                        onchange=''  data-live-search="true" id='bug_filter_backlog_id_multi'
-                                        title="Story Card">
-
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                        onchange=''  data-live-search="true" id='bug_task_type_id_multi'
-                                        title="Task Type">
-
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                        onchange=''  data-live-search="true" id='bug_task_nature_id_multi'
-                                        title="Task Nature">
-                                    <option value="" ></option>
-                                    <option value="bug" >Bug</option>
-                                    <option value="change" >Change Request</option>
-                                    <option value="new" >New Request</option>
-
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
-                                        onchange=''   id='bug_task_status_id_zad'
-                                        title="Task Status">
-                                    <option value="" ></option>
-                                    <option value="new" >New</option>
-                                    <option value="ongoing" >Ongoing</option>
-                                    <option value="waiting" >Waiting</option>
-                                    <option value="canceled" >Canceled</option>
-
-                                </select>
-                            </div>
-                            <div class="col-lg-4 " >
-
-                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
-                                        data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
-                                    <option value=''>None</option>
-                                    <option value='1'>1- Lowest</option>
-                                    <option value='2'>2</option>
-                                    <option value='3'>3</option>
-                                    <option value='4'>4</option>
-                                    <option value='5'>5</option>
-                                    <option value='6'>6</option>
-                                    <option value='7'>7</option>
-                                    <option value='8'>8</option>
-                                    <option value='9'>9 - Highest</option>
-
-                                </select>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="update_multi_bug_change_btn" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
+            <div class="modal-footer">
+              <button type="button" id="update_multi_bug_change_btn" class="btn btn-primary">Save changes</button>
             </div>
+          </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="filterPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body  row" >
-                        <div class="col-lg-4">
-                            <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
-                                    title="Status">
-                                <option value='new' selected>New</option>
-                                <option value='ongoing' selected>Ongoing</option>
-                                <option value='closed'>Closed</option>
-                                <option value='waiting'>Waiting</option>
-                                <option value='canceled'>Canceled</option>
-                                <option value='rejected' selected>Rejected</option>
-                                <option value='UAT' selected> UAT</option>
-
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
-                                <option value='bug' selected>Bug</option>
-                                <option value='change' selected>Change Request</option>
-                                <option value='new' selected>New Request</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
-                                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
-                                    data-type="created_by" title="Created by"></select>
-                        </div>
-
-
-                        <div class="col-4 text-right" style="padding-top: 7px;">
-
-                            <input type="checkbox" class="form-control1 bug-filter-checkbox bug-mgmt-filter-select"
-                                   data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id='bug_filter_onlyparent'
-                                   title="Show Child Tasks"> Show Child Tasks
-
-                        </div>
-
-                        <div class="col-4 text-right" style="padding-top: 7px;">
-
-                            <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
-                                    data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
-                                <option value=''>None</option>
-                                <option value='1'>1- Lowest</option>
-                                <option value='2'>2</option>
-                                <option value='3'>3</option>
-                                <option value='4'>4</option>
-                                <option value='5'>5</option>
-                                <option value='6'>6</option>
-                                <option value='7'>7</option>
-                                <option value='8'>8</option>
-                                <option value='9'>9 - Highest</option>
-
-                            </select>
-                        </div>
-
-
-                        <div class="col-4 text-right" style="padding-top: 7px;">
-
-                            <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
-                                    id='bug_filter_columns' title="Columns">
-                                <option value='task-status' selected>Status</option>
-                                <option value='task-id' selected>Task ID</option>
-                                <option value='task-name' selected>Description</option>
-                                <option value='task-nature' selected>Task Nature</option>
-                                <option value='assignee' selected>Assignee</option>
-                                <option value='tasktype' selected>Task Type</option>
-                                <option value='close-date'>Status Close Date</option> 
-                                <option value='closed-by'>Status Closed By</option> 
-                                <option value='priority'>Priority</option>
-                                <option value='story-card' selected>Story Card</option>
-                                <option value='project' selected>Project</option>
-                                <option value='created-by' selected>Create By</option>
-                                <option value='created-date' selected>Create Date</option>
-                                <option value='last-update'>Late Update</option>
-                                <option value='estimated-hours'>Estimated Hours</option>
-                                <option value='spent-hours'>Spent Hours</option>
-                                <!--<option value='estimated-counter'>Estimated Counter</option>-->
-                                <option value='executed-counter'>Executed Counter</option>
-                                <option value='estimated-budget'>Estimated Budget</option>
-                                <option value='spent-budget'>Spent Budget</option>
-
-                            </select>
-                        </div>
-
-
-                    </div>
-                    <!--  <div class="modal-footer">
-                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                       <button type="button" class="btn btn-primary">Save changes</button>
-                     </div> -->
-                </div>
+      </div>
+      <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="filterPopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body  row" >
+                <div class="col-lg-4">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                        title="Status">
+                        <option value='new' selected>New</option>
+                        <option value='ongoing' selected>Ongoing</option>
+                        <option value='closed'>Closed</option>
+                        <option value='waiting'>Waiting</option>
+                        <option value='canceled'>Canceled</option>
+                        <option value='rejected' selected>Rejected</option>
+                        <option value='UAT' selected> UAT</option>
+            
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                        <option value='bug' selected>Bug</option>
+                        <option value='change' selected>Change Request</option>
+                        <option value='new' selected>New Request</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                        data-type="created_by" title="Created by"></select>
+                </div>
+              
+            
+                <div class="col-4 text-right" style="padding-top: 7px;">
+            
+                    <input type="checkbox" class="form-control1 bug-filter-checkbox bug-mgmt-filter-select"
+                        data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id='bug_filter_onlyparent'
+                        title="Show Child Tasks"> Show Child Tasks
+            
+                </div>
+            
+                <div class="col-4 text-right" style="padding-top: 7px;">
+            
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                        data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                        <option value=''>None</option>
+                        <option value='1'>1- Lowest</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9 - Highest</option>
+            
+                    </select>
+                </div>
+            
+            
+                <div class="col-4 text-right" style="padding-top: 7px;">
+            
+                    <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                        id='bug_filter_columns' title="Columns">
+                        <option value='task-status' selected>Status</option>
+                        <option value='task-id' selected>Task ID</option>
+                        <option value='task-name' selected>Description</option>
+                        <option value='task-nature' selected>Task Nature</option>
+                        <option value='assignee' selected>Assignee</option>
+                        <option value='tasktype' selected>Task Type</option>
+                        <option value='close-date'>Status Close Date</option> 
+                        <option value='closed-by'>Status Closed By</option> 
+                        <option value='priority'>Priority</option>
+                        <option value='story-card' selected>Story Card</option>
+                        <option value='project' selected>Project</option>
+                        <option value='created-by' selected>Create By</option>
+                        <option value='created-date' selected>Create Date</option>
+                        <option value='last-update'>Late Update</option>
+                        <option value='estimated-hours'>Estimated Hours</option>
+                        <option value='spent-hours'>Spent Hours</option>
+                        <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                        <option value='executed-counter'>Executed Counter</option>
+                        <option value='estimated-budget'>Estimated Budget</option>
+                        <option value='spent-budget'>Spent Budget</option>
+            
+                    </select>
+                </div>
+            
+               
+            </div>
+           <!--  <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+          </div>
         </div>
-
+      </div>
+    
     </div>
-
-
+    
+    
     <div class="row" style="margin: 0;">
-
+        
     </div>
-
-
+    
+    
     <div class="row bugListContent">
         <div class="bugListNavMenu">
             <div class="cs-input-group">
@@ -340,27 +341,27 @@
                     <i>
                         <span class="bug-filter-badge-label" style="display:none;">0</span>
                     </i>
-
-
+        
+        
                     <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
                         <span>
                             <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; 
                                font-size: 12px; color:#727D91; margin-top: 5px;    " data-target="#insertNewLabel4Task">
-
+        
                                 Add Label
-
+        
                             </a>
                         </span>
                         <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
-                              onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-
-
+                            onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+        
+        
                         <div class="dropdown-divider" style="padding:0px;">
-
+        
                         </div>
                         <div id="tasklabellist4Task" class="tasklabellist4Task"
-                             style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'>
-
+                            style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'>
+        
                         </div>
                     </div>
                 </div>
@@ -369,82 +370,166 @@
                 <div class="dropdown task-sprint-show">
                     <!-- btn btn-primary   sildim -->
                     <span class="dropdown-toggle1 btn-light btn task-sprint-show" data-toggle="dropdown"
-                          style="width: 100%;">
+                        style="width: 100%;">
                         Sprint</span>
                     <i>
                         <span class=" bug-filter-badge" style="display:none;">0</span>
                     </i>
-
+        
                     <div class="dropdown-menu drop-label-menu sprint-show-4-task">
                         <span>
-
+        
                             <a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; 
                                font-size: 12px; color:#727D91; margin-top: 5px;">
                                 New Sprint</a>
                         </span>
                         <span class="newlabelspan" style="cursor: pointer;"
-                              onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                            onclick="new UserStory().clearAndShowAll(this)">Clear</span>
                         <div class="dropdown-divider" style="padding:0px;">
                         </div>
                         <div id="sprintlist4Task" class="sprintlist4Task"
-                             style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
-
+                            style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+        
                         </div>
                     </div>
                 </div>
             </div>
             <div class="cs-input-group mt-3">
                 <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
-                        style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
-                        data-type="project_id" title="Project"></select>
+                style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
+                data-type="project_id" title="Project"></select>
             </div>
             <div class="cs-input-group mt-3">
                 <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
-                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
-                        data-type="backlog_id" title="Story Card">
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
+                data-type="backlog_id" title="Story Card">
+               </select>
+            </div>
+            <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
+                data-type="assignee_id" title="Assignee"></select>
+            </div>
+            <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
+                data-type="closed_by" title="Closed By"></select>
+            </div>
+            
+
+            <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                    title="Status">
+                    <option value='new' selected>New</option>
+                    <option value='ongoing' selected>Ongoing</option>
+                    <option value='closed'>Closed</option>
+                    <option value='waiting'>Waiting</option>
+                    <option value='canceled'>Canceled</option>
+                    <option value='rejected' selected>Rejected</option>
+                    <option value='UAT' selected> UAT</option>
+        
                 </select>
             </div>
             <div class="cs-input-group mt-3">
-                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
-                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
-                        data-type="assignee_id" title="Assignee"></select>
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                    <option value='bug' selected>Bug</option>
+                    <option value='change' selected>Change Request</option>
+                    <option value='new' selected>New Request</option>
+                </select>
             </div>
             <div class="cs-input-group mt-3">
-                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
-                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
-                        data-type="closed_by" title="Closed By"></select>
+                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                    data-type="created_by" title="Created by"></select>
             </div>
-            <div class="cs-input-group bcs-col-btn bcs-more-filter-btns mt-3">
-                <button class="btn btn-light" data-toggle="modal" data-target="#filterPopUp" > <i class="fas fa-plus"></i> <span>More Filter</span></button>
-                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp" > <i class="fas fa-edit"></i></button>
+          
+        
+            <div class="cs-input-group mt-3">
+
+                <label class="checkmarkcontainer">Show Child Tasks
+                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
+                    <span class="checkmark"></span>
+                </label>
+
+                
             </div>
+        
+            <div class="cs-input-group mt-3">
+        
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                    data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                    <option value=''>None</option>
+                    <option value='1'>1- Lowest</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9 - Highest</option>
+        
+                </select>
+            </div>
+        
+        
+            <div class="cs-input-group mt-3">
+        
+                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                    id='bug_filter_columns' title="Columns">
+                    <option value='task-status' selected>Status</option>
+                    <option value='task-id' selected>Task ID</option>
+                    <option value='task-name' selected>Description</option>
+                    <option value='task-nature' selected>Task Nature</option>
+                    <option value='assignee' selected>Assignee</option>
+                    <option value='tasktype' selected>Task Type</option>
+                    <option value='close-date'>Status Close Date</option> 
+                    <option value='closed-by'>Status Closed By</option> 
+                    <option value='priority'>Priority</option>
+                    <option value='story-card' selected>Story Card</option>
+                    <option value='project' selected>Project</option>
+                    <option value='created-by' selected>Create By</option>
+                    <option value='created-date' selected>Create Date</option>
+                    <option value='last-update'>Late Update</option>
+                    <option value='estimated-hours'>Estimated Hours</option>
+                    <option value='spent-hours'>Spent Hours</option>
+                    <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                    <option value='executed-counter'>Executed Counter</option>
+                    <option value='estimated-budget'>Estimated Budget</option>
+                    <option value='spent-budget'>Spent Budget</option>
+        
+                </select>
+            </div>
+
         </div>
         <div class="col" id="addBuglist" style="zoom: 95%;">
             <div class="row" style="margin: 0;">
                 <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
                     <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
                         <thead class="bugThead">
-
+    
                         </thead>
                         <tbody>
-
+    
                         </tbody>
-
+    
                     </table>
                 </div>
-
+                
             </div>
             <div class="fixed-input-add-desc " style="display: flex;">
                 <input type="text" class="form-control col-lg-9 testDesc2 prerActionTableGeneralCls"
-                       name="testCaseDescription" id="taskNameInputNew3" onchange="addNewTask4BugInput(this)" placeholder="+ Add">
+                name="testCaseDescription" id="taskNameInputNew3" onchange="addNewTask4BugInput(this)" placeholder="+ Add">
                 <select class="form-control col-lg-3"   id="bug_add_nature" data-type="nature" title="Task Nature" tabindex="-98">
                     <option value="bug" >Bug</option>
                     <option value="change" >Change Request</option>
                     <option value="new" >New Request</option>
                 </select>
-
+     
             </div>
-
+    
             <div class=" col-12 d-flex justify-content-center paginationStyle">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination" id="pagination_block">
@@ -456,7 +541,7 @@
                         </li>
                         <li class="page-item num"><a class="page-link">1</a></li>
                         <li class="page-item num"><a class="page-link">2</a></li>
-
+    
                         <li class="page-item order-last">
                             <a class="page-link" href="#" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
@@ -467,17 +552,17 @@
                 </nav>
             </div>
         </div>   
-
+    
     </div>
-
+    
     <div  type="button" class="bigCheck" data-toggle="modal" id="addNewTaskButton" data-target="#issue-managment-add-task" >
-
+    
         <label for="sb"><i class="fas fa-plus" aria-hidden="true"></i></label>
     </div>
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
 </div>
