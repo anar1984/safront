@@ -4,6 +4,7 @@ var cheweek = {
         this.genUserInfoAccount();
         this.getBolmeList();
         Utility.addParamToUrl('current_project_id', this.cheweek_id);
+        global_var.current_project_id = this.cheweek_id;
         Utility.addParamToUrl('fkManualProjectId', this.cheweek_id);
         getProjectUserssync(this.cheweek_id);
 
@@ -44,8 +45,7 @@ var cheweek = {
            <div class="ruby-row" >
            <div class="ruby-col-1 hidden-md" style="order: 5;">
            <ul class="">
-           <li><a href="#" class="for-chewekk-new-panel-link"
-                   data-link="chwkusmngmt"> Tapşırıq Paneli</a>
+           <li><a href="#" class="filtSectReloadNew" sa-data-body='mezmun-list'> Tapşırıq Paneli</a>
            </li>
            <li><a href="#" class="filtSectReloadNew" sa-data-body='staticlist-modul' onclick=""> Cari vəziyyət</a></li>
            <li><a href="#"> Maliyyə Vəziyyəti</a></li>
@@ -830,24 +830,20 @@ $(document).on("click", ".filtSectReloadNew", function (e) {
 
             cheweek.getTaskList();
         });
-    } else if (idbd === 'staticlist-modul') {
+    } 
+    else if (idbd === 'staticlist-modul') {
         cheweek_group.getModulList();
-    } else {
+    }
+    else if (idbd === 'mezmun-list') {
+        cheweek_mezmun.init();
+    }
+     else {
         new UserStory().setGUIComponentFillGUIModal(this, idbd, '21041212141705702084');
 
     }
 
 
     Utility.addParamToUrl('lastMenuId', idbd);
-});
-
-$(document).on('click', 'body', function () {
-    $("ul.ruby-menu > li.ruby-menu-mega > div").first().removeClass('active')
-    $("#contextMenu").hide();
-});
-$(document).on('click', 'ul.ruby-menu > li.ruby-menu-mega > div i.dataFav', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
 });
 
 function checkCheweek(params) {
@@ -944,22 +940,6 @@ var requestType = {
     ]
 }
 
-$(document).on('click', '.for-chewekk-new-panel-link', function () {
-    var div = $(".component-class#21041212141705702084 >.component-section-row ");
-    var f = $(this).attr("data-link")
-    $.get("child/" + f + ".html", function (html_string) {
-        $(div).html(html_string);
-
-        $('.selectpicker').selectpicker({
-            iconBase: 'fa',
-            tickIcon: 'fa-chevron-down',
-        });
-
-
-        genFilterTapsiriq();
-    });
-
-})
 var modulListTap = {
     'techizat-satinalma': [{
             "id": "techizat",
@@ -1323,7 +1303,7 @@ function genFilterTapsiriq() {
     $("#taskTypeId-filter-tapsiriq").selectpicker("refresh");
 
     getProjectUsers4Tapsiriq();
-    getKontragent4Tapsiriq();
+   // getKontragent4Tapsiriq();
     getTapsiriqList();
     // $("#reqeustModul-filter-tapsiriq").change();
 }
@@ -1440,260 +1420,6 @@ function getContentTapsiriq1(id, mzmn, image, nameUs, taskStatus, tasktype, time
 
 }
 
-function getContentTapsiriq(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid, statusID) {
-
-    return $("<div>")
-            .addClass('cs-task-item-in-box redirectClass cs-white-bg')
-            .attr('id', id)
-            .attr('pid', id)
-            .append($("<div>")
-                    .addClass("cs-cart-head-title p-2")
-                    .append(tasktype)
-                    .append($("<span class='brend-color large-blok-icon'>")
-                            .html('<i class="fas fa-columns"></i>')))
-            .append(`<div class="cs-task-card-body pl-2 pr-2"">
-                       <div class="cs-task-card-desc">
-
-                       <p onclick_trigger_id="21031217414702167956" class=''>${mzmn}</p>
-                       </div>
-                       </div>`)
-            .append($("<div>")
-                    .addClass('cs-task-card-bottom  bg-status-' + statusID)
-                    .append($("<div>")
-                            .addClass('d-flex  bd-highlight cs-flex-align-middle')
-                            .append($("<div>")
-                                    .addClass("d-flex flex-fill align-items-center bd-highlight")
-                                    .append(`<div class="cs-task-card-avatar-boxes"><ul>
-                                               <li><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən"></li>
-                                                 </ul></div>`)
-                                    .append($("<div>")
-                                            .addClass("cs-staturs-circle-note1 ml-2")
-                                            .append(taskStatus))
-                                    )
-
-
-
-
-                            .append(` <div class="flex-fill bd-highlight text-right">
-                            <div class="cs-task-card-datatime pr-1 d-inline-block" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span >${date}</span>
-                        </div>
-                                  <div class="cs-task-card-attachfile">
-                                      <label for="cs-file-upload" class="cs-file-upload">
-                                          <i class="fas fa-paperclip"></i>
-                                      </label>
-                                      <input id="cs-file-upload" type="file"/>
-                                  </div>
-                                  <label class="cs-card-ceckbox switch">
-                                      <input type="checkbox" id="user-story-show-stat4tapsiriq" data-bid="${id}" class="user-story-prototype-change1" />
-                                      <span class="slider round hide-off "></span>
-                                  </label>
-                              </div>`)
-                            ))
-
-
-            .append($("<div>").addClass("stat-div-task-content")
-                    .append($('<table>').addClass("stat-table-us")
-                            .append($("<thead>")
-                                    .append($("<tr class=total>"))
-                                    .append($("<tr class='bug'>"))
-                                    )
-                            .append($("<tbody>")))
-                    .css("display", 'none'))
-
-            .append(hid.hide())
-
-
-}
-
-function getTapsiriqList(serach) {
-    var chkAll = $("#show-all-colmn-tapsriq")
-    var tasktypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
-    var createdBy = getProjectValueUsManageMultiByel($("#createdby-filter-tapsiriq"));
-    //var requestType = getProjectValueUsManageMultiByel($("#reqeustType-filter-tapsiriq"));
-    var fkTaskTypeId = getProjectValueUsManageMultiByel($("#taskTypeId-filter-tapsiriq"));
-    var executorİd = getProjectValueUsManageMultiByel($("#excekuter-filter-tapsiriq"));
-    var fkKontragentId = getProjectValueUsManageMultiByel($("#kontragent-filter-tapsiriq"));
-    var val = $("#date_timepicker_start_end_tapsiriq").val();
-    var stTime
-    var endTime
-
-    var type_view = localStorage.getItem('tapsiriq_view');
-    if (!type_view) {
-        type_view = "aktiv_passiv";
-    }
-    ;
-
-    if (type_view === 'aktiv_passiv') {
-        $('.filter-section .aktiv_pasiv_filter').show();
-        $('.filter-section .status_filter').hide();
-        $('.filter-section .operation_filter').hide();
-        var sl = {};
-        var cl = {};
-        sl.startLimit = 0;
-        sl.endLimit = 25;
-
-
-        if (serach) {
-            sl.reqeustDescription = serach ? serach : "";
-            sl.reqeustCode = serach ? serach : "";
-            cl.reqeustCode = serach ? serach : "";
-            cl.reqeustDescription = serach ? serach : "";
-
-        }
-        /*  if (requestType.length > 0) {
-         sl.requestType = requestType ? requestType : "";
-         cl.requestType = requestType ? requestType : "";
-         } */
-
-        if (createdBy.length > 0) {
-            sl.createdBy = createdBy ? createdBy : "";
-            cl.createdBy = createdBy ? createdBy : "";
-        }
-        if (tasktypeId.length > 0) {
-            sl.fkTaskTypeId = tasktypeId ? tasktypeId : "";
-            cl.fkTaskTypeId = tasktypeId ? tasktypeId : "";
-        }
-        if (fkKontragentId.length > 0) {
-            sl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
-            cl.fkKontragentId = fkKontragentId ? fkKontragentId : "";
-        }
-        if (val) {
-            sl.createdDate = val ? val : "";
-            cl.createdDate = val ? val : "";
-        }
-        var db = ['new%IN%ongoing%IN%waiting', 'closed%IN%canceled%IN%tamamlanib%IN%defected%IN%rejected%IN%tesdiqlenib'];
-        if (chkAll.prop("checked")) {
-            $(".cs-task-panel-column").empty()
-                    .append(tapsiriqColStatement('aktiv', "Aktiv"))
-                    .append(tapsiriqColStatement('passiv', "Passiv"));
-
-            for (let i = 0; i < db.length; i++) {
-                const g = db[i];
-                sl.requestStatus = g;
-                cl.requestStatus = g;
-                var res = be.callApi("21092513021300497192", sl);
-
-
-                var count = be.callApi('21092600043006221820', cl);
-                genAktivPassiv(res, i, count.id);
-                if (i === 0) {
-                    $(".count-cs-aktiv").text(count.id);
-                }
-
-                if (i === 1) {
-                    $(".count-cs-passiv").text(count.id);
-                }
-
-            }
-
-
-        } else {
-            $(".cs-task-panel-column").empty()
-                    .append(tapsiriqColStatement('aktiv', "Aktiv"))
-
-            const g = db[0];
-            sl.requestStatus = g;
-            cl.requestStatus = g;
-            var res = be.callApi("21092513021300497192", sl);
-
-
-            var count = be.callApi('21092600043006221820', cl);
-            genAktivPassiv(res, 0, count.id);
-
-            $(".count-cs-aktiv").text(count.id);
-
-            $(".cs-task-col.aktiv").find('.cs-card-fullview').click();
-        }
-
-
-
-
-    } else if (type_view === 'status') {
-        $('.filter-section .aktiv_pasiv_filter').hide();
-        $('.filter-section .status_filter').show();
-        $('.filter-section .operation_filter').hide();
-
-        var sl = {};
-        var cl = {};
-        sl.startLimit = 0;
-        sl.endLimit = 25;
-        if (executorİd.length > 0) {
-            sl.fkAssigneeId = executorİd ? executorİd : "";
-            cl.fkAssigneeId = executorİd ? executorİd : "";
-        }
-        if (fkTaskTypeId.length > 0) {
-            sl.fkTaskTypeId = fkTaskTypeId ? fkTaskTypeId : "";
-            cl.fkTaskTypeId = fkTaskTypeId ? fkTaskTypeId : "";
-        }
-        if (createdBy.length > 0) {
-            sl.createdBy = createdBy ? createdBy : "";
-            cl.createdBy = createdBy ? createdBy : "";
-        }
-        if (val) {
-            sl.createdDate = val ? val : "";
-            cl.createdDate = val ? val : "";
-        }
-        if (serach) {
-            sl.taskNo = serach ? serach : "";
-            cl.taskNo = serach ? serach : "";
-
-        }
-
-        var oper = getTaskTypeList();
-        oper = oper._table.r;
-        var stat = GetTaskStatusList();
-        stat = stat._table.r;
-        $(".cs-task-panel-column").empty();
-        if (chkAll.prop("checked")) {
-
-            for (let j = 0; j < stat.length; j++) {
-                const b = stat[j];
-
-                $(".cs-task-panel-column")
-
-                        .append(tapsiriqColStatement(b.id, b.taskStatusName));
-                sl.taskStatus = b.id
-                cl.taskStatus = b.id
-                var res = be.callApi("210925130704092810098", sl);
-
-
-
-                var count = be.callApi('21092620211609677313', cl);
-                $(".count-cs-" + b.id).text(count.id);
-                genstatustapsiriq(res, b.id, count.id);
-            }
-        } else {
-            var tbl = ['new', 'ongoing', 'waiting']
-            for (let j = 0; j < tbl.length; j++) {
-                const b = stat[j];
-
-                $(".cs-task-panel-column")
-
-                        .append(tapsiriqColStatement(b.id, b.taskStatusName));
-                sl.taskStatus = b.id
-                cl.taskStatus = b.id
-                var res = be.callApi("210925130704092810098", sl);
-
-
-
-                var count = be.callApi('21092620211609677313', cl);
-                $(".count-cs-" + b.id).text(count.id);
-                genstatustapsiriq(res, b.id, count.id);
-            }
-        }
-
-
-    } else if (type_view === 'operation') {
-        $('.filter-section .aktiv_pasiv_filter').hide();
-        $('.filter-section .status_filter').hide();
-        $('.filter-section .operation_filter').show();
-
-    }
-
-}
-
 function getMezmunApiLisreplace(ids, trig) {
     var ol = {}
     ol.id = ids
@@ -1707,166 +1433,6 @@ function getMezmunApiLisreplace(ids, trig) {
     }
 }
 
-function genstatustapsiriq(res, x, say) {
-    try {
-        res = res._table.r
-        var oper = getTaskTypeList();
-        oper = oper._table.r;
-        var stat = GetTaskStatusList();
-        stat = stat._table.r;
-        var ids = ''
-
-        for (let l = 0; l < res.length; l++) {
-
-            const o = res[l];
-
-
-            var date = Utility.convertDate(o.createdDate);
-            var time = Utility.convertTime(o.createdTime);
-            var img
-            var userName
-            if (o.createdBy) {
-                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-            } else {
-                img = 'userprofile.png';
-                userName = 'Yoxdur'
-            }
-            var st = $('<span>').addClass('issue_status_' + o.taskStatus);
-            for (let c = 0; c < stat.length; c++) {
-                if (stat[c].id == o.taskStatus) {
-                    st.text(stat[c].taskStatusName);
-                }
-
-            }
-            var a = $("<span>")
-                    .attr("href", '#')
-                    .addClass('operation')
-                    .addClass('_taskListTaskTypeIdField')
-                    .attr('sa-data-fktasktypeid', o.fkTaskTypeId);
-
-            if (o.fkTaskTypeId) {
-
-                for (let l = 0; l < oper.length; l++) {
-                    if (oper[l].id == o.fkTaskTypeId) {
-                        a.text(oper[l].taskTypeName + "(" + o.taskNo + ")");
-                    }
-
-                }
-
-            }
-
-            fkRequestId = o.fkRequestId
-            ids += o.fkRequestId + "%IN%"
-            var html = getContentTapsiriq1(o.id, fkRequestId, img, userName, st, a, time, date, o.taskPriority);
-            $("#flex-col-" + o.taskStatus).append(html);
-
-
-        }
-
-        selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
-        if (say > 25) {
-            $("#flex-col-" + x).append($("<div>")
-                    .addClass("more-button-fortapsiriq text-center ")
-                    .text('Daha çox')
-                    .attr("data-status", x)
-                    .attr("start-limit", '25')
-                    .attr("end-limit", '50')
-                    )
-        }
-        getMezmunApiLisreplace(ids, 'bodyMezmun');
-        $('[data-toggle="popover"]').popover({
-            html: true
-        });
-    } catch (error) {
-
-    }
-
-
-}
-
-function genstatustapsiriqmore(res, elm, count, etmit) {
-    try {
-        res = res._table.r
-        var oper = getTaskTypeList();
-        oper = oper._table.r;
-        var stat = GetTaskStatusList();
-        stat = stat._table.r;
-
-
-        for (let l = 0; l < res.length; l++) {
-
-            const o = res[l];
-
-
-            var date = Utility.convertDate(o.createdDate);
-            var time = Utility.convertTime(o.createdTime);
-            var img
-            var userName
-            if (o.createdBy) {
-                img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-            } else {
-                img = 'userprofile.png';
-                userName = 'Yoxdur'
-            }
-            var st = $('<span>').addClass('issue_status_' + o.taskStatus);
-            for (let c = 0; c < stat.length; c++) {
-                if (stat[c].id == o.taskStatus) {
-                    st.text(stat[c].taskStatusName);
-                }
-
-            }
-            var a = $("<span>")
-                    .attr("href", '#')
-                    .addClass('operation')
-                    .addClass('_taskListTaskTypeIdField')
-                    .attr('sa-data-fktasktypeid', o.fkTaskTypeId);
-
-            if (o.fkTaskTypeId) {
-
-                for (let l = 0; l < oper.length; l++) {
-                    if (oper[l].id == o.fkTaskTypeId) {
-                        a.text(oper[l].taskTypeName);
-                    }
-
-                }
-
-            }
-
-            taskDescription = o.taskDescription + "(" + o.taskNo + ")";
-
-            var html = getContentTapsiriq1(o.id, taskDescription, img, userName, st, a, time, date, o.taskPriority);
-            $("#flex-col-" + o.taskStatus).append(html);
-
-
-        }
-        var say = parseFloat(etmit) + 25;
-
-        $("#flex-col-" + elm).find('.more-button-fortapsiriq').remove();
-        if (count > etmit) {
-            $("#flex-col-" + elm).append($("<div>")
-                    .addClass("more-button-fortapsiriq text-center ")
-                    .text('Daha çox')
-                    .attr("data-status", elm)
-                    .attr("start-limit", etmit)
-                    .attr("end-limit", say)
-                    )
-        }
-
-
-        selectPickerNewoldValuechnage($('.cs-task-panel-column .selectpicker'));
-
-        $('[data-toggle="popover"]').popover({
-            html: true
-        });
-    } catch (error) {
-
-    }
-
-
-}
-
 function selectPickerNewoldValuechnage(elm) {
     elm.each(function (e) {
         var old = $(this).val();
@@ -1876,153 +1442,6 @@ function selectPickerNewoldValuechnage(elm) {
         });
         $(this).val(old).selectpicker("refresh");
     })
-}
-
-function genAktivPassiv(res, x, say) {
-
-
-    try {
-        res = res._table.r
-
-        var oper = getreqeuest4Tapsiriq();
-        oper = oper._table.r;
-        var stat = GetTaskStatusList();
-        stat = stat._table.r;
-
-
-
-
-        for (let l = 0; l < res.length; l++) {
-
-            const o = res[l];
-            if (o.requestStatus === 'new' || o.requestStatus === 'ongoing' || o.requestStatus === 'waiting') {
-
-                var hid = $('<div>')
-                        .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
-
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if (o.createdBy) {
-                    img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                    userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                } else {
-                    img = 'userprofile.png';
-                    userName = 'Yoxdur'
-                }
-                var st = $('<span>');
-                for (let c = 0; c < stat.length; c++) {
-                    if (stat[c].id == o.requestStatus) {
-                        st.text(stat[c].taskStatusName);
-                    }
-
-                }
-                var a = $("<span>")
-                        .attr("href", '#')
-                        .addClass('operation')
-                        .addClass('_taskListTaskTypeIdField')
-                        .attr('sa-data-fktasktypeid', o.requestType);
-
-                if (o.requestType) {
-
-                    for (let l = 0; l < oper.length; l++) {
-                        if (oper[l].id == o.requestType) {
-                            a.text(oper[l].requestType);
-                        }
-
-                    }
-
-                }
-
-                reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid, o.requestStatus);
-                $("#flex-col-aktiv").append(html);
-            } else {
-                var hid = $('<div>')
-                        .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
-
-                var date = Utility.convertDate(o.createdDate);
-                var time = Utility.convertTime(o.createdTime);
-                var img
-                var userName
-                if (o.createdBy) {
-                    img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
-                    userName = SAProjectUser.ProjectUsers[o.createdBy].userName;
-                } else {
-                    img = 'userprofile.png';
-                    userName = 'Yoxdur'
-                }
-
-                var st = $('<span>');
-                for (let c = 0; c < stat.length; c++) {
-                    if (stat[c].id == o.requestStatus) {
-                        st.text(stat[c].taskStatusName);
-                    }
-
-                }
-                var a = $("<span>")
-                        .attr("href", '#')
-                        .addClass('operation')
-                        .addClass('_taskListTaskTypeIdField')
-                        .attr('sa-data-fktasktypeid', o.requestType);
-
-                if (o.requestType) {
-
-                    for (let l = 0; l < oper.length; l++) {
-                        if (oper[l].id == o.requestType) {
-                            a.text(oper[l].requestType)
-                        }
-
-                    }
-
-                }
-
-                reqeustDescription = o.reqeustDescription + "(" + o.reqeustCode + ")"
-                var html = getContentTapsiriq(o.id, reqeustDescription, img, userName, st, a, time, date, hid, o.requestStatus);
-                $("#flex-col-passiv").append(html);
-            }
-
-
-        }
-
-        $('.cs-task-panel-column .selectpicker').selectpicker({
-            iconBase: 'fa',
-            tickIcon: 'fa-chevron-down',
-        });
-
-        $('[data-toggle="popover"]').popover({
-            html: true
-        });
-        if (x === 0) {
-            if (say > 25) {
-                $("#flex-col-aktiv").append($("<div>")
-                        .addClass("more-button-fortapsiriq text-center ")
-                        .text('Daha çox')
-                        .attr("data-status", 'aktiv')
-                        .attr("start-limit", '25')
-                        .attr("end-limit", '50')
-                        )
-            }
-
-        }
-
-        if (x === 1) {
-            if (say > 25) {
-                $("#flex-col-passiv").append($("<div>")
-                        .addClass("more-button-fortapsiriq text-center ")
-                        .text('Daha çox')
-                        .attr("data-status", 'passiv')
-                        .attr("start-limit", '25')
-                        .attr("end-limit", '50')
-                        );
-            }
-        }
-    } catch (error) {
-        console.log(error);
-    }
-
-
 }
 
 function getTapListMore(elm, stmit, etmit) {
@@ -2221,7 +1640,7 @@ function genAktivPassivMore(res, elm, count, etmit) {
 
 }
 
-$(document).on("click", '.more-button-fortapsiriq', function (params) {
+$(document).on("click", '.more-button-fortapsiriq', function () {
     var elm = $(this).attr('data-status');
     var st = $(this).attr('start-limit');
     var ent = $(this).attr('end-limit');
@@ -2229,36 +1648,24 @@ $(document).on("click", '.more-button-fortapsiriq', function (params) {
     getTapListMore(elm, st, ent);
 
 })
-$(document).on("click", '.cs-card-fullview', function (params) {
+$(document).on("click", '.cs-card-fullview', function () {
     var col = $(this).closest('.cs-task-col');
+    console.log('sdfgsdgsdgs');
     if (!col.attr('data-trig')) {
 
         col.attr('data-trig', 'true');
-        col.addClass('maximize-large')
+        col.addClass('maximize-large');
     } else {
 
-        col.removeAttr('data-trig')
-        col.removeClass('maximize-large')
+        col.removeAttr('data-trig');
+        col.removeClass('maximize-large');
     }
 
     $(col).scroll();
 
 })
-$(document).on("click", '.task-view-button-group a', function (params) {
-    var view = $(this).attr('data-view');
-    localStorage.setItem("tapsiriq_view", view);
-    getTapsiriqList();
 
-
-})
-$(document).on("change", '#task-kanban-search-tapsiriq', function (params) {
-
-    idk = "%%" + $(this).val() + "%%"
-
-
-    getTapsiriqList(idk);
-})
-$(document).on("change", '#reqeustModul-filter-tapsiriq', function (params) {
+$(document).on("change", '#reqeustModul-filter-tapsiriq', function () {
     var val = $(this).val();
     var obj1 = modulListTap[val];
     $("#reqeustType-filter-tapsiriq").html('')
@@ -2290,7 +1697,6 @@ $(document).on("click", '.cs-task-item-box .cs-task-card-body', function (params
 
 })
 
-
 $(document).on('change', '#user-story-show-stat4tapsiriq', function (event) {
 
 
@@ -2313,66 +1719,6 @@ $(document).on('change', '#task-us-prio-change', function (event) {
     var elm = be.callApi("21092917070904357762", ml);
 
 });
-
-function getProjectUsers4Tapsiriq() {
-
-
-    var json = initJSON();
-
-    json.kv['fkProjectId'] = global_var.current_project_id;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-
-            obj = res.tbl[0].r;
-            $("select.user-filter-tapsiriq").html('')
-            for (var n = 0; n < obj.length; n++) {
-                $("select.user-filter-tapsiriq").append($('<option>').val(obj[n].fkUserId).text(obj[n].userName));
-            }
-
-            $("select.user-filter-tapsiriq").selectpicker("refresh");
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
-}
-
-function getKontragent4Tapsiriq() {
-
-
-    var json = initJSON();
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/cl/elcompro/getKontragentList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-
-            obj = res.tbl[0].r;
-            $("#kontragent-filter-tapsiriq").html('')
-            for (var n = 0; n < obj.length; n++) {
-                $("#kontragent-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].kaName));
-            }
-
-            $("#kontragent-filter-tapsiriq").selectpicker("refresh");
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
-}
 
 function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
     try {
@@ -2534,4 +1880,3 @@ function getSTatsUserManagmentTableKanban4tapsiriq(tbody, pid) {
 
 
 }
-
