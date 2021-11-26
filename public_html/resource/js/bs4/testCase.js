@@ -3499,7 +3499,6 @@ function  getTaskkObserverListDetaisl(res) {
     }
 
 
-
     var div = $('.task-observer-list');
     div.html('')
     

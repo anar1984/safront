@@ -68,6 +68,35 @@
           <div class="cs-flex-item flex-fill">
             <div class="d-flex justify-content-end">
                 <div>
+                    <div class="cs-input-group cs-pagination-limit">
+                        <span>Closed Dates</span>
+                        <input class="  issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='date'>
+                        <input class=" issue-mgmt-general-filter bug-mgmt-filter-closed-date-to" id ='issue_management_closed_date_to' type='date'>
+
+                    </div>
+
+                </div>  <span>Sort by</span>
+
+                <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
+                        id='bug_filter_sortby' title="Columns">
+                    <option value='task_status' selected>Status</option>
+                    <option value='id' selected>Task ID</option>
+                    <option value='task_name'  accesskey="">Description</option>
+                    <option value='task_nature'  >Task Nature</option>
+                    <option value='fk_assignee_id' >Assignee</option>
+                    <option value='fk_task_type_id' >Task Type</option>
+                    <option value='close_status_date'>Closed Date</option> 
+                    <option value='closed_by'>Closed By</option> 
+                    <option value='task_priority'>Priority</option>  
+                    <option value='created_by'  >Create By</option>
+                    <option value='created_date'  >Create Date</option>  
+                </select>
+                <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                        id='bug_filter_sortby_asc' title="Columns">
+                    <option value='asc' >ASC</option>
+                    <option value='desc' selected>Desc</option>
+                </select>
+                <div>
                      <div class="cs-input-group cs-pagination-limit">
                         <select data-type='limit' class="bug-filter" id="bug_filter_limit">
                             <option value='10'>10</option>
@@ -150,6 +179,18 @@
                             <option value="change" >Change Request</option>
                             <option value="new" >New Request</option>
                 
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                onchange=''   id='bug_task_status_id_zad'
+                                title="Task Status">
+                            <option value="" ></option>
+                            <option value="new" >New</option>
+                            <option value="ongoing" >Ongoing</option>
+                            <option value="waiting" >Waiting</option>
+                            <option value="canceled" >Canceled</option>
+
                         </select>
                     </div>
                     <div class="col-lg-4 " >
