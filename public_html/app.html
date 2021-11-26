@@ -5972,8 +5972,78 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-            <div class="modal-body card-Userstory-body col-12 pt-0 pr-0">
-                <div class="comment-seqment pr-3">
+                        <div class="modal-body issue-managment-add-task col-12 pt-0">
+                  <div class="row">
+                      <div class="col-lg-12" style="padding: 0 25px">
+                        <div class="comment-seqment">
+                            <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="d-comment-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab0" aria-selected="true">Comment</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-cheklist-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Check List</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Observer</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Subtask</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Ivents</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab0">
+                                    <div class="commentwritepanel">
+                                        <div class="cs-input-group mb-3">
+                                            <div class="input-group-addon">Description</div>
+                                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
+                                                      placeholder="Add a comment.." rows="1"></textarea>
+                
+                                            <br>
+                                            <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
+                                                 style="width:100%;display: none; padding:0px;margin:0px;">
+                                                <div class="col-12 text-center canvas_canvas_msg "
+                                                     style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
+                                                    <h5>Copy and Paste Image Here</h5>
+                                                </div>
+                                            </div>
+                                            <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
+                
+                                                <div class="acceptcomment flex-fill mr-1">
+                                                    <button class="btn btn-primary" type="submit"
+                                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
+                                                </div>
+                                                <div class="deletecomment flex-fill mr-1">
+                                                    <button class="btn " type="submit">Cancel</button>
+                                                </div>
+                                                <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
+                                                       multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
+                
+                
+                                            </div>
+                
+                
+                
+                
+                                        </div>
+                                        <!--                    <output id="tasklistcomment"></output>-->
+                
+                
+                                    </div>
+                                                                       
+                                    <div class="comment-body">
+                
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
 
                     <div class="commentwritepanel ">
                         <div class="cs-input-group mb-3">
@@ -6146,38 +6216,28 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                        
-                
-                                            <div class="col-lg-4 addEpicTask cs-input-group">
-                                                <div class="dropdown-task show">
-                                                    <a href="#" class="btn comment-content-header-history"
-                                                        onclick="changeUserStoryOfTaskModal()">
-                                                        User Story<br>
-                                                </a>
-                
-                                                <a  href="#" class="btn comment-content-header-history"
-                                                        onclick="showUserStoryOfTaskCardModal(this)"
-                                                        id='task-mgmt-modal-user-story'>
-                                                </a>
-                                                </div>
-                                            </div>
-                                    
-
-                                        <div class="addEpicTask cs-input-group">
-                                            <div class="dropdown-task show">
-                                                <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
-                                                    Parent Task<br>
-                                                </a>
-
-                                                <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                    onclick="shiftTaskInfoOnTaskInfoModal(this)"
-                                                    id='task-mgmt-modal-parent-task'>
+                                    </div>
+                                    <hr>
+                                    <div class="row">           
+                                        <div class="col-lg-12 addEpicTask">
+                                          <div class="cs-input-group">
+                                            <label>
+                                               Story Card
+                                        </label>
+                                       <span>
+                                            <a  href="#" class=" comment-content-header-history"
+                                                    onclick="showUserStoryOfTaskCardModal(this)"
+                                                    id='task-mgmt-modal-user-story'>
                                             </a>
+                                            <a href="#" class=" comment-content-header-history mb-1"
+                                            onclick="changeUserStoryOfTaskModal()">
+                                            Change Story Card
+                                    </a>
+                                        </span>
                                             </div>
-                                        </div>
-
+                                          </div>
+                                
+                                    </div>
 
                                         <div class="addEpicTask cs-input-group" style="padding-bottom: 20px;">
                                             <div class="dropdown-task show">
@@ -6299,11 +6359,65 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-                                        <!-- <div class="statusCardStory">
-                                            <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
-                                            <div class="form-group statusSelectSelect">
+                                    </div>
+                                    <div class="row soon yearly-actions run-intensive mt-3">
+                                        <div class="col-12">
+                                            <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
+                                        </div>
+                                        <div class="cs-flex-col flex-item ml-3 mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Execution Data</label>
+                                                <input class="form-control" id="runTaskExecutiveDate_detail" type="text" name="runTaskExecutiveDate" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row soon">
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <label class="input-group-addon">Select Reminder</label>
+                                                <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
+                                                    <option value="at_start_time">At start time</option>
+                                                    <option value="5_minutes_before">5 minutes before</option>
+                                                    <option value="10_minutes_before">10 minutes before</option>
+                                                    <option value="15_minutes_before">15 minutes before</option>
+                                                    <option value="20_minutes_before">20 minutes before</option>
+                                                    <option value="25_minutes_before">25 minutes before</option>
+                                                    <option value="30_minutes_before">30 minutes before</option>
+                                                    <option value="45_minutes_before">45 minutes before</option>
+                                                    <option value="1_hour_before">1 hour before</option>
+                                                    <option value="2_hours_before">2 hours before</option>
+                                                    <option value="3_hours_before">3 hours before</option>
+                                                    <option value="12_hours_before">12 hours before</option>
+                                                    <option value="24_hours_before">24 hour before</option>
+                                                    <option value="2_days_before">2 days before</option>
+                                                    <option value="1_week_before">1 week before</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="d-task-tab3" role="tabpanel" aria-labelledby="pills-d-task-tab3">
+                                    <div class="task-check-list-textarea">
+                                        <div class="cs-input-group mb-3">
+                                            <div class="input-group-addon">Description</div>
+                                            <textarea class="form-control" id="updatetask_checklist"></textarea>
+                                            <button class='btn addCheckListToTask mt-3'>Add Check List</button>
+                                        </div>
+                                    </div>
+                                    <div class="task-check-list">
+            
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
+                                    <div class="cs-input-group mb-3 ml-2">
+                                        <div class="input-group-addon">Description</div>
+                                              <div class="task-check-list-observer p-0 mt-1 mb-3">
+                                                <!-- <button class='btn loadUserForObserver'>Load User</button> -->
+                                                <select class="form-control" id="updatetask_oblerverlist"></select>
+                                                <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
+                                            </div>
+                                            <div class="task-observer-list">
                         
                                                 <select class="form-control" 
                                                         style="width:auto"
@@ -6551,18 +6665,105 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <hr>
-                                    </div>
-                                    <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
-                                        <div class="cs-input-group mt-2">
-                                            <label class="checkmarkcontainer">Notify you about the confirmation?
-                                                <input type="checkbox" id="sendnotification_detail">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                <div class="tab-pane fade" id="d-task-tab5" role="tabpanel" aria-labelledby="pills-d-task-tab5">
+                                    
+                                    <div class="col-lg-12">
+                                        <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Select Task</th>
+                                                    <th>Parent Task</th>
+                                                    <th>Task Name</th>
+                                                    <th>Task ID</th>
+                                                    <th>Task Status</th>
+                                                    <!-- <th>Description</th>
+                                                    <th>Created By</th>
+                                                    <th>Updated By</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    </a></td>
+                                                    <td class="move-to-child">
+                                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                                        onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
+                                                        </a>
+                                                    </td>
+                                                    <td><div class="task-mgmt-modal-parent-task"></div></td>
+                                                    <td><div class="task-id-modal-parent-task"></div></td>
+                                                    <td><div class="task-status-modal-parent-task"></div></td>
+                                                  </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <!-- <div class="cs-input-group">
+                                             <div class="dropdown-task show">
+                                                 <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                     Parent Task<br>
+                                                 </a>
+ 
+                                                 <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                                     onclick="shiftTaskInfoOnTaskInfoModal(this)"
+                                                     id='task-mgmt-modal-parent-task'>
+                                             </a>
+                                             </div>
+                                        </div> -->
+                                     </div>
+ 
+ 
+                                     <div class="col-lg-12 mt-5">
+
+                                        <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Click</th>
+                                                    <th>Child Task</th>
+                                                    <th>Task Name</th>
+                                                    <th>Task ID</th>
+                                                    <th>Task Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <!-- <div class="cs-input-group">
+                                         <div class="dropdown-task show">
+                                             <a href="#" class="btn comment-content-header-history">
+                                                 Child Task<br>
+                                             </a>
+ 
+                                             <a class="btn comment-content-header-history task-mgmt-modal-child-task"
+                                                 id='task-mgmt-modal-child-task'>
+                                         </a>
+                                         </div>
+                                        </div> -->
+                                     </div>
+                                </div>
+                                <div class="tab-pane fade" id="d-task-tab6" role="tabpanel" aria-labelledby="pills-d-task-tab6">
+                                    Ivents
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <hr>
+                            </div>
+                            <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
+                                <div class="cs-input-group mt-2">
+                                    <label class="checkmarkcontainer">Notify you about the confirmation?
+                                        <input type="checkbox" id="sendnotification_detail">
+                                        <span class="checkmark"></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>

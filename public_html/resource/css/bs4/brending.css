@@ -4179,6 +4179,13 @@ hr.hr-ss {
 }
 .Assigne-card-story-select-img {
     margin-right: 4px;
+    box-shadow: none !important;
+}
+.Assigne-card-story-select-img.created {
+    border: 1px dashed #6bb5f0;
+}
+.Assigne-card-story-select-img.updated {
+    border: 1px dashed #da3838;
 }
 .bcs-more-filter-btns {
     width: 100%;
@@ -4646,4 +4653,157 @@ table.lbl-list-table tr td {
 }
 .task-skin-btn.navIcon .fa-times {
     display: block;
+}
+.issue-managment-add-task .tab-pane .cs-input-group {
+    padding: 0;
+}
+.issue-managment-add-task .Assigne-card-story-select-content {
+    z-index: 10;
+}
+
+/* task update Checklist */
+.task-check-list table tr td, .task-check-list table textarea {
+    font-size: 14px;
+}
+.task-check-list table {
+ border: none !important;
+}
+.task-check-list thead tr th {
+    background: transparent;
+    color: transparent;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+.task-check-list tr:nth-child(odd) {
+    background-color: #fff;
+}
+.task-check-list tr:nth-child(even) {
+    background-color: #fff;
+}
+.task-check-list .task-checklist-thead{
+    background-color: transparent;
+    border: none;
+}
+.task-check-list .task-checklist-thead tr {
+    background-color: transparent;
+    border: none;
+}
+.task-check-list td input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+.task-check-list td {
+    border-right: 1px solid #ffff !important;
+}
+.task-check-list .taskCheckListItemDelete i {
+ color: #d4d4fd;
+}
+.task-check-list .project-table-list tr:hover a i{
+    color: #525596;
+}
+.task-check-list .on-checked .updateTaskcheckListItemName{
+    text-decoration: line-through;
+}
+.task-check-list .text-checked, .task-check-list .on-checked {
+    position: relative;
+}
+.task-check-list .text-checked:after{
+    content: "";
+    top: 17px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: #d4ff0070;
+    position: absolute;
+}
+.task-check-list-observer .dropdown.bootstrap-select{
+    display: inline-block;
+    width: 270px!important;
+}
+.task-observer-list .Assigne-card-story-select-img {
+    border: 1px dashed #525596;
+}
+
+.task-observer-list table {
+    border: none !important;
+}
+.task-observer-list thead tr th {
+    background: transparent;
+    color: transparent;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+.task-observer-list table thead{
+    background-color: transparent;
+    border: none;
+}
+.task-observer-list tr {
+    background-color: transparent;
+    border: none;
+}
+.task-observer-list td input[type=checkbox] {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+.task-observer-list td {
+    border-right: 1px solid #ffff !important;
+}
+.task-observer-list .taskObserverDelete i {
+ color: #d4d4fd;
+}
+.task-observer-list .project-table-list tr:hover .taskObserverDelete i{
+    color: #525596;
+}
+.task-observer-list tr:nth-child(even) {
+    background-color: #fff;
+}
+.task-observer-list tr:nth-child(even) {
+    background-color: transparent;
+}
+
+.task-observer-list table tr {
+
+}
+.task-observer-list table tr td{
+
+}
+.task-observer-list table thead tr{
+
+}
+.task-observer-list table thead tr th {
+
+}
+.move-to-child .btn {
+    max-width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.subtask-table thead th:nth-child(-n+20) {
+    position: sticky;
+    top: -1px;
+    background: #525596;
+    color: white;
+    border-top: 4px solid #fff;
+    border-right: 4px solid #fff;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.subtask-table thead th:nth-child(-n+20) {
+    height: 40px;
+    padding: 5px 5px;
 }
