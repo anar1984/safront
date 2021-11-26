@@ -7,11 +7,20 @@
 
 var StoryCardPanel = {
     StoryCardId: "",
-    Init: function (storyCardId) {
-        StoryCardId = storyCardId;
-        loadBacklogDetailsByIdIfNotExist(StoryCardPanel.StoryCardId);
-        this.LoadContent();
+    Init: function (storyCardId, elementId) {
+        this.StoryCardId = storyCardId;
+        this.LoadStoryCardInfo();
+        this.LoadBody(elementId);
+        this.LoadProjectList();
+    },
 
+    LoadStoryCardInfo: function () {
+        loadBacklogDetailsByIdIfNotExist(StoryCardPanel.StoryCardId);
+    },
+    LoadBody: function (elementId) {
+        var html = this.LoadContent();
+        ;
+        $('#' + elementId).html(html);
     },
     LoadContent: function () {
         var res = "";
@@ -23,9 +32,6 @@ var StoryCardPanel = {
             async: false,
             success: function (html) {
                 res = html;
-            },
-            error: function () {
-                hideProgress4();
             }
         })
         return res;
@@ -33,11 +39,39 @@ var StoryCardPanel = {
     LoadProjectList: function () {
         var fkProjectId = SACore.GetBacklogDetails(StoryCardPanel.StoryCardId, "fkProjectId");
         global_var.current_project_id = fkProjectId;
-        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+
+        var cmd = $('.projectList_liveprototype_storycard');
+        cmd.html('');
+        var f = true;
+        var pid = SACore.GetProjectKeys();
+        for (var n = 0; n < pid.length; n++) {
+            var pname = SACore.GetProjectName(pid[n]);
+            var o = $('<option></option')
+                    .attr('value', pid[n])
+                    .text(pname);
+            if (f) {
+                o.attr("selected", true);
+                f = false;
+            }
+            if (pid[n] === global_var.current_project_id) {
+                o.attr("selected", true);
+            }
+            cmd.append(o);
+        }
+
+        //    cmd.val(global_var.current_project_id);
+        sortSelectBoxByElement(cmd);
+        cmd.selectpicker('refresh');
         $('select.projectList_liveprototype_storycard').val(fkProjectId);
 
+        if (StoryCardPanel.StoryCardId) {
+            this.LoadStoryCardInfoIfExist();
+        } else {
+            $('select.projectList_liveprototype_storycard').change();
+        }
+
     },
-    LoadStoryCardList: function () {
+    LoadStoryCardInfoIfExist: function () {
         global_var.current_backlog_id = StoryCardPanel.StoryCardId;
         var backlogName = SACore.GetCurrentBacklogname();
         $('#storyCardListSelectBox4StoryCard')
@@ -47,13 +81,14 @@ var StoryCardPanel = {
                         .text("Load All Story Cards"));
         $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
     },
+
     FillBacklogHistory: function () {
         fillBacklogHistory4View(StoryCardPanel.StoryCardId, "0");
     }
 }
 
 
-function callStoryCard(id, elId, backlogName) {
+function callStoryCard1(id, elId, backlogName) {
 
 
 
@@ -1025,7 +1060,7 @@ function startBusinessCaseClasswork(el) {
             , fkClassId = $(el).attr('fkClassId');
 
     if (fkActionId) {
-        openBusinessCaseModal(fkActionId);
+        openBusinessCaseModal(fkActionId, classworkType);
         return;
     }
 
@@ -1131,10 +1166,11 @@ function callService(api, dataCore, isAsync, callback) {
 
 $(document).on('click', '.openClassworkbody', function (ev) {
     var fkActionId = $(this).attr('fkActionId');
-    openBusinessCaseModal(fkActionId);
+    var classworkType = $(this).attr('classworkType');
+    openBusinessCaseModal(fkActionId,classworkType);
 });
 
-function openBusinessCaseModal(fkBusinessCaseId) {
+function openBusinessCaseModal(fkBusinessCaseId, classworkType) {
     if (!fkBusinessCaseId) {
         return;
     }
@@ -1142,13 +1178,21 @@ function openBusinessCaseModal(fkBusinessCaseId) {
     $.get("resource/child/bcase.html", function (html_string) {
         $('#trainingGeneralModal').modal('show');
         $('#trainingGeneralModal_body').html(html_string);
-        $('#trainingGeneralModal_title').html('Business Case');
+
 //        getNewExecutiveTable();
 
         activeBCId = fkBusinessCaseId;
         var caseName = "";
-        loadMainBusinesCaseBody(caseName);
         setBCasescripts();
+
+        if (classworkType === 'businesscase') {
+            $('#trainingGeneralModal_title').html('Business Case');
+            loadMainBusinesCaseBody(caseName);
+        } else if (classworkType === 'question') {
+            $('#trainingGeneralModal_title').html('Question');
+            loadMainBusinesCaseBodyForQuestion(caseName);
+        }
+
         $('#trainingGeneralModal_body').find('.cs-headline-box').hide();
 
     });
@@ -1156,7 +1200,17 @@ function openBusinessCaseModal(fkBusinessCaseId) {
 
 }
 
+function loadMainBusinesCaseBodyForQuestion(caseName) {
+    $('#business_case_heading').html(caseName)
+//   $('#business_case_description').text("asdfasd")
+    getProblemStatList();
+    $('#bcase_financial_projection').remove();
+    $('#bcase_competitor_list').remove();
+    $('#bcase_provided_services').remove();
+    $('#bcase_problem_statement').remove();
+    
 
+}
 $(document).on('click', '.ShowApiRelations', function (ev) {
     $('#entityApiRelationModal').modal('show');
 //    entityApiRelationModal_main

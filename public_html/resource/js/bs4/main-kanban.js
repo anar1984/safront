@@ -242,7 +242,48 @@ function callStoryCard4Api(id, elId, backlogName) {
     });
 }
 
+function callStoryCard(id, elId, backlogName) {
 
+
+
+    var divId = (elId) ? elId : "body_of_nature";
+    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
+
+    $.get("resource/child/storycard.html", function (html_string)
+    {
+        if (!id || id === '-1') {
+            return;
+        }
+
+        loadBacklogDetailsByIdIfNotExist(id);
+        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+        global_var.current_project_id = fkProjectId;
+
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        $("#UserStoryPopupModal-Toggle").modal('show');
+        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+
+        global_var.current_backlog_id = id;
+        var backlogName = SACore.GetCurrentBacklogname();
+        $('#storyCardListSelectBox4StoryCard')
+                .append($('<option>').text(backlogName))
+                .append($('<option>')
+                        .val('-2')
+                        .text("Load All Story Cards"));
+        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+
+
+
+        fillBacklogHistory4View(id, "0");
+        new UserStory().toggleSubmenuStoryCard();
+//        loadStoryCardBodyInfo();
+
+        loadUsersAsOwner();
+        setStoryCardOwner();
+        setStoryCardCreatedBy();
+    });
+}
 
 function loadStoryCardBodyInfo() {
     try {
