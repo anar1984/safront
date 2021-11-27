@@ -41,7 +41,7 @@ var cheweek_mezmun = {
       
         var tasktypeId =$("#taskTypeId-filter-tapsiriq").val();
         var createdBy = $("#createdby-filter-tapsiriq").val();
-        var fkTaskTypeId = $("#taskTypeId-filter-tapsiriq").val();
+        var fkExecuterId = $("#excekuter-filter-tapsiriq").val();
         var fkCompanyId = $("#sirket-filter-tapsiriq").val();
         var fkBranchId = $("#filial-filter-tapsiriq").val();
         var fkKontragentId = $("#kontragent-filter-tapsiriq").val();
@@ -55,12 +55,15 @@ var cheweek_mezmun = {
             json.kv.endLimit = 25;
              if (serach) {
                 serach = '%'+serach+'%'
-                json.kv.reqeustDescription = serach ? serach : "";
+                json.kv.requestDescription = serach ? serach : "";
             //    json.kv.reqeustCode = serach ? serach : "";
     
             }
             if (createdBy.length >0) {
                 json.kv.createdBy = createdBy.length >0 ? createdBy : "";
+            }
+            if (fkExecuterId.length >0) {
+                json.kv.fkExecuterId = fkExecuterId.length >0 ? fkExecuterId : "";
             }
              if (fkBranchId.length >0) {
                 json.kv.fkBranchId = fkBranchId.length >0? fkBranchId : "";
@@ -117,11 +120,15 @@ var cheweek_mezmun = {
            }
            else if(type_view === 'table'){
             $(".cs-task-panel-column").empty()
-            .append($("<table>").addClass('table cst-table-hover')
+             .append($("<div>")
+                       .css("height","90vh")
+                        .css("width",'100%')
+                        .css("overflow",'auto')
+                      .append($("<table>").addClass('table cst-table-hover')
                                  .attr("id",'mezmun-list-table')
                                  .append($("<thead>").append(cheweek_mezmun.genHeaderMezmunListForTable()))
                                  .append($("<tbody>"))
-                                 );
+                                 ));
                var stFull ="('new','ongoing','waiting','closed','canceled','tamamlanib','defected','rejected','tesdiqlenib')"
                var stl ="('new','ongoing','waiting')"
             if (!chkAll.prop("checked")) {
@@ -398,7 +405,7 @@ var cheweek_mezmun = {
                                             <i class="fas fa-bars" aria-hidden="true"></i>
                                             </span></div>`)
                                       .append(`<div class="form-group cs-search cs-filter-col"><span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                                      <input type="search" id='search-item-text-input' autocomplete="new-password"  class="form-control"  placeholder="Axtar...">
+                                      <input type="text" id='search-item-text-input'   class="form-control"  placeholder="Axtar...">
                                   </div>`)
                                      .append($("<div>")
                                                   .addClass("d-flex flex-wrap")
@@ -851,7 +858,7 @@ function genAktivPassiv(res, x, say) {
 function genTableViewMezmun(res, x, say) {
       var pureRes = res
       
-        var table = $("#mezmun-list-table>tbody")
+        var table = $("#mezmun-list-table > tbody")
     try {
         res = res.tbl[0].r
 
