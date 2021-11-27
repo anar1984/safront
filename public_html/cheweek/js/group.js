@@ -111,13 +111,13 @@ var cheweek_group = {
            .attr("data-etap",id)
            .append(
               $("<div>")
-              .addClass(" d-flex m-1  bg-shadow-3 p-0 rounded")
+              .addClass(" d-flex m-1  bg-fff bg-shadow-3 p-0 rounded")
               .css("font-size",'20px')
               .append($("<div>")
-                           .addClass("col-9 bg-dce3ed brend-color p-2  font-weight-bold rounded-left text-left")
+                           .addClass("col-8 bg-dce3ed brend-color p-2  font-weight-bold rounded-left text-left")
                           .append(itName))
               .append($("<div>")
-                           .addClass("col-3 brend-color text-center bg-fff font-weight-bold p-1 rounded-right")
+                           .addClass("col-4 align-self-center brend-color text-center  font-weight-bold p-1 rounded-right")
                           .append(count))
            )
           
@@ -182,13 +182,12 @@ $(document).on("click","#startstop_group", function () {
         } 
 })
 $(document).on("click",".link-memzun-list-byetapId", function () {
-     var list = $(this).closest(".modul-content-panel").find('.etap-block-mini-for-modul')
-     var codeList =[]
-           
-          list.each(function (e) {
-
-              codeList.push($(this).attr("data-etap"));
-              
+     var list = $(this).closest(".modul-content-panel").find('.etap-block-mini-for-modul')           
+     cheweek_mezmun.etap_list =[];
+     list.each(function (e) {
+            
+              cheweek_mezmun.etap_list.push($(this)); 
           }) 
+          cheweek_mezmun.init()
       
 })

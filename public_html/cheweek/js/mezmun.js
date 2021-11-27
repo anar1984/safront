@@ -1,4 +1,5 @@
 var cheweek_mezmun = {
+    etap_list:[],
     init:function () {
         
         var elm = $(".component-class#21041212141705702084 >.component-section-row");
@@ -20,16 +21,27 @@ var cheweek_mezmun = {
         });
         getProjectUsers4Tapsiriq();
         getFilterCOmboBoxListMezmun();
+        this.genEtapList();
         this.getMezmunList();
+        
 
     },
- 
+    genEtapList: function(){
+          var list = this.etap_list
+        for (let i = 0; i < list.length; i++) {
+            const o = $(list[i]);
+            o.removeClass("col-6")
+          //  o.addClass("col-2")
+            o.find("div").first().css("font-size",'12px')
+                 
+            $("#content-header-box").append(o)
+        }
+    } ,
     getFiltersItemValues:function () {
       
         var tasktypeId =$("#taskTypeId-filter-tapsiriq").val();
         var createdBy = $("#createdby-filter-tapsiriq").val();
         var fkTaskTypeId = $("#taskTypeId-filter-tapsiriq").val();
-        var executorİd = $("#excekuter-filter-tapsiriq").val();
         var fkCompanyId = $("#sirket-filter-tapsiriq").val();
         var fkBranchId = $("#filial-filter-tapsiriq").val();
         var fkKontragentId = $("#kontragent-filter-tapsiriq").val();
@@ -42,8 +54,9 @@ var cheweek_mezmun = {
             json.kv.startLimit = 0;
             json.kv.endLimit = 25;
              if (serach) {
+                serach = '%'+serach+'%'
                 json.kv.reqeustDescription = serach ? serach : "";
-                json.kv.reqeustCode = serach ? serach : "";
+            //    json.kv.reqeustCode = serach ? serach : "";
     
             }
             if (createdBy.length >0) {
@@ -385,8 +398,12 @@ var cheweek_mezmun = {
                                             <i class="fas fa-bars" aria-hidden="true"></i>
                                             </span></div>`)
                                       .append(`<div class="form-group cs-search cs-filter-col"><span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                                      <input type="search" autocomplete="new-password"  class="form-control"  placeholder="Axtar...">
+                                      <input type="search" id='search-item-text-input' autocomplete="new-password"  class="form-control"  placeholder="Axtar...">
                                   </div>`)
+                                     .append($("<div>")
+                                                  .addClass("d-flex flex-wrap")
+                                                 .attr("id",'header-etap-list-mezmun')
+                                                .append(""))
                                      .append($("<div>")
                                                 .addClass('d-flex align-content-start flex-wrap filter-section')
                                                 .attr("id",'content-header-box')))
@@ -940,6 +957,9 @@ $(document).on("change", '#sirket-filter-tapsiriq', function () {
    getBrancListByCompanyId(idk);
 
     //cheweek_mezmun.getMezmunList(idk);
+})
+$(document).on("change", '#search-item-text-input', function () {
+    cheweek_mezmun.getMezmunList();
 })
 
 $(document).on("click", '.more-button-fortapsiriq', function () {

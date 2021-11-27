@@ -629,7 +629,7 @@ label.cs-file-upload:hover {
     padding-right: 5px;
     border-right: 1px solid #EEEEEE;
 }
-.cs-task-item-in-box {
+div.cs-task-item-in-box {
     margin-bottom: 8px;
   /*   padding: 8px; */
      overflow: hidden;
