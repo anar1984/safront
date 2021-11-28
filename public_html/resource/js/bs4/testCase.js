@@ -3548,6 +3548,8 @@ function createdEventsTaskData(id) {
 }
 
 function infoEventsTaskData(taskId) {
+    $('.task-events-updated input').val('');
+    $('.task-events-updated input').change('');
     var json = initJSON();
 
     json.kv.fkTaskId = taskId;
@@ -3596,12 +3598,16 @@ function infoEventsTaskData(taskId) {
 }
 
 
-function updatedEventsTaskData(id) {
+// function updatedEventsTaskData(id) {
     
+   
+// }
+
+$(document).on("change", ".updevents", function (e) {
     var json = initJSON();
-    json.kv.id  = $('.task-events-updated').attr('data-taskId');
-    json.kv.type = $('.task-events-updated .updevents').attr('name');
-    json.kv.value = $('.task-events-updated input.updevents').val();
+    json.kv.id  = $(this).closest('.task-events-updated').attr('data-taskId');
+    json.kv.type = $(this).attr('name');
+    json.kv.value = $(this).val();
 
     // json.kv.filename = zipfilename;
     var data = JSON.stringify(json);
@@ -3631,10 +3637,6 @@ function updatedEventsTaskData(id) {
 
         }
     });
-}
-
-$(document).on("change", ".updevents", function (e) {
-    updatedEventsTaskData(e);
 });
 
 $(document).on("change", "#activateUpdatedEvenets", function (e) {
