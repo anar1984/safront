@@ -4814,3 +4814,12 @@ table.lbl-list-table tr td {
     height: 40px;
     padding: 5px 5px;
 }
+.task-mgmt-modal-parent-task td a {
+    max-width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.task-mgmt-modal-child-task .btn:hover {
+    color: #ffffff;
+}

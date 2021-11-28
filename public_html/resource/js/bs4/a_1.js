@@ -2812,8 +2812,8 @@ function getParentTask() {
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
                     var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(parentTaskName, 30) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
-                    var taskName = add3Dots2String(parentTaskName, 30);
+                    var nameFull = add3Dots2String(parentTaskName, 50) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                    var taskName = add3Dots2String(parentTaskName, 50);
                     var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
                     $('.task-mgmt-modal-parent-task').each(function () {
                         $(this).text(taskName)
@@ -2868,23 +2868,17 @@ function getChildTasks() {
                                 .append($('<td>')
                                   .text(n)
                                  )
-                                .append($('<td>')
-                                  .html(' <a href="#" class="btn comment-content-header-history">Child Task<br></a>')
-                                 )
+                                 .append($('<td>')
+                                     .text(+ " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                )
                                  .append($('<td>')
                                     .append($('<a>')
                                         .addClass('btn')
                                         .attr('pid', o.id)
                                         .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
-                                        .text(add3Dots2String(o.taskName, 30))
+                                        .text(add3Dots2String(o.taskName, 50))
                                     )
                                  )
-                                 .append($('<td>')
-                                 .text(add3Dots2String(o.taskName, 30))
-                                )
-                                 .append($('<td>')
-                                     .text(+ " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
-                                )
                                 .append($('<td>')
                                         .append($('<span>')
                                         .addClass('us-item-status-' + o.taskStatus)
