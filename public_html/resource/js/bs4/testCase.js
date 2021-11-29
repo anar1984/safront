@@ -981,10 +981,16 @@ $(document).on("click", '.openBugStatus', function (e) {
     openTaskDialog();
 })
 $(document).on("click", '#addNewTaskButton', function (e) {
+    reset_task_data();
     global_var.active_canvas = 'taskCreate';
     setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
-    add_loadTaskType_bug_list(dwlmt)
+    add_loadTaskType_bug_list(dwlmt);
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "none");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "0.7");
+    $('#issue-managment-add-task .task-step-1').show();
+    $('#issue-managment-add-task .task-step-2').hide();
+    $('#issue-managment-add-task #details-tab').click();
 })
 $(document).on("click", '#update_multi_bug_change_btn', function (e) {
 
@@ -2195,22 +2201,27 @@ function reset_task_data() {
 }
 
 $(document).on("click", '#addIssueButtonId', function (e) {
-    $('#issue-managment-add-task .after-add-task').show();
+    // $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "auto");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show();
     addNewTask4BugMultiZad( );
-    reset_task_data();
+    
 })
 
 $(document).on("focus", 'input#taskNameInputNew2', function (e) {
-    $('#issue-managment-add-task .after-add-task').hide();
-    $('#issue-managment-add-task .task-step-1').show();
-    $('#issue-managment-add-task .task-step-2').hide();
+    // $('#issue-managment-add-task .after-add-task').hide();
+    // $('#issue-managment-add-task .task-step-1').show();
+    // $('#issue-managment-add-task .task-step-2').hide();
 })
 $(document).on("focus", '.add-new-task', function (e) {
-    $('#issue-managment-add-task .after-add-task').show();
+    // $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "auto");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').show();
     $('#issue-managment-add-task .task-step-2').hide();
+    reset_task_data();
 })
 
 function insertNewTask() {
@@ -2624,7 +2635,9 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
     $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
     $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
-    $('#issue-managment-add-task .after-add-task').hide();
+    // $('#issue-managment-add-task .after-add-task').hide();
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "none");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "0.7");
     $('#issue-managment-add-task .task-step-2').hide();
 
     // TASK DETAILS ON

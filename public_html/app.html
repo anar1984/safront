@@ -9092,7 +9092,7 @@
         </div>
     </div>
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="issue-managment-add-task" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" style="max-width: 50%;" role="document">
             <div class="modal-content">
@@ -9106,11 +9106,11 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="cs-input-group mb-3 task-step-1">
+                            <div class="cs-input-group mb-3">
                                 <div class="input-group-addon">Title</div>
                                 <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
                             </div>
-                            <div class="cs-input-group task-step-1">
+                            <div class="cs-input-group">
                                 <div class="input-group-addon">Description</div>
                                 <textarea name="commentinput_for_taskcreate" id="addComment4Task_comment_new" class="commentinput form-control" placeholder="Add a description.." rows="1"></textarea>
                                 <br>
@@ -9141,7 +9141,7 @@
                                         <br>
                                     </div>
                                 </div>
-                                <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
+                                <button type="button" id="addIssueButtonId" class="btn btn-primary task-step-1">Add</button>
                             </div>
                             <div class="cs-input-group task-step-2">
                                 <button type="button" class="btn btn-primary add-new-task">Add New</button>
