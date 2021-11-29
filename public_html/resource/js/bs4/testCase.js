@@ -643,7 +643,7 @@ function insertNewTaskDetail4BugZad(dataCore) {
         crossDomain: true,
         async: true,
         success: function (res) {
-
+            createdEventsTaskData(res.kv.id);
             getBugList();
             Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
         },
@@ -1853,6 +1853,9 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     //    hideProgressAlternative();
 
 
+    infoEventsTaskData(taskId);
+    // $('.task-events-updated').attr("data-taskid",taskId);
+    // $('.task-events-updated [data-taskid]').change();  
 }
 
 
@@ -2637,11 +2640,16 @@ function loadBugTaskDeadlineScripts() {
     $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
     $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
     $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+
     $('.run-shedule-elements').addClass('el-disabled');
     $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
     $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
     $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
     $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+
+    $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
     // TASK DETAILS OFF
 
 }
@@ -3072,12 +3080,13 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
     }
 });
 
-$(document).on("change", ".checkmarkcontainer input[type='checkbox']", function (e) {
-    if ($('#runTaskStartDate_activateschedule').is(':checked')) {
+$(document).on("change", "#runTaskStartDate_activateschedule", function (e) {
+
+    if ($(this).is(':checked')){
         $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
         $('.shedule-elements.el-disabled .soon').css("opacity", "1");
-        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
-        $('.shedule-elements.el-disabled .soon').attr("disabled", false);
+        $('.shedule-elements.el-disabled .soon input').attr("disabled", false);
+        $('.shedule-elements.el-disabled .soon select').attr("disabled", false);
         $('.shedule-elements').removeClass('el-disabled');
     }else{
         $('.shedule-elements').addClass('el-disabled');
@@ -3086,11 +3095,14 @@ $(document).on("change", ".checkmarkcontainer input[type='checkbox']", function 
         $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
         $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
     }
-    if ($('#runTaskAvtivateSchedule').is(':checked')) {
+});
+$(document).on("change", "#runTaskAvtivateSchedule", function (e) {
+
+    if ($(this).is(':checked')){
         $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
         $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
-        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
-        $('.run-shedule-elements.el-disabled .rsoon').attr("disabled", false);
+        $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
+        $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
         $('.run-shedule-elements').removeClass('el-disabled');
     }else{
         $('.run-shedule-elements').addClass('el-disabled');
@@ -3101,62 +3113,6 @@ $(document).on("change", ".checkmarkcontainer input[type='checkbox']", function 
     }
 });
 
-// function run_task_detail_valid(){
-
-//     if ($('#run_task_name_detail').val()=='-1'){
-//         $(this).assets('.tab-pane').find('[data-id="run_task_name"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
-//         return false;
-//     }else{
-//         $(this).assets('.tab-pane').find('[data-id="run_task_name"]').removeAttr('style');
-//     }
-
-//     if ($.trim($('input:required#runTaskEndDate_detail').val()).length == 0){
-//         $('input:required#runTaskEndDate_detail').css('border', '1px solid red');
-//         return false;
-//     }else{
-//         $('#runTaskEndDate_detail').removeAttr('style');
-//     }
-
-//     if ($.trim($('input:required#runTaskTime_detail').val()).length == 0){
-//         $('input:required#runTaskTime_detail').css('border', '1px solid red');
-//         return false;
-//     }else{
-//         $('#runTaskTime_detail').removeAttr('style');
-//     }
-
-//     var val_sw_select = $('#run_task_intensive_select_detail').val();
-//     if (val_sw_select == 'weekly'){
-//         if ($('#run_task_weekday_select_detail').val()== 0){
-//             $(this).assets('.tab-pane').find('[data-id="run_task_weekday_select"]').css('border', '1px solid red').css('background', 'red').css('box-shadow','0px 0px 10px rgb(255 0 0 / 35%)');
-//             return false;
-//         }else{
-//             $(this).assets('.tab-pane').find('[data-id="run_task_weekday_select"]').removeAttr('style');
-//         }
-//     }
-
-//     if ($('#run_task_intensive_select_detail').val()=='monthly'){
-//         if($('#before_last_day_of_month_detail').is(':checked')) {
-//             if ($.trim($('input:required#days_before_last_day_of_month_detail').val()).length == 0){
-//                 $('input:required#days_before_last_day_of_month_detail').css('border', '1px solid red');
-//                 return false;
-//             }else{
-//                 $('#days_before_last_day_of_month_detail').removeAttr('style');
-//             }
-//         }
-//     }
-
-//     if ($('#run_task_intensive_select_detail').val()=='yearly'){
-
-//         if ($.trim($('input:required#runTaskExecutiveDate_detail').val()).length == 0){
-//             $('input:required#runTaskExecutiveDate_detail').css('border', '1px solid red');
-//             return false;
-//         }else{
-//             $('#runTaskExecutiveDate_detail').removeAttr('style');
-//         }
-//     }
-
-//     return true;
-// }
 $(document).on('change', '#run_task_project_name_detail', function (event) {
     var elm = $("#run_task_name_detail").selectpicker('refresh');
     var val = $(this).val();
@@ -3548,3 +3504,155 @@ function  getTaskkObserverListDetaisl(res) {
     }
     div.html(table);
 }
+function createdEventsTaskData(id) {
+    
+    var json = initJSON();
+    json.kv.fkTaskId  = id;
+    json.kv.mezmun = $('#ivent-mezmun').val();
+    json.kv.struktur = $('#ivent-struktur').val();
+    json.kv.nov = $('#ivent-nov').val();
+    json.kv.mesulShexs = $('#ivent-mesulShexs').val();
+    json.kv.istirakci = $('#ivent-istirakci').val();
+    json.kv.kontragent = $('#ivent-kontragent').val();
+    json.kv.yer = $('#ivent-yer').val();
+    json.kv.qeyd = $('#ivent-qeyd').val();
+
+
+    // json.kv.filename = zipfilename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsCreateBacklogTaskEvent",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+            try {
+               var err=  res.err.message;
+               if(err){
+                Toaster.showError(err);
+               }
+
+            } catch (error) {
+                msgMessage = 'Events successfully created!';
+                Toaster.showMessage(msgMessage);
+            }
+          
+        },
+        error: function () {
+            Toaster.showError(('API error'));
+
+        }
+    });
+}
+
+function infoEventsTaskData(taskId) {
+    $('.task-events-updated').attr("data-taskid",'');
+    $('.task-events-updated input').val('');
+    $('.task-events-updated input').change('');
+    var json = initJSON();
+
+    json.kv.fkTaskId = taskId;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsGetTaskEventListByTaskId",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var obj = res.tbl[0].r[0];
+
+            $('.task-events-updated').attr("data-taskid",obj.id);
+  
+            $('.task-events-updated input[name="mezmun"]').val(obj.mezmun);
+            $('.task-events-updated input[name="mezmun"]').change();  
+            
+            $('.task-events-updated input[name="struktur"]').val(obj.struktur);
+            $('.task-events-updated input[name="struktur"]').change();  
+            
+            $('.task-events-updated input[name="nov"]').val(obj.nov);
+            $('.task-events-updated input[name="nov"]').change();  
+            
+            $('.task-events-updated input[name="mesulShexs"]').val(obj.mesulShexs);
+            $('.task-events-updated input[name="mesulShexs"]').change();  
+           
+            $('.task-events-updated input[name="istirakci"]').val(obj.istirakci);
+            $('.task-events-updated input[name="istirakci"]').change();  
+           
+            $('.task-events-updated input[name="kontragent"]').val(obj.kontragent);
+            $('.task-events-updated input[name="kontragent"]').change();  
+            
+            $('.task-events-updated input[name="yer"]').val(obj.yer);
+            $('.task-events-updated input[name="yer"]').change();  
+            
+            $('.task-events-updated input[name="qeyd"]').val(obj.qeyd);
+            $('.task-events-updated input[name="qeyd"]').change();  
+
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+
+
+// function updatedEventsTaskData(id) {
+    
+   
+// }
+
+$(document).on("change", ".updevents", function (e) {
+    var json = initJSON();
+    json.kv.id  = $(this).closest('.task-events-updated').attr('data-taskId');
+    json.kv.type = $(this).attr('name');
+    json.kv.value = $(this).val();
+
+    // json.kv.filename = zipfilename;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceRsUpdateTaskEventInput4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
+            try {
+               var err=  res.err.message;
+               if(err){
+                Toaster.showError(err);
+               }
+
+            } catch (error) {
+                msgMessage = 'Events Updated successfully created!';
+                Toaster.showMessage(msgMessage);
+            }
+          
+        },
+        error: function () {
+            Toaster.showError(('API error'));
+
+        }
+    });
+});
+
+$(document).on("change", "#activateUpdatedEvenets", function (e) {
+
+    if ($(this).is(':checked')){
+    
+        $('.task-events-updated .cs-input-group input').css("pointer-events", "auto");
+        $('.task-events-updated .cs-input-group input').css("opacity", "1");
+        $('.task-events-updated .cs-input-group input').attr("disabled", false);
+    }else{
+        $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
+        $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
+        $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
+    }
+});
+
+// json.kv.fkTaskId  = global_var.current_issue_id

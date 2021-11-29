@@ -5996,7 +5996,7 @@
                                     <a class="nav-link" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Subtask</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Ivents</a>
+                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Events</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
@@ -6561,9 +6561,8 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Select Task</th>
-                                                    <th>Parent Task</th>
-                                                    <th>Task Name</th>
                                                     <th>Task ID</th>
+                                                    <th>Parent Task</th>
                                                     <th>Task Status</th>
                                                     <!-- <th>Description</th>
                                                     <th>Created By</th>
@@ -6576,13 +6575,12 @@
                                                     <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
                                                         <i class="fas fa-plus" aria-hidden="true"></i>
                                                     </a></td>
+                                                    <td><div class="task-id-modal-parent-task"></div></td>
                                                     <td class="move-to-child">
                                                         <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
                                                         onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
                                                         </a>
                                                     </td>
-                                                    <td><div class="task-mgmt-modal-parent-task"></div></td>
-                                                    <td><div class="task-id-modal-parent-task"></div></td>
                                                     <td><div class="task-status-modal-parent-task"></div></td>
                                                   </tr>
                                             </tbody>
@@ -6609,10 +6607,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Click</th>
-                                                    <th>Child Task</th>
-                                                    <th>Task Name</th>
                                                     <th>Task ID</th>
+                                                    <th>Child Task</th>                                                    
                                                     <th>Task Status</th>
                                                 </tr>
                                             </thead>
@@ -6637,8 +6633,71 @@
                                         </div> -->
                                      </div>
                                 </div>
-                                <div class="tab-pane fade" id="d-task-tab6" role="tabpanel" aria-labelledby="pills-d-task-tab6">
-                                    Ivents
+                                <div class="tab-pane fade task-events-updated" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
+                                    <div class="row">
+                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <!-- <label class="input-group-addon">Activate
+                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
+                                                </label>     -->
+                                                
+                                                <label class="checkmarkcontainer">Activate
+                                                    <input type="checkbox" name="activateUpdatedEvenets" id="activateUpdatedEvenets">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Subject</div>
+                                                <input class="form-control updevents" name="mezmun" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Structure</div>
+                                                <input class="form-control updevents" name="struktur" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Type</div>
+                                                <input class="form-control updevents" name="nov" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Responsible person</div>
+                                                <input class="form-control updevents" name="mesulShexs" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Participant</div>
+                                                <input class="form-control updevents" name="istirakci" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Counterparty</div>
+                                                <input class="form-control updevents" name="kontragent" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Location</div>
+                                                <input class="form-control updevents" name="yer" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Note</div>
+                                                <input class="form-control updevents" name="qeyd" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -9074,7 +9133,7 @@
                                          col-lg-12 hover-prototype-selector  ">
                                         <form>
                                             <input class="form-control saTypeFilePicherUploadFile component-input-class" 
-                                                   sa-type="filepicker" style=";" type="file" value="" row-no="" 
+                                                   sa-type="filepicker" style="" type="file" value="" row-no="" 
                                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                                    multiple="" 
                                                    fname="">
@@ -9094,13 +9153,13 @@
                             <hr>
                             <ul class="nav nav-pills mb-3 mt-5" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
+                                    <a class="nav-link" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
+                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Tab 3</a>
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Events</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -9399,7 +9458,56 @@
 
                                 </div>
                                 <div class="tab-pane fade" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
-                                    ...
+                                    <div class="row">
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Subject</div>
+                                                <input class="form-control" name="mezmun" id="ivent-mezmun" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Structure</div>
+                                                <input class="form-control" name="struktur" id="ivent-struktur" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Type</div>
+                                                <input class="form-control" name="nov" id="ivent-nov" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Responsible person</div>
+                                                <input class="form-control" name="mesulShexs" id="ivent-mesulShexs" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Participant</div>
+                                                <input class="form-control" name="mesulShexs" id="ivent-istirakci" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Counterparty</div>
+                                                <input class="form-control" name="mesulShexs" id="ivent-kontragent" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Location</div>
+                                                <input class="form-control" name="yer" id="ivent-yer" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <div class="input-group-addon">Note</div>
+                                                <input class="form-control" name="qeyd" id="ivent-qeyd" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -27,7 +27,6 @@ var be = {
         } else {
             be.ShowInData4Debug(apiId, data);
             res = be.callFrontApi(apiId, data, element, asyncData);
-
         }
 
         var async = (SACore.GetBacklogDetails(apiId, 'apiSyncRequest'))
