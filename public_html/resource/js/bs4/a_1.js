@@ -1698,6 +1698,43 @@ function callStoryCardAfterIPOAction() {
 
 }
 
+function setApiJsonToElement(bid, element) {
+
+    element.attr('ksiksi', 'ksikshi')
+    if (!bid)
+        return '';
+    var res = '';
+    var that = element;
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: false,
+        success: function (resCore) {
+            var res = {};
+            try {
+                res = JSON.parse(resCore);
+            } catch (err) {
+            }
+            var rsZad = '';
+            try {
+                var idx = getIndexOfTable(res, "backlogDescList");
+                var obj = res.tbl[idx].r;
+                rsZad = JSON.stringify(obj);
+
+            } catch (errr) {
+            }
+
+            that.attr('proDesc', `${rsZad}`);
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+    return res;
+}
+
 function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
     var async = (isAsync) ? isAsync : false;
     var bid = (bid1) ? bid1 : global_var.current_backlog_id;
@@ -1896,7 +1933,6 @@ function callEmptyFunctionWithAjax4BacklogLoader4Zad(bid1, makeId4) {
 
 function loadBacklogProductionDetailsById_resparams(res) {
     loadBacklogProductionDetailsById_jslist(res);
-    loadBacklogProductionDetailsById_setjslist(res);
     loadBacklogProductionDetailsById_csslist(res);
     SAInput.LoadInput4Zad(res);
     SACore.updateBacklogDescriptionByRes(res);
@@ -1904,6 +1940,8 @@ function loadBacklogProductionDetailsById_resparams(res) {
     loadBacklogProductionDetailsById_loadInputActionRelation(res);
     loadBacklogProductionDetailsById_loadInputAttribute(res);
     loadBacklogProductionDetailsById_inputDesc(res);
+//        loadBacklogProductionDetailsById_setjslist(res);
+
 
     SAInput.addInputTableByRes(res);
     SAInput.addInputTabByRes(res);
@@ -1951,7 +1989,7 @@ function loadBacklogProductionDetailsById_setjslist(res) {
                     jsCodeIsLoaded.push(o.id);
 
 
-                if (o.fnType === 'core') {
+                if (o.fnType === 'core1') {
                     if (!o.fnCoreName) {
                         continue;
                     }
@@ -1974,7 +2012,7 @@ function loadBacklogProductionDetailsById_setjslist(res) {
                     st += o.fnBody;
                     st += '})';
 
-                    var sc = $('<script>').append(st);
+                    var sc = $('<script>').append(`${st}`);
 
                     //                            console.log('add event function =>', o.fnEventObject.trim(), '->', o.fnEvent.trim())
 
@@ -2817,15 +2855,15 @@ function getParentTask() {
                     var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
                     $('.task-mgmt-modal-parent-task').each(function () {
                         $(this).text(taskName)
-                        .attr('pid', fkParentTaskId);
+                                .attr('pid', fkParentTaskId);
                     })
                     $('.task-id-modal-parent-task').each(function () {
                         $(this).text(taskCodeID)
                     })
                     $('.task-status-modal-parent-task').each(function () {
                         $(this).html($('<span>')
-                        .addClass('us-item-status-' + res.kv.taskStatus)
-                        .text(res.kv.taskStatus))
+                                .addClass('us-item-status-' + res.kv.taskStatus)
+                                .text(res.kv.taskStatus))
                     })
 
                 }
@@ -2866,32 +2904,32 @@ function getChildTasks() {
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                  .text(n)
-                                 )
+                                        .text(n)
+                                        )
                                 .append($('<td>')
-                                  .html(' <a href="#" class="btn comment-content-header-history">Child Task<br></a>')
-                                 )
-                                 .append($('<td>')
-                                    .append($('<a>')
-                                        .addClass('btn')
-                                        .attr('pid', o.id)
-                                        .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
+                                        .html(' <a href="#" class="btn comment-content-header-history">Child Task<br></a>')
+                                        )
+                                .append($('<td>')
+                                        .append($('<a>')
+                                                .addClass('btn')
+                                                .attr('pid', o.id)
+                                                .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
+                                                .text(add3Dots2String(o.taskName, 30))
+                                                )
+                                        )
+                                .append($('<td>')
                                         .text(add3Dots2String(o.taskName, 30))
-                                    )
-                                 )
-                                 .append($('<td>')
-                                 .text(add3Dots2String(o.taskName, 30))
-                                )
-                                 .append($('<td>')
-                                     .text(+ " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
-                                )
+                                        )
+                                .append($('<td>')
+                                        .text(+" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                        )
                                 .append($('<td>')
                                         .append($('<span>')
-                                        .addClass('us-item-status-' + o.taskStatus)
-                                        .text(o.taskStatus)
-                                    )
+                                                .addClass('us-item-status-' + o.taskStatus)
+                                                .text(o.taskStatus)
+                                                )
+                                        )
                                 )
-                            )
 
                     })
 
@@ -3654,12 +3692,70 @@ function executeCoreOfManualProSelection(bid1) {
     } else if (global_var.current_modal === 'loadStoryCard' && f2) {
         new UserStory().load();
     }
-
-
 }
 
 
 function loadSelectBoxesAfterGUIDesign(element) {
+    var zadList = [];
+    var idx = 1;
+    $(element).find('select.hasTriggerApiCall').each(function (e) {
+        var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
+        if (selectFromBacmkogId) {
+            var that = this;
+            callApi(selectFromBacmkogId, {}, true, function (res) {
+                loadSelectBoxesAfterGUIDesignDetails(res, that);
+            })
+        }
+    })
+}
+
+function loadSelectBoxesAfterGUIDesignDetails(res, el) {
+
+
+    var rows = [];
+    try {
+        row = res.tbl[0].r;
+    } catch (err) {
+    }
+
+    $(el).html('');
+    if ($(el).attr('sa-data-selectbox-hassnull') === '1') {
+        $(el).append($('<option>').val('').text(''));
+    }
+
+    var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
+    var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : "id";
+    var itemSeparator = ($(el).attr('sa-item-separator')) ? ' ' + $(el).attr('sa-item-separator') + ' ' : " ";
+
+
+    for (var i in rows) {
+        var row = rows[i];
+        var val = row[itemKey];
+
+        var itemValueList = itemValue.split(',');
+        var finalVal = "";
+        var idx = 1;
+        for (var ii in itemValueList) {
+            var sval = itemValueList[ii];
+            finalVal += row[sval];
+            finalVal += (idx < itemValueList.length) ? itemSeparator : "";
+            idx++;
+        }
+        var name = finalVal;
+        val = (val) ? val.trim() : name.trim();
+        $(el).append($('<option>').val(val).text(name));
+    }
+
+    if ($(el).attr('sa-data-nosort') !== '1') {
+        sortSelectBoxByElement(el);
+    }
+
+    if ($(el).hasClass('sa-selectpicker')) {
+        $(el).selectpicker('refresh');
+    }
+}
+
+function loadSelectBoxesAfterGUIDesign_old(element) {
     var zadList = [];
     $(element).find('select.hasTriggerApiCall').each(function (e) {
         var selectFromBacmkogId = $(this).attr("selectfrombacmkogid");
@@ -3799,10 +3895,10 @@ function uploadFile4Ipo(id) {
 function uploadFile4CanvasZadShey(id) {
 
     var binaryString = document.getElementById(id).toDataURL("image/png;base64");
-    binaryString = binaryString.replace(/data:image\/png;base64,/, ''); 
+    binaryString = binaryString.replace(/data:image\/png;base64,/, '');
 //    var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
-      uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id );
- 
+    uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id);
+
 }
 
 function uploadFile4CanvasZad(id) {
@@ -4071,9 +4167,9 @@ function uploadFile4IpoCanvasCopy(fileext, file_base_64, file_name, id) {
         },
         success: function (data) {
             $('#pro_zad_span_' + idx).remove();
-            pbDiv.attr('fname',data.kv.uploaded_file_name);
-           
-            
+            pbDiv.attr('fname', data.kv.uploaded_file_name);
+
+
         },
         error: function () {}
     });
@@ -6180,7 +6276,7 @@ function triggerAPI_old(element, apiId, data) {
     //    }
 }
 
-function triggerAPI(element, apiId, data) {
+function triggerAPI(element, apiId, data, apiType) {
     triggerApiDebugMode(element, apiId);
     var res = {};
     if (data) {
@@ -6190,20 +6286,12 @@ function triggerAPI(element, apiId, data) {
     var carrier = new Carrier();
     carrier.setElement(element);
     carrier.setBacklogId(apiId);
+    carrier.set("apiType", apiType);
     carrier.set("res", res);
 
-
-//    if (!ifBacklogInputs4LoaderExistById(apiId)) {
-//        showProgress5();
-//        carrier.set("res", res);
-//        carrier.setExecwarder("_CallBacklogInputListIfNotExistAndForward");
-//        carrier.setApplier("_TriggerAPI");
-//        carrier.I_am_Requirer();
-//    } else {
     carrier.setApplier("_TriggerAPI");
     carrier.I_am_Execwarder();
-//
-//    }
+
 
     SourcedDispatcher.Exec(carrier);
 
@@ -6214,6 +6302,7 @@ function _TriggerAPI(carrier) {
     var element = carrier.getElement();
     var res = carrier.get('res');
     var apiId = carrier.getBacklogId();
+    var apiType = carrier.get("apiType");
 
     var initData = getGUIDataByStoryCard(element);
     var finalRes = $.extend(initData, res);
@@ -6230,11 +6319,21 @@ function _TriggerAPI(carrier) {
     var el = element;
     var out = "";
 
-    if ($(el).attr('sendapitype') === 'back') {
-        if ($(el).attr('sa-table-load-id')) {
-            finalRes['fkRelatedTableId'] = $(el).attr('sa-table-load-id');
+    //apiType varsa demek, GUI-den bir basa element event vardir
+    //Process Description bir basa hemin elemeingin proDesc atributesine yerlesdirilbidr
 
+
+    if (apiType === 'front') {
+        var prodesc = $(element).attr('prodesc');
+        if (prodesc) {
+            try {
+                var obj = prodesc;
+                SACore.updateBacklogDescriptionByResDEtails(JSON.parse(obj));
+            } catch (err) {
+            }
+            be.ExecAPI.CallExternalApiServices(apiId, finalRes, element);
         }
+    } else if (apiType === 'back') {
         out = be.callBackendApi(apiId, finalRes, el);
     } else {
         out = be.callApi(apiId, finalRes, el);
@@ -6662,7 +6761,7 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
     var selectedfields = data.selectedField;//table.attr('sa-tableselectedfield').split(",");
     table.find('tbody').html('');
 
-    var obj = (data && data._table && data._table.r) ? data._table.r :[];
+    var obj = (data && data._table && data._table.r) ? data._table.r : [];
 
     for (var j = 0; j < obj.length; j++) {
         var o = obj[j];
@@ -6681,7 +6780,8 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
                     if (sf.trim().length === 0) {
                         continue;
                     }
-                    if (flag && selectedfields.includes(sf)) {
+                    var zdFil = selectedfields.split(",");
+                    if (flag && zdFil.includes(sf)) {
                         flag = false;
 
                         var val = o[sf];
@@ -12658,7 +12758,24 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
         // new UserStory().clearAll();
         $('#mainBodyDivForAll').html(html_string);
+        window.editorEvent = CodeMirror(document.querySelector('#eventActionType4ManualJs'), {
+            lineNumbers: true,
+            tabSize: 2,
+            mode: 'javascript',
+            theme: 'blackboard',
+            extraKeys: {
+                "F11": function (cm) {
+                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                },
+                "Esc": function (cm) {
+                    if (cm.getOption("fullScreen"))
+                        cm.setOption("fullScreen", false);
+                }
+            }
+        });
         Prototype.Init();
+
+
 
 
 
@@ -13822,7 +13939,7 @@ function loadProjectList2SelectboxByClassWithoutCallAction(className) {
     //    cmd.val(global_var.current_project_id);
     sortSelectBoxByElement(cmd);
     cmd.selectpicker('refresh');
-  
+
 }
 
 $(document).on('change', '.user-story-is-shared', function (evt) {
@@ -15696,6 +15813,8 @@ function addApiNewPopup() {
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
     json.kv['isApi'] = "1";
+    json.kv.runInBackend = "1";
+    json.kv.backlogType = 'api';
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({

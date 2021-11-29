@@ -187,6 +187,10 @@ $(document).on('change', '#liveProActionType', function (ev) {
         $('.liveProActionTypeApi').show();
     } else if (val === 'toggle') {
         $('.liveProActionTypeToggle').show();
+    } else if (val === 'manual') {
+        $('.liveProActionTypeManual').show();
+    }else if (val === 'direct') {
+        $('.liveProActionTypeDirect').show();
     }
 });
 
@@ -340,6 +344,13 @@ function updateCurrentInput4ShortChanges(el) {
     updateInput4SC(inputId, el, ustype);
 }
 
+
+$(document).on("focusout", '#eventActionType4ManualJs', function () {
+    var inputId = global_var.current_us_input_id;
+    var val = window.editorEvent.getValue();
+    updateInput4SCDetails(inputId, val, 'manualJs');
+})
+
 $(document).on('focusout', '.okayPitchYourPathYourWay', function (ev) {
     $(this).css('width', '20px');
 });
@@ -348,7 +359,10 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
     $(this).css('width', '120px');
 });
 
-
+$(document).on('click','.live-prototype-show-story-card-hard-refresh',function(ev){
+    loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, false);
+    $('.live-prototype-show-story-card-refresh').click();
+})
 
 $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
 
@@ -908,6 +922,8 @@ function getClassEnrolledUserkList(fkClassId) {
     return res1;
 }
 
+
+
 function genClassworkAndUserMatrix(fkClassId) {
     $('._teacherGradingSystem').html("No Data Found");
     if (!fkClassId) {
@@ -1125,8 +1141,8 @@ function CallActionApi(apiId, dataCore, isAsync, fn) {
     return res1;
 }
 
-function callService(api, dataCore, isAsync, callback) {
-    if (!api) {
+function callApi(apiId, dataCore, isAsync, callback) {
+    if (!apiId) {
         Toaster.showError('API ID is not entered');
     }
 
@@ -1137,10 +1153,11 @@ function callService(api, dataCore, isAsync, callback) {
     if (dataCore) {
         json.kv = $.extend(json.kv, dataCore);
     }
+    json.kv['apiId'] = apiId;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/" + api,
+        url: urlGl + "api/post/srv/serviceIoCallActionApi",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -1160,6 +1177,41 @@ function callService(api, dataCore, isAsync, callback) {
     return res1;
 }
 
+function callService(serviceName, dataCore, isAsync, callback) {
+    if (!serviceName) {
+        Toaster.showError('API ID is not entered');
+    }
+
+    var synch = (isAsync) ? isAsync : true;
+
+    var res1 = '';
+    var json = initJSON();
+    if (dataCore) {
+        json.kv = $.extend(json.kv, dataCore);
+    }
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/" + serviceName,
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: synch,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            res1 = res;
+            if (callback) {
+                callback(res);
+            }
+        },
+        error: function () {
+            Toaster.showError(serviceName + ' ----> Something went wrong!!!');
+        }
+    });
+    return res1;
+}
+
 
 
 
@@ -1167,7 +1219,7 @@ function callService(api, dataCore, isAsync, callback) {
 $(document).on('click', '.openClassworkbody', function (ev) {
     var fkActionId = $(this).attr('fkActionId');
     var classworkType = $(this).attr('classworkType');
-    openBusinessCaseModal(fkActionId,classworkType);
+    openBusinessCaseModal(fkActionId, classworkType);
 });
 
 function openBusinessCaseModal(fkBusinessCaseId, classworkType) {
@@ -1208,7 +1260,7 @@ function loadMainBusinesCaseBodyForQuestion(caseName) {
     $('#bcase_competitor_list').remove();
     $('#bcase_provided_services').remove();
     $('#bcase_problem_statement').remove();
-    
+
 
 }
 $(document).on('click', '.ShowApiRelations', function (ev) {

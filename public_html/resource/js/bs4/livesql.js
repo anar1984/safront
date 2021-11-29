@@ -20,7 +20,7 @@ $(document).on("click", ".insertnewlinetodb", function (e) {
     var dbname = getDatabaseName();
     var tablename = getTableName();
     var data = getFilterDataLine();
-     insertNewRecord(dbname, tablename, data) 
+    insertNewRecord(dbname, tablename, data)
 });
 
 
@@ -576,7 +576,7 @@ function insertNewRecord(dbname, tablename, dataCore) {
     if (dataCore) {
         json.kv = $.extend(json.kv, dataCore);
     }
- 
+
 
     json.kv.entity = tablename;
     json.kv.entityDb = dbname;
@@ -592,7 +592,7 @@ function insertNewRecord(dbname, tablename, dataCore) {
         success: function (res) {
             AJAXCallFeedback(res);
             getCoreContainerLast().find('.cs-filter-table-btn').click();
-             
+
         },
         error: function () {
             $(".live-sql-error").text("");
@@ -700,7 +700,10 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
             var col = keys[k];
 
             var td = $("<td>");
-            td.text(o[col]);
+            td.attr("data-id", o.id)
+                    .attr('data-key', col)
+                    .addClass("sql-table-cell-update")
+                    .text(o[col]);
             tr.append(td);
         }
         el.find("tbody").append(tr);
@@ -709,6 +712,43 @@ function getDataTableRowListDetails(startLimit, dataCore, el, res, hideSearchFie
 
     autoResizeOfFilterEditBox();
 }
+
+$(document).on('dblclick', '.sql-table-cell-update', function (ev) {
+    setCoreContainer(this);
+    var txt = $(this).text();
+    var id = $(this).attr('data-id');
+    var key = $(this).attr('data-key');
+    var tarea = $('<textarea>')
+            .addClass('sql-table-cell-update-zad')
+            .attr('data-id', id)
+            .attr('data-key', key)
+            .text(txt);
+    $(this).removeClass('sql-table-cell-update');
+    $(this).html(tarea);
+})
+
+$(document).on('change', '.sql-table-cell-update-zad', function (ev) {
+    setCoreContainer(this);
+
+    var txt = $(this).val()
+    var id = $(this).attr('data-id');
+    ;
+    var key = $(this).attr('data-key');
+
+    $(this).closest('td').text(txt).addClass('sql-table-cell-update');
+
+    var data = {};
+    data.entityDb = getCoreContainerLast().find("select.cs-database-name-list")
+            .find("option:selected")
+            .text();
+    data.entity = getCoreContainerLast().find("select.cs-database-table-list")
+            .find("option:selected")
+            .text();
+    data.updatedField = key;
+    data[key] = txt;
+    data.id = id;
+    callService('serviceIoCoreUpdate', data, true);
+})
 
 function autoResizeOfFilterEditBox() {
     $(".livesql-table-boxes input").each(function (ev) {

@@ -184,6 +184,12 @@ var Component = {
         }
         return st;
     },
+    GetManualFunctionBody: function (action, id, script) {
+        return 'function fn_' + id + '_' + action + "(element){" + `${script}` + "}";
+    },
+    GetManualFunctionName: function (action, id) {
+        return 'fn_' + id + '_' + action + "(this)";
+    },
     ComponentEvent: {
         Init: function (el, comp) {
 
@@ -197,15 +203,32 @@ var Component = {
                     .attr('row-no', comp.rowNo)
                     .attr("pdid", comp.id);
 
-            if (SAInput.getInputDetails(comp.id, "sectionType") === 'toggle') {
-                if (SAInput.getInputDetails(comp.id, "actionType") === 'change') {
+            var sectionType = SAInput.getInputDetails(comp.id, "sectionType");
+            var actionType = SAInput.getInputDetails(comp.id, "actionType");
+            var fkDependentBacklogId = SAInput.getInputDetails(comp.id, "fkDependentBacklogId");
+            var manualJs = SAInput.getInputDetails(comp.id, "manualJs");
+
+            if (sectionType === 'toggle') {
+                if (actionType === 'change') {
                     el.addClass('hasInputManualEventActionChange')
-                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'dblclick') {
+                } else if (actionType === 'dblclick') {
                     el.addClass('hasInputManualEventActionDblClick')
-                } else if (SAInput.getInputDetails(comp.id, "actionType") === 'click') {
+                } else if (actionType === 'click') {
                     el.addClass('hasInputManualEventActionClick')
                 } else {
-                    el.addClass('hasInputManualEventActionChange')
+                    el.addClass('')
+                }
+            } else if (sectionType === 'direct') {
+                if (actionType && fkDependentBacklogId) {
+                    loadBacklogInputsByIdIfNotExist(fkDependentBacklogId);
+                    var runInBackend = SACore.GetBacklogDetails(fkDependentBacklogId, 'runInBackend');
+                    var actionZad = (runInBackend === '1') ? "back" : "front";
+                    el.attr(actionType, "triggerAPI(this,'" + fkDependentBacklogId + "',{},'" + actionZad + "')");
+
+                    if (runInBackend !== '1') {
+                        var rs = setApiJsonToElement(fkDependentBacklogId,el);
+                        el.attr("hayhuy",'sheyshuy')
+                    }
                 }
             }
 
@@ -228,6 +251,15 @@ var Component = {
 
             //add action send api type
             el.attr('sendApiType', SAInput.getInputDetails(comp.id, "sendApiType"));
+
+
+            if (manualJs && actionType) {
+                var fn = Component.GetManualFunctionName(actionType, comp.id)
+                el.attr(actionType, fn);
+            }
+
+
+
         },
         addClassToElement: function (el, comp) {
 
@@ -434,8 +466,19 @@ var Component = {
 
             if (global_var.current_modal === 'loadLivePrototype') {
 
-                div.addClass("hover-prototype-selector").attr("cellNo",comp.cellNo);
+                div.addClass("hover-prototype-selector").attr("cellNo", comp.cellNo);
             }
+
+        }
+
+        //add manual JS
+        var manualJs = SAInput.getInputDetails(comp.id, "manualJs");
+        var actionType = SAInput.getInputDetails(comp.id, "actionType")
+        if (manualJs && actionType) {
+            var fn = this.GetManualFunctionBody(actionType, comp.id, manualJs)
+            div.append($('<div>')
+                    .addClass("script-div")
+                    .append($('<script>').text(fn)));
 
         }
 
@@ -757,7 +800,7 @@ var Component = {
                             .attr('id', inputId)
                             .attr('pid', inputId)
                             .attr('orderNo', SAInput.getInputDetails(inputId, "orderNo"))
-                            
+
 
                             .addClass(global_var.current_modal === 'loadLivePrototype' ? 'draggable' : '')
                             .attr('onclick', (global_var.current_modal === 'loadLivePrototype') ?
@@ -842,15 +885,15 @@ var Component = {
                 } catch (err) {
                 }
 
-                var hascomponentclicked = pair[inputId].trim() === '1' ? "hascomponentclicked" :"";
-                var componentIsHeaden = pairShowColumn[inputId].trim() === '1' ? "componentisheaden" :"";
+                var hascomponentclicked = pair[inputId].trim() === '1' ? "hascomponentclicked" : "";
+                var componentIsHeaden = pairShowColumn[inputId].trim() === '1' ? "componentisheaden" : "";
                 var th = $("<th>")
                         .addClass('selectablezad')
                         .addClass(hascomponentclicked)
                         .addClass(componentIsHeaden)
                         .addClass("text-center")
-                        .attr('sa-selectedfield-header',selectedFieldTemp)
-                        .attr('pid',inputId)
+                        .attr('sa-selectedfield-header', selectedFieldTemp)
+                        .attr('pid', inputId)
                         //                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp, ' ')
@@ -1803,6 +1846,9 @@ var Component = {
         }
 
         div.append(el);
+
+
+
         return $('<div></div>').append(div).html();
     },
     TextArea: function (comp) {

@@ -7,24 +7,25 @@
 var be = {
 
     callApi: function (apiId, data, element, asyncData) {
-
-        loadBacklogInputsByIdIfNotExist(apiId);
-
-        var res = {};
-        if (SACore.GetBacklogDetails(apiId, "isApi") !== '1') {
-            return;
+        //if requesti is direct. Eger elementde prodesc attr varsa o zaman
+        // section type Direct-dir ve container call is Front-dur.
+        // bu halda butun apiler runInBackend olmalidir.
+        var runInBackend = '0';
+        if ($(element).attr('prodesc')) {
+            runInBackend = '1';
+        } else {
+            loadBacklogInputsByIdIfNotExist(apiId);
+            var res = {};
+            if (SACore.GetBacklogDetails(apiId, "isApi") !== '1') {
+                return;
+            }
+            runInBackend = SACore.GetBacklogDetails(apiId, "runInBackend");
         }
-
-        be.ShowInData4Debug(apiId, data);
-
-        var backlogName = SACore.GetBacklogDetails(apiId, "backlogName");
-        be.ValidateApiOnInput(apiId, data, element);
-
-        var runInBackend = SACore.GetBacklogDetails(apiId, "runInBackend");
 
         if (runInBackend === '1') {
             res = be.callBackendApi(apiId, data, element, asyncData);
         } else {
+            be.ShowInData4Debug(apiId, data);
             res = be.callFrontApi(apiId, data, element, asyncData);
 
         }
@@ -112,6 +113,8 @@ var be = {
     },
     callFrontApi: function (apiId, data, element, asyncData) {
 
+        be.ValidateApiOnInput(apiId, data, element);
+
         var res = {};
 
         var actionType = SACore.GetBacklogDetails(apiId, "apiAction");
@@ -128,13 +131,13 @@ var be = {
         } else {
             res = this.callContainerAPI(apiId, data, element, asyncData);
 
-            var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
-            var resOut = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
-            try {
-                resOut['_table'] = res['_table'];
-            } catch (err) {
-            }
-            res = resOut;
+//            var outputList = be.ExecAPI.GetOutputsByAPI(apiId);
+//            var resOut = be.ExecAPI.SetInputValuesOnStoryCard(outputList, res);
+//            try {
+//                resOut['_table'] = res['_table'];
+//            } catch (err) {
+//            }
+//            res = resOut;
         }
 
         return res;

@@ -37,6 +37,8 @@ $(document).ready(function () {
 
     });
 
+   
+
     $(document).on("dblclick", ".DatabaseNameH4", function () {
 
         let databaseName = $(this).text();

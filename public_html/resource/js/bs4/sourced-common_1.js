@@ -11797,6 +11797,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 $('.liveProActionTypeApi').show();
             } else if (val24 === 'toggle') {
                 $('.liveProActionTypeToggle').show();
+            }else if (val24 === 'manual') {
+                $('.liveProActionTypeManual').show();
+            }else if (val24 === 'direct') {
+                 $('select.input_event_related_api').val(res.tbl[0].r[0].fkDependentBakcklogId);
+                $('.liveProActionTypeDirect').show();
             }
             
             $('#liveProActionTypeToggleItemIfKey').val(res.tbl[0].r[0].ifKey);
@@ -11815,6 +11820,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             
             
             $('#liveProActionTypeToggleItemIfThenClassname').val(res.tbl[0].r[0].thenClassname);
+            window.editorEvent.setValue(res.tbl[0].r[0].manualJs);
+            
             $('#liveProActionTypeToggleItemIfThenApiList').val(res.tbl[0].r[0].thenApiId);
             $('#liveProActionTypeToggleItemIfElseActionOperation').val(res.tbl[0].r[0].elseAction);
             var val33 = res.tbl[0].r[0].elseAction;

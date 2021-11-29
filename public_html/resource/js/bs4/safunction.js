@@ -63,9 +63,9 @@ var SAFN = {
         'setbackendcache': "SetBackendCache",
         'setlocalcache': "SetLocalCache",
         'setdata': "SetData",
-        'copytable':'CopyTable',
-         'maptotable':'MapToTable'
-        
+        'copytable': 'CopyTable',
+        'maptotable': 'MapToTable'
+
     },
     IsCommand: function (fnName) {
         fnName = fnName.trim();
@@ -1292,7 +1292,7 @@ var SAFN = {
     InitConversion: function () {
 
 
-   
+
     },
     Reconvert: {
         InitMapper: function (commandLine, triggerElm) {
@@ -2020,25 +2020,26 @@ var SAFN = {
             var backlogName = SACore.GetBacklogDetails(backlogId, 'backlogName');
             backlogName = (backlogName) ? backlogName : backlogId;
             var but = '';
-            if (backlogId.length > 0) {
-                but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-share"></i>')
-                                .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
-                                )
-            } else {
-                but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-plus"></i>')
-                                .attr("onclick", "addApiModal()")
-                                )
-            }
+
+            but = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                            .append('<i class="fas fa-share"></i>')
+                            .attr("onclick", "new UserStory().redirectUserStoryCore('" + backlogId + "')")
+                            )
+
+            var but2 = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                            .append('<i class="fas fa-plus"></i>')
+                            .attr("onclick", "addApiModal()")
+                            )
+
 
             var apiListFull = loadSelecPickerOnChnageApiList(backlogId);
 
-
+            var runInBackend = SACore.GetBacklogDetails(backlogId, 'runInBackend');
+            var apiSyncRequest = MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest'));
 
             var apiinfo = $("<li>")
                     .addClass('cs-select-api-info')
@@ -2048,7 +2049,7 @@ var SAFN = {
                             )
                     .append($('<div>')
                             .addClass('api-inc-info api-info-synchrone yellow-bg')
-                            .text(MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest')))
+                            .text((runInBackend === '1') ? apiSyncRequest + ' (Backend API)' : apiSyncRequest)
                             )
 
             var descBody = $('<div>')
@@ -2081,6 +2082,7 @@ var SAFN = {
                                                     )
                                             .append(apiinfo)
                                             .append(but)
+                                            .append(but2)
                                             )
                                     )
                             )
@@ -4206,7 +4208,11 @@ function loadSelecPickerOnChnageFnList(element) {
         crossDomain: true,
         async: false,
         success: function (res) {
-            var dt = res.tbl[0].r
+            var dt = [];
+            try {
+                dt = res.tbl[0].r
+            } catch (err) {
+            }
             $(element).each(function () {
 
                 var fnid = $(this).val();
@@ -4300,8 +4306,8 @@ $(document).ready(function () {
         '@.break()'
     ];
     $(document).on('keydown', '.add-description', function (e) {
-        var done =  $(this).attr("auto-done");
-           if(done!==true){
+        var done = $(this).attr("auto-done");
+        if (done !== true) {
             $(this).autocomplete({
                 position: {my: "left bottom", at: "left top", collision: "flip"},
                 minLength: 2,
@@ -4310,16 +4316,16 @@ $(document).ready(function () {
                 autoFocus: true,
                 select: function (event, ui) {
                     $(this).change();
-                
+
                     $(".fx-shortcodes-btn .add-description").val('');
                     return false;
                 },
-             
+
             }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
-    
-           }
-     
-        $(this).attr("auto-done",true);
+
+        }
+
+        $(this).attr("auto-done", true);
     });
 
 
@@ -4348,10 +4354,11 @@ $(document).ready(function () {
         var val = $(this).val();
         $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "new UserStory().redirectUserStoryCore('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
         var apiAction = GetApiActionTypeText(SACore.GetBacklogDetails(backlogId, 'apiAction'));
+        var runInBackend = SACore.GetBacklogDetails(backlogId, 'runInBackend');
         var apiSyncRequest = MapApiCallAsyncType(SACore.GetBacklogDetails(backlogId, 'apiSyncRequest'));
 
         $(this).closest('ul').find('.api-info-container').text(apiAction);
-        $(this).closest('ul').find('.api-info-synchrone ').text(apiSyncRequest);
+        $(this).closest('ul').find('.api-info-synchrone ').text((runInBackend === '1') ? apiSyncRequest + '(Backend API)' : apiSyncRequest);
         SAFN.Convert.Common.GetLineBody(this);
     })
 
@@ -4660,15 +4667,16 @@ function genEsasTrForDrag(desc, idk) {
 
             $("#description_table_body_id>#" + idk + "").attr('pid', res.kv.id);
             moveBacklogDescDrag();
-            
-         
+
+
         },
         error: function () {
             Toaster.showGeneralError();
         }
     });
 
-};
+}
+;
 function itemConvertSubFUnc(itm) {
 
     $(itm).find('input[type="checkbox"]').remove();
@@ -4695,4 +4703,5 @@ function itemConvertSubFUnc(itm) {
 
             );
     $(itm).removeClass('esas-table-tr-for-zad');
-};
+}
+;

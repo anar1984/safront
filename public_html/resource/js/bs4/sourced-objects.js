@@ -630,6 +630,13 @@ var SACore = {
         try {
             var idx = getIndexOfTable(res, "backlogDescList");
             var obj = res.tbl[idx].r;
+            this.updateBacklogDescriptionByResDEtails(obj) 
+        } catch (errr) {
+        }
+    },
+     updateBacklogDescriptionByResDEtails: function (res) {
+        try {
+            var obj = res;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 cr_project_desc[o.id] = o;
