@@ -6542,7 +6542,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
                                     <div class="cs-input-group mb-3 ml-2">
-                                        <div class="input-group-addon">Description</div>
+                                        <div class="input-group-addon">Observer Name</div>
                                               <div class="task-check-list-observer p-0 mt-1 mb-3">
                                                 <!-- <button class='btn loadUserForObserver'>Load User</button> -->
                                                 <select class="form-control" id="updatetask_oblerverlist"></select>
@@ -9106,19 +9106,15 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="cs-input-group mb-3">
+                            <div class="cs-input-group mb-3 task-step-1">
                                 <div class="input-group-addon">Title</div>
                                 <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
                             </div>
-                            <div class="cs-input-group">
+                            <div class="cs-input-group task-step-1">
                                 <div class="input-group-addon">Description</div>
                                 <textarea name="commentinput_for_taskcreate" id="addComment4Task_comment_new" class="commentinput form-control" placeholder="Add a description.." rows="1"></textarea>
                                 <br>
-                                <div class="input-group-addon">Check List</div>
-                                <textarea name="commentinput_for_taskcreatechecklist" id="commentinput_for_taskcreatechecklist" 
-                                          class=" form-control" placeholder="Add a check list.." rows="4"></textarea>
-
-                                <br>
+                             
                                 <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
                                      style="width:100%;display: none; padding:0px;margin:0px;">
                                     <div class="col-12 text-center canvas_canvas_msg "
@@ -9145,6 +9141,10 @@
                                         <br>
                                     </div>
                                 </div>
+                                <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
+                            </div>
+                            <div class="cs-input-group task-step-2">
+                                <button type="button" class="btn btn-primary add-new-task">Add New</button>
                             </div>
                         </div>
                     </div>
@@ -9155,10 +9155,19 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Check List</a>
+                                </li>
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Observer</a>
+                                </li>
+                                <li class="nav-item after-add-task" role="presentation">
+                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Subtask</a>
+                                </li>
+                                <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Events</a>
                                 </li>
                             </ul>
@@ -9457,7 +9466,98 @@
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                <div class="tab-pane fade task-check-list-created" id="task-tab4" role="tabpanel" aria-labelledby="task-tab4-tab">
+
+                                    <div class="task-check-list-textarea">
+                                        <div class="cs-input-group mb-3">
+                                            <div class="input-group-addon">Check List</div>
+                                            <textarea name="commentinput_for_taskcreatechecklist" id="commentinput_for_taskcreatechecklist" 
+                                              class=" form-control" placeholder="Add a check list.." rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade task-check-list-created" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
+                                    <div class="cs-input-group mb-3 ml-2">
+                                        <div class="input-group-addon">Observer Name</div>
+                                              <div class="task-check-list-observer p-0 mt-1 mb-3">
+                                                <!-- <button class='btn loadUserForObserver'>Load User</button> -->
+                                                <select class="form-control" id="createdtask_oblerverlist"></select>
+                                                <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
+                                            </div>
+                                            <div class="task-observer-list">
+                        
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade task-subtask-created" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
+                                
+                                    <div class="col-lg-12">
+                                        <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Select Task</th>
+                                                    <th>Task ID</th>
+                                                    <th>Parent Task</th>
+                                                    <th>Task Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                        <i class="fas fa-plus" aria-hidden="true"></i>
+                                                    </a></td>
+                                                    <td><div class="task-id-modal-parent-task"></div></td>
+                                                    <td class="move-to-child">
+                                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
+                                                        onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
+                                                        </a>
+                                                    </td>
+                                                    <td><div class="task-status-modal-parent-task"></div></td>
+                                                  </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                       </div>
+ 
+ 
+                                     <div class="col-lg-12 mt-5">
+
+                                        <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Task ID</th>
+                                                    <th>Child Task</th>                                                    
+                                                    <th>Task Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                     </div>
+                                </div>
+                                <div class="tab-pane fade task-events-created" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                    <div class="row">
+                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
+                                            <div class="cs-input-group">
+                                                <!-- <label class="input-group-addon">Activate
+                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
+                                                </label>     -->
+                                                
+                                                <label class="checkmarkcontainer">Activate
+                                                    <input type="checkbox" name="activateCreatedEvenets" id="activateCreatedEvenets" value="">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
@@ -9532,7 +9632,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
+                    <!-- <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button> -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

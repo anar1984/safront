@@ -2185,10 +2185,32 @@ $(document).on("click", '#expand-group', function (e) {
 
     }
 })
+
+function reset_task_data() {
+    $('.task-events-created').attr("data-taskid",'');
+    $('.task-events-created input').val('');
+    $('.task-events-created input').change('');
+    $('input#taskNameInputNew2').val('');
+    $('#addComment4Task_comment_new').val('');
+}
+
 $(document).on("click", '#addIssueButtonId', function (e) {
-
+    $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .task-step-1').hide();
+    $('#issue-managment-add-task .task-step-2').show();
     addNewTask4BugMultiZad( );
+    reset_task_data();
+})
 
+$(document).on("focus", 'input#taskNameInputNew2', function (e) {
+    $('#issue-managment-add-task .after-add-task').hide();
+    $('#issue-managment-add-task .task-step-1').show();
+    $('#issue-managment-add-task .task-step-2').hide();
+})
+$(document).on("focus", '.add-new-task', function (e) {
+    $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .task-step-1').show();
+    $('#issue-managment-add-task .task-step-2').hide();
 })
 
 function insertNewTask() {
@@ -2599,6 +2621,11 @@ function loadBugTaskDeadlineScripts() {
     });
     $('.hr_spa').hide();
 
+    $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
+    $('#issue-managment-add-task .after-add-task').hide();
+    $('#issue-managment-add-task .task-step-2').hide();
 
     // TASK DETAILS ON
     $('#run_task_project_name_detail').selectpicker('refresh');
@@ -2615,6 +2642,7 @@ function loadBugTaskDeadlineScripts() {
     $('#swofm_weekday_select_detail').selectpicker('refresh');
     $('#run_task_reminder_select_detail').selectpicker('refresh');
     $('#updatetask_oblerverlist').selectpicker('refresh');
+    $('#createdtask_oblerverlist').selectpicker('refresh');
 
     $("#runTaskStartDate_detail").daterangepicker({
         format: 'YYYY/MM/DD',
@@ -2651,6 +2679,7 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
     $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
     // TASK DETAILS OFF
+
 
 }
  
@@ -3652,6 +3681,19 @@ $(document).on("change", "#activateUpdatedEvenets", function (e) {
         $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
         $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
         $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
+    }
+});
+$(document).on("change", "#activateCreatedEvenets", function (e) {
+
+    if ($(this).is(':checked')){
+    
+        $('.task-events-created .cs-input-group input').css("pointer-events", "auto");
+        $('.task-events-created .cs-input-group input').css("opacity", "1");
+        $('.task-events-created .cs-input-group input').attr("disabled", false);
+    }else{
+        $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
+        $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
+        $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
     }
 });
 
