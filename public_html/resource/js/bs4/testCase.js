@@ -3548,6 +3548,7 @@ function createdEventsTaskData(id) {
 }
 
 function infoEventsTaskData(taskId) {
+    $('.task-events-updated').attr("data-taskid",'');
     $('.task-events-updated input').val('');
     $('.task-events-updated input').change('');
     var json = initJSON();
