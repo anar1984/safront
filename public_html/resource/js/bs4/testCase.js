@@ -3154,7 +3154,7 @@ $(document).on("click", ".sc-close-sidebar-btn", function (e) {
 $(document).on("click", ".sc-open-sidebar-btn", function (e) {
     $('.card-userstory-navmenu').removeClass('isClose');
     $('.card-userstory-navmenu').addClass('isOpen');
-}); 
+});
 
 $(document).on("click", ".task-skin-btn", function (e) {
     $(this).toggleClass('navIcon');
@@ -3168,8 +3168,7 @@ $(document).on("mouseup", "html", function (e)
         && container.has(e.target).length === 0) // ... nor a descendant of the container
     {
         container.removeClass("task-menu-open");
-         $('.task-skin-btn').removeClass('navIcon'); 
-
+         $('.task-skin-btn').removeClass('navIcon');
     }
 });
 
@@ -3455,6 +3454,8 @@ function  getTaskkObserverListDetaisl(res) {
     } catch (err) {
     }
 
+
+
     var div = $('.task-observer-list');
     div.html('')
     
@@ -3462,12 +3463,12 @@ function  getTaskkObserverListDetaisl(res) {
             .addClass('table table-hover project-table-list defaultTable sar-table');
     table.append($('<thead>')
             .append($("<tr>")
-                .append($("<th>")
-                        .css("width", "1%")
-                        .text("#"))                    
-                .append($('<th>')
-                        .text("Observer"))                    
-                )
+                    .append($("<th>")
+                            .css("width", "1%")
+                            .text("#"))                    
+                    .append($('<th>')
+                            .text("Observer"))                    
+                    )
             )
 
   var idy= getIndexOfTable(res, "tmBacklogTaskObserver");

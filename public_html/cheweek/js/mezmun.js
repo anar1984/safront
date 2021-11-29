@@ -1,4 +1,5 @@
 var cheweek_mezmun = {
+    etap_list:[],
     init:function () {
         
         var elm = $(".component-class#21041212141705702084 >.component-section-row");
@@ -12,53 +13,82 @@ var cheweek_mezmun = {
                                         .addClass("cs-task-main mt-1")
                                        .append($("<div>")
                                                     .addClass("cs-task-panel-column"))));
+          block.append(this.genFileLIst());
           elm.html(block)
           $('.selectpicker').selectpicker({
             iconBase: 'fa',
             tickIcon: 'fa-chevron-down',
         });
         getProjectUsers4Tapsiriq();
+        getFilterCOmboBoxListMezmun();
+        this.genEtapList();
         this.getMezmunList();
+        
 
     },
-    getMezmunList: function (serach) {
-        var chkAll = $("#show-all-colmn-tapsriq")
+    genEtapList: function(){
+          var list = this.etap_list
+        for (let i = 0; i < list.length; i++) {
+            const o = $(list[i]);
+            o.removeClass("col-6")
+          //  o.addClass("col-2")
+            o.find("div").first().css("font-size",'12px')
+                 
+            $("#content-header-box").append(o)
+        }
+    } ,
+    getFiltersItemValues:function () {
+      
         var tasktypeId =$("#taskTypeId-filter-tapsiriq").val();
         var createdBy = $("#createdby-filter-tapsiriq").val();
-        var fkTaskTypeId = $("#taskTypeId-filter-tapsiriq").val();
-        var executorİd = $("#excekuter-filter-tapsiriq").val();
+        var fkExecuterId = $("#excekuter-filter-tapsiriq").val();
+        var fkCompanyId = $("#sirket-filter-tapsiriq").val();
+        var fkBranchId = $("#filial-filter-tapsiriq").val();
         var fkKontragentId = $("#kontragent-filter-tapsiriq").val();
         var val = $("#date_timepicker_start_end_tapsiriq").val();
-       
-        var type_view = localStorage.getItem('mezmun_view');
-        if (!type_view) {
-            type_view = "kanban";
-        };
-        //if (type_view === 'kanban') {
-             
+        var serach = $("#search-item-text-input").val();
+            
             var json = initJSON();            
             
          //   json.kv.requestStatus = reqStat;
             json.kv.startLimit = 0;
             json.kv.endLimit = 25;
-           /*  if (serach) {
-                json.kv.reqeustDescription = serach ? serach : "";
-                json.kv.reqeustCode = serach ? serach : "";
+             if (serach) {
+                serach = '%'+serach+'%'
+                json.kv.requestDescription = serach ? serach : "";
+            //    json.kv.reqeustCode = serach ? serach : "";
     
             }
-            if (createdBy) {
-                json.kv.createdBy = createdBy ? createdBy : "";
+            if (createdBy.length >0) {
+                json.kv.createdBy = createdBy.length >0 ? createdBy : "";
             }
-            if (tasktypeId) {
-                json.kv.fkTaskTypeId = tasktypeId ? tasktypeId : "";
+            if (fkExecuterId.length >0) {
+                json.kv.fkExecuterId = fkExecuterId.length >0 ? fkExecuterId : "";
             }
-            if (fkKontragentId) {
-                json.kv.fkKontragentId = fkKontragentId ? fkKontragentId : "";
+             if (fkBranchId.length >0) {
+                json.kv.fkBranchId = fkBranchId.length >0? fkBranchId : "";
+            } 
+            if (fkKontragentId.length >0) {
+                json.kv.fkKontragentId = fkKontragentId.length >0 ? fkKontragentId : "";
+            }
+            if (fkCompanyId.length >0) {
+                json.kv.fkCompanyId = fkCompanyId.length >0 ? fkCompanyId : "";
             }
             if (val) {
                 json.kv.createdDate = val ? val : "";
             
-            } */
+            } 
+
+        return json
+    },
+    getMezmunList: function () {
+        var chkAll = $("#show-all-colmn-tapsriq")
+             var json = this.getFiltersItemValues();
+             var type_view = localStorage.getItem('mezmun_view');
+             if (!type_view) {
+                  type_view = "kanban";
+              };
+           if (type_view === 'kanban') {
             var db = ["('new','ongoing','waiting')", "('closed','canceled','tamamlanib','defected','rejected','tesdiqlenib')"];
             if (!chkAll.prop("checked")) {
                 $(".cs-task-panel-column").empty()
@@ -68,16 +98,9 @@ var cheweek_mezmun = {
                 for (let i = 0; i < db.length; i++) {
                     const g = db[i];
                     json.kv.requestStatus = g;
-                  
-                    cheweek_mezmun.getMezmunListApi(json)
-                    if (i === 0) {
-                       
-                    }
-    
-                    if (i === 1) {
-                   
-                    }
-    
+                 
+                    cheweek_mezmun.getMezmunListApi(json,i);
+                      
                 }
     
     
@@ -88,14 +111,38 @@ var cheweek_mezmun = {
                 const g = db[0];
                 json.kv.requestStatus = g;
                          
-                   cheweek_mezmun.getMezmunListApi(json)
+                   cheweek_mezmun.getMezmunListApi(json,0);
     
         
                 $(".cs-task-col.aktiv").find('.cs-card-fullview').click();
             }
+            this.getStatusRowCountApi()
+           }
+           else if(type_view === 'table'){
+            $(".cs-task-panel-column").empty()
+             .append($("<div>")
+                       .css("height","90vh")
+                        .css("width",'100%')
+                        .css("overflow",'auto')
+                      .append($("<table>").addClass('table cst-table-hover')
+                                 .attr("id",'mezmun-list-table')
+                                 .append($("<thead>").append(cheweek_mezmun.genHeaderMezmunListForTable()))
+                                 .append($("<tbody>"))
+                                 ));
+               var stFull ="('new','ongoing','waiting','closed','canceled','tamamlanib','defected','rejected','tesdiqlenib')"
+               var stl ="('new','ongoing','waiting')"
+            if (!chkAll.prop("checked")) {
+                json.kv.requestStatus = stFull
+            }else{
+                json.kv.requestStatus = stl
+            }
+            cheweek_mezmun.getMezmunListApi(json,0);
+           }
+            
         //} 
+    
     },
-    getMezmunListApi:function (json) {
+    getMezmunListApi:function (json,partOF) {
         json.kv.apiId = '21112206040002117371';
         var that = this;
         var data = JSON.stringify(json);
@@ -107,12 +154,28 @@ var cheweek_mezmun = {
             crossDomain: true,
             async: true,
             success: function (res) {
+                var type_view = localStorage.getItem('mezmun_view');
+                if (!type_view) {
+                     type_view = "kanban";
+                 };
+              if (type_view === 'kanban') {
                 try {
+                        if(partOF === 0){
+                            $(".count-cs-aktiv").text(res.kv.rowCount)
+                        }else{
+                            $(".count-cs-passiv").text(res.kv.rowCount)
+                        }
                   
-                    genAktivPassiv(res, 0, res.kv.rowCount);
+                    genAktivPassiv(res, partOF, res.kv.rowCount);
                 } catch (error) {
-                    
+                
                 }
+              }
+              if (type_view === 'table') {
+                     
+                      genTableViewMezmun(res, partOF, res.kv.rowCount);
+              }
+                
                   
             }
         });
@@ -120,6 +183,10 @@ var cheweek_mezmun = {
     genMezmunBlock:function (params) {
         return $("<div>")
                   .addClass("wrapper");
+    },
+    genFileLIst : function (params) {
+       return $("<div>")
+                 .addClass("file-list-block");
     },
     genKanbanZone: function (znID,znName) {
       
@@ -279,7 +346,7 @@ var cheweek_mezmun = {
                    <path class="fil8" d="M0.03 0.05l0.07 0c0,0 0,0 0,-0.01l0 -0.01c0,-0.02 0.01,-0.03 0.03,-0.03l0.07 0c0.02,0 0.03,0.01 0.03,0.03l0 0.01c0,0.01 0,0.01 0,0.01l0.07 0c0.02,0 0.03,0.01 0.03,0.03l0 0.17c0,0.02 -0.01,0.03 -0.03,0.03l-0.27 0c-0.02,0 -0.03,-0.01 -0.03,-0.03l0 -0.17c0,-0.02 0.01,-0.03 0.03,-0.03zm0.1 -0.03l0.07 0c0,0 0.01,0.01 0.01,0.01l0 0.01c0,0.01 -0.01,0.01 -0.01,0.01l-0.07 0c0,0 -0.01,0 -0.01,-0.01l0 -0.01c0,0 0.01,-0.01 0.01,-0.01z"/>
                      </g>
                      </svg>
-                      <select class="selectpicker user-filter-tapsiriq" title="Şirkət"  multiple data-live-search="true"
+                      <select class="selectpicker user-filter-tapsiriq" title="Şirkət" onchange="cheweek_mezmun.getMezmunList()"   data-live-search="true"
                       id="sirket-filter-tapsiriq">
                    
                     </select>
@@ -292,7 +359,7 @@ var cheweek_mezmun = {
                       <path class="fil9" d="M0.27 0.15l0 0c0,0 0,0.01 0.01,0.01l0.01 0c0,0 0,0 0,0l0 0.01c0,0 0,0 0,0l0.01 0.01c0,0 0,0 0,0.01l0 0c0,0.01 0,0.01 0,0.01l0 0.01c0,0 0,0 0,0l-0.01 0.01c0,0 0,0 0,0l0 0.01c0,0 0,0.01 0,0.01l-0.01 0c-0.01,0 -0.01,0 -0.01,0l0 0.01c0,0 -0.01,0 -0.01,0l-0.01 0c0,-0.01 0,-0.01 0,0l-0.01 0c0,0 -0.01,0 -0.01,0l0 -0.01c0,0 0,0 -0.01,0l-0.01 0c0,0 0,-0.01 0,-0.01l0 -0.01c0,0 0,0 0,0l-0.01 -0.01c0,0 0,0 0,0l0 -0.01c0,0 0,0 0,-0.01l0 0c0,-0.01 0,-0.01 0,-0.01l0.01 -0.01c0,0 0,0 0,0l0 -0.01c0,0 0,0 0,0l0.01 0c0.01,0 0.01,-0.01 0.01,-0.01l0 0c0,-0.01 0.01,-0.01 0.01,-0.01l0.01 0.01c0,0 0,0 0,0l0.01 -0.01c0,0 0.01,0 0.01,0.01z"/>
                      </g>
                     </svg>
-                      <select class="selectpicker user-filter-tapsiriq" title="Filial"  multiple data-live-search="true"
+                      <select class="selectpicker user-filter-tapsiriq" title="Filial" onchange="cheweek_mezmun.getMezmunList()"     data-live-search="true"
                       id="filial-filter-tapsiriq">
                    
                     </select>
@@ -338,8 +405,12 @@ var cheweek_mezmun = {
                                             <i class="fas fa-bars" aria-hidden="true"></i>
                                             </span></div>`)
                                       .append(`<div class="form-group cs-search cs-filter-col"><span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                                      <input type="search" autocomplete="new-password"  class="form-control"  placeholder="Axtar...">
+                                      <input type="text" id='search-item-text-input'   class="form-control"  placeholder="Axtar...">
                                   </div>`)
+                                     .append($("<div>")
+                                                  .addClass("d-flex flex-wrap")
+                                                 .attr("id",'header-etap-list-mezmun')
+                                                .append(""))
                                      .append($("<div>")
                                                 .addClass('d-flex align-content-start flex-wrap filter-section')
                                                 .attr("id",'content-header-box')))
@@ -355,6 +426,52 @@ var cheweek_mezmun = {
                                 </div>
                             </div>`))
 
+    },
+    genHeaderMezmunListForTable:function (params) {
+       return `<tr>
+       <th class="text-center"></th>
+       <th class="text-center"><label href="#" class="component-class" id="21010301044803654431" pid="21010301044803654431" orderno="0.7" onclick="">Status</label> </th>
+       <th class="text-center cst-a-font"><label href="#" class="component-class" id="21010301044606219226" pid="21010301044606219226" orderno="1.22" onclick="">Kontragent</label></th>
+
+       <th class="text-center cst-a-font"><label href="#" class="component-class" id="21010301044607177560" pid="21010301044607177560" orderno="2.51" onclick="">Məzmun</label></th>
+
+       <th class="text-center"><label href="#" class="component-class" id="21010401365809185252" pid="21010401365809185252" orderno="2.722" onclick="">Tarix</label> </th>
+
+       <th class="text-center"><label href="#" class="component-class" id="21010301044606933894" pid="21010301044606933894" orderno="2.83" onclick="">Daxil edən</label> </th>
+
+
+   </tr>` 
+    },
+    getTableTrFormezmun: function(say,id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid, statusID) {
+
+        return $("<tr>")
+                .addClass('cs-task-item-in-box redirectClass ')
+                .attr('id', id)
+                .attr('pid', id)
+                .append($("<td>")
+                         .addClass("text-center")
+                        .append(say)) 
+                .append($("<td>")
+                            .addClass(" text-center bg-status-" + statusID)
+                             .append($("<div>")
+                                      
+                                       .append(taskStatus))) 
+                .append($("<td>").append(tasktype)) 
+                .append($("<td>").append(`<div ><a href='#' onclick_trigger_id="21031217414702167956" class='m-0'>${mzmn}</a> </div>`)) 
+                .append($("<td>")
+                          .addClass("text-center")
+                 .append(` <div class="cs-task-card-datatime pr-1 d-inline-block" data-trigger="hover" data-placement='bottom' data-toggle="popover" data-content="Saat: ${time} <br> Gün: ${date}" title="" data-original-title="Tarix">
+                <i class="fas fa-calendar-alt"></i>
+                <span >${date}</span>
+            </div>`)) 
+                .append($("<td>")
+                        .addClass("text-center")
+                       .append(`<img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/${image}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameUs}" title="" data-original-title="Daxil Edən">`)) 
+               
+               
+               .append($('<td>').append(hid).hide())
+    
+    
     },
     getContentTapsiriq: function(id, mzmn, image, nameUs, taskStatus, tasktype, time, date, hid, statusID) {
 
@@ -422,8 +539,162 @@ var cheweek_mezmun = {
     
     
     },
+    getStatusRowCountApi: function () {
+        var json = initJSON();
+        json.kv.apiId = '21112200395307246938';
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                   var aktiv = $(".cs-task-col.aktiv .cs-task-status-header .cs-flex-align-middle .flex-fill:nth-child(2)");
+                   var passiv = $(".cs-task-col.passiv .cs-task-status-header .cs-flex-align-middle .flex-fill:nth-child(2)");
+                      aktiv.after($("<div>")
+                                     .addClass('flex-fill d-flex bd-highlight minimze-hidden-block')
+                                     .attr("id","aktiv-total-task-list"))
+                      passiv.after($("<div>")
+                                     .addClass('flex-fill d-flex bd-highlight minimze-hidden-block')
+                                     .attr("id","passiv-total-task-list"))
+                try {
+                    var stat = GetTaskStatusList();
+                    stat = stat._table.r;
+                    
+                      var res = res.tbl[0].r;
+                      for (let i = 0; i < res.length; i++) {
+                          const o = res[i];
+                            var stId = o.requestStatus
+                           
+                             if(stId.length<2){
+                               
+                             }else{
+                              var taskName
+                                for (let c = 0; c < stat.length; c++) {
+                                    if (stat[c].id == stId) {
+                                        taskName = stat[c].taskStatusName;
+                                    }
+                
+                                }
+
+
+                                if (stId === 'new' || stId === 'ongoing' || stId === 'waiting') {
+                                    $("#aktiv-total-task-list").append(that.genStatusBlock(taskName,stId,o.rowCount));
+                                }else{
+                                    $("#passiv-total-task-list").append(that.genStatusBlock(taskName,stId,o.rowCount));
+
+                                }
+
+                             
+                             }
+                             
+
+                          
+                      }
+                } catch (error) {
+                    
+                }
+            }
+        });
+    },
+    genStatusBlock:function (stName,stId,count) {
+        return  $("<div>")
+        .addClass('p-0 ')
+        .append(
+           $("<div>")
+
+           .addClass(" d-flex m-1 overflow-hidden  shadow-sm p-0 rounded-pill ")
+           .css("font-size",'10px')
+           .css("border",'1px solid lightgray')
+           .append($("<div>")
+                
+                        .addClass("col bg-status-"+stId+" brend-color p-1 pl-3  font-weight-bold  text-center")
+                        .css("white-space",'nowrap')
+                       .append(stName))
+           .append($("<div>")
+                        .addClass("col brend-color text-center bg-fff  align-self-center pr-2 font-weight-bold p-1 ")
+                       .append(count))
+        )
+       
+    },
+   
 }
 
+function getBrancListByCompanyId(fkCompanyId) {
+
+    var json = initJSON();
+      json.kv.fkCompanyId = fkCompanyId 
+    json.kv.apiId = '21112222503701715182';
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                    
+                    var  obj = res.tbl[0].r;
+                    $("#filial-filter-tapsiriq").html('');
+                 for (var n = 0; n < obj.length; n++) {
+                       $("#filial-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].branchName));
+                 }
+                   
+                 $("#filial-filter-tapsiriq").selectpicker("refresh")
+                } catch (error) {
+                    
+                }
+                  
+            }
+        });
+}
+function getFilterCOmboBoxListMezmun() {
+
+    var json = initJSON(); 
+    json.kv.apiId = '211122225407026410927';
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceIoCallActionApi",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+                try {
+                     
+                    var  obj = res.tbl[0].r;
+                    $("#mehsul-filter-tapsiriq").html('');
+                 for (var n = 0; n < obj.length; n++) {
+                       $("#mehsul-filter-tapsiriq").append($('<option>').val(obj[n].id).text(obj[n].productName));
+                 }
+                    var  obj1 = res.tbl[1].r;
+                    $("#kontragent-filter-tapsiriq").html('');
+                 for (var n1 = 0; n1 < obj1.length; n1++) {
+                       $("#kontragent-filter-tapsiriq").append($('<option>').val(obj1[n1].id).text(obj1[n1].kaName));
+                 }
+                    var  obj2 = res.tbl[2].r;
+                    $("#sirket-filter-tapsiriq").html('');
+                 for (var n2 = 0; n2 < obj2.length; n2++) {
+                       $("#sirket-filter-tapsiriq").append($('<option>').val(obj2[n2].id).text(obj2[n2].companyName));
+                 }
+
+                 $(".selectpicker").selectpicker("refresh")
+                } catch (error) {
+                    console.log(error);
+                    console.log('sdfghjk');
+                }
+                  
+            }
+        });
+}
 function getProjectUsers4Tapsiriq() {
 
 
@@ -459,7 +730,7 @@ function getProjectUsers4Tapsiriq() {
 }
 
 function genAktivPassiv(res, x, say) {
-
+      var pureRes = res
 
     try {
         res = res.tbl[0].r
@@ -549,27 +820,32 @@ function genAktivPassiv(res, x, say) {
         $('[data-toggle="popover"]').popover({
             html: true
         });
+         var edLmt =pureRes.kv.endLimit;
+             edLmt = parseFloat(edLmt)
         if (x === 0) {
-            if (say > 25) {
+            $("#flex-col-aktiv").find('.more-button-fortapsiriq').remove();
+            if (parseFloat(say) > edLmt) {
+             
                 $("#flex-col-aktiv").append($("<div>")
                         .addClass("more-button-fortapsiriq text-center ")
                         .text('Daha çox')
-                        .attr("data-status", 'aktiv')
-                        .attr("start-limit", '25')
-                        .attr("end-limit", '50')
+                        .attr("data-status", x)
+                        .attr("start-limit", parseFloat(pureRes.kv.startLimit)+25)
+                        .attr("end-limit", edLmt+25)
                         )
             }
 
         }
 
         if (x === 1) {
-            if (say > 25) {
+            $("#flex-col-passiv").find('.more-button-fortapsiriq').remove();
+            if (parseFloat(say) > edLmt) {
                 $("#flex-col-passiv").append($("<div>")
                         .addClass("more-button-fortapsiriq text-center ")
                         .text('Daha çox')
-                        .attr("data-status", 'passiv')
-                        .attr("start-limit", '25')
-                        .attr("end-limit", '50')
+                        .attr("data-status", x)
+                        .attr("start-limit", parseFloat(pureRes.kv.startLimit)+25)
+                        .attr("end-limit", edLmt+25)
                         );
             }
         }
@@ -579,6 +855,91 @@ function genAktivPassiv(res, x, say) {
 
 
 }
+function genTableViewMezmun(res, x, say) {
+      var pureRes = res
+      
+        var table = $("#mezmun-list-table > tbody")
+    try {
+        res = res.tbl[0].r
+
+        var oper = getreqeuest4Tapsiriq();
+        oper = oper._table.r;
+        var stat = GetTaskStatusList();
+        stat = stat._table.r;
+
+        for (let l = 0; l < res.length; l++) {
+
+            const o = res[l];
+          
+
+                var hid = $('<div>')
+                        .append($("<input>").val(o.id).attr("sa-selectedfield", 'fkRequestId'))
+
+                var date = Utility.convertDate(o.createdDate);
+                var img
+                var userName
+                if (o.createdBy) {
+                    img = SAProjectUser.ProjectUsers[o.createdBy].userImage;
+                    userName = o.userPersonName;
+                } else {
+                    img = 'userprofile.png';
+                    userName = 'Yoxdur'
+                }
+                var st = $('<span>');
+                for (let c = 0; c < stat.length; c++) {
+                    if (stat[c].id == o.requestStatus) {
+                        st.text(stat[c].taskStatusName);
+                    }
+
+                }
+                var a = $("<span>")
+                        .attr("href", '#')
+                        .addClass('operation')
+                        .addClass('_taskListTaskTypeIdField')
+                        .attr('sa-data-fktasktypeid', o.kaName)
+                        .text(o.kaName);
+
+                reqeustDescription = o.requestDescription + "(" + o.requestCode + ")"
+                var html = cheweek_mezmun.getTableTrFormezmun((parseFloat(pureRes.kv.startLimit)+1+l),o.id, reqeustDescription, img, userName, st, a, '', date, hid, o.requestStatus);
+                $(table).append(html);
+            
+
+
+        }
+
+        $('.cs-task-panel-column .selectpicker').selectpicker({
+            iconBase: 'fa',
+            tickIcon: 'fa-chevron-down',
+        });
+
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
+         var edLmt =pureRes.kv.endLimit;
+             edLmt = parseFloat(edLmt)
+       
+            table.find('.more-button-fortapsiriq').remove();
+            if (parseFloat(say) > edLmt) {
+             
+                table.append($("<div>")
+                        .addClass("more-button-fortapsiriq text-center ")
+                        .text('Daha çox')
+                        .attr("data-status", x)
+                        .attr("start-limit", parseFloat(pureRes.kv.startLimit)+25)
+                        .attr("end-limit", edLmt+25)
+                        )
+            }
+
+        
+
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
+
 
 $(document).on("click", '.task-view-button-group li a', function (params) {
     var view = $(this).attr('data-view');
@@ -586,14 +947,39 @@ $(document).on("click", '.task-view-button-group li a', function (params) {
       $(this).closest('li').addClass("active");
 
     localStorage.setItem("mezmun_view", view);
-    //cheweek_mezmun.getMezmunList(idk);
+      cheweek_mezmun.getMezmunList();
 
 
 })
-$(document).on("change", '#task-kanban-search-tapsiriq', function (params) {
+$(document).on("change", '#task-kanban-search-tapsiriq', function () {
 
    var idk = "%%" + $(this).val() + "%%"
 
 
     //cheweek_mezmun.getMezmunList(idk);
+})
+$(document).on("change", '#sirket-filter-tapsiriq', function () {
+
+   var idk =  $(this).val();
+   getBrancListByCompanyId(idk);
+
+    //cheweek_mezmun.getMezmunList(idk);
+})
+$(document).on("change", '#search-item-text-input', function () {
+    cheweek_mezmun.getMezmunList();
+})
+
+$(document).on("click", '.more-button-fortapsiriq', function () {
+    var elm = $(this).attr('data-status');
+    var st = $(this).attr('start-limit');
+    var ent = $(this).attr('end-limit');
+    var db = ["('new','ongoing','waiting')", "('closed','canceled','tamamlanib','defected','rejected','tesdiqlenib')"];
+
+    var json = cheweek_mezmun.getFiltersItemValues();
+           json.kv.startLimit = st;
+           json.kv.endLimit = ent;
+           json.kv.requestStatus = db[elm];
+
+    cheweek_mezmun.getMezmunListApi(json, parseFloat(elm));
+
 })

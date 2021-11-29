@@ -3806,7 +3806,7 @@ function updateCaseProblemStat4Short(el) {
     updateCaseProblemStat4ShortDetails(id, type, val)
 }
 
-
+ 
 //3  P.S_______________________________________________________________  
 function getProblemStatList(e) {
     if (!activeBCId) {
@@ -3823,9 +3823,10 @@ function getProblemStatList(e) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
              try {
+                 businessCaseDesc  = res.kv.caseDesc;
                 tinyMCE.get('business_case_description').setContent(res.kv.caseDesc);
                  
             } catch (err) {

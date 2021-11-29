@@ -4259,7 +4259,6 @@ table.lbl-list-table tr td {
     font-size: 14px;
     margin-bottom: 3px;
     color: #313582;
-    width: 100%;
 }
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
@@ -4326,7 +4325,7 @@ table.lbl-list-table tr td {
       width: 100% !important;
   }
   .issue-managment-add-task .horizontal .checkcontainer {
-      margin-right: 17px;
+      margin-right: 20px;
   }
   .issue-managment-add-task .nav-pills .nav-link {
     color: #525596;
@@ -4488,11 +4487,6 @@ table.lbl-list-table tr td {
      display: inline-block;
      padding: 0;
      font-size: 14px;
-     vertical-align: top;
-     max-width: 550px;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
  }
  .card-Userstory-detail .card-Userstory-body {
   height: 100vh;

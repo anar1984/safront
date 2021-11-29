@@ -19454,6 +19454,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
+        
+        var storyCardType = SACore.GetBacklogDetails(global_var.current_backlog_id,"backlogType");
+        $('#user-story-type').val(storyCardType);
+        storyCardTypeChangeEvent(storyCardType);
+        $('#user-story-type').selectpicker('refresh');
 
         var ido = SACore.GetCurrentBacklogId();
 
@@ -19836,22 +19841,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
     },
     toggleSubmenuStoryCard: function () {
         try {
-//            Backloglar load olanda inputlarin load olmasi bir az gec cekir
             this.setUserStoryInforOnGeneralView4Select();
         } catch (e) {
-//            this.setUserStoryInforOnGeneralView();
         }
 
         this.setUserStoryInforOnGeneralView4HistoryDateAndLabel();
-//        this.setUserStoryTaskInfoOnGeneralView();
-        //this.loadAssignedLabel();
-        //this.setBView();
-
         this.loadStoryCardFileList();
         try {
             this.getBacklogDesc();
         } catch (e) {
-//            this.setUserStoryInforOnGeneralView();
         }
 
         this.getBacklogTaskStats();

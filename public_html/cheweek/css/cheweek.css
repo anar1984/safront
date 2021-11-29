@@ -629,7 +629,7 @@ label.cs-file-upload:hover {
     padding-right: 5px;
     border-right: 1px solid #EEEEEE;
 }
-.cs-task-item-in-box {
+div.cs-task-item-in-box {
     margin-bottom: 8px;
   /*   padding: 8px; */
      overflow: hidden;
@@ -735,14 +735,48 @@ label.cs-file-upload:hover {
 .cs-task-card-avatar-boxes .Assigne-card-story-select-img.created {
     box-shadow: 0px 0px 0px 2px #6bb5f0 inset;
 }
-.maximize-large{
-    min-width: 100%;
+.cs-task-col.aktiv ,.cs-task-col.passiv {
+  
+    min-width: 49%;
+
 }
-.maximize-large .cs-task-item-in-box{
-    max-width: 19.586%;
-    min-width: 19.586%;
+.cs-task-col.aktiv .cs-task-item-box-bg,.cs-task-col.passiv .cs-task-item-box-bg {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.cs-task-col.aktiv .cs-task-item-in-box,.cs-task-col.passiv .cs-task-item-in-box {
+    max-width: 49%;
+    min-width: 49%;
     margin-right: 5px;
 
+}
+.maximize-large{
+    min-width: 100% !important;
+}
+.maximize-large .cs-task-item-in-box{
+    max-width: 19.586% !important;
+    min-width: 19.586% !important;
+    margin-right: 5px !important;
+
+}
+.minimze-hidden-block{
+    display: none !important;
+}
+.maximize-large .minimze-hidden-block{
+    display: flex !important;
+}
+
+.file-list-block{
+    width: 20%;
+    top: 0px;
+    right: 0px;
+    position: fixed;
+    background: #e4ecf7;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 50000;
+    display: none;
 }
 .cs-task-item-in-box:hover .large-blok-icon{
      
@@ -757,7 +791,7 @@ label.cs-file-upload:hover {
     right: 10px;
      
 }
-.maximize-large .cs-task-item-box-bg {
+.cs-task-col.aktiv .cs-task-item-box-bg,.cs-task-col.passiv .cs-task-item-box-bg {
     display: flex;
     flex-wrap: wrap;
 

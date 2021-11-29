@@ -218,7 +218,7 @@ function showStoryCardIn(id, elId) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
-         setStoryCardCreatedBy();
+        setStoryCardCreatedBy();
     });
 }
 
@@ -238,17 +238,12 @@ function callStoryCard4Api(id, elId, backlogName) {
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
         setStoryCardOwner();
-         setStoryCardCreatedBy();
+        setStoryCardCreatedBy();
     });
 }
 
 function callStoryCard(id, elId, backlogName) {
 
-   /*  if ($(document).find("#UserStoryPopupModal-Toggle").first().html()) {
-        $(document).find("#UserStoryPopupModal-Toggle").modal("hide");
-     
-       
-    } */
 
 
     var divId = (elId) ? elId : "body_of_nature";
@@ -259,22 +254,26 @@ function callStoryCard(id, elId, backlogName) {
         if (!id || id === '-1') {
             return;
         }
-        
-        loadBacklogDetailsByIdIfNotExist(id);
-        
-        var fkProjectId = SACore.GetBacklogDetails(id,"fkProjectId");
-        global_var.current_project_id = fkProjectId;
-        
-       /*  $('#smb-details-generalview-us-story-mgmt').html(html_string); // this is not Working
 
-        var storyCard = getPopup(html_string);
-       
-        $("#" + divId).append(storyCard); */
+        loadBacklogDetailsByIdIfNotExist(id);
+        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+        global_var.current_project_id = fkProjectId;
 
         $("#UserStoryPopupModal-Toggle-modal").html(html_string);
         $("#UserStoryPopupModal-Toggle").modal('show');
-        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+
         global_var.current_backlog_id = id;
+        var backlogName = SACore.GetCurrentBacklogname();
+        $('#storyCardListSelectBox4StoryCard')
+                .append($('<option>').text(backlogName))
+                .append($('<option>')
+                        .val('-2')
+                        .text("Load All Story Cards"));
+        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+
+
 
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
