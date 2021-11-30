@@ -19454,12 +19454,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
-        
+
+       
         var storyCardType = SACore.GetBacklogDetails(global_var.current_backlog_id,"backlogType");
+
         $('#user-story-type').val(storyCardType);
         storyCardTypeChangeEvent(storyCardType);
         $('#user-story-type').selectpicker('refresh');
-
+        
         var ido = SACore.GetCurrentBacklogId();
 
         var created_date = SACore.GetBacklogDetails(ido,'createdDate')
