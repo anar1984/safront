@@ -13758,7 +13758,7 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     Utility.addParamToUrl('current_modal', global_var.current_modal);
 
     callLoadStoryCard();
-});
+  });
 
 
 $(document).on('click', '.loadDev', function (evt) {
@@ -13766,7 +13766,6 @@ $(document).on('click', '.loadDev', function (evt) {
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
- 
 });
 function callLoadDev() {
     $.get("resource/child/dev.html", function (html_string) {
@@ -13782,6 +13781,9 @@ function callLoadDev() {
         commmonOnloadAction(this);
         getJsCodeListByProject();
        
+        $('.cs-col-pagename .mm-title').html('');
+        $('.cs-col-pagename .mm-title').html('Development');
+
     });
 }
 
@@ -13809,6 +13811,9 @@ function callLoadStoryCard() {
         //            jsEditorGenerate();
         //            cdnh = false;
         //        }
+
+        $('.cs-col-pagename .mm-title').html('');
+        $('.cs-col-pagename .mm-title').html('Story Card');
 
     });
    
