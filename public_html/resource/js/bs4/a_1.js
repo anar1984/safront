@@ -36,6 +36,7 @@ var cr_project_desc_by_backlog = {};
 var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
+    "loadDev": "Development",
     "loadLivePrototype": "Live Prototype",
     "loadStoryCardMgmt": "Story Card Management",
     "loadProjectManagement": "Project Management",
@@ -14020,7 +14021,34 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     Utility.addParamToUrl('current_modal', global_var.current_modal);
 
     callLoadStoryCard();
+  });
+
+
+$(document).on('click', '.loadDev', function (evt) {
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadDev";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    callLoadDev();
 });
+function callLoadDev() {
+    $.get("resource/child/dev.html", function (html_string) {
+
+        new UserStory().clearAndShowAll(this)
+        $('#mainBodyDivForAll').html(html_string);
+        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        new UserStory().refreshCurrentBacklog();
+        SACore.FillAllSelectBox();
+        $('#show_ipo_toggle').prop("checked", true) //show input list
+        showNavBar();
+        loadUsersAsOwner();
+        commmonOnloadAction(this);
+        getJsCodeListByProject();
+       
+        $('.cs-col-pagename .mm-title').html('');
+        $('.cs-col-pagename .mm-title').html('Development');
+
+    });
+}
 
 function callLoadStoryCard() {
     SAFN.InitConversion();
@@ -14047,7 +14075,11 @@ function callLoadStoryCard() {
         //            cdnh = false;
         //        }
 
+        $('.cs-col-pagename .mm-title').html('');
+        $('.cs-col-pagename .mm-title').html('Story Card');
+
     });
+   
 }
 
 

@@ -5570,7 +5570,13 @@ UserStory.prototype = {
                             .append(backlogProcessDescLineSubmenuItemVar));
 
             table.append(tr);
-
+            var by_dev_elm = $(".descriptiontable .dev");
+            if (global_var.current_modal == 'loadStoryCard') {
+                by_dev_elm.hide();
+            }
+            if (global_var.current_modal == 'loadDev') {
+                $('.add-description').addClass('dev-desc');
+            }
         }
         table.append(lasttr);
 
@@ -5659,7 +5665,7 @@ UserStory.prototype = {
                                     .append(' <button class="btn newin dropdown-toggle fas fa-cog" href="#" role="button" id="dropdownMenuLink" \n\
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\n' +
                                             '</button>')
-                                    .append($('<div class="dropdown-menu ropdown-menu-right  uuu" aria-labelledby="dropdownMenuLink">')
+                                    .append($('<div class="dropdown-menu dropdown-menu-right  uuu" aria-labelledby="dropdownMenuLink">')
                                             .append($('<button class="dropdown-item firstbut" >')
                                                     .text('Move Up')
                                                     .attr("onclick", "moveBacklogDesc(this,'" +  id + "','up')")
@@ -5668,33 +5674,33 @@ UserStory.prototype = {
                                                     .text('Move Down')
                                                     .attr("onclick", "moveBacklogDesc(this,'" + id + "','down')")
                                                     )
-                                            .append($('<hr>'))
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<hr class="dev">'))
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Add Related API')
                                                     .attr("onclick", "addRelatedApi(this,'" +id + "')")
                                                     )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Add Related Function')
                                                     .attr("onclick", "addRelatedSourceCode(this,'" + id + "')")
                                                     )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Remove Related API')
                                                     .attr("onclick", "removeRelatedApiFromDesc('" + id + "')")
                                                     )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Remove Related Function')
                                                     .attr("onclick", "removeRelatedSourceCodeFromDesc('" + id + "')")
                                                     )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Insert New Description')
                                                     .attr("onclick", "ADDtrafter(this,'" + id + "')")
                                                     )
-                                            .append($('<hr>')  )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<hr class="dev">')  )
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Set as Comment')
                                                     .attr("onclick", "setBacklogDescCommentType(this,'" + id + "','comment')")
                                                     )
-                                            .append($('<button class="dropdown-item firstbut" >')
+                                            .append($('<button class="dev dropdown-item firstbut" >')
                                                     .text('Remove  Comment')
                                                     .attr("onclick", "removeBacklogDescCommentType(this,'" + id + "')")
                                                     )
@@ -19461,12 +19467,14 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         $('#user-story-status').addClass('us-status-bg-' + SACore.GetCurrentBaklogStatus());
         $('#user-story-status').val(SACore.GetCurrentBaklogStatus()).selectpicker('refresh');
-        
+
+       
         var storyCardType = SACore.GetBacklogDetails(global_var.current_backlog_id,"backlogType");
+
         $('#user-story-type').val(storyCardType);
         storyCardTypeChangeEvent(storyCardType);
         $('#user-story-type').selectpicker('refresh');
-
+        
         var ido = SACore.GetCurrentBacklogId();
 
         var created_date = SACore.GetBacklogDetails(ido,'createdDate')

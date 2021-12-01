@@ -1283,6 +1283,7 @@ var SAFN = {
                         break;
                 }
             }
+            
         } catch (err) {
             console.log('getBacklogDescLineDetails error', err)
         }
@@ -1298,7 +1299,6 @@ var SAFN = {
         InitMapper: function (commandLine, triggerElm) {
             var descLine = "";
             try {
-
                 var mainBody = triggerElm;
                 commandLine = commandLine.toLowerCase();
                 switch (commandLine) {
@@ -1427,6 +1427,7 @@ var SAFN = {
                         break;
 
                 }
+                
             } catch (err) {
                 console.log('getBacklogDescLineDetails error', err)
             }
@@ -3939,6 +3940,7 @@ var SAFN = {
 
         },
     },
+    
     FnStatements: {
         'If': '@.if(,,){}',
         'IfHasValue': '@.ifhasvalue(,){}',
@@ -4305,28 +4307,33 @@ $(document).ready(function () {
         '@.callapi()',
         '@.break()'
     ];
-    $(document).on('keydown', '.add-description', function (e) {
-        var done = $(this).attr("auto-done");
-        if (done !== true) {
-            $(this).autocomplete({
-                position: {my: "left bottom", at: "left top", collision: "flip"},
-                minLength: 2,
-                // source: shortcodes,
-                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-                autoFocus: true,
-                select: function (event, ui) {
-                    $(this).change();
 
-                    $(".fx-shortcodes-btn .add-description").val('');
-                    return false;
-                },
+    $(document).on('keydown', '.add-description.dev-desc', function (e) {
 
-            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+        var done =  $(this).attr("auto-done");
+       if(done!==true){
+        $(this).autocomplete({
+            position: {my: "left bottom", at: "left top", collision: "flip"},
+            minLength: 2,
+            // source: shortcodes,
+            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+            autoFocus: true,
+            select: function (event, ui) {
+                $(this).change();
+            
+                $(".fx-shortcodes-btn .add-description").val('');
+                return false;
+            },
+         
+        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
 
-        }
+       }
+ 
+    $(this).attr("auto-done",true);
 
-        $(this).attr("auto-done", true);
-    });
+
+});
+
 
 
 
