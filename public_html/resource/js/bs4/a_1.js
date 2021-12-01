@@ -1700,7 +1700,7 @@ function callStoryCardAfterIPOAction() {
 
 function setApiJsonToElement(bid, element) {
 
-    element.attr('ksiksi', 'ksikshi')
+
     if (!bid)
         return '';
     var res = '';
@@ -2904,19 +2904,19 @@ function getChildTasks() {
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                  .text(n)
-                                 )
-                                 .append($('<td>')
-                                     .text(+ " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
-                                )
-                                 .append($('<td>')
-                                    .append($('<a>')
-                                        .addClass('btn')
-                                        .attr('pid', o.id)
-                                        .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
-                                        .text(add3Dots2String(o.taskName, 50))
-                                    )
-                                 )
+                                        .text(n)
+                                        )
+                                .append($('<td>')
+                                        .text(+" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                        )
+                                .append($('<td>')
+                                        .append($('<a>')
+                                                .addClass('btn')
+                                                .attr('pid', o.id)
+                                                .attr('onclick', 'shiftTaskInfoOnTaskInfoModal(this)')
+                                                .text(add3Dots2String(o.taskName, 50))
+                                                )
+                                        )
                                 .append($('<td>')
                                         .append($('<span>')
                                                 .addClass('us-item-status-' + o.taskStatus)
@@ -6744,19 +6744,22 @@ function setTableValueOnCompAfterTriggerApi(el, apiId, data, startLimit) {
         loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit);
     } else {
         loadTableOnTriggerAsDefault(el, apiId, data, startLimit);
-
     }
 }
 
-function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
+function loadTableDirectOnTriggerAsDefault_old(el, apiId, data, startLimit) {
     var directTableLoaderId = $(el).attr('sa-table-load-id');
     var table = $('table#' + directTableLoaderId);
     var thead = table.find('thead');
     var selectedfields = data.selectedField;//table.attr('sa-tableselectedfield').split(",");
-    table.find('tbody').html('');
+
 
     var obj = (data && data._table && data._table.r) ? data._table.r : [];
+    if (obj.length == 1) {
+        table.find('tbody').html('');
+    }
 
+    var tbody = $('<tbody>');
     for (var j = 0; j < obj.length; j++) {
         var o = obj[j];
         var tr = $('<tr>').append($('<td>').text((parseInt(startLimit) + j + 1)));
@@ -6766,6 +6769,10 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
             var inputId = $(this).attr("pid");
             var flag = true;
             var td = $('<td>');
+            if (global_var.current_modal !== 'loadLivePrototype' &&
+                    $(this).hasClass("componentisheaden")) {
+                td.css('display', 'none');
+            }
             var noActionHappened = true;
             if (sfield) {
                 var sfList = sfield.split(',');
@@ -6780,58 +6787,26 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
 
                         var val = o[sf];
 
-                        if (global_var.current_modal !== 'loadLivePrototype' &&
-                                $(this).hasClass("componentisheaden")) {
-                            td.css('display', 'none');
+
+                        var elm = this;
+                        if ($(elm).attr('sa-type')) {
+                            val = getComponentValueAfterTriggerApi4Direct($(elm).attr('sa-type'), val);
                         }
-
-                        if ($(this).hasClass("hascomponentclicked")) {
-                            var comp = new ComponentInfo();
-                            Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
-
-                            comp.secondContent = val;
-                            comp.isFromTableNew = true;
-                            comp.isFromTable = true;
-                            comp.tableRowId = "1";
-                            comp.withLabel = false;
-                            comp.hasOnClickEvent = false;
-                            comp.cellNo = "12";
-                            comp.showProperties = false;
-                            comp.rowNo = parseInt(startLimit) + parseInt(j);
-                            val = Component.GetComponentHtmlNew(comp);
-
-                            td.append(val)
-                        } else {
-                            td.css("text-align", "center")
-                            td.text(val);
-                        }
-
+                        td.css("text-align", "center")
+                        td.text(val);
                         tr.append(td);
                         noActionHappened = false;
                         break;
                     }
                 }
             } else {
-                if ($(this).hasClass("hascomponentclicked")) {
-                    var comp = new ComponentInfo();
-                    Component.FillComponentInfo(comp, SAInput.Inputs[inputId]);
-
-                    comp.secondContent = "";
-                    comp.isFromTableNew = true;
-                    comp.isFromTable = true;
-                    comp.tableRowId = "1";
-                    comp.withLabel = false;
-                    comp.hasOnClickEvent = false;
-                    comp.cellNo = "12";
-                    comp.showProperties = false;
-                    comp.rowNo = parseInt(startLimit) + parseInt(j);
-                    var val = Component.GetComponentHtmlNew(comp);
-
-                    td.append(val)
-                } else {
-                    td.css("text-align", "center")
-                    td.text("");
+                var elm = this;
+                if ($(elm).attr('sa-type')) {
+                    val = getComponentValueAfterTriggerApi4Direct($(elm).attr('sa-type'), val);
                 }
+                td.append(val)
+                td.css("text-align", "center")
+                td.text("");
 
                 tr.append(td);
                 noActionHappened = false;
@@ -6842,12 +6817,41 @@ function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
             }
         })
 
-        table.find('tbody').append(tr);
+        tbody.append(tr);
     }
-
+    table.find('tbody').html(tbody.html());
 
 }
 
+
+function loadTableDirectOnTriggerAsDefault(el, apiId, data, startLimit) {
+    var directTableLoaderId = $(el).attr('sa-table-load-id');
+    TableComp.Init(directTableLoaderId,data,startLimit);
+}
+
+function loadTableDirectOnTriggerAsDefaultDetails(comp, elm) {
+    comp.inputType = $(elm).attr('inputType');
+    comp.componentType = $(elm).attr('componentType')
+    comp.label = $(elm).attr('label');
+    comp.content = $(elm).attr('content');
+    comp.param1 = $(elm).attr('param1');
+    comp.containerCSS = $(elm).attr('containerCSS');
+    comp.css = $(elm).attr('css');
+    comp.event = $(elm).attr('inSection');
+    comp.action = $(elm).attr('action');
+    comp.inSection = $(elm).attr('inSection');
+    comp.relatedSUS = $(elm).attr('relatedSUS');
+
+
+    comp.isFromTableNew = true;
+    comp.isFromTable = true;
+    comp.tableRowId = "1";
+    comp.withLabel = false;
+    comp.hasOnClickEvent = false;
+    comp.cellNo = "12";
+    comp.showProperties = false;
+    return comp;
+}
 
 function loadTableOnTriggerAsDefault(el, apiId, data, startLimit) {
     try {
@@ -7232,8 +7236,6 @@ function setValueOnCompAfterTriggerApi(el, data) {
 
                             fillSelectBoxAfterSyncApiCall(this, data, field);
 
-
-
                             //select table list-de 1 setr cavab qayinda selectbox.value deyerini
                             //aldigi ucun bu field data-dan silinmelidir
 
@@ -7258,119 +7260,153 @@ function setValueOnCompAfterTriggerApi(el, data) {
     })
 }
 
+function getComponentValueAfterTriggerApi4Direct(type, val) {
+    var res = val;
+    try {
+
+        if (type === 'date') {
+            res = Utility.convertDate(val);
+        } else if (type === 'time') {
+            res = Utility.convertTime(val);
+        } else if (type === 'image') {
+            res = fileUrl(val);
+        } else if (type === 'filelist') {
+
+            var div = $("<div>");
+            var resr = val.split(global_var.vertical_seperator);
+            for (var i = 0; i < resr.length; i++) {
+                try {
+                    div.append(generateFileLine(resr[i].trim(), "col-12"));
+                } catch (e) {
+                }
+            }
+            res = div.html();
+        }
+        return res;
+    } catch (err) {
+        console.log(err)
+    }
+    return res;
+}
+
+
 function getComponentValueAfterTriggerApi(el, val, selectedField) {
-    triggerApiDebugMode4ApiOutput(el, selectedField);
+    try {
+        triggerApiDebugMode4ApiOutput(el, selectedField);
 
-    if ($(el).attr('sa-type') === 'date') {
-        SetConvertedDateByElement(el, val);
-    } else if ($(el).attr('sa-type') === 'time') {
-        SetConvertedTimeByElement(el, val);
-    } else if ($(el).attr('sa-type') === 'image') {
-        $(el).attr('src', fileUrl(val));
-        $(el).closest('div').find('.biyzad').remove();
-    } else if ($(el).attr('sa-type') === 'filepicker') {
-        $(el).attr('fname', val);
+        if ($(el).attr('sa-type') === 'date') {
+            SetConvertedDateByElement(el, val);
+        } else if ($(el).attr('sa-type') === 'time') {
+            SetConvertedTimeByElement(el, val);
+        } else if ($(el).attr('sa-type') === 'image') {
+            $(el).attr('src', fileUrl(val));
+            $(el).closest('div').find('.biyzad').remove();
+        } else if ($(el).attr('sa-type') === 'filepicker') {
+            $(el).attr('fname', val);
 
-    } else if ($(el).attr('sa-type') === 'checkbox') {
-        if (val === '1')
-            $(el).prop('checked', true);
-        else
-            $(el).prop('checked', false);
+        } else if ($(el).attr('sa-type') === 'checkbox') {
+            if (val === '1')
+                $(el).prop('checked', true);
+            else
+                $(el).prop('checked', false);
 
-    } else if ($(el).attr('sa-type') === 'htmleditor') {
+        } else if ($(el).attr('sa-type') === 'htmleditor') {
 
-        initHtmlFroalaEditor($(el).attr('id'), val);
+            initHtmlFroalaEditor($(el).attr('id'), val);
 
 
-    } else if ($(el).attr('sa-type') === 'filelist') {
-        $(el).html('');
+        } else if ($(el).attr('sa-type') === 'filelist') {
+            $(el).html('');
 
-        var res = val.split(global_var.vertical_seperator);
-        for (var i = 0; i < res.length; i++) {
-            try {
-                $(el).append(generateFileLine(res[i].trim(), "col-12"));
-            } catch (e) {
+            var res = val.split(global_var.vertical_seperator);
+            for (var i = 0; i < res.length; i++) {
+                try {
+                    $(el).append(generateFileLine(res[i].trim(), "col-12"));
+                } catch (e) {
+                }
+            }
+
+
+        } else if ($(el).attr('sa-type') === 'select') {
+
+            if ($(el).attr('sa-item-setterfield') &&
+                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).val(val);
+                $(el).find('option[value="' + val + '"]').attr('selected', true);
+            } else {
+                $(el).val(val);
+                $(el).find('option[value="' + val + '"]').attr('selected', true);
+            }
+
+
+
+        } else if ($(el).attr('sa-type') === 'multiselect') {
+
+            if ($(el).attr('sa-item-setterfield') &&
+                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).find("option:selected").prop("selected", false);
+                $(el).selectpicker('refresh');
+
+                $.each(val.split(","), function (i, e) {
+                    var id = $(el).attr('id');
+                    $(el).find("option[value='" + e + "']").prop("selected", true);
+                });
+                $(el).selectpicker('refresh');
+            } else {
+                $(el).find("option:selected").prop("selected", false);
+                $(el).selectpicker('refresh');
+
+                $.each(val.split(","), function (i, e) {
+                    var id = $(el).attr('id');
+                    $(el).find("option[value='" + e + "']").prop("selected", true);
+                });
+                $(el).selectpicker('refresh');
+            }
+
+
+
+        } else if ($(el).attr('sa-type') === 'htmlviewer') {
+            $(el).html(val);
+
+        } else {
+            $(el).val(val);
+            $(el).attr('sa-data-value', val);
+
+            var elWithText = ['label', 'textarea', 'a', 'span'];
+            var tagName = $(el).get(0).tagName.toLowerCase();
+            if (elWithText.includes(tagName)) {
+                $(el).text(val);
+            }
+
+            //.sa-callapi-onvalueset //value elave olanda avtomatik olaraq apini cagirir ve deyerini replace edir
+            if ($(el).hasClass('sa-callapi-onvalueset')) {
+
             }
         }
 
-
-    } else if ($(el).attr('sa-type') === 'select') {
-
-        if ($(el).attr('sa-item-setterfield') &&
-                $(el).attr('sa-item-setterfield') === selectedField) {
-            $(el).val(val);
-            $(el).find('option[value="' + val + '"]').attr('selected', true);
-        } else {
-            $(el).val(val);
-            $(el).find('option[value="' + val + '"]').attr('selected', true);
-        }
-
-
-
-    } else if ($(el).attr('sa-type') === 'multiselect') {
-
-        if ($(el).attr('sa-item-setterfield') &&
-                $(el).attr('sa-item-setterfield') === selectedField) {
-            $(el).find("option:selected").prop("selected", false);
-            $(el).selectpicker('refresh');
-
-            $.each(val.split(","), function (i, e) {
-                var id = $(el).attr('id');
-                $(el).find("option[value='" + e + "']").prop("selected", true);
-            });
-            $(el).selectpicker('refresh');
-        } else {
-            $(el).find("option:selected").prop("selected", false);
-            $(el).selectpicker('refresh');
-
-            $.each(val.split(","), function (i, e) {
-                var id = $(el).attr('id');
-                $(el).find("option[value='" + e + "']").prop("selected", true);
-            });
-            $(el).selectpicker('refresh');
-        }
-
-
-
-    } else if ($(el).attr('sa-type') === 'htmlviewer') {
-        $(el).html(val);
-
-    } else {
-        $(el).val(val);
         $(el).attr('sa-data-value', val);
 
-        var elWithText = ['label', 'textarea', 'a', 'span'];
-        var tagName = $(el).get(0).tagName.toLowerCase();
-        if (elWithText.includes(tagName)) {
-            $(el).text(val);
-        }
 
-        //.sa-callapi-onvalueset //value elave olanda avtomatik olaraq apini cagirir ve deyerini replace edir
-        if ($(el).hasClass('sa-callapi-onvalueset')) {
-
-        }
-    }
-
-    $(el).attr('sa-data-value', val);
-
-
-    if ($(el).hasClass('sa-onloadclick-async')) {
+        if ($(el).hasClass('sa-onloadclick-async')) {
 //        if ($(el).attr("sa-isloaded") !== '1') {
 //            $(el).attr("sa-isloaded", "1");
-        $(el).click();
+            $(el).click();
 //        }
-    }
+        }
 
 
-    if ($(el).hasClass('sa-onloadchange-async')) {
+        if ($(el).hasClass('sa-onloadchange-async')) {
 //        if ($(el).attr("sa-isloaded") !== '1' && $(el).attr("sa-isrunning") !== '1') {
 //            $(el).attr("sa-isloaded", "1");
-        $(el).change();
+            $(el).change();
 //        }
-    }
+        }
 
-    if ($(el).attr("sa-isselectpicker") === '1') {
-        $(el).selectpicker('refresh');
+        if ($(el).attr("sa-isselectpicker") === '1') {
+            $(el).selectpicker('refresh');
+        }
+    } catch (err) {
+        console.log(err)
     }
 }
 
@@ -7515,7 +7551,13 @@ function getGUIDataByStoryCard(el) {
 
     $(el).closest('.redirectClass').find('[sa-selectedfield]').each(function (e) {
         var val = $(this).val();
-        if ($(this).attr('sa-type') === 'date') {
+        if ($(this).attr('sa-type') === 'label') {
+            val = $(this).text();
+        }if ($(this).attr('sa-type') === 'date') {
+            val = GetConvertedDateByElement(this);
+        }if ($(this).attr('sa-type') === 'date') {
+            val = GetConvertedDateByElement(this);
+        }if ($(this).attr('sa-type') === 'date') {
             val = GetConvertedDateByElement(this);
         } else if ($(this).attr('sa-type') === 'time1') {
             val = GetConvertedTimeByElement(this);

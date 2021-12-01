@@ -993,94 +993,66 @@ $(document).on("click", '#update_multi_bug_change_btn', function (e) {
     var fkBacklogId = $("#bug_filter_backlog_id_multi").val();
     var taskPriority = $("#bug_filter_priority_add").val();
     var taskNature = $("#bug_task_nature_id_multi").val();
+    var taskStatus = $("#bug_task_status_id_zad").val();
 
     var check = $("#bugListTable .bug-tr .checkbox-issue-task");
 
     if (!fkAssigneeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkAssigneeId, "fkAssigneeId", taskId);
-
             }
-
         }
     }
     if (!fkTaskTypeId == 0) {
 
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkTaskTypeId, "fkTaskTypeId", taskId);
-
             }
-
         }
     }
     if (!fkBacklogId == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(fkBacklogId, "fkBacklogId", taskId);
-
             }
-
         }
     }
     if (!taskPriority == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(taskPriority, "taskPriority", taskId);
-
             }
-
         }
     }
     if (!taskNature == 0) {
-
         for (var indx = 0; indx < check.length; indx++) {
-
-
             if ($(check[indx]).prop('checked')) {
-
                 var taskId = $(check[indx]).parents("tr").attr("id");
-
                 multiUpdateTask4ShortChangePure(taskNature, "taskNature", taskId);
-
             }
-
         }
     }
-
-
+    if (taskStatus) {
+        for (var indx = 0; indx < check.length; indx++) {
+            if ($(check[indx]).prop('checked')) {
+                var taskId = $(check[indx]).parents("tr").attr("id");
+                multiUpdateTask4ShortChangePure(taskStatus, "taskStatus", taskId);
+            }
+        }
+    }
     $("#multieditpopUp").modal("hide");
-
+    getBugList();
 })
 
 
 function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
-
-
     try {
 
         if (ustype.lentgh === 0 || val.lentgh === 0 || taskId === 0) {
@@ -1088,9 +1060,6 @@ function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
         }
     } catch (e) {
         return;
-
-
-
     }
 
 
@@ -1259,14 +1228,26 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 // ______________________________________________________________
 
-
-
-function getBugList() {
+function setBugListInitialData() {
     setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
+
+    bug_filter.sortBy = $('#bug_filter_sortby').val();
+    bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
+    bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
+    bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
+    ;
+}
+
+$(document).on("change", ".issue-mgmt-general-filter", function (e) {
+    getBugList();
+})
+
+function getBugList() {
+    setBugListInitialData();
     var json = initJSON();
     json.kv.fkProjectId = bug_filter.project_id;
     json.kv.fkAssigneeId = bug_filter.assignee_id;
@@ -1281,9 +1262,11 @@ function getBugList() {
     json.kv.pageNo = bug_filter.page_no;
     json.kv.sprintId = bug_filter.sprint_id;
     json.kv.labelId = bug_filter.label_id;
-//    if (global_var.current_issue_is_hide == '0') {
-//        json.kv.fkTaskId = global_var.current_issue_id;
-//    }
+    json.kv.sortBy = bug_filter.sortBy;
+    json.kv.sortByAsc = bug_filter.sortByAsc;
+    json.kv.closedDateFrom = bug_filter.closed_date_from;
+    json.kv.closedDateTo = bug_filter.closed_date_to;
+    json.kv.showChildTask = bug_filter.showChildTask;
     json.kv.showChildTask = bug_filter.showChildTask;
     var that = this;
     var data = JSON.stringify(json);
@@ -1830,9 +1813,9 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     $('.task-mgmt-tasktype').each(function () {
         $(this).after($('<div class="col-lg-4 task-card-project-div-id statusCardStory" id="task-card-project-div-id">')
                 .append($('<div>').addClass('cs-input-group')
-                    .append($('<label>').addClass('input-group-addon').append('Project'))
-                    .append(getProjectList4TaskInfo(projectId))
-                    )
+                        .append($('<label>').addClass('input-group-addon').append('Project'))
+                        .append(getProjectList4TaskInfo(projectId))
+                        )
                 );
         $('#task-card-project-id').selectpicker('refresh');
     });
@@ -1846,7 +1829,7 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     }
 
     getTaskCheckList(taskId);
-     getTaskkObserverList(taskId);
+    getTaskkObserverList(taskId);
 
     //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
 
@@ -2653,7 +2636,7 @@ function loadBugTaskDeadlineScripts() {
     // TASK DETAILS OFF
 
 }
- 
+
 $(document).on("change", "#runTaskExecutiveDate", function (e) {
     $('#hide_actions').val('');
     $('#hide_actions_param').val('');
@@ -3082,13 +3065,13 @@ $(document).on("change", ".checkcontainer.spa input[type='radio']", function (e)
 
 $(document).on("change", "#runTaskStartDate_activateschedule", function (e) {
 
-    if ($(this).is(':checked')){
+    if ($(this).is(':checked')) {
         $('.shedule-elements.el-disabled .soon').css("pointer-events", "auto");
         $('.shedule-elements.el-disabled .soon').css("opacity", "1");
         $('.shedule-elements.el-disabled .soon input').attr("disabled", false);
         $('.shedule-elements.el-disabled .soon select').attr("disabled", false);
         $('.shedule-elements').removeClass('el-disabled');
-    }else{
+    } else {
         $('.shedule-elements').addClass('el-disabled');
         $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
         $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
@@ -3098,13 +3081,13 @@ $(document).on("change", "#runTaskStartDate_activateschedule", function (e) {
 });
 $(document).on("change", "#runTaskAvtivateSchedule", function (e) {
 
-    if ($(this).is(':checked')){
+    if ($(this).is(':checked')) {
         $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "auto");
         $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "1");
         $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", false);
         $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", false);
         $('.run-shedule-elements').removeClass('el-disabled');
-    }else{
+    } else {
         $('.run-shedule-elements').addClass('el-disabled');
         $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
         $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
@@ -3159,16 +3142,16 @@ $(document).on("click", ".sc-open-sidebar-btn", function (e) {
 $(document).on("click", ".task-skin-btn", function (e) {
     $(this).toggleClass('navIcon');
     $('.bugListNavMenu').toggleClass('task-menu-open');
- });
-$(document).on("mouseup", "html", function (e) 
+});
+$(document).on("mouseup", "html", function (e)
 {
     var container = $(".bugListNavMenu");
 
     if (!container.is(e.target) // if the target of the click isn't the container...
-        && container.has(e.target).length === 0) // ... nor a descendant of the container
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
     {
         container.removeClass("task-menu-open");
-         $('.task-skin-btn').removeClass('navIcon');
+        $('.task-skin-btn').removeClass('navIcon');
     }
 });
 
@@ -3232,7 +3215,7 @@ function  getTaskCheckListDetails(res) {
                             .css("width", "40px")
                             .text(""))
                     .append($('<th>')
-                             .css("width", "40px")
+                            .css("width", "40px")
                             .text(""))
                     .append($('<th>')
                             .css("width", "40px")
@@ -3240,21 +3223,21 @@ function  getTaskCheckListDetails(res) {
                     )
             )
 
- var idy= getIndexOfTable(res, "tmBacklogTaskCheckList");
-    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    var idy = getIndexOfTable(res, "tmBacklogTaskCheckList");
+    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
-         var createdBySpan = (o.createdBy && userList[o.createdBy])
+        var createdBySpan = (o.createdBy && userList[o.createdBy])
                 ? $('<span>')
                 .attr('title', 'Created By')
                 .append($('<img>')
                         .attr('width', '40px')
                         .addClass('Assigne-card-story-select-img created')
                         .attr('src', fileUrl(userList[o.createdBy].userImage))
-                        .attr('data-placement','top')
+                        .attr('data-placement', 'top')
                         .attr('data-trigger', 'hover')
                         .attr('data-toggle', 'popover')
-                        .attr('data-content', userList[o.createdBy].userPersonName + ' / ' + Utility.convertDate(o.createdDate) + '  '+ Utility.convertTime(o.createdTime))
+                        .attr('data-content', userList[o.createdBy].userPersonName + ' / ' + Utility.convertDate(o.createdDate) + '  ' + Utility.convertTime(o.createdTime))
                         .attr('data-title', 'Created By')
                         )
                 : '';
@@ -3266,10 +3249,10 @@ function  getTaskCheckListDetails(res) {
                         .attr('width', '40px')
                         .addClass('Assigne-card-story-select-img updated')
                         .attr('src', fileUrl(userList[o.updatedBy].userImage))
-                        .attr('data-placement','top')
+                        .attr('data-placement', 'top')
                         .attr('data-trigger', 'hover')
                         .attr('data-toggle', 'popover')
-                        .attr('data-content', userList[o.updatedBy].userPersonName + ' | ' + Utility.convertDate(o.updatedDate) + '  '+ Utility.convertTime(o.updatedTime))
+                        .attr('data-content', userList[o.updatedBy].userPersonName + ' | ' + Utility.convertDate(o.updatedDate) + '  ' + Utility.convertTime(o.updatedTime))
                         .attr('data-title', 'Updated By')
                         )
                 : '';
@@ -3283,8 +3266,8 @@ function  getTaskCheckListDetails(res) {
                         .attr('type', 'checkbox')
                         .attr("checked", (o.isChecked === '1') ? true : false)))
                 .append($('<td>')
-                .addClass((o.isChecked === '1') ? 'text-checked' : '')
-                                .append($('<textarea>')
+                        .addClass((o.isChecked === '1') ? 'text-checked' : '')
+                        .append($('<textarea>')
                                 .attr('rows', '1')
                                 .addClass('form-control')
                                 .attr("oid", o.id)
@@ -3302,14 +3285,14 @@ function  getTaskCheckListDetails(res) {
                                 .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
                 ;
         table.append(tr);
-        
+
     }
     $('.task-check-list').html(table);
-    
+
     $('[data-toggle=popover]').popover({
         html: true,
         trigger: "hover"
-      });
+    });
 }
 
 $(document).on("change", '.taskCheckListItemToggle', function () {
@@ -3458,21 +3441,21 @@ function  getTaskkObserverListDetaisl(res) {
 
     var div = $('.task-observer-list');
     div.html('')
-    
+
     var table = $('<table>')
             .addClass('table table-hover project-table-list defaultTable sar-table');
     table.append($('<thead>')
             .append($("<tr>")
                     .append($("<th>")
                             .css("width", "1%")
-                            .text("#"))                    
+                            .text("#"))
                     .append($('<th>')
-                            .text("Observer"))                    
+                            .text("Observer"))
                     )
             )
 
-  var idy= getIndexOfTable(res, "tmBacklogTaskObserver");
-    var obj = (res && res.tbl && res.tbl.length>0) ? res.tbl[idy].r :[];
+    var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
+    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
     for (var n = 0; n < obj.length; n++) {
         var o = obj[n];
 
@@ -3485,10 +3468,10 @@ function  getTaskkObserverListDetaisl(res) {
                         .attr('width', '40px')
                         .attr('src', fileUrl(userList[o.fkUserId].userImage)))
                 .append($('<span>').text(userList[o.fkUserId].userPersonName))
-                
+
                 : '';
 
-        
+
 
         var tr = $("<tr>")
                 .append($('<td>').text((n + 1)))
@@ -3505,9 +3488,9 @@ function  getTaskkObserverListDetaisl(res) {
     div.html(table);
 }
 function createdEventsTaskData(id) {
-    
+
     var json = initJSON();
-    json.kv.fkTaskId  = id;
+    json.kv.fkTaskId = id;
     json.kv.mezmun = $('#ivent-mezmun').val();
     json.kv.struktur = $('#ivent-struktur').val();
     json.kv.nov = $('#ivent-nov').val();
@@ -3530,16 +3513,16 @@ function createdEventsTaskData(id) {
         success: function (res) {
             //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
             try {
-               var err=  res.err.message;
-               if(err){
-                Toaster.showError(err);
-               }
+                var err = res.err.message;
+                if (err) {
+                    Toaster.showError(err);
+                }
 
             } catch (error) {
                 msgMessage = 'Events successfully created!';
                 Toaster.showMessage(msgMessage);
             }
-          
+
         },
         error: function () {
             Toaster.showError(('API error'));
@@ -3549,7 +3532,7 @@ function createdEventsTaskData(id) {
 }
 
 function infoEventsTaskData(taskId) {
-    $('.task-events-updated').attr("data-taskid",'');
+    $('.task-events-updated').attr("data-taskid", '');
     $('.task-events-updated input').val('');
     $('.task-events-updated input').change('');
     var json = initJSON();
@@ -3566,31 +3549,31 @@ function infoEventsTaskData(taskId) {
         success: function (res) {
             var obj = res.tbl[0].r[0];
 
-            $('.task-events-updated').attr("data-taskid",obj.id);
-  
+            $('.task-events-updated').attr("data-taskid", obj.id);
+
             $('.task-events-updated input[name="mezmun"]').val(obj.mezmun);
-            $('.task-events-updated input[name="mezmun"]').change();  
-            
+            $('.task-events-updated input[name="mezmun"]').change();
+
             $('.task-events-updated input[name="struktur"]').val(obj.struktur);
-            $('.task-events-updated input[name="struktur"]').change();  
-            
+            $('.task-events-updated input[name="struktur"]').change();
+
             $('.task-events-updated input[name="nov"]').val(obj.nov);
-            $('.task-events-updated input[name="nov"]').change();  
-            
+            $('.task-events-updated input[name="nov"]').change();
+
             $('.task-events-updated input[name="mesulShexs"]').val(obj.mesulShexs);
-            $('.task-events-updated input[name="mesulShexs"]').change();  
-           
+            $('.task-events-updated input[name="mesulShexs"]').change();
+
             $('.task-events-updated input[name="istirakci"]').val(obj.istirakci);
-            $('.task-events-updated input[name="istirakci"]').change();  
-           
+            $('.task-events-updated input[name="istirakci"]').change();
+
             $('.task-events-updated input[name="kontragent"]').val(obj.kontragent);
-            $('.task-events-updated input[name="kontragent"]').change();  
-            
+            $('.task-events-updated input[name="kontragent"]').change();
+
             $('.task-events-updated input[name="yer"]').val(obj.yer);
-            $('.task-events-updated input[name="yer"]').change();  
-            
+            $('.task-events-updated input[name="yer"]').change();
+
             $('.task-events-updated input[name="qeyd"]').val(obj.qeyd);
-            $('.task-events-updated input[name="qeyd"]').change();  
+            $('.task-events-updated input[name="qeyd"]').change();
 
         },
         error: function () {
@@ -3601,13 +3584,13 @@ function infoEventsTaskData(taskId) {
 
 
 // function updatedEventsTaskData(id) {
-    
-   
+
+
 // }
 
 $(document).on("change", ".updevents", function (e) {
     var json = initJSON();
-    json.kv.id  = $(this).closest('.task-events-updated').attr('data-taskId');
+    json.kv.id = $(this).closest('.task-events-updated').attr('data-taskId');
     json.kv.type = $(this).attr('name');
     json.kv.value = $(this).val();
 
@@ -3623,16 +3606,16 @@ $(document).on("change", ".updevents", function (e) {
         success: function (res) {
             //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
             try {
-               var err=  res.err.message;
-               if(err){
-                Toaster.showError(err);
-               }
+                var err = res.err.message;
+                if (err) {
+                    Toaster.showError(err);
+                }
 
             } catch (error) {
                 msgMessage = 'Events Updated successfully created!';
                 Toaster.showMessage(msgMessage);
             }
-          
+
         },
         error: function () {
             Toaster.showError(('API error'));
@@ -3643,12 +3626,12 @@ $(document).on("change", ".updevents", function (e) {
 
 $(document).on("change", "#activateUpdatedEvenets", function (e) {
 
-    if ($(this).is(':checked')){
-    
+    if ($(this).is(':checked')) {
+
         $('.task-events-updated .cs-input-group input').css("pointer-events", "auto");
         $('.task-events-updated .cs-input-group input').css("opacity", "1");
         $('.task-events-updated .cs-input-group input').attr("disabled", false);
-    }else{
+    } else {
         $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
         $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
         $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);

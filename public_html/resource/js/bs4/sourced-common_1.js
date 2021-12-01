@@ -10607,7 +10607,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;       
         
-        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
+//        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
         var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
         
                 //  click on first tab

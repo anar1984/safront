@@ -4,6 +4,184 @@
  * and open the template in the editor.
  */
 
+var TableComp = {
+    Init: function (tableId, data, startLimitCore) {
+        if (!tableId) {
+            return;
+        }
+
+        var startLimit = (startLimitCore) ? startLimitCore : 0;
+        var table = $('table#' + tableId);
+        var thead = table.find('thead');
+
+        var obj = (data && data._table && data._table.r) ? data._table.r : [];
+        var tbody = $('<tbody>');
+
+        for (var j = 0; j < obj.length; j++) {
+            var o = obj[j];
+            var tr = $('<tr>')
+                    .addClass('redirectClass')
+                    .append($('<td>')
+                            .text((parseInt(startLimit) + j + 1)));
+
+            thead.find("th.selectablezad").each(function (e) {
+                var sfield = $(this).attr("sa-selectedfield");
+                var inputId = $(this).attr("pid");
+                var td = $('<td>');
+                td.attr('onclick', $(this).attr('onclick'));
+                td.attr('onchange', $(this).attr('onchange'));
+                td.attr('ondblclick', $(this).attr('ondblclick'));
+                td.attr('prodesc', $(this).attr('prodesc'));
+
+
+                TableComp.IsColumnHidden(td);
+
+                var val = (sfield) ? o[sfield.split(',')[0]] : "";
+                val = (val) ? val : "";
+
+                val = TableComp.SetType(this, val);
+                td.append(val);
+                td.css("text-align", "center");
+                tr.append(td);
+            })
+
+            tbody.append(tr);
+        }
+        table.find('tbody').html(tbody.html());
+    },
+    SetType: function (elm, val) {
+        var type = $(elm).attr('sa-type');
+        var res = "";
+
+        try {
+            switch (type) {
+                case 'input':
+                    res = TableComp.CompType.Input(val, elm);
+                    break;
+                case 'date':
+                    res = TableComp.CompType.Date(val, elm);
+                    break;
+                case 'time' :
+                    res = TableComp.CompType.Time(val, elm);
+                    break;
+                case 'image':
+                    res = TableComp.CompType.Image(val, elm);
+                    break;
+                case 'filelist':
+                    res = TableComp.CompType.FileList(val, elm);
+                    break;
+                case 'button':
+                    res = TableComp.CompType.Button(val, elm);
+                    break;
+                case 'hiperlink':
+                    res = TableComp.CompType.Hiperlink(val, elm);
+                    break;
+                default:
+                    res = TableComp.CompType.Label(val, elm);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        res.addClass($(elm).attr('class'));
+        res.attr('sa-selectedfield', $(elm).attr('sa-selectedfield'));
+
+
+        return res;
+
+    },
+    IsColumnHidden: function (td) {
+        if (global_var.current_modal !== 'loadLivePrototype' &&
+                $(this).hasClass("componentisheaden")) {
+            td.css('display', 'none');
+        }
+    },
+    CompType: {
+        Input: function (val, elm) {
+            return  $('<input>')
+                    .attr('sa-type', 'input')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .addClass('form-control')
+                    .attr('value', val);
+        },
+        Label: function (val, elm) {
+            return  $('<span>')
+                    .attr('sa-type', 'label')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .text(val);
+        },
+        Date: function (val, elm) {
+            return  $('<span>')
+                    .attr('sa-type', 'date')
+
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .text(Utility.convertDate(val));
+        },
+        Time: function (val, elm) {
+            return  $('<span>')
+                    .attr('sa-type', 'time')
+
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .text(Utility.convertTime(val));
+            ;
+        },
+        FileList: function (val, elm) {
+            var div = $("<div>");
+            var resr = val.split(global_var.vertical_seperator);
+            for (var i = 0; i < resr.length; i++) {
+                try {
+                    div.append(generateFileLine(resr[i].trim(), "col-12"));
+                } catch (e) {
+                }
+            }
+            return div;
+        },
+        Image: function (val, elm) {
+            return $('<img>')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .attr('src', fileUrl(val));
+
+        },
+        TextArea: function (val, elm) {
+            return  $('<input>')
+                    .attr('sa-type', 'textarea')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .addClass('form-control')
+                    .attr('value', val);
+        },
+        InnerCheckbox: function (val, elm) {
+            return  $('<input>')
+                    .attr('sa-type', 'innercheckbox')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .addClass('form-control')
+                    .attr('value', val);
+        },
+        Button: function (val, elm) {
+            var title = (val) ? val : $(elm).attr("sa-title");
+            return  $('<button>')
+                    .attr('sa-type', 'button')
+                    .attr('style', gui_component.defaultCSS.Button + ';' + $(elm).attr('css').replace(/##/g, ''))
+                    .css("cursor", "pointer")
+                    .addClass('form-control')
+                    .text(title);
+        },
+        Icon: function (val, elm) {
+            return  $('<input>')
+                    .attr('style', $(elm).attr('css').replace(/##/g, ''))
+                    .addClass('form-control')
+                    .attr('value', val);
+        },
+        Hiperlink: function (val, elm) {
+            var title = (val) ? val : $(elm).attr("sa-title");
+            return  $('<a>')
+                    .attr('sa-type', 'hiperlink')
+                    .attr('style', gui_component.defaultCSS.Hiperlink + ';' + $(elm).attr('css').replace(/##/g, ''))
+                    .css("cursor", "pointer")
+                    .attr("href", "#")
+                    .text(title);
+        },
+    }
+}
 
 var StoryCardPanel = {
     StoryCardId: "",
@@ -189,7 +367,7 @@ $(document).on('change', '#liveProActionType', function (ev) {
         $('.liveProActionTypeToggle').show();
     } else if (val === 'manual') {
         $('.liveProActionTypeManual').show();
-    }else if (val === 'direct') {
+    } else if (val === 'direct') {
         $('.liveProActionTypeDirect').show();
     }
 });
@@ -359,7 +537,7 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
     $(this).css('width', '120px');
 });
 
-$(document).on('click','.live-prototype-show-story-card-hard-refresh',function(ev){
+$(document).on('click', '.live-prototype-show-story-card-hard-refresh', function (ev) {
     loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, false);
     $('.live-prototype-show-story-card-refresh').click();
 })

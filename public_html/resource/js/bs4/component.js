@@ -58,11 +58,6 @@ var Component = {
         comp.inSection = replaceTags(inputObj.section);
         comp.relatedSUS = replaceTags(inputObj.param1);
         comp.description = "";
-        try {
-            comp.description = new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4Select(inputObj);
-        } catch (e) {
-            comp.description = new UserStory().setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc(inputObj); //for BView.html
-        }
 
         try {
             comp.pureDescription = SAInputDesc.getDescriptionByIn(inputObj.id);
@@ -226,8 +221,7 @@ var Component = {
                     el.attr(actionType, "triggerAPI(this,'" + fkDependentBacklogId + "',{},'" + actionZad + "')");
 
                     if (runInBackend !== '1') {
-                        var rs = setApiJsonToElement(fkDependentBacklogId,el);
-                        el.attr("hayhuy",'sheyshuy')
+                        var rs = setApiJsonToElement(fkDependentBacklogId, el); 
                     }
                 }
             }
@@ -251,7 +245,6 @@ var Component = {
 
             //add action send api type
             el.attr('sendApiType', SAInput.getInputDetails(comp.id, "sendApiType"));
-
 
             if (manualJs && actionType) {
                 var fn = Component.GetManualFunctionName(actionType, comp.id)
@@ -787,6 +780,7 @@ var Component = {
                 var inputId = col[i].trim();
 
                 var type = SAInput.getInputDetails(inputId, "componentType");
+                var inputObject = SAInput.getInputObject(inputId);
 
                 if (inputId.length === 0)
                     continue;
@@ -894,11 +888,73 @@ var Component = {
                         .addClass("text-center")
                         .attr('sa-selectedfield-header', selectedFieldTemp)
                         .attr('pid', inputId)
-                        //                        .css("min-width", "70px;")
                         .append(a)
                         .append(showComp, ' ')
                         .append(showColumn, ' ')
-                        .append(showColumnName, ' ')
+                        .append(showColumnName, ' ');
+
+
+
+                th.attr('inputType', inputObject.inputType);
+                th.attr('componentType', inputObject.componentType);
+                th.attr('label', inputObject.inputName);
+                th.attr('content', inputObject.inputContent);
+                th.attr('param1', inputObject.param1);
+                th.attr('containerCSS', `${inputObject.param2}`);
+                th.attr('css', `${inputObject.param4 + ";" + inputObject.param3}`);
+                th.attr('event', inputObject.inputEvent);
+                th.attr('action', inputObject.action);
+                th.attr('inSection', inputObject.section);
+                th.attr('relatedSUS', inputObject.param1);
+
+                //add all params to header
+                var keys = cr_input_comp_attribute_kv[inputId];
+                for (var key in keys) {
+                    var val = keys[key];
+//                    var val = cr_input_comp_attribute_kv[inputId][key];
+                    th.attr(key, val);
+                }
+
+                //add class to th tag
+                try {
+                    var classElList = cr_comp_input_classes[inputId];
+                    if (classElList) {
+                        var cl = classElList.split(',');
+                        for (var iii = 0; iii < cl.length; iii++) {
+                            var classId = cl[iii];
+                            var className = cr_gui_claasses[classId].className;
+                            className = className.replace(".", "");
+                            th.addClass(className);
+                        }
+                    }
+                } catch (err) {
+                }
+                //////////////////////////////////
+
+
+                ////////////
+                ////////////add onclick event to th
+                var sectionType = SAInput.getInputDetails(inputId, "sectionType");
+                var actionType = SAInput.getInputDetails(inputId, "actionType");
+                var fkDependentBacklogId = SAInput.getInputDetails(inputId, "fkDependentBacklogId");
+                
+
+                 if (sectionType === 'direct') {
+                    if (actionType && fkDependentBacklogId) {
+                        loadBacklogInputsByIdIfNotExist(fkDependentBacklogId);
+                        var runInBackend = SACore.GetBacklogDetails(fkDependentBacklogId, 'runInBackend');
+                        var actionZad = (runInBackend === '1') ? "back" : "front";
+                        th.attr(actionType, "triggerAPI(this,'" + fkDependentBacklogId + "',{},'" + actionZad + "')");
+
+                        if (runInBackend !== '1') {
+                            var rs = setApiJsonToElement(fkDependentBacklogId, th);
+                        }
+                    }
+                }
+
+
+                ///////////
+
                 if (global_var.current_modal !== 'loadLivePrototype') {
                     try {
                         th.append((a === '') ? "" : "<span class='handle-drag'></span>");

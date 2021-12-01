@@ -579,7 +579,7 @@ function toTime(id) {
 
 
 
- 
+
 function fileUrl(fname) {
     return urlGl + 'api/get/files/' + fname;
 }
@@ -665,27 +665,31 @@ function replaceJSON(json) {
 }
 
 function replaceTags(arg) {
+    try {
 
-    if (!arg) {
-        return arg;
-    }
+        if (!arg) {
+            return arg;
+        }
 
-    if (arg.includes("<") > 0 && arg.includes(">") > 0) {
-        arg = arg.replace(/&nbsp;&nbsp;/g, '');
-        arg = arg.replace(/  /g, '');
-        arg = arg.replace(/< /g, '<');
-        arg = arg.replace(/ >/g, '>');
-        arg = arg.replace(/<script>/g, '');
-        arg = arg.replace(/<\/script>/g, '');
-    }
-    arg = arg.replace(/</g, '&lt;');
-    arg = arg.replace(/>/g, '&gt;');
+        if (arg.includes("<") > 0 && arg.includes(">") > 0) {
+            arg = arg.replace(/&nbsp;&nbsp;/g, '');
+            arg = arg.replace(/  /g, '');
+            arg = arg.replace(/< /g, '<');
+            arg = arg.replace(/ >/g, '>');
+            arg = arg.replace(/<script>/g, '');
+            arg = arg.replace(/<\/script>/g, '');
+        }
+        arg = arg.replace(/</g, '&lt;');
+        arg = arg.replace(/>/g, '&gt;');
 //    arg = arg.replace('/', '&#x2F;');
 
 //    arg = arg.replace(/'/g, '&quot;');
 //    arg = arg.replace(/\\/g, '&quot;');
 
-    return arg;
+        return arg;
+    } catch (err) {
+        return arg;
+    }
 }
 
 function init4Core() {
@@ -1084,7 +1088,7 @@ window.addEventListener("paste", function (e) {
             (!$('#addTaskType_showcomment').is(":checked"))) {
         return;
     }
-    
+
 
 
 
@@ -1122,9 +1126,9 @@ window.addEventListener("paste", function (e) {
             // namely the original Blob
             img.src = URLObj.createObjectURL(imageBlob);
             global_var.current_canvas++;
-            
-            
-            if (global_var.active_canvas === 'taskCreate'){
+
+
+            if (global_var.active_canvas === 'taskCreate') {
                 uploadFile4CanvasZadShey(canvasdiv);
             }
         }
@@ -1351,7 +1355,7 @@ function GetTagLineVal(text, tag) {
 }
 
 function GetConvertedTime(elementId) {
-    var date = new Date($('#'+elementId).val());
+    var date = new Date($('#' + elementId).val());
     var day = date.getHours();
     day = day.toString(10).length === 1 ? '0' + day : day;
     var month = date.getSeconds() + 1;
@@ -1393,16 +1397,17 @@ function GetConvertedDateByElement(element) {
 
 function GetConvertedDate(componentId) {
     var date = new Date($('#' + componentId).val());
-    if (!date) return "";
+    if (!date)
+        return "";
     var day = date.getDate();
     day = day.toString(10).length === 1 ? '0' + day : day;
     var month = date.getMonth() + 1;
     month = month.toString(10).length === 1 ? '0' + month : month;
     var year = date.getFullYear();
     var d = year + "" + month + '' + day;
-    try{
+    try {
         d = parseInt(d);
-    }catch(err){
+    } catch (err) {
         d = "";
     }
     return d;
