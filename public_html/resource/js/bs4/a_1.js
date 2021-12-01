@@ -13760,6 +13760,7 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     callLoadStoryCard();
 });
 
+
 $(document).on('click', '.loadDev', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";

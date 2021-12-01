@@ -1151,138 +1151,141 @@ var SAFN = {
     },
     InitConvention: function (descLine) {
         try {
-            var mainBody = descLine.trim();
-            var res = "";
-            if (SAFN.IsCommand(mainBody)) {
-                var fnName = SAFN.GetFunctionNameLine(mainBody);
-                fnName = fnName.toLowerCase();
-
-                switch (fnName) {
-                    case '@.callfn':
-                        descLine = SAFN.Convert.CallFnStatement(mainBody);
-                        break;
-                    case '@.callapi':
-                        descLine = SAFN.Convert.CallApiStatement(mainBody);
-                        break;
-                    case '@.if':
-                        descLine = SAFN.Convert.IfStatement(mainBody);
-                        break;
-                    case '@.ifhasvalue':
-                        descLine = SAFN.Convert.IfHasValueStatement(mainBody);
-                        break;
-                    case '@.ifhasnotvalue':
-                        descLine = SAFN.Convert.IfHasNotValueStatement(mainBody);
-                        break;
-                    case '@.deletekey':
-                        descLine = SAFN.Convert.DeleteKeyStatement(mainBody);
-                        break;
-                    case '@.console':
-                        descLine = SAFN.Convert.ConsoleStatement(mainBody);
-                        break;
-                    case '@.consoledata':
-                        descLine = SAFN.Convert.ConsoleDataStatement(mainBody);
-                        break;
-                    case '@.get':
-                        descLine = SAFN.Convert.GetStatement(mainBody);
-                        break;
-                    case '@.set':
-                        descLine = SAFN.Convert.SetStatement(mainBody);
-                        break;
-                    case '@.setvalue':
-                        descLine = SAFN.Convert.SetValueStatement(mainBody);
-                        break;
-                    case '@.settext':
-                        descLine = SAFN.Convert.SetTextStatement(mainBody);
-                        break;
-                    case '@.setparamurl':
-                        descLine = SAFN.Convert.SetParamUrlStatement(mainBody);
-                        break;
-                    case '@.getparamurl':
-                        descLine = SAFN.Convert.GetParamUrlStatement(mainBody);
-                        break;
-                    case '@.alert':
-                        descLine = SAFN.Convert.AlertStatement(mainBody);
-                        break;
-                    case '@.alertdata':
-                        descLine = SAFN.Convert.AlertDataStatement(mainBody);
-                        break;
-                    case '@.break':
-                        descLine = SAFN.Convert.BreakStatement(mainBody);
-                        break;
-                    case '@.map':
-                        descLine = SAFN.Convert.MapStatement(mainBody);
-                        break;
-                    case '@.sendemail':
-                        descLine = SAFN.Convert.SendEmailStatement(mainBody);
-                        break;
-                    case '@.showerror':
-                        descLine = SAFN.Convert.ShowErrorStatement(mainBody);
-                        break;
-                    case '@.error':
-                        descLine = SAFN.Convert.ErrorStatement(mainBody);
-                        break;
-                    case '@.sum':
-                        descLine = SAFN.Convert.SumStatement(mainBody);
-                        break;
-                    case '@.inc':
-                        descLine = SAFN.Convert.IncStatement(mainBody);
-                        break;
-                    case '@.dec':
-                        descLine = SAFN.Convert.DecStatement(mainBody);
-                        break;
-                    case '@.concat':
-                        descLine = SAFN.Convert.ConcatStatement(mainBody);
-                        break;
-                    case '@.click':
-                        descLine = SAFN.Convert.ClickStatement(mainBody);
-                        break;
-                    case '@.change':
-                        descLine = SAFN.Convert.ChangeStatement(mainBody);
-                        break;
-                    case '@.focus':
-                        descLine = SAFN.Convert.FocusStatement(mainBody);
-                        break;
-                    case '@.showmessage':
-                        descLine = SAFN.Convert.ShowMessageStatement(mainBody);
-                        break;
-                    case '@.hide':
-                        descLine = SAFN.Convert.HideStatement(mainBody);
-                        break;
-                    case '@.show':
-                        descLine = SAFN.Convert.ShowStatement(mainBody);
-                        break;
-                    case '@.visible':
-                        descLine = SAFN.Convert.VisibleStatement(mainBody);
-                        break;
-                    case '@.unvisible':
-                        descLine = SAFN.Convert.UnvisibleStatement(mainBody);
-                        break;
-                    case '@.clear':
-                        descLine = SAFN.Convert.ClearStatement(mainBody);
-                        break;
-                    case '@.clearclass':
-                        descLine = SAFN.Convert.ClearClassStatement(mainBody);
-                        break;
-                    case '@.showparam':
-                        descLine = SAFN.Convert.ShowParamStatement(mainBody);
-                        break;
-                    case '@.hideparam':
-                        descLine = SAFN.Convert.HideParamStatement(mainBody);
-                        break;
-                    case '@.visibleparam':
-                        descLine = SAFN.Convert.VisibleParamStatement(mainBody);
-                        break;
-                    case '@.unvisibleparam':
-                        descLine = SAFN.Convert.UnvisibleParamStatement(mainBody);
-                        break;
-                    case '@.forlist':
-                        descLine = SAFN.Convert.ForListStatement(mainBody);
-                        break;
-                    case '@.fortable':
-                        descLine = SAFN.Convert.ForTableStatement(mainBody);
-                        break;
+            if (global_var.current_modal === 'loadDev') {
+                var mainBody = descLine.trim();
+                var res = "";
+                if (SAFN.IsCommand(mainBody)) {
+                    var fnName = SAFN.GetFunctionNameLine(mainBody);
+                    fnName = fnName.toLowerCase();
+    
+                    switch (fnName) {
+                        case '@.callfn':
+                            descLine = SAFN.Convert.CallFnStatement(mainBody);
+                            break;
+                        case '@.callapi':
+                            descLine = SAFN.Convert.CallApiStatement(mainBody);
+                            break;
+                        case '@.if':
+                            descLine = SAFN.Convert.IfStatement(mainBody);
+                            break;
+                        case '@.ifhasvalue':
+                            descLine = SAFN.Convert.IfHasValueStatement(mainBody);
+                            break;
+                        case '@.ifhasnotvalue':
+                            descLine = SAFN.Convert.IfHasNotValueStatement(mainBody);
+                            break;
+                        case '@.deletekey':
+                            descLine = SAFN.Convert.DeleteKeyStatement(mainBody);
+                            break;
+                        case '@.console':
+                            descLine = SAFN.Convert.ConsoleStatement(mainBody);
+                            break;
+                        case '@.consoledata':
+                            descLine = SAFN.Convert.ConsoleDataStatement(mainBody);
+                            break;
+                        case '@.get':
+                            descLine = SAFN.Convert.GetStatement(mainBody);
+                            break;
+                        case '@.set':
+                            descLine = SAFN.Convert.SetStatement(mainBody);
+                            break;
+                        case '@.setvalue':
+                            descLine = SAFN.Convert.SetValueStatement(mainBody);
+                            break;
+                        case '@.settext':
+                            descLine = SAFN.Convert.SetTextStatement(mainBody);
+                            break;
+                        case '@.setparamurl':
+                            descLine = SAFN.Convert.SetParamUrlStatement(mainBody);
+                            break;
+                        case '@.getparamurl':
+                            descLine = SAFN.Convert.GetParamUrlStatement(mainBody);
+                            break;
+                        case '@.alert':
+                            descLine = SAFN.Convert.AlertStatement(mainBody);
+                            break;
+                        case '@.alertdata':
+                            descLine = SAFN.Convert.AlertDataStatement(mainBody);
+                            break;
+                        case '@.break':
+                            descLine = SAFN.Convert.BreakStatement(mainBody);
+                            break;
+                        case '@.map':
+                            descLine = SAFN.Convert.MapStatement(mainBody);
+                            break;
+                        case '@.sendemail':
+                            descLine = SAFN.Convert.SendEmailStatement(mainBody);
+                            break;
+                        case '@.showerror':
+                            descLine = SAFN.Convert.ShowErrorStatement(mainBody);
+                            break;
+                        case '@.error':
+                            descLine = SAFN.Convert.ErrorStatement(mainBody);
+                            break;
+                        case '@.sum':
+                            descLine = SAFN.Convert.SumStatement(mainBody);
+                            break;
+                        case '@.inc':
+                            descLine = SAFN.Convert.IncStatement(mainBody);
+                            break;
+                        case '@.dec':
+                            descLine = SAFN.Convert.DecStatement(mainBody);
+                            break;
+                        case '@.concat':
+                            descLine = SAFN.Convert.ConcatStatement(mainBody);
+                            break;
+                        case '@.click':
+                            descLine = SAFN.Convert.ClickStatement(mainBody);
+                            break;
+                        case '@.change':
+                            descLine = SAFN.Convert.ChangeStatement(mainBody);
+                            break;
+                        case '@.focus':
+                            descLine = SAFN.Convert.FocusStatement(mainBody);
+                            break;
+                        case '@.showmessage':
+                            descLine = SAFN.Convert.ShowMessageStatement(mainBody);
+                            break;
+                        case '@.hide':
+                            descLine = SAFN.Convert.HideStatement(mainBody);
+                            break;
+                        case '@.show':
+                            descLine = SAFN.Convert.ShowStatement(mainBody);
+                            break;
+                        case '@.visible':
+                            descLine = SAFN.Convert.VisibleStatement(mainBody);
+                            break;
+                        case '@.unvisible':
+                            descLine = SAFN.Convert.UnvisibleStatement(mainBody);
+                            break;
+                        case '@.clear':
+                            descLine = SAFN.Convert.ClearStatement(mainBody);
+                            break;
+                        case '@.clearclass':
+                            descLine = SAFN.Convert.ClearClassStatement(mainBody);
+                            break;
+                        case '@.showparam':
+                            descLine = SAFN.Convert.ShowParamStatement(mainBody);
+                            break;
+                        case '@.hideparam':
+                            descLine = SAFN.Convert.HideParamStatement(mainBody);
+                            break;
+                        case '@.visibleparam':
+                            descLine = SAFN.Convert.VisibleParamStatement(mainBody);
+                            break;
+                        case '@.unvisibleparam':
+                            descLine = SAFN.Convert.UnvisibleParamStatement(mainBody);
+                            break;
+                        case '@.forlist':
+                            descLine = SAFN.Convert.ForListStatement(mainBody);
+                            break;
+                        case '@.fortable':
+                            descLine = SAFN.Convert.ForTableStatement(mainBody);
+                            break;
+                    }
                 }
             }
+            
         } catch (err) {
             console.log('getBacklogDescLineDetails error', err)
         }
@@ -1298,135 +1301,137 @@ var SAFN = {
         InitMapper: function (commandLine, triggerElm) {
             var descLine = "";
             try {
-
-                var mainBody = triggerElm;
-                commandLine = commandLine.toLowerCase();
-                switch (commandLine) {
-                    case '@.callfn':
-                        descLine = SAFN.Reconvert.CallFnStatement(mainBody);
-                        break;
-                    case '@.callapi':
-                        descLine = SAFN.Reconvert.CallApiStatement(mainBody);
-                        break;
-                    case '@.if':
-                        descLine = SAFN.Reconvert.IfStatement(mainBody);
-                        break;
-                    case '@.ifhasvalue':
-                        descLine = SAFN.Reconvert.IfHasValueStatementNew(mainBody);
-                        break;
-                    case '@.ifhasnotvalue':
-                        descLine = SAFN.Reconvert.IfHasNotValueStatementNew(mainBody);
-                        break;
-                    case '@.deletekey':
-                        descLine = SAFN.Reconvert.DeleteKeyStatement(mainBody);
-                        break;
-                    case '@.console':
-                        descLine = SAFN.Reconvert.ConsoleStatement(mainBody);
-                        break;
-                    case '@.consoledata':
-                        descLine = SAFN.Reconvert.ConsoleDataStatement(mainBody);
-                        break;
-                    case '@.get':
-                        descLine = SAFN.Reconvert.GetStatement(mainBody);
-                        break;
-                    case '@.set':
-                        descLine = SAFN.Reconvert.SetStatement(mainBody);
-                        break;
-                    case '@.setvalue':
-                        descLine = SAFN.Reconvert.SetValueStatement(mainBody);
-                        break;
-                    case '@.settext':
-                        descLine = SAFN.Reconvert.SetTextStatement(mainBody);
-                        break;
-                    case '@.setparamurl':
-                        descLine = SAFN.Reconvert.SetParamUrlStatement(mainBody);
-                        break;
-                    case '@.getparamurl':
-                        descLine = SAFN.Reconvert.GetParamUrlStatement(mainBody);
-                        break;
-                    case '@.alert':
-                        descLine = SAFN.Reconvert.AlertStatement(mainBody);
-                        break;
-                    case '@.alertdata':
-                        descLine = SAFN.Reconvert.AlertDataStatement(mainBody);
-                        break;
-                    case '@.map':
-                        descLine = SAFN.Reconvert.MapStatement(mainBody);
-                        break;
-                    case '@.sendemail':
-                        descLine = SAFN.Reconvert.SendEmailStatement(mainBody);
-                        break;
-                    case '@.showerror':
-                        descLine = SAFN.Reconvert.ShowErrorStatement(mainBody);
-                        break;
-                    case '@.error':
-                        descLine = SAFN.Reconvert.ErrorStatement(mainBody);
-                        break;
-                    case '@.sum':
-                        descLine = SAFN.Reconvert.SumStatement(mainBody);
-                        break;
-                    case '@.inc':
-                        descLine = SAFN.Reconvert.IncStatement(mainBody);
-                        break;
-                    case '@.dec':
-                        descLine = SAFN.Reconvert.DecStatement(mainBody);
-                        break;
-                    case '@.concat':
-                        descLine = SAFN.Reconvert.ConcatStatement(mainBody);
-                        break;
-                    case '@.click':
-                        descLine = SAFN.Reconvert.ClickStatement(mainBody);
-                        break;
-                    case '@.change':
-                        descLine = SAFN.Reconvert.ChangeStatement(mainBody);
-                        break;
-                    case '@.focus':
-                        descLine = SAFN.Reconvert.FocusStatement(mainBody);
-                        break;
-                    case '@.showmessage':
-                        descLine = SAFN.Reconvert.ShowMessageStatement(mainBody);
-                        break;
-                    case '@.hide':
-                        descLine = SAFN.Reconvert.HideStatement(mainBody);
-                        break;
-                    case '@.show':
-                        descLine = SAFN.Reconvert.ShowStatement(mainBody);
-                        break;
-                    case '@.visible':
-                        descLine = SAFN.Reconvert.VisibleStatement(mainBody);
-                        break;
-                    case '@.unvisible':
-                        descLine = SAFN.Reconvert.UnvisibleStatement(mainBody);
-                        break;
-                    case '@.clear':
-                        descLine = SAFN.Reconvert.ClearStatement(mainBody);
-                        break;
-                    case '@.clearclass':
-                        descLine = SAFN.Reconvert.ClearClassStatement(mainBody);
-                        break;
-                    case '@.showparam':
-                        descLine = SAFN.Reconvert.ShowParamStatement(mainBody);
-                        break;
-                    case '@.hideparam':
-                        descLine = SAFN.Reconvert.HideParamStatement(mainBody);
-                        break;
-                    case '@.visibleparam':
-                        descLine = SAFN.Reconvert.VisibleParamStatement(mainBody);
-                        break;
-                    case '@.unvisibleparam':
-                        descLine = SAFN.Reconvert.UnvisibleParamStatement(mainBody);
-                        break;
-                    case '@.forlist':
-                        descLine = SAFN.Reconvert.ForListStatement(mainBody);
-                        break;
-                    case '@.fortable':
-                        descLine = SAFN.Reconvert.ForTableStatement(mainBody);
-                        break;
-                    default:
-                        descLine = triggerElm.find('td.text-holder').first().text();
-                        break;
-
+                if (global_var.current_modal === 'loadDev') {
+                    var mainBody = triggerElm;
+                    commandLine = commandLine.toLowerCase();
+                    switch (commandLine) {
+                        case '@.callfn':
+                            descLine = SAFN.Reconvert.CallFnStatement(mainBody);
+                            break;
+                        case '@.callapi':
+                            descLine = SAFN.Reconvert.CallApiStatement(mainBody);
+                            break;
+                        case '@.if':
+                            descLine = SAFN.Reconvert.IfStatement(mainBody);
+                            break;
+                        case '@.ifhasvalue':
+                            descLine = SAFN.Reconvert.IfHasValueStatementNew(mainBody);
+                            break;
+                        case '@.ifhasnotvalue':
+                            descLine = SAFN.Reconvert.IfHasNotValueStatementNew(mainBody);
+                            break;
+                        case '@.deletekey':
+                            descLine = SAFN.Reconvert.DeleteKeyStatement(mainBody);
+                            break;
+                        case '@.console':
+                            descLine = SAFN.Reconvert.ConsoleStatement(mainBody);
+                            break;
+                        case '@.consoledata':
+                            descLine = SAFN.Reconvert.ConsoleDataStatement(mainBody);
+                            break;
+                        case '@.get':
+                            descLine = SAFN.Reconvert.GetStatement(mainBody);
+                            break;
+                        case '@.set':
+                            descLine = SAFN.Reconvert.SetStatement(mainBody);
+                            break;
+                        case '@.setvalue':
+                            descLine = SAFN.Reconvert.SetValueStatement(mainBody);
+                            break;
+                        case '@.settext':
+                            descLine = SAFN.Reconvert.SetTextStatement(mainBody);
+                            break;
+                        case '@.setparamurl':
+                            descLine = SAFN.Reconvert.SetParamUrlStatement(mainBody);
+                            break;
+                        case '@.getparamurl':
+                            descLine = SAFN.Reconvert.GetParamUrlStatement(mainBody);
+                            break;
+                        case '@.alert':
+                            descLine = SAFN.Reconvert.AlertStatement(mainBody);
+                            break;
+                        case '@.alertdata':
+                            descLine = SAFN.Reconvert.AlertDataStatement(mainBody);
+                            break;
+                        case '@.map':
+                            descLine = SAFN.Reconvert.MapStatement(mainBody);
+                            break;
+                        case '@.sendemail':
+                            descLine = SAFN.Reconvert.SendEmailStatement(mainBody);
+                            break;
+                        case '@.showerror':
+                            descLine = SAFN.Reconvert.ShowErrorStatement(mainBody);
+                            break;
+                        case '@.error':
+                            descLine = SAFN.Reconvert.ErrorStatement(mainBody);
+                            break;
+                        case '@.sum':
+                            descLine = SAFN.Reconvert.SumStatement(mainBody);
+                            break;
+                        case '@.inc':
+                            descLine = SAFN.Reconvert.IncStatement(mainBody);
+                            break;
+                        case '@.dec':
+                            descLine = SAFN.Reconvert.DecStatement(mainBody);
+                            break;
+                        case '@.concat':
+                            descLine = SAFN.Reconvert.ConcatStatement(mainBody);
+                            break;
+                        case '@.click':
+                            descLine = SAFN.Reconvert.ClickStatement(mainBody);
+                            break;
+                        case '@.change':
+                            descLine = SAFN.Reconvert.ChangeStatement(mainBody);
+                            break;
+                        case '@.focus':
+                            descLine = SAFN.Reconvert.FocusStatement(mainBody);
+                            break;
+                        case '@.showmessage':
+                            descLine = SAFN.Reconvert.ShowMessageStatement(mainBody);
+                            break;
+                        case '@.hide':
+                            descLine = SAFN.Reconvert.HideStatement(mainBody);
+                            break;
+                        case '@.show':
+                            descLine = SAFN.Reconvert.ShowStatement(mainBody);
+                            break;
+                        case '@.visible':
+                            descLine = SAFN.Reconvert.VisibleStatement(mainBody);
+                            break;
+                        case '@.unvisible':
+                            descLine = SAFN.Reconvert.UnvisibleStatement(mainBody);
+                            break;
+                        case '@.clear':
+                            descLine = SAFN.Reconvert.ClearStatement(mainBody);
+                            break;
+                        case '@.clearclass':
+                            descLine = SAFN.Reconvert.ClearClassStatement(mainBody);
+                            break;
+                        case '@.showparam':
+                            descLine = SAFN.Reconvert.ShowParamStatement(mainBody);
+                            break;
+                        case '@.hideparam':
+                            descLine = SAFN.Reconvert.HideParamStatement(mainBody);
+                            break;
+                        case '@.visibleparam':
+                            descLine = SAFN.Reconvert.VisibleParamStatement(mainBody);
+                            break;
+                        case '@.unvisibleparam':
+                            descLine = SAFN.Reconvert.UnvisibleParamStatement(mainBody);
+                            break;
+                        case '@.forlist':
+                            descLine = SAFN.Reconvert.ForListStatement(mainBody);
+                            break;
+                        case '@.fortable':
+                            descLine = SAFN.Reconvert.ForTableStatement(mainBody);
+                            break;
+                        default:
+                            descLine = triggerElm.find('td.text-holder').first().text();
+                            break;
+    
+                    }
                 }
+                
             } catch (err) {
                 console.log('getBacklogDescLineDetails error', err)
             }
@@ -3937,6 +3942,7 @@ var SAFN = {
 
         },
     },
+    
     FnStatements: {
         'If': '@.if(,,){}',
         'IfHasValue': '@.ifhasvalue(,){}',
@@ -4299,28 +4305,33 @@ $(document).ready(function () {
         '@.callapi()',
         '@.break()'
     ];
-    $(document).on('keydown', '.add-description', function (e) {
+
+    $(document).on('keydown', '.add-description.dev-desc', function (e) {
+
         var done =  $(this).attr("auto-done");
-           if(done!==true){
-            $(this).autocomplete({
-                position: {my: "left bottom", at: "left top", collision: "flip"},
-                minLength: 2,
-                // source: shortcodes,
-                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-                autoFocus: true,
-                select: function (event, ui) {
-                    $(this).change();
-                
-                    $(".fx-shortcodes-btn .add-description").val('');
-                    return false;
-                },
-             
-            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
-    
-           }
-     
-        $(this).attr("auto-done",true);
-    });
+       if(done!==true){
+        $(this).autocomplete({
+            position: {my: "left bottom", at: "left top", collision: "flip"},
+            minLength: 2,
+            // source: shortcodes,
+            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+            autoFocus: true,
+            select: function (event, ui) {
+                $(this).change();
+            
+                $(".fx-shortcodes-btn .add-description").val('');
+                return false;
+            },
+         
+        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+
+       }
+ 
+    $(this).attr("auto-done",true);
+
+
+});
+
 
 
 
