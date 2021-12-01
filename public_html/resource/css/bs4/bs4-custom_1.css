@@ -992,6 +992,7 @@ table tr.active {
         border-color: white;
         margin: auto;*/
 
+        margin-left: 35px;
 }
 
 .gv-gui-design{
@@ -3853,5 +3854,5 @@ img.sc-IbsAh.kqHqhS {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   height: auto;
-  z-index: 9;
+  z-index: 900000;
 }

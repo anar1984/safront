@@ -1819,13 +1819,11 @@ END PROJECT SECTION
     display: flex;
     justify-content: center;
     background-color: #fff;
-    /* line-height: 2; */
-    position: fixed;
-    right: 0px;
-    border: 1px solid #D1D1D1;
+    line-height: 2;
+    position: absolute;
     z-index: 30;
-
     top: 0px;
+    right: 0px;
 
 }
 .tool-panel-col.col-1{
@@ -1858,7 +1856,6 @@ END PROJECT SECTION
     border-right: none;
     /* overflow: auto; */
     width: 100%;
-    top: 60px;
     position: relative;
     height: 87vh;
 
@@ -1870,7 +1867,7 @@ END PROJECT SECTION
     display: none;
     width: 40vh;
     border-right: none;
-    z-index: 6;
+/*     z-index: 6; */
     background: #ffff;
     padding-right: 20px;
 }
@@ -2078,10 +2075,9 @@ label h6{
     display: flex;
     flex-wrap: wrap;
     /*max-width: 600px;*/
-    position: fixed;
+   /*  position: fixed; */
     padding: 5px;
     top: 0;
-    padding-left: 40px;
     left: 0;
     z-index: 20;
     border-radius: 4px;
@@ -3029,13 +3025,13 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
 
     width: 100%;
     position: relative;
-    height: 100vh;
-    overflow: scroll;
+    height: 100%;
     min-width: 200px;
 
 }
+#panel-css{
 
-
+}
 :root {
 
     font-family: 'Roboto', serif;
@@ -5832,8 +5828,8 @@ span.ruby-c-content {
     display:flex;
 }
 #gui_component_main_view{
-    position: relative;
-    overflow: auto !important;
+  /*   position: relative;
+    overflow: auto !important; */
 
 }
 

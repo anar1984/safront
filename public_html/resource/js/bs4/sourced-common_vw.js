@@ -11463,6 +11463,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         global_var.current_us_task_id = '';
         Utility.addParamToUrl('current_us_task_id', global_var.current_us_task_id);
         $('#gui_component_main_view').focus();
+      
     },
     getStoryInfoDetail4BacklogList: function (id, e) {
 

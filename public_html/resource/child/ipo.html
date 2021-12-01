@@ -2,21 +2,21 @@
     <div class="col-lg-12 porjectNameProto">
         <div class="col-12 row  ">
 
-            <div class="col-3">
-                <span>Project</span>
+            <div class="col-2 p-0">
+            
                 <select onchange="Prototype.loadStoryCardByProject4oIpo(this)" class="form-control projectList_liveprototype" 
                         data-live-search="true" name="" id="">
                 </select>
             </div>
             <!--    onchange="loadStoryCardInfo4Ipo(this)" -->
-            <div class="col-3">
-                <span>Story Card</span>
+            <div class="col-3 p-0">
+               
                 <select class="form-control"  
                         name="" data-live-search="true" id="storyCardListSelectBox">
                 </select>
             </div>
-            <div class="col-4">
-                <span>Operation</span>
+            <div class="col-5 p-0">
+        
                 <div>
 
                     <button class="btn btn-outline-secondary inp_popUp_story_card_list_cl"><i class="fas fa-list"></i></button>    
@@ -29,6 +29,7 @@
                     <button class="btn btn-outline-secondary line_icon_line_list"><i class="fas fa-stream" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary line_icon_selectedfields" title="Input Selected Fields"><i class="fas fa-database" style="font-size: 10px;cursor: pointer;"></i></button>  
                     <button class="btn btn-outline-secondary line_icon_mvp_create">MVP</button>  
+                    <button class="btn btn-outline-secondary dev-mode-generate-live">Dev</button>  
                     <input type='checkbox' id='livePrototypDebugMode'>Debug Mode
 
 
@@ -37,7 +38,7 @@
             <div class="col-1" >
 
                 <div >
-                    <div>History</div>
+                
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-primary " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -443,9 +444,9 @@
 
             <!--start 10.08.2020   -->
             <!--            <div class='row dragsection'>-->
-            <div class='row   dragsection' style1="display: flex;">
+            <div class='row  m-0 p-0 dragsection' style1="display: flex;">
 
-                <div  class=" gui-design-is-api main-design-page" style="width: 100%;" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
+                <div  class="col-12 gui-design-is-api main-design-page" style="width: 100%;" id="guid-desigin-main-div-id" onwheel="new UserStory().mainGuiZoomWheel(event)" >
 
 
 
@@ -465,19 +466,28 @@
 
 
 
-                        <div class="gui-design-is-apis redirectClass4CSS target" tabindex="-1" id="gui_component_main_view" style="zoom:100%;display:block1;overflow: auto;margin-left: 60px;padding-top: 100px;">
+                        <div class="gui-design-is-apis redirectClass4CSS target" tabindex="-1" id="gui_component_main_view" >
 
 
-                            <div class=" container SUS_IPO_GUI_Design1 " id="SUS_IPO_GUI_Design1" style="height:95vh;z-index: 9;position: relative; max-width: 95%;padding-left: 1.5%;" >
+                            <div class=" container SUS_IPO_GUI_Design1 " id="SUS_IPO_GUI_Design1"  >
                                 <div style='position: relative' id='zzddff'>
                                     <div class="sa-gui-esas">
                                         <div class="sa-gui-rw sa-rw ">
+                                           
                                             <div class="sa-c1 "></div>
-                                            <div class="sa-main-c2 col  sa-c2" id=" ">
+                                            <div style="zoom:100%;display:block1;overflow: auto;padding-top: 10px; height: 95vh;" class="sa-main-c2 col  sa-c2" id=" ">
                                                 <div class="row redirectClass gui-design " id="SUS_IPO_GUI_Design" bid="" bcode="">
                                                 </div>
                                             </div>
                                             <div class="sa-c3 "></div>
+                                            <div id="editor-section" style="display: none;" class="col-5 p-0">
+                                                js:
+                                                <div  id="panel-js" style="height: 50%;"></div>
+                                                css:
+                                                <div  id="panel-css" style="height: 50%;"></div>
+                                              
+                                            </div>
+                                         
                                         </div>
                                         <div class="sa-gui-dept-rw sa-rw ">
 
@@ -544,7 +554,7 @@
 
 
                 <div class="col-1 order-2 tool-panel-col" >
-                    <ul class="nav nav-tabs tool-panel" role="tablist" style="display: inline-block;">
+                    <ul class="nav nav-tabs tool-panel" role="tablist" style="display: inline-block;zoom: 80%;">
                         <li class="nav-item gui-design-is-api" id="input-btn-icon" >
                             <a class="nav-link nav-link-custom tool-item"   href="#ipo-tab-setting-inputAdd" >
                                 <i class="far fa-address-card"></i>
@@ -823,7 +833,7 @@
                                                     <div class='liveProActionTypeManual liveProActionTypeAll'>
                                                         <br>
                                                         function fn(element){
-                                                        <div rows='10'  class='inputActionTypeChangeZadSheyOOO'
+                                                        <div rows='10'  class=''
                                                                   key='manualJs' id='eventActionType4ManualJs'></div>
                                                                   }
 

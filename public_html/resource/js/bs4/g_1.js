@@ -1912,6 +1912,68 @@ $(document).on('click', '.more-table-details', function (event) {
 
 
 });
+$(document).on('click', '.dev-mode-generate-live', function (event) {
+
+
+    var attr  = $(this).attr("click-trig");
+         if(attr==="false"){
+            $("#editor-section").hide();
+            $(this).attr("click-trig",true);
+            $("#SUS_IPO_GUI_Design1")
+             .removeAttr("style")
+            .removeClass("m-0 p-0")
+
+
+            $("#gui_component_main_view")
+                   .removeClass("m-0")
+                
+            $("#gui_component_main_view .sa-main-c2 ")
+                   .removeClass("m-0 col-7")
+            $("#gui_component_main_view .sa-c1").show();
+            $("#gui_component_main_view .sa-c3").show();
+            $("#SUS_IPO_GUI_Design").removeAttr("style")
+         }else{
+          
+            $("#editor-section").show();
+            $(this).attr("click-trig",false);
+            $("#SUS_IPO_GUI_Design1")
+            .addClass("m-0 p-0")
+            .css("max-width",'100%')
+
+            $("#gui_component_main_view")
+            .addClass("m-0")
+       
+           $("#gui_component_main_view .sa-main-c2 ")
+           .addClass("m-0 col-7");
+           $("#gui_component_main_view .sa-c1").hide();
+           $("#gui_component_main_view .sa-c3").hide();
+
+           $("#SUS_IPO_GUI_Design").css({
+               "width":'auto',
+            })
+           
+         }
+
+
+
+});
+
+$(document).on('focusout', '#panel-js', function () {
+
+    var body = window.editorJSnew.getValue();
+    insertJSmanualBybacklogId(body);
+    insertJsSendDbBybacklogId(body)
+ 
+});
+$(document).on('focusout', '#panel-css', function () {
+    var body = window.editorCSSnew.getValue();
+    insertCssSendDbBybacklogId(body)
+    insertCssmanualBybacklogId(body);
+});
+
+
+
+
 $(document).on('click', '.stat-table-us thead .new-tapsiriq-rew', function (event) {
     var tbody = $(this).parents('table').find('tbody');
 

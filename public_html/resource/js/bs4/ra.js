@@ -523,10 +523,23 @@ function updateCurrentInput4ShortChanges(el) {
 }
 
 
-$(document).on("focusout", '#eventActionType4ManualJs', function () {
-    var inputId = global_var.current_us_input_id;
-    var val = window.editorEvent.getValue();
-    updateInput4SCDetails(inputId, val, 'manualJs');
+$(document).on("focusout", '#eventActionType4ManualJs', function (event) {
+  
+      
+            var inputId = global_var.current_us_input_id;
+            var val = window.editorEvent.getValue();
+            var actionType = SAInput.getInputDetails(inputId, "actionType")
+            if (val && actionType) {
+                $("div#"+inputId + " .script-div").remove();
+                var fn = Component.GetManualFunctionBody(actionType,inputId, val)
+                $("div#"+inputId).append($('<div>')
+                        .addClass("script-div")
+                        .append($('<script>').text(fn)));
+    
+            }
+            updateInput4SCDetails(inputId, val, 'manualJs');
+          return false;
+            
 })
 
 $(document).on('focusout', '.okayPitchYourPathYourWay', function (ev) {

@@ -1,6 +1,14 @@
 var global_var_new = {
     "backlog_json": ""
 }
+var Carrier_Events = {
+     
+   inputsUpdate:function (key,value,id) {
+       var ids = id?id:global_var.current_us_input_id;
+       SAInput.Inputs[ids][key]=value;
+   }
+
+}
 var Prototype = {
 
     Init: function () {
@@ -888,14 +896,8 @@ $(document).keydown(function (event) {
         cntrlIsPressed = true;
 });
 
-
-$(document).keyup(function (event) {
-    if (event.which == "17")
-        cntrlIsPressed = false;
-
-});
-
 var cntrlIsPressed = false;
+
 
 
 var idggdd = 4868347683787384609;
@@ -1065,3 +1067,58 @@ $(document).on("change", "#change-orderno-input-short", function () {
 
 })
 
+
+function manualCodeListGenBAcklog(id) {
+    getBacklogJSBodyById(id);
+    getBacklogCSSBodyById();
+}
+
+function getBacklogJSBodyById(bid) {
+
+    var pid =bid?bid:global_var.current_backlog_id; 
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            console.log(res.tbl[0].r[0].fnBody);
+            window.editorJSnew.setValue(res.tbl[0].r[0].fnBody)
+         //   insertJSmanualBybacklogId(body);
+         setTimeout(function() {
+            window.editorJSnew.refresh();
+        },1);
+
+        }
+    });
+}
+function getBacklogCSSBodyById(bid) {
+    var pid =bid?bid:global_var.current_backlog_id;  
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+                     window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
+                     setTimeout(function() {
+                        window.editorCSSnew.refresh();
+                    },1);
+            //insertCssmanualBybacklogId(body);
+        }
+    });
+}

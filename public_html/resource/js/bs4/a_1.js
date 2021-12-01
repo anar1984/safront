@@ -12810,7 +12810,7 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
             }
         });
         Prototype.Init();
-
+        editorGenerateJSCSS();
 
 
 
@@ -12822,6 +12822,110 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
 
 });
+function insertJSmanualBybacklogId(body) {
+    var elm = $("#SUS_IPO_GUI_Design")
+        elm.parent().find("#backlog-manual-js-body").remove();
+    var div = $("<div>")
+                 .attr("id",'backlog-manual-js-body')
+                 .append($("<script>")
+                  .append(body))
+      elm.after(div)
+
+}
+function insertCssmanualBybacklogId(body) {
+    var elm = $("#SUS_IPO_GUI_Design")
+    elm.parent().find("#backlog-manual-css-body").remove();
+    var div = $("<div>")
+                 .attr("id",'backlog-manual-css-body')
+                 .append($("<style>")
+                  .append(body))
+    elm.after(div)
+}
+function insertJsSendDbBybacklogId(body) {
+
+    var pid = global_var.current_backlog_id;  
+
+      if(!body){
+          return
+      }
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    json.kv.jsBody = body;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+        }
+    });
+}
+function insertCssSendDbBybacklogId(body) {
+    var pid = global_var.current_backlog_id;  
+
+      if(!body){
+          return
+      }
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    json.kv.classBody = body;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+                     
+
+        }
+    });
+}
+function editorGenerateJSCSS() {
+    window.editorCSSnew = CodeMirror(document.querySelector('#panel-css'), {
+        lineNumbers: true,
+        tabSize: 2,
+        mode: {name: "css", globalVars: true},    
+        theme: 'blackboard',
+        extraKeys: {
+            "F11": function (cm) {
+                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+            },
+            "Esc": function (cm) {
+                if (cm.getOption("fullScreen"))
+                    cm.setOption("fullScreen", false);
+            },
+            "Ctrl-Space": "autocomplete"
+        }
+    });
+    window.editorJSnew = CodeMirror(document.querySelector('#panel-js'), {
+        lineNumbers: true,
+        tabSize: 2,
+        mode: {name: "javascript", globalVars: true},    
+        theme: 'blackboard',
+        extraKeys: {
+            "F11": function (cm) {
+                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+            },
+            "Esc": function (cm) {
+                if (cm.getOption("fullScreen"))
+                    cm.setOption("fullScreen", false);
+            },
+            "Ctrl-Space": "autocomplete"
+        }
+    });
+
+}
+
 
 function genToolbarStatus() {
     var ast = localStorage.getItem('data-toolbar-opened');
@@ -16947,7 +17051,7 @@ function updateInput4SC(inputId, el, ustype) {
 }
 
 function updateInput4SCDetails(inputId, val, ustype) {
-
+    Carrier_Events.inputsUpdate(ustype,val,inputId);
     try {
 
         if (inputId.length === 0 || ustype.lentgh === 0 || val.lentgh === 0) {
@@ -16977,8 +17081,9 @@ function updateInput4SCDetails(inputId, val, ustype) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            SAInput.updateInputByRes(res);
-            loadCurrentBacklogProdDetails();
+           
+           // SAInput.updateInputByRes(res);
+           // loadCurrentBacklogProdDetails();
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));

@@ -15770,7 +15770,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         return arg;
     },
     getStoryInfo: function (id, e) {
-
+        manualCodeListGenBAcklog(id);
         clearLivePrototypeView42();
 
         if (!id) {

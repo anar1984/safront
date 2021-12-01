@@ -817,7 +817,7 @@ $(document).on("change", "select.task-list-prt-change-select", function (e) {
     sl.taskPriority = val;
     sl.id = id;
 
-    be.callApi("21092917070904357762", sl)
+    be.callApi("21092917070904357762", sl);
 });
 $(document).on("click", ".filtSectReloadNew", function (e) {
     var div = $(".component-class#21041212141705702084 >.component-section-row ");
