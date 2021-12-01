@@ -3021,8 +3021,8 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
 
 .panel-right {
     flex: 1 1 auto;
-
-
+    height: 100vh;
+    overflow: scroll;
     width: 100%;
     position: relative;
     height: 100%;
