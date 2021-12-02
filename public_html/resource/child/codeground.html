@@ -1,0 +1,148 @@
+
+<style>
+.wrap {
+    width: 100%;
+    float:left;
+    overflow:hidden;
+    height:100vh;
+}
+
+.resizable {
+    width: 50%;
+    height:100%;
+    padding: 0;
+    display: block;
+    float:left;
+    color:#000;
+    position:relative; 
+}
+
+.resizable1 {
+    background-color: #f3f3f3;
+    float:left;
+}
+
+.resizable2 {
+    background-color: #eaeaea;
+    float:right;
+}
+
+.resizable .inner {
+  padding:30px;
+  overflow:hidden;
+  overflow-y:auto;
+  position:absolute; 
+
+  top:0;
+  left:0;
+  -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+.resizable1 .inner {
+  margin-right:7px;
+}
+.resizable2 .inner {
+  margin-left:7px;
+}
+
+.ui-resizable-e { 
+    cursor: e-resize; 
+    display:block!important;
+    width: 14px; 
+    right: -7px; 
+    top: 0; 
+    bottom: 0; 
+    background: #333;
+}
+</style>
+<div style="position: relative;" class="d-flex justify-content-center storecard-header-nav-section">
+
+    <div class="d-flex justify-content-center cs-col-pagename" style="padding-right:10px;">
+        <div class="mm-col">
+            <span class="mm-title"></span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-project">
+        <div class="mm-col">
+            <span class="mm-title">Project</span>
+        </div>
+        <div class="mm-col">
+            <select  class="form-control  projectList_codeground_storycard" 
+                    data-live-search="true" name="" id="project-list-codeground">
+            </select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Story Card</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control code-select-picker"
+                    name="" data-live-search="true" id="storyCardListSelectBox4CodeGround">
+            </select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Theme</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control code-select-picker"
+                    name=""   id="change-editor-theme-monaco">
+                    <option value="vs">Light</option>
+                <option value="vs-dark">Dark</option>
+                <option value="hc-black">Black</option>
+            </select>
+        </div>
+    </div>
+    <div class="cs-col-storecard-general-setting">
+        <button class="btn btn-success  " title="Run">
+            Run
+        </button>
+    </div>
+
+   
+</div>
+<div class="wrap">
+    <div class="resizable resizable1">
+      <div class="inner" id="container">
+      </div>  
+    </div>
+    <div class="resizable resizable2">
+      <div class="inner">
+      </div>  
+    </div>
+</div>
+
+
+
+
+<script>$(function () 
+    {
+        $(".resizable1").resizable(
+        {
+            autoHide: true,
+            handles: 'e',
+            resize: function(e, ui) 
+            {
+                var parent = ui.element.parent();
+                //alert(parent.attr('class'));
+                var remainingSpace = parent.width() - ui.element.outerWidth(),
+                    divTwo = ui.element.next(),
+                    divTwoWidth = (remainingSpace - (divTwo.outerWidth() - divTwo.width()))/parent.width()*100+"%";
+                    divTwo.width(divTwoWidth);
+            },
+            stop: function(e, ui) 
+            {
+                var parent = ui.element.parent();
+                ui.element.css(
+                {
+                    width: ui.element.width()/parent.width()*100+"%",
+                });
+            }
+        });
+    });</script>
+

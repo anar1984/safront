@@ -12769,6 +12769,105 @@ $(document).on('click', '.loadSqlBoard', function (evt) {
 
 });
 
+$(document).on('click', '.loadCodeGround', function (evt) {
+    //    return;
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadCodeGround";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+    showToggleMain();
+
+    getProjectUsers();
+    getUsers();
+
+    $.get("resource/child/codeground.html", function (html_string) {
+        
+        $('#mainBodyDivForAll').html(html_string);
+        $('.code-select-picker').selectpicker();
+        loadProjectList2SelectboxByClass('projectList_codeground_storycard');
+        generateMonacoeditros('container','editorJSGround','html','vs-dark')
+    });
+
+});
+
+
+function generateMonacoeditros(elmId,nameEditor,lang,theme) {
+    require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs' }});
+    window.MonacoEnvironment = { getWorkerUrl: () => proxy };
+    
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+    `], { type: 'text/javascript' }));
+    
+    require(["vs/editor/editor.main"], function () {
+        window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
+            value: [
+                'function x() {',
+                '\tconsole.log("Hello world!");',
+                '}'
+            ].join('\n'),
+            language: lang,
+            automaticLayout: true,
+            lineNumbers: "on",
+            roundedSelection: true,
+            scrollBeyondLastLine: true,
+            theme: theme 
+        });
+        
+    });
+          
+}
+
+ function getBacklogListforCodeGround(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    json.kv.isApi = 'NE%1';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var cmd = $('#storyCardListSelectBox4CodeGround');
+            cmd.html('');
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi !== '1') {
+                    var pname = o.backlogName;
+                    var op = $('<option></option>').attr('value', o.id).text(pname);
+
+                    if (o.id === global_var.current_backlog_id) {
+                        op.attr("selected", true);
+                    }
+                    cmd.append(op);
+                }
+            }
+
+
+            sortSelectBoxByElement(cmd);
+            cmd.val(global_var.current_backlog_id);
+            cmd.selectpicker('refresh');
+            cmd.change();
+        }
+    });
+}
+$(document).on("change", '#change-editor-theme-monaco', function (e) {
+    window.editorJSGround.updateOptions({ theme: $(this).val });
+
+});
+$(document).on("change", '#project-list-codeground', function (e) {
+    getBacklogListforCodeGround($(this).val())
+
+});
 $(document).on('click', '.loadLivePrototype', function (evt) {
     //    return;
     clearManualProjectFromParam();
