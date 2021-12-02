@@ -12769,6 +12769,8 @@ $(document).on('click', '.loadSqlBoard', function (evt) {
 
 });
 
+///// code ground start >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 $(document).on('click', '.loadCodeGround', function (evt) {
     //    return;
     clearManualProjectFromParam();
@@ -12784,7 +12786,9 @@ $(document).on('click', '.loadCodeGround', function (evt) {
         $('#mainBodyDivForAll').html(html_string);
         $('.code-select-picker').selectpicker();
         loadProjectList2SelectboxByClass('projectList_codeground_storycard');
-        generateMonacoeditros('container','editorJSGround','html','vs-dark')
+        generateMonacoeditros('html-code-editor','editorHTMLGround','html','vs-dark')
+        generateMonacoeditros('css-code-editor','editorCSSGround','css','vs-dark')
+        generateMonacoeditros('js-code-editor','editorJSGround','javascript','vs-dark')
     });
 
 });
@@ -12803,11 +12807,6 @@ function generateMonacoeditros(elmId,nameEditor,lang,theme) {
     
     require(["vs/editor/editor.main"], function () {
         window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
-            value: [
-                'function x() {',
-                '\tconsole.log("Hello world!");',
-                '}'
-            ].join('\n'),
             language: lang,
             automaticLayout: true,
             lineNumbers: "on",
@@ -12817,6 +12816,11 @@ function generateMonacoeditros(elmId,nameEditor,lang,theme) {
         });
         
     });
+    window[nameEditor].getModel().onDidChangeContent((event) => {
+        // render();
+        console.log('sdfsdfsdf');
+       });
+      
           
 }
 
@@ -12868,6 +12872,31 @@ $(document).on("change", '#project-list-codeground', function (e) {
     getBacklogListforCodeGround($(this).val())
 
 });
+function getIframeBlock(pid,css,js,body) {
+ var $iframe= $("<div class='overflow-hidden'>")
+                          .append($("<style>").text(css))
+                          .append($("<div class='redirectClass h-100'>").html(body))
+                          .append($("<script type='text/javascript'>").text(js))
+   
+  return $iframe              
+}
+$(document).on("click", '#run-code-ground-btn', function (e) {
+   
+        var elm = $("#result-code-editor");
+          var pid = $("#project-list-codeground").val()
+        var js = window.editorJSGround.getValue();
+        var html = window.editorHTMLGround.getValue();
+        var css = window.editorCSSGround.getValue();
+
+        var block = getIframeBlock(pid,css,js,html);
+
+          elm.html(block)
+
+
+});
+
+
+///// code ground end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 $(document).on('click', '.loadLivePrototype', function (evt) {
     //    return;
     clearManualProjectFromParam();
@@ -12928,7 +12957,7 @@ function insertJSmanualBybacklogId(body) {
     var div = $("<div>")
                  .attr("id",'backlog-manual-js-body')
                  .append($("<script>")
-                  .append(body))
+                  .text(body))
       elm.after(div)
 
 }

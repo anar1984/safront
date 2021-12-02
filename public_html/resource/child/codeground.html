@@ -1,61 +1,75 @@
 
 <style>
-.wrap {
-    width: 100%;
-    float:left;
-    overflow:hidden;
-    height:100vh;
-}
+/* horizontal panel*/
 
-.resizable {
+.panel-container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid silver;
+  overflow: hidden;
+  
+}
+.panel-left-code {
+    flex: 0 0 auto;
+    padding: 0px;
+    width: 300px;
+    min-height: 100%;
     width: 50%;
-    height:100%;
-    padding: 0;
-    display: block;
-    float:left;
-    color:#000;
-    position:relative; 
+    white-space: nowrap;
+    background: #838383;
+    color: white;
 }
 
-.resizable1 {
-    background-color: #f3f3f3;
-    float:left;
+.splitter-code {
+  flex: 0 0 auto;
+  width: 18px;  
+  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #535353;
+  min-height: 200px;
+  cursor: col-resize;  
 }
 
-.resizable2 {
-    background-color: #eaeaea;
-    float:right;
+.panel-right-code {
+  flex: 1 1 auto;
+  /* resizable */
+  padding: 0px;
+  width: 50%;
+  height: 100%;
+  background: #eee;
 }
 
-.resizable .inner {
-  padding:30px;
-  overflow:hidden;
-  overflow-y:auto;
-  position:absolute; 
+/* vertical panel */
 
-  top:0;
-  left:0;
-  -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-}
-.resizable1 .inner {
-  margin-right:7px;
-}
-.resizable2 .inner {
-  margin-left:7px;
+.panel-container-vertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid silver;
+  overflow: hidden;
 }
 
-.ui-resizable-e { 
-    cursor: e-resize; 
-    display:block!important;
-    width: 14px; 
-    right: -7px; 
-    top: 0; 
-    bottom: 0; 
-    background: #333;
+.panel-top-code {
+  flex: 0 0 auto;
+  /* only manually resize */
+  padding: 0px;
+  width: 100%;
+  white-space: nowrap;
+  background: #838383;
+  color: white;
+}
+
+.splitter-horizontal {
+  flex: 0 0 auto;
+  height: 18px;
+  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
+  cursor: row-resize;
+}
+
+.panel-bottom-code{
+  flex: 1 1 auto;
+  /* resizable */
+  padding: 2px;
+  min-height: 200px;
+  background: #eee;
 }
 </style>
 <div style="position: relative;" class="d-flex justify-content-center storecard-header-nav-section">
@@ -99,50 +113,71 @@
         </div>
     </div>
     <div class="cs-col-storecard-general-setting">
-        <button class="btn btn-success  " title="Run">
+        <button class="btn btn-success  " id="run-code-ground-btn" title="Run">
             Run
         </button>
     </div>
 
    
 </div>
-<div class="wrap">
-    <div class="resizable resizable1">
-      <div class="inner" id="container">
-      </div>  
+<div style="height:calc(100% - 45px);" class="page-container ">
+
+    <div class="panel-container h-100">
+
+        <div class="panel-left-code">
+            <div class="panel-container-vertical">
+
+        <div style="height: 40%;" class="panel-top-code html-code-editor">
+            <div class="w-100 h-100" id="html-code-editor">
+
+            </div>
+        </div>
+
+       
+        <div style="height: 60%;" class="panel-bottom-code">
+            <div class="w-100 h-100" id="js-code-editor">
+
+            </div>
+        </div>
     </div>
-    <div class="resizable resizable2">
-      <div class="inner">
-      </div>  
+        </div>
+      
+
+      
+
+        <div  class="panel-right-code">
+             <div class="panel-container-vertical">
+
+        <div  style="height: 45%;" class="panel-top-code">
+            <div class="w-100 h-100" id="css-code-editor">
+
+            </div>
+        </div>
+      
+        <div style="height: 55%;" class="panel-bottom-code">
+            <div class="w-100 h-100  overflow-hidden" id="result-code-editor">
+
+            </div>
+        </div>
     </div>
+        </div>
+    </div>
+
+  
 </div>
 
 
 
 
-<script>$(function () 
-    {
-        $(".resizable1").resizable(
-        {
-            autoHide: true,
-            handles: 'e',
-            resize: function(e, ui) 
-            {
-                var parent = ui.element.parent();
-                //alert(parent.attr('class'));
-                var remainingSpace = parent.width() - ui.element.outerWidth(),
-                    divTwo = ui.element.next(),
-                    divTwoWidth = (remainingSpace - (divTwo.outerWidth() - divTwo.width()))/parent.width()*100+"%";
-                    divTwo.width(divTwoWidth);
-            },
-            stop: function(e, ui) 
-            {
-                var parent = ui.element.parent();
-                ui.element.css(
-                {
-                    width: ui.element.width()/parent.width()*100+"%",
-                });
-            }
-        });
-    });</script>
+<script>
+     $(".panel-left-code").resizable({
+        handles: 'e',
+        resizeHeight: false
+ });
+
+ $(".panel-top-code").resizable({
+    handles: 's',
+   resizeWidth: false
+ });
+</script>
 
