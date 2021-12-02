@@ -1,0 +1,183 @@
+
+<style>
+/* horizontal panel*/
+
+.panel-container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid silver;
+  overflow: hidden;
+  
+}
+.panel-left-code {
+    flex: 0 0 auto;
+    padding: 0px;
+    width: 300px;
+    min-height: 100%;
+    width: 50%;
+    white-space: nowrap;
+    background: #838383;
+    color: white;
+}
+
+.splitter-code {
+  flex: 0 0 auto;
+  width: 18px;  
+  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #535353;
+  min-height: 200px;
+  cursor: col-resize;  
+}
+
+.panel-right-code {
+  flex: 1 1 auto;
+  /* resizable */
+  padding: 0px;
+  width: 50%;
+  height: 100%;
+  background: #eee;
+}
+
+/* vertical panel */
+
+.panel-container-vertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid silver;
+  overflow: hidden;
+}
+
+.panel-top-code {
+  flex: 0 0 auto;
+  /* only manually resize */
+  padding: 0px;
+  width: 100%;
+  white-space: nowrap;
+  background: #838383;
+  color: white;
+}
+
+.splitter-horizontal {
+  flex: 0 0 auto;
+  height: 18px;
+  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
+  cursor: row-resize;
+}
+
+.panel-bottom-code{
+  flex: 1 1 auto;
+  /* resizable */
+  padding: 2px;
+  min-height: 200px;
+  background: #eee;
+}
+</style>
+<div style="position: relative;" class="d-flex justify-content-center storecard-header-nav-section">
+
+    <div class="d-flex justify-content-center cs-col-pagename" style="padding-right:10px;">
+        <div class="mm-col">
+            <span class="mm-title"></span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-project">
+        <div class="mm-col">
+            <span class="mm-title">Project</span>
+        </div>
+        <div class="mm-col">
+            <select  class="form-control  projectList_codeground_storycard" 
+                    data-live-search="true" name="" id="project-list-codeground">
+            </select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Story Card</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control code-select-picker"
+                    name="" data-live-search="true" id="storyCardListSelectBox4CodeGround">
+            </select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Theme</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control code-select-picker"
+                    name=""   id="change-editor-theme-monaco">
+                    <option value="vs">Light</option>
+                <option value="vs-dark">Dark</option>
+                <option value="hc-black">Black</option>
+            </select>
+        </div>
+    </div>
+    <div class="cs-col-storecard-general-setting">
+        <button class="btn btn-success  " id="run-code-ground-btn" title="Run">
+            Run
+        </button>
+    </div>
+
+   
+</div>
+<div style="height:calc(100% - 45px);" class="page-container ">
+
+    <div class="panel-container h-100">
+
+        <div class="panel-left-code">
+            <div class="panel-container-vertical">
+
+        <div style="height: 40%;" class="panel-top-code html-code-editor">
+            <div class="w-100 h-100" id="html-code-editor">
+
+            </div>
+        </div>
+
+       
+        <div style="height: 60%;" class="panel-bottom-code">
+            <div class="w-100 h-100" id="js-code-editor">
+
+            </div>
+        </div>
+    </div>
+        </div>
+      
+
+      
+
+        <div  class="panel-right-code">
+             <div class="panel-container-vertical">
+
+        <div  style="height: 45%;" class="panel-top-code">
+            <div class="w-100 h-100" id="css-code-editor">
+
+            </div>
+        </div>
+      
+        <div style="height: 55%;" class="panel-bottom-code">
+            <div class="w-100 h-100  overflow-hidden" id="result-code-editor">
+
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+  
+</div>
+
+
+
+
+<script>
+     $(".panel-left-code").resizable({
+        handles: 'e',
+        resizeHeight: false
+ });
+
+ $(".panel-top-code").resizable({
+    handles: 's',
+   resizeWidth: false
+ });
+</script>
+

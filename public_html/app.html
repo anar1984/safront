@@ -103,7 +103,7 @@
         <!--<script src="https://app.sourcedagile.com/api/get/script/js/48edh/210102102810037910965.js"></script>-->
         <script src="resource/js/bs4/bc.js"></script>
         <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
-
+        <script src="https://unpkg.com/monaco-editor@0.8.3/min/vs/loader.js"></script>
 
     </head>
 
@@ -745,6 +745,17 @@
                     </li>
                     <li>
                         <div class="project-item-zad">
+                            <a class="loadCodeGround openNavshow  left-menu-load "
+                               data-link="ipo" title="UserStory">
+                               <i class="fas fa-code" aria-hidden="true"></i>
+                                <span class="description-main"
+                                      style="margin-top: 19px;">Code Ground</span>
+                            </a>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="project-item-zad">
                             <a class="loadStoryCardMgmt openNavshow left-menu-load "
                                data-link="storycardmgmt" title="User Story Management">
                                 <i class="fa fa-file-code-o" aria-hidden="true"></i>
@@ -1241,12 +1252,12 @@
 
 
             <div class="panel-right col-12" id="panelSecond1">
-                <div class="new-wrapper">
+                <div class="new-wrapper h-100">
 
-                    <div id="main">
+                    <div id="main" class="h-100">
 
                         <!--height:95vh;overflow-y: auto;-->
-                        <div class="col-12 us-half-div" id="main_div_of_backlog_info_pivot_view" style="display: none;">
+                        <div class="col-12 us-half-div h-100" id="main_div_of_backlog_info_pivot_view" style="display: none;">
                             <div class="row us-half-div-row">
                                 <div class="col-1 text-left toggleUSPanel" style="padding:4px;;">
                                     <a href="#" class="add-userstory-button1 toggleUSPanel" style="display: none;"
@@ -1401,7 +1412,7 @@
                             </div>
                         </div>
 
-                        <div class="us-half-div" id="main_div_of_backlog_info" style="display: block;">
+                        <div class="us-half-div h-100" id="main_div_of_backlog_info" style="display: block;">
                             <div class="row">
                                 <div class="col-1 text-left toggleUSPanel" style="padding:4px;display: none;">
                                     <a href="#" class="add-userstory-button1"
@@ -1683,7 +1694,7 @@
                             </div>
 
 
-                            <div class="redirectClass" id="mainBodyDivForAll" onwheel="documentOnwhile(event)">
+                            <div class="redirectClass h-100" id="mainBodyDivForAll" onwheel="documentOnwhile(event)">
 
                             </div>
 
