@@ -3704,15 +3704,16 @@ function loadSelectBoxesAfterGUIDesign(element) {
     })
 }
 
-function loadSelectBoxesAfterGUIDesignDetails(res, el) {
+function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
 
 
     var rows = [];
     try {
-        row = res.tbl[0].r;
+        rows = res.tbl[0].r;
     } catch (err) {
     }
-
+    
+    var el = $('#'+$(elm).attr('id'));
     $(el).html('');
     if ($(el).attr('sa-data-selectbox-hassnull') === '1') {
         $(el).append($('<option>').val('').text(''));
@@ -12829,7 +12830,7 @@ function insertJSmanualBybacklogId(body) {
     var div = $("<div>")
                  .attr("id",'backlog-manual-js-body')
                  .append($("<script>")
-                  .append(body))
+                  .text(body))
       elm.after(div)
 
 }
@@ -12839,7 +12840,7 @@ function insertCssmanualBybacklogId(body) {
     var div = $("<div>")
                  .attr("id",'backlog-manual-css-body')
                  .append($("<style>")
-                  .append(body))
+                  .text(body))
     elm.after(div)
 }
 function insertJsSendDbBybacklogId(body) {

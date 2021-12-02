@@ -2,11 +2,11 @@ var global_var_new = {
     "backlog_json": ""
 }
 var Carrier_Events = {
-     
-   inputsUpdate:function (key,value,id) {
-       var ids = id?id:global_var.current_us_input_id;
-       SAInput.Inputs[ids][key]=value;
-   }
+
+    inputsUpdate: function (key, value, id) {
+        var ids = id ? id : global_var.current_us_input_id;
+        SAInput.Inputs[ids][key] = value;
+    }
 
 }
 var Prototype = {
@@ -525,9 +525,9 @@ var Prototype = {
                     $('.liveProActionTypeToggle').show();
                 } else if (val24 === 'manual') {
                     $('.liveProActionTypeManual').show();
-                }else if (val24 === 'direct') {
+                } else if (val24 === 'direct') {
                     $('select.input_event_related_api').val(res.tbl[0].r[0].fkDependentBacklogId);
-                                        $('select.input_event_related_api').selectpicker('refresh');
+                    $('select.input_event_related_api').selectpicker('refresh');
 
                     $('.liveProActionTypeDirect').show();
                 }
@@ -1054,12 +1054,12 @@ $(document).on("click", "#add-new-apidirect-relation-add", function () {
 })
 
 $(document).on("click", "#add-new-apidirect-relation-show", function () {
-  var id = $('select.input_event_related_api').val();
-   callStoryCard(id);
+    var id = $('select.input_event_related_api').val();
+    callStoryCard(id);
 
 })
 
- 
+
 
 $(document).on("change", "#change-orderno-input-short", function () {
 
@@ -1075,7 +1075,7 @@ function manualCodeListGenBAcklog(id) {
 
 function getBacklogJSBodyById(bid) {
 
-    var pid =bid?bid:global_var.current_backlog_id; 
+    var pid = bid ? bid : global_var.current_backlog_id;
 
     var json = initJSON();
     json.kv.fkBacklogId = pid;
@@ -1089,18 +1089,20 @@ function getBacklogJSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            console.log(res.tbl[0].r[0].fnBody);
-            window.editorJSnew.setValue(res.tbl[0].r[0].fnBody)
-         //   insertJSmanualBybacklogId(body);
-         setTimeout(function() {
-            window.editorJSnew.refresh();
-        },1);
+            try {
+                window.editorJSnew.setValue(res.tbl[0].r[0].fnBody)
+                //   insertJSmanualBybacklogId(body);
+                setTimeout(function () {
+                    window.editorJSnew.refresh();
+                }, 1);
+            } catch (err) {
+            }
 
         }
     });
 }
 function getBacklogCSSBodyById(bid) {
-    var pid =bid?bid:global_var.current_backlog_id;  
+    var pid = bid ? bid : global_var.current_backlog_id;
 
     var json = initJSON();
     json.kv.fkBacklogId = pid;
@@ -1114,10 +1116,14 @@ function getBacklogCSSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-                     window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
-                     setTimeout(function() {
-                        window.editorCSSnew.refresh();
-                    },1);
+            try {
+                window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
+                setTimeout(function () {
+                    window.editorCSSnew.refresh();
+                }, 1);
+            } catch (err) {
+            }
+
             //insertCssmanualBybacklogId(body);
         }
     });

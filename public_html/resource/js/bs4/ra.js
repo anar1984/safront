@@ -950,7 +950,7 @@ function setBacklogAsHtml(backlogId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+//            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
@@ -1362,7 +1362,7 @@ function callApi(apiId, dataCore, isAsync, callback) {
             }
         },
         error: function () {
-            Toaster.showError(api + ' ----> Something went wrong!!!');
+            Toaster.showError(apiId + ' ----> Something went wrong!!!');
         }
     });
     return res1;
