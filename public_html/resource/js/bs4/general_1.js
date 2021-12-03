@@ -1237,7 +1237,6 @@ function GetTagLine(text, tag) {
 
 function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var pageId = makeId(15);
-    var st = "";
     var butnList = '';
     var fkpr = Utility.getParamFromUrl("fkManualProjectId").length
     if (global_var.current_domain === '48edh' && fkpr > 0) {
@@ -1248,29 +1247,26 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
                              </div>`
     }
   
-    st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
-    st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
-    st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';
-    st += '            <div class="modal-header text-center" style="padding: 0px 10px;background: none;"> ';
-    st += '              <b class="modal-title" id="userstory-gui-input-component-res-sus-label">' + title + '</b>' + butnList;
-    st += '              <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-    st += '           <span aria-hidden="true">&times;</span>';
-    st += '             </button>';
-    st += '      </div>';
-    st += '   <div class="loaderModalInitiator"></div>';
-    st += '   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">';
-//    st += '   <form>';
-    st += '     <input type="hidden" id=popupTrigger pid="' + triggerId + '" value="nonenone">';
-    st += '     <div class="row redirectClass" bid="' + backlogId + '"';
-    st += '                     bcode="' + makeId(10) + '" ';
-    st += '                     id="userstory-gui-input-component-res-sus-id">';
-    st += modalBody;
-    st += '     </div>';
-//    st += '   </form>';
-    st += '   </div>';
-    st += '  </div>';
-    st += '  </div>';
-    st += '</div>';
+    var st =`<div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                 <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;'${style}" role="document">
+                   <div class="modal-content" style="background-color:inherit;border: 0px;">
+                         <div class="modal-header text-center" style="padding: 0px 10px;background: none;">
+                           <b class="modal-title" id="userstory-gui-input-component-res-sus-label">${title }</b> ${butnList} 
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                          </button>
+                   </div>
+                    <div class="loaderModalInitiator"></div>
+                   <div class="modal-body" style="overflow-y: auto;overflow-x: hidden;height: 100%;max-height: 90vh;">
+                        
+                     <input type="hidden" id=popupTrigger pid="${triggerId}" value="nonenone">
+                   <div class="row redirectClass" bid="${backlogId}"  bcode="${makeId(10)}" id="userstory-gui-input-component-res-sus-id">
+                        ${modalBody}
+                   </div>
+                </div>
+            </div>
+       </div>
+    </div>`;
     $("#body_of_nature").append(st);
     initSelectpickerComponent();
     $('#' + pageId).modal("show");
