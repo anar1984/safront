@@ -1070,7 +1070,7 @@ $(document).on("change", "#change-orderno-input-short", function () {
 
 function manualCodeListGenBAcklog(id) {
     getBacklogJSBodyById(id);
-    getBacklogCSSBodyById();
+    getBacklogCSSBodyById(id);
 }
 
 function getBacklogJSBodyById(bid) {
@@ -1091,10 +1091,8 @@ function getBacklogJSBodyById(bid) {
         success: function (res) {
             console.log(res.tbl[0].r[0].fnBody);
             window.editorJSnew.setValue(res.tbl[0].r[0].fnBody)
-         //   insertJSmanualBybacklogId(body);
-         setTimeout(function() {
-            window.editorJSnew.refresh();
-        },1);
+            insertJSmanualBybacklogId(res.tbl[0].r[0].fnBody);
+        
 
         }
     });
@@ -1114,11 +1112,9 @@ function getBacklogCSSBodyById(bid) {
         crossDomain: true,
         async: true,
         success: function (res) {
-                     window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
-                     setTimeout(function() {
-                        window.editorCSSnew.refresh();
-                    },1);
-            //insertCssmanualBybacklogId(body);
+            window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
+                    
+            insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);
         }
     });
 }

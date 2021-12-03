@@ -933,10 +933,7 @@ function setBacklogAsHtml(backlogId) {
     }
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
-
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-
-
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
     json.kv.backlogHtml = html;
