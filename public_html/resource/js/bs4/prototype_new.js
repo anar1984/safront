@@ -1115,6 +1115,7 @@ function getBacklogCSSBodyById(bid) {
             window.editorCSSnew.setValue(res.tbl[0].r[0].classBody);
                     
             insertCssmanualBybacklogId(res.tbl[0].r[0].classBody);
+            
         }
     });
 }

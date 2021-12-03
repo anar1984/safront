@@ -927,7 +927,7 @@ function getRandomColor() {
 }
 
 
-function setBacklogAsHtml(backlogId) {
+function setBacklogAsHtml(backlogId,css,js) {
     if (!backlogId) {
         return;
     }
@@ -936,7 +936,8 @@ function setBacklogAsHtml(backlogId) {
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = html;
+   
+    json.kv.backlogHtml = '<style>'+css+'</style>'+html+'<script>'+js+'</script>' ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -947,7 +948,6 @@ function setBacklogAsHtml(backlogId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
