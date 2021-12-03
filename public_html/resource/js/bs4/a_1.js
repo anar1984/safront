@@ -12785,16 +12785,25 @@ $(document).on('click', '.loadCodeGround', function (evt) {
         
         $('#mainBodyDivForAll').html(html_string);
         $('.code-select-picker').selectpicker();
+      
         loadProjectList2SelectboxByClass('projectList_codeground_storycard');
-        generateMonacoeditros('html-code-editor','editorHTMLGround','html','vs-dark')
-        generateMonacoeditros('css-code-editor','editorCSSGround','css','vs-dark')
-        generateMonacoeditros('js-code-editor','editorJSGround','javascript','vs-dark')
+        if(global_var.current_backlog_id){
+            var val =global_var.current_backlog_id;
+            getBacklogHTMLBodyByIdCodeGround(val,'');
+            getBacklogJSBodyByIdCodeGround(val,'');
+            getBacklogCSSBodyByIdCodeGround(val,'');
+            
+            return
+        }
+        generateMonacoeditros('html-code-editor','editorHTMLGround','html','vs-dark');
+        generateMonacoeditros('css-code-editor','editorCSSGround','css','vs-dark');
+        generateMonacoeditros('js-code-editor','editorJSGround','javascript','vs-dark');
     });
 
 });
 
 
-function generateMonacoeditros(elmId,nameEditor,lang,theme) {
+function generateMonacoeditros(elmId,nameEditor,lang,theme,body) {
     require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs' }});
     window.MonacoEnvironment = { getWorkerUrl: () => proxy };
     
@@ -12807,21 +12816,124 @@ function generateMonacoeditros(elmId,nameEditor,lang,theme) {
     
     require(["vs/editor/editor.main"], function () {
         window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
+            value: body,
             language: lang,
             automaticLayout: true,
             lineNumbers: "on",
+            //readOnly: nameEditor==='html'?true:false,
             roundedSelection: true,
             scrollBeyondLastLine: true,
             theme: theme 
         });
         
     });
-    window[nameEditor].getModel().onDidChangeContent((event) => {
-        // render();
-        console.log('sdfsdfsdf');
-       });
-      
+}
+
+function getBacklogHTMLBodyByIdCodeGround(bid,trig) {
+
+    var pid =bid?bid:global_var.current_backlog_id; 
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogHtml",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                if(trig=='load'){
+                    window.editorHTMLGround.setValue(res.kv.backlogHtml);
+                  }else{
+                    generateMonacoeditros('html-code-editor','editorHTMLGround','html','vs-dark',res.kv.backlogHtml);
+                  }
+            } catch (error) {
+                if(trig=='load'){
+                    return
+                  }
+                generateMonacoeditros('html-code-editor','editorHTMLGround','html','vs-dark');
+
+            }
           
+
+        }
+    });
+}
+function getBacklogJSBodyByIdCodeGround(bid,trig) {
+
+    var pid =bid?bid:global_var.current_backlog_id; 
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                if(trig=='load'){
+                    window.editorJSGround.setValue(res.tbl[0].r[0].fnBody);
+                  }else{
+                    generateMonacoeditros('js-code-editor','editorJSGround','javascript','vs-dark',res.tbl[0].r[0].fnBody);
+                  }
+                  
+            } catch (error) {
+                if(trig=='load'){
+                    window.editorJSGround.setValue('');
+                    return
+                  }
+                generateMonacoeditros('js-code-editor','editorJSGround','javascript','vs-dark');
+
+            }
+          
+
+        }
+    });
+}
+function getBacklogCSSBodyByIdCodeGround(bid,trig) {
+    var pid =bid?bid:global_var.current_backlog_id;  
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmgetBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                if(trig=='load'){
+                    window.editorCSSGround.setValue(res.tbl[0].r[0].classBody);
+                  }else{
+                    generateMonacoeditros('css-code-editor','editorCSSGround','css','vs-dark',res.tbl[0].r[0].classBody);
+                  }
+            } catch (error) {
+                if(trig=='load'){
+                    window.editorCSSGround.setValue('');
+                    return
+                  }
+                generateMonacoeditros('css-code-editor','editorCSSGround','css','vs-dark');
+
+            }
+            
+
+                     
+            //insertCssmanualBybacklogId(body);
+        }
+    });
 }
 
  function getBacklogListforCodeGround(fkProjectId) {
@@ -12860,10 +12972,12 @@ function generateMonacoeditros(elmId,nameEditor,lang,theme) {
             sortSelectBoxByElement(cmd);
             cmd.val(global_var.current_backlog_id);
             cmd.selectpicker('refresh');
-            cmd.change();
+                      
         }
     });
 }
+
+  
 $(document).on("change", '#change-editor-theme-monaco', function (e) {
     window.editorJSGround.updateOptions({ theme: $(this).val });
 
@@ -12872,29 +12986,163 @@ $(document).on("change", '#project-list-codeground', function (e) {
     getBacklogListforCodeGround($(this).val())
 
 });
+
+$(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
+    var val = $(this).val()
+    global_var.current_backlog_id = val;
+    Utility.addParamToUrl("current_backlog_id",val);
+    getBacklogHTMLBodyByIdCodeGround(val,'load');
+    getBacklogJSBodyByIdCodeGround(val,'load');
+    getBacklogCSSBodyByIdCodeGround(val,'load');
+});
+
 function getIframeBlock(pid,css,js,body) {
  var $iframe= $("<div class='overflow-hidden'>")
                           .append($("<style>").text(css))
                           .append($("<div class='redirectClass h-100'>").html(body))
                           .append($("<script type='text/javascript'>").text(js))
    
-  return $iframe              
+  return $iframe.html();        
+}
+$(document).on("click", '#save-code-ground-btn', function (e) {
+   
+        var elm = $("#result-code-editor");
+            elm.find('div').remove();
+          var pid = $("#project-list-codeground").val()
+        var js = window.editorJSGround.getValue();
+        var html = window.editorHTMLGround.getValue();
+        var css = window.editorCSSGround.getValue();
+        
+        
+        var block = getIframeBlock(pid,css,js,html);
+               
+          elm.append(block);
+          insertJsSendDbBybacklogId(js);
+          insertCssSendDbBybacklogId(css);
+          insertHtmlSendDbBybacklogId(html);
+          setBacklogAsHtmlCodeGround(global_var.current_backlog_id,block);
+
+});
+function setBacklogAsHtmlCodeGround(backlogId,html) {
+    if (!backlogId) {
+        return;
+    }
+    var json = initJSON();
+    json.kv.fkBacklogId = backlogId;
+    json.kv.backlogHtml = html;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmsetBacklogAsHtml",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+        },
+        error: function () {
+            Toaster.showError(('Something went wrong!!!'));
+        }
+    });
 }
 $(document).on("click", '#run-code-ground-btn', function (e) {
    
         var elm = $("#result-code-editor");
+            elm.find('div').remove();
           var pid = $("#project-list-codeground").val()
         var js = window.editorJSGround.getValue();
         var html = window.editorHTMLGround.getValue();
         var css = window.editorCSSGround.getValue();
 
         var block = getIframeBlock(pid,css,js,html);
-
-          elm.html(block)
+               
+          elm.append(block)
 
 
 });
+function insertJSmanualBybacklogId(body) {
+    var elm = $("#SUS_IPO_GUI_Design")
+        elm.parent().find("#backlog-manual-js-body").remove();
+    var div = $("<div>")
+                 .attr("id",'backlog-manual-js-body')
+                 .append($("<script>")
+                  .text(body))
+      elm.after(div)
 
+}
+function insertCssmanualBybacklogId(body) {
+    var elm = $("#SUS_IPO_GUI_Design")
+    elm.parent().find("#backlog-manual-css-body").remove();
+    var div = $("<div>")
+                 .attr("id",'backlog-manual-css-body')
+                 .append($("<style>")
+                  .append(body))
+    elm.after(div)
+}
+
+function insertJsSendDbBybacklogId(body) {
+
+    var pid = global_var.current_backlog_id;  
+
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    json.kv.jsBody = body;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertBacklogJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+
+        }
+    });
+}
+function insertCssSendDbBybacklogId(body) {
+    var pid = global_var.current_backlog_id;  
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    json.kv.classBody = body;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTminsertBacklogCssCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+                     
+
+        }
+    });
+}
+function insertHtmlSendDbBybacklogId(body) {
+    var pid = global_var.current_backlog_id;  
+    var json = initJSON();
+    json.kv.fkBacklogId = pid;
+    json.kv.backlogHtml = body;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertBacklogHtml",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+                     
+
+        }
+    });
+}
 
 ///// code ground end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 $(document).on('click', '.loadLivePrototype', function (evt) {
@@ -12951,74 +13199,8 @@ $(document).on('click', '.loadLivePrototype', function (evt) {
 
 
 });
-function insertJSmanualBybacklogId(body) {
-    var elm = $("#SUS_IPO_GUI_Design")
-        elm.parent().find("#backlog-manual-js-body").remove();
-    var div = $("<div>")
-                 .attr("id",'backlog-manual-js-body')
-                 .append($("<script>")
-                  .text(body))
-      elm.after(div)
-
-}
-function insertCssmanualBybacklogId(body) {
-    var elm = $("#SUS_IPO_GUI_Design")
-    elm.parent().find("#backlog-manual-css-body").remove();
-    var div = $("<div>")
-                 .attr("id",'backlog-manual-css-body')
-                 .append($("<style>")
-                  .append(body))
-    elm.after(div)
-}
-function insertJsSendDbBybacklogId(body) {
-
-    var pid = global_var.current_backlog_id;  
-
-      if(!body){
-          return
-      }
-    var json = initJSON();
-    json.kv.fkBacklogId = pid;
-    json.kv.jsBody = body;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTminsertBacklogJsCode",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
 
 
-        }
-    });
-}
-function insertCssSendDbBybacklogId(body) {
-    var pid = global_var.current_backlog_id;  
-
-      if(!body){
-          return
-      }
-    var json = initJSON();
-    json.kv.fkBacklogId = pid;
-    json.kv.classBody = body;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTminsertBacklogCssCode",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-                     
-
-        }
-    });
-}
 function editorGenerateJSCSS() {
     window.editorCSSnew = CodeMirror(document.querySelector('#panel-css'), {
         lineNumbers: true,
