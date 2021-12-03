@@ -1245,7 +1245,7 @@ function setBugListInitialData() {
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
     bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
     bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
-    ;
+   
 }
 
 $(document).on("change", ".issue-mgmt-general-filter", function (e) {
@@ -1274,6 +1274,8 @@ function getBugList() {
     json.kv.closedDateTo = bug_filter.closed_date_to;
     json.kv.showChildTask = bug_filter.showChildTask;
     json.kv.showChildTask = bug_filter.showChildTask;
+    json.kv.startLimit=0;
+    json.kv.endLimit=25;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({

@@ -524,22 +524,22 @@ function updateCurrentInput4ShortChanges(el) {
 
 
 $(document).on("focusout", '#eventActionType4ManualJs', function (event) {
-  
-      
-            var inputId = global_var.current_us_input_id;
-            var val = window.editorEvent.getValue();
-            var actionType = SAInput.getInputDetails(inputId, "actionType")
-            if (val && actionType) {
-                $("div#"+inputId + " .script-div").remove();
-                var fn = Component.GetManualFunctionBody(actionType,inputId, val)
-                $("div#"+inputId).append($('<div>')
-                        .addClass("script-div")
-                        .append($('<script>').text(fn)));
-    
-            }
-            updateInput4SCDetails(inputId, val, 'manualJs');
-          return false;
-            
+
+
+    var inputId = global_var.current_us_input_id;
+    var val = window.editorEvent.getValue();
+    var actionType = SAInput.getInputDetails(inputId, "actionType")
+    if (val && actionType) {
+        $("div#" + inputId + " .script-div").remove();
+        var fn = Component.GetManualFunctionBody(actionType, inputId, val)
+        $("div#" + inputId).append($('<div>')
+                .addClass("script-div")
+                .append($('<script>').text(fn)));
+
+    }
+    updateInput4SCDetails(inputId, val, 'manualJs');
+    return false;
+
 })
 
 $(document).on('focusout', '.okayPitchYourPathYourWay', function (ev) {
@@ -1033,6 +1033,17 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
     });
 }
 
+//////////classwork ucun zad
+
+
+$(document).on('change', '.user-classwork-grade', function () {
+    var id = $(this).attr("pid");
+    var grade = $(this).val();
+    //Update Classwork Grade
+    callApi('21120315284308914323', {id: id, grade: grade})
+})
+
+
 
 function getClasswordAndUserList(fkClassId) {
     var res1 = '';
@@ -1113,12 +1124,37 @@ function getClassEnrolledUserkList(fkClassId) {
     return res1;
 }
 
+var GradeList = {
+    "0": "Not Submited",
+    "5": "Correct",
+    "4": "Half Correct",
+    "3": "Almost Correct",
+    "2": "Almost Wrong",
+    "1": "Wrong"
+}
+
+function GradingBlock(pid, grade) {
+    var select = $('<select>')
+            .addClass("user-classwork-grade")
+            .attr('pid', pid)
+            .addClass('gradingblock')
+            .append($('<option>').val('').text(''))
+            .append($('<option>').val('0').text('Not Submited'))
+            .append($('<option>').val('5').text('Correct'))
+            .append($('<option>').val('4').text('Half Correct'))
+            .append($('<option>').val('3').text('Almost Correct'))
+            .append($('<option>').val('2').text('Almost Wrong'))
+            .append($('<option>').val('1').text('Wrong'));
+
+    select.find('[value="' + grade + '"]').attr("selected", "selected")
+    return select;
+}
+
 
 
 function genClassworkAndUserMatrix(fkClassId) {
     $('._teacherGradingSystem').html("No Data Found");
     if (!fkClassId) {
-
         return;
     }
 
@@ -1134,10 +1170,26 @@ function genClassworkAndUserMatrix(fkClassId) {
 
 
     var thead = $('<thead>')
-    var trh = $('<tr>').append($('<th>').text(''))
+    var trh = $('<tr>')
+            .addClass("redirectClass")
+            .append($('<th>').text(''))
     for (var i in clworkObj) {
         var cObj = clworkObj[i];
-        trh.append($('<th>').text(cObj.title))
+        trh.append($('<th>')
+                .append($('<a href="#">')
+                        .val(cObj.id)
+                        .attr('sa-selectedfield', 'fkClassworkId')
+                        .attr('onclick_trigger_id', "21111819514900624174")
+                        .attr('fkClassworkId', cObj.id)
+                        .attr('onclick', 'showClassworkInfoManual(this)')
+                        .append($('<span>').text(cObj.title))
+                        .append($('<span>').text(' '))
+                        .append($('<span>').text(cObj.createdDate))
+                        .append($('<span>').text(' '))
+                        .append($('<span>').text(cObj.dueDate))
+                        .append($('<span>').text(cObj.type))
+                        )
+                )
     }
     thead.append(trh);
     table.append(thead);
@@ -1145,35 +1197,33 @@ function genClassworkAndUserMatrix(fkClassId) {
     var tbody = $('<tbody>')
     for (var j in partObj) {
         var pObj = partObj[j];
-        var tr = $('<tr>');
+        var tr = $('<tr>').addClass("redirectClass");
+        ;
         tr.append($('<td>').text(pObj.userName));
         for (var i in clworkObj) {
             var cObj = clworkObj[i];
 
-            var cnt = "-";
-            var key = cObj.fkClassworkId + "_" + pObj.fkUserId;
+            var td = $('<td>');
+            var key = cObj.id + "_" + pObj.fkUserId;
             if (grading && grading[key]) {
-                cnt = $("<a href='#'>")
-                        .append($('<spen>').text('Open'))
-                        .append(GradingBlock());
+                var pid = grading[key].id
+                var grade = grading[key].grade
+                td.append(GradingBlock(pid, grade))
+                        .append($("<a href='#'>")
+                                .addClass("openClassworkbody")
+                                .attr('fkActionId', grading[key].fkActionId)
+                                .attr('classworkType', grading[key].classworkType)
+                                .append($('<br>'))
+                                .append($('<span>').text('Open')))
+                        ;
             }
-            tr.append($('<td>').append(cnt))
+            tr.append(td);
 
         }
         tbody.append(tr);
     }
     table.append(tbody);
     $('._teacherGradingSystem').html(table);
-}
-
-function GradingBlock() {
-    return $('<select>')
-            .addClass('gradingblock')
-            .append($('<option>').val('5').text('Correct'))
-            .append($('<option>').val('4').text('Almost Corrent'))
-            .append($('<option>').val('3').text('Half Correct'))
-            .append($('<option>').val('2').text('Almost Wrong'))
-            .append($('<option>').val('1').text('Wrong'));
 }
 
 
@@ -1226,7 +1276,6 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
                 .append($('<td>').text(Utility.convertDate(cObj.createdDate)))
                 .append($('<td>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
                 .append($('<td>').text(cObj.typeName))
-                .append($('<td>').text(cObj.grade))
 
 
                 ;
@@ -1234,23 +1283,30 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
 
         var key = cObj.id + "_" + global_var.current_ticker_id;
         if (grading && grading[key]) {
-            tr.append($('<td>')
-                    .append($('<a href="#">')
-                            .addClass("openClassworkbody")
 
-                            .attr('fkActionId', grading[key].fkActionId)
-                            .attr('classworkType', grading[key].classworkType)
-                            .text("Open")))
+            var span = (grading[key].grade) ? $('<b>')
+                    .css('background-color', 'yellow')
+                    .css('border-radius', '10px')
+                    .css('padding', '2px 5px')
+                    .text(GradeList[grading[key].grade]) : "";
+            tr.append($('<td>').append(span))
+                    .append($('<td>')
+                            .append($('<a href="#">')
+                                    .addClass("openClassworkbody")
+                                    .attr('fkActionId', grading[key].fkActionId)
+                                    .attr('classworkType', grading[key].classworkType)
+                                    .text("Open")))
                     ;
         } else {
-            tr.append($('<td>')
-                    .append($('<a href="#">')
-                            .attr("fkClassworkId", cObj.id)
-                            .attr("fkUserId", global_var.current_ticker_id)
-                            .attr("classworkType", cObj.classworkType)
-                            .attr("fkClassId", fkClassId)
-                            .attr('onclick', 'startBusinessCaseClasswork(this)')
-                            .text("Submit")))
+            tr.append($('<td>').text(''))
+                    .append($('<td>')
+                            .append($('<a href="#">')
+                                    .attr("fkClassworkId", cObj.id)
+                                    .attr("fkUserId", global_var.current_ticker_id)
+                                    .attr("classworkType", cObj.classworkType)
+                                    .attr("fkClassId", fkClassId)
+                                    .attr('onclick', 'startBusinessCaseClasswork(this)')
+                                    .text("Submit")))
         }
         tbody.append(tr);
     }
@@ -1291,6 +1347,171 @@ function startBusinessCaseClasswork(el) {
 //            21112007581103583541 startNewClasswork
 }
 
+
+function showClassworkInfoManual(el) {
+    //Show Classwork From info
+    var padeId = showForm('21111723482809628427');
+    //Get Classwork Info
+    var fkClassworkId = $(el).attr("fkClassworkId");
+    var data = callApi('21111821480702138626', {"fkClassworkId": fkClassworkId}, false);
+
+    setDataToForm(padeId, data.kv);
+//    
+//    new UserStory().setGUIComponentButtonGUIModal('', el);
+    $('._save').remove();
+    $('._update').remove();
+    $('#21111723495201831388').remove();
+    $('#comp_id_21111822572801867649').remove();
+}
+
+//load 
+function showForm(formId, conf) {
+    if (!formId) {
+        return;
+    }
+
+    var html = new UserStory().getPopupHtmlBodyById4ProjectView(formId);
+    var title = ''; //SACore.GetBacklogDetails(popupBacklogId, 'description');
+    var canvasCSS = '';//Component.ReplaceCSS(SACore.GetBacklogDetails(popupBacklogId, 'param1'));
+    var padeId = generatePopupModalNew(html, canvasCSS, "", formId, title);
+    var el = document.getElementById(padeId);
+    loadSelectBoxesAfterGUIDesign(el);
+    if (!$(el).hasClass('sa-onloadclick')) {
+        initOnloadActionOnGUIDesign4OnClick(el);
+    }
+    return padeId;
+}
+
+function setDataToForm(formId, data) {
+    //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
+    //redirectClassa shamir edilir.
+    // eger sa-global-trigger===1 attribute-si varsa o zaman row redirectClass-da yeni
+    // umumi sehifede axtaracaqdir.
+
+
+
+    $('#' + formId).find('[sa-selectedfield]').each(function (e) {
+        try {
+            var val = "";
+            var selectedFields = $(this).attr('sa-selectedfield').split(',');
+            for (var i in selectedFields) {
+
+
+
+                var field = selectedFields[i].trim();
+                if (!field) {
+                    continue;
+                }
+
+                var keys = Object.keys(data);
+                if (keys.includes(field)) {
+                    val = data[field];
+                    setDataToFormComponent(this, val, field);
+                }
+            }
+        } catch (err) {
+        }
+
+    })
+}
+
+function setDataToFormComponent(el, val, selectedField) {
+    try {
+
+
+        if ($(el).attr('sa-type') === 'date') {
+            SetConvertedDateByElement(el, val);
+        } else if ($(el).attr('sa-type') === 'time') {
+            SetConvertedTimeByElement(el, val);
+        } else if ($(el).attr('sa-type') === 'image') {
+            $(el).attr('src', fileUrl(val));
+            $(el).closest('div').find('.biyzad').remove();
+        } else if ($(el).attr('sa-type') === 'filepicker') {
+            $(el).attr('fname', val);
+
+        } else if ($(el).attr('sa-type') === 'checkbox') {
+            if (val === '1')
+                $(el).prop('checked', true);
+            else
+                $(el).prop('checked', false);
+
+        } else if ($(el).attr('sa-type') === 'htmleditor') {
+
+            initHtmlFroalaEditor($(el).attr('id'), val);
+
+
+        } else if ($(el).attr('sa-type') === 'filelist') {
+            $(el).html('');
+
+            var res = val.split(global_var.vertical_seperator);
+            for (var i = 0; i < res.length; i++) {
+                try {
+                    $(el).append(generateFileLine(res[i].trim(), "col-12"));
+                } catch (e) {
+                }
+            }
+
+
+        } else if ($(el).attr('sa-type') === 'select') {
+
+            if ($(el).attr('sa-item-setterfield') &&
+                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).val(val);
+                $(el).find('option[value="' + val + '"]').attr('selected', true);
+            } else {
+                $(el).val(val);
+                $(el).find('option[value="' + val + '"]').attr('selected', true);
+            }
+
+        } else if ($(el).attr('sa-type') === 'multiselect') {
+
+            if ($(el).attr('sa-item-setterfield') &&
+                    $(el).attr('sa-item-setterfield') === selectedField) {
+                $(el).find("option:selected").prop("selected", false);
+                $(el).selectpicker('refresh');
+
+                $.each(val.split(","), function (i, e) {
+                    var id = $(el).attr('id');
+                    $(el).find("option[value='" + e + "']").prop("selected", true);
+                });
+                $(el).selectpicker('refresh');
+            } else {
+                $(el).find("option:selected").prop("selected", false);
+                $(el).selectpicker('refresh');
+
+                $.each(val.split(","), function (i, e) {
+                    var id = $(el).attr('id');
+                    $(el).find("option[value='" + e + "']").prop("selected", true);
+                });
+                $(el).selectpicker('refresh');
+            }
+
+        } else if ($(el).attr('sa-type') === 'htmlviewer') {
+            $(el).html(val);
+        } else {
+            $(el).val(val);
+            $(el).attr('sa-data-value', val);
+
+            var elWithText = ['label', 'textarea', 'a', 'span'];
+            var tagName = $(el).get(0).tagName.toLowerCase();
+            if (elWithText.includes(tagName)) {
+                $(el).text(val);
+            }
+        }
+
+        $(el).attr('sa-data-value', val);
+
+
+
+        if ($(el).attr("sa-isselectpicker") === '1') {
+            $(el).selectpicker('refresh');
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+
 function showClassworkInfo(el) {
     new UserStory().setGUIComponentButtonGUIModal('21111723482809628427', el);
     $('._save').remove();
@@ -1298,6 +1519,13 @@ function showClassworkInfo(el) {
     $('#21111723495201831388').remove();
     $('#comp_id_21111822572801867649').remove();
 }
+
+//classwork ucun zad
+
+
+
+
+
 
 
 function CallActionApi(apiId, dataCore, isAsync, fn) {
@@ -1337,7 +1565,8 @@ function callApi(apiId, dataCore, isAsync, callback) {
         Toaster.showError('API ID is not entered');
     }
 
-    var synch = (isAsync) ? isAsync : true;
+    var synch = isAsync;
+    synch = (synch !== 'undefined') ? synch : true;
 
     var res1 = '';
     var json = initJSON();
@@ -1370,7 +1599,7 @@ function callApi(apiId, dataCore, isAsync, callback) {
 
 function callService(serviceName, dataCore, isAsync, callback) {
     if (!serviceName) {
-        Toaster.showError('API ID is not entered');
+        Toaster.showError('Service is not entered');
     }
 
     var synch = (isAsync) ? isAsync : true;

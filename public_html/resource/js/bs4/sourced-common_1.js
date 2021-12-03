@@ -10637,7 +10637,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var padeId = carrier.get('padeId');        
         var el = carrier.getElement();
         
-        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
+//        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
         try{
             var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
             loadSelectBoxesAfterGUIDesign(tempEl1);

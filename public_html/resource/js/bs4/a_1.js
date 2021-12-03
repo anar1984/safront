@@ -3722,6 +3722,7 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
     var itemKey = ($(el).attr('sa-item-key')) ? $(el).attr('sa-item-key') : "id";
     var itemValue = ($(el).attr('sa-item-value')) ? $(el).attr('sa-item-value') : "id";
     var itemSeparator = ($(el).attr('sa-item-separator')) ? ' ' + $(el).attr('sa-item-separator') + ' ' : " ";
+var dataValue = $(el).attr('sa-data-value');
 
 
     for (var i in rows) {
@@ -3739,7 +3740,12 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
         }
         var name = finalVal;
         val = (val) ? val.trim() : name.trim();
-        $(el).append($('<option>').val(val).text(name));
+        var opt = $('<option>').val(val).text(name);
+        
+        if (dataValue ===val){
+            opt.attr("selected","selected");
+        }
+        $(el).append(opt);
     }
 
     if ($(el).attr('sa-data-nosort') !== '1') {
