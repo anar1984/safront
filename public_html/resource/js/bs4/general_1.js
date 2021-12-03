@@ -1247,7 +1247,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
                              <span  class='mr-2'><img width="25px" class='rounded-circle' src="img/info.jpg"></a> </span> 
                              </div>`
     }
-    console.log(fkpr);
+  
     st += ' <div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">';
     st += '    <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;' + style + '" role="document">';
     st += '      <div class="modal-content" style="background-color:inherit;border: 0px;">';

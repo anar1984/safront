@@ -468,12 +468,12 @@ function addNewTask4BugMultiZad() {
     data.taskName = val;
     data.filename = files;
     data.fkProjectId = $('#bug_filter_project_id_add').val();
-    data.fkBacklogId = $('#bug_filter_backlog_id_add').val()
-    data.fkAssigneeId = $('#bug_filter_assignee_id_add').val()
+    data.fkBacklogId = $('#bug_filter_backlog_id_add').val();
+    data.fkAssigneeId = $('#bug_filter_assignee_id_add').val();
     data.fkTaskTypeId = $("#bug_task_type_id_add").val();
     data.taskNature = $("#bug_task_nature_id_add").val();
     data.taskPriority = $("#bug_filter_priority_add").val();
-    data.taskNature = $("#bug_filter_project_id_add").val();
+    //data.taskNature = $("#bug_filter_project_id_add").val();
     data.sprintList = sprintList;
 
 

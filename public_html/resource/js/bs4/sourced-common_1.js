@@ -10608,13 +10608,15 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
                
-        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
         closeModal('userstory-gui-input-component-res-sus-analytic');
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;       
         
 //        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
-        var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
+        var padeId = new UserStory().showPopupforGUIComponent("",popupBacklogId,bcode);
+
+        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
+                $("#"+padeId+" #userstory-gui-input-component-res-sus-id").append(html);
         
                 //  click on first tab
         $('.activeTabClass').each(function (e) {
