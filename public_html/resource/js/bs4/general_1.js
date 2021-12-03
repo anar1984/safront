@@ -1247,7 +1247,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
                              </div>`
     }
   
-    var st =`<div class="modal fade" id="' + pageId + '" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    var st =`<div class="modal fade" id="${pageId}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                  <div class="modal-dialog modal-lg gui-design redirectClass4CSS"  style="max-width: 800px;margin-top: 20px;padding: 0px;'${style}" role="document">
                    <div class="modal-content" style="background-color:inherit;border: 0px;">
                          <div class="modal-header text-center" style="padding: 0px 10px;background: none;">
