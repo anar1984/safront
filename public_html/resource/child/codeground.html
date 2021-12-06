@@ -16,7 +16,6 @@
     min-height: 100%;
     width: 50%;
     white-space: nowrap;
-    background: #838383;
     color: white;
 }
 
@@ -53,7 +52,7 @@
   padding: 0px;
   width: 100%;
   white-space: nowrap;
-  background: #838383;
+
   color: white;
 }
 
@@ -69,7 +68,6 @@
   /* resizable */
   padding: 2px;
   min-height: 200px;
-  background: #eee;
 }
 </style>
 <div style="position: relative;" class="d-flex justify-content-center storecard-header-nav-section">
@@ -117,6 +115,11 @@
             Run
         </button>
     </div>
+    <div class="cs-col-storecard-general-setting mr-2">
+        <button class="btn btn-info  " id="save-code-ground-btn" title="Save">
+            Save
+        </button>
+    </div>
 
    
 </div>
@@ -155,8 +158,14 @@
         </div>
       
         <div style="height: 55%;" class="panel-bottom-code">
-            <div class="w-100 h-100  overflow-hidden" id="result-code-editor">
+            <div class="w-100 h-100 "   style="overflow: scroll;"  id="result-code-editor">
+                <div class="overflow-hidden">
+                    <style id="style-result-code-editor"></style>
+                    <div id="element-result-code-editor" class="redirectClass h-100">
 
+                    </div>
+                    <script type="text/javascript" id="js-result-code-editor" ></script>
+                </div>
             </div>
         </div>
     </div>

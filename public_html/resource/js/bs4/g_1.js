@@ -1961,12 +1961,18 @@ $(document).on('click', '.dev-mode-generate-live', function (event) {
 $(document).on('focusout', '#panel-js', function () {
 
     var body = window.editorJSnew.getValue();
+    var css = window.editorCSSnew.getValue();
+    var bid = global_var.current_backlog_id;
+    setBacklogAsHtml(bid,css,body)
     insertJSmanualBybacklogId(body);
     insertJsSendDbBybacklogId(body)
  
 });
 $(document).on('focusout', '#panel-css', function () {
     var body = window.editorCSSnew.getValue();
+    var js = window.editorJSnew.getValue();
+    var bid = global_var.current_backlog_id;
+    setBacklogAsHtml(bid,body,js)
     insertCssSendDbBybacklogId(body)
     insertCssmanualBybacklogId(body);
 });

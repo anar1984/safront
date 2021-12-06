@@ -339,6 +339,7 @@ function loadStoryCardInfo4StoryCard(el) {
         $('select.projectList_liveprototype_storycard').change();
     } else {
         global_var.current_backlog_id = id;
+        $('#storycard-panel-backlog-id').val(id);
         Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
@@ -346,6 +347,7 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
+        
     }
 }
 
@@ -927,19 +929,17 @@ function getRandomColor() {
 }
 
 
-function setBacklogAsHtml(backlogId) {
+function setBacklogAsHtml(backlogId, css, js) {
     if (!backlogId) {
         return;
     }
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
-
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-
-
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = html;
+
+    json.kv.backlogHtml = '<style>' + css + '</style>' + html + '<script>' + js + '</script>';
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -1183,11 +1183,12 @@ function genClassworkAndUserMatrix(fkClassId) {
                         .attr('fkClassworkId', cObj.id)
                         .attr('onclick', 'showClassworkInfoManual(this)')
                         .append($('<span>').text(cObj.title))
-                        .append($('<span>').text(' '))
-                        .append($('<span>').text(cObj.createdDate))
-                        .append($('<span>').text(' '))
-                        .append($('<span>').text(cObj.dueDate))
-                        .append($('<span>').text(cObj.type))
+                        .append($('<br>'))
+                        .append($('<span>').text('  ('))
+                        .append($('<span>').text(Utility.convertDate(cObj.dueDate) + ' : ' + cObj.dueTime))
+                        .append($('<span>').text(', '))
+                        .append($('<span>').text(cObj.typeName))
+                        .append($('<span>').text(')'))
                         )
                 )
     }
@@ -1215,6 +1216,11 @@ function genClassworkAndUserMatrix(fkClassId) {
                                 .attr('classworkType', grading[key].classworkType)
                                 .append($('<br>'))
                                 .append($('<span>').text('Open')))
+                        .append("<br>")
+                        .append($("<a href='#'>")
+                                .addClass("add-comment-to-classwork")
+                                .attr('pid', pid)
+                                .append($('<i class="fa fa-comment">').text('3')))
                         ;
             }
             tr.append(td);
@@ -1226,7 +1232,14 @@ function genClassworkAndUserMatrix(fkClassId) {
     $('._teacherGradingSystem').html(table);
 }
 
+$(document).on('click', '.add-comment-to-classwork', function () {
+    var pid = $(this).attr('pid');
 
+    //Show Classwork From info
+    var padeId = showForm('21120404294009645062');
+    $('#comp_id_21120404343400055046').val(pid);
+    getClassworkCommentList();
+})
 function genClassworkAndUserMatrixStudent(fkClassId) {
     $('._teacherGradingSystem').html("No Data Found");
     if (!fkClassId) {
@@ -1251,8 +1264,10 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
             .append($('<th>').text('Created Date'))
             .append($('<th>').text('Due Date'))
             .append($('<th>').text('Type'))
+            .append($('<th>').text(''))
             .append($('<th>').text('Grade'))
             .append($('<th>').text(''))
+
 
 
     thead.append(trh);
@@ -1278,17 +1293,21 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
                 .append($('<td>').text(cObj.typeName))
 
 
+
                 ;
         idx++;
 
         var key = cObj.id + "_" + global_var.current_ticker_id;
         if (grading && grading[key]) {
-
             var span = (grading[key].grade) ? $('<b>')
                     .css('background-color', 'yellow')
                     .css('border-radius', '10px')
                     .css('padding', '2px 5px')
                     .text(GradeList[grading[key].grade]) : "";
+            tr.append($('<td>').append($("<a href='#'>")
+                    .addClass("add-comment-to-classwork")
+                    .attr('pid', grading[key].id)
+                    .append($('<i class="fa fa-comment">').text(''))))
             tr.append($('<td>').append(span))
                     .append($('<td>')
                             .append($('<a href="#">')
@@ -1299,6 +1318,7 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
                     ;
         } else {
             tr.append($('<td>').text(''))
+                    .append($('<td>').text(''))
                     .append($('<td>')
                             .append($('<a href="#">')
                                     .attr("fkClassworkId", cObj.id)
@@ -1308,6 +1328,8 @@ function genClassworkAndUserMatrixStudent(fkClassId) {
                                     .attr('onclick', 'startBusinessCaseClasswork(this)')
                                     .text("Submit")))
         }
+
+
         tbody.append(tr);
     }
 
@@ -1347,6 +1369,37 @@ function startBusinessCaseClasswork(el) {
 //            21112007581103583541 startNewClasswork
 }
 
+
+$(document).on('click', '.comment-loader', function (ev) {
+    getClassworkCommentList();
+});
+
+function getClassworkCommentList() {
+    var fkClassworkAndUserId = $('#comp_id_21120404343400055046').val();
+    callApi('21120407174202603802', {fkClassworkAndUserId: fkClassworkAndUserId}, true, function (res) {
+        var table = $('table#comp_id_21120407301502687177');
+        table.find('tbody').html('');
+        var obj = res.tbl[0].r;
+        for (var i in obj) {
+            var o = obj[i];
+            var tr = $('<tr>');
+            tr.append($('<td>')
+                    .css('max-width', '55px')
+                    .append($('<img>')
+                            .attr('width', '50px')
+                            .css("border-radius", '45px')
+                            .attr('src', fileUrl(o.createdByImage))))
+                    .append($('<td>').text(o.createdByName))
+                    .append($('<td>').text(o.commentBody))
+                    .append($('<td>').append(TableComp.CompType.FileList(o.commentFile)))
+                    .append($('<td>').text(Utility.convertDate(o.createdDate) + " " + Utility.convertTime(o.createdTime)))
+
+
+
+            table.find('tbody').append(tr);
+        }
+    });
+}
 
 function showClassworkInfoManual(el) {
     //Show Classwork From info

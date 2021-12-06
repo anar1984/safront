@@ -468,12 +468,12 @@ function addNewTask4BugMultiZad() {
     data.taskName = val;
     data.filename = files;
     data.fkProjectId = $('#bug_filter_project_id_add').val();
-    data.fkBacklogId = $('#bug_filter_backlog_id_add').val()
-    data.fkAssigneeId = $('#bug_filter_assignee_id_add').val()
+    data.fkBacklogId = $('#bug_filter_backlog_id_add').val();
+    data.fkAssigneeId = $('#bug_filter_assignee_id_add').val();
     data.fkTaskTypeId = $("#bug_task_type_id_add").val();
     data.taskNature = $("#bug_task_nature_id_add").val();
     data.taskPriority = $("#bug_filter_priority_add").val();
-    data.taskNature = $("#bug_filter_project_id_add").val();
+    //data.taskNature = $("#bug_filter_project_id_add").val();
     data.sprintList = sprintList;
 
 
@@ -598,8 +598,9 @@ function addNewTask4BugInput(el) {
     var taskName = $(el).val().trim();
     var projectList = $('#bug_filter_project_id').val();
     if (projectList.length === 0) {
-        Toaster.showError("Please select project(s).")
-        return;
+//        Toaster.showError("Please select project(s).")
+//        return;
+        projectList = '-1';
     }
 
     var backlogList = ($('#bug_filter_backlog_id').val().length > 0) ?
@@ -692,7 +693,7 @@ function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, pr
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
             id = res.kv.id;
             SATask.updateTaskByRes(res);
@@ -1245,7 +1246,7 @@ function setBugListInitialData() {
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
     bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
     bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
-   
+
 }
 
 $(document).on("change", ".issue-mgmt-general-filter", function (e) {
@@ -1274,8 +1275,8 @@ function getBugList() {
     json.kv.closedDateTo = bug_filter.closed_date_to;
     json.kv.showChildTask = bug_filter.showChildTask;
     json.kv.showChildTask = bug_filter.showChildTask;
-    json.kv.startLimit=0;
-    json.kv.endLimit=25;
+    json.kv.startLimit = 0;
+    json.kv.endLimit = 25;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2178,7 +2179,7 @@ $(document).on("click", '#expand-group', function (e) {
 })
 
 function reset_task_data() {
-    $('.task-events-created').attr("data-taskid",'');
+    $('.task-events-created').attr("data-taskid", '');
     $('.task-events-created input').val('');
     $('.task-events-created input').change('');
     $('input#taskNameInputNew2').val('');
@@ -2192,7 +2193,7 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show();
     addNewTask4BugMultiZad( );
-    
+
 })
 
 $(document).on("focus", 'input#taskNameInputNew2', function (e) {
@@ -3683,12 +3684,12 @@ $(document).on("change", "#activateUpdatedEvenets", function (e) {
 });
 $(document).on("change", "#activateCreatedEvenets", function (e) {
 
-    if ($(this).is(':checked')){
-    
+    if ($(this).is(':checked')) {
+
         $('.task-events-created .cs-input-group input').css("pointer-events", "auto");
         $('.task-events-created .cs-input-group input').css("opacity", "1");
         $('.task-events-created .cs-input-group input').attr("disabled", false);
-    }else{
+    } else {
         $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
         $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
         $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
