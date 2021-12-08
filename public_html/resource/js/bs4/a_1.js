@@ -22390,3 +22390,76 @@ var SCSourceManagement = {
 
 }
 
+function RemoveDescMultiple() {
+    var listch = $(".multiple-desc-inp");
+    var lst = '';
+        listch.each(function(index) {
+        
+        if ($(this).prop('checked')) {
+             lst+= $(this).attr('data-id')+'%IN%'
+            $(this).parent().remove();
+            
+        }
+       
+        })
+    
+    removeApidesct(lst);
+}
+
+
+function removeApidesct(apiId) {
+     var json = initJSON();
+         json.kv.ids = apiId;
+         json.kv.fkBacklogId = global_var.current_backlog_id;
+         json.kv.fkProjectId = global_var.current_project_id;
+    
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              
+            }
+        });
+}
+function dragDesctInputChangeOrder(item) {
+    var itms = $(item).closest('td').find('.drag-item');
+
+       var lst = '';
+        itms.each(function(index) {
+        
+             lst+= $(this).attr('data-id')+'%IN%'          
+           
+        })
+
+    updateOrderNo(lst);
+}
+
+function updateOrderNo(id) {
+     var json = initJSON();
+         json.kv.id = id;
+         json.kv.fkBacklogId = global_var.current_backlog_id;
+         json.kv.fkProjectId = global_var.current_project_id;
+    
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              
+            }
+        });
+}
+
+
+
