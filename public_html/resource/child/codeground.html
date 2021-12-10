@@ -1,78 +1,178 @@
-
 <style>
-/* horizontal panel*/
+    /* horizontal panel*/
 
-.panel-container {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid silver;
-  overflow: hidden;
-  
-}
-.panel-left-code {
-    flex: 0 0 auto;
-    padding: 0px;
-    width: 300px;
-    min-height: 100%;
-    width: 50%;
-    white-space: nowrap;
-    color: white;
-}
+    .panel-container {
+        display: flex;
+        flex-direction: row;
+        border: 1px solid silver;
+        overflow: hidden;
 
-.splitter-code {
-  flex: 0 0 auto;
-  width: 18px;  
-  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #535353;
-  min-height: 200px;
-  cursor: col-resize;  
-}
+    }
 
-.panel-right-code {
-  flex: 1 1 auto;
-  /* resizable */
-  padding: 0px;
-  width: 50%;
-  height: 100%;
-  background: #eee;
-}
+    .panel-left-code {
+        flex: 0 0 auto;
+        padding: 0px;
+        width: 300px;
+        min-height: 100%;
+        width: 50%;
+        white-space: nowrap;
+        color: white;
+    }
 
-/* vertical panel */
+    .splitter-code {
+        flex: 0 0 auto;
+        width: 18px;
+        background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #535353;
+        min-height: 200px;
+        cursor: col-resize;
+    }
 
-.panel-container-vertical {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: 1px solid silver;
-  overflow: hidden;
-}
+    .panel-right-code {
+        flex: 1 1 auto;
+        /* resizable */
+        padding: 0px;
+        width: 50%;
+        height: 100%;
+        background: #eee;
+    }
 
-.panel-top-code {
-  flex: 0 0 auto;
-  /* only manually resize */
-  padding: 0px;
-  width: 100%;
-  white-space: nowrap;
+    /* vertical panel */
 
-  color: white;
-}
+    .panel-container-vertical {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid silver;
+        overflow: hidden;
+    }
 
-.splitter-horizontal {
-  flex: 0 0 auto;
-  height: 18px;
-  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
-  cursor: row-resize;
-}
+    .panel-top-code {
+        flex: 0 0 auto;
+        /* only manually resize */
+        padding: 0px;
+        width: 100%;
+        white-space: nowrap;
 
-.panel-bottom-code{
-  flex: 1 1 auto;
-  /* resizable */
-  padding: 2px;
-  min-height: 200px;
-}
+        color: white;
+    }
+
+    .splitter-horizontal {
+        flex: 0 0 auto;
+        height: 18px;
+        background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
+        cursor: row-resize;
+    }
+
+    .panel-bottom-code {
+      background-color: white;
+        flex: 1 1 auto;
+        /* resizable */
+        padding: 2px;
+        min-height: 200px;
+    }
+
+    .html-code-editor::after {
+        content: "HTML";
+        color: black;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border-radius: 6px;
+        border: 1px solid black;
+        padding: 2px 5px;
+        font-size: 11px;
+        background: #ffc107;
+        font-weight: bold;
+    }
+
+    .js-code-editor::after {
+        content: "JS";
+        color: black;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border-radius: 6px;
+        border: 1px solid black;
+        padding: 2px 5px;
+        font-size: 11px;
+        background: #dc3545;
+        font-weight: bold;
+    }
+
+    .css-code-editor::after {
+        content: "CSS";
+        color: black;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border-radius: 6px;
+        border: 1px solid black;
+        padding: 2px 5px;
+        font-size: 11px;
+        background: #17a2b8;
+        font-weight: bold;
+    }
+
+    .panel-bottom-code-view {
+        color: black;
+        z-index: 10;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border-radius: 6px;
+        padding: 2px 5px;
+        font-size: 11px;
+        background: #82eebc;
+        font-weight: bold;
+    }
+
+    .panel-bottom-code:hover .panel-bottom-code-view {
+        display: none;
+    }
+
+    .cs-col-Ceckbox {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .display-n {
+        display: none;
+    }
+    .result-code-editor-inp-div{
+        width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+   
+
+    .result-code-editor-style{
+        width: 95%;
+        background-color: #eeeeee;
+        box-shadow:
+       inset 0 -3em 3em rgba(0,0,0,0.1),
+             0 0  0 2px rgb(255,255,255),
+             0.3em 0.3em 1em rgba(0,0,0,0.3); 
+    }
+    .with-100{
+        width: 100%;
+       
+    }
+     .with-0{
+        width: 0px;
+       
+    }
 </style>
-<div style="position: relative;" class="d-flex justify-content-center storecard-header-nav-section">
+<div style="position: relative;" class="d-flex justify-content-center align-items-center storecard-header-nav-section">
 
-    <div class="d-flex justify-content-center cs-col-pagename" style="padding-right:10px;">
+    <div class=" cs-col-Ceckbox"></label><span>from Live Prototipe HTML</span>
+        <label class="switch " style="right: 0px; margin: 10px;">
+            <input type="checkbox" id="cs-col-Ceckbox-id" class="">
+            <span class="slider round"></span>
+    </div>
+
+    <div class="d-flex justify-content-center cspagename-col-" style="padding-right:10px;">
         <div class="mm-col">
             <span class="mm-title"></span>
         </div>
@@ -82,8 +182,8 @@
             <span class="mm-title">Project</span>
         </div>
         <div class="mm-col">
-            <select  class="form-control  projectList_codeground_storycard" 
-                    data-live-search="true" name="" id="project-list-codeground">
+            <select class="form-control  projectList_codeground_storycard" data-live-search="true" name=""
+                id="project-list-codeground">
             </select>
         </div>
     </div>
@@ -92,8 +192,8 @@
             <span class="mm-title">Story Card</span>
         </div>
         <div class="mm-col">
-            <select class="form-control code-select-picker"
-                    name="" data-live-search="true" id="storyCardListSelectBox4CodeGround">
+            <select class="form-control code-select-picker" name="" data-live-search="true"
+                id="storyCardListSelectBox4CodeGround">
             </select>
         </div>
     </div>
@@ -102,26 +202,40 @@
             <span class="mm-title">Theme</span>
         </div>
         <div class="mm-col">
-            <select class="form-control code-select-picker"
-                    name=""   id="change-editor-theme-monaco">
-                    <option value="vs">Light</option>
+            <select class="form-control code-select-picker" name="" id="change-editor-theme-monaco">
+                <option value="vs">Light</option>
                 <option value="vs-dark">Dark</option>
                 <option value="hc-black">Black</option>
             </select>
         </div>
     </div>
     <div class="cs-col-storecard-general-setting">
-        <button class="btn btn-success  " id="run-code-ground-btn" title="Run">
+        <button class="btn ml-1 mr-1 btn-success btn-sm" id="run-code-ground-btn" title="Run">
             Run
         </button>
     </div>
-    <div class="cs-col-storecard-general-setting mr-2">
-        <button class="btn btn-info  " id="save-code-ground-btn" title="Save">
+    <div class="cs-col-storecard-general-setting mr-1">
+        <button class="btn btn-info btn-sm " id="save-code-ground-btn" title="Save">
             Save
         </button>
     </div>
+    <div class="cs-col-storecard-general-setting mr-1">
+        <button class="btn btn-danger btn-sm " id="js-toggle-ground-btn" title="Toggle-js">
+            TOGGLE-JS
+        </button>
+    </div>
+    <div class="cs-col-storecard-general-setting mr-1">
+        <button class="btn btn-warning btn-sm " id="html-toggle-ground-btn" title="Toggle-js">
+            TOGGLE-HTML
+        </button>
+    </div>
+    <div class="cs-col-storecard-general-setting mr-1">
+        <button class="btn btn-info btn-sm " id="css-toggle-ground-btn" title="Toggle-js">
+            TOGGLE-CSS
+        </button>
+    </div>
 
-   
+
 </div>
 <div style="height:calc(100% - 45px);" class="page-container ">
 
@@ -130,63 +244,99 @@
         <div class="panel-left-code">
             <div class="panel-container-vertical">
 
-        <div style="height: 40%;" class="panel-top-code html-code-editor">
-            <div class="w-100 h-100" id="html-code-editor">
-
-            </div>
-        </div>
-
-       
-        <div style="height: 60%;" class="panel-bottom-code">
-            <div class="w-100 h-100" id="js-code-editor">
-
-            </div>
-        </div>
-    </div>
-        </div>
-      
-
-      
-
-        <div  class="panel-right-code">
-             <div class="panel-container-vertical">
-
-        <div  style="height: 45%;" class="panel-top-code">
-            <div class="w-100 h-100" id="css-code-editor">
-
-            </div>
-        </div>
-      
-        <div style="height: 55%;" class="panel-bottom-code">
-            <div class="w-100 h-100 "   style="overflow: scroll;"  id="result-code-editor">
-                <div class="overflow-hidden">
-                    <style id="style-result-code-editor"></style>
-                    <div id="element-result-code-editor" class="redirectClass h-100">
+                <div style="height: 40%;" class="panel-top-code html-code-editor display-n">
+                    <div class="w-100 h-100 " id="html-code-editor">
 
                     </div>
-                    <script type="text/javascript" id="js-result-code-editor" ></script>
+                </div>
+
+
+                <div style="height: 60%; position: relative;" class="panel-bottom-code js-code-editor">
+                    <div class="w-100 h-100" id="js-code-editor">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="panel-right-code ">
+            <div class="panel-container-vertical">
+
+                <div style="height: 45%;" class="panel-top-code css-code-editor display-n">
+                    <div class="w-100 h-100 " id="css-code-editor">
+
+                    </div>
+                </div>
+
+                <div style="height: 55%; position: relative;" class="panel-bottom-code">
+                    <div class="result-code-editor-inp-div">
+                       <label for="with">width:
+                            <input id="result-code-width-inp" type="text" name="width">
+                       </label>
+                    </div>
+                    <span class="panel-bottom-code-view btn btn-sm">VIEW</span>
+                    <div class="m-auto h-100 result-code-editor-style " style="overflow: scroll;" id="result-code-editor">
+                        <div class="overflow-hidden">
+                            <style id="style-result-code-editor"></style>
+                            <div id="element-result-code-editor" class="redirectClass h-100">
+
+                            </div>
+                            <script type="text/javascript" id="js-result-code-editor"></script>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-        </div>
-    </div>
 
-  
+
 </div>
 
 
 
 
 <script>
-     $(".panel-left-code").resizable({
+    $('#css-toggle-ground-btn').click(function () {
+        $(".css-code-editor").toggleClass('display-n');
+    })
+
+    $('#html-toggle-ground-btn').click(function () {
+        $(".html-code-editor").toggleClass('display-n');
+        if($(".js-code-editor").hasClass("display-n")&& $(".html-code-editor").hasClass("display-n")){
+            $(".panel-right-code").addClass("with-100")  
+            $(".panel-left-code").addClass("with-0")   
+        }else{
+            $(".panel-right-code").removeClass("with-100")  
+            $(".panel-left-code").removeClass("with-0") 
+        }
+    })
+
+    $('#js-toggle-ground-btn').click(function () {
+        
+        $(".js-code-editor").toggleClass('display-n');
+        if($(".js-code-editor").hasClass("display-n")&& $(".html-code-editor").hasClass("display-n")){
+            $(".panel-right-code").addClass("with-100")  
+            $(".panel-left-code").addClass("with-0")   
+        }else{
+            $(".panel-right-code").removeClass("with-100")  
+            $(".panel-left-code").removeClass("with-0") 
+        }
+    })
+
+
+    $(".panel-left-code").resizable({
         handles: 'e',
         resizeHeight: false
- });
+    });
+    $("#result-code-editor").resizable({
+        handles: 'e',
+        resizeHeight: false
+    });
 
- $(".panel-top-code").resizable({
-    handles: 's',
-   resizeWidth: false
- });
+    $(".panel-top-code").resizable({
+        handles: 's',
+        resizeWidth: false
+    });
 </script>
-

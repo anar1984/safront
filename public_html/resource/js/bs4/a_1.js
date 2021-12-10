@@ -13020,7 +13020,12 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     elm.find('div').remove();
     var pid = $("#project-list-codeground").val()
     var js = window.editorJSGround.getValue();
-    var html = window.editorHTMLGround.getValue();
+   
+     if ($("#cs-col-Ceckbox-id").prop('checked')) {
+         var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+    } else {
+         var html = window.editorHTMLGround.getValue();
+    }
     var css = window.editorCSSGround.getValue();
 
 
@@ -13060,9 +13065,15 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val()
+    var pid = $("#project-list-codeground").val();
     var js = window.editorJSGround.getValue();
-    var html = window.editorHTMLGround.getValue();
+    
+    if ($("#cs-col-Ceckbox-id").prop('checked')) {
+        var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+
     var css = window.editorCSSGround.getValue();
 
     var block = getIframeBlock(pid, css, js, html);
@@ -22394,18 +22405,14 @@ function RemoveDescMultiple() {
     var listch = $(".multiple-desc-inp");
     var lst = '';
         listch.each(function(index) {
-        
         if ($(this).prop('checked')) {
              lst+= $(this).attr('data-id')+'%IN%'
-            $(this).parent().remove();
-            
+            $(this).parent().remove();   
         }
-       
         })
     
     removeApidesct(lst);
 }
-
 
 function removeApidesct(apiId) {
      var json = initJSON();
@@ -22432,7 +22439,6 @@ function dragDesctInputChangeOrder(item) {
 
        var lst = '';
         itms.each(function(index) {
-        
              lst+= $(this).attr('data-id')+'%IN%'          
            
         })
