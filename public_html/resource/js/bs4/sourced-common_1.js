@@ -7387,6 +7387,7 @@ UserStory.prototype = {
 
         }
         $('#generalview_input_list').append(table);
+
         $(".description-style-background").sortable({
             handle: ".iconDrag",
             update: function (event, ui) {
