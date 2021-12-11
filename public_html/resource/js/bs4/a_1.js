@@ -124,7 +124,7 @@ var saInputTagIsPressed = false;
 }(jQuery));
 
 
-$(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+$(document).on('keyup', '#backlogDescriptionText', function (e) {
     if (e.keyCode === 13) {
         new UserStory().insertNewBacklogDesc();
     }
@@ -13351,6 +13351,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
             var f = true;
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
+
                 var o = obj[n];
                 var pname = o.backlogName;
                 var op = $('<option></option>')
@@ -13363,10 +13364,21 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                cmd.append(op);
+                if(global_var.current_modal==='loadDev'){
+                      
+                      if(o.isApi==='1'){
+                        cmd.append(op); 
+
+                      }
+                }else{
+                    if(!o.isApi==='1'){
+                        cmd.append(op); 
+                      }
+                }
+              
             }
 
-            //            cmd.val(global_var.current_backlog_id);
+            cmd.val(global_var.current_backlog_id);
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
@@ -14310,12 +14322,15 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     callLoadStoryCard();
 });
 $(document).on('click', '.loadDev', function (evt) {
+    getProjectUsers();
+    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
 function callLoadDev() {
+      
     $.get("resource/child/dev.html", function (html_string) {
 
         new UserStory().clearAndShowAll(this)
@@ -14325,7 +14340,7 @@ function callLoadDev() {
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-        loadUsersAsOwner();
+       // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
         $('.cs-col-pagename .mm-title').html('');
@@ -16097,6 +16112,12 @@ function addApiModal() {
 
 
 function addUserStoryNewModal() {
+    if(global_var.current_modal==='loadDev'){
+        $(".trigger-name-class-backlog").html('API Name')
+    }else{
+        $(".trigger-name-class-backlog").html('User Story Name')
+
+    }
     $('#addUserStoryPopupModal').modal('show');
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
@@ -16113,7 +16134,11 @@ function addUserStoryNewPopup() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
-    json.kv['isApi'] = "0";
+    if(global_var.current_modal==='loadDev'){
+        json.kv['isApi'] = "1";  
+    }else{
+        json.kv['isApi'] = "0";
+    }
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -22435,19 +22460,22 @@ function removeApidesct(apiId) {
 }
 function dragDesctInputChangeOrder(item) {
     var itms = $(item).closest('td').find('.drag-item');
-
+        
+       var iid = $(item).closest('td').find('input.description-style').attr("iid");
        var lst = '';
         itms.each(function(index) {
              lst+= $(this).attr('data-id')+'%IN%'          
            
         })
 
-    updateOrderNo(lst);
+    updateOrderNo(lst,iid);
 }
 
-function updateOrderNo(id) {
+function updateOrderNo(id,iid) {
      var json = initJSON();
          json.kv.id = id;
+         json.kv.fkInputId = iid;
+         json.kv.inputName = SAInput.GetInputName(iid);
          json.kv.fkBacklogId = global_var.current_backlog_id;
          json.kv.fkProjectId = global_var.current_project_id;
     

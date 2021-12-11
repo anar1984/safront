@@ -29,7 +29,7 @@
         <div class="scg-button-box form-control">
             <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-wrench" style=" margin-right: 6px; color: #fff;"></i> Tools</button>
             <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
-                <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Story Card</a></button>  <!-- 20.08.2020 -->
+                <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Api</a></button>  <!-- 20.08.2020 -->
                 <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
                 <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()"><a href="#" >Save as PDF</a></button>
                 <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()"> <a href="#" >Copy URL</a></button>
@@ -50,6 +50,11 @@
                 <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
             </div>
         </div>
+    </div>
+    <div class="cs-col-storecard-general-setting">
+        <input disabled='disabled' class="btn btn-outline-light"
+               id="storycard-panel-backlog-id"  title = 'Refresh'>
+          
     </div>
 </div>
 
@@ -360,7 +365,7 @@
                     <div class="col-6">
                         <div class="cs-forum-group pt-4">
                             <label class="cs-label-name all-cs-status">Type</label>
-                            <select class="user-story-backlog-type user-story-short-change" data-type="backlogType" id="user-story-type">
+                            <select class="user-story-backlog-type user-story-short-change" disabled='disabled' data-type="backlogType" id="user-story-type">
                                  <option value="api"  selected="selected">Backend Function(API)</option>
                             </select>
                         </div>

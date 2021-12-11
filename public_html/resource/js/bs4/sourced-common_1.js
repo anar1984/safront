@@ -19483,9 +19483,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
        
         var storyCardType = SACore.GetBacklogDetails(global_var.current_backlog_id,"backlogType");
 
-        $('#user-story-type').val(storyCardType);
-        storyCardTypeChangeEvent(storyCardType);
+        if(!global_var.current_modal==='loadDev'){
+            $('#user-story-type').val(storyCardType);
+           
+
+        }
         $('#user-story-type').selectpicker('refresh');
+        if(global_var.current_modal==='loadDev'){
+            storyCardTypeChangeEvent('api');
+
+        }else{
+            storyCardTypeChangeEvent(storyCardType);
+
+        }
         
         var ido = SACore.GetCurrentBacklogId();
 
