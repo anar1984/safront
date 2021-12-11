@@ -13379,7 +13379,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
               
             }
 
-            //            cmd.val(global_var.current_backlog_id);
+            cmd.val(global_var.current_backlog_id);
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
@@ -14323,12 +14323,15 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     callLoadStoryCard();
 });
 $(document).on('click', '.loadDev', function (evt) {
+    getProjectUsers();
+    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
 function callLoadDev() {
+      
     $.get("resource/child/dev.html", function (html_string) {
 
         new UserStory().clearAndShowAll(this)
@@ -14338,7 +14341,7 @@ function callLoadDev() {
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-        loadUsersAsOwner();
+       // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
         $('.cs-col-pagename .mm-title').html('');
