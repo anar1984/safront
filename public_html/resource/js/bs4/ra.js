@@ -935,11 +935,14 @@ function setBacklogAsHtml(backlogId, css, js) {
     }
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
+    var oldmodal = global_var.current_modal
+    global_var.current_modal =''
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+    global_var.current_modal =oldmodal
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
 
-    json.kv.backlogHtml = '<style>' + css + '</style>' + html + '<script>' + js + '</script>';
+    json.kv.backlogHtml = '<style id="css-function-list-for-story-card">' + css + '</style>' + html + '<script id="js-function-list-for-story-card">' + js + '</script>';
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
