@@ -160,7 +160,7 @@
 .bugListTable td:nth-child(5),
 .bugListTable td:nth-child(6),
 .bugListTable td:nth-child(7){
-   border-right: 1px solid #eeeeee;
+   border-right: none
 }
 .bugListTable th:nth-child(1),
 .bugListTable th:nth-child(2),
@@ -169,7 +169,7 @@
 .bugListTable th:nth-child(5),
 .bugListTable th:nth-child(6),
 .bugListTable th:nth-child(7){
-   border-right: 1px solid #eeeeee;
+   border-right: none;
 }
 .bug-icon{
     color:transparent;
