@@ -194,7 +194,9 @@
             <div class="col-12">
                 <br>
                 <label class="inputAndDes"><b>Inputs and Descriptions</b></label>
-                <div class="col-12 add_descriotion_btn pdfHide" > 
+                
+                <div  class="d-flex col-12 add_descriotion_btn-container">
+                    <div  class="col-2 add_descriotion_btn pdfHide" > 
                     <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
                             id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </button>
@@ -216,6 +218,20 @@
 
                     </div>
                 </div>
+                  <div class="col-10 add_descriotion_btn pdfHide" > 
+                    <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                       
+                        <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
+                      
+                    </div>
+                </div>
+
+                </div>
+                
+                
 
 
                 <div class="col-12" id='generalview_input_list'>

@@ -124,7 +124,7 @@ var saInputTagIsPressed = false;
 }(jQuery));
 
 
-$(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+$(document).on('keyup', '#backlogDescriptionText', function (e) {
     if (e.keyCode === 13) {
         new UserStory().insertNewBacklogDesc();
     }
@@ -13030,21 +13030,39 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
 
-function getIframeBlock(pid, css, js, body) {
+function getIframeBlock(pid, css, js, bodys) {
+    var body = $("<div class='redirectClass h-100'>").html(bodys)
+         var cssBlock = $(body).find('#css-function-list-for-story-card');
+         var jsBlock = $(body).find('#js-function-list-for-story-card')
+      if(cssBlock){
+        $(body).find('#css-function-list-for-story-card').html(css);
+
+      }else{
+        $(body).append($('<style id="js-function-list-for-story-card">').html(css));
+
+      }
+      if(jsBlock){
+        $(body).find('#js-function-list-for-story-card').html(js);
+      }else{
+        $(body).append($('<script id="js-function-list-for-story-card">').html(js));
+      }
+      return body;
     var $iframe = $("<div class='overflow-hidden'>")
-            .append($("<style>").text(css))
-            .append($("<div class='redirectClass h-100'>").html(body))
-            .append($("<script type='text/javascript'>").text(js))
+            .append(body)
 
     return $iframe.html();
 }
 $(document).on("click", '#save-code-ground-btn', function (e) {
-
     var elm = $("#result-code-editor");
     elm.find('div').remove();
     var pid = $("#project-list-codeground").val()
     var js = window.editorJSGround.getValue();
-    var html = window.editorHTMLGround.getValue();
+   
+     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+         var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+    } else {
+         var html = window.editorHTMLGround.getValue();
+    }
     var css = window.editorCSSGround.getValue();
 
 
@@ -13084,9 +13102,15 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val()
+    var pid = $("#project-list-codeground").val();
     var js = window.editorJSGround.getValue();
-    var html = window.editorHTMLGround.getValue();
+    
+    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+        var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+
     var css = window.editorCSSGround.getValue();
 
     var block = getIframeBlock(pid, css, js, html);
@@ -13365,6 +13389,7 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
             var f = true;
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
+
                 var o = obj[n];
                 var pname = o.backlogName;
                 var op = $('<option></option>')
@@ -13377,10 +13402,21 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                cmd.append(op);
+                if(global_var.current_modal==='loadDev'){
+                      
+                      if(o.isApi==='1'){
+                        cmd.append(op); 
+
+                      }
+                }else{
+                    if(!o.isApi==='1'){
+                        cmd.append(op); 
+                      }
+                }
+              
             }
 
-            //            cmd.val(global_var.current_backlog_id);
+            cmd.val(global_var.current_backlog_id);
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
             cmd.change();
@@ -14324,12 +14360,15 @@ $(document).on('click', '.loadStoryCard', function (evt) {
     callLoadStoryCard();
 });
 $(document).on('click', '.loadDev', function (evt) {
+    getProjectUsers();
+    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
 function callLoadDev() {
+      
     $.get("resource/child/dev.html", function (html_string) {
 
         new UserStory().clearAndShowAll(this)
@@ -14339,7 +14378,7 @@ function callLoadDev() {
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-        loadUsersAsOwner();
+       // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
         $('.cs-col-pagename .mm-title').html('');
@@ -16111,6 +16150,12 @@ function addApiModal() {
 
 
 function addUserStoryNewModal() {
+    if(global_var.current_modal==='loadDev'){
+        $(".trigger-name-class-backlog").html('API Name')
+    }else{
+        $(".trigger-name-class-backlog").html('User Story Name')
+
+    }
     $('#addUserStoryPopupModal').modal('show');
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
@@ -16127,7 +16172,11 @@ function addUserStoryNewPopup() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
-    json.kv['isApi'] = "0";
+    if(global_var.current_modal==='loadDev'){
+        json.kv['isApi'] = "1";  
+    }else{
+        json.kv['isApi'] = "0";
+    }
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -22413,4 +22462,75 @@ var SCSourceManagement = {
     }
 
 }
+
+function RemoveDescMultiple() {
+    var listch = $(".multiple-desc-inp");
+    var lst = '';
+        listch.each(function(index) {
+        if ($(this).prop('checked')) {
+             lst+= $(this).attr('data-id')+'%IN%'
+            $(this).parent().remove();   
+        }
+        })
+    
+    removeApidesct(lst);
+}
+
+function removeApidesct(apiId) {
+     var json = initJSON();
+         json.kv.ids = apiId;
+         json.kv.fkBacklogId = global_var.current_backlog_id;
+         json.kv.fkProjectId = global_var.current_project_id;
+    
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              
+            }
+        });
+}
+function dragDesctInputChangeOrder(item) {
+    var itms = $(item).closest('td').find('.drag-item');
+        
+       var iid = $(item).closest('td').find('input.description-style').attr("iid");
+       var lst = '';
+        itms.each(function(index) {
+             lst+= $(this).attr('data-id')+'%IN%'          
+           
+        })
+
+    updateOrderNo(lst,iid);
+}
+
+function updateOrderNo(id,iid) {
+     var json = initJSON();
+         json.kv.id = id;
+         json.kv.fkInputId = iid;
+         json.kv.inputName = SAInput.GetInputName(iid);
+         json.kv.fkBacklogId = global_var.current_backlog_id;
+         json.kv.fkProjectId = global_var.current_project_id;
+    
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              
+            }
+        });
+}
+
+
 
