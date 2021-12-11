@@ -13006,11 +13006,25 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
 
-function getIframeBlock(pid, css, js, body) {
+function getIframeBlock(pid, css, js, bodys) {
+    var body = $("<div class='redirectClass h-100'>").html(bodys)
+         var cssBlock = $(body).find('#css-function-list-for-story-card');
+         var jsBlock = $(body).find('#js-function-list-for-story-card')
+      if(cssBlock){
+        $(body).find('#css-function-list-for-story-card').html(css);
+
+      }else{
+        $(body).append($('<style id="js-function-list-for-story-card">').html(css));
+
+      }
+      if(jsBlock){
+        $(body).find('#js-function-list-for-story-card').html(js);
+      }else{
+        $(body).append($('<script id="js-function-list-for-story-card">').html(js));
+      }
+      return body;
     var $iframe = $("<div class='overflow-hidden'>")
-            .append($("<style>").text(css))
-            .append($("<div class='redirectClass h-100'>").html(body))
-            .append($("<script type='text/javascript'>").text(js))
+            .append(body)
 
     return $iframe.html();
 }
