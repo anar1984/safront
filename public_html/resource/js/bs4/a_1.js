@@ -124,7 +124,7 @@ var saInputTagIsPressed = false;
 }(jQuery));
 
 
-$(document).on('keypress keydown keyup', '#backlogDescriptionText', function (e) {
+$(document).on('keyup', '#backlogDescriptionText', function (e) {
     if (e.keyCode === 13) {
         new UserStory().insertNewBacklogDesc();
     }
@@ -16113,6 +16113,12 @@ function addApiModal() {
 
 
 function addUserStoryNewModal() {
+    if(global_var.current_modal==='loadDev'){
+        $(".trigger-name-class-backlog").html('API Name')
+    }else{
+        $(".trigger-name-class-backlog").html('User Story Name')
+
+    }
     $('#addUserStoryPopupModal').modal('show');
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
@@ -16129,7 +16135,11 @@ function addUserStoryNewPopup() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
-    json.kv['isApi'] = "0";
+    if(global_var.current_modal==='loadDev'){
+        json.kv['isApi'] = "1";  
+    }else{
+        json.kv['isApi'] = "0";
+    }
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
