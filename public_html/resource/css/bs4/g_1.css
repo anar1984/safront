@@ -4689,3 +4689,13 @@ td.selected{
 .modal-body .modal-inside-table-expand {
     display: block;
 }
+
+.iconDrag {
+    visibility: hidden;
+    color: #525596;
+}
+
+.drag-item:hover .iconDrag {
+    visibility: visible;
+}
+

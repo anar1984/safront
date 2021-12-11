@@ -720,11 +720,13 @@ $(document).on('dblclick', '.sql-table-cell-update', function (ev) {
     var key = $(this).attr('data-key');
     var tarea = $('<textarea>')
             .addClass('sql-table-cell-update-zad')
+            .addClass('form-control')
             .attr('data-id', id)
             .attr('data-key', key)
             .text(txt);
     $(this).removeClass('sql-table-cell-update');
     $(this).html(tarea);
+    tarea.focus();
 })
 
 $(document).on('change', '.sql-table-cell-update-zad', function (ev) {

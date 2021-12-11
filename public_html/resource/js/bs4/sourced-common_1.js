@@ -7387,6 +7387,14 @@ UserStory.prototype = {
 
         }
         $('#generalview_input_list').append(table);
+
+        $(".description-style-background").sortable({
+            handle: ".iconDrag",
+            update: function (event, ui) {
+                dragDesctInputChangeOrder(ui.item)
+            }
+           
+        });
     },
 
     getStoryCardOutputList: function (res) {
@@ -7464,6 +7472,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
+                    .append("<input type='checkbox'>")
                     .attr('class', 'description-style-background')
                     .addClass("text-left")
                     .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
@@ -10608,13 +10617,16 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
     
     setGUIComponentButtonGUIModal: function (popupBacklogId, el) {
                
-        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
         closeModal('userstory-gui-input-component-res-sus-analytic');
         var bcode = $(el).closest('div.redirectClass').attr("bcode");
         bcode = (bcode === undefined) ? "" : bcode;       
         
 //        loadBacklogProductionCoreDetailssById(popupBacklogId,true)
-        var padeId = new UserStory().showPopupforGUIComponent(html,popupBacklogId,bcode);
+         var loader = '<div class="box-loader shimmer"></div>'
+        var padeId = new UserStory().showPopupforGUIComponent(loader,popupBacklogId,bcode);
+
+        var html = new UserStory().getPopupHtmlBodyById4ProjectView(popupBacklogId);        
+                $("#"+padeId+" #userstory-gui-input-component-res-sus-id").html(html);
         
                 //  click on first tab
         $('.activeTabClass').each(function (e) {
@@ -10637,7 +10649,7 @@ class="us-ipo-input-table-tr"  pid="' + id + '" itable="' + replaceTags(Replace2
         var padeId = carrier.get('padeId');        
         var el = carrier.getElement();
         
-        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
+//        $('#' + padeId).find('.loaderModalInitiator').addClass("loaderModal");
         try{
             var tempEl1 = $('#' + padeId).find('div.redirectClass').first();
             loadSelectBoxesAfterGUIDesign(tempEl1);
@@ -19471,9 +19483,19 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
        
         var storyCardType = SACore.GetBacklogDetails(global_var.current_backlog_id,"backlogType");
 
-        $('#user-story-type').val(storyCardType);
-        storyCardTypeChangeEvent(storyCardType);
+        if(!global_var.current_modal==='loadDev'){
+            $('#user-story-type').val(storyCardType);
+           
+
+        }
         $('#user-story-type').selectpicker('refresh');
+        if(global_var.current_modal==='loadDev'){
+            storyCardTypeChangeEvent('api');
+
+        }else{
+            storyCardTypeChangeEvent(storyCardType);
+
+        }
         
         var ido = SACore.GetCurrentBacklogId();
 
@@ -20492,7 +20514,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
                                 .append('<input type="checkbox" id="us_input_list_check_all_new" onclick="new UserStory().toggleAllInputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
+                        .append($('<th></th>').attr('style', 'width:15%;background-color: #ffffff;').append('Name'))
 //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
                         .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
                         );
@@ -21948,7 +21970,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 var descId = obj[n].trim();
                 var desc1 = SAInputDesc.InputDescriptions[descId].description;
                 var color = SAInputDesc.InputDescriptions[descId].colored;
-                stln = this.getInputDescTdItem(descId, desc1, stln, color, object.id);
+                var orderNo = SAInputDesc.InputDescriptions[descId].orderNo;
+                stln = this.getInputDescTdItem(descId, desc1, stln, color, object.id,orderNo);
             }
 
             st += stln;
@@ -21957,7 +21980,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return st;
     },
 
-    getInputDescTdItem: function (descId, desc1, stln, color, inputId) {
+    getInputDescTdItem: function (descId, desc1, stln, color, inputId,orderNo) {
         color = (color) ? color : 'undefined';
         var colored = '<a class="colored-a" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
         var closeColor = "</a>"
@@ -21969,7 +21992,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         } catch (err) {
         }
 
-        return   (desc1) ? stln + '<div class="span-button-div">'
+        return (desc1) ? stln + '<div data-id="' + descId + '" order="'+orderNo+'" class="drag-item align-items-center d-flex span-button-div">'
+            + "<input class='multiple-desc-inp' data-id=" + descId + " type='checkbox'>"
+            +`<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>`
                 + '<span class="span_hover" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
 
                 + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
@@ -21997,6 +22022,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
     },
+
+    
 
     updateInputDescriptionEditLineNew: function (el, descId) {
         var inp = $('<input type="text">')

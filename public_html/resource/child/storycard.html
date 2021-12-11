@@ -58,6 +58,12 @@
             <i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;" aria-hidden="true"></i>
         </button>
     </div>
+     <div class="cs-col-storecard-general-setting">
+        <input class="btn btn-outline-secondary  "
+               id="storycard-panel-backlog-id"
+                title = 'Refresh'>
+          
+    </div>
 </div>
 
 <div class="row">
@@ -188,7 +194,9 @@
             <div class="col-12">
                 <br>
                 <label class="inputAndDes"><b>Inputs and Descriptions</b></label>
-                <div class="col-12 add_descriotion_btn pdfHide" > 
+                
+                <div  class="d-flex col-12 add_descriotion_btn-container">
+                    <div  class="col-2 add_descriotion_btn pdfHide" > 
                     <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
                             id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </button>
@@ -210,6 +218,20 @@
 
                     </div>
                 </div>
+                  <div class="col-10 add_descriotion_btn pdfHide" > 
+                    <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                       
+                        <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
+                      
+                    </div>
+                </div>
+
+                </div>
+                
+                
 
 
                 <div class="col-12" id='generalview_input_list'>
@@ -364,9 +386,10 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="cs-forum-group pt-4">
-                            <label class="cs-label-name all-cs-status">Type</label>
+                            <label class="cs-label-name all-cs-status" >Type</label>
                             <select class="user-story-backlog-type user-story-short-change" data-type="backlogType" id="user-story-type">
                                 <option value="gui"  selected>GUI Mockup</option>
+                                <option value="api"  selected>Backend API</option>
                                 <option value="desc">Descriptive</option>
                                 <option value="userstory">User Story</option>
                                 <option value="process">Process</option>
@@ -441,7 +464,7 @@
             <div class="col-12">
                 <hr class="hr-ss">
             </div>
-<!-- 
+ 
             <div class="col-12 story-card-right-menu-panels story-card-right-menu-panels-api ">
                 <div class="row">
                     <div class="story-card-right-menu-panels story-card-right-menu-panels-api col-6 is-api-dependence-verse cs-forum-group">
@@ -476,7 +499,7 @@
                         </div> 
                     </div>
                 </div>
-            </div> -->
+            </div> 
 
             <div class="story-card-right-menu-panels story-card-right-menu-panels-gui prototype-on-off col-12 is-api-dependence">
                 <div>
@@ -504,7 +527,7 @@
                 </div>
             </div>
 
-            <!-- <div class="prototype-on-off col-12 story-card-right-menu-panels story-card-right-menu-panels-api  ">
+             <div class="prototype-on-off col-12 story-card-right-menu-panels story-card-right-menu-panels-api  ">
                 <div>
                     <h3>Run in Backend</h3>
                 </div>
@@ -515,7 +538,7 @@
 
                     </label>
                 </div>
-            </div>     -->
+            </div>     
 
 
             <!-- <div class="" style="margin-top: 80px;" ><span><b>Estimated hour(s):</b> </span><span style="font-size: 14px;color: #727d91;" id="generalview_esthours"
