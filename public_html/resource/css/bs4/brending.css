@@ -3877,12 +3877,16 @@ hr.hr-ss {
     pointer-events:auto;
     display: block;
 }
+.cs-core-issue-management {
+    font-family: 'Quicksand', sans-serif !important;
+    background: rgb(4,57,109);
+    background: -moz-linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    background: -webkit-linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    background: linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525596",endColorstr="#bbbeff",GradientType=1);
+}
 .cs-core-issue-management .task-header-filter {
-    background: rgb(233,233,241);
-    background: -moz-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e9e9f1",endColorstr="#ffffff",GradientType=1);
+    background: transparent;
 }
 .cs-core-issue-management .task-header-filter {
     padding: 10px 6px;
@@ -3893,15 +3897,20 @@ hr.hr-ss {
 }
 .cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
     position: sticky;
-    top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
-    font-weight: 500;
+    background: #DFEEF7;
     z-index: 500;
     text-align: center;
     box-shadow: none;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 100%;
+    height: 30px;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
 }
 .cs-core-issue-management .tableFixHead tbody th:nth-child(20n) {
     border-right: none;
@@ -3956,10 +3965,10 @@ hr.hr-ss {
     width: 120px !important;
 }
 .cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(even) {
-    background-color: #E9E9F1;
+    background-color: #dfeef7;
 }
 .cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(odd) {
-    background-color: #F6F6FF;
+    background-color: #dfeef7;
 }
 .cs-core-issue-management .bugListTable td:nth-child(1), .cs-core-issue-management .bugListTable th:nth-child(1) {
     width: 25px;
@@ -3967,9 +3976,25 @@ hr.hr-ss {
     font-weight: bold;
     font-size: 14px;
 }
-.cs-core-issue-management .bugListTable tbody .bug-tr td{
-    padding: 3px 10px;
+.cs-core-issue-management .bugListTable {
     color: #525596;
+    width: max-content !important;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td{
+    color: #525596;
+    height: 30px;
+    border: none;
+    padding: 0px;
+    border: 1px solid transparent;
+    font-weight: 500;
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-checkbox{
+    width: 30px !important;
+    height: 30px !important;
+    text-align: center;
 }
 .cs-core-issue-management .bugListTable .bug-tr td input[type=checkbox], .cs-core-issue-management .bugListTable .bug-tr td input[type=radio], .cs-core-issue-management .tableFixHead tbody th:nth-child(n+1) input[type=checkbox] {
     width: 17px;
@@ -4003,19 +4028,19 @@ hr.hr-ss {
     font-size: 14px;
 }
 .bug-list-column-task-status .dropdown-toggle {
-    color: #ffffff;
-    background-color: #525596 !important;
-    border-color: #525596;
-    font-size: 14px;
-    height: 30px;
-    line-height: initial;
-    border-radius: 3px;
-    padding: 0 10px;
-    padding-left: 0;
     position: relative;
-    width: 100%;
     display: inline-flex;
     text-align: left;
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: auto;
+    height: 18px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
 }
 .cst-dropwdown-toggle-bug:hover:after {
     font-family: "Font Awesome 5 Pro";
@@ -4034,33 +4059,30 @@ hr.hr-ss {
     top: auto;
 }
 .bug-list-column-task-status [class*="us-item-status-"] {
-  padding: 0 0;
-  background-color: transparent !important;
-  height: 100%;
-  width: 100%;
-  vertical-align: middle;
-  font-size: 14px;
-  border-left: 10px solid;
-  padding-left: 5px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    border-radius: 0;
+
 }
 .bug-list-column-task-status .dropdown-toggle:after{
-    margin-top: 8px;
+    margin-top: 0;
+    margin-right: 0;
     vertical-align: middle;
+    right: 0px;
+    float: right
 }
 .bug-list-column-task-status .us-item-status-new {
  border-color: #f19a91;
+ background-color: #f19a91 !important;
 }
 .bug-list-column-task-status .us-item-status-ongoing {
     border-color: #f3c788;
+    background-color: #f3c788 !important;
 }
 .bug-list-column-task-status .us-item-status-closed {
     border-color: #8ad6a3;
+    background-color: #8ad6a3 !important;
 }
 .bug-list-column-task-status .us-item-status-waiting {
     border-color: #FFFF00;
+    background-color: #FFFF00 !important;
 }
 
 .bug-list-column-task-nature .get-data-group [class*="im-"] {
@@ -4816,4 +4838,29 @@ table.lbl-list-table tr td {
 }
 .task-mgmt-modal-child-task .btn:hover {
     color: #ffffff;
+}
+.cs-core-issue-management .tableFixHead tbody th i:after {
+    width:18px;
+    height:18px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.deadline:after {
+    width: 26px;
+    height: 18.09px;
+    margin-top: -3px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.status:after {
+    width: 20px;
+    height: 18px;
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.id:after {
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.numbers:after {
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.task-user-2:after, .cs-core-issue-management .tableFixHead tbody th i.task-user-1:after {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
 }
