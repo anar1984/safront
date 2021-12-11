@@ -273,17 +273,18 @@
     </div>
     <div class="cs-col-storecard-general-setting mr-1">
         <button class="btn btn-danger btn-sm " id="js-toggle-ground-btn" title="Toggle-js">
-            TOGGLE-JS
+           <i class="far fa-eye"> </i> JS
         </button>
     </div>
     <div class="cs-col-storecard-general-setting mr-1">
-        <button class="btn btn-warning btn-sm " id="html-toggle-ground-btn" title="Toggle-js">
-            TOGGLE-HTML
+        <button class="btn btn-danger btn-sm" id="html-toggle-ground-btn" title="Toggle-js">
+            <i class="far fa-eye fa-eye-slash "> </i> HTML
         </button>
     </div>
     <div class="cs-col-storecard-general-setting mr-1">
-        <button class="btn btn-info btn-sm " id="css-toggle-ground-btn" title="Toggle-js">
-            TOGGLE-CSS
+        <button class="btn btn-danger btn-sm " id="css-toggle-ground-btn" title="Toggle-js">
+            <i class="far fa-eye fa-eye-slash"> </i> CSS
+
         </button>
     </div>
 
@@ -368,19 +369,18 @@
             </div>
         </div>
     </div>
-
-
 </div>
-
 
 
 
 <script>
     $('#css-toggle-ground-btn').click(function () {
+        $('#css-toggle-ground-btn').children("i").toggleClass("fa-eye-slash")
         $(".css-code-editor").toggleClass('display-n');
     })
 
     $('#html-toggle-ground-btn').click(function () {
+        $('#html-toggle-ground-btn').children("i").toggleClass("fa-eye-slash")
         $(".html-code-editor").toggleClass('display-n');
         if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
             $(".panel-right-code").addClass("with-100")
@@ -391,8 +391,8 @@
         }
     })
 
-    $('#js-toggle-ground-btn').click(function () {
-
+    $('#js-toggle-ground-btn').click(function() {
+         $('#js-toggle-ground-btn').children("i").toggleClass("fa-eye-slash")
         $(".js-code-editor").toggleClass('display-n');
         if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
             $(".panel-right-code").addClass("with-100")
@@ -459,20 +459,6 @@
         $("#result-code-width-inp").val(with_selct)
         $("#result-code-height-inp").val(height_select)
     })
-
-    // $("#res-panel-900").click(function () {//result-code-editor
-    //     $("#result-code-editor").css("width", "900px")
-    //     $("#result-code-width-inp").val(900 + " px")
-    // })
-    // $("#res-panel-600").click(function () {
-    //     $("#result-code-editor").css("width", "600px")
-    //     $("#result-code-width-inp").val(600 + " px")
-    // })
-    // $("#res-panel-400").click(function () {
-    //     $("#result-code-editor").css("width", "400px")
-    //     $("#result-code-width-inp").val(400 + " px")
-   // })
-
 
    
 </script>
