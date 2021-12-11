@@ -234,3 +234,9 @@
   .cs-svg-icon.task-user-2:after {
     background-image: url(../ch-icons/task-user-2.svg);
   }
+  .cs-svg-icon.user-group:after {
+    background-image: url(../ch-icons/user-group.svg);
+  }
+  .cs-svg-icon.sub-task:after {
+    background-image: url(../ch-icons/sub-task.svg);
+  }

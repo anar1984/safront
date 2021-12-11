@@ -268,7 +268,11 @@
 }
 
 .paginationStyle{
-    padding-right: -1px;
+    padding: 0;
+    background: #dfeef7;
+}
+.paginationStyle .pagination{
+ margin: 0;
 }
 
 .updateBugList{
@@ -291,9 +295,11 @@
     background-color: #fce95f;
 }
 .bug-list-column .Assigne-card-story-select-img{
-    width: 35px;
-    height: 35px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
+    border: 1px solid rgb(82 85 150);
+    padding: 0;
 }
 
 .bug-list-column-task-status{
