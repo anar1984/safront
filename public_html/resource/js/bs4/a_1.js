@@ -13015,13 +13015,12 @@ function getIframeBlock(pid, css, js, body) {
     return $iframe.html();
 }
 $(document).on("click", '#save-code-ground-btn', function (e) {
-
     var elm = $("#result-code-editor");
     elm.find('div').remove();
     var pid = $("#project-list-codeground").val()
     var js = window.editorJSGround.getValue();
    
-     if ($("#cs-col-Ceckbox-id").prop('checked')) {
+     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
          var html = getBacklogAsHtml(global_var.current_backlog_id, false);
     } else {
          var html = window.editorHTMLGround.getValue();
@@ -13068,7 +13067,7 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
     var pid = $("#project-list-codeground").val();
     var js = window.editorJSGround.getValue();
     
-    if ($("#cs-col-Ceckbox-id").prop('checked')) {
+    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
         var html = getBacklogAsHtml(global_var.current_backlog_id, false);
     } else {
         var html = window.editorHTMLGround.getValue();
