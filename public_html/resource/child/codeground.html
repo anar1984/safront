@@ -64,7 +64,7 @@
     }
 
     .panel-bottom-code {
-      background-color: white;
+        background-color: white;
         flex: 1 1 auto;
         /* resizable */
         padding: 2px;
@@ -130,6 +130,28 @@
         display: none;
     }
 
+    .panel-bottom-code-size {
+        color: black;
+        z-index: 10;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        border-radius: 6px;
+        padding: 2px 5px;
+        font-size: 11px;
+        background: #82eebc;
+        font-weight: bold;
+        display: none;
+    }
+
+    .panel-bottom-code:hover .panel-bottom-code-size {
+        display: block;
+    }
+
+    .display-block {
+        display: block !important;
+    }
+
     .cs-col-Ceckbox {
         display: flex;
         justify-content: space-around;
@@ -139,29 +161,59 @@
     .display-n {
         display: none;
     }
-    .result-code-editor-inp-div{
-        width: 95%;
+
+    .result-code-editor-inp-div {
+        padding-left: 30px;
+        width: 100%;
+        height: 40px;
+        display: none;
+    }
+    .responsible-panel-box{
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-   
 
-    .result-code-editor-style{
+
+    .result-code-editor-style {
+       
         width: 95%;
         background-color: #eeeeee;
-        box-shadow:
-       inset 0 -3em 3em rgba(0,0,0,0.1),
-             0 0  0 2px rgb(255,255,255),
-             0.3em 0.3em 1em rgba(0,0,0,0.3); 
+        height: 95%;
     }
-    .with-100{
+
+    .with-100 {
         width: 100%;
-       
+
     }
-     .with-0{
+
+    .with-0 {
         width: 0px;
-       
+
+    }
+
+    #result-code-width-inp {
+        margin-left: 20px;
+        margin-right: 10px;
+        width: 75px;
+        height: 25px;
+        border-radius: 5px;
+        padding-left: 5px;
+    }
+    #result-code-height-inp
+    {
+        margin-left: 10px;
+        width: 75px;
+        height: 25px;
+        border-radius: 5px;
+        padding-left: 5px;
+    }
+
+    #element-result-code-editor{
+        height: 70%;
+        
     }
 </style>
 <div style="position: relative;" class="d-flex justify-content-center align-items-center storecard-header-nav-section">
@@ -272,12 +324,38 @@
 
                 <div style="height: 55%; position: relative;" class="panel-bottom-code">
                     <div class="result-code-editor-inp-div">
-                       <label for="with">width:
-                            <input id="result-code-width-inp" type="text" name="width">
-                       </label>
+                      <div class="responsible-panel-box">
+                          
+                        <select class="" name="res-panel-select" id="res-panel-select" style="margin-left: -20px;">
+                         <option width="1400" height="700" value="Responsible">Responsible</option>
+                          <option width="360" height="640" value="Moto">Moto G-4</option>
+                          <option width="360" height="640" value="galaxy">galaxy S5</option>
+                          <option width="411" height="731" value="Pixel">Pixel 2</option>
+                          <option width="411" height="823" value="Pixel-2XL">Pixel 2XL</option>
+                          <option width="320" height="568" value="Iphone-5/SE">Iphone 5/S</option>
+                          <option width="375" height="667" value="Iphone-6/7/8">Iphone 6/7/8</option>
+                          <option width="414" height="736" value="Iphone-6/7/8-PLUS">Iphone 6/7/8 PLUS</option>
+                          <option width="375" height="812" value="Iphone-X">Iphone X</option>
+                          <option width="768" height="1024" value="Ipad">Ipad</option>
+                          <option width="1024" height="1366" value="Ipad-Pro">Ipad Pro</option>
+                          <option width="540" height="720" value="Surface-Duo">Surface Duo</option>
+                          <option width="280" height="653" value="Galaxy-Fold">Galaxy Fold</option>
+                          <option width="1024" height="600" value="Nest-Hub">Nest Hub</option>
+                          <option width="1280" height="800" value="Nest-Hub-Max">Nest Hub Max</option>
+                         </select>
+                      
+                               
+                            <input  id="result-code-width-inp" type="text" name="width"> <span>X</span>
+                            <input   id="result-code-height-inp" type="text" name="height">
+                               
+                         
+                    
+                      </div>  
                     </div>
+                    <button class="panel-bottom-code-size btn btn-sm">Size</button>
+
                     <span class="panel-bottom-code-view btn btn-sm">VIEW</span>
-                    <div class="m-auto h-100 result-code-editor-style " style="overflow: scroll;" id="result-code-editor">
+                    <div class="m-auto result-code-editor-style" style="overflow: scroll;"id="result-code-editor">
                         <div class="overflow-hidden">
                             <style id="style-result-code-editor"></style>
                             <div id="element-result-code-editor" class="redirectClass h-100">
@@ -304,24 +382,24 @@
 
     $('#html-toggle-ground-btn').click(function () {
         $(".html-code-editor").toggleClass('display-n');
-        if($(".js-code-editor").hasClass("display-n")&& $(".html-code-editor").hasClass("display-n")){
-            $(".panel-right-code").addClass("with-100")  
-            $(".panel-left-code").addClass("with-0")   
-        }else{
-            $(".panel-right-code").removeClass("with-100")  
-            $(".panel-left-code").removeClass("with-0") 
+        if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
+            $(".panel-right-code").addClass("with-100")
+            $(".panel-left-code").addClass("with-0")
+        } else {
+            $(".panel-right-code").removeClass("with-100")
+            $(".panel-left-code").removeClass("with-0")
         }
     })
 
     $('#js-toggle-ground-btn').click(function () {
-        
+
         $(".js-code-editor").toggleClass('display-n');
-        if($(".js-code-editor").hasClass("display-n")&& $(".html-code-editor").hasClass("display-n")){
-            $(".panel-right-code").addClass("with-100")  
-            $(".panel-left-code").addClass("with-0")   
-        }else{
-            $(".panel-right-code").removeClass("with-100")  
-            $(".panel-left-code").removeClass("with-0") 
+        if ($(".js-code-editor").hasClass("display-n") && $(".html-code-editor").hasClass("display-n")) {
+            $(".panel-right-code").addClass("with-100")
+            $(".panel-left-code").addClass("with-0")
+        } else {
+            $(".panel-right-code").removeClass("with-100")
+            $(".panel-left-code").removeClass("with-0")
         }
     })
 
@@ -330,13 +408,71 @@
         handles: 'e',
         resizeHeight: false
     });
-    $("#result-code-editor").resizable({
-        handles: 'e',
-        resizeHeight: false
-    });
 
-    $(".panel-top-code").resizable({
+     $(".panel-top-code").resizable({
         handles: 's',
         resizeWidth: false
     });
+
+    // responsib panel
+
+    $(".panel-bottom-code-size").click(function () {
+        $(".result-code-editor-inp-div").toggleClass("display-block")
+        $("#result-code-width-inp").val(1200 + " px")
+        $(".panel-right-code").toggleClass("with-100")
+        $(".panel-left-code").addClass("with-0")
+        $("#result-code-editor").height("90%")
+
+        let width_editor = Math.round($("#result-code-editor").width())
+        $("#result-code-width-inp").val(width_editor)
+
+        let height_editor = Math.round($("#result-code-editor").height())
+        $("#result-code-height-inp").val(height_editor)
+
+        $("#result-code-editor").resizable({
+            handles: 'e, s',
+            resize: function (event, ui) {
+                $("#result-code-width-inp").val(Math.round(ui.size.width))
+                $("#result-code-height-inp").val(Math.round(ui.size.height))
+            }
+        });
+    })
+
+    
+    $(document).on("change","#result-code-width-inp",function(){
+        var with_inp=$("#result-code-width-inp").val() 
+        $("#result-code-editor").width(with_inp)
+    })
+
+    $(document).on("change","#result-code-height-inp",function(){
+        var height_inp=$("#result-code-height-inp").val() 
+        $("#result-code-editor").height(height_inp)
+    })
+
+
+
+    $(document).on("change","#res-panel-select",function(){
+        var with_selct=$("#res-panel-select > option:selected").attr("width") 
+        var height_select=$("#res-panel-select > option:selected").attr("height") 
+        $("#result-code-editor").width(with_selct)
+        $("#result-code-editor").height(height_select)
+        $("#result-code-width-inp").val(with_selct)
+        $("#result-code-height-inp").val(height_select)
+    })
+
+    // $("#res-panel-900").click(function () {//result-code-editor
+    //     $("#result-code-editor").css("width", "900px")
+    //     $("#result-code-width-inp").val(900 + " px")
+    // })
+    // $("#res-panel-600").click(function () {
+    //     $("#result-code-editor").css("width", "600px")
+    //     $("#result-code-width-inp").val(600 + " px")
+    // })
+    // $("#res-panel-400").click(function () {
+    //     $("#result-code-editor").css("width", "400px")
+    //     $("#result-code-width-inp").val(400 + " px")
+   // })
+
+
+   
 </script>
