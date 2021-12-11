@@ -1670,7 +1670,9 @@ function loadBacklogProductionDetailsById(bid1) {
 
 function loadCurrentBacklogProdDetails() {
     global_var.current_modal = '';
-    setBacklogAsHtml(global_var.current_backlog_id);
+    var js = window.editorJSnew.getValue();
+    var css = window.editorCSSnew.getValue();
+    setBacklogAsHtml(global_var.current_backlog_id, css, js);
     global_var.current_modal = 'loadLivePrototype';
 
 
@@ -2164,6 +2166,30 @@ function loadBacklogProductionDetailsById_loadInputClassRelation(res) {
     }
 }
 
+function searchFilterTable4LiveProtoptyApi(el, tableId) {
+
+    var input, filter, table, tr, td, i, txtValue,text_id;
+    input = el;
+    filter = input.value.toLowerCase();
+    table = $('#' + tableId);
+
+    tr = table.find("tr").each(function () {
+        td = $(this).text();
+        txtValue = td.toLowerCase();
+        text_id = $(this).find('a').first().attr('bid'); 
+        if (txtValue) {
+
+            if ((txtValue.indexOf(filter) > -1) || (text_id.indexOf(filter)>-1)) {
+                $(this).css("display", "");
+
+            } else {
+                $(this).css("display", "none");
+
+            }
+        }
+    });
+}
+
 function searchFilterTable(el, tableId) {
 
     var input, filter, table, tr, td, i, txtValue;
@@ -2185,8 +2211,6 @@ function searchFilterTable(el, tableId) {
             }
         }
     });
-
-
 }
 
 function LoadChildDependenceId4Input(fkInputId) {

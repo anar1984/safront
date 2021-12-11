@@ -255,6 +255,7 @@ function callStoryCard(id, elId, backlogName) {
             return;
         }
 
+
         loadBacklogDetailsByIdIfNotExist(id);
         var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
         global_var.current_project_id = fkProjectId;
@@ -265,6 +266,7 @@ function callStoryCard(id, elId, backlogName) {
         $('select.projectList_liveprototype_storycard').val(fkProjectId)
 
         global_var.current_backlog_id = id;
+        $('#storycard-panel-backlog-id').val(id);
         var backlogName = SACore.GetCurrentBacklogname();
         $('#storyCardListSelectBox4StoryCard')
                 .append($('<option>').text(backlogName))

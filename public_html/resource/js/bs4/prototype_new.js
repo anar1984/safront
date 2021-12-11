@@ -515,7 +515,7 @@ var Prototype = {
                 $('.us-gui-component-action').val(res.tbl[0].r[0].action);
                 $('.input_event_type').val(res.tbl[0].r[0].actionType ? res.tbl[0].r[0].actionType : "");
 
-                $('#liveProActionType').val(val24 ? val24 : "api");
+                $('#liveProActionType').val(val24 ? val24 : "");
                 $('#liveProSendApiType').val(res.tbl[0].r[0].sendApiType);
                 $('.liveProActionTypeAll').hide();
 
