@@ -2711,6 +2711,20 @@ function showBacklogHistoryClick(el) {
 
     fillBacklogHistory4View(bid, isApi);
 
+
+    if(global_var.current_modal === 'loadStoryCard'||global_var.current_modal === 'loadDev'){
+        
+    if (pid === global_var.current_project_id) {
+        $("#storyCardListSelectBox4StoryCard").val(bid)
+        $("#storyCardListSelectBox4StoryCard").change();
+    } else {
+        global_var.current_backlog_id = bid;
+        Utility.addParamToUrl('current_backlog_id', bid);
+        $('select.projectList_liveprototype_storycard').val(pid);
+        $('select.projectList_liveprototype_storycard').change();
+    }
+        return;
+    }
     if (isApi === '1') {
         callStoryCard(bid);
         return;
