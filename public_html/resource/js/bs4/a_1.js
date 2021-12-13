@@ -13088,7 +13088,8 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+   // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+    setBacklogAsHtml(global_var.current_backlog_id,css,js)
 
 
 });
@@ -18845,7 +18846,37 @@ function addNewDetailedTaskAction_assigneeList() {
     })
     return st;
 }
+function name(params) {
+    $("#addNewDetailedTaskModal_list").each
+}
+function addNewDetailedTaskActionEvent() {
+    if (!$('#addNewDetailedTaskModal_projectid-new').val() || !$('#addNewDetailedTaskModal_description-new').val().trim()) {
+        return;
+    }
 
+    var json = initJSON();
+    json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid-new').val();
+    json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid-new').val();
+    json.kv.taskName = $('#addNewDetailedTaskModal_description-new').val();
+    json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature').val();
+    json.kv.taskComment = $('#addNewDetailedTaskModal_comment').val();
+    json.kv.assineeList = addNewDetailedTaskAction_assigneeList();
+    json.kv.fileList = $('#addNewDetailedTaskModal_filelist').val();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddNewDetailedTaskAction",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            $('#addNewDetailedTaskModal-multi-new').modal('hide');
+            new UserStory().getBacklogTaskStats();
+        }
+    });
+}
 function addNewDetailedTaskAction() {
     if (!$('#addNewDetailedTaskModal_projectid').val() || !$('#addNewDetailedTaskModal_description').val().trim()) {
         return;
@@ -19025,13 +19056,13 @@ function addInputListToTaskNew(el, descId, inputId) {
 }
 function addInputListToTaskNewEvent(el, descId, inputId) {
     $('#addNewDetailedTaskModal-multi-new').modal('show');
-   /*  addUserStoryToTask_loadAssignee();
-    addUserStoryToTask_loadTaskType();
-    $('#addNewDetailedTaskModal_assigneelist').html('');
-    $('#addNewDetailedTaskModal_backlogid').val(global_var.current_backlog_id);
-    $('#addNewDetailedTaskModal_projectid').val(global_var.current_project_id);
-    addInputListToTaskNew_setHeader(descId);
-    addInputListToTaskNew_setComment(descId, inputId); */
+     addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
+    //addInputListToTaskNew_setHeader(descId);
+    addInputListToTaskNew_setComment_event(descId, inputId); 
 }
 
 function addInputListToTaskNew_setHeader() {
@@ -19076,6 +19107,37 @@ function addInputListToTaskNew_setComment() {
     })
 
     $('#addNewDetailedTaskModal_comment').val(st);
+}
+function addInputListToTaskNew_setComment_event() {
+    var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
+    $('.us-input-list-item-check-box-class-new').each(function () {
+        if ($(this).is(":checked")) {
+            var st = "";
+
+            var name = SAInput.GetInputName($(this).val());           
+
+            try {
+                //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
+                //                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
+                var descId = SAInput.DescriptionId[$(this).val()];
+                for (var i in descId) {
+                    var id = descId[i];
+
+                    var desc = fnline2Text(SAInputDesc.GetDetails(id));
+                    st += (i+1)+")"+"- " + desc + '\n';
+
+                
+                }
+            } catch (err) {
+            }
+            var col = $("<div class='col-12'>")
+                .append(`<label class='font-weight-bold' >${name}</label>`)
+                 .append($("<textarea class='form-control' row='3'>").val(st))
+                 $("#addNewDetailedTaskModal_list").append(col);
+        }
+    })
+
 }
 
 
@@ -19259,6 +19321,42 @@ function addUserStoryToTask_loadAssignee() {
     }
     sortSelectBox('addNewDetailedTaskModal_assignee');
 }
+function addUserStoryToTask_loadAssignee_event() {
+    var select = $('#addNewDetailedTaskModal_assignee-new');
+    select.html('');
+    var keys = SAProjectUser.GetKeys();
+    select.append($('<option>').val('').text(''));
+    for (var i = 0; i < keys.length; i++) {
+        var userName = SAProjectUser.GetDetails(keys[i], "userName");
+        select.append($('<option>').val(keys[i]).text(userName));
+    }
+    sortSelectBox('addNewDetailedTaskModal_assignee-new');
+}
+
+function addUserStoryToTask_loadTaskType_event() {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.asc = 'typeName';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            addUserStoryToTask_loadTaskTypeDetails_event(res);
+        }
+    });
+}
 
 function addUserStoryToTask_loadTaskType() {
     var json = {
@@ -19297,6 +19395,19 @@ function addUserStoryToTask_loadTaskTypeDetails(res) {
     }
     sortSelectBox('addNewDetailedTaskModal_tasktype');
     sortSelectBox('assignTaskToOthersModal_tasktype');
+}
+function addUserStoryToTask_loadTaskTypeDetails_event(res) {
+    var select = $('#addNewDetailedTaskModal_tasktype-new');
+    var select2 = $('#assignTaskToOthersModal_tasktype-new');
+    select.html("").append($('<option>').val("").append(" "));
+    select2.html("").append($('<option>').val("").append(" "));
+    var obj = res.tbl[0].r;
+    for (var n = 0; n < obj.length; n++) {
+        select.append($('<option>').val(obj[n].id).text(obj[n].typeName));
+        select2.append($('<option>').val(obj[n].id).text(obj[n].typeName));
+    }
+    sortSelectBox('addNewDetailedTaskModal_tasktype-new');
+    sortSelectBox('assignTaskToOthersModal_tasktype-new');
 }
 
 
