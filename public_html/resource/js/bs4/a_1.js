@@ -13083,10 +13083,12 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     var block = getIframeBlock(pid, css, js, html);
 
     elm.html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
     setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+
 
 });
 function setBacklogAsHtmlCodeGround(backlogId, html) {
@@ -13129,7 +13131,8 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var block = getIframeBlock(pid, css, js, html);
 
-    elm.html(block)
+    elm.html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
 
 
 });
