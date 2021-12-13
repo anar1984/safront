@@ -1669,11 +1669,12 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
+    var oldaMoadl  =global_var.current_modal 
     global_var.current_modal = '';
     var js = window.editorJSnew.getValue();
     var css = window.editorCSSnew.getValue();
     setBacklogAsHtml(global_var.current_backlog_id, css, js);
-    global_var.current_modal = 'loadLivePrototype';
+    global_var.current_modal = oldaMoadl;
 
 
 }
@@ -13426,9 +13427,9 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
 
                       }
                 }else{
-                    if(!o.isApi==='1'){
+                  
                         cmd.append(op); 
-                      }
+                      
                 }
               
             }
@@ -19021,6 +19022,16 @@ function addInputListToTaskNew(el, descId, inputId) {
     $('#addNewDetailedTaskModal_projectid').val(global_var.current_project_id);
     addInputListToTaskNew_setHeader(descId);
     addInputListToTaskNew_setComment(descId, inputId);
+}
+function addInputListToTaskNewEvent(el, descId, inputId) {
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+   /*  addUserStoryToTask_loadAssignee();
+    addUserStoryToTask_loadTaskType();
+    $('#addNewDetailedTaskModal_assigneelist').html('');
+    $('#addNewDetailedTaskModal_backlogid').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid').val(global_var.current_project_id);
+    addInputListToTaskNew_setHeader(descId);
+    addInputListToTaskNew_setComment(descId, inputId); */
 }
 
 function addInputListToTaskNew_setHeader() {

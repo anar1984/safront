@@ -7620,9 +7620,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.addInputByRes(res);
                 SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
-
-                loadCurrentBacklogProdDetails();
-
+                
+                //loadCurrentBacklogProdDetails();
 
                 //backlogun canvas parametrleri set edilir
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
