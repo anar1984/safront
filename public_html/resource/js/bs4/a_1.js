@@ -13082,7 +13082,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
 
     var block = getIframeBlock(pid, css, js, html);
 
-    elm.append(block);
+    elm.html(block);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
@@ -13129,7 +13129,7 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var block = getIframeBlock(pid, css, js, html);
 
-    elm.append(block)
+    elm.html(block)
 
 
 });
