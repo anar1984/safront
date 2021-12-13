@@ -1355,16 +1355,18 @@ function getBugListDetailsHeader() {
             .append($('<th>').append('<input type="checkbox" class="all-bug-list-check">'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-task-status')
-                    .css("width", '90px')
+                    .css("width", '100px')
                     .append('<i class="cs-svg-icon status"></i>'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-task-id').css("width1", '2%').append('<i class="cs-svg-icon id"></i>'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-task-name').css("min-width", '160px').append('Description'))
+                    .addClass('bug-list-column-task-name').css("min-width", '250px').append('Description'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-task-nature').attr("style", "width:140px;").append('Task Nature'))
-            // .append($('<th>').addClass('bug-list-column')
-            //         .addClass('bug-list-column-tasktype').append('Task Type'))
+                    .addClass('bug-list-column-task-nature').append('Task Nature'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-assignee').css("width", '80px').append('<i class="cs-svg-icon task-user-1"></i>'))
+            .append($('<th>').addClass('bug-list-column')
+                    .addClass('bug-list-column-tasktype').append('Task Type'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-priority').append('Priority'))
             .append($('<th>').addClass('bug-list-column')
@@ -1372,11 +1374,9 @@ function getBugListDetailsHeader() {
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-project').append('Project'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-assignee').css("width", '50px').append('<i class="cs-svg-icon task-user-1"></i>'))
+                    .addClass('bug-list-column-created-by').css("width", '80px').append('<i class="cs-svg-icon task-user-2"></i>'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-created-by').css("width", '50px').append('<i class="cs-svg-icon task-user-2"></i>'))
-            .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-created-date').css("width", '80px').append('<i class="cs-svg-icon calendar-01-dark"></i>'))
+                    .addClass('bug-list-column-created-date').append('Created Date'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-close-date').append('Closed On'))
             .append($('<th>').addClass('bug-list-column')
@@ -1535,7 +1535,7 @@ function getBugListDetails(res) {
                 .attr("projectId", o.fkProjectId)
                 .attr("stIdr", o.fkBacklogId)
                 .addClass('bug-tr')
-                .append($('<td>').attr("style", "width:25px;")
+                .append($('<td>').attr("style", "width:46px;")
                     .append(row)
                 )
                 .append($('<td>').attr("style", "width:30px;")
@@ -1546,7 +1546,6 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-task-status cs-input-group')
                         .css("text-align", 'left')
                         .css("padding-left", '3px')
-                        .css("overflow", 'initial')
                         .append($("<div>")
                                 .addClass("dropdown")
                                 .append($("<div>")
@@ -1565,7 +1564,7 @@ function getBugListDetails(res) {
                 .append($('<td>')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-task-name')
-                        .css("max-width", '240px')
+                        .css("max-width", '400px')
                         .append(taskName, ' ')
                         .append("<input type='text' class=' task-name-issue select-box-issue'>")
                         .append($("<div>")
@@ -1616,32 +1615,66 @@ function getBugListDetails(res) {
                                         .append('<a class="dropdown-item" data-value ="bug">Bug</a>')
 
                                         )))
-          
-                // .append($('<td>').addClass('bug-list-column')
-                //         .addClass('bug-list-column-tasktype')
-                //         .append($("<div>")
-                //                 .addClass("dropdown")
-                //                 .append($("<div>")
-                //                         .addClass('dropdown-toggle cst-dropwdown-toggle-bug get-data-group')
+                .append($('<td>')
+                        .css('white-space', 'nowrap').css("text-align", 'center')
+                        .addClass('bug-list-column')
+                        .addClass('bug-list-column-assignee')
+                        .append($("<div>")
+                                .addClass("dropdown")
+                                .append($("<div>")
+                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug get-data-group')
+                                        .attr("data-toggle", "dropdown")
+                                        .attr("aria-haspopup", "true")
+                                        .attr("aria-expanded", "false")
+                                        .attr("id", "bug-listassigne-dropdown")
+                                        .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
+                                                .attr('src', img)
+                                                : " ")
+//                                        .append(o.userName)
+                                        )
 
-                //                         .attr("data-toggle", "dropdown")
-                //                         .attr("aria-haspopup", "true")
-                //                         .attr("aria-expanded", "false")
-                //                         .attr("id", "bug-tasktype-dropdown")
-                //                         .append((replaceTags(o.taskTypeName)) ? "<span >" + o.taskTypeName + "</span>" : "<span style ='visibility:hidden;'>djnfjsd</span>"))
+                                .append($("<div>")
+                                        .addClass("dropdown-menu")
+                                        .attr("aria-labelledby", "bug-listassigne-dropdown")
+                                        .append("")))
+                        .append(" ")
 
-                //                 .append($("<div>")
-                //                         .addClass("dropdown-menu")
-                //                         .attr("aria-labelledby", "bug-tasktype-dropdown")
+                        .append($('<i class="fa fa-filter">')
+                                .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
+                                .css("display", "none")
+                                .addClass("hpYuyept"))
+                        .mouseover(function () {
+                            $(this).find(".hpYuyept").show();
+                        })
+                        .mouseleave(function () {
+                            $(this).find(".hpYuyept").hide();
+                        })
+                        )
+                .append($('<td>').addClass('bug-list-column')
+                        .addClass('bug-list-column-tasktype')
+                        .append($("<div>")
+                                .addClass("dropdown")
+                                .append($("<div>")
+                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug get-data-group')
 
-                //                         /* .append('<a class="dropdown-item" data-value ="New">New</a>')
-                //                          .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
-                //                          .append('<a class="dropdown-item" data-value ="closed">closed</a>')
-                //                          .append('<a class="dropdown-item" data-value ="waiting">waiting</a>')
-                //                          .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
-                //                          .append('<a class="dropdown-item" data-value ="UAT">UAT</a>') */
+                                        .attr("data-toggle", "dropdown")
+                                        .attr("aria-haspopup", "true")
+                                        .attr("aria-expanded", "false")
+                                        .attr("id", "bug-tasktype-dropdown")
+                                        .append((replaceTags(o.taskTypeName)) ? "<span >" + o.taskTypeName + "</span>" : "<span style ='visibility:hidden;'>djnfjsd</span>"))
 
-                //                         )))
+                                .append($("<div>")
+                                        .addClass("dropdown-menu")
+                                        .attr("aria-labelledby", "bug-tasktype-dropdown")
+
+                                        /* .append('<a class="dropdown-item" data-value ="New">New</a>')
+                                         .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
+                                         .append('<a class="dropdown-item" data-value ="closed">closed</a>')
+                                         .append('<a class="dropdown-item" data-value ="waiting">waiting</a>')
+                                         .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
+                                         .append('<a class="dropdown-item" data-value ="UAT">UAT</a>') */
+
+                                        )))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
                 .append($('<td>').addClass('bug-list-column')
@@ -1667,7 +1700,6 @@ function getBugListDetails(res) {
                             $(this).find(".hpYuyept1").hide();
                         }))
                 .append($('<td>').addClass('bug-list-column')
-                .attr("style", "width:140px;")
                         .addClass('bug-list-column-project')
                         .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
                         .append($('<i class="fa fa-filter">')
@@ -1681,28 +1713,28 @@ function getBugListDetails(res) {
                             $(this).find(".hpYuyept").hide();
                         })
                         )
-                .append($('<td>')
-                        .css('white-space', 'nowrap').css("text-align", 'center')
-                        .addClass('bug-list-column')
-                        .addClass('bug-list-column-assignee')
-                        .append($("<div>")
-                                .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                                .attr('src', img)
-                                : " ")
-                            )
-                      
-                        )
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
                         .append($("<div>").addClass("get-data-group")
                                 .append((o.createByName) ? $('<img class="Assigne-card-story-select-img">')
                                         .attr('src', createdByImg) : "")
-                              
+                                .append(" ")
+//                                .append(o.createByName)
                                 )
+
+                        .append($('<i class="fa fa-filter">')
+                                .attr('onclick', 'setFilter4IssueMgmtAsCreatedBy("' + o.createdBy + '")')
+                                .css("display", "none")
+                                .addClass("hpYuyept"))
+                        .mouseover(function () {
+                            $(this).find(".hpYuyept").show();
+                        })
+                        .mouseleave(function () {
+                            $(this).find(".hpYuyept").hide();
+                        })
                         )
                 .append($('<td>').addClass('bug-list-column')
-                        .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-close-date')
@@ -1726,7 +1758,13 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-estimated-budget').append((o.estimatedBudget !== '0') ? o.estimatedBudget : ""))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
-            
+                .append($('<td>')
+                        .css("width", "1%")
+                        //                        .append($('<i>')
+                        //                                .addClass('fa fa-arrow-right bug-icon viewBtn')
+                        //                                .addClass('openBugStatus'))
+                        )
+
         tbody.append(t);
     }
 
@@ -2557,8 +2595,6 @@ function loadBugTaskDeadlineScripts() {
     $("#task-info-modal-status").selectpicker('refresh');
     $("#task-info-modal-nature").selectpicker('refresh');
     $("#task-info-modal-tasktype").selectpicker('refresh');
-    $("#bug_filter_sortby").selectpicker('refresh');
-    $("#bug_filter_sortby_asc").selectpicker('refresh');
     $("#bug_filter_limit").selectpicker('refresh');
     $("#inputGroupSelect01").selectpicker('refresh');
     $('#run_task_project_name').selectpicker('refresh');
@@ -3670,7 +3706,7 @@ $(document).on("change", "#activateCreatedEvenets", function (e) {
     }
 });
 
-$(document).on("click", '.sticky-badges, .taskfilter-btn', function () {
+$(document).on("click", '.setting-elemen-box, .avatar-box', function () {
     $('body').addClass('open-setting-panel');    
 });
 $(document).on("click", '.close-panel', function () {
@@ -3688,13 +3724,4 @@ $(document).on("focusout", '.has-search .form-control', function () {
 });
 $(document).on("mouseenter", '.personal-btn-img', function () {
     $('.popover').addClass('task-list-personal-info-popover')
-});
-
-$(document).on("click", '.setting-elemen-box .taskfilter-btn', function () {
-    $('#main-sidebar-div>div').hide();
-    $('#main-sidebar-div .bugList-elements').show();    
-});
-$(document).on("click", '.setting-elemen-box .sticky-badges', function () {
-    $('#main-sidebar-div>div').hide();
-    $('#main-sidebar-div .sticky-elements').show();    
 });
