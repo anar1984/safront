@@ -246,3 +246,6 @@
   .cs-svg-icon.new-task:after {
     background-image: url(../ch-icons/new-task.svg);
   }
+  .cs-svg-icon.link:after {
+    background-image: url(../ch-icons/link.svg);
+  }

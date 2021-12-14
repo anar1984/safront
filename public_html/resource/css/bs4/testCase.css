@@ -1099,8 +1099,9 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     color: #fff;
     vertical-align: middle;
 }
-.standart-badges {
+.standart-badges, .sticky-badges {
     position: relative;
+    cursor: pointer;
 }
 .standart-badges span.info {
     background: #DC2E2E;
@@ -1450,4 +1451,83 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .bugList-elements .bootstrap-select.issue-mgmt-general-filter {
    width: 100% !important;
+}
+
+/* Notification Elements */
+.notification-elements .notify-top-section {
+  
+}
+.notification-elements .notify-top-section .totp-title {
+  
+}
+.notification-elements .notify-top-section .dedline {
+  
+}
+.notification-elements .notify-top-section .top-date-time {
+  
+}
+.notification-elements .notify-top-section .circle-s {
+  
+}
+.notification-elements .notify-msg span {
+  
+}
+.notification-elements .notify-msg .show-arrow {
+  
+}
+.notification-elements .notify-msg .show-arrow i:after{
+  
+}
+.notification-elements .notify-title-box {
+  
+}
+.notification-elements .notify-title-box .id {
+  
+}
+.notification-elements .notify-title-box .notefy-title {
+  
+}
+.notification-elements .notify-title-box .show-arrow {
+  
+}
+.notification-elements .notify-title-box .show-arrow i:after{
+  
+}
+/* bottom */
+.notification-elements .notify-bottom-box {
+  
+}
+.notification-elements .notify-bottom-box .date-time {
+  
+}
+.notification-elements .notify-bottom-box .status-box {
+  
+}
+.notification-elements .notify-bottom-box .status-box .author-img {
+  
+}
+.notification-elements .notify-bottom-box .status-box .author-img img {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notefy-status {
+  
+}
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click i {
+  
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click i:after {
+  
 }

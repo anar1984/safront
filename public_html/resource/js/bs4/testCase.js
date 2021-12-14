@@ -1690,7 +1690,16 @@ function getBugListDetails(res) {
                                 .attr('src', img)
                                 : " ")
                             )
-                      
+                            .append($('<i class="fa fa-filter">')
+                            .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
+                            .css("display", "none")
+                            .addClass("hpYuyept"))
+                    .mouseover(function () {
+                        $(this).find(".hpYuyept").show();
+                    })
+                    .mouseleave(function () {
+                        $(this).find(".hpYuyept").hide();
+                    })
                         )
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
@@ -3670,7 +3679,7 @@ $(document).on("change", "#activateCreatedEvenets", function (e) {
     }
 });
 
-$(document).on("click", '.sticky-badges, .taskfilter-btn', function () {
+$(document).on("click", '.sticky-badges, .taskfilter-btn, .notification-btn', function () {
     $('body').addClass('open-setting-panel');    
 });
 $(document).on("click", '.close-panel', function () {
@@ -3697,4 +3706,8 @@ $(document).on("click", '.setting-elemen-box .taskfilter-btn', function () {
 $(document).on("click", '.setting-elemen-box .sticky-badges', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .sticky-elements').show();    
+});
+$(document).on("click", '.setting-elemen-box .notification-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .notification-elements').show();    
 });
