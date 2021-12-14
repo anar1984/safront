@@ -13366,11 +13366,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#main_div_of_backlog_info_kanban_view_table_new').html('');
         $('#main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('#main_div_of_backlog_info_kanban_view_table_closed').html('');
-        $('#main_div_of_backlog_info_kanban_view_table_waiting').html('');
+        $('#main_div_of_backlog_info_kanban_view_table_draft').html('');
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
         $('#kanban_view_closed_count').html(0);
-        $('#kanban_view_waiting_count').html(0);
+        $('#kanban_view_draft_count').html(0);
         $('#us_core_filter_paginationresult_rowcount').html(0);
         this.setEmptyMessage4Backlog();
         this.setEmptyMessage4BacklogListView();
@@ -14117,7 +14117,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     var c4new = 0;
                     var c4ongoing = 0;
                     var c4closed = 0;                 
-                    var c4waiting = 0;                 
+                    var c4draft = 0;                 
                         var usIdList = res.tbl[0].r;
         
                         for (var k = 0; k < usIdList.length; k++) {
@@ -14142,9 +14142,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 c4closed++;
                                 $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
                             }
-                            else if (obj.backlogStatus === 'waiting') {
-                                c4waiting++;
-                                $('.main_div_of_backlog_info_kanban_view_table_waiting').append(html);
+                            else if (obj.backlogStatus === 'draft') {
+                                c4draft++;
+                                $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                             }
                            
                         }
@@ -14174,7 +14174,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanView: function () {
   
 
-        var stl  = ["new","ongoing",'closed','waiting']
+        var stl  = ["new","ongoing",'closed','draft']
             for (let si = 0; si < stl.length; si++) {
                
                this.setUSLists4KanbanViewCore(stl[si])
@@ -14191,7 +14191,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                $(".modal-header b.status-UAT-total").text(0)
                $(".modal-header b.status-rejected-total").text(0)
                $(".modal-header b.status-Canceled-total").text(0)
-               $(".modal-header b.status-waiting-total").text(0)
+               $(".modal-header b.status-draft-total").text(0)
                $(".modal-header b.status-total-total").text(0)
                 var priD =getProjectValueUsManageMulti();
                 var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
@@ -14492,7 +14492,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
-        $('.main_div_of_backlog_info_kanban_view_table_waiting').html('');
+        $('.main_div_of_backlog_info_kanban_view_table_draft').html('');
         var bNoList = SACore.GetBacklogNoKeys();
         var addedUS = [];
 
@@ -14501,6 +14501,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             var c4new = 0;
             var c4ongoing = 0;
             var c4closed = 0;
+            var c4draft = 0;
             $('.main_div_of_backlog_info_kanban_view_table_new ')
             for (var n = 0; n < bNoList.length; n++) {
                 var bid = SACore.BacklogNo[bNoList[n]];
@@ -14525,13 +14526,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     } else if (obj.backlogStatus === 'ongoing') {
                         c4ongoing++;
                         $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
-                    } else if (obj.backlogStatus === 'closed') {
+                    } 
+                    else if (obj.backlogStatus === 'closed') {
                         c4closed++;
                         $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                    }
+                    else if (obj.backlogStatus === 'closed') {
+                        c4draft++;
+                        $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                     }
                     $('#kanban_view_new_count').html(c4new);
                     $('#kanban_view_ongoing_count').html(c4ongoing);
                     $('#kanban_view_closed_count').html(c4closed);
+                    $('#kanban_view_closed_count').html(c4draft);
                 }
                 addedUS.push(lastId);
             }
@@ -14545,6 +14552,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         .append($('<div class="task-content content-drag">'));
             if (c4closed === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_closed')
+                        .append($('<div class="task-content content-drag">'));
+            if (c4draft === 0)
+                $('.main_div_of_backlog_info_kanban_view_table_draft')
                         .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
@@ -14561,6 +14571,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('.main_div_of_backlog_info_kanban_view_table_draft').html('');
         console.log(res)
 
         try {
@@ -14578,13 +14589,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 } else if (obj[n].backlogStatus === 'ongoing') {
                     c4ongoing++;
                     $('.main_div_of_backlog_info_kanban_view_table_ongoing ').append(html);
-                } else if (obj[n].backlogStatus === 'closed') {
+                } 
+                else if (obj[n].backlogStatus === 'closed') {
                     c4closed++;
                     $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                }
+                else if (obj[n].backlogStatus === 'draft') {
+                    c4draft++;
+                    $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                 }
                 $('#kanban_view_new_count').html(c4new);
                 $('#kanban_view_ongoing_count').html(c4ongoing);
                 $('#kanban_view_closed_count').html(c4closed);
+                $('#kanban_view_draft_count').html(c4draft);
             }
 
             $('.main_div_of_backlog_info_kanban_view_table_new ')
@@ -14592,6 +14609,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.main_div_of_backlog_info_kanban_view_table_ongoing ')
                     .append($('<div class="task-content content-drag">'));
             $('.main_div_of_backlog_info_kanban_view_table_closed')
+                    .append($('<div class="task-content content-drag">'));
+            $('.main_div_of_backlog_info_kanban_view_table_draft')
                     .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
