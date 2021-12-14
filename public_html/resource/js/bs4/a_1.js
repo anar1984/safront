@@ -14373,6 +14373,8 @@ $(document).on('click', '.loadDocEditor', function (evt) {
     });
 });
 $(document).on('click', '.loadStoryCard', function (evt) {
+    getProjectUsers();
+    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
@@ -18838,12 +18840,12 @@ function genTaskKanbanView4Group() {
 
 function addNewDetailedTaskAction_assigneeList_event() {
     var st = "";
-   // $('#addNewDetailedTaskModal_assigneelist-new').find('.assignee-main-tr').each(function () {
-        var assigneeId = $('#addNewDetailedTaskModal_assignee-new').val();
-        var tasktypeId = $('#addNewDetailedTaskModal_tasktype-new').val();
+    $('#addNewDetailedTaskModal_assigneelist-new').find('.assignee-main-tr').each(function () {
+        var assigneeId = $(this).find('.assignee-td').attr('pid');
+        var tasktypeId = $(this).find('.tasktype-td').attr('pid');
         tasktypeId = (tasktypeId) ? tasktypeId : "-1";
         st += assigneeId + ':' + tasktypeId + "|";
-   // })
+    })
     return st;
 }
 function addNewDetailedTaskAction_assigneeList() {
@@ -18974,13 +18976,12 @@ function ForwardTaskTo_loadAssignee() {
 }
 
 function addProceccDescListToTaskNew() {
-    $('#addNewDetailedTaskModal').modal('show');
-    addUserStoryToTask_loadAssignee();
-    addUserStoryToTask_loadTaskType();
-    $('#addNewDetailedTaskModal_assigneelist').html('');
-    $('#addNewDetailedTaskModal_backlogid').val(global_var.current_backlog_id);
-    $('#addNewDetailedTaskModal_projectid').val(global_var.current_project_id);
-    addProceccDescListToTaskNew_setHeader();
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+    addUserStoryToTask_loadAssignee_event();
+   addUserStoryToTask_loadTaskType_event();
+   $('#addNewDetailedTaskModal_assigneelist-new').html('');
+   $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+   $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
     addProceccDescListToTaskNew_setComment();
 }
 
@@ -19005,19 +19006,26 @@ function addProceccDescListToTaskNew_getCheckedProcess() {
 
 
 function addProceccDescListToTaskNew_setComment() {
-    var st = "The following Process Description(s) should be Added or Updated. For the detailed information please check the related Story Card: \n\n";
+    var st = "";
     var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
     $('.pdescList').each(function () {
         if ($(this).is(":checked")) {
             var id = $(this).val();
-            var name = $(this).closest('tr').find('.procDescTitleNewNowAfter').html();
+            var name = $(this).closest('tr').find('.procDescTitleNewNowAfter').text();
             name = name.replaceAll('<br>', '')
-            st += (idx++) + ") " + name;
-            st += "\n------------------------------------------------------------------------------------------\n";
+            st += '';
+            var col = $("<div class='col-12 item-input-add-task'>")
+                .append(`<label class='font-weight-bold' >${name}</label>`)
+                       
+                 .append($("<input class='form-control' row='3'>").val("Add/Update : "+name))
+                       
+                 .append($("<textarea class='form-control' row='3'>").val(st))
+                 $("#addNewDetailedTaskModal_list").append(col);
         }
     })
 
-    $('#addNewDetailedTaskModal_comment').val(st);
+   // $('#addNewDetailedTaskModal_comment').val(st);
 }
 
 function addProceccDescListToTaskNew_getLastValue(descId) {
@@ -19299,6 +19307,27 @@ function addUserStoryToTask_addAssignees() {
                     .attr("pid", $('#addNewDetailedTaskModal_tasktype').val())
                     .addClass('tasktype-td')
                     .text($('#addNewDetailedTaskModal_tasktype option:selected').text()))
+            .append($('<i class="fa fa-trash">')
+                    .attr("onclick", "addUserStoryToTask_removeAssignee(this)")
+                    .attr("cursor", "pointer")
+                    .css("color", "blue")
+                    ))
+}
+function addUserStoryToTask_addAssignees_event() {
+    if (!$('#addNewDetailedTaskModal_assignee-new').val()) {
+        return;
+    }
+
+    var tbody = $('#addNewDetailedTaskModal_assigneelist-new');
+    tbody.append($('<tr>').addClass("assignee-main-tr")
+            .append($('<td>')
+                    .addClass("assignee-td")
+                    .attr("pid", $('#addNewDetailedTaskModal_assignee-new').val())
+                    .text($('#addNewDetailedTaskModal_assignee-new option:selected').text()))
+            .append($('<td>')
+                    .attr("pid", $('#addNewDetailedTaskModal_tasktype-new').val())
+                    .addClass('tasktype-td')
+                    .text($('#addNewDetailedTaskModal_tasktype-new option:selected').text()))
             .append($('<i class="fa fa-trash">')
                     .attr("onclick", "addUserStoryToTask_removeAssignee(this)")
                     .attr("cursor", "pointer")

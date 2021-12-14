@@ -3086,6 +3086,8 @@ span.convertedTextAreaLinesItem {
 }
 .storecard-sidebarin {
     background: #525596;
+    height: calc(100vh - 120px);
+    overflow: scroll;
 }
 .storecard-sidebarin .cs-forum-group .bootstrap-select {
     width: 100% !important;
