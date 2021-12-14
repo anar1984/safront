@@ -19086,6 +19086,16 @@ function addInputListToTaskNewEvent(el, descId, inputId) {
     //addInputListToTaskNew_setHeader(descId);
     addInputListToTaskNew_setComment_event(descId, inputId); 
 }
+function addInputDescListToTaskNewEvent(el, descId, inputId) {
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+     addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
+    //addInputListToTaskNew_setHeader(descId);
+    addInputDescListToTaskNew_setComment_event(descId, inputId); 
+}
 
 function addInputListToTaskNew_setHeader() {
     var inputList = addInputListToTaskNew_getCheckedInputs();
@@ -19129,6 +19139,26 @@ function addInputListToTaskNew_setComment() {
     })
 
     $('#addNewDetailedTaskModal_comment').val(st);
+}
+function addInputDescListToTaskNew_setComment_event() {
+    var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
+    $('.desc-table-list-for-multiple  .multiple-desc-inp').each(function () {
+        if ($(this).is(":checked")) {
+            var st = "";
+
+            var name = SAInputDesc.GetDetails($(this).attr("data-id"));           
+         
+            var col = $("<div class='col-12 item-input-add-task'>")
+                .append(`<label class='font-weight-bold' >${name}</label>`)
+                       
+                 .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : "+name))
+                       
+                 .append($("<textarea class='form-control' row='3'>").val(st))
+                 $("#addNewDetailedTaskModal_list").append(col);
+        }
+    })
+
 }
 function addInputListToTaskNew_setComment_event() {
     var idx = 1;

@@ -20958,7 +20958,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('class', 'description-style-background')
+                    .attr('class', 'description-style-background desc-table-list-for-multiple')
                     .addClass("text-left")
                     .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
                     .append($('<input type="text">')
@@ -21998,7 +21998,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return (desc1) ? stln + '<div data-id="' + descId + '" order="'+orderNo+'" class="drag-item align-items-center d-flex span-button-div">'
             + "<input class='multiple-desc-inp' data-id=" + descId + " type='checkbox'>"
             +`<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>`
-                + '<span class="span_hover" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
+                + '<span class="span_hover desc-item-input" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
 
                 + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
                 + '- &nbsp; ' + colored
