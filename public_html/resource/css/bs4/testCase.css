@@ -1453,6 +1453,45 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
    width: 100% !important;
 }
 
+/* Task deadline */
+
+.td-deadline-box {
+    position: relative;
+    height: 100%;
+    display: table;
+}
+.td-deadline-box span {
+    padding-left: 12px;
+    padding-right: 5px;
+    vertical-align: middle;
+    display: table-cell;
+    height: 100%;
+}
+.td-deadline-box:after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #CACACA;
+}
+.td-deadline-box.kecib:after {
+    background-color: #FF0000;
+}
+.td-deadline-box.bugun:after {
+    background-color: #ADDE45;
+}
+.td-deadline-box.gelecek:after {
+    background-color: #61D1F4;
+}
+.td-deadline-box.nodeadline:after {
+    background-color: #CACACA;
+}
+.td-deadline-box span {
+
+}
+
 /* Notification Elements */
 .notification-elements .notify-top-section {
   
