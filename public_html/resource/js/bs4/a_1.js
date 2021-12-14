@@ -18836,6 +18836,16 @@ function genTaskKanbanView4Group() {
     $('[data-toggle="popover"]').popover();
 }
 
+function addNewDetailedTaskAction_assigneeList_event() {
+    var st = "";
+   // $('#addNewDetailedTaskModal_assigneelist-new').find('.assignee-main-tr').each(function () {
+        var assigneeId = $('#addNewDetailedTaskModal_assignee-new').val();
+        var tasktypeId = $('#addNewDetailedTaskModal_tasktype-new').val();
+        tasktypeId = (tasktypeId) ? tasktypeId : "-1";
+        st += assigneeId + ':' + tasktypeId + "|";
+   // })
+    return st;
+}
 function addNewDetailedTaskAction_assigneeList() {
     var st = "";
     $('#addNewDetailedTaskModal_assigneelist').find('.assignee-main-tr').each(function () {
@@ -18846,10 +18856,15 @@ function addNewDetailedTaskAction_assigneeList() {
     })
     return st;
 }
-function name(params) {
-    $("#addNewDetailedTaskModal_list").each
+function addNewDetailedTaskActionEvent1(params) {
+    $("#addNewDetailedTaskModal_list >.item-input-add-task").each(function () {
+
+        addNewDetailedTaskActionEvent($(this).find('textarea').val(),$(this).find('input').val());
+    })
+    $('#addNewDetailedTaskModal-multi-new').modal('hide');
+    new UserStory().getBacklogTaskStats();
 }
-function addNewDetailedTaskActionEvent() {
+function addNewDetailedTaskActionEvent(nameL,Com) {
     if (!$('#addNewDetailedTaskModal_projectid-new').val() || !$('#addNewDetailedTaskModal_description-new').val().trim()) {
         return;
     }
@@ -18857,11 +18872,11 @@ function addNewDetailedTaskActionEvent() {
     var json = initJSON();
     json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid-new').val();
     json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid-new').val();
-    json.kv.taskName = $('#addNewDetailedTaskModal_description-new').val();
-    json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature').val();
-    json.kv.taskComment = $('#addNewDetailedTaskModal_comment').val();
-    json.kv.assineeList = addNewDetailedTaskAction_assigneeList();
-    json.kv.fileList = $('#addNewDetailedTaskModal_filelist').val();
+    json.kv.taskName = nameL +"\n"+$("#addNewDetailedTaskModal_description-new").val();
+    json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature-new').val();
+    json.kv.taskComment = Com;
+    json.kv.assineeList = addNewDetailedTaskAction_assigneeList_event();
+    json.kv.fileList = $('#addNewDetailedTaskModal_filelist-new').val();
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -18872,8 +18887,7 @@ function addNewDetailedTaskActionEvent() {
         crossDomain: true,
         async: true,
         success: function (res) {
-            $('#addNewDetailedTaskModal-multi-new').modal('hide');
-            new UserStory().getBacklogTaskStats();
+           
         }
     });
 }
@@ -19116,7 +19130,6 @@ function addInputListToTaskNew_setComment_event() {
             var st = "";
 
             var name = SAInput.GetInputName($(this).val());           
-
             try {
                 //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
                 //                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
@@ -19131,8 +19144,11 @@ function addInputListToTaskNew_setComment_event() {
                 }
             } catch (err) {
             }
-            var col = $("<div class='col-12'>")
+            var col = $("<div class='col-12 item-input-add-task'>")
                 .append(`<label class='font-weight-bold' >${name}</label>`)
+                       
+                 .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : "+name))
+                       
                  .append($("<textarea class='form-control' row='3'>").val(st))
                  $("#addNewDetailedTaskModal_list").append(col);
         }

@@ -7697,8 +7697,8 @@
                                class="form-control">
                     </div>
                     <div class="col-12 p-4 ">
-                        <label>Description</label>
-                        <input id="addNewDetailedTaskModal_description-new" rows="2" type="" class="form-control">
+                        <label>Comment</label>
+                        <textarea id="addNewDetailedTaskModal_description-new" rows="3" type="" class="form-control"></textarea>
                     </div>
                                     
                     <div class="col-12 " >
@@ -7734,7 +7734,9 @@
                                 </tr>
 
                             </thead>
-                
+                            <tbody id='addNewDetailedTaskModal_assigneelist-new'>
+
+                            </tbody>
                         </table>
                     </div>
                    <div class="col-12" id="addNewDetailedTaskModal_list">
@@ -7746,7 +7748,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="addNewDetailedTaskAction()">
+                <button type="button" class="btn btn-primary" onclick="addNewDetailedTaskActionEvent1()">
                     Add
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
