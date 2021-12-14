@@ -13050,16 +13050,16 @@ function getIframeBlock(pid, css, js, bodys) {
          var cssBlock = $(body).find('#css-function-list-for-story-card');
          var jsBlock = $(body).find('#js-function-list-for-story-card')
       if(cssBlock){
-        $(body).find('#css-function-list-for-story-card').html(css);
+        $(body).find('#css-function-list-for-story-card').text(css);
 
       }else{
-        $(body).append($('<style id="js-function-list-for-story-card">').html(css));
+        $(body).append($('<style id="js-function-list-for-story-card">').text(css));
 
       }
       if(jsBlock){
-        $(body).find('#js-function-list-for-story-card').html(js);
+        $(body).find('#js-function-list-for-story-card').text(js);
       }else{
-        $(body).append($('<script id="js-function-list-for-story-card">').html(js));
+        $(body).append($('<script id="js-function-list-for-story-card">').text(js));
       }
       return body;
     var $iframe = $("<div class='overflow-hidden'>")
