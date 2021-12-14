@@ -13366,9 +13366,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#main_div_of_backlog_info_kanban_view_table_new').html('');
         $('#main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('#main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('#main_div_of_backlog_info_kanban_view_table_waiting').html('');
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
         $('#kanban_view_closed_count').html(0);
+        $('#kanban_view_waiting_count').html(0);
         $('#us_core_filter_paginationresult_rowcount').html(0);
         this.setEmptyMessage4Backlog();
         this.setEmptyMessage4BacklogListView();
@@ -14115,6 +14117,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     var c4new = 0;
                     var c4ongoing = 0;
                     var c4closed = 0;                 
+                    var c4waiting = 0;                 
                         var usIdList = res.tbl[0].r;
         
                         for (var k = 0; k < usIdList.length; k++) {
@@ -14134,9 +14137,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 $(html).find("#user-story-show-stat").click();
                     
 
-                            } else if (obj.backlogStatus === 'closed') {
+                            } 
+                            else if (obj.backlogStatus === 'closed') {
                                 c4closed++;
                                 $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                            }
+                            else if (obj.backlogStatus === 'waiting') {
+                                c4waiting++;
+                                $('.main_div_of_backlog_info_kanban_view_table_waiting').append(html);
                             }
                            
                         }
@@ -14166,7 +14174,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanView: function () {
   
 
-        var stl  = ["new","ongoing",'closed']
+        var stl  = ["new","ongoing",'closed','waiting']
             for (let si = 0; si < stl.length; si++) {
                
                this.setUSLists4KanbanViewCore(stl[si])
@@ -14484,6 +14492,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('.main_div_of_backlog_info_kanban_view_table_waiting').html('');
         var bNoList = SACore.GetBacklogNoKeys();
         var addedUS = [];
 

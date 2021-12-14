@@ -134,7 +134,52 @@
 
 
             </div>
-            <div class="task-panel" style="margin: auto;">
+            <div class="task-panel" style="margin: auto;width: 95%;">
+                <div class="task-column waiting" status="waiting">
+
+                    <div draggable="true" class="task-column-header" >
+                        <input type="checkbox" name="" data-st='waiting' class='all-check-us-mngm' id="alcheck-waiting-us-mng">
+
+                        <span class="headerInputColumn">Waiting <b><span class="counterkanban" id="kanban_view_waiting_count">0</span></b></span>
+                        <!--                            <div class="column-header-edit">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="Column header-choose">
+                                                        <div class="col-12 choosebtn">
+                                                            <span class=" limitSet">Limit Set Column</span>
+                                                        </div>
+                        
+                        
+                        
+                                                    </div>-->
+                        <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs" > <i class="fas fa-edit"></i></button>
+
+                        <button data-status='waiting' class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand"></i></button>
+                    </div>
+<!--                    <div class="CardContentAdd">
+                        <img class="contentAdImg" src="resource/img/plus-icon.png" alt="">
+                    </div>-->
+                    <div  class="miniStoryCard">
+                        <h5>New Story Card</h5>
+                        <input  class="miniStoryInput form-control" 
+                                type="text">
+                        <div class="TextHeader " onclick="insertNewUserStory(this, 'waiting')" id="AcceptStory" style="color: green;">
+                            <i class="fas fa-check" ></i>
+
+                        </div>
+                        <div class="TextHeader "  id="DeleteStory" style="color: red;">
+                            <i class="fas fa-times"></i> 
+                        </div>
+                    </div>
+
+                    <div class="task-column-body main_div_of_backlog_info_kanban_view_table_waiting" id="waiting">
+                        <div draggable="true" class="content-drag"></div>  
+
+
+
+                    </div>
+
+                </div>
                 <div class="task-column new" status="new">
 
                     <div draggable="true" class="task-column-header" >
