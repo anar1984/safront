@@ -56,6 +56,22 @@
                id="storycard-panel-backlog-id"  title = 'Refresh'>
           
     </div>
+    <div class="cs-col-storecard-general-setting ml-1">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="vertical-align: -webkit-baseline-middle;">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-info btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-history"></i>
+                </button>
+                <div class="dropdown-menu" id="item-history-list" aria-labelledby="btnGroupDrop1">
+
+                </div>
+            </div>
+            <button   id="backBacklogBtn-block"   type="button" class="btn btn-info btn-sm " >
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -198,6 +214,8 @@
                                 onclick="new UserStory().setAsOutput()">Set as Output</button>
                         <button class="dropdown-item firstbut " data-toggle="modal" 
                                 onclick="addInputListToTaskNew()"  >Add to Task </button>
+                        <button class="dropdown-item firstbut " data-toggle="modal" 
+                                onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
 
                         <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
                                 onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>

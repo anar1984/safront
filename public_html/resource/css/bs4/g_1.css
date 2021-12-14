@@ -2000,7 +2000,7 @@ END PROJECT SECTION
 .groupStyleRow .col-3 a{
     margin: 10px;
 }
-i{
+i.fa,i.fas,i.far{
     cursor: pointer;
 }
 label h6{

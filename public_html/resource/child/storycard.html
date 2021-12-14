@@ -39,6 +39,7 @@
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
+                
                 <hr style="margin: 4px 0px;"> 
                 <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Export</a></button>
                 <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox"><a href="#" >Copy</a></button>
@@ -208,6 +209,9 @@
                                 onclick="new UserStory().setAsOutput()">Set as Output</button>
                         <button class="dropdown-item firstbut " data-toggle="modal" 
                                 onclick="addInputListToTaskNew()"  >Add to Task </button>
+                        <button class="dropdown-item firstbut " data-toggle="modal" 
+                                onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
+
 
                         <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
                                 onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>

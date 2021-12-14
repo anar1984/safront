@@ -912,7 +912,7 @@ $(function () {
 
     // search api list
     $(document).on('keyup', "#search-api_list", function () {
-        searchFilterTable(this, 'api_list_side_bar');
+        searchFilterTable4LiveProtoptyApi(this, 'api_list_side_bar');
     })
 
 

@@ -347,7 +347,7 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
-        
+
     }
 }
 
@@ -554,6 +554,7 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
 
 $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function (ev) {
     loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, false);
+    loadCurrentBacklogProdDetails();
     $('.live-prototype-show-story-card-refresh').click();
 })
 
@@ -980,7 +981,10 @@ function getBacklogAsHtml(bid1, isAsync) {
         success: function (res) {
             out = res;
             if (out.length === 0) {
-                setBacklogAsHtml(bid);
+                var js = window.editorJSnew.getValue();
+                var css = window.editorCSSnew.getValue();
+                setBacklogAsHtml(bid, css, js)
+
             }
         }
     });
@@ -1023,7 +1027,9 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
-                    setBacklogAsHtml(o.id);
+                    var js = window.editorJSnew.getValue();
+                    var css = window.editorCSSnew.getValue();
+                    setBacklogAsHtml(o.id, css, js);
 
                 }
 

@@ -7620,9 +7620,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.addInputByRes(res);
                 SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
-
-                loadCurrentBacklogProdDetails();
-
+                
+                //loadCurrentBacklogProdDetails();
 
                 //backlogun canvas parametrleri set edilir
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
@@ -15252,8 +15251,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
             
-            if(global_var.current_modal === 'loadStoryCard'){
-                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+            if(global_var.current_modal === 'loadStoryCard'||global_var.current_modal === 'loadDev'){
+                var pid  = SACore.Backlogs[backlogId].fkProjectId
+                if (pid === global_var.current_project_id) {
+                    $("#storyCardListSelectBox4StoryCard").val(backlogId)
+                    $("#storyCardListSelectBox4StoryCard").change();
+                } else {
+                    global_var.current_backlog_id = backlogId;
+                    Utility.addParamToUrl('current_backlog_id', backlogId);
+                    $('select.projectList_liveprototype_storycard').val(pid);
+                    $('select.projectList_liveprototype_storycard').change();
+                }
                 return;
             }
 
@@ -15271,12 +15279,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             console.log(err)
         }
         
-        
-        
-        
-        
-        
-        
+ 
         try {
 //            event.preventDefault();
 
