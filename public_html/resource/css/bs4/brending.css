@@ -3977,20 +3977,35 @@ hr.hr-ss {
     font-weight: bold;
     font-size: 14px;
 }
+.cs-core-issue-management .tableFixHead {
+    flex: 1 1 auto;
+    height: calc(100vh - 117px );
+    overflow: scroll;
+    width: 100%;
+    position: relative;
+    min-width: 200px;
+}
 .cs-core-issue-management .bugListTable {
-    color: #525596;
+    color: #313582;
     width: max-content !important;
     min-width: 100%;
     border-collapse: separate;
-    border-spacing: 2px;
+    border-spacing: 1px;
 }
 .cs-core-issue-management .bugListTable tbody .bug-tr td{
-    color: #525596;
+    color: #313582;
     height: 30px;
     border: none;
-    padding: 0px;
+    padding: 0 6px;
     border: 1px solid transparent;
     font-weight: 500;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: auto;
+    max-width: 100px;
+    text-align: left;
 }
 .cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-checkbox{
     width: 30px !important;
@@ -4023,10 +4038,10 @@ hr.hr-ss {
     padding-right: 25px;
 }
 .bugListTable tbody .bug-tr td>a {
-    font-size: 14px;
+    font-size: 13px;
 }
 .cs-core-issue-management .bug-list-column-assignee {
-    font-size: 14px;
+    font-size: 13px;
 }
 .bug-list-column-task-status .dropdown-toggle {
     position: relative;
@@ -4039,7 +4054,7 @@ hr.hr-ss {
     border-radius: 60px;
     font-style: normal;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 17px;
     color: #FFFFFF;
 }
@@ -4122,13 +4137,13 @@ hr.hr-ss {
     top: 50%;
 }
 .bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
-    color: #ffff;
+    color: #525596;
     height: 30px;
     width: 30px;
-    background-color: #525596;
+    background-color: transparent;
     border: none;
     border-radius: 4px;
-    margin: 0 2px;
+    margin: 0 -7px 0px 0px;
     position: relative;
     top: inherit;
     float: right;
@@ -4140,7 +4155,7 @@ hr.hr-ss {
 .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept {
     position: absolute;
     top: 50%;
-    right: -12px;
+    right: -10px;
 }
 .bug-list-column-story-card .hpYuyept {
     margin-right: 0;
@@ -4649,7 +4664,7 @@ table.lbl-list-table tr td {
     background-color: #3a3d87;
 }
 .bugListNavMenu {
-    background: white;
+    /* background: white;
     -ms-flex: 0 0 370px;
     flex: 0 0 300px;
     max-width: 300px;
@@ -4663,7 +4678,7 @@ table.lbl-list-table tr td {
     left: -300px;
     top: 58px;
     z-index: 10000;
-    transition-duration: .25s;
+    transition-duration: .25s; */
 }
 .bugListNavMenu.task-menu-open {
  left: 0;
@@ -4865,3 +4880,9 @@ table.lbl-list-table tr td {
     height: 18px;
     margin-top: -3px;
 }
+.bug-list-column.bug-list-column-story-card span {
+    vertical-align: middle;
+    height: 100%;
+    line-height: 1.5;
+}
+

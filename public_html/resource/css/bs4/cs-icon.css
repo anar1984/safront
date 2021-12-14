@@ -21,11 +21,14 @@
   .cs-svg-icon.calendar-empty:after {
     background-image: url(../ch-icons/calendar-empty.svg);
   }
-  .cs-svg-icon.calentar-01:after {
-    background-image: url(../ch-icons/calentar-01.svg);
+  .cs-svg-icon.calendar-01-dark:after {
+    background-image: url(../ch-icons/calendar-01-dark.svg);
   }
-  .cs-svg-icon.calentar-02:after {
-    background-image: url(../ch-icons/calentar-02.svg);
+  .cs-svg-icon.calendar-01:after {
+    background-image: url(../ch-icons/calendar-01.svg);
+  }
+  .cs-svg-icon.calendar-02:after {
+    background-image: url(../ch-icons/calendar-02.svg);
   }
   .cs-svg-icon.cedvel:after {
     background-image: url(../ch-icons/cedvel.svg);
@@ -233,4 +236,13 @@
   }
   .cs-svg-icon.task-user-2:after {
     background-image: url(../ch-icons/task-user-2.svg);
+  }
+  .cs-svg-icon.user-group:after {
+    background-image: url(../ch-icons/user-group.svg);
+  }
+  .cs-svg-icon.sub-task:after {
+    background-image: url(../ch-icons/sub-task.svg);
+  }
+  .cs-svg-icon.new-task:after {
+    background-image: url(../ch-icons/new-task.svg);
   }
