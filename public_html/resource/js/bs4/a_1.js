@@ -18874,9 +18874,9 @@ function addNewDetailedTaskActionEvent(nameL,Com) {
     var json = initJSON();
     json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid-new').val();
     json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid-new').val();
-    json.kv.taskName = nameL +"\n"+$("#addNewDetailedTaskModal_description-new").val();
+    json.kv.taskName = nameL 
     json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature-new').val();
-    json.kv.taskComment = Com;
+    json.kv.taskComment = Com +"\n"+$("#addNewDetailedTaskModal_description-new").val();
     json.kv.assineeList = addNewDetailedTaskAction_assigneeList_event();
     json.kv.fileList = $('#addNewDetailedTaskModal_filelist-new').val();
     var that = this;
