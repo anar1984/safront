@@ -3719,3 +3719,6 @@ $(document).on("click", '.setting-elemen-box .notification-btn', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .notification-elements').show();    
 });
+$(document).on("click", '.show-more-btn', function () {
+    $('.notification-elements').toggleClass('show-more');    
+});

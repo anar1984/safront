@@ -1537,17 +1537,38 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     color: #EBFF00;
     margin-right: 5px;
 }
-.notification-elements .notify-top-section .circle-s {
-    text-align: right;
-    width: 17px;
-    height: 17px;
-    background: transparent;
-    border: 1px solid #78A812;
-    box-sizing: border-box;
-    display: inline-block;
-    border-radius: 50px;
-    vertical-align: middle;
+.notification-elements.show-more .notify-top-section .top-date-time {
+    display: none;
 }
+.notification-elements .notify-top-section .circle-s {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    height: 17px;
+}
+.notify-top-section .circle-s .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #78A812;
+    background-color: transparent;
+    border-radius: 50px;
+  }
+  .notify-top-section .circle-s .checkmarkcontainer:hover input ~ .checkmark {
+    border-radius: 50px;
+    border: 1px solid #99b857;
+    background-color: rgb(153 184 87 / 30%);
+  }
+  .notify-top-section .circle-s .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #99b857;
+  }
+  .notify-top-section .circle-s .checkmarkcontainer .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 6px;
+  }
 .notification-elements .notify-msg span {
     position: relative;
     height: 15px;
@@ -1558,6 +1579,12 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     line-height: 15px;   
     color: #FFFFFF;
 }
+.notification-elements .notify-msg {
+    display: none !important;
+}
+.notification-elements.show-more .notify-msg {
+    display: flex !important;
+}
 .notification-elements .show-arrow i:after{
   width: 16px;
   height: 10px;
@@ -1566,15 +1593,37 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     padding: 0 5px;
 }
 .notification-elements .notify-title-box .show-arrow {
-    /* -moz-transform: rotate(90deg);
+    margin-left: 22px;
+    position: relative;
+    cursor: pointer;
+}
+.notification-elements .notify-title-box .show-arrow i{
+    -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
-    transform: rotate(90deg); */
+    transform: rotate(90deg);
+    position: absolute;
+    right: 0;
+    transition: all .2s ease;
+}
+.notification-elements.show-more .notify-title-box .show-arrow i{
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    position: absolute;
+    right: 0;
 }
 .notification-elements .notify-title-box .ncs-ellipsis {
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+}
+.notification-elements.show-more .notify-title-box .ncs-ellipsis {
+    white-space: initial;
+    overflow: visible;
     text-overflow: ellipsis;
 }
 .notification-elements .notify-title-box .id {
@@ -1617,9 +1666,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     padding-left: 5px;
     vertical-align: middle;
 }
-.notification-elements .notify-title-box .show-arrow {
-    margin-left: 10px;
-}
 .notification-elements .notify-title-box .show-arrow i:after{
   
 }
@@ -1628,6 +1674,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
   
 }
 .notification-elements .notify-bottom-box .date-time {
+    display: none;
     text-align: right;
     height: 13px;
     font-family: 'Quicksand', sans-serif;
@@ -1638,10 +1685,12 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     color: #EBFF00;
     margin-right: 5px;
     width: 100%;
-    display: block;
     position: absolute;
     bottom: 20px;
     right: 0;
+}
+.notification-elements.show-more .notify-bottom-box .date-time {
+    display: block;
 }
 .notification-elements .notify-bottom-box .status-box {
     background: #D09838;
