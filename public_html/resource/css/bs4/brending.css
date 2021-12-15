@@ -4155,6 +4155,9 @@ hr.hr-ss {
     display: inline-block;    
     top: 50%;
 }
+.bug-list-column-story-card .set-filter-box i:first-child{
+margin-left: 11px;
+}
 .bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
     color: #ffffff;
     height: 18px;
