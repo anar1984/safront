@@ -4000,9 +4000,6 @@ hr.hr-ss {
     border: 1px solid transparent;
     font-weight: 500;
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     width: auto;
     max-width: 100px;
     text-align: left;
