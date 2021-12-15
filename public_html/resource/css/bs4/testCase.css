@@ -1453,42 +1453,218 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
    width: 100% !important;
 }
 
+/* Task deadline */
+
+.td-deadline-box {
+    position: relative;
+    height: 100%;
+    display: table;
+}
+.td-deadline-box span {
+    padding-left: 12px;
+    padding-right: 5px;
+    vertical-align: middle;
+    display: table-cell;
+    height: 100%;
+}
+.td-deadline-box:after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #CACACA;
+}
+.td-deadline-box.kecib:after {
+    background-color: #FF0000;
+}
+.td-deadline-box.bugun:after {
+    background-color: #ADDE45;
+}
+.td-deadline-box.gelecek:after {
+    background-color: #61D1F4;
+}
+.td-deadline-box.nodeadline:after {
+    background-color: #CACACA;
+}
+.td-deadline-box span {
+
+}
+
 /* Notification Elements */
+.notification-elements {
+    position: relative;
+    width: 100%;  
+    background: #03396C;
+    mix-blend-mode: normal;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+}
 .notification-elements .notify-top-section {
-  
+
 }
-.notification-elements .notify-top-section .totp-title {
-  
+.notification-elements .notify-top-section .top-title {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+    color: #FFFFFF;
+    margin-right: 10px;
 }
-.notification-elements .notify-top-section .dedline {
-  
+.notification-elements .notify-top-section .deadline {
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    border-left: 5px solid #ADDE45;
+    height: 100%;
+    vertical-align: middle;
+    padding: 0 4px;
 }
 .notification-elements .notify-top-section .top-date-time {
-  
+    text-align: right;
+    height: 13px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EBFF00;
+    margin-right: 5px;
+}
+.notification-elements.show-more .notify-top-section .top-date-time {
+    display: none;
 }
 .notification-elements .notify-top-section .circle-s {
-  
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    height: 17px;
 }
+.notify-top-section .circle-s .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #78A812;
+    background-color: transparent;
+    border-radius: 50px;
+  }
+  .notify-top-section .circle-s .checkmarkcontainer:hover input ~ .checkmark {
+    border-radius: 50px;
+    border: 1px solid #99b857;
+    background-color: rgb(153 184 87 / 30%);
+  }
+  .notify-top-section .circle-s .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #99b857;
+  }
+  .notify-top-section .circle-s .checkmarkcontainer .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 6px;
+  }
 .notification-elements .notify-msg span {
-  
+    position: relative;
+    height: 15px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;   
+    color: #FFFFFF;
 }
-.notification-elements .notify-msg .show-arrow {
-  
+.notification-elements .notify-msg {
+    display: none !important;
 }
-.notification-elements .notify-msg .show-arrow i:after{
-  
+.notification-elements.show-more .notify-msg {
+    display: flex !important;
+}
+.notification-elements .show-arrow i:after{
+  width: 16px;
+  height: 10px;
 }
 .notification-elements .notify-title-box {
-  
-}
-.notification-elements .notify-title-box .id {
-  
-}
-.notification-elements .notify-title-box .notefy-title {
-  
+    padding: 0 5px;
 }
 .notification-elements .notify-title-box .show-arrow {
-  
+    margin-left: 22px;
+    position: relative;
+    cursor: pointer;
+}
+.notification-elements .notify-title-box .show-arrow i{
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    position: absolute;
+    right: 0;
+    transition: all .2s ease;
+}
+.notification-elements.show-more .notify-title-box .show-arrow i{
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    position: absolute;
+    right: 0;
+}
+.notification-elements .notify-title-box .ncs-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.notification-elements.show-more .notify-title-box .ncs-ellipsis {
+    white-space: initial;
+    overflow: visible;
+    text-overflow: ellipsis;
+}
+.notification-elements .notify-title-box .id {
+    position: relative;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    height: 13px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    padding-left: 20px;
+    padding-right: 0;
+    vertical-align: middle;
+}
+.notification-elements .notify-title-box .id:after {
+    content: "ID";
+    position: absolute;
+    background: #ffffff;
+    color: #03396C;
+    width: 14.84px;
+    height: 14px;
+    left: 0;
+    top: 0px;
+    border-radius: 2px 0px 0px 2px;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 1px 1px;
+}
+.notification-elements .notify-title-box .notefy-title {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    padding-left: 5px;
+    vertical-align: middle;
 }
 .notification-elements .notify-title-box .show-arrow i:after{
   
@@ -1498,36 +1674,83 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
   
 }
 .notification-elements .notify-bottom-box .date-time {
-  
+    display: none;
+    text-align: right;
+    height: 13px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EBFF00;
+    margin-right: 5px;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+}
+.notification-elements.show-more .notify-bottom-box .date-time {
+    display: block;
 }
 .notification-elements .notify-bottom-box .status-box {
-  
+    background: #D09838;
+    vertical-align: middle;
+    position: relative;
+    height: 19px;
 }
 .notification-elements .notify-bottom-box .status-box .author-img {
-  
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    margin-top: -17px;
 }
 .notification-elements .notify-bottom-box .status-box .author-img img {
-  
+    width: 33px;
+    height: 33px;
+    border-radius: 50px;
 }
 .notification-elements .notify-bottom-box .status-box .notefy-status {
-  
-}
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #FFFFFF;
+    padding-left: 55px;
+    display: block;
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right {
-  
+ line-height: 1;  
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right ul {
-  
+  list-style: none;
+  padding: 0;
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li {
-  
+  display: inline-block;
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click {
-  
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    vertical-align: middle;
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click i {
-  
+  vertical-align: middle;
+  margin-left: 5px;
 }
 .notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click i:after {
-  
+    width: 13.45px;
+    height: 16px;
+}
+.notification-elements .notify-bottom-box .status-box .notify-bottom-right ul li .cs-click i.attach-01:after {
+    width: 12.45px;
+    height: 16px;
+    top: 0;
+    display: inline-block;
+    margin-top: -4px;
 }
