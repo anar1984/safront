@@ -4090,6 +4090,13 @@ hr.hr-ss {
  border-color: #f19a91;
  background-color: #f19a91 !important;
 }
+
+.bug-list-column-task-status .us-item-status-draft {
+ border-color: #6264a0;
+ color:white;
+ background-color: #6264a0 !important;
+}
+
 .bug-list-column-task-status .us-item-status-ongoing {
     border-color: #f3c788;
     background-color: #f3c788 !important;
