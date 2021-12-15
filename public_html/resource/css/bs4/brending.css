@@ -4109,6 +4109,13 @@ hr.hr-ss {
  border-color: #D09838;
  background-color: #D09838 !important;
 }
+
+.bug-list-column-task-status .us-item-status-draft {
+ border-color: #6264a0;
+ color:white;
+ background-color: #6264a0 !important;
+}
+
 .bug-list-column-task-status .us-item-status-ongoing {
     border-color: #4AA9AF;
     background-color: #4AA9AF !important;

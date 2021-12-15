@@ -361,9 +361,17 @@ body{
     /*color:white;*/
 }
 
+ 
+.us-item-status-draft{
+    background-color: #6264a0; 
+    font-size:10px;
+    display: inline-block;
+    padding: 1px 10px 1px 10px;
+    border-radius:10px;
+    color:white;
+}
 
-
-.us-item-status-Canceled{
+.us-item-status-canceled{
     background-color: lightblue; 
     font-size:10px;
     display: inline-block;
