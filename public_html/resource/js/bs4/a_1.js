@@ -13094,12 +13094,15 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
 
 });
 function setBacklogAsHtmlCodeGround(backlogId, html) {
+
+      var jsLink  = `<script src="https://app.sourcedagile.com/api/get/script/js/${global_var.current_domain}/${backlogId}.js"></script>`
+      var cssLink  = `<link src="https://app.sourcedagile.com/api/get/script/css/${global_var.current_domain}/${backlogId}.css">`
     if (!backlogId) {
         return;
     }
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = html;
+    json.kv.backlogHtml = cssLink + html +jsLink;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
