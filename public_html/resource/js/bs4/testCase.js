@@ -1374,9 +1374,9 @@ function getBugListDetailsHeader() {
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-project').append('Project'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-assignee').css("width", '50px').append('<i class="cs-svg-icon task-user-1"></i>'))
+                    .addClass('bug-list-column-assignee').css("width", '70px').append('<i class="cs-svg-icon task-user-1"></i>'))
             .append($('<th>').addClass('bug-list-column')
-                    .addClass('bug-list-column-created-by').css("width", '50px').append('<i class="cs-svg-icon task-user-2"></i>'))
+                    .addClass('bug-list-column-created-by').css("width", '70px').append('<i class="cs-svg-icon task-user-2"></i>'))
             .append($('<th>').addClass('bug-list-column')
                     .addClass('bug-list-column-created-date').css("width", '80px').append('<i class="cs-svg-icon calendar-01-dark"></i>'))
             .append($('<th>').addClass('bug-list-column')
@@ -1666,14 +1666,15 @@ function getBugListDetails(res) {
                                         .css("display", "none")
                                         .addClass("hpYuyept1"))
                                 )
-                        .mouseover(function () {
-                            $(this).find(".hpYuyept").show();
-                            $(this).find(".hpYuyept1").show();
-                        })
-                        .mouseleave(function () {
-                            $(this).find(".hpYuyept").hide();
-                            $(this).find(".hpYuyept1").hide();
-                        }))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                                $(this).find(".hpYuyept1").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                                $(this).find(".hpYuyept1").hide();
+                            })
+                        )
                 .append($('<td>').addClass('bug-list-column')
                 .attr("style", "width:140px;")
                         .addClass('bug-list-column-project')
@@ -1687,17 +1688,12 @@ function getBugListDetails(res) {
                         })
                         .mouseleave(function () {
                             $(this).find(".hpYuyept").hide();
-                        })
-                        )
+                        }))
                 .append($('<td>')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append($("<div>")
-                                .append((o.userName) ? $('<img class="Assigne-card-story-select-img">')
-                                .attr('src', img)
-                                : " ")
-                            )
+                        .append(genUserTrblock(o.userName,img))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                             .css("display", "none")
@@ -1707,16 +1703,21 @@ function getBugListDetails(res) {
                     })
                     .mouseleave(function () {
                         $(this).find(".hpYuyept").hide();
-                    })
-                        )
+                    }))
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
-                        .append($("<div>").addClass("get-data-group")
-                                .append((o.createByName) ? $('<img class="Assigne-card-story-select-img">')
-                                        .attr('src', createdByImg) : "")
-                              
-                                )
+                            .append(genUserTrblock(o.createByName,createdByImg))
+                            .append($('<i class="fa fa-filter">')
+                            .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                            .css("display", "none")
+                            .addClass("hpYuyept"))
+                            .mouseover(function () {
+                                $(this).find(".hpYuyept").show();
+                            })
+                            .mouseleave(function () {
+                                $(this).find(".hpYuyept").hide();
+                            })
                         )
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
@@ -1745,6 +1746,9 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
             
         tbody.append(t);
+        $('[data-toggle="popover"]').popover({
+            html: true
+        });
     }
 
     getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
@@ -1760,7 +1764,94 @@ function getBugListDetails(res) {
     global_var.bug_task_label_assign_id = '';
 
 }
+function genUserTrblock(names,img) {
 
+    try {
+        return $('<a>')
+            .attr('tabindex', "0")
+            .attr('data-placement', "left")
+            //.attr('data-original-title', filed === "createdBy" ? "Daxil Edən" : "İcra Edən")
+            .attr('data-toggle', 'popover')
+            .attr('data-trigger', "focus")
+            .attr('data-content', genHoverImageBlock(img, names))
+                .append($('<img>')
+                .addClass("rounded-circle personal-btn-img js-btn-popover--custom")
+                .css("width", '22px')
+                .css("height", '22px')
+                .css("border", '1px solid #03396C')
+                .attr("src", img)
+            )
+
+    } catch (error) {
+        return ''
+    }
+
+  }
+  function genHoverImageBlock (img,ad) {
+    return `
+    <div class="task-table-personal-info">
+     <div class="d-table w-100"><div class="pi-head-title">Daxil Edən</div></div>
+     <ul class="avatar">
+         <li>
+             <div class="d-flex">
+               <div class="left-min-box avatar-image"><img width='36px' height="36px" src="${img}"></div>
+               <div class="mr-auto avatar-name"><span>${ad}</span></div>
+             </div>                
+         </li>
+     </ul>
+     <ul class="main-info">
+         <li>
+             <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Şirkət</span></div>
+                 <div class="mr-auto info-desc"><span>ELCOM GROUP</span></div>
+             </div>
+         </li>
+         <li>
+              <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Filial</span></div>
+                 <div class="mr-auto info-desc"><span>Reklam</span></div>
+             </div>
+         </li>
+         <li>
+         <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Dep.</span></div>
+                 <div class="mr-auto info-desc"><span>Planlama</span></div>
+             </div>
+         </li>
+         <li>
+             <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Şöbə</span></div>
+                 <div class="mr-auto info-desc"><span>Dizayn</span></div>
+             </div>
+         </li>
+         <li>
+          <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Sektor</span></div>
+                 <div class="mr-auto info-desc"><span>Qrafik</span></div>
+             </div>
+         </li>
+         <li>
+             <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Vəzifə</span></div>
+                 <div class="mr-auto info-desc"><span>Qrafik Dizayner</span></div>
+             </div>
+         </li>
+         <li>
+             <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Email</span></div>
+                 <div class="mr-auto info-desc"><span>info@elcom.az</span></div>
+             </div>
+         </li>
+         <li>
+             <div class="d-flex">
+                 <div class="left-min-box info-title"><span>Mobil</span></div>
+                 <div class="mr-auto info-desc"><span>+994 10 101 01 01</span></div>
+             </div>
+         </li>
+     </ul>
+    </div>
+    `
+ };
 function callTaskCard4BugTask(el, projectId, taskId) {
 
 

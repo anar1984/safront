@@ -4104,20 +4104,20 @@ hr.hr-ss {
     float: right
 }
 .bug-list-column-task-status .us-item-status-new {
- border-color: #f19a91;
- background-color: #f19a91 !important;
+ border-color: #D09838;
+ background-color: #D09838 !important;
 }
 .bug-list-column-task-status .us-item-status-ongoing {
-    border-color: #f3c788;
-    background-color: #f3c788 !important;
+    border-color: #4AA9AF;
+    background-color: #4AA9AF !important;
 }
 .bug-list-column-task-status .us-item-status-closed {
-    border-color: #8ad6a3;
-    background-color: #8ad6a3 !important;
+    border-color: #78A812;
+    background-color: #78A812 !important;
 }
 .bug-list-column-task-status .us-item-status-waiting {
-    border-color: #FFFF00;
-    background-color: #FFFF00 !important;
+    border-color: #CA3E12;
+    background-color: #CA3E12 !important;
 }
 
 .bug-list-column-task-nature .get-data-group [class*="im-"] {
@@ -4156,25 +4156,25 @@ hr.hr-ss {
     top: 50%;
 }
 .bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
-    color: #525596;
-    height: 30px;
-    width: 30px;
-    background-color: transparent;
+    color: #ffffff;
+    height: 18px;
+    width: 18px;
+    background-color: #525596;
     border: none;
-    border-radius: 4px;
-    margin: 0 -7px 0px 0px;
+    margin: 0px -8px 0 0px;
     position: relative;
     top: inherit;
     float: right;
     right: auto;
     text-align: center;
-    font-size: 12px;
-    padding: 8px;
+    font-size: 8px;
+    padding: 5px 4px;
+    border-radius: 50px;
 }
 .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept {
     position: absolute;
     top: 50%;
-    right: -10px;
+    right: 0px;
 }
 .bug-list-column-story-card .hpYuyept {
     margin-right: 0;
