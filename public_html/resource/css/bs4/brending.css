@@ -3979,7 +3979,7 @@ hr.hr-ss {
 }
 .cs-core-issue-management .tableFixHead {
     flex: 1 1 auto;
-    height: calc(100vh - 117px );
+    height: calc(100vh - 140px );
     overflow: scroll;
     width: 100%;
     position: relative;
@@ -4003,6 +4003,28 @@ hr.hr-ss {
     width: auto;
     max-width: 100px;
     text-align: left;
+}
+.bugListTable tbody .bug-tr td>a.task-list-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+.bugListTable tbody .bug-tr td.bug-list-column-project {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    max-width: 140px !important;
+}
+.bugListTable tbody .bug-tr td.bug-list-column-story-card .ellipsis-story-card{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
 }
 .cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-checkbox{
     width: 30px !important;

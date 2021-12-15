@@ -1654,7 +1654,7 @@ function getBugListDetails(res) {
                         .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
                 .append($('<td>').addClass('bug-list-column')
                         .addClass('bug-list-column-story-card')
-                        .append("<span class='get-data-group'>" + backlogName + "</span>")
+                        .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
                         .append(' <select dataPid=' + o.fkProjectId + ' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
                         .append($('<div>').addClass('set-filter-box')
                                 .append($('<i class="fa fa-filter">')
