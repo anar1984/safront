@@ -12,7 +12,7 @@ and open the template in the editor.
 
 
 #body_of_nature{
-    position: fixed;
+    /* position: fixed; */
 }
 .sa-sct-full-width .dropdown-menu{
     transform: none !important;
