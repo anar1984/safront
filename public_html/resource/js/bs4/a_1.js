@@ -13046,38 +13046,34 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(pid, css, js, bodys) {
-    var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
-    var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
+   // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
+   // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
     
-    var body = $("<div class='redirectClass h-100'>")
-                       .append(cssLink)
-                       .append(bodys)
-                       .append(jsLink)
-    
-    /*   var cssBlock = $(body).find('#css-function-list-for-story-card');
-         var jsBlock = $(body).find('#js-function-list-for-story-card')
-      if(cssBlock){
-        $(body).find('div#css-function-list-for-story-card').html(cssLink);
+    var body = $("<div class='redirectClass h-100'>").html(bodys)
+    var cssBlock = $(body).find('#css-function-list-for-story-card');
+    var jsBlock = $(body).find('#js-function-list-for-story-card')
+ if(cssBlock.length > 0){
+   $(body).find('#css-function-list-for-story-card').text(css);
 
-      }else{
-        $(body).append($('<div id="js-function-list-for-story-card">').html(cssLink));
+ }else{
+   $(body).append($('<style id="js-function-list-for-story-card">').text(css));
 
-      }
-      if(jsBlock){
-        $(body).find('div#js-function-list-for-story-card').html(jsLink);
-      }else{
-        $(body).append($('<div id="js-function-list-for-story-card">').html(jsLink));
-      } */
-      return body;
-  /*   var $iframe = $("<div class='overflow-hidden'>")
-            .append(body)
+ }
+ if(jsBlock.length >0){
+   $(body).find('#js-function-list-for-story-card').text(js);
+ }else{
+   $(body).append($('<script id="js-function-list-for-story-card">').text(js));
+ }
+ return body;
+var $iframe = $("<div class='overflow-hidden'>")
+       .append(body)
 
-    return $iframe.html(); */
+return $iframe.html();
 }
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val()
+    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
    
      if (!$("#cs-col-Ceckbox-id").prop('checked')) {
@@ -13134,7 +13130,7 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val();
+    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
     
     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
