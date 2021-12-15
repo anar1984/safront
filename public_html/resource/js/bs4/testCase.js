@@ -453,7 +453,7 @@ function addNewTask4BugMultiZad() {
 
     data.comment = $('#addComment4Task_comment_new').val();
     var files = $('#addComment4Task_addnewfile').attr('fname');
-    ;
+    
     $('.canvas-sub-class').each(function (e) {
         files += $(this).attr('fname') + "|";
     })
@@ -3615,47 +3615,7 @@ function  getTaskkObserverListDetaisl(res) {
     div.html(table);
 }
 function createdEventsTaskData(id) {
-
-    var json = initJSON();
-    json.kv.fkTaskId = id;
-    json.kv.mezmun = $('#ivent-mezmun').val();
-    json.kv.struktur = $('#ivent-struktur').val();
-    json.kv.nov = $('#ivent-nov').val();
-    json.kv.mesulShexs = $('#ivent-mesulShexs').val();
-    json.kv.istirakci = $('#ivent-istirakci').val();
-    json.kv.kontragent = $('#ivent-kontragent').val();
-    json.kv.yer = $('#ivent-yer').val();
-    json.kv.qeyd = $('#ivent-qeyd').val();
-
-
-    // json.kv.filename = zipfilename;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceRsCreateBacklogTaskEvent",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            //  var dataurl = urlGl + 'api/get/files/' + res.kv.filename;
-            try {
-                var err = res.err.message;
-                if (err) {
-                    Toaster.showError(err);
-                }
-
-            } catch (error) {
-                msgMessage = 'Events successfully created!';
-                Toaster.showMessage(msgMessage);
-            }
-
-        },
-        error: function () {
-            Toaster.showError(('API error'));
-
-        }
-    });
+   ///legv edildi
 }
 
 function infoEventsTaskData(taskId) {

@@ -13096,7 +13096,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
    // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
-   setBacklogAsHtmlCodeGround(global_var.current_backlog_id,block)
+   setBacklogAsHtml(global_var.current_backlog_id,css, js);
 
 
 });
