@@ -1488,10 +1488,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 .td-deadline-box.nodeadline:after {
     background-color: #CACACA;
 }
-.td-deadline-box span {
-
-}
-
 /* Notification Elements */
 .notification-elements {
     position: relative;
@@ -1501,9 +1497,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     border-radius: 10px;
     overflow: hidden;
     color: #fff;
-}
-.notification-elements .notify-top-section {
-
 }
 .notification-elements .notify-top-section .top-title {
     font-family: 'Quicksand', sans-serif;
@@ -1665,13 +1658,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     color: #FFFFFF;
     padding-left: 5px;
     vertical-align: middle;
-}
-.notification-elements .notify-title-box .show-arrow i:after{
-  
-}
-/* bottom */
-.notification-elements .notify-bottom-box {
-  
 }
 .notification-elements .notify-bottom-box .date-time {
     display: none;
