@@ -9246,12 +9246,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="cs-input-group mb-3">
-
-                                <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                                <div class="d-flex">
+                                    <div class="mr-auto" style="width: 93%;">
+                                        <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                                    </div>
+                                    <div class="p-0">
+                                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                                             <i class="cs-svg-icon flame"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="cs-input-group">
-                                <div class="task-check-list-box cs-box-background">
-                                    <input type="text" class="form-control" id="newAddCheckList" placeholder="cehck words..." style="background: transparent; border-radius: 0;">
+                                <div class="task-check-list-box cs-box-background overflow-hidden">
+                                    <input type="text" class="form-control" id="newAddCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
                                     <ul>
                                         <li class="d-flex">
                                             <div class="item-checkbox">
@@ -9315,56 +9323,115 @@
                                     </div>
                                 </div>
                                 <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" style="display: none;">
-
-                                    <div data-toggle="tooltip"  id="file1134"                                         
+                                    <div data-toggle="tooltip" id="file1134"                                         
                                          class=" tooltipMan component-class  
-                                         col-lg-12 hover-prototype-selector  ">
-                                        <form>
+                                         col-lg-12 hover-prototype-selector">
+                                         <label class="cs-file-upload">
                                             <input class="form-control saTypeFilePicherUploadFile component-input-class" 
                                                    sa-type="filepicker"  type="file" value="" row-no="" 
                                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                                    multiple="" 
                                                    fname="">
-                                        </form>
-                                        <div id="progress_bar_new"><br>
-
-
-                                        </div>
-                                        <br>
+                                                   Attach a file
+                                        </label>
+                                        <div class="progress_bar_new" id="progress_bar_new"></div>
                                     </div>
                                 </div>
-                                <button type="button" id="addIssueButtonId" class="btn btn-primary task-step-1">Add</button>
                             </div>
                             <div class="cs-input-group task-step-2">
                                 <button type="button" class="btn btn-primary add-new-task">Add New</button>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-lg-12" style="padding: 0 25px;">
-                            <hr>
-                            <ul class="nav nav-pills mb-3 mt-5" id="pills-tab" role="tablist">
+                        <div class="col-lg-12 mt-3"> 
+                            <div class="d-flex pl-2 pr-2 task-deadline-boxes">
+                                <div class="mr-auto p-2">
+                                        <div class="row">
+                                            <div class="col-xl-12" style="display:contents">
+                                                <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
+                                                    <div class="cs-input-group">
+                                                        <div class="input-group-addon">Start Date</div>
+                                                        <input class="form-control" type="text" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
+                                                    <div class="cs-input-group">
+                                                        <div class="input-group-addon">End Date</div>
+                                                        <input class="form-control" type="text" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
+                                                    <div class="cs-input-group">
+                                                        <div class="input-group-addon">Responsible</div>
+                                                        <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
+                                                                id='bug_filter_assignee_id_add' title="Assignee"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
+                                                    <div class="cs-input-group">
+                                                        <div class="input-group-addon">Categories</div>
+                                                        <select class="run_task_categories"  id="run_task_categories" data-live-search="true">
+                                                            <option value="cat1">Software</option>
+                                                            <option value="ca2">Back-end</option>
+                                                            <option value="cat3">Front-end</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                           </div>
+                                        </div>
+                                </div>
+                                <div class="p-2 mt-2 ml-4">
+                                    <div class="">
+                                        <div class="cs-input-group">
+                                            <div class="input-group-addon">Tapşırıq</div>
+                                            <div class="tapshiriq-btn active">
+                                                <i class="cs-svg-icon tapshiriq"></i>
+                                                <i class="cs-svg-icon tapshiriq-light"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="p-2 mt-2">
+                                    <div class="">
+                                        <div class="cs-input-group">
+                                            <div class="input-group-addon">Toplantı</div>
+                                            <div class="toplanti-btn">
+                                                <i class="cs-svg-icon toplanti"></i>
+                                                <i class="cs-svg-icon toplanti-light"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                              </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12" style="padding: 0 25px;"> 
+                            <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
+                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
+                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Check List</a>
+                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"> <span>Check List</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Observer</a>
+                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"> <span>Observer</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Subtask</a>
+                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"> <span>Subtask</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Events</a>
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"> <span>Events</span></a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade task-tab1" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
+                                <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                                     <div class='row'>
                                         <div class="col-lg-4  mt-2">
                                             <div class="cs-input-group">
@@ -9373,13 +9440,6 @@
                                                         title="Project"></select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                                        id='bug_filter_assignee_id_add' title="Assignee"></select>
-                                            </div>
-                                        </div>
-
                                         <div class="col-lg-4 mt-2">
                                             <div class="cs-input-group">
                                                 <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
@@ -9403,7 +9463,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mt-2">
+                                        <!-- <div class="col-lg-4 mt-2">
                                             <div class="cs-input-group">
                                                 <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
                                                         data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
@@ -9420,10 +9480,10 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
-                                <div class="tab-pane fade run-shedule-elements task-tab2" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
                                     <div class="row">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
@@ -9658,7 +9718,7 @@
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade task-check-list-created" id="task-tab4" role="tabpanel" aria-labelledby="task-tab4-tab">
+                                <div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab4" role="tabpanel" aria-labelledby="task-tab4-tab">
 
                                     <div class="task-check-list-textarea">
                                         <div class="cs-input-group mb-3">
@@ -9669,7 +9729,7 @@
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade task-check-list-created" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
+                                <div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
                                     <div class="cs-input-group mb-3 ml-2">
                                         <div class="input-group-addon">Observer Name</div>
                                         <div class="task-check-list-observer p-0 mt-1 mb-3">
@@ -9682,7 +9742,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade task-subtask-created" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
+                                <div class="tab-pane fade task-subtask-created cs-box-background" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
 
                                     <div class="col-lg-12">
                                         <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
@@ -9735,7 +9795,7 @@
 
                                     </div>
                                 </div>
-                                <div class="tab-pane fade task-events-created" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
+                                <div class="tab-pane fade task-events-created cs-box-background" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
                                     <div class="row">
                                         <div class="col-lg-12 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
@@ -9824,7 +9884,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!-- <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button> -->
+                    <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

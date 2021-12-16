@@ -249,3 +249,21 @@
   .cs-svg-icon.link:after {
     background-image: url(../ch-icons/link.svg);
   }
+  .cs-svg-icon.tapshiriq:after {
+    background-image: url(../ch-icons/tapshiriq.svg);
+  }
+  .cs-svg-icon.tapshiriq-light:after {
+    background-image: url(../ch-icons/tapshiriq-light.svg);
+  }
+  .cs-svg-icon.toplanti:after {
+    background-image: url(../ch-icons/toplanti.svg);
+  }
+  .cs-svg-icon.toplanti-light:after {
+    background-image: url(../ch-icons/toplanti-light.svg);
+  }
+  .cs-svg-icon.details:after {
+    background-image: url(../ch-icons/details.svg);
+  }
+  .cs-svg-icon.schedule:after {
+    background-image: url(../ch-icons/schedule.svg);
+  }
