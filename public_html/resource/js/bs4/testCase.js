@@ -442,72 +442,6 @@ function deleteBugFromTable(el) {
 
 
 
-function addNewTask4BugMultiZad() {
-
-    var val = $('#taskNameInputNew2').val();
-    if (!val) {
-        Toaster.showError('Məzmun daxil edilməmişdir.');
-    }
-
-    var data = {};
-
-    data.comment = $('#addComment4Task_comment_new').val();
-    var files = $('#addComment4Task_addnewfile').attr('fname');
-    
-    $('.canvas-sub-class').each(function (e) {
-        files += $(this).attr('fname') + "|";
-    })
-
-    var sprintList = "";
-    $('.bug-task-filter-checkbox-sprint').each(function () {
-        if ($(this).is(":checked")) {
-            sprintList += $(this).val() + ',';
-        }
-    })
-
-    data.taskName = val;
-    data.filename = files;
-    data.fkProjectId = $('#bug_filter_project_id_add').val();
-    data.fkBacklogId = $('#bug_filter_backlog_id_add').val();
-    data.fkAssigneeId = $('#bug_filter_assignee_id_add').val();
-    data.fkTaskTypeId = $("#bug_task_type_id_add").val();
-    data.taskNature = $("#bug_task_nature_id_add").val();
-    data.taskPriority = $("#bug_filter_priority_add").val();
-    //data.taskNature = $("#bug_filter_project_id_add").val();
-    data.sprintList = sprintList;
-
-
-    data.startDate = toDate("runTaskStartDate");
-    data.endDate = toDate("runTaskEndDate");
-    data.runTime = GetConvertedTime("runTaskTime");
-    data.intensive = $("#run_task_intensive_select").val();
-    data.repeatInterval = $("#run_task_repeat_select").val();
-    data.scheduleStatus = $("#run_task_status_select").val();
-// data.description = $("#bug_filter_project_id_add").val();
-    data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
-    data.action = $("#bug_filter_project_id_add").val();
-    data.weekdays = $("#swofm_weekday_select").val();
-    data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-    data.notificationMail = $("#bug_filter_project_id_add").val();
-    data.remindMeParam = $("#bug_filter_project_id_add").val();
-    data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
-
-
-    data.monthlyAction = $("#monthlyAction:checked").val();
-    data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
-    data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
-    data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
-    data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
-    data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
-
-
-
-    insertNewTaskDetail4BugZad(data);
-
-
-}
-
-
 function addNewTask4BugMulti(tskNm) {
     if (!tskNm.trim()) {
         return;
@@ -625,35 +559,6 @@ function addNewTask4BugInput(el) {
     $(el).val('');
     getBugList();
 }
-
-
-
-function insertNewTaskDetail4BugZad(dataCore) {
-
-    var json = initJSON();
-    var dataPure = $.extend(json.kv, dataCore);
-    json.kv = dataPure;
-
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmInsertNewBacklogTaskCoreNew",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            createdEventsTaskData(res.kv.id);
-            getBugList();
-            Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
-}
-
 
 function insertNewTaskDetail4Bug(taskName, backlogId, assgineeId, taskStatus, projectId, sprintList, taskTypeName, taskNature, taskPriority) {
     if (!(taskName))
@@ -831,7 +736,6 @@ function setBugFilterProject() {
                 .text(SACore.Project[pid]))
     }
 }
-
 
 
 function addUserStoryNewPopupBug() {
@@ -1073,11 +977,6 @@ function multiUpdateTask4ShortChangePure(val, ustype, taskId) {
     });
 }
 
-$(document).on("click", '#multi-edit-menu-btn', function (e) {
-    setBugFilterProjectAdd('bug_filter_project_id_multi');
-    var dwlmt = $('#bug_task_type_id_multi')
-    add_loadTaskType_bug_list(dwlmt)
-})
 
 function openTaskDialog() {
     return;
@@ -2233,7 +2132,15 @@ function reset_task_data() {
     $('#addComment4Task_comment_new').val('');
 }
 
+/* $(document).on("click", '#addIssueButtonId', function (e) {
+    // $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "auto");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "1");
+    $('#issue-managment-add-task .task-step-1').hide();
+    $('#issue-managment-add-task .task-step-2').show();
+    addNewTask4BugMultiZad( );
 
+}) */
 
 $(document).on("focus", 'input#taskNameInputNew2', function (e) {
     // $('#issue-managment-add-task .after-add-task').hide();
@@ -2242,8 +2149,6 @@ $(document).on("focus", 'input#taskNameInputNew2', function (e) {
 })
 $(document).on("focus", '.add-new-task', function (e) {
     // $('#issue-managment-add-task .after-add-task').show();
-    $('#issue-managment-add-task .after-add-task').css("pointer-events", "auto");
-    $('#issue-managment-add-task .after-add-task').css("opacity", "1");
     $('#issue-managment-add-task .task-step-1').show();
     $('#issue-managment-add-task .task-step-2').hide();
     reset_task_data();
@@ -2345,39 +2250,6 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
     });
 }
 
-function add_loadTaskType_bug_list(elm) {
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.fkProjectId = global_var.current_project_id;
-    json.kv.asc = 'typeName';
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-
-            var dt = res.tbl[0].r;
-            for (let index = 0; index < dt.length; index++) {
-
-                var nm = dt[index].typeName;
-                var ids = dt[index].id;
-                var opt = $('<option>').val(ids).text(nm);
-                $(elm).append(opt);
-                $(elm).selectpicker('refresh')
-            }
-        }
-    });
-}
 
 function toggleColumns() {
     $('.bug-list-column').hide();
@@ -2667,8 +2539,7 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
     $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
     // $('#issue-managment-add-task .after-add-task').hide();
-    $('#issue-managment-add-task .after-add-task').css("pointer-events", "none");
-    $('#issue-managment-add-task .after-add-task').css("opacity", "0.7");
+   
     $('#issue-managment-add-task .task-step-2').hide();
 
     // TASK DETAILS ON
