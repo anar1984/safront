@@ -144,5 +144,89 @@ const taskManagement = {
         }
           
 
+    },
+    getBacklogLIstByprojectId: function (projectId) {
+        if (!projectId) {
+            return;
+        }
+    
+        var json = initJSON();
+        json.kv.fkProjectId = projectId;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmLoadStoryCardByProject",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                try {
+                    var el = $('#bug_filter_backlog_id');
+                    el.html('');
+                    var obj = res.tbl[0].r;
+                    for (var i in obj) {
+                        var o = obj[i];
+                        el.append($('<option>')
+                                .val(o.id)
+                                .text(o.backlogName));
+                    }
+                } catch (err) {
+            
+                }
+                $('#bug_filter_backlog_id_add').selectpicker('refresh');
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+    },
+    setBugFilterProjectAdd: function (elID) {
+        var select = $("#" + elId);
+    var keys = Object.keys(SACore.Project);
+    select.append($("<option>")
+            .val("")
+            .text("All Projects"))
+    for (var id in keys) {
+        var pid = keys[id];
+        select.append($("<option>")
+                .val(pid)
+                .text(SACore.Project[pid]))
+    }
+
+    $('#' + elId).selectpicker('refresh'); 
     }
 }
+
+
+// task-management event  list
+
+$(document).on("change", '#bug_filter_project_id_add', function (e) {
+    var id = $(this).val();
+     taskManagement.getBacklogLIstByprojectId(id)
+
+
+})
+$(document).on("click", '#addNewTaskButton', function (e) {
+    reset_task_data();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    add_loadTaskType_bug_list(dwlmt);
+    /* $('#issue-managment-add-task .after-add-task').css("pointer-events", "none");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "0.7");
+    $('#issue-managment-add-task .task-step-1').show();
+    $('#issue-managment-add-task .task-step-2').hide();
+    $('#issue-managment-add-task #details-tab').click(); */
+})
+
+$(document).on("click", '#addIssueButtonId', function (e) {
+    // $('#issue-managment-add-task .after-add-task').show();
+    $('#issue-managment-add-task .after-add-task').css("pointer-events", "auto");
+    $('#issue-managment-add-task .after-add-task').css("opacity", "1");
+    $('#issue-managment-add-task .task-step-1').hide();
+    $('#issue-managment-add-task .task-step-2').show();
+     taskManagement.insertTask.insertNewTask()
+
+})

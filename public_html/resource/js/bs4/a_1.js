@@ -4114,6 +4114,7 @@ function importSendNameApi(filNm) {
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
+    
 
     var idx = makeId(10);
 
@@ -4134,9 +4135,11 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         contentType: "application/json",
         async: true,
         beforeSend: function () {
-            pbDiv.append('<br>').append($('<span>')
+            pbDiv.append(
+                $('<div>')
+                    .addClass("file-item")
                     .attr('id', 'pro_zad_span' + idx)
-                    .text(file_name)
+                    .append($("<span class='file-name-attach'>").text(file_name))
                     .append($('<img>')
                             .attr('id', 'pro_zad_' + idx)
                             .attr('src', 'resource/img/loader.gif'))
@@ -4152,7 +4155,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
-                    .after($('<i class="fa fa-times">')
+                    .append($('<i class="fa fa-times">')
                             .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
