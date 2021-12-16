@@ -3784,7 +3784,7 @@ hr.hr-ss {
   .checkmarkcontainer {
     display: block;
     position: relative;
-    padding-left: 25px;
+    padding-left: 20px;
     margin-bottom: 4px;
     cursor: pointer;
     font-size: 14px;
@@ -3881,6 +3881,8 @@ hr.hr-ss {
     display: block;
 }
 .cs-core-issue-management {
+    position: fixed;
+    width: 100%;
     font-family: 'Quicksand', sans-serif !important;
     background: rgb(4,57,109);
     background: -moz-linear-gradient(167deg, #525596 0%, #bbbeff 100%);
@@ -3986,6 +3988,11 @@ hr.hr-ss {
     width: 100%;
     position: relative;
     min-width: 200px;
+}
+@media (max-width: 1540px) {
+    body.open-setting-panel .cs-core-issue-management .tableFixHead {
+        max-width: 1060px;
+    }
 }
 .cs-core-issue-management .bugListTable {
     color: #313582;
@@ -4164,6 +4171,9 @@ hr.hr-ss {
     display: inline-block;    
     top: 50%;
 }
+.bug-list-column-story-card .set-filter-box i:first-child{
+margin-left: 11px;
+}
 .bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
     color: #ffffff;
     height: 18px;
@@ -4303,13 +4313,27 @@ table.lbl-list-table tr td {
     box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
     border-color: #fff;
 }
+
+/***** ///// TASK CREATED and UPDATED //// ******/
 .issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header {
     font-size: 14px;
     padding: 7px 18px 7px 18px;
-    border-bottom-color: #E9E9F1;
-    background-color: #E9E9F1;
-    color: #272B7C;
+    border-bottom-color: transparent;
+    color: #ffff;
     border-radius: 0;
+    background: rgb(82 85 150);
+    background: -moz-linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
+    background: -webkit-linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
+    background: linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
+}
+.issue-managment-add-task.cs-modal-box .modal-content, .card-Userstory-detail.cs-modal-box .modal-content {
+    background-color: transparent;
+}
+.issue-managment-add-task.cs-modal-box .modal-dialog, .card-Userstory-detail.cs-modal-box .modal-dialog {
+    background: rgb(82 85 150) !important;
+    background: -moz-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
+    background: -webkit-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
+    background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
 }
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
@@ -4319,12 +4343,18 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
     height: 35px;
-    border: 1px solid #BEBFD7;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    color: #fff;
+}
+.issue-managment-add-task .cs-input-group input.form-control::placeholder, .card-Userstory-detail .cs-input-group input.form-control::placeholder {
+    color: rgb(255 255 255 / 70%);
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
     font-size: 14px;
     margin-bottom: 3px;
-    color: #313582;
+    color: #fff;
 }
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
@@ -4472,6 +4502,93 @@ table.lbl-list-table tr td {
 .cs-core-issue-management .bigCheck {
     z-index: 1000;
 }
+.cs-box-background {
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.task-check-list-box ul {
+    list-style: none;
+    padding: 12px;
+    margin-bottom: 0;
+}
+.task-check-list-box ul li{
+ margin-bottom: 10px;
+}
+.task-check-list-box ul li .item-checkbox{
+ margin-top: 4px;
+}
+.task-check-list-box ul li .item-checkbox input{
+
+}
+.task-check-list-box ul li .item-note {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #fff;
+    letter-spacing: 0px;
+    text-align: left;
+    padding-left: 10px;
+}
+.task-check-list-box ul li.on-checked .item-note {
+ text-decoration: line-through;
+}
+.task-check-list-box .checkmarkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .task-check-list-box .checkmarkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .task-check-list-box .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: rgb(0 0 0 / 0%);
+    border: 2px solid #fff;
+    border-radius: 50px;
+  }
+  .task-check-list-box .checkmarkcontainer:hover input ~ .checkmark {
+    background-color: rgb(0 0 0 / 15%);
+  }
+  .task-check-list-box .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #fff;
+  }
+  .task-check-list-box .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .task-check-list-box .checkmarkcontainer input:checked ~ .checkmark:after {
+    display: none;
+  }
+  .task-check-list-box .checkmarkcontainer .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
 @media only screen and (max-width: 1370px) {
     .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
         width: 70% !important;
@@ -4691,23 +4808,6 @@ table.lbl-list-table tr td {
 .card-Userstory-rightbody .checkmarkcontainer input:checked ~ .checkmark {
     background-color: #3a3d87;
 }
-.bugListNavMenu {
-    /* background: white;
-    -ms-flex: 0 0 370px;
-    flex: 0 0 300px;
-    max-width: 300px;
-    width: 300px;
-    height: 100%;
-    padding: 20px 0px 20px 0;
-    margin-right: 20px;
-    border-right: 1px solid #e8e8e8;
-    box-shadow: 0 10px 10px rgb(0 0 0 / 18%);
-    position: absolute;
-    left: -300px;
-    top: 58px;
-    z-index: 10000;
-    transition-duration: .25s; */
-}
 .bugListNavMenu.task-menu-open {
  left: 0;
 }
@@ -4838,20 +4938,6 @@ table.lbl-list-table tr td {
 .task-observer-list tr:nth-child(even) {
     background-color: transparent;
 }
-
-.task-observer-list table tr {
-
-}
-.task-observer-list table tr td{
-
-}
-.task-observer-list table thead tr{
-
-}
-.task-observer-list table thead tr th {
-
-}
-
 .move-to-child .btn {
     max-width: 270px;
     white-space: nowrap;

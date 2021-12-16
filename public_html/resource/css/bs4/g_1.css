@@ -3020,12 +3020,12 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
 }
 
 .panel-right {
-    /* flex: 1 1 auto;
+    flex: 1 1 auto;
     height: calc(100vh - -25px );
     overflow: scroll;
     width: 100%;
     position: relative;
-    min-width: 200px; */
+    min-width: 200px;
 }
 #panel-css{
 
