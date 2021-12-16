@@ -68,7 +68,7 @@
 </div>
 
 <div class="row">
-    <div class="col print-container pdf page-content"  id="exportContent">
+    <div class="col print-container pdf page-content" style="height: calc(100vh - 80px);overflow: auto;"  id="exportContent">
         <!-- 
         <div class="row">
             <div class="col-12 text-center">
@@ -228,6 +228,7 @@
                     </button>
                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                        
+                        <button class="dropdown-item firstbut "     onclick="addInputDescListToTaskNewEvent()">Add To Task Desc</button>
                         <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
                       
                     </div>
@@ -407,6 +408,9 @@
                                 <option value="new"  selected>New</option>
                                 <option value="ongoing">Ongoing</option>
                                 <option value="closed">Closed</option>
+                                 <option value="draft"  selected>Draft</option>
+                                <!--<option value="ongoing">Ongoing</option>-->
+                                <!--<option value="closed">Closed</option>-->
                             </select>
                         </div>
                     </div>
