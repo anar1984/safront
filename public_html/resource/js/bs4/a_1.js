@@ -11850,7 +11850,7 @@ function commmonOnloadAction(el) {
 
     if (global_var.current_modal === 'loadDashboard') {
         // $('#statistics-projectlist').html($('#projectList').html());
-        setBugFilterProjectAdd('statistics-projectlist')
+        taskManagement.setBugFilterProjectAdd('statistics-projectlist')
         //        $('#statistics-projectlist').prepend($('<option>').text(""))
         $('#statistics-projectlist option').first().remove()
         $('.selectcustom1').selectpicker("refresh");
