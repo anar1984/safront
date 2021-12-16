@@ -3,7 +3,7 @@ const taskManagement = {
     insertTask: {
 
         insertNewTask: function () {
-            var data = this.getValueCreateModalScreen();
+            this.getValueCreateModalScreen();
 
         },
         insertNewTaskApi: function (dataCore) {
@@ -23,6 +23,7 @@ const taskManagement = {
                 success: function (res) {
                     that.insertEventByTaskId(res.kv.id);
                     that.insertObserverTask(res.kv.id);
+                    that.insertCheckListComulativ(res.kv.id);
                     getBugList();
                     Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
                 },
@@ -117,7 +118,7 @@ const taskManagement = {
         insertObserverTask: function (taskId) {
             try {
                 var userList = "";
-                var tbl = $("#issue-managment-add-task .task-observer-list>table>tbody tr");
+                var tbl = $("#issue-managment-add-task .task-observer-list>table>tr");
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
@@ -170,6 +171,22 @@ const taskManagement = {
             }
 
 
+        },
+        insertCheckListComulativ: function (taskId) {
+            var itmList  =''
+            var items  = $(".task-check-list-box ul>li");
+              for (let i = 0; i < items.length; i++) {
+                  const o = items[i];
+
+                  itmList += $(o).find('.item-note').text() +'|';                
+              }
+
+            var data ={};
+                data.fkTaskId = taskId;
+                data.itemName =itmList;
+            callService('insertSingleTaskCheckListCumulativeNew', data, true, function () {
+              
+            });
         }
 
 
@@ -264,6 +281,20 @@ const taskManagement = {
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+$(document).on("change", '#newAddCheckList', function (e) {
+          
+     $(this).parent().find('ul').prepend(`<li class="d-flex">
+    <div class="item-checkbox">
+        <label class="checkmarkcontainer">
+            <input type="checkbox" class="noteCheckListItem" value="0">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="item-note">${$(this).val()}</div>
+</li>`)
+  $(this).val('')
+
+})
 $(document).on("change", '#bug_filter_project_id_add', function (e) {
     var id = $(this).val();
     taskManagement.getBacklogLIstByprojectId(id)
