@@ -4335,6 +4335,9 @@ table.lbl-list-table tr td {
     background: -webkit-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
     background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
 }
+.issue-managment-add-task.cs-modal-box .tab-content>.tab-pane, .card-Userstory-detail.cs-modal-box .tab-content>.tab-pane {
+    padding: 10px 20px 20px 20px;
+}
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
     border: 1px solid #BEBFD7;
@@ -4390,9 +4393,44 @@ table.lbl-list-table tr td {
     color: rgb(255 255 255 / 70%);
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
-    font-size: 14px;
-    margin-bottom: 3px;
     color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i, .issue-managment-add-task .cs-input-group .toplanti-btn i {
+    margin-top: 10px;
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn i {
+    margin-top: 10px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i:after{
+    width: 61.5px;
+    height: 67px;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn i:after {
+  width: 55px;
+  height: 73px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i:last-child {
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn:hover i:last-child, .issue-managment-add-task .cs-input-group .tapshiriq-btn.active i:last-child {
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .tapshiriq-btn.active i:first-child {
+    display: none;
+}
+
+.issue-managment-add-task .cs-input-group .toplanti-btn i:last-child {
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn:hover i:last-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:last-child {
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:first-child {
+    display: none;
 }
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
@@ -4537,6 +4575,20 @@ table.lbl-list-table tr td {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
+.issue-managment-add-task .cs-input-group .bootstrap-select {
+    background-color: transparent;
+    border: none;
+}
+.issue-managment-add-task .cs-input-group .btn, .issue-managment-add-task .task-deadline-boxes .cs-input-group input {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
+    height: 25px;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    padding: 1px 12px;
+}
 .cs-core-issue-management .bigCheck {
     z-index: 1000;
 }
@@ -4555,9 +4607,6 @@ table.lbl-list-table tr td {
 }
 .task-check-list-box ul li .item-checkbox{
  margin-top: 4px;
-}
-.task-check-list-box ul li .item-checkbox input{
-
 }
 .task-check-list-box ul li .item-note {
     font-family: 'Quicksand', sans-serif;
@@ -4627,12 +4676,17 @@ table.lbl-list-table tr td {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+  .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
+    width: 70% !important;
+    max-width: 660px !important;
+    margin-top: 40px;
+}
 @media only screen and (max-width: 1370px) {
-    .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
+    /* .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
         width: 70% !important;
         max-width: 70% !important;
         margin-top: 40px;
-    }
+    } */
   }
 @media only screen and (max-width: 1024px) {
     .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog{

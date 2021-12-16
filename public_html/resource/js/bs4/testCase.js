@@ -2497,6 +2497,8 @@ $(document).on('click', function (e) {
     })
 })
 function loadBugTaskDeadlineScripts() {
+    $("#run_task_responsible").selectpicker('refresh');
+    $("#run_task_categories").selectpicker('refresh');
     $("#task-info-modal-status").selectpicker('refresh');
     $("#task-info-modal-nature").selectpicker('refresh');
     $("#task-info-modal-tasktype").selectpicker('refresh');
