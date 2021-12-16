@@ -4500,9 +4500,20 @@ table.lbl-list-table tr td {
       margin-right: 20px;
   }
   .issue-managment-add-task .nav-pills .nav-link {
-    color: #525596;
-    background-color: #e9e9f1;
+    background: transparent;
+    padding: 4px 10px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
 }
+  .issue-managment-add-task .nav-pills .nav-link span{
+    display: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: middle;
+  }
     .issue-managment-add-task .nav-pills .nav-item{
         margin-right: 5px;
         margin-bottom: 5px;
@@ -4514,9 +4525,16 @@ table.lbl-list-table tr td {
         margin-right: 0;
     }
   .issue-managment-add-task .nav-pills .nav-link.active,   .issue-managment-add-task .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #525596;
-}
+    color: #03396C;
+    background-color: #DFEEF7;
+    width: 100%;
+  }
+  .issue-managment-add-task .nav-pills .nav-link.active i,   .issue-managment-add-task .nav-pills .show>.nav-link i{
+    filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(195deg) brightness(91%) contrast(98%);
+  }
+  .issue-managment-add-task .nav-pills .nav-link.active span,   .issue-managment-add-task .nav-pills .show>.nav-link span{
+    display: contents;
+  }
 .issue-managment-add-task .section-title {
     font-size: 17px;
     margin-left: 4px;
@@ -4589,14 +4607,41 @@ table.lbl-list-table tr td {
     border-radius: 7px;
     padding: 1px 12px;
 }
+.issue-managment-add-task .priority-btn {
+    position: relative;
+    display: table;
+    width: 34px;
+    height: 34px;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+.issue-managment-add-task .priority-btn.active {
+    background: #DFEEF7;
+}
+.issue-managment-add-task .priority-btn i {
+    display: block;
+    text-align: center;
+    margin-top: -2px;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(6%) saturate(26%) hue-rotate(266deg) brightness(105%) contrast(110%);
+}
+.issue-managment-add-task .priority-btn.active i {
+    filter: none;
+}
+.issue-managment-add-task .priority-btn i:after {
+    width: 13.15px;
+    height: 18px;
+}
 .cs-core-issue-management .bigCheck {
     z-index: 1000;
 }
 .cs-box-background {
     background: rgba(3, 57, 108, 0.5);
     border-radius: 10px;
-    overflow: hidden;
-}
+ }
 .task-check-list-box ul {
     list-style: none;
     padding: 12px;

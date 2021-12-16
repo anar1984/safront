@@ -9246,12 +9246,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="cs-input-group mb-3">
-
-                                <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                                <div class="d-flex">
+                                    <div class="mr-auto" style="width: 93%;">
+                                        <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                                    </div>
+                                    <div class="p-0">
+                                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                                             <i class="cs-svg-icon flame"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="cs-input-group">
-                                <div class="task-check-list-box cs-box-background">
-                                    <input type="text" class="form-control" id="newAddCheckList" placeholder="cehck words..." style="background: transparent; border-radius: 0;">
+                                <div class="task-check-list-box cs-box-background overflow-hidden">
+                                    <input type="text" class="form-control" id="newAddCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
                                     <ul>
                                         <li class="d-flex">
                                             <div class="item-checkbox">
@@ -9357,11 +9365,8 @@
                                                 <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
                                                     <div class="cs-input-group">
                                                         <div class="input-group-addon">Responsible</div>
-                                                        <select class="run_task_responsible"  id="run_task_responsible" data-live-search="true">
-                                                            <option value="nam1">Revan</option>
-                                                            <option value="nam2">Taleh</option>
-                                                            <option value="nam3">Reshid</option>
-                                                        </select>
+                                                        <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
+                                                                id='bug_filter_assignee_id_add' title="Assignee"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
@@ -9407,22 +9412,22 @@
                         <div class="col-lg-12" style="padding: 0 25px;"> 
                             <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
+                                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
+                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Check List</a>
+                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"> <span>Check List</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Observer</a>
+                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"> <span>Observer</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Subtask</a>
+                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"> <span>Subtask</span></a>
                                 </li>
                                 <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Events</a>
+                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"> <span>Events</span></a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
@@ -9435,13 +9440,6 @@
                                                         title="Project"></select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                                        id='bug_filter_assignee_id_add' title="Assignee"></select>
-                                            </div>
-                                        </div>
-
                                         <div class="col-lg-4 mt-2">
                                             <div class="cs-input-group">
                                                 <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
@@ -9465,7 +9463,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mt-2">
+                                        <!-- <div class="col-lg-4 mt-2">
                                             <div class="cs-input-group">
                                                 <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
                                                         data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
@@ -9482,7 +9480,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="tab-pane fade run-shedule-elements task-tab2 cs-box-background" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
