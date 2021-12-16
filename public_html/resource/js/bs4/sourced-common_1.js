@@ -23189,14 +23189,11 @@ Sprint.prototype = {
         });
     },
     insert: function () {
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
         json.kv.fkProjectId = global_var.current_project_id;
+        json.kv.isGlobal = $('#insertNewSprint_isglobal').is(':checked')?"1":"0";
         json.kv.sprintStartDate = GetConvertedDate('insertNewSprint_startdate');
         json.kv.sprintEndDate = GetConvertedDate('insertNewSprint_enddate');
         var that = this;
@@ -23229,6 +23226,7 @@ Sprint.prototype = {
         json.kv.id = this.getId();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
+        json.kv.isGlobal=$('#updateSprint_isglobal').is("checked")?"1":"0";
         json.kv.sprintStartDate = GetConvertedDate('updateSprint_startdate');
         json.kv.sprintEndDate = GetConvertedDate('updateSprint_enddate');
         var that = this;
@@ -23289,15 +23287,11 @@ Sprint.prototype = {
 
     load: function () {
         $('#sprintlist').html("");
-        if (!global_var.current_project_id) {
-            return;
-        }
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.fkProjectId = global_var.current_project_id;
+//        if (!global_var.current_project_id) {
+//            return;
+//        }
+        var json = initJSON();
+//        json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -23406,8 +23400,7 @@ Sprint.prototype = {
         if (!id) {
             return;
         }
-        var json = {
-            kv: {}};
+        var json = initJSON();
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -23437,6 +23430,12 @@ Sprint.prototype = {
         SetConvertedDate('updateSprint_enddate', obj.sprintEndDate);
 //        $('#u_sprintEndDate').val(SetConvertedDate(obj.sprintEndDate));
         $('#u_sprintProjectId').val(obj.fkProjectId);
+        if (obj.isGlobal==='1'){
+            $('#updateSprint_isglobal').prop("checked",true)
+        }else{
+                        $('#updateSprint_isglobal').prop("checked",false)
+
+        }
     },
     setSprintListTable: function (res) {
         $('#sprintlist').html("");
@@ -23537,7 +23536,7 @@ Sprint.prototype = {
             tr.append($('<td class="lbl-list-td"></td>')
                     .append(replaceTags(obj[n].sprintName))
                     .append(d)
-                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
+//                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
                     .attr("class", "lbl-item")
                     .css("font-size", "12px")
                     .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
@@ -23549,7 +23548,14 @@ Sprint.prototype = {
                             .css("display", "none")
                             .val(obj[n].id)
                             .append("Assign")
-                            .attr('id', obj[n].id)));
+                            .attr('id', obj[n].id))
+                     .append($('<button class="  story-card-sprint-assign story-card-sprint-unassign btn btn-secondary">')
+                            .css("padding", "0px 6px")
+                            .attr("sname", replaceTags(obj[n].sprintName))
+                            .css("display", "none")
+                            .val(obj[n].id)
+                            .append("Unassign")
+                            .attr('id', obj[n].id))) ;
 
             var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
                     .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')

@@ -1669,7 +1669,7 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
-    var oldaMoadl  =global_var.current_modal 
+    var oldaMoadl = global_var.current_modal
     global_var.current_modal = '';
     var js = window.editorJSnew.getValue();
     var css = window.editorCSSnew.getValue();
@@ -2169,7 +2169,7 @@ function loadBacklogProductionDetailsById_loadInputClassRelation(res) {
 
 function searchFilterTable4LiveProtoptyApi(el, tableId) {
 
-    var input, filter, table, tr, td, i, txtValue,text_id;
+    var input, filter, table, tr, td, i, txtValue, text_id;
     input = el;
     filter = input.value.toLowerCase();
     table = $('#' + tableId);
@@ -2177,10 +2177,10 @@ function searchFilterTable4LiveProtoptyApi(el, tableId) {
     tr = table.find("tr").each(function () {
         td = $(this).text();
         txtValue = td.toLowerCase();
-        text_id = $(this).find('a').first().attr('bid'); 
+        text_id = $(this).find('a').first().attr('bid');
         if (txtValue) {
 
-            if ((txtValue.indexOf(filter) > -1) || (text_id.indexOf(filter)>-1)) {
+            if ((txtValue.indexOf(filter) > -1) || (text_id.indexOf(filter) > -1)) {
                 $(this).css("display", "");
 
             } else {
@@ -2713,17 +2713,17 @@ function showBacklogHistoryClick(el) {
     fillBacklogHistory4View(bid, isApi);
 
 
-    if(global_var.current_modal === 'loadStoryCard'||global_var.current_modal === 'loadDev'){
-        
-    if (pid === global_var.current_project_id) {
-        $("#storyCardListSelectBox4StoryCard").val(bid)
-        $("#storyCardListSelectBox4StoryCard").change();
-    } else {
-        global_var.current_backlog_id = bid;
-        Utility.addParamToUrl('current_backlog_id', bid);
-        $('select.projectList_liveprototype_storycard').val(pid);
-        $('select.projectList_liveprototype_storycard').change();
-    }
+    if (global_var.current_modal === 'loadStoryCard' || global_var.current_modal === 'loadDev') {
+
+        if (pid === global_var.current_project_id) {
+            $("#storyCardListSelectBox4StoryCard").val(bid)
+            $("#storyCardListSelectBox4StoryCard").change();
+        } else {
+            global_var.current_backlog_id = bid;
+            Utility.addParamToUrl('current_backlog_id', bid);
+            $('select.projectList_liveprototype_storycard').val(pid);
+            $('select.projectList_liveprototype_storycard').change();
+        }
         return;
     }
     if (isApi === '1') {
@@ -13046,44 +13046,44 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(pid, css, js, bodys) {
-   // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
-   // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
-    
+    // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
+    // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
+
     var body = $("<div class='redirectClass h-100'>").html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
     var jsBlock = $(body).find('#js-function-list-for-story-card')
- if(cssBlock.length > 0){
-   $(body).find('#css-function-list-for-story-card').text(css);
+    if (cssBlock.length > 0) {
+        $(body).find('#css-function-list-for-story-card').text(css);
 
- }else{
-   $(body).append($('<style id="js-function-list-for-story-card">').text(css));
+    } else {
+        $(body).append($('<style id="js-function-list-for-story-card">').text(css));
 
- }
- if(jsBlock.length >0){
-   $(body).find('#js-function-list-for-story-card').text(js);
- }else{
-   $(body).append($('<script id="js-function-list-for-story-card">').text(js));
- }
- return body;
-var $iframe = $("<div class='overflow-hidden'>")
-       .append(body)
+    }
+    if (jsBlock.length > 0) {
+        $(body).find('#js-function-list-for-story-card').text(js);
+    } else {
+        $(body).append($('<script id="js-function-list-for-story-card">').text(js));
+    }
+    return body;
+    var $iframe = $("<div class='overflow-hidden'>")
+            .append(body)
 
-return $iframe.html();
+    return $iframe.html();
 }
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-   
-     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+
+    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
-        global_var.current_modal ='';
+        global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal =oldmodal;
+        global_var.current_modal = oldmodal;
     } else {
-         var html = window.editorHTMLGround.getValue();
+        var html = window.editorHTMLGround.getValue();
     }
     var css = window.editorCSSGround.getValue();
 
@@ -13095,21 +13095,21 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
-   // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
-   setBacklogAsHtml(global_var.current_backlog_id,css, js);
+    // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+    setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
 function setBacklogAsHtmlCodeGround(backlogId, html) {
 
-      var jsLink  = `<script src="https://app.sourcedagile.com/api/get/script/js/${global_var.current_domain}/${backlogId}.js"></script>`
-      var cssLink  = `<link src="https://app.sourcedagile.com/api/get/script/css/${global_var.current_domain}/${backlogId}.css">`
+    var jsLink = `<script src="https://app.sourcedagile.com/api/get/script/js/${global_var.current_domain}/${backlogId}.js"></script>`
+    var cssLink = `<link src="https://app.sourcedagile.com/api/get/script/css/${global_var.current_domain}/${backlogId}.css">`
     if (!backlogId) {
         return;
     }
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = cssLink + html +jsLink;
+    json.kv.backlogHtml = cssLink + html + jsLink;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13132,14 +13132,14 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
     elm.find('div').remove();
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-    
+
     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
-       // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
-        global_var.current_modal ='';
+        global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal =oldmodal;
+        global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
     }
@@ -13436,18 +13436,18 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                if(global_var.current_modal==='loadDev'){
-                      
-                      if(o.isApi==='1'){
-                        cmd.append(op); 
+                if (global_var.current_modal === 'loadDev') {
 
-                      }
-                }else{
-                  
-                        cmd.append(op); 
-                      
+                    if (o.isApi === '1') {
+                        cmd.append(op);
+
+                    }
+                } else {
+
+                    cmd.append(op);
+
                 }
-              
+
             }
 
             cmd.val(global_var.current_backlog_id);
@@ -14404,7 +14404,7 @@ $(document).on('click', '.loadDev', function (evt) {
     callLoadDev();
 });
 function callLoadDev() {
-      
+
     $.get("resource/child/dev.html", function (html_string) {
 
         new UserStory().clearAndShowAll(this)
@@ -14414,7 +14414,7 @@ function callLoadDev() {
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-       // loadUsersAsOwner();
+        // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
         $('.cs-col-pagename .mm-title').html('');
@@ -14534,6 +14534,11 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
 
+
+        new Label().load();
+        new Sprint().load();
+
+
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
         Priority.load();
@@ -14541,9 +14546,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
-        $('#date_timepicker_start_end-usmn').daterangepicker({
-
-        }).val('').change();
+        $('#date_timepicker_start_end-usmn').daterangepicker({}).val('').change();
     });
 });
 $(document).on('click', '.loadBugChange', function (evt) {
@@ -16186,9 +16189,9 @@ function addApiModal() {
 
 
 function addUserStoryNewModal() {
-    if(global_var.current_modal==='loadDev'){
+    if (global_var.current_modal === 'loadDev') {
         $(".trigger-name-class-backlog").html('API Name')
-    }else{
+    } else {
         $(".trigger-name-class-backlog").html('User Story Name')
 
     }
@@ -16208,9 +16211,9 @@ function addUserStoryNewPopup() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
-    if(global_var.current_modal==='loadDev'){
-        json.kv['isApi'] = "1";  
-    }else{
+    if (global_var.current_modal === 'loadDev') {
+        json.kv['isApi'] = "1";
+    } else {
         json.kv['isApi'] = "0";
     }
     var that = this;
@@ -17851,24 +17854,16 @@ function lableAddAssignProjectManagement(elm) {
 
 }
 ;
-function sprintAddAssignUSerStoryManagement(elm) {
-
-
-
-
+function sprintAddAssignUSerStoryManagement(elm,checkedCore) {
     var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+    var checked = (checkedCore) ? checkedCore : '1';
     var sprintId = $(elm).attr("id");
     for (var indx = 0; indx < check.length; indx++) {
-
-
         if ($(check[indx]).prop('checked')) {
-
-
-
-            var projectId = getProjectValueUsManageMulti();
+//            var projectId = getProjectValueUsManageMulti();
             var id = $(check[indx]).attr("pid");
-            var checked = '1';
-            sprintZadininSheyeidlmesiProjectManagement(projectId, id, sprintId, checked);
+            
+            sprintZadininSheyeidlmesiProjectManagement("", id, sprintId, checked);
         }
 
     }
@@ -17893,6 +17888,7 @@ function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprint
         crossDomain: true,
         async: true,
         success: function (res) {
+            labelOrSplitValuesUs();
             new Sprint().load()
             new Label().load()
         },
@@ -17977,6 +17973,22 @@ function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprint
 }
 
 
+$(document).on('click', '.story-card-sprint-unassign', function (evt) {
+    global_var.story_card_sprint_assign_checked = 0;
+    global_var.story_card_sprint_assign_name = $(this).attr('sname');
+    global_var.story_card_sprint_assign_id = $(this).val();
+    if (global_var.current_modal === "loadStoryCardMgmt") {
+        sprintAddAssignUSerStoryManagement(this,"0")
+    } else if (global_var.current_modal === "loadTaskManagement") {
+        $('.userStoryTab').click();
+    } else if (global_var.current_modal === "loadBugChange") {
+        getBugListDetails(coreBugList);
+    } else if (global_var.current_modal === "loadProjectManagement") {
+        sprintAddAssignProjectManagement(this);
+    } else {
+        new UserStory().loadDetailesPure(SACore.toJSON());
+    }
+});
 
 
 $(document).on('click', '.story-card-sprint-assign', function (evt) {
@@ -18080,8 +18092,6 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    new Label().load();
-    new Sprint().load();
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#priority-change-story-card-filter', function (evt) {
@@ -18876,12 +18886,12 @@ function addNewDetailedTaskAction_assigneeList() {
 function addNewDetailedTaskActionEvent1(params) {
     $("#addNewDetailedTaskModal_list >.item-input-add-task").each(function () {
 
-        addNewDetailedTaskActionEvent($(this).find('textarea').val(),$(this).find('input').val());
+        addNewDetailedTaskActionEvent($(this).find('textarea').val(), $(this).find('input').val());
     })
     $('#addNewDetailedTaskModal-multi-new').modal('hide');
     new UserStory().getBacklogTaskStats();
 }
-function addNewDetailedTaskActionEvent(nameL,Com) {
+function addNewDetailedTaskActionEvent(nameL, Com) {
     if (!$('#addNewDetailedTaskModal_projectid-new').val() || !$('#addNewDetailedTaskModal_description-new').val().trim()) {
         return;
     }
@@ -18889,9 +18899,9 @@ function addNewDetailedTaskActionEvent(nameL,Com) {
     var json = initJSON();
     json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid-new').val();
     json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid-new').val();
-    json.kv.taskName = nameL 
+    json.kv.taskName = nameL
     json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature-new').val();
-    json.kv.taskComment = Com +"\n"+$("#addNewDetailedTaskModal_description-new").val();
+    json.kv.taskComment = Com + "\n" + $("#addNewDetailedTaskModal_description-new").val();
     json.kv.assineeList = addNewDetailedTaskAction_assigneeList_event();
     json.kv.fileList = $('#addNewDetailedTaskModal_filelist-new').val();
     var that = this;
@@ -18904,7 +18914,7 @@ function addNewDetailedTaskActionEvent(nameL,Com) {
         crossDomain: true,
         async: true,
         success: function (res) {
-           
+
         }
     });
 }
@@ -18993,10 +19003,10 @@ function ForwardTaskTo_loadAssignee() {
 function addProceccDescListToTaskNew() {
     $('#addNewDetailedTaskModal-multi-new').modal('show');
     addUserStoryToTask_loadAssignee_event();
-   addUserStoryToTask_loadTaskType_event();
-   $('#addNewDetailedTaskModal_assigneelist-new').html('');
-   $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
-   $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
     addProceccDescListToTaskNew_setComment();
 }
 
@@ -19031,16 +19041,16 @@ function addProceccDescListToTaskNew_setComment() {
             name = name.replaceAll('<br>', '')
             st += '';
             var col = $("<div class='col-12 item-input-add-task'>")
-                .append(`<label class='font-weight-bold' >${name}</label>`)
-                       
-                 .append($("<input class='form-control' row='3'>").val("Add/Update : "+name))
-                       
-                 .append($("<textarea class='form-control' row='3'>").val(st))
-                 $("#addNewDetailedTaskModal_list").append(col);
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
         }
     })
 
-   // $('#addNewDetailedTaskModal_comment').val(st);
+    // $('#addNewDetailedTaskModal_comment').val(st);
 }
 
 function addProceccDescListToTaskNew_getLastValue(descId) {
@@ -19093,23 +19103,23 @@ function addInputListToTaskNew(el, descId, inputId) {
 }
 function addInputListToTaskNewEvent(el, descId, inputId) {
     $('#addNewDetailedTaskModal-multi-new').modal('show');
-     addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadAssignee_event();
     addUserStoryToTask_loadTaskType_event();
     $('#addNewDetailedTaskModal_assigneelist-new').html('');
     $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
     $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
     //addInputListToTaskNew_setHeader(descId);
-    addInputListToTaskNew_setComment_event(descId, inputId); 
+    addInputListToTaskNew_setComment_event(descId, inputId);
 }
 function addInputDescListToTaskNewEvent(el, descId, inputId) {
     $('#addNewDetailedTaskModal-multi-new').modal('show');
-     addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadAssignee_event();
     addUserStoryToTask_loadTaskType_event();
     $('#addNewDetailedTaskModal_assigneelist-new').html('');
     $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
     $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
     //addInputListToTaskNew_setHeader(descId);
-    addInputDescListToTaskNew_setComment_event(descId, inputId); 
+    addInputDescListToTaskNew_setComment_event(descId, inputId);
 }
 
 function addInputListToTaskNew_setHeader() {
@@ -19162,15 +19172,15 @@ function addInputDescListToTaskNew_setComment_event() {
         if ($(this).is(":checked")) {
             var st = "";
 
-            var name = SAInputDesc.GetDetails($(this).attr("data-id"));           
-         
+            var name = SAInputDesc.GetDetails($(this).attr("data-id"));
+
             var col = $("<div class='col-12 item-input-add-task'>")
-                .append(`<label class='font-weight-bold' >${name}</label>`)
-                       
-                 .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : "+name))
-                       
-                 .append($("<textarea class='form-control' row='3'>").val(st))
-                 $("#addNewDetailedTaskModal_list").append(col);
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
         }
     })
 
@@ -19182,7 +19192,7 @@ function addInputListToTaskNew_setComment_event() {
         if ($(this).is(":checked")) {
             var st = "";
 
-            var name = SAInput.GetInputName($(this).val());           
+            var name = SAInput.GetInputName($(this).val());
             try {
                 //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
                 //                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
@@ -19191,19 +19201,19 @@ function addInputListToTaskNew_setComment_event() {
                     var id = descId[i];
 
                     var desc = fnline2Text(SAInputDesc.GetDetails(id));
-                    st += (i+1)+")"+"- " + desc + '\n';
+                    st += (i + 1) + ")" + "- " + desc + '\n';
 
-                
+
                 }
             } catch (err) {
             }
             var col = $("<div class='col-12 item-input-add-task'>")
-                .append(`<label class='font-weight-bold' >${name}</label>`)
-                       
-                 .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : "+name))
-                       
-                 .append($("<textarea class='form-control' row='3'>").val(st))
-                 $("#addNewDetailedTaskModal_list").append(col);
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
         }
     })
 
@@ -22695,70 +22705,70 @@ var SCSourceManagement = {
 function RemoveDescMultiple() {
     var listch = $(".multiple-desc-inp");
     var lst = '';
-        listch.each(function(index) {
+    listch.each(function (index) {
         if ($(this).prop('checked')) {
-             lst+= $(this).attr('data-id')+'%IN%'
-            $(this).parent().remove();   
+            lst += $(this).attr('data-id') + '%IN%'
+            $(this).parent().remove();
         }
-        })
-    
+    })
+
     removeApidesct(lst);
 }
 
 function removeApidesct(apiId) {
-     var json = initJSON();
-         json.kv.ids = apiId;
-         json.kv.fkBacklogId = global_var.current_backlog_id;
-         json.kv.fkProjectId = global_var.current_project_id;
-    
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-              
-            }
-        });
+    var json = initJSON();
+    json.kv.ids = apiId;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
 }
 function dragDesctInputChangeOrder(item) {
     var itms = $(item).closest('td').find('.drag-item');
-        
-       var iid = $(item).closest('td').find('input.description-style').attr("iid");
-       var lst = '';
-        itms.each(function(index) {
-             lst+= $(this).attr('data-id')+'%IN%'          
-           
-        })
 
-    updateOrderNo(lst,iid);
+    var iid = $(item).closest('td').find('input.description-style').attr("iid");
+    var lst = '';
+    itms.each(function (index) {
+        lst += $(this).attr('data-id') + '%IN%'
+
+    })
+
+    updateOrderNo(lst, iid);
 }
 
-function updateOrderNo(id,iid) {
-     var json = initJSON();
-         json.kv.id = id;
-         json.kv.fkInputId = iid;
-         json.kv.inputName = SAInput.GetInputName(iid);
-         json.kv.fkBacklogId = global_var.current_backlog_id;
-         json.kv.fkProjectId = global_var.current_project_id;
-    
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-              
-            }
-        });
+function updateOrderNo(id, iid) {
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.fkInputId = iid;
+    json.kv.inputName = SAInput.GetInputName(iid);
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
 }
 
 
