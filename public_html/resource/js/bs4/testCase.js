@@ -3813,3 +3813,13 @@ $(document).on("click", '.setting-elemen-box .notification-btn', function () {
 $(document).on("click", '.show-more-btn', function () {
     $('.notification-elements').toggleClass('show-more');    
 });
+$(document).on("change", '.noteCheckListItem', function () {
+
+    if ($(this).is(':checked')) {
+        $(this).closest('li').addClass('on-checked');
+    } else {
+        $(this).closest('li').removeClass('on-checked');
+    }
+
+})
+
