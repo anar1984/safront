@@ -14388,16 +14388,13 @@ $(document).on('click', '.loadDocEditor', function (evt) {
     });
 });
 $(document).on('click', '.loadStoryCard', function (evt) {
-    getProjectUsers();
-    getUsers();
+
     clearManualProjectFromParam();
     global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadStoryCard();
 });
 $(document).on('click', '.loadDev', function (evt) {
-    getProjectUsers();
-    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
@@ -14406,7 +14403,8 @@ $(document).on('click', '.loadDev', function (evt) {
 function callLoadDev() {
 
     $.get("resource/child/dev.html", function (html_string) {
-
+        getProjectUsers();
+        getUsers();
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
@@ -14427,7 +14425,8 @@ function callLoadStoryCard() {
     showToggleMain();
     var f = 'storycard';
     $.get("resource/child/storycard.html", function (html_string) {
-
+        getProjectUsers();
+        getUsers();
 
         //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
