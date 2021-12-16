@@ -4,7 +4,7 @@ const taskManagement = {
 
         insertNewTask: function () {
             var data = this.getValueCreateModalScreen();
-           
+
         },
         insertNewTaskApi: function (dataCore) {
             var json = initJSON();
@@ -22,6 +22,7 @@ const taskManagement = {
                 async: true,
                 success: function (res) {
                     that.insertEventByTaskId(res.kv.id);
+                    that.insertObserverTask(res.kv.id);
                     getBugList();
                     Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
                 },
@@ -65,28 +66,9 @@ const taskManagement = {
             data.sprintList = sprintList;
 
 
-            data.startDate = toDate("runTaskStartDate");
-            data.endDate = toDate("runTaskEndDate");
-            data.runTime = GetConvertedTime("runTaskTime");
-            data.intensive = $("#run_task_intensive_select").val();
-            data.repeatInterval = $("#run_task_repeat_select").val();
-            data.scheduleStatus = $("#run_task_status_select").val();
+
             // data.description = $("#bug_filter_project_id_add").val();
-            data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
-            data.action = $("#bug_filter_project_id_add").val();
-            data.weekdays = $("#swofm_weekday_select").val();
-            data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
-            data.notificationMail = $("#bug_filter_project_id_add").val();
-            data.remindMeParam = $("#bug_filter_project_id_add").val();
-            data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
 
-
-            data.monthlyAction = $("#monthlyAction:checked").val();
-            data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
-            data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
-            data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
-            data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
-            data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
             this.insertNewTaskApi(data);
         },
         insertEventByTaskId: function (id) {
@@ -133,14 +115,61 @@ const taskManagement = {
             });
         },
         insertObserverTask: function (taskId) {
+            try {
+                var userList = "";
+                var tbl = $("#issue-managment-add-task .task-observer-list>table>tbody tr");
 
-            var userList =
+                for (let i = 0; i < tbl.length; i++) {
+                    const o = tbl[i];
+                    userList += $(o).attr("id") + ",";
+                }
+
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": userList
                 }, true, function () {
-                    getTaskkObserverList(global_var.current_task_id_4_comment)
+                    // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
+            } catch (error) {
+                console.log('task Observer ++++' + error);
+            }
+
+
+        },
+        insertBacklogTaskDetail: function (taskId) {
+            try {
+                var data = {};
+                data.fkTaskId = taskId;
+                data.actionParam = getMultiSelectpickerValueByElementName("run_task_weekday_select");
+                data.action = $("#bug_filter_project_id_add").val();
+                data.weekdays = $("#swofm_weekday_select").val();
+                data.startDate = toDate("runTaskStartDate");
+                data.endDate = toDate("runTaskEndDate");
+                data.runTime = GetConvertedTime("runTaskTime");
+                data.intensive = $("#run_task_intensive_select").val();
+                data.repeatInterval = $("#run_task_repeat_select").val();
+                data.scheduleStatus = $("#run_task_status_select").val();
+                data.projectId = $('#bug_filter_project_id_add').val();
+                data.projectName = $('#bug_filter_project_id_add option:selected').text();
+                data.sendNotification = $("#sendnotification").is(":checked") ? "1" : "0";
+                data.notificationMail = $("#sendnotification").is(":checked") ? "1" : "0";
+                data.remindMeParam = $("#bug_filter_project_id_add").val();
+                data.activateSchedule = $("#runTaskAvtivateSchedule").is(":checked") ? "1" : "0";
+                data.monthlyAction = $("#monthlyAction:checked").val();
+                data.actionDayOfMonth = $("#sdofm_day_of_Month_select").val();
+                data.dayBeforeLastDayOfMonth = $("#days_before_last_day_of_month").val();
+                data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
+                data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
+                data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
+
+                callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
+                    // getTaskkObserverList(global_var.current_task_id_4_comment)
+                });
+            } catch (error) {
+                console.log('task Observer ++++' + error);
+            }
+
+
         }
 
 
@@ -232,7 +261,8 @@ const taskManagement = {
 }
 
 
-// task-management event  list
+// task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 $(document).on("change", '#bug_filter_project_id_add', function (e) {
     var id = $(this).val();
@@ -246,6 +276,7 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
+    loadAssigneesByProject(global_var.current_project_id)
     /* $('#issue-managment-add-task .after-add-task').css("pointer-events", "none");
     $('#issue-managment-add-task .after-add-task').css("opacity", "0.7");
     $('#issue-managment-add-task .task-step-1').show();
@@ -260,7 +291,7 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show(); */
     taskManagement.insertTask.insertNewTask();
-    
+
 
 })
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
@@ -268,3 +299,138 @@ $(document).on("click", '#multi-edit-menu-btn', function (e) {
     var dwlmt = $('#bug_task_type_id_multi');
     taskManagement.add_loadTaskType_bug_list(dwlmt);
 })
+
+$(document).on("click", ".addObserverToTAsk", function (e) {
+    var div = $('div.task-observer-list');
+    var table = $('<table>')
+        .addClass('table table-hover project-table-list defaultTable sar-table');
+    table.append($('<thead>')
+        .append($("<tr>")
+            .append($("<th>")
+                .css("width", "1%")
+                .text("#"))
+            .append($('<th>')
+                .text("Observer"))))
+
+    var usId = $("#createdtask_oblerverlist").val();
+    var ct = table.find("tbody tr")
+    /*    callService('serviceTminsertTaskObserver',
+               {"fkTaskId": global_var.current_task_id_4_comment,
+                   "fkUserId": $('#updatetask_oblerverlist').val()}, true
+               , function () {
+                   getTaskkObserverList(global_var.current_task_id_4_comment)
+               }); */
+    if (div.find(".project-table-list").length < 1) {
+        div.html(table);
+    } else {
+        table = div.find(".project-table-list")
+    }
+    var det = $(table).find('tr#' + usId);
+    var userSpan = (usId) ?
+        $('<span>')
+        .attr('title', 'Observer ')
+        .addClass('peronal-info')
+        .append($('<img>')
+            .addClass('Assigne-card-story-select-img')
+            .attr('width', '40px')
+            .attr('src', fileUrl(SAProjectUser.Users[usId].userImage)))
+        .append($('<span>').text(SAProjectUser.Users[usId].userPersonName))
+
+        :
+        '';
+
+    var tr = $("<tr>")
+        .attr('id', usId)
+        .append($('<td>').text((parseFloat(ct.length) + 1)))
+        .append($('<td>')
+            .append(userSpan))
+        .append($('<td>')
+            .append($('<a href="#">')
+                .attr('oid', usId)
+                .addClass("taskObserverDelete")
+                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')));
+    if (det.length < 1) {
+        table.append(tr);
+        // nl++
+    } else {
+        Toaster.showError("İstifadəçi daxil edilib");
+    }
+
+
+
+})
+
+function getTaskkObserverList(fkTaskId) {
+    $('.task-observer-list').html('')
+    callService('serviceTmgetTaskkObserverList', {
+        "fkTaskId": fkTaskId
+    }, true, function (res) {
+        getTaskkObserverListDetaisl(res);
+    });
+}
+
+
+function getTaskkObserverListDetaisl(res) {
+    var userList = {};
+    try {
+        var idx = getIndexOfTable(res, "userList");
+        var objUser = res.tbl[idx].r;
+        for (var k in objUser) {
+            var o2 = objUser[k];
+            userList[o2.id] = o2;
+        }
+    } catch (err) {}
+
+
+
+    var div = $('.task-observer-list');
+    div.html('')
+
+    var table = $('<table>')
+        .addClass('table table-hover project-table-list defaultTable sar-table');
+    table.append($('<thead>')
+        .append($("<tr>")
+            .append($("<th>")
+                .css("width", "1%")
+                .text("#"))
+            .append($('<th>')
+                .text("Observer"))
+        )
+    )
+
+    var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
+    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
+    for (var n = 0; n < obj.length; n++) {
+        var o = obj[n];
+
+        var userSpan = (o.fkUserId && userList[o.fkUserId]) ?
+            $('<span>')
+            .attr('title', 'Observer ')
+            .addClass('peronal-info')
+            .append($('<img>')
+                .addClass('Assigne-card-story-select-img')
+                .attr('width', '40px')
+                .attr('src', fileUrl(userList[o.fkUserId].userImage)))
+            .append($('<span>').text(userList[o.fkUserId].userPersonName))
+
+            :
+            '';
+
+
+
+        var tr = $("<tr>")
+            .append($('<td>').text((n + 1)))
+            .append($('<td>')
+                .append(userSpan))
+            .append($('<td>')
+                .append($('<a href="#">')
+                    .attr('oid', o.id)
+                    .addClass("taskObserverDelete")
+                    .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')));
+        table.append(tr);
+    }
+    div.html(table);
+}
+
+// task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

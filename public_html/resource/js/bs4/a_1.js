@@ -14557,6 +14557,8 @@ $(document).on('click', '.loadBugChange', function (evt) {
     global_var.current_modal = "loadBugChange";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string) {
+        getProjectUsers();
+        getUsers();
         $('#mainBodyDivForAll').html(html_string);
         commmonOnloadAction(this);
         setBugFilterProject();

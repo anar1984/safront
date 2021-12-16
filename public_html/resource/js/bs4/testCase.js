@@ -3283,16 +3283,11 @@ $(document).on("change", ".taskCheckListItemToggle", function (e) {
 
 
 $(document).on("click", ".taskObserverDelete", function (e) {
-    if (!confirm("Are you sure?")) {
-        return;
-    }
-    var that = this;
-    callService('serviceTmDeleteTaskObserver',
-            {"id": $(this).attr('oid')}, true
-            , function () {
-                $(that).closest('tr').remove();
-            });
+    if (confirm("Are you sure?")) {
+          $(this).closest('tr').removeAttr('id');
+          $(this).closest('tr').remove();
 
+    }   
 })
 
 $(document).on("click", ".taskCheckListItemDelete", function (e) {
@@ -3338,17 +3333,6 @@ $(document).on("change", ".updateTaskcheckListItemName", function (e) {
 
 })
 
-$(document).on("click", ".addObserverToTAsk", function (e) {
-
-
-    callService('serviceTminsertTaskObserver',
-            {"fkTaskId": global_var.current_task_id_4_comment,
-                "fkUserId": $('#updatetask_oblerverlist').val()}, true
-            , function () {
-                getTaskkObserverList(global_var.current_task_id_4_comment)
-            });
-
-})
 
 
 $(document).on("click", ".loadUserForObserver", function (e) {
@@ -3376,78 +3360,8 @@ $(document).on("click", ".loadUserForObserver", function (e) {
 })
 
 
-function getTaskkObserverList(fkTaskId) {
-    $('.task-observer-list').html('')
-    callService('serviceTmgetTaskkObserverList',
-            {"fkTaskId": fkTaskId}, true
-            , function (res) {
-                getTaskkObserverListDetaisl(res);
-            });
-}
 
 
-function  getTaskkObserverListDetaisl(res) {
-    var userList = {};
-    try {
-        var idx = getIndexOfTable(res, "userList");
-        var objUser = res.tbl[idx].r;
-        for (var k in objUser) {
-            var o2 = objUser[k];
-            userList[o2.id] = o2;
-        }
-    } catch (err) {
-    }
-
-
-
-    var div = $('.task-observer-list');
-    div.html('')
-
-    var table = $('<table>')
-            .addClass('table table-hover project-table-list defaultTable sar-table');
-    table.append($('<thead>')
-            .append($("<tr>")
-                    .append($("<th>")
-                            .css("width", "1%")
-                            .text("#"))
-                    .append($('<th>')
-                            .text("Observer"))
-                    )
-            )
-
-    var idy = getIndexOfTable(res, "tmBacklogTaskObserver");
-    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
-    for (var n = 0; n < obj.length; n++) {
-        var o = obj[n];
-
-        var userSpan = (o.fkUserId && userList[o.fkUserId])
-                ? $('<span>')
-                .attr('title', 'Observer ')
-                .addClass('peronal-info')
-                .append($('<img>')
-                        .addClass('Assigne-card-story-select-img')
-                        .attr('width', '40px')
-                        .attr('src', fileUrl(userList[o.fkUserId].userImage)))
-                .append($('<span>').text(userList[o.fkUserId].userPersonName))
-
-                : '';
-
-
-
-        var tr = $("<tr>")
-                .append($('<td>').text((n + 1)))
-                .append($('<td>')
-                        .append(userSpan))
-                .append($('<td>')
-                        .append($('<a href="#">')
-                                .attr('oid', o.id)
-                                .addClass("taskObserverDelete")
-                                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
-                ;
-        table.append(tr);
-    }
-    div.html(table);
-}
 function createdEventsTaskData(id) {
    ///legv edildi
 }
