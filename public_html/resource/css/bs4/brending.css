@@ -4364,9 +4364,9 @@ table.lbl-list-table tr td {
     padding: 7px 25px;
 }
 .issue-managment-add-task .cm-file-upload-box .progress_bar_new {
-
+ margin-top: 6px;
 }
-.issue-managment-add-task .cm-file-upload-box .progress_bar_new span {
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item {
     display: inline-block;
     background: rgba(3, 57, 108, 0.5);
     padding: 0px 6px;
@@ -4374,7 +4374,17 @@ table.lbl-list-table tr td {
     margin-bottom: 5px;
     font-weight: 300;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 17px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item span {
+    margin-right: 4px;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item i {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0 0px 0 7px;
 }
 .issue-managment-add-task .cs-input-group input.form-control::placeholder, .card-Userstory-detail .cs-input-group input.form-control::placeholder {
     color: rgb(255 255 255 / 70%);
