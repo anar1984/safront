@@ -16232,7 +16232,13 @@ function addUserStoryNewPopup() {
         success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
-            loadCurrentBacklogProdDetails();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                loadCurrentBacklogProdDetails();
+            }
+            if (global_var.current_modal === 'loadDev'||global_var.current_modal === 'loadStoryCard') {
+                $("select.projectList_liveprototype_storycard").change();
+            }
+         
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
             $('.projectList_liveprototype').change();
