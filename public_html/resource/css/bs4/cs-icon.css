@@ -280,3 +280,9 @@
   .cs-svg-icon.participant:after {
     background-image: url(../ch-icons/participant.svg);
   }
+  .cs-svg-icon.title-decor-left:after {
+    background-image: url(../ch-icons/title-decor-left.svg);
+  }
+  .cs-svg-icon.title-decor-right:after {
+    background-image: url(../ch-icons/title-decor-right.svg);
+  }
