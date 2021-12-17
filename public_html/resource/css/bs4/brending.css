@@ -4345,7 +4345,9 @@ table.lbl-list-table tr td {
     font-size: 14px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
-    height: 35px;
+    font-size: 16px;
+    line-height: 20px;
+    height: 25px;
     border: none;
     background: rgba(3, 57, 108, 0.5);
     border-radius: 10px;
@@ -4389,8 +4391,13 @@ table.lbl-list-table tr td {
     font-weight: 600;
     padding: 0 0px 0 7px;
 }
+.issue-managment-add-task .cs-input-group input.newTaskNameInput {
+    height: 35px;
+}
 .issue-managment-add-task .cs-input-group input.form-control::placeholder, .card-Userstory-detail .cs-input-group input.form-control::placeholder {
     color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
     color: #fff;
