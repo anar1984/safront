@@ -277,3 +277,6 @@
   .cs-svg-icon.subtask-light:after {
     background-image: url(../ch-icons/subtask-light.svg);
   }
+  .cs-svg-icon.participant:after {
+    background-image: url(../ch-icons/participant.svg);
+  }

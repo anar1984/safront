@@ -3860,7 +3860,8 @@ hr.hr-ss {
 }
 .cs-input-group .bootstrap-datetimepicker-widget {
     list-style: none;
-    max-width: 180px;
+    max-width: 270px;
+    padding:0;
 }
 .run-intensive {
     pointer-events:none;
@@ -4438,6 +4439,9 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .cs-input-group .toplanti-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:first-child {
     display: none;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn, .issue-managment-add-task .cs-input-group .toplanti-btn {
+    cursor: pointer;
 }
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
@@ -5277,4 +5281,49 @@ table.lbl-list-table tr td {
 .bcs-swith input:checked + .slider .active {
  display: inline-block;
  margin-left: 18px;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table th, .card-Userstory-detail .bootstrap-datetimepicker-widget table th {
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+    color: #fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table, .card-Userstory-detail .bootstrap-datetimepicker-widget table {
+    width: 100%;
+    margin: 0;
+    background: rgb(33 81 124);
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    color:#fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table td.active, .issue-managment-add-task .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #03396c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+    border-radius: 50px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    height: 30px;
+    line-height: 1;
+    width: 30px;
+}
+.bootstrap-datetimepicker-widget table td.day:hover, .bootstrap-datetimepicker-widget table td.hour:hover, .bootstrap-datetimepicker-widget table td.minute:hover, .bootstrap-datetimepicker-widget table td.second:hover {
+    background: #03396c;
+    cursor: pointer;
+    border-radius: 50px;
+}
+.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+    background: #03396c;
+}
+.cs-date-time {
+    background-color: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    padding: 1px 2px 1px 12px;
+}
+.cs-date-time input {
+    background: transparent !important;
+    padding: 0 6px !important;
+}
+.cs-date-time .input-group-icon{
+    color: #fff;
 }
