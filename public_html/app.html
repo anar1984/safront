@@ -6405,7 +6405,7 @@
                                     </div>
                                     <div class="row soon weekly-actions run-intensive run-enabled mt-3">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Weekly Actions</strong></h5>
                                         </div>
                                         <div class="col-md-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
@@ -6429,7 +6429,7 @@
                                     </div>
                                     <div class="row soon monthly-actions run-intensive mt-3">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Monthly Action</strong></h5>
                                         </div>
                                         <div class="cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group horizontal ml-3 mt-2">
@@ -6531,7 +6531,7 @@
                                     </div>
                                     <div class="row soon yearly-actions run-intensive mt-3">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Yearly</strong> </h5>
                                         </div>
                                         <div class="cs-flex-col flex-item ml-3 mt-2">
                                             <div class="cs-input-group">
@@ -9248,7 +9248,7 @@
                             <div class="cs-input-group mb-3">
                                 <div class="d-flex">
                                     <div class="mr-auto" style="width: 93%;">
-                                        <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
                                     </div>
                                     <div class="p-0">
                                         <div class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -9379,9 +9379,9 @@
                                 <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>Observer</span></a>
                                 </li>
-                                <li class="nav-item after-add-task" role="presentation">
+                                <!-- <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>Subtask</span></a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item after-add-task" role="presentation">
                                     <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>Events</span></a>
                                 </li>
@@ -9443,11 +9443,13 @@
                                     <div class="row">
                                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
-                                                <label class="checkmarkcontainer">Activate
+                                                <label class="switch bcs-swith">
                                                     <input type="checkbox" id="runTaskAvtivateSchedule">
-                                                    <span class="checkmark"></span>
+                                                    <span class="slider round">
+                                                        <small class="deactive">Deactive</small>
+                                                        <small class="active">Active</small>
+                                                    </span>
                                                 </label>
-
                                             </div>
                                         </div>
                                     </div>
@@ -9512,7 +9514,7 @@
                                     </div>
                                     <div class="row rsoon weekly-actions run-intensive run-enabled">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Weekly Actions</strong></h5>
                                         </div>
                                         <div class="col-md-3 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
@@ -9536,7 +9538,7 @@
                                     </div>
                                     <div class="row rsoon monthly-actions run-intensive">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Monthly Action</strong></h5>
                                         </div>
                                         <div class="cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group horizontal ml-3 mt-2">
@@ -9638,7 +9640,7 @@
                                     </div>
                                     <div class="row rsoon yearly-actions run-intensive">
                                         <div class="col-12">
-                                            <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
+                                            <h5 class="section-title"><strong>Yearly</strong></h5>
                                         </div>
                                         <div class="cs-flex-col flex-item ml-3 mt-2">
                                             <div class="cs-input-group">
@@ -9698,7 +9700,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade task-subtask-created cs-box-background" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
+                                <!-- <div class="tab-pane fade task-subtask-created cs-box-background" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
 
                                     <div class="col-lg-12">
                                         <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
@@ -9750,18 +9752,22 @@
                                         </table>
 
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="tab-pane fade task-events-created cs-box-background" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
                                     <div class="row">
                                         <div class="col-lg-12 cs-flex-col flex-item mt-2">
                                             <div class="cs-input-group">
-                                                <!-- <label class="input-group-addon">Activate
-                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
-                                                </label>     -->
 
-                                                <label class="checkmarkcontainer">Activate
+                                                <!-- <label class="checkmarkcontainer">Activate
                                                     <input type="checkbox" name="activateCreatedEvenets" id="activateCreatedEvenets" value="">
                                                     <span class="checkmark"></span>
+                                                </label> -->
+                                                <label class="switch bcs-swith">
+                                                    <input type="checkbox"  name="activateCreatedEvenets" id="activateCreatedEvenets">
+                                                    <span class="slider round">
+                                                        <small class="deactive">Deactive</small>
+                                                        <small class="active">Active</small>
+                                                    </span>
                                                 </label>
                                             </div>
                                         </div>
