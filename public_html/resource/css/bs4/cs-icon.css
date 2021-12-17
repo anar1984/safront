@@ -263,7 +263,17 @@
   }
   .cs-svg-icon.details:after {
     background-image: url(../ch-icons/details.svg);
+    height: 20px;
   }
   .cs-svg-icon.schedule:after {
     background-image: url(../ch-icons/schedule.svg);
+  }
+  .cs-svg-icon.observer:after {
+    background-image: url(../ch-icons/observer.svg);
+  }
+  .cs-svg-icon.subtask:after {
+    background-image: url(../ch-icons/subtask.svg);
+  }
+  .cs-svg-icon.subtask-light:after {
+    background-image: url(../ch-icons/subtask-light.svg);
   }
