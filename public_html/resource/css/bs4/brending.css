@@ -4403,7 +4403,7 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .issue-managment-add-task .cs-input-group .toplanti-btn i {
-    margin-top: 10px;
+    margin-top: 6px;
 }
 .issue-managment-add-task .cs-input-group .tapshiriq-btn i:after{
     width: 61.5px;
@@ -4924,9 +4924,6 @@ table.lbl-list-table tr td {
     background-color: #272b7c;
     box-shadow: inset 1px 1px 0px 0px rgb(0 0 0 / 20%);
 }
-.card-Userstory-rightbody .cs-flex-col {
-
-}
 .card-Userstory-rightbody .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
@@ -5135,4 +5132,45 @@ table.lbl-list-table tr td {
     vertical-align: middle;
     height: 100%;
     line-height: 1.5;
+}
+.issue-managment-add-task .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #525596;
+}
+.issue-managment-add-task .checkmarkcontainer .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.issue-managment-add-task .checkmarkcontainer {
+    padding-left: 24px;
+    color: #fff;
+}
+.issue-managment-add-task.cs-modal-box .modal-footer .btn {
+    background: #3C6E93;
+    box-shadow: 1px 1px 10px rgb(0 0 0 / 40%);
+    border: none;
+    border-radius: 7px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 7px 25px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
+}
+.issue-managment-add-task .cs-input-group .btn:hover, .issue-managment-add-task.cs-modal-box .btn:hover {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
 }

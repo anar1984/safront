@@ -1,9 +1,9 @@
-
-
 /* ****************************
     Bug List 30.08.2020
  **************************** */
-
+body {
+    font-family: 'Quicksand', sans-serif !important;
+}
  .bugListTable{
   
     text-align: left;
