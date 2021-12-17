@@ -18890,7 +18890,7 @@ function addNewDetailedTaskAction_assigneeList() {
 function addNewDetailedTaskActionEvent1(params) {
     $("#addNewDetailedTaskModal_list >.item-input-add-task").each(function () {
 
-        addNewDetailedTaskActionEvent($(this).find('textarea').val(), $(this).find('input').val());
+        addNewDetailedTaskActionEvent( $(this).find('input').val(),$(this).find('textarea').val());
     })
     $('#addNewDetailedTaskModal-multi-new').modal('hide');
     new UserStory().getBacklogTaskStats();
@@ -19425,16 +19425,42 @@ function addUserStoryToTask_loadAssignee() {
     }
     sortSelectBox('addNewDetailedTaskModal_assignee');
 }
-function addUserStoryToTask_loadAssignee_event() {
+function addUserStoryToTask_loadAssignee_event(id) {
     var select = $('#addNewDetailedTaskModal_assignee-new');
-    select.html('');
-    var keys = SAProjectUser.GetKeys();
-    select.append($('<option>').val('').text(''));
-    for (var i = 0; i < keys.length; i++) {
-        var userName = SAProjectUser.GetDetails(keys[i], "userName");
-        select.append($('<option>').val(keys[i]).text(userName));
+    select.html(''); 
+   
+    var json = initJSON();
+    if (global_var.current_project_id) {
+        json.kv['fkProjectId'] = global_var.current_project_id
+    } else {
+        json.kv['fkProjectId'] = id;
     }
-    sortSelectBox('addNewDetailedTaskModal_assignee-new');
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            select.append($('<option>').val('').text(''));
+             var keys = res.tbl[0].r;
+            for (var i = 0; i < keys.length; i++) {
+                var userName = keys[i].userName;
+                select.append($('<option>').val(keys[i].fkUserId).text(userName));
+                
+            }
+
+            sortSelectBox('addNewDetailedTaskModal_assignee-new');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+   
 }
 
 function addUserStoryToTask_loadTaskType_event() {
