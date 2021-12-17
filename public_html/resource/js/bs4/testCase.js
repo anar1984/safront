@@ -2597,6 +2597,23 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
     // TASK DETAILS OFF
 
+    // Task Deadline 
+        $("#taskDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        });
+        $("#taskDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("#taskDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+        $("#taskDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        });
 
 }
 
@@ -3530,6 +3547,17 @@ $(document).on("change", '.noteCheckListItem', function () {
     } else {
         $(this).closest('li').removeClass('on-checked');
     }
-
 })
+$(document).on("click", '.toplanti-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $('.loadUserForObserver span').text('').text('Participant');
+});
+$(document).on("click", '.tapshiriq-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+     $('.loadUserForObserver span').text('').text('Observer');
+});
 
