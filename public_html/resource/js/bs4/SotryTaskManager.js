@@ -88,7 +88,8 @@ $(document).ready(function () {
 //card user story 
 
     $(document).on("dblclick", ".card-UserStory-header-text", function () {
-        $(this).parent().find(".card-UserStory-header-edit").css("display", "block")
+        $(this).hide();
+        $(this).parent().find(".card-UserStory-header-edit").css("display", "inline-block")
         let Namestory = $(this).parent().parent().find(".card-UserStory-header-text").text()
         $(this).parent().find(".card-UserStory-header-input").val(Namestory)
     })
@@ -98,13 +99,15 @@ $(document).ready(function () {
         let InputText = $(this).parent().find(".card-UserStory-header-input").val()
         if (InputText.trim().length > 0) {
             $(this).parent().parent().find(".card-UserStory-header-text").text(InputText)
+            $(this).parent().parent().find(".card-UserStory-header-text").show();
             $(this).parent().find(".card-UserStory-header-input").val("")
             $(this).parent().css("display", "none")
         }
     })
 
     $(document).on("click", "#DeleteText", function (e) {
-        $(this).parent().css("display", "none")
+        $(this).parent().css("display", "none");
+        $(this).parent().parent().find(".card-UserStory-header-text").show();
     })
 
 

@@ -286,3 +286,9 @@
   .cs-svg-icon.title-decor-right:after {
     background-image: url(../ch-icons/title-decor-right.svg);
   }
+  .cs-svg-icon.hammer:after {
+    background-image: url(../ch-icons/hammer.svg);
+  }
+  .cs-svg-icon.comment:after {
+    background-image: url(../ch-icons/comment.svg);
+  }
