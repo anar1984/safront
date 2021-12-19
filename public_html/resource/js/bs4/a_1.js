@@ -9935,6 +9935,18 @@ function addRelatedSourceCodeModal(el) {
     var descId = $('#addRelatedSourceCodeModal-id').val();
     var apidId = $('#addRelatedSourceCodeModal-api').val();
 
+    var attr  = $("#addRelatedSourceCodeModal-id").attr('data-fn');
+
+          if(attr==='callFn'){
+             var select=  $("tr[pid='"+descId+"']").find("#get-callfn-select-box")
+             select.append($("<option>")
+                     .attr('value',apidId)
+                     .text(apidId));
+            select.val(apidId)
+            select.change();
+            return
+          }
+
     if (!descId || !apidId)
         return;
 
@@ -10169,11 +10181,19 @@ function addRelatedApi(el, descId) {
 
 function addRelatedSourceCode(el, descId) {
     $('#addRelatedSourceCodeModal-id').val(descId);
+    $('#addRelatedSourceCodeModal-id').attr('data-fn','relatedApi');;
     $('#addRelatedSourceCodeModal').modal('show');
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
 }
-
+function addRelatedCallfn(el) {
+      var descId  = $(el).closest('tr').attr('pid')
+    $('#addRelatedSourceCodeModal-id').val(descId);
+    $('#addRelatedSourceCodeModal-id').attr('data-fn','callFn');
+    $('#addRelatedSourceCodeModal').modal('show');
+    loadRelatedSourceCode4Relation();
+    loadRelatedGlobalSourceCode4Relation();
+}
 function loadRelatedSourceCode4Relation() {
     //    addRelatedApiModal-api
     $('#addRelatedSourceCodeModal-api').html('');
@@ -16185,8 +16205,14 @@ function loadAddUserStoriesToTabList(tabId) {
     $('#addUserStoryToTabModal-assinged-userstories').html(table);
 }
 
-function addApiModal() {
+function addApiModal(el,callApi) {
     $("#addApiPopupModal-userstoryname").removeAttr("data-trig-rel");
+    if(callApi){
+        $("#addApiPopupModal-userstoryname").attr("data-api",$(el).closest('tr').attr("pid"));
+    }else{
+        $("#addApiPopupModal-userstoryname").removeAttr("data-api");
+  
+    }
     $('#addApiPopupModal').modal('show');
     $('#addApiPopupModal-userstoryname').focus();
 }
@@ -16273,6 +16299,18 @@ function addApiNewPopup() {
         crossDomain: true,
         async: true,
         success: function (res) {
+            var attr = nameInput.attr('data-api');
+            if(attr){
+             var select=  $("tr[pid='"+attr+"']").find("#get-callapi-select-box")
+             select.append($("<option>")
+                     .attr('value',res.kv.id)
+                     .text(res.kv.backlogName));
+            select.val(res.kv.id);
+            select.change();
+            nameInput.removeAttr('data-trig-rel');
+            $('#addApiPopupModal').modal('hide');
+            return
+            }
 
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
