@@ -20242,8 +20242,6 @@ function generateCommentListHtml4Task(res, taskId) {
                             .addClass("figure-img img-fluid rounded-circle")
                             .attr("style", "max-width:28px")
                             .attr("src", img)
-                            .attr("alt", replaceTags(obj[i].username)));
-            //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
             var comment = replaceTags(obj[i].comment);
             var div2 = $('<div></div>')
                     .attr('style', "padding-left:0px;font-size:13px;")
@@ -20264,8 +20262,8 @@ function generateCommentListHtml4Task(res, taskId) {
                             //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
                             //                                    .append("Delete"))
                             )
-                    .append("<br><br>")
-                    .append($("<span>")
+                    .append("<br>")
+                    .append($("<span class='comment-main-span'>")
                             .css('padding-bottom', "5px")
                             .attr("id", obj[i].id)
                             //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
