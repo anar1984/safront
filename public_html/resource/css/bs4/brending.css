@@ -4335,13 +4335,20 @@ table.lbl-list-table tr td {
     background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
 }
 .issue-managment-add-task.cs-modal-box .tab-content>.tab-pane, .card-Userstory-detail.cs-modal-box .tab-content>.tab-pane {
-    padding: 10px 20px 20px 20px;
+    padding: 15px 10px 10px 10px;
 }
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
-    border: 1px solid #BEBFD7;
-    padding: 5px;
+    background: rgb(0 0 0 / 15%);
+    border: none;
+    padding: 5px 15px;
     font-size: 14px;
+    color: #fff;
+}
+.issue-managment-add-task .cs-input-group textarea::placeholder, .card-Userstory-detail .cs-input-group textarea::placeholder {
+    color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
     font-size: 16px;
@@ -4888,7 +4895,7 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 7px;
+    top: 2px;
     left: auto;
     right: 28px;
     position: absolute;
@@ -4899,7 +4906,7 @@ table.lbl-list-table tr td {
 }
 .card-UserStory-header-delete {
     left: auto;
-    top: 7px;
+    top: 2px;
     right: 5px;
     position: absolute;
     height: 21px;
@@ -5100,17 +5107,27 @@ table.lbl-list-table tr td {
 .subtask-table thead th:nth-child(-n+20) {
     position: sticky;
     top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.bugListTable td {
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
     font-weight: 500;
     z-index: 500;
     text-align: center;
     box-shadow: none;
 }
 .subtask-table thead th:nth-child(-n+20) {
-    height: 40px;
+    height: 30px;
     padding: 5px 5px;
 }
 .task-mgmt-modal-parent-task td a {
@@ -5465,4 +5482,7 @@ table.lbl-list-table tr td {
     line-height: 2.5;
     margin-bottom: 0;
     color: #ffffff;
+}
+.comment-main-span {
+    color: #fff;
 }

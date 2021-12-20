@@ -6100,15 +6100,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
-                                                <div class="cs-input-group">
+                                            <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                                                <div class="cs-input-group p-0">
                                                     <div class="input-group-addon">Responsible</div>
                                                     <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
                                                             id='bug_filter_detail_assignee_id_add' title="Assignee"></select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
-                                                <div class="cs-input-group">
+                                            <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                                                <div class="cs-input-group p-0">
                                                     <div class="input-group-addon">Categories</div>
                                                     <select class="run_task_categories"  id="run_task_detail_detail_categories" data-live-search="true">
                                                         <option value="cat1">Software</option>
@@ -6318,7 +6318,7 @@
                                             <div class="col-md-4">
                                                 <div class="cs-input-group Assigne-card-story">
                                                     <label class="input-group-addon">Assignee</label>
-    
+
                                                     <div class="Assigne-card-story-select form-control">
                                                         <div id='task-mgmt-assignee'>
                                                             <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
@@ -6710,7 +6710,7 @@
                                 </div>
                                 <div class="tab-pane fade cs-box-background" id="d-task-tab5" role="tabpanel" aria-labelledby="pills-d-task-tab5">
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 pl-0 pr-0">
                                         <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
                                             <thead>
                                                 <tr>
@@ -6727,13 +6727,13 @@
                                             <tbody>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
+                                                    <td><a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
                                                             <i class="fas fa-plus" aria-hidden="true"></i>
                                                         </a></td>
                                                     <td><div class="task-id-modal-parent-task"></div></td>
                                                     <td class="move-to-child">
                                                         <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                           onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
+                                                           onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task' > To Child
                                                         </a>
                                                     </td>
                                                     <td><div class="task-status-modal-parent-task"></div></td>
@@ -6756,8 +6756,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-12 mt-5">
-
+                                    <div class="col-lg-12 mt-3 pl-0 pr-0">
                                         <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
                                             <thead>
                                                 <tr>
@@ -6774,18 +6773,20 @@
                                             </tbody>
                                         </table>
 
-
-                                        <!-- <div class="cs-input-group">
-                                         <div class="dropdown-task show">
+                                        <div class="cs-input-group">
+                                            <a href="#" style="color: #fff;">
+                                                <i class="fas fa-plus" aria-hidden="true"></i>
+                                            </a>
+                                         <!-- <div class="dropdown-task show">
                                              <a href="#" class="btn comment-content-header-history">
-                                                 Child Task<br>
+                                                 <i class="fas fa-plus" aria-hidden="true"></i>
                                              </a>
  
                                              <a class="btn comment-content-header-history task-mgmt-modal-child-task"
                                                  id='task-mgmt-modal-child-task'>
                                          </a>
-                                         </div>
-                                        </div> -->
+                                         </div> -->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade task-events-updated cs-box-background" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
