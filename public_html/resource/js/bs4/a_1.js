@@ -20241,7 +20241,8 @@ function generateCommentListHtml4Task(res, taskId) {
                     .append($('<img></img>')
                             .addClass("figure-img img-fluid rounded-circle")
                             .attr("style", "max-width:28px")
-                            .attr("src", img)
+                            .attr("src", img));
+            //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
             var comment = replaceTags(obj[i].comment);
             var div2 = $('<div></div>')
                     .attr('style', "padding-left:0px;font-size:13px;")
