@@ -7646,6 +7646,10 @@ function getGUIDataByStoryCard(el) {
     return res;
 }
 
+function getDataFromForm(el){
+    return getGUIDataByStoryCard(el);
+}
+
 function insertNewInputActionRel(el) {
 
     if (!global_var.current_project_id || !$(el).parents(".animation-block-for-find").find('.input_event_type').val() ||
