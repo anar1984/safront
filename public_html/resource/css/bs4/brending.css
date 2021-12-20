@@ -4316,7 +4316,7 @@ table.lbl-list-table tr td {
 }
 
 /***** ///// TASK CREATED and UPDATED //// ******/
-.issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header {
+.issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header, .story-card-modal .modal-header{
     font-size: 14px;
     padding: 0;
     border-bottom-color: transparent;
@@ -4324,11 +4324,11 @@ table.lbl-list-table tr td {
     border-radius: 0;
     background: transparent;
 }
-.issue-managment-add-task.cs-modal-box .modal-content, .card-Userstory-detail.cs-modal-box .modal-content {
+.issue-managment-add-task.cs-modal-box .modal-content, .card-Userstory-detail.cs-modal-box .modal-content, .story-card-modal .modal-content {
     background-color: transparent;
     overflow: visible;
 }
-.issue-managment-add-task.cs-modal-box .modal-dialog, .card-Userstory-detail.cs-modal-box .modal-dialog {
+.issue-managment-add-task.cs-modal-box .modal-dialog, .card-Userstory-detail.cs-modal-box .modal-dialog, .story-card-modal .modal-dialog {
     background: rgb(82 85 150) !important;
     background: -moz-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
     background: -webkit-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
@@ -5485,4 +5485,21 @@ table.lbl-list-table tr td {
 }
 .comment-main-span {
     color: #fff;
+}
+
+/* STORY CARD SYTLE */
+.story-card-modal .modal-dialog{
+    width: 70% !important;
+    max-width: 900px !important;
+    margin-top: 40px;
+}
+.storycard-author-section {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+.storycard-author-section .author-card-story {
+    display: inline-block;
+    margin-right: 10px;
+}
+.storycard-author-section .author-card-story:last-child {
+ margin-right: 0;
 }
