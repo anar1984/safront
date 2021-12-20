@@ -690,10 +690,8 @@ background-color: rgba(196, 193, 193, 0.6) ;
     border-bottom: 2px solid black;
 }
 .commentwritepanel{
-    margin-bottom: 10px;
     bottom: 0;
-     background-color: #ffffff;
-     padding-top: 20px;
+    background-color: transparent
 }
 .commentinput{
 /*    width: 39rem;*/
