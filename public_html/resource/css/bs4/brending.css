@@ -4335,7 +4335,7 @@ table.lbl-list-table tr td {
     background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
 }
 .issue-managment-add-task.cs-modal-box .tab-content>.tab-pane, .card-Userstory-detail.cs-modal-box .tab-content>.tab-pane {
-    padding: 10px 20px 20px 20px;
+    padding: 15px 10px 10px 10px;
 }
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
@@ -5107,17 +5107,27 @@ table.lbl-list-table tr td {
 .subtask-table thead th:nth-child(-n+20) {
     position: sticky;
     top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.bugListTable td {
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
     font-weight: 500;
     z-index: 500;
     text-align: center;
     box-shadow: none;
 }
 .subtask-table thead th:nth-child(-n+20) {
-    height: 40px;
+    height: 30px;
     padding: 5px 5px;
 }
 .task-mgmt-modal-parent-task td a {

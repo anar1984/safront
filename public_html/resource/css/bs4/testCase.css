@@ -9,6 +9,7 @@ body {
     text-align: left;
     color: #172b4d;
     border-collapse: separate;
+    border-spacing: 1px;
   
  }
  .groupTableDivInside{
