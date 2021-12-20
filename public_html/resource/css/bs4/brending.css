@@ -3860,7 +3860,8 @@ hr.hr-ss {
 }
 .cs-input-group .bootstrap-datetimepicker-widget {
     list-style: none;
-    max-width: 180px;
+    max-width: 270px;
+    padding:0;
 }
 .run-intensive {
     pointer-events:none;
@@ -4317,17 +4318,15 @@ table.lbl-list-table tr td {
 /***** ///// TASK CREATED and UPDATED //// ******/
 .issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header {
     font-size: 14px;
-    padding: 7px 18px 7px 18px;
+    padding: 0;
     border-bottom-color: transparent;
     color: #ffff;
     border-radius: 0;
-    background: rgb(82 85 150);
-    background: -moz-linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
-    background: -webkit-linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
-    background: linear-gradient(164.42deg, #03396C 8.37%, rgba(223, 238, 247, 0.75) 130.68%);
+    background: transparent;
 }
 .issue-managment-add-task.cs-modal-box .modal-content, .card-Userstory-detail.cs-modal-box .modal-content {
     background-color: transparent;
+    overflow: visible;
 }
 .issue-managment-add-task.cs-modal-box .modal-dialog, .card-Userstory-detail.cs-modal-box .modal-dialog {
     background: rgb(82 85 150) !important;
@@ -4345,6 +4344,8 @@ table.lbl-list-table tr td {
     font-size: 14px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
+    font-size: 16px;
+    line-height: 20px;
     height: 35px;
     border: none;
     background: rgba(3, 57, 108, 0.5);
@@ -4389,8 +4390,13 @@ table.lbl-list-table tr td {
     font-weight: 600;
     padding: 0 0px 0 7px;
 }
+.issue-managment-add-task .cs-input-group input.newTaskNameInput {
+    height: 35px;
+}
 .issue-managment-add-task .cs-input-group input.form-control::placeholder, .card-Userstory-detail .cs-input-group input.form-control::placeholder {
     color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
     color: #fff;
@@ -4403,7 +4409,7 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .issue-managment-add-task .cs-input-group .toplanti-btn i {
-    margin-top: 10px;
+    margin-top: 6px;
 }
 .issue-managment-add-task .cs-input-group .tapshiriq-btn i:after{
     width: 61.5px;
@@ -4432,10 +4438,13 @@ table.lbl-list-table tr td {
 .issue-managment-add-task .cs-input-group .toplanti-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:first-child {
     display: none;
 }
+.issue-managment-add-task .cs-input-group .tapshiriq-btn, .issue-managment-add-task .cs-input-group .toplanti-btn {
+    cursor: pointer;
+}
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
     font-size: 14px;
-    color: #525596;
+    color: #fff;
     margin-right: 25px;
 }
 .issue-managment-add-task .checkcontainer {
@@ -4459,17 +4468,17 @@ table.lbl-list-table tr td {
     position: absolute;
     top: 2px;
     left: 0;
-    height: 18px;
-    width: 18px;
-    border: 1px solid #9395bd;
-    background-color: #e9e9f1;
+    height: 19px;
+    width: 19px;
+    border: 1px solid #dfeef7;
+    background-color: #dfeef7;
     border-radius: 50%;
   }
   .issue-managment-add-task .checkcontainer:hover input ~ .radiobtn {
-    background-color: #9395bd;
+    background-color: rgba(3, 57, 108, 0.5);
   }
   .issue-managment-add-task .checkcontainer input:checked ~ .radiobtn {
-    background-color: #525596;
+    background-color: #dfeef7;
   }
   .issue-managment-add-task .radiobtn:after {
     content: "";
@@ -4480,12 +4489,12 @@ table.lbl-list-table tr td {
     display: block;
   }
   .issue-managment-add-task .checkcontainer .radiobtn:after {
-      top: 5px;
-      left: 5px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: white;
+    top: 2px;
+    left: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #03396c;
   }
   .issue-managment-add-task .task-tab1 .cs-input-group {
       padding: 15px;
@@ -4537,22 +4546,28 @@ table.lbl-list-table tr td {
   }
 .issue-managment-add-task .section-title {
     font-size: 17px;
-    margin-left: 4px;
-    margin-top: 40px;
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
     position: relative;
-    color: #525596;
+    color: #ffffff;
     display: block;
     width: 100%;
     height: 10px;
 }
 .issue-managment-add-task .section-title strong {
-    background: white;
+    background: transparent;
+    border-bottom: 2px solid rgb(3 57 108);
+    border-radius: 0;
+    color: white;
     position: absolute;
-    top: -16px;
+    top: 0;
+    width: 100%;
     display: block;
     z-index: 1;
-    padding: 5px 10px 5px 0;
-    font-weight: 600;
+    padding: 2px 10px 2px 3px;
+    font-size: 17px;
+    font-weight: 400;
 }
 .issue-managment-add-task .section-title span {
     display: block;
@@ -4697,7 +4712,7 @@ table.lbl-list-table tr td {
     border-radius: 50px;
   }
   .task-check-list-box .checkmarkcontainer:hover input ~ .checkmark {
-    background-color: rgb(0 0 0 / 15%);
+    background-color: rgb(255 255 255);
   }
   .task-check-list-box .checkmarkcontainer input:checked ~ .checkmark {
     background-color: #fff;
@@ -4792,21 +4807,13 @@ table.lbl-list-table tr td {
      padding: 0;
  }
  .card-UserStory-edit-task .btn.dropdown-toggle-task {
-    height: 24px;
-    width: 24px;
+    height: 34px;
+    width: 34px;
     margin-left: 5px;
-    padding: 0;
+    padding: 6px;
     vertical-align: middle;
     line-height: 21px;
- }
- .card-Userstory-detail .card-UserStory-header-text-code {
-    display: inline-block;
-    font-size: 14px;
- }
- .card-Userstory-detail .card-UserStory-header-text {
-     display: inline-block;
-     padding: 0;
-     font-size: 14px;
+    border-radius: 10px;
  }
  .card-Userstory-detail .card-Userstory-body {
   height: 100vh;
@@ -4870,24 +4877,32 @@ table.lbl-list-table tr td {
     color: #525596;
     background-color: #f7f7f7;
     font-size: 14px;
+    padding-right: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 3px;
+    top: 7px;
     left: auto;
-    right: 25px;
+    right: 28px;
     position: absolute;
     height: 21px;
     width: 21px;
     font-size: 13px;
+    padding: 1px;
 }
 .card-UserStory-header-delete {
     left: auto;
-    top: 3px;
-    right: 0;
+    top: 7px;
+    right: 5px;
     position: absolute;
     height: 21px;
     width: 21px;
     font-size: 13px;
+    padding: 1px;
 }
 .card-Userstory-detail .cs-forum-group .cs-label-name {
     color: #E9E9F1;
@@ -4923,9 +4938,6 @@ table.lbl-list-table tr td {
     color: #fff;
     background-color: #272b7c;
     box-shadow: inset 1px 1px 0px 0px rgb(0 0 0 / 20%);
-}
-.card-Userstory-rightbody .cs-flex-col {
-
 }
 .card-Userstory-rightbody .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
@@ -5135,4 +5147,277 @@ table.lbl-list-table tr td {
     vertical-align: middle;
     height: 100%;
     line-height: 1.5;
+}
+.issue-managment-add-task .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #ffffff;
+}
+.issue-managment-add-task .checkmarkcontainer .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.issue-managment-add-task .checkmarkcontainer {
+    padding-left: 24px;
+    color: #fff;
+}
+.issue-managment-add-task.cs-modal-box .modal-footer .btn {
+    background: #3C6E93;
+    box-shadow: 1px 1px 10px rgb(0 0 0 / 40%);
+    border: none;
+    border-radius: 7px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 7px 25px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
+}
+.issue-managment-add-task .cs-input-group .btn:hover, .issue-managment-add-task.cs-modal-box .btn:hover {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
+}
+/* task switch on off stat */
+.bcs-swith.switch {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 25px;
+    float: left;
+    right: 0;
+}
+.bcs-swith.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.bcs-swith.switch input:focus { 
+    outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.bcs-swith .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(3, 57, 108, 0.5);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.bcs-swith .slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 40%);
+    border-radius: 6px;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.bcs-swith input:checked + .slider {
+    background-color: #DFEEF7;
+}
+
+.bcs-swithissue-managment-add-task input:focus + .slider {
+    box-shadow: none;
+}
+
+.bcs-swith input:checked + .slider:before {
+    -webkit-transform: translateX(66px);
+    -ms-transform: translateX(66px);
+    transform: translateX(66px);
+    background-color: #03396C;
+}
+.bcs-swith .slider.round {
+    box-shadow: 0px 0px 3px rgb(0 0 0 / 50%);
+    border-radius: 8px;
+}
+
+.bcs-swith .slider .deactive {
+    color: #fff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 27px;
+}
+.bcs-swith .slider .active {
+    color: #03396C;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 27px;
+    display: none;
+}
+.bcs-swith input:checked + .slider .deactive {
+ display: none;
+}
+.bcs-swith input:checked + .slider .active {
+ display: inline-block;
+ margin-left: 18px;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table th, .card-Userstory-detail .bootstrap-datetimepicker-widget table th {
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+    color: #fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table, .card-Userstory-detail .bootstrap-datetimepicker-widget table {
+    width: 100%;
+    margin: 0;
+    background: rgb(33 81 124);
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    color:#fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table td.active, .issue-managment-add-task .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #03396c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+    border-radius: 50px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    height: 30px;
+    line-height: 1;
+    width: 30px;
+}
+.bootstrap-datetimepicker-widget table td.day:hover, .bootstrap-datetimepicker-widget table td.hour:hover, .bootstrap-datetimepicker-widget table td.minute:hover, .bootstrap-datetimepicker-widget table td.second:hover {
+    background: #03396c;
+    cursor: pointer;
+    border-radius: 50px;
+}
+.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+    background: #03396c;
+}
+.cs-date-time {
+    background-color: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    padding: 1px 2px 1px 12px;
+}
+.cs-date-time input {
+    background: transparent !important;
+    padding: 0 6px !important;
+}
+.cs-date-time .input-group-icon{
+    color: #fff;
+}
+.task-modal-header {
+ padding: 0px;
+ position: relative;
+}
+.task-modal-title {
+    position: relative;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 26px;
+    color: #03396C;
+    width: 100%;
+    text-align: center;
+}
+.task-modal-title span {
+    height: 35px;
+    display: inline-block;
+    background: #dfeef7;
+    position: relative;
+    vertical-align: middle;
+    padding: 4px 20px;
+}
+.task-modal-title span:after {
+    content: "";
+    position: absolute;
+    right: -30px;
+    top: 0;
+    width: 30px;
+    height: 35px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    background-image: url(../ch-icons/title-decor-right.svg);
+}
+.task-modal-title span:before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 30px;
+    height: 35px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    background-image: url(../ch-icons/title-decor-left.svg);
+}
+.task-modal-header .close, .task-modal-header button.close {
+    opacity: 1;
+    padding: 0;
+    color: #272B7C;
+    background: rgb(75 114 149 / 88%);
+    text-shadow: none;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 54px;
+    right: 0;
+    margin: 0 -32px 0 0px;
+    border-radius: 0 15px 15px 0;
+}
+.task-modal-header .close i:after, .task-modal-header button.close:after {
+    width: 13px;
+    height: 19px;
+}
+.card-Userstory-detail .Story-card-Header-task {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    box-shadow: none;
+    flex: 0 0 auto;
+    transition: box-shadow 200ms ease 0s;
+    padding: 0;
+}
+.card-Userstory-detail .card-UserStory-header {
+    width: 100%;
+    height: 35px;
+    overflow: hidden;   
+}
+.card-Userstory-detail .card-UserStory-header .card-UserStory-header-text {
+    font-size: 16px;
+    width: 100%;
+    line-height: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.task-modal-title span b {
+    font-weight: 400;
 }

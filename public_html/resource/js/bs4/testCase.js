@@ -456,6 +456,7 @@ function addNewTask4BugMulti(tskNm) {
     var backlogList = $('#bug_filter_backlog_id_add').val()
     /*    : ['-1']; */
     var assigneeList = $('#bug_filter_assignee_id_add').val()
+    var assigneeList = $('#bug_filter_detail_assignee_id_add').val()
 
     var sprintList = "";
     $('.bug-task-filter-checkbox-sprint').each(function () {
@@ -669,6 +670,7 @@ function setBugFilterAssignees() {
             var select = $('#bug_filter_assignee_id');
             var select2 = $('#bug_filter_created_by');
             var select3 = $('#bug_filter_assignee_id_add');
+            var select3 = $('#bug_filter_detail_assignee_id_add');
             var select4 = $('#bug_filter_assignee_id_multi');
             var select5 = $('#bug_filter_closed_by');
             select.html('');
@@ -2315,6 +2317,7 @@ function loadAssigneesByProject(projectId) {
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
+            $('#bug_filter_detail_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_assignee_id_multi').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
             $('#createdtask_oblerverlist').selectpicker('refresh');
@@ -2329,6 +2332,7 @@ function loadAssigneesByProject(projectId) {
 function loadAssigneesByProjectDetails(res) {
     $('#bug_filter_assignee_id').html('');
     $('#bug_filter_assignee_id_add').html('');
+    $('#bug_filter_detail_assignee_id_add').html('');
     $('#bug_filter_assignee_id_multi').html('');
     $('#bug_filter_created_by').html('');
     $('#testcase_createdbyfilter').html('');
@@ -2344,6 +2348,7 @@ function loadAssigneesByProjectDetails(res) {
         var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
         $('#bug_filter_assignee_id').append(opt);
         $('#bug_filter_assignee_id_add').append(opt4);
+        $('#bug_filter_detail_assignee_id_add').append(opt4);
         $('#bug_filter_assignee_id_multi').append(opt5);
         $('#bug_filter_created_by').append(opt2);
         $('#testcase_createdbyfilter').append(opt3);
@@ -2499,6 +2504,7 @@ $(document).on('click', function (e) {
 function loadBugTaskDeadlineScripts() {
     $("#run_task_responsible").selectpicker('refresh');
     $("#run_task_categories").selectpicker('refresh');
+    $("#run_task_detail_detail_categories").selectpicker('refresh');
     $("#task-info-modal-status").selectpicker('refresh');
     $("#task-info-modal-nature").selectpicker('refresh');
     $("#task-info-modal-tasktype").selectpicker('refresh');
@@ -2597,6 +2603,40 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
     // TASK DETAILS OFF
 
+    // Task Deadline 
+        $("#taskDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        });
+        $("#taskDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("#taskDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+        $("#taskDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        });
+
+        $("#taskDetailDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        });
+        $("#taskDetailDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("#taskDetailDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+        $("#taskDetailDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        });
 
 }
 
@@ -3530,6 +3570,39 @@ $(document).on("change", '.noteCheckListItem', function () {
     } else {
         $(this).closest('li').removeClass('on-checked');
     }
-
 })
+$(document).on("click", '#toplanti-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
+});
+$(document).on("click", '#tapshiriq-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+     $('.loadUserForObserver span').text('').text('Observer');
+});
 
+
+$(document).on("click", '#toplanti-d-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
+});
+
+$(document).on("click", '#tapshiriq-d-btn', function () {
+    $(this).addClass('active');
+
+    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
+
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
+});

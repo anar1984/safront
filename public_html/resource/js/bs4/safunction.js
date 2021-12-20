@@ -1962,6 +1962,12 @@ var SAFN = {
             // fnName = (fnName) ? fnName : fnId;
 
             var but = '';
+            var but2 = $("<li>")
+            .addClass('cs-select-btn-box')
+            .append($('<button>')
+                    .append('<i class="fas fa-plus"></i>')
+                    .attr("onclick", "addRelatedCallfn(this)")
+                    )
             if (fnId.length > 0) {
                 but = $("<li>")
                         .addClass('cs-select-btn-box')
@@ -2006,6 +2012,7 @@ var SAFN = {
                                                             )
                                                     )
                                             .append(but)
+                                            .append(but2)
                                             )
                                     )
                             )
@@ -2033,7 +2040,7 @@ var SAFN = {
                     .addClass('cs-select-btn-box')
                     .append($('<button>')
                             .append('<i class="fas fa-plus"></i>')
-                            .attr("onclick", "addApiModal()")
+                            .attr("onclick", "addApiModal(this,'callApi')")
                             )
 
 
