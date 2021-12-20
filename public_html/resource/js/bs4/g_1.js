@@ -1576,18 +1576,7 @@ $(document).on('click', '.more-us-card-btn', function (event) {
     new UserStory().setUSLists4KanbanViewByStatus(st, end, bsts);
 
 });
-$(document).on('click', '.add-task-us-card-managmenet', function (event) {
-    var bgid = $(this).parents('.task-content').attr("bid")
-    var prId = getProjectIdOfBacklog(bgid);//$("#story_mn_filter_project_id").val();
-    $("#bug_filter_project_id_add").val(prId).change();
-    $("#bug_filter_backlog_id_add").val(bgid).change();
-    var dwlmt = $('#bug_task_type_id_add')
-    add_loadTaskType_bug_list(dwlmt);
 
-
-    $("#issue-managment-add-task").modal("show");
-
-});
 $(document).on('click', '.hide-more-table', function (event) {
 
 

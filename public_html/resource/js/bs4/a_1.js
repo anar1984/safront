@@ -14552,7 +14552,6 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
-        setProjectListByID('bug_filter_project_id_add');
         var prId = localStorage.getItem('current_project_id');
         getUsers()
         prId = prId.split('%IN%');
