@@ -4888,7 +4888,7 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 7px;
+    top: 2px;
     left: auto;
     right: 28px;
     position: absolute;
@@ -4899,7 +4899,7 @@ table.lbl-list-table tr td {
 }
 .card-UserStory-header-delete {
     left: auto;
-    top: 7px;
+    top: 2px;
     right: 5px;
     position: absolute;
     height: 21px;
