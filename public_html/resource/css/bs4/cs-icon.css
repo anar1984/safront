@@ -8,6 +8,10 @@
     background-repeat: no-repeat;
     vertical-align: middle;
   }
+.cs-svg-icon.cs-xs-icon:after, i.cs-svg-icon.cs-xs-icon:after, span.cs-svg-icon.cs-xs-icon:after {
+    width: 14px !important;
+    height: 20px !important;
+  }
   
   .cs-svg-icon.arrow-1:after {
     background-image: url(../ch-icons/arrow-1.svg);
@@ -177,6 +181,9 @@
   .cs-svg-icon.user-eye:after {
     background-image: url(../ch-icons/user-eye.svg);
   }
+  .cs-svg-icon.user-eye-o:after {
+    background-image: url(../ch-icons/user-eye-o.svg);
+  }
   .cs-svg-icon.users-circle:after {
     background-image: url(../ch-icons/users-circle.svg);
   }
@@ -273,6 +280,12 @@
   }
   .cs-svg-icon.subtask:after {
     background-image: url(../ch-icons/subtask.svg);
+  }
+  .cs-svg-icon.subtask-o:after {
+    background-image: url(../ch-icons/subtask-o.svg);
+  }
+  .cs-svg-icon.subtask-o-light:after {
+    background-image: url(../ch-icons/subtask-o-light.svg);
   }
   .cs-svg-icon.subtask-light:after {
     background-image: url(../ch-icons/subtask-light.svg);

@@ -4257,6 +4257,9 @@ margin-left: 11px;
 .Assigne-card-story-select-img {
     margin-right: 4px;
     box-shadow: none !important;
+    margin-top: 3px;
+    width: 33px;
+    height: 33px;
 }
 .Assigne-card-story-select-img.created {
     border: 1px dashed #6bb5f0;
@@ -5502,4 +5505,91 @@ table.lbl-list-table tr td {
 }
 .storycard-author-section .author-card-story:last-child {
  margin-right: 0;
+}
+.author-card-story {
+    color: #fff;
+}
+.author-card-story .author-name {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+.author-card-story .datatime {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 11px;
+}
+.author-card-story .dropdown-toggle {
+    background-color: transparent !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 0;
+}
+.author-card-story .dropdown-toggle:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+.author-card-story .dropdown-menu {
+    padding: 0;
+    margin: 0.125rem 0 0;
+    font-size: 14px;
+    color: #03396C;
+    text-align: left;
+    line-height: 17px;
+    list-style: none;
+    background-color: #DFEEF7;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 0.25rem;
+}
+.author-card-story .dropdown-menu > li a {
+    padding: 3px 7px;
+}
+.author-card-story .dropdown-item.active, .author-card-story .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #03396C;
+}
+.toggle-nav-elements ul {
+
+}
+.toggle-nav-elements ul li {
+    background: transparent;
+    padding: 4px 0px;
+    width: auto;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+.toggle-nav-elements ul li a.nav-item-url {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff;
+    cursor: pointer;
+}
+.toggle-nav-elements ul li a.nav-item-url {
+    background: transparent;
+    padding: 4px 10px;
+    width: auto;
+    height: 32px;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    display: inline-block;
+}
+.toggle-nav-elements ul li a.nav-item-url i:after {
+    width: 16px;
+}
+.toggle-nav-elements ul li a.nav-item-url:hover {
+    color: #03396C ;
+    background-color: #DFEEF7;
+}
+.toggle-nav-elements ul li a.nav-item-url:hover i {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(
+195deg) brightness(91%) contrast(98%);
 }

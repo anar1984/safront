@@ -11,7 +11,15 @@
                     <div class="d-flex">
                         <div class="mr-auto">
                             <div class="author-card-story">
-                                <div class="author-sticky"><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='https://app.sourcedagile.com/api/get/files/userprofile.png' alt='avatar' srcset=''>Unassigned</div>                                 
+                                <div class="author-sticky d-flex">
+                                    <div>
+                                        <img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='https://app.sourcedagile.com/api/get/files/userprofile.png' alt='avatar' srcset=''>
+                                    </div>
+                                    <div>
+                                        <div class="author-name">Unassigned</div>
+                                        <div class="datatime">26.11.2021  13:42:36</div>
+                                    </div>
+                                </div>                                 
                             </div>
                             <div class="author-card-story">
                                 <select class="cs-selectpicker">
@@ -20,16 +28,21 @@
                                   </select>                                  
                             </div>
                         </div>
-                        <div class="p-2">
-                            icons
+                        <div class="toggle-nav-elements">
+                            <ul class="nav">
+                                <li><a class="nav-item-url"><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
+                                <li><a class="nav-item-url"><i class="cs-svg-icon user-eye-o"></i></a></li>
+                                <li><a class="nav-item-url"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
+                            </ul>
                         </div>
                       </div>
                 </div>
+                
             </div>
         </div>
     </div>
 
 </div>
-<script>
+<script>  
     $('.cs-selectpicker').selectpicker('refresh');
 </script>
