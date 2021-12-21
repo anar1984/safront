@@ -5467,9 +5467,6 @@ table.lbl-list-table tr td {
     width: 100% !important;
     background: transparent !important;
 }
-.Assigne-card-story .name {
-
-}
 .Assigne-content-user span {
     color: #03396C;
 }
@@ -5495,9 +5492,6 @@ table.lbl-list-table tr td {
     width: 70% !important;
     max-width: 900px !important;
     margin-top: 40px;
-}
-.storycard-author-section {
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
 }
 .storycard-author-section .author-card-story {
     display: inline-block;
@@ -5575,12 +5569,16 @@ table.lbl-list-table tr td {
 }
 .toggle-nav-elements ul li a.nav-item-url {
     background: transparent;
-    padding: 4px 10px;
+    padding: 4px 4px;
+    margin-left: 4px;
     width: auto;
-    height: 32px;
+    height: 25px;
     vertical-align: middle;
     border-radius: 0.25rem;
     display: inline-block;
+}
+.toggle-nav-elements ul li:last-child a.nav-item-url {
+    padding-right: 4px;
 }
 .toggle-nav-elements ul li a.nav-item-url i:after {
     width: 16px;
@@ -5588,8 +5586,94 @@ table.lbl-list-table tr td {
 .toggle-nav-elements ul li a.nav-item-url:hover {
     color: #03396C ;
     background-color: #DFEEF7;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 .toggle-nav-elements ul li a.nav-item-url:hover i {
     filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(
 195deg) brightness(91%) contrast(98%);
+}
+.toggle-nav-elements ul li:last-child a.nav-item-url:hover {
+    padding-right: 4px;
+}
+.toggle-min-elements {
+    position: relative;
+    vertical-align: middle;
+    width: 40px;
+    display: flex;
+    height: 100%;
+}
+.toggle-min-elements a.cs-url{
+    position: relative;
+    display: block;
+    float: none;
+    height: 100%;
+    width: 50%;
+    padding: 0;
+    top: 4px;
+    right: 0px;
+    margin-left: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.toggle-min-elements a.cs-url i{
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    position: absolute;
+    color: #fff;
+    background: rgb(3 57 108 / 50%);
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    vertical-align: middle;
+    right: 0;
+    top: 0;
+    display: table-cell;
+}
+.toggle-min-elements a.cs-url i:after{
+    width: 9px;
+    height: 10px;
+    vertical-align: middle;
+    display: block;
+    margin-left: 3px;
+    margin-top: 3.1px;
+}
+.toggle-body-title {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+.toggle-body-title .result-box {
+    height: 100%;
+    display: block;
+}
+.toggle-body-title .result-box i{
+    vertical-align: middle;
+    height: 100%;
+    display: inline-block;
+}
+.toggle-body-title .result-box i:after{
+    width: 15.87px;
+    height: 15.3px;
+}
+.toggle-body-title .result-box .result {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 3px 6px 3px 2px;
+}
+.toggle-body-title .result-box .name {
+    vertical-align: middle;
+    display: inline-block;
+}
+.border-bottom-2px {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+.border-bottom-1px {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }

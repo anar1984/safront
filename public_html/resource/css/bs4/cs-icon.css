@@ -79,8 +79,8 @@
   .cs-svg-icon.filter:after {
     background-image: url(../ch-icons/filter.svg);
   }
-  .cs-svg-icon.foolscreen:after {
-    background-image: url(../ch-icons/foolscreen.svg);
+  .cs-svg-icon.fullscreen:after {
+    background-image: url(../ch-icons/fullscreen.svg);
   }
   .cs-svg-icon.help-icon:after {
     background-image: url(../ch-icons/help-icon.svg);
@@ -90,6 +90,9 @@
   }
   .cs-svg-icon.hour-02:after {
     background-image: url(../ch-icons/hour-02.svg);
+  }
+  .cs-svg-icon.hour-03:after {
+    background-image: url(../ch-icons/hour-03.svg);
   }
   .cs-svg-icon.hours:after {
     background-image: url(../ch-icons/hours.svg);
@@ -304,4 +307,7 @@
   }
   .cs-svg-icon.comment:after {
     background-image: url(../ch-icons/comment.svg);
+  }
+  .cs-svg-icon.comment-01:after {
+    background-image: url(../ch-icons/comment-01.svg);
   }
