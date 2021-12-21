@@ -4336,18 +4336,26 @@ table.lbl-list-table tr td {
     background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
 }
 .issue-managment-add-task.cs-modal-box .tab-content>.tab-pane, .card-Userstory-detail.cs-modal-box .tab-content>.tab-pane {
-    padding: 10px 20px 20px 20px;
+    padding: 15px 10px 10px 10px;
 }
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
-    border: 1px solid #BEBFD7;
-    padding: 5px;
+    background: rgb(0 0 0 / 15%);
+    border: none;
+    padding: 5px 15px;
     font-size: 14px;
+    color: #fff;
+}
+.issue-managment-add-task .cs-input-group textarea::placeholder, .card-Userstory-detail .cs-input-group textarea::placeholder {
+    color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
     font-size: 16px;
     line-height: 20px;
-    height: 35px;
+    height: 25px;
+    width: 100%;
     border: none;
     background: rgba(3, 57, 108, 0.5);
     border-radius: 10px;
@@ -4580,24 +4588,26 @@ table.lbl-list-table tr td {
     border-top: 1px solid #bebfd7;
 }
 .issue-managment-add-task .us-file-upload, .card-Userstory-detail .us-file-upload {
-    border: 1px solid #525596;
+    border: 1px solid #1f4f7b;
     display: inline-block !important;
     text-align: left;
     margin: 0;
     margin-left: 4px;
     border-radius: 4px;
-    color: #525596 !important;
+    color: #ffffff !important;
     font-size: 15px;
     width: 100%;
+    height: 30px;
+    vertical-align: middle; 
 }
 .issue-managment-add-task .us-file-upload::before, .card-Userstory-detail .us-file-upload::before {
     content: 'Chose file';
     display: inline-block;
-    background: #525596;
+    background: #1f4f7a;
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 8px;
+    padding: 4px 8px;
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
@@ -4886,7 +4896,7 @@ table.lbl-list-table tr td {
     display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 7px;
+    top: 2px;
     left: auto;
     right: 28px;
     position: absolute;
@@ -4897,7 +4907,7 @@ table.lbl-list-table tr td {
 }
 .card-UserStory-header-delete {
     left: auto;
-    top: 7px;
+    top: 2px;
     right: 5px;
     position: absolute;
     height: 21px;
@@ -4975,6 +4985,7 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .Assigne-card-story-select-content {
     z-index: 10;
+    width: 220px;
 }
 
 /* task update Checklist */
@@ -5097,17 +5108,27 @@ table.lbl-list-table tr td {
 .subtask-table thead th:nth-child(-n+20) {
     position: sticky;
     top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.bugListTable td {
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
     font-weight: 500;
     z-index: 500;
     text-align: center;
     box-shadow: none;
 }
 .subtask-table thead th:nth-child(-n+20) {
-    height: 40px;
+    height: 30px;
     padding: 5px 5px;
 }
 .task-mgmt-modal-parent-task td a {
@@ -5421,4 +5442,48 @@ table.lbl-list-table tr td {
 }
 .task-modal-title span b {
     font-weight: 400;
+}
+.cs-box-background hr {
+    border-color: rgb(255 255 255 / 15%);
+}
+.addEpicTask .cs-history-links {
+    color: #73bdff;
+    margin-right: 10px;
+}
+.Assigne-card-story-select {
+    width: 100%;
+    height: 35px;
+    line-height: 20px;
+    border: none;
+    font-size: 14px;
+    position: relative;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 50px;
+    color: #fff;
+}
+.Assigne-card-story-select input {
+    width: 100% !important;
+    background: transparent !important;
+}
+.Assigne-card-story .name {
+
+}
+.Assigne-content-user span {
+    color: #03396C;
+}
+.Assigne-card-story-search {
+    width: 100%;
+}
+.canvas_canvas_msg {
+    border: 1px dashed rgb(255 255 255 / 30%) !important;
+    border-radius: 5px !important;
+    color: white !important;
+}
+.canvas_canvas_msg .copy-title, .canvas_canvas_msg h5 {
+    line-height: 2.5;
+    margin-bottom: 0;
+    color: #ffffff;
+}
+.comment-main-span {
+    color: #fff;
 }

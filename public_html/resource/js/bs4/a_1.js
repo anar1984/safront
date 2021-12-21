@@ -14558,7 +14558,6 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
-        setProjectListByID('bug_filter_project_id_add');
         var prId = localStorage.getItem('current_project_id');
         getUsers()
         prId = prId.split('%IN%');
@@ -20247,8 +20246,7 @@ function generateCommentListHtml4Task(res, taskId) {
                     .append($('<img></img>')
                             .addClass("figure-img img-fluid rounded-circle")
                             .attr("style", "max-width:28px")
-                            .attr("src", img)
-                            .attr("alt", replaceTags(obj[i].username)));
+                            .attr("src", img));
             //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
             var comment = replaceTags(obj[i].comment);
             var div2 = $('<div></div>')
@@ -20270,8 +20268,8 @@ function generateCommentListHtml4Task(res, taskId) {
                             //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
                             //                                    .append("Delete"))
                             )
-                    .append("<br><br>")
-                    .append($("<span>")
+                    .append("<br>")
+                    .append($("<span class='comment-main-span'>")
                             .css('padding-bottom', "5px")
                             .attr("id", obj[i].id)
                             //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
