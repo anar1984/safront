@@ -1671,8 +1671,13 @@ function loadBacklogProductionDetailsById(bid1) {
 function loadCurrentBacklogProdDetails() {
     var oldaMoadl = global_var.current_modal
     global_var.current_modal = '';
-    var js = window.editorJSnew.getValue();
-    var css = window.editorCSSnew.getValue();
+    var js = '', css = '';
+    try {
+        js = window.editorJSnew.getValue();
+        css = window.editorCSSnew.getValue();
+    } catch (err) {
+
+    }
     setBacklogAsHtml(global_var.current_backlog_id, css, js);
     global_var.current_modal = oldaMoadl;
 
@@ -2612,7 +2617,7 @@ function getRelatedStoryCardByApiId() {
                     div.append($('<a>')
                             .text((i + 1) + ') ' + o.backlogName)
                             .attr('is_api', '1')
-                            .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
+                            .attr('onclick', 'new UserStory().redirectUserStoryCore("' + o.id + '")'))
                             .append("<br>")
 
                 }
@@ -4114,7 +4119,7 @@ function importSendNameApi(filNm) {
 
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
-    
+
 
     var idx = makeId(10);
 
@@ -4136,7 +4141,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         async: true,
         beforeSend: function () {
             pbDiv.append(
-                $('<div>')
+                    $('<div>')
                     .addClass("file-item")
                     .attr('id', 'pro_zad_span' + idx)
                     .append($("<span class='file-name-attach'>").text(file_name))
@@ -7646,7 +7651,7 @@ function getGUIDataByStoryCard(el) {
     return res;
 }
 
-function getDataFromForm(el){
+function getDataFromForm(el) {
     return getGUIDataByStoryCard(el);
 }
 
@@ -9939,17 +9944,17 @@ function addRelatedSourceCodeModal(el) {
     var descId = $('#addRelatedSourceCodeModal-id').val();
     var apidId = $('#addRelatedSourceCodeModal-api').val();
 
-    var attr  = $("#addRelatedSourceCodeModal-id").attr('data-fn');
+    var attr = $("#addRelatedSourceCodeModal-id").attr('data-fn');
 
-          if(attr==='callFn'){
-             var select=  $("tr[pid='"+descId+"']").find("#get-callfn-select-box")
-             select.append($("<option>")
-                     .attr('value',apidId)
-                     .text(apidId));
-            select.val(apidId)
-            select.change();
-            return
-          }
+    if (attr === 'callFn') {
+        var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+        select.append($("<option>")
+                .attr('value', apidId)
+                .text(apidId));
+        select.val(apidId)
+        select.change();
+        return
+    }
 
     if (!descId || !apidId)
         return;
@@ -10185,15 +10190,16 @@ function addRelatedApi(el, descId) {
 
 function addRelatedSourceCode(el, descId) {
     $('#addRelatedSourceCodeModal-id').val(descId);
-    $('#addRelatedSourceCodeModal-id').attr('data-fn','relatedApi');;
+    $('#addRelatedSourceCodeModal-id').attr('data-fn', 'relatedApi');
+    ;
     $('#addRelatedSourceCodeModal').modal('show');
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
 }
 function addRelatedCallfn(el) {
-      var descId  = $(el).closest('tr').attr('pid')
+    var descId = $(el).closest('tr').attr('pid')
     $('#addRelatedSourceCodeModal-id').val(descId);
-    $('#addRelatedSourceCodeModal-id').attr('data-fn','callFn');
+    $('#addRelatedSourceCodeModal-id').attr('data-fn', 'callFn');
     $('#addRelatedSourceCodeModal').modal('show');
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
@@ -16209,13 +16215,13 @@ function loadAddUserStoriesToTabList(tabId) {
     $('#addUserStoryToTabModal-assinged-userstories').html(table);
 }
 
-function addApiModal(el,callApi) {
+function addApiModal(el, callApi) {
     $("#addApiPopupModal-userstoryname").removeAttr("data-trig-rel");
-    if(callApi){
-        $("#addApiPopupModal-userstoryname").attr("data-api",$(el).closest('tr').attr("pid"));
-    }else{
+    if (callApi) {
+        $("#addApiPopupModal-userstoryname").attr("data-api", $(el).closest('tr').attr("pid"));
+    } else {
         $("#addApiPopupModal-userstoryname").removeAttr("data-api");
-  
+
     }
     $('#addApiPopupModal').modal('show');
     $('#addApiPopupModal-userstoryname').focus();
@@ -16265,10 +16271,10 @@ function addUserStoryNewPopup() {
             if (global_var.current_modal === 'loadLivePrototype') {
                 loadCurrentBacklogProdDetails();
             }
-            if (global_var.current_modal === 'loadDev'||global_var.current_modal === 'loadStoryCard') {
+            if (global_var.current_modal === 'loadDev' || global_var.current_modal === 'loadStoryCard') {
                 $("select.projectList_liveprototype_storycard").change();
             }
-         
+
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
             $('.projectList_liveprototype').change();
@@ -16304,16 +16310,16 @@ function addApiNewPopup() {
         async: true,
         success: function (res) {
             var attr = nameInput.attr('data-api');
-            if(attr){
-             var select=  $("tr[pid='"+attr+"']").find("#get-callapi-select-box")
-             select.append($("<option>")
-                     .attr('value',res.kv.id)
-                     .text(res.kv.backlogName));
-            select.val(res.kv.id);
-            select.change();
-            nameInput.removeAttr('data-trig-rel');
-            $('#addApiPopupModal').modal('hide');
-            return
+            if (attr) {
+                var select = $("tr[pid='" + attr + "']").find("#get-callapi-select-box")
+                select.append($("<option>")
+                        .attr('value', res.kv.id)
+                        .text(res.kv.backlogName));
+                select.val(res.kv.id);
+                select.change();
+                nameInput.removeAttr('data-trig-rel');
+                $('#addApiPopupModal').modal('hide');
+                return
             }
 
             SACore.addBacklogByRes(res);
@@ -17906,7 +17912,7 @@ function lableAddAssignProjectManagement(elm) {
 
 }
 ;
-function sprintAddAssignUSerStoryManagement(elm,checkedCore) {
+function sprintAddAssignUSerStoryManagement(elm, checkedCore) {
     var check = $(".task-panel .task-column .assign-label-story-card-item-new");
     var checked = (checkedCore) ? checkedCore : '1';
     var sprintId = $(elm).attr("id");
@@ -17914,7 +17920,7 @@ function sprintAddAssignUSerStoryManagement(elm,checkedCore) {
         if ($(check[indx]).prop('checked')) {
 //            var projectId = getProjectValueUsManageMulti();
             var id = $(check[indx]).attr("pid");
-            
+
             sprintZadininSheyeidlmesiProjectManagement("", id, sprintId, checked);
         }
 
@@ -18030,7 +18036,7 @@ $(document).on('click', '.story-card-sprint-unassign', function (evt) {
     global_var.story_card_sprint_assign_name = $(this).attr('sname');
     global_var.story_card_sprint_assign_id = $(this).val();
     if (global_var.current_modal === "loadStoryCardMgmt") {
-        sprintAddAssignUSerStoryManagement(this,"0")
+        sprintAddAssignUSerStoryManagement(this, "0")
     } else if (global_var.current_modal === "loadTaskManagement") {
         $('.userStoryTab').click();
     } else if (global_var.current_modal === "loadBugChange") {
@@ -18938,7 +18944,7 @@ function addNewDetailedTaskAction_assigneeList() {
 function addNewDetailedTaskActionEvent1(params) {
     $("#addNewDetailedTaskModal_list >.item-input-add-task").each(function () {
 
-        addNewDetailedTaskActionEvent( $(this).find('input').val(),$(this).find('textarea').val());
+        addNewDetailedTaskActionEvent($(this).find('input').val(), $(this).find('textarea').val());
     })
     $('#addNewDetailedTaskModal-multi-new').modal('hide');
     new UserStory().getBacklogTaskStats();
@@ -19475,8 +19481,8 @@ function addUserStoryToTask_loadAssignee() {
 }
 function addUserStoryToTask_loadAssignee_event(id) {
     var select = $('#addNewDetailedTaskModal_assignee-new');
-    select.html(''); 
-   
+    select.html('');
+
     var json = initJSON();
     if (global_var.current_project_id) {
         json.kv['fkProjectId'] = global_var.current_project_id
@@ -19495,11 +19501,11 @@ function addUserStoryToTask_loadAssignee_event(id) {
         async: false,
         success: function (res) {
             select.append($('<option>').val('').text(''));
-             var keys = res.tbl[0].r;
+            var keys = res.tbl[0].r;
             for (var i = 0; i < keys.length; i++) {
                 var userName = keys[i].userName;
                 select.append($('<option>').val(keys[i].fkUserId).text(userName));
-                
+
             }
 
             sortSelectBox('addNewDetailedTaskModal_assignee-new');
@@ -19508,7 +19514,7 @@ function addUserStoryToTask_loadAssignee_event(id) {
             Toaster.showError(('somethingww'));
         }
     });
-   
+
 }
 
 function addUserStoryToTask_loadTaskType_event() {

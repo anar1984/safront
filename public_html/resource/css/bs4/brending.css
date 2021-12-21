@@ -306,7 +306,8 @@
     border-radius: 5px;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi {
-    background-color: #b98181;
+    border-left: 4px solid #b98181;
+    border-radius: 10px;
 }
 .cs-sum-inbox.cs-sum-inbox-callfn .cs-funcname {
     color: rgb(0 0 0 / 60%);
