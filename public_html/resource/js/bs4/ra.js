@@ -347,6 +347,7 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
+        getRelatedStoryCardByApiId();
 
     }
 }
@@ -554,6 +555,7 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
 
 $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function (ev) {
     loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, false);
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id);
     loadCurrentBacklogProdDetails();
     $('.live-prototype-show-story-card-refresh').click();
 })
@@ -937,9 +939,9 @@ function setBacklogAsHtml(backlogId, css, js) {
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
     var oldmodal = global_var.current_modal
-    global_var.current_modal =''
+    global_var.current_modal = ''
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-    global_var.current_modal =oldmodal
+    global_var.current_modal = oldmodal
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
 
@@ -964,6 +966,7 @@ function setBacklogAsHtml(backlogId, css, js) {
 
 
 
+
 function getBacklogAsHtml(bid1, isAsync) {
     var out = '';
     var async = (isAsync) ? isAsync : false;
@@ -975,7 +978,7 @@ function getBacklogAsHtml(bid1, isAsync) {
     $.ajax({
         url: urlGl + "api/get/dwd/html/" + global_var.current_domain + "/" + bid,
         type: "GET",
-        contentType: "application/json",
+        contentType: "text/html",
         crossDomain: true,
         async: async,
         success: function (res) {
@@ -983,7 +986,7 @@ function getBacklogAsHtml(bid1, isAsync) {
             if (out.length === 0) {
                 var js = window.editorJSnew.getValue();
                 var css = window.editorCSSnew.getValue();
-                setBacklogAsHtml(bid, css, js)
+                setBacklogAsHtml(bid, css, js);
 
             }
         }
@@ -1789,3 +1792,113 @@ $(document).on('click', '.ShowApiRelations', function (ev) {
 });
 
 
+$(document).on('click', '.callapi-item-toggle-details', function () {
+    if ($(this).find('i').hasClass('fa-arrow-up')) {
+        $(this).find('i').removeClass('fa-arrow-up')
+                .addClass('fa-arrow-down')
+        var div = GetProcessDescriptionByApiId($(this).attr('bid'));
+        $(this).closest('div.cs-sum-inbox-callapi')
+                .find('.proc-desc-api-subitem-list-body')
+                .remove()
+        $(this).closest('div.cs-sum-inbox-callapi')
+                .append(div);
+    } else if ($(this).find('i').hasClass('fa-arrow-down')) {
+        $(this).find('i').removeClass('fa-arrow-down')
+                .addClass('fa-arrow-up')
+        $(this).closest('div.cs-sum-inbox-callapi')
+                .find('.proc-desc-api-subitem-list-body')
+                .remove()
+    }
+
+
+
+})
+
+function GetProcessDescriptionByApiId(apiId) {
+    var bid = apiId;
+
+    if (!bid)
+        return;
+
+    var div = $('<div>')
+    div.addClass("proc-desc-api-subitem-list-body");
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: false,
+        success: function (resCore) {
+            var res = "";
+            try {
+                res = JSON.parse(resCore);
+
+                try {
+                    var div2 = $('<div>')
+                            .addClass("col-12")
+                            .addClass('proc-desc-api-input-list-container')
+                    var div3 = $('<div>')
+                            .addClass("col-12")
+                            .addClass('proc-desc-api-input-list-container')
+                    var div5 = $('<div>')
+                            .addClass("col-12")
+                            .addClass('proc-desc-api-output-backlog-list-container')
+                    var idx2 = getIndexOfTable(res, "Response");
+                    var obj2 = res.tbl[idx2].r;
+                    for (var n = 0; n < obj2.length; n++) {
+                        var o = obj2[n];
+                        if (o.inputType === 'IN') {
+                            div2.prepend($('<span>')
+                                    .addClass('proc-desc-api-input-list-container-item')
+                                    .text(o.inputName))
+                        } else if (o.inputType === 'OUT') {
+                            if (o.sendToBacklogId){
+                                var fn = '@.callapi('+o.sendToBacklogId+')';
+                                div5.append(SAFN.InitConvention(fn));
+                            }
+                            div3.prepend($('<span>')
+                                    .addClass('proc-desc-api-input-list-container-output-item')
+                                    .text(o.inputName))
+                        }
+                    }
+                } catch (errr) {
+                }
+                div.append(div2)
+
+
+                try {
+                    var idx = getIndexOfTable(res, "backlogDescList");
+                    var obj = res.tbl[idx].r;
+                    for (var n = 0; n < obj.length; n++) {
+                        var o = obj[n];
+                        if (o.commentType === 'comment') {
+                            continue;
+                        } else if (SAFN.IsCommand(o.description)) {
+                            var div4 = $('<div>')
+                                    .addClass("proc-desc-api-subitem-list-line")
+                            div4.append(SAFN.InitConvention(o.description));
+                            div.append(div4)
+                        } else {
+                            var div4 = $('<div>')
+                                    .addClass("proc-desc-api-subitem-list-line")
+                                    .addClass('');
+                            div4.text(o.description);
+                            div.append(div4)
+                        }
+
+                    }
+                } catch (errr) {
+                }
+
+                div.append(div3);
+                div.append(div5);
+            } catch (err) {
+            }
+        },
+        error: function () {
+            hideProgress4();
+        }
+    });
+    return div;
+}

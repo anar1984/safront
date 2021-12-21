@@ -4698,3 +4698,43 @@ td.selected{
     visibility: visible;
 }
 
+.proc-desc-api-subitem-list{
+    background-color: yellow;
+    margin: 10px 10px 10px 30px;
+}
+
+.proc-desc-api-subitem-list-body{
+    background-color: transparent !important;
+        margin: 10px 10px 10px 30px;
+
+}
+
+.proc-desc-api-subitem-list-line{
+    /*background-color: yellow;*/
+    margin: 10px 10px 10px 30px;
+}
+
+.proc-desc-api-subitem-list-line .function-statement-container{
+    margin:3px 5px!important;
+}
+
+.proc-desc-api-input-list-container{
+    margin-top:5px;
+    background-color: transparent!important;
+    border-radius: 5px;
+}
+
+
+.proc-desc-api-input-list-container-item{
+    padding:2px 5px;
+    margin-left:5px;
+    background-color: yellow !important;
+    border-radius: 5px;
+}
+
+.proc-desc-api-input-list-container-output-item{
+    padding:2px 5px;
+    margin-left:5px;
+    background-color: greenyellow !important;
+    border-radius: 5px;
+}

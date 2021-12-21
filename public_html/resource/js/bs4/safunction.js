@@ -1283,7 +1283,7 @@ var SAFN = {
                         break;
                 }
             }
-            
+
         } catch (err) {
             console.log('getBacklogDescLineDetails error', err)
         }
@@ -1427,7 +1427,7 @@ var SAFN = {
                         break;
 
                 }
-                
+
             } catch (err) {
                 console.log('getBacklogDescLineDetails error', err)
             }
@@ -1963,11 +1963,11 @@ var SAFN = {
 
             var but = '';
             var but2 = $("<li>")
-            .addClass('cs-select-btn-box')
-            .append($('<button>')
-                    .append('<i class="fas fa-plus"></i>')
-                    .attr("onclick", "addRelatedCallfn(this)")
-                    )
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                            .append('<i class="fas fa-plus"></i>')
+                            .attr("onclick", "addRelatedCallfn(this)")
+                            )
             if (fnId.length > 0) {
                 but = $("<li>")
                         .addClass('cs-select-btn-box')
@@ -2042,6 +2042,15 @@ var SAFN = {
                             .append('<i class="fas fa-plus"></i>')
                             .attr("onclick", "addApiModal(this,'callApi')")
                             )
+            var but3 = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                            .attr('bid', backlogId)
+                            .addClass('callapi-item-toggle-details')
+                            .append('<i class="fas fa-arrow-up"></i>')
+
+                            )
+
 
 
             var apiListFull = loadSelecPickerOnChnageApiList(backlogId);
@@ -2071,9 +2080,7 @@ var SAFN = {
                                             .addClass("cs-funcname d-table-cell")
                                             .text("Call API")
                                             )
-
                                     )
-
                             .append($("<div>").addClass('col-cs-2')
                                     .append($("<ul>").css('display', 'inline-block')
                                             .css("padding", '0 0 0 0')
@@ -2091,13 +2098,16 @@ var SAFN = {
                                             .append(apiinfo)
                                             .append(but)
                                             .append(but2)
+                                            .append(but3)
                                             )
                                     )
                             )
+//                    .append(GetProcessDescriptionByApiId(backlogId))
 
             return descBody;
 
         },
+
         IfStatement: function (line) {
             var arg = SAFN.GetCommandArgument(line);
             var argList = arg.split(",");
@@ -3947,7 +3957,7 @@ var SAFN = {
 
         },
     },
-    
+
     FnStatements: {
         'If': '@.if(,,){}',
         'IfHasValue': '@.ifhasvalue(,){}',
@@ -4317,29 +4327,29 @@ $(document).ready(function () {
 
     $(document).on('keydown', '.add-description.dev-desc', function (e) {
 
-        var done =  $(this).attr("auto-done");
-       if(done!==true){
-        $(this).autocomplete({
-            position: {my: "left bottom", at: "left top", collision: "flip"},
-            minLength: 2,
-            // source: shortcodes,
-            source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
-            autoFocus: true,
-            select: function (event, ui) {
-                $(this).change();
-            
-                $(".fx-shortcodes-btn .add-description").val('');
-                return false;
-            },
-         
-        }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+        var done = $(this).attr("auto-done");
+        if (done !== true) {
+            $(this).autocomplete({
+                position: {my: "left bottom", at: "left top", collision: "flip"},
+                minLength: 2,
+                // source: shortcodes,
+                source: shortcodes.sort((a, b) => (a > b) ? 1 : -1),
+                autoFocus: true,
+                select: function (event, ui) {
+                    $(this).change();
 
-       }
- 
-    $(this).attr("auto-done",true);
+                    $(".fx-shortcodes-btn .add-description").val('');
+                    return false;
+                },
+
+            }).autocomplete("option", "appendTo", ".descriptiontable").autocomplete("widget").addClass("cs-function-list");
+
+        }
+
+        $(this).attr("auto-done", true);
 
 
-});
+    });
 
 
 
