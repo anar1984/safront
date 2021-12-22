@@ -1930,8 +1930,6 @@ var SAFN = {
                                                 .html('<i class="fas fa-trash-alt"></i> Delete')
                                                 )
                                         )
-
-
                                 )
 
                         );
@@ -1956,6 +1954,97 @@ var SAFN = {
                     .attr("cname", commandName)
 
         },
+        GetProcessDescriptionByApiId: function (apiId) {
+            var bid = apiId;
+
+            if (!bid)
+                return;
+
+            var div = $('<div>').css('display','none');
+            div.addClass("proc-desc-api-subitem-list-body");
+
+            $.ajax({
+                url: urlGl + "api/get/dwd/us/" + global_var.current_domain + "/" + bid,
+                type: "GET",
+                contentType: "text/html",
+                crossDomain: true,
+                async: false,
+                success: function (resCore) {
+                    var res = "";
+                    try {
+                        res = JSON.parse(resCore);
+
+                        try {
+                            var div2 = $('<div>')
+                                    .css('display', 'none')
+                                    .addClass("col-12")
+                                    .addClass('proc-desc-api-input-list-container')
+                            var div3 = $('<div>')
+                                    .css('display', 'none')
+                                    .addClass("col-12")
+                                    .addClass('proc-desc-api-input-list-container')
+                            var div5 = $('<div>')
+                                    .addClass("col-12")
+                                    .addClass('proc-desc-api-output-backlog-list-container')
+                            var idx2 = getIndexOfTable(res, "Response");
+                            var obj2 = res.tbl[idx2].r;
+                            for (var n = 0; n < obj2.length; n++) {
+                                var o = obj2[n];
+                                if (o.inputType === 'IN') {
+                                    div2.prepend($('<span>')
+                                            .addClass('proc-desc-api-input-list-container-item')
+                                            .text(o.inputName))
+                                } else if (o.inputType === 'OUT') {
+                                    if (o.sendToBacklogId) {
+                                        var fn = '@.callapi(' + o.sendToBacklogId + ')';
+                                        div5.append(SAFN.InitConvention(fn));
+                                    }
+                                    div3.prepend($('<span>')
+                                            .addClass('proc-desc-api-input-list-container-output-item')
+                                            .text(o.inputName))
+                                }
+                            }
+                        } catch (errr) {
+                        }
+                        div.append(div2)
+
+
+                        try {
+                            var idx = getIndexOfTable(res, "backlogDescList");
+                            var obj = res.tbl[idx].r;
+                            for (var n = 0; n < obj.length; n++) {
+                                var o = obj[n];
+                                if (o.commentType === 'comment') {
+                                    continue;
+                                } else if (SAFN.IsCommand(o.description)) {
+                                    var div4 = $('<div>')
+                                            .addClass("proc-desc-api-subitem-list-line")
+                                    div4.append(SAFN.InitConvention(o.description));
+                                    div.append(div4)
+                                } else {
+                                    var div4 = $('<div>')
+                                            .addClass("proc-desc-api-subitem-list-line")
+                                            .addClass('');
+                                    div4.text(o.description);
+                                    div.append(div4)
+                                }
+
+                            }
+                        } catch (errr) {
+                        }
+
+                        div.append(div3);
+                        div.append(div5);
+                    } catch (err) {
+                    }
+                },
+                error: function () {
+                    hideProgress4();
+                }
+            });
+            return div;
+        },
+
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
             // var fnName = SACore.GetBacklogDetails(fnId, 'backlogName');
@@ -2047,9 +2136,23 @@ var SAFN = {
                     .append($('<button>')
                             .attr('bid', backlogId)
                             .addClass('callapi-item-toggle-details')
+                            .attr('onclick', 'SAFN.Convert.ToggleApiCallDetailsView(this)')
                             .append('<i class="fas fa-arrow-up"></i>')
-
                             )
+
+            var but4 = $("<li>")
+                    .addClass('cs-select-btn-box')
+                    .append($('<button>')
+                            .css('display', 'none')
+                            .attr('bid', backlogId)
+                            .addClass('callapi-item-toggle-details-inputs')
+                            .addClass('callapi-item-toggle-details-inputs-items')
+                            .append('<i class="fas fa-table"></i>')
+                            )
+                    .click(function () {
+                        $(this).closest('div.cs-sum-inbox-callapi')
+                                .find('.proc-desc-api-input-list-container').toggle(500);
+                    })
 
 
 
@@ -2099,6 +2202,8 @@ var SAFN = {
                                             .append(but)
                                             .append(but2)
                                             .append(but3)
+                                            .append(but4)
+
                                             )
                                     )
                             )
@@ -2106,6 +2211,38 @@ var SAFN = {
 
             return descBody;
 
+        },
+        ToggleApiCallDetailsView: function (el) {
+            if ($(el).find('i').hasClass('fa-arrow-up')) {
+                $(el).find('i').removeClass('fa-arrow-up')
+                        .addClass('fa-arrow-down')
+                var div = SAFN.Convert.GetProcessDescriptionByApiId($(el).attr('bid'));
+                $(el).closest('div.cs-sum-inbox-callapi')
+                        .find('.proc-desc-api-subitem-list-body')
+                        .remove()
+                $(el).closest('div.cs-sum-inbox-callapi')                        
+                        .append(div);
+                 $(el).closest('div.cs-sum-inbox-callapi')                        
+                        .find('.proc-desc-api-subitem-list-body')
+                        .first().show('500');
+                
+                $(el).closest('div.cs-sum-inbox-callapi')
+                        .find('.callapi-item-toggle-details-inputs')
+                        .first()
+                        .show()
+
+
+            } else if ($(el).find('i').hasClass('fa-arrow-down')) {
+                $(el).find('i').removeClass('fa-arrow-down')
+                        .addClass('fa-arrow-up')
+                $(el).closest('div.cs-sum-inbox-callapi')
+                        .find('.proc-desc-api-subitem-list-body')
+                        .remove()
+                $(el).closest('div.cs-sum-inbox-callapi')
+                        .find('.callapi-item-toggle-details-inputs')
+                        .first()
+                        .hide();
+            }
         },
 
         IfStatement: function (line) {
