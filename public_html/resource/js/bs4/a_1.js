@@ -2866,7 +2866,7 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) 
 
 function shiftTaskInfoOnTaskInfoModal(el) {
     var taskId = $(el).attr('pid');
-    callTaskCard4BugTask(el, global_var.current_project_id, taskId);
+    taskManagement.updateTask.callTaskCard4BugTask(el, global_var.current_project_id, taskId);
 
 
 }
@@ -15718,7 +15718,7 @@ function getBugList4UserStory(bgId, tbody) {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.fkBackogId = bgId;
+    json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
     var prd = getProjectValueUsManageMulti();
@@ -15756,7 +15756,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append($("<td>")
                                 .append($("<a>")
                                         .attr('href', '#')
-                                        .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
@@ -17589,7 +17589,7 @@ function updateTask4ShortChange(el, ustype) {
 }
 
 function updateTask4ShortChangeDetails(val, ustype) {
-    updateTask4ShortChangePure(val, ustype, global_var.current_us_task_id);
+    updateTask4ShortChangePure(val, ustype, global_var.current_issue_id);
 }
 
 function updateTask4ShortChangeDetailsWithSync(val, ustype) {

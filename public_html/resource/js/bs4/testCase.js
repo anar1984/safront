@@ -2108,13 +2108,7 @@ $(document).on("click", '#expand-group', function (e) {
     }
 })
 
-function reset_task_data() {
-    $('.task-events-created').attr("data-taskid", '');
-    $('.task-events-created input').val('');
-    $('.task-events-created input').change('');
-    $('input#taskNameInputNew2').val('');
-    $('#addComment4Task_comment_new').val('');
-}
+
 
 /* $(document).on("click", '#addIssueButtonId', function (e) {
     // $('#issue-managment-add-task .after-add-task').show();
@@ -2601,23 +2595,30 @@ function loadBugTaskDeadlineScripts() {
         $("#taskDeadlineEndTime").datetimepicker({
              format: 'HH:mm',
             // singleDatePicker: true
-        });
+        })
 
         $("#taskDetailDeadlineStartDade").datetimepicker({
             format: 'YYYY-MM-DD',
             // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startDate');
         });
         $("#taskDetailDeadlineStartTime").datetimepicker({
             format: 'HH:mm',
             // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startTime');
         });
         $("#taskDetailDeadlineEndDade").datetimepicker({
-            format: 'YYYY-MM-DD'
-            // singleDatePicker: true
+            format: 'YYYY-MM-DD',
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endDate');
         });
         $("#taskDetailDeadlineEndTime").datetimepicker({
              format: 'HH:mm',
             // singleDatePicker: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endTime');
         });
 
 }
@@ -3414,38 +3415,3 @@ $(document).on("change", '.noteCheckListItem', function () {
         $(this).closest('li').removeClass('on-checked');
     }
 })
-$(document).on("click", '#toplanti-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-});
-$(document).on("click", '#tapshiriq-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
-    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-     $('.loadUserForObserver span').text('').text('Observer');
-});
-
-
-$(document).on("click", '#toplanti-d-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-
-    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
-    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
-});
-
-$(document).on("click", '#tapshiriq-d-btn', function () {
-    $(this).addClass('active');
-
-    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
-
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
-
-    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-});

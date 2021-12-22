@@ -65,6 +65,7 @@ const taskManagement = {
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
                         <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
+                        <span class='p-1'>quick insert task onfocus input SHIFT+ENTER</span>
                     </div>
                     <div class="p-0">
                         <div class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -212,6 +213,12 @@ const taskManagement = {
                           <input type="checkbox" id="sendnotification">
                           <span class="checkmark"></span>
                       </label>
+                      <label class="">
+                      <input type="checkbox" checked='true' id="after_insert_modal">
+                      After insert closed Modal
+                      
+                
+                  </label>
                   </div>
               </div>
           </div>`
@@ -634,13 +641,16 @@ const taskManagement = {
                 crossDomain: true,
                 async: true,
                 success: function (res) {
-                    console.log(res.kv.id);
                     that.insertEventByTaskId(res.kv.id);
                     that.insertObserverTask(res.kv.id);
                     that.insertCheckListComulativ(res.kv.id);
                     getBugList();
                     Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
-                    $("#issue-managment-add-task").modal("hide");
+                     if($("#after_insert_modal").prop("checked")){
+                        $("#issue-managment-add-task").modal("hide");
+                       
+                     }
+                     reset_task_data();
                 },
                 error: function () {
                     Toaster.showError(('Tapşırıq daxil edilmədi'));
@@ -680,6 +690,11 @@ const taskManagement = {
             data.taskPriority = $("#bug_filter_priority_add").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
+              data.startDate = $('#taskDeadlineStartDade').val();
+                data.startTime = $('#taskDeadlineStartTime').val();
+                data.endTime = $('#taskDeadlineEndTime').val();
+                data.endDate = $('#taskDeadlineEndDade').val();
+                data.isMeet = ($("#tapshiriq-btn").hasClass("active"))?"1":"0";
 
 
 
@@ -715,7 +730,7 @@ const taskManagement = {
                     try {
                         var err = res.err.message;
                         if (err) {
-                            Toaster.showError(err);
+                            //Toaster.showError(err);
                         }
 
                     } catch (error) {
@@ -739,7 +754,9 @@ const taskManagement = {
                     const o = tbl[i];
                     userList += $(o).attr("id") + ",";
                 }
-
+                 if(!userList){
+                   return
+                 }
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": userList
@@ -777,6 +794,7 @@ const taskManagement = {
                 data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
                 data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
                 data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
+                
 
                 callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
@@ -803,6 +821,9 @@ const taskManagement = {
             var data = {};
             data.fkTaskId = taskId;
             data.itemName = list;
+               if(!list){
+                   return
+               }
             callService('serviceTmInsertSingleTaskCheckListCumulativeNew', data, true, function () {
                 if (type === 'update') {
                     taskManagement.updateTask.getCheckListComulativ();
@@ -817,7 +838,8 @@ const taskManagement = {
             $('#bug_filter_created_by').html('');
             $('#testcase_createdbyfilter').html('');
             $('#createdtask_oblerverlist').html('');
-            var obj = res.tbl[0].r;
+            try {
+                var obj = res.tbl[0].r;
             for (var i in obj) {
                 var o = obj[i];
                 var opt = $('<option>').val(o.fkUserId).text(o.userName);
@@ -833,15 +855,19 @@ const taskManagement = {
                 $('#bug_filter_created_by').append(opt2);
                 $('#testcase_createdbyfilter').append(opt3);
                 $('#createdtask_oblerverlist').append(opt6);
-                $('#bug_filter_created_by').selectpicker('refresh');
+             
+            }
+            } catch (error) {
+                
+            }
+            
+            $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_detail_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_assignee_id_multi').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
             $('#createdtask_oblerverlist').selectpicker('refresh');
-            }
-
 
         }
 
@@ -1003,7 +1029,7 @@ const taskManagement = {
                                         <span class="input-group-icon">
                                             <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                            </span>
-                                           <input type='text' id="taskDetailDeadlineStartDade" class="form-control" />
+                                           <input type='text' id="taskDetailDeadlineStartDade"  class="form-control" />
                                     </div>
                                 </div>
                                 <div>
@@ -1011,7 +1037,7 @@ const taskManagement = {
                                         <span class="input-group-icon">
                                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                                            </span>
-                                           <input type='text' id="taskDetailDeadlineStartTime" class="form-control" style="width:50px;" />
+                                           <input type='text' id="taskDetailDeadlineStartTime" class="form-control"  style="width:50px;" />
                                     </div>
                                 </div>
                              </div>
@@ -1032,7 +1058,7 @@ const taskManagement = {
                                         <span class="input-group-icon">
                                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDetailDeadlineEndTime" class="form-control" style="width:50px;" />
+                                            <input type='text' id="taskDetailDeadlineEndTime"  class="form-control" style="width:50px;" />
                                     </div>
                                 </div>
                             </div>
@@ -1040,14 +1066,14 @@ const taskManagement = {
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Responsible</div>
-                                <select class="form-control update-selectpicker" data-actions-box="true" onchange='' data-live-search="true"
-                                        id='bug_filter_detail_assignee_id_update' title="Assignee"></select>
+                                <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
+                                        id='bug_filter_detail_assignee_id_update'  title="Assignee"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Categories</div>
-                                <select class="run_task_categories update-selectpicker"  id="run_task_detail_detail_categories" data-live-search="true">
+                                <select class="run_task_categories update-selectpicker"   id="run_task_detail_detail_categories" data-live-search="true">
                                     <option value="cat1">Software</option>
                                     <option value="ca2">Back-end</option>
                                     <option value="cat3">Front-end</option>
@@ -1827,11 +1853,20 @@ const taskManagement = {
            
             taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'update')
             loadTaskInfoToContainer(taskId, projectId);
-                        
+            taskManagement.updateTask.genCommentListOfTask();
             $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
             $("#task-info-modal-status").selectpicker('refresh');
             $("#task-mgmt-create-by>img").attr('src',fileUrl(coreBugKV[taskId].createByImage));
             $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
+             $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
+             $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
+            $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
+             $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+             if(coreBugKV[taskId].isMeet==='1'){
+                $("#toplanti-d-btn").click();
+             }else{
+                $("#tapshiriq-btn").click();
+             }
             $("#taskMgmtModal").modal("show");
                console.log(coreBugKV[taskId]);
             //set backlog infos
@@ -2140,7 +2175,7 @@ const taskManagement = {
 
         },
         genCommentListOfTask: function (taskId) {
-            var taskId = global_var.current_us_task_id;
+            var taskId = global_var.current_issue_id;
             //        console.log('task id'+taskId);
             if (!taskId) {
                 return;
@@ -2314,19 +2349,29 @@ const taskManagement = {
         loadAssigneesByProjectDetails: function (res) {
             var el = $('#bug_filter_detail_assignee_id_update')
             el.html('');
-
-            var obj = res.tbl[0].r;
-            for (var i in obj) {
-                var o = obj[i];
-                var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                
-                el.append(opt4);
+            try {
                
-                el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId)
+    
+                var obj = res.tbl[0].r;
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+                    
+                    el.append(opt4);
+                   
+                  
+                    
+            
+                } 
+                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);  
+                el.selectpicker("destroy");             
+                el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId);
                 el.selectpicker("refresh");
-        
+            } catch (error) {
+                el.hide();
             }
-
+            
+           
 
         }
 
@@ -2418,9 +2463,10 @@ const taskManagement = {
     },
     getUserListWithImageSelectbox: function (projectId,type) {
         var json = initJSON();
-        json.kv.fkProjectId = projectId;
+        json.kv.fkProjectId = projectId?projectId:global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
+        console.log('sdfsdfsdf');
         $.ajax({
             url: urlGl + "api/post/srv/serviceTmLoadAssigneeByProject",
             type: "POST",
@@ -2429,7 +2475,7 @@ const taskManagement = {
             crossDomain: true,
             async: false,
             success: function (res) {
-
+                  
                 if (type === 'update') {
                     taskManagement.updateTask.loadAssigneesByProjectDetails(res);
                 } else if (type === 'create') {
@@ -2520,6 +2566,13 @@ $(document).on("click", '#addIssueButtonId', function (e) {
 
 
 })
+$(document).on("keyup","#taskNameInputNew2",function (event) {
+    if (event.keyCode == 13) {      
+        if(event.shiftKey){
+            taskManagement.insertTask.insertNewTask();
+        } 
+    }
+});
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_multi');
     var dwlmt = $('#bug_task_type_id_multi');
@@ -2636,7 +2689,51 @@ function saveComment(el, commentId) {
     new UserStory().convertTextArea2HtmlAsText($('#' + commentId));
     $(el).hide();
 }
+$(document).on("click", '#toplanti-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
+});
+$(document).on("click", '#tapshiriq-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
+    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+     $('.loadUserForObserver span').text('').text('Observer');
+     
+});
+
+
+$(document).on("click", '#toplanti-d-btn', function () {
+    $(this).addClass('active');
+    $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
+});
+
+$(document).on("click", '#tapshiriq-d-btn', function () {
+    $(this).addClass('active');
+
+    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
+
+    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
+    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
+
+    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
+    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
+
+});
 
 
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function reset_task_data() {
+    $('.task-events-created').attr("data-taskid", '');
+    $('.task-events-created input').val('');
+    $('.task-events-created input').change('');
+    $('input#taskNameInputNew2').val('');
+    $('#addComment4Task_comment_new').val('');
+}

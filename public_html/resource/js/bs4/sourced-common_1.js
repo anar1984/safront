@@ -17059,8 +17059,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
     addCommentInput4Task: function (fileName) {
-        if (!global_var.current_us_task_id) {
+        if (!global_var.current_issue_id) {
             Toaster.showError("Task is not selected.")
+            return
         }
 
         this.addCommentInput4TaskDetails($('#addComment4Task_comment').val(),
@@ -17068,7 +17069,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#addComment4Task_commentestimationhours').val(),
                 fileName + global_var.vertical_seperator + global_var.current_upload_canvas,
                 global_var.current_backlog_id,
-                global_var.current_us_task_id
+                global_var.current_issue_id,
 
 
                 )
