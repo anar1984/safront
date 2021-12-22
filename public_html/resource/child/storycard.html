@@ -30,7 +30,7 @@
                         </div>
                         <div class="toggle-nav-elements">
                             <ul class="nav">
-                                <li><a class="nav-item-url "><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
+                                <li><a class="nav-item-url toggle-btn-1"><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon link"></i><span> 2</span></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon user-eye-o"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
@@ -48,10 +48,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-open"><i class="fal fa-angle-down"></i></a>
+                                <a class="cs-url toggle-btn-1"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="table-box" orderno="7.3" style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;" class="tooltipMan component-container-dashed col-lg-12  table-responsive">
+                        <div class="toggle-box-1 table-box" orderno="7.3" style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;" class="tooltipMan component-container-dashed col-lg-12  table-responsive">
                                 <table class="table cst-table-hover tablePaginatione component-input-class">
                                     <thead>
                                         <tr>
@@ -150,4 +150,7 @@
 </div>
 <script>  
     $('.cs-selectpicker').selectpicker('refresh');
+    $(document).on("click", ".toggle-btn-1", function (e) {
+        $('.toggle-box-1').toggleClass('open');
+    });
 </script>

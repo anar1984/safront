@@ -1,6 +1,6 @@
 /* general */
-.cs-list-group {
-
+.brand-lolor {
+    color: #173359;
 }
 .cs-list-group, ul.cs-list-group {
     list-style: none;
@@ -5677,4 +5677,178 @@ table.lbl-list-table tr td {
 }
 .border-bottom-1px {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.cst-table-hover {
+    width: max-content !important;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+.cst-table-hover thead th {
+    padding: 0px;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 100%;
+    height: 30px;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
+}
+.cst-table-hover thead tr {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: #DFEEF7;
+    padding-left: 5px;
+}
+.cst-table-hover thead th label {
+    margin-bottom: 0px;
+    height: 100%;
+}
+
+.cst-table-hover tbody tr {
+    background-color: #dfeef7;
+}
+.cst-table-hover tbody tr:hover{
+    box-shadow: none;
+    background-color: #accdde !important;
+}
+.cst-table-hover tbody tr td a{
+    color: #173359;
+}
+ .issue_status_defected{
+    color:black;
+     font-size:11px;
+     background-color: #dc3545;
+     border-radius:10px;
+     padding: 3px 10px;
+     white-space: nowrap;
+}
+ .issue_status_rejected{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #CBA26E;
+}
+ .issue_status_canceled{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #D285CF;
+}
+ .issue_status_waiting{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #CA3E12;
+}
+ .issue_status_ongoing{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #4AA9AF;
+}
+ .showElementOnRightSide{
+    display:inline;
+}
+ .issue_status_new{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #D09838
+}
+.issue_status_yonlendirilib {
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: #011726;  
+}
+ .issue_status_closed{
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: 39px;
+    height: 16px;
+    background: #78A812;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
+ .issue_operation_type_projection{
+    color:black;
+     font-size:11px;
+     background-color:yellow;
+     border-radius:10px;
+     padding: 3px 15px;
+}
+ .issue_operation_type_draft{
+    color:white;
+     font-size:11px;
+     background-color:orange;
+     border-radius:10px;
+     padding: 3px 15px;
+}
+ .issue_operation_type_active{
+    color:white;
+     font-size:11px;
+     background-color:green;
+     border-radius:10px;
+     padding: 3px 15px;
+}
+.toggle-box-1 {
+    overflow: hidden;
+    height: 0 !important;
+    opacity: 0 !important;
+    transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+.toggle-box-1.open {
+    height: auto !important; 
+    opacity: 1 !important;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
 }
