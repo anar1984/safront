@@ -17093,14 +17093,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: false,
             success: function (res) {
-                SATask.updateTaskByRes(res);
+                taskManagement.updateTask.genCommentListOfTask();
+            
 //                genTaskKanbanView();
                 $('#addComment4Task_comment').val('');
                 $('#addComment4Task_id').val('');
                 $('#tasklistcomment').val('');
                 $('#file11').val('');
                 $('canvasdiv_comment').html(emptyCanvasDiv());
-                genCommentListOfTask();
+               // SATask.updateTaskByRes(res);
 //                 Toaster.showError("successfull");
 //                new Notification("").clearField('updateBacklog');
 //                closeModal('updateBacklog');
