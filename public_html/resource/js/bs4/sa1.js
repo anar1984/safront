@@ -331,7 +331,7 @@ function updateBacklogName() {
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmUpdateBacklog",
+        url: urlGl + "api/post/srv/serviceTmUpdateBacklogName",
         type: "POST",
         data: data,
         contentType: "application/json",
