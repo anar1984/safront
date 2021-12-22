@@ -422,18 +422,7 @@ $(document).ready(function () {
         $(".commentsubmit-seqment").css("display", "flex")
         $(".commentinput").css("height", "6rem")
     })
-    $(document).on("focusout", ".commentinput", function () {
-        return;
-        setTimeout(function () {
-            $(".commentsubmit-seqment").css("display", "none")
-            $(".commentinput").css("height", "")
-        }, 300)
-
-
-
-    })
-
-
+    
 
 //add description
     $(document).on("click", ".descriptonBody", function () {
@@ -642,14 +631,11 @@ function loadTaskCardDetails(taskId) {
     var id = taskId;
     global_var.current_us_task_id = id;
 
-    $(".card-UserStory-header-text-code").text("");
-    $(".card-UserStory-header-text-code").append(getTaskCode(id));
+    $(".card-UserStory-header-text-code").text(getTaskCode(id));
 
 
-    $(".card-UserStory-header-text").text("");
-    $(".card-UserStory-header-text").append(replaceTags(SATask.GetDetails(id, 'taskName')));
-    $('.comment-body').html("")
-
+    $(".card-UserStory-header-text").text(replaceTags(SATask.GetDetails(id, 'taskName')));
+  
 
     $('#task-info-modal-status').val(replaceTags(SATask.GetDetails(id, 'taskStatus')));
     $('.task-info-modal-status').each(function () {
@@ -753,8 +739,8 @@ function loadTaskCardDetails(taskId) {
 
 
     setGlobalActiveCanvas(global_var.canvas.comment);
-
-    genCommentListOfTask();
+     taskManagement.updateTask.genCommentListOfTask();
+    
 
     loadAssignedLabel(SATask.GetDetails(id, 'fkBacklogId'), SATask.GetDetails(id, 'taskVersion'));
 
