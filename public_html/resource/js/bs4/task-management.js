@@ -4,6 +4,7 @@ const taskManagement = {
         genBlockModal: {
             Init: function () {
                 $('body').find("#issue-managment-add-task").remove();
+                $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
 
                 setProjectListByID('bug_filter_project_id_add');
@@ -25,6 +26,7 @@ const taskManagement = {
                       </div>
                       <div class="modal-body">
                     <div class="row">
+                      <input class='d-none' type='text' id='parent-task-id-input'>
                        <div class="col-lg-12">
                          ${this.genTitleBlock()}
                          ${this.genCheckListBlock()}
@@ -690,11 +692,12 @@ const taskManagement = {
             data.taskPriority = $("#bug_filter_priority_add").val();
             //data.taskNature = $("#bug_filter_project_id_add").val();
             data.sprintList = sprintList;
-              data.startDate = $('#taskDeadlineStartDade').val();
-                data.startTime = $('#taskDeadlineStartTime').val();
-                data.endTime = $('#taskDeadlineEndTime').val();
-                data.endDate = $('#taskDeadlineEndDade').val();
-                data.isMeet = ($("#tapshiriq-btn").hasClass("active"))?"1":"0";
+            data.startDate = $('#taskDeadlineStartDade').val();
+            data.startTime = $('#taskDeadlineStartTime').val();
+            data.endTime = $('#taskDeadlineEndTime').val();
+            data.endDate = $('#taskDeadlineEndDade').val();
+            data.isMeet = ($("#tapshiriq-btn").hasClass("active"))?"1":"0";
+            data.fkParentTaskId = $("#parent-task-id-input").val();
 
 
 
@@ -871,12 +874,12 @@ const taskManagement = {
 
         }
 
-
     },
     updateTask: {
         genBlockModal: {
             Init: function () {
                 $('body').find("#taskMgmtModal").remove();
+                $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
 
                 setProjectListByID('bug_filter_project_id_add');
@@ -1683,29 +1686,15 @@ const taskManagement = {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Select Task</th>
                                     <th>Task ID</th>
-                                    <th>Parent Task</th>
+                                    <th>Parent Task <a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
+                                            <i class="fas fa-plus" aria-hidden="true"></i>
+                                        </a></th>
                                     <th>Task Status</th>
-                                    <!-- <th>Description</th>
-                                    <th>Created By</th>
-                                    <th>Updated By</th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
-                                            <i class="fas fa-plus" aria-hidden="true"></i>
-                                        </a></td>
-                                    <td><div class="task-id-modal-parent-task"></div></td>
-                                    <td class="move-to-child">
-                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                           onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task' > To Child
-                                        </a>
-                                    </td>
-                                    <td><div class="task-status-modal-parent-task"></div></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
 
@@ -1730,7 +1719,10 @@ const taskManagement = {
                                 <tr>
                                     <th>#</th>
                                     <th>Task ID</th>
-                                    <th>Child Task</th>                                                    
+                                    <th>Child Task
+                                    <a href="#" class='comment-content-header-history' id="add-child-task-open-modal" style="color: #03396c;">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </a></th>                                                    
                                     <th>Task Status</th>
                                 </tr>
                             </thead>
@@ -1742,9 +1734,7 @@ const taskManagement = {
                         </table>
 
                         <div class="cs-input-group">
-                            <a href="#" style="color: #fff;">
-                                <i class="fas fa-plus" aria-hidden="true"></i>
-                            </a>
+                           
                          <!-- <div class="dropdown-task show">
                              <a href="#" class="btn comment-content-header-history">
                                  <i class="fas fa-plus" aria-hidden="true"></i>
@@ -1881,6 +1871,8 @@ const taskManagement = {
             this.getTaskObserverList(taskId);
 
             this.getTaskEvent(taskId);
+            getChildTasks();
+            getParentTask();
            
         },
         updateEventByTaskId: function (id) {
@@ -2563,6 +2555,21 @@ $(document).on("click", '#addIssueButtonId', function (e) {
     $('#issue-managment-add-task .task-step-1').hide();
     $('#issue-managment-add-task .task-step-2').show(); */
     taskManagement.insertTask.insertNewTask();
+
+
+})
+$(document).on("click", '#add-child-task-open-modal', function (e) {
+    var taskId  = global_var.current_issue_id
+    taskManagement.insertTask.genBlockModal.Init();
+    loadBugTaskDeadlineScripts()
+    reset_task_data();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    taskManagement.add_loadTaskType_bug_list(dwlmt);
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    $("#parent-task-id-input").val(taskId);
+    $("#issue-managment-add-task").modal("show");
 
 
 })

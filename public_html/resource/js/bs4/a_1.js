@@ -2873,11 +2873,11 @@ function shiftTaskInfoOnTaskInfoModal(el) {
 
 
 function getParentTask() {
-    $('.task-mgmt-modal-parent-task').text("");
-
+    var body  = $('#d-task-tab5 .parent-task tbody');
+    body.html("")
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2889,31 +2889,39 @@ function getParentTask() {
         async: true,
         success: function (res) {
             try {
-                var fkParentTaskId = res.kv.id;
+                var relId = res.kv.id;
+                    if(!relId){
+                         return
+                    }
+                var fkParentTaskId = res.kv.fkTaskId;
                 if (fkParentTaskId) {
+
+                    
                     var fkProjectId4 = res.kv.fkProjectId;
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(parentTaskName, 50) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                       var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     } catch (error) {
+                        var projectCode ="PRIVATE" ;
+                     }
+                   
                     var taskName = add3Dots2String(parentTaskName, 50);
-                    var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
-                    $('.task-mgmt-modal-parent-task').each(function () {
-                        $(this).text(taskName)
-                                .attr('pid', fkParentTaskId);
-                    })
-                    $('.task-id-modal-parent-task').each(function () {
-                        $(this).text(taskCodeID)
-                    })
-                    $('.task-status-modal-parent-task').each(function () {
-                        $(this).html($('<span>')
-                                .addClass('us-item-status-' + res.kv.taskStatus)
-                                .text(res.kv.taskStatus))
-                    })
+                    
+                    var tr = `<tr>
+                    <td>1</td>
+                    <td>${taskCodeID}</td>
+                    <td><div pid='${fkParentTaskId}' class="task-id-modal-parent-task">${taskName}</div></td>
+                    <td><div class="task-status-modal-parent-task"><span class='us-item-status-${res.kv.taskStatus}'>${res.kv.taskStatus}<span>
+                    </div></td>
+                </tr>`
+                body.append(tr) 
 
                 }
 
             } catch (err) {
+               
             }
         }
     });
@@ -2924,7 +2932,7 @@ function getChildTasks() {
     tbody.html('');
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2935,6 +2943,7 @@ function getChildTasks() {
         crossDomain: true,
         async: true,
         success: function (res) {
+          
             try {
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
@@ -2944,15 +2953,20 @@ function getChildTasks() {
 
 
                     var fkProjectId4 = o.fkProjectId;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(o.taskName, 30) + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                           projectCode =" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = 'PRIVATE';
+
+                    }
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                        .text(n)
+                                        .text(n+1)
                                         )
                                 .append($('<td>')
-                                        .text(+" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                        .text(projectCode)
                                         )
                                 .append($('<td>')
                                         .append($('<a>')
@@ -2962,7 +2976,7 @@ function getChildTasks() {
                                                 .text(add3Dots2String(o.taskName, 50))
                                                 )
                                         )
-                                .append($('<td>')
+                                .append($('<td class="bug-list-column-task-status">')
                                         .append($('<span>')
                                                 .addClass('us-item-status-' + o.taskStatus)
                                                 .text(o.taskStatus)
@@ -2975,6 +2989,7 @@ function getChildTasks() {
                 }
 
             } catch (err) {
+               // alert(err);
             }
         }
     });
