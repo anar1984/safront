@@ -2477,13 +2477,16 @@ $(document).on("change", '#newAddCheckList', function (e) {
 })
 $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.insertTask.genBlockModal.Init()
+    loadBugTaskDeadlineScripts()
     var bgid = $(this).parents('.task-content').attr("bid")
     var prId = getProjectIdOfBacklog(bgid); //$("#story_mn_filter_project_id").val();
     $("#bug_filter_project_id_add").val(prId).change();
     $("#bug_filter_backlog_id_add").val(bgid).change();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    loadBugTaskDeadlineScripts()
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
 
     $("#issue-managment-add-task").modal("show");
 
