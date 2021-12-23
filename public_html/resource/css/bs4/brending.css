@@ -306,7 +306,8 @@
     border-radius: 5px;
 }
 .cs-sum-inbox.cs-sum-inbox-callapi {
-    background-color: #b98181;
+    border-left: 4px solid #b98181;
+    border-radius: 10px;
 }
 .cs-sum-inbox.cs-sum-inbox-callfn .cs-funcname {
     color: rgb(0 0 0 / 60%);
@@ -3086,6 +3087,8 @@ span.convertedTextAreaLinesItem {
 }
 .storecard-sidebarin {
     background: #525596;
+    height: calc(100vh - 120px);
+    overflow: scroll;
 }
 .storecard-sidebarin .cs-forum-group .bootstrap-select {
     width: 100% !important;
@@ -3782,7 +3785,7 @@ hr.hr-ss {
   .checkmarkcontainer {
     display: block;
     position: relative;
-    padding-left: 25px;
+    padding-left: 20px;
     margin-bottom: 4px;
     cursor: pointer;
     font-size: 14px;
@@ -3858,7 +3861,8 @@ hr.hr-ss {
 }
 .cs-input-group .bootstrap-datetimepicker-widget {
     list-style: none;
-    max-width: 180px;
+    max-width: 270px;
+    padding:0;
 }
 .run-intensive {
     pointer-events:none;
@@ -3878,12 +3882,18 @@ hr.hr-ss {
     pointer-events:auto;
     display: block;
 }
+.cs-core-issue-management {
+    position: fixed;
+    width: 100%;
+    font-family: 'Quicksand', sans-serif !important;
+    background: rgb(4,57,109);
+    background: -moz-linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    background: -webkit-linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    background: linear-gradient(167deg, #525596 0%, #bbbeff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525596",endColorstr="#bbbeff",GradientType=1);
+}
 .cs-core-issue-management .task-header-filter {
-    background: rgb(233,233,241);
-    background: -moz-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    background: linear-gradient(90deg, rgba(233,233,241,1) 0%, rgba(252,252,252,1) 51%, rgba(255,255,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e9e9f1",endColorstr="#ffffff",GradientType=1);
+    background: transparent;
 }
 .cs-core-issue-management .task-header-filter {
     padding: 10px 6px;
@@ -3894,15 +3904,20 @@ hr.hr-ss {
 }
 .cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
     position: sticky;
-    top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
-    font-weight: 500;
+    background: #DFEEF7;
     z-index: 500;
     text-align: center;
     box-shadow: none;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 100%;
+    height: 30px;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
 }
 .cs-core-issue-management .tableFixHead tbody th:nth-child(20n) {
     border-right: none;
@@ -3957,10 +3972,10 @@ hr.hr-ss {
     width: 120px !important;
 }
 .cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(even) {
-    background-color: #E9E9F1;
+    background-color: #dfeef7;
 }
 .cs-core-issue-management .tableFixHead tbody .bug-tr:nth-child(odd) {
-    background-color: #F6F6FF;
+    background-color: #dfeef7;
 }
 .cs-core-issue-management .bugListTable td:nth-child(1), .cs-core-issue-management .bugListTable th:nth-child(1) {
     width: 25px;
@@ -3968,9 +3983,64 @@ hr.hr-ss {
     font-weight: bold;
     font-size: 14px;
 }
+.cs-core-issue-management .tableFixHead {
+    flex: 1 1 auto;
+    height: calc(100vh - 140px );
+    overflow: scroll;
+    width: 100%;
+    position: relative;
+    min-width: 200px;
+}
+@media (max-width: 1540px) {
+    body.open-setting-panel .cs-core-issue-management .tableFixHead {
+        max-width: 1060px;
+    }
+}
+.cs-core-issue-management .bugListTable {
+    color: #313582;
+    width: max-content !important;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
 .cs-core-issue-management .bugListTable tbody .bug-tr td{
-    padding: 3px 10px;
-    color: #525596;
+    color: #313582;
+    height: 30px;
+    border: none;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    font-weight: 500;
+    font-size: 13px;
+    width: auto;
+    max-width: 100px;
+    text-align: left;
+}
+.bugListTable tbody .bug-tr td>a.task-list-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+.bugListTable tbody .bug-tr td.bug-list-column-project {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    max-width: 140px !important;
+}
+.bugListTable tbody .bug-tr td.bug-list-column-story-card .ellipsis-story-card{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-checkbox{
+    width: 30px !important;
+    height: 30px !important;
+    text-align: center;
 }
 .cs-core-issue-management .bugListTable .bug-tr td input[type=checkbox], .cs-core-issue-management .bugListTable .bug-tr td input[type=radio], .cs-core-issue-management .tableFixHead tbody th:nth-child(n+1) input[type=checkbox] {
     width: 17px;
@@ -3998,25 +4068,25 @@ hr.hr-ss {
     padding-right: 25px;
 }
 .bugListTable tbody .bug-tr td>a {
-    font-size: 14px;
+    font-size: 13px;
 }
 .cs-core-issue-management .bug-list-column-assignee {
-    font-size: 14px;
+    font-size: 13px;
 }
 .bug-list-column-task-status .dropdown-toggle {
-    color: #ffffff;
-    background-color: #525596 !important;
-    border-color: #525596;
-    font-size: 14px;
-    height: 30px;
-    line-height: initial;
-    border-radius: 3px;
-    padding: 0 10px;
-    padding-left: 0;
     position: relative;
-    width: 100%;
     display: inline-flex;
     text-align: left;
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: auto;
+    height: 18px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 17px;
+    color: #FFFFFF;
 }
 .cst-dropwdown-toggle-bug:hover:after {
     font-family: "Font Awesome 5 Pro";
@@ -4035,33 +4105,37 @@ hr.hr-ss {
     top: auto;
 }
 .bug-list-column-task-status [class*="us-item-status-"] {
-  padding: 0 0;
-  background-color: transparent !important;
-  height: 100%;
-  width: 100%;
-  vertical-align: middle;
-  font-size: 14px;
-  border-left: 10px solid;
-  padding-left: 5px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    border-radius: 0;
+
 }
 .bug-list-column-task-status .dropdown-toggle:after{
-    margin-top: 8px;
+    margin-top: 0;
+    margin-right: 0;
     vertical-align: middle;
+    right: 0px;
+    float: right
 }
 .bug-list-column-task-status .us-item-status-new {
- border-color: #f19a91;
+ border-color: #D09838;
+ background-color: #D09838 !important;
 }
+
+.bug-list-column-task-status .us-item-status-draft {
+ border-color: #6264a0;
+ color:white;
+ background-color: #6264a0 !important;
+}
+
 .bug-list-column-task-status .us-item-status-ongoing {
-    border-color: #f3c788;
+    border-color: #4AA9AF;
+    background-color: #4AA9AF !important;
 }
 .bug-list-column-task-status .us-item-status-closed {
-    border-color: #8ad6a3;
+    border-color: #78A812;
+    background-color: #78A812 !important;
 }
 .bug-list-column-task-status .us-item-status-waiting {
-    border-color: #FFFF00;
+    border-color: #CA3E12;
+    background-color: #CA3E12 !important;
 }
 
 .bug-list-column-task-nature .get-data-group [class*="im-"] {
@@ -4099,26 +4173,29 @@ hr.hr-ss {
     display: inline-block;    
     top: 50%;
 }
+.bug-list-column-story-card .set-filter-box i:first-child{
+margin-left: 11px;
+}
 .bug-list-column-story-card .hpYuyept, .bug-list-column-story-card .hpYuyept1, .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept{
-    color: #ffff;
-    height: 30px;
-    width: 30px;
+    color: #ffffff;
+    height: 18px;
+    width: 18px;
     background-color: #525596;
     border: none;
-    border-radius: 4px;
-    margin: 0 2px;
+    margin: 0px -8px 0 0px;
     position: relative;
     top: inherit;
     float: right;
     right: auto;
     text-align: center;
-    font-size: 12px;
-    padding: 8px;
+    font-size: 8px;
+    padding: 5px 4px;
+    border-radius: 50px;
 }
 .bug-list-column-assignee .hpYuyept, .bug-list-column-project .hpYuyept, .bug-list-column-created-by .hpYuyept {
     position: absolute;
     top: 50%;
-    right: -12px;
+    right: 0px;
 }
 .bug-list-column-story-card .hpYuyept {
     margin-right: 0;
@@ -4238,33 +4315,145 @@ table.lbl-list-table tr td {
     box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
     border-color: #fff;
 }
+
+/***** ///// TASK CREATED and UPDATED //// ******/
 .issue-managment-add-task.cs-modal-box .modal-header, .card-Userstory-detail.cs-modal-box .modal-header {
     font-size: 14px;
-    padding: 7px 18px 7px 18px;
-    border-bottom-color: #E9E9F1;
-    background-color: #E9E9F1;
-    color: #272B7C;
+    padding: 0;
+    border-bottom-color: transparent;
+    color: #ffff;
     border-radius: 0;
+    background: transparent;
+}
+.issue-managment-add-task.cs-modal-box .modal-content, .card-Userstory-detail.cs-modal-box .modal-content {
+    background-color: transparent;
+    overflow: visible;
+}
+.issue-managment-add-task.cs-modal-box .modal-dialog, .card-Userstory-detail.cs-modal-box .modal-dialog {
+    background: rgb(82 85 150) !important;
+    background: -moz-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
+    background: -webkit-linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
+    background: linear-gradient(164.42deg, #03396C -30%, rgba(223, 238, 247, 0.75) 130.68%) !important;
+}
+.issue-managment-add-task.cs-modal-box .tab-content>.tab-pane, .card-Userstory-detail.cs-modal-box .tab-content>.tab-pane {
+    padding: 15px 10px 10px 10px;
 }
 .issue-managment-add-task .cs-input-group textarea, .card-Userstory-detail .cs-input-group textarea{
     width: 100%;
-    border: 1px solid #BEBFD7;
-    padding: 5px;
+    background: rgb(0 0 0 / 15%);
+    border: none;
+    padding: 5px 15px;
     font-size: 14px;
+    color: #fff;
+}
+.issue-managment-add-task .cs-input-group textarea::placeholder, .card-Userstory-detail .cs-input-group textarea::placeholder {
+    color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
+    font-size: 16px;
+    line-height: 20px;
+    height: 25px;
+    width: 100%;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    color: #fff;
+}
+.issue-managment-add-task .cs-input-group .cs-file-upload input.saTypeFilePicherUploadFile{
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .cs-file-upload {
+    background: rgba(3, 57, 108, 0.5);
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 50%);
+    border-radius: 7px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 7px 25px;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new {
+ margin-top: 6px;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item {
+    display: inline-block;
+    background: rgba(3, 57, 108, 0.5);
+    padding: 0px 6px;
+    color: #fff;
+    margin-bottom: 5px;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 17px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item span {
+    margin-right: 4px;
+}
+.issue-managment-add-task .cm-file-upload-box .progress_bar_new .file-item i {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0 0px 0 7px;
+}
+.issue-managment-add-task .cs-input-group input.newTaskNameInput {
     height: 35px;
-    border: 1px solid #BEBFD7;
+}
+.issue-managment-add-task .cs-input-group input.form-control::placeholder, .card-Userstory-detail .cs-input-group input.form-control::placeholder {
+    color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group .input-group-addon, .card-Userstory-detail .cs-input-group .input-group-addon {
-    font-size: 14px;
-    margin-bottom: 3px;
-    color: #313582;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i, .issue-managment-add-task .cs-input-group .toplanti-btn i {
+    margin-top: 10px;
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn i {
+    margin-top: 6px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i:after{
+    width: 61.5px;
+    height: 67px;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn i:after {
+  width: 55px;
+  height: 73px;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn i:last-child {
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn:hover i:last-child, .issue-managment-add-task .cs-input-group .tapshiriq-btn.active i:last-child {
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .tapshiriq-btn.active i:first-child {
+    display: none;
+}
+
+.issue-managment-add-task .cs-input-group .toplanti-btn i:last-child {
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn:hover i:last-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:last-child {
+    display: inline-block;
+}
+.issue-managment-add-task .cs-input-group .toplanti-btn:hover i:first-child, .issue-managment-add-task .cs-input-group .toplanti-btn.active i:first-child {
+    display: none;
+}
+.issue-managment-add-task .cs-input-group .tapshiriq-btn, .issue-managment-add-task .cs-input-group .toplanti-btn {
+    cursor: pointer;
 }
 .issue-managment-add-task .horizontal .checkcontainer {
     display: inline-block;
     font-size: 14px;
-    color: #525596;
+    color: #fff;
     margin-right: 25px;
 }
 .issue-managment-add-task .checkcontainer {
@@ -4288,17 +4477,17 @@ table.lbl-list-table tr td {
     position: absolute;
     top: 2px;
     left: 0;
-    height: 18px;
-    width: 18px;
-    border: 1px solid #9395bd;
-    background-color: #e9e9f1;
+    height: 19px;
+    width: 19px;
+    border: 1px solid #dfeef7;
+    background-color: #dfeef7;
     border-radius: 50%;
   }
   .issue-managment-add-task .checkcontainer:hover input ~ .radiobtn {
-    background-color: #9395bd;
+    background-color: rgba(3, 57, 108, 0.5);
   }
   .issue-managment-add-task .checkcontainer input:checked ~ .radiobtn {
-    background-color: #525596;
+    background-color: #dfeef7;
   }
   .issue-managment-add-task .radiobtn:after {
     content: "";
@@ -4309,12 +4498,12 @@ table.lbl-list-table tr td {
     display: block;
   }
   .issue-managment-add-task .checkcontainer .radiobtn:after {
-      top: 5px;
-      left: 5px;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: white;
+    top: 2px;
+    left: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #03396c;
   }
   .issue-managment-add-task .task-tab1 .cs-input-group {
       padding: 15px;
@@ -4329,9 +4518,20 @@ table.lbl-list-table tr td {
       margin-right: 20px;
   }
   .issue-managment-add-task .nav-pills .nav-link {
-    color: #525596;
-    background-color: #e9e9f1;
+    background: transparent;
+    padding: 4px 10px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
 }
+  .issue-managment-add-task .nav-pills .nav-link span{
+    display: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: middle;
+  }
     .issue-managment-add-task .nav-pills .nav-item{
         margin-right: 5px;
         margin-bottom: 5px;
@@ -4343,27 +4543,40 @@ table.lbl-list-table tr td {
         margin-right: 0;
     }
   .issue-managment-add-task .nav-pills .nav-link.active,   .issue-managment-add-task .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #525596;
-}
+    color: #03396C;
+    background-color: #DFEEF7;
+    width: 100%;
+  }
+  .issue-managment-add-task .nav-pills .nav-link.active i,   .issue-managment-add-task .nav-pills .show>.nav-link i{
+    filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(195deg) brightness(91%) contrast(98%);
+  }
+  .issue-managment-add-task .nav-pills .nav-link.active span,   .issue-managment-add-task .nav-pills .show>.nav-link span{
+    display: contents;
+  }
 .issue-managment-add-task .section-title {
     font-size: 17px;
-    margin-left: 4px;
-    margin-top: 40px;
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
     position: relative;
-    color: #525596;
+    color: #ffffff;
     display: block;
     width: 100%;
     height: 10px;
 }
 .issue-managment-add-task .section-title strong {
-    background: white;
+    background: transparent;
+    border-bottom: 2px solid rgb(3 57 108);
+    border-radius: 0;
+    color: white;
     position: absolute;
-    top: -16px;
+    top: 0;
+    width: 100%;
     display: block;
     z-index: 1;
-    padding: 5px 10px 5px 0;
-    font-weight: 600;
+    padding: 2px 10px 2px 3px;
+    font-size: 17px;
+    font-weight: 400;
 }
 .issue-managment-add-task .section-title span {
     display: block;
@@ -4375,24 +4588,26 @@ table.lbl-list-table tr td {
     border-top: 1px solid #bebfd7;
 }
 .issue-managment-add-task .us-file-upload, .card-Userstory-detail .us-file-upload {
-    border: 1px solid #525596;
+    border: 1px solid #1f4f7b;
     display: inline-block !important;
     text-align: left;
     margin: 0;
     margin-left: 4px;
     border-radius: 4px;
-    color: #525596 !important;
+    color: #ffffff !important;
     font-size: 15px;
     width: 100%;
+    height: 30px;
+    vertical-align: middle; 
 }
 .issue-managment-add-task .us-file-upload::before, .card-Userstory-detail .us-file-upload::before {
     content: 'Chose file';
     display: inline-block;
-    background: #525596;
+    background: #1f4f7a;
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 8px;
+    padding: 4px 8px;
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
@@ -4404,15 +4619,145 @@ table.lbl-list-table tr td {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
+.issue-managment-add-task .cs-input-group .bootstrap-select {
+    background-color: transparent;
+    border: none;
+}
+.issue-managment-add-task .cs-input-group .btn, .issue-managment-add-task .task-deadline-boxes .cs-input-group input {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
+    height: 25px;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    padding: 1px 12px;
+}
+.issue-managment-add-task .priority-btn {
+    position: relative;
+    display: table;
+    width: 34px;
+    height: 34px;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+.issue-managment-add-task .priority-btn.active {
+    background: #DFEEF7;
+}
+.issue-managment-add-task .priority-btn i {
+    display: block;
+    text-align: center;
+    margin-top: -2px;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(6%) saturate(26%) hue-rotate(266deg) brightness(105%) contrast(110%);
+}
+.issue-managment-add-task .priority-btn.active i {
+    filter: none;
+}
+.issue-managment-add-task .priority-btn i:after {
+    width: 13.15px;
+    height: 18px;
+}
 .cs-core-issue-management .bigCheck {
     z-index: 1000;
 }
+.cs-box-background {
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+ }
+.task-check-list-box ul {
+    list-style: none;
+    padding: 12px;
+    margin-bottom: 0;
+}
+.task-check-list-box ul li{
+ margin-bottom: 10px;
+}
+.task-check-list-box ul li .item-checkbox{
+ margin-top: 4px;
+}
+.task-check-list-box ul li .item-note {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #fff;
+    letter-spacing: 0px;
+    text-align: left;
+    padding-left: 10px;
+}
+.task-check-list-box ul li.on-checked .item-note {
+ text-decoration: line-through;
+}
+.task-check-list-box .checkmarkcontainer {
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .task-check-list-box .checkmarkcontainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .task-check-list-box .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: rgb(0 0 0 / 0%);
+    border: 2px solid #fff;
+    border-radius: 50px;
+  }
+  .task-check-list-box .checkmarkcontainer:hover input ~ .checkmark {
+    background-color: rgb(255 255 255);
+  }
+  .task-check-list-box .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #fff;
+  }
+  .task-check-list-box .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .task-check-list-box .checkmarkcontainer input:checked ~ .checkmark:after {
+    display: none;
+  }
+  .task-check-list-box .checkmarkcontainer .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
+    width: 70% !important;
+    max-width: 660px !important;
+    margin-top: 40px;
+}
 @media only screen and (max-width: 1370px) {
-    .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
+    /* .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog {
         width: 70% !important;
         max-width: 70% !important;
         margin-top: 40px;
-    }
+    } */
   }
 @media only screen and (max-width: 1024px) {
     .issue-managment-add-task .modal-dialog, .card-Userstory-detail .modal-dialog{
@@ -4473,21 +4818,13 @@ table.lbl-list-table tr td {
      padding: 0;
  }
  .card-UserStory-edit-task .btn.dropdown-toggle-task {
-    height: 24px;
-    width: 24px;
+    height: 34px;
+    width: 34px;
     margin-left: 5px;
-    padding: 0;
+    padding: 6px;
     vertical-align: middle;
     line-height: 21px;
- }
- .card-Userstory-detail .card-UserStory-header-text-code {
-    display: inline-block;
-    font-size: 14px;
- }
- .card-Userstory-detail .card-UserStory-header-text {
-     display: inline-block;
-     padding: 0;
-     font-size: 14px;
+    border-radius: 10px;
  }
  .card-Userstory-detail .card-Userstory-body {
   height: 100vh;
@@ -4551,24 +4888,32 @@ table.lbl-list-table tr td {
     color: #525596;
     background-color: #f7f7f7;
     font-size: 14px;
+    padding-right: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: inline-block;
 }
 .card-UserStory-header-accept {
-    top: 3px;
+    top: 2px;
     left: auto;
-    right: 25px;
+    right: 28px;
     position: absolute;
     height: 21px;
     width: 21px;
     font-size: 13px;
+    padding: 1px;
 }
 .card-UserStory-header-delete {
     left: auto;
-    top: 3px;
-    right: 0;
+    top: 2px;
+    right: 5px;
     position: absolute;
     height: 21px;
     width: 21px;
     font-size: 13px;
+    padding: 1px;
 }
 .card-Userstory-detail .cs-forum-group .cs-label-name {
     color: #E9E9F1;
@@ -4605,9 +4950,6 @@ table.lbl-list-table tr td {
     background-color: #272b7c;
     box-shadow: inset 1px 1px 0px 0px rgb(0 0 0 / 20%);
 }
-.card-Userstory-rightbody .cs-flex-col {
-
-}
 .card-Userstory-rightbody .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
@@ -4626,23 +4968,6 @@ table.lbl-list-table tr td {
 .card-Userstory-rightbody .checkmarkcontainer input:checked ~ .checkmark {
     background-color: #3a3d87;
 }
-.bugListNavMenu {
-    background: white;
-    -ms-flex: 0 0 370px;
-    flex: 0 0 300px;
-    max-width: 300px;
-    width: 300px;
-    height: 100%;
-    padding: 20px 0px 20px 0;
-    margin-right: 20px;
-    border-right: 1px solid #e8e8e8;
-    box-shadow: 0 10px 10px rgb(0 0 0 / 18%);
-    position: absolute;
-    left: -300px;
-    top: 58px;
-    z-index: 10000;
-    transition-duration: .25s;
-}
 .bugListNavMenu.task-menu-open {
  left: 0;
 }
@@ -4660,6 +4985,7 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .Assigne-card-story-select-content {
     z-index: 10;
+    width: 220px;
 }
 
 /* task update Checklist */
@@ -4773,20 +5099,6 @@ table.lbl-list-table tr td {
 .task-observer-list tr:nth-child(even) {
     background-color: transparent;
 }
-
-.task-observer-list table tr {
-
-}
-.task-observer-list table tr td{
-
-}
-.task-observer-list table thead tr{
-
-}
-.task-observer-list table thead tr th {
-
-}
-
 .move-to-child .btn {
     max-width: 270px;
     white-space: nowrap;
@@ -4796,17 +5108,27 @@ table.lbl-list-table tr td {
 .subtask-table thead th:nth-child(-n+20) {
     position: sticky;
     top: -1px;
-    background: #525596;
-    color: white;
-    border-top: 4px solid #fff;
-    border-right: 4px solid #fff;
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
+    font-weight: 500;
+    z-index: 500;
+    text-align: center;
+    box-shadow: none;
+}
+.bugListTable td {
+    background: #DFEEF7;
+    color: #03396C;
+    border-top: none;
+    border-right: none;
     font-weight: 500;
     z-index: 500;
     text-align: center;
     box-shadow: none;
 }
 .subtask-table thead th:nth-child(-n+20) {
-    height: 40px;
+    height: 30px;
     padding: 5px 5px;
 }
 .task-mgmt-modal-parent-task td a {
@@ -4817,4 +5139,351 @@ table.lbl-list-table tr td {
 }
 .task-mgmt-modal-child-task .btn:hover {
     color: #ffffff;
+}
+.cs-core-issue-management .tableFixHead tbody th i:after {
+    width:18px;
+    height:18px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.deadline:after {
+    width: 26px;
+    height: 18.09px;
+    margin-top: -3px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.status:after {
+    width: 20px;
+    height: 18px;
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.id:after {
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.numbers:after {
+    margin-top: -4px;
+}
+.cs-core-issue-management .tableFixHead tbody th i.task-user-2:after, .cs-core-issue-management .tableFixHead tbody th i.task-user-1:after {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+}
+.bug-list-column.bug-list-column-story-card span {
+    vertical-align: middle;
+    height: 100%;
+    line-height: 1.5;
+}
+.issue-managment-add-task .checkmarkcontainer input:checked ~ .checkmark {
+    background-color: #ffffff;
+}
+.issue-managment-add-task .checkmarkcontainer .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.issue-managment-add-task .checkmarkcontainer {
+    padding-left: 24px;
+    color: #fff;
+}
+.issue-managment-add-task.cs-modal-box .modal-footer .btn {
+    background: #3C6E93;
+    box-shadow: 1px 1px 10px rgb(0 0 0 / 40%);
+    border: none;
+    border-radius: 7px;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 7px 25px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
+}
+.issue-managment-add-task .cs-input-group .btn:hover, .issue-managment-add-task.cs-modal-box .btn:hover {
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+    color: #03396C;
+}
+/* task switch on off stat */
+.bcs-swith.switch {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 25px;
+    float: left;
+    right: 0;
+}
+.bcs-swith.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.bcs-swith.switch input:focus { 
+    outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.bcs-swith .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(3, 57, 108, 0.5);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.bcs-swith .slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    box-shadow: 1px 2px 4px rgb(0 0 0 / 40%);
+    border-radius: 6px;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.bcs-swith input:checked + .slider {
+    background-color: #DFEEF7;
+}
+
+.bcs-swithissue-managment-add-task input:focus + .slider {
+    box-shadow: none;
+}
+
+.bcs-swith input:checked + .slider:before {
+    -webkit-transform: translateX(66px);
+    -ms-transform: translateX(66px);
+    transform: translateX(66px);
+    background-color: #03396C;
+}
+.bcs-swith .slider.round {
+    box-shadow: 0px 0px 3px rgb(0 0 0 / 50%);
+    border-radius: 8px;
+}
+
+.bcs-swith .slider .deactive {
+    color: #fff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 27px;
+}
+.bcs-swith .slider .active {
+    color: #03396C;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 27px;
+    display: none;
+}
+.bcs-swith input:checked + .slider .deactive {
+ display: none;
+}
+.bcs-swith input:checked + .slider .active {
+ display: inline-block;
+ margin-left: 18px;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table th, .card-Userstory-detail .bootstrap-datetimepicker-widget table th {
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+    color: #fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table, .card-Userstory-detail .bootstrap-datetimepicker-widget table {
+    width: 100%;
+    margin: 0;
+    background: rgb(33 81 124);
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    color:#fff;
+}
+.issue-managment-add-task .bootstrap-datetimepicker-widget table td.active, .issue-managment-add-task .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #03396c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+    border-radius: 50px;
+}
+.issue-managment-add-task .cs-input-group .bootstrap-datetimepicker-widget table td, .card-Userstory-detail .cs-input-group .bootstrap-datetimepicker-widget table td {
+    height: 30px;
+    line-height: 1;
+    width: 30px;
+}
+.bootstrap-datetimepicker-widget table td.day:hover, .bootstrap-datetimepicker-widget table td.hour:hover, .bootstrap-datetimepicker-widget table td.minute:hover, .bootstrap-datetimepicker-widget table td.second:hover {
+    background: #03396c;
+    cursor: pointer;
+    border-radius: 50px;
+}
+.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+    background: #03396c;
+}
+.cs-date-time {
+    background-color: rgba(3, 57, 108, 0.5);
+    border-radius: 7px;
+    padding: 1px 2px 1px 12px;
+}
+.cs-date-time input {
+    background: transparent !important;
+    padding: 0 6px !important;
+}
+.cs-date-time .input-group-icon{
+    color: #fff;
+}
+.task-modal-header {
+ padding: 0px;
+ position: relative;
+}
+.task-modal-title {
+    position: relative;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 26px;
+    color: #03396C;
+    width: 100%;
+    text-align: center;
+}
+.task-modal-title span {
+    height: 35px;
+    display: inline-block;
+    background: #dfeef7;
+    position: relative;
+    vertical-align: middle;
+    padding: 4px 20px;
+}
+.task-modal-title span:after {
+    content: "";
+    position: absolute;
+    right: -30px;
+    top: 0;
+    width: 30px;
+    height: 35px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    background-image: url(../ch-icons/title-decor-right.svg);
+}
+.task-modal-title span:before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 30px;
+    height: 35px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    background-image: url(../ch-icons/title-decor-left.svg);
+}
+.task-modal-header .close, .task-modal-header button.close {
+    opacity: 1;
+    padding: 0;
+    color: #272B7C;
+    background: rgb(75 114 149 / 88%);
+    text-shadow: none;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 54px;
+    right: 0;
+    margin: 0 -32px 0 0px;
+    border-radius: 0 15px 15px 0;
+}
+.task-modal-header .close i:after, .task-modal-header button.close:after {
+    width: 13px;
+    height: 19px;
+}
+.card-Userstory-detail .Story-card-Header-task {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    box-shadow: none;
+    flex: 0 0 auto;
+    transition: box-shadow 200ms ease 0s;
+    padding: 0;
+}
+.card-Userstory-detail .card-UserStory-header {
+    width: 100%;
+    height: 35px;
+    overflow: hidden;   
+}
+.card-Userstory-detail .card-UserStory-header .card-UserStory-header-text {
+    font-size: 16px;
+    width: 100%;
+    line-height: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.task-modal-title span b {
+    font-weight: 400;
+}
+.cs-box-background hr {
+    border-color: rgb(255 255 255 / 15%);
+}
+.addEpicTask .cs-history-links {
+    color: #73bdff;
+    margin-right: 10px;
+}
+.Assigne-card-story-select {
+    width: 100%;
+    height: 35px;
+    line-height: 20px;
+    border: none;
+    font-size: 14px;
+    position: relative;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 50px;
+    color: #fff;
+}
+.Assigne-card-story-select input {
+    width: 100% !important;
+    background: transparent !important;
+}
+.Assigne-card-story .name {
+
+}
+.Assigne-content-user span {
+    color: #03396C;
+}
+.Assigne-card-story-search {
+    width: 100%;
+}
+.canvas_canvas_msg {
+    border: 1px dashed rgb(255 255 255 / 30%) !important;
+    border-radius: 5px !important;
+    color: white !important;
+}
+.canvas_canvas_msg .copy-title, .canvas_canvas_msg h5 {
+    line-height: 2.5;
+    margin-bottom: 0;
+    color: #ffffff;
+}
+.comment-main-span {
+    color: #fff;
 }

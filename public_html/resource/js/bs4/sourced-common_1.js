@@ -7620,9 +7620,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 SAInput.addInputByRes(res);
                 SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
-
-                loadCurrentBacklogProdDetails();
-
+                
+                //loadCurrentBacklogProdDetails();
 
                 //backlogun canvas parametrleri set edilir
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
@@ -13367,9 +13366,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('#main_div_of_backlog_info_kanban_view_table_new').html('');
         $('#main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('#main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('#main_div_of_backlog_info_kanban_view_table_draft').html('');
         $('#kanban_view_new_count').html(0);
         $('#kanban_view_ongoing_count').html(0);
         $('#kanban_view_closed_count').html(0);
+        $('#kanban_view_draft_count').html(0);
         $('#us_core_filter_paginationresult_rowcount').html(0);
         this.setEmptyMessage4Backlog();
         this.setEmptyMessage4BacklogListView();
@@ -14116,6 +14117,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     var c4new = 0;
                     var c4ongoing = 0;
                     var c4closed = 0;                 
+                    var c4draft = 0;                 
                         var usIdList = res.tbl[0].r;
         
                         for (var k = 0; k < usIdList.length; k++) {
@@ -14135,9 +14137,14 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 $(html).find("#user-story-show-stat").click();
                     
 
-                            } else if (obj.backlogStatus === 'closed') {
+                            } 
+                            else if (obj.backlogStatus === 'closed') {
                                 c4closed++;
                                 $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                            }
+                            else if (obj.backlogStatus === 'draft') {
+                                c4draft++;
+                                $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                             }
                            
                         }
@@ -14167,7 +14174,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     setUSLists4KanbanView: function () {
   
 
-        var stl  = ["new","ongoing",'closed']
+        var stl  = ["new","ongoing",'closed','draft']
             for (let si = 0; si < stl.length; si++) {
                
                this.setUSLists4KanbanViewCore(stl[si])
@@ -14184,7 +14191,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                $(".modal-header b.status-UAT-total").text(0)
                $(".modal-header b.status-rejected-total").text(0)
                $(".modal-header b.status-Canceled-total").text(0)
-               $(".modal-header b.status-waiting-total").text(0)
+               $(".modal-header b.status-draft-total").text(0)
                $(".modal-header b.status-total-total").text(0)
                 var priD =getProjectValueUsManageMulti();
                 var fkAsId = getProjectValueUsManageMultiByel($("#story_mn_filter_updated_id"));
@@ -14485,6 +14492,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('.main_div_of_backlog_info_kanban_view_table_draft').html('');
         var bNoList = SACore.GetBacklogNoKeys();
         var addedUS = [];
 
@@ -14493,6 +14501,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             var c4new = 0;
             var c4ongoing = 0;
             var c4closed = 0;
+            var c4draft = 0;
             $('.main_div_of_backlog_info_kanban_view_table_new ')
             for (var n = 0; n < bNoList.length; n++) {
                 var bid = SACore.BacklogNo[bNoList[n]];
@@ -14517,13 +14526,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     } else if (obj.backlogStatus === 'ongoing') {
                         c4ongoing++;
                         $('.main_div_of_backlog_info_kanban_view_table_ongoing').append(html);
-                    } else if (obj.backlogStatus === 'closed') {
+                    } 
+                    else if (obj.backlogStatus === 'closed') {
                         c4closed++;
                         $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                    }
+                    else if (obj.backlogStatus === 'closed') {
+                        c4draft++;
+                        $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                     }
                     $('#kanban_view_new_count').html(c4new);
                     $('#kanban_view_ongoing_count').html(c4ongoing);
                     $('#kanban_view_closed_count').html(c4closed);
+                    $('#kanban_view_closed_count').html(c4draft);
                 }
                 addedUS.push(lastId);
             }
@@ -14537,6 +14552,9 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         .append($('<div class="task-content content-drag">'));
             if (c4closed === 0)
                 $('.main_div_of_backlog_info_kanban_view_table_closed')
+                        .append($('<div class="task-content content-drag">'));
+            if (c4draft === 0)
+                $('.main_div_of_backlog_info_kanban_view_table_draft')
                         .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
@@ -14553,6 +14571,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_new').html('');
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
+        $('.main_div_of_backlog_info_kanban_view_table_draft').html('');
         console.log(res)
 
         try {
@@ -14570,13 +14589,19 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 } else if (obj[n].backlogStatus === 'ongoing') {
                     c4ongoing++;
                     $('.main_div_of_backlog_info_kanban_view_table_ongoing ').append(html);
-                } else if (obj[n].backlogStatus === 'closed') {
+                } 
+                else if (obj[n].backlogStatus === 'closed') {
                     c4closed++;
                     $('.main_div_of_backlog_info_kanban_view_table_closed').append(html);
+                }
+                else if (obj[n].backlogStatus === 'draft') {
+                    c4draft++;
+                    $('.main_div_of_backlog_info_kanban_view_table_draft').append(html);
                 }
                 $('#kanban_view_new_count').html(c4new);
                 $('#kanban_view_ongoing_count').html(c4ongoing);
                 $('#kanban_view_closed_count').html(c4closed);
+                $('#kanban_view_draft_count').html(c4draft);
             }
 
             $('.main_div_of_backlog_info_kanban_view_table_new ')
@@ -14584,6 +14609,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             $('.main_div_of_backlog_info_kanban_view_table_ongoing ')
                     .append($('<div class="task-content content-drag">'));
             $('.main_div_of_backlog_info_kanban_view_table_closed')
+                    .append($('<div class="task-content content-drag">'));
+            $('.main_div_of_backlog_info_kanban_view_table_draft')
                     .append($('<div class="task-content content-drag">'));
         } catch (e) {
         }
@@ -15252,8 +15279,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
             
-            if(global_var.current_modal === 'loadStoryCard'){
-                $("#storyCardListSelectBox4StoryCard").val(backlogId).change();
+            if(global_var.current_modal === 'loadStoryCard'||global_var.current_modal === 'loadDev'){
+                var pid  = SACore.Backlogs[backlogId].fkProjectId
+                if (pid === global_var.current_project_id) {
+                    $("#storyCardListSelectBox4StoryCard").val(backlogId)
+                    $("#storyCardListSelectBox4StoryCard").change();
+                } else {
+                    global_var.current_backlog_id = backlogId;
+                    Utility.addParamToUrl('current_backlog_id', backlogId);
+                    $('select.projectList_liveprototype_storycard').val(pid);
+                    $('select.projectList_liveprototype_storycard').change();
+                }
                 return;
             }
 
@@ -15271,12 +15307,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             console.log(err)
         }
         
-        
-        
-        
-        
-        
-        
+ 
         try {
 //            event.preventDefault();
 
@@ -17028,8 +17059,9 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
     },
     addCommentInput4Task: function (fileName) {
-        if (!global_var.current_us_task_id) {
+        if (!global_var.current_issue_id) {
             Toaster.showError("Task is not selected.")
+            return
         }
 
         this.addCommentInput4TaskDetails($('#addComment4Task_comment').val(),
@@ -17037,7 +17069,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 $('#addComment4Task_commentestimationhours').val(),
                 fileName + global_var.vertical_seperator + global_var.current_upload_canvas,
                 global_var.current_backlog_id,
-                global_var.current_us_task_id
+                global_var.current_issue_id,
 
 
                 )
@@ -17062,14 +17094,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             crossDomain: true,
             async: false,
             success: function (res) {
-                SATask.updateTaskByRes(res);
+                taskManagement.updateTask.genCommentListOfTask();
+            
 //                genTaskKanbanView();
                 $('#addComment4Task_comment').val('');
                 $('#addComment4Task_id').val('');
                 $('#tasklistcomment').val('');
                 $('#file11').val('');
                 $('canvasdiv_comment').html(emptyCanvasDiv());
-                genCommentListOfTask();
+               // SATask.updateTaskByRes(res);
 //                 Toaster.showError("successfull");
 //                new Notification("").clearField('updateBacklog');
 //                closeModal('updateBacklog');
@@ -20955,7 +20988,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 //            tr.append($('<td></td>').html(obj[i].tableName));
             tr.append($('<td></td>')
-                    .attr('class', 'description-style-background')
+                    .attr('class', 'description-style-background desc-table-list-for-multiple')
                     .addClass("text-left")
                     .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
                     .append($('<input type="text">')
@@ -21995,7 +22028,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         return (desc1) ? stln + '<div data-id="' + descId + '" order="'+orderNo+'" class="drag-item align-items-center d-flex span-button-div">'
             + "<input class='multiple-desc-inp' data-id=" + descId + " type='checkbox'>"
             +`<div  class="btn btn-sm iconDrag"><i class=" fas fa-expand-arrows-alt"></i></div>`
-                + '<span class="span_hover" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
+                + '<span class="span_hover desc-item-input" idesc=\'' + replaceTags(Replace2Primes(this.fnline2Text(desc1))) + '\' '
 
                 + ' ondblclick="new UserStory().updateInputDescriptionEditLineNew(this,\'' + descId + '\')">'
                 + '- &nbsp; ' + colored
@@ -23158,14 +23191,11 @@ Sprint.prototype = {
         });
     },
     insert: function () {
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
         json.kv.fkProjectId = global_var.current_project_id;
+        json.kv.isGlobal = $('#insertNewSprint_isglobal').is(':checked')?"1":"0";
         json.kv.sprintStartDate = GetConvertedDate('insertNewSprint_startdate');
         json.kv.sprintEndDate = GetConvertedDate('insertNewSprint_enddate');
         var that = this;
@@ -23198,6 +23228,7 @@ Sprint.prototype = {
         json.kv.id = this.getId();
         json.kv.sprintName = this.getName();
         json.kv.sprintColor = this.getColor();
+        json.kv.isGlobal=$('#updateSprint_isglobal').is("checked")?"1":"0";
         json.kv.sprintStartDate = GetConvertedDate('updateSprint_startdate');
         json.kv.sprintEndDate = GetConvertedDate('updateSprint_enddate');
         var that = this;
@@ -23258,15 +23289,11 @@ Sprint.prototype = {
 
     load: function () {
         $('#sprintlist').html("");
-        if (!global_var.current_project_id) {
-            return;
-        }
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.fkProjectId = global_var.current_project_id;
+//        if (!global_var.current_project_id) {
+//            return;
+//        }
+        var json = initJSON();
+//        json.kv.fkProjectId = global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -23375,8 +23402,7 @@ Sprint.prototype = {
         if (!id) {
             return;
         }
-        var json = {
-            kv: {}};
+        var json = initJSON();
         json.kv.id = id;
         var that = this;
         var data = JSON.stringify(json);
@@ -23406,6 +23432,12 @@ Sprint.prototype = {
         SetConvertedDate('updateSprint_enddate', obj.sprintEndDate);
 //        $('#u_sprintEndDate').val(SetConvertedDate(obj.sprintEndDate));
         $('#u_sprintProjectId').val(obj.fkProjectId);
+        if (obj.isGlobal==='1'){
+            $('#updateSprint_isglobal').prop("checked",true)
+        }else{
+                        $('#updateSprint_isglobal').prop("checked",false)
+
+        }
     },
     setSprintListTable: function (res) {
         $('#sprintlist').html("");
@@ -23506,7 +23538,7 @@ Sprint.prototype = {
             tr.append($('<td class="lbl-list-td"></td>')
                     .append(replaceTags(obj[n].sprintName))
                     .append(d)
-                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
+//                    .append(" (<b>" + obj[n].backlogCount + "</b>)")
                     .attr("class", "lbl-item")
                     .css("font-size", "12px")
                     .attr("style", "font-size:12px;color:" + obj[n].sprintColor));
@@ -23518,7 +23550,14 @@ Sprint.prototype = {
                             .css("display", "none")
                             .val(obj[n].id)
                             .append("Assign")
-                            .attr('id', obj[n].id)));
+                            .attr('id', obj[n].id))
+                     .append($('<button class="  story-card-sprint-assign story-card-sprint-unassign btn btn-secondary">')
+                            .css("padding", "0px 6px")
+                            .attr("sname", replaceTags(obj[n].sprintName))
+                            .css("display", "none")
+                            .val(obj[n].id)
+                            .append("Unassign")
+                            .attr('id', obj[n].id))) ;
 
             var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
                     .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')

@@ -39,6 +39,7 @@
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
+                
                 <hr style="margin: 4px 0px;"> 
                 <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Export</a></button>
                 <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox"><a href="#" >Copy</a></button>
@@ -67,7 +68,7 @@
 </div>
 
 <div class="row">
-    <div class="col print-container pdf page-content"  id="exportContent">
+    <div class="col print-container pdf page-content" style="height: calc(100vh - 80px);overflow: auto;"  id="exportContent">
         <!-- 
         <div class="row">
             <div class="col-12 text-center">
@@ -208,6 +209,9 @@
                                 onclick="new UserStory().setAsOutput()">Set as Output</button>
                         <button class="dropdown-item firstbut " data-toggle="modal" 
                                 onclick="addInputListToTaskNew()"  >Add to Task </button>
+                        <button class="dropdown-item firstbut " data-toggle="modal" 
+                                onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
+
 
                         <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
                                 onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>
@@ -224,6 +228,7 @@
                     </button>
                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                        
+                        <button class="dropdown-item firstbut "     onclick="addInputDescListToTaskNewEvent()">Add To Task Desc</button>
                         <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
                       
                     </div>
@@ -403,6 +408,9 @@
                                 <option value="new"  selected>New</option>
                                 <option value="ongoing">Ongoing</option>
                                 <option value="closed">Closed</option>
+                                 <option value="draft"  selected>Draft</option>
+                                <!--<option value="ongoing">Ongoing</option>-->
+                                <!--<option value="closed">Closed</option>-->
                             </select>
                         </div>
                     </div>
@@ -437,6 +445,17 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="cs-forum-group mt-3">
+                            <label class="cs-label-name">Change Project</label>
+                            <select onchange="" data-type="fkProjectId" class="form-control user-story-short-change projectList_for_change_storycard" 
+                            data-live-search="true" name="" id="">
+                    </select>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cs-forum-group mt-3">
                             <label class="cs-label-name">Description</label>
                             <div class="cs-textarea">      
                                 <textarea rows='2' type="number" id="user-story-description" class="form-control user-story-short-change" data-type="description" step=any required></textarea>           
@@ -448,7 +467,7 @@
             </div>
 
             <!-- switch on off  -->
-            <div class="story-card-right-menu-panels   prototype-on-off col-12">
+            <div class="story-card-right-menu-panels  story-card-right-menu-panels-api  prototype-on-off col-12">
                 <div>
                     <h3>Is API</h3>
                 </div>

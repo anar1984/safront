@@ -9,9 +9,11 @@
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
         </link>
-
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="resource/css/bs4/bootstrap.min.css"> 
         <link rel="stylesheet" href="resource/css/fontawesome-5-pro-master/css/all.css">
+        <link rel="stylesheet" href="resource/css/bs4/cs-icon.css" />
+
         <link rel="stylesheet" href="resource/css/bs4/bs4-custom_1.css">
         <link rel="stylesheet" href="resource/css/bs4/g_1.css">
         <link rel="stylesheet" href="resource/css/bs4/style-kanban.css">
@@ -83,6 +85,7 @@
         <script src="resource/js/bs4/data-base.js"></script>
         <script src="resource/js/bs4/entity.js"></script>
         <script src="resource/js/bs4/testCase.js"></script>
+        <script src="resource/js/bs4/task-management.js"></script>
         <script src="resource/js/bs4/testCaseSenario.js"></script>
         <script src="resource/js/bs4/ExecutiveSummary.js"></script>
         <script src="resource/js/bs4/RunService.js"></script>
@@ -241,7 +244,7 @@
         <div class="row main_body_class " id="main_body_class_analytics" style="margin-top:0vh;display:none;">
             <div class="row" style="font-size:13px;">
 
-                <div class="col-12 analytics-details text-center1" style="" id="analytics-details-spenthours">
+                <div class="col-12 analytics-details text-center1"  id="analytics-details-spenthours">
                     <div class="col-12 text-center1" id="analytics-details-spenthours-4-print">
 
                         <div class="row" style="padding: 0px;">
@@ -260,7 +263,7 @@
                                                         href="#" onclick="Analytics.uncheckAllProjects(this)">None</a>)
                                                     <br>
                                                     <div
-                                                        style="width:100%;background-color:white;padding:5px;max1-height: 200px;overflow1-y: scroll;border1: 0.5px solid #2C73B4!important;">
+                                                        style="width:100%;background-color:white;padding:5px;">
                                                         <table style="width:100%" id="analytics_main_list_of_projects">
                                                             <tbody>
                                                             </tbody>
@@ -276,7 +279,7 @@
                                                                            onclick="Analytics.uncheckAllAssignees(this)">None</a>)
                                                     <br>
                                                     <div
-                                                        style="width:100%;background-color:white;padding:5px; max-height1: 200px;overflow-y1: scroll;border1: 0.5px solid #2C73B4!important;">
+                                                        style="width:100%;background-color:white;padding:5px;">
                                                         <table style="width:100%" id="analytics_main_list_of_assignee">
                                                             <tbody>
                                                             </tbody>
@@ -512,7 +515,7 @@
                                                         href="#" onclick="Analytics.uncheckAllGroupBy(this)">None</a>)
                                                     <br>
                                                     <div
-                                                        style="width:100%;background-color:white;padding:5px; max-height1: 200px;overflow-y1: scroll;border1: 0.5px solid #2C73B4!important;">
+                                                        style="width:100%;background-color:white;padding:5px;">
                                                         <table style="width:100%" id="analytics_main_list_of_groupby">
                                                             <tbody>
                                                             </tbody>
@@ -574,7 +577,7 @@
                                                                            onclick="Analytics.uncheckAllTaskTypes(this)">None</a>)
                                                     <br>
                                                     <div
-                                                        style="width:100%;background-color:white;padding:5px; max-height1: 200px;overflow-y1: scroll;border1: 0.5px solid #2C73B4!important;">
+                                                        style="width:100%;background-color:white;padding:5px;">
                                                         <table style="width:100%" id="analytics_main_list_of_tasktypes">
                                                             <tbody>
                                                             </tbody>
@@ -590,7 +593,7 @@
                                                         href="#" onclick="Analytics.uncheckAllPriority(this)">None</a>)
                                                     <br>
                                                     <div
-                                                        style="width:100%;background-color:white;padding:5px; max-height1: 200px;overflow-y1: scroll;border1: 0.5px solid #2C73B4!important;">
+                                                        style="width:100%;background-color:white;padding:5px; ">
                                                         <table style="width:100%" id="analytics_main_list_of_priority">
                                                             <tbody>
                                                             </tbody>
@@ -747,7 +750,7 @@
                         <div class="project-item-zad">
                             <a class="loadCodeGround openNavshow  left-menu-load "
                                data-link="ipo" title="UserStory">
-                               <i class="fas fa-code" aria-hidden="true"></i>
+                                <i class="fas fa-code" aria-hidden="true"></i>
                                 <span class="description-main"
                                       style="margin-top: 19px;">Code Ground</span>
                             </a>
@@ -3180,7 +3183,7 @@
 <div class="modal fade" id="commentFileImageViewer" tabindex="-1" style="z-index: 2000;" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" style="min-width: 90%;max-width:90%" role="document">
-        <div class="modal-content" style="">
+        <div class="modal-content" >
             <div class="modal-header">
                 <h5 class="modal-title">Image File Viewer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3200,7 +3203,7 @@
 
 <div class="modal fade" id="commentFileVideoViewer" style="z-index: 2000;" tabindex="-1" role="dialog"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="auto" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style1="min-height: 90%;">
             <div class="modal-header">
                 <h5 class="modal-title">Video File Viewer</h5>
@@ -3306,7 +3309,7 @@
                                         </div>
 
                                     </div>
-                                    <div id="addBacklogTaskTab" class="container tab-pane" style="">
+                                    <div id="addBacklogTaskTab" class="container tab-pane" >
 
                                         <form>
                                             <div class="row">
@@ -3338,14 +3341,14 @@
 
 
                                                 <div class="form-group col-9 addtasktype_toggle backlog-toggle"
-                                                     style=" ">
+                                                     >
                                                     <label for="priority" class="col-form-label">Comment</label>
                                                     <textarea class="form-control1 addUS backlog-toggle" disabled
                                                               id="addBacklog_comment" rows=4
                                                               style='width:100%;padding:4px 0 4px 0;'></textarea>
                                                 </div>
                                                 <div class="form-group col-3 addtasktype_toggle backlog-toggle"
-                                                     style=" ">
+                                                     >
                                                     <label for="priority" class="col-form-label">Comment
                                                         Type</label>
                                                     <select class="form-control1 backlog-toggle" disabled
@@ -3357,7 +3360,7 @@
                                                         <option value="creq">Change Request</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-12 addtasktype_toggle backlog-toggle" style=" ">
+                                                <div class="col-12 addtasktype_toggle backlog-toggle" >
                                                     <input id="file4AddBacklog"
                                                            class="us-file-upload backlog-toggle" multiple=""
                                                            type="file" file_type="general" disabled style="width:100%"
@@ -3773,9 +3776,13 @@
                         </div>
 
 
-                        <div class="form-group text-left col-12">
+                        <div class="form-group text-left col-6">
                             <br>
-                            <input type="checkbox" class="" id="closeAfterInsertSprint" checked>
+                            <input type="checkbox" class="" id="insertNewSprint_isglobal" checked>
+                            <span for="insertNewSprint_isglobal" class="col-form-label">Show Visible for others</span>
+                        </div> <div class="form-group text-left col-6">
+                            <br>
+                            <input type="checkbox" class="" id="closeAfterInsertSprint" >
                             <span for="closeAfterInsertSprint" class="col-form-label">Close after insert</span>
                         </div>
                     </div>
@@ -3882,7 +3889,7 @@
                                onchange="new UserStory().addFileForAddTaskType()">
                         <output id="setStoryCardUploadImageModal_filelist"></output>
                     </div>
-                    <div class="col-12 text-center test-actual-result-toggle addtasktype_toggle" style="">
+                    <div class="col-12 text-center test-actual-result-toggle addtasktype_toggle" >
                         <div class="row canvas_canvas" id="canvasdiv_storyCard" style="padding:30px;">
                             <div class="col-12 text-center canvas_canvas_msg" style="background-color: gainsboro">
                                 <h5>Copy and Paste Image Here</h5>
@@ -3973,6 +3980,12 @@
                         <label for="label" class="col-form-label">End Date<span style="color:red">*</span></label>
                         <input type="date" class="form-control msg-clear" id="updateSprint_enddate">
 
+                    </div>
+
+                    <div class="form-group text-left col-6">
+                        <br>
+                        <input type="checkbox" class="" id="updateSprint_isglobal" checked>
+                        <span for="insertNewSprint_isglobal" class="col-form-label">Show Visible for others</span>
                     </div>
 
                 </div>
@@ -4126,7 +4139,7 @@
                                       style="font-size:14px" spellcheck="false"></textarea>
                         </div>
 
-                        <div class="form-group col-3 addtasktype_toggle" style="">
+                        <div class="form-group col-3 addtasktype_toggle" >
                             <label for="priority" class="col-form-label">Comment Type</label>
                             <select class="form-control1" id="addComment4Task_commenttype"
                                     style='width:100%;padding:4px 0 4px 0;'>
@@ -5578,7 +5591,7 @@
 </div>
 
 
-<div class="modal fade" id="generalStatisticsDetailsModal" style=" " tabindex="-1" role="dialog" aria-labelledby=""
+<div class="modal fade" id="generalStatisticsDetailsModal"  tabindex="-1" role="dialog" aria-labelledby=""
      aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 90%;max-width: 90%" role="document">
         <div class="modal-content">
@@ -5763,7 +5776,7 @@
                 </div>
 
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" onclick="addUserStoryToToSection()">
                     Add
                 </button>
@@ -5826,7 +5839,7 @@
                 </div>
 
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -5854,7 +5867,7 @@
                 </div>
 
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" onclick="saveAsDocument()">
                     Save As
                 </button>
@@ -5884,7 +5897,7 @@
                 </div>
 
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -5944,812 +5957,10 @@
     </div>
 </div>
 
-            <div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog Card-story-taskmanager" role="document" style="max-width: 50%" id="taskMgmtModal-body">
-                    <div class="modal-content">
-                        <div class="modal-header StorycardHeader">
-                            <header class="Story-card-Header-task">
-                                <div class="card-UserStory-header">
-                                    <div class="card-UserStory-header-text-code"></div>
-                                    <div class="card-UserStory-header-text"></div>
-                                    <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
-                                        <input class="card-UserStory-header-input form-control" type="text">
-                                        <div class=" card-UserStory-header-accept TextHeader "
-                                            onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: green;">
-                                            <i class="fas fa-check"></i>
+</div>
+</div>
 
-                                        </div>
-                                        <div class=" card-UserStory-header-delete TextHeader " id="DeleteText"
-                                            style="color: red;">
-                                            <i class="fas fa-times"></i>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="card-UserStory-edit-task cs-input-group">
-                                    <div class="dropdown-task show dropright">
-                                        <a class="btn dropdown-toggle-task" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </a>
-
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">Create
-                                                Child Task</a>
-                                            <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward
-                                                To</a>
-                                            <a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign
-                                                To</a>
-                                            <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
-                                            <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
-                                            <a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </header>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body issue-managment-add-task col-12 pt-0">
-                  <div class="row">
-                      <div class="col-lg-12" style="padding: 0 25px">
-                        <div class="comment-seqment">
-                            <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="d-comment-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab0" aria-selected="true">Comment</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-cheklist-tab" data-toggle="tab" href="#d-task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Check List</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Observer</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Subtask</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Events</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab0">
-                                    <div class="commentwritepanel">
-                                        <div class="cs-input-group mb-3">
-                                            <div class="input-group-addon">Description</div>
-                                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput form-control"
-                                                      placeholder="Add a comment.." rows="1"></textarea>
-                
-                                            <br>
-                                            <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
-                                                 style="width:100%;display: none; padding:0px;margin:0px;">
-                                                <div class="col-12 text-center canvas_canvas_msg "
-                                                     style='border: 1px dashed grey;border-radius: 5px;color: dimgrey;'>
-                                                    <h5>Copy and Paste Image Here</h5>
-                                                </div>
-                                            </div>
-                                            <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0 d-flex " style="display: none;">
-                
-                                                <div class="acceptcomment flex-fill mr-1">
-                                                    <button class="btn btn-primary" type="submit"
-                                                            onclick="new UserStory().addTaskCommentToTask(this)">Add</button>
-                                                </div>
-                                                <div class="deletecomment flex-fill mr-1">
-                                                    <button class="btn " type="submit">Cancel</button>
-                                                </div>
-                                                <input id="file11" class="us-file-upload commentsubmit-seqment flex-fill  " 
-                                                       multiple="" type="file" file_type="general" value="" onchange1="new UserStory().addFileForTaskComment()">
-                
-                
-                                            </div>
-                
-                
-                
-                
-                                        </div>
-                                        <!--                    <output id="tasklistcomment"></output>-->
-                
-                
-                                    </div>
-                                                                       
-                                    <div class="comment-body">
-                
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="d-task-tab1" role="tabpanel" aria-labelledby="pills-d-task-tab1">
-
-                                   <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-lg-4 statusCardStorymb-3">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Status</label>
-                                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
-                                                <div class="form-group ">
-                
-                                                    <select class="form-control task-info-modal-status" style="width:auto"
-                                                            onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
-                                                        <option value='new'><span
-                                                            class="us-item-status-new comment-content-header-status">New</span></option>
-                                                        <option value='ongoing'> <span
-                                                            class="us-item-status-ongoing comment-content-header-status"
-                                                            id="">Ongoing</span></option>
-                                                        <option value='closed'><span
-                                                            class="us-item-status-closed comment-content-header-status"
-                                                            id="">Closed</span></option>
-                                                        <option value='waiting'><span
-                                                            class="us-item-status-waiting comment-content-header-status"
-                                                            id="">Waiting</span></option>
-                                                        <option value='canceled'><span
-                                                            class="us-item-status-canceled comment-content-header-status"
-                                                            id="">Canceled</span></option>
-                                                        <option value='rejected'><span
-                                                            class="us-item-status-rejected comment-content-header-status"
-                                                            id="">Rejected</span></option>
-                                                        <option value='UAT'><span
-                                                            class="us-item-status-rejected comment-content-header-status"
-                                                            id="">UAT</span></option>
-                
-                                                    </select>
-                                                </div>
-                                            </div>            
-                                        </div>
-            
-            
-            
-                                        <div class="col-lg-4 statusCardStory mb-3">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Task Nature</label>
-                                                <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
-                                                <div class="form-group">
-                                                    <select class="form-control task-info-modal-nature" style="width:auto"
-                                                            onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
-                                                        <option value='new'><span
-                                                            class="us-item-status-new comment-content-header-status">New Request</span>
-                                                        </option>
-                                                        <option value='change'> <span
-                                                            class="us-item-status-ongoing comment-content-header-status" id="">Change
-                                                            Request</span></option>
-                                                        <option value='bug'><span
-                                                            class="us-item-status-closed comment-content-header-status" id="">Bug</span>
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-            
-                                        <div class="col-lg-4 statusCardStory task-mgmt-tasktype mb-3" id='task-mgmt-tasktype'>
-                                          <div class="cs-input-group">
-                                            <label class="input-group-addon">Task Type</label>
-                                            <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
-                                            <div class="form-group">
-            
-                                                <select class="form-control task-info-modal-tasktype" style="width:auto"
-                                                        onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
-                                                        id="task-info-modal-tasktype">
-            
-            
-                                                </select>
-                                            </div>
-                                          </div>            
-                                        </div>
-                                        <div class="col-lg-4 statusCardStory">
-                                          <div class="cs-input-group">
-                                            <label class="input-group-addon">Priority</label>
-                                            <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
-                                            <div class="form-group ">
-                                                <select class="form-control task-info-modal-priority" style="width:auto"
-                                                        onchange="updateTask4ShortChange(this, 'taskPriority')"
-                                                        id="task-info-modal-priority">
-                                                    <option value='1' selected>1- Lowest</option>
-                                                    <option value='2'>2</option>
-                                                    <option value='3'>3</option>
-                                                    <option value='4'>4</option>
-                                                    <option value='5'>5</option>
-                                                    <option value='6'>6</option>
-                                                    <option value='7'>7</option>
-                                                    <option value='8'>8</option>
-                                                    <option value='9'>9 - Highest</option>
-                                                </select>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">           
-                                        <div class="col-lg-12 addEpicTask">
-                                          <div class="cs-input-group">
-                                            <label>
-                                               Story Card
-                                        </label>
-                                       <span>
-                                            <a  href="#" class=" comment-content-header-history"
-                                                    onclick="showUserStoryOfTaskCardModal(this)"
-                                                    id='task-mgmt-modal-user-story'>
-                                            </a>
-                                            <a href="#" class=" comment-content-header-history mb-1"
-                                            onclick="changeUserStoryOfTaskModal()">
-                                            Change Story Card
-                                    </a>
-                                        </span>
-                                            </div>
-                                          </div>
-                                
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="row">
-                                        <div class="cs-input-group Assigne-card-story">
-                                            <label class="input-group-addon">Assignee</label>
-
-                                            <div class="Assigne-card-story-select form-control">
-                                                <div id='task-mgmt-assignee'>
-                                                    <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
-                                                        srcset="">
-                                                    <span class="Assigne-card-story-select-name">Unassigned</span>
-                                                </div>
-                                                <input type="search" class="Assigne-card-story-search form-control">
-
-                                                <div class="Assigne-card-story-select-content ">
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="cs-input-group Assigne-card-story">
-                                            <label class="input-group-addon">Created by</label>
-
-                                            <div class="Assigne-card-story-select form-control">
-                                                <div id='task-mgmt-create-by'>
-                                                    <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
-                                                        srcset="">
-                                                    <span class="Assigne-card-story-select-name">Unassigned</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="cs-input-group Assigne-card-story">
-                                            <label class="input-group-addon">Updated By: <span class="by-last-updated" style="float:right"><span class="task_detail_created_date"></span> / <span class="task_detail_created_time"></span></span></label>
-
-                                            <div class="Assigne-card-story-select form-control">
-                                                <div id='task-mgmt-closed-by'>
-                                                    <img class="Assigne-card-story-select-img" src="resource/img/rev.png" alt=""
-                                                        srcset="">
-                                                    <span class="Assigne-card-story-select-name">Unassigned</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                <div class="row">
-                                    <div class="cs-forum-group addEpicTask">
-                                        <div class="dropdown-task show">
-                                            <span href="#" class="comment-content-header-history">
-                                                Sprint<br>
-                                            </span>
-
-                                            <span class="comment-content-header-history task-mgmt-modal-sprintname"
-                                                style="color:black;" id="task-mgmt-modal-sprintname">
-
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-4 estimateHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Estimated Hour(s)</label>
-                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedHours')"
-                                                class="taskEstimationHoursInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                id="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4 spentHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Spent Hour(s)</label>
-                                            <input placeholder="None" class="taskSpentHoursInput estimateHourseInput form-control cs-input"
-                                                onchange="updateTask4ShortChange(this, 'spentHours')" type="number" name="" id="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4 estimateHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Estimated Counter</label>
-                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedCounter')"
-                                                class="taskEstimatedCounterInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                id="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4 spentHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Executed Counter</label>
-                                            <input placeholder="None" class="taskExecutedCounterInput estimateHourseInput form-control cs-input"
-                                                onchange="updateTask4ShortChange(this, 'executedCounter')" type="number" name="" id="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4 estimateHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Estimated Budget</label>
-                                            <input placeholder="None" onchange="updateTask4ShortChange(this, 'estimatedBudget')"
-                                                class="taskEstimatedBudgetInput estimateHourseInput form-control cs-input" type="number" name=""
-                                                id="">
-                                        </div>
-                                    </div>
-                                    <div class="col-4 spentHours">
-                                        <div class="cs-input-group">
-                                            <label class="input-group-addon">Spent Budget</label>
-                                            <input placeholder="None" class="taskSpentBudgetInput estimateHourseInput form-control cs-input"
-                                                onchange="updateTask4ShortChange(this, 'spentBudget')" type="number" name="" id="">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- <div class="statusCardStory">
-                                    <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
-                                    <div class="form-group statusSelectSelect">
-                
-                                        <select class="form-control" 
-                                                style="width:auto"
-                                                onchange="updateTask4ShortChange(this, 'taskVersion')"
-                                                id="task-info-change-version">
-                
-                
-                                        </select>
-                                    </div>
-                
-                                </div>-->
-                                   </div>
-                                </div>
-                                <div class="tab-pane fade shedule-elements" id="d-task-tab2" role="tabpanel" aria-labelledby="pills-d-task-tab2">
-                                    <div class="row">
-                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <!-- <label class="input-group-addon">Activate
-                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
-                                                </label>     -->
-                                                
-                                                <label class="checkmarkcontainer">Activate
-                                                    <input type="checkbox" name="activateSchedule" id="runTaskStartDate_activateschedule">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row soon">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Start Date</label>
-                                                <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">End Date</label>
-                                                <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Run Time</label>
-                                                <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Intensive</label>
-                                                <select class="" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
-                                                    <option value="weekly">Weekly</option>
-                                                    <option value="monthly">Monthly</option>
-                                                    <option value="yearly">Yearly</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Repeat every</label>
-                                                <select class="" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Status</label>
-                                                <select class="" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
-                                                    <option value="active">Active</option>
-                                                    <option value="passive">Passive</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row soon weekly-actions run-intensive run-enabled mt-3">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
-                                        </div>
-                                        <div class="col-md-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Weekday</label>
-                                                <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
-                                                    <option value="monday">Monday</option>
-                                                    <option value="tuesday">Tuesday</option>
-                                                    <option value="wednesday">Wednesday</option>
-                                                    <option value="thursday">Thursday</option>
-                                                    <option value="friday">Friday</option>
-                                                    <option value="saturday">Saturday</option>
-                                                    <option value="sunday">Sunday</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row soon" style="display: none;">
-                                        <input type="hide" id="hide_actions_detail">
-                                        <input type="hide" id="hide_actions_param_detail">
-                                        <input type="hide" id="hide_actions_param_2_detail">
-                                    </div>
-                                    <div class="row soon monthly-actions run-intensive mt-3">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
-                                        </div>
-                                        <div class="cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group horizontal ml-3 mt-2">
-                                                <div class="input-group-addon">Specification</div>
-                                                <label class="checkcontainer">Last day of month
-                                                    <input type="radio" checked="checked" name="radio" id="last_day_of_month_detail">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer">First day of month
-                                                    <input type="radio" name="radio" id="first_day_of_month_detail">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Specific day of month
-                                                    <input type="radio" name="radio" id="specific_day_of_month_detail">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Before last day of month
-                                                    <input type="radio" name="radio" id="before_last_day_of_month_detail">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Specific weekday of month 
-                                                    <input type="radio" name="radio" id="specific_weekday_of_month_detail">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <hr class="hr_spa">
-                                            <div class="row">
-                                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                    <div class="cs-input-group ml-3">
-                                                        <label class="input-group-addon">Day of Month</label>
-                                                        <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
-                                                            <option value="1">1</option>
-                                                            <option value="2">3</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                            <option value="13">13</option>
-                                                            <option value="14">14</option>
-                                                            <option value="15">15</option>
-                                                            <option value="16">16</option>
-                                                            <option value="17">17</option>
-                                                            <option value="18">18</option>
-                                                            <option value="19">19</option>
-                                                            <option value="20">20</option>
-                                                            <option value="21">21</option>
-                                                            <option value="22">22</option>
-                                                            <option value="23">23</option>
-                                                            <option value="24">24</option>
-                                                            <option value="25">25</option>
-                                                            <option value="26">26</option>
-                                                            <option value="27">27</option>
-                                                            <option value="28">28</option>
-                                                            <option value="29">29</option>
-                                                            <option value="30">30</option>
-                                                            <option value="31">31</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <label class="input-group-addon">Day(s) before last day of month</label>
-                                                        <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month_detail" type="number" required>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <label class="input-group-addon">Action</label>
-                                                        <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
-                                                            <option value="first">First</option>
-                                                            <option value="last">Last</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <label class="input-group-addon">Weekdays</label>
-                                                        <select name="swofm_weekday_select" id="swofm_weekday_select_detail" data-live-search="true">
-                                                            <option value="monday">Monday</option>
-                                                            <option value="tuesday">Tuesday</option>
-                                                            <option value="wednesday">Wednesday</option>
-                                                            <option value="thursday">Thursday</option>
-                                                            <option value="friday">Friday</option>
-                                                            <option value="saturday">Saturday</option>
-                                                            <option value="sunday">Sunday</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row soon yearly-actions run-intensive mt-3">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
-                                        </div>
-                                        <div class="cs-flex-col flex-item ml-3 mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Execution Data</label>
-                                                <input class="form-control" id="runTaskExecutiveDate_detail" type="text" name="runTaskExecutiveDate" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row soon">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="input-group-addon">Select Reminder</label>
-                                                <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
-                                                    <option value="at_start_time">At start time</option>
-                                                    <option value="5_minutes_before">5 minutes before</option>
-                                                    <option value="10_minutes_before">10 minutes before</option>
-                                                    <option value="15_minutes_before">15 minutes before</option>
-                                                    <option value="20_minutes_before">20 minutes before</option>
-                                                    <option value="25_minutes_before">25 minutes before</option>
-                                                    <option value="30_minutes_before">30 minutes before</option>
-                                                    <option value="45_minutes_before">45 minutes before</option>
-                                                    <option value="1_hour_before">1 hour before</option>
-                                                    <option value="2_hours_before">2 hours before</option>
-                                                    <option value="3_hours_before">3 hours before</option>
-                                                    <option value="12_hours_before">12 hours before</option>
-                                                    <option value="24_hours_before">24 hour before</option>
-                                                    <option value="2_days_before">2 days before</option>
-                                                    <option value="1_week_before">1 week before</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="d-task-tab3" role="tabpanel" aria-labelledby="pills-d-task-tab3">
-                                    <div class="task-check-list-textarea">
-                                        <div class="cs-input-group mb-3">
-                                            <div class="input-group-addon">Description</div>
-                                            <textarea class="form-control" id="updatetask_checklist"></textarea>
-                                            <button class='btn addCheckListToTask mt-3'>Add Check List</button>
-                                        </div>
-                                    </div>
-                                    <div class="task-check-list">
-            
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="d-task-tab4" role="tabpanel" aria-labelledby="pills-d-task-tab4">
-                                    <div class="cs-input-group mb-3 ml-2">
-                                        <div class="input-group-addon">Observer Name</div>
-                                              <div class="task-check-list-observer p-0 mt-1 mb-3">
-                                                <!-- <button class='btn loadUserForObserver'>Load User</button> -->
-                                                <select class="form-control" id="updatetask_oblerverlist"></select>
-                                                <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
-                                            </div>
-                                            <div class="task-observer-list">
-                        
-                                            </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="d-task-tab5" role="tabpanel" aria-labelledby="pills-d-task-tab5">
-                                    
-                                    <div class="col-lg-12">
-                                        <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Select Task</th>
-                                                    <th>Task ID</th>
-                                                    <th>Parent Task</th>
-                                                    <th>Task Status</th>
-                                                    <!-- <th>Description</th>
-                                                    <th>Created By</th>
-                                                    <th>Updated By</th> -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
-                                                        <i class="fas fa-plus" aria-hidden="true"></i>
-                                                    </a></td>
-                                                    <td><div class="task-id-modal-parent-task"></div></td>
-                                                    <td class="move-to-child">
-                                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                        onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
-                                                        </a>
-                                                    </td>
-                                                    <td><div class="task-status-modal-parent-task"></div></td>
-                                                  </tr>
-                                            </tbody>
-                                        </table>
-                                        
-                                        <!-- <div class="cs-input-group">
-                                             <div class="dropdown-task show">
-                                                 <a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
-                                                     Parent Task<br>
-                                                 </a>
- 
-                                                 <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                     onclick="shiftTaskInfoOnTaskInfoModal(this)"
-                                                     id='task-mgmt-modal-parent-task'>
-                                             </a>
-                                             </div>
-                                        </div> -->
-                                     </div>
- 
- 
-                                     <div class="col-lg-12 mt-5">
-
-                                        <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Task ID</th>
-                                                    <th>Child Task</th>                                                    
-                                                    <th>Task Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-
-                                        <!-- <div class="cs-input-group">
-                                         <div class="dropdown-task show">
-                                             <a href="#" class="btn comment-content-header-history">
-                                                 Child Task<br>
-                                             </a>
- 
-                                             <a class="btn comment-content-header-history task-mgmt-modal-child-task"
-                                                 id='task-mgmt-modal-child-task'>
-                                         </a>
-                                         </div>
-                                        </div> -->
-                                     </div>
-                                </div>
-                                <div class="tab-pane fade task-events-updated" id="d-task-tab6" data-taskId="" role="tabpanel" aria-labelledby="pills-d-task-tab6">
-                                    <div class="row">
-                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <!-- <label class="input-group-addon">Activate
-                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
-                                                </label>     -->
-                                                
-                                                <label class="checkmarkcontainer">Activate
-                                                    <input type="checkbox" name="activateUpdatedEvenets" id="activateUpdatedEvenets">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Subject</div>
-                                                <input class="form-control updevents" name="mezmun" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Structure</div>
-                                                <input class="form-control updevents" name="struktur" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Type</div>
-                                                <input class="form-control updevents" name="nov" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Responsible person</div>
-                                                <input class="form-control updevents" name="mesulShexs" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Participant</div>
-                                                <input class="form-control updevents" name="istirakci" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Counterparty</div>
-                                                <input class="form-control updevents" name="kontragent" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Location</div>
-                                                <input class="form-control updevents" name="yer" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Note</div>
-                                                <input class="form-control updevents" name="qeyd" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <hr>
-                            </div>
-                            <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
-                                <div class="cs-input-group mt-2">
-                                    <label class="checkmarkcontainer">Notify you about the confirmation?
-                                        <input type="checkbox" id="sendnotification_detail">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                    </div>
-                </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
+</div>
 </div>
 
 
@@ -6764,19 +5975,19 @@
                 </button>
             </div>
             <div class="modal-body">
-               <div class="row">
-                   <div class="col-6" style="height: 50vh;" id="panel-html"></div>
-                
-                   <div class="col-6"  style="height: 50vh;" id="panel-css"></div>
-               </div>
+                <div class="row">
+                    <div class="col-6" style="height: 50vh;" id="panel-html"></div>
+
+                    <div class="col-6"  style="height: 50vh;" id="panel-css"></div>
+                </div>
             </div>
-           
+
         </div>
     </div>
 </div>
 <div class="modal fade" id="addUserStoryPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
 
             <div class="modal-body">
@@ -6798,7 +6009,7 @@
 
                 </div>
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" onclick="addUserStoryNewPopup()">
                     Add
                 </button>
@@ -6810,7 +6021,7 @@
 
 <div class="modal fade" id="updateUserStoryPopupModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
 
             <div class="modal-body">
@@ -6832,7 +6043,7 @@
 
                 </div>
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" onclick="updateUserStoryPopup()">
                     Update
                 </button>
@@ -6845,7 +6056,7 @@
 
 <div class="modal fade" id="addNewComponentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add New Input (Component)</h5>
@@ -6936,7 +6147,7 @@
                         <div class="row">
                             <div class="col-6 text-right">
                                 <br>
-                                <button class="form-control btn btn-primary" style="width1:160px;"
+                                <button class="form-control btn btn-primary" 
                                         onclick="createNewInputComponent(this)">Add</button>
 
 
@@ -6965,7 +6176,7 @@
 
 <div class="modal fade" id="addRelatedSourceCodeModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Source Code</h5>
@@ -6998,7 +6209,7 @@
                             <div class=" col-2">
                                 <br>
                                 <button class=" btn btn-primary toggleRelatedSourceCode4DescClass "
-                                        onclick="new addNewSourceCodeFromDesc()" style="">Add</button>
+                                        onclick="new addNewSourceCodeFromDesc()" >Add</button>
                             </div>
                         </div>
                     </div>
@@ -7025,7 +6236,7 @@
 
 <div class="modal fade" id="addRelatedApiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Related API</h5>
@@ -7090,7 +6301,7 @@
 </div>
 
 <!--    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document" style="min-width1: 60%">
+   <div class="modal-dialog" role="document" >
        <div class="modal-content">
            <div class="modal-header">
                <h5 class="modal-title" id="exampleModalLabel">Properties</h5>
@@ -7673,6 +6884,87 @@
     </div>
 </div>
 
+<div class="modal fade" id="addNewDetailedTaskModal-multi-new" tabindex="-1" style="margin-top:50px;" role="dialog"
+     aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add NewTask</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 12px;">
+                <div class="row ">
+                    <div class="col-9  hidden" hidden>
+
+                        <input id="addNewDetailedTaskModal_filelist-new" rows="2" type='hidden' value='-1'
+                               class="form-control">
+                        <input id="addNewDetailedTaskModal_backlogid-new" rows="2" type='hidden' value='-1'
+                               class="form-control">
+                        <input id="addNewDetailedTaskModal_projectid-new" rows="2" type='hidden' value='-1'
+                               class="form-control">
+                    </div>
+                    <div class="col-12 p-4 ">
+                        <label>Comment</label>
+                        <textarea id="addNewDetailedTaskModal_description-new" rows="3" type="" class="form-control"></textarea>
+                    </div>
+
+                    <div class="col-12 " >
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        <label>Assignee</label>
+                                        <select class="form-control" style="width:100%"
+                                                id="addNewDetailedTaskModal_assignee-new">
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <label>Task Type</label>
+                                        <select class="form-control" style="width:100%; "
+                                                id="addNewDetailedTaskModal_tasktype-new">
+                                        </select>
+                                    </th>
+                                    <th>
+
+                                        <i class="fa fa-plus" onclick="addUserStoryToTask_addAssignees_event()"
+                                           style="padding-bottom:10px;font-size: 23px;color:blue;"></i>
+                                    </th>
+                                    <th>
+                                        <label>Task Nature</label>
+                                        <select class="form-control" style="width:100%" id="addNewDetailedTaskModal_tasknature-new">
+                                            <option value="new">New Request</option>
+                                            <option value="change" selected> Change Request</option>
+                                            <option value="bug">Bug</option>
+                                        </select>
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            <tbody id='addNewDetailedTaskModal_assigneelist-new'>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12" id="addNewDetailedTaskModal_list">
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="addNewDetailedTaskActionEvent1()">
+                    Add
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="addNewDetailedTaskModal" tabindex="-1" style="margin-top:50px;" role="dialog"
      aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
@@ -7905,7 +7197,7 @@
 
 
 <div class="modal fade" id="addUserStoryPopupModalwithProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width1: 60%">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
 
             <div class="modal-body">
@@ -7935,7 +7227,7 @@
 
                 </div>
             </div>
-            <div class="modal-footer" style="display1:block;">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" onclick="addUserStoryNewPopupBug()">
                     Add
                 </button>
@@ -8145,7 +7437,7 @@
 
                             </tr>
                         </thead>
-                        <tbody style="cursor1:pointer">
+                        <tbody >
                         </tbody>
                     </table>
                 </div>
@@ -9137,552 +8429,6 @@
         </div>
     </div>
 
-    <div class="modal fade cs-modal-box issue-managment-add-task" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" style="max-width: 50%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel">Add Task</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="cs-input-group mb-3">
-                                <div class="input-group-addon">Title</div>
-                                <input type="text" class="form-control" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
-                            </div>
-                            <div class="cs-input-group">
-                                <div class="input-group-addon">Description</div>
-                                <textarea name="commentinput_for_taskcreate" id="addComment4Task_comment_new" class="commentinput form-control" placeholder="Add a description.." rows="1"></textarea>
-                                <br>
-                             
-                                <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
-                                     style="width:100%;display: none; padding:0px;margin:0px;">
-                                    <div class="col-12 text-center canvas_canvas_msg "
-                                         style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
-                                        <h5>Copy and Paste Image Here</h5>
-                                    </div>
-                                </div>
-                                <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" style="display: none;">
-
-                                    <div data-toggle="tooltip"  style="" id="file1134"                                         
-                                         class=" tooltipMan component-class  
-                                         col-lg-12 hover-prototype-selector  ">
-                                        <form>
-                                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
-                                                   sa-type="filepicker" style="" type="file" value="" row-no="" 
-                                                   pdid="21112211275108954370" id="addComment4Task_addnewfile" 
-                                                   multiple="" 
-                                                   fname="">
-                                        </form>
-                                        <div id="progress_bar_new"><br>
-
-
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-                                <button type="button" id="addIssueButtonId" class="btn btn-primary task-step-1">Add</button>
-                            </div>
-                            <div class="cs-input-group task-step-2">
-                                <button type="button" class="btn btn-primary add-new-task">Add New</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12" style="padding: 0 25px;">
-                            <hr>
-                            <ul class="nav nav-pills mb-3 mt-5" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true">Details</a>
-                                </li>
-                                <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false">Schedule</a>
-                                </li>
-                                <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false">Check List</a>
-                                </li>
-                                <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false">Observer</a>
-                                </li>
-                                <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false">Subtask</a>
-                                </li>
-                                <li class="nav-item after-add-task" role="presentation">
-                                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false">Events</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade task-tab1" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
-                                    <div class='row'>
-                                        <div class="col-lg-4  mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control" data-live-search="true" data-actions-box="true"
-                                                style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
-                                                title="Project"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                                id='bug_filter_assignee_id_add' title="Assignee"></select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                data-live-search="true" id='bug_filter_backlog_id_add' title="Story Card">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                data-live-search="true" id='bug_task_type_id_add' title="Task Type"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                                    id='bug_task_nature_id_add' title="Task Nature">
-                                                    <option value="bug" selected="">Bug</option>
-                                                    <option value="change" selected="">Change Request</option>
-                                                    <option value="new" selected="">New Request</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mt-2">
-                                            <div class="cs-input-group">
-                                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true"
-                                                    data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
-                                                <option value=''>None</option>
-                                                <option value='1'>1- Lowest</option>
-                                                <option value='2'>2</option>
-                                                <option value='3'>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                                <option value='6'>6</option>
-                                                <option value='7'>7</option>
-                                                <option value='8'>8</option>
-                                                <option value='9'>9 - Highest</option>
-
-                                            </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade run-shedule-elements task-tab2" id="task-tab2" role="tabpanel" aria-labelledby="task-tab2-tab">
-                                    <div class="row">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <label class="checkmarkcontainer">Activate
-                                                    <input type="checkbox" id="runTaskAvtivateSchedule">
-                                                    <span class="checkmark"></span>
-                                                </label>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row rsoon">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Start Date</div>
-                                                <input class="form-control" name="runTaskStartDate" id="runTaskStartDate" type="date" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">End Date</div>
-                                                <input class="form-control" name="runTaskiceEndDate" id="runTaskEndDate" type="text" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Run Time</div>
-                                                <input class="form-control" name="runTaskTime" id="runTaskTime" type="text" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Intensive</div>
-                                                <select class="" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
-                                                    <option value="weekly">Weekly</option>
-                                                    <option value="monthly">Monthly</option>
-                                                    <option value="yearly">Yearly</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Repeat every</div>
-                                                <select class="" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Status</div>
-                                                <select class="" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
-                                                    <option value="active">Active</option>
-                                                    <option value="passive">Passive</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row rsoon weekly-actions run-intensive run-enabled">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Weekly Actions</strong> <span></span></h5>
-                                        </div>
-                                        <div class="col-md-3 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Weekday</div>
-                                                <select class="" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
-                                                    <option value="monday">Monday</option>
-                                                    <option value="tuesday">Tuesday</option>
-                                                    <option value="wednesday">Wednesday</option>
-                                                    <option value="thursday">Thursday</option>
-                                                    <option value="friday">Friday</option>
-                                                    <option value="saturday">Saturday</option>
-                                                    <option value="sunday">Sunday</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row rsoon" style="display: none;">
-                                        <input type="hide" id="hide_actions">
-                                        <input type="hide" id="hide_actions_param">
-                                        <input type="hide" id="hide_actions_param_2">
-                                    </div>
-                                    <div class="row rsoon monthly-actions run-intensive">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Monthly Action</strong> <span></span></h5>
-                                        </div>
-                                        <div class="cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group horizontal ml-3 mt-2">
-                                                <div class="input-group-addon">Specification</div>
-                                                <label class="checkcontainer">Last day of month
-                                                    <input type="radio" checked="checked" name="monthlyAction" id="monthlyAction" value="last_day_of_month">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer">First day of month
-                                                    <input type="radio" name="monthlyAction" id="monthlyAction" value="first_day_of_month">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Specific day of month
-                                                    <input type="radio" name="monthlyAction" id="monthlyAction" value="specific_day_of_month">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Before last day of month
-                                                    <input type="radio" name="monthlyAction" id="monthlyAction" value="before_last_day_of_month">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                                <label class="checkcontainer spa">Specific weekday of month 
-                                                    <input type="radio" name="monthlyAction" id="monthlyAction" value="specific_weekday_of_month">
-                                                    <span class="radiobtn"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <hr class="hr_spa">
-                                            <div class="row">
-                                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                    <div class="cs-input-group ml-3">
-                                                        <div class="input-group-addon">Day of Month</div>
-                                                        <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
-                                                            <option value="1">1</option>
-                                                            <option value="2">3</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                            <option value="13">13</option>
-                                                            <option value="14">14</option>
-                                                            <option value="15">15</option>
-                                                            <option value="16">16</option>
-                                                            <option value="17">17</option>
-                                                            <option value="18">18</option>
-                                                            <option value="19">19</option>
-                                                            <option value="20">20</option>
-                                                            <option value="21">21</option>
-                                                            <option value="22">22</option>
-                                                            <option value="23">23</option>
-                                                            <option value="24">24</option>
-                                                            <option value="25">25</option>
-                                                            <option value="26">26</option>
-                                                            <option value="27">27</option>
-                                                            <option value="28">28</option>
-                                                            <option value="29">29</option>
-                                                            <option value="30">30</option>
-                                                            <option value="31">31</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_days_before_last_day_of_month run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <div class="input-group-addon">Day(s) before last day of month</div>
-                                                        <input class="form-control" name="days_before_last_day_of_month" id="days_before_last_day_of_month" type="number" required>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <div class="input-group-addon">Action</div>
-                                                        <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
-                                                            <option value="first">First</option>
-                                                            <option value="last">Last</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
-                                                    <div class="cs-input-group">
-                                                        <div class="input-group-addon">Weekdays</div>
-                                                        <select name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
-                                                            <option value="monday">Monday</option>
-                                                            <option value="tuesday">Tuesday</option>
-                                                            <option value="wednesday">Wednesday</option>
-                                                            <option value="thursday">Thursday</option>
-                                                            <option value="friday">Friday</option>
-                                                            <option value="saturday">Saturday</option>
-                                                            <option value="sunday">Sunday</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row rsoon yearly-actions run-intensive">
-                                        <div class="col-12">
-                                            <h5 class="section-title"><strong>Yearly</strong> <span></span></h5>
-                                        </div>
-                                        <div class="cs-flex-col flex-item ml-3 mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Execution Data</div>
-                                                <input class="form-control" id="runTaskExecutiveDate" type="text" name="runTaskExecutiveDate" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row rsoon">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Select Reminder</div>
-                                                <select class="" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
-                                                    <option value="at_start_time">At start time</option>
-                                                    <option value="5_minutes_before">5 minutes before</option>
-                                                    <option value="10_minutes_before">10 minutes before</option>
-                                                    <option value="15_minutes_before">15 minutes before</option>
-                                                    <option value="20_minutes_before">20 minutes before</option>
-                                                    <option value="25_minutes_before">25 minutes before</option>
-                                                    <option value="30_minutes_before">30 minutes before</option>
-                                                    <option value="45_minutes_before">45 minutes before</option>
-                                                    <option value="1_hour_before">1 hour before</option>
-                                                    <option value="2_hours_before">2 hours before</option>
-                                                    <option value="3_hours_before">3 hours before</option>
-                                                    <option value="12_hours_before">12 hours before</option>
-                                                    <option value="24_hours_before">24 hour before</option>
-                                                    <option value="2_days_before">2 days before</option>
-                                                    <option value="1_week_before">1 week before</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="tab-pane fade task-check-list-created" id="task-tab4" role="tabpanel" aria-labelledby="task-tab4-tab">
-
-                                    <div class="task-check-list-textarea">
-                                        <div class="cs-input-group mb-3">
-                                            <div class="input-group-addon">Check List</div>
-                                            <textarea name="commentinput_for_taskcreatechecklist" id="commentinput_for_taskcreatechecklist" 
-                                              class=" form-control" placeholder="Add a check list.." rows="4"></textarea>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="tab-pane fade task-check-list-created" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
-                                    <div class="cs-input-group mb-3 ml-2">
-                                        <div class="input-group-addon">Observer Name</div>
-                                              <div class="task-check-list-observer p-0 mt-1 mb-3">
-                                                <!-- <button class='btn loadUserForObserver'>Load User</button> -->
-                                                <select class="form-control" id="createdtask_oblerverlist"></select>
-                                                <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
-                                            </div>
-                                            <div class="task-observer-list">
-                        
-                                            </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade task-subtask-created" id="task-tab6" role="tabpanel" aria-labelledby="task-tab6-tab">
-                                
-                                    <div class="col-lg-12">
-                                        <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Select Task</th>
-                                                    <th>Task ID</th>
-                                                    <th>Parent Task</th>
-                                                    <th>Task Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><a href="#" class="btn comment-content-header-history" onclick="changeParentTaskModal()">
-                                                        <i class="fas fa-plus" aria-hidden="true"></i>
-                                                    </a></td>
-                                                    <td><div class="task-id-modal-parent-task"></div></td>
-                                                    <td class="move-to-child">
-                                                        <a class="btn comment-content-header-history task-mgmt-modal-parent-task"
-                                                        onclick="shiftTaskInfoOnTaskInfoModal(this)" id='task-mgmt-modal-parent-task'> To Child
-                                                        </a>
-                                                    </td>
-                                                    <td><div class="task-status-modal-parent-task"></div></td>
-                                                  </tr>
-                                            </tbody>
-                                        </table>
-                                        
-                                       </div>
- 
- 
-                                     <div class="col-lg-12 mt-5">
-
-                                        <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Task ID</th>
-                                                    <th>Child Task</th>                                                    
-                                                    <th>Task Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                     </div>
-                                </div>
-                                <div class="tab-pane fade task-events-created" id="task-tab3" role="tabpanel" aria-labelledby="task-tab2-tab">
-                                    <div class="row">
-                                        <div class="col-lg-12 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <!-- <label class="input-group-addon">Activate
-                                                <input class="form-control cs-input" id="runTaskStartDate_activateschedule" type="checkbox" required>
-                                                </label>     -->
-                                                
-                                                <label class="checkmarkcontainer">Activate
-                                                    <input type="checkbox" name="activateCreatedEvenets" id="activateCreatedEvenets" value="">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Subject</div>
-                                                <input class="form-control" name="mezmun" id="ivent-mezmun" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Structure</div>
-                                                <input class="form-control" name="struktur" id="ivent-struktur" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Type</div>
-                                                <input class="form-control" name="nov" id="ivent-nov" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Responsible person</div>
-                                                <input class="form-control" name="mesulShexs" id="ivent-mesulShexs" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Participant</div>
-                                                <input class="form-control" name="mesulShexs" id="ivent-istirakci" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Counterparty</div>
-                                                <input class="form-control" name="mesulShexs" id="ivent-kontragent" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Location</div>
-                                                <input class="form-control" name="yer" id="ivent-yer" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
-                                            <div class="cs-input-group">
-                                                <div class="input-group-addon">Note</div>
-                                                <input class="form-control" name="qeyd" id="ivent-qeyd" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <hr>
-                        </div>
-                        <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
-                            <div class="cs-input-group mt-2">
-                                <label class="checkmarkcontainer">Notify you about the confirmation?
-                                    <input type="checkbox" id="sendnotification">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="run-msg"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button> -->
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="task-ongoing-large-modal4backlog" style="z-index: 1045;" tabindex="-1" role="dialog"
          aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;"
@@ -9848,7 +8594,7 @@
                                                                     </div>
                                                                     <div class="modal fade" id="addApiPopupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                                          aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document" style="min-width1: 60%">
+                                                                        <div class="modal-dialog" role="document" >
                                                                             <div class="modal-content">
 
                                                                                 <div class="modal-body">
@@ -9869,7 +8615,7 @@
 
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="modal-footer" style="display1:block;">
+                                                                                <div class="modal-footer" >
                                                                                     <button type="button" class="btn btn-primary" onclick="addApiNewPopup()">
                                                                                         Add
                                                                                     </button>
@@ -9962,16 +8708,7 @@
 
                                                                             } else {
 
-                                                                                //                                                                                    request = window.indexedDB.open("sa-db", 1);
-                                                                                //                                                                                    request.onupgradeneeded = function (event) {
-                                                                                //                                                                                        db = event.target.result;
-                                                                                //                                                                                        objectStore = db.createObjectStore("subdb", {
-                                                                                //                                                                                            keyPath: "bid",
-                                                                                //                                                                                        });
-                                                                                //                                                                                    }
-                                                                                //                                                                                    request.onsuccess = function (event) {
-                                                                                //                                                                                        db = request.result;
-                                                                                //                                                                                    }
+
 
                                                                                 loadFromIndexedDBtoRAM4LivePrototype();
                                                                                 init4Core();
@@ -9981,7 +8718,13 @@
 
 
                                                                             }
-
+                                                                            // $('.cs-core-issue-management').each(function() {
+                                                                            //     if($(this).closest('body')) {
+                                                                            //         $('body').css('position','fixed');
+                                                                            //     }else{
+                                                                            //         $('body').removeAttr('style');
+                                                                            //     }
+                                                                            // });
 
 
                                                                         });

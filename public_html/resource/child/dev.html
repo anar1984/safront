@@ -56,10 +56,31 @@
                id="storycard-panel-backlog-id"  title = 'Refresh'>
           
     </div>
+    <div class="cs-col-storecard-general-setting ml-1">
+        <button class="btn btn-outline-secondary live-prototype-show-story-card-hard-refresh" title="Refresh">
+            <i class="live-prototype-show-story-card1 fa fa-refresh " style="font-size: 10px;cursor: pointer;" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="cs-col-storecard-general-setting ml-1">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="vertical-align: -webkit-baseline-middle;">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-info btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-history"></i>
+                </button>
+                <div class="dropdown-menu" id="item-history-list" aria-labelledby="btnGroupDrop1">
+
+                </div>
+            </div>
+            <button   id="backBacklogBtn-block"   type="button" class="btn btn-info btn-sm " >
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+        </div>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col print-container pdf page-content"  id="exportContent">
+    <div class="col print-container pdf page-content"  style="height: calc(100vh - 80px);overflow: auto;" id="exportContent">
         <!-- 
         <div class="row">
             <div class="col-12 text-center">
@@ -198,6 +219,8 @@
                                 onclick="new UserStory().setAsOutput()">Set as Output</button>
                         <button class="dropdown-item firstbut " data-toggle="modal" 
                                 onclick="addInputListToTaskNew()"  >Add to Task </button>
+                        <button class="dropdown-item firstbut " data-toggle="modal" 
+                                onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
 
                         <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
                                 onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>
@@ -365,8 +388,9 @@
                     <div class="col-6">
                         <div class="cs-forum-group pt-4">
                             <label class="cs-label-name all-cs-status">Type</label>
-                            <select class="user-story-backlog-type user-story-short-change" disabled='disabled' data-type="backlogType" id="user-story-type">
+                            <select class="user-story-backlog-type user-story-short-change" disabled1='disabled' data-type="backlogType" id="user-story-type">
                                  <option value="api"  selected="selected">Backend Function(API)</option>
+                                  <option value="gui"  >GUI Mockup</option>
                             </select>
                         </div>
                     </div>
@@ -418,11 +442,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cs-forum-group mt-3">
+                            <label class="cs-label-name">Change Project</label>
+                            <select onchange="" data-type="fkProjectId" class="form-control user-story-short-change projectList_for_change_storycard" 
+                            data-live-search="true" name="" id="">
+                    </select>
+                            
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
             <!-- switch on off  -->
-            <div class="story-card-right-menu-panels   prototype-on-off col-12">
+            <div class="story-card-right-menu-panels  story-card-right-menu-panels-api  prototype-on-off col-12">
                 <div>
                     <h3>Is API</h3>
                 </div>

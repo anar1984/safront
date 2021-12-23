@@ -347,7 +347,8 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
-        
+        getRelatedStoryCardByApiId();
+
     }
 }
 
@@ -554,6 +555,8 @@ $(document).on('focusin', '.okayPitchYourPathYourWay', function (ev) {
 
 $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function (ev) {
     loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, false);
+    loadBacklogProductionCoreDetailssById(global_var.current_backlog_id);
+    loadCurrentBacklogProdDetails();
     $('.live-prototype-show-story-card-refresh').click();
 })
 
@@ -936,9 +939,9 @@ function setBacklogAsHtml(backlogId, css, js) {
 
     var resTmp = SAInput.toJSONByBacklog(backlogId);
     var oldmodal = global_var.current_modal
-    global_var.current_modal =''
+    global_var.current_modal = ''
     var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-    global_var.current_modal =oldmodal
+    global_var.current_modal = oldmodal
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
 
@@ -963,6 +966,7 @@ function setBacklogAsHtml(backlogId, css, js) {
 
 
 
+
 function getBacklogAsHtml(bid1, isAsync) {
     var out = '';
     var async = (isAsync) ? isAsync : false;
@@ -974,13 +978,16 @@ function getBacklogAsHtml(bid1, isAsync) {
     $.ajax({
         url: urlGl + "api/get/dwd/html/" + global_var.current_domain + "/" + bid,
         type: "GET",
-        contentType: "application/json",
+        contentType: "text/html",
         crossDomain: true,
         async: async,
         success: function (res) {
             out = res;
             if (out.length === 0) {
-                setBacklogAsHtml(bid);
+                var js = window.editorJSnew.getValue();
+                var css = window.editorCSSnew.getValue();
+                setBacklogAsHtml(bid, css, js);
+
             }
         }
     });
@@ -1023,7 +1030,9 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
-                    setBacklogAsHtml(o.id);
+                    var js = window.editorJSnew.getValue();
+                    var css = window.editorCSSnew.getValue();
+                    setBacklogAsHtml(o.id, css, js);
 
                 }
 
@@ -1781,5 +1790,6 @@ $(document).on('click', '.ShowApiRelations', function (ev) {
     });
 
 });
+
 
 

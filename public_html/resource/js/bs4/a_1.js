@@ -1669,9 +1669,17 @@ function loadBacklogProductionDetailsById(bid1) {
 }
 
 function loadCurrentBacklogProdDetails() {
+    var oldaMoadl = global_var.current_modal
     global_var.current_modal = '';
-    setBacklogAsHtml(global_var.current_backlog_id);
-    global_var.current_modal = 'loadLivePrototype';
+    var js = '', css = '';
+    try {
+        js = window.editorJSnew.getValue();
+        css = window.editorCSSnew.getValue();
+    } catch (err) {
+
+    }
+    setBacklogAsHtml(global_var.current_backlog_id, css, js);
+    global_var.current_modal = oldaMoadl;
 
 
 }
@@ -2164,6 +2172,30 @@ function loadBacklogProductionDetailsById_loadInputClassRelation(res) {
     }
 }
 
+function searchFilterTable4LiveProtoptyApi(el, tableId) {
+
+    var input, filter, table, tr, td, i, txtValue, text_id;
+    input = el;
+    filter = input.value.toLowerCase();
+    table = $('#' + tableId);
+
+    tr = table.find("tr").each(function () {
+        td = $(this).text();
+        txtValue = td.toLowerCase();
+        text_id = $(this).find('a').first().attr('bid');
+        if (txtValue) {
+
+            if ((txtValue.indexOf(filter) > -1) || (text_id.indexOf(filter) > -1)) {
+                $(this).css("display", "");
+
+            } else {
+                $(this).css("display", "none");
+
+            }
+        }
+    });
+}
+
 function searchFilterTable(el, tableId) {
 
     var input, filter, table, tr, td, i, txtValue;
@@ -2185,8 +2217,6 @@ function searchFilterTable(el, tableId) {
             }
         }
     });
-
-
 }
 
 function LoadChildDependenceId4Input(fkInputId) {
@@ -2587,7 +2617,7 @@ function getRelatedStoryCardByApiId() {
                     div.append($('<a>')
                             .text((i + 1) + ') ' + o.backlogName)
                             .attr('is_api', '1')
-                            .attr('onclick', 'new UserStory().getStoryInfo("' + o.id + '",this)'))
+                            .attr('onclick', 'new UserStory().redirectUserStoryCore("' + o.id + '")'))
                             .append("<br>")
 
                 }
@@ -2687,6 +2717,20 @@ function showBacklogHistoryClick(el) {
 
     fillBacklogHistory4View(bid, isApi);
 
+
+    if (global_var.current_modal === 'loadStoryCard' || global_var.current_modal === 'loadDev') {
+
+        if (pid === global_var.current_project_id) {
+            $("#storyCardListSelectBox4StoryCard").val(bid)
+            $("#storyCardListSelectBox4StoryCard").change();
+        } else {
+            global_var.current_backlog_id = bid;
+            Utility.addParamToUrl('current_backlog_id', bid);
+            $('select.projectList_liveprototype_storycard').val(pid);
+            $('select.projectList_liveprototype_storycard').change();
+        }
+        return;
+    }
     if (isApi === '1') {
         callStoryCard(bid);
         return;
@@ -2822,18 +2866,18 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) 
 
 function shiftTaskInfoOnTaskInfoModal(el) {
     var taskId = $(el).attr('pid');
-    callTaskCard4BugTask(el, global_var.current_project_id, taskId);
+    taskManagement.updateTask.callTaskCard4BugTask(el, global_var.current_project_id, taskId);
 
 
 }
 
 
 function getParentTask() {
-    $('.task-mgmt-modal-parent-task').text("");
-
+    var body  = $('#d-task-tab5 .parent-task tbody');
+    body.html("")
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2845,31 +2889,39 @@ function getParentTask() {
         async: true,
         success: function (res) {
             try {
-                var fkParentTaskId = res.kv.id;
+                var relId = res.kv.id;
+                    if(!relId){
+                         return
+                    }
+                var fkParentTaskId = res.kv.fkTaskId;
                 if (fkParentTaskId) {
+
+                    
                     var fkProjectId4 = res.kv.fkProjectId;
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(parentTaskName, 50) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                       var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     } catch (error) {
+                        var projectCode ="PRIVATE" ;
+                     }
+                   
                     var taskName = add3Dots2String(parentTaskName, 50);
-                    var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
-                    $('.task-mgmt-modal-parent-task').each(function () {
-                        $(this).text(taskName)
-                                .attr('pid', fkParentTaskId);
-                    })
-                    $('.task-id-modal-parent-task').each(function () {
-                        $(this).text(taskCodeID)
-                    })
-                    $('.task-status-modal-parent-task').each(function () {
-                        $(this).html($('<span>')
-                                .addClass('us-item-status-' + res.kv.taskStatus)
-                                .text(res.kv.taskStatus))
-                    })
+                    
+                    var tr = `<tr>
+                    <td>1</td>
+                    <td>${taskCodeID}</td>
+                    <td><div pid='${fkParentTaskId}' class="task-id-modal-parent-task">${taskName}</div></td>
+                    <td><div class="task-status-modal-parent-task"><span class='us-item-status-${res.kv.taskStatus}'>${res.kv.taskStatus}<span>
+                    </div></td>
+                </tr>`
+                body.append(tr) 
 
                 }
 
             } catch (err) {
+               
             }
         }
     });
@@ -2880,7 +2932,7 @@ function getChildTasks() {
     tbody.html('');
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2891,6 +2943,7 @@ function getChildTasks() {
         crossDomain: true,
         async: true,
         success: function (res) {
+          
             try {
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
@@ -2900,15 +2953,20 @@ function getChildTasks() {
 
 
                     var fkProjectId4 = o.fkProjectId;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(o.taskName, 30) + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                           projectCode =" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = 'PRIVATE';
+
+                    }
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                        .text(n)
+                                        .text(n+1)
                                         )
                                 .append($('<td>')
-                                        .text(+" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                        .text(projectCode)
                                         )
                                 .append($('<td>')
                                         .append($('<a>')
@@ -2918,7 +2976,7 @@ function getChildTasks() {
                                                 .text(add3Dots2String(o.taskName, 50))
                                                 )
                                         )
-                                .append($('<td>')
+                                .append($('<td class="bug-list-column-task-status">')
                                         .append($('<span>')
                                                 .addClass('us-item-status-' + o.taskStatus)
                                                 .text(o.taskStatus)
@@ -2931,6 +2989,7 @@ function getChildTasks() {
                 }
 
             } catch (err) {
+               // alert(err);
             }
         }
     });
@@ -4076,6 +4135,7 @@ function importSendNameApi(filNm) {
 function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
     var pbDiv = $('#' + id).closest('div').find('#progress_bar_new');
 
+
     var idx = makeId(10);
 
     var d = new Object();
@@ -4095,9 +4155,11 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
         contentType: "application/json",
         async: true,
         beforeSend: function () {
-            pbDiv.append('<br>').append($('<span>')
+            pbDiv.append(
+                    $('<div>')
+                    .addClass("file-item")
                     .attr('id', 'pro_zad_span' + idx)
-                    .text(file_name)
+                    .append($("<span class='file-name-attach'>").text(file_name))
                     .append($('<img>')
                             .attr('id', 'pro_zad_' + idx)
                             .attr('src', 'resource/img/loader.gif'))
@@ -4113,7 +4175,7 @@ function uploadFile4IpoCore(fileext, file_base_64, file_name, id) {
 
             $('#pro_zad_' + idx).remove();
             $('#pro_zad_span' + idx)
-                    .after($('<i class="fa fa-times">')
+                    .append($('<i class="fa fa-times">')
                             .attr('pid', idx)
                             .attr('onclick', 'removeFilenameFromZad(this,\'' + finalname + '\')'));
 
@@ -7604,6 +7666,10 @@ function getGUIDataByStoryCard(el) {
     return res;
 }
 
+function getDataFromForm(el) {
+    return getGUIDataByStoryCard(el);
+}
+
 function insertNewInputActionRel(el) {
 
     if (!global_var.current_project_id || !$(el).parents(".animation-block-for-find").find('.input_event_type').val() ||
@@ -9893,6 +9959,18 @@ function addRelatedSourceCodeModal(el) {
     var descId = $('#addRelatedSourceCodeModal-id').val();
     var apidId = $('#addRelatedSourceCodeModal-api').val();
 
+    var attr = $("#addRelatedSourceCodeModal-id").attr('data-fn');
+
+    if (attr === 'callFn') {
+        var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+        select.append($("<option>")
+                .attr('value', apidId)
+                .text(apidId));
+        select.val(apidId)
+        select.change();
+        return
+    }
+
     if (!descId || !apidId)
         return;
 
@@ -10127,11 +10205,20 @@ function addRelatedApi(el, descId) {
 
 function addRelatedSourceCode(el, descId) {
     $('#addRelatedSourceCodeModal-id').val(descId);
+    $('#addRelatedSourceCodeModal-id').attr('data-fn', 'relatedApi');
+    ;
     $('#addRelatedSourceCodeModal').modal('show');
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
 }
-
+function addRelatedCallfn(el) {
+    var descId = $(el).closest('tr').attr('pid')
+    $('#addRelatedSourceCodeModal-id').val(descId);
+    $('#addRelatedSourceCodeModal-id').attr('data-fn', 'callFn');
+    $('#addRelatedSourceCodeModal').modal('show');
+    loadRelatedSourceCode4Relation();
+    loadRelatedGlobalSourceCode4Relation();
+}
 function loadRelatedSourceCode4Relation() {
     //    addRelatedApiModal-api
     $('#addRelatedSourceCodeModal-api').html('');
@@ -11808,7 +11895,7 @@ function commmonOnloadAction(el) {
 
     if (global_var.current_modal === 'loadDashboard') {
         // $('#statistics-projectlist').html($('#projectList').html());
-        setBugFilterProjectAdd('statistics-projectlist')
+        taskManagement.setBugFilterProjectAdd('statistics-projectlist')
         //        $('#statistics-projectlist').prepend($('<option>').text(""))
         $('#statistics-projectlist option').first().remove()
         $('.selectcustom1').selectpicker("refresh");
@@ -13006,44 +13093,71 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
 
-function getIframeBlock(pid, css, js, body) {
+function getIframeBlock(pid, css, js, bodys) {
+    // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
+    // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
+
+    var body = $("<div class='redirectClass h-100'>").html(bodys)
+    var cssBlock = $(body).find('#css-function-list-for-story-card');
+    var jsBlock = $(body).find('#js-function-list-for-story-card')
+    if (cssBlock.length > 0) {
+        $(body).find('#css-function-list-for-story-card').text(css);
+
+    } else {
+        $(body).append($('<style id="js-function-list-for-story-card">').text(css));
+
+    }
+    if (jsBlock.length > 0) {
+        $(body).find('#js-function-list-for-story-card').text(js);
+    } else {
+        $(body).append($('<script id="js-function-list-for-story-card">').text(js));
+    }
+    return body;
     var $iframe = $("<div class='overflow-hidden'>")
-            .append($("<style>").text(css))
-            .append($("<div class='redirectClass h-100'>").html(body))
-            .append($("<script type='text/javascript'>").text(js))
+            .append(body)
 
     return $iframe.html();
 }
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val()
+    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-   
-     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
-         var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+
+    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var oldmodal = global_var.current_modal;
+        global_var.current_modal = '';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
     } else {
-         var html = window.editorHTMLGround.getValue();
+        var html = window.editorHTMLGround.getValue();
     }
     var css = window.editorCSSGround.getValue();
 
 
     var block = getIframeBlock(pid, css, js, html);
 
-    elm.append(block);
+    elm.html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
     insertHtmlSendDbBybacklogId(html);
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+    // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
+    setBacklogAsHtml(global_var.current_backlog_id, css, js);
+
 
 });
 function setBacklogAsHtmlCodeGround(backlogId, html) {
+
+    var jsLink = `<script src="https://app.sourcedagile.com/api/get/script/js/${global_var.current_domain}/${backlogId}.js"></script>`
+    var cssLink = `<link src="https://app.sourcedagile.com/api/get/script/css/${global_var.current_domain}/${backlogId}.css">`
     if (!backlogId) {
         return;
     }
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = html;
+    json.kv.backlogHtml = cssLink + html + jsLink;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -13064,11 +13178,16 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#project-list-codeground").val();
+    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-    
+
     if (!$("#cs-col-Ceckbox-id").prop('checked')) {
-        var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var oldmodal = global_var.current_modal;
+        global_var.current_modal = '';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
     }
@@ -13077,7 +13196,8 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var block = getIframeBlock(pid, css, js, html);
 
-    elm.append(block)
+    elm.html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
 
 
 });
@@ -13364,18 +13484,18 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
                 if (o.id === global_var.current_backlog_id) {
                     op.attr("selected", true);
                 }
-                if(global_var.current_modal==='loadDev'){
-                      
-                      if(o.isApi==='1'){
-                        cmd.append(op); 
+                if (global_var.current_modal === 'loadDev') {
 
-                      }
-                }else{
-                    if(!o.isApi==='1'){
-                        cmd.append(op); 
-                      }
+                    if (o.isApi === '1') {
+                        cmd.append(op);
+
+                    }
+                } else {
+
+                    cmd.append(op);
+
                 }
-              
+
             }
 
             cmd.val(global_var.current_backlog_id);
@@ -14316,31 +14436,32 @@ $(document).on('click', '.loadDocEditor', function (evt) {
     });
 });
 $(document).on('click', '.loadStoryCard', function (evt) {
+
     clearManualProjectFromParam();
     global_var.current_modal = "loadStoryCard";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadStoryCard();
 });
 $(document).on('click', '.loadDev', function (evt) {
-    getProjectUsers();
-    getUsers();
     clearManualProjectFromParam();
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
 function callLoadDev() {
-      
-    $.get("resource/child/dev.html", function (html_string) {
 
+    $.get("resource/child/dev.html", function (html_string) {
+        getProjectUsers();
+        getUsers();
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
-       // loadUsersAsOwner();
+        // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
         $('.cs-col-pagename .mm-title').html('');
@@ -14353,12 +14474,14 @@ function callLoadStoryCard() {
     showToggleMain();
     var f = 'storycard';
     $.get("resource/child/storycard.html", function (html_string) {
-
+        getProjectUsers();
+        getUsers();
 
         //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -14452,13 +14575,17 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
         setProjectListByID('story_mn_filter_project_id');
-        setProjectListByID('bug_filter_project_id_add');
         var prId = localStorage.getItem('current_project_id');
         getUsers()
         prId = prId.split('%IN%');
         if (prId) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
+
+
+        new Label().load();
+        new Sprint().load();
+
 
         new UserStory().genUsFilterCreatedBy();
         new UserStory().genUsFilterTaskTypes();
@@ -14467,9 +14594,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
-        $('#date_timepicker_start_end-usmn').daterangepicker({
-
-        }).val('').change();
+        $('#date_timepicker_start_end-usmn').daterangepicker({}).val('').change();
     });
 });
 $(document).on('click', '.loadBugChange', function (evt) {
@@ -14478,6 +14603,8 @@ $(document).on('click', '.loadBugChange', function (evt) {
     global_var.current_modal = "loadBugChange";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     $.get("resource/child/" + f + ".html", function (html_string) {
+        getProjectUsers();
+        getUsers();
         $('#mainBodyDivForAll').html(html_string);
         commmonOnloadAction(this);
         setBugFilterProject();
@@ -15608,7 +15735,7 @@ function getBugList4UserStory(bgId, tbody) {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.fkBackogId = bgId;
+    json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
     var prd = getProjectValueUsManageMulti();
@@ -15646,7 +15773,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append($("<td>")
                                 .append($("<a>")
                                         .attr('href', '#')
-                                        .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
@@ -16104,17 +16231,23 @@ function loadAddUserStoriesToTabList(tabId) {
     $('#addUserStoryToTabModal-assinged-userstories').html(table);
 }
 
-function addApiModal() {
+function addApiModal(el, callApi) {
     $("#addApiPopupModal-userstoryname").removeAttr("data-trig-rel");
+    if (callApi) {
+        $("#addApiPopupModal-userstoryname").attr("data-api", $(el).closest('tr').attr("pid"));
+    } else {
+        $("#addApiPopupModal-userstoryname").removeAttr("data-api");
+
+    }
     $('#addApiPopupModal').modal('show');
     $('#addApiPopupModal-userstoryname').focus();
 }
 
 
 function addUserStoryNewModal() {
-    if(global_var.current_modal==='loadDev'){
+    if (global_var.current_modal === 'loadDev') {
         $(".trigger-name-class-backlog").html('API Name')
-    }else{
+    } else {
         $(".trigger-name-class-backlog").html('User Story Name')
 
     }
@@ -16134,9 +16267,9 @@ function addUserStoryNewPopup() {
     var json = initJSON();
     json.kv['backlogName'] = usName;
     json.kv['fkProjectId'] = global_var.current_project_id;
-    if(global_var.current_modal==='loadDev'){
-        json.kv['isApi'] = "1";  
-    }else{
+    if (global_var.current_modal === 'loadDev') {
+        json.kv['isApi'] = "1";
+    } else {
         json.kv['isApi'] = "0";
     }
     var that = this;
@@ -16151,7 +16284,13 @@ function addUserStoryNewPopup() {
         success: function (res) {
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
-            loadCurrentBacklogProdDetails();
+            if (global_var.current_modal === 'loadLivePrototype') {
+                loadCurrentBacklogProdDetails();
+            }
+            if (global_var.current_modal === 'loadDev' || global_var.current_modal === 'loadStoryCard') {
+                $("select.projectList_liveprototype_storycard").change();
+            }
+
             global_var.current_backlog_id = res.kv.id;
             Utility.addParamToUrl('current_backlog_id', global_var.current_backlog_id);
             $('.projectList_liveprototype').change();
@@ -16159,7 +16298,7 @@ function addUserStoryNewPopup() {
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModal').modal('hide');
             if (global_var.current_modal === 'loadStoryCard') {
-                $('.projectList_liveprototype_storycard').change();
+                $('select.projectList_liveprototype_storycard').change();
             }
         }
     });
@@ -16186,6 +16325,18 @@ function addApiNewPopup() {
         crossDomain: true,
         async: true,
         success: function (res) {
+            var attr = nameInput.attr('data-api');
+            if (attr) {
+                var select = $("tr[pid='" + attr + "']").find("#get-callapi-select-box")
+                select.append($("<option>")
+                        .attr('value', res.kv.id)
+                        .text(res.kv.backlogName));
+                select.val(res.kv.id);
+                select.change();
+                nameInput.removeAttr('data-trig-rel');
+                $('#addApiPopupModal').modal('hide');
+                return
+            }
 
             SACore.addBacklogByRes(res);
             SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
@@ -17370,6 +17521,10 @@ function updateUS4ShortChangeDetails(val, ustype) {
             //            } else if (global_var.current_modal === 'loadStoryCard') {
             //                reloadBacklogListOnStoryCard();
             //            }
+            if(ustype==='fkProjectId'){
+                  $("select.projectList_liveprototype_storycard").val(val)
+                  $("select.projectList_liveprototype_storycard").change();
+            }
 
 
         },
@@ -17455,7 +17610,7 @@ function updateTask4ShortChange(el, ustype) {
 }
 
 function updateTask4ShortChangeDetails(val, ustype) {
-    updateTask4ShortChangePure(val, ustype, global_var.current_us_task_id);
+    updateTask4ShortChangePure(val, ustype, global_var.current_issue_id);
 }
 
 function updateTask4ShortChangeDetailsWithSync(val, ustype) {
@@ -17572,6 +17727,32 @@ function loadMainProjectList4Class() {
     })
 }
 
+function loadProjectList2SelectboxByClassNochange(className) {
+
+    var cmd = $('.' + className);
+    cmd.html('');
+    var f = true;
+    var pid = SACore.GetProjectKeys();
+    for (var n = 0; n < pid.length; n++) {
+        var pname = SACore.GetProjectName(pid[n]);
+        var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+        if (f) {
+            o.attr("selected", true);
+            f = false;
+        }
+
+        if (pid[n] === global_var.current_project_id) {
+            o.attr("selected", true);
+        }
+        cmd.append(o);
+    }
+
+    //    cmd.val(global_var.current_project_id);
+    sortSelectBoxByElement(cmd);
+    cmd.selectpicker('refresh');
+}
 function loadProjectList2SelectboxByClass(className) {
 
     var cmd = $('.' + className);
@@ -17777,24 +17958,16 @@ function lableAddAssignProjectManagement(elm) {
 
 }
 ;
-function sprintAddAssignUSerStoryManagement(elm) {
-
-
-
-
+function sprintAddAssignUSerStoryManagement(elm, checkedCore) {
     var check = $(".task-panel .task-column .assign-label-story-card-item-new");
+    var checked = (checkedCore) ? checkedCore : '1';
     var sprintId = $(elm).attr("id");
     for (var indx = 0; indx < check.length; indx++) {
-
-
         if ($(check[indx]).prop('checked')) {
-
-
-
-            var projectId = getProjectValueUsManageMulti();
+//            var projectId = getProjectValueUsManageMulti();
             var id = $(check[indx]).attr("pid");
-            var checked = '1';
-            sprintZadininSheyeidlmesiProjectManagement(projectId, id, sprintId, checked);
+
+            sprintZadininSheyeidlmesiProjectManagement("", id, sprintId, checked);
         }
 
     }
@@ -17819,6 +17992,7 @@ function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprint
         crossDomain: true,
         async: true,
         success: function (res) {
+            labelOrSplitValuesUs();
             new Sprint().load()
             new Label().load()
         },
@@ -17903,6 +18077,22 @@ function sprintZadininSheyeidlmesiProjectManagement(projectId, backlogId, sprint
 }
 
 
+$(document).on('click', '.story-card-sprint-unassign', function (evt) {
+    global_var.story_card_sprint_assign_checked = 0;
+    global_var.story_card_sprint_assign_name = $(this).attr('sname');
+    global_var.story_card_sprint_assign_id = $(this).val();
+    if (global_var.current_modal === "loadStoryCardMgmt") {
+        sprintAddAssignUSerStoryManagement(this, "0")
+    } else if (global_var.current_modal === "loadTaskManagement") {
+        $('.userStoryTab').click();
+    } else if (global_var.current_modal === "loadBugChange") {
+        getBugListDetails(coreBugList);
+    } else if (global_var.current_modal === "loadProjectManagement") {
+        sprintAddAssignProjectManagement(this);
+    } else {
+        new UserStory().loadDetailesPure(SACore.toJSON());
+    }
+});
 
 
 $(document).on('click', '.story-card-sprint-assign', function (evt) {
@@ -18006,8 +18196,6 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
-    new Label().load();
-    new Sprint().load();
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#priority-change-story-card-filter', function (evt) {
@@ -18779,6 +18967,16 @@ function genTaskKanbanView4Group() {
     $('[data-toggle="popover"]').popover();
 }
 
+function addNewDetailedTaskAction_assigneeList_event() {
+    var st = "";
+    $('#addNewDetailedTaskModal_assigneelist-new').find('.assignee-main-tr').each(function () {
+        var assigneeId = $(this).find('.assignee-td').attr('pid');
+        var tasktypeId = $(this).find('.tasktype-td').attr('pid');
+        tasktypeId = (tasktypeId) ? tasktypeId : "-1";
+        st += assigneeId + ':' + tasktypeId + "|";
+    })
+    return st;
+}
 function addNewDetailedTaskAction_assigneeList() {
     var st = "";
     $('#addNewDetailedTaskModal_assigneelist').find('.assignee-main-tr').each(function () {
@@ -18789,7 +18987,41 @@ function addNewDetailedTaskAction_assigneeList() {
     })
     return st;
 }
+function addNewDetailedTaskActionEvent1(params) {
+    $("#addNewDetailedTaskModal_list >.item-input-add-task").each(function () {
 
+        addNewDetailedTaskActionEvent($(this).find('input').val(), $(this).find('textarea').val());
+    })
+    $('#addNewDetailedTaskModal-multi-new').modal('hide');
+    new UserStory().getBacklogTaskStats();
+}
+function addNewDetailedTaskActionEvent(nameL, Com) {
+    if (!$('#addNewDetailedTaskModal_projectid-new').val() || !$('#addNewDetailedTaskModal_description-new').val().trim()) {
+        return;
+    }
+
+    var json = initJSON();
+    json.kv.fkProjectId = $('#addNewDetailedTaskModal_projectid-new').val();
+    json.kv.fkBacklogId = $('#addNewDetailedTaskModal_backlogid-new').val();
+    json.kv.taskName = nameL
+    json.kv.taskNature = $('#addNewDetailedTaskModal_tasknature-new').val();
+    json.kv.taskComment = Com + "\n" + $("#addNewDetailedTaskModal_description-new").val();
+    json.kv.assineeList = addNewDetailedTaskAction_assigneeList_event();
+    json.kv.fileList = $('#addNewDetailedTaskModal_filelist-new').val();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmAddNewDetailedTaskAction",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
+}
 function addNewDetailedTaskAction() {
     if (!$('#addNewDetailedTaskModal_projectid').val() || !$('#addNewDetailedTaskModal_description').val().trim()) {
         return;
@@ -18873,13 +19105,12 @@ function ForwardTaskTo_loadAssignee() {
 }
 
 function addProceccDescListToTaskNew() {
-    $('#addNewDetailedTaskModal').modal('show');
-    addUserStoryToTask_loadAssignee();
-    addUserStoryToTask_loadTaskType();
-    $('#addNewDetailedTaskModal_assigneelist').html('');
-    $('#addNewDetailedTaskModal_backlogid').val(global_var.current_backlog_id);
-    $('#addNewDetailedTaskModal_projectid').val(global_var.current_project_id);
-    addProceccDescListToTaskNew_setHeader();
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+    addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
     addProceccDescListToTaskNew_setComment();
 }
 
@@ -18904,19 +19135,26 @@ function addProceccDescListToTaskNew_getCheckedProcess() {
 
 
 function addProceccDescListToTaskNew_setComment() {
-    var st = "The following Process Description(s) should be Added or Updated. For the detailed information please check the related Story Card: \n\n";
+    var st = "";
     var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
     $('.pdescList').each(function () {
         if ($(this).is(":checked")) {
             var id = $(this).val();
-            var name = $(this).closest('tr').find('.procDescTitleNewNowAfter').html();
+            var name = $(this).closest('tr').find('.procDescTitleNewNowAfter').text();
             name = name.replaceAll('<br>', '')
-            st += (idx++) + ") " + name;
-            st += "\n------------------------------------------------------------------------------------------\n";
+            st += '';
+            var col = $("<div class='col-12 item-input-add-task'>")
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
         }
     })
 
-    $('#addNewDetailedTaskModal_comment').val(st);
+    // $('#addNewDetailedTaskModal_comment').val(st);
 }
 
 function addProceccDescListToTaskNew_getLastValue(descId) {
@@ -18967,6 +19205,26 @@ function addInputListToTaskNew(el, descId, inputId) {
     addInputListToTaskNew_setHeader(descId);
     addInputListToTaskNew_setComment(descId, inputId);
 }
+function addInputListToTaskNewEvent(el, descId, inputId) {
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+    addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
+    //addInputListToTaskNew_setHeader(descId);
+    addInputListToTaskNew_setComment_event(descId, inputId);
+}
+function addInputDescListToTaskNewEvent(el, descId, inputId) {
+    $('#addNewDetailedTaskModal-multi-new').modal('show');
+    addUserStoryToTask_loadAssignee_event();
+    addUserStoryToTask_loadTaskType_event();
+    $('#addNewDetailedTaskModal_assigneelist-new').html('');
+    $('#addNewDetailedTaskModal_backlogid-new').val(global_var.current_backlog_id);
+    $('#addNewDetailedTaskModal_projectid-new').val(global_var.current_project_id);
+    //addInputListToTaskNew_setHeader(descId);
+    addInputDescListToTaskNew_setComment_event(descId, inputId);
+}
 
 function addInputListToTaskNew_setHeader() {
     var inputList = addInputListToTaskNew_getCheckedInputs();
@@ -19010,6 +19268,59 @@ function addInputListToTaskNew_setComment() {
     })
 
     $('#addNewDetailedTaskModal_comment').val(st);
+}
+function addInputDescListToTaskNew_setComment_event() {
+    var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
+    $('.desc-table-list-for-multiple  .multiple-desc-inp').each(function () {
+        if ($(this).is(":checked")) {
+            var st = "";
+
+            var name = SAInputDesc.GetDetails($(this).attr("data-id"));
+
+            var col = $("<div class='col-12 item-input-add-task'>")
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
+        }
+    })
+
+}
+function addInputListToTaskNew_setComment_event() {
+    var idx = 1;
+    $("#addNewDetailedTaskModal_list").empty()
+    $('.us-input-list-item-check-box-class-new').each(function () {
+        if ($(this).is(":checked")) {
+            var st = "";
+
+            var name = SAInput.GetInputName($(this).val());
+            try {
+                //var descId = SAInput.getInputDetails($(this).val(), 'inputDescriptionIds').split(", ");
+                //                var descId = SAInput.DescriptionId[$(this).val()].split(", ");
+                var descId = SAInput.DescriptionId[$(this).val()];
+                for (var i in descId) {
+                    var id = descId[i];
+
+                    var desc = fnline2Text(SAInputDesc.GetDetails(id));
+                    st += (i + 1) + ")" + "- " + desc + '\n';
+
+
+                }
+            } catch (err) {
+            }
+            var col = $("<div class='col-12 item-input-add-task'>")
+                    .append(`<label class='font-weight-bold' >${name}</label>`)
+
+                    .append($("<input class='form-control' row='3'>").val("Add/Update Inputs : " + name))
+
+                    .append($("<textarea class='form-control' row='3'>").val(st))
+            $("#addNewDetailedTaskModal_list").append(col);
+        }
+    })
+
 }
 
 
@@ -19161,6 +19472,27 @@ function addUserStoryToTask_addAssignees() {
                     .css("color", "blue")
                     ))
 }
+function addUserStoryToTask_addAssignees_event() {
+    if (!$('#addNewDetailedTaskModal_assignee-new').val()) {
+        return;
+    }
+
+    var tbody = $('#addNewDetailedTaskModal_assigneelist-new');
+    tbody.append($('<tr>').addClass("assignee-main-tr")
+            .append($('<td>')
+                    .addClass("assignee-td")
+                    .attr("pid", $('#addNewDetailedTaskModal_assignee-new').val())
+                    .text($('#addNewDetailedTaskModal_assignee-new option:selected').text()))
+            .append($('<td>')
+                    .attr("pid", $('#addNewDetailedTaskModal_tasktype-new').val())
+                    .addClass('tasktype-td')
+                    .text($('#addNewDetailedTaskModal_tasktype-new option:selected').text()))
+            .append($('<i class="fa fa-trash">')
+                    .attr("onclick", "addUserStoryToTask_removeAssignee(this)")
+                    .attr("cursor", "pointer")
+                    .css("color", "blue")
+                    ))
+}
 
 function assignTaskToOthersModal_removeAssignee(el) {
     $(el).closest("tr").remove();
@@ -19192,6 +19524,68 @@ function addUserStoryToTask_loadAssignee() {
         select.append($('<option>').val(keys[i]).text(userName));
     }
     sortSelectBox('addNewDetailedTaskModal_assignee');
+}
+function addUserStoryToTask_loadAssignee_event(id) {
+    var select = $('#addNewDetailedTaskModal_assignee-new');
+    select.html('');
+
+    var json = initJSON();
+    if (global_var.current_project_id) {
+        json.kv['fkProjectId'] = global_var.current_project_id
+    } else {
+        json.kv['fkProjectId'] = id;
+    }
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmSelectUsersByProject4Select",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            select.append($('<option>').val('').text(''));
+            var keys = res.tbl[0].r;
+            for (var i = 0; i < keys.length; i++) {
+                var userName = keys[i].userName;
+                select.append($('<option>').val(keys[i].fkUserId).text(userName));
+
+            }
+
+            sortSelectBox('addNewDetailedTaskModal_assignee-new');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+}
+
+function addUserStoryToTask_loadTaskType_event() {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.asc = 'typeName';
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskTypeList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            addUserStoryToTask_loadTaskTypeDetails_event(res);
+        }
+    });
 }
 
 function addUserStoryToTask_loadTaskType() {
@@ -19231,6 +19625,19 @@ function addUserStoryToTask_loadTaskTypeDetails(res) {
     }
     sortSelectBox('addNewDetailedTaskModal_tasktype');
     sortSelectBox('assignTaskToOthersModal_tasktype');
+}
+function addUserStoryToTask_loadTaskTypeDetails_event(res) {
+    var select = $('#addNewDetailedTaskModal_tasktype-new');
+    var select2 = $('#assignTaskToOthersModal_tasktype-new');
+    select.html("").append($('<option>').val("").append(" "));
+    select2.html("").append($('<option>').val("").append(" "));
+    var obj = res.tbl[0].r;
+    for (var n = 0; n < obj.length; n++) {
+        select.append($('<option>').val(obj[n].id).text(obj[n].typeName));
+        select2.append($('<option>').val(obj[n].id).text(obj[n].typeName));
+    }
+    sortSelectBox('addNewDetailedTaskModal_tasktype-new');
+    sortSelectBox('assignTaskToOthersModal_tasktype-new');
 }
 
 
@@ -19779,166 +20186,6 @@ function updateTask4ShortChangeTaskName() {
 
 function deleteTask() {
     new UserStory().deleteBacklogTask(global_var.current_us_task_id);
-}
-
-function deleteComment(commentId) {
-
-
-    //        console.log('task id'+taskId);
-    if (!commentId) {
-        return;
-    }
-
-    if (!confirm("Are you sure?")) {
-        return;
-    }
-
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.id = commentId;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmDeleteComment",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            genCommentListOfTask();
-        }
-    });
-}
-
-function convertCommentHtml2TextArea(el, commentId) {
-    new UserStory().convertCommentHtml2TextAreaNoChange($('#' + commentId));
-    $(el).closest("div").find('.saveComment').show();
-}
-
-function saveComment(el, commentId) {
-    new UserStory().saveCommentUpdate($('#' + commentId));
-    new UserStory().convertTextArea2HtmlAsText($('#' + commentId));
-    $(el).hide();
-}
-
-function genCommentListOfTask() {
-    var taskId = global_var.current_us_task_id;
-    //        console.log('task id'+taskId);
-    if (!taskId) {
-        return;
-    }
-
-
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.fkTaskId = taskId;
-    var that = this;
-    var data = JSON.stringify(json);
-    var rs = "";
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetCommentListByTask",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            rs = generateCommentListHtml4Task(res, taskId);
-        },
-        error: function () {
-            //                Toaster.showError("error");
-        }
-    });
-    return rs;
-}
-
-function generateCommentListHtml4Task(res, taskId) {
-    try {
-        if (!res.tbl[0].r) {
-            return;
-        }
-        var obj = res.tbl[0].r;
-        var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
-        for (var i = 0; i < obj.length; i++) {
-
-
-            var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                    .append("<br>");
-            var div_by_row = $('<div></div>')
-                    .addClass("row")
-                    .addClass("mangodb");
-            var img = obj[i].avatarUrl.length === 0 ?
-                    fileUrl(new User().getDefaultUserprofileName()) :
-                    fileUrl(obj[i].avatarUrl);
-            var div1 = $('<div></div>')
-                    .addClass("col-1 comment-line1")
-                    .append($('<img></img>')
-                            .addClass("figure-img img-fluid rounded-circle")
-                            .attr("style", "max-width:28px")
-                            .attr("src", img)
-                            .attr("alt", replaceTags(obj[i].username)));
-            //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
-            var comment = replaceTags(obj[i].comment);
-            var div2 = $('<div></div>')
-                    .attr('style', "padding-left:0px;font-size:13px;")
-                    .addClass("col-11")
-                    .append($("<span>").append(obj[i].username)
-                            .addClass('comment-content-header-name')
-                            .append($("<span>")
-                                    .addClass('comment-content-header-history')
-                                    .append(Utility.convertDate(obj[i].commentDate))
-                                    .append(", ")
-                                    .append(Utility.convertTime(obj[i].commentTime))
-                                    .append(" ")
-                                    )
-                            .append('&nbsp;&nbsp;&nbsp;')
-
-                            //                            .append($('<a href="#" style="font-size:11px;">')
-                            //                                    .addClass('comment-content-header-name')
-                            //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                            //                                    .append("Delete"))
-                            )
-                    .append("<br><br>")
-                    .append($("<span>")
-                            .css('padding-bottom', "5px")
-                            .attr("id", obj[i].id)
-                            //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
-                            .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
-                            .append(MapTextAreaHtml(comment)));
-            var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
-            var div3 = $('<div></div>').addClass("col-12").append("");
-            div2.append(div2_1)
-                    .append("<br>")
-            //                    .append($('<a href="#" style="font-size:11px;">')
-            //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
-            //                            .append("Edit"))
-
-            //                    .append('&nbsp;&nbsp;&nbsp;')
-            //                    .append($('<a class="saveComment" href="#" style="display:none;font-size:11px;">')
-            //                            .attr('onclick', "saveComment(this,'" + obj[i].id + "')")
-            //                            .append("Save"));
-            div_by_row.append(div1).append(div2)
-                    .append(div3);
-            div_by_col.append(div_by_row)
-            div.append(div_by_col);
-            //                        div.append(div1).append(div2).append(div3);
-        }
-        //        return div.html();
-
-        $('.comment-body').html(div.html());
-    } catch (e) {
-    }
 }
 
 
@@ -22428,70 +22675,70 @@ var SCSourceManagement = {
 function RemoveDescMultiple() {
     var listch = $(".multiple-desc-inp");
     var lst = '';
-        listch.each(function(index) {
+    listch.each(function (index) {
         if ($(this).prop('checked')) {
-             lst+= $(this).attr('data-id')+'%IN%'
-            $(this).parent().remove();   
+            lst += $(this).attr('data-id') + '%IN%'
+            $(this).parent().remove();
         }
-        })
-    
+    })
+
     removeApidesct(lst);
 }
 
 function removeApidesct(apiId) {
-     var json = initJSON();
-         json.kv.ids = apiId;
-         json.kv.fkBacklogId = global_var.current_backlog_id;
-         json.kv.fkProjectId = global_var.current_project_id;
-    
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-              
-            }
-        });
+    var json = initJSON();
+    json.kv.ids = apiId;
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmDeleteBulkInputDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
 }
 function dragDesctInputChangeOrder(item) {
     var itms = $(item).closest('td').find('.drag-item');
-        
-       var iid = $(item).closest('td').find('input.description-style').attr("iid");
-       var lst = '';
-        itms.each(function(index) {
-             lst+= $(this).attr('data-id')+'%IN%'          
-           
-        })
 
-    updateOrderNo(lst,iid);
+    var iid = $(item).closest('td').find('input.description-style').attr("iid");
+    var lst = '';
+    itms.each(function (index) {
+        lst += $(this).attr('data-id') + '%IN%'
+
+    })
+
+    updateOrderNo(lst, iid);
 }
 
-function updateOrderNo(id,iid) {
-     var json = initJSON();
-         json.kv.id = id;
-         json.kv.fkInputId = iid;
-         json.kv.inputName = SAInput.GetInputName(iid);
-         json.kv.fkBacklogId = global_var.current_backlog_id;
-         json.kv.fkProjectId = global_var.current_project_id;
-    
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-              
-            }
-        });
+function updateOrderNo(id, iid) {
+    var json = initJSON();
+    json.kv.id = id;
+    json.kv.fkInputId = iid;
+    json.kv.inputName = SAInput.GetInputName(iid);
+    json.kv.fkBacklogId = global_var.current_backlog_id;
+    json.kv.fkProjectId = global_var.current_project_id;
+
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateInputDescriptionOrder",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+        }
+    });
 }
 
 
