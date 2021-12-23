@@ -14456,7 +14456,7 @@ function callLoadDev() {
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
-        loadProjectList2SelectboxByClass('projectList_for_change_storycard');
+        loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -14481,7 +14481,7 @@ function callLoadStoryCard() {
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
-        loadProjectList2SelectboxByClass('projectList_for_change_storycard');
+        loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -17727,6 +17727,32 @@ function loadMainProjectList4Class() {
     })
 }
 
+function loadProjectList2SelectboxByClassNochange(className) {
+
+    var cmd = $('.' + className);
+    cmd.html('');
+    var f = true;
+    var pid = SACore.GetProjectKeys();
+    for (var n = 0; n < pid.length; n++) {
+        var pname = SACore.GetProjectName(pid[n]);
+        var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+        if (f) {
+            o.attr("selected", true);
+            f = false;
+        }
+
+        if (pid[n] === global_var.current_project_id) {
+            o.attr("selected", true);
+        }
+        cmd.append(o);
+    }
+
+    //    cmd.val(global_var.current_project_id);
+    sortSelectBoxByElement(cmd);
+    cmd.selectpicker('refresh');
+}
 function loadProjectList2SelectboxByClass(className) {
 
     var cmd = $('.' + className);
