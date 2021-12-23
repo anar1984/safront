@@ -5584,12 +5584,12 @@ table.lbl-list-table tr td {
 .toggle-nav-elements ul li a.nav-item-url i:after {
     width: 16px;
 }
-.toggle-nav-elements ul li a.nav-item-url:hover {
+.toggle-nav-elements ul li a.nav-item-url:hover,.toggle-nav-elements ul li a.nav-item-url.active {
     color: #03396C ;
     background-color: #DFEEF7;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
-.toggle-nav-elements ul li a.nav-item-url:hover i {
+.toggle-nav-elements ul li a.nav-item-url:hover i, .toggle-nav-elements ul li a.nav-item-url.active i {
     filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(
 195deg) brightness(91%) contrast(98%);
 }
@@ -5633,6 +5633,13 @@ table.lbl-list-table tr td {
     right: 0;
     top: 0;
     display: table-cell;
+}
+.toggle-min-elements a.cs-url.active i{
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 .toggle-min-elements a.cs-url i:after{
     width: 9px;
@@ -5848,6 +5855,17 @@ table.lbl-list-table tr td {
     transition: height 0ms 400ms, opacity 400ms 0ms;
 }
 .toggle-box-1.open {
+    height: auto !important; 
+    opacity: 1 !important;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
+}
+.toggle-box-2 {
+    overflow: hidden;
+    height: 0 !important;
+    opacity: 0 !important;
+    transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+.toggle-box-2.open {
     height: auto !important; 
     opacity: 1 !important;
     transition: height 0ms 0ms, opacity 600ms 0ms;
