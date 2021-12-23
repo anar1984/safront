@@ -5901,3 +5901,8 @@ table.lbl-list-table tr td {
     font-size: 16px;
     line-height: 20px;
 }
+.user-addons-box {
+    display: block;
+    width: 100%;
+    width: 180px;
+}

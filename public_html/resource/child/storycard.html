@@ -43,7 +43,7 @@
                                             2</span></a></li>
                                 <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li>
                                 <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
-                                <li><a class="nav-item-url"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon comment-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
@@ -438,8 +438,39 @@
                             </div>
                         </div>
                         <div class="toggle-box-4">
-                           <div class="nezaretci-box">
+                           <div class="user-addons-box cs-box-background">
                                sss
+                           </div>
+                        </div>
+                    </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon cs-xs-icon attach-01"></i> <span class="name">Fayl</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-5"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-5">
+                           <div class="attach-files-box cs-box-background">
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link active" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-selected="true">Fayl</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-media-tab" data-toggle="pill" href="#pills-media" role="tab" aria-selected="false">Media</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-docs-tab" data-toggle="pill" href="#pills-docs" role="tab" aria-selected="false">Sənəd</a>
+                                </li>
+                              </ul>
+                              <div class="tab-content">
+                                <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-home-tab">... 1</div>
+                                <div class="tab-pane fade" id="pills-media" role="tabpanel" aria-labelledby="pills-profile-tab">... 2</div>
+                                <div class="tab-pane fade" id="pills-docs" role="tabpanel" aria-labelledby="pills-contact-tab">... 3</div>
+                              </div>
                            </div>
                         </div>
                     </div>
@@ -466,5 +497,9 @@
     $(document).on("click", ".toggle-btn-4", function (e) {
         $('.toggle-btn-4').toggleClass('active');
         $('.toggle-box-4').toggleClass('open');
+    });
+    $(document).on("click", ".toggle-btn-5", function (e) {
+        $('.toggle-btn-5').toggleClass('active');
+        $('.toggle-box-5').toggleClass('open');
     });
 </script>
