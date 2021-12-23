@@ -4365,12 +4365,18 @@ table.lbl-list-table tr td {
     color: #fff;
 }
 .task-check-list-box textarea {
- background: transparent !important;
+    width: 100%;
+    background: transparent !important;
+    border: none;
+    padding: 5px 15px;
+    font-size: 14px;
+    color: #fff;
  
 }
 .task-check-list-box textarea:focus {
     outline: none;
     box-shadow: none;
+    color: white;
 }
 .task-check-list-box .taskCheckListItemDelete {
     color: #ffffff;
@@ -5593,6 +5599,12 @@ table.lbl-list-table tr td {
     border-radius: 0.25rem;
     display: inline-block;
 }
+.toggle-nav-elements ul li a.nav-item-url span {
+    vertical-align: middle;
+    margin-bottom: 10px;
+    display: inline-block;
+    margin-left: 4px;
+}
 .toggle-nav-elements ul li:last-child a.nav-item-url {
     padding-right: 4px;
 }
@@ -5863,25 +5875,29 @@ table.lbl-list-table tr td {
      border-radius:10px;
      padding: 3px 15px;
 }
-.toggle-box-1 {
+.toggle-box-1, .toggle-box-2, .toggle-box-3, .toggle-box-4, .toggle-box-5, .toggle-box-6, .toggle-box-7, .toggle-box-8, .toggle-box-9  {
     overflow: hidden;
     height: 0 !important;
     opacity: 0 !important;
     transition: height 0ms 400ms, opacity 400ms 0ms;
 }
-.toggle-box-1.open {
+.toggle-box-1.open, .toggle-box-2.open, .toggle-box-3.open, .toggle-box-4.open, .toggle-box-5.open, .toggle-box-6.open, .toggle-box-7.open, .toggle-box-8.open, .toggle-box-9.open {
     height: auto !important; 
     opacity: 1 !important;
     transition: height 0ms 0ms, opacity 600ms 0ms;
 }
-.toggle-box-2 {
-    overflow: hidden;
-    height: 0 !important;
-    opacity: 0 !important;
-    transition: height 0ms 400ms, opacity 400ms 0ms;
+.task-check-list-box input.form-control {
+    font-size: 16px;
+    line-height: 20px;
+    height: 25px;
+    width: 100%;
+    border: none;
+    background: rgba(3, 57, 108, 0.5);
+    border-radius: 10px;
+    color: #fff;
 }
-.toggle-box-2.open {
-    height: auto !important; 
-    opacity: 1 !important;
-    transition: height 0ms 0ms, opacity 600ms 0ms;
+.task-check-list-box input.form-control::placeholder {
+    color: rgb(255 255 255 / 70%);
+    font-size: 16px;
+    line-height: 20px;
 }

@@ -172,6 +172,9 @@
   .cs-svg-icon.task-02:after {
     background-image: url(../ch-icons/task-02.svg);
   }
+  .cs-svg-icon.task-03:after {
+    background-image: url(../ch-icons/task-03.svg);
+  }
   .cs-svg-icon.task-checking:after {
     background-image: url(../ch-icons/task-checking.svg);
   }
