@@ -14456,6 +14456,7 @@ function callLoadDev() {
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        loadProjectList2SelectboxByClass('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -14480,6 +14481,7 @@ function callLoadStoryCard() {
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
         loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+        loadProjectList2SelectboxByClass('projectList_for_change_storycard');
         new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
@@ -16296,7 +16298,7 @@ function addUserStoryNewPopup() {
             $('#addUserStoryPopupModal-userstoryname').val('');
             $('#addUserStoryPopupModal').modal('hide');
             if (global_var.current_modal === 'loadStoryCard') {
-                $('.projectList_liveprototype_storycard').change();
+                $('select.projectList_liveprototype_storycard').change();
             }
         }
     });
@@ -17519,6 +17521,10 @@ function updateUS4ShortChangeDetails(val, ustype) {
             //            } else if (global_var.current_modal === 'loadStoryCard') {
             //                reloadBacklogListOnStoryCard();
             //            }
+            if(ustype==='fkProjectId'){
+                  $("select.projectList_liveprototype_storycard").val(val)
+                  $("select.projectList_liveprototype_storycard").change();
+            }
 
 
         },

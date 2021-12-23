@@ -779,7 +779,7 @@ function addUserStoryNewPopupBug() {
 //            $('#addUserStoryPopupModalwithProject').modal('hide');
 
             if (global_var.current_modal === 'loadStoryCard') {
-                $('.projectList_liveprototype_storycard').change();
+                $('select.projectList_liveprototype_storycard').change();
             }
 
             $("#bug_filter_backlog_id").val(res.kv.id)
