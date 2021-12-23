@@ -5906,3 +5906,19 @@ table.lbl-list-table tr td {
     width: 100%;
     width: 180px;
 }
+.cs-nav-pills .nav-link {
+    height: 33px;
+    background: rgba(3, 57, 108, 0.5);
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 30%);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    color: #fff;
+    margin-right: 7px;
+}
+.cs-nav-pills .nav-link.active, .cs-nav-pills .show>.nav-link {
+    background: #DFEEF7;
+    color: #03396C;
+    box-shadow: none;
+}
