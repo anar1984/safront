@@ -1394,7 +1394,7 @@ function getBugListDetails(res) {
                 " ";
 
         var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
-        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
         var task_id = getTaskCode(o.id);
 
         var dropMenuDiv = $("<div>")
@@ -1729,20 +1729,16 @@ function genUserTrblock(names,img) {
     `
  };
 function callTaskCard4BugTask(el, projectId, taskId) {
-
-
-
+      
     if (!taskId) {
         //        hideProgressAlternative();
         return;
     }
 
-
     global_var.current_issue_id = taskId;
     Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
     global_var.current_issue_is_hide = "0";
     Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide);
-
 
     //Task card-da Story Card-linke basanda istifade edilir.
     if (projectId !== global_var.current_project_id) {
@@ -1751,16 +1747,12 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     }
 
     getProjectUsers();
-    //    getUsers();
 
     $(".card-UserStory-header-text-code").text("");
     $(".card-UserStory-header-text-code").append(getTaskCode(taskId));
 
-
-
     let headerText = $(el).html();
-    $(".card-UserStory-header-text").text("");
-    $(".card-UserStory-header-text").append(headerText);
+    $(".card-UserStory-header-text").text(headerText);
     $("#taskMgmtModal").modal("show");
     $('.comment-body').html("")
     $('.card-UserStory-edit-task').show();
@@ -1769,9 +1761,6 @@ function callTaskCard4BugTask(el, projectId, taskId) {
     loadUsersAsAssignee();
     loadTaskInfoToContainer(taskId, projectId);
     loadTaskCardDetails(taskId);
-
-
-
 
     //add project list to task
     $('.task-card-project-div-id').remove();
@@ -1793,17 +1782,10 @@ function callTaskCard4BugTask(el, projectId, taskId) {
                 .html(coreBugKV[taskId].backlogName);
     }
 
-    getTaskCheckList(taskId);
+    taskManagement.updateTask.getCheckListComulativ(taskId);
     getTaskkObserverList(taskId);
 
-    //    showAssigneeTaskCardIn(taskId, 'updateBugList-taskinfo');
-
-    //    hideProgressAlternative();
-
-
     infoEventsTaskData(taskId);
-    // $('.task-events-updated').attr("data-taskid",taskId);
-    // $('.task-events-updated [data-taskid]').change();  
 }
 
 
@@ -2126,13 +2108,7 @@ $(document).on("click", '#expand-group', function (e) {
     }
 })
 
-function reset_task_data() {
-    $('.task-events-created').attr("data-taskid", '');
-    $('.task-events-created input').val('');
-    $('.task-events-created input').change('');
-    $('input#taskNameInputNew2').val('');
-    $('#addComment4Task_comment_new').val('');
-}
+
 
 /* $(document).on("click", '#addIssueButtonId', function (e) {
     // $('#issue-managment-add-task .after-add-task').show();
@@ -2619,23 +2595,30 @@ function loadBugTaskDeadlineScripts() {
         $("#taskDeadlineEndTime").datetimepicker({
              format: 'HH:mm',
             // singleDatePicker: true
-        });
+        })
 
         $("#taskDetailDeadlineStartDade").datetimepicker({
             format: 'YYYY-MM-DD',
             // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startDate');
         });
         $("#taskDetailDeadlineStartTime").datetimepicker({
             format: 'HH:mm',
             // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startTime');
         });
         $("#taskDetailDeadlineEndDade").datetimepicker({
-            format: 'YYYY-MM-DD'
-            // singleDatePicker: true
+            format: 'YYYY-MM-DD',
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endDate');
         });
         $("#taskDetailDeadlineEndTime").datetimepicker({
              format: 'HH:mm',
             // singleDatePicker: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endTime');
         });
 
 }
@@ -3159,144 +3142,7 @@ $(document).on("mouseup", "html", function (e)
 });
 
 
-function getTaskCheckList(taskId) {
-    if (!taskId && !global_var.current_task_id_4_comment) {
-        return;
-    }
 
-    global_var.current_task_id_4_comment = (taskId)
-            ? taskId
-            : global_var.current_task_id_4_comment;
-    var json = initJSON();
-    json.kv.fkTaskId = global_var.current_task_id_4_comment;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskCheckList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            getTaskCheckListDetails(res)
-        },
-        error: function () {
-//                alert("error");
-        }
-    });
-}
-
-function  getTaskCheckListDetails(res) {
-    var userList = {};
-    try {
-        var idx = getIndexOfTable(res, "userList");
-        var objUser = res.tbl[idx].r;
-        for (var k in objUser) {
-            var o2 = objUser[k];
-            userList[o2.id] = o2;
-        }
-    } catch (err) {
-    }
-
-
-
-    $('.task-check-list').html('')
-    var table = $('<table>')
-            .addClass('table table-hover project-table-list defaultTable sar-table');
-    table.append($('<thead>').addClass('task-checklist-thead')
-            .append($("<tr>")
-                    .append($("<th>")
-                            .css("width", "1%")
-                            .text("#"))
-                    .append($('<th>')
-                            .css("width", "20px")
-                            .text(""))
-                    .append($('<th>')
-                            .text(""))
-                    .append($('<th>')
-                            .css("width", "40px")
-                            .text(""))
-                    .append($('<th>')
-                            .css("width", "40px")
-                            .text(""))
-                    .append($('<th>')
-                            .css("width", "40px")
-                            .text(""))
-                    )
-            )
-
-    var idy = getIndexOfTable(res, "tmBacklogTaskCheckList");
-    var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[idy].r : [];
-    for (var n = 0; n < obj.length; n++) {
-        var o = obj[n];
-        var createdBySpan = (o.createdBy && userList[o.createdBy])
-                ? $('<span>')
-                .attr('title', 'Created By')
-                .append($('<img>')
-                        .attr('width', '40px')
-                        .addClass('Assigne-card-story-select-img created')
-                        .attr('src', fileUrl(userList[o.createdBy].userImage))
-                        .attr('data-placement', 'top')
-                        .attr('data-trigger', 'hover')
-                        .attr('data-toggle', 'popover')
-                        .attr('data-content', userList[o.createdBy].userPersonName + ' / ' + Utility.convertDate(o.createdDate) + '  ' + Utility.convertTime(o.createdTime))
-                        .attr('data-title', 'Created By')
-                        )
-                : '';
-
-        var updatedBySpan = (o.updatedBy && userList[o.updatedBy])
-                ? $('<span>')
-                .attr('title', 'Updated By')
-                .append($('<img>')
-                        .attr('width', '40px')
-                        .addClass('Assigne-card-story-select-img updated')
-                        .attr('src', fileUrl(userList[o.updatedBy].userImage))
-                        .attr('data-placement', 'top')
-                        .attr('data-trigger', 'hover')
-                        .attr('data-toggle', 'popover')
-                        .attr('data-content', userList[o.updatedBy].userPersonName + ' | ' + Utility.convertDate(o.updatedDate) + '  ' + Utility.convertTime(o.updatedTime))
-                        .attr('data-title', 'Updated By')
-                        )
-                : '';
-
-        var tr = $("<tr>")
-                .addClass((o.isChecked === '1') ? 'on-checked' : '')
-                .append($('<td>').text((n + 1)))
-                .append($('<td>').append($('<input>')
-                        .addClass("taskCheckListItemToggle")
-                        .attr("oid", o.id)
-                        .attr('type', 'checkbox')
-                        .attr("checked", (o.isChecked === '1') ? true : false)))
-                .append($('<td>')
-                        .addClass((o.isChecked === '1') ? 'text-checked' : '')
-                        .append($('<textarea>')
-                                .attr('rows', '1')
-                                .addClass('form-control')
-                                .attr("oid", o.id)
-                                .addClass("updateTaskcheckListItemName")
-                                .val(o.itemName)))
-                .append($('<td>')
-                        .append(createdBySpan))
-                .append($('<td>')
-                        .append(updatedBySpan))
-
-                .append($('<td>')
-                        .append($('<a href="#">')
-                                .attr('oid', o.id)
-                                .addClass("taskCheckListItemDelete")
-                                .append('<i class="fas fa-trash-alt" aria-hidden="true"></i>')))
-                ;
-        table.append(tr);
-
-    }
-    $('.task-check-list').html(table);
-
-    $('[data-toggle=popover]').popover({
-        html: true,
-        trigger: "hover"
-    });
-}
 
 $(document).on("change", '.taskCheckListItemToggle', function () {
 
@@ -3340,7 +3186,7 @@ $(document).on("click", ".taskCheckListItemDelete", function (e) {
     callService('serviceTmDeleteTaskCheckListItemCheck',
             {"id": $(this).attr('oid')}, true
             , function () {
-                $(that).closest('tr').remove();
+                $(that).closest('li').remove();
             });
 
 })
@@ -3354,7 +3200,7 @@ $(document).on("click", ".addCheckListToTask", function (e) {
             {"fkTaskId": global_var.current_task_id_4_comment,
                 "itemName": itemName}, true
             , function () {
-                getTaskCheckList(global_var.current_task_id_4_comment);
+                taskManagement.updateTask.getCheckListComulativ(global_var.current_task_id_4_comment);
                 ;
                 $('#updatetask_checklist').val('');
             });
@@ -3387,13 +3233,11 @@ $(document).on("click", ".loadUserForObserver", function (e) {
             {}, true
             , function (res) {
                 var obj = (res && res.tbl && res.tbl.length > 0) ? res.tbl[0].r : [];
+                console.log(res);
                 for (var i in obj) {
                     var o = obj[i];
-                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                    var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt = `<option value='${o.fkUserId}' data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='${fileUrl(o.userImage)}' alt='avatar' srcset=''>${o.userName}</span>"></option>
+                  </select>`;
                     cmb.append(opt);
                     cmb.selectpicker('refresh');
                 }
@@ -3571,38 +3415,3 @@ $(document).on("change", '.noteCheckListItem', function () {
         $(this).closest('li').removeClass('on-checked');
     }
 })
-$(document).on("click", '#toplanti-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.tapshiriq-btn').removeClass('active');
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-});
-$(document).on("click", '#tapshiriq-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
-    $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-     $('.loadUserForObserver span').text('').text('Observer');
-});
-
-
-$(document).on("click", '#toplanti-d-btn', function () {
-    $(this).addClass('active');
-    $(this).closest('.modal-body').find('.tapshiriq-btn').removeClass('active');
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('observer').addClass('participant');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Participant');
-
-    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
-    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
-});
-
-$(document).on("click", '#tapshiriq-d-btn', function () {
-    $(this).addClass('active');
-
-    $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
-
-    $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-    $(this).closest('.modal-body').find('.loadUserForObserver span').text('').text('Observer');
-
-    $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
-    $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-});

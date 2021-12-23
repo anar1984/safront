@@ -2866,18 +2866,18 @@ $(document).on('change', '#storyCardInputRelationModal_apilist', function (evt) 
 
 function shiftTaskInfoOnTaskInfoModal(el) {
     var taskId = $(el).attr('pid');
-    callTaskCard4BugTask(el, global_var.current_project_id, taskId);
+    taskManagement.updateTask.callTaskCard4BugTask(el, global_var.current_project_id, taskId);
 
 
 }
 
 
 function getParentTask() {
-    $('.task-mgmt-modal-parent-task').text("");
-
+    var body  = $('#d-task-tab5 .parent-task tbody');
+    body.html("")
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2889,31 +2889,39 @@ function getParentTask() {
         async: true,
         success: function (res) {
             try {
-                var fkParentTaskId = res.kv.id;
+                var relId = res.kv.id;
+                    if(!relId){
+                         return
+                    }
+                var fkParentTaskId = res.kv.fkTaskId;
                 if (fkParentTaskId) {
+
+                    
                     var fkProjectId4 = res.kv.fkProjectId;
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(parentTaskName, 50) + " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                       var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                     } catch (error) {
+                        var projectCode ="PRIVATE" ;
+                     }
+                   
                     var taskName = add3Dots2String(parentTaskName, 50);
-                    var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
-                    $('.task-mgmt-modal-parent-task').each(function () {
-                        $(this).text(taskName)
-                                .attr('pid', fkParentTaskId);
-                    })
-                    $('.task-id-modal-parent-task').each(function () {
-                        $(this).text(taskCodeID)
-                    })
-                    $('.task-status-modal-parent-task').each(function () {
-                        $(this).html($('<span>')
-                                .addClass('us-item-status-' + res.kv.taskStatus)
-                                .text(res.kv.taskStatus))
-                    })
+                    
+                    var tr = `<tr>
+                    <td>1</td>
+                    <td>${taskCodeID}</td>
+                    <td><div pid='${fkParentTaskId}' class="task-id-modal-parent-task">${taskName}</div></td>
+                    <td><div class="task-status-modal-parent-task"><span class='us-item-status-${res.kv.taskStatus}'>${res.kv.taskStatus}<span>
+                    </div></td>
+                </tr>`
+                body.append(tr) 
 
                 }
 
             } catch (err) {
+               
             }
         }
     });
@@ -2924,7 +2932,7 @@ function getChildTasks() {
     tbody.html('');
 
     var json = initJSON();
-    json.kv.fkTaskId = global_var.current_us_task_id;
+    json.kv.fkTaskId = global_var.current_issue_id;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -2935,6 +2943,7 @@ function getChildTasks() {
         crossDomain: true,
         async: true,
         success: function (res) {
+          
             try {
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
@@ -2944,15 +2953,20 @@ function getChildTasks() {
 
 
                     var fkProjectId4 = o.fkProjectId;
-                    var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                    var nameFull = add3Dots2String(o.taskName, 30) + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                           projectCode =" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = 'PRIVATE';
+
+                    }
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                        .text(n)
+                                        .text(n+1)
                                         )
                                 .append($('<td>')
-                                        .text(+" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ")
+                                        .text(projectCode)
                                         )
                                 .append($('<td>')
                                         .append($('<a>')
@@ -2962,7 +2976,7 @@ function getChildTasks() {
                                                 .text(add3Dots2String(o.taskName, 50))
                                                 )
                                         )
-                                .append($('<td>')
+                                .append($('<td class="bug-list-column-task-status">')
                                         .append($('<span>')
                                                 .addClass('us-item-status-' + o.taskStatus)
                                                 .text(o.taskStatus)
@@ -2975,6 +2989,7 @@ function getChildTasks() {
                 }
 
             } catch (err) {
+               // alert(err);
             }
         }
     });
@@ -15718,7 +15733,7 @@ function getBugList4UserStory(bgId, tbody) {
         json.kv.cookie = getToken();
     } catch (err) {
     }
-    json.kv.fkBackogId = bgId;
+    json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
     var prd = getProjectValueUsManageMulti();
@@ -15756,7 +15771,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append($("<td>")
                                 .append($("<a>")
                                         .attr('href', '#')
-                                        .attr("onclick", "callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
+                                        .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
@@ -17589,7 +17604,7 @@ function updateTask4ShortChange(el, ustype) {
 }
 
 function updateTask4ShortChangeDetails(val, ustype) {
-    updateTask4ShortChangePure(val, ustype, global_var.current_us_task_id);
+    updateTask4ShortChangePure(val, ustype, global_var.current_issue_id);
 }
 
 function updateTask4ShortChangeDetailsWithSync(val, ustype) {
@@ -20139,165 +20154,6 @@ function updateTask4ShortChangeTaskName() {
 
 function deleteTask() {
     new UserStory().deleteBacklogTask(global_var.current_us_task_id);
-}
-
-function deleteComment(commentId) {
-
-
-    //        console.log('task id'+taskId);
-    if (!commentId) {
-        return;
-    }
-
-    if (!confirm("Are you sure?")) {
-        return;
-    }
-
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.id = commentId;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmDeleteComment",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            genCommentListOfTask();
-        }
-    });
-}
-
-function convertCommentHtml2TextArea(el, commentId) {
-    new UserStory().convertCommentHtml2TextAreaNoChange($('#' + commentId));
-    $(el).closest("div").find('.saveComment').show();
-}
-
-function saveComment(el, commentId) {
-    new UserStory().saveCommentUpdate($('#' + commentId));
-    new UserStory().convertTextArea2HtmlAsText($('#' + commentId));
-    $(el).hide();
-}
-
-function genCommentListOfTask() {
-    var taskId = global_var.current_us_task_id;
-    //        console.log('task id'+taskId);
-    if (!taskId) {
-        return;
-    }
-
-
-    var json = {
-        kv: {}
-    };
-    try {
-        json.kv.cookie = getToken();
-    } catch (err) {
-    }
-    json.kv.fkTaskId = taskId;
-    var that = this;
-    var data = JSON.stringify(json);
-    var rs = "";
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetCommentListByTask",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            rs = generateCommentListHtml4Task(res, taskId);
-        },
-        error: function () {
-            //                Toaster.showError("error");
-        }
-    });
-    return rs;
-}
-
-function generateCommentListHtml4Task(res, taskId) {
-    try {
-        if (!res.tbl[0].r) {
-            return;
-        }
-        var obj = res.tbl[0].r;
-        var div = $('<div></div>').append($('<div></div>').addClass("row").append("<br>"));
-        for (var i = 0; i < obj.length; i++) {
-
-
-            var div_by_col = $('<div></div>').addClass("col").addClass("mangodbcol1")
-                    .append("<br>");
-            var div_by_row = $('<div></div>')
-                    .addClass("row")
-                    .addClass("mangodb");
-            var img = obj[i].avatarUrl.length === 0 ?
-                    fileUrl(new User().getDefaultUserprofileName()) :
-                    fileUrl(obj[i].avatarUrl);
-            var div1 = $('<div></div>')
-                    .addClass("col-1 comment-line1")
-                    .append($('<img></img>')
-                            .addClass("figure-img img-fluid rounded-circle")
-                            .attr("style", "max-width:28px")
-                            .attr("src", img));
-            //            var comment = replaceMainTrustedTags(replaceTags(obj[i].comment));
-            var comment = replaceTags(obj[i].comment);
-            var div2 = $('<div></div>')
-                    .attr('style', "padding-left:0px;font-size:13px;")
-                    .addClass("col-11")
-                    .append($("<span>").append(obj[i].username)
-                            .addClass('comment-content-header-name')
-                            .append($("<span>")
-                                    .addClass('comment-content-header-history')
-                                    .append(Utility.convertDate(obj[i].commentDate))
-                                    .append(", ")
-                                    .append(Utility.convertTime(obj[i].commentTime))
-                                    .append(" ")
-                                    )
-                            .append('&nbsp;&nbsp;&nbsp;')
-
-                            //                            .append($('<a href="#" style="font-size:11px;">')
-                            //                                    .addClass('comment-content-header-name')
-                            //                                    .attr('onclick', "deleteComment('" + obj[i].id + "')")
-                            //                                    .append("Delete"))
-                            )
-                    .append("<br>")
-                    .append($("<span class='comment-main-span'>")
-                            .css('padding-bottom', "5px")
-                            .attr("id", obj[i].id)
-                            //                            .attr("ondblclick", "new UserStory().convertCommentHtml2TextArea(this)")
-                            .attr("pval", replaceMainTrustedTags(replaceTags(obj[i].comment)))
-                            .append(MapTextAreaHtml(comment)));
-            var div2_1 = new UserStory().generateCommentFileLine(obj[i].fileName);
-            var div3 = $('<div></div>').addClass("col-12").append("");
-            div2.append(div2_1)
-                    .append("<br>")
-            //                    .append($('<a href="#" style="font-size:11px;">')
-            //                            .attr('onclick', " convertCommentHtml2TextArea(this,'" + obj[i].id + "')")
-            //                            .append("Edit"))
-
-            //                    .append('&nbsp;&nbsp;&nbsp;')
-            //                    .append($('<a class="saveComment" href="#" style="display:none;font-size:11px;">')
-            //                            .attr('onclick', "saveComment(this,'" + obj[i].id + "')")
-            //                            .append("Save"));
-            div_by_row.append(div1).append(div2)
-                    .append(div3);
-            div_by_col.append(div_by_row)
-            div.append(div_by_col);
-            //                        div.append(div1).append(div2).append(div3);
-        }
-        //        return div.html();
-
-        $('.comment-body').html(div.html());
-    } catch (e) {
-    }
 }
 
 
