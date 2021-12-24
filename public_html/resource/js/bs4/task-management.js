@@ -1070,7 +1070,7 @@ const taskManagement = {
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Responsible</div>
                                 <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
-                                        id='bug_filter_detail_assignee_id_update'  title="Assignee"></select>
+                                        id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
