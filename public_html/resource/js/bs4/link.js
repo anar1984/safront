@@ -7,7 +7,7 @@
 
 
 // var urlGl = "https://app.sourcedagile.com/"; 
-  var urlGl = "https://test.sourcedagile.com/";     
+  var urlGl = "http://test.sourcedagile.com/";     
  
 //   var urlGl = "http://localhost:8079/tsn3/";
 //var urlGl = ""

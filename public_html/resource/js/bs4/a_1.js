@@ -12705,6 +12705,128 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
 
 });
 
+/// new modal api
+function showApiRelationModal(backLogId) {
+    $('#storyCardShowRelationModal').modal('show'); 
+    data = {};
+     data.fkApiId = backLogId
+    callApi('21122413451908481407', data, true, function (res) {
+         
+    try {
+        var b = res.tbl[0].r;
+    var table = $('#storyCardShowRelationModalTable tbody');
+    table.empty();
+    var i = 0;
+    for (var i; i < b.length; i++) {
+      const o = b[i];
+    if (o.inputType === 'IN') {
+        var tr = $(`<tr>`) 
+                   .attr("pid",o.id)    
+        .append($("<td>")
+            .append($("<select>")
+                .addClass("tableInputSelect")
+                .attr("data-live-search", "true")
+                .attr("onchange", "tableSelectBoxOnChange(this)")
+                .attr("data-apiId", backLogId)
+                 .attr("data-relType", 'IN')
+            )
+            .append($('<i class="fas fa-arrow-right"></i>'))
+        )
+        .append($("<td>")
+          .text(o.inputName)
+        )
+        .append($("<td>")
+          .append("")
+        )  
+        } else {
+        var tr = $(`<tr>`)
+                .attr("pid",o.id) 
+        .append($("<td>")
+          .append("")
+        )
+        .append($("<td>")
+          .text(o.inputName)
+        )
+            .append($("<td>")
+            .append($('<i class="fas fa-arrow-right"></i>'))
+            .append($("<select>")
+                .addClass("tableInputSelect")
+                .attr("data-live-search", "true")
+                .attr("onchange", "tableSelectBoxOnChange(this)")
+                  .attr("data-apiId", backLogId)
+                  .attr("data-relType", 'OUT')
+            )           
+        )  
+        }  
+      table.append(tr);
+    }
+    } catch (error) {       
+    }
+        inputSetSelectBox();
+        getBacklogInputOutPutSetTable(backLogId);
+  })   
+}
+// onChange
+
+function tableSelectBoxOnChange(el) {
+    var inId = $(el).val();
+    var typ  = $(el).attr("data-relType");
+    var apiId  = $(el).attr("data-apiId");
+    var typId  = $(el).closest("tr").attr("pid");
+    var data  ={};
+     data.fkBacklogInputId = inId;
+    if (!$(el).attr('sa-data-val')) {
+       
+     data.fkApiInputId = typId;
+      data.fkApiId = apiId;
+      data.relType = typ;
+        callApi('21122412541607067550', data, true, function (res) {
+        
+       }) 
+    } else {
+        data.id = $(el).attr('sa-data-val');
+    
+        callApi('21122417433606496584', data, true, function (res) {
+             
+  }) 
+
+    }
+    
+}
+
+/// select box set
+function inputSetSelectBox() {
+    var inputs = $("#generalview_input_list .description-left");
+     $(".tableInputSelect").append($("<option>").text('').val('0'))
+    inputs.each(function () {
+        var elm = $(this).clone();
+        elm.find(".dropdown").first().remove();
+        var text = $(elm).text();
+        var idOption = $(elm).attr("data-id");
+       
+        $(".tableInputSelect").append($("<option>").text(text).val(idOption))
+    })
+    $(".tableInputSelect").selectpicker()
+}
+ ///
+function getBacklogInputOutPutSetTable(backlogId) {
+      data = {};
+     data.fkApiId = backlogId
+    callApi('211224123024004010435', data, true, function (res) {
+            
+        var dt = res.tbl[0].r;
+         for (let i = 0; i < dt.length; i++) {
+             const o = dt[i];
+             var slct = $("#storyCardShowRelationModalTable tbody").find("tr[pid='" + o.fkApiInputId + "']").find("select.tableInputSelect");
+              slct.selectpicker("destroy");
+              slct.val(o.fkBacklogInputId);
+              slct.attr("sa-data-val",o.id);
+             slct.selectpicker("refresh");
+                  
+         }  
+  })  
+}
+
 function setInputListToInputRelation() {
     var div = $('#storyCardInputRelationModal_maindivid');
     div.html('');

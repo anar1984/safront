@@ -7439,6 +7439,7 @@ UserStory.prototype = {
                     .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
                     .attr("iname", replaceTags(Replace2Primes(inputName)))
                     .attr('class', 'description-left')
+                    .attr("data-id",obj[i].id )
                     .append(inputName)
                     .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
@@ -20960,6 +20961,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
                     .attr("iname", replaceTags(Replace2Primes(inputName)))
                     .attr('class', 'description-left')
+                     .attr("data-id",obj[i].id )
                     .append(inputName)
                     .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
@@ -21988,7 +21990,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                         "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>"
                         + ")";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
-                        + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a>";
+                        + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a> ";
+                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "')\"><i class='fas fa-exchange-alt'></i></a> ";
 
             }
 
