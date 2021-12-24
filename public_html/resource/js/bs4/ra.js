@@ -405,6 +405,13 @@ $(document).on('change', '.inputActionTypeChangeZadSheyOOO', function (ev) {
     updateCurrentInput4ShortChanges(this);
 });
 
+$(document).on('change', '.inputActionTypeChangeZadShey111', function (ev) {
+    var inputId = $(this).attr('inputid');
+    var ustype = $(this).attr('key');
+    var val=$(this).val();
+    updateInput4SCDetails(inputId, val, ustype);
+});
+
 $(document).on('change', '.hasInputManualEventActionChange', function (ev) {
     var inputId = $(this).attr('pdid');
     var ifKey = SAInput.getInputDetails(inputId, 'ifKey');

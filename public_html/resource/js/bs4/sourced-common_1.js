@@ -8076,7 +8076,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             async: true,
             success: function (res) {
                 SAInput.addInputByRes(res);
-                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
+//                SACore.addInputToBacklog(res.kv.fkBacklogId, res.kv.id);
                 that.insertSuplementaryOfNewInputTotal(res.kv.id, res.kv.inputName);
 
                 that.loadAPIOutput4SelectNewDemo(res.kv.fkBacklogId);
@@ -21579,6 +21579,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         if (!id) {
             return;
         }
+        
+        loadDetailsOnProjectSelect4StoryCardNewTr();
         var f = false;
         if ($('#us-related-api-input-actiontype') !== action) {
             f = true;
@@ -21974,6 +21976,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             }
             if (sendToInput) {
                 st += (selectFromInput || selectFromDBField || sendToDBField) ? '<br>' : "";
+                st += ` <select key="actionType" inputid='${object.id}' class="input_event_type inputActionTypeChangeZadShey111">
+                            <option value='onclick' ${object.actionType==='onclick'?"selected":""}>On Click</option>
+                            <option value='onchange' ${object.actionType==='onchange'?"selected":""}>On Change</option>
+                            <option value='ondblclick' ${object.actionType==='ondblclick'?"selected":""}>On Dbl Click</option>
+                            <option value='onfocus' ${object.actionType==='onfocus'?"selected":""}>On Focusout</option>
+                        </select>`
+                
                 st += " <b>Send/Save data to Story Card (API)</b>: " + sendToInput
                         + " (" +
                         "<a style=\"color:black;\" href=\"#\" onclick=\"new UserStory().redirectUserStoryCore('" + object.sendToBacklogId + "')\">" + sendToBacklog + "</a>"
