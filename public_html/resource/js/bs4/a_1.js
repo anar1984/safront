@@ -13447,6 +13447,63 @@ function loadStoryCardByProject4TaskMgmt(e) {
     //    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
+function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var cmd = $('.us-related-apis-new');
+            cmd.html('');
+            //            new UserStory().setUSLists(res);
+            var f = true;
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+
+                var o = obj[n];
+                if (o.isApi!=='1'){
+                    continue;
+                }
+                var pname = o.backlogName;
+                var op = $('<option></option>')
+                        .attr('value', o.id)
+                        .text(pname);
+                if (f) {
+                    op.attr("selected", true);
+                    f = false;
+                }
+                if (o.id === global_var.current_backlog_id) {
+                    op.attr("selected", true);
+                }
+                if (global_var.current_modal === 'loadDev') {
+
+                    if (o.isApi === '1') {
+                        cmd.append(op);
+
+                    }
+                } else {
+
+                    cmd.append(op);
+
+                }
+
+            }
+
+            cmd.val(global_var.current_backlog_id);
+            sortSelectBoxByElement(cmd);
+            cmd.selectpicker('refresh');
+            cmd.change();
+        }
+    });
+}
 
 function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
@@ -17778,6 +17835,33 @@ function loadProjectList2SelectboxByClass(className) {
     //    cmd.val(global_var.current_project_id);
     sortSelectBoxByElement(cmd);
     cmd.selectpicker('refresh');
+    cmd.change();
+}
+
+function loadProjectList2SelectboxSimple(className) {
+
+    var cmd = $('.' + className);
+    cmd.html('');
+    var f = true;
+    var pid = SACore.GetProjectKeys();
+    for (var n = 0; n < pid.length; n++) {
+        var pname = SACore.GetProjectName(pid[n]);
+        var o = $('<option></option')
+                .attr('value', pid[n])
+                .text(pname);
+        if (f) {
+            o.attr("selected", true);
+            f = false;
+        }
+
+        if (pid[n] === global_var.current_project_id) {
+            o.attr("selected", true);
+        }
+        cmd.append(o);
+    }
+
+    //    cmd.val(global_var.current_project_id);
+    sortSelectBoxByElement(cmd);
     cmd.change();
 }
 
