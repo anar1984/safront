@@ -20,6 +20,7 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text">Add Task</span>
                           </h6>
+                          <button id="addModalBugIssueTaskMng" bid='21121313200609883521' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
                           </button>
@@ -895,6 +896,8 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text card-UserStory-header-text-code">Add Task</span>
                           </h6>
+                          <button id="addModalBugIssueTaskMng" bid='21121313201600758588' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
+
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
                           </button>
@@ -2529,6 +2532,41 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     $("#issue-managment-add-task").modal("show");
 
 });
+$(document).on('click', '#addModalBugIssueTaskMng', function (event) {
+
+    taskManagement.insertTask.genBlockModal.Init()
+    loadBugTaskDeadlineScripts()
+    var bgid = $(this).attr("bid")
+    var prId = $(this).attr("pid"); //$("#story_mn_filter_project_id").val();
+    $("#bug_filter_project_id_add").val(prId).change();
+    $("#bug_filter_backlog_id_add").val(bgid).change();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    taskManagement.add_loadTaskType_bug_list(dwlmt);
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+
+    $("#issue-managment-add-task").modal("show");
+
+});
+$(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
+
+      var manId  = Utility.getParamFromUrl("fkManualProjectId")
+    taskManagement.insertTask.genBlockModal.Init()
+    loadBugTaskDeadlineScripts()
+    var bgid = manId?"":getCurrentModalId4UsTask();
+    var prId = manId?manId:'21062415244905361923'; //$("#story_mn_filter_project_id").val();
+    $("#bug_filter_project_id_add").val(prId).change();
+    $("#bug_filter_backlog_id_add").val(bgid).change();
+    global_var.active_canvas = 'taskCreate';
+    taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
+    var dwlmt = $('#bug_task_type_id_add')
+    taskManagement.add_loadTaskType_bug_list(dwlmt);
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+
+    $("#issue-managment-add-task").modal("show");
+
+});
 $(document).on("change", '#bug_filter_project_id_add', function (e) {
     var id = $(this).val();
     taskManagement.getBacklogLIstByprojectId(id)
@@ -2547,6 +2585,64 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     $("#issue-managment-add-task").modal("show");
 
 })
+
+function getCurrentModalId4UsTask() {
+    var idb = '';
+
+   if(global_var.current_modal==='loadStoryCardMgmt'){
+       idb = '21082003291903775632'
+   }
+   if(global_var.current_modal==='loadStoryCard'){
+       idb = '21122411175006081920'
+   }
+   if(global_var.current_modal==='loadDev'){
+       idb = '21122518513102431977'
+   }
+   if(global_var.current_modal==='loadCodeGround'){
+       idb = '21122518532301398391'
+   }
+   if(global_var.current_modal==='loadProjectManagement'){
+       idb = '21090713220709994607'
+   }
+   if(global_var.current_modal==='loadDashboard'){
+       idb = '210820032833056810823'
+   }
+   if(global_var.current_modal==='loadTaskManagement'){
+       idb = '21082003302308873715'
+   }
+   if(global_var.current_modal==='loadBusinessCase'){
+       idb = '21082003314403151270'
+   }
+   if(global_var.current_modal==='loadBugChange'){
+       idb = '21082003275802222786'
+   }
+   if(global_var.current_modal==='loadTestCase'){
+       idb = '21082003310301912293'
+   }
+   if(global_var.current_modal==='loadDocEditor'){
+       idb = '21082003312500622676'
+   }
+   if(global_var.current_modal==='loadRunService'){
+       idb = '21110810291103705004'
+   }
+   if(global_var.current_modal==='loadBusinessService'){
+       idb = '21082003320807935137'
+   }
+   if(global_var.current_modal==='loadActivityDiagram'){
+       idb = ''
+   }
+   if(global_var.current_modal==='loadSourceActivity'){
+       idb = ''
+   }
+   if(global_var.current_modal==='loadEntityDiagram'){
+       idb = '21082003322903142571'
+   }
+   if(global_var.current_modal==='loadSqlBoard'){
+       idb = '21102000014805402484'
+   }
+
+     return idb;
+}
 
 $(document).on("click", '#addIssueButtonId', function (e) {
     // $('#issue-managment-add-task .after-add-task').show();

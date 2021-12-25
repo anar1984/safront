@@ -14181,7 +14181,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                this.setUSLists4KanbanViewCore(stl[si])
             }
            
-       this.getManualStatusList()
+            if($("manualStatusListUs").prop("checked")){
+                this.getManualStatusList();
+            }
+       
       
     },
     getManualStatusList: function () {

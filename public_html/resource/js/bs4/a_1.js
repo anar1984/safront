@@ -8647,11 +8647,10 @@ function showJSModal(jsId) {
     $('select#jsCodeModal_fnlist').change() ;
 
 }
-function showJSModalByName(jsId) {
+function showJSModalByName(elm) {
 
     showJsCodeModal();
-
-    var fid = $('select#jsCodeModal_fnlist').find('option:contains("'+jsId+'")').attr("value")
+     var fid  = $(elm).closest("ul").find('select.get-callfn-select-box option:selected').attr("pid");
     
     $('select#jsCodeModal_fnlist').val(fid);
     $('select#jsCodeModal_fnlist').selectpicker("refresh");

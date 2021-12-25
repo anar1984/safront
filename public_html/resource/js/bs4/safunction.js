@@ -2061,7 +2061,7 @@ var SAFN = {
                         .addClass('cs-select-btn-box')
                         .append($('<button>')
                                 .append('<i class="fas fa-share"></i>')
-                                .attr("onclick", "showJSModalByName('" + fnId + "')")
+                                .attr("onclick", "showJSModalByName(this)")
                                 )
             }
             var descBody = $('<div>')
@@ -4354,7 +4354,7 @@ function loadSelecPickerOnChnageFnList(element) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: false,
+        async: true,
         success: function (res) {
             var dt = [];
             try {
@@ -4365,20 +4365,22 @@ function loadSelecPickerOnChnageFnList(element) {
             $(element).each(function () {
 
                 var fnid = $(this).val();
-
+                $(this).empty();  
                 for (var n = 0; n < dt.length; n++) {
 
                     var o = dt[n];
 
                     var td = $('<option>')
                             .text(o.fnDescription)
-                            .val(o.fnDescription)
+                            .val(o.fnCoreName)
+                            .attr('pid',o.id)
 
-                    if (o.id === fnid) {
+                   /*  if (o.id === fnid) {
                         td.attr('selected', 'selected')
-                    }
+                    } */
                     $(this).append(td);
                 }
+                $(this).val(fnid)
                 $(this).selectpicker('refresh');
                
             })
@@ -4519,10 +4521,6 @@ $(document).ready(function () {
     })
 
     $(document).on("change", "select.function-statement-input-common.get-callfn-select-box", function (e) {
-
-        var val = $(this).val();
-
-        $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModalByName('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
 
         SAFN.Convert.Common.GetLineBody(this);
     })
