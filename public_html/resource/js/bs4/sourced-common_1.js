@@ -14173,16 +14173,108 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
-  
-
+          var div = $(".task-panel")
+          div.empty();
         var stl  = ["new","ongoing",'closed','draft']
             for (let si = 0; si < stl.length; si++) {
-               
+               div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()))
                this.setUSLists4KanbanViewCore(stl[si])
             }
-       
-     
+           
+       this.getManualStatusList()
+      
+    },
+    getManualStatusList: function () {
+        data ={};//createTechizatTelebProducts
+        var that  = this;
+        var div = $(".task-panel")
+        callApi('21122311111704737668',data,true,function (res) { 
+               var tbl = res.tbl[0].r;
+                for (let i = 0; i < tbl.length; i++) {
+                    const o = tbl[i];
+                    div.append(that.genUsManagementZone(o.id,o.statusName.toUpperCase()))
+                    that.getBacklogListByManualStatusId(o.id);               
+                }
 
+         })
+            
+    },
+    getBacklogListByManualStatusId:function (stl) {
+        data ={};//createTechizatTelebProducts
+        data.fkBacklogId = stl
+        callApi('21122313051700845260',data,true,function (res) { 
+          
+            var c4new = 0
+            $('#kanban_view_'+stl+'_count').html(0);
+            $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
+            $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
+            try {
+                                      
+                    var usIdList = res.tbl[0].r;
+    
+                    for (var k = 0; k < usIdList.length; k++) {  
+                        var obj = usIdList[k];
+                        var html = new UserStory().genUSLine4KanbanView(obj);
+                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
+
+                         if (obj.backlogStatus === 'ongoing') {
+                            $(html).find("#user-story-show-stat").click();
+                        } 
+                        c4new++
+                    }
+                
+                  if(c4new > 19){
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
+                  }
+               
+        
+            } catch (e) {
+
+              if(c4new < 1){
+                 
+                  $('.main_div_of_backlog_info_kanban_view_table_'+stl)
+                  .append($('<div class="task-content content-drag">'));
+                }
+                
+            }
+            global_var.story_card_sprint_assign_checked = 0;
+            global_var.story_card_label_assign_checked = 0;
+    
+            $('[data-toggle="popover"]').popover({html:true});
+           
+             
+
+         })
+    },
+    genUsManagementZone:function (id,Name,order) {
+        return `<div class="task-column  ${id}" status="${id}" order='${order?order:0}'>
+        <div class="task-column-header">
+            <input type="checkbox" name="" data-st="${id}" class="all-check-us-mngm" id="alcheck-${id}-us-mng">
+
+            <span class="headerInputColumn">${Name} <b><span class="counterkanban" id="kanban_view_${id}_count">0</span></b></span>
+            
+            <button id="multi-edit-menu-btn-us" class="btn btn-sm invisible btn-light" data-toggle="modal" data-target="#multieditpopUpUs"> <i class="fas fa-edit" aria-hidden="true"></i></button>
+
+            <button data-status="${id}" class="btn btn-sm btn-light next-large-modal-btn"><i class="fas fa-expand" aria-hidden="true"></i></button>
+        </div>
+        <div class="miniStoryCard">
+            <h5>New Story Card</h5>
+            <input class="miniStoryInput form-control" type="text">
+            <div class="TextHeader " onclick="insertNewUserStory(this, '${id}')" id="AcceptStory" style="color: green;">
+                <i class="fas fa-check" aria-hidden="true"></i>
+
+            </div>
+            <div class="TextHeader " id="DeleteStory" style="color: red;">
+                <i class="fas fa-times" aria-hidden="true"></i> 
+            </div>
+        </div>
+
+
+        <div class="task-column-body main_div_of_backlog_info_kanban_view_table_${id}" id="${id}"></div>
+
+
+    </div>`
     },
     setUSLists4KanbanViewCoreUsLArge: function (stl) {
                $('#body-large-modal-in-us').html('');
@@ -14349,6 +14441,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
            
 
     },
+    
+    
     setUSLists4KanbanViewCore: function (stl) {
   
              $('#kanban_view_'+stl+'_count').html(0);
@@ -14573,7 +14667,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_ongoing').html('');
         $('.main_div_of_backlog_info_kanban_view_table_closed').html('');
         $('.main_div_of_backlog_info_kanban_view_table_draft').html('');
-        console.log(res)
+        
 
         try {
             var obj = res.tbl[0].r;

@@ -51,7 +51,8 @@
        
 }
 .task-column{
-    width: 24.71%;
+    min-width: 350px;
+    max-width: 350px;
     border-radius: 6px;
     padding: 5px;
     margin-left: 5px;

@@ -2047,7 +2047,6 @@ var SAFN = {
 
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
-            // var fnName = SACore.GetBacklogDetails(fnId, 'backlogName');
             // fnName = (fnName) ? fnName : fnId;
 
             var but = '';
@@ -2055,21 +2054,14 @@ var SAFN = {
                     .addClass('cs-select-btn-box')
                     .append($('<button>')
                             .append('<i class="fas fa-plus"></i>')
-                            .attr("onclick", "addRelatedCallfn(this)")
+                            .attr("onclick", "addNewRelatedCallfn(this)")
                             )
             if (fnId.length > 0) {
                 but = $("<li>")
                         .addClass('cs-select-btn-box')
                         .append($('<button>')
                                 .append('<i class="fas fa-share"></i>')
-                                .attr("onclick", "showJSModal('" + fnId + "')")
-                                )
-            } else {
-                but = $("<li>")
-                        .addClass('cs-select-btn-box')
-                        .append($('<button>')
-                                .append('<i class="fas fa-plus"></i>')
-                                .attr("onclick", "addJsModalNewSt(this)")
+                                .attr("onclick", "showJSModalByName('" + fnId + "')")
                                 )
             }
             var descBody = $('<div>')
@@ -4369,6 +4361,7 @@ function loadSelecPickerOnChnageFnList(element) {
                 dt = res.tbl[0].r
             } catch (err) {
             }
+          
             $(element).each(function () {
 
                 var fnid = $(this).val();
@@ -4387,26 +4380,28 @@ function loadSelecPickerOnChnageFnList(element) {
                     $(this).append(td);
                 }
                 $(this).selectpicker('refresh');
-                $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
-                    let arrowWidth = 60;
-                    let $this = $(this);
-                    let style = window.getComputedStyle(this)
-                    let {fontWeight, fontSize, fontFamily} = style
-                    let text = $this.find("option:selected").text();
-                    let $demo = $("<span>").html(text).css({
-                        "font-size": fontSize,
-                        "font-weight": fontWeight,
-                        "font-family": fontFamily,
-                        "visibility": "hidden"
-                    });
-                    $demo.appendTo($this.parent());
-                    let width = $demo.width();
-                    $demo.remove();
-
-                    $this.width(width + arrowWidth);
-
-                });
+               
             })
+
+            $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
+                let arrowWidth = 60;
+                let $this = $(this);
+                let style = window.getComputedStyle(this)
+                let {fontWeight, fontSize, fontFamily} = style
+                let text = $this.find("option:selected").text();
+                let $demo = $("<span>").html(text).css({
+                    "font-size": fontSize,
+                    "font-weight": fontWeight,
+                    "font-family": fontFamily,
+                    "visibility": "hidden"
+                });
+                $demo.appendTo($this.parent());
+                let width = $demo.width();
+                $demo.remove();
+
+                $this.width(width + arrowWidth);
+
+            });
 
         }
     });
@@ -4526,7 +4521,8 @@ $(document).ready(function () {
     $(document).on("change", "select.function-statement-input-common.get-callfn-select-box", function (e) {
 
         var val = $(this).val();
-        $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModal('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
+
+        $(this).parents('tr').find(".cs-select-btn-box > button").attr("onclick", "showJSModalByName('" + val + "')").html('<i class="fas fa-share" aria-hidden="true"></i>')
 
         SAFN.Convert.Common.GetLineBody(this);
     })

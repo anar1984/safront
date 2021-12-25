@@ -7802,6 +7802,7 @@ function deleteInputActionRel(relId) {
             getInputActionRelList();
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
+            loadBacklogProductionCoreDetailssByIdPost("",true);
         }
     });
 }
@@ -8479,22 +8480,20 @@ function deleteJsCodeClass() {
 
 
 
-$(document).on("change", ".jsCodeModal_checkbox", function (e) {
+$(document).on("change", "select.jsCodeModal_checkbox", function (e) {
     jsCodeModal_checkbox_action();
 })
 
 function jsCodeModal_checkbox_action() {
     $('.jscode-zad').hide();
-    var val = $('.jsCodeModal_checkbox').val();
+    var val = $('select.jsCodeModal_checkbox').val();
     $('.jscode-zad-' + val).show();
 }
 
 
-$(document).on("click", ".jscode-row-tr", function (e) {
-    $('.jscode-row-tr').removeClass('jscode-row-tr-active');
-    $(this).addClass('jscode-row-tr-active');
-
-    var val = $(this).attr('pid');
+$(document).on("change", "#jsCodeModal_fnlist", function (e) {
+   
+    var val = $(this).val();
     if (!val) {
         return;
     }
@@ -8523,7 +8522,9 @@ $(document).on("click", ".jscode-row-tr", function (e) {
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
             $('#jsCodeModal_isactive').val(res.kv.isActive);
+            $('#jsCodeModal_fntype').selectpicker('destroy');
             $('#jsCodeModal_fntype').val(res.kv.fnType);
+            $('#jsCodeModal_fntype').selectpicker('refresh');
             $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
 
             jsCodeModal_checkbox_action();
@@ -8553,7 +8554,10 @@ function insertNewJsFuncionDesc() {
             getAllJsCodeByProject();
             loadCurrentBacklogProdDetails();
             $('#jsCodeModal_newfunction').val('');
-            $('.jscode-row-tr[pid="' + res.kv.id + '"]').first().click();
+            
+            $('select#jsCodeModal_fnlist').val(res.kv.id)
+            $('select#jsCodeModal_fnlist').selectpicker("refresh");
+            $('select#jsCodeModal_fnlist').change() ;
         }
     });
 }
@@ -8596,40 +8600,34 @@ function loadGlobalJsCode() {
         crossDomain: true,
         async: false,
         success: function (res) {
-            var table = $('#jsCodeModal_fnlist');
+            var table = $('select#jsCodeModal_fnlist');
 
             var obj = res.tbl[0].r;
             for (var i = 0; i < obj.length; i++) {
                 var o = obj[i];
-                var tr = $("<tr>")
-                        .addClass('jscode-row-tr')
+                var tr = $("<option>")
                         .attr("pid", o.id)
-                        .append($('<td>')
-                                .css("cursor", "pointer")
-                                .text(o.fnDescription))
+                        .text(o.fnDescription)
                 table.append(tr);
             }
             if (current_js_code_id) {
-                $(".jscode-row-tr[pid='" + current_js_code_id + "']").first().click();
-            } else {
-                $(".jscode-row-tr").first().click();
-            }
+              table.val(current_js_code_id);
+            } 
+            table.change();
+            table.selectpicker('refresh');
         }
     });
 }
 
 function getAllJsCodeByProjectDetails(res) {
-    var table = $('#jsCodeModal_fnlist');
+    var table = $('select#jsCodeModal_fnlist');
     table.html('');
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
-        var tr = $("<tr>")
-                .addClass('jscode-row-tr')
-                .attr("pid", o.id)
-                .append($('<td>')
-                        .css("cursor", "pointer")
-                        .text(o.fnDescription))
+        var tr = $("<option>")
+                .attr("value", o.id)
+                .text(o.fnDescription)
         table.append(tr);
     }
     //    if (current_js_code_id) {
@@ -8637,11 +8635,27 @@ function getAllJsCodeByProjectDetails(res) {
     //    } else {
     //        $(".jscode-row-tr").first().click();
     //    }
+    table.selectpicker("refresh");
 }
 
 function showJSModal(jsId) {
     showJsCodeModal();
-    $('.jscode-row-tr[pid="' + jsId + '"]').click();
+
+    
+    $('select#jsCodeModal_fnlist').val(jsId);
+    $('select#jsCodeModal_fnlist').selectpicker("refresh");
+    $('select#jsCodeModal_fnlist').change() ;
+
+}
+function showJSModalByName(jsId) {
+
+    showJsCodeModal();
+
+    var fid = $('select#jsCodeModal_fnlist').find('option:contains("'+jsId+'")').attr("value")
+    
+    $('select#jsCodeModal_fnlist').val(fid);
+    $('select#jsCodeModal_fnlist').selectpicker("refresh");
+    $('select#jsCodeModal_fnlist').change() ;
 
 }
 
@@ -8649,15 +8663,17 @@ var cdnh = true;
 var cdnh2 = true;
 
 function showJsCodeModal() {
-
+    $('.jsCodeModal-selectpicker').selectpicker('refresh');
     $('#jsCodeModal').modal('show');
-
+   
+    /* 
     if (cdnh) {
 
 
         cdnh = false;
-        jsEditorGenerate();
-    }
+      //  jsEditorGenerate();
+    
+    } */
     getAllJsCodeByProject();
     //loadApisToComboOnJSCode();
 }
@@ -10158,6 +10174,56 @@ function firstLetterToLowercase(str) {
     return str;
 }
 
+function addNewSourceCodeFromDescNew() {
+    var val = $('#addNewRelatedSourceCodeModal-newapi').val();
+    var type = $('#addNewRelatedSourceCodeModal-type').val();
+    if (!val) {
+        return;
+    }
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv['fnDescription'] = val;
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    json.kv.fnCoreName = convertToCamelView(val);
+    json.kv.fnCoreInput = "data";
+    json.kv.fnBody = "return data";
+    json.kv.fnType = type;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewJsCode",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var descId = $('#addNewRelatedSourceCodeModal-id').val();
+           var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
+
+
+        var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+        select.append($("<option>")
+                .attr('value', apidId)
+                .text(apidId));
+        select.val(apidId)
+        select.change();
+        $('#addNewRelatedSourceCodeModal-newapi').val('');
+        $("#addNewRelatedSourceCodeModal"),moadl("hide");
+        return
+    
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
+}
 function addNewSourceCodeFromDesc() {
     var val = $('#addRelatedSourceCodeModal-newapi').val();
     if (!val) {
@@ -10218,6 +10284,11 @@ function addRelatedCallfn(el) {
     $('#addRelatedSourceCodeModal').modal('show');
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
+}
+function addNewRelatedCallfn(el) {
+    var descId = $(el).closest('tr').attr('pid')
+    $('#addNewRelatedSourceCodeModal-id').val(descId);
+    $('#addNewRelatedSourceCodeModal').modal('show');
 }
 function loadRelatedSourceCode4Relation() {
     //    addRelatedApiModal-api
@@ -11323,7 +11394,7 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
             } else if (global_var.current_modal === 'loadStoryCard') {
                 reloadBacklogListOnStoryCard();
             }
-
+            loadBacklogProductionCoreDetailssByIdPost("",true);
         }
     });
 }
@@ -13583,7 +13654,7 @@ function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            var cmd = $('.us-related-apis-new');
+            var cmd = $('select.us-related-apis-new');
             cmd.html('');
             //            new UserStory().setUSLists(res);
             var f = true;
@@ -14773,7 +14844,7 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         commmonOnloadAction(this);
         $("#story_mn_filter_assigne_id").selectpicker();
         $("#priority-change-story-card-filter").selectpicker();
-        $('#date_timepicker_start_end-usmn').daterangepicker({}).val('').change();
+        $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
     });
 });
 $(document).on('click', '.loadBugChange', function (evt) {

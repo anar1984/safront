@@ -6213,6 +6213,118 @@
 </div>
 
 
+<div class="modal fade" id="addNewRelatedSourceCodeModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New  Function </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        
+                        <div class="row  " >
+                            <div class="form-group col-2">
+                                <label for="addNewRelatedSourceCodeModal-shortdesc"
+                                class="col-form-label control-label">Fn Type</label>
+                                <select  class="form-control " id="addNewRelatedSourceCodeModal-type" tabindex="null">
+                                    <option selected="" value="core">Core</option>
+                                    <option value="event">Event Based</option>
+                                    <option value="java">Java</option>
+                                    <option value="sql">SQL Query</option>
+    
+                                </select>
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="addNewRelatedSourceCodeModal-shortdesc"
+                                       class="col-form-label control-label">New Function </label>
+                                <input type="text" id="addNewRelatedSourceCodeModal-newapi"
+                                       class="form-control "
+                                       style="padding: 10px 0px;">
+                            </div>
+                            <div class=" col-2">
+                                <br>
+                                <button class=" btn btn-primary  "
+                                        onclick="addNewSourceCodeFromDescNew()" >Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 hidden">
+                        <input class="form-control hidden" type='hidden' id="addNewRelatedSourceCodeModal-id"
+                               style="font-size:14px" spellcheck="false">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addRelatedSourceCodeModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Source Code</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        <label for="sprintname" class="col-form-label control-label">Function Name
+                        </label>
+                        <select id="addRelatedSourceCodeModal-api" class="form-control "
+                                onchange="toggleRelatedSourceCode4Desc(this)" style="width:100%;padding: 0px;
+                                border-radius: 4px;
+                                border: 1px solid gray;">
+                            <option value=""></option>
+
+                        </select>
+                        <div class="row  toggleRelatedSourceCode4DescClass" style="display: none;">
+                            <div class="form-group col-9">
+                                <label for="addRelatedSourceCodeModal-shortdesc"
+                                       class="col-form-label control-label">New Function </label>
+                                <input type="text" id="addRelatedSourceCodeModal-newapi"
+                                       class="form-control toggleRelatedSourceCode4DescClass"
+                                       style="padding: 10px 0px;">
+                            </div>
+                            <div class=" col-2">
+                                <br>
+                                <button class=" btn btn-primary toggleRelatedSourceCode4DescClass "
+                                        onclick="new addNewSourceCodeFromDesc()" >Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 hidden">
+                        <input class="form-control hidden" type='hidden' id="addRelatedSourceCodeModal-id"
+                               style="font-size:14px" spellcheck="false">
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary " onclick="addRelatedSourceCodeModal(this)"> Save
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="addRelatedSourceCodeModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" >
@@ -7490,108 +7602,101 @@
     </div>
 </div>
 
-<div class="modal fade" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index: 40001;" aria-hidden="true">
+<div class="modal fade p-0" id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index: 40001;" aria-hidden="true">
 
-    <div class="modal-dialog modal-lg" style="width: 90%;max-width: 90%" role="document">
+    <div class="modal-dialog modal-lg m-0 h-100 position-fixed" style="width: 100%;max-width: 100%" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">JS Code Management</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-size: 12px;">
-
-                <div class="row">
-                    <div class="col-4">
-                        <b>New Function (Description)</b>
-                        <input class="form-control" id="jsCodeModal_newfunction">
+            <div class="modal-header p-0">
+                
+                <div class="d-flex  storecard-header-nav-section">
+                    <div class="d-flex">
+                        <div class="">
+                            <input onchange='updateJSChange(this, "fnDescription")'
+                            style='background-color: transparent;border: none;color: white;' placeholder="Function Description"
+                            class="form-control " id="jsCodeModal_fndescription">
+                       
                     </div>
-                    <div class="col-1">
-                        <b><br></b>
-                        <button type="button" class="btn btn-success"
-                                onclick="insertNewJsFuncionDesc()">Add</button>
-                    </div>
-                    <div class="col-7"><br><br></div>
-                    <div class="col-12">
-                        <br><br>
-                        <div class="col-3 p-0">
-                            <input type="search" placeholder="search function"  class="form-control" id="search-function-gui-modal-js" >
+                </div>
+                      <div style="width: inherit;" class="d-flex justify-content-center ">
+                        <div class="d-flex justify-content-left cs-col-project">
+                            <div class="mm-col">
+                            <span class="mm-title">Function Type</span>
+                            <select onchange='updateJSChange(this, "fnType")'
+                                    class="form-control jsCodeModal_checkbox jsCodeModal-selectpicker " id="jsCodeModal_fntype">
+                                <option selected value='core'>Core</option>
+                                <option value='event'>Event Based</option>
+                                <option value='java'>Java</option>
+                                <option value='sql'>SQL Query</option>
 
+                            </select>
                         </div>
-                        <br>
-
                     </div>
-
-                    <div class="col-3" style="height: 60vh; 
-                         overflow-y: scroll; overflow-x: hidden;">
-                        <table class="table table-hover">
-                            <tbody id="jsCodeModal_fnlist">
-
-                            </tbody>
-                        </table>
+                    
+                    <div class="d-flex justify-content-left cs-col-storecard">
+                            <div class="mm-col">
+                            <span class="mm-title">Function</span>
+                            <select class="form-control" data-live-search="true" data-actions-box="true" onchange='' id='jsCodeModal_fnlist'
+                             title="Project"></select> 
+                        </div>
                     </div>
-                    <div class="col-9">
-                        <div class="row">
-                            <div class="col-4">
-                                Function Description <input onchange='updateJSChange(this, "fnDescription")'
-                                                            style='margin:0px 0px 15px 0px;' placeholder="Function Description"
-                                                            class="form-control" id="jsCodeModal_fndescription">
-                            </div>
-                            <div class="col-2">
-                                Function Type
-                                <select onchange='updateJSChange(this, "fnType")'
-                                        class="form-control jsCodeModal_checkbox" id="jsCodeModal_fntype">
-                                    <option selected value='core'>Core</option>
-                                    <option value='event'>Event Based</option>
-                                    <option value='java'>Java</option>
-                                    <option value='sql'>SQL Query</option>
-
-                                </select>
-                                <!--                                <input  type="checkbox"
-                                                                    checked="checked"
-                                                                    style=' height:20px;width:20px;;'
-                                                                    class=" jsCodeModal_checkbox"  id="jsCodeModal_fntype">Is Core Function-->
-                            </div>
-                            <div class="col-2">
-                                Is Active?
-                                <select onchange='updateJSChange(this, "isActive")'
-                                        class="form-control jsCodeModal_isactive" id="jsCodeModal_isactive">
-                                    <option selected value='A'>Active</option>
-                                    <option value='P'>Passive</option>
-                                </select>
-                            </div>
-                            <div class="col-2">
-                                API List
-                                <select onclick="getApiIdOnJSCode(this)" class="form-control"
-                                        id="jsCodeModal_apilist">
-                                </select>
-                            </div>
-                            <div class="col-2">
+                   
+                    <div class="cs-col-storecard-general-setting">
+                        <div class="scg-button-box form-control">
+                            <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-wrench" style=" margin-right: 6px; color: #fff;" aria-hidden="true"></i> Tools</button>
+                            <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
+                                 <button class="dropdown-item firstbut " id=""  onclick="copyJsCodeClassTo()" ><a href="#">Copy</a></button>
+                                <button class="dropdown-item firstbut " id="" pid="" bid="" lid="" onclick="deleteJsCodeClass(this)"><a href="#">Delete</a></button>
                                 <br>
-                                <input class="form-control" id="jsCodeModal_apiid">
-
+                                <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
                             </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-right " style="padding-right:10px;">
+                        <div class="mm-col">
+                            <input class="form-control" placeholder="New function" id="jsCodeModal_newfunction">
+                         
+                        </div>
+                        <div class="mm-col">
+                            <button type="button" class="btn btn-success" onclick="insertNewJsFuncionDesc()">Add</button>                         
+                        </div>
+                       
+                    </div>
+                      </div>
+                   
+                    <button type="button" class="m-0 p-2 close" style="color: white;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                
+                </div>               
+               
+            </div>
+            <div class="modal-body p-0" style="font-size: 12px;">
 
+                <div class="d-flex flex-wrap">
+    
+                    <div class="w-100">
+                        <div class="row">
+                           
+                                                  
                             <div class="col-12 jscode-corepart jscode-zad  jscode-zad-core">
                                 <b>function</b> <input onchange='updateJSChange(this, "fnCoreName")'
                                                        placeholder="Function Name" class="form-control"
-                                                       style='border-color:white;margin:15px 0px;display:inline-flex;width:30%'
+                                                       style='border-color:white;display:inline-flex;width:30%'
                                                        id="jsCodeModal_javafncorename">
                                 <b>(</b><input onchange='updateJSChange(this, "fnCoreInput")'
                                                placeholder="Input Patameters" class="form-control"
-                                               style='border-color:white;margin: 15px 0px;display:inline-flex;width:30%'
+                                               style='border-color:white;display:inline-flex;width:30%'
                                                id="jsCodeModal_fncoreinput"><b> ){</b>
                             </div>
 
                             <div class="col-12 jscode-eventpart jscode-zad  jscode-zad-event" style="display:none;">
                                 <b>$(document).on("</b><input onchange='updateJSChange(this, "fnEvent")'
                                                               placeholder="Function Event. ex:click" class="form-control"
-                                                              style='border-color:white;margin:15px 0px;display:inline-flex;width:25%'
+                                                              style='border-color:white;display:inline-flex;width:25%'
                                                               id="jsCodeModal_fnevent">
                                 <b>","</b><input onchange='updateJSChange(this, "fnEventObject")'
                                                  placeholder="Class Name. ex: .customer" class="form-control"
-                                                 style='border-color:white;margin: 15px 0px;display:inline-flex;width:30%'
+                                                 style='border-color:white;display:inline-flex;width:30%'
                                                  id="jsCodeModal_fneventobject"> <b>", function(e){</b>
                             </div>
 
@@ -7604,7 +7709,7 @@
                                                          id="jsCodeModal_libraryurl"></textarea>
                                 <b>public static Carrier </b> <input onchange='updateJSChange(this, "fnCoreName")'
                                                                      placeholder="Function Name" class="form-control"
-                                                                     style='border-color:white;margin:15px 0px;display:inline-flex;width:30%'
+                                                                     style='border-color:white;display:inline-flex;width:30%'
                                                                      id="jsCodeModal_fncorename">
                                 <b>(</b> Carrier carrier<b> ){</b>
                             </div>
@@ -7614,31 +7719,19 @@
                                 <!--  <span class="btn btn-secondary editor_full_screenBt"><i
                                          class="fas fa-expand"></i></span> -->
                                 <div onchange='' placeholder="Function Body" rows=15
-                                     style="height: 200px; width: 100%;" id="jsCodeModal_fnbody"></div>
+                                     style="height: 700px; width: 100%;" id="jsCodeModal_fnbody"></div>
 
                                 <span class="jscode-corepart"> }</span>
                                 <span class="jscode-eventpart"> })</span>
                             </div>
-                            <div class="col-6 text-left">
-                                <input onchange="updateJSChange4IsGlobal(this)" type='checkbox'>Is Global</input>
-
-                            </div>
-                            <div class="col-6 text-right">
-                                <a href="#" onclick="copyJsCodeClassTo()">Copy To</a>
-                            </div>
-                            <div class="col-12 text-right">
-                                <a href="#" onclick="deleteJsCodeClass(this)">Delete</a>
-                            </div>
+                      
+                           
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
+           
         </div>
     </div>
 </div>
@@ -8739,6 +8832,7 @@
                                                                         $(document).ready(function () {
                                                                             init();
                                                                             Utility.setParamOnLoad();
+                                                                            generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
 
 
                                                                             if (global_var.fkManualProjectId) {
