@@ -3864,3 +3864,22 @@ img.sc-IbsAh.kqHqhS {
   height: auto;
   z-index: 900000;
 }
+
+/* apiModalInputCss */
+
+.apiModalTableInput{
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.apiModalTableTd{
+    font-size: 15px;
+    color: blue;
+    margin:0px 20px;
+}
+
+
+
+
+
