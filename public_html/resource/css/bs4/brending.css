@@ -625,7 +625,19 @@ tbody tr button.cs-copy-btn {
     vertical-align: middle;
 }
 .descriptiontable tbody tr:first-child{
-    padding: 0px 8px 0px 35px;
+    padding: 0px 8px 0px 43px;
+}
+.storycard_inputs_table tbody tr:first-child {
+    padding: 0px 8px 0px 0px;
+}
+.form-control.newinp {
+    height: 30px;
+    width: 100%;
+    resize: none;
+    white-space: pre;
+    background-color: #dfeef7;
+    color: #03396C;
+    font-family: 'Quicksand', sans-serif !important;
 }
 .descriptiontable tbody .add-description {
     height: 35px;
@@ -3346,6 +3358,7 @@ hr.hr-ss {
 .storecard-header-nav-section .bootstrap-select {
     border-radius: 0;
     background: transparent ;
+    max-width: 270px;
 }
 .storecard-header-nav-section .bootstrap-select > button{
     border-radius: 0;
@@ -5603,7 +5616,7 @@ table.lbl-list-table tr td {
     margin-right: 0;
     margin-bottom: 0;
 }
-.toggle-nav-elements ul li a.nav-item-url {
+.toggle-nav-elements ul li a.nav-item-url, .toggle-nav-elements ul li label.nav-item-label {
     font-family: 'Quicksand', sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -5612,7 +5625,7 @@ table.lbl-list-table tr td {
     color: #fff;
     cursor: pointer;
 }
-.toggle-nav-elements ul li a.nav-item-url {
+.toggle-nav-elements ul li a.nav-item-url, .toggle-nav-elements ul li label.nav-item-label {
     background: transparent;
     padding: 4px 4px;
     margin-left: 4px;
@@ -5634,12 +5647,12 @@ table.lbl-list-table tr td {
 .toggle-nav-elements ul li a.nav-item-url i:after {
     width: 16px;
 }
-.toggle-nav-elements ul li a.nav-item-url:hover,.toggle-nav-elements ul li a.nav-item-url.active {
+.toggle-nav-elements ul li a.nav-item-url:hover,.toggle-nav-elements ul li a.nav-item-url.active, .toggle-nav-elements ul li label.nav-item-label:hover,.toggle-nav-elements ul li label.nav-item-label.active {
     color: #03396C ;
     background-color: #DFEEF7;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
-.toggle-nav-elements ul li a.nav-item-url:hover i, .toggle-nav-elements ul li a.nav-item-url.active i {
+.toggle-nav-elements ul li a.nav-item-url:hover i, .toggle-nav-elements ul li a.nav-item-url.active i, .toggle-nav-elements ul li label.nav-item-label.active i {
     filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(
 195deg) brightness(91%) contrast(98%);
 }
@@ -5899,7 +5912,7 @@ table.lbl-list-table tr td {
      padding: 3px 15px;
 }
 .toggle-box-1, .toggle-box-2, .toggle-box-3, .toggle-box-4, .toggle-box-5, .toggle-box-6, .toggle-box-7, .toggle-box-8, .toggle-box-9  {
-    overflow: visible;
+    overflow: hidden;
     height: 0 !important;
     opacity: 0 !important;
     transition: height 0ms 400ms, opacity 400ms 0ms;
@@ -6071,6 +6084,8 @@ table.lbl-list-table tr td {
     margin-left: 5px;
     right: 0;
     position: absolute;
+    top: 50%;
+    margin-top: 10px;
 }
 .storycard_inputs_table tbody tr td:hover .dropdown {
     display: block;
@@ -6080,3 +6095,45 @@ table.lbl-list-table tr td {
     display: inline-block;
     margin-bottom: 0;
 }
+.storycard_inputs_table tbody tr td .iconDrag {
+    color: #03396C;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+    padding: 2px;
+    font-size: 10px;
+    margin: 0 10px;
+}
+.storycard_inputs_table tbody tr td .iconDrag:hover {
+    background: #2e5c86;
+}
+.storycard_inputs_table .spilted tr:nth-child(odd) td input {
+    background: #ffffff !important;
+}
+.desc-table-list-for-multiple .span-button-div {
+    position: relative;
+}
+.desc-table-list-for-multiple .span_hover:hover {
+    background-color: #dfeef7;
+}
+.description-style-background span {
+    font-size: 14px;
+    float: left;
+    width: 100%;
+    margin: 2px;
+    display: flex;
+    word-break: break-all;
+    text-align: start;
+    padding: 0 20px 0px 0px;
+}
+/* .nav-item-label input:checked + .slider {
+
+}
+.storecard-sidebarin .slider:before {
+
+}
+.storecard-sidebarin input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+} */

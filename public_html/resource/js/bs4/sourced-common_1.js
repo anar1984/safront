@@ -21026,6 +21026,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             tr.append($('<td></td>')
                     .attr('class', 'description-style-background desc-table-list-for-multiple')
                     .addClass("text-left")
+                    .css('max-width', '970px')
                     .append(this.setUserStoryInputsInfoOnGeneralViewDetailsPure4Desc4SelectNew(obj[i]))
                     .append($('<input type="text">')
                             .attr("iid", obj[i].id)

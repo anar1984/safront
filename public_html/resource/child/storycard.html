@@ -26,11 +26,11 @@
                         </div>
                     </div>
                     <h6 class="modal-title task-modal-title">
-                        <span class="text card-UserStory-header-text-code">#3435 Azercell baner çapı</span>
+                        <span class="text card-UserStory-header-text-code">Story Card</span>
                     </h6>
                     <div class="d-flex justify-content-center cs-col-storecard">
                         <div class="mm-col pr-3">
-                            <span class="mm-title">Story Card</span>
+                            <span class="mm-title">API Name</span>
                         </div>
                         <div class="mm-col">
                             <select class="form-control"  onchange="loadStoryCardInfo4StoryCard(this)"
@@ -105,7 +105,11 @@
                                 <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li>
                                 <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
                                 <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
-                                <li><a class="nav-item-url toggle-btn-6"><i class="cs-svg-icon comment-01"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-6"><i class="cs-svg-icon input"></i></a></li>
+                                <li><label class="nav-item-label toggle-btn-7">
+                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i></label>
+                                </li>
+                                <li><a class="nav-item-url"><i class="cs-svg-icon comment-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
                         </div>
@@ -571,7 +575,35 @@
                     <div class="toggle-body-item">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon comment-01"></i> <span class="name">Inputs and Descriptions</span></div>
+                                <div class="result-box"><i class="cs-svg-icon live"></i> <span class="name">Live Prototype</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-7">
+                            <div class="hideme1 mt-3" id="live-prototype-show-key" style="display:none">
+                                <div class='row gv-gui-design-api'>
+                                    <div class="col-12 text-center text-prototype">
+                                        <br>
+                                        <b style="font-size:14px">Live Prototype</b>
+                                    </div>
+                                </div>
+                    
+                                <div class="row gv-gui-design gv-gui-design-api " id="gv_gui_component_main_view1">
+                                    <div class="col-12 redirectClass4CSS" id="gv_gui_component_main_view">
+                                        <div class="row redirectClass" id="general-view-task-gui"></div>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon input"></i> <span class="name">Inputs</span></div>
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
@@ -582,7 +614,6 @@
                             <div class="row text-center storycard_ipo storycard_inputs_table">
                                 <!-- <div class="col-1"></div> -->
                                 <div class="w-100">
-                                    <label class="inputAndDes"><b>Inputs and Descriptions</b></label>
                                     <!-- <div  class="d-flex col-12 add_descriotion_btn-container"> -->
                                         <!-- <div  class="add_descriotion_btn pdfHide" > 
                                         <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
@@ -642,73 +673,6 @@
                                 </div>
                             </div>
                     
-                            <div class="row text-center storycard_ipo" style="margin-top: 30px;">
-                                <!-- <div class="col-1"></div> -->
-                                <div class="w-100">
-                                    <!-- <label class="prosesDes"><b>Process Description</b></label>
-                        
-                                    <div class="col-12 add_descriotion_btn pdfHide"> 
-                                        <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" style="margin-left: -22px;" href="#" role="button" 
-                                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu prosesD-alt-menu" aria-labelledby="dropdownMenuLink">
-                                            <button class="dropdown-item " onclick="addProceccDescListToTaskNew()"  >Add to Task</button>
-                                            <button class="dropdown-item pdescColored" pcolor='#f19a91' val="#f19a91">Oranged</button>
-                                            <button   class="dropdown-item firstbut pdescColored" pcolor="#33E8FF">Blued</button>
-                                            <button  class="dropdown-item firstbut pdescColored" pcolor="#8ad6a3">Greened</button>
-                                            <button class="dropdown-item firstbut pdescColored" pcolor="">Whited</button>
-                                            <button   class="dropdown-item firstbut pdescDeleteAll">Delete</button>
-                        
-                                        </div>
-                                    </div> -->
-                    
-                    
-                                    <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
-                                        <thead id="cs_description_table_head_id">
-                                            <tr class="cs-cursor-auto">
-                                                <th class="col-3"><div class="cs-table-head-title prosesDes">Process Description</div></th>
-                                                <th class="col-9">
-                                                    <div class="cs-table-head-right-section">
-                                                        <div class="row">
-                                                            <div class="col-12 text-right">
-                                                                <div class="cs-table-row-setting-btn dropdown">
-                                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-cog"></i> Row setting
-                                                                        <span class="caret"></span></button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><button class="pdescColored" pcolor='#f19a91' val="#f19a91"><i class="fas fa-tint"></i> Oranged</button></li>
-                                                                        <li><button class="firstbut pdescColored" pcolor="#33E8FF"><i class="fas fa-tint"></i> Blued</button></li>
-                                                                        <li><button class="firstbut pdescColored" pcolor="#8ad6a3"><i class="fas fa-tint"></i> Greened</button></li>
-                                                                        <li><button class="firstbut pdescColored" pcolor=""><i class="fas fa-tint"></i> Default</button></li>
-                                                                        <li role="presentation" class="divider"></li>
-                                                                        <li><button class="firstbut pdescDeleteAll"><i class="fas fa-trash-alt"></i> Delete</button></li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="cs-proces-desc-add-to-task-box">
-                                                                    <button class="btn btn-primary" onclick="addProceccDescListToTaskNew()"  ><i class="fas fa-address-book"></i> Add to Task</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="description_table_body_id">       
-                                        </tbody>
-                                        <tfooter>
-                                            <tr><td> 
-                                                    <input type="checkbox" class="prosDescCheckAll pdfHide">
-                                                </td><td >
-                                                    <input type="text" id="backlogDescriptionText" class="form-control newinp add-description" 
-                                                                 placeholder="Add Process Description"   />
-                                                </td><td> 
-                                                </td>
-                                            </tr>
-                                        </tfooter>
-                                    </table>
-                    
-                                </div>
-                                <div class="col-1"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -742,5 +706,13 @@
     $(document).on("click", ".toggle-btn-6", function (e) {
         $('.toggle-btn-6').toggleClass('active');
         $('.toggle-box-6').toggleClass('open');
+    });
+    $(document).on("click", ".toggle-btn-7", function (e) {
+        if ($('.nav-item-label input').is(':checked')) {
+            $('.toggle-btn-7').toggleClass('active');
+            $('.toggle-box-7').toggleClass('open');
+        }
+        $('.toggle-btn-7').toggleClass('active');
+        $('.toggle-box-7').toggleClass('open');
     });
 </script>

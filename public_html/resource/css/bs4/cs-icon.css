@@ -314,3 +314,9 @@
   .cs-svg-icon.comment-01:after {
     background-image: url(../ch-icons/comment-01.svg);
   }
+  .cs-svg-icon.input:after {
+    background-image: url(../ch-icons/input.svg);
+  }
+  .cs-svg-icon.live:after {
+    background-image: url(../ch-icons/live.svg);
+  }
