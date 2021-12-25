@@ -3327,17 +3327,14 @@ hr.hr-ss {
     background: #272b7c;
 }
 .storecard-header-nav-section {
-    background-color: #525596;
-    border-bottom: 1px solid #272B7C;
-    border-top: 1px solid #272B7C;
-    color: #fff;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
 .modal.show .storecard-header-nav-section {
     z-index:auto;
     position: relative;
+    width: 100%;
 }
 .modal.show #storyCardRightMenu {
     margin-top: 30px;
@@ -3348,22 +3345,35 @@ hr.hr-ss {
 }
 .storecard-header-nav-section .bootstrap-select {
     border-radius: 0;
+    background: transparent ;
 }
 .storecard-header-nav-section .bootstrap-select > button{
-    background-color: #525596;
-    border-color: #525596;
     border-radius: 0;
-    color: rgb(255 255 255 / 70%);
-    font-size: 14px;
     box-shadow: none !important;
+    background-color: transparent;
+    border-color: transparent;
+    border-left-color: rgba(255, 255, 255, 0.5);
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 4px 12px;
+    font-weight: 400;
+    height: 35px;
+    color: #fff !important;
+}
+.storecard-header-nav-section .bootstrap-select > button:hover, .cs-modal-box .cs-col-storecard-general-setting button:hover {
+    background-color: #dfeef7;
+    border-color: #dfeef7;
+    color: #03396C !important;
 }
 .storecard-header-nav-section .bootstrap-select>.dropdown-toggle:after {
     font-size: 10px;
 }
 .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled).active, .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled):active, .storecard-header-nav-section .show>.btn-light.dropdown-toggle {
-    color: #ffffff;
-    background-color: #272b7c;
-    border-color: #272b7c;
+    background-color: #dfeef7;
+    border-color: #dfeef7;
+    color: #03396C !important;
 }
 .storecard-header-nav-section .mm-col {
     display: table;
@@ -3377,13 +3387,11 @@ hr.hr-ss {
     margin: 0 5px;
 }
 .storecard-header-nav-section .cs-col-project {
-  border-left: 1px solid #272b7c;
-  border-right: 1px solid #272b7c;
   padding-left: 12px;
   padding-right: 0;
 }
 .storecard-header-nav-section .cs-col-storecard {
-    border-right: 1px solid #272b7c;
+    border-right: none;
     padding-left: 0;
     margin-right: 0;
     padding-right: 0;
@@ -3416,22 +3424,33 @@ hr.hr-ss {
     justify-content: space-between;
 }
 .storecard-header-nav-section .scg-button-box > button {
-    background-color: #525596;
-    border-color: #525596;
-    border-radius: 0;
-    color: rgb(255 255 255 / 70%);
-    font-size: 14px;
     box-shadow: none !important;
+    background-color: transparent;
+    border-color: transparent;
+    border-left: 1px solid rgba(255, 255, 255, 0.5) !important;
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 4px 12px;
+    font-weight: 400;
+    height: 35px;
+    border-radius: 0;
 }
 .storecard-header-nav-section .scg-button-box > button:after {
     font-weight: 400;
     font-size: 11px;
 }
 .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle {
-    color: #ffffff;
-    background-color: #272b7c;
-    border-color: #272b7c;
+    color: #03396C !important;
+    background-color: #dfeef7;
+    border-color: #dfeef7;
 }
+.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active i, .storecard-header-nav-section .scg-button-box  button:hover i {
+    color: #03396C !important;
+}
+    
 .Assigne-card-story1 .by-last-updated, .cs-label-name .by-last-updated {
     float: right;
 }
@@ -5382,8 +5401,9 @@ table.lbl-list-table tr td {
     font-size: 21px;
     line-height: 26px;
     color: #03396C;
-    width: 100%;
+    width: auto;
     text-align: center;
+    margin: 0 40px;
 }
 .task-modal-title span {
     height: 35px;
@@ -5510,10 +5530,13 @@ table.lbl-list-table tr td {
 }
 
 /* STORY CARD SYTLE */
-.story-card-modal .modal-dialog{
-    width: 70% !important;
-    max-width: 900px !important;
-    margin-top: 40px;
+.story-card-modal .modal-dialog {
+    display: table;
+    width: 100% !important;
+    max-width: 1200px !important;
+    height: 100%;
+    /* background: transparent !important;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 35%); */
 }
 .storycard-author-section .author-card-story {
     display: inline-block;
@@ -5876,7 +5899,7 @@ table.lbl-list-table tr td {
      padding: 3px 15px;
 }
 .toggle-box-1, .toggle-box-2, .toggle-box-3, .toggle-box-4, .toggle-box-5, .toggle-box-6, .toggle-box-7, .toggle-box-8, .toggle-box-9  {
-    overflow: hidden;
+    overflow: visible;
     height: 0 !important;
     opacity: 0 !important;
     transition: height 0ms 400ms, opacity 400ms 0ms;
@@ -5904,7 +5927,9 @@ table.lbl-list-table tr td {
 .user-addons-box {
     display: block;
     width: 100%;
-    width: 180px;
+    max-width: 180px;
+    height: 100%;
+    min-height: 70px;
 }
 .cs-nav-pills .nav-link {
     height: 33px;
@@ -5921,4 +5946,137 @@ table.lbl-list-table tr td {
     background: #DFEEF7;
     color: #03396C;
     box-shadow: none;
+}
+.user-addons-box input.form-control {
+    mix-blend-mode: normal;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: transparent;
+    box-sizing: border-box;
+    border-radius: 15px;
+    height: 20px;
+}
+.user-addons-box input.form-control {
+    font-family: 'Quicksand', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff;
+}
+.user-addons-box .input-group-text {
+    font-size: 11px;
+    line-height: 17px;
+    color: #fff;
+    height: 20px;
+    border-left: none;
+}
+.user-avatar-list ul{
+ list-style: none;
+ padding: 0;
+ margin: 0;
+}
+.user-avatar-list ul li {
+    display: inline-block;
+    margin-right: 3px;
+}
+.user-avatar-list ul li:last-child {
+    margin-right: 0;
+}
+.circular--portrait { 
+    position: relative; 
+    width: 20px; 
+    height: 20px; 
+    overflow: hidden; 
+    border-radius: 50%; 
+} 
+.circular--portrait img { 
+    width: 100%; 
+    height: auto; 
+    position: absolute;
+}
+.user-avatar-list ul li .item-click {
+    cursor: pointer;
+    position: relative;
+}
+.user-avatar-list ul li .item-click i {
+    font-size: 6px;
+    height: 9px;
+    width: 9px;
+    background: rgb(255 255 255);
+    position: absolute;
+    color: rgba(3, 57, 108, 0.5);
+    border-radius: 50px;
+    padding: 2px 0px 0px 2px;
+    top: -2px;
+    right: -3px;
+}
+.storycard_inputs_table table {
+    width: max-content !important;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    border: none !important;
+}
+.storycard_inputs_table thead tr {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: #DFEEF7 !important;
+    padding-left: 5px;
+}
+.storycard_inputs_table thead th {
+    padding: 0px;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 100%;
+    height: 30px;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
+}
+.storycard_inputs_table tbody tr {
+    background-color: #dfeef7 !important;
+}
+.storycard_inputs_table tbody tr button {
+ background-color: transparent;
+}
+.description-left:hover {
+    background-color: transparent;
+}
+.storycard_inputs_table button#dropdownMenuLink:focus {
+    outline: none;
+    border: none;
+}
+.storycard_inputs_table button#dropdownMenuLink {
+    background: transparent !important;
+    color: #03396C;
+    box-shadow: none;
+}
+.storycard_inputs_table button#dropdownMenuLink:after {
+    display: none;
+}
+.storycard_inputs_table button#dropdownMenuLink:hover {
+    background: transparent;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+.storycard_inputs_table tbody tr td {
+    border: none;
+    position: relative   
+}
+.storycard_inputs_table tbody tr td .dropdown {
+    display: none;
+    margin-left: 5px;
+    right: 0;
+    position: absolute;
+}
+.storycard_inputs_table tbody tr td:hover .dropdown {
+    display: block;
+}
+.storycard_inputs_table .add_descriotion_btn {
+    padding: 0px;
+    display: inline-block;
+    margin-bottom: 0;
 }

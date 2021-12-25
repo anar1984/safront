@@ -20541,15 +20541,52 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         var thead = $('<thead></thead>')
                 .append($('<tr></tr>')
-                        .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
+                        .append($('<th></th>').append('#').css('padding','4px 6px'))
                         .append($('<th></th>')
                                 .addClass("pdfHide")
-                                .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
                                 .append('<input type="checkbox" id="us_input_list_check_all_new" onclick="new UserStory().toggleAllInputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:15%;background-color: #ffffff;').append('Name'))
+                        .append($('<th></th>').attr('style', 'width:15%;').append($('<span>').text('Name'))
+                            .append(`<div  class="add_descriotion_btn pdfHide" > 
+                            <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
+                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                                <button class="dropdown-item firstbut " data-toggle="modal" 
+                                        onclick="setActiveInputDescType('IN')"
+                                        data-target="#addRelatedSUSOutputModal">Add Descriptions </button>
+                                <button class="dropdown-item firstbut "   
+                                        onclick="new UserStory().setAsOutput()">Set as Output</button>
+                                <button class="dropdown-item firstbut " data-toggle="modal" 
+                                        onclick="addInputListToTaskNew()"  >Add to Task </button>
+                                <button class="dropdown-item firstbut " data-toggle="modal" 
+                                        onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
+        
+        
+                                <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
+                                        onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>
+                                <button class="dropdown-item firstbut "     onclick="new UserStory().deleteInputsNew()">Delete</button>
+                                <hr style="margin:3px 0px;">
+                                <button class="dropdown-item firstbut "     onclick="addFieldsOfTableAsInput(this)">Add Fields of Table as Input</button>
+                                <button class="dropdown-item firstbut "     onclick="addInputOfStoryCardAs(this)">Add Input of Story Card As</button>
+        
+                            </div>
+                        </div>`)
+                        )
 //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
-                        .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
+                        .append($('<th></th>').append($('<span>').text('Description'))
+                        .append(`<div class="add_descriotion_btn pdfHide" > 
+                        <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
+                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                           
+                            <button class="dropdown-item firstbut "     onclick="addInputDescListToTaskNewEvent()">Add To Task Desc</button>
+                            <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
+                          
+                        </div>
+                    </div>`)
+                        )
                         );
         return thead;
     },
@@ -20559,15 +20596,15 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         }
         var thead = $('<thead></thead>')
                 .append($('<tr></tr>')
-                        .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;background-color: #ffffff; ').append(''))
+                        .append($('<th></th>').attr('style', 'width:1%;white-space:nowrap;').append(''))
                         .append($('<th></th>')
                                 .addClass("pdfHide")
-                                .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
+                                .attr('style', 'width:1%; white-space:nowrap;')
                                 .append('<input type="checkbox" id="us_output_list_check_all_new" onclick="new UserStory().toggleAllOutputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
+                        .append($('<th></th>').attr('style', 'width:200px;').append('Name'))
 //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
-                        .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
+                        .append($('<th></th>').append('Description'))
                         );
         return thead;
     },
@@ -20823,8 +20860,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 // .addClass('table-hover')
                 .addClass('spilted')
 
-                .attr('border', '1')
-                .attr('style', 'border:1px solid #cccccc ;margin: 0 auto;');
+                .attr('border', '1');
 
 
         var tbody = $('<tbody></tbody>');
@@ -20960,7 +20996,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .attr("ondblclick", "new UserStory().updateInputEditLineNew(this,'" + obj[i].id + "')")
                     .attr("iname", replaceTags(Replace2Primes(inputName)))
                     .attr('class', 'description-left')
-                    .append(inputName)
+                    .append($('<span>').text(inputName))
                     .append('<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" \n\
 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
                             + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; \n\
