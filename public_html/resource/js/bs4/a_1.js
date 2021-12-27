@@ -13094,7 +13094,7 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 });
 
 
-function generateMonacoeditros(elmId, nameEditor, lang, theme, body) {
+function generateMonacoeditros(elmId, nameEditor, lang, theme, body,readOnly) {
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -13111,7 +13111,8 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body) {
             language: lang,
             automaticLayout: true,
             lineNumbers: "on",
-            //readOnly: nameEditor==='html'?true:false,
+
+            readOnly: readOnly,
             roundedSelection: true,
             scrollBeyondLastLine: true,
             theme: theme
@@ -13136,19 +13137,43 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            try {
-                if (trig == 'load') {
-                    window.editorHTMLGround.setValue(res.kv.backlogHtml);
-                } else {
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml);
+            var isHtml  = SACore.Backlogs[pid].hasHtml;
+            console.log(isHtml);
+            if(isHtml !=='1'){
+                $('#cs-col-Ceckbox-id').val("0");
+                $('#cs-col-Ceckbox-id').selectpicker("refresh");
+              
+                try {
+                    if (trig == 'load') {
+                        window.editorHTMLGround.setValue(res.kv.backlogHtml);
+                    } else {
+                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml,true);
+                    }
+                } catch (error) {
+                    if (trig == 'load') {
+                        return
+                    }
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark',"",true);
+    
                 }
-            } catch (error) {
-                if (trig == 'load') {
-                    return
-                }
-                generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark');
+            }else{
+                $('#cs-col-Ceckbox-id').val("1");
+                $('#cs-col-Ceckbox-id').selectpicker("refresh");
+               
 
+                var resTmp = SAInput.toJSONByBacklog(pid);
+                var oldmodal = global_var.current_modal;
+                global_var.current_modal = '';
+                var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+                global_var.current_modal = oldmodal;
+                if (trig == 'load') {
+                    window.editorHTMLGround.setValue(html);
+                } else {
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml,false);
+                }
             }
+     
+           
 
 
         }
@@ -13270,7 +13295,24 @@ function getBacklogListforCodeGround(fkProjectId) {
 
 
 $(document).on("change", '#change-editor-theme-monaco', function (e) {
-    window.editorJSGround.updateOptions({theme: $(this).val});
+    window.editorJSGround.updateOptions({theme: $(this).val()});
+    window.editorHTMLGround.updateOptions({ theme: $(this).val() })
+    window.editorCSSGround.updateOptions({ theme: $(this).val() })
+
+});
+$(document).on("change", '#cs-col-Ceckbox-id', function (e) {
+
+     
+
+        updateUS4ShortChangeDetails($(this).val(), 'hasHtml');
+          if($(this).val()==='1'){
+            window.editorHTMLGround.updateOptions({ readOnly: false })
+          }else{
+            window.editorHTMLGround.updateOptions({ readOnly: true })
+          }
+
+            loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
+      
 
 });
 $(document).on("change", '#project-list-codeground', function (e) {
@@ -13282,7 +13324,9 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     var val = $(this).val()
     global_var.current_backlog_id = val;
     Utility.addParamToUrl("current_backlog_id", val);
+   
     getBacklogHTMLBodyByIdCodeGround(val, 'load');
+
     getBacklogJSBodyByIdCodeGround(val, 'load');
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
@@ -13318,7 +13362,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+    if ($("#cs-col-Ceckbox-id").val() !=='1') {
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
         global_var.current_modal = '';
@@ -13326,6 +13370,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
         global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
+        insertHtmlSendDbBybacklogId(html);
     }
     var css = window.editorCSSGround.getValue();
 
@@ -13336,7 +13381,8 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-    insertHtmlSendDbBybacklogId(html);
+
+  
     // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
     setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
@@ -13375,7 +13421,7 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-    if (!$("#cs-col-Ceckbox-id").prop('checked')) {
+    if ($("#cs-col-Ceckbox-id").val() !=='1') {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
@@ -13433,7 +13479,7 @@ function insertJsSendDbBybacklogId(body) {
         async: true,
         success: function (res) {
 
-
+            setHistoryCodeGround(pid,body,"js");
         }
     });
 }
@@ -13453,7 +13499,8 @@ function insertCssSendDbBybacklogId(body) {
         crossDomain: true,
         async: true,
         success: function (res) {
-
+            setHistoryCodeGround(pid,body,"css")
+            
 
         }
     });
@@ -13473,10 +13520,20 @@ function insertHtmlSendDbBybacklogId(body) {
         crossDomain: true,
         async: true,
         success: function (res) {
-
-
+            
+            setHistoryCodeGround(pid,body,"html")
         }
     });
+}
+
+function setHistoryCodeGround(bid,body,type) {
+    var data  = {};
+        data.requestBody=body;
+        data.fkBacklogId=bid;
+        data.devType = type;
+    callApi('21122715084804621887', data, true, function (res) {
+             
+    }) 
 }
 
 ///// code ground end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -13616,8 +13673,6 @@ function loadStoryCardByProject4oIpo(e) {
     loadDetailsOnProjectSelect4Ipo(global_var.current_project_id);
 }
 
-
-
 function loadStoryCardByProject4StoryCard(e) {
 
     global_var.current_project_id = $(e).val();
@@ -13626,7 +13681,6 @@ function loadStoryCardByProject4StoryCard(e) {
 //    getBacklogLastModificationDateAndTime(global_var.current_project_id);
     loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
-
 
 function loadStoryCardByProject4TaskMgmt(e) {
 
@@ -13715,7 +13769,6 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
         success: function (res) {
 
 
-            var cmd = $('#storyCardListSelectBox4StoryCard');
             var cmd = $('#storyCardListSelectBox4StoryCard');
             cmd.html('');
             //            new UserStory().setUSLists(res);
@@ -17772,6 +17825,7 @@ function updateUS4ShortChangeDetails(val, ustype) {
         success: function (res) {
             AJAXCallFeedback(res);
             SACore.addBacklogByRes(res);
+            
             loadCurrentBacklogProdDetails();
             loadCurrentBacklogProdDetailsSyncrone();
             //            if (global_var.current_modal === 'loadLivePrototype') {

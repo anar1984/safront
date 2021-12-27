@@ -14204,7 +14204,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getBacklogListByManualStatusId:function (stl) {
         data ={};//createTechizatTelebProducts
-        data.fkBacklogId = stl
+        data.statusId = stl;
         callApi('21122313051700845260',data,true,function (res) { 
           
             var c4new = 0
