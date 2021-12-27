@@ -75,20 +75,33 @@
                             <div class="author-card-story">
                                 <div class="author-sticky d-flex">
                                     <div>
-                                        <img id='story-card-createdby-img' class='Assigne-card-story-select-img'
+                                        <img id='story-card-createdby-img' class='Assigne-card-story-select-img created'
                                             src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg'
                                             alt='avatar' srcset=''>
                                     </div>
                                     <div>
                                         <div class="author-name">Unassigned</div>
-                                        <div class="datatime">26.11.2021 13:42:36</div>
+                                        <!-- <div class="datatime">26.11.2021 13:42:36</div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="author-card-story">
+                                <div class="author-sticky d-flex">
+                                    <div>
+                                        <img id='story-card-updatedby-img' class='Assigne-card-story-select-img updated'
+                                            src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg'
+                                            alt='avatar' srcset=''>
+                                    </div>
+                                    <div>
+                                        <div class="author-name">Unassigned</div>
+                                        <!-- <div class="datatime">26.11.2021 13:42:36</div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="author-card-story">
                                 <select class="cs-selectpicker">
                                     <option
-                                        data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg' alt='avatar' srcset=''>Unassigned</span>">
+                                        data-content="<span><img id='story-card-owner-img' class='Assigne-card-story-select-img owner' src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg' alt='avatar' srcset=''>Unassigned</span>">
                                         Unassigned</option>
                                     <option
                                         data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg' alt='avatar' srcset=''>Saleh Balakişiyev</span>">
@@ -104,11 +117,13 @@
                                             2</span></a></li>
                                 <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li>
                                 <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
-                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
                                 <li><a class="nav-item-url toggle-btn-6"><i class="cs-svg-icon input"></i></a></li>
-                                <li><label class="nav-item-label toggle-btn-7">
-                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i></label>
+                                <li>
+                                    <label class="nav-item-label toggle-btn-7 prototype-cls">
+                                        <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i>
+                                    </label>
                                 </li>
+                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon comment-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
@@ -552,6 +567,16 @@
                             </div>
                         </div>
                         <div class="toggle-box-5">
+                            <div class="row">
+                                <div class="col-12" id="storycard_filelis1t">
+                                    <br>
+                                    <div class="row" id="storycard_filelist"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center" id="pinnedImages">
+
+                            </div>
+
                            <div class="attach-files-box">
                             <ul class="nav nav-pills cs-nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -564,8 +589,19 @@
                                   <a class="nav-link" id="pills-docs-tab" data-toggle="pill" href="#pills-docs" role="tab" aria-selected="false">Sənəd</a>
                                 </li>
                               </ul>
-                              <div class="tab-content">
-                                <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-home-tab">... 1</div>
+                              <div class="tab-content mb-4">
+                                <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div class="col-6 pl-0 pr-0">
+                                        <!-- <label for="sprintname" class="col-form-label control-label">File
+                                            <span style="color:red">*</span>
+                                        </label> -->
+                                        <input id="setStoryCardUploadImageModal_file" class="us-file-upload" multiple="" type="file" file_type="general" style="width:100%" value="" onchange="new UserStory().addFileForAddTaskType()">
+                                        <output id="setStoryCardUploadImageModal_filelist"></output>
+                                    </div>
+                                    <button type="button" class="btn brand-btn" onclick="new UserStory().uploadStoryCardImage(this)">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
                                 <div class="tab-pane fade" id="pills-media" role="tabpanel" aria-labelledby="pills-profile-tab">... 2</div>
                                 <div class="tab-pane fade" id="pills-docs" role="tabpanel" aria-labelledby="pills-contact-tab">... 3</div>
                               </div>
@@ -582,8 +618,7 @@
                                 <a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-7">
-                            <div class="hideme1 mt-3" id="live-prototype-show-key" style="display:none">
+                        <div class="hideme1" id="live-prototype-show-key" style="display:none"> 
                                 <div class='row gv-gui-design-api'>
                                     <div class="col-12 text-center text-prototype">
                                         <br>
@@ -596,8 +631,7 @@
                                         <div class="row redirectClass" id="general-view-task-gui"></div>
                     
                                     </div>
-                                </div>
-                            </div>
+                                </div> 
                         </div>
                     </div>
                     <div class="toggle-body-item">
@@ -709,10 +743,10 @@
     });
     $(document).on("click", ".toggle-btn-7", function (e) {
         if ($('.nav-item-label input').is(':checked')) {
-            $('.toggle-btn-7').toggleClass('active');
-            $('.toggle-box-7').toggleClass('open');
+            $('.toggle-btn-7').addClass('active');
+        }else{
+            $('.toggle-btn-7').removeClass('active');
         }
-        $('.toggle-btn-7').toggleClass('active');
-        $('.toggle-box-7').toggleClass('open');
-    });
+   });
+
 </script>

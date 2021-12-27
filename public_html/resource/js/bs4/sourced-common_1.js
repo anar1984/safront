@@ -19562,9 +19562,13 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-apirequesttype').selectpicker('refresh');
 
         if (SACore.GetCurrentBaklogShowPrototype() === '1') {
+            $('.toggle-btn-7').addClass('active');
+            // $('.toggle-box-7').addClass('open');
             $('#user-story-show-prototype').prop("checked", true);
             $("#live-prototype-show-key").show(600);
         } else {
+            $('.toggle-btn-7').removeClass('active');
+            // $('.toggle-box-7').removeClass('open');
             $('#user-story-show-prototype').prop("checked", false);
             $("#live-prototype-show-key").hide(600);
         }
@@ -20551,7 +20555,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                             <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
                                     id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             </button>
-                            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <button class="dropdown-item firstbut " data-toggle="modal" 
                                         onclick="setActiveInputDescType('IN')"
                                         data-target="#addRelatedSUSOutputModal">Add Descriptions </button>
@@ -22073,7 +22077,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 + closeColor
                 + "</span>"
                 + '<div class="dropdown show"><button class="btn newin dropdown-toggle fa fa-ellipsis-h points-btn pdfHide" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float:right"></button>'
-                + '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">'
+                + '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 26px, 0px);">'
                 + ' <button class="dropdown-item" onclick="editInputDescription(this)">Edit</button>'
                 + ' <button class="dropdown-item" onclick="addInputDescToTaskNew(this,\'' + descId + '\',\'' + inputId + '\')">Add to Task</button>'
                 + ' <button class="dropdown-item" onclick="setColoredToInputDesc(this,\'' + descId + '\',\'#f19a91\')">Oranged</button>'
