@@ -19654,6 +19654,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         $('#user-story-priority').val(SACore.GetCurrentBaklogPriority()).selectpicker('refresh');
         $('#user-story-est-hours').val(SACore.GetCurrentBaklogEstimatedHours());
         $('#user-story-description').val(SACore.GetCurrentBaklogDescription());
+       $('#user-story-input-json').val(SACore.GetBacklogDetails(global_var.current_backlog_id,'inputJson'));
         $('#user-story-spent-hours').val(SACore.GetCurrentBaklogSpentHours());
         $('#user-story-est-counter').val(SACore.GetCurrentBaklogEstimatedCounter());
         $('#user-story-executed-counter').val(SACore.GetCurrentBaklogExecutedCounter());

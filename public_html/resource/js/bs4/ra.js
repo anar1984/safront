@@ -348,6 +348,10 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
         getRelatedStoryCardByApiId();
+        
+        callApi('21122616260906401317',{fkBacklogId:id},true,function(res){
+            $('#user-story-input-json').val(res.kv.inputJson)
+        })
 
     }
 }

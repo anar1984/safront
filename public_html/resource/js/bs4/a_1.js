@@ -12794,6 +12794,7 @@ function showApiRelationModal(backLogId) {
                    .attr("pid",o.id)    
         .append($("<td>")
             .append($("<select>")
+            .attr('title','')
                 .addClass("tableInputSelect")
                 .attr("data-live-search", "true")
                 .attr("onchange", "tableSelectBoxOnChange(this)")
@@ -12820,6 +12821,7 @@ function showApiRelationModal(backLogId) {
             .append($("<td>")
             .append($('<i class="fas fa-arrow-right"></i>'))
             .append($("<select>")
+            .attr('title','')
                 .addClass("tableInputSelect")
                 .attr("data-live-search", "true")
                 .attr("onchange", "tableSelectBoxOnChange(this)")
@@ -14808,6 +14810,13 @@ $(document).on('change', '.user-story-short-change', function (evt) {
     var val = $(this).val();
     updateUS4ShortChange(this, ustype);
 });
+
+$(document).on('change','.user-story-input-json',function(ev){
+    var id = global_var.current_backlog_id;
+    var val = $(this).val();
+    callApi('21122616132506122050',{fkBacklogId:id,inputJson:val});
+})
+
 $(document).on('click', '.neefdiagram-call', function (evt) {
     var f = $(this).data('link');
     $.get("resource/child/" + f + ".html", function (html_string) {
