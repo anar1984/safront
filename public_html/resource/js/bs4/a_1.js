@@ -13137,8 +13137,9 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            var isHtml  = SACore.Backlogs[pid].hasHtml;
-            console.log(isHtml);
+        
+            var isHtml  = $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml"); 
+         
             if(isHtml !=='1'){
                 $('#cs-col-Ceckbox-id').val("0");
                 $('#cs-col-Ceckbox-id').selectpicker("refresh");
@@ -13172,10 +13173,7 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
                     generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml,false);
                 }
             }
-     
-           
-
-
+    
         }
     });
 }
@@ -13266,8 +13264,9 @@ function getBacklogListforCodeGround(fkProjectId) {
         data: data,
         contentType: "application/json",
         crossDomain: true,
-        async: true,
+        async: false,
         success: function (res) {
+
             var cmd = $('#storyCardListSelectBox4CodeGround');
             cmd.html('');
             var obj = res.tbl[0].r;
@@ -13275,7 +13274,7 @@ function getBacklogListforCodeGround(fkProjectId) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
                     var pname = o.backlogName;
-                    var op = $('<option></option>').attr('value', o.id).text(pname);
+                    var op = $('<option></option>').attr('value', o.id).text(pname).attr("isHtml",o.hasHtml?o.hasHtml:'0');
 
                     if (o.id === global_var.current_backlog_id) {
                         op.attr("selected", true);
