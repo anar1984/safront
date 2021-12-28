@@ -5774,6 +5774,11 @@ table.lbl-list-table tr td {
     border-top: none !important;
     border-bottom: 1px solid !important;
 }
+.cs-modal-box .cst-table-hover thead th {
+    font-size: 16px;
+    line-height: 20px;
+    height: 30px;
+}
 .cst-table-hover thead tr {
     -webkit-box-shadow: none;
     box-shadow: none;
