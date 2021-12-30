@@ -12,8 +12,9 @@
 //   var urlGl = "http://localhost:8079/tsn3/";
 //var urlGl = ""
  
-
+let tkn_var = '';
 function getToken() {
-   return localStorage.getItem('tk');
+     
+   return tkn_var
 }
 
