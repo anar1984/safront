@@ -831,8 +831,8 @@
             </nav>
         </div>
 
-        <div class="cs-top-navbar">
-            <div class="cs-top-navbar-profile-box top-level-link project-item-zad">
+        <div class="cs-top-navbar d-none">
+            <div class="cs-top-navbar-profile-box top-level-link d-none project-item-zad">
                 <div class="btn-group mr-2 dropup">
                    <button id="addProjectBugIssueTaskMng" class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle"></i></button>
                 </div> 
@@ -8620,68 +8620,27 @@
 
                                                                     </html>
 
-                                                                    <script>
-                                                                        $('.nav-toggle').click(function (e) {
-                                                                            e.preventDefault();
-                                                                            $("html").toggleClass("openNav");
-                                                                            $(".nav-toggle").toggleClass("active");
-
-                                                                        });
-                                                                    </script>
+                                                            
                                                                     <script>
                                                                         $(document).ready(function () {
                                                                             init();
                                                                             Utility.setParamOnLoad();
                                                                             generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
 
+                                                                             if(global_var.n_rgstr) {
+                                                                               
 
-                                                                            if (global_var.fkManualProjectId) {
-                                                                                manualProjectRefreshInit(global_var.fkManualProjectId);
-
-
-                                                                            } else {
-
-
-
-                                                                                loadFromIndexedDBtoRAM4LivePrototype();
-                                                                                init4Core();
+                                                                              //  loadFromIndexedDBtoRAM4LivePrototype();
+                                                                                  init4CoreNoRegstr();
                                                                                 if (global_var.current_modal !== 'loadStoryCard') {
                                                                                     new Project().loadMainProjectList();
                                                                                 }
 
 
                                                                             }
-                                                                            // $('.cs-core-issue-management').each(function() {
-                                                                            //     if($(this).closest('body')) {
-                                                                            //         $('body').css('position','fixed');
-                                                                            //     }else{
-                                                                            //         $('body').removeAttr('style');
-                                                                            //     }
-                                                                            // });
-
-
                                                                         });
 
-                                                                        function clearText() {
-                                                                            $('.add-bkl-line').val('');
-                                                                            $('.search-clear').css('display', 'none');
-                                                                            $('.add-btn2').css('background-image', 'url(https://img.icons8.com/pastel-glyph/2x/search--v2.png)');
-                                                                        }
-                                                                        ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                                                     
 
 
                                                                     </script>
