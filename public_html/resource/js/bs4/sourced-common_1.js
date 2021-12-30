@@ -22221,7 +22221,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
             if (backlogNameRelated) {
                 st += '<span>';
-                st+='<u>' + inputNameRelated + " (<a href='#' style='color:#007bff' onclick='new UserStory().redirectUserStoryCore('"+object.fkDependentBacklogId+"')>" + backlogNameRelated + "</a>)</u>";
+                st+='<u>' + inputNameRelated + " (<a href='#' style='color:#007bff' onclick='new UserStory().redirectUserStoryCore(\""+object.fkDependentBacklogId+"\")'>" + backlogNameRelated + "</a>)</u>";
                 st += '<a style="color:#007bff" href="#" onclick="new UserStory().deleteInputBySUSOutputId(\''+object.id.trim()+'\',this)"><i class="fa fa-remove" aria-hidden="true"></i></a>'
                  st += "<hr style='margin:0px;'>";
                  st += '</span>'
