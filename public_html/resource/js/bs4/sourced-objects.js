@@ -812,9 +812,12 @@ var SACore = {
                 .attr("value", obj.id)
                 .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
 
-        $('#us-related-sus').append($("<option></option>")
-                .attr("value", obj.id)
-                .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+        if(obj.isApi==='1'){
+            $('#us-related-sus').append($("<option></option>")
+            .attr("value", obj.id)
+            .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+        }
+       
 
     },
     FillInCombo: function (compId) {

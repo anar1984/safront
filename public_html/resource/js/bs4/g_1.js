@@ -1597,14 +1597,27 @@ var deadline = new Date(current_time + time_in_minutes * 60 * 1000);
 $(document).on('click', '.next-large-modal-btn', function (event) {
     var st = $(this).attr('data-status')
 
-
-    new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
-    $("#task-ongoing-large-modal").modal('show');
+      $(this).closest(".task-column").toggleClass("large-modal-expand");
+   /*  new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
+  
     $("#countDown-larg").attr('data-status-time', st)
     current_time = Date.parse(new Date());
     deadline = new Date(current_time + time_in_minutes * 60 * 1000)
-    run_clock('countDown-larg', deadline);
+     */
+    console.log($(this).closest(".task-column").position().left);
+    if($(this).closest(".task-column").hasClass('large-modal-expand')){
+        $('.task-panel').stop().animate({
+            scrollLeft: $(this).closest(".task-column").position().left-40
+        }, 200);
 
+         if($('#story_mn_groupBy_id').val()==='fkProjectId'){
+             var projectId = $(this).closest(".task-column").attr('status')
+            new UserStory().getStatisticList4Project(projectId,this);
+         }
+
+       
+    }
+  
 });
 $(document).on('click', '.baclog-large-modal-next', function (event) {
     $("#body-large-modal-in-us4backlog").html("");

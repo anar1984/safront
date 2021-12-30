@@ -11194,6 +11194,60 @@ $(document).on("click1", ".card-UserStory-edit-exit", function (e) {
     //    }
 
 })
+$(document).on("click", ".btn-change-mode-eventdesc", function (e) {
+    $(this).closest('.modal-body').find('.create-new-text-4-desc').toggleClass('d-none');
+    $(this).closest('.modal-body').find('.create-new-db-4-select').val('');
+
+})
+
+ function addEventDescription(){
+     var actype = $("#addEventDescModal-actiontype1").val();
+     var inputId = $("#addEventDescModal-input-id").val();
+     var text = $("#addEventDescModal-text").val();
+     var apidId = $("#addEventDescModal-apiId").val();
+     var apiName = $("#addEventDescModal-apiId option:selected").text();
+    var fn_body  = `fn_event(|r|${actype}|r|${text?'text':'Api'}|r|${text?text:apidId}|r|${apiName}|r|)`;
+    addNewDescByValueAndInpId(fn_body,inputId);
+}
+function addNewDescByValueAndInpId(val,inputId) {
+      if(!val || !inputId){
+          return;
+      }
+    var json = {kv: {}};
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkInputId = inputId;
+        json.kv.fkProjectId = global_var.current_project_id;
+        json.kv.description = val;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmInsertNewInputDescription",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: true,
+            success: function (res) {
+              
+                AJAXCallFeedback(res);
+                SAInput.updateInputByRes(res);
+                SAInputDesc.addInputDescriptionByRes(res);
+
+                var id = res.kv.id;
+                var stln = new UserStory().getInputDescTdItem(id, val, "");
+                $('[inid="'+inputId+'"] .desc-table-list-for-multiple .description-style').before(stln)
+              
+                 $("#addEventDescModal").modal('hide');
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+}
+
 
 
 $(document).on("click", '#user-story-is-api', function (e) {
@@ -12869,16 +12923,16 @@ function tableSelectBoxOnChange(el) {
 /// select box set
 function inputSetSelectBox() {
     var inputs = $("#generalview_input_list .description-left");
-     $(".tableInputSelect").append($("<option>").text('').val('0'))
+     $("select.tableInputSelect").append($("<option>").text('').val('0'))
     inputs.each(function () {
         var elm = $(this).clone();
         elm.find(".dropdown").first().remove();
         var text = $(elm).text();
         var idOption = $(elm).attr("data-id");
        
-        $(".tableInputSelect").append($("<option>").text(text).val(idOption))
+        $("select.tableInputSelect").append($("<option>").text(text).val(idOption))
     })
-    $(".tableInputSelect").selectpicker()
+    $("select.tableInputSelect").selectpicker()
 }
  ///
 function getBacklogInputOutPutSetTable(backlogId) {
@@ -13315,7 +13369,10 @@ $(document).on("change", '#cs-col-Ceckbox-id', function (e) {
 
 });
 $(document).on("change", '#project-list-codeground', function (e) {
-    getBacklogListforCodeGround($(this).val())
+    Utility.addParamToUrl("current_project_id",$(this).val())
+    global_var.current_project_id = $(this).val();
+    getBacklogListforCodeGround($(this).val());
+
 
 });
 
@@ -13694,6 +13751,42 @@ function loadStoryCardByProject4TaskMgmt(e) {
     //    loadDetailsOnProjectSelect4StoryCard(global_var.current_project_id);
 }
 
+function loadEventDesApiList(fkProjectId) {
+    var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
+    var json = initJSON();
+    json.kv.fkProjectId = pid;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetBacklogList4Combo",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            var cmd = $('select#addEventDescModal-apiId');
+            cmd.html('');
+           
+            var obj = res.tbl[0].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                if (o.isApi!=='1'){
+                    continue;
+                }
+                var pname = o.backlogName;
+                var op = $('<option></option>')
+                        .attr('value', o.id)
+                        .text(pname);    
+                    cmd.append(op);
+            }
+
+            sortSelectBoxByElement(cmd);
+            cmd.selectpicker('refresh');
+        
+        }
+    });
+}
 function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
     var json = initJSON();
@@ -14884,8 +14977,14 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
     $.get("resource/child/" + f + ".html", function (html_string) {
         new UserStory().clearAndShowAll();
         $('#mainBodyDivForAll').html(html_string);
+        $(".usmg-selectpicker").selectpicker();
         setProjectListByID('story_mn_filter_project_id');
+        var groupBy = localStorage.getItem('usm_groupBy');
         var prId = localStorage.getItem('current_project_id');
+           console.log(groupBy?groupBy:'backlogStatus');
+        $("#story_mn_groupBy_id").val(groupBy?groupBy:'backlogStatus');
+        $("#story_mn_groupBy_id").selectpicker("refresh");
+       
         getUsers()
         prId = prId.split('%IN%');
         if (prId) {
@@ -14902,8 +15001,6 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         Priority.load();
         hideToggleMain();
         commmonOnloadAction(this);
-        $("#story_mn_filter_assigne_id").selectpicker();
-        $("#priority-change-story-card-filter").selectpicker();
         $('#date_timepicker_start_end-usmn').daterangepicker({}).val('');
     });
 });
@@ -16048,6 +16145,7 @@ function getBugList4UserStory(bgId, tbody) {
     json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
     json.kv.searchLimit = 200;
+    json.kv.considerAll = '1';
     var prd = getProjectValueUsManageMulti();
     var that = this;
     var data = JSON.stringify(json);
@@ -18528,6 +18626,18 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
 
 
     var val = getProjectValueUsManageMulti();
+    localStorage.setItem('current_project_id', val);
+    loadAssigneesByProjectUSM(val);
+    loadStoryCardByProjectAdd(val)
+
+    UsLabel = '';
+    UsSprint = '';
+    labelOrSplitValuesUs();
+});
+$(document).on('change', '#story_mn_groupBy_id', function (evt) {
+       localStorage.setItem("usm_groupBy",$(this).val());
+
+       var val = getProjectValueUsManageMulti();
     localStorage.setItem('current_project_id', val);
     loadAssigneesByProjectUSM(val);
     loadStoryCardByProjectAdd(val)

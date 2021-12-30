@@ -481,7 +481,7 @@ var Component = {
         return ((comp.pureDescription) &&
                 comp.pureDescription !== 'undefined' &&
                 comp.pureDescription.includes('fn_(ismandatory)')) ?
-                '<span style="color:red">*</span>' : ""
+                '<span class="cs-box-star-class">*</span>' : ""
     },
     ReplaceCSS: function (arg) {
         try {
@@ -1860,7 +1860,9 @@ var Component = {
         }
 
 
-        div.append($('<form><form>').append(el));
+        div.append($('<label class="cs-file-upload">')
+         .append('<span class="btn-name" style="display:none">'+comp.label+'</span>')
+        .append(el));
         div.append('<div id="progress_bar_new"></div>');
         return $('<div></div>').append(div).html();
     },

@@ -5180,6 +5180,73 @@
 
 
 
+<div class="modal fade" id="addEventDescModal" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectFromDbModal-title">Add Event Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                  
+                        <div class="form-group col-12" style="font-size:14px;">
+                            <input type="hidden" id="addEventDescModal-input-id">
+                            <div class="row " >
+                                <div class="form-group  col-2">
+                                    <span style="width: 100%;"> Select Action </span><br>
+                                    <select id="addEventDescModal-actiontype1" class='form-control '>
+                                          <option value="onclick">onclick</option>
+                                          <option value="onchange">onchange</option>
+                                          <option value="ondblcick">ondblclick</option>
+                                          <option value="onfocus">onfocus</option>
+                                          <option value="onfocusin">onfocusin</option>
+                                          <option value="onfocusout">onfocusout</option>
+                                          <option value="onkeypress">onkeypress</option>
+                                          <option value="onkeyup">onkeyup</option>
+                                          <option value="onkeydown">onkeydown</option>
+                                  </select>
+                               </div>
+                                <div class="form-group create-new-text-4-desc col-7">
+                                    <span style="width: 100%;"> Select Api </span><br>
+                                    <select id="addEventDescModal-apiId" class='form-control create-new-db-4-select'>
+                                  </select>
+                                  <button type="button" class="btn btn-primary"
+                                  onclick="$(this).closest('.modal-body').find('.create-new-text-4-desc').toggleClass('d-none')">Add text</button>
+                                </div>
+                                <div class="form-group create-new-text-4-desc d-none col-7" >
+                                    <span style="width: 100%;">Text Description</span><br>
+                                    <input type="text" id="addEventDescModal-text"
+                                           class='form-control create-new-db-4-select' style=" padding:10px 0px;  ">
+                                           <button type="button" class="btn btn-change-mode-eventdesc btn-primary"
+                                           onclick="">Add api</button>
+                                </div>
+                            
+                                
+                            </div>
+                         
+                        </div>
+                        <div class="form-group col-12 text-right">
+                            <br>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="addEventDescription()">Add</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+
+
+            
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="selectFromDbModal" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
      aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
