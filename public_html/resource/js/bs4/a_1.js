@@ -11249,6 +11249,74 @@ function addNewDescByValueAndInpId(val,inputId) {
 }
 
 
+function updateEventEventDesc(elm) {
+    var val = $(elm).val();
+    var oldVal = $(elm).attr('sa-data-value');
+    var fn  = $(elm).closest('.span_hover.desc-item-input').attr('idesc');
+     var descId  = $(elm).closest('div.span-button-div').attr("data-id");
+     
+      updateInputDescCompNewf(fn.replace(oldVal, val),descId);
+    
+}
+ function updateInputDescCompNewf(val, descId) {
+    var id = descId;
+    if (descId.trim().length == 0) {
+        return;
+    }
+
+    if (val.trim().length === 0) {
+        return;
+    }
+
+    var json = {kv: {}};
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.id = id;
+    json.kv.description = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmUpdateInputDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            AJAXCallFeedback(res);
+            loadCurrentBacklogProdDetails();
+         
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+
+
+
+
+
+}
+
+
+$(document).on("dblclick", '.update-event-desc-text', function (e) {
+         var tx  =$(this).text()
+         var inp =$(`<input onkeypress="this.style.width = (this.value.length + 1) + 'rem'" class='update-event-desc-input'  sa-data-value='${tx}' value='${tx}'>").attr('onchange','updateEventEventDesc(this)`)
+             inp.css("width",(tx.length + 1) + 'rem')
+             inp.css("max-width",'50rem')
+         $(this).html(inp);
+        //  inp.focus();
+
+})
+$(document).on("focusout", '.update-event-desc-input', function (e) {
+         var tx  =$(this).val();
+           
+          $(this).parent().text(tx);
+
+})
+
 
 $(document).on("click", '#user-story-is-api', function (e) {
 

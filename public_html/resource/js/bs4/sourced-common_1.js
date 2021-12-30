@@ -8227,6 +8227,8 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
              var params = fnline.split('|r|');
              var select  = $("<select>");
                  select.addClass("mr-2")
+                        .attr("onchange",'updateEventEventDesc(this)')
+                        .attr("sa-data-value",params[1])
                            .append('<option value="onclick"  >onclick</option>')
                            .append('<option value="onchange" >onchange</option>')
                            .append('<option value="ondblcick" >ondblclick</option>')
@@ -8236,13 +8238,16 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                            .append('<option value="onkeypress" >onkeypress</option>')
                            .append('<option value="onkeyup" >onkeyup</option>')
                            .append('<option value="onkeydown" >onkeydown</option>');
+                
                            
               $(select).find('option[value="'+params[1]+'"]').attr('selected','selected');
              sp.append(select);
             
            
             if(params[2]==='text'){
-                sp.append(" "+params[3])
+                sp.append($("<span>")
+                               .text(params[3])
+                               .addClass("update-event-desc-text"));
             }
             if(params[2]==='Api'){
 
@@ -22248,12 +22253,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
     getInputDescTdItem: function (descId, desc1, stln, color, inputId,orderNo) {
         color = (color) ? color : 'undefined';
-        var colored = '<a class="colored-a" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
+        var colored = '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
         var closeColor = "</a>"
         try {
             colored = color.length > 0
                     ? colored
-                    : '<a class="colored-a" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
+                    : '<a class="colored-a d-flex" style="border: 3px solid ' + color + ';background-color:' + color + '; border-radius: 5px;">';
 
         } catch (err) {
         }
@@ -22292,13 +22297,17 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
     
 
     updateInputDescriptionEditLineNew: function (el, descId) {
-        var inp = $('<input type="text">')
-                .css("width", "90%")
-                .attr("onchange", "new UserStory().updateInputDescCompNew(this,'" + descId + "')")
-                .val($(el).attr('idesc'))
-                ;
-        $(el).html(inp);
+        var trg = $(el).find('.update-event-desc-text');
+        if(trg.length <1){
+            var inp = $('<input type="text">')
+            .css("width", "90%")
+            .attr("onchange", "new UserStory().updateInputDescCompNew(this,'" + descId + "')")
+            .val($(el).attr('idesc'))
+            ;
+       $(el).html(inp);
         inp.focus();
+        }
+        
     },
 
     updateInputDescCompNew: function (el, descId) {
@@ -22332,7 +22341,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 loadCurrentBacklogProdDetails();
                 console.log(res);
                 var id  = res.tbl[0].r[0].id;
-                    var stln = new UserStory().getInputDescTdItem(id, $(el).val(), "");
+                var stln = new UserStory().getInputDescTdItem(id, $(el).val(), "");
 
                 $(el).closest('div.drag-item').after(stln);
                 $(el).closest('div.drag-item').remove();
