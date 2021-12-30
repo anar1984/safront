@@ -20184,6 +20184,40 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 + '&d=' + el.attr('d')
                 + '&lid=' + el.attr('lid');
     },
+    getGeneralViewLine4Share: function ( ) {
+        var json = {kv: {}};
+        try {
+            json.kv.cookie = getToken();
+        } catch (err) {
+        }
+        json.kv.fkBacklogId = global_var.current_backlog_id;
+        var that = this;
+        var data = JSON.stringify(json);
+        $.ajax({
+            url: urlGl + "api/post/srv/serviceTmshareStoryCard",
+            type: "POST",
+            data: data,
+            contentType: "application/json",
+            crossDomain: true,
+            async: false,
+            success: function (res) {
+                 console.log(res);
+
+               
+                 var copyText = $(location).attr('protocol') + "//" +
+                $(location).attr('host') + "/" +"c.html?"+'&bgid='+global_var.current_backlog_id+'&n_rgstr='+res.kv.key +'&current_domain='+global_var.current_domain;
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(copyText).select();
+                document.execCommand("copy");
+                $temp.remove();
+                Toaster.showMessage('Copy Succesfuly');
+            },
+            error: function () {
+                Toaster.showError(('somethingww'));
+            }
+        });
+    },
     getGeneralPrototypeViewLine: function ( ) {
 
         return this.getGeneralViewLine() + "&h=1";
@@ -20204,13 +20238,8 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         window.open(this.getGeneralViewLineDirect(pid, bid));
     },
     copyGeneralView: function () {
-        var copyText = $(location).attr('protocol') + "//" +
-                $(location).attr('host') + "/" + this.getGeneralViewLine();
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val(copyText).select();
-        document.execCommand("copy");
-        $temp.remove();
+      this.getGeneralViewLine4Share();
+       
     },
     copyGeneralPrototypeView: function () {
         var copyText = $(location).attr('protocol') + "//" +
@@ -24996,6 +25025,29 @@ User.prototype = {
                 //bu hisse de error atmalidir. lakin atmir
 
                 document.location = "login.html";
+//                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
+            }
+        });
+    },
+    loadNoRegistrOnInit: function () {
+        var bgid = Utility.getParamFromUrl('bgid');
+        var n_rgstr = Utility.getParamFromUrl('n_rgstr');
+        var dmn = Utility.getParamFromUrl('current_domain');
+   
+        $.ajax({
+            url: urlGl + "api/post/sht/"+dmn+"/"+bgid+"/"+n_rgstr,
+            type: "POST",
+            async: false,
+            contentType: 'text/html',
+            success: function (res) {
+                         localStorage.setItem("tk",res.kv.token)
+            
+               console.log(res);
+            },
+            error: function () {
+                //bu hisse de error atmalidir. lakin atmir
+
+               // document.location = "login.html";
 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }
         });

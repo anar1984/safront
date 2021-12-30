@@ -13198,8 +13198,15 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 
         $('#mainBodyDivForAll').html(html_string);
         $('.code-select-picker').selectpicker();
+        if(global_var.n_rgstr){
+            var bgid  = Utility.getParamFromUrl('bgid');
+            global_var.current_backlog_id =bgid;
+                $('.projectList_codeground_storycard').attr('disabled','disabled')
+                $('.projectList_codeground_storycard').selectpicker();
+        }else{
+            loadProjectList2SelectboxByClass('projectList_codeground_storycard');
 
-        loadProjectList2SelectboxByClass('projectList_codeground_storycard');
+        }
         if (global_var.current_backlog_id) {
             var val = global_var.current_backlog_id;
             getBacklogHTMLBodyByIdCodeGround(val, '');
@@ -13486,16 +13493,16 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-    if ($("#cs-col-Ceckbox-id").val() !=='1') {
+  /*   if ($("#cs-col-Ceckbox-id").val() !=='1') {
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
         global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
         global_var.current_modal = oldmodal;
-    } else {
+    } else { */
         var html = window.editorHTMLGround.getValue();
         insertHtmlSendDbBybacklogId(html);
-    }
+   // }
     var css = window.editorCSSGround.getValue();
 
 
@@ -13538,6 +13545,12 @@ function setBacklogAsHtmlCodeGround(backlogId, html) {
         }
     });
 }
+$(document).on("click", '#info-code-ground-btn', function (e) {
+      
+     callStoryCard(global_var.current_backlog_id);
+    console.log('sdsdg');
+
+});
 $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
@@ -13545,16 +13558,16 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-    if ($("#cs-col-Ceckbox-id").val() !=='1') {
+    /* if ($("#cs-col-Ceckbox-id").val() !=='1') {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
         global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
         global_var.current_modal = oldmodal;
-    } else {
+    } else { */
         var html = window.editorHTMLGround.getValue();
-    }
+    //}
 
     var css = window.editorCSSGround.getValue();
 
