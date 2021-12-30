@@ -14860,6 +14860,7 @@ function callLoadDev() {
         // loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
+        Prototype.ApiContainer.Init(global_var.current_project_id);
         $('.cs-col-pagename .mm-title').html('');
         $('.cs-col-pagename .mm-title').html('Development');
     });

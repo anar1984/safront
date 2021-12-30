@@ -22330,8 +22330,12 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             success: function (res) {
                 AJAXCallFeedback(res);
                 loadCurrentBacklogProdDetails();
+                console.log(res);
+                var id  = res.tbl[0].r[0].id;
+                    var stln = new UserStory().getInputDescTdItem(id, $(el).val(), "");
 
-                $(el).closest('div.span-button-div').find('span.span_hover').text($(el).val())
+                $(el).closest('div.drag-item').after(stln);
+                $(el).closest('div.drag-item').remove();
 // refreshLiveProtytypeView();
 
 
