@@ -8238,10 +8238,9 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                            .append('<option value="onkeypress" >onkeypress</option>')
                            .append('<option value="onkeyup" >onkeyup</option>')
                            .append('<option value="onkeydown" >onkeydown</option>');
-                
-                           
-              $(select).find('option[value="'+params[1]+'"]').attr('selected','selected');
-             sp.append(select);
+                                           
+            $(select).find('option[value="'+params[1]+'"]').attr('selected','selected');
+            sp.append(select);
             
            
             if(params[2]==='text'){
@@ -8250,12 +8249,13 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                                .addClass("update-event-desc-text"));
             }
             if(params[2]==='Api'){
-
-                sp.append(`<a href='#' style='color:black;' onclick="new UserStory().redirectUserStoryCore('${params[3]}')">  ${params[4]} </a>`)
+                sp.append(` <b>Call API : </b> `)
+                sp.append(` <a href='#' style='color:black;' onclick="new UserStory().redirectUserStoryCore('${params[3]}')"> <i><b> ${params[4]} </b></i></a>`)
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#" 
                 onclick="showApiRelSettingModal('${params[3]}','${params[3]}','IN_DESC_SEND')">
                 <i class="fa fa-cog" aria-hidden="true"></i>
                 </a>`)
+                
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#"
                  onclick="showApiRelationModal('${params[3]}')">
                  <i class="fas fa-exchange-alt" aria-hidden="true"></i>
