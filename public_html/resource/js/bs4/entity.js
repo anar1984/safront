@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     });
 
-   
+
 
     $(document).on("dblclick", ".DatabaseNameH4", function () {
 
@@ -931,6 +931,7 @@ function genUsTableNew(genText) {
 //                                            .append('<a class="dropdown-item">Copy</a>')
                                             .append('<a class="dropdown-item ShowTableDataEntry">Show Data Entry</a>')
                                             .append('<a class="dropdown-item ShowApiRelations">Show API Relations</a>')
+                                            .append(`<a class="dropdown-item ShowGenerateCrudApis">Generate CRUD APIs</a>`)
                                             .append('<a class="dropdown-item DeleteTableCont">Delete</a>')))))
             .append($("<div>")
                     .addClass("tdBody")

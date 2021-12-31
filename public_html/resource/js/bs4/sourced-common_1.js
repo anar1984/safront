@@ -16301,8 +16301,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         if (!global_var.current_backlog_id) {
             return;
         }
-        var json = {
-            kv: {}};
+        var json = initJSON();
         json.kv.id = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);

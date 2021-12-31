@@ -348,8 +348,8 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
         getRelatedStoryCardByApiId();
-        
-        callApi('21122616260906401317',{fkBacklogId:id},true,function(res){
+
+        callApi('21122616260906401317', {fkBacklogId: id}, true, function (res) {
             $('#user-story-input-json').val(res.kv.inputJson)
         })
 
@@ -412,7 +412,7 @@ $(document).on('change', '.inputActionTypeChangeZadSheyOOO', function (ev) {
 $(document).on('change', '.inputActionTypeChangeZadShey111', function (ev) {
     var inputId = $(this).attr('inputid');
     var ustype = $(this).attr('key');
-    var val=$(this).val();
+    var val = $(this).val();
     updateInput4SCDetails(inputId, val, ustype);
 });
 
@@ -632,6 +632,68 @@ function splitSelectedFieldAndGenHtml(selectedField, fkInputId) {
     return div;
 }
 
+$(document).on('click', '.generate-crud-api-for-entity', function () {
+    var data = {"dbId": "",
+        "tableId": "",
+        "entity": "",
+        "entityDb": "test",
+        "action": "",
+        "fkProjectId": ""};
+
+    data.fkProjectId = $('#ShowGenerateCrudApisModal-projectlist').val();
+    data.tableId = show_generate_crud_api_table_id;
+    data.entity = $('#ShowGenerateCrudApisModal-tablename').val();
+    data.dbId = $('#entityDatabaseList').val();
+    data.action += $('#ShowGenerateCrudApis-crud-c').is(":checked") ? "," +
+            $('#ShowGenerateCrudApis-crud-c').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-r').is(":checked") ? "," +
+            $('#ShowGenerateCrudApis-crud-r').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-i').is(":checked") ? "," +
+            $('#ShowGenerateCrudApis-crud-i').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-u').is(":checked") ? "," +
+            $('#ShowGenerateCrudApis-crud-u').val() : "";
+    data.action += $('#ShowGenerateCrudApis-crud-d').is(":checked") ? "," +
+            $('#ShowGenerateCrudApis-crud-d').val() : "";
+
+    callService("serviceTmcreateApiFromEntity", data, true,
+            function (res) {
+                Toaster.showMessage("API Successfully Created");
+                $('#ShowGenerateCrudApisModal').modal('hide');
+            })
+})
+
+var show_generate_crud_api_table_id = "";
+$(document).on('click', '.ShowGenerateCrudApis', function (ev) {
+    $('#ShowGenerateCrudApisModal').modal('show');
+    show_generate_crud_api_table_id = $(this).closest('td.tdSeqment').attr('pid');
+    var tablename = $(this).closest('td.tdSeqment').find('.TableNameH5').first().text();
+    $('#ShowGenerateCrudApisModal-tablename').val(tablename);
+
+    callService("serviceTmgetProjectList", {}, true,
+            function (res) {
+                var select = $('#ShowGenerateCrudApisModal-projectlist');
+                select.html('');
+                var obj = res.tbl[0].r;
+                var urlVal = global_var.current_project_id;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = $('<option></option')
+                            .attr('value', obj[n].id)
+                            .html(obj[n].projectName);
+                    if (urlVal === obj[n].id) {
+                        o.attr("selected", "selected");
+                    }
+                    select.append(o);
+                }
+            })
+//    entityApiRelationModal_main
+
+
+
+
+
+
+});
+
 $(document).on('click', '.ShowApiFieldRelations', function (ev) {
     $('#entityApiRelationModal').modal('show');
 //    entityApiRelationModal_main
@@ -675,7 +737,7 @@ $(document).on('click', '.ShowApiFieldRelations', function (ev) {
 
 });
 
-
+var table_id_4_api_relation = "";
 $(document).on('click', '.ShowApiRelations', function (ev) {
     $('#entityApiRelationModal').modal('show');
 //    entityApiRelationModal_main
@@ -685,7 +747,7 @@ $(document).on('click', '.ShowApiRelations', function (ev) {
 
     if (!tableid)
         return;
-
+    table_id_4_api_relation = tableid;
     var json = initJSON();
     json.kv.tableId = tableid;
     var that = this;
@@ -706,18 +768,87 @@ $(document).on('click', '.ShowApiRelations', function (ev) {
                 var o = obj[i];
                 body.append($('<tr>')
                         .append($("<td>").text(i + 1))
-                        .append($("<td>").append($('<b>')
-                                .css('cursor', 'pointer')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                                .text(o.backlogName)))
-                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
-                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                        .append($("<td>")
+                                .attr('backlogid', o.id)
+                                .addClass('api-relation-input-backlog')
+                                .append($('<b>')
+                                        .css('cursor', 'pointer')
+                                        .attr('onclick', 'callStoryCard("' + o.id + '")')
+                                        .text(o.backlogName)))
+                        .append($("<td>")
+                                .text(SACore.Project[o.fkProjectId]))
+                        .append($("<td>")
+                                .addClass('api-action-class-zad')
+                                .attr("action-type", o.apiAction)
+                                .text(GetApiActionTypeText(o.apiAction)))
+//                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
+                        .append($("<td>").append(tableField(that)))
+                        .append($("<td>").append(tableFieldBothAction()))
+                        .append($("<td>").append(tableFieldBothActionButton()))
                         )
             }
+            $('.entity-api-relation-crud-info-list-selectpicker').selectpicker('refresh');
         }
     });
 
 });
+
+$(document).on('click', '.entity-api-relation-crud-info-list-submit-action', function () {
+//    carrier.addController("fkBacklogId", cp.hasValue(carrier, "fkBacklogId"));
+//        carrier.addController("actionType", cp.hasValue(carrier, "actionType"));
+//        carrier.addController("applyType", cp.hasValue(carrier, "applyType"));
+//        carrier.addController("fieldName", cp.hasValue(carrier, "fieldName"));
+//        carrier.addController("dbId", cp.hasValue(carrier, "dbId"));
+//        carrier.addController("tableId", cp.hasValue(carrier, "tableId"));
+//        carrier.addController("fieldId", cp.hasValue(carrier, "fieldId"));
+    var tr = $(this).closest('tr');
+    var data = {};
+    data.fkBacklogId = tr.find('td.api-relation-input-backlog').attr('backlogid');
+    data.actionType = tr.find('td.api-action-class-zad').attr('action-type');
+    data.actionType = tr.find('td.api-action-class-zad').attr('action-type');
+    data.applyType = tr.find('select.apply-type').val();
+    data.fieldName = tr.find('select.entity-api-relation-crud-info-list-selectpicker').find('option:selected').text();
+    data.dbId = $('#entityDatabaseList').val();
+    data.tableId = table_id_4_api_relation;
+    data.fieldId = tr.find('select.entity-api-relation-crud-info-list-selectpicker').val();
+
+    callService("serviceTmmodifyApiFromEntity", data, true, function (res) {
+        Toaster.showMessage("Field added successfully!")
+    })
+})
+
+var tableFieldBothActionButton = function ( ) {
+    return `<button class='form-control btn btn-secondary 
+                    entity-api-relation-crud-info-list-submit-action'>
+                 Generate
+            </button>`;
+}
+
+var tableFieldBothAction = function ( ) {
+    return `<select class='form-control apply-type'>
+                <option value='all'>Both</option>
+                <option value='in'>Input</option>
+                <option value='out'>Output</option>
+            </select>`;
+}
+
+var tableField = function (el) {
+    var select = $('<select>');
+    select.addClass("entity-api-relation-crud-info-list-selectpicker")
+            .attr('title', '')
+            .attr("data-live-search", "true")
+            .attr('data-actions-box', "true")
+    //.attr('multiple', true);
+    select.append($('<option>').text("").val(""))
+    var td = $(el).closest('td.tdSeqment');
+    td.find('.feildSection').each(function () {
+        var id = $(this).attr('id');
+        var fieldname = $(this).find('span.feildNamespan').text();
+        select.append($('<option>').text(fieldname).val(id))
+
+    })
+    return select;
+}
 
 $(document).on('click', '.deleteSelectedFieldFromInput', function (ev) {
 
@@ -1759,48 +1890,6 @@ function loadMainBusinesCaseBodyForQuestion(caseName) {
 
 
 }
-$(document).on('click', '.ShowApiRelations', function (ev) {
-    $('#entityApiRelationModal').modal('show');
-//    entityApiRelationModal_main
-
-
-    var tableid = $(this).closest('td.tdSeqment').first().attr('pid');
-
-    if (!tableid)
-        return;
-
-    var json = initJSON();
-    json.kv.tableId = tableid;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmgetApiListByEntityId",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            var body = $('#entityApiRelationModal_table tbody');
-            body.empty();
-
-            var obj = res.tbl[0].r;
-            for (let i = 0; i < obj.length; i++) {
-                var o = obj[i];
-                body.append($('<tr>')
-                        .append($("<td>").text(i + 1))
-                        .append($("<td>").append($('<b>')
-                                .css('cursor', 'pointer')
-                                .attr('onclick', 'callStoryCard("' + o.id + '")')
-                                .text(o.backlogName)))
-                        .append($("<td>").text(GetApiActionTypeText(o.apiAction)))
-                        .append($("<td>").text(MapApiCallAsyncType(o.apiSyncRequest)))
-                        )
-            }
-        }
-    });
-
-});
 
 
 
