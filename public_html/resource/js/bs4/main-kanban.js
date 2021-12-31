@@ -261,6 +261,14 @@ function callStoryCard(id, elId, backlogName) {
         global_var.current_project_id = fkProjectId;
 
         $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        if(global_var.current_modal==='loadCodeGround'){
+          $('#UserStoryPopupModal-Toggle .cs-proces-desc-add-to-task-box').remove();
+          $('#UserStoryPopupModal-Toggle input').remove();
+          $("#UserStoryPopupModal-Toggle .storycard_ipo").css("pointer-events",'none');
+          $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
+          $("#UserStoryPopupModal-Toggle .dropdown-toggle").parent().remove();
+          $('#storyCardRightMenu').remove();
+        }
         $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
         $('select.projectList_liveprototype_storycard').val(fkProjectId)

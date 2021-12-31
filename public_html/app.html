@@ -8940,6 +8940,7 @@
                                                                     </html>
 
                                                                     <script>
+                                                                      
                                                                         $('.nav-toggle').click(function (e) {
                                                                             e.preventDefault();
                                                                             $("html").toggleClass("openNav");
@@ -8948,7 +8949,9 @@
                                                                         });
                                                                     </script>
                                                                     <script>
+                                                                          
                                                                         $(document).ready(function () {
+                                                                            tkn_var = localStorage.getItem('tk');
                                                                             init();
                                                                             Utility.setParamOnLoad();
                                                                             generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');

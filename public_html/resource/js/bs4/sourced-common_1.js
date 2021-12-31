@@ -25039,10 +25039,8 @@ User.prototype = {
             async: false,
             contentType: 'text/html',
             success: function (res) {
-                         localStorage.setItem("tk",res.kv.token)
-            
-               console.log(res);
-            },
+                        tkn_var= res.kv.token
+                },
             error: function () {
                 //bu hisse de error atmalidir. lakin atmir
 
