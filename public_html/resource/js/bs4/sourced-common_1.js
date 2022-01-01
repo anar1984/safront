@@ -5600,7 +5600,7 @@ UserStory.prototype = {
             $("div.function-statement-container table tr").hover(function(){
                 $(this).closest('tbody > tr').find('.cs-copy-btn').toggleClass("active-hover");
             });
-        
+            resetAllEditStoryCard();
           $('div.function-statement-container').each(function(i) {
             $(this).attr('in_pid', +(i+1));
           });
@@ -7395,6 +7395,7 @@ UserStory.prototype = {
             }
            
         });
+        resetAllEditStoryCard();
     },
 
     getStoryCardOutputList: function (res) {

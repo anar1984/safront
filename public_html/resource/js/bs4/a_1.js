@@ -14758,6 +14758,21 @@ function loadStoryCardInfo4StoryCard_old(el) {
     setStoryCardUpdatedBy();
 }
 
+function resetAllEditStoryCard() {
+    if(global_var.current_modal==='loadCodeGround'){
+          $('#UserStoryPopupModal-Toggle .cs-proces-desc-add-to-task-box').remove();
+          $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
+          $('#storyCardRightMenu').remove();
+        $("#UserStoryPopupModal-Toggle input").remove();
+        $("#UserStoryPopupModal-Toggle .iconDrag").remove();
+        $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle  span").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle .dropdown-toggle").parent().remove();
+        $('#description_table_id').remove();
+
+    }
+}
+
 
 
 function clearLivePrototypeView42() {
