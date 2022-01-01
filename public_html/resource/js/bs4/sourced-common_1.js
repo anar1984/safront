@@ -20184,11 +20184,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 + '&lid=' + el.attr('lid');
     },
     getGeneralViewLine4Share: function ( ) {
-        var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
+        var json = initJSON();
         json.kv.fkBacklogId = global_var.current_backlog_id;
         var that = this;
         var data = JSON.stringify(json);
@@ -20788,7 +20784,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
                                 .append('<input type="checkbox" id="us_input_list_check_all_new" onclick="new UserStory().toggleAllInputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:15%;background-color: #ffffff;').append('Name'))
+                        .append($('<th></th>').attr('style', 'min-width:350px;background-color: #ffffff;').append('Name'))
 //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
                         .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
                         );
@@ -20806,7 +20802,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .attr('style', 'width:1%; white-space:nowrap;background-color: #ffffff;')
                                 .append('<input type="checkbox" id="us_output_list_check_all_new" onclick="new UserStory().toggleAllOutputNew(this)">'))
 
-                        .append($('<th></th>').attr('style', 'width:200px;background-color: #ffffff;').append('Name'))
+                        .append($('<th></th>').attr('style', 'min-width:300px;background-color: #ffffff;').append('Name'))
 //                        .append($('<th></th>').attr('style', 'border-color:#5181B8').append('Table name'))
                         .append($('<th></th>').attr('style', 'border-color:none;background-color: #ffffff;').append('Description'))
                         );

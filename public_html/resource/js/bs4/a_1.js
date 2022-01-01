@@ -2873,7 +2873,7 @@ function shiftTaskInfoOnTaskInfoModal(el) {
 
 
 function getParentTask() {
-    var body  = $('#d-task-tab5 .parent-task tbody');
+    var body = $('#d-task-tab5 .parent-task tbody');
     body.html("")
 
     var json = initJSON();
@@ -2890,25 +2890,25 @@ function getParentTask() {
         success: function (res) {
             try {
                 var relId = res.kv.id;
-                    if(!relId){
-                         return
-                    }
+                if (!relId) {
+                    return
+                }
                 var fkParentTaskId = res.kv.fkTaskId;
                 if (fkParentTaskId) {
 
-                    
+
                     var fkProjectId4 = res.kv.fkProjectId;
                     var parentTaskName = res.kv.taskName;
                     var orderNoSeq = res.kv.orderNoSeq;
-                     try {
+                    try {
                         var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                       var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
-                     } catch (error) {
-                        var projectCode ="PRIVATE" ;
-                     }
-                   
+                        var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = "PRIVATE";
+                    }
+
                     var taskName = add3Dots2String(parentTaskName, 50);
-                    
+
                     var tr = `<tr>
                     <td>1</td>
                     <td>${taskCodeID}</td>
@@ -2916,12 +2916,12 @@ function getParentTask() {
                     <td><div class="task-status-modal-parent-task"><span class='us-item-status-${res.kv.taskStatus}'>${res.kv.taskStatus}<span>
                     </div></td>
                 </tr>`
-                body.append(tr) 
+                    body.append(tr)
 
                 }
 
             } catch (err) {
-               
+
             }
         }
     });
@@ -2943,7 +2943,7 @@ function getChildTasks() {
         crossDomain: true,
         async: true,
         success: function (res) {
-          
+
             try {
                 var obj = res.tbl[0].r;
                 for (var n = 0; n < obj.length; n++) {
@@ -2955,7 +2955,7 @@ function getChildTasks() {
                     var fkProjectId4 = o.fkProjectId;
                     try {
                         var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
-                           projectCode =" (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                        projectCode = " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
                     } catch (error) {
                         var projectCode = 'PRIVATE';
 
@@ -2963,7 +2963,7 @@ function getChildTasks() {
                     tbody.each(function () {
                         $(this).append($('<tr>')
                                 .append($('<td>')
-                                        .text(n+1)
+                                        .text(n + 1)
                                         )
                                 .append($('<td>')
                                         .text(projectCode)
@@ -2989,7 +2989,7 @@ function getChildTasks() {
                 }
 
             } catch (err) {
-               // alert(err);
+                // alert(err);
             }
         }
     });
@@ -7802,7 +7802,7 @@ function deleteInputActionRel(relId) {
             getInputActionRelList();
             getInputAttributeByProject();
             new UserStory().genGUIDesign();
-            loadBacklogProductionCoreDetailssByIdPost("",true);
+            loadBacklogProductionCoreDetailssByIdPost("", true);
         }
     });
 }
@@ -8492,7 +8492,7 @@ function jsCodeModal_checkbox_action() {
 
 
 $(document).on("change", "#jsCodeModal_fnlist", function (e) {
-   
+
     var val = $(this).val();
     if (!val) {
         return;
@@ -8554,10 +8554,10 @@ function insertNewJsFuncionDesc() {
             getAllJsCodeByProject();
             loadCurrentBacklogProdDetails();
             $('#jsCodeModal_newfunction').val('');
-            
+
             $('select#jsCodeModal_fnlist').val(res.kv.id)
             $('select#jsCodeModal_fnlist').selectpicker("refresh");
-            $('select#jsCodeModal_fnlist').change() ;
+            $('select#jsCodeModal_fnlist').change();
         }
     });
 }
@@ -8611,8 +8611,8 @@ function loadGlobalJsCode() {
                 table.append(tr);
             }
             if (current_js_code_id) {
-              table.val(current_js_code_id);
-            } 
+                table.val(current_js_code_id);
+            }
             table.change();
             table.selectpicker('refresh');
         }
@@ -8641,20 +8641,20 @@ function getAllJsCodeByProjectDetails(res) {
 function showJSModal(jsId) {
     showJsCodeModal();
 
-    
+
     $('select#jsCodeModal_fnlist').val(jsId);
     $('select#jsCodeModal_fnlist').selectpicker("refresh");
-    $('select#jsCodeModal_fnlist').change() ;
+    $('select#jsCodeModal_fnlist').change();
 
 }
 function showJSModalByName(elm) {
 
     showJsCodeModal();
-     var fid  = $(elm).closest("ul").find('select.get-callfn-select-box option:selected').attr("pid");
-    
+    var fid = $(elm).closest("ul").find('select.get-callfn-select-box option:selected').attr("pid");
+
     $('select#jsCodeModal_fnlist').val(fid);
     $('select#jsCodeModal_fnlist').selectpicker("refresh");
-    $('select#jsCodeModal_fnlist').change() ;
+    $('select#jsCodeModal_fnlist').change();
 
 }
 
@@ -8664,15 +8664,15 @@ var cdnh2 = true;
 function showJsCodeModal() {
     $('.jsCodeModal-selectpicker').selectpicker('refresh');
     $('#jsCodeModal').modal('show');
-   
+
     /* 
-    if (cdnh) {
-
-
-        cdnh = false;
-      //  jsEditorGenerate();
-    
-    } */
+     if (cdnh) {
+     
+     
+     cdnh = false;
+     //  jsEditorGenerate();
+     
+     } */
     getAllJsCodeByProject();
     //loadApisToComboOnJSCode();
 }
@@ -10204,19 +10204,19 @@ function addNewSourceCodeFromDescNew() {
         async: true,
         success: function (res) {
             var descId = $('#addNewRelatedSourceCodeModal-id').val();
-           var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
+            var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
 
 
-        var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
-        select.append($("<option>")
-                .attr('value', apidId)
-                .text(apidId));
-        select.val(apidId)
-        select.change();
-        $('#addNewRelatedSourceCodeModal-newapi').val('');
-        $("#addNewRelatedSourceCodeModal"),moadl("hide");
-        return
-    
+            var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+            select.append($("<option>")
+                    .attr('value', apidId)
+                    .text(apidId));
+            select.val(apidId)
+            select.change();
+            $('#addNewRelatedSourceCodeModal-newapi').val('');
+            $("#addNewRelatedSourceCodeModal"), moadl("hide");
+            return
+
         },
         error: function () {
             Toaster.showGeneralError();
@@ -11200,65 +11200,65 @@ $(document).on("click", ".btn-change-mode-eventdesc", function (e) {
 
 })
 
- function addEventDescription(){
-     var actype = $("#addEventDescModal-actiontype1").val();
-     var inputId = $("#addEventDescModal-input-id").val();
-     var text = $("#addEventDescModal-text").val();
-     var apidId = $("#addEventDescModal-apiId").val();
-     var apiName = $("#addEventDescModal-apiId option:selected").text();
-    var fn_body  = `fn_event(|r|${actype}|r|${text?'text':'Api'}|r|${text?text:apidId}|r|${apiName}|r|)`;
-    addNewDescByValueAndInpId(fn_body,inputId);
+function addEventDescription() {
+    var actype = $("#addEventDescModal-actiontype1").val();
+    var inputId = $("#addEventDescModal-input-id").val();
+    var text = $("#addEventDescModal-text").val();
+    var apidId = $("#addEventDescModal-apiId").val();
+    var apiName = $("#addEventDescModal-apiId option:selected").text();
+    var fn_body = `fn_event(|r|${actype}|r|${text ? 'text' : 'Api'}|r|${text ? text : apidId}|r|${apiName}|r|)`;
+    addNewDescByValueAndInpId(fn_body, inputId);
 }
-function addNewDescByValueAndInpId(val,inputId) {
-      if(!val || !inputId){
-          return;
-      }
+function addNewDescByValueAndInpId(val, inputId) {
+    if (!val || !inputId) {
+        return;
+    }
     var json = {kv: {}};
-        try {
-            json.kv.cookie = getToken();
-        } catch (err) {
-        }
-        json.kv.fkInputId = inputId;
-        json.kv.fkProjectId = global_var.current_project_id;
-        json.kv.description = val;
-        var that = this;
-        var data = JSON.stringify(json);
-        $.ajax({
-            url: urlGl + "api/post/srv/serviceTmInsertNewInputDescription",
-            type: "POST",
-            data: data,
-            contentType: "application/json",
-            crossDomain: true,
-            async: true,
-            success: function (res) {
-              
-                AJAXCallFeedback(res);
-                SAInput.updateInputByRes(res);
-                SAInputDesc.addInputDescriptionByRes(res);
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkInputId = inputId;
+    json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.description = val;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewInputDescription",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
 
-                var id = res.kv.id;
-                var stln = new UserStory().getInputDescTdItem(id, val, "");
-                $('[inid="'+inputId+'"] .desc-table-list-for-multiple .description-style').before(stln)
-              
-                 $("#addEventDescModal").modal('hide');
-            },
-            error: function () {
-                Toaster.showError(('somethingww'));
-            }
-        });
+            AJAXCallFeedback(res);
+            SAInput.updateInputByRes(res);
+            SAInputDesc.addInputDescriptionByRes(res);
+
+            var id = res.kv.id;
+            var stln = new UserStory().getInputDescTdItem(id, val, "");
+            $('[inid="' + inputId + '"] .desc-table-list-for-multiple .description-style').before(stln)
+
+            $("#addEventDescModal").modal('hide');
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
 }
 
 
 function updateEventEventDesc(elm) {
     var val = $(elm).val();
     var oldVal = $(elm).attr('sa-data-value');
-    var fn  = $(elm).closest('.span_hover.desc-item-input').attr('idesc');
-     var descId  = $(elm).closest('div.span-button-div').attr("data-id");
-     
-      updateInputDescCompNewf(fn.replace(oldVal, val),descId);
-    
+    var fn = $(elm).closest('.span_hover.desc-item-input').attr('idesc');
+    var descId = $(elm).closest('div.span-button-div').attr("data-id");
+
+    updateInputDescCompNewf(fn.replace(oldVal, val), descId);
+
 }
- function updateInputDescCompNewf(val, descId) {
+function updateInputDescCompNewf(val, descId) {
     var id = descId;
     if (descId.trim().length == 0) {
         return;
@@ -11287,7 +11287,7 @@ function updateEventEventDesc(elm) {
         success: function (res) {
             AJAXCallFeedback(res);
             loadCurrentBacklogProdDetails();
-         
+
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -11302,18 +11302,18 @@ function updateEventEventDesc(elm) {
 
 
 $(document).on("dblclick", '.update-event-desc-text', function (e) {
-         var tx  =$(this).text()
-         var inp =$(`<input onkeypress="this.style.width = (this.value.length + 1) + 'rem'" class='update-event-desc-input'  sa-data-value='${tx}' value='${tx}'>").attr('onchange','updateEventEventDesc(this)`)
-             inp.css("width",(tx.length + 1) + 'rem')
-             inp.css("max-width",'50rem')
-         $(this).html(inp);
-        //  inp.focus();
+    var tx = $(this).text()
+    var inp = $(`<input onkeypress="this.style.width = (this.value.length + 1) + 'rem'" class='update-event-desc-input'  sa-data-value='${tx}' value='${tx}'>").attr('onchange','updateEventEventDesc(this)`)
+    inp.css("width", (tx.length + 1) + 'rem')
+    inp.css("max-width", '50rem')
+    $(this).html(inp);
+    //  inp.focus();
 
 })
 $(document).on("focusout", '.update-event-desc-input', function (e) {
-         var tx  =$(this).val();
-           
-          $(this).parent().text(tx);
+    var tx = $(this).val();
+
+    $(this).parent().text(tx);
 
 })
 
@@ -11515,7 +11515,7 @@ function addSourceOfRelationAsAPIDetails(id, action, selectFromBacklogId, select
             } else if (global_var.current_modal === 'loadStoryCard') {
                 reloadBacklogListOnStoryCard();
             }
-            loadBacklogProductionCoreDetailssByIdPost("",true);
+            loadBacklogProductionCoreDetailssByIdPost("", true);
         }
     });
 }
@@ -12899,126 +12899,140 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
 
 /// new modal api
 function showApiRelationModal(backLogId) {
-    $('#storyCardShowRelationModal').modal('show'); 
+    $('#storyCardShowRelationModal').modal('show');
     data = {};
-     data.fkApiId = backLogId
+    data.fkApiId = backLogId
     callApi('21122413451908481407', data, true, function (res) {
-         
-    try {
-        var b = res.tbl[0].r;
-    var table = $('#storyCardShowRelationModalTable tbody');
-    table.empty();
-    var i = 0;
-    for (var i; i < b.length; i++) {
-      const o = b[i];
-    if (o.inputType === 'IN') {
-        var tr = $(`<tr>`) 
-                   .attr("pid",o.id)    
-        .append($("<td>")
-            .append($("<select>")
-            .attr('title','')
-                .addClass("tableInputSelect")
-                .attr("data-live-search", "true")
-                .attr("onchange", "tableSelectBoxOnChange(this)")
-                .attr("data-apiId", backLogId)
-                 .attr("data-relType", 'IN')
-            )
-            .append($('<i class="fas fa-arrow-right"></i>'))
-        )
-        .append($("<td>")
-          .text(o.inputName)
-        )
-        .append($("<td>")
-          .append("")
-        )  
-        } else {
-        var tr = $(`<tr>`)
-                .attr("pid",o.id) 
-        .append($("<td>")
-          .append("")
-        )
-        .append($("<td>")
-          .text(o.inputName)
-        )
-            .append($("<td>")
-            .append($('<i class="fas fa-arrow-right"></i>'))
-            .append($("<select>")
-            .attr('title','')
-                .addClass("tableInputSelect")
-                .attr("data-live-search", "true")
-                .attr("onchange", "tableSelectBoxOnChange(this)")
-                  .attr("data-apiId", backLogId)
-                  .attr("data-relType", 'OUT')
-            )           
-        )  
-        }  
-      table.append(tr);
-    }
-    } catch (error) {       
-    }
+        try {
+            var b = res.tbl[0].r;
+            var table = $('#storyCardShowRelationModalTable tbody');
+            table.empty();
+            var i = 0;
+            var idIn = 1;
+            var idOut = 1;
+            for (var i; i < b.length; i++) {
+                const o = b[i];
+                if (o.inputType === 'IN') {
+                    var tr = $(`<tr>`)
+                            .attr("pid", o.id)
+                            .append($("<td>")
+                                    .append($("<select>")
+                                            .addClass('form-control')
+                                            .attr('title', '')
+                                            .addClass("tableInputSelect")
+                                            .attr("data-live-search", "true")
+                                            .attr("onchange", "tableSelectBoxOnChange(this)")
+                                            .attr("data-apiId", backLogId)
+                                            .attr("data-relType", 'IN')
+                                            )
+                                    )
+                            .append($("<td>")
+                                    .append($('<i class="fas fa-arrow-right"></i>'))
+                                    )
+                            .append($("<td>")
+                                    .addClass('input-relation-selected-name-for-zad')
+                                    .attr('iname', o.inputName)
+                                    .text((idIn++) + ". " + o.inputName)
+                                    )
+                            .append($("<td>")
+                                    .append("")
+                                    )
+                } else {
+                    var tr = $(`<tr>`)
+                            .attr("pid", o.id)
+                            .append($("<td>")
+                                    .append("")
+                                    )
+                            .append($("<td>")
+                                    .append("")
+                                    )
+                            .append($("<td>")
+                                    .addClass('input-relation-selected-name-for-zad')
+                                    .attr('iname', o.inputName)
+                                    .text((idOut++) + ". " + o.inputName)
+                                    )
+                            .append($("<td>")
+                                    .append($('<i class="fas fa-arrow-right"></i>')))
+                            .append($("<td>")
+                                   
+                                    .append($("<select>")
+                                            .addClass('form-control')
+                                            .attr('title', '')
+                                            .addClass("tableInputSelect")
+                                            .attr("data-live-search", "true")
+                                            .attr("onchange", "tableSelectBoxOnChange(this)")
+                                            .attr("data-apiId", backLogId)
+                                            .attr("data-relType", 'OUT')
+                                            )
+                                    )
+                }
+                table.append(tr);
+            }
+        } catch (error) {
+        }
         inputSetSelectBox();
         getBacklogInputOutPutSetTable(backLogId);
-  })   
+    })
 }
 // onChange
 
 function tableSelectBoxOnChange(el) {
     var inId = $(el).val();
-    var typ  = $(el).attr("data-relType");
-    var apiId  = $(el).attr("data-apiId");
-    var typId  = $(el).closest("tr").attr("pid");
-    var data  ={};
-     data.fkBacklogInputId = inId;
+    var typ = $(el).attr("data-relType");
+    var apiId = $(el).attr("data-apiId");
+    var typId = $(el).closest("tr").attr("pid");
+    var data = {};
+    data.fkBacklogInputId = inId;
     if (!$(el).attr('sa-data-val')) {
-       
-     data.fkApiInputId = typId;
-      data.fkApiId = apiId;
-      data.relType = typ;
+
+        data.fkApiInputId = typId;
+        data.fkApiId = apiId;
+        data.relType = typ;
         callApi('21122412541607067550', data, true, function (res) {
-        
-       }) 
+
+        })
     } else {
         data.id = $(el).attr('sa-data-val');
-    
+
         callApi('21122417433606496584', data, true, function (res) {
-             
-  }) 
+
+        })
 
     }
-    
+
 }
 
 /// select box set
 function inputSetSelectBox() {
     var inputs = $("#generalview_input_list .description-left");
-     $("select.tableInputSelect").append($("<option>").text('').val('0'))
+    $("select.tableInputSelect").append($("<option>").text('').val(''))
     inputs.each(function () {
         var elm = $(this).clone();
         elm.find(".dropdown").first().remove();
         var text = $(elm).text();
         var idOption = $(elm).attr("data-id");
-       
+
         $("select.tableInputSelect").append($("<option>").text(text).val(idOption))
     })
     $("select.tableInputSelect").selectpicker()
 }
- ///
+///
 function getBacklogInputOutPutSetTable(backlogId) {
-      data = {};
-     data.fkApiId = backlogId
+    data = {};
+    data.fkApiId = backlogId
     callApi('211224123024004010435', data, true, function (res) {
-            
+
         var dt = res.tbl[0].r;
-         for (let i = 0; i < dt.length; i++) {
-             const o = dt[i];
-             var slct = $("#storyCardShowRelationModalTable tbody").find("tr[pid='" + o.fkApiInputId + "']").find("select.tableInputSelect");
-              slct.selectpicker("destroy");
-              slct.val(o.fkBacklogInputId);
-              slct.attr("sa-data-val",o.id);
-             slct.selectpicker("refresh");
-                  
-         }  
-  })  
+        for (let i = 0; i < dt.length; i++) {
+            const o = dt[i];
+            var slct = $("#storyCardShowRelationModalTable tbody").find("tr[pid='" + o.fkApiInputId + "']").find("select.tableInputSelect");
+            slct.selectpicker("destroy");
+            slct.val(o.fkBacklogInputId);
+            slct.attr("sa-data-val", o.id);
+            slct.selectpicker("refresh");
+
+        }
+    })
 }
 
 function setInputListToInputRelation() {
@@ -13198,12 +13212,12 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 
         $('#mainBodyDivForAll').html(html_string);
         $('.code-select-picker').selectpicker();
-        if(global_var.n_rgstr){
-            var bgid  = Utility.getParamFromUrl('bgid');
-            global_var.current_backlog_id =bgid;
-                $('.projectList_codeground_storycard').attr('disabled','disabled')
-                $('.projectList_codeground_storycard').selectpicker();
-        }else{
+        if (global_var.n_rgstr) {
+            var bgid = Utility.getParamFromUrl('bgid');
+            global_var.current_backlog_id = bgid;
+            $('.projectList_codeground_storycard').attr('disabled', 'disabled')
+            $('.projectList_codeground_storycard').selectpicker();
+        } else {
             loadProjectList2SelectboxByClass('projectList_codeground_storycard');
 
         }
@@ -13223,7 +13237,7 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 });
 
 
-function generateMonacoeditros(elmId, nameEditor, lang, theme, body,readOnly) {
+function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -13266,30 +13280,30 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
         crossDomain: true,
         async: true,
         success: function (res) {
-        
-            var isHtml  = $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml"); 
-         
-            if(isHtml !=='1'){
+
+            var isHtml = $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
+
+            if (isHtml !== '1') {
                 $('#cs-col-Ceckbox-id').val("0");
                 $('#cs-col-Ceckbox-id').selectpicker("refresh");
-              
+
                 try {
                     if (trig == 'load') {
                         window.editorHTMLGround.setValue(res.kv.backlogHtml);
                     } else {
-                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml,true);
+                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, true);
                     }
                 } catch (error) {
                     if (trig == 'load') {
                         return
                     }
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark',"",true);
-    
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", true);
+
                 }
-            }else{
+            } else {
                 $('#cs-col-Ceckbox-id').val("1");
                 $('#cs-col-Ceckbox-id').selectpicker("refresh");
-               
+
 
                 var resTmp = SAInput.toJSONByBacklog(pid);
                 var oldmodal = global_var.current_modal;
@@ -13299,10 +13313,10 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
                 if (trig == 'load') {
                     window.editorHTMLGround.setValue(html);
                 } else {
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml,false);
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, false);
                 }
             }
-    
+
         }
     });
 }
@@ -13403,7 +13417,7 @@ function getBacklogListforCodeGround(fkProjectId) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
                     var pname = o.backlogName;
-                    var op = $('<option></option>').attr('value', o.id).text(pname).attr("isHtml",o.hasHtml?o.hasHtml:'0');
+                    var op = $('<option></option>').attr('value', o.id).text(pname).attr("isHtml", o.hasHtml ? o.hasHtml : '0');
 
                     if (o.id === global_var.current_backlog_id) {
                         op.attr("selected", true);
@@ -13424,27 +13438,27 @@ function getBacklogListforCodeGround(fkProjectId) {
 
 $(document).on("change", '#change-editor-theme-monaco', function (e) {
     window.editorJSGround.updateOptions({theme: $(this).val()});
-    window.editorHTMLGround.updateOptions({ theme: $(this).val() })
-    window.editorCSSGround.updateOptions({ theme: $(this).val() })
+    window.editorHTMLGround.updateOptions({theme: $(this).val()})
+    window.editorCSSGround.updateOptions({theme: $(this).val()})
 
 });
 $(document).on("change", '#cs-col-Ceckbox-id', function (e) {
 
-     
 
-        updateUS4ShortChangeDetails($(this).val(), 'hasHtml');
-          if($(this).val()==='1'){
-            window.editorHTMLGround.updateOptions({ readOnly: false })
-          }else{
-            window.editorHTMLGround.updateOptions({ readOnly: true })
-          }
 
-            loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
-      
+    updateUS4ShortChangeDetails($(this).val(), 'hasHtml');
+    if ($(this).val() === '1') {
+        window.editorHTMLGround.updateOptions({readOnly: false})
+    } else {
+        window.editorHTMLGround.updateOptions({readOnly: true})
+    }
+
+    loadBacklogProductionCoreDetailssByIdPost(global_var.current_backlog_id, true);
+
 
 });
 $(document).on("change", '#project-list-codeground', function (e) {
-    Utility.addParamToUrl("current_project_id",$(this).val())
+    Utility.addParamToUrl("current_project_id", $(this).val())
     global_var.current_project_id = $(this).val();
     getBacklogListforCodeGround($(this).val());
 
@@ -13455,7 +13469,7 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     var val = $(this).val()
     global_var.current_backlog_id = val;
     Utility.addParamToUrl("current_backlog_id", val);
-   
+
     getBacklogHTMLBodyByIdCodeGround(val, 'load');
 
     getBacklogJSBodyByIdCodeGround(val, 'load');
@@ -13493,16 +13507,16 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-     if ($("#cs-col-Ceckbox-id").val() !=='1') {
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
         global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
         global_var.current_modal = oldmodal;
-    } else { 
+    } else {
         var html = window.editorHTMLGround.getValue();
         insertHtmlSendDbBybacklogId(html);
-   }
+    }
     var css = window.editorCSSGround.getValue();
 
 
@@ -13513,7 +13527,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
 
-  
+
     // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
     setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
@@ -13546,9 +13560,9 @@ function setBacklogAsHtmlCodeGround(backlogId, html) {
     });
 }
 $(document).on("click", '#info-code-ground-btn', function (e) {
-      
-     callStoryCard(global_var.current_backlog_id);
-   
+
+    callStoryCard(global_var.current_backlog_id);
+
 
 });
 $(document).on("click", '#run-code-ground-btn', function (e) {
@@ -13558,14 +13572,14 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
     var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
-     if ($("#cs-col-Ceckbox-id").val() !=='1') {
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
         global_var.current_modal = '';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
         global_var.current_modal = oldmodal;
-    } else { 
+    } else {
         var html = window.editorHTMLGround.getValue();
     }
 
@@ -13616,7 +13630,7 @@ function insertJsSendDbBybacklogId(body) {
         async: true,
         success: function (res) {
 
-            setHistoryCodeGround(pid,body,"js");
+            setHistoryCodeGround(pid, body, "js");
         }
     });
 }
@@ -13636,8 +13650,8 @@ function insertCssSendDbBybacklogId(body) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            setHistoryCodeGround(pid,body,"css")
-            
+            setHistoryCodeGround(pid, body, "css")
+
 
         }
     });
@@ -13657,20 +13671,20 @@ function insertHtmlSendDbBybacklogId(body) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            
-            setHistoryCodeGround(pid,body,"html")
+
+            setHistoryCodeGround(pid, body, "html")
         }
     });
 }
 
-function setHistoryCodeGround(bid,body,type) {
-    var data  = {};
-        data.requestBody=body;
-        data.fkBacklogId=bid;
-        data.devType = type;
+function setHistoryCodeGround(bid, body, type) {
+    var data = {};
+    data.requestBody = body;
+    data.fkBacklogId = bid;
+    data.devType = type;
     callApi('21122715084804621887', data, true, function (res) {
-             
-    }) 
+
+    })
 }
 
 ///// code ground end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -13848,23 +13862,23 @@ function loadEventDesApiList(fkProjectId) {
         success: function (res) {
             var cmd = $('select#addEventDescModal-apiId');
             cmd.html('');
-           
+
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
-                if (o.isApi!=='1'){
+                if (o.isApi !== '1') {
                     continue;
                 }
                 var pname = o.backlogName;
                 var op = $('<option></option>')
                         .attr('value', o.id)
-                        .text(pname);    
-                    cmd.append(op);
+                        .text(pname);
+                cmd.append(op);
             }
 
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
-        
+
         }
     });
 }
@@ -13890,7 +13904,7 @@ function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
             for (var n = 0; n < obj.length; n++) {
 
                 var o = obj[n];
-                if (o.isApi!=='1'){
+                if (o.isApi !== '1') {
                     continue;
                 }
                 var pname = o.backlogName;
@@ -15038,10 +15052,10 @@ $(document).on('change', '.user-story-short-change', function (evt) {
     updateUS4ShortChange(this, ustype);
 });
 
-$(document).on('change','.user-story-input-json',function(ev){
+$(document).on('change', '.user-story-input-json', function (ev) {
     var id = global_var.current_backlog_id;
     var val = $(this).val();
-    callApi('21122616132506122050',{fkBacklogId:id,inputJson:val});
+    callApi('21122616132506122050', {fkBacklogId: id, inputJson: val});
 })
 
 $(document).on('click', '.neefdiagram-call', function (evt) {
@@ -15063,10 +15077,10 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         setProjectListByID('story_mn_filter_project_id');
         var groupBy = localStorage.getItem('usm_groupBy');
         var prId = localStorage.getItem('current_project_id');
-           console.log(groupBy?groupBy:'backlogStatus');
-        $("#story_mn_groupBy_id").val(groupBy?groupBy:'backlogStatus');
+        console.log(groupBy ? groupBy : 'backlogStatus');
+        $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
-       
+
         getUsers()
         prId = prId.split('%IN%');
         if (prId) {
@@ -18004,7 +18018,7 @@ function updateUS4ShortChangeDetails(val, ustype) {
         success: function (res) {
             AJAXCallFeedback(res);
             SACore.addBacklogByRes(res);
-            
+
             loadCurrentBacklogProdDetails();
             loadCurrentBacklogProdDetailsSyncrone();
             //            if (global_var.current_modal === 'loadLivePrototype') {
@@ -18012,9 +18026,9 @@ function updateUS4ShortChangeDetails(val, ustype) {
             //            } else if (global_var.current_modal === 'loadStoryCard') {
             //                reloadBacklogListOnStoryCard();
             //            }
-            if(ustype==='fkProjectId'){
-                  $("select.projectList_liveprototype_storycard").val(val)
-                  $("select.projectList_liveprototype_storycard").change();
+            if (ustype === 'fkProjectId') {
+                $("select.projectList_liveprototype_storycard").val(val)
+                $("select.projectList_liveprototype_storycard").change();
             }
 
 
@@ -18717,9 +18731,9 @@ $(document).on('change', '#story_mn_filter_project_id', function (evt) {
     labelOrSplitValuesUs();
 });
 $(document).on('change', '#story_mn_groupBy_id', function (evt) {
-       localStorage.setItem("usm_groupBy",$(this).val());
+    localStorage.setItem("usm_groupBy", $(this).val());
 
-       var val = getProjectValueUsManageMulti();
+    var val = getProjectValueUsManageMulti();
     localStorage.setItem('current_project_id', val);
     loadAssigneesByProjectUSM(val);
     loadStoryCardByProjectAdd(val)

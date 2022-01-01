@@ -574,13 +574,11 @@ $(document).on('click', '.live-prototype-show-story-card-hard-refresh', function
 $(document).on('change', '.okayPitchYourPathYourWay', function (ev) {
 
     var attrVal = $(this).val();
-
     if (!attrVal) {
         return;
     }
 
     var json = initJSON();
-
     json.kv.attrValue = attrVal;
     json.kv.fkInputId = global_var.current_us_input_id;
     json.kv.fkProjectId = global_var.current_project_id;
@@ -1589,6 +1587,10 @@ function showForm(formId, conf) {
     return padeId;
 }
 
+function getDataFromForm(el) {
+    return getGUIDataByStoryCard(el);
+}
+
 function setDataToForm(formId, data) {
     //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
     //redirectClassa shamir edilir.
@@ -1887,9 +1889,36 @@ function loadMainBusinesCaseBodyForQuestion(caseName) {
     $('#bcase_competitor_list').remove();
     $('#bcase_provided_services').remove();
     $('#bcase_problem_statement').remove();
-
-
 }
+
+$(document).on('click', '.generate-selected-fields-from-api-relation', function () {
+    var addSelectedFieldList = [];
+    var div = $(this).closest('div.modal');
+    var table = div.find('#storyCardShowRelationModalTable');
+    table.find('select.tableInputSelect').each(function () {
+        var val = $(this).val();
+        var text = $(this).find('option:selected').text();
+        if (val) {
+            addSelectedFieldList.push(val);
+            var selectedField = $(this).closest('tr')
+                    .find('td.input-relation-selected-name-for-zad')
+                    .attr('iname');
+//            alert(val +' - '+text+ ' - ' + selectedField);
+
+
+            var data = {};
+            data.attrValue = selectedField;
+            data.fkInputId = val;
+            data.fkProjectId = global_var.current_project_id;
+            data.fkBacklogId = global_var.current_backlog_id;
+            data.attrType = "comp";
+            callService('serviceTmAddSelectedField', data, true,
+                    function (res) {
+                            Toaster.showMessage(text+ ' - '+selectedField +" relation added.");
+                    });
+        }
+    })
+})
 
 
 
