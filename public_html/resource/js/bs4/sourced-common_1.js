@@ -8230,15 +8230,15 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                  select.addClass("mr-2")
                         .attr("onchange",'updateEventEventDesc(this)')
                         .attr("sa-data-value",params[1])
-                           .append('<option value="onclick"  >onclick</option>')
-                           .append('<option value="onchange" >onchange</option>')
-                           .append('<option value="ondblcick" >ondblclick</option>')
-                           .append('<option value="onfocus" >onfocus</option>')
-                           .append('<option value="onfocusin" >onfocusin</option>')
-                           .append('<option value="onfocusout" >onfocusout</option>')
-                           .append('<option value="onkeypress" >onkeypress</option>')
-                           .append('<option value="onkeyup" >onkeyup</option>')
-                           .append('<option value="onkeydown" >onkeydown</option>');
+                           .append('<option value="onclick">onclick</option>')
+                           .append('<option value="onchange">onchange</option>')
+                           .append('<option value="ondblcick">ondblclick</option>')
+                           .append('<option value="onfocus">onfocus</option>')
+                           .append('<option value="onfocusin">onfocusin</option>')
+                           .append('<option value="onfocusout">onfocusout</option>')
+                           .append('<option value="onkeypress">onkeypress</option>')
+                           .append('<option value="onkeyup"> onkeyup</option>')
+                           .append('<option value="onkeydown">onkeydown</option>');
                                            
             $(select).find('option[value="'+params[1]+'"]').attr('selected','selected');
             sp.append(select);
@@ -8252,6 +8252,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
             if(params[2]==='Api'){
                 sp.append(` <b>Call API : </b> `)
                 sp.append(` <a href='#' style='color:black;' onclick="new UserStory().redirectUserStoryCore('${params[3]}')"> <i><b> ${params[4]} </b></i></a>`)
+                sp.append(` <a style='color:black;'  class='ml-2' >(${params[3]})</a> `)
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#" 
                 onclick="showApiRelSettingModal('${params[3]}','${params[3]}','IN_DESC_SEND')">
                 <i class="fa fa-cog" aria-hidden="true"></i>
@@ -14232,18 +14233,23 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
           var div = $(".task-panel")
           div.empty();
           var groupBy  = localStorage.getItem("usm_groupBy");
+          var stl  = ['draft',"new","ongoing",'closed']
           if(groupBy==='backlogStatus'){
-            var stl  = ["new","ongoing",'closed','draft']
+           
             for (let si = 0; si < stl.length; si++) {
                div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                this.setUSLists4KanbanViewCore(stl[si],groupBy);
+            }       
+          }
+          else if(groupBy==='manualStatus'){
+            for (let si = 0; si < stl.length; si++) {
+               div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
+               this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
             }
-           
-            if($("#manualStatusListUscheck").prop("checked")){
-                this.getManualStatusList();
-            }
-       
-          }else{
+               
+                this.getManualStatusList();           
+          }
+          else if(groupBy==='fkProjectId'){
             var stl  =  $("#story_mn_filter_project_id").val();
             for (let si = 0; si < stl.length; si++) { 
                var nm =  $("select#story_mn_filter_project_id option[value='"+stl[si]+"']").text();
@@ -14260,12 +14266,21 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var that  = this;
         var div = $(".task-panel")
         callApi('21122311111704737668',data,true,function (res) { 
+              
                var tbl = res.tbl[0].r;
+               var valueList  = $('')
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    div.append(that.genUsManagementZone(o.id,o.statusName.toUpperCase()))
+                    $('#story_mn_manual_status_id')
+                                 .append($("<option>")
+                                               .val(o.id)
+                                              .text(o.statusName))
+                    $('#story_mn_manual_status_id').selectpicker('refresh');
+
+                    div.append(that.genUsManagementZone(o.id,o.statusName.toUpperCase(),o.orderNo))
                     that.getBacklogListByManualStatusId(o.id);               
                 }
+
 
          })
             
@@ -14516,16 +14531,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     getStatisticList4Project:function (projectId,elm) {
                
         var data ={};//createTechizatTelebProducts 
-        if($(".us-mngm-is-api").prop("checked")){
+        /* if($(".us-mngm-is-api").prop("checked")){
             data.isApi = '.*';    
         }else{
             data.isApi = ""; 
-        }
+        } */
        /// data.fkOwnerId = ".*";
      //   data.updatedBy = ".*";
         data.fkProjectId = projectId;
         callApi('21122912341403497474',data,true,function (res) { 
-          
+            
             console.log(res);
             var div  = `<div class="info-box">
             <span class="title">Status</span>
@@ -14544,8 +14559,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         </div>`
        $(elm).closest('.task-column').find('.status-list-table-for-us').html(div);
             $('[data-toggle="popover"]').popover({html:true});
-           
-         })
+         });
        
     },
     setUSLists4KanbanViewCore: function (stl,apiFiled) {
@@ -14594,15 +14608,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     json.kv.backlogName = "%%"+search +"%%";
                 }
 
-                if($(".us-mngm-is-api").prop("checked")){
-                  
-                  
+                if($(".us-mngm-is-api").prop("checked")){ 
                 }else{
                     json.kv.isApi = 'NE%1'; 
                 }
                
                 json.kv[apiFiled] = stl;
-                
                 
                 json.kv.startLimit =0;
               
@@ -14621,32 +14632,15 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         $('#kanban_view_'+stl+'_count').html(0);
                         $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
                         $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
-                        try {
-                                                  
+                        try {                    
                                 var usIdList = res.tbl[0].r;
-                
                                 for (var k = 0; k < usIdList.length; k++) {
-                                  
-                                     
-                
                                     var obj = usIdList[k];
-                                   
-                
                                     var html = new UserStory().genUSLine4KanbanView(obj);
                                     $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
 
-                                     /* if (obj.backlogStatus === 'ongoing') {
-                                    
-                                 
-                                        $(html).find("#user-story-show-stat").click();
-                            
-                                    }  */
                                     c4new++
-                                    /* $('#kanban_view_new_count').html(c4new);
-                                    $('#kanban_view_ongoing_count').html(c4ongoing);
-                                    $('#kanban_view_closed_count').html(c4closed); */
                                 }
-                              
                               if(c4new > 19){
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
                                 $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
@@ -14654,15 +14648,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                 
                               }
                            
-                            /* if (c4new === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_new')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4ongoing === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4closed === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_closed')
-                                        .append($('<div class="task-content content-drag">')); */
+                          
                         } catch (e) {
 
                           if(c4new < 1){
@@ -25029,18 +25015,29 @@ User.prototype = {
         var bgid = Utility.getParamFromUrl('bgid');
         var n_rgstr = Utility.getParamFromUrl('n_rgstr');
         var dmn = Utility.getParamFromUrl('current_domain');
-   
+            if(!bgid){
+                $("body").html($("<h1 class='mr-auto'>").text('Data IS not defined'))
+            }
         $.ajax({
             url: urlGl + "api/post/sht/"+dmn+"/"+bgid+"/"+n_rgstr,
             type: "POST",
             async: false,
             contentType: 'text/html',
             success: function (res) {
-                        tkn_var= res.kv.token
+                    try {
+                        if(!res.kv.token){
+                            $("body").html($("<img class='mr-auto' width='90%' height='90%'>").attr('src','resource/img/no_access_code.png'))
+                        }
+                            tkn_var= res.kv.token;
+                    } catch (error) {
+                        $("body").html($("<img class='mr-auto' width='90%' height='90%'>").attr('src','resource/img/no_access_code.png'))
+                    }
+                 
+
                 },
             error: function () {
                 //bu hisse de error atmalidir. lakin atmir
-
+                  $("body").html($("<img class='mr-auto' width='90%' height='90%'>").attr('src','resource/img/no_access_code.png'))
                // document.location = "login.html";
 //                Toaster.showError("Something went wrong. This might be caused by duplicate table.");
             }

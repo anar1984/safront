@@ -13215,23 +13215,27 @@ $(document).on('click', '.loadCodeGround', function (evt) {
         if (global_var.n_rgstr) {
             var bgid = Utility.getParamFromUrl('bgid');
             global_var.current_backlog_id = bgid;
+            loadNameBacklogOrProjectShareURl(bgid);
             $('.projectList_codeground_storycard').attr('disabled', 'disabled')
             $('.projectList_codeground_storycard').selectpicker();
         } else {
             loadProjectList2SelectboxByClass('projectList_codeground_storycard');
+            if (global_var.current_backlog_id) {
+                var val = global_var.current_backlog_id;
+                getBacklogHTMLBodyByIdCodeGround(val, '');
+                getBacklogJSBodyByIdCodeGround(val, '');
+                getBacklogCSSBodyByIdCodeGround(val, '');
+    
+                return
+                
+            }
+            generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark');
+            generateMonacoeditros('css-code-editor', 'editorCSSGround', 'css', 'vs-dark');
+            generateMonacoeditros('js-code-editor', 'editorJSGround', 'javascript', 'vs-dark');
 
         }
-        if (global_var.current_backlog_id) {
-            var val = global_var.current_backlog_id;
-            getBacklogHTMLBodyByIdCodeGround(val, '');
-            getBacklogJSBodyByIdCodeGround(val, '');
-            getBacklogCSSBodyByIdCodeGround(val, '');
-
-            return
-        }
-        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark');
-        generateMonacoeditros('css-code-editor', 'editorCSSGround', 'css', 'vs-dark');
-        generateMonacoeditros('js-code-editor', 'editorJSGround', 'javascript', 'vs-dark');
+        
+       
     });
 
 });
@@ -13263,8 +13267,41 @@ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
 
     });
 }
+function loadNameBacklogOrProjectShareURl(backlogId) {
+    var bid = (backlogId) ? backlogId : global_var.current_backlog_id;
 
-function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
+    var data = {};
+     data.id = bid;
+    callService('serviceTmGetBacklogCoreInfoByIdNew',data,true,function (res) {
+    
+        var cmd = $('#storyCardListSelectBox4CodeGround');
+        cmd.html('');
+          console.log(res);
+        var obj = res.tbl[0].r;
+        for (var n = 0; n < obj.length; n++) {
+            var o = obj[n];
+            if (o.isApi !== '1') {
+                var pname = o.backlogName;
+               
+                cmd.closest('.mm-col').html($('<span style="color:rgb(255 255 255 / 70%);" class="pl-2 pr-2">').text(" "+pname));
+            } 
+
+            try {
+                var prName  = SACore.Project[o.fkProjectId]
+                 $('#project-list-codeground')
+                        .closest(".mm-col")
+                        .html($('<span style="color:rgb(255 255 255 / 70%);" class="pl-2 pr-2">').text(" "+prName));
+            } catch (error) {
+                
+            }
+         
+        }
+                getBacklogHTMLBodyByIdCodeGround(bid, '',o.hasHtml);
+                getBacklogJSBodyByIdCodeGround(bid, '');
+                getBacklogCSSBodyByIdCodeGround(bid, '');
+    })
+}
+function getBacklogHTMLBodyByIdCodeGround(bid, trig,isHtml) {
 
     var pid = bid ? bid : global_var.current_backlog_id;
 
@@ -13281,9 +13318,9 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
         async: true,
         success: function (res) {
 
-            var isHtml = $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
+              isHtml = isHtml?isHtml: $('#storyCardListSelectBox4CodeGround option:selected').attr("isHtml");
 
-            if (isHtml !== '1') {
+            if (isHtml === '1') {
                 $('#cs-col-Ceckbox-id').val("0");
                 $('#cs-col-Ceckbox-id').selectpicker("refresh");
 
@@ -13291,18 +13328,19 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
                     if (trig == 'load') {
                         window.editorHTMLGround.setValue(res.kv.backlogHtml);
                     } else {
-                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, true);
+                        generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, false);
                     }
                 } catch (error) {
                     if (trig == 'load') {
                         return
                     }
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", true);
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', "", false);
 
                 }
-            } else {
                 $('#cs-col-Ceckbox-id').val("1");
                 $('#cs-col-Ceckbox-id').selectpicker("refresh");
+            } else {
+               
 
 
                 var resTmp = SAInput.toJSONByBacklog(pid);
@@ -13313,7 +13351,7 @@ function getBacklogHTMLBodyByIdCodeGround(bid, trig) {
                 if (trig == 'load') {
                     window.editorHTMLGround.setValue(html);
                 } else {
-                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', res.kv.backlogHtml, false);
+                    generateMonacoeditros('html-code-editor', 'editorHTMLGround', 'html', 'vs-dark', html, true);
                 }
             }
 
@@ -14761,13 +14799,20 @@ function loadStoryCardInfo4StoryCard_old(el) {
 function resetAllEditStoryCard() {
     if(global_var.current_modal==='loadCodeGround'){
           $('#UserStoryPopupModal-Toggle .cs-proces-desc-add-to-task-box').remove();
-          $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
+        //  $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
           $('#storyCardRightMenu').remove();
-        $("#UserStoryPopupModal-Toggle input").remove();
+        $("#UserStoryPopupModal-Toggle .modal-body>.row input").not('.pdfHide').remove();
         $("#UserStoryPopupModal-Toggle .iconDrag").remove();
         $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle  span").removeAttr("ondblclick");
-        $("#UserStoryPopupModal-Toggle .dropdown-toggle").parent().remove();
+        $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
+        $("#UserStoryPopupModal-Toggle  select").removeAttr("onchange");
+        $("#UserStoryPopupModal-Toggle  .scg-button-box").remove();
+        $("#UserStoryPopupModal-Toggle  .live-prototype-show-story-card-hard-refresh").remove();
+        $("#UserStoryPopupModal-Toggle .modal-body>.row .dropdown-toggle").parent().remove();
+        $("#UserStoryPopupModal-Toggle input.pdfHide").prop('checked',true).change();
+        $("#UserStoryPopupModal-Toggle .storecard-header-nav-section .cs-col-storecard").addClass('d-none').removeClass("d-flex");
+        $("#UserStoryPopupModal-Toggle .storecard-header-nav-section .cs-col-project").addClass('d-none').removeClass("d-flex");
         $('#description_table_id').remove();
 
     }
@@ -18790,6 +18835,11 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
         backLogIdListForSearch = '';
     }
 
+
+});
+$(document).on('change', '#story_mn_manual_status_id', function (evt) {
+
+       localStorage.setItem('manual_list_val',$(this).val());
 
 });
 $(document).on('change', '#story_mn_filter_updated_id', function (evt) {
