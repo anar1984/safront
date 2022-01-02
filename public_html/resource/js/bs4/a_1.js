@@ -13518,7 +13518,7 @@ function getIframeBlock(pid, css, js, bodys) {
     // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
     // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
 
-    var body = $("<div class='redirectClass h-100'>").html(bodys)
+    var body = $(`<div class='redirectClass h-100' id='${pid}'>`).html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
     var jsBlock = $(body).find('#js-function-list-for-story-card')
     if (cssBlock.length > 0) {
