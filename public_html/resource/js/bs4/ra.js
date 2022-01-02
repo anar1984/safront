@@ -1553,6 +1553,14 @@ function getClassworkCommentList() {
     });
 }
 
+function getFormId(el){
+    var res = $(el).closest('.redirectClass');
+//    alert(res.html())
+            res = res.attr('id');
+    
+    return res;
+}
+
 function showClassworkInfoManual(el) {
     //Show Classwork From info
     var padeId = showForm('21111723482809628427');
@@ -1589,6 +1597,36 @@ function showForm(formId, conf) {
 
 function getDataFromForm(el) {
     return getGUIDataByStoryCard(el);
+}
+
+function clearDataInForm(formId, data) {
+    //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
+    //redirectClassa shamir edilir.
+    // eger sa-global-trigger===1 attribute-si varsa o zaman row redirectClass-da yeni
+    // umumi sehifede axtaracaqdir.
+
+
+
+    $('#' + formId).find('[sa-selectedfield]').each(function (e) {
+        try {
+            var val = "";
+            var selectedFields = $(this).attr('sa-selectedfield').split(',');
+            for (var i in selectedFields) {
+                var field = selectedFields[i].trim();
+                if (!field) {
+                    continue;
+                }
+
+                var keys = Object.keys(data);
+                if (keys.includes(field)) {
+                    val = "";
+                    setDataToFormComponent(this, val, field);
+                }
+            }
+        } catch (err) {
+        }
+
+    })
 }
 
 function setDataToForm(formId, data) {
@@ -1919,6 +1957,9 @@ $(document).on('click', '.generate-selected-fields-from-api-relation', function 
         }
     })
 })
+
+
+
 
 
 
