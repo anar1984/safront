@@ -14289,8 +14289,8 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                      const k = dt[l];
                      var znm =  combo.find('[value="'+k+'"]').text().toUpperCase();
                      var orderNo =  combo.find('[value="'+k+'"]').attr('order');
-                     div.append(that.genUsManagementZone(k,znm,orderNo))
-                     that.getBacklogListByManualStatusId(k);
+                     div.append(that.genUsManagementZone(k,znm,orderNo,'manual'))
+                     that.getBacklogListByManualStatusId(k,'"new","ongoing"');
                  }
                  combo.val(dt);
                  combo.selectpicker('refresh');
@@ -14301,9 +14301,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
          })
             
     },
-    getBacklogListByManualStatusId:function (stl) {
+    getBacklogListByManualStatusId:function (stl,statusList) {
         data ={};//createTechizatTelebProducts
-        data.statusId = stl;
+        data.fkTaskTypeId = '('+stl+')';
+        data.backlogStatus = '('+statusList+')';
         data.startLimit = 0;
         data.endLimit = 20;
         callApi('21122313051700845260',data,true,function (res) { 
@@ -14319,19 +14320,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                         var obj = usIdList[k];
                         var html = new UserStory().genUSLine4KanbanView(obj);
                         $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
-
-                         if (obj.backlogStatus === 'ongoing') {
-                            $(html).find("#user-story-show-stat").click();
-                        } 
                         c4new++
                     }
-                
                   if(c4new > 19){
                     $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn-manual').remove();
                     $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
                   }
-               
-        
+            
             } catch (e) {
 
               if(c4new < 1){
@@ -14345,59 +14340,46 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             global_var.story_card_label_assign_checked = 0;
     
             $('[data-toggle="popover"]').popover({html:true});
-           
-             
 
          })
     },
     getBacklogListByManualStatusIdMore:function (st,end,stl) {
         data ={};//createTechizatTelebProducts
-        data.statusId = stl;
+        data.fkTaskTypeId = '('+stl+')';
+        data.backlogStatus = "('new','ongoing')";
         data.startLimit = st;
         data.endLimit = end;
         callApi('21122313051700845260',data,true,function (res) { 
           
             var c4new = 0;
             $('#kanban_view_'+stl+'_count').text(res.kv.rowCount);
-            try {
-                                      
+            try {                      
                     var usIdList = res.tbl[0].r;
-    
                     for (var k = 0; k < usIdList.length; k++) {  
                         var obj = usIdList[k];
                         var html = new UserStory().genUSLine4KanbanView(obj);
                         $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
-
-                        
                         c4new++
                     }
-                
                   if(c4new > 19){
                     $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn-manual').remove();
                     $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
                   }
-               
-        
             } catch (e) {
-
               if(c4new < 1){
-                 
                   $('.main_div_of_backlog_info_kanban_view_table_'+stl)
                   .append($('<div class="task-content content-drag">'));
                 }
-                
             }
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
     
             $('[data-toggle="popover"]').popover({html:true});
            
-             
-
          })
     },
-    genUsManagementZone:function (id,Name,order) {
-        return `<div class="task-column  ${id}" status="${id}" order='${order?order:0}'>
+    genUsManagementZone:function (id,Name,order,manual) {
+        return `<div class="task-column  ${id}" status="${id}" ${manual?"manual='true'":""} order='${order?order:0}'>
         <div class="task-column-header">
             <input type="checkbox" name="" data-st="${id}" class="all-check-us-mngm" id="alcheck-${id}-us-mng">
 
@@ -14492,19 +14474,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                             for (let k = 0; k < tstl.length; k++) {
                           
                                 lstp += tstl[k]+'%IN%';
-                            }
-                              
-                        }
-                        
-                    }
+                            
+                        }}}
                     if(lstp){
-                        json.kv.id = lstp; 
-                       
-                    }else{
-                       
-                    }
-                    
-
+                        json.kv.id = lstp;
+                     }else{ }
                  }
 
                 if($(".us-mngm-is-api").prop("checked")){
@@ -14540,47 +14514,22 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                                 var usIdList = res.tbl[0].r;
                 
                                 for (var k = 0; k < usIdList.length; k++) {
-                                  
-                                     
-                
+                                                 
                                     var obj = usIdList[k];
-                                   
-                
                                     var html = new UserStory().genUSLine4KanbanView(obj);
                                     $('#body-large-modal-in-us').append(html);
                                     getSTatsUserManagmentTableKanbanLargeMenu(obj.id)
-                                     if (obj.backlogStatus === 'ongoing') {
-                                    
-                                 
+                                     if (obj.backlogStatus === 'ongoing') {        
                                         $(html).find("#user-story-show-stat").click();
-                            
                                     } 
-                                    c4new++
-                                    /* $('#kanban_view_new_count').html(c4new);
-                                    $('#kanban_view_ongoing_count').html(c4ongoing);
-                                    $('#kanban_view_closed_count').html(c4closed); */
+                                    c4new++;
                                 }
-                            
-                           
-                            /* if (c4new === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_new')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4ongoing === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_ongoing')
-                                        .append($('<div class="task-content content-drag">'));
-                            if (c4closed === 0)
-                                $('.main_div_of_backlog_info_kanban_view_table_closed')
-                                        .append($('<div class="task-content content-drag">')); */
                         } catch (e) {
-
-                        
-                            
                         }
                         global_var.story_card_sprint_assign_checked = 0;
                         global_var.story_card_label_assign_checked = 0;
                         //contentArrangableUI();
                         $('[data-toggle="popover"]').popover({html:true});
-                
                     },
                     error: function () {
                         Toaster.showError(('somethingww'));
@@ -14602,28 +14551,63 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
        /// data.fkOwnerId = ".*";
      //   data.updatedBy = ".*";
         data.fkProjectId = projectId;
+        var that = this ;
         callApi('21122912341403497474',data,true,function (res) { 
-            
-            console.log(res);
-            var div  = `<div class="info-box">
-            <span class="title">Status</span>
-            <div class=" info-item-elements" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="New" data-original-title="" title="">
-              <i class="cs-svg-icon plus-circle"></i> <span>${res.kv.new}</span>
-            </div>
-            <div class=" info-item-elements" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ongoing" data-original-title="" title="">
-                <i class="cs-svg-icon refresh-three"></i> <span>${res.kv.ongoing}</span>
-            </div>
-            <div class=" info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Closed" data-original-title="" title="">
-                <i class="cs-svg-icon shtamp-circle"></i> <span>${res.kv.closed}</span>
-            </div>
-            <div class=" info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Draft" data-original-title="" title="">
-                <i class="cs-svg-icon shtamp-circle"></i> <span>${res.kv.draft}</span>
-            </div>
-        </div>`
-       $(elm).closest('.task-column').find('.status-list-table-for-us').html(div);
+           
+       $(elm).closest('.task-column').find('.status-list-table-for-us').html(that.genStatisticBlockUSman(projectId,'manual-project-stat-list'));
+               
+                res= res.tbl[0].r
+              for (let i = 0; i < res.length; i++) {
+                  const o = res[i];           
+                  $("#"+o.backlogStatus+"-"+projectId).text(o.rowCount);
+              }
+         
             $('[data-toggle="popover"]').popover({html:true});
          });
        
+    },
+    getStatisticList4Status:function (mnId,elm) {
+               
+        var data ={};
+        //createTechizatTelebProducts 
+        /* if($(".us-mngm-is-api").prop("checked")){
+            data.isApi = '.*';    
+        }else{
+            data.isApi = ""; 
+        } */
+       /// data.fkOwnerId = ".*";
+       //   data.updatedBy = ".*";
+        data.fkTaskTypeId ="("+mnId+")";
+        var that = this;
+        callApi('22010305404407902224',data,true,function (res) { 
+           
+       $(elm).closest('.task-column').find('.status-list-table-for-us').html(that.genStatisticBlockUSman(mnId,'manual-status-stat-list'));
+               
+                res= res.tbl[0].r
+              for (let i = 0; i < res.length; i++) {
+                  const o = res[i];           
+                  $("#"+o.backlogStatus+"-"+mnId).text(o.rowCount);
+              }
+            $('[data-toggle="popover"]').popover({html:true});
+         });
+       
+    },
+    genStatisticBlockUSman: function (projectId,trigClass) {
+         return `<div class="info-box ${trigClass}">
+        <span class="title">Status</span>
+        <div class="active info-item-elements" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="New" data-original-title="" title="">
+                <i class="cs-svg-icon plus-circle"></i> <span id='new-${projectId}'></span>
+              </div>
+        <div class="active info-item-elements" data-status="ongoing"  data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ongoing" data-original-title="" title="">
+            <i class="cs-svg-icon refresh-three"></i> <span id='ongoing-${projectId}'></span>
+        </div>
+        <div class=" info-item-elements" data-status="closed" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Closed" data-original-title="" title="">
+            <i class="cs-svg-icon shtamp-circle"></i> <span id='closed-${projectId}'></span>
+        </div>
+        <div class=" info-item-elements" data-status="draft" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Draft" data-original-title="" title="">
+            <i class="cs-svg-icon shtamp-circle"></i> <span id='draft-${projectId}'></span>
+        </div>
+    </div>`
     },
     setUSLists4KanbanViewCore: function (stl,apiFiled) {
   

@@ -172,6 +172,7 @@
     flex: 0 0 25%;
     max-width: 19.444%;
     margin: 5px;
+    height: fit-content;
     
 }
 .large-modal-expand .headerInputColumn{
