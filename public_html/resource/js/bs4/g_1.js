@@ -1572,8 +1572,22 @@ $(document).on('click', '.more-us-card-btn-manual', function (event) {
     var st = parseFloat(stLimit);
     var end = parseFloat(endlimit);
     var bsts = $(this).attr('data-ople');
+     var list  =  '';
+     
+     if ($(this).closest('.task-column').hasClass('large-modal-expand')) {
+         var elm  =$(this).closest('.task-column').find(".info-item-elements.active")
+         elm.each(function (index) {
+             if (elm.length===(index+1)) {
+                 list  += "'"+$(this).attr('data-status')+"'"
+             }else{
+                 list  += "'"+$(this).attr('data-status')+"',"
+             }
+        })
+     }else{
+         list = '"new","ongoing"'
+     }
 
-    new UserStory().getBacklogListByManualStatusIdMore(st, end, bsts);
+    new UserStory().getBacklogListByManualStatusIdMore(st, end, bsts,list);
 
 });
 $(document).on('click', '.more-us-card-btn', function (event) {
@@ -1605,30 +1619,44 @@ var time_in_minutes = 5;
 var current_time = Date.parse(new Date());
 var deadline = new Date(current_time + time_in_minutes * 60 * 1000);
 
+$(document).on('click', '.manual-status-stat-list .info-item-elements', function () {
+      $(this).toggleClass('active');
+       var st  =  $(this).closest('.task-column').attr("status");
+         var  list  =''
+         var elm  =$(this).parent().find(".info-item-elements.active")
+            elm.each(function (index) {
+                if (elm.length===(index+1)) {
+                    list  += "'"+$(this).attr('data-status')+"'"
+                }else{
+                    list  += "'"+$(this).attr('data-status')+"',"
+                }
+           })
+            if(!list){
+                return
+            }
+       new UserStory().getBacklogListByManualStatusId(st,list);
+});
 $(document).on('click', '.next-large-modal-btn', function (event) {
     var st = $(this).attr('data-status')
 
       $(this).closest(".task-column").toggleClass("large-modal-expand");
-   /*  new UserStory().setUSLists4KanbanViewCoreUsLArge(st);
-  
-    $("#countDown-larg").attr('data-status-time', st)
-    current_time = Date.parse(new Date());
-    deadline = new Date(current_time + time_in_minutes * 60 * 1000)
-     */
-    console.log($(this).closest(".task-column").position().left);
     if($(this).closest(".task-column").hasClass('large-modal-expand')){
         $('.task-panel').stop().animate({
-            scrollLeft: $(this).closest(".task-column").position().left-40
+            scrollLeft:$(this).closest(".task-panel").scrollLeft() + $(this).closest(".task-column").position().left-15
         }, 200);
-
          if($('#story_mn_groupBy_id').val()==='fkProjectId'){
-             var projectId = $(this).closest(".task-column").attr('status')
-            new UserStory().getStatisticList4Project(projectId,this);
+             var projectId = $(this).closest(".task-column").attr('status');
+             new UserStory().getStatisticList4Project(projectId,this);
          }
+         if($('#story_mn_groupBy_id').val()==='manualStatus'){
 
-       
+              if($(this).closest(".task-column").attr('manual')){
+                var statusId = $(this).closest(".task-column").attr('status');
+                new UserStory().getStatisticList4Status(statusId,this);
+              }
+            
+         }
     }
-  
 });
 $(document).on('click', '.baclog-large-modal-next', function (event) {
     $("#body-large-modal-in-us4backlog").html("");
@@ -1637,7 +1665,6 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
     var elm = elm1.clone();
     elm.css("width", '100%')
     elm.find('.baclog-large-modal-next').hide();
-
     $("#task-ongoing-large-modal4backlog").modal('show');
     $("#body-large-modal-in-us4backlog").append(elm);
     $('[data-toggle="popover"]').popover();

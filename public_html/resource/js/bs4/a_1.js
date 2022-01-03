@@ -13515,8 +13515,8 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(pid, css, js, bodys) {
-    // var jsLink  = `<script src="https://app.sourcedagile.com/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
-    // var cssLink  = `<link src="https://app.sourcedagile.com/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
+    // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
+    // var cssLink  = `<link src="${urlGl}/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
 
     var body = $(`<div class='redirectClass h-100' id='${pid}'>`).html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
@@ -13531,7 +13531,8 @@ function getIframeBlock(pid, css, js, bodys) {
     if (jsBlock.length > 0) {
         $(body).find('#js-function-list-for-story-card').text(js);
     } else {
-        $(body).append($('<script id="js-function-list-for-story-card">').text(js));
+        $(body).append($('<script id="js-function-list-for-story-card">')
+                      .text("(function(){"+js+"})();"));
     }
     return body;
     var $iframe = $("<div class='overflow-hidden'>")
