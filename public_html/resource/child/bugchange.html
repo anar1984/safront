@@ -293,6 +293,28 @@
         
                 </div> -->
     
+                <div class=" col-12 d-flex justify-content-center paginationStyle" style=" margin-top: -50px; z-index: 500; ">
+
+                    <div class="mr-auto">
+                        <div class="task-list-datetime">
+                            <input type="text" id="task-list-datetime" class="form-control" placeholder="Tarixə görə">
+                         </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown">
+                            <button class="btn pagination_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1-50/212</button>
+                            <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                                <button class="btn-minus-pag dropdown-item" type="button">Ən başa</button>
+                                <button class="btn-plus-pag dropdown-item" type="button">Ən sona</button>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn pagination_btn_left_right" data-page-icon="pageLeft"> <i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                            <button class="btn pagination_btn_left_right" data-page-icon="pageRight"> <i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
                 <div class=" col-12 d-flex justify-content-center paginationStyle">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination" id="pagination_block">
@@ -355,11 +377,12 @@
     
                     <hr class="rcs-hr">
                     
-                    <div class="setting-elemen-box">
-                        <div class="sticky-badges">
-                            <i class="cs-svg-icon sticky-notes"></i>
+                    <div class="setting-elemen-box pb-0">
+                        <div class="standart-badges taskfilter-btn">
+                            <i class="cs-svg-icon filter"></i>
                         </div>
                     </div>
+
                     <div class="setting-elemen-box">
                         <div class="dropdown">
                             <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
@@ -388,12 +411,13 @@
                         </div>
 
                     </div>
-                    <div class="setting-elemen-box pb-0">
-                        <div class="standart-badges taskfilter-btn">
-                            <i class="cs-svg-icon filter"></i>
+
+                    <div class="setting-elemen-box">
+                        <div class="sticky-badges">
+                            <i class="cs-svg-icon sticky-notes"></i>
                         </div>
                     </div>
-    
+                        
                     <hr class="rcs-hr">
     
                     <div class="setting-elemen-box">
