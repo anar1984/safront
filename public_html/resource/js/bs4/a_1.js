@@ -14801,7 +14801,7 @@ function resetAllEditStoryCard() {
           $('#UserStoryPopupModal-Toggle .cs-proces-desc-add-to-task-box').remove();
         //  $('#UserStoryPopupModal-Toggle .storecard-header-nav-section').addClass('d-none').removeClass("d-flex");
           $('#storyCardRightMenu').remove();
-        $("#UserStoryPopupModal-Toggle .modal-body>.row input").not('.pdfHide').remove();
+        $("#UserStoryPopupModal-Toggle .modal-body>.row input").not('.pdfHide[type="checkbox"]').remove();
         $("#UserStoryPopupModal-Toggle .iconDrag").remove();
         $("#UserStoryPopupModal-Toggle  td").removeAttr("ondblclick");
         $("#UserStoryPopupModal-Toggle  span").removeAttr("ondblclick");
@@ -18840,7 +18840,12 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
 $(document).on('change', '#story_mn_manual_status_id', function (evt) {
 
        localStorage.setItem('manual_list_val',$(this).val());
-
+       
+    UsLabel = '';
+    UsSprint = '';
+    Utility.addParamToUrl('fk_assigne_id', $(this).val());
+    labelOrSplitValuesUs();
+       
 });
 $(document).on('change', '#story_mn_filter_updated_id', function (evt) {
 

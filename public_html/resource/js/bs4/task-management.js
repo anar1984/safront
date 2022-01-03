@@ -1833,6 +1833,8 @@ const taskManagement = {
             Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
 
             //Task card-da Story Card-linke basanda istifade edilir.
+            var dwlmt = $('#task-info-modal-tasktype')
+             taskManagement.add_loadTaskType_bug_list(dwlmt,'load');
             if (projectId !== global_var.current_project_id) {
                 global_var.current_project_id = projectId;
                 new UserStory().refreshBacklog4Bug(true);
@@ -1861,7 +1863,6 @@ const taskManagement = {
                 $("#tapshiriq-btn").click();
              }
             $("#taskMgmtModal").modal("show");
-               console.log(coreBugKV[taskId]);
             //set backlog infos
             
             if (coreBugKV[taskId].backlogName) {
@@ -2424,7 +2425,7 @@ const taskManagement = {
 
         $('#' + elId).selectpicker('refresh');
     },
-    add_loadTaskType_bug_list: function (elm) {
+    add_loadTaskType_bug_list: function (elm,dlm) {
         var json = {
             kv: {}
         };
@@ -2451,6 +2452,9 @@ const taskManagement = {
                     var ids = dt[index].id;
                     var opt = $('<option>').val(ids).text(nm);
                     $(elm).append(opt);
+                    if(dlm = 'load'){
+                        $(elm).val(coreBugKV[global_var.current_issue_id].fkTaskTypeId);
+                    }
                     $(elm).selectpicker('refresh')
                 }
             }

@@ -3236,12 +3236,15 @@ $(document).on("click", ".loadUserForObserver", function (e) {
                 console.log(res);
                 for (var i in obj) {
                     var o = obj[i];
+                    console.log(o);
                     var opt = `<option value='${o.fkUserId}' data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='${fileUrl(o.userImage)}' alt='avatar' srcset=''>${o.userName}</span>"></option>
                   </select>`;
                     cmb.append(opt);
                     cmb.selectpicker('refresh');
                 }
             });
+
+            
 
 })
 
