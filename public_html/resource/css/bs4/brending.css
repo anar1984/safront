@@ -4322,19 +4322,19 @@ margin-left: 11px;
  margin-left: 5px;
  width: 35px !important;
 }
-.tasklabellist4Task .lbl-list-tr {
+.tasklabellist4Task .lbl-list-tr, .sprintlist4Task .lbl-list-tr {
     background: #e9e9f1;
     height: 30px;
 }
-.tasklabellist4Task .lbl-list-tr:nth-child(odd) {
+.tasklabellist4Task .lbl-list-tr:nth-child(odd), .sprintlist4Task .lbl-list-tr:nth-child(odd) {
  background: #f6f6ff;
 }
-.tasklabellist4Task .lbl-list-tr .lbl-list-td .btn {
+.tasklabellist4Task .lbl-list-tr .lbl-list-td .btn, .sprintlist4Task .lbl-list-tr .lbl-list-td .btn {
     font-size: 14px;
     height: 30px;
     margin-right: 3px;
 }
-.tasklabellist4Task .lbl-list-tr .lbl-list-td .lbl-action{
+.tasklabellist4Task .lbl-list-tr .lbl-list-td .lbl-action, .sprintlist4Task .lbl-list-tr .lbl-list-td .lbl-action{
     font-size: 14px;
     width: 30px;
     height: 30px;
@@ -4346,13 +4346,13 @@ margin-left: 11px;
     display: inline-block;
     margin-right: 2px;
 }
-.tasklabellist4Task .lbl-list-tr .lbl-list-td.cs-edit-delet{
+.tasklabellist4Task .lbl-list-tr .lbl-list-td.cs-edit-delet, .sprintlist4Task .lbl-list-tr .lbl-list-td.cs-edit-delet {
     width: 66px;
 }
 table.lbl-list-table tr td {
     padding: 0;
 }
-.tasklabellist4Task .lbl-list-table tr td input[type=checkbox], .tasklabellist4Task .lbl-list-table tr td input[type=radio] {
+.tasklabellist4Task .lbl-list-table tr td input[type=checkbox], .tasklabellist4Task .lbl-list-table tr td input[type=radio], .sprintlist4Task .lbl-list-table tr td input[type=checkbox], .sprintlist4Task .lbl-list-table tr td input[type=radio] {
     margin-left: 7px;
     text-align: center;
 }
