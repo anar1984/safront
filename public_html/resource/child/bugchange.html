@@ -361,14 +361,32 @@
                         </div>
                     </div>
                     <div class="setting-elemen-box">
-                        <div class="standart-badges">
-                            <i class="fas fa-tag" style=" color: #fff; font-size: 21px; "></i>
+                        <div class="dropdown">
+                            <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
+                                <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                            </div>
+                            <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
+                                <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
+                                <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
+                                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                    <div class="dropdown-divider" style="padding:0px;"></div>
+                                <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
+                            </div>
                         </div>
                     </div>
                     <div class="setting-elemen-box">
-                        <div class="standart-badges">
-                            <i class="fas fa-running" style=" color: #fff; font-size: 21px; "></i>
+                        <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
+                            <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                            <div class="dropdown-menu drop-label-menu sprint-show-4-task">
+                                <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
+                                </span>
+                                <span class="newlabelspan" style="cursor: pointer;"
+                                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                <div class="dropdown-divider" style="padding:0px;"></div>
+                                <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+                            </div>
                         </div>
+
                     </div>
                     <div class="setting-elemen-box pb-0">
                         <div class="standart-badges taskfilter-btn">
@@ -610,7 +628,7 @@
 
 
 
-                            <div class="cs-input-group">
+                            <!-- <div class="cs-input-group">
                                 <div class="dropdown">
                                     <span class="dropdown-toggle1 btn btn-light"  style="width: 100%;" data-toggle="dropdown">Label</span>
                                     <i>
@@ -640,10 +658,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="cs-input-group mt-3">
+                            </div> -->
+                            <!-- <div class="cs-input-group mt-3">
                                 <div class="dropdown task-sprint-show">
-                                    <!-- btn btn-primary   sildim -->
+                                    
                                     <span class="dropdown-toggle1 btn-light btn task-sprint-show" data-toggle="dropdown"
                                         style="width: 100%;">
                                         Sprint</span>
@@ -668,7 +686,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="cs-input-group mt-3">
                                 <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
                                 style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'

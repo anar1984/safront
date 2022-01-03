@@ -1444,10 +1444,19 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 /* issue management right panel styles */
 .bugList-elements .cs-input-group .btn {
-    border-radius: 50px;
+    border-radius: 50px !important;
 }
 .bugList-elements :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
     background: transparent;
+}
+.bugList-elements .bootstrap-select {
+    width: 360px !important;
+}
+.bugList-elements .bootstrap-select .dropdown-menu li a {
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .bugList-elements .cs-input-group .btn {
     color: #ffffff;

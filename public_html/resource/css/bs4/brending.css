@@ -4032,6 +4032,7 @@ hr.hr-ss {
     color: #313582;
     width: max-content !important;
     min-width: 100%;
+    max-width: 1170px !important;
     border-collapse: separate;
     border-spacing: 1px;
 }
@@ -4080,7 +4081,13 @@ hr.hr-ss {
     vertical-align: middle;
 }
 .cs-input-group .bug-mgmt-filter-select .dropdown-menu {
-    min-width: 216px;
+    min-width: 216px !important;
+    width: 360px !important;
+}
+.bootstrap-select.show-tick .dropdown-menu li a span.text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .cs-core-issue-management .task-name-editdrop button {
     background-color: #525596;
