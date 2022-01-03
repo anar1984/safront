@@ -14996,7 +14996,6 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         tr.append($('<td class="us-td-list"></td>').html(td3));
         return tr;
     },
-
     genUSLine: function (o) {
 
         var ischecked = (global_var.userStoryFilter.sprint.length > 1);
