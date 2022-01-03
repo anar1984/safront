@@ -6220,14 +6220,71 @@ table.lbl-list-table tr td {
     background-color: #ACCDDE !important;
 }
 .paginationStyle .task-list-datetime {
-    
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+    line-height: 2;
 }
 .paginationStyle .task-list-datetime input {
-
+    height: 30px;
+    color: #fff;
+    background: #03396C;
+    border: none;
+    mix-blend-mode: normal;
+    border-radius: 50px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.paginationStyle .task-list-datetime input::placeholder {
+    color: rgb(255 255 255 / 70%) !important;
+    font-size: 16px;
+    line-height: 20px;
+    display: table-cell;
+    vertical-align: middle;
 }
 .paginationStyle .pagination_btn {
-    
+    height: 30px;
+    min-width: 85px;
+    background: #03396C;
+    mix-blend-mode: normal;
+    border-radius: 25px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 0 8px;
+    vertical-align: middle;
+    display: table-cell;
+    margin-top: 3px;
+    margin-right: 0;
 }
 .paginationStyle .pagination_btn_left_right {
- 
+    height: 30px;
+    width: 30px;
+    background: #03396C;
+    mix-blend-mode: normal;
+    border-radius: 25px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    padding: 0 8px;
+    margin-left: 5px;
+    margin-top: 2px;
+    vertical-align: middle;
+    display: table-cell;
+}
+.paginationStyle button.dropdown-item:hover {
+    background-color: #03396c !important;
+    color: #ffffff !important;
+}
+.paginationStyle button.dropdown-item{
+    border: none;
+    outline: none;
+}
+.paginationStyle .dropdown-menu {
+    border-radius: 7px;
+    overflow: hidden;
 }
