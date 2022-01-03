@@ -14230,6 +14230,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
 
     },
     setUSLists4KanbanView: function () {
+         $(".manual-list-combo").addClass('d-none').removeClass('d-flex');
           var div = $(".task-panel")
           div.empty();
           var groupBy  = localStorage.getItem("usm_groupBy");
@@ -14246,7 +14247,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
             }
-               
+            $(".manual-list-combo").addClass('d-flex').removeClass('d-none');
                 this.getManualStatusList();           
           }
           else if(groupBy==='fkProjectId'){
@@ -14265,33 +14266,49 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data ={};//createTechizatTelebProducts
         var that  = this;
         var div = $(".task-panel")
-        callApi('21122311111704737668',data,true,function (res) { 
-              
+        callApi('220102225238057110391',data,true,function (res) { 
+              var combo = $("#story_mn_manual_status_id");
+                 combo.empty();
                var tbl = res.tbl[0].r;
-               var valueList  = $('')
-                for (let i = 0; i < tbl.length; i++) {
-                    const o = tbl[i];
-                    $('#story_mn_manual_status_id')
-                                 .append($("<option>")
-                                               .val(o.id)
-                                              .text(o.statusName))
-                    $('#story_mn_manual_status_id').selectpicker('refresh');
-
-                    div.append(that.genUsManagementZone(o.id,o.statusName.toUpperCase(),o.orderNo))
-                    that.getBacklogListByManualStatusId(o.id);               
-                }
-
-
+           
+               for (let i = 0; i < tbl.length; i++) {
+                const o = tbl[i];
+                           combo.append($("<option>")
+                                           .val(o.id)
+                                          .text(o.statusName)
+                                          .attr('order',o.orderNo));                      
+            }
+            combo.selectpicker('refresh');
+               try {
+                 var dt = localStorage.getItem('manual_list_val');
+                     if(!dt){
+                           return
+                     }
+                     dt = dt.split(',');
+                 for (let l = 0; l < dt.length; l++) {
+                     const k = dt[l];
+                     var znm =  combo.find('[value="'+k+'"]').text().toUpperCase();
+                     var orderNo =  combo.find('[value="'+k+'"]').attr('order');
+                     div.append(that.genUsManagementZone(k,znm,orderNo))
+                     that.getBacklogListByManualStatusId(k);
+                 }
+                 combo.val(dt);
+                 combo.selectpicker('refresh');
+               
+               } catch (error) {
+                   
+               }
          })
             
     },
     getBacklogListByManualStatusId:function (stl) {
         data ={};//createTechizatTelebProducts
         data.statusId = stl;
+        data.startLimit = 0;
+        data.endLimit = 20;
         callApi('21122313051700845260',data,true,function (res) { 
           
-            var c4new = 0
-            $('#kanban_view_'+stl+'_count').html(0);
+            var c4new = 0;
             $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
             $('#kanban_view_'+stl+'_count').text(res.kv.rowCount)
             try {
@@ -14310,8 +14327,54 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                     }
                 
                   if(c4new > 19){
-                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn').remove();
-                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn col-12">More</a>');
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn-manual').remove();
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
+                  }
+               
+        
+            } catch (e) {
+
+              if(c4new < 1){
+                 
+                  $('.main_div_of_backlog_info_kanban_view_table_'+stl)
+                  .append($('<div class="task-content content-drag">'));
+                }
+                
+            }
+            global_var.story_card_sprint_assign_checked = 0;
+            global_var.story_card_label_assign_checked = 0;
+    
+            $('[data-toggle="popover"]').popover({html:true});
+           
+             
+
+         })
+    },
+    getBacklogListByManualStatusIdMore:function (st,end,stl) {
+        data ={};//createTechizatTelebProducts
+        data.statusId = stl;
+        data.startLimit = st;
+        data.endLimit = end;
+        callApi('21122313051700845260',data,true,function (res) { 
+          
+            var c4new = 0;
+            $('#kanban_view_'+stl+'_count').text(res.kv.rowCount);
+            try {
+                                      
+                    var usIdList = res.tbl[0].r;
+    
+                    for (var k = 0; k < usIdList.length; k++) {  
+                        var obj = usIdList[k];
+                        var html = new UserStory().genUSLine4KanbanView(obj);
+                        $('.main_div_of_backlog_info_kanban_view_table_'+stl).append(html);
+
+                        
+                        c4new++
+                    }
+                
+                  if(c4new > 19){
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.more-us-card-btn-manual').remove();
+                    $('.main_div_of_backlog_info_kanban_view_table_'+stl).append('<a href="#" data-ople="'+stl+'" startLimit="20" endLimit="40" role="button" class="more-us-card-btn-manual col-12">More</a>');
                   }
                
         

@@ -1565,6 +1565,17 @@ $(document).on('change', '#edit-name-input-component', function (event) {
 
 });
 
+$(document).on('click', '.more-us-card-btn-manual', function (event) {
+
+    var stLimit = $(this).attr('startlimit')
+    var endlimit = $(this).attr('endlimit')
+    var st = parseFloat(stLimit);
+    var end = parseFloat(endlimit);
+    var bsts = $(this).attr('data-ople');
+
+    new UserStory().getBacklogListByManualStatusIdMore(st, end, bsts);
+
+});
 $(document).on('click', '.more-us-card-btn', function (event) {
 
     var stLimit = $(this).attr('startlimit')

@@ -1003,7 +1003,7 @@ color: white;
     box-shadow: 0px 0px 0px 2px #da3838 inset;
 
 }
-.more-us-card-btn{
+.more-us-card-btn,.more-us-card-btn-manual{
     width: 100%;
     display: block;
     text-align: center;
