@@ -3937,7 +3937,7 @@ hr.hr-ss {
 .cs-core-issue-management .tableFixHead tbody th:nth-child(-n+20) {
     position: sticky;
     background: #DFEEF7;
-    z-index: 500;
+    z-index: 1;
     text-align: center;
     box-shadow: none;
     padding: 0px;
@@ -5190,7 +5190,7 @@ table.lbl-list-table tr td {
     border-top: none;
     border-right: none;
     font-weight: 500;
-    z-index: 500;
+    /* z-index: 500; */
     text-align: center;
     box-shadow: none;
 }
