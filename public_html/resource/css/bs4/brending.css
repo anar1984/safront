@@ -4200,8 +4200,9 @@ hr.hr-ss {
     vertical-align: middle;
 }
 .bug-list-column-task-nature .dropdown-toggle {
- display: inline-flex;
- width: 100%;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }
 .bug-list-column-task-nature .get-data-group .text {
  margin-left: 18px;
@@ -6287,4 +6288,7 @@ table.lbl-list-table tr td {
 .paginationStyle .dropdown-menu {
     border-radius: 7px;
     overflow: hidden;
+}
+.bug-list-column-task-nature .dropdown-menu {
+    min-width: 35px;
 }
