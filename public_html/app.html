@@ -106,9 +106,9 @@
         <script src="resource/js/bs4/prototype_new.js"></script>
         <!--<script src="https://app.sourcedagile.com/api/get/script/js/48edh/210102102810037910965.js"></script>-->
         <script src="resource/js/bs4/bc.js"></script>
+        <script src="resource/js/bs4/generate_form.js"></script>
         <script src="ace-builds-master/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://unpkg.com/monaco-editor@0.8.3/min/vs/loader.js"></script>
-
+        <script src="https://unpkg.com/monaco-editor@0.8.3/min/vs/loader.js"></script> 
     </head>
 
     <body  id='body_of_nature'>
@@ -7407,22 +7407,150 @@
                          style="height: 50vh;overflow-y: scroll; overflow-x: hidden">
                         <table id='fieldFormGeneratorModal_id' class="table table-hover">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>N</th>
-                                <th>Field</th>
-                                <th>Component Type</th>
-                                <th>Order No</th>
-                                <th>Cell No</th>
-                                <th>Content</th>
-                                <th>Related Table</th>
-                                <th>Related Field</th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>N</th>
+                                    <th>Field</th>
+                                    <th>Component Type</th>
+                                    <th>Order No</th>
+                                    <th>Cell No</th>
+                                    <th>Content</th>
+                                    <th>Related Table</th>
+                                    <th>Related Field</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-9" id='fieldFormGeneratorModal_body'>
+                        <br>
+                        <label>Generate Form In Project</label>
+                        <select id='generalte-form-in-project-called'
+                                class='form-control'>
+                        </select>
+                    </div>
+                    <div class='col-lg-12'>
+                        <div class='row'>
+                            <div class="col-lg-3"    >
+                                <label>Create Action API</label>
+                                <select  id='fieldFormGeneratorModal_body_create_form_name_action_api' 
+                                         class='form-control'>
+                                </select>
+                            </div>
+                            <div class="col-lg-1"    >
+                                <br>
+                                <input  id='fieldFormGeneratorModal_body_create_form_name_auto_generate' 
+                                        type='checkbox'>
+                                <label for="fieldFormGeneratorModal_body_create_form_name_auto_generate">Auto Generate</label>
+
+                            </div>
+                            <div class="col-lg-3"    >
+                                <label>Update Action API</label>
+                                <select  id='fieldFormGeneratorModal_body_update_form_name_action_api' 
+                                         class='form-control'>
+                                </select>
+                            </div>
+                            <div class="col-lg-1"    >
+                                <br>
+                                <input  id='fieldFormGeneratorModal_body_update_form_name_auto_generate' 
+                                        type='checkbox'>
+                                <label for="fieldFormGeneratorModal_body_update_form_name_auto_generate">Auto Generate</label>
+
+                            </div>
+                             <div class="col-lg-3"    >
+                                <label>Delete Action API</label>
+                                <select  id='fieldFormGeneratorModal_body_delete_form_name_action_api' 
+                                         class='form-control'>
+                                </select>
+                            </div>
+                            <div class="col-lg-1"    >
+                                <br>
+                                <input  id='fieldFormGeneratorModal_body_delete_form_name_auto_generate' 
+                                        type='checkbox'>
+                                <label for="fieldFormGeneratorModal_body_update_form_name_auto_generate">Auto Generate</label>
+
+                            </div>
+
+
+                            <div class="col-lg-3"    >
+                                <label>View Action API</label>
+                                <select  id='fieldFormGeneratorModal_body_view_form_name_action_api' 
+                                         class='form-control'>
+                                </select>
+                            </div>
+                            <div class="col-lg-1"    >
+                                <br>
+                                <input  id='fieldFormGeneratorModal_body_view_form_name_auto_generate' 
+                                        type='checkbox'>
+                                <label for="fieldFormGeneratorModal_body_view_form_name_auto_generate">Auto Generate</label>
+                            </div>
+
+                            <div class="col-lg-3"    >
+                                <label>List Action API</label>
+
+                                <select  id='fieldFormGeneratorModal_body_list_form_name_action_api' 
+                                         class='form-control'>
+                                </select>
+                            </div>
+                            <div class="col-lg-1"    >
+                                <br>
+                                <input  id='fieldFormGeneratorModal_body_list_form_name_auto_generate' 
+                                        type='checkbox'>
+                                <label for="fieldFormGeneratorModal_body_list_form_name_auto_generate">Auto Generate</label>
+                            </div>
+
+                        </div>
                     </div>
 
+                    <div class="col-lg-4"    >
+                        <br>
+                        <input type='text' placeholder='Create Form Name' id='fieldFormGeneratorModal_body_create_form_name' 
+                               class='form-control'>
+                    </div>
+
+                    <div class="col-lg-2"    >
+                        <br>
+                        <button type='text' placeholder='Create Form Name' id='fieldFormGeneratorModal_body_create_form_name_generate' 
+                                class='btn btn-primary form-control'>Generate Create Form
+                        </button>
+                    </div>
+                    <div class="col-lg-4"    >
+                        <br>
+                        <input type='text' placeholder='Update Form Name' id='fieldFormGeneratorModal_body_update_form_name' 
+                               class='form-control'>
+                    </div>
+
+                    <div class="col-lg-2"    >
+                        <br>
+                        <button type='text' placeholder='Update Form Name' id='fieldFormGeneratorModal_body_update_form_name_generate' 
+                                class='btn btn-primary form-control'>Generate Update Form
+                        </button>
+                    </div>
+                    <div class="col-lg-4"    >
+                        <br>
+                        <input type='text' placeholder='View Form Name' id='fieldFormGeneratorModal_body_view_form_name' 
+                               class='form-control'>
+                    </div>
+
+                    <div class="col-lg-2"    >
+                        <br>
+                        <button type='text'   id='fieldFormGeneratorModal_body_view_form_name_generate' 
+                                class='btn btn-primary form-control'>Generate View Form
+                        </button>
+                    </div>
+
+                    <div class="col-lg-4"    >
+                        <br>
+                        <input type='text' placeholder='List Form Name' id='fieldFormGeneratorModal_body_list_form_name' 
+                               class='form-control'>
+                    </div>
+                    <div class="col-lg-2"    >
+                        <br>
+                        <button type='text'   id='fieldFormGeneratorModal_body_view_form_name_generate' 
+                                class='btn btn-primary form-control'>Generate List Form
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
