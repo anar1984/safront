@@ -96,7 +96,7 @@ $('[sa-onloadclick]').click(function () {
 function loadInfo() {
     var data = getDataFromForm(this);
     callApi('${load_table_api}', data, true, function (res) {
-        var tbody = $('table#${input_table_id}').find('tbody');
+        var tbody = $('table#comp_id_${input_table_id}').find('tbody');
         tbody.html('');
         var idx = 1;
 
@@ -516,30 +516,26 @@ const create_js_for_list_form = (backlog_id,input_table_id) => {
 }
 
 const create_js_for_list_form_details = () => {
-    var res = `<tr><td>\${idx++}</td></tr>
-    <tr><td sa-selectedfield='id' hidden >\${o.id}</td></tr>
+    var res = `<tr><td>\${idx++}</td> 
+    <td sa-selectedfield='id' hidden >\${o.id}</td> 
     `;
 
     var obj = Object.keys(table_list_body);
     for (var i in obj) {
         var key = obj[i];
         var val = table_list_body[key];
-        res += `<tr><td>\${o.${val}}</td></tr> \n\t`
+        res += ` <td>\${o.${val}}</td> \n\t`
     }
 
-    res += `  <tr>
+    res += `   
     <td>
-        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row' href='#>Ətraflı</a>
-    </td>
-</tr>
-<tr>
+        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row' href='#'>Ətraflı</a>
+    </td> 
     <td >
-        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row' href='#>Ətraflı</a>
-    </td>
-</tr>
-<tr>
+        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row' href='#'>Dəyil</a>
+    </td> 
     <td>
-        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row' href='#>Ətraflı</a>
+        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row' href='#'>Sil</a>
     </td>
 </tr>`;
     return res;
@@ -618,7 +614,7 @@ const table_body = (backlog_id, fkProjectId) => {
         delete_table_row_button(backlog_id, fkProjectId, res.kv.fkInputTableCompId);
         add_checked_inputs_to_story_card(backlog_id, fkProjectId, false, res.kv.fkInputTableCompId);
          //create JS file
-         create_js_for_list_form(backlog_id, res.kv.fkInputTableCompId);
+         create_js_for_list_form(backlog_id, res.kv.id);
     })
 }
 
