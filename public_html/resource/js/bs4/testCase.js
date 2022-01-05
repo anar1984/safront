@@ -626,16 +626,23 @@ $(document).on("change", '.bug-filter', function (e) {
 
 $(document).on("click", '.page-item-core-previous', function (e) {
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
-        getBugList();
+         if((parseInt(bug_filter.page_no) - 1)>0){
+            bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
+            getBugList();
+         }
+      
     }
 
 })
 
 $(document).on("click", '.page-item-core-next', function (e) {
+     var val = $("#pagintion-selectbox-issue").val();
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
-        getBugList();
+         if(val>bug_filter.page_no){
+            bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
+            getBugList();
+         }
+     
     }
 
 })
@@ -1166,7 +1173,7 @@ function getBugList() {
             AJAXCallFeedback(res);
             coreBugList = res;
             setKV4CoreBugList();
-            getBugListDetails(res);
+            taskManagement.readTask.genBlockTask.genTableView.genTableBodyBlock(res);
             toggleColumns();
             setPagination(res.kv.tableCount, res.kv.limit);
             getGroupList();
@@ -1192,34 +1199,13 @@ function setKV4CoreBugList() {
 }
 
 function setPagination(rowcount, limit) {
+    $("#issue-table-aktiv-all #row-count-table").text(rowcount)
     var rc = Math.ceil(rowcount / limit);
-    var el = $('#pagination_block');
-    el.html('');
-    el.append($('<li class="page-item page-item-core-previous">')
-            .append($('<a class="page-link" href="#" aria-label="Previous">')
-                    .append($('<span aria-hidden="true">').append('&laquo;'))
-                    .append($('<span class="sr-only">').append('Previous'))))
+    var el = $('.brand-issue-management .pagination_btn');
+    el.html( ((bug_filter.page_no * limit)-limit+1)+"-"+(bug_filter.page_no * limit)+"/"+rowcount);
 
-    for (var i = 1; i <= rc; i++) {
-
-        var li = $('<li>')
-                .addClass('page-item num page-item-core')
-                .attr('page-no', i)
-                .append($('<a  href="#" class="page-link">').append(i));
-
-        if (i === parseInt(bug_filter.page_no)) {
-            li.addClass("active");
-        }
-
-        el.append(li)
-
-
-    }
-
-    el.append($('<li class="page-item order-last page-item-core-next">')
-            .append($('<a class="page-link" href="#" aria-label="Next">')
-                    .append($('<span aria-hidden="true">').append('&raquo;'))
-                    .append($('<span class="sr-only">').append('Next'))))
+      $("#pagintion-selectbox-issue").val(rc);
+  
 
 }
 
@@ -1627,8 +1613,8 @@ function getBugListDetails(res) {
         });
     }
 
-    getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-            sumEstBudget, sumSpentBudget);
+   // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+   //         sumEstBudget, sumSpentBudget);
 
     global_var.bug_task_sprint_assign_checked = '';
     global_var.bug_task_sprint_assign_name = '';
@@ -2230,6 +2216,7 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
 
 
 function toggleColumns() {
+ //   $('#bug_filter_columns option:selected').removeAttr("selected");
     $('.bug-list-column').hide();
     var colList = $('#bug_filter_columns').val();
     for (var col in colList) {

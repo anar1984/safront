@@ -8139,6 +8139,94 @@
             </div>
         </div>
     </div>
+     
+              <!-- Modal -->
+              <div class="modal fade bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  row" >
+                         <div class='col-12 row'>
+                            <div class="col-lg-4">
+                                <select class="form-control" data-live-search="true" data-actions-box="true"
+                                    style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_multi'
+                                     title="Project"></select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control" data-actions-box="true"
+                                    onchange=''  data-live-search="true" id='bug_filter_assignee_id_multi'
+                                     title="Assignee"></select>
+                            </div>
+                        
+                            <div class="col-lg-4">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange=''  data-live-search="true" id='bug_filter_backlog_id_multi'
+                                    title="Story Card">
+                        
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange=''  data-live-search="true" id='bug_task_type_id_multi'
+                                    title="Task Type">
+                        
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                    onchange=''  data-live-search="true" id='bug_task_nature_id_multi'
+                                    title="Task Nature">
+                                    <option value="" ></option>
+                                    <option value="bug" >Bug</option>
+                                    <option value="change" >Change Request</option>
+                                    <option value="new" >New Request</option>
+                        
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                                        onchange=''   id='bug_task_status_id_zad'
+                                        title="Task Status">
+                                    <option value="" ></option>
+                                    <option value="new" >New</option>
+                                    <option value="ongoing" >Ongoing</option>
+                                    <option value="waiting" >Waiting</option>
+                                    <option value="canceled" >Canceled</option>
+        
+                                </select>
+                            </div>
+                            <div class="col-lg-4 " >
+            
+                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
+                                    data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
+                                    <option value=''>None</option>
+                                    <option value='1'>1- Lowest</option>
+                                    <option value='2'>2</option>
+                                    <option value='3'>3</option>
+                                    <option value='4'>4</option>
+                                    <option value='5'>5</option>
+                                    <option value='6'>6</option>
+                                    <option value='7'>7</option>
+                                    <option value='8'>8</option>
+                                    <option value='9'>9 - Highest</option>
+                        
+                                </select>
+                            </div>
+                           
+                              </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="update_multi_bug_change_btn" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
     <!-- Modal -->

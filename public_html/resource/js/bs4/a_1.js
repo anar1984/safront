@@ -15166,29 +15166,31 @@ $(document).on('click', '.loadBugChange', function (evt) {
     clearManualProjectFromParam();
     global_var.current_modal = "loadBugChange";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
-    $.get("resource/child/" + f + ".html", function (html_string) {
-        getProjectUsers();
-        getUsers();
-        $('#mainBodyDivForAll').html(html_string);
-        commmonOnloadAction(this);
-        setBugFilterProject();
-        setBugFilterAssignees();
-        loadBugTaskDeadlineScripts();
-        $('.bug-mgmt-filter-select').selectpicker();
-        new Sprint().load4Task();
-        new Label().load4Task();
-        getBugList();
-        if (global_var.current_issue_is_hide !== '1' &&
-                (global_var.current_issue_id)) {
-            $('.issue_' + global_var.current_issue_id).click();
-            global_var.current_issue_is_hide = "1";
-            global_var.current_issue_id = "";
-        }
+    getProjectUsers();
+    getUsers();
+  ///  $('#mainBodyDivForAll').html(html_string);
+    taskManagement.Init($('#mainBodyDivForAll'));
+    commmonOnloadAction(this);
+    setBugFilterProject();
+    setBugFilterAssignees();
+    loadBugTaskDeadlineScripts();
+    $('.bug-mgmt-filter-select').selectpicker();
+    new Sprint().load4Task();
+    new Label().load4Task();
+    getBugList();
+    if (global_var.current_issue_is_hide !== '1' &&
+            (global_var.current_issue_id)) {
+        $('.issue_' + global_var.current_issue_id).click();
+        global_var.current_issue_is_hide = "1";
+        global_var.current_issue_id = "";
+    }
 
-        if ((global_var.current_issue_id)) {
-            global_var.current_issue_id = "";
-        }
-    });
+    if ((global_var.current_issue_id)) {
+        global_var.current_issue_id = "";
+    }
+    /* $.get("resource/child/" + f + ".html", function (html_string) {
+       
+    }); */
 });
 $(document).on('click', '.loadUserManual', function (evt) {
     var f = 'usermanual';

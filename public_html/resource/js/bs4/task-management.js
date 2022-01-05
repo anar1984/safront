@@ -1,5 +1,9 @@
 const taskManagement = {
-
+    Init: function (elm) {
+        var elm = $(elm);
+        elm.html(this.genBlockMain());
+        this.readTask.genBlockTask.Init($('.main-section'));
+    },
     insertTask: {
         genBlockModal: {
             Init: function () {
@@ -71,7 +75,7 @@ const taskManagement = {
                         <span class='p-1'>quick insert task onfocus input SHIFT+ENTER</span>
                     </div>
                     <div class="p-0">
-                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                        <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -980,7 +984,7 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="p-0">
-                        <div class="priority-btn"><!-- if active ( class name -- active ) -->
+                        <div  id="updateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
                     </div>
@@ -1864,7 +1868,11 @@ const taskManagement = {
             }
             $("#taskMgmtModal").modal("show");
             //set backlog infos
-
+             if(coreBugKV[taskId].taskPriority==='9'){
+                $("#updateTask-priority-btn").addClass("active");
+             }else {
+                $("#updateTask-priority-btn").removeClass("active");
+             }
             if (coreBugKV[taskId].backlogName) {
                 $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
                     .attr('pid', coreBugKV[taskId].fkBacklogId)
@@ -2070,14 +2078,14 @@ const taskManagement = {
                                 .addClass("updateTaskcheckListItemName")
                                 .val(o.itemName)))
                         .append($('<div>')
-                        .addClass('pl-1 p2-1')
+                            .addClass('pl-1 p2-1')
                             .append(createdBySpan))
                         .append($('<div>')
-                        .addClass('pl-1 p2-1')
+                            .addClass('pl-1 p2-1')
                             .append(updatedBySpan))
 
                         .append($('<div>')
-                        .addClass('pl-1 p2-1 d-table')
+                            .addClass('pl-1 p2-1 d-table')
                             .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskCheckListItemDelete")
@@ -2386,25 +2394,40 @@ const taskManagement = {
                 var div = $(elm);
                 div.empty();
                 var view = localStorage.getItem('task-view-format');
+                $("#main-sidebar-div").html('');
+                $("#main-sidebar-div").append(this.genFilterBlock());
+                if (!view) {
+                    view = "table"
+                }
                 if (view === 'kanban') {
                     div.append(this.genHeader());
                 } else if (view === 'table') {
                     div.append(this.genHeader());
                     div.append(this.genTableView.genTableBlock());
                 }
-
             },
             genHeader: function () {
-                return `<div class="header-info-section d-flex w-100">
-                <div class="mr-auto p-2">
-                    <div class="d-flex justify-content-start" id="task-list-statistic-block"> 
-                
-               </div>    
+                return `    <div class="header-info-section d-flex w-100">
+                <div class="mr-auto d-flex p-2">
+                    <div class="d-flex justify-content-start">
+                        <div class="info-box">
+                            <input data-type="search_text" type="text" class="bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        </div>
+                                     
+                        <div class="info-box">
+                              <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
+                              <div class="bcs-col-btn" style=" display: inline-block; ">
+                                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start" id="task-list-statistic-block">
+                    </div>    
                 </div>
                 <div class="p-2 mt-2">
-                    <div class="dropdown info-box-dropdown" id="task-table-aktiv-all">
+                    <div class="dropdown info-box-dropdown" id="issue-table-aktiv-all">
                         <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="title">H</span> <span id="row-count-table">125</span>
+                            <span class="title">${localStorage.getItem("issue_mode_active")?localStorage.getItem("issue_mode_active"):"H"}</span> <span id="row-count-table">125</span>
                         </a>
                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
                           <a class="dropdown-item" all-aktiv="A" href="#">Activ</a>
@@ -2471,9 +2494,257 @@ const taskManagement = {
                 </div>
             </div>`
             },
+            genFilterBlock: function () {
+                 
+                return `<div class="bugListNavMenu bugList-elements">
+
+                <div class="main-sorting mb-5">
+                    <div class="row ml-0 mr-0">
+                        <div class="cs-input-group cs-pagination-limit col-6">
+                            <div class="input-group-addon">Closed Dates From</div>
+                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='date'>
+                        </div>
+                        <div class="cs-input-group cs-pagination-limit col-6">
+                            <div class="input-group-addon">Closed Dates To</div>
+                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-to" id ='issue_management_closed_date_to' type='date'>           
+                        </div>
+                    </div>
+                    <div class="row ml-0 mr-0">
+                        <div class="col-12">
+                            <span>Sort by</span>
+                        </div>
+                        <div class="cs-input-group col-4">
+                            
+                            <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
+                            id='bug_filter_sortby' title="Columns">
+                                <option value='task_status' selected>Status</option>
+                                <option value='id' selected>Task ID</option>
+                                <option value='task_name'  accesskey="">Description</option>
+                                <option value='task_nature'  >Task Nature</option>
+                                <option value='fk_assignee_id' >Assignee</option>
+                                <option value='fk_task_type_id' >Task Type</option>
+                                <option value='close_status_date'>Closed Date</option> 
+                                <option value='closed_by'>Closed By</option> 
+                                <option value='task_priority'>Priority</option>  
+                                <option value='created_by'  >Create By</option>
+                                <option value='created_date'  >Create Date</option>  
+                            </select>
+                        </div>
+
+                        <div class="cs-input-group col-4">
+                            <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                                    id='bug_filter_sortby_asc' title="Columns">
+                                <option value='asc' >ASC</option>
+                                <option value='desc' selected>Desc</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div class="cs-input-group cs-pagination-limit">
+                                <select data-type='limit' class="bug-filter" id="bug_filter_limit">
+                                    <option value='10'>10</option>
+                                    <option value='25' selected> 25</option>
+                                    <option value='50'>50</option>
+                                    <option value='100'>100</option>
+                                    <option value='200'>200</option>
+                                    <option value='300'>300</option>
+                                </select>
+                            </div>
+                            <b id="table-row-count"> </b>
+                        </div>
+                    </div>
+                    <div class="row ml-0 mr-0">
+                        <div class="col-12">
+                            <div class="cs-input-group cs-pagination-group-by">
+                                <div class="input-group-addon cs-group-by">Group By</div>
+                                <select id="inputGroupSelect01">
+                                    <option value='0' >None</option>
+                                    <option value='4' >Task Nature</option>
+                                    <option value='5' >Assignee</option>
+                                    <option value='6' >Task Type</option>
+                                    <option value='7'>Priority</option>
+                                    <option value='8' >Story Card</option>
+                                    <option value='9' >Project</option>
+                                    <option value='10' >Create By</option>
+                                    <option value='11' >Create Date</option>
+                                    <option value='12'>Last Update</option>
+                        
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
+                    style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
+                    data-type="project_id" title="Project"></select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
+                    data-type="backlog_id" title="Story Card">
+                   </select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
+                    data-type="assignee_id" title="Assignee"></select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
+                    data-type="closed_by" title="Closed By"></select>
+                </div>
+                
+    
+                <div class="cs-input-group mt-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                        title="Status">
+                        <option value='new' selected>New</option>
+                        <option value='ongoing' selected>Ongoing</option>
+                        <option value='closed'>Closed</option>
+                        <option value='waiting'>Waiting</option>
+                        <option value='canceled'>Canceled</option>
+                        <option value='rejected' selected>Rejected</option>
+                        <option value='UAT' selected> UAT</option>
+            
+                    </select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                        <option value='bug' selected>Bug</option>
+                        <option value='change' selected>Change Request</option>
+                        <option value='new' selected>New Request</option>
+                    </select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                        data-type="created_by" title="Created by"></select>
+                </div>
+              
+            
+                <div class="cs-input-group mt-3">
+    
+                    <label class="checkmarkcontainer">Show Child Tasks
+                        <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
+                        <span class="checkmark"></span>
+                    </label>
+    
+                    
+                </div>
+            
+                <div class="cs-input-group mt-3">
+            
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                        data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                        <option value=''>None</option>
+                        <option value='1'>1- Lowest</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9 - Highest</option>
+            
+                    </select>
+                </div>
+            
+            
+                <div class="cs-input-group mt-3">
+            
+                    <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                        id='bug_filter_columns' title="Columns">
+                        <option value='task-status' selected>Status</option>
+                        <option value='task-id' selected>Task ID</option>
+                        <option value='task-name' selected>Description</option>
+                        <option value='task-nature' selected>Task Nature</option>
+                        <option value='assignee' selected>Assignee</option>
+                        <option value='tasktype' selected>Task Type</option>
+                        <option value='close-date'>Status Close Date</option> 
+                        <option value='closed-by'>Status Closed By</option> 
+                        <option value='priority'>Priority</option>
+                        <option value='story-card' selected>Story Card</option>
+                        <option value='project' selected>Project</option>
+                        <option value='created-by' selected>Create By</option>
+                        <option value='created-date' selected>Create Date</option>
+                        <option value='last-update'>Late Update</option>
+                        <option value='estimated-hours'>Estimated Hours</option>
+                        <option value='spent-hours'>Spent Hours</option>
+                        <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                        <option value='executed-counter'>Executed Counter</option>
+                        <option value='estimated-budget'>Estimated Budget</option>
+                        <option value='spent-budget'>Spent Budget</option>
+            
+                    </select>
+                </div>
+    
+            </div>
+                `
+            },
+            genNotificationBlock: function () {
+                return `<div class="notifcation-block">
+                <div class="notification-header">
+                    sdfhsdhfhsdfhsdf
+                </div>
+                <div class="notification-body" id="notification-block-id">
+
+                </div>
+            </div>`
+            },
+            genNotificationItemBlock: function (id, taskId, title, deadline, body) {
+                return `  <div class="notification-elements">
+              <div class="d-flex p-2 notify-top-section">
+                  <div class="mr-auto">
+                      <span class="top-title">${title}</span>
+                       <span class="deadline"> ${deadline}</span>
+                  </div>
+                  <div>
+                      <span class="top-date-time">${date + time}</span>
+                      <div class="circle-s">
+                          <label class="checkmarkcontainer">
+                              <input type="checkbox" class="noteCheckListItem" value="0">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="d-flex pl-2 pr-2 pb-2 pt-0 mb-0 notify-title-box">
+                  <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
+                      <span class="notefy-title">${body}</span>
+                      <div class="d-flex mt-1 notify-msg">
+                          <span>Mesaj: </span><span>${msg}</span>
+                      </div>
+                  </div>
+                  <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
+              </div>
+              <div class="notify-bottom-box pt-2">
+                  <div class="d-block"><span class="date-time pr-2">26.11.2021 13:41:43</span></div>
+                  <div class="d-flex mt-2 status-box">
+                      <div class="mr-auto">
+                          <div class="author-img"><img class="author" src="https://app.sourcedagile.com/api/get/files/Resid_77D6372B4DFE6.png" title="Creator"></div>
+                          <span class="notefy-status">Yeni</span>
+                      </div>
+                      <div class="notify-bottom-right pr-2">
+                          <ul>
+                              <li><div class="cs-click"><i class="cs-svg-icon link"></i> 12</div></li>
+                              <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
+                              <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>`
+            },
             genKanbanView: {
+                genKanbanBlock: function () {
+
+                },
                 genZonaBlock: function () {
-                   
+
                 },
                 genKanbanContentBlock: function () {
 
@@ -2481,7 +2752,7 @@ const taskManagement = {
             },
             genTableView: {
                 genTableBlock: function () {
-                    return `   <div class="col pl-1 pr-1" id="addBuglist">
+                    return ` <div class="col pl-1 pr-1" id="addBuglist">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
                            <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
@@ -2497,29 +2768,34 @@ const taskManagement = {
                        
                    </div>
                   
-       
-                   <div class=" col-12 d-flex justify-content-center paginationStyle">
-                       <nav aria-label="Page navigation example">
-                           <ul class="pagination" id="pagination_block">
-                               <li class="page-item">
-                                   <a class="page-link" href="#" aria-label="Previous">
-                                       <span aria-hidden="true">&laquo;</span>
-                                       <span class="sr-only">Previous</span>
-                                   </a>
-                               </li>
-                               <li class="page-item num"><a class="page-link">1</a></li>
-                               <li class="page-item num"><a class="page-link">2</a></li>
-       
-                               <li class="page-item order-last">
-                                   <a class="page-link" href="#" aria-label="Next">
-                                       <span aria-hidden="true">&raquo;</span>
-                                       <span class="sr-only">Next</span>
-                                   </a>
-                               </li>
-                           </ul>
-                       </nav>
+                 
+
+                   <div class=" col-12 d-flex justify-content-center paginationStyle" style=" z-index: 500; ">
+
+                   <div class="mr-auto">
+                       <div class="task-list-datetime">
+                           <input type="text" id="task-list-datetime" class="form-control" placeholder="Tarixə görə">
+                        </div>
                    </div>
-               </div>   `
+                     <div class="d-none">
+                         <input type="text" name="" id="pagintion-selectbox-issue">
+                     </div>
+                   <div class="d-flex">
+                       <div class="dropdown">
+                           <button class="btn pagination_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">1-50/212</button>
+                           <div class="dropdown-menu pageBttnContainer" aria-labelledby="dropdownMenu2">
+                               <button class="btn-minus-pag dropdown-item" type="button" style="border-bottom: 1px solid #9a9a9a45;">Ən başa</button>
+                               <button class="btn-plus-pag dropdown-item" type="button">Ən sona</button>
+                           </div>
+                       </div>
+                       <div class="d-table">
+                           <button class="btn pagination_btn_left_right page-item-core-previous" data-page-icon="pageLeft"> <i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                           <button class="btn pagination_btn_left_right page-item-core-next" data-page-icon="pageRight"> <i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                       </div>
+                   </div>
+                  </div>
+                 </div>
+                     `
                 },
                 genTableHeaderBlock: function () {
                     return `<thead class="bugThead">
@@ -2550,11 +2826,10 @@ const taskManagement = {
                    </thead>`
                 },
                 genTableBodyBlock: function (res) {
-                    //    tbody to append
-                    var table = $('#bugListTable');
+
                     var tbody = $('#bugListTable > tbody');
                     tbody.html('');
-                    table.append(getBugListDetailsHeader());
+                    //table.append(getBugListDetailsHeader());
                     // // thead to appaend----main header
                     var sumEstHours = 0,
                         sumSpentHours = 0,
@@ -2562,54 +2837,18 @@ const taskManagement = {
                         sumExecCount = 0,
                         sumEstBudget = 0,
                         sumSpentBudget = 0;
-
-
-
                     var obj = res.tbl[0].r;
                     for (var i = 0; i < obj.length; i++) {
                         var o = obj[i];
-
-                        /*         var isLabelChecked = (bug_filter.label_id.length > 1);
-                         var divLabelFilter = $('<div>')
-                         .append($("<input type='checkbox'>")
-                         .addClass("assign-label-to-task-item")
-                         .attr("pid", o.id)
-                         .attr('projectId', o.fkProjectId)
-                         .attr('backlogId', o.fkBacklogId)
-                         .attr("checked", isLabelChecked)
-                         .attr("sid", global_var.bug_task_label_assign_id))
-                         .append($('<span>').append(" (" + global_var.bug_task_label_assign_name + ") ")); */
-
-                        /* var rsLabelFilter = global_var.bug_task_label_assign_checked === 1 */
-                        /*  ?
-                                 divLabelFilter.html() :
-                                 ""; */
-                        /* 
-                         var ischecked = (bug_filter.sprint_id.length > 1); */
-                        /*         var div = $('<div>')
-                         .append($("<input type='checkbox'>")
-                         .addClass("assign-sprint-to-task-item")
-                         .attr("pid", o.id)
-                         .attr('projectId', o.fkProjectId)
-                         .attr('backlogId', o.fkBacklogId)
-                         .attr("checked", ischecked)
-                         .attr("sid", global_var.bug_task_sprint_assign_id))
-                         .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") ")); */
-
-
-
-                        var rs = global_var.bug_task_sprint_assign_checked === 1
-                        /* ?
-                                div.html() :
-                                ""; */
-
                         sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
                         sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
                         sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
                         sumExecCount = increaseValue(sumExecCount, o.executedCounter);
                         sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
                         sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-
+                        var startTime= new Date();
+                        var endTime= new Date(o.endDate+' '+o.endTime);
+                        
                         var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
                         row += " " /* + rs + rsLabelFilter; */
 
@@ -2627,16 +2866,7 @@ const taskManagement = {
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
-                        var dropMenuDiv = $("<div>")
-                            .addClass("dropdown-menu")
-                            .attr("aria-labelledby", "bug-status-dropdown")
-
-                            .append('<a class="dropdown-item" data-value ="new">New</a>')
-                            .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
-                            //                        .append('<a class="dropdown-item" data-value ="closed">closed</a>')
-                            .append('<a class="dropdown-item" data-value ="waiting">Waiting</a>')
-                            .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
-                        //                        .append('<a class="dropdown-item" data-value ="UAT">UAT</a>')
+                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
 
                         var t = $('<tr>')
                             .attr("id", o.id)
@@ -2654,9 +2884,7 @@ const taskManagement = {
                                 .addClass('bug-list-column-task-id').append(task_id))
                             .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
                                 .addClass('bug-list-column-task-deadline')
-                                .append($('<div>').addClass('td-deadline-box kecib')
-                                    .append($('<span>')
-                                        .text('-22s')))
+                                .append(getTimeDifference(endTime,startTime))
                             )
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-task-status cs-input-group')
@@ -2664,17 +2892,11 @@ const taskManagement = {
                                 .css("padding-left", '3px')
                                 .css("overflow", 'initial')
                                 .append($("<div>")
-                                    .addClass("dropdown")
                                     .append($("<div>")
-                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
-                                        .addClass('us-item-status-' + o.taskStatus)
-                                        .attr("data-toggle", "dropdown")
-                                        .attr("aria-haspopup", "true")
-                                        .attr("aria-expanded", "false")
-                                        .attr("id", "bug-status-dropdown")
+                                        .addClass('position-relative us-item-status-' + o.taskStatus)
                                         .append($('<span>')
-                                            .append(o.taskStatus)))
-                                    .append(o.taskStatus !== 'UAT' ? dropMenuDiv : "")
+                                            .append(o.taskStatus))
+                                            .append((o.taskPriority==='9')?prtDiv:""))
                                 ))
                             .append($('<td>')
                                 .addClass('bug-list-column')
@@ -2712,25 +2934,13 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-task-nature')
                                 .append($("<div>")
-                                    .addClass("dropdown")
+                                    .addClass("dropdown ")
                                     .append($("<div>")
-                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
-                                        .attr("data-toggle", "dropdown")
-                                        .attr("aria-haspopup", "true")
-                                        .attr("aria-expanded", "false")
                                         .attr("id", "bug-taskNature-dropdown")
-                                        .append(getBugListTaskNatureValue(o.taskNature)))
-
-                                    .append($("<div>")
-                                        .addClass("dropdown-menu")
-                                        .attr("aria-labelledby", "bug-taskNature-dropdown")
-
-                                        .append('<a class="dropdown-item" data-value ="new">New Request</a>')
-                                        .append('<a class="dropdown-item" data-value ="change">Change Request</a>')
-                                        .append('<a class="dropdown-item" data-value ="bug">Bug</a>')
-
+                                        .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "")
+                                        .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "")
+                                        .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "")
                                     )))
-
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
                             .append($('<td>').addClass('bug-list-column')
@@ -2742,10 +2952,7 @@ const taskManagement = {
                                         .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
                                         .css("display", "none")
                                         .addClass("hpYuyept"))
-                                    .append($('<i class="fas fa-chevron-down">')
-                                        .attr('onclick', 'setChnageUserStoryCard("' + o.fkProjectId + '",this)')
-                                        .css("display", "none")
-                                        .addClass("hpYuyept1"))
+                                    
                                 )
                                 .mouseover(function () {
                                     $(this).find(".hpYuyept").show();
@@ -2832,8 +3039,8 @@ const taskManagement = {
                         });
                     }
 
-                    getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-                        sumEstBudget, sumSpentBudget);
+                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                    //         sumEstBudget, sumSpentBudget);
 
                     global_var.bug_task_sprint_assign_checked = '';
                     global_var.bug_task_sprint_assign_name = '';
@@ -2844,8 +3051,105 @@ const taskManagement = {
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
                 }
-            }
+            },
         },
+
+    },
+    genBlockMain: function () {
+        return `<div class="cs-core-issue-management brand-issue-management">
+        <div class="panel-container">
+            <div class="main-section"></div>
+        <div class="right-section">
+            <div class="setting-panel d-flex">
+                <div class="setting-btn-panel">
+                   <div class="setting-btn-panel-in">
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges notification-btn">
+                                <span class="info">12</span>
+                                <i class="cs-svg-icon task-01"></i>
+                            </div>
+                        </div>
+                        <hr class="rcs-hr">
+                        <div class="setting-elemen-box pb-0">
+                            <div class="standart-badges taskfilter-btn">
+                                <i class="cs-svg-icon filter"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="dropdown">
+                                <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
+                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                                </div>
+                                <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
+                                    <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
+                                    <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
+                                        onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                        <div class="dropdown-divider" style="padding:0px;"></div>
+                                    <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                                <div class="dropdown-menu drop-label-menu sprint-show-4-task">
+                                    <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
+                                    </span>
+                                    <span class="newlabelspan" style="cursor: pointer;"
+                                        onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                                    <div class="dropdown-divider" style="padding:0px;"></div>
+                                    <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+                                </div>
+                            </div>
+    
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="sticky-badges">
+                                <i class="cs-svg-icon sticky-notes"></i>
+                            </div>
+                        </div>       
+                        <hr class="rcs-hr">
+                        <div class="setting-elemen-box">
+                            <div class="calendar-badges">
+                                <span class="calendar-info">19</span>
+                                <i class="cs-svg-icon calendar-02"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges">
+                                <i class="cs-svg-icon cs-row-style"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box">
+                            <div class="standart-badges">
+                                <i class="cs-svg-icon cs-col-style"></i>
+                            </div>
+                        </div>
+                        <div class="btn-panel-bottom" >
+                            <div class="setting-elemen-box">
+                                
+                                <div class="standart-badges" id="addNewTaskButton"   style="margin-bottom: 5px;background: rgb(0 0 0 / 20%);border-radius: 50px;height: 28px;width: 28px;padding: 1px;color: #fff;border: 1px solid rgb(0 0 0 / 20%);">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                <div class="setting-views-panel mr-auto">
+                    <div class="setting-views-panel-in">
+                        <div class="setting-headline d-flex">
+                            <div class="title mr-auto">Qeydlər</div>
+                            <div class="close-panel"><i class="cs-svg-icon x-close"></i></div>
+                        </div>
+                        <div class="setting-main" id="main-sidebar-div">
+                                                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    </div>`
     },
     getBacklogLIstByprojectId: function (projectId) {
         if (!projectId) {
@@ -2927,7 +3231,12 @@ const taskManagement = {
                     var opt = $('<option>').val(ids).text(nm);
                     $(elm).append(opt);
                     if (dlm = 'load') {
-                        $(elm).val(coreBugKV[global_var.current_issue_id].fkTaskTypeId);
+                        try {
+                            $(elm).val(coreBugKV[global_var.current_issue_id].fkTaskTypeId);
+
+                        } catch (error) {
+
+                        }
                     }
                     $(elm).selectpicker('refresh')
                 }
@@ -2965,6 +3274,52 @@ const taskManagement = {
 
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var getTimeDifference=function(from,to){
+    
+     
+    var difMs = (from - to);
+   var colorClass 
+   
+    /* if(difMs<=0){
+        return 0 + " days, " + 0 + " hours, " + 0 + " mins";
+    }else{ */
+        var difDays = Math.floor(difMs / 86400000);
+        var difHrs = Math.floor((difMs % 86400000) / 3600000);
+        var difMins = Math.round(((difMs % 86400000) % 3600000) / 60000);
+       var txt = difDays + " d, " + difHrs + " h, " + difMins + " m";
+          var time  = '';
+          if(parseFloat(difMins)!==0){
+               time  = difMins +"m"
+          }
+          if(parseFloat(difHrs)!==0){
+            time  = difHrs +"h"
+          }
+          if(parseFloat(difDays)!==0){
+            time  = difDays +"d"
+          }
+          if(difMs<0){
+            colorClass = 'kecib'
+          }else{
+              if(difDays>0){
+                colorClass = "gelecek"
+              }
+              else if(difDays===0){
+                colorClass = "bugun"
+              }else{
+                colorClass = "nodeadline"
+              }
+          }
+           console.log(txt);
+           var div =  $('<div>')
+                          .addClass('td-deadline-box ')
+                          .addClass(colorClass)
+                          .append($('<span>')
+                                    .html(difMins?`<div data-placement="top" data-toggle="popover" data-trigger="hover" data-content="${txt}" >${time}</div>`:'<i class="fas fa-ellipsis-h"></i>'))
+
+          var bl  = $("<div>").html(div)
+        return bl.html();
+   // } 
+}
 
 $(document).on("change", '#updateCheckList', function (e) {
 
@@ -2975,11 +3330,23 @@ $(document).on("change", '#updateCheckList', function (e) {
     $(this).val('');
 
 })
-/* $(document).on("keypress", ".commentinput", function (event) {
-    if (event.keyCode === 13) {
-        new UserStory().addTaskCommentToTask(this)
-    }
-}) */
+
+$(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
+        var ty  = $(this).attr('all-aktiv');
+      localStorage.setItem("issue_mode_active",ty);
+      $(this).closest('#issue-table-aktiv-all').find('.title').text(ty)
+      var sel  = $("#bug_filter_status");
+       let value 
+             if(ty==='A'){
+               value  = ["new",'ongoing','waiting']
+             }else if(ty==='P'){
+                value  = ["rejected",'UAT','closed','canceled']
+             }
+             sel.val(value);
+             sel.selectpicker("refresh")
+      getBugList();
+
+})
 $(document).on("change", '#newAddCheckList', function (e) {
 
     $(this).parent().find('ul').prepend(`<li class="d-flex">
@@ -3308,6 +3675,17 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 
 });
 
+$(document).on('click','#updateTask-priority-btn', function () {
+    $(this).toggleClass('active');
+     if($(this).hasClass('active')){
+        updateTask4ShortChangeDetails('9', "taskPriority");
+     }else{
+        updateTask4ShortChangeDetails('1', "taskPriority");
+     }
+})
+$(document).on('click','#cerateTask-priority-btn', function () {
+    $(this).toggleClass('active');
+})
 
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
