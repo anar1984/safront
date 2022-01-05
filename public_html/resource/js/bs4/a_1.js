@@ -13566,21 +13566,20 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     insertCssSendDbBybacklogId(css);
 
 
-    // setBacklogAsHtmlCodeGround(global_var.current_backlog_id, block);
-    setBacklogAsHtml(global_var.current_backlog_id, css, js);
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id, elm.html());
+ ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
+
 function setBacklogAsHtmlCodeGround(backlogId, html) {
 
-    var jsLink = `<script src="https://app.sourcedagile.com/api/get/script/js/${global_var.current_domain}/${backlogId}.js"></script>`
-    var cssLink = `<link src="https://app.sourcedagile.com/api/get/script/css/${global_var.current_domain}/${backlogId}.css">`
-    if (!backlogId) {
+   if (!backlogId) {
         return;
     }
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml = cssLink + html + jsLink;
+    json.kv.backlogHtml =   html ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
