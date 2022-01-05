@@ -649,11 +649,11 @@ const taskManagement = {
                     that.insertCheckListComulativ(res.kv.id);
                     getBugList();
                     Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
-                     if($("#after_insert_modal").prop("checked")){
+                    if ($("#after_insert_modal").prop("checked")) {
                         $("#issue-managment-add-task").modal("hide");
-                       
-                     }
-                     reset_task_data();
+
+                    }
+                    reset_task_data();
                 },
                 error: function () {
                     Toaster.showError(('Tapşırıq daxil edilmədi'));
@@ -697,7 +697,7 @@ const taskManagement = {
             data.startTime = $('#taskDeadlineStartTime').val();
             data.endTime = $('#taskDeadlineEndTime').val();
             data.endDate = $('#taskDeadlineEndDade').val();
-            data.isMeet = ($("#tapshiriq-btn").hasClass("active"))?"1":"0";
+            data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "1" : "0";
             data.fkParentTaskId = $("#parent-task-id-input").val();
 
 
@@ -758,9 +758,9 @@ const taskManagement = {
                     const o = tbl[i];
                     userList += $(o).attr("id") + ",";
                 }
-                 if(!userList){
-                   return
-                 }
+                if (!userList) {
+                    return
+                }
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": userList
@@ -798,7 +798,7 @@ const taskManagement = {
                 data.specificWeekDayOfMonthAction = $("#swofm_fl_action_select").val();
                 data.specificWeekDayOfMonthWeekdays = $("#swofm_weekday_select").val();
                 data.taskCheckList = $('#commentinput_for_taskcreatechecklist').val();
-                
+
 
                 callService('serviceRsCreateBacklogTaskDetail', data, true, function () {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
@@ -825,9 +825,9 @@ const taskManagement = {
             var data = {};
             data.fkTaskId = taskId;
             data.itemName = list;
-               if(!list){
-                   return
-               }
+            if (!list) {
+                return
+            }
             callService('serviceTmInsertSingleTaskCheckListCumulativeNew', data, true, function () {
                 if (type === 'update') {
                     taskManagement.updateTask.getCheckListComulativ();
@@ -844,27 +844,27 @@ const taskManagement = {
             $('#createdtask_oblerverlist').html('');
             try {
                 var obj = res.tbl[0].r;
-            for (var i in obj) {
-                var o = obj[i];
-                var opt = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
-                var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
-                $('#bug_filter_assignee_id').append(opt);
-                $('#bug_filter_assignee_id_add').append(opt4);
-                $('#bug_filter_detail_assignee_id_add').append(opt4);
-                $('#bug_filter_assignee_id_multi').append(opt5);
-                $('#bug_filter_created_by').append(opt2);
-                $('#testcase_createdbyfilter').append(opt3);
-                $('#createdtask_oblerverlist').append(opt6);
-             
-            }
+                for (var i in obj) {
+                    var o = obj[i];
+                    var opt = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt2 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt3 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
+                    var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
+                    $('#bug_filter_assignee_id').append(opt);
+                    $('#bug_filter_assignee_id_add').append(opt4);
+                    $('#bug_filter_detail_assignee_id_add').append(opt4);
+                    $('#bug_filter_assignee_id_multi').append(opt5);
+                    $('#bug_filter_created_by').append(opt2);
+                    $('#testcase_createdbyfilter').append(opt3);
+                    $('#createdtask_oblerverlist').append(opt6);
+
+                }
             } catch (error) {
-                
+
             }
-            
+
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
             $('#bug_filter_assignee_id_add').selectpicker('refresh');
@@ -1829,12 +1829,12 @@ const taskManagement = {
             }
             global_var.current_issue_id = taskId;
             Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
-          /*   global_var.current_issue_is_hide = "0";
-            Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
+            /*   global_var.current_issue_is_hide = "0";
+              Utility.addParamToUrl('current_issue_is_hide', global_var.current_issue_is_hide); */
 
             //Task card-da Story Card-linke basanda istifade edilir.
             var dwlmt = $('#task-info-modal-tasktype')
-             taskManagement.add_loadTaskType_bug_list(dwlmt,'load');
+            taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
             if (projectId !== global_var.current_project_id) {
                 global_var.current_project_id = projectId;
                 new UserStory().refreshBacklog4Bug(true);
@@ -1845,26 +1845,26 @@ const taskManagement = {
 
             let headerText = $(el).html();
             $(".card-UserStory-header-text").html(headerText);
-           
-            taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'update')
+
+            taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'update')
             loadTaskInfoToContainer(taskId, projectId);
             taskManagement.updateTask.genCommentListOfTask();
             $("#task-info-modal-status").val(coreBugKV[taskId].taskStatus);
             $("#task-info-modal-status").selectpicker('refresh');
-            $("#task-mgmt-create-by>img").attr('src',fileUrl(coreBugKV[taskId].createByImage));
+            $("#task-mgmt-create-by>img").attr('src', fileUrl(coreBugKV[taskId].createByImage));
             $("#task-mgmt-create-by>span").text(coreBugKV[taskId].createByName);
-             $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
-             $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
+            $('#taskDetailDeadlineStartDade').val(coreBugKV[taskId].startDate);
+            $('#taskDetailDeadlineStartTime').val(coreBugKV[taskId].startTime);
             $('#taskDetailDeadlineEndTime').val(coreBugKV[taskId].endTime);
-             $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
-             if(coreBugKV[taskId].isMeet==='1'){
+            $('#taskDetailDeadlineEndDade').val(coreBugKV[taskId].endDate);
+            if (coreBugKV[taskId].isMeet === '1') {
                 $("#toplanti-d-btn").click();
-             }else{
+            } else {
                 $("#tapshiriq-btn").click();
-             }
+            }
             $("#taskMgmtModal").modal("show");
             //set backlog infos
-            
+
             if (coreBugKV[taskId].backlogName) {
                 $('#taskMgmtModal').find('#task-mgmt-modal-user-story')
                     .attr('pid', coreBugKV[taskId].fkBacklogId)
@@ -1877,7 +1877,7 @@ const taskManagement = {
             this.getTaskEvent(taskId);
             getChildTasks();
             getParentTask();
-           
+
         },
         updateEventByTaskId: function (id) {
 
@@ -1922,15 +1922,15 @@ const taskManagement = {
                 }
             });
         },
-        updateObserverTask: function (taskId,val) {
+        updateObserverTask: function (taskId, val) {
             try {
-                
-                var that  = this ;
+
+                var that = this;
                 callService('serviceTminsertTaskObserver', {
                     "fkTaskId": taskId,
                     "fkUserId": val
                 }, true, function () {
-                     that.getTaskObserverList(taskId);
+                    that.getTaskObserverList(taskId);
                 });
             } catch (error) {
                 console.log('task Observer ++++' + error);
@@ -2060,7 +2060,8 @@ const taskManagement = {
                                     .attr('type', 'checkbox')
                                     .attr("checked", (o.isChecked === '1') ? true : false))
                                 .append('<span class="checkmark"></span>')))
-                        .append($('<span>')
+                        .append($('<div>')
+                            .addClass('mr-auto w-100')
                             .addClass((o.isChecked === '1') ? 'text-checked' : '')
                             .append($('<textarea>')
                                 .attr('rows', '1')
@@ -2068,12 +2069,15 @@ const taskManagement = {
                                 .attr("oid", o.id)
                                 .addClass("updateTaskcheckListItemName")
                                 .val(o.itemName)))
-                        .append($('<span>')
+                        .append($('<div>')
+                        .addClass('pl-1 p2-1')
                             .append(createdBySpan))
-                        .append($('<span>')
+                        .append($('<div>')
+                        .addClass('pl-1 p2-1')
                             .append(updatedBySpan))
 
-                        .append($('<span>')
+                        .append($('<div>')
+                        .addClass('pl-1 p2-1 d-table')
                             .append($('<a href="#">')
                                 .attr('oid', o.id)
                                 .addClass("taskCheckListItemDelete")
@@ -2152,7 +2156,7 @@ const taskManagement = {
                             '';
 
                         var tr = $("<tr>")
-                            .append($('<td>').text(( parseFloat(l) + 1)))
+                            .append($('<td>').text((parseFloat(l) + 1)))
                             .append($('<td>')
                                 .append(userSpan))
                             .append($('<td>')
@@ -2346,32 +2350,502 @@ const taskManagement = {
             var el = $('#bug_filter_detail_assignee_id_update')
             el.html('');
             try {
-               
-    
+
+
                 var obj = res.tbl[0].r;
                 for (var i in obj) {
                     var o = obj[i];
                     var opt4 = $('<option>').val(o.fkUserId).text(o.userName);
-                    
+
                     el.append(opt4);
-                   
-                  
-                    
-            
-                } 
-                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);  
-                el.selectpicker("destroy");             
+
+
+
+
+                }
+                console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+                el.selectpicker("destroy");
                 el.val(coreBugKV[global_var.current_issue_id].fkAssigneeId);
                 el.selectpicker("refresh");
             } catch (error) {
                 el.hide();
             }
-            
-           
+
+
 
         }
 
 
+    },
+    readTask: {
+        Init: function () {
+
+        },
+        genBlockTask: {
+            Init: function (elm) {
+                var div = $(elm);
+                div.empty();
+                var view = localStorage.getItem('task-view-format');
+                if (view === 'kanban') {
+                    div.append(this.genHeader());
+                } else if (view === 'table') {
+                    div.append(this.genHeader());
+                    div.append(this.genTableView.genTableBlock());
+                }
+
+            },
+            genHeader: function () {
+                return `<div class="header-info-section d-flex w-100">
+                <div class="mr-auto p-2">
+                    <div class="d-flex justify-content-start" id="task-list-statistic-block"> 
+                
+               </div>    
+                </div>
+                <div class="p-2 mt-2">
+                    <div class="dropdown info-box-dropdown" id="task-table-aktiv-all">
+                        <a class="btn dropdown-toggle" href="#" role="button" id="task-table-aktiv-all1" data-toggle="dropdown" aria-expanded="false">
+                            <span class="title">H</span> <span id="row-count-table">125</span>
+                        </a>
+                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-table-aktiv-all1">
+                          <a class="dropdown-item" all-aktiv="A" href="#">Activ</a>
+                          <a class="dropdown-item" all-aktiv="P" href="#">Passiv</a>
+                          <a class="dropdown-item" all-aktiv="H" href="#">Hamısı</a>
+                        </div>
+                      </div>
+                   </div>
+                </div>`
+            },
+            genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
+                return `
+               <div class="info-box mr-2">
+               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+                   <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
+               </div>
+               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
+                   <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
+               </div>
+           </div> 
+           <div class="info-box mr-2">
+                <span class="title">Tarix</span>
+                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                    <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
+                </div>
+                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                    <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
+                </div>
+                <div class="info-item-elements" data-placement="bottom" data-toggle="p
+                opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
+                    <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
+                </div>
+                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                    <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+                </div>
+            </div>
+            <div class="info-box">
+                <span class="title">Status</span>
+                <div class=" info-item-elements" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
+                  <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
+                </div>
+                <div class=" info-item-elements" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
+                    <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
+                </div>
+                <div class=" info-item-elements" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
+                    <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
+                </div>
+        
+                <div class=" info-item-elements active" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
+                    <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
+                </div>
+                <div class=" info-item-elements" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
+                    <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
+                </div>
+                <div class=" info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
+                    <i class="cs-svg-icon none"></i> <span>${rejected}</span>
+        
+                </div>
+                <div class=" info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
+                    <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
+                </div>
+                <div class=" info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
+                    <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
+                </div>
+            </div>`
+            },
+            genKanbanView: {
+                genZonaBlock: function () {
+                   
+                },
+                genKanbanContentBlock: function () {
+
+                },
+            },
+            genTableView: {
+                genTableBlock: function () {
+                    return `   <div class="col pl-1 pr-1" id="addBuglist">
+                   <div class="row" style="margin: 0;">
+                       <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                           <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
+                               <thead class="bugThead">
+                                ${this.genTableHeaderBlock()}
+                               </thead>
+                               <tbody>
+       
+                               </tbody>
+       
+                           </table>
+                       </div>
+                       
+                   </div>
+                  
+       
+                   <div class=" col-12 d-flex justify-content-center paginationStyle">
+                       <nav aria-label="Page navigation example">
+                           <ul class="pagination" id="pagination_block">
+                               <li class="page-item">
+                                   <a class="page-link" href="#" aria-label="Previous">
+                                       <span aria-hidden="true">&laquo;</span>
+                                       <span class="sr-only">Previous</span>
+                                   </a>
+                               </li>
+                               <li class="page-item num"><a class="page-link">1</a></li>
+                               <li class="page-item num"><a class="page-link">2</a></li>
+       
+                               <li class="page-item order-last">
+                                   <a class="page-link" href="#" aria-label="Next">
+                                       <span aria-hidden="true">&raquo;</span>
+                                       <span class="sr-only">Next</span>
+                                   </a>
+                               </li>
+                           </ul>
+                       </nav>
+                   </div>
+               </div>   `
+                },
+                genTableHeaderBlock: function () {
+                    return `<thead class="bugThead">
+                    <tr>
+                    <th><i class="cs-svg-icon numbers"></i></th>
+                    <th><input type="checkbox" class="all-bug-list-check"></th>
+                    <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
+                    <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
+                    <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
+                    <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
+                    <th class="bug-list-column bug-list-column-task-nature" style="width: 140px;">Task Nature</th>
+                    <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
+                    <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
+                    <th class="bug-list-column bug-list-column-project" style="">Project</th>
+                    <th class="bug-list-column bug-list-column-assignee" style="width: 70px;"><i class="cs-svg-icon task-user-1"></i></th>
+                    <th class="bug-list-column bug-list-column-created-by" style="width: 70px;"><i class="cs-svg-icon task-user-2"></i></th>
+                    <th class="bug-list-column bug-list-column-created-date" style="width: 80px;"><i class="cs-svg-icon calendar-01-dark"></i></th>
+                    <th class="bug-list-column bug-list-column-close-date" style="display: none;">Closed On</th><th class="bug-list-column bug-list-column-closed-by" style="display: none;">Closed By</th>
+                    <th class="bug-list-column bug-list-column-last-update" style="display: none;">Last Update</th>
+                    <th class="bug-list-column bug-list-column-estimated-hours" style="display: none;">Estimated Hour(s)</th>
+                    <th class="bug-list-column bug-list-column-spent-hours" style="display: none;">Spent Hour(s)</th>
+                    <th class="bug-list-column bug-list-column-estimated-counter" style="display: none;">Estimated Counter</th>
+                    <th class="bug-list-column bug-list-column-executed-counter" style="display: none;">Executed Counter</th>
+                    <th class="bug-list-column bug-list-column-estimated-budget" style="display: none;">Estimated Budget</th>
+                    <th class="bug-list-column bug-list-column-spent-budget" style="display: none;">Spent Budget</th>
+                    <th></th>
+                    </tr>
+                   </thead>`
+                },
+                genTableBodyBlock: function (res) {
+                    //    tbody to append
+                    var table = $('#bugListTable');
+                    var tbody = $('#bugListTable > tbody');
+                    tbody.html('');
+                    table.append(getBugListDetailsHeader());
+                    // // thead to appaend----main header
+                    var sumEstHours = 0,
+                        sumSpentHours = 0,
+                        sumEstCount = 0,
+                        sumExecCount = 0,
+                        sumEstBudget = 0,
+                        sumSpentBudget = 0;
+
+
+
+                    var obj = res.tbl[0].r;
+                    for (var i = 0; i < obj.length; i++) {
+                        var o = obj[i];
+
+                        /*         var isLabelChecked = (bug_filter.label_id.length > 1);
+                         var divLabelFilter = $('<div>')
+                         .append($("<input type='checkbox'>")
+                         .addClass("assign-label-to-task-item")
+                         .attr("pid", o.id)
+                         .attr('projectId', o.fkProjectId)
+                         .attr('backlogId', o.fkBacklogId)
+                         .attr("checked", isLabelChecked)
+                         .attr("sid", global_var.bug_task_label_assign_id))
+                         .append($('<span>').append(" (" + global_var.bug_task_label_assign_name + ") ")); */
+
+                        /* var rsLabelFilter = global_var.bug_task_label_assign_checked === 1 */
+                        /*  ?
+                                 divLabelFilter.html() :
+                                 ""; */
+                        /* 
+                         var ischecked = (bug_filter.sprint_id.length > 1); */
+                        /*         var div = $('<div>')
+                         .append($("<input type='checkbox'>")
+                         .addClass("assign-sprint-to-task-item")
+                         .attr("pid", o.id)
+                         .attr('projectId', o.fkProjectId)
+                         .attr('backlogId', o.fkBacklogId)
+                         .attr("checked", ischecked)
+                         .attr("sid", global_var.bug_task_sprint_assign_id))
+                         .append($('<span>').append(" (" + global_var.bug_task_sprint_assign_name + ") ")); */
+
+
+
+                        var rs = global_var.bug_task_sprint_assign_checked === 1
+                        /* ?
+                                div.html() :
+                                ""; */
+
+                        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+
+                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                        row += " " /* + rs + rsLabelFilter; */
+
+                        var userImage = o.userImage;
+                        var img = (userImage) ?
+                            fileUrl(userImage) :
+                            fileUrl(new User().getDefaultUserprofileName());
+
+                        var createByImage = o.createByImage;
+                        var createdByImg = (createByImage) ?
+                            fileUrl(createByImage) :
+                            " ";
+
+                        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var task_id = getTaskCode(o.id);
+
+                        var dropMenuDiv = $("<div>")
+                            .addClass("dropdown-menu")
+                            .attr("aria-labelledby", "bug-status-dropdown")
+
+                            .append('<a class="dropdown-item" data-value ="new">New</a>')
+                            .append('<a class="dropdown-item" data-value ="ongoing">Ongoing</a>')
+                            //                        .append('<a class="dropdown-item" data-value ="closed">closed</a>')
+                            .append('<a class="dropdown-item" data-value ="waiting">Waiting</a>')
+                            .append('<a class="dropdown-item" data-value ="Canceled">Canceled</a>')
+                        //                        .append('<a class="dropdown-item" data-value ="UAT">UAT</a>')
+
+                        var t = $('<tr>')
+                            .attr("id", o.id)
+                            .attr("projectId", o.fkProjectId)
+                            .attr("stIdr", o.fkBacklogId)
+                            .addClass('bug-tr')
+                            .append($('<td>').attr("style", "width:25px;")
+                                .append(row)
+                            )
+                            .append($('<td>').attr("style", "width:30px;")
+                                .addClass('bug-list-checkbox')
+                                .append('<input class="checkbox-issue-task" type="checkbox">')
+                            )
+                            .append($('<td>').addClass('bug-list-column').attr("style", "width:100px;")
+                                .addClass('bug-list-column-task-id').append(task_id))
+                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                                .addClass('bug-list-column-task-deadline')
+                                .append($('<div>').addClass('td-deadline-box kecib')
+                                    .append($('<span>')
+                                        .text('-22s')))
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-status cs-input-group')
+                                .css("text-align", 'left')
+                                .css("padding-left", '3px')
+                                .css("overflow", 'initial')
+                                .append($("<div>")
+                                    .addClass("dropdown")
+                                    .append($("<div>")
+                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                        .addClass('us-item-status-' + o.taskStatus)
+                                        .attr("data-toggle", "dropdown")
+                                        .attr("aria-haspopup", "true")
+                                        .attr("aria-expanded", "false")
+                                        .attr("id", "bug-status-dropdown")
+                                        .append($('<span>')
+                                            .append(o.taskStatus)))
+                                    .append(o.taskStatus !== 'UAT' ? dropMenuDiv : "")
+                                ))
+                            .append($('<td>')
+                                .addClass('bug-list-column')
+                                .addClass('bug-list-column-task-name')
+                                .css("max-width", '240px')
+                                .append(taskName, ' ')
+                                .append("<input type='text' class=' task-name-issue select-box-issue'>")
+                                .append($("<div>")
+                                    .addClass("dropdown task-name-editdrop")
+                                    .append($("<button>")
+                                        .addClass('btn btn-light')
+                                        .attr("aria-haspopup", "true")
+                                        .attr("aria-expanded", "false")
+                                        .attr("data-toggle", "dropdown")
+                                        .attr("id", "bug-taskName-dropdown")
+                                        .append('<i class="fas fa-ellipsis-v"></i>'))
+
+                                    .append($("<div>")
+                                        .addClass("dropdown-menu")
+                                        .attr("aria-labelledby", "bug-taskName-dropdown")
+
+                                        .append('<a class="dropdown-item forward-task" href="#" onclick="()">Create Child Task</a>')
+                                        .append('<a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward To</a>')
+                                        .append('<a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign To</a>')
+                                        .append('<a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>')
+                                        .append('<a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>')
+                                        .append('<a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>')
+                                        .append('<a class="dropdown-item" href="#" onclick="userAcceptance()">User Acceptance Testing</a>')
+                                        .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
+
+                                    ))
+                                .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-nature')
+                                .append($("<div>")
+                                    .addClass("dropdown")
+                                    .append($("<div>")
+                                        .addClass('dropdown-toggle cst-dropwdown-toggle-bug')
+                                        .attr("data-toggle", "dropdown")
+                                        .attr("aria-haspopup", "true")
+                                        .attr("aria-expanded", "false")
+                                        .attr("id", "bug-taskNature-dropdown")
+                                        .append(getBugListTaskNatureValue(o.taskNature)))
+
+                                    .append($("<div>")
+                                        .addClass("dropdown-menu")
+                                        .attr("aria-labelledby", "bug-taskNature-dropdown")
+
+                                        .append('<a class="dropdown-item" data-value ="new">New Request</a>')
+                                        .append('<a class="dropdown-item" data-value ="change">Change Request</a>')
+                                        .append('<a class="dropdown-item" data-value ="bug">Bug</a>')
+
+                                    )))
+
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-story-card')
+                                .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
+                                .append(' <select dataPid=' + o.fkProjectId + ' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
+                                .append($('<div>').addClass('set-filter-box')
+                                    .append($('<i class="fa fa-filter">')
+                                        .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
+                                        .css("display", "none")
+                                        .addClass("hpYuyept"))
+                                    .append($('<i class="fas fa-chevron-down">')
+                                        .attr('onclick', 'setChnageUserStoryCard("' + o.fkProjectId + '",this)')
+                                        .css("display", "none")
+                                        .addClass("hpYuyept1"))
+                                )
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                    $(this).find(".hpYuyept1").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                    $(this).find(".hpYuyept1").hide();
+                                })
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .attr("style", "width:140px;")
+                                .addClass('bug-list-column-project')
+                                .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                }))
+                            .append($('<td>')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column')
+                                .addClass('bug-list-column-assignee')
+                                .append(genUserTrblock(o.userName, img))
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                }))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-by ')
+                                .append(genUserTrblock(o.createByName, createdByImg))
+                                .append($('<i class="fa fa-filter">')
+                                    .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
+                                    .css("display", "none")
+                                    .addClass("hpYuyept"))
+                                .mouseover(function () {
+                                    $(this).find(".hpYuyept").show();
+                                })
+                                .mouseleave(function () {
+                                    $(this).find(".hpYuyept").hide();
+                                })
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-close-date')
+                                .append((o.closeStatusDate) ?
+                                    "<span class='get-data-group'>" + Utility.convertDate(o.closeStatusDate) + " : " + Utility.convertTime(o.closeStatusTime) + "</span>" :
+                                    ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-closed-by')
+                                .append("<span class='get-data-group'>" + o.closedByName + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-last-update').append("<span class='get-data-group'>" + (o.lastUpdatedDate) ? Utility.convertDate(o.lastUpdatedDate) : "" + "</span>"))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-hours').append((o.estimatedHours !== '0') ? o.estimatedHours : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-spent-hours').append((o.spentHours !== '0') ? o.spentHours : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-counter').append((o.estimatedCounter !== '0') ? o.estimatedCounter : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-executed-counter').append((o.executedCounter !== '0') ? o.executedCounter : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-estimated-budget').append((o.estimatedBudget !== '0') ? o.estimatedBudget : ""))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
+
+                        tbody.append(t);
+                        $('[data-toggle="popover"]').popover({
+                            html: true
+                        });
+                    }
+
+                    getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                        sumEstBudget, sumSpentBudget);
+
+                    global_var.bug_task_sprint_assign_checked = '';
+                    global_var.bug_task_sprint_assign_name = '';
+                    global_var.bug_task_sprint_assign_id = '';
+
+
+                    global_var.bug_task_label_assign_checked = '';
+                    global_var.bug_task_label_assign_name = '';
+                    global_var.bug_task_label_assign_id = '';
+                }
+            }
+        },
     },
     getBacklogLIstByprojectId: function (projectId) {
         if (!projectId) {
@@ -2425,7 +2899,7 @@ const taskManagement = {
 
         $('#' + elId).selectpicker('refresh');
     },
-    add_loadTaskType_bug_list: function (elm,dlm) {
+    add_loadTaskType_bug_list: function (elm, dlm) {
         var json = {
             kv: {}
         };
@@ -2452,7 +2926,7 @@ const taskManagement = {
                     var ids = dt[index].id;
                     var opt = $('<option>').val(ids).text(nm);
                     $(elm).append(opt);
-                    if(dlm = 'load'){
+                    if (dlm = 'load') {
                         $(elm).val(coreBugKV[global_var.current_issue_id].fkTaskTypeId);
                     }
                     $(elm).selectpicker('refresh')
@@ -2460,9 +2934,9 @@ const taskManagement = {
             }
         });
     },
-    getUserListWithImageSelectbox: function (projectId,type) {
+    getUserListWithImageSelectbox: function (projectId, type) {
         var json = initJSON();
-        json.kv.fkProjectId = projectId?projectId:global_var.current_project_id;
+        json.kv.fkProjectId = projectId ? projectId : global_var.current_project_id;
         var that = this;
         var data = JSON.stringify(json);
         console.log('sdfsdfsdf');
@@ -2474,7 +2948,7 @@ const taskManagement = {
             crossDomain: true,
             async: false,
             success: function (res) {
-                  
+
                 if (type === 'update') {
                     taskManagement.updateTask.loadAssigneesByProjectDetails(res);
                 } else if (type === 'create') {
@@ -2531,7 +3005,7 @@ $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -2548,25 +3022,25 @@ $(document).on('click', '#addModalBugIssueTaskMng', function (event) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
 });
 $(document).on('click', '#addProjectBugIssueTaskMng', function (event) {
 
-      var manId  = Utility.getParamFromUrl("fkManualProjectId")
+    var manId = Utility.getParamFromUrl("fkManualProjectId")
     taskManagement.insertTask.genBlockModal.Init()
     loadBugTaskDeadlineScripts()
-    var bgid = manId?"":getCurrentModalId4UsTask();
-    var prId = manId?manId:'21062415244905361923'; //$("#story_mn_filter_project_id").val();
+    var bgid = manId ? "" : getCurrentModalId4UsTask();
+    var prId = manId ? manId : '21062415244905361923'; //$("#story_mn_filter_project_id").val();
     $("#bug_filter_project_id_add").val(prId).change();
     $("#bug_filter_backlog_id_add").val(bgid).change();
     global_var.active_canvas = 'taskCreate';
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
 
     $("#issue-managment-add-task").modal("show");
 
@@ -2585,7 +3059,7 @@ $(document).on("click", '#addNewTaskButton', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#issue-managment-add-task").modal("show");
 
 })
@@ -2593,59 +3067,59 @@ $(document).on("click", '#addNewTaskButton', function (e) {
 function getCurrentModalId4UsTask() {
     var idb = '';
 
-   if(global_var.current_modal==='loadStoryCardMgmt'){
-       idb = '21082003291903775632'
-   }
-   if(global_var.current_modal==='loadStoryCard'){
-       idb = '21122411175006081920'
-   }
-   if(global_var.current_modal==='loadDev'){
-       idb = '21122518513102431977'
-   }
-   if(global_var.current_modal==='loadCodeGround'){
-       idb = '21122518532301398391'
-   }
-   if(global_var.current_modal==='loadProjectManagement'){
-       idb = '21090713220709994607'
-   }
-   if(global_var.current_modal==='loadDashboard'){
-       idb = '210820032833056810823'
-   }
-   if(global_var.current_modal==='loadTaskManagement'){
-       idb = '21082003302308873715'
-   }
-   if(global_var.current_modal==='loadBusinessCase'){
-       idb = '21082003314403151270'
-   }
-   if(global_var.current_modal==='loadBugChange'){
-       idb = '21082003275802222786'
-   }
-   if(global_var.current_modal==='loadTestCase'){
-       idb = '21082003310301912293'
-   }
-   if(global_var.current_modal==='loadDocEditor'){
-       idb = '21082003312500622676'
-   }
-   if(global_var.current_modal==='loadRunService'){
-       idb = '21110810291103705004'
-   }
-   if(global_var.current_modal==='loadBusinessService'){
-       idb = '21082003320807935137'
-   }
-   if(global_var.current_modal==='loadActivityDiagram'){
-       idb = ''
-   }
-   if(global_var.current_modal==='loadSourceActivity'){
-       idb = ''
-   }
-   if(global_var.current_modal==='loadEntityDiagram'){
-       idb = '21082003322903142571'
-   }
-   if(global_var.current_modal==='loadSqlBoard'){
-       idb = '21102000014805402484'
-   }
+    if (global_var.current_modal === 'loadStoryCardMgmt') {
+        idb = '21082003291903775632'
+    }
+    if (global_var.current_modal === 'loadStoryCard') {
+        idb = '21122411175006081920'
+    }
+    if (global_var.current_modal === 'loadDev') {
+        idb = '21122518513102431977'
+    }
+    if (global_var.current_modal === 'loadCodeGround') {
+        idb = '21122518532301398391'
+    }
+    if (global_var.current_modal === 'loadProjectManagement') {
+        idb = '21090713220709994607'
+    }
+    if (global_var.current_modal === 'loadDashboard') {
+        idb = '210820032833056810823'
+    }
+    if (global_var.current_modal === 'loadTaskManagement') {
+        idb = '21082003302308873715'
+    }
+    if (global_var.current_modal === 'loadBusinessCase') {
+        idb = '21082003314403151270'
+    }
+    if (global_var.current_modal === 'loadBugChange') {
+        idb = '21082003275802222786'
+    }
+    if (global_var.current_modal === 'loadTestCase') {
+        idb = '21082003310301912293'
+    }
+    if (global_var.current_modal === 'loadDocEditor') {
+        idb = '21082003312500622676'
+    }
+    if (global_var.current_modal === 'loadRunService') {
+        idb = '21110810291103705004'
+    }
+    if (global_var.current_modal === 'loadBusinessService') {
+        idb = '21082003320807935137'
+    }
+    if (global_var.current_modal === 'loadActivityDiagram') {
+        idb = ''
+    }
+    if (global_var.current_modal === 'loadSourceActivity') {
+        idb = ''
+    }
+    if (global_var.current_modal === 'loadEntityDiagram') {
+        idb = '21082003322903142571'
+    }
+    if (global_var.current_modal === 'loadSqlBoard') {
+        idb = '21102000014805402484'
+    }
 
-     return idb;
+    return idb;
 }
 
 $(document).on("click", '#addIssueButtonId', function (e) {
@@ -2659,7 +3133,7 @@ $(document).on("click", '#addIssueButtonId', function (e) {
 
 })
 $(document).on("click", '#add-child-task-open-modal', function (e) {
-    var taskId  = global_var.current_issue_id
+    var taskId = global_var.current_issue_id
     taskManagement.insertTask.genBlockModal.Init();
     loadBugTaskDeadlineScripts()
     reset_task_data();
@@ -2667,17 +3141,17 @@ $(document).on("click", '#add-child-task-open-modal', function (e) {
     taskManagement.setBugFilterProjectAdd('bug_filter_project_id_add');
     var dwlmt = $('#bug_task_type_id_add')
     taskManagement.add_loadTaskType_bug_list(dwlmt);
-    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id,'create');
+    taskManagement.getUserListWithImageSelectbox(global_var.current_project_id, 'create');
     $("#parent-task-id-input").val(taskId);
     $("#issue-managment-add-task").modal("show");
 
 
 })
-$(document).on("keyup","#taskNameInputNew2",function (event) {
-    if (event.keyCode == 13) {      
-        if(event.shiftKey){
+$(document).on("keyup", "#taskNameInputNew2", function (event) {
+    if (event.keyCode == 13) {
+        if (event.shiftKey) {
             taskManagement.insertTask.insertNewTask();
-        } 
+        }
     }
 });
 $(document).on("click", '#multi-edit-menu-btn', function (e) {
@@ -2747,9 +3221,9 @@ $(document).on("click", ".addObserverToTAsk", function (e) {
 })
 $(document).on("click", ".addObserverToTAskUpdate", function (e) {
 
-    var taskid  = Utility.getParamFromUrl('current_issue_id');
-    var val  = $("#updatetask_oblerverlist").val();
-      taskManagement.updateTask.updateObserverTask(taskid,val)
+    var taskid = Utility.getParamFromUrl('current_issue_id');
+    var val = $("#updatetask_oblerverlist").val();
+    taskManagement.updateTask.updateObserverTask(taskid, val)
 })
 
 function deleteComment(commentId) {
@@ -2806,8 +3280,8 @@ $(document).on("click", '#tapshiriq-btn', function () {
     $(this).addClass('active');
     $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
     $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
-     $('.loadUserForObserver span').text('').text('Observer');
-     
+    $('.loadUserForObserver span').text('').text('Observer');
+
 });
 
 

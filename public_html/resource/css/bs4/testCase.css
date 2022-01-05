@@ -1406,14 +1406,29 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     width:18px;
     height:18px;
 }
+.cs-modal-box .cst-table-hover thead th i:after {
+    width:14px;
+    height:14px;
+}
 .cst-table-hover thead th i.deadline:after {
     width: 26px;
     height: 18.09px;
     margin-top: -3px;
 }
+
+.cs-modal-box .cst-table-hover thead th i.deadline:after {
+    width: 21px;
+    height: 16px;
+    margin-top: -2px;
+}
 .cst-table-hover thead th i.status:after {
     width: 20px;
     height: 18px;
+    margin-top: -4px;
+}
+.cs-modal-box .cst-table-hover thead th i.status:after {
+    width: 17px;
+    height: 16px;
     margin-top: -4px;
 }
 .cst-table-hover thead th i.id:after {
@@ -1429,10 +1444,19 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 /* issue management right panel styles */
 .bugList-elements .cs-input-group .btn {
-    border-radius: 50px;
+    border-radius: 50px !important;
 }
 .bugList-elements :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
     background: transparent;
+}
+.bugList-elements .bootstrap-select {
+    width: 360px !important;
+}
+.bugList-elements .bootstrap-select .dropdown-menu li a {
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .bugList-elements .cs-input-group .btn {
     color: #ffffff;

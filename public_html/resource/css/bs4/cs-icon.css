@@ -8,6 +8,10 @@
     background-repeat: no-repeat;
     vertical-align: middle;
   }
+.cs-svg-icon.cs-xs-icon:after, i.cs-svg-icon.cs-xs-icon:after, span.cs-svg-icon.cs-xs-icon:after {
+    width: 14px !important;
+    height: 20px !important;
+  }
   
   .cs-svg-icon.arrow-1:after {
     background-image: url(../ch-icons/arrow-1.svg);
@@ -75,8 +79,8 @@
   .cs-svg-icon.filter:after {
     background-image: url(../ch-icons/filter.svg);
   }
-  .cs-svg-icon.foolscreen:after {
-    background-image: url(../ch-icons/foolscreen.svg);
+  .cs-svg-icon.fullscreen:after {
+    background-image: url(../ch-icons/fullscreen.svg);
   }
   .cs-svg-icon.help-icon:after {
     background-image: url(../ch-icons/help-icon.svg);
@@ -86,6 +90,9 @@
   }
   .cs-svg-icon.hour-02:after {
     background-image: url(../ch-icons/hour-02.svg);
+  }
+  .cs-svg-icon.hour-03:after {
+    background-image: url(../ch-icons/hour-03.svg);
   }
   .cs-svg-icon.hours:after {
     background-image: url(../ch-icons/hours.svg);
@@ -165,6 +172,9 @@
   .cs-svg-icon.task-02:after {
     background-image: url(../ch-icons/task-02.svg);
   }
+  .cs-svg-icon.task-03:after {
+    background-image: url(../ch-icons/task-03.svg);
+  }
   .cs-svg-icon.task-checking:after {
     background-image: url(../ch-icons/task-checking.svg);
   }
@@ -176,6 +186,9 @@
   }
   .cs-svg-icon.user-eye:after {
     background-image: url(../ch-icons/user-eye.svg);
+  }
+  .cs-svg-icon.user-eye-o:after {
+    background-image: url(../ch-icons/user-eye-o.svg);
   }
   .cs-svg-icon.users-circle:after {
     background-image: url(../ch-icons/users-circle.svg);
@@ -274,6 +287,12 @@
   .cs-svg-icon.subtask:after {
     background-image: url(../ch-icons/subtask.svg);
   }
+  .cs-svg-icon.subtask-o:after {
+    background-image: url(../ch-icons/subtask-o.svg);
+  }
+  .cs-svg-icon.subtask-o-light:after {
+    background-image: url(../ch-icons/subtask-o-light.svg);
+  }
   .cs-svg-icon.subtask-light:after {
     background-image: url(../ch-icons/subtask-light.svg);
   }
@@ -291,4 +310,13 @@
   }
   .cs-svg-icon.comment:after {
     background-image: url(../ch-icons/comment.svg);
+  }
+  .cs-svg-icon.comment-01:after {
+    background-image: url(../ch-icons/comment-01.svg);
+  }
+  .cs-svg-icon.input:after {
+    background-image: url(../ch-icons/input.svg);
+  }
+  .cs-svg-icon.live:after {
+    background-image: url(../ch-icons/live.svg);
   }
