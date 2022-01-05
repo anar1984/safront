@@ -1599,6 +1599,10 @@ function getDataFromForm(el) {
     return getGUIDataByStoryCard(el);
 }
 
+function getDataFromTable(el) {
+    return getGUIDataByStoryCard(el);
+}
+
 function clearDataInForm(formId, data) {
     //element eger table-nin tr-in click olubdursa yalniz tr-in icindeki
     //redirectClassa shamir edilir.

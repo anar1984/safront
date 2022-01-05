@@ -4906,7 +4906,6 @@ function getPermissionRoleByProject() {
                 el.append($('<option>').val(o.id).text(o.roleName))
             }
         }
-
     });
 }
 
