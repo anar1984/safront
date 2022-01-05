@@ -1326,7 +1326,7 @@ function getBugListDetails(res) {
     var table = $('#bugListTable');
     var tbody = $('#bugListTable > tbody');
     tbody.html('');
-    table.append(getBugListDetailsHeader());
+    //table.append(getBugListDetailsHeader());
     // // thead to appaend----main header
     var sumEstHours = 0,
             sumSpentHours = 0,
@@ -1334,9 +1334,6 @@ function getBugListDetails(res) {
             sumExecCount = 0,
             sumEstBudget = 0,
             sumSpentBudget = 0;
-
-
-
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
