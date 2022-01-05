@@ -13531,7 +13531,9 @@ function getIframeBlock(pid, css, js, bodys) {
         $(body).find('#js-function-list-for-story-card').text(js);
     } else {
         $(body).append($('<script id="js-function-list-for-story-card">')
-                      .text("(function(){"+js+"})(window,document);"));
+                   //   .text("(function(){"+js+"})(window,document);")
+                      .text(js)
+                      );
     }
     return body;
     var $iframe = $("<div class='overflow-hidden'>")
