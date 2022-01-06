@@ -439,7 +439,6 @@ function getLeft(divObj, parentDivId) {
     return rc;
 }
 
-
 function GetApiActionTypeText(arg) {
     switch (arg) {
         case 'C':
@@ -463,10 +462,6 @@ function GetApiActionTypeText(arg) {
     }
     return arg;
 }
-
-
-
-
 function bindScrollZadToCanvas() {
     //    $('.SUS_IPO_GUI_Design1').scroll(function () {
     //        SADebug.DrawLineOnZoom();
@@ -509,8 +504,6 @@ $(document).on("click", '#file_export_excel_new', function () {
 
 
 });
-
-
 function exportExcelFile(workbook) {
     return XLSX.writeFile(workbook, "bookName.xlsx");
 }
@@ -568,7 +561,6 @@ function filePicked(oEvent, tabID) {
     // Tell JS To Start Reading The File.. You could delay this if desired
     reader.readAsBinaryString(oFile);
 }
-
 
 function getGroupList4Table(elm) {
 
@@ -13531,9 +13523,7 @@ function getIframeBlock(pid, css, js, bodys) {
         $(body).find('#js-function-list-for-story-card').text(js);
     } else {
         $(body).append($('<script id="js-function-list-for-story-card">')
-                   //   .text("(function(){"+js+"})(window,document);")
-                      .text(js)
-                      );
+                      .text("(function(){"+js+"})(window,document);"));
     }
     return body;
     var $iframe = $("<div class='overflow-hidden'>")

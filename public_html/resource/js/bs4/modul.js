@@ -40,3 +40,39 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     });
     return pageId;
 }
+function genTimePickerById(id) {
+  $('#' + id).daterangepicker({
+      showDropdowns: true,
+      showWeekNumbers: true,
+      timePicker: false,
+      timePickerIncrement: 1,
+      timePicker12Hour: true,
+      defaultDate: true,
+      startDate:  moment(),
+      endDate:  moment(),
+      ranges: {
+          'This Day': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Son 7 gün': [moment().subtract(6, 'days'), moment()],
+          'Son 30 gün': [moment().subtract(29, 'days'), moment()],
+          'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
+          'Son Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      },
+  
+      buttonClasses: ['btn btn-default'],
+      applyClass: 'btn-small btn-primary',
+      cancelClass: 'btn-small btn-cancel-value-clear',
+      separator: ' to ',
+      drops:"up",
+      locale: {
+
+          applyLabel: 'Search',
+          cancelLabel: 'cancel',
+          fromLabel: 'From',
+          toLabel: 'To',
+          customRangeLabel: 'Special',
+          daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+          monthNames: ['January', 'February', 'March', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
+      }
+  });
+}

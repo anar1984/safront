@@ -18,6 +18,7 @@ var bug_filter = {
     sprint_id: '',
     label_id: '',
     showChildTask: '1',
+    createdDate: '',
 }
 
 var sprintTaskIds = "";
@@ -253,7 +254,6 @@ function getLabelFilterCheckedCount() {
     return rc;
 }
 
-
 function getSprintFilterCheckedCount() {
     var rc = 0;
     $('.bug-task-filter-checkbox-sprint').each(function () {
@@ -439,8 +439,6 @@ function deleteBugFromTable(el) {
         }
     });
 }
-
-
 
 function addNewTask4BugMulti(tskNm) {
     if (!tskNm.trim()) {
@@ -745,8 +743,6 @@ function setBugFilterProject() {
                 .text(SACore.Project[pid]))
     }
 }
-
-
 function addUserStoryNewPopupBug() {
     var usName = $('#addUserStoryPopupModal-userstoryname1').val();
     var prid = $('#bug_filter_project_id_add_pop').val();
@@ -813,9 +809,6 @@ function addUserStoryNewModalWithProject() {
     $('#addUserStoryPopupModalwithProject').modal('show');
     $('#addUserStoryPopupModal-userstoryname').focus();
 }
-
-
-
 function setBugFilterMultiValues() {
     $('.bug-filter-multi').each(function () {
         var data_type = $(this).attr('data-type');
@@ -854,7 +847,6 @@ function setBugFilterCheckBoxValues() {
     })
 }
 
-
 function setBugFilterLabelValues() {
     var st = ' ';
     $('.bug-task-filter-checkbox-label').each(function () {
@@ -864,6 +856,22 @@ function setBugFilterLabelValues() {
     })
     st = st.substring(0, st.length - 1);
     bug_filter.label_id = st;
+}
+function setBugFilterCreatedDateValues() {
+    try {
+        var val  = $("#issue-list-datetime").val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+        var inns = stTime.trim() + ' AND ' + endTime.trim();
+        bug_filter.createdDate = inns;
+    } catch (error) {
+        
+    }
+   
+    
 }
 
 function setBugFilterSprintValues() {
@@ -1124,6 +1132,7 @@ function setBugListInitialData() {
     setBugFilterMultiValues();
     setBugFilterSprintValues();
     setBugFilterLabelValues();
+    setBugFilterCreatedDateValues()
 
     bug_filter.sortBy = $('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
@@ -1144,7 +1153,24 @@ function getBugList() {
     json.kv.closedBy = bug_filter.closed_by;
     json.kv.createdBy = bug_filter.created_by;
     json.kv.fkBackogId = bug_filter.backlog_id;
-    json.kv.taskStatus = bug_filter.status;
+    if(bug_filter.status){
+        json.kv.taskStatus = bug_filter.status;
+        
+    }else{
+       var ty = localStorage.getItem("issue_mode_active");
+      $('#issue-table-aktiv-all').find('.title').text(ty);
+      var sel  = $("#bug_filter_status");
+         let value 
+             if(ty==='A'){
+               value  = ["new",'ongoing','waiting'];
+             }else if(ty==='P'){
+                value  = ["rejected",'UAT','closed','canceled'];     
+             }
+             sel.val(value);
+             sel.selectpicker("refresh");
+             json.kv.taskStatus = getBugFilterMultiSelect(sel);
+    }
+    
     json.kv.priority = bug_filter.priority;
     json.kv.taskNature = bug_filter.nature;
     json.kv.searchText = bug_filter.search_text;
@@ -1157,7 +1183,7 @@ function getBugList() {
     json.kv.closedDateFrom = bug_filter.closed_date_from;
     json.kv.closedDateTo = bug_filter.closed_date_to;
     json.kv.showChildTask = bug_filter.showChildTask;
-    json.kv.showChildTask = bug_filter.showChildTask;
+    json.kv.createdDate = bug_filter.createdDate;
     json.kv.startLimit = 0;
     json.kv.endLimit = 25;
     var that = this;
@@ -1173,7 +1199,17 @@ function getBugList() {
             AJAXCallFeedback(res);
             coreBugList = res;
             setKV4CoreBugList();
-            taskManagement.readTask.genBlockTask.genTableView.genTableBodyBlock(res);
+
+            var view = localStorage.getItem('task-view-format');
+                if (!view) {
+                    view = "table"
+                }
+                if (view === 'kanban') {
+                    taskManagement.readTask.genBlockTask.genKanbanView.getKanbanBodyBlock(res);
+                } else if (view === 'table') {
+                    taskManagement.readTask.genBlockTask.genTableView.genTableBodyBlock(res);
+                }
+           
             toggleColumns();
             setPagination(res.kv.tableCount, res.kv.limit);
             getGroupList();
