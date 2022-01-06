@@ -626,16 +626,23 @@ $(document).on("change", '.bug-filter', function (e) {
 
 $(document).on("click", '.page-item-core-previous', function (e) {
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
-        getBugList();
+         if((parseInt(bug_filter.page_no) - 1)>0){
+            bug_filter.page_no = parseInt(bug_filter.page_no) - 1;
+            getBugList();
+         }
+      
     }
 
 })
 
 $(document).on("click", '.page-item-core-next', function (e) {
+     var val = $("#pagintion-selectbox-issue").val();
     if (global_var.current_modal == "loadBugChange") {
-        bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
-        getBugList();
+         if(val>bug_filter.page_no){
+            bug_filter.page_no = parseInt(bug_filter.page_no) + 1;
+            getBugList();
+         }
+     
     }
 
 })
@@ -779,7 +786,7 @@ function addUserStoryNewPopupBug() {
 //            $('#addUserStoryPopupModalwithProject').modal('hide');
 
             if (global_var.current_modal === 'loadStoryCard') {
-                $('.projectList_liveprototype_storycard').change();
+                $('select.projectList_liveprototype_storycard').change();
             }
 
             $("#bug_filter_backlog_id").val(res.kv.id)
@@ -1166,7 +1173,7 @@ function getBugList() {
             AJAXCallFeedback(res);
             coreBugList = res;
             setKV4CoreBugList();
-            getBugListDetails(res);
+            taskManagement.readTask.genBlockTask.genTableView.genTableBodyBlock(res);
             toggleColumns();
             setPagination(res.kv.tableCount, res.kv.limit);
             getGroupList();
@@ -1192,34 +1199,13 @@ function setKV4CoreBugList() {
 }
 
 function setPagination(rowcount, limit) {
+    $("#issue-table-aktiv-all #row-count-table").text(rowcount)
     var rc = Math.ceil(rowcount / limit);
-    var el = $('#pagination_block');
-    el.html('');
-    el.append($('<li class="page-item page-item-core-previous">')
-            .append($('<a class="page-link" href="#" aria-label="Previous">')
-                    .append($('<span aria-hidden="true">').append('&laquo;'))
-                    .append($('<span class="sr-only">').append('Previous'))))
+    var el = $('.brand-issue-management .pagination_btn');
+    el.html( ((bug_filter.page_no * limit)-limit+1)+"-"+(bug_filter.page_no * limit)+"/"+rowcount);
 
-    for (var i = 1; i <= rc; i++) {
-
-        var li = $('<li>')
-                .addClass('page-item num page-item-core')
-                .attr('page-no', i)
-                .append($('<a  href="#" class="page-link">').append(i));
-
-        if (i === parseInt(bug_filter.page_no)) {
-            li.addClass("active");
-        }
-
-        el.append(li)
-
-
-    }
-
-    el.append($('<li class="page-item order-last page-item-core-next">')
-            .append($('<a class="page-link" href="#" aria-label="Next">')
-                    .append($('<span aria-hidden="true">').append('&raquo;'))
-                    .append($('<span class="sr-only">').append('Next'))))
+      $("#pagintion-selectbox-issue").val(rc);
+  
 
 }
 
@@ -1326,7 +1312,7 @@ function getBugListDetails(res) {
     var table = $('#bugListTable');
     var tbody = $('#bugListTable > tbody');
     tbody.html('');
-    table.append(getBugListDetailsHeader());
+    //table.append(getBugListDetailsHeader());
     // // thead to appaend----main header
     var sumEstHours = 0,
             sumSpentHours = 0,
@@ -1334,9 +1320,6 @@ function getBugListDetails(res) {
             sumExecCount = 0,
             sumEstBudget = 0,
             sumSpentBudget = 0;
-
-
-
     var obj = res.tbl[0].r;
     for (var i = 0; i < obj.length; i++) {
         var o = obj[i];
@@ -1630,8 +1613,8 @@ function getBugListDetails(res) {
         });
     }
 
-    getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-            sumEstBudget, sumSpentBudget);
+   // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+   //         sumEstBudget, sumSpentBudget);
 
     global_var.bug_task_sprint_assign_checked = '';
     global_var.bug_task_sprint_assign_name = '';
@@ -2233,6 +2216,7 @@ function addUserStoryToTask_loadTaskType_bug_list(elm) {
 
 
 function toggleColumns() {
+ //   $('#bug_filter_columns option:selected').removeAttr("selected");
     $('.bug-list-column').hide();
     var colList = $('#bug_filter_columns').val();
     for (var col in colList) {
@@ -3239,12 +3223,15 @@ $(document).on("click", ".loadUserForObserver", function (e) {
                 console.log(res);
                 for (var i in obj) {
                     var o = obj[i];
+                    console.log(o);
                     var opt = `<option value='${o.fkUserId}' data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='${fileUrl(o.userImage)}' alt='avatar' srcset=''>${o.userName}</span>"></option>
                   </select>`;
                     cmb.append(opt);
                     cmb.selectpicker('refresh');
                 }
             });
+
+            
 
 })
 

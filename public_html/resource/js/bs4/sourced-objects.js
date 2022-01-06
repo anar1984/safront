@@ -630,11 +630,11 @@ var SACore = {
         try {
             var idx = getIndexOfTable(res, "backlogDescList");
             var obj = res.tbl[idx].r;
-            this.updateBacklogDescriptionByResDEtails(obj) 
+            this.updateBacklogDescriptionByResDEtails(obj)
         } catch (errr) {
         }
     },
-     updateBacklogDescriptionByResDEtails: function (res) {
+    updateBacklogDescriptionByResDEtails: function (res) {
         try {
             var obj = res;
             for (var n = 0; n < obj.length; n++) {
@@ -665,10 +665,14 @@ var SACore = {
     },
     addBacklogByRes: function (res) {
         var idx = getIndexOfTable(res, "userStoryTable");
-        var obj = res.tbl[idx].r;
-        for (var n = 0; n < obj.length; n++) {
-            var o = obj[n];
-            this.AddBacklog(o.id, o);
+        try {
+            var obj = res.tbl[idx].r;
+            for (var n = 0; n < obj.length; n++) {
+                var o = obj[n];
+                this.AddBacklog(o.id, o);
+            }
+        } catch (err) {
+
         }
     },
     addInputToBacklog: function (backlogId, inputId) {
@@ -704,8 +708,8 @@ var SACore = {
                 this.AddBacklog(o.id, o);
                 this.SetBacklogNo(o.backlogNo, o.id);
 //                if (o.isSourced === '1') {
-                    this.AddSUSs(o.id);
-                    this.FillSUSCombobox(o);
+                this.AddSUSs(o.id);
+                this.FillSUSCombobox(o);
 //                }
             }
             this.SortFilledCombos();
@@ -757,8 +761,8 @@ var SACore = {
                 var id = keys[n];
                 var o = this.Backlogs[id];
 //                if (o.isSourced === '1') {
-                    this.AddSUSs(o.id);
-                    this.FillSUSCombobox(o);
+                this.AddSUSs(o.id);
+                this.FillSUSCombobox(o);
 //                }
             }
             this.SortFilledCombos();
@@ -812,9 +816,12 @@ var SACore = {
                 .attr("value", obj.id)
                 .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
 
-        $('#us-related-sus').append($("<option></option>")
-                .attr("value", obj.id)
-                .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+        if (obj.isApi === '1') {
+            $('#us-related-sus').append($("<option></option>")
+                    .attr("value", obj.id)
+                    .text(replaceTags(obj.backlogName) + "  #" + obj.orderNo + " "));
+        }
+
 
     },
     FillInCombo: function (compId) {
@@ -1157,7 +1164,7 @@ var SACore = {
         try {
             res = this.Backlogs[backlogId]['backlogName'];
             res = replaceTag(res);
-            
+
         } catch (err) {
         }
         return res;
@@ -1802,7 +1809,7 @@ var SAInput = {
                 var k = keys[n].trim();
                 var o = SAInput.Inputs[k];
                 if (!(o.inputType === 'IN' || o.inputType === 'GUI'
-                        || o.inputType === 'TBL' || o.inputType==='GRP'
+                        || o.inputType === 'TBL' || o.inputType === 'GRP'
                         || o.inputType === 'TAB')) {
                     continue;
                 }
@@ -1814,7 +1821,7 @@ var SAInput = {
         return json;
     },
     _toJSONByBacklog: function (backlogId) {
-       
+
         var json = {"tbl": [{"r": []}]};
 
         var keys = SACore.GetInputList(backlogId);
@@ -2309,7 +2316,7 @@ var SABacklogLabel = {
     toCurrentDescJSON: function () {
         return this.toDescJSON(global_var.current_us_input_id);
     },
-    
+
     toDescJSON: function (inputId) {
         var json = {"tbl": [{"r": []}]};
         var keys = SAInput.GetCurrentInputDescription();

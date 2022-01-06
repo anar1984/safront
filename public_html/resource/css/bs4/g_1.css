@@ -3027,8 +3027,17 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     position: relative;
     min-width: 200px;
 }
+.ui-resizable-e{
+    cursor: col-resize !important;
+}
+.ui-resizable-s{
+    cursor: row-resize !important;
+}
 #panel-css{
 
+}
+.us-managmenet-project-button div button.dropdown-toggle{
+    width: 200px;
 }
 :root {
 

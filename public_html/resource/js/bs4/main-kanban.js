@@ -261,6 +261,7 @@ function callStoryCard(id, elId, backlogName) {
         global_var.current_project_id = fkProjectId;
 
         $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        resetAllEditStoryCard();
         $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
         $('select.projectList_liveprototype_storycard').val(fkProjectId)

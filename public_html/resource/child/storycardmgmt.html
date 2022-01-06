@@ -1,4 +1,163 @@
-<div class="col-12 us-half-div" id="main_div_of_backlog_info_kanban_view">
+<div class="d-flex justify-content-center storecard-header-nav-section" style="position: relative;">
+
+
+    <div class="d-flex justify-content-center cs-col-project">
+        <div class="mm-col">
+            <span class="mm-title">Project</span>
+        </div>
+        <div class="mm-col us-managmenet-project-button" >
+            <select class="form-control  usmg-selectpicker" data-live-search="true" data-actions-box="true"
+            style="text-overflow: ellipsis"  id='story_mn_filter_project_id'
+            data-type="project_id" multiple title="Project"></select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Updated By</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
+            style="text-overflow: ellipsis"  id='story_mn_filter_updated_id'
+            data-type="updated_id" multiple title="Updated By"></select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Assignee</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control usmg-selectpicker " data-live-search="true" data-actions-box="true"
+            style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
+            data-type="assigne_id" multiple title="Assignee"></select>
+        </div>
+    </div>
+   
+    <div class="d-flex justify-content-center cs-col-storecard">
+        
+        <div class="mm-col">
+            <input type="text" placeholder="search"  class="form-control" name="" id="search-us-managmenet">
+
+        </div>
+    </div>
+
+    <div class="cs-col-storecard-general-setting">
+        <div class="scg-button-box form-control">
+           
+                <button class="dropdown-toggle1 btn btn-light "  data-toggle="dropdown">Label</button> 
+                <div id="general" class="">
+                    <i>
+                        <span class="badge">0</span>
+                    </i>
+                </div>
+
+
+                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
+                    <span>
+                        <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
+                           data-target="#insertNewLabel" >
+
+                            Add Label
+
+                        </a>
+                    </span>
+                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+
+
+                    <div class="dropdown-divider" style="padding:0px;">
+
+                    </div>
+                    <div id="tasklabellist"
+                         class="tasklabellist"
+
+                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+
+                    </div>
+                </div>
+        
+        </div>
+    </div>
+    <div class="cs-col-storecard-general-setting">
+        <div class="scg-button-box form-control">
+          
+                <!-- btn btn-primary   sildim -->      
+                <button class="dropdown-toggle1  btn btn-light"  data-toggle="dropdown" style="cursor: pointer;margin-left: -6px;">
+
+                    Sprint</button> 
+
+                <div id="general3" class="">
+                    <i>
+                        <span class="badge">0</span>
+                    </i>
+                </div>
+
+
+                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
+                    <span>
+
+                        <a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint" 
+                           f="" 
+                           style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; 
+                           font-size: 12px; color:#727D91; margin-top: 5px;" >
+                            New Sprint</a>
+                    </span>
+                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+
+
+                    <div class="dropdown-divider" style="padding:0px;">
+
+                    </div>
+                    <div id="sprintlist"
+                         class="sprintlist"
+                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
+
+                    </div>
+                </div>
+           
+        </div>
+    </div>
+   
+   
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Is Api</span>
+        </div>
+        <div class="mm-col">
+            <input type="checkbox" class="us-mngm-is-api" >
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard">
+        <div class="mm-col">
+            <span class="mm-title">Group By</span>
+        </div>
+        <div class="mm-col">
+            <select class="form-control usmg-selectpicker " data-actions-box="true"
+            style="text-overflow: ellipsis"  id='story_mn_groupBy_id'
+                title="Group By">
+                <option value="fkProjectId">Project</option>
+                <option value="backlogStatus">Status</option>
+                <option value="manualStatus">Status(with Manual)</option>
+            </select>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center cs-col-storecard manual-list-combo">
+        <div class="mm-col">
+            <span class="mm-title">Manual Status</span>
+        </div>
+        <div class="mm-col us-managmenet-project-button">
+            <select class="form-control usmg-selectpicker " multiple data-actions-box="true"
+            style="text-overflow: ellipsis"  id='story_mn_manual_status_id'
+                title="Group By">
+            </select>
+        </div>
+    </div>
+    <div class="cs-col-storecard-general-setting">
+        <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
+            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+        </button>
+    </div>
+     
+</div>
+<div class="col-12 cs-core-issue-management us-half-div" id="main_div_of_backlog_info_kanban_view">
     <div class="row us-half-div-row">
         <!--        <div class="col-1 text-left toggleUSPanel" style="padding:4px;  ">
                     <a href="#" class="add-userstory-button1"
@@ -6,135 +165,11 @@
                         <i class="fa fa-angle-double-right" style="font-size:24px;"></i>
                     </a>
                 </div>-->
-        <div class="col-12 text-center" style="padding:4px;">
-            <h4>User Story Management</h4>
-        </div>
+       
         <!--By G.R-->
         <div class="TaskPanel col-12" >
-            <div class="taskPanel " style="margin: auto;">
-                <div class="category-kanban">
-                    <div class="searchSeqment ">
-                        <div class="col-lg-4">
-                            <select class="form-control prmanage-mgmt-filter-select" data-live-search="true" data-actions-box="true"
-                                    style="text-overflow: ellipsis"  id='story_mn_filter_project_id'
-                                    data-type="project_id" multiple title="Project"></select>
-                        </div>
-                        <div class="col-lg-3">
-                            <select class="form-control " data-live-search="true" data-actions-box="true"
-                                    style="text-overflow: ellipsis"  id='story_mn_filter_updated_id'
-                                    data-type="updated_id" multiple title="Updated By"></select>
-                        </div>
-                        <div class="col-lg-3">
-                            <select class="form-control " data-live-search="true" data-actions-box="true"
-                                    style="text-overflow: ellipsis"  id='story_mn_filter_assigne_id'
-                                    data-type="assigne_id" multiple title="Assignee"></select>
-                        </div>
-                        <div class="col-lg-5">
-                            <input type="text" placeholder="search"  class="form-control" name="" id="search-us-managmenet">
-
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="dropdown">
-                                <button class="dropdown-toggle1 btn btn-light "  data-toggle="dropdown">Label</button> 
-                                <div id="general" class="">
-                                    <i>
-                                        <span class="badge">0</span>
-                                    </i>
-                                </div>
-
-
-                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
-                                    <span>
-                                        <a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"
-                                           data-target="#insertNewLabel" >
-
-                                            Add Label
-
-                                        </a>
-                                    </span>
-                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-
-
-                                    <div class="dropdown-divider" style="padding:0px;">
-
-                                    </div>
-                                    <div id="tasklabellist"
-                                         class="tasklabellist"
-
-                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2 text-center" >
-                            <div class="dropdown">
-                                <!-- btn btn-primary   sildim -->      
-                                <button class="dropdown-toggle1  btn btn-light"  data-toggle="dropdown" style="cursor: pointer;margin-left: -6px;">
-
-                                    Sprint</button> 
-
-                                <div id="general3" class="">
-                                    <i>
-                                        <span class="badge">0</span>
-                                    </i>
-                                </div>
-
-
-                                <div class="dropdown-menu drop-label-menu " style="width: 360px;">
-                                    <span>
-
-                                        <a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint" 
-                                           f="" 
-                                           style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; 
-                                           font-size: 12px; color:#727D91; margin-top: 5px;" >
-                                            New Sprint</a>
-                                    </span>
-                                    <span class="newlabelspan" style="cursor: pointer;" onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-
-
-                                    <div class="dropdown-divider" style="padding:0px;">
-
-                                    </div>
-                                    <div id="sprintlist"
-                                         class="sprintlist"
-                                         style='height: 250px;overflow-y: auto; overflow-x: hidden;'>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-1">
-                            <span>Is Api</span>
-                            <input type="checkbox" class="us-mngm-is-api" >
-                        </div>
-                        <div class="col-lg-1">
-                            <button style="color:lightgreen;" onclick="addUserStoryNewModalWithProject()" class="btn btn-sm">
-                                <i class="fas fa-plus-circle" aria-hidden="true"></i>
-                            </button>
-                        </div>
-
-
-                        <div class="sprint dropdown" style="margin-left: 10px;" >
-
-                        </div>
-
-                        <div class="col-3">
-
-                            <div class="input-group date" id="datetimepicker6"><input type="text" placeholder="Update Time "  class="form-control form-control-sm   tame-range-picker-comp" id="date_timepicker_start_end-usmn"><span class="input-group-append" role="right-icon"><button
-                                        class=" btn btn-sm  border-left-0" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button></span></div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="task-panel" style="margin: auto;width: 95%;">
+           
+            <div class="task-panel" style="width:100%;overflow: scroll;flex-wrap: nowrap;">
                 <div class="task-column draft" status="draft">
 
                     <div draggable="true" class="task-column-header" >
