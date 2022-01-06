@@ -1091,7 +1091,7 @@ function setBacklogAsHtml(backlogId, css, js) {
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTmsetBacklogAsHtml",
+        url: urlGl + "api/post/srv/serviceTm",
         type: "POST",
         data: data,
         contentType: "application/json",
