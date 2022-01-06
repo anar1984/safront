@@ -3338,7 +3338,7 @@ hr.hr-ss {
 .storecard-sidebarin .task-fbe-box .task-for-backlog-event:hover {
     background: #272b7c;
 }
-.storecard-header-nav-section {
+.story-card-modal .storecard-header-nav-section {
     background-color: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -3361,6 +3361,19 @@ hr.hr-ss {
     max-width: 270px;
 }
 .storecard-header-nav-section .bootstrap-select > button{
+    background-color: #525596;
+    border-color: #525596;
+    border-radius: 0;
+    color: rgb(255 255 255 / 70%);
+    font-size: 14px;
+    box-shadow: none !important;
+}
+.storecard-header-nav-section .bootstrap-select > button:hover, .cs-col-storecard-general-setting button:hover {
+    color: #ffffff;
+    background-color: #272b7c;
+    border-color: #272b7c;
+}
+.story-card-modal .storecard-header-nav-section .bootstrap-select > button{
     border-radius: 0;
     box-shadow: none !important;
     background-color: transparent;
@@ -3375,7 +3388,7 @@ hr.hr-ss {
     height: 35px;
     color: #fff !important;
 }
-.storecard-header-nav-section .bootstrap-select > button:hover, .cs-modal-box .cs-col-storecard-general-setting button:hover {
+.story-card-modal .storecard-header-nav-section .bootstrap-select > button:hover, .cs-modal-box .cs-col-storecard-general-setting button:hover {
     background-color: #dfeef7;
     border-color: #dfeef7;
     color: #03396C !important;
@@ -3383,7 +3396,7 @@ hr.hr-ss {
 .storecard-header-nav-section .bootstrap-select>.dropdown-toggle:after {
     font-size: 10px;
 }
-.storecard-header-nav-section .btn-light:not(:disabled):not(.disabled).active, .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled):active, .storecard-header-nav-section .show>.btn-light.dropdown-toggle {
+.story-card-modal .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled).active, .story-card-modal .storecard-header-nav-section .btn-light:not(:disabled):not(.disabled):active, .story-card-modal .storecard-header-nav-section .show>.btn-light.dropdown-toggle {
     background-color: #dfeef7;
     border-color: #dfeef7;
     color: #03396C !important;
@@ -3399,9 +3412,15 @@ hr.hr-ss {
     padding: 0 5px;
     margin: 0 5px;
 }
+.story-card-modal .storecard-header-nav-section .cs-col-project {
+    border-left: 1px solid #272b7c;
+    border-right: 1px solid #272b7c;
+    padding-left: 12px;
+    padding-right: 0;
+}
 .storecard-header-nav-section .cs-col-project {
   padding-left: 12px;
-  padding-right: 0;
+  padding-right: 0; 
 }
 .storecard-header-nav-section .cs-col-storecard {
     border-right: none;
@@ -4046,7 +4065,7 @@ hr.hr-ss {
     font-size: 13px;
     width: auto;
     max-width: 100px;
-    text-align: left;
+    text-align: center;
 }
 .bugListTable tbody .bug-tr td>a.task-list-name {
     white-space: nowrap;
@@ -4054,6 +4073,7 @@ hr.hr-ss {
     text-overflow: ellipsis;
     width: 100%;
     display: block;
+    text-align: left;
 }
 .bugListTable tbody .bug-tr td.bug-list-column-project {
     white-space: nowrap;
@@ -4262,13 +4282,17 @@ margin-left: 11px;
     color: white;
 }
 .bug-list-column-story-card button {
-    color: #525596 !important;
-    background-color: #e9e9f1;
+    color: #ffffff !important;
+    background-color: #03396c;
     border: none !important;
     box-shadow: none !important;
-    margin-left: 6px;
+    margin-left: 5px;
     float: right;
     right: 0;
+    height: 23px;
+    width: 23px;
+    font-size: 10px;
+    padding: 0;
 }
 .bigCheck label:before, .bigCheck label:after {
     content: none;
