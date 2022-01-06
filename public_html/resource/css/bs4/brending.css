@@ -4073,6 +4073,7 @@ hr.hr-ss {
     text-overflow: ellipsis;
     width: 100%;
     display: block;
+    text-align: left;
 }
 .bugListTable tbody .bug-tr td.bug-list-column-project {
     white-space: nowrap;
