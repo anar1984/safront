@@ -6292,3 +6292,11 @@ table.lbl-list-table tr td {
 .bug-list-column-task-nature .dropdown-menu {
     min-width: 35px;
 }
+.cs-task-panel-column-issue{
+    color: #313582;
+    width: max-content !important;
+    min-width: 100%;
+    max-width: 1170px !important;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
