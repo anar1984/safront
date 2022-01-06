@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-const create_form_js_body = (api_id) => {
-    return `$('[sa-save-button]').click(function () {
+const create_form_js_body = (button_id, api_id) => {
+    return `$('#comp_id_${button_id}').click(function () {
                 var data = getDataFromForm(this);
                 var formId = getFormId(this);
                 var that = this;
@@ -15,8 +15,8 @@ const create_form_js_body = (api_id) => {
             })`;
 }
 
-const update_form_js_body = (info_api_id, update_api_id) => {
-    return `$('[sa-onloadclick]').click(function () {
+const update_form_js_body = (update_button_id, load_button_id, info_api_id, update_api_id) => {
+    return `$('#comp_id_${load_button_id}').click(function () {
         var formId = getFormId(this);
         var id1 =  $(this).closest('.redirectClass').find('[sa-onloadclick-id]').val();
         callApi('${info_api_id}', { id: id1 }, true, function (res) {
@@ -24,7 +24,7 @@ const update_form_js_body = (info_api_id, update_api_id) => {
         })
     })
     
-    $('[sa-update-button]').click(function () {
+    $('#comp_id_${update_button_id}').click(function () {
         var formId = getFormId(this);
         var id1 =  $(this).closest('.redirectClass').find('[sa-onloadclick-id]').val();
         var data = getDataFromForm(this);
@@ -32,85 +32,88 @@ const update_form_js_body = (info_api_id, update_api_id) => {
         var that  = this;
         callApi('${update_api_id}', data, true, function (res) {
             $(that).closest('.redirectClass').find('[sa-close-button]').click();
+            $('[sa-loader-button]').click();
         })
     })
     `;
 }
 
 
-const view_form_js_body = (info_api_id) => {
-    return `$('[sa-onloadclick]').click(function () {
+const view_form_js_body = (load_button_id, info_api_id) => {
+    return `$('#comp_id_${load_button_id}').click(function () {
         var formId = getFormId(this);
         var id1 = $(this).closest('.redirectClass').find('[sa-onloadclick-id]').val();
         callApi('${info_api_id}', { id: id1 }, true, function (res) {
              setDataToForm(formId, res.kv);
         })
     })
+
+  
     
  
     `;
 }
 
-
-const list_form_js_body = (delete_table_api, new_form_id,
-    update_form_id, view_form_id,load_table_api, input_table_id, tbody_script) => {
+const list_form_js_body = (  delete_table_api, new_form_id,
+    update_form_id, view_form_id, load_table_api, input_table_id, tbody_script) => {
+        let new_button_id =table_new_button_id;
+        let loader_button_id = table_loader_button_id; 
     return ` 
  
 
-$('[sa-add-button]').click(function () {
+$('#comp_id_${new_button_id}').click(function () {
       showForm('${new_form_id}');
 })
 
-$('.sa-delete-table-row.').click(function () {
+function deleteRow(el) {
     if (!confirm("Məlumatın silinməsindən əminsiz?")) {
         return;
     }
-    let id1 = $(this).closest('tr').find('[sa-table-row-id]').text();
-    callApi('${delete_table_api}', { id: id1 }, true, function (res) {
-        $(this).closest('tr').remove();
+    var data = getDataFromTable(el); 
+    callApi('${delete_table_api}', data, true, function (res) {
+        $(el).closest('tr').remove();
     })
-})
+}
 
-$('.sa-view-table-row').click(function () {
-    var data = getDataFromTable(this);
-    showForm('${view_form_id}');
-    setDataToForm('${view_form_id}', data);
-    $('#${view_form_id}').find('[sa-onloadclick]').click();
-})
-
-
-$('.sa-update-table-row').click(function () {
-    var data = getDataFromTable(this);
-    showForm('${update_form_id}');
-    setDataToForm('${update_form_id}', data);
-    $('#${update_form_id}').find('[sa-onloadclick]').click();
-})
+ function viewRow (el) {
+    var data = getDataFromTable(el);
+    var form_id = showForm('${view_form_id}');
+    setDataToForm(form_id, data);
+    $('#'+form_id).find('[sa-loader-button]').click();
+}
 
 
+ 
+
+function updateRow(el) {
+    var data = getDataFromTable(el);
+    var form_id = showForm('${update_form_id}');
+    setDataToForm(form_id, data);
+    $('#'+form_id).find('[sa-loader-button]').click();
+}
 
 
-$('[sa-onloadclick]').click(function () {
-    loadInfo();
-});
 
-function loadInfo() {
+
+$('#comp_id_${loader_button_id}').click(function () {
     var data = getDataFromForm(this);
     callApi('${load_table_api}', data, true, function (res) {
         var tbody = $('table#comp_id_${input_table_id}').find('tbody');
         tbody.html('');
         var idx = 1;
-
         var obj = res.tbl[0].r;
-        var o = obj[i];
-        for (var i = 0; i < obj.lenght; i++) {
+       
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
             tbody.append(\`
                 ${tbody_script}
                                                 
                         \`)
         }
-
     })
-}
+});
+
+ 
     `;
 }
 
@@ -342,38 +345,32 @@ const generate_create_form_backlog = () => {
     data.fkProjectId = $('#generalte-form-in-project-called').val();
     data.isApi = "0";
     callService('serviceTmInsertNewBacklogShort', data, true, function (res) {
-        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_create',res.id,data.backlogName)
+        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_create', res.kv.id, data.backlogName)
 
         add_checked_inputs_to_story_card(res.kv.id, data.fkProjectId);
         hr(res.kv.id, data.fkProjectId, 100);
         save_button(res.kv.id, data.fkProjectId, 101);
         close_button(res.kv.id, data.fkProjectId, 102);
-        create_js_for_create_form(res.kv.id);
+
     })
 }
 
-const set_story_card_to_combo =(combo_id,id,value)=>{
-    $('#'+combo_id).append(`<option value='${id}' selected>${value}</option>`);
-    $('#'+combo_id).selectpicker('refresh');
-    $('#'+combo_id).val(id);
+const set_story_card_to_combo = (combo_id, id, value) => {
+    $('#' + combo_id).append(`<option value='${id}' selected>${value}</option>`);
+    $('#' + combo_id).selectpicker('refresh');
+    $('#' + combo_id).val(id);
 
 
 }
 
-const create_js_for_create_form = (backlog_id) => {
-    if ($('#fieldFormGeneratorModal_body_create_form_name_auto_generate').is(":checked")) {
-        generate_create_api(backlog_id);
-    } else {
-        var api_id = $('#fieldFormGeneratorModal_body_create_form_name_action_api').val();
-        var js_body = create_form_js_body(api_id);
-        var data = {};
-        data.fkBacklogId = backlog_id;
-        data.jsBody = js_body;
-        callService("serviceTminsertBacklogJsCode", data, true, function (res) {
-        })
-    }
-
-
+const create_js_for_create_form = (save_button_id, backlog_id) => {
+    var api_id = $('#fieldFormGeneratorModal_body_create_form_name_action_api').val();
+    var js_body = create_form_js_body(save_button_id, api_id);
+    var data = {};
+    data.fkBacklogId = backlog_id;
+    data.jsBody = js_body;
+    callService("serviceTminsertBacklogJsCode", data, true, function (res) {
+    })
 }
 
 var show_generate_crud_api_table_id = "";
@@ -413,24 +410,22 @@ const generate_update_form_backlog = () => {
     data.fkProjectId = $('#generalte-form-in-project-called').val();
     data.isApi = "0";
     callService('serviceTmInsertNewBacklogShort', data, true, function (res) {
-        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_update',res.id,data.backlogName)
+        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_update', res.kv.id, data.backlogName)
 
         add_checked_inputs_to_story_card(res.kv.id, data.fkProjectId);
         hr(res.kv.id, data.fkProjectId, 100);
         update_button(res.kv.id, data.fkProjectId, 101);
         close_button(res.kv.id, data.fkProjectId, 102);
         id_hidden_carrier(res.kv.id, data.fkProjectId, 103);
-        loader_hidden_carrier(res.kv.id, data.fkProjectId, 103);
-        //create JS file
-        create_js_for_update_form(res.kv.id);
+
     })
 }
 
 
-const create_js_for_update_form = (backlog_id) => {
+const create_js_for_update_form = (update_button_id, load_button_id, backlog_id) => {
     var info_api_id = $('#fieldFormGeneratorModal_body_view_form_name_action_api').val();
     var update_api_id = $('#fieldFormGeneratorModal_body_update_form_name_action_api').val();
-    var js_body = update_form_js_body(info_api_id, update_api_id);
+    var js_body = update_form_js_body(update_button_id, load_button_id, info_api_id, update_api_id);
     var data = {};
     data.fkBacklogId = backlog_id;
     data.jsBody = js_body;
@@ -451,16 +446,15 @@ const generate_view_form_backlog = () => {
     data.fkProjectId = $('#generalte-form-in-project-called').val();
     data.isApi = "0";
     callService('serviceTmInsertNewBacklogShort', data, true, function (res) {
-        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_view',res.id,data.backlogName)
+        set_story_card_to_combo('fieldFormGeneratorModal_body_list_form_name_story_card_view', res.kv.id, data.backlogName)
 
         add_checked_inputs_to_story_card(res.kv.id, data.fkProjectId, true);
         hr(res.kv.id, data.fkProjectId, 100);
         close_button(res.kv.id, data.fkProjectId, 102);
         id_hidden_carrier(res.kv.id, data.fkProjectId, 103);
-        loader_hidden_carrier(res.kv.id, data.fkProjectId, 103);
+        loader_hidden_carrier_4_view(res.kv.id, data.fkProjectId, 103);
 
-        //create_js_for_view_form
-        create_js_for_view_form(res.kv.id);
+
     })
 }
 
@@ -470,7 +464,7 @@ $(document).on('click', '#fieldFormGeneratorModal_body_list_form_name_generate',
     generate_list_form_backlog();
 })
 
-const table_list_body = [];
+const table_list_body = []; 
 
 const generate_list_form_backlog = () => {
     var data = {};
@@ -479,35 +473,36 @@ const generate_list_form_backlog = () => {
     data.isApi = "0";
     callService('serviceTmInsertNewBacklogShort', data, true, function (res) {
         new_button(res.kv.id, data.fkProjectId, 0.1);
-        hr(res.kv.id, data.fkProjectId, 0.2);
-
-        table_body(res.kv.id, data.fkProjectId);
       
-        close_button(res.kv.id, data.fkProjectId, 102);
-        id_hidden_carrier(res.kv.id, data.fkProjectId, 103);
-        loader_hidden_carrier(res.kv.id, data.fkProjectId, 103);
+        id_hidden_carrier(res.kv.id, data.fkProjectId, 0.3);
+        hr(res.kv.id, data.fkProjectId, 0.5);
+
        
+       
+
+
+
     })
 }
 
 
 
-const create_js_for_list_form = (backlog_id,input_table_id) => {
+const create_js_for_list_form = (backlog_id, input_table_id) => {
     var info_api_id = $('#fieldFormGeneratorModal_body_view_form_name_action_api').val();
     var update_api_id = $('#fieldFormGeneratorModal_body_update_form_name_action_api').val();
     var delete_table_api = $('#fieldFormGeneratorModal_body_delete_form_name_action_api').val();
     var load_table_api = $('#fieldFormGeneratorModal_body_list_form_name_action_api').val();
-   
+
     var new_form_id = $('#fieldFormGeneratorModal_body_list_form_name_story_card_create').val();
     var update_form_id = $('#fieldFormGeneratorModal_body_list_form_name_story_card_update').val();
-     var view_form_id = $('#fieldFormGeneratorModal_body_list_form_name_story_card_view').val();
-     
-    
+    var view_form_id = $('#fieldFormGeneratorModal_body_list_form_name_story_card_view').val();
+
+
 
     var js_body_details = create_js_for_list_form_details();
 
     var js_body = list_form_js_body(delete_table_api, new_form_id,
-        update_form_id,  view_form_id, load_table_api,input_table_id, js_body_details);
+        update_form_id, view_form_id, load_table_api, input_table_id, js_body_details);
     var data = {};
     data.fkBacklogId = backlog_id;
     data.jsBody = js_body;
@@ -516,26 +511,31 @@ const create_js_for_list_form = (backlog_id,input_table_id) => {
 }
 
 const create_js_for_list_form_details = () => {
-    var res = `<tr><td>\${idx++}</td> 
-    <td sa-selectedfield='id' hidden >\${o.id}</td> 
+    var res = `<tr>
+    
+    <tr class='redirectClass' ><td>\${idx++}</td> 
+    <td sa-data-id='id' sa-data-value='\${o.id}'   hidden >\${o.id}</td> 
+    
+   
     `;
 
     var obj = Object.keys(table_list_body);
     for (var i in obj) {
         var key = obj[i];
         var val = table_list_body[key];
+        val = Utility.convertStringToCamelStyle(val);
         res += ` <td>\${o.${val}}</td> \n\t`
     }
 
     res += `   
     <td>
-        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row' href='#'>Ətraflı</a>
+        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row' onclick='viewRow(this)' href='#'>Ətraflı</a>
     </td> 
     <td >
-        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row' href='#'>Dəyil</a>
+        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row'  onclick='updateRow(this)' href='#'>Dəyiş</a>
     </td> 
     <td>
-        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row' href='#'>Sil</a>
+        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row'  onclick='deleteRow(this)' href='#'>Sil</a>
     </td>
 </tr>`;
     return res;
@@ -543,9 +543,9 @@ const create_js_for_list_form_details = () => {
 
 ////////////////
 
-const create_js_for_view_form = (backlog_id) => {
+const create_js_for_view_form = (load_button_id, backlog_id) => {
     var info_api_id = $('#fieldFormGeneratorModal_body_view_form_name_action_api').val();
-    var js_body = view_form_js_body(info_api_id);
+    var js_body = view_form_js_body(load_button_id, info_api_id);
     var data = {};
     data.fkBacklogId = backlog_id;
     data.jsBody = js_body;
@@ -601,20 +601,22 @@ const add_checked_inputs_to_story_card = (backlog_id, fkProjectId, setDisabled, 
     })
 }
 
-const table_body = (backlog_id, fkProjectId) => {
+const table_body = ( backlog_id, fkProjectId) => {
     var data = {};
     data.fkBacklogId = backlog_id;
     data.fkProjectId = fkProjectId;
     data.rowCount = global_var.component_table_default_row_count;
-
+    
     callService('serviceTmAddTableAsInput', data, true, function (res) {
+        close_button(backlog_id, data.fkProjectId, 102);
+
         table_id_button(backlog_id, fkProjectId, res.kv.fkInputTableCompId);
         view_table_row_button(backlog_id, fkProjectId, res.kv.fkInputTableCompId);
         update_table_row_button(backlog_id, fkProjectId, res.kv.fkInputTableCompId);
         delete_table_row_button(backlog_id, fkProjectId, res.kv.fkInputTableCompId);
         add_checked_inputs_to_story_card(backlog_id, fkProjectId, false, res.kv.fkInputTableCompId);
-         //create JS file
-         create_js_for_list_form(backlog_id, res.kv.id);
+        //create JS file
+        create_js_for_list_form(backlog_id, res.kv.id);
     })
 }
 
@@ -634,6 +636,7 @@ const hr = (backlog_id, fkProjectId, orderNo) => {
     })
 }
 
+let table_new_button_id = "";
 const new_button = (backlog_id, fkProjectId, orderNo) => {
 
     var data = {};
@@ -647,6 +650,12 @@ const new_button = (backlog_id, fkProjectId, orderNo) => {
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-new-button", "1");
         add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-add-button", "1");
+
+        table_new_button_id = res.kv.id;
+
+        loader_hidden_carrier_4_list(backlog_id, data.fkProjectId, 0.2);
+       
+
         Toaster.showMessage("Successfully Added");
     })
 }
@@ -731,6 +740,7 @@ const save_button = (backlog_id, fkProjectId, orderNo) => {
     data.orderNo = orderNo;
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-save-button", "1");
+        create_js_for_create_form(res.kv.id, backlog_id);
         Toaster.showMessage("Successfully Added");
     })
 }
@@ -765,6 +775,9 @@ const update_button = (backlog_id, fkProjectId, orderNo) => {
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         Toaster.showMessage("Successfully Added");
         add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-update-button", "1");
+
+        loader_hidden_carrier_4_update(res.kv.id, backlog_id, data.fkProjectId, 103);
+
     })
 }
 
@@ -781,6 +794,69 @@ const id_hidden_carrier = (backlog_id, fkProjectId, orderNo) => {
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         Toaster.showMessage("Successfully Added");
         add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick-id", "1")
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId,   "id")
+    })
+}
+
+//create JS file
+
+
+
+let table_loader_button_id = '';
+const loader_hidden_carrier_4_list = (backlog_id, fkProjectId, orderNo) => {
+    var data = {};
+    data.fkBacklogId = backlog_id;
+    data.fkProjectId = fkProjectId;
+    data.inputName = 'loader';
+    data.inputType = "IN";
+    data.componentType = 'hcrr';
+    data.cellNo = "2";
+    data.orderNo = orderNo;
+    callService('serviceTmInsertNewInput4Select', data,true, function (res) {
+        Toaster.showMessage("Successfully Added");
+        table_loader_button_id = res.kv.id;
+
+        table_body(backlog_id,  data.fkProjectId);
+
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+    })
+}
+
+const loader_hidden_carrier_4_update = (update_button_id, backlog_id, fkProjectId, orderNo) => {
+    var data = {};
+    data.fkBacklogId = backlog_id;
+    data.fkProjectId = fkProjectId;
+    data.inputName = 'loader';
+    data.inputType = "IN";
+    data.componentType = 'hcrr';
+    data.cellNo = "2";
+    data.orderNo = orderNo;
+    callService('serviceTmInsertNewInput4Select', data, true, function (res) {
+        Toaster.showMessage("Successfully Added");
+        create_js_for_update_form(update_button_id, res.kv.id, backlog_id);
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+    })
+}
+
+
+const loader_hidden_carrier_4_view = (backlog_id, fkProjectId, orderNo) => {
+    var data = {};
+    data.fkBacklogId = backlog_id;
+    data.fkProjectId = fkProjectId;
+    data.inputName = 'loader';
+    data.inputType = "IN";
+    data.componentType = 'hcrr';
+    data.cellNo = "2";
+    data.orderNo = orderNo;
+    callService('serviceTmInsertNewInput4Select', data, true, function (res) {
+        Toaster.showMessage("Successfully Added");
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+
+        //create_js_for_view_form
+        create_js_for_view_form(res.kv.id, backlog_id);
     })
 }
 
