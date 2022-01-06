@@ -613,12 +613,17 @@
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon live"></i> <span class="name">Live Prototype</span></div>
                             </div>
-                            <div class="toggle-min-elements">
+                            <div class="toggle-min-elements prototype-cls">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
+
+                                <label class="nav-item-label toggle-btn-7 prototype-cls" style="display: contents;">
+                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
+                                </label>
+
+                                <!-- <a class="cs-url toggle-btn-7 user-story-prototype-change"><i class="fal fa-angle-down"></i></a> -->
                             </div>
                         </div>
-                        <div class="hideme1" id="live-prototype-show-key" style="display:none"> 
+                        <div class="hideme1 toggle-box-7" id="live-prototype-show-key" style="display:none"> 
                                 <div class='row gv-gui-design-api'>
                                     <div class="col-12 text-center text-prototype">
                                         <br>
@@ -741,11 +746,11 @@
         $('.toggle-btn-6').toggleClass('active');
         $('.toggle-box-6').toggleClass('open');
     });
-    $(document).on("click", ".toggle-btn-7", function (e) {
-        if ($('.nav-item-label input').is(':checked')) {
+    $(document).on("click", ".prototype-cls", function (e) {
+        if ($('.prototype-cls input').is(':checked')) {
             $('.toggle-btn-7').addClass('active');
         }else{
             $('.toggle-btn-7').removeClass('active');
         }
-   });
+    });
 </script>
