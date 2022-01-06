@@ -524,18 +524,18 @@ const create_js_for_list_form_details = () => {
         var key = obj[i];
         var val = table_list_body[key];
         val = Utility.convertStringToCamelStyle(val);
-        res += ` <td>\${o.${val}}</td> \n\t`
+        res += ` <td class=text-center'>\${o.${val}}</td> \n\t`
     }
 
     res += `   
     <td>
-        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row' onclick='viewRow(this)' href='#'>Ətraflı</a>
+        <a sa-selectedfield="sa-view-table-row" class='sa-view-table-row text-center' onclick='viewRow(this)' href='#'>Ətraflı</a>
     </td> 
     <td >
-        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row'  onclick='updateRow(this)' href='#'>Dəyiş</a>
+        <a sa-selectedfield="sa-update-table-row" class='sa-update-table-row text-center'  onclick='updateRow(this)' href='#'>Dəyiş</a>
     </td> 
     <td>
-        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row'  onclick='deleteRow(this)' href='#'>Sil</a>
+        <a sa-selectedfield="sa-delete-table-row" class='sa-delete-table-row text-center'   onclick='deleteRow(this)' href='#'>Sil</a>
     </td>
 </tr>`;
     return res;
