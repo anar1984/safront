@@ -4065,7 +4065,7 @@ hr.hr-ss {
     font-size: 13px;
     width: auto;
     max-width: 100px;
-    text-align: left;
+    text-align: center;
 }
 .bugListTable tbody .bug-tr td>a.task-list-name {
     white-space: nowrap;
@@ -4281,13 +4281,17 @@ margin-left: 11px;
     color: white;
 }
 .bug-list-column-story-card button {
-    color: #525596 !important;
-    background-color: #e9e9f1;
+    color: #ffffff !important;
+    background-color: #03396c;
     border: none !important;
     box-shadow: none !important;
-    margin-left: 6px;
+    margin-left: 5px;
     float: right;
     right: 0;
+    height: 23px;
+    width: 23px;
+    font-size: 10px;
+    padding: 0;
 }
 .bigCheck label:before, .bigCheck label:after {
     content: none;

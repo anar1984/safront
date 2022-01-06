@@ -338,16 +338,43 @@ text-align: center;
  ***************************** */
 
 .tableFixHead thead th:nth-child(-n+20){ 
-    position: sticky; 
-    top: 0; 
-    background-color: #eeeeee; 
+    position: sticky;
+    text-align: center;
+    top: 0;
+    background: #DFEEF7;
+    border: none !important;
+    z-index: 1;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    height: 30px;
+    color: #03396C;
+    vertical-align: middle;
+    border: 1px solid transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid !important;
 }
 .top-fixed-menu{ 
     position: sticky; 
     top: 0; 
     background-color: #ffffff; 
 }
-
+.tableFixHead thead th i:after {
+    width: 18px;
+    height: 18px;
+    margin-top: 0px;
+}
+.tableFixHead thead th i.deadline:after {
+    width: 26px;
+    height: 18.09px;
+    margin-top: -3px;
+}
+.tableFixHead thead th i.status:after {
+    width: 20px;
+    height: 18px;
+    margin-top: -4px;
+}
 #testCaseTrialViewPage{
     box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
     position: absolute;
@@ -414,9 +441,6 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
   justify-content: center;
   position: absolute;
   top: 40%;
-    
-
-
 }
 .bigCheck label {
     background-color: white;
