@@ -5,6 +5,9 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
+        this.readTask.genBlockTask.getNotificationRowCount();  
+
     },
     insertTask: {
         genBlockModal: {
@@ -2744,6 +2747,59 @@ const taskManagement = {
               </div>
           </div>`
             },
+            getNotificationRowCount:function () {
+                var json  = initJSON();
+                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+                var data = JSON.stringify(json);
+                var that = this;
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceRsGetRowCount4TaskNotificationByUser",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                        $(".notification-btn .info").text(res.kv.rowCount);
+                           
+                       // $(".notification-btn .info").text(res.kv.rowCount);
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+              
+            },
+            getNotificationList:function () {
+                var json  = initJSON();
+                   json.kv.fkAssigneeId =  global_var.current_ticker_id;
+                var data = JSON.stringify(json);
+                var that = this;
+                $.ajax({
+                    url: urlGl + "api/post/srv/serviceRsGetRowCount4TaskNotificationByUser",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json",
+                    crossDomain: true,
+                    async: true,
+                    success: function (res) {
+                        var list  = res.tbl[0].r;
+                           var elm  = $("#notification-block-id")
+                            for (let i = 0; i < list.length; i++) {
+                                const o = list[i];
+                                var html = that.genNotificationItemBlock(
+                                    o.id,
+                                    o.taskId
+                                )
+                                elm.append(html)
+                            }
+                    },
+                    error: function () {
+                        Toaster.showError(('somethingww'));
+                    }
+                });
+              
+            },
             getstatisticList: function () {
                 try {
                     var that = this
@@ -2760,6 +2816,9 @@ const taskManagement = {
 
             },
             genKanbanView: {
+                Init: function (params) {
+
+                },
                 genKanbanBlock: function () {
                     return `
                     <div class="col pl-1 pr-1" id="">
@@ -2768,7 +2827,6 @@ const taskManagement = {
                        <div class="cs-task-panel-column cs-task-panel-column-issue">
                        </div>
                        </div>
-                       
                    </div></div>`
                 },
                 genZonaBlock: function (nameh, id) {
@@ -2797,7 +2855,7 @@ const taskManagement = {
             </div>
             </div>`
                 },
-                genKanbanContentBlock: function (id,taskid,title,deadline,body,stats,ceratedDate) {
+                genKanbanContentBlock: function (id, taskid, title, deadline, body, stats, ceratedDate) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
                     <div class="cs-cart-head-title p-2">
                     <span href="#" class="operation " >${title}</span><span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
@@ -2840,65 +2898,72 @@ const taskManagement = {
                                             </div>
                                             </div> </div>  </div>  </div> </div>`
                 },
-                getKanbanBodyBlock: function (res) {
-
-                    var tbody = $('.cs-task-panel-column');
-                    tbody.html('');
-                  var typeRow  = this.generAteBlockKanbanByGroupBy(tbody);
+                getKanbanBodyBlock: function (res, typeRow, st,pageNo) {
+                    $(".count-cs-" + st).text(res.kv.tableCount);
                     var sumEstHours = 0,
                         sumSpentHours = 0,
                         sumEstCount = 0,
                         sumExecCount = 0,
                         sumEstBudget = 0,
                         sumSpentBudget = 0;
-                    var obj = res.tbl[0].r;
-                    for (var i = 0; i < obj.length; i++) {
-                        var o = obj[i];
-                        sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
-                        sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
-                        sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
-                        sumExecCount = increaseValue(sumExecCount, o.executedCounter);
-                        sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
-                        sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-                        var startTime = new Date();
-                        var endTime = new Date(o.endDate + ' ' + o.endTime);
+                    try {
+                        var obj = res.tbl[0].r;
+                        for (var i = 0; i < obj.length; i++) {
+                            var o = obj[i];
+                            sumEstHours = increaseValue(sumEstHours, o.estimatedHours);
+                            sumSpentHours = increaseValue(sumSpentHours, o.spentHours);
+                            sumEstCount = increaseValue(sumEstCount, o.estimatedCounter);
+                            sumExecCount = increaseValue(sumExecCount, o.executedCounter);
+                            sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
+                            sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
+                            var startTime = new Date();
+                            var endTime = new Date(o.endDate + ' ' + o.endTime);
 
-                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
-                        row += " " /* + rs + rsLabelFilter; */
+                            var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                            row += " " /* + rs + rsLabelFilter; */
 
-                        var userImage = o.userImage;
-                        var img = (userImage) ?
-                            fileUrl(userImage) :
-                            fileUrl(new User().getDefaultUserprofileName());
+                            var userImage = o.userImage;
+                            var img = (userImage) ?
+                                fileUrl(userImage) :
+                                fileUrl(new User().getDefaultUserprofileName());
 
-                        var createByImage = o.createByImage;
-                        var createdByImg = (createByImage) ?
-                            fileUrl(createByImage) :
-                            " ";
+                            var createByImage = o.createByImage;
+                            var createdByImg = (createByImage) ?
+                                fileUrl(createByImage) :
+                                " ";
 
-                        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
-                        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
-                        var task_id = getTaskCode(o.id);
+                            var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+                            var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                            var task_id = getTaskCode(o.id);
 
-                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
-                          $('#flex-col-'+o[typeRow]).append(
-                              this.genKanbanContentBlock(
-                                  o.id,
-                                  task_id,
-                                  backlogName,
-                                getTimeDifference(endTime, startTime)
-                                ,taskName
-                                ,o.taskStatus
-                                ,Utility.convertDate(o.createdDate),
-                                genUserTrblock(o.userName, img),
-                                genUserTrblock(o.createByName, createdByImg)
+                            // var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
+                            $('#flex-col-' + o[typeRow]).append(
+                                this.genKanbanContentBlock(
+                                    o.id,
+                                    task_id,
+                                    backlogName,
+                                    getTimeDifference(endTime, startTime), taskName, o.taskStatus, Utility.convertDate(o.createdDate),
+                                    genUserTrblock(o.userName, img),
+                                    genUserTrblock(o.createByName, createdByImg)
                                 )
-                          )
-                      
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
+                            )
+
+
+                        }
+                    } catch (error) {
+
                     }
+
+                    $('[data-toggle="popover"]').popover({
+                        html: true
+                    });
+
+                    if (parseFloat(bug_filter.limit) < parseFloat(res.kv.tableCount)) {
+                        $('#flex-col-' + st).find(".more-button-forIssue").remove();
+                        $('#flex-col-' + st)
+                            .append(`<div class="more-button-forIssue text-center" data-type="${typeRow}" data-status="${st}" start-limit="${parseFloat(pageNo) +1}" end-limit="${bug_filter.limit}">More</div>`)
+                    }
+
 
                     // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
                     //         sumEstBudget, sumSpentBudget);
@@ -2912,33 +2977,132 @@ const taskManagement = {
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
                 },
-                generAteBlockKanbanByGroupBy: function (elm) {
-                    var  goupBy  = $('#inputGroupSelect01').val();
-                    var  items ;
-                    var type  = "";
-                    if(goupBy==="0"){
-                         items  = $("select#bug_filter_status option");  
-                         type = "taskStatus"
+                generAteBlockKanbanByGroupBy: function (elm, data) {
+                    var goupBy = $('#inputGroupSelect01').val();
+                    var items;
+                    var type = "";
+                    if (goupBy === "0") {
+                        items = $("select#bug_filter_status option");
+                        type = "taskStatus"
                     }
-                    if(goupBy==="4"){
-                         items  = $("select#bug_filter_nature option");
-                         type = "taskNature"  
+                    if (goupBy === "4") {
+                        items = $("select#bug_filter_nature option");
+                        type = "taskNature"
                     }
-                    if(goupBy==="5"){
-                         items  = $("select#bug_filter_assignee_id option"); 
-                         type = "fkAssigneeId" 
+                    if (goupBy === "5") {
+                        items = $("select#bug_filter_assignee_id option");
+                        type = "fkAssigneeId"
                     }
-                   /*  if(goupBy===0){
-                         items  = $("select#bug_filter_status>option");  
-                    } */
-                    var that  = this
-                   items.each(function (index) {
-                          var id  = $(this).attr("value")
-                          var nm  = $(this).text()
-                       $(elm).append(that.genZonaBlock(nm,id));  
-                   })
+                    /*  if(goupBy===0){
+                          items  = $("select#bug_filter_status>option");  
+                     } */
+                    var that = this
+                    $(elm).empty();
+                    items.each(function (index) {
+                        var id = $(this).attr("value")
+                        var nm = $(this).text()
+                        $(elm).append(that.genZonaBlock(nm, id));
+                        that.getTaskList4Kanban(data, type, id);
 
-                   return type
+                    })
+
+                    return type
+                },
+                getTaskList4Kanban: function (json, type, st) {
+                    json.kv[type] = "'" + st + "'";
+                    var limit = json.kv.searchLimit;
+                    var data = JSON.stringify(json);
+                    var that = this;
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: true,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.getKanbanBodyBlock(res, type, st, '1');
+                            //   toggleColumns();
+                            //  setPagination(res.kv.tableCount, res.kv.limit);
+                            getGroupList();
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
+                },
+                getTaskList4KanbanMore: function (type, st,pageNo) {
+                    setBugListInitialData();
+
+
+                    var json = initJSON();
+                    json.kv.fkProjectId = bug_filter.project_id;
+                    json.kv.fkAssigneeId = bug_filter.assignee_id;
+                    json.kv.closedBy = bug_filter.closed_by;
+                    json.kv.createdBy = bug_filter.created_by;
+                    json.kv.fkBackogId = bug_filter.backlog_id;
+                    if (bug_filter.status) {
+                        json.kv.taskStatus = bug_filter.status;
+
+                    } else {
+                        var ty = localStorage.getItem("issue_mode_active");
+                        $('#issue-table-aktiv-all').find('.title').text(ty);
+                        var sel = $("#bug_filter_status");
+                        let value
+                        if (ty === 'A') {
+                            value = ["new", 'ongoing', 'waiting'];
+                        } else if (ty === 'P') {
+                            value = ["rejected", 'UAT', 'closed', 'canceled'];
+                        }
+                        sel.val(value);
+                        sel.selectpicker("refresh");
+                        json.kv.taskStatus = getBugFilterMultiSelect(sel);
+                    }
+
+                    json.kv.priority = bug_filter.priority;
+
+                    json.kv.taskNature = bug_filter.nature;
+                    json.kv.searchText = bug_filter.search_text;
+                    json.kv.searchLimit = bug_filter.limit;
+                    json.kv.pageNo = pageNo;
+                    json.kv.sprintId = bug_filter.sprint_id;
+                    json.kv.labelId = bug_filter.label_id;
+                    json.kv.sortBy = bug_filter.sortBy;
+                    json.kv.sortByAsc = bug_filter.sortByAsc;
+                    json.kv.closedDateFrom = bug_filter.closed_date_from;
+                    json.kv.closedDateTo = bug_filter.closed_date_to;
+                    json.kv.showChildTask = bug_filter.showChildTask;
+                    json.kv.createdDate = bug_filter.createdDate;
+                    json.kv.startLimit = 0;
+                    json.kv.endLimit = 25;
+                    json.kv[type] = "'" + st + "'";
+                    var data = JSON.stringify(json);
+                    var that = this;
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: true,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.getKanbanBodyBlock(res, type, st,pageNo );
+                            //   toggleColumns();
+                            //  setPagination(res.kv.tableCount, res.kv.limit);
+                            getGroupList();
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
                 }
             },
             genTableView: {
@@ -3241,6 +3405,32 @@ const taskManagement = {
                     global_var.bug_task_label_assign_checked = '';
                     global_var.bug_task_label_assign_name = '';
                     global_var.bug_task_label_assign_id = '';
+                },
+                getTaskList4Table: function (json) {
+                    var that = this;
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: false,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.genTableBodyBlock(res);
+
+                            toggleColumns();
+                            setPagination(res.kv.tableCount, res.kv.limit);
+                            getGroupList();
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
                 }
             },
         },
@@ -3609,7 +3799,7 @@ $(document).on("change", '#bug_filter_project_id_add', function (e) {
 })
 $(document).on("click", '.issue-view-change-button', function (e) {
     var ty = $(this).attr('view-type');
-    localStorage.setItem('task-view-format',ty);
+    localStorage.setItem('task-view-format', ty);
     taskManagement.readTask.genBlockTask.Init($('.main-section'));
     getBugList();
 
@@ -3897,6 +4087,13 @@ $(document).on('click', '#issue-list-statistic-block .info-item-elements.status-
     sel.selectpicker("refresh");
     getBugList();
 })
+$(document).on('click', '.more-button-forIssue', function () {
+     var type  = $(this).attr('data-type');
+     var pageNo  = $(this).attr('start-limit');
+     var st  = $(this).attr('data-status');
+     taskManagement.readTask.genBlockTask.genKanbanView.getTaskList4KanbanMore(type, st,pageNo)
+    
+})
 
 // task-management event  list  add section events end >>>>>>>END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -3910,3 +4107,9 @@ function reset_task_data() {
 if (self.CavalryLogger) {
     CavalryLogger.start_js(["jMqsAf+"]);
 }
+
+$(document).on("click", '.setting-elemen-box .notification-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .notifcation-block').show();  
+    taskManagement.readTask.genBlockTask.getNotificationList();  
+});

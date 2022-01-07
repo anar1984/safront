@@ -1147,6 +1147,8 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 
 function getBugList() {
     setBugListInitialData();
+
+  
     var json = initJSON();
     json.kv.fkProjectId = bug_filter.project_id;
     json.kv.fkAssigneeId = bug_filter.assignee_id;
@@ -1186,39 +1188,17 @@ function getBugList() {
     json.kv.createdDate = bug_filter.createdDate;
     json.kv.startLimit = 0;
     json.kv.endLimit = 25;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: false,
-        success: function (res) {
-            AJAXCallFeedback(res);
-            coreBugList = res;
-            setKV4CoreBugList();
-
-            var view = localStorage.getItem('task-view-format');
-                if (!view) {
-                    view = "table"
-                }
-                if (view === 'kanban') {
-                    taskManagement.readTask.genBlockTask.genKanbanView.getKanbanBodyBlock(res);
-                } else if (view === 'table') {
-                    taskManagement.readTask.genBlockTask.genTableView.genTableBodyBlock(res);
-                }
-           
-            toggleColumns();
-            setPagination(res.kv.tableCount, res.kv.limit);
-            getGroupList();
-
-        },
-        error: function () {
-            Toaster.showError(('somethingww'));
-        }
-    });
+  
+    var view = localStorage.getItem('task-view-format');
+    if (!view) {
+        view = "table"
+    }
+    if (view === 'kanban') {
+        taskManagement.readTask.genBlockTask.genKanbanView.generAteBlockKanbanByGroupBy($('.cs-task-panel-column'),json);
+    } else if (view === 'table') {
+        taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
+    }
+   
 
 }
 
@@ -3426,10 +3406,7 @@ $(document).on("click", '.setting-elemen-box .sticky-badges', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .sticky-elements').show();    
 });
-$(document).on("click", '.setting-elemen-box .notification-btn', function () {
-    $('#main-sidebar-div>div').hide();
-    $('#main-sidebar-div .notification-elements').show();    
-});
+
 $(document).on("click", '.show-more-btn', function () {
     $('.notification-elements').toggleClass('show-more');    
 });

@@ -645,6 +645,7 @@ function replaceJSON(json) {
 }
 
 function replaceTags(arg) {
+    return arg
     try {
 
         if (!arg) {

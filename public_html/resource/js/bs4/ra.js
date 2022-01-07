@@ -1091,7 +1091,7 @@ function setBacklogAsHtml(backlogId, css, js) {
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
-        url: urlGl + "api/post/srv/serviceTm",
+        url: urlGl + "api/post/srv/serviceTmsetBacklogAsHtml",
         type: "POST",
         data: data,
         contentType: "application/json",
@@ -1170,12 +1170,25 @@ function loadDetailsOnProjectSelect4Ipo5555555(fkProjectId) {
             global_var.current_modal = "";
             var obj = res.tbl[0].r;
             for (var n = 0; n < obj.length; n++) {
-                var o = obj[n];
+                const o = obj[n];
                 if (o.isApi !== '1') {
-                    var js = window.editorJSnew.getValue();
-                    var css = window.editorCSSnew.getValue();
-                    setBacklogAsHtml(o.id, css, js);
-
+                  
+                    jQuery.ajax({
+                        url: `${urlGl}/api/get/dwd/js/${global_var.current_domain}/${o.id}.js`,
+                        success: function(js) {
+                                 
+                            jQuery.ajax({
+                                url: `${urlGl}/api/get/dwd/css/${global_var.current_domain}/${o.id}.css`,
+                                success: function(css) {
+                                         
+                                    setBacklogAsHtml(o.id, css, js);
+                                },
+                                async:false
+                              });
+                        },
+                        async:false
+                      });
+                   
                 }
 
             }
