@@ -66,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="modal-body w-100">
@@ -76,12 +77,8 @@
                                 <div class="author-sticky d-flex">
                                     <div>
                                         <img id='story-card-createdby-img' class='Assigne-card-story-select-img created'
-                                            src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg'
-                                            alt='avatar' srcset=''>
-                                    </div>
-                                    <div>
-                                        <div class="author-name">Unassigned</div>
-                                        <!-- <div class="datatime">26.11.2021 13:42:36</div> -->
+                                            src='https://test.sourcedagile.com/api/get/files/userprofile.png'
+                                            srcset='' data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='' style=" margin-top: 4px; ">
                                     </div>
                                 </div>
                             </div>
@@ -89,41 +86,60 @@
                                 <div class="author-sticky d-flex">
                                     <div>
                                         <img id='story-card-updatedby-img' class='Assigne-card-story-select-img updated'
-                                            src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg'
-                                            alt='avatar' srcset=''>
-                                    </div>
-                                    <div>
-                                        <div class="author-name">Unassigned</div>
-                                        <!-- <div class="datatime">26.11.2021 13:42:36</div> -->
+                                             src='https://test.sourcedagile.com/api/get/files/userprofile.png' data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='' style=" margin-top: 4px; ">
                                     </div>
                                 </div>
                             </div>
                             <div class="author-card-story">
-                                <select class="cs-selectpicker">
-                                    <option
-                                        data-content="<span><img id='story-card-owner-img' class='Assigne-card-story-select-img owner' src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg' alt='avatar' srcset=''>Unassigned</span>">
-                                        Unassigned</option>
-                                    <option
-                                        data-content="<span><img id='story-card-createdby-img' class='Assigne-card-story-select-img' src='https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg' alt='avatar' srcset=''>Saleh Balakişiyev</span>">
-                                        Saleh Balakişiyev</option>
+                                <select class="cs-selectpicker" data-live-search="true" id="story-card-owner-list">
+                                  
                                 </select>
                             </div>
+                            <div class="type-status-box" style="display: inline-block;border-left: 1px solid #ffffff73;padding-left: 20px;margin-left: 10px;">
+                                <div class="d-flex">
+                                    <div class="cs-forum-group">
+                                        <label class="cs-label-name all-cs-status">Type</label>
+                                        <select class="user-story-backlog-type user-story-short-change" data-type="backlogType" id="user-story-type">
+                                            <option value="gui"  selected>GUI Mockup</option>
+                                            <option value="api"  selected>Backend API</option>
+                                            <option value="desc">Descriptive</option>
+                                            <option value="userstory">User Story</option>
+                                            <option value="process">Process</option>
+                                        </select>
+                                    </div>
+                                    <div class="cs-forum-group ml-3">
+                                        <label class="cs-label-name all-cs-status">Status <span class="s-status cs-status-new"></span></label>
+                                        <select class="user-status user-story-short-change" data-type="backlogStatus" id="user-story-status">
+                                            <option value="new"  selected>New</option>
+                                            <option value="ongoing">Ongoing</option>
+                                            <option value="closed">Closed</option>
+                                             <option value="draft"  selected>Draft</option>
+                                            <!--<option value="ongoing">Ongoing</option>-->
+                                            <!--<option value="closed">Closed</option>-->
+                                        </select>
+                                    </div>
+                                    <div class="storycard-panel-backlog-id cs-input-group" style=" border-left: 1px solid #ffffff73; padding-left: 20px; margin-left: 20px; ">
+                                        <input class="btn" id="storycard-panel-backlog-id" title="Refresh" style="background-color: #295883;
+                                        border-color: #295883; color: #fff;">
+                                    </div>
+                                </div>
+                            </div>                            
                         </div>
                         <div class="toggle-nav-elements">
                             <ul class="nav">
-                                <li><a class="nav-item-url toggle-btn-1"><i
-                                            class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
-                                <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span>
-                                            2</span></a></li>
-                                <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li>
-                                <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
-                                <li><a class="nav-item-url toggle-btn-6"><i class="cs-svg-icon input"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-8 active"><i class="cs-svg-icon task-03"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-6 active"><i class="cs-svg-icon input"></i></a></li>
                                 <li>
                                     <label class="nav-item-label toggle-btn-7 prototype-cls">
                                         <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i>
                                     </label>
                                 </li>
-                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
+                                <li><a class="nav-item-url toggle-btn-1"><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
+                                <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span> 2</span></a></li>
+                                <!-- <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li> -->
+                                <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
+              
                                 <li><a class="nav-item-url"><i class="cs-svg-icon comment-01"></i></a></li>
                                 <li><a class="nav-item-url"><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
@@ -131,6 +147,176 @@
                     </div>
                 </div>
                 <div class="toggle-body-elements">
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon cs-xs-icon attach-01"></i> <span class="name">Fayl</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-5"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-5">
+                            <div class="row">
+                                <div class="col-12" id="storycard_filelis1t">
+                                    <br>
+                                    <div class="row" id="storycard_filelist"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center" id="pinnedImages">
+
+                            </div>
+
+                           <div class="attach-files-box">
+                            <ul class="nav nav-pills cs-nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link active" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-selected="true">Fayl</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-media-tab" data-toggle="pill" href="#pills-media" role="tab" aria-selected="false">Media</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="pills-docs-tab" data-toggle="pill" href="#pills-docs" role="tab" aria-selected="false">Sənəd</a>
+                                </li>
+                              </ul>
+                              <div class="tab-content mb-4">
+                                <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div class="col-6 pl-0 pr-0">
+                                        <!-- <label for="sprintname" class="col-form-label control-label">File
+                                            <span style="color:red">*</span>
+                                        </label> -->
+                                        <input id="setStoryCardUploadImageModal_file" class="us-file-upload" multiple="" type="file" file_type="general" style="width:100%" value="" onchange="new UserStory().addFileForAddTaskType()">
+                                        <output id="setStoryCardUploadImageModal_filelist"></output>
+                                    </div>
+                                    <button type="button" class="btn brand-btn" onclick="new UserStory().uploadStoryCardImage(this)">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <div class="tab-pane fade" id="pills-media" role="tabpanel" aria-labelledby="pills-profile-tab">... 2</div>
+                                <div class="tab-pane fade" id="pills-docs" role="tabpanel" aria-labelledby="pills-contact-tab">... 3</div>
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon input"></i> <span class="name">Inputs</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-6"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-6 open">
+                            <div class="row text-center storycard_ipo storycard_inputs_table">
+                               
+                                <div class="w-100">
+                                    <div class="w-100" id='generalview_input_list'>
+                                    </div>
+                                    <table class="table table-hover table-bordered descriptiontable pdfHide" id="description_table_id_2" >
+                                        <tbody id="description_table_body_id_2">       
+                                        </tbody >
+                    
+                                        <tfooter>
+                                            <tr><td> </td><td >
+                                                    <input type="text" id="newInputId" class="form-control newinp add-input" onchange="new UserStory().insertNewInputNew(this)"
+                                                           placeholder="Add new input">
+                                        </tfooter>
+                                    </table>
+                    
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon task-03"></i> <span class="name">Process Description</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-8"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-8 open">
+                            <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
+                                <thead id="cs_description_table_head_id">
+                                    <tr class="cs-cursor-auto" style=" background: #21527e; ">
+                                        <th class="col-3"><div class="cs-table-head-title prosesDes">Process Description</div></th>
+                                        <th class="col-9">
+                                            <div class="cs-table-head-right-section">
+                                                <div class="row">
+                                                    <div class="col-12 text-right">
+                                                        <div class="cs-table-row-setting-btn dropdown">
+                                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fas fa-cog"></i> Row setting
+                                                                <span class="caret"></span></button>
+                                                            <ul class="dropdown-menu">
+                                                                <li><button class="pdescColored" pcolor='#f19a91' val="#f19a91"><i class="fas fa-tint"></i> Oranged</button></li>
+                                                                <li><button class="firstbut pdescColored" pcolor="#33E8FF"><i class="fas fa-tint"></i> Blued</button></li>
+                                                                <li><button class="firstbut pdescColored" pcolor="#8ad6a3"><i class="fas fa-tint"></i> Greened</button></li>
+                                                                <li><button class="firstbut pdescColored" pcolor=""><i class="fas fa-tint"></i> Default</button></li>
+                                                                <li role="presentation" class="divider"></li>
+                                                                <li><button class="firstbut pdescDeleteAll"><i class="fas fa-trash-alt"></i> Delete</button></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="cs-proces-desc-add-to-task-box">
+                                                            <button class="btn btn-primary" onclick="addProceccDescListToTaskNew()"  ><i class="fas fa-address-book"></i> Add to Task</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="description_table_body_id">       
+                                </tbody>
+                                <tfooter>
+                                    <tr><td> 
+                                            <input type="checkbox" class="prosDescCheckAll pdfHide">
+                                        </td><td >
+                                            <input type="text" id="backlogDescriptionText" class="form-control newinp add-description" 
+                                                         placeholder="Add Process Description"   />
+                                        </td><td> 
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon live"></i> <span class="name">Live Prototype</span></div>
+                            </div>
+                            <div class="toggle-min-elements prototype-cls">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+
+                                <label class="nav-item-label toggle-btn-7 prototype-cls" style="display: contents;">
+                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
+                                </label>
+
+                                <!-- <a class="cs-url toggle-btn-7 user-story-prototype-change"><i class="fal fa-angle-down"></i></a> -->
+                            </div>
+                        </div>
+                        <div class="hideme1 toggle-box-7" id="live-prototype-show-key" style="display:none"> 
+                                <div class='row gv-gui-design-api'>
+                                    <div class="col-12 text-center text-prototype">
+                                        <br>
+                                        <b style="font-size:14px">Live Prototype</b>
+                                    </div>
+                                </div>
+                    
+                                <div class="row gv-gui-design gv-gui-design-api " id="gv_gui_component_main_view1">
+                                    <div class="col-12 redirectClass4CSS" id="gv_gui_component_main_view">
+                                        <div class="row redirectClass" id="general-view-task-gui"></div>
+                    
+                                    </div>
+                                </div> 
+                        </div>
+                    </div>
                     <div class="toggle-body-item">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
@@ -421,7 +607,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="toggle-body-item">
+                    <!-- <div class="toggle-body-item">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon task-03"></i> <span
@@ -506,7 +692,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="toggle-body-item">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
@@ -556,164 +742,6 @@
                            </div>
                         </div>
                     </div>
-                    <div class="toggle-body-item">
-                        <div class="d-flex border-bottom-1px pb-1 mb-2">
-                            <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon cs-xs-icon attach-01"></i> <span class="name">Fayl</span></div>
-                            </div>
-                            <div class="toggle-min-elements">
-                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-5"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="toggle-box-5">
-                            <div class="row">
-                                <div class="col-12" id="storycard_filelis1t">
-                                    <br>
-                                    <div class="row" id="storycard_filelist"></div>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center" id="pinnedImages">
-
-                            </div>
-
-                           <div class="attach-files-box">
-                            <ul class="nav nav-pills cs-nav-pills mb-3" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <a class="nav-link active" id="pills-file-tab" data-toggle="pill" href="#pills-file" role="tab" aria-selected="true">Fayl</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                  <a class="nav-link" id="pills-media-tab" data-toggle="pill" href="#pills-media" role="tab" aria-selected="false">Media</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                  <a class="nav-link" id="pills-docs-tab" data-toggle="pill" href="#pills-docs" role="tab" aria-selected="false">Sənəd</a>
-                                </li>
-                              </ul>
-                              <div class="tab-content mb-4">
-                                <div class="tab-pane fade show active" id="pills-file" role="tabpanel" aria-labelledby="pills-home-tab">
-                                    <div class="col-6 pl-0 pr-0">
-                                        <!-- <label for="sprintname" class="col-form-label control-label">File
-                                            <span style="color:red">*</span>
-                                        </label> -->
-                                        <input id="setStoryCardUploadImageModal_file" class="us-file-upload" multiple="" type="file" file_type="general" style="width:100%" value="" onchange="new UserStory().addFileForAddTaskType()">
-                                        <output id="setStoryCardUploadImageModal_filelist"></output>
-                                    </div>
-                                    <button type="button" class="btn brand-btn" onclick="new UserStory().uploadStoryCardImage(this)">
-                                        <i class="fas fa-upload"></i> Upload
-                                    </button>
-                                </div>
-                                <div class="tab-pane fade" id="pills-media" role="tabpanel" aria-labelledby="pills-profile-tab">... 2</div>
-                                <div class="tab-pane fade" id="pills-docs" role="tabpanel" aria-labelledby="pills-contact-tab">... 3</div>
-                              </div>
-                           </div>
-                        </div>
-                    </div>
-                    <div class="toggle-body-item">
-                        <div class="d-flex border-bottom-1px pb-1 mb-2">
-                            <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon live"></i> <span class="name">Live Prototype</span></div>
-                            </div>
-                            <div class="toggle-min-elements prototype-cls">
-                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-
-                                <label class="nav-item-label toggle-btn-7 prototype-cls" style="display: contents;">
-                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
-                                </label>
-
-                                <!-- <a class="cs-url toggle-btn-7 user-story-prototype-change"><i class="fal fa-angle-down"></i></a> -->
-                            </div>
-                        </div>
-                        <div class="hideme1 toggle-box-7" id="live-prototype-show-key" style="display:none"> 
-                                <div class='row gv-gui-design-api'>
-                                    <div class="col-12 text-center text-prototype">
-                                        <br>
-                                        <b style="font-size:14px">Live Prototype</b>
-                                    </div>
-                                </div>
-                    
-                                <div class="row gv-gui-design gv-gui-design-api " id="gv_gui_component_main_view1">
-                                    <div class="col-12 redirectClass4CSS" id="gv_gui_component_main_view">
-                                        <div class="row redirectClass" id="general-view-task-gui"></div>
-                    
-                                    </div>
-                                </div> 
-                        </div>
-                    </div>
-                    <div class="toggle-body-item">
-                        <div class="d-flex border-bottom-1px pb-1 mb-2">
-                            <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon input"></i> <span class="name">Inputs</span></div>
-                            </div>
-                            <div class="toggle-min-elements">
-                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-6"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="toggle-box-6">
-                            <div class="row text-center storycard_ipo storycard_inputs_table">
-                                <!-- <div class="col-1"></div> -->
-                                <div class="w-100">
-                                    <!-- <div  class="d-flex col-12 add_descriotion_btn-container"> -->
-                                        <!-- <div  class="add_descriotion_btn pdfHide" > 
-                                        <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
-                                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                                            <button class="dropdown-item firstbut " data-toggle="modal" 
-                                                    onclick="setActiveInputDescType('IN')"
-                                                    data-target="#addRelatedSUSOutputModal">Add Descriptions </button>
-                                            <button class="dropdown-item firstbut "   
-                                                    onclick="new UserStory().setAsOutput()">Set as Output</button>
-                                            <button class="dropdown-item firstbut " data-toggle="modal" 
-                                                    onclick="addInputListToTaskNew()"  >Add to Task </button>
-                                            <button class="dropdown-item firstbut " data-toggle="modal" 
-                                                    onclick="addInputListToTaskNewEvent()"  >Add to Task Events</button>
-                    
-                    
-                                            <button class="dropdown-item firstbut " data-toggle="modal" data-target="#copyMoveInputsModalNew"
-                                                    onclick="new UserStory().copyMoveInputsModalNew('IN')">Copy/Move</button>
-                                            <button class="dropdown-item firstbut "     onclick="new UserStory().deleteInputsNew()">Delete</button>
-                                            <hr style="margin:3px 0px;">
-                                            <button class="dropdown-item firstbut "     onclick="addFieldsOfTableAsInput(this)">Add Fields of Table as Input</button>
-                                            <button class="dropdown-item firstbut "     onclick="addInputOfStoryCardAs(this)">Add Input of Story Card As</button>
-                    
-                                        </div>
-                                    </div> -->
-                                      <!-- <div class="col-10 add_descriotion_btn pdfHide" > 
-                                        <button class="btn newin dropdown-toggle fa fa-ellipsis-h description-delete-btn" href="#" role="button" 
-                                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                           
-                                            <button class="dropdown-item firstbut "     onclick="addInputDescListToTaskNewEvent()">Add To Task Desc</button>
-                                            <button class="dropdown-item firstbut "     onclick="RemoveDescMultiple()">Delete</button>
-                                          
-                                        </div>
-                                    </div> -->
-                    
-                                    <!-- </div> -->
-                                    
-                                    
-                    
-                    
-                                    <div class="w-100" id='generalview_input_list'>
-                                    </div>
-                                    <table class="table table-hover table-bordered descriptiontable pdfHide" id="description_table_id_2" >
-                                        <tbody id="description_table_body_id_2">       
-                                        </tbody >
-                    
-                                        <tfooter>
-                                            <tr><td> </td><td >
-                                                    <input type="text" id="newInputId" class="form-control newinp add-input" onchange="new UserStory().insertNewInputNew(this)"
-                                                           placeholder="Add new input">
-                                        </tfooter>
-                                    </table>
-                    
-                                </div>
-                            </div>
-                    
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -753,4 +781,55 @@
             $('.toggle-btn-7').removeClass('active');
         }
     });
+    $(document).on("click", ".toggle-btn-8", function (e) {
+        $('.toggle-btn-8').toggleClass('active');
+        $('.toggle-box-8').toggleClass('open');
+    });
 </script>
+
+<div class="modal fade" id="task-ongoing-large-history" style="z-index: 1100;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">
+    <div class="modal-dialog modal-lg"  style="max-width: 100%; max-height: 100%; margin: 0px;height: 100%;" role="document">
+        <div class="modal-content" style="width: 100%; height: 100%;">
+            <div class="modal-header" >
+                <h5 class="modal-title" >History</h5>
+                <div class="float-right">
+
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body histroy-and-dashboard" style="background-color: rgb(244, 245, 247);height: 90vh;overflow: auto; position: relative;">
+                <!--<form>-->
+                <div class="row" >
+                    <div class="table-content " style="overflow-y: auto; height: 80vh;">
+
+
+                        <table id="history-main-table-backlogst" style="width: max-content;min-width: 100%;" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <td>Project </td>
+                                    <td>Backlog</td>
+                                    <td>Input</td>
+                                    <td>Description</td>
+                                    <td>New Value</td>
+                                    <td>Old Value</td>
+                                    <td>Action Type</td>
+                                    <td>Time & Date</td> 
+                                    <td>Created</td>
+
+                                </tr>  
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
