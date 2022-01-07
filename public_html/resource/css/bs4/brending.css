@@ -3245,7 +3245,7 @@ hr.hr-ss {
     color: rgb(235 235 240 / 38%) !important;
 }
 .cs-forum-group .user-status.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-    width: 100%;
+    /* width: 100%; */
 }
 .storecard-sidebarin .cs-forum-group input.btn {
     font-size: 14px;
@@ -6323,4 +6323,32 @@ table.lbl-list-table tr td {
     max-width: 1170px !important;
     border-collapse: separate;
     border-spacing: 1px;
+}
+/* customize store card */
+.type-status-box .cs-forum-group .bootstrap-select > .btn {
+    background-color: rgba(3, 57, 108, 0.5);
+    color: #fff;
+    font-size: 14px;
+    height: 35px;
+    padding: 6px 8px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+.type-status-box .cs-forum-group .bootstrap-select > .btn:not(:disabled):not(.disabled).active, .type-status-box .cs-forum-group .bootstrap-select > .btn:not(:disabled):not(.disabled):active {
+    color: #03396C;
+    background-color: #DFEEF7;
+    border-color: #DFEEF7;
+}
+.type-status-box .cs-forum-group .bootstrap-select .dropdown-menu li {
+    height: 35px;
+    background: #dfeef7;
+}
+.type-status-box .cs-forum-group .dropdown-menu > li a {
+    color: #03396C;
+}
+.type-status-box .cs-forum-group .dropdown-item.active, .type-status-box .cs-forum-group .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #2a5984;
 }
