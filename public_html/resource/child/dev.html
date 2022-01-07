@@ -571,35 +571,20 @@
             </div>
 
             <div class="cs-forum-group col-12 Assigne-card-story1" style="z-index: 1000;">
-                <label class="cs-label-name">Created By: <span class="by-last-updated"><span class="story_card_created_date"></span> / <span class="story_card_created_time"></span></label>
-                <div class="Assigne-card-story-select form-control">
-                    <div id='story-card-createdby'>
-                        <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
-                        <span id='story-card-createdby-name' class="Assigne-card-story-select-name">Unassigned</span>
-                    </div>
-                </div>
+                <label class="cs-label-name">Created By: <img id='story-card-createdby-img' class='Assigne-card-story-select-img created'
+                    src='https://test.sourcedagile.com/api/get/files/userprofile.png'
+                    srcset='' data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='' style=" margin-top: 4px; "> <span class="by-last-updated"><span class="story_card_created_date"></span> / <span class="story_card_created_time"></span></label>
             </div>
             <div class="cs-forum-group col-12 Assigne-card-story1 mt-3" style="z-index: 1000;">
-                <label class="cs-label-name">Updated By: <span class="by-last-updated"><span class="story_card_updated_updated"></span> / <span class="story_card_updated_time"></span></span></label>
-                <div class="Assigne-card-story-select form-control">
-                    <div id='story-card-updatedby'>
-                        <img id='story-card-createdby-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
-                        <span id='story-card-createdby-name' class="Assigne-card-story-select-name">Unassigned</span>
-                    </div>
-                </div>
+                <label class="cs-label-name">Updated By: <img id='story-card-updatedby-img' class='Assigne-card-story-select-img updated'
+                    src='https://test.sourcedagile.com/api/get/files/userprofile.png' data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='' style=" margin-top: 4px; "> <span class="by-last-updated"><span class="story_card_updated_updated"></span> / <span class="story_card_updated_time"></span></span></label>
             </div>
 
             <div class="cs-forum-group col-12 Assigne-card-story mt-3" style="z-index: 1000;">
                 <label class="cs-label-name">Owner </label>
-                <div class="Assigne-card-story-select form-control">
-                    <div id='story-card-owner'>
-                        <img id='story-card-owner-img' class="Assigne-card-story-select-img" src="api/get/files/userprofile.png" alt="" srcset="">
-                        <span id='story-card-owner-name' class="Assigne-card-story-select-name">Unassigned</span>
-                    </div>
-                    <input type="search" class="Assigne-card-story-search form-control" >
-                    <div class="Assigne-card-story-select-content pr-0 pl-0" id='story-card-owner-list'>
-                    </div>
-                </div>
+                <select class="cs-selectpicker" data-live-search="true" id="story-card-owner-list">
+                                  
+                </select>
             </div>
 
             <div class="col-12 mt-4">

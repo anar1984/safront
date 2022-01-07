@@ -15417,11 +15417,9 @@ function loadUsersAsAssignee() {
 function loadUsersAsOwner() {
     $('#story-card-owner-list').html('');
     var keys = SAProjectUser.GetKeys();
-    var div1 = $('<div class="owner-content-user">')
-            .attr('pid', "-1")
-            .append($('<img class="Assigne-card-story-select-img">')
-                    .attr('src', fileUrl(new User().getDefaultUserprofileName())))
-            .append($('<span>').append(" Unassigned"));
+    var div1 = $(`<option
+    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
+    Unassigned</option>`);
     $('#story-card-owner-list').append(div1);
     for (var i = 0; i < keys.length; i++) {
         var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
@@ -15429,15 +15427,12 @@ function loadUsersAsOwner() {
         var img = (userImage) ?
                 fileUrl(userImage) :
                 fileUrl(new User().getDefaultUserprofileName());
-        var div = $('<div class="owner-content-user">')
-                .attr('pid', keys[i])
-                .append($('<img class="Assigne-card-story-select-img">')
-                        .attr('src', img))
-                .append($('<span>')
-                        .append(" ")
-                        .append(userName));
+        var div = $(`<option
+        data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+        Unassigned</option>`);
         $('#story-card-owner-list').append(div)
     }
+    $('#story-card-owner-list').selectpicker('refresh')
 }
 //$(document).on('click', '.dropdownMenuButtonCss', function (evt) {
 //   
@@ -16363,8 +16358,10 @@ function setStoryCardCreatedBy() {
     var userName1 = (userName) ?
             userName :
             ' Unassigned';
-    $('#story-card-createdby').find('img').attr('src', img);
-    $('#story-card-createdby').find('span').html(' ' + userName1);
+    $('#story-card-createdby-img').attr('src', img)
+                                  .attr('data-content',userName1)
+                              $('[data-toggle="popover"]').popover();
+   // $('#story-card-createdby-name').html(' ' + userName1);
 }
 function setStoryCardUpdatedBy() {
     var updatedBy = SACore.GetBacklogDetails(global_var.current_backlog_id, "updatedBy");
@@ -16376,8 +16373,10 @@ function setStoryCardUpdatedBy() {
     var userName1 = (userName) ?
             userName :
             ' Unassigned';
-    $('#story-card-updatedby').find('img').attr('src', img);
-    $('#story-card-updatedby').find('span').html(' ' + userName1);
+    $('#story-card-updatedby-img').attr('src', img)
+                                   .attr('data-content',userName1)
+     $('[data-toggle="popover"]').popover();
+   // $('#story-card-updatedby-name').html(' ');
 }
 
 function toggleNewUserStory4Section(el) {
