@@ -6640,3 +6640,6 @@ div.cs-task-item-in-box {
  .bg-status-tamamlanib{
      background-color: #a8dff4;
  }
+ input#bug_filter_search_text::placeholder{
+  color: #c2c2c2;
+ }

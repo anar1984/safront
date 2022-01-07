@@ -2418,8 +2418,8 @@ const taskManagement = {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
                     <div class="d-flex justify-content-start">
-                        <div class="info-box">
-                            <input data-type="search_text" type="text" class="bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        <div class="info-box cs-input-group" style="padding:0;">
+                            <input data-type="search_text" type="text" class="btn bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
                         </div>
                                      
                         <div class="info-box">
