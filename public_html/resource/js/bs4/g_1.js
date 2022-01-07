@@ -1667,6 +1667,8 @@ $(document).on('click', '.baclog-large-modal-next', function (event) {
     elm.find('.baclog-large-modal-next').hide();
     $("#task-ongoing-large-modal4backlog").modal('show');
     $("#body-large-modal-in-us4backlog").append(elm);
+    $("#body-large-modal-in-us4backlog .user-story-prototype-change1").prop("checked",true).change();
+
     $('[data-toggle="popover"]').popover();
 
 });

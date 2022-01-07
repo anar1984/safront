@@ -14243,10 +14243,10 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }       
           }
           else if(groupBy==='manualStatus'){
-            for (let si = 0; si < stl.length; si++) {
+           /*  for (let si = 0; si < stl.length; si++) {
                div.append(this.genUsManagementZone(stl[si],stl[si].toUpperCase()));
                this.setUSLists4KanbanViewCore(stl[si],'backlogStatus');
-            }
+            } */
             $(".manual-list-combo").addClass('d-flex').removeClass('d-none');
                 this.getManualStatusList();           
           }
