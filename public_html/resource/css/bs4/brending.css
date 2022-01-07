@@ -1470,8 +1470,9 @@ input:checked + .slider:before {
     margin-right: 0;
 }
 .cs-task-boxes {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    background: rgba(255, 255, 255, 0.11);
+    mix-blend-mode: normal;
+    border-radius: 15px 15px 0px 0px;
 }
 .cs-task-status-header {
     padding: 15px;
@@ -1482,6 +1483,7 @@ input:checked + .slider:before {
 .cs-task-status-header .cs-card-size {
     font-size: 14px;
     vertical-align: middle;
+    color: #173359;
 }
 .cs-task-status-header .cs-card-size span:first-child {
     font-size: 16px;
@@ -1500,10 +1502,10 @@ input:checked + .slider:before {
     float: right;
 }
 .cs-task-status-header .cs-card-fullview a {
-    color: #9b9b9b;
+    color: #173359;
 }
 .cs-task-status-header .cs-card-fullview a:hover {
-    color: #163656;
+    color: #173359;
 }
 .cs-task-status-header .cs-card-fullview i {
 
@@ -6466,8 +6468,8 @@ div.cs-task-item-in-box {
     display: inline-block;
 }
 .cs-task-card-avatar-boxes .Assigne-card-story-select-img {
-    width: 25px;
-    height: 25px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     padding: 1px;
 }
@@ -6609,3 +6611,32 @@ div.cs-task-item-in-box {
 .cs-task-item-in-box:hover .large-blok-icon {
     visibility: visible;
 }
+/* status color */
+.bg-status-new{
+    background-color: #D09838;
+ }
+ .bg-status-ongoing{
+    background-color: #68B7BD;
+ }
+ .bg-status-waiting{
+    background-color: #E45527;
+ }
+ .bg-status-closed{
+     background-color: #78A812;
+   
+ }
+ .bg-status-rejected{
+    background-color: #D285CF;
+ }
+ .bg-status-canceled{
+    background-color: #CBA26E;
+ }
+ .bg-status-defected{
+    background-color: #d0d9ea;
+ }
+ .bg-status-tesdiqlenib{
+    background-color: #dce2ee;
+ }
+ .bg-status-tamamlanib{
+     background-color: #a8dff4;
+ }
