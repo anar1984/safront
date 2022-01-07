@@ -1146,57 +1146,61 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-    setBugListInitialData();
+
+    if(global_var.current_modal==='loadBugChange'){
+
+        setBugListInitialData();
 
   
-    var json = initJSON();
-    json.kv.fkProjectId = bug_filter.project_id;
-    json.kv.fkAssigneeId = bug_filter.assignee_id;
-    json.kv.closedBy = bug_filter.closed_by;
-    json.kv.createdBy = bug_filter.created_by;
-    json.kv.fkBackogId = bug_filter.backlog_id;
-    if(bug_filter.status){
-        json.kv.taskStatus = bug_filter.status;
+        var json = initJSON();
+        json.kv.fkProjectId = bug_filter.project_id;
+        json.kv.fkAssigneeId = bug_filter.assignee_id;
+        json.kv.closedBy = bug_filter.closed_by;
+        json.kv.createdBy = bug_filter.created_by;
+        json.kv.fkBackogId = bug_filter.backlog_id;
+        if(bug_filter.status){
+            json.kv.taskStatus = bug_filter.status;
+            
+        }else{
+           var ty = localStorage.getItem("issue_mode_active");
+          $('#issue-table-aktiv-all').find('.title').text(ty);
+          var sel  = $("#bug_filter_status");
+             let value 
+                 if(ty==='A'){
+                   value  = ["new",'ongoing','waiting'];
+                 }else if(ty==='P'){
+                    value  = ["rejected",'UAT','closed','canceled'];     
+                 }
+                 sel.val(value);
+                 sel.selectpicker("refresh");
+                 json.kv.taskStatus = getBugFilterMultiSelect(sel);
+        }
         
-    }else{
-       var ty = localStorage.getItem("issue_mode_active");
-      $('#issue-table-aktiv-all').find('.title').text(ty);
-      var sel  = $("#bug_filter_status");
-         let value 
-             if(ty==='A'){
-               value  = ["new",'ongoing','waiting'];
-             }else if(ty==='P'){
-                value  = ["rejected",'UAT','closed','canceled'];     
-             }
-             sel.val(value);
-             sel.selectpicker("refresh");
-             json.kv.taskStatus = getBugFilterMultiSelect(sel);
-    }
-    
-    json.kv.priority = bug_filter.priority;
-    json.kv.taskNature = bug_filter.nature;
-    json.kv.searchText = bug_filter.search_text;
-    json.kv.searchLimit = bug_filter.limit;
-    json.kv.pageNo = bug_filter.page_no;
-    json.kv.sprintId = bug_filter.sprint_id;
-    json.kv.labelId = bug_filter.label_id;
-    json.kv.sortBy = bug_filter.sortBy;
-    json.kv.sortByAsc = bug_filter.sortByAsc;
-    json.kv.closedDateFrom = bug_filter.closed_date_from;
-    json.kv.closedDateTo = bug_filter.closed_date_to;
-    json.kv.showChildTask = bug_filter.showChildTask;
-    json.kv.createdDate = bug_filter.createdDate;
-    json.kv.startLimit = 0;
-    json.kv.endLimit = 25;
-  
-    var view = localStorage.getItem('task-view-format');
-    if (!view) {
-        view = "table"
-    }
-    if (view === 'kanban') {
-        taskManagement.readTask.genBlockTask.genKanbanView.generAteBlockKanbanByGroupBy($('.cs-task-panel-column'),json);
-    } else if (view === 'table') {
-        taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
+        json.kv.priority = bug_filter.priority;
+        json.kv.taskNature = bug_filter.nature;
+        json.kv.searchText = bug_filter.search_text;
+        json.kv.searchLimit = bug_filter.limit;
+        json.kv.pageNo = bug_filter.page_no;
+        json.kv.sprintId = bug_filter.sprint_id;
+        json.kv.labelId = bug_filter.label_id;
+        json.kv.sortBy = bug_filter.sortBy;
+        json.kv.sortByAsc = bug_filter.sortByAsc;
+        json.kv.closedDateFrom = bug_filter.closed_date_from;
+        json.kv.closedDateTo = bug_filter.closed_date_to;
+        json.kv.showChildTask = bug_filter.showChildTask;
+        json.kv.createdDate = bug_filter.createdDate;
+        json.kv.startLimit = 0;
+        json.kv.endLimit = 25;
+      
+        var view = localStorage.getItem('task-view-format');
+        if (!view) {
+            view = "table"
+        }
+        if (view === 'kanban') {
+            taskManagement.readTask.genBlockTask.genKanbanView.generAteBlockKanbanByGroupBy($('.cs-task-panel-column'),json);
+        } else if (view === 'table') {
+            taskManagement.readTask.genBlockTask.genTableView.getTaskList4Table(json);
+        }
     }
    
 
