@@ -583,6 +583,9 @@ const add_checked_inputs_to_story_card = (backlog_id, fkProjectId, setDisabled, 
             data.orderNo = $(this).closest('tr').find('#us-gui-component-order-no-form-gen').val();
             data.cellNo = $(this).closest('tr').find('#us-gui-component-cell-no-form-gen').val();
             data.content = $(this).closest('tr').find('#us-gui-component-content-form-gen').text();
+            data.fkSelectFromProjectId = $(this).closest('tr').find('.form-generator-projectlist-main').text();
+            data.fkSelectFromBacklogId = $(this).closest('tr').find('.form-generator-api-list-main').text();
+            data.fkSelectFromInputId = $(this).closest('tr').find('#form-generator-input-list-main').text();
 
             table_list_body[data.orderNo] = data.inputKey;
 
@@ -628,7 +631,7 @@ const hr = (backlog_id, fkProjectId, orderNo) => {
     data.fkProjectId = fkProjectId;
     data.inputName = 'Inner Line';
     data.inputType = "IN";
-    data.componentType = 'hr';
+    data.componentType = 'hdn';
     data.cellNo = "12";
     data.orderNo = orderNo;
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
@@ -819,7 +822,8 @@ const loader_hidden_carrier_4_list = (backlog_id, fkProjectId, orderNo) => {
         table_body(backlog_id,  data.fkProjectId);
 
         add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
-        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "0")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button-development-visibility", "1")
     })
 }
 
@@ -835,8 +839,9 @@ const loader_hidden_carrier_4_update = (update_button_id, backlog_id, fkProjectI
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         Toaster.showMessage("Successfully Added");
         create_js_for_update_form(update_button_id, res.kv.id, backlog_id);
-        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
-        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1");
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "0");
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button-development-visibility", "1")
     })
 }
 
@@ -852,8 +857,10 @@ const loader_hidden_carrier_4_view = (backlog_id, fkProjectId, orderNo) => {
     data.orderNo = orderNo;
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         Toaster.showMessage("Successfully Added");
-        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
-        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+        add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1") 
+        
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "0");
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button-development-visibility", "1")
 
         //create_js_for_view_form
         create_js_for_view_form(res.kv.id, backlog_id);
@@ -872,7 +879,8 @@ const loader_hidden_carrier = (backlog_id, fkProjectId, orderNo) => {
     callService('serviceTmInsertNewInput4Select', data, true, function (res) {
         Toaster.showMessage("Successfully Added");
         add_input_selectedfield(res.kv.id, backlog_id, fkProjectId, "sa-onloadclick", "1")
-        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "1")
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button", "0");
+        add_input_attribute(res.kv.id, backlog_id, fkProjectId, "sa-loader-button-development-visibility", "1")
     })
 }
 
