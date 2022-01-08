@@ -2855,7 +2855,7 @@ const taskManagement = {
             </div>
             </div>`
                 },
-                genKanbanContentBlock: function (id, taskid, title, deadline, body, stats, ceratedDate) {
+                genKanbanContentBlock: function (id, taskid, title, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
                     <div class="cs-cart-head-title p-2">
                     <span href="#" class="operation " >${title}</span><span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
@@ -2871,29 +2871,34 @@ const taskManagement = {
                            <div class="cs-task-card-desc">
                            <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
                            </div>
-                           </div><div class="cs-task-card-bottom"><div class="d-flex cs-flex-align-middle"><div class="align-items-center"><div class="cs-task-card-avatar-boxes"><ul>
-                                                   <li><img class="Assigne-card-story-select-img closed" src="https://app.sourcedagile.com/api/get/files/" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Guest" title="" data-original-title="Daxil Edən"></li>
-                                                     </ul></div></div><div class="flex-fill text-right"><div class="cs-task-card-datatime d-block text-right">
+                           </div><div class="cs-task-card-bottom">
+                           <div class="d-flex cs-flex-align-middle">
+                           <div class="align-items-center">
+                           <div class="cs-task-card-avatar-boxes">
+                           <ul class='d-flex'>
+                            <li><img class="Assigne-card-story-select-img ${stats}" src="${createdImg}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${createdName}" title="" data-original-title="Daxil Edən"></li>
+                            <li><img class="Assigne-card-story-select-img ${stats}" src="${assigneImage}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${assignName}" title="" data-original-title="İcra Edən"></li>
+                                 </ul>
+                                 </div>
+                                 </div>
+                                 <div class="flex-fill text-right"><div class="cs-task-card-datatime d-block text-right">
                                     <span>${ceratedDate} </span>
-                                </div><div class="bg-status-closed" style="height: 2px; margin: 10px 0px 10px 7px;"></div>
+                                </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 10px 7px;"></div>
                                 <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
                                 <span>${stats}</span></div><div class="canban-item-btns d-flex float-right">
-                                            <div class="btn-1 mr-2">
+                                            <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="I did It">
                                                 <i class="cs-svg-icon c-icon-1"></i>
                                             </div>
-                                            <div class="btn-2 mr-2">
+                                            <div class="btn-2 mr-2 status-change" data-value='rejected' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Rejected"  >
                                                 <i class="cs-svg-icon c-icon-2"></i>
                                             </div>
-                                            <div class="btn-3 mr-2">
+                                            <div class="btn-3 mr-2 status-change"  data-value='canceled' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Canceled">
                                                 <i class="cs-svg-icon c-icon-3"></i>
                                             </div>
-                                            <div class="btn-4 mr-2">
-                                                <i class="cs-svg-icon c-icon-4"></i>
-                                            </div>
-                                            <div class="btn-5 mr-2">
+                                            <div class="btn-5 mr-2"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="Observer">
                                                 <i class="cs-svg-icon c-icon-5"></i>
                                             </div>
-                                            <div class="btn-6">
+                                            <div class="btn-6"  data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="History">
                                                 <i class="cs-svg-icon c-icon-6"></i>
                                             </div>
                                             </div> </div>  </div>  </div> </div>`
@@ -2942,9 +2947,15 @@ const taskManagement = {
                                     o.id,
                                     task_id,
                                     backlogName,
-                                    getTimeDifference(endTime, startTime), taskName, o.taskStatus, Utility.convertDate(o.createdDate),
-                                    genUserTrblock(o.userName, img),
-                                    genUserTrblock(o.createByName, createdByImg)
+                                    getTimeDifference(endTime, startTime),
+                                     taskName, 
+                                     o.taskStatus, 
+                                     Utility.convertDate(o.createdDate),
+                                     createdByImg,
+                                     o.createByName,
+                                     img,
+                                     o.userName,
+                                    
                                 )
                             )
 
@@ -4113,3 +4124,7 @@ $(document).on("click", '.setting-elemen-box .notification-btn', function () {
     $('#main-sidebar-div .notifcation-block').show();  
     taskManagement.readTask.genBlockTask.getNotificationList();  
 });
+$(document).on("click",'.cs-task-item-in-box',function (params) {
+    global_var.current_issue_id = $(this).attr('id');
+    Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
+})

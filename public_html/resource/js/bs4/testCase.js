@@ -2170,11 +2170,14 @@ $(document).on("click", '#bug-listassigne-dropdown', function (e) {
     el.empty()
     loadAssigneesByProjectDrop(id, el);
 })
-$(document).on("click", '.bug-list-column-task-status a', function (e) {
-
-    var val = $(this).attr("data-value");
-    var id = $(this).parents('tr').attr("id");
-    updateTask4ShortChangePure(val, "taskStatus", id);
+$(document).on("click", '.canban-item-btns .status-change', function (e) {
+     if(confirm("Are You sure?")){
+        var val = $(this).attr("data-value");
+        var id = $(this).parents('.cs-task-item-in-box').attr("id");
+        updateTask4ShortChangePure(val, "taskStatus", id);
+     }
+        
+   
 })
 $(document).on("click", '.bug-list-column-assignee a', function (e) {
 
