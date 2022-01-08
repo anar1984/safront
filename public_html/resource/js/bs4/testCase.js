@@ -1868,7 +1868,7 @@ function callStoryCard4BugTask(projectIdOld, backlogId, el, containDiv) {
     //    var divId = (containDiv)? containDiv :"body_of_nature";
 
     var divId = '#storyCardViewManualModal-body';
-    $('#storyCardViewManualModal').modal('show');
+    
 
     $.get("resource/child/storycard.html", function (html_string) {
         if (!backlogId || backlogId === '-1') {
@@ -1876,11 +1876,13 @@ function callStoryCard4BugTask(projectIdOld, backlogId, el, containDiv) {
         }
 
         global_var.current_backlog_id = backlogId;
-
-        $(divId).html(html_string); // this is not Working
-        var storyCard = html_string;
-        $(divId).html(storyCard);
-
+             $("#storyCardViewManualModal").remove();
+      //  $(divId).html(html_string); // this is not Working
+        var storyCard = $("<div>").append(html_string);
+            $(storyCard).find('#taskMgmtModal').attr("id",'storyCardViewManualModal')
+                                               .removeAttr("style")
+        $("body").append(storyCard);
+        $('#storyCardViewManualModal').modal('show');
 
         var backlogName = $(el).html();
         $('#generalview-us-header-name').text(backlogName);
