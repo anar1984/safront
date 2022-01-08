@@ -2711,15 +2711,15 @@ const taskManagement = {
                 </div>
             </div>`
             },
-            genNotificationItemBlock: function (id, taskId, title, deadline, body) {
-                return `  <div class="notification-elements">
+            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus) {
+                return `  <div class="notification-elements" id='${id}'>
               <div class="d-flex p-2 notify-top-section">
                   <div class="mr-auto">
                       <span class="top-title">${title}</span>
-                       <span class="deadline"> ${deadline}</span>
+                        ${deadline}
                   </div>
                   <div>
-                      <span class="top-date-time">${date + time}</span>
+                      <span class="top-date-time">${time}</span>
                       <div class="circle-s">
                           <label class="checkmarkcontainer">
                               <input type="checkbox" class="noteCheckListItem" value="0">
@@ -2738,11 +2738,11 @@ const taskManagement = {
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
               </div>
               <div class="notify-bottom-box pt-2">
-                  <div class="d-block"><span class="date-time pr-2">26.11.2021 13:41:43</span></div>
+                  <div class="d-block"><span class="date-time pr-2">${time}</span></div>
                   <div class="d-flex mt-2 status-box">
                       <div class="mr-auto">
-                          <div class="author-img"><img class="author" src="https://app.sourcedagile.com/api/get/files/Resid_77D6372B4DFE6.png" title="Creator"></div>
-                          <span class="notefy-status">Yeni</span>
+                          <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
+                          <span class="notefy-status">${taskStatus}</span>
                       </div>
                       <div class="notify-bottom-right pr-2">
                           <ul>
@@ -2784,7 +2784,7 @@ const taskManagement = {
                 var data = JSON.stringify(json);
                 var that = this;
                 $.ajax({
-                    url: urlGl + "api/post/srv/serviceRsGetRowCount4TaskNotificationByUser",
+                    url: urlGl + "api/post/srv/serviceRsGetTaskNotificationListByUserId",
                     type: "POST",
                     data: data,
                     contentType: "application/json",
@@ -2792,14 +2792,27 @@ const taskManagement = {
                     async: true,
                     success: function (res) {
                         var list  = res.tbl[0].r;
-                           var elm  = $("#notification-block-id")
+                           var elm  = $("#notification-block-id");
+                                elm.empty();
                             for (let i = 0; i < list.length; i++) {
                                 const o = list[i];
-                                var html = that.genNotificationItemBlock(
+                                var endTime = new Date(o.endDate + ' ' + o.endTime);
+                                var html = that.genTypeNotMessaje(
                                     o.id,
-                                    o.taskId
+                                    o.fkTaskId,
+                                    o.fkProjectId,
+                                    o.historyTellerId,
+                                    o.newValue,
+                                    o.oldValue,
+                                    o.historyDate,
+                                    o.historyTime,
+                                    o.noteType,
+                                    o.orderNoSeq,
+                                    endTime,
+                                    o.taskStatus,
+                                    o.isMeet
                                 )
-                                elm.append(html)
+                                elm.append(html);
                             }
                     },
                     error: function () {
@@ -2807,6 +2820,39 @@ const taskManagement = {
                     }
                 });
               
+            },
+            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+                try {
+                    var projectCode = SACore.GetProjectCore(projectId).projectCode;
+                    projectCode = projectCode.toUpperCase();
+                    var title  = (isMeet==='1')?"Meet":"Task"
+                   var taskId = (orderNoSeq)
+                   ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                     var  img  =''
+                         var body =''                
+                      if(notType==='new'){
+                          body = "New Task Added ("+newValue+")"
+                      }
+                      else if (notType==='status'){
+                        body = "Status Changed ("+newValue+")"
+                      }
+                      else if (notType==='assigne'){
+                        body = "Task Assigne ("+oldValue+") changed ("+oldValue+")"
+                      }
+                      else if (notType==='comment'){
+                        body = "New Comment Added ("+newValue+")"
+                      }
+   
+                            var msg = "jjj"
+                             var img  = SAProjectUser.Users[tellerId].userImage;
+                               img  =  fileUrl(img)
+                             var deadLine = getTimeDifference(endTime, new Date());
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,dateL+" "+timeL,msg,img,taskStatus)
+                    
+                } catch (error) {
+                    return ''
+                }
+                
             },
             getstatisticList: function () {
                 try {
