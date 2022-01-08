@@ -5,6 +5,8 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        var dwlmt = $('#bug_filter_tasktype')
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
         this.readTask.genBlockTask.getNotificationRowCount();  
 
@@ -2626,6 +2628,14 @@ const taskManagement = {
                 </div>
                 <div class="cs-input-group mt-3">
                     <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
+                        title="Task Type">
+                      
+            
+                    </select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                         multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
                         <option value='bug' selected>Bug</option>
                         <option value='change' selected>Change Request</option>
@@ -2738,7 +2748,7 @@ const taskManagement = {
                   <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
                       <span class="notefy-title">${body}</span>
                       <div class="d-flex mt-1 notify-msg">
-                          <span>Mesaj: </span><span>${msg}</span>
+                          <span>${msj?"Mesaj:":""} </span><span>${msg}</span>
                       </div>
                   </div>
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
@@ -2829,11 +2839,17 @@ const taskManagement = {
             },
             genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
                 try {
-                    var projectCode = SACore.GetProjectCore(projectId).projectCode;
-                    projectCode = projectCode.toUpperCase();
                     var title  = (isMeet==='1')?"Meet":"Task"
-                   var taskId = (orderNoSeq)
-                   ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                    try {
+                        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+                        projectCode = projectCode.toUpperCase();
+                      
+                       var taskId = (orderNoSeq)
+                       ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                    } catch (error) {
+                     var  taskId ="no-id";
+                    }
+                   
                      var  img  =''
                          var body =''                
                       if(notType==='new'){
@@ -2843,17 +2859,18 @@ const taskManagement = {
                         body = "Status Changed From ("+oldValue+") To ("+newValue+")"
                       }
                       else if (notType==='assigne'){
-                        body = "Task Assigne ("+oldValue+") changed ("+oldValue+")"
+                        body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
                       }
                       else if (notType==='comment'){
                         body = "New Comment Added ("+newValue+")"
                       }
    
-                            var msg = "jjj"
+                            var msg = ""
                              var img  = SAProjectUser.Users[tellerId].userImage;
                                img  =  fileUrl(img)
                              var deadLine = getTimeDifference(endTime, new Date());
-                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,dateL+" "+timeL,msg,img,taskStatus)
+                             var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus);
                     
                 } catch (error) {
                     return ''

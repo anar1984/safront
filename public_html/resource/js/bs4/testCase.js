@@ -19,6 +19,7 @@ var bug_filter = {
     label_id: '',
     showChildTask: '1',
     createdDate: '',
+    fkTaskTypeId: '',
 }
 
 var sprintTaskIds = "";
@@ -1189,6 +1190,7 @@ function getBugList() {
         json.kv.closedDateTo = bug_filter.closed_date_to;
         json.kv.showChildTask = bug_filter.showChildTask;
         json.kv.createdDate = bug_filter.createdDate;
+        json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
       
