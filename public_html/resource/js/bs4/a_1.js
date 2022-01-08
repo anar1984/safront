@@ -15048,7 +15048,7 @@ function callLoadStoryCard() {
 
 function loadProjectList2SelectboxByClassWithoutCallAction(className) {
 
-    var cmd = $('.' + className);
+    var cmd = $('select.' + className);
     cmd.html('');
     var f = true;
     var pid = SACore.GetProjectKeys();

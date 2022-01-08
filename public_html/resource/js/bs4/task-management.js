@@ -2418,13 +2418,19 @@ const taskManagement = {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
                     <div class="d-flex justify-content-start">
-                        <div class="info-box cs-input-group" style="padding:0;">
-                            <input data-type="search_text" type="text" class="btn bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        <div class="form-group has-search mr-2">
+                        <div class="has-search-in">
+                            <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
+                            <input data-type="search_text" type="text" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
                         </div>
+                        </div>
+                       <!-- <div class="info-box cs-input-group" style="padding:0;">
+                          <input data-type="search_text" type="text" class="btn bug-filter bug-filter-search form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        </div> -->
                                      
-                        <div class="info-box">
+                        <div class="info-box" style="background: transparent; border: none;">
                               <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                              <div class="bcs-col-btn" style=" display: inline-block; ">
+                              <div class="bcs-col-btn cs-input-group" style=" display: inline-block; ">
                                 <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
                              </div>
                         </div>
@@ -2696,22 +2702,30 @@ const taskManagement = {
             genNotificationBlock: function () {
                 return `<div class="notifcation-block">
                 <div class="notification-header">
-                    sdfhsdhfhsdfhsdf
+                  <div style="float: right;padding: 0 3px;">
+                  <span class="large-blok-expand"><i class="fas fa-expand" aria-hidden="true"></i></span>
+                    <span class="circle">
+                        <label class="checkmarkcontainer">
+                            <input type="checkbox" class="noteCheckListItem" value="0">
+                            <span class="checkmark"></span>
+                        </label>
+                    </span>
+                  </div>
                 </div>
                 <div class="notification-body" id="notification-block-id">
 
                 </div>
             </div>`
             },
-            genNotificationItemBlock: function (id, taskId, title, deadline, body) {
-                return `  <div class="notification-elements">
+            genNotificationItemBlock: function (id, taskId, title, deadline, body,time,msg,img,taskStatus) {
+                return `  <div class="notification-elements" id='${id}'>
               <div class="d-flex p-2 notify-top-section">
                   <div class="mr-auto">
                       <span class="top-title">${title}</span>
-                       <span class="deadline"> ${deadline}</span>
+                        ${deadline}
                   </div>
                   <div>
-                      <span class="top-date-time">${date + time}</span>
+                      <span class="top-date-time">${time}</span>
                       <div class="circle-s">
                           <label class="checkmarkcontainer">
                               <input type="checkbox" class="noteCheckListItem" value="0">
@@ -2730,11 +2744,11 @@ const taskManagement = {
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
               </div>
               <div class="notify-bottom-box pt-2">
-                  <div class="d-block"><span class="date-time pr-2">26.11.2021 13:41:43</span></div>
+                  <div class="d-block"><span class="date-time pr-2">${time}</span></div>
                   <div class="d-flex mt-2 status-box">
                       <div class="mr-auto">
-                          <div class="author-img"><img class="author" src="https://app.sourcedagile.com/api/get/files/Resid_77D6372B4DFE6.png" title="Creator"></div>
-                          <span class="notefy-status">Yeni</span>
+                          <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
+                          <span class="notefy-status">${taskStatus}</span>
                       </div>
                       <div class="notify-bottom-right pr-2">
                           <ul>
@@ -2776,7 +2790,7 @@ const taskManagement = {
                 var data = JSON.stringify(json);
                 var that = this;
                 $.ajax({
-                    url: urlGl + "api/post/srv/serviceRsGetRowCount4TaskNotificationByUser",
+                    url: urlGl + "api/post/srv/serviceRsGetTaskNotificationListByUserId",
                     type: "POST",
                     data: data,
                     contentType: "application/json",
@@ -2784,14 +2798,27 @@ const taskManagement = {
                     async: true,
                     success: function (res) {
                         var list  = res.tbl[0].r;
-                           var elm  = $("#notification-block-id")
+                           var elm  = $("#notification-block-id");
+                                elm.empty();
                             for (let i = 0; i < list.length; i++) {
                                 const o = list[i];
-                                var html = that.genNotificationItemBlock(
+                                var endTime = new Date(o.endDate + ' ' + o.endTime);
+                                var html = that.genTypeNotMessaje(
                                     o.id,
-                                    o.taskId
+                                    o.fkTaskId,
+                                    o.fkProjectId,
+                                    o.historyTellerId,
+                                    o.newValue,
+                                    o.oldValue,
+                                    o.historyDate,
+                                    o.historyTime,
+                                    o.noteType,
+                                    o.orderNoSeq,
+                                    endTime,
+                                    o.taskStatus,
+                                    o.isMeet
                                 )
-                                elm.append(html)
+                                elm.append(html);
                             }
                     },
                     error: function () {
@@ -2799,6 +2826,39 @@ const taskManagement = {
                     }
                 });
               
+            },
+            genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+                try {
+                    var projectCode = SACore.GetProjectCore(projectId).projectCode;
+                    projectCode = projectCode.toUpperCase();
+                    var title  = (isMeet==='1')?"Meet":"Task"
+                   var taskId = (orderNoSeq)
+                   ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                     var  img  =''
+                         var body =''                
+                      if(notType==='new'){
+                          body = "New Task Added ("+newValue+")"
+                      }
+                      else if (notType==='taskStatus'){
+                        body = "Status Changed From ("+oldValue+") To ("+newValue+")"
+                      }
+                      else if (notType==='assigne'){
+                        body = "Task Assigne ("+oldValue+") changed ("+oldValue+")"
+                      }
+                      else if (notType==='comment'){
+                        body = "New Comment Added ("+newValue+")"
+                      }
+   
+                            var msg = "jjj"
+                             var img  = SAProjectUser.Users[tellerId].userImage;
+                               img  =  fileUrl(img)
+                             var deadLine = getTimeDifference(endTime, new Date());
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,dateL+" "+timeL,msg,img,taskStatus)
+                    
+                } catch (error) {
+                    return ''
+                }
+                
             },
             getstatisticList: function () {
                 try {
@@ -2937,7 +2997,7 @@ const taskManagement = {
                                 fileUrl(createByImage) :
                                 " ";
 
-                            var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+                            var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\')">' + replaceTags(o.backlogName) + '</a>';
                             var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                             var task_id = getTaskCode(o.id);
 
@@ -3172,7 +3232,7 @@ const taskManagement = {
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
-                    <th class="bug-list-column bug-list-column-task-nature" style="width: 140px;">Task Nature</th>
+                    <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
@@ -3228,7 +3288,7 @@ const taskManagement = {
                             fileUrl(createByImage) :
                             " ";
 
-                        var backlogName = '<a href1="#" onclick="callStoryCard4BugTask(\'' + o.fkProjectId + '\',\'' + o.fkBacklogId + '\',this)">' + replaceTags(o.backlogName) + '</a>';
+                        var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\'>' + replaceTags(o.backlogName) + '</a>';
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
@@ -3463,14 +3523,14 @@ const taskManagement = {
                         </div>
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box pb-0">
-                            <div class="standart-badges taskfilter-btn">
+                            <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
                                 <i class="cs-svg-icon filter"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
                             <div class="dropdown">
                                 <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
-                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label"></i>
                                 </div>
                                 <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
                                     <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
@@ -3483,7 +3543,7 @@ const taskManagement = {
                         </div>
                         <div class="setting-elemen-box">
                             <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
-                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Spring"></i>
                                 <div class="dropdown-menu drop-label-menu sprint-show-4-task">
                                     <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
                                     </span>
@@ -3496,24 +3556,24 @@ const taskManagement = {
     
                         </div>
                         <div class="setting-elemen-box">
-                            <div class="sticky-badges">
+                            <div class="sticky-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Notes">
                                 <i class="cs-svg-icon sticky-notes"></i>
                             </div>
                         </div>       
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box">
-                            <div class="calendar-badges">
+                            <div class="calendar-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Calendar">
                                 <span class="calendar-info">19</span>
                                 <i class="cs-svg-icon calendar-02"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box issue-view-change-button" view-type='table' >
-                            <div class="standart-badges">
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Row Style">
                                 <i class="cs-svg-icon cs-row-style"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box issue-view-change-button" view-type='kanban'>
-                            <div class="standart-badges">
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Canban Style">
                                 <i class="cs-svg-icon cs-col-style"></i>
                             </div>
                         </div>
@@ -4127,4 +4187,7 @@ $(document).on("click", '.setting-elemen-box .notification-btn', function () {
 $(document).on("click",'.cs-task-item-in-box',function (params) {
     global_var.current_issue_id = $(this).attr('id');
     Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
+})
+$(document).on("click",'.bug-filter-search',function (e) {
+
 })
