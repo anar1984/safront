@@ -2422,9 +2422,9 @@ const taskManagement = {
                             <input data-type="search_text" type="text" class="btn bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
                         </div>
                                      
-                        <div class="info-box">
+                        <div class="info-box" style="background: transparent; border: none;">
                               <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                              <div class="bcs-col-btn" style=" display: inline-block; ">
+                              <div class="bcs-col-btn cs-input-group" style=" display: inline-block; ">
                                 <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
                              </div>
                         </div>
@@ -2696,7 +2696,15 @@ const taskManagement = {
             genNotificationBlock: function () {
                 return `<div class="notifcation-block">
                 <div class="notification-header">
-                    sdfhsdhfhsdfhsdf
+                  <div style="float: right;padding: 0 3px;">
+                  <span class="large-blok-expand"><i class="fas fa-expand" aria-hidden="true"></i></span>
+                    <span class="circle">
+                        <label class="checkmarkcontainer">
+                            <input type="checkbox" class="noteCheckListItem" value="0">
+                            <span class="checkmark"></span>
+                        </label>
+                    </span>
+                  </div>
                 </div>
                 <div class="notification-body" id="notification-block-id">
 
@@ -3172,7 +3180,7 @@ const taskManagement = {
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
-                    <th class="bug-list-column bug-list-column-task-nature" style="width: 140px;">Task Nature</th>
+                    <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
@@ -3463,14 +3471,14 @@ const taskManagement = {
                         </div>
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box pb-0">
-                            <div class="standart-badges taskfilter-btn">
+                            <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
                                 <i class="cs-svg-icon filter"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
                             <div class="dropdown">
                                 <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
-                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
+                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label"></i>
                                 </div>
                                 <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
                                     <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
@@ -3483,7 +3491,7 @@ const taskManagement = {
                         </div>
                         <div class="setting-elemen-box">
                             <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
-                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Spring"></i>
                                 <div class="dropdown-menu drop-label-menu sprint-show-4-task">
                                     <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
                                     </span>
@@ -3496,24 +3504,24 @@ const taskManagement = {
     
                         </div>
                         <div class="setting-elemen-box">
-                            <div class="sticky-badges">
+                            <div class="sticky-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Notes">
                                 <i class="cs-svg-icon sticky-notes"></i>
                             </div>
                         </div>       
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box">
-                            <div class="calendar-badges">
+                            <div class="calendar-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Calendar">
                                 <span class="calendar-info">19</span>
                                 <i class="cs-svg-icon calendar-02"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box issue-view-change-button" view-type='table' >
-                            <div class="standart-badges">
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Row Style">
                                 <i class="cs-svg-icon cs-row-style"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box issue-view-change-button" view-type='kanban'>
-                            <div class="standart-badges">
+                            <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Canban Style">
                                 <i class="cs-svg-icon cs-col-style"></i>
                             </div>
                         </div>
