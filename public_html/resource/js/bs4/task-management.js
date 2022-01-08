@@ -3078,8 +3078,22 @@ const taskManagement = {
                         type = "taskNature"
                     }
                     if (goupBy === "5") {
-                        items = $("select#bug_filter_assignee_id option");
-                        type = "fkAssigneeId"
+                        items = $("select#bug_filter_assignee_id");
+                        type = "fkAssigneeId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "6") {
+                        items = $("select#bug_filter_tasktype option");
+                        type = "fkTaskTypeId"
                     }
                     /*  if(goupBy===0){
                           items  = $("select#bug_filter_status>option");  

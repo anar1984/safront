@@ -623,7 +623,9 @@ function getTaskCode(taskId) {
         taskId = "<b>" + taskId + "</b>";
         return taskId;
     } catch (err) {
-        return ""
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        taskId = "<b>" + "PRVT-"+orderSeq + "</b>";
+        return taskId;
     }
 }
 
