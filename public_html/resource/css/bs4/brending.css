@@ -6700,3 +6700,58 @@ div.cs-task-item-in-box {
     font-size: 10px;
     vertical-align: middle;
 }
+/* .open-setting-panel {
+
+} */
+.has-search {
+    position: relative;
+    vertical-align: middle;
+    height: 36px;
+    width: 17px;
+    display: inline-block;
+}
+.has-search-in {
+    position: absolute;
+    left: 0;
+    z-index: 5000;
+}
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 36px;
+    left: 0;
+    line-height: 2.4;
+    text-align: center;
+    pointer-events: none;
+    color: #fff;
+}
+.has-search .form-control {
+    padding-right: 2.375rem;
+    transition: all .3s ease;
+}
+.has-search .form-control {
+    width: 36px;
+    height: 36px;
+    mix-blend-mode: normal;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgb(255 255 255 / 50%);
+    border-radius: 50px!important;
+    padding: 16px 17px;
+}
+.has-search .form-control:focus {
+    width: 340px;
+}
+.has-search .form-control:focus {
+    color: #03396C;
+    background-color: #DFEEF7;
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: 0;
+    box-shadow: none;
+    padding: 16px 10px 16px 30px;
+}
+.has-search .form-control:focus::placeholder, .has-search:focus-within .form-control-feedback {
+    color: #03396C;
+}

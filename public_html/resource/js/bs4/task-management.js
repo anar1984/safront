@@ -2418,9 +2418,15 @@ const taskManagement = {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
                     <div class="d-flex justify-content-start">
-                        <div class="info-box cs-input-group" style="padding:0;">
-                            <input data-type="search_text" type="text" class="btn bug-filter form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        <div class="form-group has-search mr-2">
+                        <div class="has-search-in">
+                            <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
+                            <input data-type="search_text" type="text" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
                         </div>
+                        </div>
+                       <!-- <div class="info-box cs-input-group" style="padding:0;">
+                          <input data-type="search_text" type="text" class="btn bug-filter bug-filter-search form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
+                        </div> -->
                                      
                         <div class="info-box" style="background: transparent; border: none;">
                               <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
@@ -4135,4 +4141,7 @@ $(document).on("click", '.setting-elemen-box .notification-btn', function () {
 $(document).on("click",'.cs-task-item-in-box',function (params) {
     global_var.current_issue_id = $(this).attr('id');
     Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
+})
+$(document).on("click",'.bug-filter-search',function (e) {
+
 })
