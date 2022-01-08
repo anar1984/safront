@@ -2839,8 +2839,8 @@ const taskManagement = {
                       if(notType==='new'){
                           body = "New Task Added ("+newValue+")"
                       }
-                      else if (notType==='status'){
-                        body = "Status Changed ("+newValue+")"
+                      else if (notType==='taskStatus'){
+                        body = "Status Changed From ("+oldValue+") To ("+newValue+")"
                       }
                       else if (notType==='assigne'){
                         body = "Task Assigne ("+oldValue+") changed ("+oldValue+")"
