@@ -2457,10 +2457,10 @@ const taskManagement = {
             genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
                 return `
                <div class="info-box mr-2">
-               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+               <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
-               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
+               <div class="info-item-elements me-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
                </div>
            </div> 
@@ -2611,13 +2611,13 @@ const taskManagement = {
                     <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                         data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                         title="Status">
-                        <option value='new' selected>New</option>
-                        <option value='ongoing' selected>Ongoing</option>
+                        <option value='new' >New</option>
+                        <option value='ongoing' >Ongoing</option>
                         <option value='closed'>Closed</option>
                         <option value='waiting'>Waiting</option>
                         <option value='canceled'>Canceled</option>
-                        <option value='rejected' selected>Rejected</option>
-                        <option value='UAT' selected> UAT</option>
+                        <option value='rejected' >Rejected</option>
+                        <option value='UAT' > UAT</option>
             
                     </select>
                 </div>
@@ -3135,35 +3135,14 @@ const taskManagement = {
                     });
                 },
                 getTaskList4KanbanMore: function (type, st,pageNo) {
-                    setBugListInitialData();
-
-
                     var json = initJSON();
                     json.kv.fkProjectId = bug_filter.project_id;
                     json.kv.fkAssigneeId = bug_filter.assignee_id;
                     json.kv.closedBy = bug_filter.closed_by;
                     json.kv.createdBy = bug_filter.created_by;
                     json.kv.fkBackogId = bug_filter.backlog_id;
-                    if (bug_filter.status) {
-                        json.kv.taskStatus = bug_filter.status;
-
-                    } else {
-                        var ty = localStorage.getItem("issue_mode_active");
-                        $('#issue-table-aktiv-all').find('.title').text(ty);
-                        var sel = $("#bug_filter_status");
-                        let value
-                        if (ty === 'A') {
-                            value = ["new", 'ongoing', 'waiting'];
-                        } else if (ty === 'P') {
-                            value = ["rejected", 'UAT', 'closed', 'canceled'];
-                        }
-                        sel.val(value);
-                        sel.selectpicker("refresh");
-                        json.kv.taskStatus = getBugFilterMultiSelect(sel);
-                    }
-
+                    json.kv.taskStatus = bug_filter.status;
                     json.kv.priority = bug_filter.priority;
-
                     json.kv.taskNature = bug_filter.nature;
                     json.kv.searchText = bug_filter.search_text;
                     json.kv.searchLimit = bug_filter.limit;
@@ -3316,7 +3295,7 @@ const taskManagement = {
                             fileUrl(createByImage) :
                             " ";
 
-                        var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\'>' + replaceTags(o.backlogName) + '</a>';
+                        var backlogName = '<a href1="#" onclick="callStoryCard("' + o.fkBacklogId + '")">' + replaceTags(o.backlogName) + '</a>';
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
@@ -3400,7 +3379,6 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-story-card')
                                 .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
-                                .append(' <select dataPid=' + o.fkProjectId + ' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
                                 .append($('<div>').addClass('set-filter-box')
                                     .append($('<i class="fa fa-filter">')
                                         .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
@@ -4216,6 +4194,13 @@ $(document).on("click",'.cs-task-item-in-box',function (params) {
     global_var.current_issue_id = $(this).attr('id');
     Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
 })
-$(document).on("click",'.bug-filter-search',function (e) {
-
+$(document).on("click",'.me-send-task-list-btn',function (e) {
+    $(this).parent().find(".my-send-task-list-btn").removeClass("active");
+    $(this).toggleClass("active");
+    getBugList();
+})
+$(document).on("click",'.my-send-task-list-btn',function (e) {
+     $(this).parent().find(".me-send-task-list-btn").removeClass("active");
+     $(this).toggleClass("active");
+     getBugList();
 })
