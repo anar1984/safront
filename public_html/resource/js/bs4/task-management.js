@@ -2748,7 +2748,7 @@ const taskManagement = {
                   <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
                       <span class="notefy-title">${body}</span>
                       <div class="d-flex mt-1 notify-msg">
-                          <span>${msj?"Mesaj:":""} </span><span>${msg}</span>
+                          <span>${msg?"Mesaj:":""} </span><span>${msg}</span>
                       </div>
                   </div>
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
@@ -2847,6 +2847,7 @@ const taskManagement = {
                        var taskId = (orderNoSeq)
                        ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
                     } catch (error) {
+                        console.log(error);
                      var  taskId ="no-id";
                     }
                    
@@ -2873,6 +2874,7 @@ const taskManagement = {
                   return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus);
                     
                 } catch (error) {
+                   console.log(error)
                     return ''
                 }
                 
