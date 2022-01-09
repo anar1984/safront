@@ -556,7 +556,7 @@ table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select
 
 /* StoreCard  */
 #description_table_id thead#cs_description_table_head_id tr {
-    background: #272B7C;
+    background: #1e4f7c;
     padding: 0;
     border: none;
 }
@@ -6188,8 +6188,12 @@ table.lbl-list-table tr td {
 .storycard_inputs_table tbody tr td .iconDrag:hover {
     background: #2e5c86;
 }
-.storycard_inputs_table .spilted tr:nth-child(odd) td input {
+.storycard_inputs_table .spilted tr td input {
     background: #ffffff !important;
+}
+.storycard_inputs_table .spilted tr td input:focus {
+    border: none;
+    box-shadow: none;
 }
 .desc-table-list-for-multiple .span-button-div {
     position: relative;
@@ -6260,7 +6264,7 @@ table.lbl-list-table tr td {
 .desc-table-list-for-multiple .dropdown-menu, .description-left .dropdown-menu, .cs-col-storecard-general-setting .dropdown-menu {
     overflow: hidden;
     background: #DFEEF7;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.55);
+    box-shadow: 0px 0px 7px rgb(0 0 0 / 22%);
     border-radius: 6px;
 }
 .desc-table-list-for-multiple button.dropdown-item, .description-left button.dropdown-item, .cs-col-storecard-general-setting button.dropdown-item{
@@ -6779,4 +6783,34 @@ div.cs-task-item-in-box {
 }
 .has-search .form-control:focus::placeholder, .has-search:focus-within .form-control-feedback {
     color: #03396C;
+}
+.storycard_inputs_table tbody tr td .desc-item-input a {
+    color: #03396C !important;
+}
+.storycard_inputs_table tbody .dropdown-menu {
+    min-width: 100px;
+}
+.storycard_inputs_table tbody .dropdown-menu button.dropdown-item:hover, .storycard_inputs_table .add_descriotion_btn .dropdown-menu button.dropdown-item:hover{
+    background-color: #272B7C !important;
+    color: #ffffff !important;
+}
+.storycard_inputs_table tbody .dropdown-menu .dropdown-item, .storycard_inputs_table .add_descriotion_btn .dropdown-menu button.dropdown-item {
+    padding: 0.25rem 0.5rem;
+    line-height: 1.5;
+}
+.storycard_inputs_table table tr td div.sub_table {
+    padding: 15px !important;
+    margin: 5px 0 15px;
+    border: 1px solid #446e95 !important;
+    border-radius: 7px;
+}
+.storycard_inputs_table tbody tr td table {
+    border-collapse: collapse;
+    border-spacing: 1px;
+}
+.storycard_inputs_table tbody tr td table tbody tr {
+    border-bottom: 1px solid #03396c;
+}
+.storycard_inputs_table tbody tr td table tbody tr td {
+
 }
