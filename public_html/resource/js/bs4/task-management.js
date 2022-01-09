@@ -2706,7 +2706,7 @@ const taskManagement = {
             },
             genNotificationBlock: function () {
                 return `<div class="notifcation-block">
-                <div class="notification-header">
+                <div class="notification-header mb-4">
                   <div style="float: right;padding: 0 3px;">
                   <span class="large-blok-expand"><i class="fas fa-expand" aria-hidden="true"></i></span>
                     <span class="circle">
@@ -2728,9 +2728,10 @@ const taskManagement = {
                   <div class="mr-auto">
                       <span class="top-title">${title}</span>
                         ${deadline}
+                      
                   </div>
                   <div>
-                      <span class="top-date-time">${time}</span>
+                     
                       <div class="circle-s">
                           <label class="checkmarkcontainer">
                               <input type="checkbox" class="noteCheckListItem" value="0">
@@ -2749,17 +2750,17 @@ const taskManagement = {
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
               </div>
               <div class="notify-bottom-box pt-2">
-                  <div class="d-block"><span class="date-time pr-2">${time}</span></div>
-                  <div class="d-flex mt-2 status-box">
+                  
+                  <div class="d-flex mt-2 status-box status-box-${taskStatus}">
                       <div class="mr-auto">
                           <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
                           <span class="notefy-status">${taskStatus}</span>
                       </div>
                       <div class="notify-bottom-right pr-2">
                           <ul>
-                              <li><div class="cs-click"><i class="cs-svg-icon link"></i> 12</div></li>
-                              <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
-                              <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li>
+                            <li><div class="cs-click">${time}</div></li>
+                            <!-- <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
+                            <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li> -->
                           </ul>
                       </div>
                   </div>

@@ -5554,6 +5554,7 @@ UserStory.prototype = {
                                     .css("border", obj[n].coloredType ? "3px solid " + replaceTags(obj[n].coloredType) : "")
                                     .css("background-color", obj[n].coloredType ? replaceTags(obj[n].coloredType) : "")
                                     .css("border-radius", "5px")
+                                    .css("line-height", "1")
                                     .append(descBody)
                                     .append(scDesc)
                                     .append(apiDesc)
