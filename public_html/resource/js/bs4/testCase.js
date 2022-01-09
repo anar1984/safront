@@ -19,6 +19,7 @@ var bug_filter = {
     label_id: '',
     showChildTask: '1',
     createdDate: '',
+    fkTaskTypeId: '',
 }
 
 var sprintTaskIds = "";
@@ -1146,7 +1147,7 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 })
 
 function getBugList() {
-
+      var me = "'"+global_var.current_ticker_id+"'"
     if(global_var.current_modal==='loadBugChange'){
 
         setBugListInitialData();
@@ -1154,9 +1155,9 @@ function getBugList() {
   
         var json = initJSON();
         json.kv.fkProjectId = bug_filter.project_id;
-        json.kv.fkAssigneeId = bug_filter.assignee_id;
+        json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active'))?me:bug_filter.assignee_id;
         json.kv.closedBy = bug_filter.closed_by;
-        json.kv.createdBy = bug_filter.created_by;
+        json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active'))?me:bug_filter.created_by;
         json.kv.fkBackogId = bug_filter.backlog_id;
         if(bug_filter.status){
             json.kv.taskStatus = bug_filter.status;
@@ -1168,10 +1169,14 @@ function getBugList() {
              let value 
                  if(ty==='A'){
                    value  = ["new",'ongoing','waiting'];
+                   sel.val(value);
                  }else if(ty==='P'){
-                    value  = ["rejected",'UAT','closed','canceled'];     
+                    value  = ["rejected",'UAT','closed','canceled'];  
+                    sel.val(value);   
+                 }else if(ty==='H'){
+                    sel.selectpicker('selectAll');
                  }
-                 sel.val(value);
+              
                  sel.selectpicker("refresh");
                  json.kv.taskStatus = getBugFilterMultiSelect(sel);
         }
@@ -1189,6 +1194,7 @@ function getBugList() {
         json.kv.closedDateTo = bug_filter.closed_date_to;
         json.kv.showChildTask = bug_filter.showChildTask;
         json.kv.createdDate = bug_filter.createdDate;
+        json.kv.fkTaskTypeId = bug_filter.fktaskTypeId;
         json.kv.startLimit = 0;
         json.kv.endLimit = 25;
       

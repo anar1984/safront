@@ -14379,7 +14379,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
          })
     },
     genUsManagementZone:function (id,Name,order,manual) {
-        return `<div class="task-column  ${id}" status="${id}" ${manual?"manual='true'":""} order='${order?order:0}'>
+        return `<div class="task-column  ${id}" status="${id}" ${manual?"manual='true'":""} style='order:${order?order:0};'>
         <div class="task-column-header">
             <input type="checkbox" name="" data-st="${id}" class="all-check-us-mngm" id="alcheck-${id}-us-mng">
 

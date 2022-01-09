@@ -5,6 +5,8 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        var dwlmt = $('#bug_filter_tasktype')
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
         this.readTask.genBlockTask.getNotificationRowCount();  
 
@@ -2455,10 +2457,10 @@ const taskManagement = {
             genHeaderContent: function (privateT, work, vxtkcb, vxtctb, nvbd, nodeadln, newt, ongoing, waiting, yonledrlb, canceled, rejected, closed, btb) {
                 return `
                <div class="info-box mr-2">
-               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
+               <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
-               <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
+               <div class="info-item-elements me-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
                </div>
            </div> 
@@ -2614,13 +2616,21 @@ const taskManagement = {
                     <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
                         data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                         title="Status">
-                        <option value='new' selected>New</option>
-                        <option value='ongoing' selected>Ongoing</option>
+                        <option value='new' >New</option>
+                        <option value='ongoing' >Ongoing</option>
                         <option value='closed'>Closed</option>
                         <option value='waiting'>Waiting</option>
                         <option value='canceled'>Canceled</option>
-                        <option value='rejected' selected>Rejected</option>
-                        <option value='UAT' selected> UAT</option>
+                        <option value='rejected' >Rejected</option>
+                        <option value='UAT' > UAT</option>
+            
+                    </select>
+                </div>
+                <div class="cs-input-group mt-3">
+                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
+                        title="Task Type">
+                      
             
                     </select>
                 </div>
@@ -2738,7 +2748,7 @@ const taskManagement = {
                   <div class="mr-auto ncs-ellipsis"><span class="id">${taskId}</span>
                       <span class="notefy-title">${body}</span>
                       <div class="d-flex mt-1 notify-msg">
-                          <span>Mesaj: </span><span>${msg}</span>
+                          <span>${msg?"Mesaj:":""} </span><span>${msg}</span>
                       </div>
                   </div>
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
@@ -2829,11 +2839,18 @@ const taskManagement = {
             },
             genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
                 try {
-                    var projectCode = SACore.GetProjectCore(projectId).projectCode;
-                    projectCode = projectCode.toUpperCase();
                     var title  = (isMeet==='1')?"Meet":"Task"
-                   var taskId = (orderNoSeq)
-                   ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                    try {
+                        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+                        projectCode = projectCode.toUpperCase();
+                      
+                       var taskId = (orderNoSeq)
+                       ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderNoSeq : orderNoSeq : "";
+                    } catch (error) {
+                        console.log(error);
+                     var  taskId ="no-id";
+                    }
+                   
                      var  img  =''
                          var body =''                
                       if(notType==='new'){
@@ -2843,19 +2860,21 @@ const taskManagement = {
                         body = "Status Changed From ("+oldValue+") To ("+newValue+")"
                       }
                       else if (notType==='assigne'){
-                        body = "Task Assigne ("+oldValue+") changed ("+oldValue+")"
+                        body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
                       }
                       else if (notType==='comment'){
                         body = "New Comment Added ("+newValue+")"
                       }
    
-                            var msg = "jjj"
+                            var msg = ""
                              var img  = SAProjectUser.Users[tellerId].userImage;
                                img  =  fileUrl(img)
                              var deadLine = getTimeDifference(endTime, new Date());
-                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,dateL+" "+timeL,msg,img,taskStatus)
+                             var time  =  Utility.convertDate(dateL) +" "+ Utility.convertTime(timeL)
+                  return this.genNotificationItemBlock(noetId, taskId, title, deadLine, body,time,msg,img,taskStatus);
                     
                 } catch (error) {
+                   console.log(error)
                     return ''
                 }
                 
@@ -3061,8 +3080,22 @@ const taskManagement = {
                         type = "taskNature"
                     }
                     if (goupBy === "5") {
-                        items = $("select#bug_filter_assignee_id option");
-                        type = "fkAssigneeId"
+                        items = $("select#bug_filter_assignee_id");
+                        type = "fkAssigneeId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "6") {
+                        items = $("select#bug_filter_tasktype option");
+                        type = "fkTaskTypeId"
                     }
                     /*  if(goupBy===0){
                           items  = $("select#bug_filter_status>option");  
@@ -3107,35 +3140,14 @@ const taskManagement = {
                     });
                 },
                 getTaskList4KanbanMore: function (type, st,pageNo) {
-                    setBugListInitialData();
-
-
                     var json = initJSON();
                     json.kv.fkProjectId = bug_filter.project_id;
                     json.kv.fkAssigneeId = bug_filter.assignee_id;
                     json.kv.closedBy = bug_filter.closed_by;
                     json.kv.createdBy = bug_filter.created_by;
                     json.kv.fkBackogId = bug_filter.backlog_id;
-                    if (bug_filter.status) {
-                        json.kv.taskStatus = bug_filter.status;
-
-                    } else {
-                        var ty = localStorage.getItem("issue_mode_active");
-                        $('#issue-table-aktiv-all').find('.title').text(ty);
-                        var sel = $("#bug_filter_status");
-                        let value
-                        if (ty === 'A') {
-                            value = ["new", 'ongoing', 'waiting'];
-                        } else if (ty === 'P') {
-                            value = ["rejected", 'UAT', 'closed', 'canceled'];
-                        }
-                        sel.val(value);
-                        sel.selectpicker("refresh");
-                        json.kv.taskStatus = getBugFilterMultiSelect(sel);
-                    }
-
+                    json.kv.taskStatus = bug_filter.status;
                     json.kv.priority = bug_filter.priority;
-
                     json.kv.taskNature = bug_filter.nature;
                     json.kv.searchText = bug_filter.search_text;
                     json.kv.searchLimit = bug_filter.limit;
@@ -3288,7 +3300,7 @@ const taskManagement = {
                             fileUrl(createByImage) :
                             " ";
 
-                        var backlogName = '<a href1="#" onclick="callStoryCard(\'' + o.fkBacklogId + '\'>' + replaceTags(o.backlogName) + '</a>';
+                        var backlogName = '<a href1="#" onclick="callStoryCard("' + o.fkBacklogId + '")">' + replaceTags(o.backlogName) + '</a>';
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
@@ -3372,7 +3384,6 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-story-card')
                                 .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
-                                .append(' <select dataPid=' + o.fkProjectId + ' id="userStory-taskList-us" title="UserStory" data-actions-box="true" class=" select-box-issue" data-live-search="true"></select>')
                                 .append($('<div>').addClass('set-filter-box')
                                     .append($('<i class="fa fa-filter">')
                                         .attr('onclick', 'setFilter4IssueMgmtAsBacklog("' + o.fkProjectId + '","' + o.fkBacklogId + '")')
@@ -4188,6 +4199,13 @@ $(document).on("click",'.cs-task-item-in-box',function (params) {
     global_var.current_issue_id = $(this).attr('id');
     Utility.addParamToUrl("current_issue_id",$(this).attr('id'))
 })
-$(document).on("click",'.bug-filter-search',function (e) {
-
+$(document).on("click",'.me-send-task-list-btn',function (e) {
+    $(this).parent().find(".my-send-task-list-btn").removeClass("active");
+    $(this).toggleClass("active");
+    getBugList();
+})
+$(document).on("click",'.my-send-task-list-btn',function (e) {
+     $(this).parent().find(".me-send-task-list-btn").removeClass("active");
+     $(this).toggleClass("active");
+     getBugList();
 })
