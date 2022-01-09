@@ -2514,7 +2514,7 @@ const taskManagement = {
 
                 return `<div class="bugListNavMenu bugList-elements">
 
-                <div class="main-sorting mb-5">
+                <div class="main-sorting">
                     <div class="row ml-0 mr-0">
                         <div class="cs-input-group cs-pagination-limit col-6">
                             <div class="input-group-addon">Closed Dates From</div>
@@ -2526,11 +2526,10 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row ml-0 mr-0">
-                        <div class="col-12">
-                            <span>Sort by</span>
+                        <div class="cs-input-group col-12 mt-2">
+                            <div class="input-group-addon">Sort by</div>
                         </div>
                         <div class="cs-input-group col-4">
-                            
                             <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
                             id='bug_filter_sortby' title="Columns">
                                 <option value='task_status' selected>Status</option>
@@ -2568,26 +2567,22 @@ const taskManagement = {
                             <b id="table-row-count"> </b>
                         </div>
                     </div>
-                    <div class="row ml-0 mr-0">
-                        <div class="col-12">
-                            <div class="cs-input-group cs-pagination-group-by">
-                                <div class="input-group-addon cs-group-by">Group By</div>
-                                <select id="inputGroupSelect01">
-                                    <option value='0' >None</option>
-                                    <option value='4' >Task Nature</option>
-                                    <option value='5' >Assignee</option>
-                                    <option value='6' >Task Type</option>
-                                    <option value='7'>Priority</option>
-                                    <option value='8' >Story Card</option>
-                                    <option value='9' >Project</option>
-                                    <option value='10' >Create By</option>
-                                    <option value='11' >Create Date</option>
-                                    <option value='12'>Last Update</option>
-                        
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="cs-input-group cs-pagination-group-by mt-2">
+                    <div class="input-group-addon cs-group-by">Group By</div>
+                    <select id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='4' >Task Nature</option>
+                        <option value='5' >Assignee</option>
+                        <option value='6' >Task Type</option>
+                        <option value='7'>Priority</option>
+                        <option value='8' >Story Card</option>
+                        <option value='9' >Project</option>
+                        <option value='10' >Create By</option>
+                        <option value='11' >Create Date</option>
+                        <option value='12'>Last Update</option>
+            
+                    </select>
                 </div>
                 <div class="cs-input-group mt-3">
                     <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
@@ -2651,7 +2646,7 @@ const taskManagement = {
             
                 <div class="cs-input-group mt-3">
     
-                    <label class="checkmarkcontainer">Show Child Tasks
+                    <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
                         <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
                         <span class="checkmark"></span>
                     </label>
