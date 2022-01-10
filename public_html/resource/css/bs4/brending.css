@@ -2,6 +2,22 @@
 .brand-lolor {
     color: #173359;
 }
+.nice-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+/* ::-webkit-scrollbar-button {
+    background: #ccc
+} */
+/* ::-webkit-scrollbar-track-piece {
+    background: #dee2e6;
+} */
+.nice-scroll::-webkit-scrollbar-thumb {
+    background:  rgb(0 0 0 / 23%);
+}
+.nice-scroll::-webkit-scrollbar-thumb:hover {
+    background:  rgb(0 0 0 / 35%);
+}
 .dropdown-item:focus, .dropdown-item:hover {
     background-color: #accdde;
     color: black;
