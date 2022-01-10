@@ -2,6 +2,10 @@
 .brand-lolor {
     color: #173359;
 }
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: #accdde;
+    color: black;
+}
 .cs-list-group, ul.cs-list-group {
     list-style: none;
     padding: 0;
@@ -1169,10 +1173,13 @@ div > [class*='cs-svg-icon-'] {
 .dropdown-item {
     padding: 10px 10px;
 }
+.dropdown-menu > li a {
+    padding: 6px 10px;
+}
 .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #163656;
+    background-color: #255581;
 }
 .bootstrap-select .dropdown-toggle:focus, .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
     outline: none !important;
@@ -3215,6 +3222,9 @@ hr.hr-ss {
    background: #3a3d87;
    box-shadow: 0 2px 5px #272b7c;
    margin: 0;
+}
+.storycard-author-section .cs-forum-group .dropdown-menu {
+   background: #dfeef7;
 }
 .cs-forum-group .bootstrap-select .dropdown-menu li {
     height: 35px;
@@ -5755,7 +5765,7 @@ table.lbl-list-table tr td {
     background-color: #DFEEF7;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
-.toggle-nav-elements ul li a.nav-item-url:hover i, .toggle-nav-elements ul li a.nav-item-url.active i, .toggle-nav-elements ul li label.nav-item-label.active i {
+.toggle-nav-elements ul li a.nav-item-url:hover i, .toggle-nav-elements ul li a.nav-item-url.active i, .toggle-nav-elements ul li label.nav-item-label.active i, .toggle-nav-elements ul li label.nav-item-label:hover i {
     filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(5774%) hue-rotate(
 195deg) brightness(91%) contrast(98%);
 }
@@ -6304,15 +6314,16 @@ table.lbl-list-table tr td {
     font-size: 14px;
     line-height: 17px;
     color: #03396C !important;
-    background: transparent;
+    background: #dfeef7 !important;
     border: none;
     outline: none;
     vertical-align: middle;
-    padding: 10px 9px;
+    padding: 6px 10px;
 }
 .desc-table-list-for-multiple button.dropdown-item:focus, .desc-table-list-for-multiple button.dropdown-item:hover, .description-left button.dropdown-item:focus, .description-left button.dropdown-item:hover, .cs-col-storecard-general-setting button.dropdown-item:focus, .cs-col-storecard-general-setting button.dropdown-item:hover {
-    box-shadow: inset 0 0px 4px rgb(0 0 0 / 25%);
-    background-color: #ACCDDE !important;
+    box-shadow: none;
+    background-color: #20517e !important;
+    color: #fff !important;
 }
 .paginationStyle .task-list-datetime {
     display: table-cell;
