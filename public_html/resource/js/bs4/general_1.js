@@ -1065,6 +1065,7 @@ function getTimeWithMillisecond() {
 }
 
 window.addEventListener("paste", function (e) {
+    console.log('sdsds');
     var current_canvas_no = $('#canvasdiv_' + global_var.active_canvas + ' > div ').length + getTimeWithMillisecond();
     if (global_var.active_canvas.length === 0) {
         return;
@@ -1148,7 +1149,7 @@ function sortCombo(elementId) {
 }
 
 function clearCanvasDiv() {
-    $('.canvas_canvas').html('<div class="col-12 text-center canvas_canvas_msg" style=\'background-color: gainsboro\' >' +
+    $('.canvas_canvas').html('<div class="col-12 text-center canvas_canvas_msg">' +
             ' <h5>Copy and Paste Image Here</h5></div>');
 }
 function hideAllCanvas() {

@@ -3932,6 +3932,7 @@ UserStory.prototype = {
                 SACore.updateBacklogByRes(res);
                 that.refreshCurrentBacklog();
                 that.toggleSubmenu($('#us-submenu-generalview'), "generalview");
+                emptyCanvasDiv();
             },
             error: function () {
                 Toaster.showGeneralError();

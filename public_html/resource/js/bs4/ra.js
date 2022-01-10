@@ -348,11 +348,13 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
         getRelatedStoryCardByApiId(); 
+        getBugList4StoryCard(id, $('.tablePaginatione.component-input-class tbody'))
             if(!id){
                   return
             }
         callApi('21122616260906401317', { fkBacklogId: id }, true, function (res) {
-            $('#user-story-input-json').val(res.kv.inputJson)
+            $('#user-story-input-json').val(res.kv.inputJson);
+            
         })
 
     }

@@ -1756,8 +1756,12 @@ function loadBacklogProductionCoreDetailssById(bid1, isAsync) {
             try {
                 res = JSON.parse(resCore);
             } catch (err) {
+            };
+            try {
+             
+               SACore.PinnedImages = res.kv;
+            } catch (err) {
             }
-            ;
 //            alert(res);
 //            alert(JSON.stringify(res));
             try {
@@ -14013,8 +14017,12 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
 
                     }
                 } else {
+                    if (o.isApi !== '1') {
+                        cmd.append(op);
 
-                    cmd.append(op);
+                    }
+
+                  
 
                 }
 
@@ -15025,9 +15033,9 @@ function callLoadStoryCard() {
         //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
-        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
-        loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
-        new UserStory().refreshCurrentBacklog();
+       loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
+       // loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
+       // new UserStory().refreshCurrentBacklog();
         SACore.FillAllSelectBox();
         $('#show_ipo_toggle').prop("checked", true) //show input list
         showNavBar();
@@ -15039,7 +15047,7 @@ function callLoadStoryCard() {
         //            jsEditorGenerate();
         //            cdnh = false;
         //        }
-
+        global_var.active_canvas = 'storyCard'
         $('.cs-col-pagename .mm-title').html('');
         $('.cs-col-pagename .mm-title').html('Story Card');
     });
@@ -16340,6 +16348,89 @@ function getBugList4UserStory(bgId, tbody) {
 
             $('[data-toggle="popover"]').popover();
             $(tbody).find('.trigger-status-filter').click();
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+function getBugList4StoryCard(bgId, tbody) {
+
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkBacklogId = bgId;
+    json.kv.pageNo = 1;
+    json.kv.searchLimit = 200;
+    json.kv.considerAll = '1';
+    var prd = $("select.projectList_liveprototype_storycard").val();
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+            try {
+                coreBugList = res;
+            setKV4CoreBugList();
+            SATask.updateTaskByRes(res);
+            var ela = res.tbl[0].r
+            $(tbody).html('')
+           
+
+            for (let i = 0; i < ela.length; i++) {
+                var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
+                var tr  = `<tr class="redirectClass" >
+                <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
+                <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
+                    <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                </td>
+                <td class="text-center" style="width: 100px;" >
+                    <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
+                </td>
+                <td class="text-center" style="width: 50px;">
+                      ${getTimeDifference(endTime, new Date())}
+                </td>
+                <td class="text-center" style="width: 100px; position: relative;"><span class="cheweek-status-name issue_status_${ela[i].taskStatus}" sa-data-value="${ela[i].taskStatus}">
+                        ${ela[i].taskPriority==9?`<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`:""}${ela[i].taskStatus}
+                    </span>
+                </td>
+                <td class="text-center" >
+                    <a href="#" class="brend-color">${ela[i].taskName}</a>
+                </td>
+                <td class="cs-tasklistData" style="padding-left: 5px; width: 100px;">
+                    <a href="#" class="brend-color">${ela[i].taskTypeName}</a>
+                </td>
+                <td class="cs-tasklistTime" style="padding-left: 5px; width: 80px;">
+                    <a href="#" class="brend-color">${Utility.convertDate(ela[i].createdDate)}</a>
+                </td>
+                <td class="text-center" style="width: 80px;">
+                    <img class="rounded-circle personal-btn-img" src="${fileUrl(ela[i].userImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                </td>
+
+                <td class="text-center" style="width: 80px;">
+                    <img class="rounded-circle personal-btn-img js-btn-popover--custom" src="${fileUrl(ela[i].createByImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                </td>
+            </tr>`
+                $(tbody).append(tr);
+
+            }
+
+            $('[data-toggle="popover"]').popover();
+            $(tbody).find('.trigger-status-filter').click();
+            } catch (error) {
+               $(tbody).html("");
+            }
+            
         },
         error: function () {
             Toaster.showError(('somethingww'));
