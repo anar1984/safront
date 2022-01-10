@@ -2163,6 +2163,14 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
     event.preventDefault();
 
 });
+$(document).on('click', '#part-nav-menu-id4UserStory ul li >*', function (event) {
+     
+      $("#part-nav-menu-id4UserStory ul li >*").each(function () {
+          
+      })
+     console.log($(this).attr("data-link"));
+
+});
 
 
 

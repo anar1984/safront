@@ -349,6 +349,7 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardUpdatedBy();
         getRelatedStoryCardByApiId(); 
         getBugList4StoryCard(id, $('.tablePaginatione.component-input-class tbody'))
+        getTaskTatisticInfoUserStory(id)
             if(!id){
                   return
             }
