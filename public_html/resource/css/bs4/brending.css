@@ -6055,7 +6055,7 @@ table.lbl-list-table tr td {
     opacity: 0 !important;
     transition: height 0ms 400ms, opacity 400ms 0ms;
 }
-.toggle-box-1.open, .toggle-box-2.open, .toggle-box-3.open, .toggle-box-4.open, .toggle-box-5.open, .toggle-box-6.open, .toggle-box-8.open, .toggle-box-9.open {
+.toggle-box-1.open, .toggle-box-2.open, .toggle-box-3.open, .toggle-box-4.open, .toggle-box-5.open, .toggle-box-6.open, .toggle-box-7.open, .toggle-box-8.open, .toggle-box-9.open {
     visibility: visible;
     height: auto !important; 
     opacity: 1 !important;
