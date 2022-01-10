@@ -16355,7 +16355,10 @@ function getBugList4UserStory(bgId, tbody) {
     });
 }
 function getBugList4StoryCard(bgId, tbody) {
-
+    
+    if(!bgId){
+        return
+    }
     var json = {
         kv: {}
     };
@@ -16426,7 +16429,6 @@ function getBugList4StoryCard(bgId, tbody) {
             }
 
             $('[data-toggle="popover"]').popover();
-            $(tbody).find('.trigger-status-filter').click();
             } catch (error) {
                $(tbody).html("");
             }
