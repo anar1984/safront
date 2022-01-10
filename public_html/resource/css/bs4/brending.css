@@ -3217,7 +3217,7 @@ hr.hr-ss {
     color: #fff;
 }
 .cs-forum-group .cs-label-name span.s-status {
-    background: rgb(180, 215, 255);
+    background: rgb(221 185 255);
     height: 10px;
     width: 10px;
     border-radius: 50px;
@@ -3233,6 +3233,9 @@ hr.hr-ss {
 }
 .cs-status-closed {
     background: #8ad6a3 !important;
+}
+.cs-status-draft {
+    background: lightgrey !important;
 }
 .cs-forum-group .dropdown-menu {
    background: #3a3d87;

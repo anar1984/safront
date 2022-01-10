@@ -2545,6 +2545,9 @@ $(document).ready(function () {
                 case 'closed':
                     class_status = 'closed';
                 break;
+                case 'draft':
+                    class_status = 'draft';
+                break;
             }
             if (class_status){
                  $('.all-cs-status span').addClass("s-status cs-status-" + class_status);
