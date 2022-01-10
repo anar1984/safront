@@ -1,6 +1,6 @@
-<div class="modal fade cs-modal-box story-card-modal show" id="taskMgmtModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" style="display: block;margin-top: 0;position: relative;background: #90b1cc;" aria-modal="true">
-    <div class="modal-dialog" role="document" style="max-width: 50%; margin-top:0 !important;" id="taskMgmtModal-body">
+<div class="modal fade cs-modal-box story-card-modal show" id="" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="display: block; margin-top: 40px; overflow: auto;" aria-modal="true">
+    <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
         <div class="modal-content">
             <!-- <div class="modal-header task-modal-header">
                 <h6 class="modal-title task-modal-title">
@@ -127,17 +127,17 @@
                                 </div>
                             </div>                            
                         </div>
-                        <div class="toggle-nav-elements">
+                        <div class="toggle-nav-elements" id="part-nav-menu-id4UserStory">
                             <ul class="nav">
                                 <li><a data-link="1" class="nav-item-url toggle-btn-5" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='File'><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
                                 <li><a data-link="2" class="nav-item-url toggle-btn-6" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Inputs'><i class="cs-svg-icon input"></i></a></li>
                                 <li><a data-link="3" class="nav-item-url toggle-btn-8" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Process Description'><i class="cs-svg-icon task-03"></i></a></li>
                                 <li>
-                                    <label data-link="4" class="nav-item-label toggle-btn-7 prototype-cls" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Live Prototype'>
+                                    <label data-link="4" class="nav-item-label toggle-btn-4 prototype-cls" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Live Prototype'>
                                         <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i>
                                     </label>
                                 </li>
-                                <li><a data-link="5" class="nav-item-url toggle-btn-1" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Task List'><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
+                                <li><a data-link="5" class="nav-item-url toggle-btn-1" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Task List'><i class="cs-svg-icon subtask-o-light"></i><span class="task-result-4us"> </span></a></li>
                                 <!-- <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span> 2</span></a></li> -->
                                 <!-- <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li> -->
                                 <li><a data-link="6" class="nav-item-url toggle-btn-4" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Nəzarətçi'><i class="cs-svg-icon user-eye-o"></i></a></li>
@@ -154,10 +154,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-5"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='1' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-5">
+                        <div class="toggle-box-1">
                             <div class="row">
                                 <div class="col-12" id="storycard_filelis1t">
                                     <br>
@@ -213,10 +213,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-6 active"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='2' class="cs-url  toggle-btn "><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-6">
+                        <div class="toggle-box-2">
                             <div class="row text-center storycard_ipo storycard_inputs_table">
                                
                                 <div class="w-100">
@@ -245,10 +245,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-8 active"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='3' class="cs-url toggle-btn "><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-8">
+                        <div class="toggle-box-3">
                             <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
                                 <thead id="cs_description_table_head_id">
                                     <tr class="cs-cursor-auto">
@@ -301,14 +301,15 @@
                             <div class="toggle-min-elements prototype-cls">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
 
-                                <label class="nav-item-label toggle-btn-7 prototype-cls" style="display: contents;">
-                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><a class="cs-url toggle-btn-7"><i class="fal fa-angle-down"></i></a>
+                                <label data-link='4' class="nav-item-label toggle-btn prototype-cls" style="display: contents;">
+                                    <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" />
+                                    <a class="cs-url "><i class="fal fa-angle-down"></i></a>
                                 </label>
 
-                                <!-- <a class="cs-url toggle-btn-7 user-story-prototype-change"><i class="fal fa-angle-down"></i></a> -->
+                                <!-- <a class="cs-url toggle-btn user-story-prototype-change"><i class="fal fa-angle-down"></i></a> -->
                             </div>
                         </div>
-                        <div class="hideme1 toggle-box-7" id="live-prototype-show-key" style="display:none"> 
+                        <div class="hideme1 toggle-box-4" id="live-prototype-show-key" style="display:none"> 
                                 <div class='row gv-gui-design-api'>
                                     <div class="col-12 text-center text-prototype">
                                         <br>
@@ -328,41 +329,41 @@
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon subtask-o-light"></i> <span
-                                        class="result">6</span> <span class="name">Task List</span></div>
+                                        class="task-result-4us result">0</span> <span class="name">Task List</span></div>
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-1"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='5' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-1 table-box" orderno="7.3"
+                        <div class="toggle-box-5 table-box" orderno="7.3"
                             style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
                             class="tooltipMan component-container-dashed col-lg-12  table-responsive">
                             <div class="d-flex justify-content-start mt-3 mb-2">
                                 <div class="info-box" id="task-list-statistic-4backlog">
                                     <span class="title">Status</span>
                                     <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="New" data-original-title="" title="">
-                                      <i class="cs-svg-icon plus-circle"></i> <span>89</span>
+                                      <i class="cs-svg-icon plus-circle"></i> <span>0</span>
                                     </div>
                                     <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ongoing" data-original-title="" title="">
-                                        <i class="cs-svg-icon refresh-three"></i> <span>2</span>
+                                        <i class="cs-svg-icon refresh-three"></i> <span>0</span>
                                     </div>
                                     <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Waiting" data-original-title="" title="">
-                                        <i class="cs-svg-icon hour-01"></i> <span>35</span>
+                                        <i class="cs-svg-icon hour-01"></i> <span>0</span>
                                     </div>
                             
                                     <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Forwarded" data-original-title="" title="">
                                         <i class="cs-svg-icon right-circle"></i> <span>0</span>
                                     </div>
                                     <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Canceled" data-original-title="" title="">
-                                        <i class="cs-svg-icon close-icon"></i> <span>19</span>
+                                        <i class="cs-svg-icon close-icon"></i> <span>0</span>
                                     </div>
                                     <div class=" info-item-elements status-class" data-status="rejected" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Rejected" data-original-title="" title="">
-                                        <i class="cs-svg-icon none"></i> <span>2</span>
+                                        <i class="cs-svg-icon none"></i> <span>0</span>
                             
                                     </div>
                                     <div class=" info-item-elements status-class" data-status="closed" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Closed" data-original-title="" title="">
-                                        <i class="cs-svg-icon double-checkbox"></i> <span>203</span>
+                                        <i class="cs-svg-icon double-checkbox"></i> <span>0</span>
                                     </div><!-- 
                                     <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
                                         <i class="cs-svg-icon shtamp-circle"></i> <span>0</span>
@@ -509,7 +510,7 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-2"><i class="fal fa-angle-down"></i></a>
+                                <a class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
                         <div class="toggle-box-2 table-box" orderno="7.3"
@@ -654,7 +655,7 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-3"><i class="fal fa-angle-down"></i></a>
+                                <a class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
                         <div class="toggle-box-3">
@@ -739,10 +740,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-4"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='6' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-4">
+                        <div class="toggle-box-6">
                            <div class="user-addons-box p-2 cs-box-background">
                                 <div class="user-avatar-list mb-1">
                                     <ul>
@@ -788,10 +789,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-9"><i class="fal fa-angle-down"></i></a>
+                                <a data-link='7' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-9">
+                        <div class="toggle-box-7">
                             <div class="col-12">
                                 <div class="row mt-3">
                                     <div class="col-12 story-card-right-menu-panels story-card-right-menu-panels-api right-menu-description">
@@ -852,45 +853,6 @@
 </div>
 <script>
     $('.cs-selectpicker').selectpicker('refresh');
-    $(document).on("click", ".toggle-btn-1", function (e) {
-        $('.toggle-btn-1').toggleClass('active');
-        $('.toggle-box-1').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-2", function (e) {
-        $('.toggle-btn-2').toggleClass('active');
-        $('.toggle-box-2').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-3", function (e) {
-        $('.toggle-btn-3').toggleClass('active');
-        $('.toggle-box-3').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-4", function (e) {
-        $('.toggle-btn-4').toggleClass('active');
-        $('.toggle-box-4').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-5", function (e) {
-        $('.toggle-btn-5').toggleClass('active');
-        $('.toggle-box-5').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-6", function (e) {
-        $('.toggle-btn-6').toggleClass('active');
-        $('.toggle-box-6').toggleClass('open');
-    });
-    $(document).on("click", ".prototype-cls", function (e) {
-        if ($('.prototype-cls input').is(':checked')) {
-            $('.toggle-btn-7').addClass('active');
-        }else{
-            $('.toggle-btn-7').removeClass('active');
-        }
-    });
-    $(document).on("click", ".toggle-btn-8", function (e) {
-        $('.toggle-btn-8').toggleClass('active');
-        $('.toggle-box-8').toggleClass('open');
-    });
-    $(document).on("click", ".toggle-btn-9", function (e) {
-        $('.toggle-btn-9').toggleClass('active');
-        $('.toggle-box-9').toggleClass('open');
-    });
 </script>
 
 <div class="modal fade" id="task-ongoing-large-history" style="z-index: 1100;" tabindex="-1" role="dialog" aria-labelledby=""    aria-hidden="true">

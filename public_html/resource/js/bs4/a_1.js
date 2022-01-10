@@ -15033,6 +15033,7 @@ function callLoadStoryCard() {
         //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
+        nav_list_menu_story_card();
        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
        // loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
        // new UserStory().refreshCurrentBacklog();
@@ -15042,11 +15043,7 @@ function callLoadStoryCard() {
         loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
-        //        if (cdnh) {
-        //
-        //            jsEditorGenerate();
-        //            cdnh = false;
-        //        }
+      
         global_var.active_canvas = 'storyCard'
         $('.cs-col-pagename .mm-title').html('');
         $('.cs-col-pagename .mm-title').html('Story Card');
@@ -16387,7 +16384,7 @@ function getBugList4StoryCard(bgId, tbody) {
             SATask.updateTaskByRes(res);
             var ela = res.tbl[0].r
             $(tbody).html('')
-           
+           $(".task-result-4us").text(res.kv.tableCount)
 
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
@@ -16408,7 +16405,7 @@ function getBugList4StoryCard(bgId, tbody) {
                     </span>
                 </td>
                 <td class="text-center" >
-                    <a href="#" class="brend-color">${ela[i].taskName}</a>
+                    <a href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${ela[i].fkProjectId}','${ela[i].id}')" class="brend-color">${ela[i].taskName}</a>
                 </td>
                 <td class="cs-tasklistData" style="padding-left: 5px; width: 100px;">
                     <a href="#" class="brend-color">${ela[i].taskTypeName}</a>
@@ -16439,7 +16436,60 @@ function getBugList4StoryCard(bgId, tbody) {
         }
     });
 }
+function getTaskTatisticInfoUserStory(bgid) {
 
+     if(!bgid){
+         return
+     }
+    var div = $("#task-list-statistic-4backlog");
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkBacklogId = bgid;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetGeneralStatisticsByUserStory4Kanban",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            // $(div).html('')
+            var dt = res.tbl;
+            try {
+                for (let index = 0; index < dt.length; index++) {
+                    var ifle = dt[index].tn;
+                    if (ifle == "overall") {
+    
+    
+                        var le = dt[index].r[0];
+                        $(div).find("[data-status='new'] span").text(le.statusNew);
+                        $(div).find("[data-status='ongoing'] span").text(le.statusOngoing);
+                        $(div).find("[data-status='waiting'] span").text(le.statusWaiting);
+                        $(div).find("[data-status='forwarded'] span").text(le.statusUat);
+                        $(div).find("[data-status='canceled'] span").text(le.statusCanceled);
+                        $(div).find("[data-status='rejected'] span").text(le.statusRejected);
+                        $(div).find("[data-status='closed'] span").text(le.statusClosed);
+                     
+                    }
+    
+                }
+            } catch (error) {
+                $(div).empty();
+            }
+         
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+ 
 /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 function setStoryCardCreatedBy() {
