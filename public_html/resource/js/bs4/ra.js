@@ -347,8 +347,10 @@ function loadStoryCardInfo4StoryCard(el) {
         setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();
-        getRelatedStoryCardByApiId();
-
+        getRelatedStoryCardByApiId(); 
+            if(!id){
+                  return
+            }
         callApi('21122616260906401317', { fkBacklogId: id }, true, function (res) {
             $('#user-story-input-json').val(res.kv.inputJson)
         })
