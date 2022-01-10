@@ -3536,7 +3536,7 @@ hr.hr-ss {
     -ms-flex-pack: justify;
     justify-content: space-between;
 }
-.storecard-header-nav-section .scg-button-box > button, .storecard-header-nav-section button.live-prototype-show-story-card-hard-refresh {
+.storecard-header-nav-section .scg-button-box > button, .storecard-header-nav-section button.live-prototype-show-story-card-hard-refresh, #btnGroupDrop1, #backBacklogBtn-block {
     box-shadow: none !important;
     background-color: transparent;
     border-color: transparent;
@@ -3544,7 +3544,7 @@ hr.hr-ss {
     font-family: 'Quicksand', sans-serif;
     font-style: normal;
     color: #fff;
-    font-size: 16px;
+    font-size: 13px;
     line-height: 24px;
     padding: 4px 12px;
     font-weight: 400;
@@ -3555,7 +3555,7 @@ hr.hr-ss {
     font-weight: 400;
     font-size: 11px;
 }
-.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle {
+.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle, #btnGroupDrop1:hover, #backBacklogBtn-block:hover {
     color: #03396C !important;
     background-color: #dfeef7;
     border-color: #dfeef7;
@@ -6048,7 +6048,7 @@ table.lbl-list-table tr td {
      border-radius:10px;
      padding: 3px 15px;
 }
-.toggle-box-1, .toggle-box-2, .toggle-box-3, .toggle-box-4, .toggle-box-5, .toggle-box-6, .toggle-box-8, .toggle-box-9  {
+.toggle-box-1, .toggle-box-2, .toggle-box-3, .toggle-box-4, .toggle-box-5, .toggle-box-6, .toggle-box-7, .toggle-box-8, .toggle-box-9  {
     overflow: visible;
     visibility: hidden;
     height: 0 !important;
