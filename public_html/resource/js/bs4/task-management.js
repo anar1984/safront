@@ -681,9 +681,9 @@ const taskManagement = {
             var data = {};
 
             data.comment = $('#addComment4Task_comment_new').val();
-            var files = $('#addComment4Task_addnewfile').attr('fname');
+            var files = $('#addComment4Task_addnewfile').attr('fname') +"|";
 
-            $('.canvas-sub-class').each(function (e) {
+            $('#canvasdiv_taskCreate .canvas-sub-class').each(function (e) {
                 files += $(this).attr('fname') + "|";
             })
 
@@ -1011,7 +1011,7 @@ const taskManagement = {
             genFileAddBlock: function () {
                 return `<div class="cs-input-group">
                               
-                <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_taskCreate"
+                <div class="row canvas_canvas commentsubmit-seqment" id=""
                      style="width:100%;padding:0px;margin:0px;">
                     <div class="col-12 text-center canvas_canvas_msg "
                          style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
@@ -1839,6 +1839,7 @@ const taskManagement = {
             if (!taskId) {
                 return;
             }
+            global_var.active_canvas = 'comment';
             global_var.current_issue_id = taskId;
             Utility.addParamToUrl('current_issue_id', global_var.current_issue_id);
             /*   global_var.current_issue_is_hide = "0";

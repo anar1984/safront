@@ -3496,7 +3496,7 @@ UserStory.prototype = {
         var idx = 1;
         var that = this;
         var finalname = "";
-        $('.canvas-image-class').each(function (e) {
+        $('#taskMgmtModal .canvas-image-class').each(function (e) {
 //            $('.preloader').fadeIn(400, function () {
 //                console.log('ok')
 //            });

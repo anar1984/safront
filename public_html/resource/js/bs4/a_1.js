@@ -3949,8 +3949,9 @@ function uploadFile4CanvasZadShey(id) {
 
     var binaryString = document.getElementById(id).toDataURL("image/png;base64");
     binaryString = binaryString.replace(/data:image\/png;base64,/, '');
-//    var fname = that.uploadFile4NewTicket("jpeg", binaryString, 'image_' + idx);
-    uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id);
+     var fname = new UserStory().uploadFile4NewTicket("png", binaryString, id);
+        $("#"+id).attr("fname",fname);
+   // uploadFile4IpoCanvasCopy("jpeg", btoa(binaryString), 'clipboardimage', id);
 
 }
 
