@@ -15033,6 +15033,7 @@ function callLoadStoryCard() {
         //        new UserStory().pureClearAll(this);
         new UserStory().clearAndShowAll(this)
         $('#mainBodyDivForAll').html(html_string);
+        nav_list_menu_story_card();
        loadProjectList2SelectboxByClass('projectList_liveprototype_storycard');
        // loadProjectList2SelectboxByClassNochange('projectList_for_change_storycard');
        // new UserStory().refreshCurrentBacklog();
@@ -15042,11 +15043,7 @@ function callLoadStoryCard() {
         loadUsersAsOwner();
         commmonOnloadAction(this);
         getJsCodeListByProject();
-        //        if (cdnh) {
-        //
-        //            jsEditorGenerate();
-        //            cdnh = false;
-        //        }
+      
         global_var.active_canvas = 'storyCard'
         $('.cs-col-pagename .mm-title').html('');
         $('.cs-col-pagename .mm-title').html('Story Card');
@@ -16464,30 +16461,35 @@ function getTaskTatisticInfoUserStory(bgid) {
         success: function (res) {
             // $(div).html('')
             var dt = res.tbl;
-            for (let index = 0; index < dt.length; index++) {
-                var ifle = dt[index].tn;
-                if (ifle == "overall") {
-
-
-                    var le = dt[index].r[0];
-                    $(div).find("[data-status='new'] span").text(le.statusNew);
-                    $(div).find("[data-status='ongoing'] span").text(le.statusOngoing);
-                    $(div).find("[data-status='waiting'] span").text(le.statusWaiting);
-                    $(div).find("[data-status='forwarded'] span").text(le.statusUat);
-                    $(div).find("[data-status='canceled'] span").text(le.statusCanceled);
-                    $(div).find("[data-status='rejected'] span").text(le.statusRejected);
-                    $(div).find("[data-status='closed'] span").text(le.statusClosed);
-                 
+            try {
+                for (let index = 0; index < dt.length; index++) {
+                    var ifle = dt[index].tn;
+                    if (ifle == "overall") {
+    
+    
+                        var le = dt[index].r[0];
+                        $(div).find("[data-status='new'] span").text(le.statusNew);
+                        $(div).find("[data-status='ongoing'] span").text(le.statusOngoing);
+                        $(div).find("[data-status='waiting'] span").text(le.statusWaiting);
+                        $(div).find("[data-status='forwarded'] span").text(le.statusUat);
+                        $(div).find("[data-status='canceled'] span").text(le.statusCanceled);
+                        $(div).find("[data-status='rejected'] span").text(le.statusRejected);
+                        $(div).find("[data-status='closed'] span").text(le.statusClosed);
+                     
+                    }
+    
                 }
-
+            } catch (error) {
+                $(div).empty();
             }
+         
         },
         error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
-
+ 
 /*  Project managment By R.G End >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 function setStoryCardCreatedBy() {

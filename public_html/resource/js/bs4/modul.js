@@ -76,3 +76,20 @@ function genTimePickerById(id) {
       }
   });
 }
+
+function nav_list_menu_story_card() {
+     try {
+      var list  =localStorage.getItem('nav_list_menu_story_card');
+      list  = list.split(',');
+      for (let i = 0; i < list.length; i++) {
+          const o = list[i];
+          if(o!=='4'){
+            $("#part-nav-menu-id4UserStory [data-link='"+o+"']").click();
+
+          }
+      }
+     } catch (error) {
+       
+     }
+  
+}
