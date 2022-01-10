@@ -528,7 +528,6 @@ background: rgb(39 43 124 / 100%);
 #description_table_body_id.ui-sortable tr{
     padding: 0px 8px 0px 0;
     background: rgb(223 238 247);
-    height: 30px;
     border: solid #7194b2;
     border-width: 1px 0px;
 }
@@ -3508,7 +3507,7 @@ hr.hr-ss {
     -ms-flex-pack: justify;
     justify-content: space-between;
 }
-.storecard-header-nav-section .scg-button-box > button {
+.storecard-header-nav-section .scg-button-box > button, .storecard-header-nav-section button.live-prototype-show-story-card-hard-refresh {
     box-shadow: none !important;
     background-color: transparent;
     border-color: transparent;
