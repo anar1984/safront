@@ -16414,11 +16414,11 @@ function getBugList4StoryCard(bgId, tbody) {
                     <a href="#" class="brend-color">${Utility.convertDate(ela[i].createdDate)}</a>
                 </td>
                 <td class="text-center" style="width: 80px;">
-                    <img class="rounded-circle personal-btn-img" src="${fileUrl(ela[i].userImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                    <img class="rounded-circle " src="${fileUrl(ela[i].userImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="Assigne" data-content="${ela[i].userName}" title="">
                 </td>
 
                 <td class="text-center" style="width: 80px;">
-                    <img class="rounded-circle personal-btn-img js-btn-popover--custom" src="${fileUrl(ela[i].createByImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="" title="">
+                    <img class="rounded-circle " src="${fileUrl(ela[i].createByImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="Created By" data-content="${ela[i].createByName}" title="">
                 </td>
             </tr>`
                 $(tbody).append(tr);
