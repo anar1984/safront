@@ -927,9 +927,9 @@ table tr td .cs-sum-inbox.cs-sum-inbox-callfn > div {
     max-width: 520px;
     vertical-align: middle;
     border-radius: 3px;
-    background: rgb(255 255 255);
-    border: 1px solid #525596;
-    color: #525596;
+    background: #2b5a85;
+    border: 1px solid #2b5a85;  
+    color: #ffffff;
     outline: none;
 }
 .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled).active, .cs-input-group.select-if-style .btn-light:not(:disabled):not(.disabled):active, .cs-input-group.select-if-style .show>.btn-light.dropdown-toggle {
@@ -6868,4 +6868,7 @@ div.cs-task-item-in-box {
 }
 #description_table_id tr:nth-child(odd) {
     background: #dfeef7;
+}
+.story-card-modal .cs-input-group .cs-label-name {
+    color: #fff;
 }

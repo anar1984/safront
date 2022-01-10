@@ -141,7 +141,7 @@
                                 <!-- <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span> 2</span></a></li> -->
                                 <!-- <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li> -->
                                 <li><a data-link="6" class="nav-item-url toggle-btn-4" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Nəzarətçi'><i class="cs-svg-icon user-eye-o"></i></a></li>
-                                <li><a data-link="7" class="nav-item-url toggle-btn-9"><i class="cs-svg-icon hour-03"></i></a></li>
+                                <li><a data-link="7" class="nav-item-url toggle-btn-9" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Estimated & Hour(s)'><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -338,6 +338,38 @@
                         <div class="toggle-box-1 table-box" orderno="7.3"
                             style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
                             class="tooltipMan component-container-dashed col-lg-12  table-responsive">
+                            <div class="d-flex justify-content-start mt-3 mb-2">
+                                <div class="info-box">
+                                    <span class="title">Status</span>
+                                    <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
+                                      <i class="cs-svg-icon plus-circle"></i> <span>89</span>
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
+                                        <i class="cs-svg-icon refresh-three"></i> <span>2</span>
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
+                                        <i class="cs-svg-icon hour-01"></i> <span>35</span>
+                                    </div>
+                            
+                                    <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
+                                        <i class="cs-svg-icon right-circle"></i> <span>0</span>
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
+                                        <i class="cs-svg-icon close-icon"></i> <span>19</span>
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
+                                        <i class="cs-svg-icon none"></i> <span>2</span>
+                            
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
+                                        <i class="cs-svg-icon double-checkbox"></i> <span>203</span>
+                                    </div>
+                                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
+                                        <i class="cs-svg-icon shtamp-circle"></i> <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <table class="table cst-table-hover tablePaginatione component-input-class" id="taskListCW">
                                 <thead>
                                     <tr>
@@ -749,6 +781,69 @@
                            </div>
                         </div>
                     </div>
+                    <div class="toggle-body-item">
+                        <div class="d-flex border-bottom-1px pb-1 mb-2">
+                            <div class="mr-auto toggle-body-title">
+                                <div class="result-box"><i class="cs-svg-icon hour-03"></i> <span class="name">Estimated & Hour(s)</span></div>
+                            </div>
+                            <div class="toggle-min-elements">
+                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
+                                <a class="cs-url toggle-btn-9"><i class="fal fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        <div class="toggle-box-9">
+                            <div class="col-12">
+                                <div class="row mt-3">
+                                    <div class="col-12 story-card-right-menu-panels story-card-right-menu-panels-api right-menu-description">
+                                        <div id="storycard_dependentapi" class="cs-forum-group">
+                                            <label class="cs-label-name">Dependencies </label> 
+                                            <span id="storycard_dependentapi_span" class="1us1-priority" style="font-size:11px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-6 cs-input-group mb-3">
+                                        <label class="cs-label-name">Estimated hour(s) </label> 
+                                        <input type="number" id="user-story-est-hours" class=" cs-input user-story-short-change" data-type="estimatedHours" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                    <div class="col-6 cs-input-group mb-3">
+                                        <label class="cs-label-name">Hour(s) Spent </label> 
+                                        <input type="number" id="user-story-spent-hours" class="cs-input user-story-short-change" data-type="spentHours" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                    <div class="col-6 cs-input-group mb-3"> 
+                                        <label class="cs-label-name">Estimated Counter(s)</label>      
+                                        <input type="number" id="user-story-est-counter" class="cs-input user-story-short-change" data-type="estimatedCounter" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                    <div class="col-6 cs-input-group mb-3">   
+                                        <label class="cs-label-name">Executed Counter(s)</label>       
+                                        <input type="number" id="user-story-executed-counter" class="cs-input user-story-short-change" data-type="executedCounter" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                
+                
+                                    <div class="col-6 cs-input-group">
+                                        <label class="cs-label-name">Estimated Budget </label>          
+                                        <input type="number" id="user-story-est-budget" class="cs-input user-story-short-change" data-type="estimatedBudget" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                    <div class="col-6 cs-input-group">
+                                        <label class="cs-label-name">Spent Budget </label>          
+                                        <input type="number" id="user-story-spent-budget" class="cs-input user-story-short-change" data-type="spentBudget" step=any required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -791,6 +886,10 @@
     $(document).on("click", ".toggle-btn-8", function (e) {
         $('.toggle-btn-8').toggleClass('active');
         $('.toggle-box-8').toggleClass('open');
+    });
+    $(document).on("click", ".toggle-btn-9", function (e) {
+        $('.toggle-btn-9').toggleClass('active');
+        $('.toggle-box-9').toggleClass('open');
     });
 </script>
 
