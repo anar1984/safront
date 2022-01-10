@@ -40,25 +40,25 @@
                         <div class="scg-button-box form-control">
                             <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-wrench" style=" margin-right: 6px; color: #fff;"></i> Tools</button>
                             <div class="dropdown-menu " aria-labelledby="copyMovePrint" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
-                                <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()"><a href="#" >New Story Card</a></button>  <!-- 20.08.2020 -->
-                                <button class="dropdown-item firstbut "   onclick="window.print();"><a href="#" >Print</a></button>  <!-- 20.08.2020 -->
-                                <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()"><a href="#" >Save as PDF</a></button>
-                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()"> <a href="#" >Copy URL</a></button>
-                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralPrototypeView()" ><a href="#" >Copy Prototype URL</a></button>
-                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="20042316073405409986" bid="20071210041301137431" lid="" onclick="new UserStory().shareGeneralView(this)" d="backlog"><a href="#" >View Story Card</a></button>
-                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" ><a href="#" >View Live Prototype</a></button>
-                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" ><a href="#" >Edit</a></button>
-                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" ><a href="#" >Add to Task</a></button>
-                                
-                                <hr style="margin: 4px 0px;"> 
-                                <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox"><a href="#" >Export</a></button>
-                                <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox"><a href="#" >Copy</a></button>
-                                <button class="dropdown-item firstbut " id="ImportView" data-toggle="modal" data-target="#ImportBox"><a href="#" >Import</a></button>
-                                <button class="dropdown-item firstbut " id="HiostoryView" ><a href="#" >History</a></button>
-                
-                                <hr style="margin: 4px 0px;">
-                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid=""  onclick="new UserStory().delete()"><a href="#" >Delete</a></button>
-                                <br>
+                                <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()">New Story Card</button>  <!-- 20.08.2020 -->
+                                <button class="dropdown-item firstbut "   onclick="window.print();">Print</button>  <!-- 20.08.2020 -->
+                                <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()">Save as PDF</button>
+                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()">Copy URL</button>
+                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralPrototypeView()" >Copy Prototype URL</button>
+                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="20042316073405409986" bid="20071210041301137431" lid="" onclick="new UserStory().shareGeneralView(this)" d="backlog">View Story Card</button>
+                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" >View Live Prototype</button>
+                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="editUserStoryName(this)" >Edit</button>
+                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="addUserStoryToTask()" >Add to Task</button>
+
+                                <hr style="margin: 2px 0px;"> 
+                                <button class="dropdown-item firstbut " id="ExportImportView" data-toggle="modal" data-target="#ExportImportBox">Export</button>
+                                <button class="dropdown-item firstbut " id="CopyView" data-toggle="modal" data-target="#CopyBox">Copy</button>
+                                <button class="dropdown-item firstbut " id="ImportView" data-toggle="modal" data-target="#ImportBox">Import</button>
+                                <button class="dropdown-item firstbut " id="HiostoryView" >History</button>
+
+                                <hr style="margin: 2px 0px;">
+                                <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid=""  onclick="new UserStory().delete()">Delete</button>
+                             
                                 <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
                             </div>
                         </div>
@@ -129,19 +129,19 @@
                         </div>
                         <div class="toggle-nav-elements">
                             <ul class="nav">
-                                <li><a class="nav-item-url toggle-btn-5"><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
-                                <li><a class="nav-item-url toggle-btn-8 active"><i class="cs-svg-icon task-03"></i></a></li>
-                                <li><a class="nav-item-url toggle-btn-6 active"><i class="cs-svg-icon input"></i></a></li>
+                                <li><a data-link="1" class="nav-item-url toggle-btn-5" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='File'><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
+                                <li><a data-link="2" class="nav-item-url toggle-btn-6" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Inputs'><i class="cs-svg-icon input"></i></a></li>
+                                <li><a data-link="3" class="nav-item-url toggle-btn-8" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Process Description'><i class="cs-svg-icon task-03"></i></a></li>
                                 <li>
-                                    <label class="nav-item-label toggle-btn-7 prototype-cls">
+                                    <label data-link="4" class="nav-item-label toggle-btn-7 prototype-cls" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Live Prototype'>
                                         <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i>
                                     </label>
                                 </li>
-                                <li><a class="nav-item-url toggle-btn-1"><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
+                                <li><a data-link="5" class="nav-item-url toggle-btn-1" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Task List'><i class="cs-svg-icon subtask-o-light"></i><span> 6</span></a></li>
                                 <!-- <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span> 2</span></a></li> -->
                                 <!-- <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li> -->
-                                <li><a class="nav-item-url toggle-btn-4"><i class="cs-svg-icon user-eye-o"></i></a></li>
-              
+                                <li><a data-link="6" class="nav-item-url toggle-btn-4" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Nəzarətçi'><i class="cs-svg-icon user-eye-o"></i></a></li>
+                                <li><a data-link="7" class="nav-item-url toggle-btn-9"><i class="cs-svg-icon hour-03"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="col-12 text-center test-actual-result-toggle addtasktype_toggle">
                                         <div class="row canvas_canvas" id="canvasdiv_storyCard" style="padding:30px;">
-                                            <div class="col-12 text-center canvas_canvas_msg" style="background-color: gainsboro">
+                                            <div class="col-12 text-center canvas_canvas_msg">
                                                 <h5>Copy and Paste Image Here</h5>
                                             </div>
                                         </div>
@@ -213,10 +213,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-6"><i class="fal fa-angle-down"></i></a>
+                                <a class="cs-url toggle-btn-6 active"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-6 open">
+                        <div class="toggle-box-6">
                             <div class="row text-center storycard_ipo storycard_inputs_table">
                                
                                 <div class="w-100">
@@ -245,10 +245,10 @@
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn-8"><i class="fal fa-angle-down"></i></a>
+                                <a class="cs-url toggle-btn-8 active"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-8 open">
+                        <div class="toggle-box-8">
                             <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
                                 <thead id="cs_description_table_head_id">
                                     <tr class="cs-cursor-auto">
@@ -328,7 +328,7 @@
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon subtask-o-light"></i> <span
-                                        class="result">6</span> <span class="name">Bağlı əməliyyat</span></div>
+                                        class="result">6</span> <span class="name">Task List</span></div>
                             </div>
                             <div class="toggle-min-elements">
                                 <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
@@ -338,7 +338,7 @@
                         <div class="toggle-box-1 table-box" orderno="7.3"
                             style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
                             class="tooltipMan component-container-dashed col-lg-12  table-responsive">
-                            <table class="table cst-table-hover tablePaginatione component-input-class">
+                            <table class="table cst-table-hover tablePaginatione component-input-class" id="taskListCW">
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
