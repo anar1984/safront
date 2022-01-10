@@ -57,6 +57,28 @@
 .mt-30px {
     margin-top: 30px !important;
 }
+.cs-input-group input.form-control[type=date], .cs-input-group input.form-control[type=text]{
+    color: #ffffff;
+    background-color: rgb(49 53 130 / 50%);
+    border-color: rgb(49 53 130 / 50%);
+    font-family: Quicksand;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 4px 12px;
+    font-weight: 400;
+    height: 28px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0.6;
+    filter: invert(0.8);
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1
+  }
 .cs-cursor-auto, tr.cs-cursor-auto {
     cursor: auto;
 }
@@ -505,6 +527,10 @@ background: rgb(39 43 124 / 100%);
 }
 #description_table_body_id.ui-sortable tr{
     padding: 0px 8px 0px 0;
+    background: rgb(223 238 247);
+    height: 30px;
+    border: solid #7194b2;
+    border-width: 1px 0px;
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr {
     height: 100%;
@@ -515,17 +541,23 @@ background: rgb(39 43 124 / 100%);
 }
 #description_table_body_id.ui-sortable tr .cs-move-tr i {
     margin: 5px 10px 5px 10px;
-    font-size: 16px;
-    color: rgb(0 0 0 / 50%);
+    font-size: 13px;
+    color: rgb(32 81 126);
     float: left;
 }
 .table-hover tbody tr button#dropdownMenuLink {
     background-color: transparent;
     color: rgb(39 43 124 / 11%);
+    outline: none;
+    border: none;
 }
 .table-hover tbody tr:hover button#dropdownMenuLink,  table.if-inc-table tr:hover .btn, table.if-inc-table tr .btn:focus {
     background-color: transparent;
     color: #272B7C;
+}
+.table-hover tbody tr:hover button#dropdownMenuLink, table.if-inc-table tr .btn, table.if-inc-table tr .btn:focus, .table-hover tbody tr:hover button#dropdownMenuLink:focus {
+    border: none;
+    outline: none;
 }
 table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select-if-style .btn:focus {
     background-color: #da7a9e;
@@ -534,17 +566,22 @@ table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select
 
 /* StoreCard  */
 #description_table_id thead#cs_description_table_head_id tr {
-    background: #272B7C;
+    background: #dfeef7;
     padding: 0;
     border: none;
+}
+#description_table_id .cs-modal-box .btn-primary {
+    color: #1d4e7c;
+    background-color: #dfeef7;
+    border-color: #dfeef7;
 }
 #description_table_id thead#cs_description_table_head_id tr th {
     border: none;
     padding: 0;
 }
 .cs-table-head-title {
-    color: #ffffff;
-    padding: 15px 15px;
+    color: #03396C;
+    padding: 5px 15px;
     text-align: left;
     font-size: 14px;
     font-weight: 600;
@@ -609,7 +646,7 @@ table.if-inc-table tr:hover .select-if-style .btn, table.if-inc-table tr .select
     background-color: #f5f5f5;
 }
 .cs-table-row-setting-btn .dropdown-menu button i {
-    color: #525596;
+    color: #1d4e7c;
     margin-right: 3px
 }
 tbody tr button.cs-copy-btn {
@@ -1829,6 +1866,9 @@ padding: 0 10px;
     font-size: 14px;
     margin-bottom: 3px;
 }
+.setting-views-panel .cs-input-group .input-group-addon, .setting-views-panel .checkmark-title {
+    color: #fff;
+}
 .cs-button-group .dropdown-item.active, .cs-button-group a.dropdown-item:active {
     background-color: #272B7C;
     border-color: #272B7C;
@@ -1967,6 +2007,8 @@ padding: 0 10px;
 .table-hover tbody tr .tr-remove-btn, .table-hover tbody tr .cs-copy-btn {
     font-size: 13px;
     color: rgb(39 43 124 / 11%) !important;
+    outline: none;
+    border: none;
 }
 table tr .active-hover.tr-remove-btn :not(:disabled):not(.disabled):active, table tr .active-hover.btn.tr-remove-btn, table tr .active-hover.cs-copy-btn :not(:disabled):not(.disabled):active, table tr .active-hover.btn.cs-copy-btn  {
     background-color: transparent;
@@ -2274,9 +2316,10 @@ tbody tr.sortbodyEmpty {
   #description_table_id #description_table_body_id>tr::before, #description_table_id #description_table_body_id tbody>tr::before {
     counter-increment: section;
     content: counters(section, ".") " ";
-    color: #9395bd;
+    color: #03396C;
     padding: 0px 0 0px 10px;
     font-weight: bold;
+    font-size: 14px;
 }
 .livesql-table-boxes {
     width: 100%;
@@ -4183,28 +4226,40 @@ hr.hr-ss {
     right: 0px;
     float: right
 }
-.bug-list-column-task-status .us-item-status-new {
+.bug-list-column-task-status .us-item-status-new, .notification-elements .notify-bottom-box .status-box-new {
  border-color: #D09838;
  background-color: #D09838 !important;
 }
 
-.bug-list-column-task-status .us-item-status-draft {
+.bug-list-column-task-status .us-item-status-draft, .notification-elements .notify-bottom-box .status-box-draft {
  border-color: #6264a0;
  color:white;
  background-color: #6264a0 !important;
 }
 
-.bug-list-column-task-status .us-item-status-ongoing {
+.bug-list-column-task-status .us-item-status-ongoing, .notification-elements .notify-bottom-box .status-box-ongoing {
     border-color: #4AA9AF;
     background-color: #4AA9AF !important;
 }
-.bug-list-column-task-status .us-item-status-closed {
+.bug-list-column-task-status .us-item-status-closed, .notification-elements .notify-bottom-box .status-box-closed {
     border-color: #78A812;
     background-color: #78A812 !important;
 }
-.bug-list-column-task-status .us-item-status-waiting {
+.bug-list-column-task-status .us-item-status-waiting, .notification-elements .notify-bottom-box .status-box-waiting {
     border-color: #CA3E12;
     background-color: #CA3E12 !important;
+}
+.notification-elements .notify-bottom-box .status-box-UAT {
+    border-color: #097F55;
+    background-color: #097F55 !important;
+}
+.notification-elements .notify-bottom-box .status-box-rejected {
+    color: #272B7C;
+    border-color: #e8bdc8;
+    background-color: #e8bdc8 !important;
+}
+.notification-elements .notify-bottom-box .status-box-rejected .notefy-status, .notification-elements .notify-bottom-box .status-box-rejected .notify-bottom-right ul li .cs-click{
+    color: #272B7C;
 }
 
 .bug-list-column-task-nature .get-data-group [class*="im-"] {
@@ -6095,7 +6150,7 @@ table.lbl-list-table tr td {
 .storycard_inputs_table thead th {
     padding: 0px;
     font-weight: normal;
-    font-size: 21px;
+    font-size: 16px;
     line-height: 100%;
     height: 30px;
     color: #03396C;
@@ -6163,8 +6218,14 @@ table.lbl-list-table tr td {
 .storycard_inputs_table tbody tr td .iconDrag:hover {
     background: #2e5c86;
 }
-.storycard_inputs_table .spilted tr:nth-child(odd) td input {
+.storycard_inputs_table .spilted tr td input, .storycard_inputs_table .spilted tr:nth-child(even) td input:hover {
     background: #ffffff !important;
+    padding: 0 10px;
+}
+.storycard_inputs_table .spilted tr td input:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
 }
 .desc-table-list-for-multiple .span-button-div {
     position: relative;
@@ -6235,7 +6296,7 @@ table.lbl-list-table tr td {
 .desc-table-list-for-multiple .dropdown-menu, .description-left .dropdown-menu, .cs-col-storecard-general-setting .dropdown-menu {
     overflow: hidden;
     background: #DFEEF7;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.55);
+    box-shadow: 0px 0px 7px rgb(0 0 0 / 22%);
     border-radius: 6px;
 }
 .desc-table-list-for-multiple button.dropdown-item, .description-left button.dropdown-item, .cs-col-storecard-general-setting button.dropdown-item{
@@ -6754,4 +6815,47 @@ div.cs-task-item-in-box {
 }
 .has-search .form-control:focus::placeholder, .has-search:focus-within .form-control-feedback {
     color: #03396C;
+}
+.storycard_inputs_table tbody tr td .desc-item-input a {
+    color: #03396C !important;
+}
+.storycard_inputs_table tbody .dropdown-menu {
+    min-width: 100px;
+}
+.storycard_inputs_table tbody .dropdown-menu button.dropdown-item:hover, .storycard_inputs_table .add_descriotion_btn .dropdown-menu button.dropdown-item:hover{
+    background-color: #272B7C !important;
+    color: #ffffff !important;
+}
+.storycard_inputs_table tbody .dropdown-menu .dropdown-item, .storycard_inputs_table .add_descriotion_btn .dropdown-menu button.dropdown-item {
+    padding: 0.25rem 0.5rem;
+    line-height: 1.5;
+}
+.storycard_inputs_table table tr td div.sub_table {
+    padding: 15px !important;
+    margin: 5px 0 15px;
+    border: 1px solid #446e95 !important;
+    border-radius: 7px;
+}
+.storycard_inputs_table tbody tr td table {
+    border-collapse: collapse;
+    border-spacing: 1px;
+}
+.storycard_inputs_table tbody tr td table tbody tr {
+    border-bottom: 1px solid #03396c;
+}
+.storycard_inputs_table tbody tr td table tbody tr td {
+    border: 1px solid #446e95;
+}
+.cs-modal-box .descriptiontable .cs-table-head-right-section .btn-primary {
+    color: #20517e;
+    background-color: #dfeef7;
+    border-color: #dfeef7;
+}
+.cs-modal-box .descriptiontable .cs-table-head-right-section .btn:hover {
+    background-color: #1e4f7d;
+    border-color: #1e4f7d;
+    color: #fff;
+}
+#description_table_id tr:nth-child(odd) {
+    background: #dfeef7;
 }

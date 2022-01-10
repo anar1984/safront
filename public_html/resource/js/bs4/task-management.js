@@ -2515,7 +2515,7 @@ const taskManagement = {
 
                 return `<div class="bugListNavMenu bugList-elements">
 
-                <div class="main-sorting mb-5">
+                <div class="main-sorting">
                     <div class="row ml-0 mr-0">
                         <div class="cs-input-group cs-pagination-limit col-6">
                             <div class="input-group-addon">Closed Dates From</div>
@@ -2527,11 +2527,10 @@ const taskManagement = {
                         </div>
                     </div>
                     <div class="row ml-0 mr-0">
-                        <div class="col-12">
-                            <span>Sort by</span>
+                        <div class="cs-input-group col-12 mt-2">
+                            <div class="input-group-addon">Sort by</div>
                         </div>
                         <div class="cs-input-group col-4">
-                            
                             <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
                             id='bug_filter_sortby' title="Columns">
                                 <option value='task_status' selected>Status</option>
@@ -2569,26 +2568,22 @@ const taskManagement = {
                             <b id="table-row-count"> </b>
                         </div>
                     </div>
-                    <div class="row ml-0 mr-0">
-                        <div class="col-12">
-                            <div class="cs-input-group cs-pagination-group-by">
-                                <div class="input-group-addon cs-group-by">Group By</div>
-                                <select id="inputGroupSelect01">
-                                    <option value='0' >None</option>
-                                    <option value='4' >Task Nature</option>
-                                    <option value='5' >Assignee</option>
-                                    <option value='6' >Task Type</option>
-                                    <option value='7'>Priority</option>
-                                    <option value='8' >Story Card</option>
-                                    <option value='9' >Project</option>
-                                    <option value='10' >Create By</option>
-                                    <option value='11' >Create Date</option>
-                                    <option value='12'>Last Update</option>
-                        
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="cs-input-group cs-pagination-group-by mt-2">
+                    <div class="input-group-addon cs-group-by">Group By</div>
+                    <select id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='4' >Task Nature</option>
+                        <option value='5' >Assignee</option>
+                        <option value='6' >Task Type</option>
+                        <option value='7'>Priority</option>
+                        <option value='8' >Story Card</option>
+                        <option value='9' >Project</option>
+                        <option value='10' >Create By</option>
+                        <option value='11' >Create Date</option>
+                        <option value='12'>Last Update</option>
+            
+                    </select>
                 </div>
                 <div class="cs-input-group mt-3">
                     <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
@@ -2652,7 +2647,7 @@ const taskManagement = {
             
                 <div class="cs-input-group mt-3">
     
-                    <label class="checkmarkcontainer">Show Child Tasks
+                    <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
                         <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
                         <span class="checkmark"></span>
                     </label>
@@ -2712,7 +2707,7 @@ const taskManagement = {
             },
             genNotificationBlock: function () {
                 return `<div class="notifcation-block">
-                <div class="notification-header">
+                <div class="notification-header mb-4">
                   <div style="float: right;padding: 0 3px;">
                   <span class="large-blok-expand"><i class="fas fa-expand" aria-hidden="true"></i></span>
                     <span class="circle">
@@ -2734,9 +2729,10 @@ const taskManagement = {
                   <div class="mr-auto">
                       <span class="top-title">${title}</span>
                         ${deadline}
+                      
                   </div>
                   <div>
-                      <span class="top-date-time">${time}</span>
+                     
                       <div class="circle-s">
                           <label class="checkmarkcontainer">
                               <input type="checkbox" class="noteCheckListItem" value="0">
@@ -2755,17 +2751,17 @@ const taskManagement = {
                   <div class="show-arrow show-more-btn"><i class="cs-svg-icon arrow-bottom"></i></div>
               </div>
               <div class="notify-bottom-box pt-2">
-                  <div class="d-block"><span class="date-time pr-2">${time}</span></div>
-                  <div class="d-flex mt-2 status-box">
+                  
+                  <div class="d-flex mt-2 status-box status-box-${taskStatus}">
                       <div class="mr-auto">
                           <div class="author-img"><img class="author" src="${img}" title="Creator"></div>
                           <span class="notefy-status">${taskStatus}</span>
                       </div>
                       <div class="notify-bottom-right pr-2">
                           <ul>
-                              <li><div class="cs-click"><i class="cs-svg-icon link"></i> 12</div></li>
-                              <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
-                              <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li>
+                            <li><div class="cs-click">${time}</div></li>
+                            <!-- <li><div class="cs-click"><i class="cs-svg-icon setting-checkbox"></i> 3</div></li>
+                            <li><div class="cs-click"><i class="cs-svg-icon attach-01"></i></div></li> -->
                           </ul>
                       </div>
                   </div>

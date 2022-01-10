@@ -3423,7 +3423,7 @@ $(document).on("click", '.setting-elemen-box .sticky-badges', function () {
 });
 
 $(document).on("click", '.show-more-btn', function () {
-    $('.notification-elements').toggleClass('show-more');    
+    $(this).closest('.notification-elements').toggleClass('show-more');    
 });
 $(document).on("change", '.noteCheckListItem', function () {
 

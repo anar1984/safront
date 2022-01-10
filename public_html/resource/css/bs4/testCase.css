@@ -1488,7 +1488,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     border-color: rgb(49 53 130 / 50%);
     font-family: Quicksand;
     font-style: normal;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 18px;
     padding: 4px 12px;
     font-weight: 400;
@@ -1538,20 +1538,27 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     background-color: #CACACA;
 }
 /* Notification Elements */
+.notification-header {
+    margin-bottom: 0;
+    display: inline-block;
+    width: 100%;
+}
 .notification-elements {
     position: relative;
-    width: 100%;  
+    width: 100%;
     background: #03396C;
     mix-blend-mode: normal;
     border-radius: 10px;
     overflow: hidden;
     color: #fff;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
 }
 .notification-elements .notify-top-section .top-title {
     font-family: 'Quicksand', sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 25px;
     color: #FFFFFF;
     margin-right: 10px;
@@ -1744,6 +1751,9 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     width: 33px;
     height: 33px;
     border-radius: 50px;
+    background: #03396c;
+    object-fit: cover;
+    object-position: center center;
 }
 .notification-elements .notify-bottom-box .status-box .notefy-status {
     font-family: 'Quicksand', sans-serif;
@@ -1789,4 +1799,26 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     display: inline-block;
     margin-top: -4px;
 }
-
+.notification-elements .notify-top-section .td-deadline-box {
+    display: inline-block;
+}
+.notification-elements .notify-top-section .td-deadline-box span {
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    position: relative;
+}
+.notification-elements .notify-top-section .td-deadline-box span div{
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    height: 100%;
+    vertical-align: middle;
+    padding: 0 4px;
+}
+.notification-body {
+    padding: 5px;
+}
