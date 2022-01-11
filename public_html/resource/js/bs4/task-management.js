@@ -926,23 +926,10 @@ const taskManagement = {
                       <div class="row">
                       <div class="col-lg-12 mt-3"> 
                           <div class="d-flex pl-3 pr-3 task-deadline-boxes">
-                            ${this.genTaskDeadLineBlockTime()}
-                            <div class="p-2 ml-4 mt-2">
-                                <div class="d-flex">
-                                    ${this.genTaskDeadLineBlockTask()}
-                                    ${this.genTaskDeadLineBlockEvent()}
-                                </div>
-                                <div class="d-flex cs-input-group">
-                                  <select class="update-selectpicker">
-                                   <option>hello 1</option>
-                                   <option>hello 2</option>
-                                   <option>hello 3</option>
-                                   <option>hello 4</option>
-                                   <option>hello 5</option>
-                                  </select>
-                                </div>
+                          ${this.genTaskDeadLineBlockTime()}
+                          ${this.genTaskDeadLineBlockTask()}
+                          ${this.genTaskDeadLineBlockEvent()}
                             </div>
-                         </div>
                       </div>
                   </div>
                   <div class="row">
@@ -1111,12 +1098,22 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                            <div class="cs-input-group p-0">
+                                <div class="input-group-addon">Label</div>
+                                <select class="run_task_label update-selectpicker" id="run_task_detail_detail_label" data-live-search="true">
+                                    <option value="cat1">Software</option>
+                                    <option value="ca2">Back-end</option>
+                                    <option value="cat3">Front-end</option>
+                                </select>
+                            </div>
+                        </div>
                    </div>
                 </div>
         </div>`
             },
             genTaskDeadLineBlockTask: function () {
-                return ` <div class="p-0">
+                return `       <div class="p-2 mt-2 ml-4">
                 <div class="">
                     <div class="cs-input-group">
                         <div class="input-group-addon">Tapşırıq</div>
@@ -1129,7 +1126,7 @@ const taskManagement = {
             </div> `
             },
             genTaskDeadLineBlockEvent: function () {
-                return ` <div class="p-0">
+                return ` <div class="p-2 mt-2">
                 <div class="">
                     <div class="cs-input-group">
                         <div class="input-group-addon">Toplantı</div>
