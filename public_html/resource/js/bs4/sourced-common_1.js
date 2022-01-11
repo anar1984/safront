@@ -23089,6 +23089,7 @@ Label.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
+                taskManagement.taskLabelList = res
                 try {
                     that.setLabelListTable4Body(res);
                 } catch (e) {
