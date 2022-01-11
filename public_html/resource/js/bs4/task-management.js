@@ -1,6 +1,6 @@
 const taskManagement = {
     "taskLabelList":{},
-    "taskSprintList":"",
+    "taskSprintList":{},
     Init: function (elm) {
         var elm = $(elm);
         elm.html(this.genBlockMain());
