@@ -901,6 +901,7 @@ const taskManagement = {
                 setProjectListByID('bug_filter_project_id_add');
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
 
+
             },
             genModalSelfBlock: function () {
                 return `<div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
@@ -1093,20 +1094,16 @@ const taskManagement = {
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Categories</div>
-                                <select class="run_task_categories update-selectpicker"   id="run_task_detail_detail_categories" data-live-search="true">
-                                    <option value="cat1">Software</option>
-                                    <option value="ca2">Back-end</option>
-                                    <option value="cat3">Front-end</option>
+                                <select class="run_task_categories update-selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
+                                 
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">Label</div>
-                                <select class="run_task_label update-selectpicker" id="run_task_detail_detail_label" data-live-search="true">
-                                    <option value="cat1">Software</option>
-                                    <option value="ca2">Back-end</option>
-                                    <option value="cat3">Front-end</option>
+                                <div class="input-group-addon">Sprint</div>
+                                <select class="run_task_sprint update-selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
+                                
                                 </select>
                             </div>
                         </div>
@@ -1860,6 +1857,8 @@ const taskManagement = {
                 global_var.current_project_id = projectId;
                 new UserStory().refreshBacklog4Bug(true);
             }
+            this.getLabelTask();
+            this.getSprintTask();
 
             getProjectUsers();
             $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
@@ -1902,6 +1901,7 @@ const taskManagement = {
             this.getTaskEvent(taskId);
             getChildTasks();
             getParentTask();
+            
 
         },
         updateEventByTaskId: function (id) {
@@ -2311,6 +2311,31 @@ const taskManagement = {
         },
         getTaskDeadLine: function () {
 
+        },
+        getLabelTask: function () {
+            var  list  = taskManagement.taskLabelList.tbl[0].r;
+            var  elm  = $('#run_task_detail_detail_categories')
+                 elm.empty();
+            for (let i = 0; i < list.length; i++) {
+                const o = list[i];
+                elm.append($("<option>")
+                                .val(o.id)
+                               .text(o.name))
+            }
+            elm.selectpicker("refresh");
+        },
+        getSprintTask: function () {
+            var  list  = taskManagement.taskSprintList.tbl[0].r;
+            var  elm  = $('#run_task_detail_detail_sprint')
+
+                 elm.empty();
+            for (let i = 0; i < list.length; i++) {
+                const o = list[i];
+                elm.append($("<option>")
+                                .val(o.id)
+                               .text(o.sprintName))
+            }
+             elm.selectpicker("refresh");
         },
         getTaskEvent: function (taskId) {
             $('.task-events-updated').attr("data-taskid", '');
