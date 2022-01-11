@@ -3391,7 +3391,7 @@ $(document).on("change", "#activateCreatedEvenets", function (e) {
     }
 });
 
-$(document).on("click", '.sticky-badges, .taskfilter-btn, .notification-btn', function () {
+$(document).on("click", '.sticky-badges, .taskfilter-btn, .notification-btn, .tasklabel-btn, .tasksprint-btn', function () {
     $('body').addClass('open-setting-panel');    
 });
 $(document).on("click", '.close-panel', function () {
@@ -3414,6 +3414,14 @@ $(document).on("mouseenter", '.personal-btn-img', function () {
 $(document).on("click", '.setting-elemen-box .taskfilter-btn', function () {
     $('#main-sidebar-div>div').hide();
     $('#main-sidebar-div .bugList-elements').show();    
+});
+$(document).on("click", '.setting-elemen-box .tasklabel-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .bugLabel-elements').show();    
+});
+$(document).on("click", '.setting-elemen-box .tasksprint-btn', function () {
+    $('#main-sidebar-div>div').hide();
+    $('#main-sidebar-div .bugSprint-elements').show();    
 });
 $(document).on("click", '.setting-elemen-box .sticky-badges', function () {
     $('#main-sidebar-div>div').hide();

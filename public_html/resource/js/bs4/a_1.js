@@ -15631,7 +15631,7 @@ function setProjectListByID(elid) {
                 .val(pid)
                 .text(SACore.Project[pid]))
     }
-    select.selectpicker('refresh')
+    select.selectpicker('refresh');
 }
 
 function getStatisticList(idlist) {
@@ -16391,7 +16391,7 @@ function getBugList4StoryCard(bgId, tbody) {
             for (let i = 0; i < ela.length; i++) {
                 var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
                 var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
-                var tr  = `<tr class="redirectClass" >
+                var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
                 <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
                 <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
                     <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">

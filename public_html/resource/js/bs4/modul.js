@@ -93,3 +93,17 @@ function nav_list_menu_story_card() {
      }
   
 }
+
+$(document).on("click", '#task-list-statistic-4backlog .status-class',function (e) {
+  $(this).toggleClass('active');
+  var items  = $("#task-list-statistic-4backlog .status-class.active");
+      if(items.length <1){
+        $('.cst-table-hover tbody tr.redirectClass').show();
+      }else{
+        $('.cst-table-hover tbody tr.redirectClass').hide();
+        items.each(function () {
+          var dataStatus = $(this).attr('data-status');     
+         $('.cst-table-hover tbody tr.triggger-status-' + dataStatus).show();   
+        })
+      }
+})
