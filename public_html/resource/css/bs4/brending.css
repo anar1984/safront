@@ -4606,12 +4606,12 @@ table.lbl-list-table tr td {
     margin-top: 6px;
 }
 .issue-managment-add-task .cs-input-group .tapshiriq-btn i:after{
-    width: 40.5px;
-    height: 47px;
+    width: 52.5px;
+    height: 67px;
 }
 .issue-managment-add-task .cs-input-group .toplanti-btn i:after {
-    width: 37px;
-    height: 62px;
+    width: 46px;
+    height: 73px;
 }
 .issue-managment-add-task .cs-input-group .tapshiriq-btn i:last-child {
     display: none;
@@ -6902,7 +6902,4 @@ div.cs-task-item-in-box {
     top: 50%;
     margin-top: -7px;
     left: 3px;
-}
-.cst-table-hover tbody tr td {
-    
 }
