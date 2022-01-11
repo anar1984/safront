@@ -1077,6 +1077,8 @@ window.addEventListener("paste", function (e) {
         return;
     }
 
+    console.log(global_var.active_canvas);
+
 
 
 
@@ -1103,22 +1105,27 @@ window.addEventListener("paste", function (e) {
                 var oc = document.createElement('canvas'),
                         octx = oc.getContext('2d');
                 // Update dimensions of the canvas with the dimensions of the image
-                canvas.width = this.width * 4.30;
-                canvas.height = this.height * 4.30;
+                canvas.width = this.width * 2.30;
+                canvas.height = this.height * 2.30;
                 // Draw the image
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                if (global_var.active_canvas === 'taskCreate') {
+                    uploadFile4CanvasZadShey(canvasdiv);
+                }
             };
             // Crossbrowser support for URL
             var URLObj = window.URL || window.webkitURL;
             // Creates a DOMString containing a URL representing the object given in the parameter
             // namely the original Blob
             img.src = URLObj.createObjectURL(imageBlob);
+            console.log('img-src == '+img.src)
             global_var.current_canvas++;
 
 
-            if (global_var.active_canvas === 'taskCreate') {
-                uploadFile4CanvasZadShey(canvasdiv);
-            }
+            // if (global_var.active_canvas === 'taskCreate') {
+            //     uploadFile4CanvasZadShey(canvasdiv);
+            // }
         }
     });
 }, false);

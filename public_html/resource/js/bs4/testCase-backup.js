@@ -1591,7 +1591,7 @@ function getBugListDetails(res) {
                                         .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
 
                                         ))
-                        .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
+                        // .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
                         .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                         )
                 .append($('<td>').addClass('bug-list-column')
