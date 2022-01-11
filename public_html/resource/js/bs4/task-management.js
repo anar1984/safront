@@ -924,10 +924,23 @@ const taskManagement = {
                       <div class="row">
                       <div class="col-lg-12 mt-3"> 
                           <div class="d-flex pl-3 pr-3 task-deadline-boxes">
-                          ${this.genTaskDeadLineBlockTime()}
-                          ${this.genTaskDeadLineBlockTask()}
-                          ${this.genTaskDeadLineBlockEvent()}
+                            ${this.genTaskDeadLineBlockTime()}
+                            <div class="p-2 ml-4 mt-2">
+                                <div class="d-flex">
+                                    ${this.genTaskDeadLineBlockTask()}
+                                    ${this.genTaskDeadLineBlockEvent()}
+                                </div>
+                                <div class="d-flex cs-input-group">
+                                  <select class="update-selectpicker">
+                                   <option>hello 1</option>
+                                   <option>hello 2</option>
+                                   <option>hello 3</option>
+                                   <option>hello 4</option>
+                                   <option>hello 5</option>
+                                  </select>
+                                </div>
                             </div>
+                         </div>
                       </div>
                   </div>
                   <div class="row">
@@ -1102,7 +1115,7 @@ const taskManagement = {
         </div>`
             },
             genTaskDeadLineBlockTask: function () {
-                return `       <div class="p-2 mt-2 ml-4">
+                return ` <div class="p-0">
                 <div class="">
                     <div class="cs-input-group">
                         <div class="input-group-addon">Tapşırıq</div>
@@ -1115,7 +1128,7 @@ const taskManagement = {
             </div> `
             },
             genTaskDeadLineBlockEvent: function () {
-                return ` <div class="p-2 mt-2">
+                return ` <div class="p-0">
                 <div class="">
                     <div class="cs-input-group">
                         <div class="input-group-addon">Toplantı</div>
