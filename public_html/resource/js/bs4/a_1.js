@@ -15629,7 +15629,7 @@ function setProjectListByID(elid) {
                 .val(pid)
                 .text(SACore.Project[pid]))
     }
-    select.selectpicker('refresh')
+    select.selectpicker('refresh');
 }
 
 function getStatisticList(idlist) {
