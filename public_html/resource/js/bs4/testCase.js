@@ -734,9 +734,7 @@ function getBugFilterProjectList4Sprint() {
 function setBugFilterProject() {
     var select = $('#bug_filter_project_id');
     var keys = Object.keys(SACore.Project);
-    select.append($("<option>")
-            .val("")
-            .text("All Projects"))
+  
     for (var id in keys) {
         var pid = keys[id];
         select.append($("<option>")
@@ -2257,10 +2255,10 @@ function toggleColumns() {
 
 function getProjectListIn() {
     var id = $('#bug_filter_project_id').val();
-    var st = id;
-    //    for (var i in id) {
-    //        st += id[i] + "%IN%"
-    //    }
+    var st = '';
+        for (var i in id) {
+         st += id[i] + "%IN%"
+        }
     return st;
 }
 

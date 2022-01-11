@@ -23089,6 +23089,7 @@ Label.prototype = {
             crossDomain: true,
             async: false,
             success: function (res) {
+                taskManagement.taskLabelList = res
                 try {
                     that.setLabelListTable4Body(res);
                 } catch (e) {
@@ -23694,6 +23695,7 @@ Sprint.prototype = {
             success: function (res) {
 //                sprintTaskIds = res.kv.sprintTaskIds;
 //                console.log(JSON.stringify(res));
+                  taskManagement.taskSprintList = res
                 try {
                     var tbl = that.getSprintListTableBody4Task(res, true, checkedLines);
                     $('#sprintlist4Task').html(tbl);
