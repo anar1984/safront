@@ -708,7 +708,7 @@ const taskManagement = {
             data.startTime = $('#taskDeadlineStartTime').val();
             data.endTime = $('#taskDeadlineEndTime').val();
             data.endDate = $('#taskDeadlineEndDade').val();
-            data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "1" : "0";
+            data.isMeet = ($("#tapshiriq-btn").hasClass("active")) ? "0" : "1";
             data.fkParentTaskId = $("#parent-task-id-input").val();
 
 
@@ -827,7 +827,7 @@ const taskManagement = {
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
 
-                itmList += $(o).find('.item-note').text() + '|';
+                itmList += $(o).find('.textarea').val() + '|';
             }
 
             this.insertCheckListComulativCore(itmList, taskId)
@@ -979,8 +979,7 @@ const taskManagement = {
                                             Child Task</a>
                                         <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward
                                             To</a>
-                                        <a class="dropdown-item assign-task" href="#" onclick="assignTaskToOthers()">Assign
-                                            To</a>
+                                    
                                         <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
                                         <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
                                         <a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>
@@ -1233,15 +1232,11 @@ const taskManagement = {
                                             <option value='ongoing'> <span
                                                 class="us-item-status-ongoing comment-content-header-status"
                                                 id="">Ongoing</span></option>
-                                            <option value='closed'><span
-                                                class="us-item-status-closed comment-content-header-status"
-                                                id="">Closed</span></option>
+                                          
                                             <option value='waiting'><span
                                                 class="us-item-status-waiting comment-content-header-status"
                                                 id="">Waiting</span></option>
-                                            <option value='canceled'><span
-                                                class="us-item-status-canceled comment-content-header-status"
-                                                id="">Canceled</span></option>
+                                            
                                             <option value='rejected'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">Rejected</span></option>
@@ -2573,21 +2568,19 @@ const taskManagement = {
                     <div class="input-group-addon cs-group-by">Group By</div>
                     <select id="inputGroupSelect01">
                         <option value='0' >None</option>
-                        <option value='4' >Task Nature</option>
-                        <option value='5' >Assignee</option>
-                        <option value='6' >Task Type</option>
-                        <option value='7'>Priority</option>
-                        <option value='8' >Story Card</option>
-                        <option value='9' >Project</option>
-                        <option value='10' >Create By</option>
-                        <option value='11' >Create Date</option>
-                        <option value='12'>Last Update</option>
+                        <option value='5' >Task Status</option>
+                        <option value='7' >Task Nature</option>
+                        <option value='8' >Task Type</option>
+                        <option value='9' >Story Card</option>
+                        <option value='10' >Project</option>
+                        <option value='12' >Create By</option>
+                        <option value='11' >Assignee</option>
             
                     </select>
                 </div>
                 <div class="cs-input-group mt-3">
-                    <select class="form-control  bug-filter bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
-                    style="text-overflow: ellipsis" onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
+                    <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
+                    style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
                     data-type="project_id" title="Project"></select>
                 </div>
                 <div class="cs-input-group mt-3">
@@ -3068,15 +3061,43 @@ const taskManagement = {
                     var goupBy = $('#inputGroupSelect01').val();
                     var items;
                     var type = "";
-                    if (goupBy === "0") {
+                    if (goupBy === "5"||goupBy === "0") {
                         items = $("select#bug_filter_status option");
                         type = "taskStatus"
                     }
-                    if (goupBy === "4") {
+                    if (goupBy === "7") {
                         items = $("select#bug_filter_nature option");
                         type = "taskNature"
                     }
-                    if (goupBy === "5") {
+                    if (goupBy === "9") {
+                        items = $("select#bug_filter_backlog_id");
+                        type = "fkBacklogId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "10") {
+                        items = $("select#bug_filter_project_id");
+                        type = "fkProjectId";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "11") {
                         items = $("select#bug_filter_assignee_id");
                         type = "fkAssigneeId";
                         $(elm).empty();
@@ -3090,9 +3111,33 @@ const taskManagement = {
 
                        return
                     }
-                    if (goupBy === "6") {
-                        items = $("select#bug_filter_tasktype option");
+                    if (goupBy === "12") {
+                        items = $("select#bug_filter_created_by");
+                        type = "createdBy";
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
+                    }
+                    if (goupBy === "8") {
+                        items = $("select#bug_filter_tasktype");
                         type = "fkTaskTypeId"
+                        $(elm).empty();
+                        var arr  = items.val();                        
+                      for (let index = 0; index < arr.length; index++) {
+                          const al = arr[index];
+                             var nm =items.find('[value='+al+']').text();
+                          $(elm).append(this.genZonaBlock(nm, al));
+                          this.getTaskList4Kanban(data, type, al);
+                       }
+
+                       return
                     }
                     /*  if(goupBy===0){
                           items  = $("select#bug_filter_status>option");  
@@ -3126,10 +3171,7 @@ const taskManagement = {
                             coreBugList = res;
                             setKV4CoreBugList();
                             that.getKanbanBodyBlock(res, type, st, '1');
-                            //   toggleColumns();
-                            //  setPagination(res.kv.tableCount, res.kv.limit);
-                            getGroupList();
-
+                          
                         },
                         error: function () {
                             Toaster.showError(('somethingww'));
@@ -3174,9 +3216,7 @@ const taskManagement = {
                             coreBugList = res;
                             setKV4CoreBugList();
                             that.getKanbanBodyBlock(res, type, st,pageNo );
-                            //   toggleColumns();
-                            //  setPagination(res.kv.tableCount, res.kv.limit);
-                            getGroupList();
+                            
 
                         },
                         error: function () {
@@ -3242,6 +3282,7 @@ const taskManagement = {
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
                     <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th class="bug-list-column bug-list-column-tasktype" style="width: 40px;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
@@ -3375,6 +3416,15 @@ const taskManagement = {
                                         .append(o.taskNature == 'bug' ? '<i class="fas fa-bug" style="color: red;"></i>' : "")
                                         .append(o.taskNature == 'change' ? '<i class="fas fa-edit" style="color: #FF7F50;"></i>' : "")
                                         .append(o.taskNature == 'new' ? '<i class="fas fa-file-alt"></i>' : "")
+        
+                                    )))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-tasktype')
+                                .append($("<div>")
+                                    .addClass(" ")
+                                    .append($("<div>")
+                                        .attr("id", "bug-taskNature-dropdown")
+                                        .append(o.taskTypeName)
                                     )))
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
@@ -3809,15 +3859,24 @@ $(document).on("change", '#newAddCheckList', function (e) {
 
     $(this).parent().find('ul').prepend(`<li class="d-flex">
     <div class="item-checkbox">
-        <label class="checkmarkcontainer">
-            <input type="checkbox" class="noteCheckListItem" value="0">
-            <span class="checkmark"></span>
-        </label>
+    <label class="checkmarkcontainer">
+    <input class="taskCheckListItemToggle noteCheckListItem" oid="22011021582408303160" type="checkbox">
+    <span class="checkmark">
+    </span></label>
     </div>
-    <div class="item-note">${$(this).val()}</div>
-</li>`)
+    <div class="mr-auto w-100">
+    <textarea rows="1" class="form-control " oid="">${$(this).val()}</textarea></div>
+    <div class="pl-1 p2-1"></div>
+    <div class="pl-1 p2-1">
+    </div>
+    <div class="pl-1 p2-1 d-table">
+    <a href="#" oid="" class="taskCheckListItemDeletecreate"><i class="fas fa-trash-alt text-danger" aria-hidden="true"></i></a></div></li>`)
     $(this).val('')
 
+})
+
+$(document).on('click', '.taskCheckListItemDeletecreate', function (event) {
+     $(this).closest('li').remove();
 })
 $(document).on('click', '.add-task-us-card-managmenet', function (event) {
     taskManagement.insertTask.genBlockModal.Init()
@@ -4125,11 +4184,12 @@ $(document).on("click", '#toplanti-d-btn', function () {
 
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('subtask-light').addClass('hammer');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Decisions');
+    updateTask4ShortChangeDetails('1', "isMeet");
 });
 
 $(document).on("click", '#tapshiriq-d-btn', function () {
     $(this).addClass('active');
-
+   
     $(this).closest('.modal-body').find('.toplanti-btn').removeClass('active');
 
     $(this).closest('.modal-body').find('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
@@ -4137,7 +4197,7 @@ $(document).on("click", '#tapshiriq-d-btn', function () {
 
     $(this).closest('.modal-body').find('.loadUserForSubtask i.cs-svg-icon').removeClass('hammer').addClass('subtask-light');
     $(this).closest('.modal-body').find('.loadUserForSubtask span').text('').text('Subtask');
-
+    updateTask4ShortChangeDetails('0', "isMeet");
 });
 
 $(document).on('click', '#updateTask-priority-btn', function () {
