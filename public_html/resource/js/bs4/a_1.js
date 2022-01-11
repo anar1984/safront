@@ -15427,18 +15427,22 @@ function loadUsersAsOwner() {
     data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
     Unassigned</option>`);
     $('#story-card-owner-list').append(div1);
+    var fkOwnerId = SACore.GetBacklogDetails(global_var.current_backlog_id, "fkOwnerId");
     for (var i = 0; i < keys.length; i++) {
         var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
         var userName = SAProjectUser.GetDetails(keys[i], "userName");
+        var id = SAProjectUser.GetDetails(keys[i], "fkUserId");
         var img = (userImage) ?
                 fileUrl(userImage) :
                 fileUrl(new User().getDefaultUserprofileName());
-        var div = $(`<option
+        var div = $(`<option value='${id}'
         data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
-        Unassigned</option>`);
+        ${userName}</option>`);
         $('#story-card-owner-list').append(div)
     }
-    $('#story-card-owner-list').selectpicker('refresh')
+
+    $('#story-card-owner-list').val(fkOwnerId)
+    $('#story-card-owner-list').selectpicker('refresh');
 }
 //$(document).on('click', '.dropdownMenuButtonCss', function (evt) {
 //   

@@ -7,6 +7,7 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        genTimePickerById("issue_management_closed_date_from",'');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genLabelBlock());
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genSprintBlock());
         var dwlmt = $('#bug_filter_tasktype')
@@ -2447,7 +2448,8 @@ const taskManagement = {
 
                     div.append(this.genTableView.genTableBlock());
                 }
-                genTimePickerById("issue-list-datetime");
+                genTimePickerById("issue-list-datetime",'up');
+                             
 
             },
             genHeader: function () {
@@ -2551,13 +2553,23 @@ const taskManagement = {
                 <div class="main-sorting">
                     <div class="row ml-0 mr-0">
                         <div class="cs-input-group cs-pagination-limit col-6">
-                            <div class="input-group-addon">Closed Dates From</div>
-                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='date'>
+                            <div class="input-group-addon">Closed Dates</div>
+                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='text'>
                         </div>
-                        <div class="cs-input-group cs-pagination-limit col-6">
-                            <div class="input-group-addon">Closed Dates To</div>
-                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-to" id ='issue_management_closed_date_to' type='date'>           
-                        </div>
+                        <div class="cs-input-group cs-pagination-group-by ">
+                    <div class="input-group-addon cs-group-by">Group By</div>
+                    <select id="inputGroupSelect01">
+                        <option value='0' >None</option>
+                        <option value='5' >Task Status</option>
+                        <option value='7' >Task Nature</option>
+                        <option value='8' >Task Type</option>
+                        <option value='9' >Story Card</option>
+                        <option value='10' >Project</option>
+                        <option value='12' >Create By</option>
+                        <option value='11' >Assignee</option>
+            
+                    </select>
+                </div>
                     </div>
                     <div class="row ml-0 mr-0">
                         <div class="cs-input-group col-12 mt-2">
@@ -2602,20 +2614,7 @@ const taskManagement = {
                         </div>
                     </div>
                 </div>
-                <div class="cs-input-group cs-pagination-group-by mt-2">
-                    <div class="input-group-addon cs-group-by">Group By</div>
-                    <select id="inputGroupSelect01">
-                        <option value='0' >None</option>
-                        <option value='5' >Task Status</option>
-                        <option value='7' >Task Nature</option>
-                        <option value='8' >Task Type</option>
-                        <option value='9' >Story Card</option>
-                        <option value='10' >Project</option>
-                        <option value='12' >Create By</option>
-                        <option value='11' >Assignee</option>
-            
-                    </select>
-                </div>
+              
                 <div class="cs-input-group mt-3">
                     <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
                     style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
@@ -4217,6 +4216,19 @@ $(document).on("click", '#tapshiriq-btn', function () {
     $(this).closest('.task-deadline-boxes').find('.toplanti-btn').removeClass('active');
     $('.loadUserForObserver i.cs-svg-icon').removeClass('participant').addClass('observer');
     $('.loadUserForObserver span').text('').text('Observer');
+
+});
+$(document).on("change", '#run_task_detail_detail_sprint', function () {
+
+    var id  = global_var.current_issue_id;
+    var backlogId  = coreBugKV[id].fkBacklogId;
+    var projectId  = coreBugKV[id].fkProjectId;
+    var sprintId  = $(this).val();
+     for (let i = 0; i < sprintId.length; i++) {
+         const o = sprintId[i];
+         sprintZadininSheyeidlmesi(id, projectId, backlogId, o, '1');
+     }
+
 
 });
 

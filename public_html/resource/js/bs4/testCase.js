@@ -872,6 +872,23 @@ function setBugFilterCreatedDateValues() {
    
     
 }
+function setBugFilterClosedDatesValues() {
+    try {
+        var val  = $("#issue_management_closed_date_from").val();
+        val = val.split('-')
+        var dt = val[0].split('/');
+        var dt1 = val[1].split('/');
+        stTime = dt[2].trim() + dt[0].trim() + dt[1].trim();
+        endTime = dt1[2].trim() + dt1[0].trim() + dt1[1].trim();
+               
+    bug_filter.closed_date_from = stTime.trim();
+    bug_filter.closed_date_to = endTime.trim();
+    } catch (error) {
+        
+    }
+   
+    
+}
 
 function setBugFilterSprintValues() {
     var st = ' ';
@@ -1132,11 +1149,10 @@ function setBugListInitialData() {
     setBugFilterSprintValues();
     setBugFilterLabelValues();
     setBugFilterCreatedDateValues()
+    setBugFilterClosedDatesValues()
 
     bug_filter.sortBy = $('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
-    bug_filter.closed_date_from = GetConvertedDate('issue_management_closed_date_from');
-    bug_filter.closed_date_to = GetConvertedDate('issue_management_closed_date_to');
 
 }
 

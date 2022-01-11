@@ -40,7 +40,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     });
     return pageId;
 }
-function genTimePickerById(id) {
+function genTimePickerById(id,drop) {
   $('#' + id).daterangepicker({
       showDropdowns: true,
       showWeekNumbers: true,
@@ -63,7 +63,7 @@ function genTimePickerById(id) {
       applyClass: 'btn-small btn-primary',
       cancelClass: 'btn-small btn-cancel-value-clear',
       separator: ' to ',
-      drops:"up",
+      drops:drop,
       locale: {
 
           applyLabel: 'Search',

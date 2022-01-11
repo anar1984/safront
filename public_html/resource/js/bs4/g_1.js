@@ -2163,7 +2163,7 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
     event.preventDefault();
 
 });
-$(document).on('click', '#part-nav-menu-id4UserStory ul li >*', function (event) {
+$(document).on('click', '#part-nav-menu-id4UserStory ul li >a', function (event) {
   
     $(".toggle-btn[data-link="+$(this).attr("data-link")+"]").click();
   //   $('.toggle-box-'+$(this).attr("data-link")).toggleClass('open');
