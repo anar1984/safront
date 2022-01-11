@@ -3951,6 +3951,8 @@ function uploadFile4Ipo(id) {
 
 function uploadFile4CanvasZadShey(id) {
 
+    //img.src = URLObj.createObjectURL(imageBlob);
+
     var binaryString = document.getElementById(id).toDataURL("image/png;base64");
     binaryString = binaryString.replace(/data:image\/png;base64,/, '');
      var fname = new UserStory().uploadFile4NewTicket("png", binaryString, id);
