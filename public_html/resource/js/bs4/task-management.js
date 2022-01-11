@@ -3565,7 +3565,7 @@ const taskManagement = {
                         </div>
                         <div class="setting-elemen-box">
                             <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
-                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Spring"></i>
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Sprint"></i>
                                 <div class="dropdown-menu drop-label-menu sprint-show-4-task">
                                     <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
                                     </span>
