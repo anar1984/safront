@@ -227,12 +227,11 @@ const taskManagement = {
                           <input type="checkbox" id="sendnotification">
                           <span class="checkmark"></span>
                       </label>
-                      <label class="">
-                      <input type="checkbox" checked='true' id="after_insert_modal">
-                      After insert closed Modal
-                      
-                
-                  </label>
+
+                      <label class="checkmarkcontainer"> After insert closed Modal
+                            <input type="checkbox" checked='true' id="after_insert_modal">
+                            <span class="checkmark"></span>
+                      </label>
                   </div>
               </div>
           </div>`
@@ -990,7 +989,7 @@ const taskManagement = {
         
                         </div>
                     </div>
-                    <div class="p-0">
+                    <div class="p-0" style="margin-top: 3px;">
                         <div  id="updateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
                              <i class="cs-svg-icon flame"></i>
                         </div>
@@ -3374,10 +3373,16 @@ const taskManagement = {
                                             .append(o.taskStatus))
                                         .append((o.taskPriority === '9') ? prtDiv : ""))
                                 ))
-                            .append($('<td>')
+                           .append($('<td>')
                                 .addClass('bug-list-column')
+                                .attr("data-placement","bottom")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",taskName)
                                 .addClass('bug-list-column-task-name')
                                 .css("max-width", '240px')
+                                .append((o.fkParentTaskId) ? "<i class='fa fa-level-up bug-list-column-task-name-icon'>" : "")
+                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
                                 .append(taskName, ' ')
                                 .append("<input type='text' class=' task-name-issue select-box-issue'>")
                                 .append($("<div>")
@@ -3404,8 +3409,7 @@ const taskManagement = {
                                         .append('<a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>')
 
                                     ))
-                                .append((o.fkParentTaskId) ? "<i class='fa fa-level-up '>" : "")
-                                .attr('title', (o.fkParentTaskId) ? "Has Parent Task" : "")
+                                
                             )
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-task-nature')
