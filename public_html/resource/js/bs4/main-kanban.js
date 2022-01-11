@@ -244,8 +244,18 @@ function callStoryCard4Api(id, elId, backlogName) {
 
 function callStoryCard(id, elId, backlogName) {
 
+       var isApi = SACore.GetBacklogDetails(id,'isApi');
+        if(isApi ==="1"){
+            callApiCard(id, elId, backlogName);
+        }
+        else {
+            calStroyCardNew(id, elId, backlogName);
+        }
 
+   
+}
 
+function calStroyCardNew(id, elId, backlogName) {
     var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
 
@@ -259,14 +269,54 @@ function callStoryCard(id, elId, backlogName) {
         loadBacklogDetailsByIdIfNotExist(id);
         var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
         global_var.current_project_id = fkProjectId;
-        $("#UserStoryPopupModal-Toggle").remove();
-        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
         resetAllEditStoryCard();
         var storyCard = $("<div>").append(html_string);
-        $(storyCard).find('#taskMgmtModal').attr("id",'UserStoryPopupModal-Toggle')
+        $(storyCard).find('#storyCardModalNew').attr("id",'UserStoryPopupModal-Toggle-new')
                                            .removeAttr("style")
         $("body").append(storyCard);
-       $('#UserStoryPopupModal-Toggle').modal('show');
+       $('#UserStoryPopupModal-Toggle-new').modal('show');
+        loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
+        $('select.projectList_liveprototype_storycard').val(fkProjectId)
+
+        global_var.current_backlog_id = id;
+        $('#storycard-panel-backlog-id').val(id);
+        var backlogName = SACore.GetCurrentBacklogname();
+        $('#storyCardListSelectBox4StoryCard')
+                .append($('<option>').text(backlogName))
+                .append($('<option>')
+                        .val('-2')
+                        .text("Load All Story Cards"));
+        $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
+
+
+        fillBacklogHistory4View(id, "0");
+        new UserStory().toggleSubmenuStoryCard();
+//        loadStoryCardBodyInfo();
+
+        loadUsersAsOwner();
+        setStoryCardOwner();
+        setStoryCardCreatedBy();
+    }); 
+}
+function callApiCard(id, elId, backlogName) {
+   
+
+    var divId = (elId) ? elId : "body_of_nature";
+    $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
+
+    $.get("resource/child/dev.html", function (html_string)
+    {
+        if (!id || id === '-1') {
+            return;
+        }
+
+
+        loadBacklogDetailsByIdIfNotExist(id);
+        var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+        global_var.current_project_id = fkProjectId;
+
+        $("#UserStoryPopupModal-Toggle-modal").html(html_string);
+        $("#UserStoryPopupModal-Toggle").modal('show');
         loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
         $('select.projectList_liveprototype_storycard').val(fkProjectId)
 
@@ -288,10 +338,9 @@ function callStoryCard(id, elId, backlogName) {
 
         loadUsersAsOwner();
         setStoryCardOwner();
-        setStoryCardCreatedBy();
+        setStoryCardCreatedBy(); 
     });
 }
-
 function loadStoryCardBodyInfo() {
     try {
         //load general info
