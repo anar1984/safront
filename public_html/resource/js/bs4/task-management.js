@@ -7,6 +7,8 @@ const taskManagement = {
         this.readTask.genBlockTask.Init($('.main-section'));
         $("#main-sidebar-div").html('');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genFilterBlock());
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genLabelBlock());
+        $("#main-sidebar-div").append(this.readTask.genBlockTask.genSprintBlock());
         var dwlmt = $('#bug_filter_tasktype')
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
@@ -2709,6 +2711,25 @@ const taskManagement = {
             </div>
                 `
             },
+            genLabelBlock:function (param) {  
+                return`<div class="bugLabel-elements label-show-4-task" style="min-width: 475px;">
+                <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
+                <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
+                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                    <div class="dropdown-divider" style="padding:0px;"></div>
+                <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
+            </div>`
+            },
+            genSprintBlock:function (param) {  
+                return`<div class="bugSprint-elements sprint-show-4-task">
+                <span><a class="btn" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
+                </span>
+                <span class="newlabelspan" style="cursor: pointer;"
+                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
+                <div class="dropdown-divider" style="padding:0px;"></div>
+                <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
+            </div>`
+            },
             genNotificationBlock: function () {
                 return `<div class="notifcation-block">
                 <div class="notification-header mb-4">
@@ -3387,7 +3408,7 @@ const taskManagement = {
                                 ))
                            .append($('<td>')
                                 .addClass('bug-list-column')
-                                .attr("data-placement","bottom")
+                                .attr("data-placement","top")
                                 .attr("data-toggle","popover")
                                 .attr("data-trigger","hover")
                                 .attr("data-content",taskName)
@@ -3602,45 +3623,28 @@ const taskManagement = {
                             </div>
                         </div>
                         <div class="setting-elemen-box">
-                            <div class="dropdown">
-                                <div class="standart-badges dropdown-toggle1" data-toggle="dropdown">
-                                    <i class="fas fa-tag" style="color:#fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label"></i>
-                                </div>
-                                <div class="dropdown-menu drop-label-menu label-show-4-task" style="min-width: 475px;">
-                                    <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
-                                    <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
-                                        onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                                        <div class="dropdown-divider" style="padding:0px;"></div>
-                                    <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
-                                </div>
+                            <div class="standart-badges tasklabel-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label">
+                                <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
-                            <div class="dropdown task-sprint-show dropdown-toggle1" data-toggle="dropdown">
-                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Sprint"></i>
-                                <div class="dropdown-menu drop-label-menu sprint-show-4-task">
-                                    <span><a class="dropdown-item" data-toggle="modal" href="#" data-target="#insertNewSprint4Task" style="padding:0px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;"> New Sprint</a>
-                                    </span>
-                                    <span class="newlabelspan" style="cursor: pointer;"
-                                        onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                                    <div class="dropdown-divider" style="padding:0px;"></div>
-                                    <div id="sprintlist4Task" class="sprintlist4Task" style='height: 250px;overflow-y: auto; overflow-x: hidden;'></div>
-                                </div>
+                            <div class="standart-badges tasksprint-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Sprint">
+                                <i class="fas fa-running" style=" color: #fff; font-size: 21px;"></i>
                             </div>
     
                         </div>
-                        <div class="setting-elemen-box">
+                        <!--<div class="setting-elemen-box">
                             <div class="sticky-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Notes">
                                 <i class="cs-svg-icon sticky-notes"></i>
                             </div>
-                        </div>       
+                        </div>-->       
                         <hr class="rcs-hr">
-                        <div class="setting-elemen-box">
+                        <!-- <div class="setting-elemen-box">
                             <div class="calendar-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Calendar">
                                 <span class="calendar-info">19</span>
                                 <i class="cs-svg-icon calendar-02"></i>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="setting-elemen-box issue-view-change-button" view-type='table' >
                             <div class="standart-badges" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Row Style">
                                 <i class="cs-svg-icon cs-row-style"></i>

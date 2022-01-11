@@ -4371,9 +4371,8 @@ margin-left: 11px;
     vertical-align: middle;
     box-shadow: none;
 }
-.cs-core-issue-management table tr.active {
-    background: #dadbff!important;
-    color: white;
+.cs-core-issue-management table tr.active, .cs-core-issue-management table tr.active td {
+    background: #ACCDDE!important;
 }
 .bug-list-column-story-card button {
     color: #ffffff !important;
