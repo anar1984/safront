@@ -499,7 +499,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 @media(min-width: 1600px) {
 
 }
-@media(max-width: 1440px) {
+@media(max-width: 1365px) {
     .right-section {
         margin-right: -515px;
     }
