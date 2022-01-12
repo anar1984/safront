@@ -273,8 +273,9 @@ function calStroyCardNew(id, elId, backlogName) {
         var storyCard = $("<div>").append(html_string);
         $(storyCard).find('#storyCardModalNew').attr("id",'UserStoryPopupModal-Toggle-new')
                                            .removeAttr("style")
-        $("body").append(storyCard);
+        $("body").prepend(storyCard);
        $('#UserStoryPopupModal-Toggle-new').modal('show');
+       $('#UserStoryPopupModal-Toggle-modal').empty();
         loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
         $('select.projectList_liveprototype_storycard').val(fkProjectId)
 

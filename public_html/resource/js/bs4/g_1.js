@@ -1728,7 +1728,6 @@ $(document).on('change', '#project_list_for_copy', function (event) {
 
 });
 $(document).on('change', '.label-assign-link-class', function (event) {
-
       if($(this).prop("checked")){
           $(this).closest("li").addClass('rt-label-checking')
       }else{

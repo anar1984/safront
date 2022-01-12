@@ -1,4 +1,4 @@
-const taskList = {
+const lang_task = {
   topBar: {
     taskSelector: {
       Personal: 'Personal',
@@ -20,7 +20,7 @@ const taskList = {
       compleated: 'Done',
     },
     tableTypeSelector: {
-      active: 'Activv',
+      active: 'Active',
       passive: 'Passive',
       all: 'All',
     },
@@ -59,7 +59,7 @@ const taskList = {
     selectAll: 'Select all',
     deSelectAll: 'Deselect all',
     project: 'Project',
-    storyCart: 'Story cart',
+    storyCart: 'Story card',
     assignee: 'Assignee',
     closedBy: 'Closed by',
     taskType: 'Task type',
@@ -114,6 +114,7 @@ const taskList = {
   },
   windowAddTask: {
     addTask: 'Add new task',
+    taskName: 'e.g., Renew gym every May 1st #Sport',
     priorityStandart: 'Standart',
     priorityHigh: 'Urgent',
     quickInsertTaskOnfocusInput: 'Quick insert task onfocus input SHIFT+ENTER',
@@ -121,7 +122,7 @@ const taskList = {
     copyPasteImg: 'Copy and Paste Image Here',
     attachFile: 'Attach file',
     startDate: 'Start date',
-    endDate: 'End tarixi',
+    endDate: 'End date',
     task: 'Task',
     meeting: 'Meeting',
     responsible: 'Responsible',
@@ -135,6 +136,10 @@ const taskList = {
     runTime: 'Run time',
     intensive: 'intensive',
     weekly: 'Weekly',
+    weekDay: 'WeekDay',
+    weeklyAction: 'Weekly action',
+    monthly: 'Monthly',
+    yearly: 'Yearly',
     selectReminder: 'Select reminder',
     observerName: 'Observer name',
     addObserver: 'Add observer',
@@ -152,6 +157,10 @@ const taskList = {
     closeAfterInsert: 'After insert closed Modal',
     add: 'Add',
     close: 'Close',
+    addTaskMessageSucc: 'Tapşırıq uğurla daxil edilmişdir',
+    addTaskMessageErr: 'Tapşırıq daxil edilmədi',
+    errorMessageTask: 'Məzmun daxil edilməmişdir.',
+    eventMessageAdd: 'Events successfully created!',
   },
   windowUpdateTask: {
     description: 'Description',
@@ -178,5 +187,11 @@ const taskList = {
     taskStatus: 'Task status',
     parentTask: 'Parent task',
     childTask: 'Child task',
+    ForwardTaskTo: 'Forward To',
+    Duplicate: 'Duplicate',
+    rejectTask: 'Reject Task',
+    Delete: 'Delete ',
+    subtask: 'Sub task ',
+    comment:"Comment"
   },
 };

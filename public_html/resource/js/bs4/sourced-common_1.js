@@ -23227,7 +23227,7 @@ Label.prototype = {
                 var cl  =  obj[n].color;
 
             var tr = $('<li class="">');
-            tr.append($('<label class="label-assign-link-class">')
+            tr.append($('<label class="">')
                          .attr('id', obj[n].id)
                          .attr('for','label-'+obj[n].id)
                      .append(`<span style='color:${cl==='#000000'?"#fff":cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
