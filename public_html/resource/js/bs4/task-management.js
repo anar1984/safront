@@ -36,7 +36,6 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text">Add Task</span>
                           </h6>
-                          <button id="addModalBugIssueTaskMng" bid='21121313200609883521' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
                           </button>
@@ -913,7 +912,6 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text card-UserStory-header-text-code">Add Task</span>
                           </h6>
-                          <button id="addModalBugIssueTaskMng" bid='21121313201600758588' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
 
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
@@ -1251,6 +1249,9 @@ const taskManagement = {
                                             <option value='rejected'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">Rejected</span></option>
+                                            <option value='canceled'><span
+                                                class="us-item-status-rejected comment-content-header-status"
+                                                id="">Canceled</span></option>
                                             <option value='UAT'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">UAT</span></option>
@@ -2314,28 +2315,39 @@ const taskManagement = {
 
         },
         getLabelTask: function () {
-            var  list  = taskManagement.taskLabelList.tbl[0].r;
             var  elm  = $('#run_task_detail_detail_categories')
-                 elm.empty();
+            elm.empty();
+            try {
+                var  list  = taskManagement.taskLabelList.tbl[0].r;
+           
             for (let i = 0; i < list.length; i++) {
                 const o = list[i];
                 elm.append($("<option>")
                                 .val(o.id)
                                .text(o.name))
             }
+            } catch (error) {
+                
+            }
+            
             elm.selectpicker("refresh");
         },
         getSprintTask: function () {
-            var  list  = taskManagement.taskSprintList.tbl[0].r;
             var  elm  = $('#run_task_detail_detail_sprint')
+            elm.empty();
+             try {
+                var  list  = taskManagement.taskSprintList.tbl[0].r;
 
-                 elm.empty();
-            for (let i = 0; i < list.length; i++) {
-                const o = list[i];
-                elm.append($("<option>")
-                                .val(o.id)
-                               .text(o.sprintName))
-            }
+                for (let i = 0; i < list.length; i++) {
+                    const o = list[i];
+                    elm.append($("<option>")
+                                    .val(o.id)
+                                   .text(o.sprintName))
+                }
+             } catch (error) {
+                 
+             }
+             
              elm.selectpicker("refresh");
         },
         getTaskEvent: function (taskId) {
@@ -2736,13 +2748,23 @@ const taskManagement = {
                 `
             },
             genLabelBlock:function (param) {  
-                return`<div class="bugLabel-elements label-show-4-task" style="min-width: 475px;">
-                <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
-                <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
-                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                    <div class="dropdown-divider" style="padding:0px;"></div>
-                <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
-            </div>`
+                return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
+                                        <div class="category-case-box text-left">
+                                            <span class="first-icon"><i class="cs-svg-icon label"></i></span> Cheweek <span class="last-icon">8</span>
+                                        </div>
+                                        <div class="category-item-boxes text-left">
+                                            <div href="#" class="category-show-hide d-flex">
+                                                <div class="category">
+                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kategoriyalar
+                                                </div>
+                                                <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+                                            <ul id="tasklabellist4Task" >
+                    
+                                            </ul>
+                                        </div>
+                                    </div>
+            `
             },
             genSprintBlock:function (param) {  
                 return`<div class="bugSprint-elements sprint-show-4-task">
@@ -2884,7 +2906,11 @@ const taskManagement = {
               
             },
             genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+                if(!notType){
+                    return
+                }
                 try {
+
                     var title  = (isMeet==='1')?"Meet":"Task"
                     try {
                         var projectCode = SACore.GetProjectCore(projectId).projectCode;
@@ -2902,10 +2928,10 @@ const taskManagement = {
                       if(notType==='new'){
                           body = "New Task Added ("+newValue+")"
                       }
-                      else if (notType==='taskStatus'){
+                      else if (notType==='status'){
                         body = "Status Changed From ("+oldValue+") To ("+newValue+")"
                       }
-                      else if (notType==='assigne'){
+                      else if (notType==='assignee'){
                         body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
                       }
                       else if (notType==='comment'){
@@ -3824,6 +3850,24 @@ const taskManagement = {
                 Toaster.showError(('somethingww'));
             }
         });
+    }
+}
+
+function getTaskCode(taskId) {
+    try {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        var projectId = SATask.GetDetails(taskId, 'fkProjectId');
+        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+        projectCode = projectCode.toUpperCase();
+
+        var taskId = (orderSeq)
+                ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
+        taskId = "<b>" + taskId + "</b>";
+        return taskId;
+    } catch (err) {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        taskId = "<b>" + "PRVT-"+orderSeq + "</b>";
+        return taskId;
     }
 }
 
