@@ -2748,13 +2748,23 @@ const taskManagement = {
                 `
             },
             genLabelBlock:function (param) {  
-                return`<div class="bugLabel-elements label-show-4-task" style="min-width: 475px;">
-                <span><a class="new-label-modal" title="New Label" data-toggle="modal" href="#" style="padding:10px;width: 20px;font-weight: 600;vertical-align: -webkit-baseline-middle; font-size: 12px; color:#727D91; margin-top: 5px;" data-target="#insertNewLabel4Task"> Add Label </a></span>
-                <span class="newlabelspan" style="cursor: pointer;margin-top: 10px; padding-right: 20px;"
-                    onclick="new UserStory().clearAndShowAll(this)">Clear</span>
-                    <div class="dropdown-divider" style="padding:0px;"></div>
-                <div id="tasklabellist4Task" class="tasklabellist4Task" style='height: 250px;overflow-y: auto; padding:10px 10px; overflow-x: hidden;'></div>
-            </div>`
+                return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
+                                        <div class="category-case-box text-left">
+                                            <span class="first-icon"><i class="cs-svg-icon label"></i></span> Cheweek <span class="last-icon">8</span>
+                                        </div>
+                                        <div class="category-item-boxes text-left">
+                                            <div href="#" class="category-show-hide d-flex">
+                                                <div class="category">
+                                                    <span class="icon"><i class="cs-svg-icon category"></i></span> Kategoriyalar
+                                                </div>
+                                                <div class="created new-label-modal" title="New Label" data-target="#insertNewLabel4Task" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+                                            <ul id="tasklabellist4Task" >
+                    
+                                            </ul>
+                                        </div>
+                                    </div>
+            `
             },
             genSprintBlock:function (param) {  
                 return`<div class="bugSprint-elements sprint-show-4-task">

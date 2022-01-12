@@ -23214,7 +23214,7 @@ Label.prototype = {
     },
     setLabelListTableBody: function (res) {
         var obj = res.tbl[0].r;
-        var tbl = $('<table></table>').attr("class", 'lbl-list-table');
+        var tbl = $('<ul></ul>').attr("class", 'lbl-list-table');
 //        var tr1 = $('<tr class="lbl-list-tr"></tr>');
 //        tr1.append($('<td class="lbl-list-td"></td>').html('<input class="us-filter-checkbox-label"  type="checkbox" value="all">'));
 //        tr1.append($('<td class="lbl-list-td"></td>').html('<b>All</b>').attr("class", "lbl-item"));
@@ -23224,17 +23224,20 @@ Label.prototype = {
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (global_var.userStoryFilter.label.includes(obj[n].id)) ? true : false;
 
-            var tr = $('<tr class="lbl-list-tr"></tr>');
-            tr.append($('<td class="lbl-list-td"></td>')
-                    .html($('<input type="checkbox" class="us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
+            var tr = $('<li class="lbl-list-tr">');
+            tr.append($('<label class="lbl-list-td">')
+                         .attr('id', obj[n].id))
+                         .attr('for','label-assign-link')
+                     .append(`<span class="first-icon"><i class="cs-svg-icon label"></i></span>`)
+                    .append($('<input type="checkbox" id="label-assign-link" class="d-none us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                             .attr('taskIds', obj[n].labelTaskIds)
                             .prop("checked", isFiltered))
-                    .attr('id', obj[n].id));
-            tr.append($('<td class="lbl-list-td"></td>')
+                   .append($('<span class="lbl-list-td">')
                     .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
                     .append(replaceTags(obj[n].name) + " (<b>" + obj[n].backlogCount + "</b>)")
                     .attr("class", "lbl-item")
                     .attr("style", "color:" + obj[n].color));
+                    
             tr.append($('<td class="lbl-list-td"></td>')
                     .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
                             .css("padding", "0px 6px")
@@ -23260,7 +23263,7 @@ Label.prototype = {
             });
             tbl.append(tr);
         }
-        return tbl;
+        return tbl.html();
     },
     setLabelListTable: function (res) {
 //        $('.tasklabellist').each(function () {
