@@ -6920,3 +6920,114 @@ div.cs-task-item-in-box {
     background-color: #525596;
     color: #fff;
 }
+/* category section */
+.category-show-hide {
+    margin-left: 10px;
+}
+.category-show-hide .category {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #fff;
+}
+.category-show-hide .category .icon {
+    margin-right: 10px;
+}
+.category-show-hide .category .icon i {
+
+}
+.category-show-hide .category .icon i:after{
+    width: 17.09px;
+    height: 22px;
+}  
+.category-show-hide .created {
+    margin-left: 10px;
+    vertical-align: middle;
+    display: table;
+}
+.category-show-hide .created i {
+    vertical-align: middle;
+    display: block;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    padding: 5px 5px;
+    background: rgba(255, 255, 255, 0.11);
+}
+.category-item-boxes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+.category-item-boxes ul li {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    color: #fff;
+    background: transparent;
+    mix-blend-mode: normal;
+    border-radius: 25px;
+    padding: 3px 10px;
+    height: 30px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.category-item-boxes ul li:hover {
+    background: rgb(3 57 108 / 50%);
+}
+.category-item-boxes ul li .first-icon {
+ margin-right: 5px;
+}
+.category-item-boxes ul li .first-icon i:after{
+ width: 16px;
+ height: 16px;
+}
+.category-item-boxes ul li .last-icon {
+    float: right;
+    visibility: hidden;
+}
+.category-item-boxes ul li:hover .last-icon {
+    visibility: visible;
+}
+.category-item-boxes ul li .last-icon i{
+    font-size: 14px;
+}
+.category-case-box {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    color: #fff;
+    background: rgb(3 57 108 / 50%);
+    mix-blend-mode: normal;
+    border-radius: 25px;
+    padding: 3px 10px;
+    height: 30px;
+    cursor: pointer;
+    margin-bottom: 32px;
+}
+.category-case-box .first-icon {
+    margin-right: 5px;
+}
+.category-case-box .first-icon i:after {
+    width: 16px;
+    height: 16px;
+}
+.category-case-box .last-icon {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 18px;
+    float: right;
+    color: #03396C;
+    background-color: white;
+    width: auto;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 50px;
+    vertical-align: middle;
+    padding: 2px 3px;
+    text-align: center;
+}
