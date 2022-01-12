@@ -1249,6 +1249,9 @@ const taskManagement = {
                                             <option value='rejected'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">Rejected</span></option>
+                                            <option value='canceled'><span
+                                                class="us-item-status-rejected comment-content-header-status"
+                                                id="">Canceled</span></option>
                                             <option value='UAT'><span
                                                 class="us-item-status-rejected comment-content-header-status"
                                                 id="">UAT</span></option>
@@ -2312,28 +2315,39 @@ const taskManagement = {
 
         },
         getLabelTask: function () {
-            var  list  = taskManagement.taskLabelList.tbl[0].r;
             var  elm  = $('#run_task_detail_detail_categories')
-                 elm.empty();
+            elm.empty();
+            try {
+                var  list  = taskManagement.taskLabelList.tbl[0].r;
+           
             for (let i = 0; i < list.length; i++) {
                 const o = list[i];
                 elm.append($("<option>")
                                 .val(o.id)
                                .text(o.name))
             }
+            } catch (error) {
+                
+            }
+            
             elm.selectpicker("refresh");
         },
         getSprintTask: function () {
-            var  list  = taskManagement.taskSprintList.tbl[0].r;
             var  elm  = $('#run_task_detail_detail_sprint')
+            elm.empty();
+             try {
+                var  list  = taskManagement.taskSprintList.tbl[0].r;
 
-                 elm.empty();
-            for (let i = 0; i < list.length; i++) {
-                const o = list[i];
-                elm.append($("<option>")
-                                .val(o.id)
-                               .text(o.sprintName))
-            }
+                for (let i = 0; i < list.length; i++) {
+                    const o = list[i];
+                    elm.append($("<option>")
+                                    .val(o.id)
+                                   .text(o.sprintName))
+                }
+             } catch (error) {
+                 
+             }
+             
              elm.selectpicker("refresh");
         },
         getTaskEvent: function (taskId) {
