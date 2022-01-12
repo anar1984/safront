@@ -36,7 +36,6 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text">Add Task</span>
                           </h6>
-                          <button id="addModalBugIssueTaskMng" bid='21121313200609883521' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
                           </button>
@@ -913,7 +912,6 @@ const taskManagement = {
                           <h6 class="modal-title task-modal-title">
                               <span class="text card-UserStory-header-text-code">Add Task</span>
                           </h6>
-                          <button id="addModalBugIssueTaskMng" bid='21121313201600758588' pid='21120217192004514462' class="btn btn-sm rounded-circle btn-danger" style="padding-top: 3px;"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></button>
 
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
@@ -2884,7 +2882,11 @@ const taskManagement = {
               
             },
             genTypeNotMessaje:function (noetId, taskId, projectId ,tellerId, newValue,oldValue,dateL,timeL,notType,orderNoSeq,endTime,taskStatus,isMeet) {
+                if(!notType){
+                    return
+                }
                 try {
+
                     var title  = (isMeet==='1')?"Meet":"Task"
                     try {
                         var projectCode = SACore.GetProjectCore(projectId).projectCode;
@@ -2902,10 +2904,10 @@ const taskManagement = {
                       if(notType==='new'){
                           body = "New Task Added ("+newValue+")"
                       }
-                      else if (notType==='taskStatus'){
+                      else if (notType==='status'){
                         body = "Status Changed From ("+oldValue+") To ("+newValue+")"
                       }
-                      else if (notType==='assigne'){
+                      else if (notType==='assignee'){
                         body = "Task Assigne ("+oldValue+") changed ("+newValue+")"
                       }
                       else if (notType==='comment'){

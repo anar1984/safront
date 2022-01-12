@@ -13613,7 +13613,8 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
         var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
         var oldmodal = global_var.current_modal;
-        global_var.current_modal = '';
+        
+        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
         var html = new UserStory().getGUIDesignHTMLPure(resTmp);
         global_var.current_modal = oldmodal;
     } else {
