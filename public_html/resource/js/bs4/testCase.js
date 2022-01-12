@@ -1162,7 +1162,8 @@ $(document).on("change", ".issue-mgmt-general-filter", function (e) {
 
 function getBugList() {
       var me = "'"+global_var.current_ticker_id+"'"
-    if(global_var.current_modal==='loadBugChange'){
+      var lastmnId  =  Utility.getParamFromUrl('lastMenuId')
+    if(global_var.current_modal==='loadBugChange'||lastmnId ==='21082003275802222786'){
 
         setBugListInitialData();
 

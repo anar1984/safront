@@ -3827,6 +3827,24 @@ const taskManagement = {
     }
 }
 
+function getTaskCode(taskId) {
+    try {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        var projectId = SATask.GetDetails(taskId, 'fkProjectId');
+        var projectCode = SACore.GetProjectCore(projectId).projectCode;
+        projectCode = projectCode.toUpperCase();
+
+        var taskId = (orderSeq)
+                ? (replaceTags(projectCode)) ? replaceTags(projectCode) + "-" + orderSeq : orderSeq : "";
+        taskId = "<b>" + taskId + "</b>";
+        return taskId;
+    } catch (err) {
+        var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
+        taskId = "<b>" + "PRVT-"+orderSeq + "</b>";
+        return taskId;
+    }
+}
+
 // task-management event  list  add section events start >>>>>>>>START>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 var getTimeDifference = function (from, to) {
