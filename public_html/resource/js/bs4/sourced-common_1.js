@@ -23221,46 +23221,44 @@ Label.prototype = {
 //        tr1.append($('<td class="lbl-list-td "></td>').html('<b> </b>').attr("class", "close-btn").attr('onclick', 'checkedClear()'));
 //
 //        tbl.append(tr1);
+
         for (var n = 0; n < obj.length; n++) {
             var isFiltered = (global_var.userStoryFilter.label.includes(obj[n].id)) ? true : false;
+                var cl  =  obj[n].color;
 
-            var tr = $('<li class="lbl-list-tr">');
-            tr.append($('<label class="lbl-list-td">')
+            var tr = $('<li class="">');
+            tr.append($('<label class="">')
                          .attr('id', obj[n].id))
                          .attr('for','label-assign-link')
-                     .append(`<span class="first-icon"><i class="cs-svg-icon label"></i></span>`)
+                     .append(`<span style='color:${cl==='#000000'?"#fff":cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
                     .append($('<input type="checkbox" id="label-assign-link" class="d-none us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                             .attr('taskIds', obj[n].labelTaskIds)
                             .prop("checked", isFiltered))
-                   .append($('<span class="lbl-list-td">')
+                   .append($('<span class="">')
                     .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
-                    .append(replaceTags(obj[n].name) + " (<b>" + obj[n].backlogCount + "</b>)")
-                    .attr("class", "lbl-item")
-                    .attr("style", "color:" + obj[n].color));
+                    .append(replaceTags(obj[n].name) + " (" + obj[n].backlogCount + ")"));
                     
-            tr.append($('<td class="lbl-list-td"></td>')
-                    .append($('<button class="  story-card-label-assign prManag-task-label-assign btn btn-primary">')
+            tr.append($('<span>')
+                    .append($('<span class="  last-icon story-card-label-assign prManag-task-label-assign ">')
                             .css("padding", "0px 6px")
                             .attr("sname", replaceTags(obj[n].name))
-                            .css("display", "none")
                             .val(obj[n].id)
-                            .append("Assign")
-                            .attr('id', obj[n].id)));
-            var td = $('<td class="lbl-list-td cs-edit-delet"></td>')
-                    .append($('<i class="fa fa-edit lbl-action"  style="display: none;" ></i>')
-                            .attr('id', obj[n].id)
-                            .attr('data-toggle', "modal")
-                            .attr("onclick", "new Label().select('" + obj[n].id + "')")
-                            .attr("data-target", "#updateLabel"));
-            td.append($('<i class="fa fa-trash lbl-action"  style="display: none;" ></i>')
-                    .attr('id', obj[n].id)
-                    .attr("onclick", "new Label().delete('" + obj[n].id + "')"));
-            tr.append(td);
-            tr.hover(function () {
-                $(this).find('.lbl-action, .story-card-label-assign').show();
-            }, function () {
-                $(this).find('.lbl-action, .story-card-label-assign').hide();
-            });
+                            .text("Assign")
+                            .attr('id', obj[n].id))
+                     .append($('<span class=" last-icon ">')
+                             .append($('<i class="fa fa-edit " ></i>')
+                             .attr('id', obj[n].id)
+                             .attr('data-toggle', "modal")
+                             .attr("onclick", "new Label().select('" + obj[n].id + "')")
+                             .attr("data-target", "#updateLabel")))
+                     .append($('<span class="last-icon" >')
+                                .html(`<i class='fa fa-trash'>`)
+                               .attr('id', obj[n].id)
+                               .attr("onclick", "new Label().delete('" + obj[n].id + "')"))
+                              )
+             
+        
+           
             tbl.append(tr);
         }
         return tbl.html();
