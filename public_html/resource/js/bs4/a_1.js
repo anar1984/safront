@@ -12966,10 +12966,11 @@ function showApiRelationModal(backLogId) {
                 }
                 table.append(tr);
             }
+            inputSetSelectBox();
+            getBacklogInputOutPutSetTable(backLogId);
         } catch (error) {
         }
-        inputSetSelectBox();
-        getBacklogInputOutPutSetTable(backLogId);
+       
     })
 }
 // onChange
@@ -13005,10 +13006,11 @@ function inputSetSelectBox() {
     var inputs = $("#generalview_input_list .description-left");
     $("select.tableInputSelect").append($("<option>").text('').val(''))
     inputs.each(function () {
+        var idOption = $(this).closest("tr").attr("inid");
         var elm = $(this).clone();
         elm.find(".dropdown").first().remove();
         var text = $(elm).text();
-        var idOption = $(elm).attr("data-id");
+        
 
         $("select.tableInputSelect").append($("<option>").text(text).val(idOption))
     })
@@ -13024,7 +13026,6 @@ function getBacklogInputOutPutSetTable(backlogId) {
         for (let i = 0; i < dt.length; i++) {
             const o = dt[i];
             var slct = $("#storyCardShowRelationModalTable tbody").find("tr[pid='" + o.fkApiInputId + "']").find("select.tableInputSelect");
-            slct.selectpicker("destroy");
             slct.val(o.fkBacklogInputId);
             slct.attr("sa-data-val", o.id);
             slct.selectpicker("refresh");
