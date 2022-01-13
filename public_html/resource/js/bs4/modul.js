@@ -108,12 +108,3 @@ $(document).on("click", '#task-list-statistic-4backlog .status-class',function (
       }
 })
 
-$(document).on('change', '.label-assign-link-class', function (event) {
-
-  if($(this).prop("checked")){
-      $(this).closest("li").addClass('rt-label-checking')
-  }else{
-    $(this).closest("li").removeClass('rt-label-checking')
-
-  }
-});

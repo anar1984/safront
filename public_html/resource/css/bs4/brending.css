@@ -6974,8 +6974,13 @@ div.cs-task-item-in-box {
     height: 30px;
     cursor: pointer;
     margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
 }
-.category-item-boxes ul li:hover {
+.category-item-boxes ul li label {
+    cursor: pointer;
+}
+.category-item-boxes ul li:hover, .category-item-boxes ul li.rt-label-checking {
     background: rgb(3 57 108 / 50%);
 }
 .category-item-boxes ul li .first-icon {
@@ -6988,6 +6993,7 @@ div.cs-task-item-in-box {
 .category-item-boxes ul li .last-icon {
     float: right;
     visibility: hidden;
+    margin-left: 10px;
 }
 .category-item-boxes ul li:hover .last-icon {
     visibility: visible;
@@ -7031,3 +7037,16 @@ div.cs-task-item-in-box {
     padding: 2px 3px;
     text-align: center;
 }
+.category-item-boxes ul li:hover .cs-button-group {
+    display: none;
+    position: absolute;
+    width: auto;
+    right: 0;
+    background: rgb(29 71 110 / 92%);
+    height: 30px;
+    top: 0;
+    padding: 3px 15px 3px 10px;
+}
+.category-item-boxes ul li:hover .cs-button-group {
+    display: block;
+}   
