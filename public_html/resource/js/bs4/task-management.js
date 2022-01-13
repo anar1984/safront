@@ -83,7 +83,7 @@ const taskManagement = {
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
                         <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.taskName}">
-                        <span class='p-1'>${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
+                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; ">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
