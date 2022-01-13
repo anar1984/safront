@@ -1173,7 +1173,7 @@ function getBugList() {
         json.kv.fkAssigneeId = ($(".me-send-task-list-btn").hasClass('active'))?me:bug_filter.assignee_id;
         json.kv.closedBy = bug_filter.closed_by;
         json.kv.createdBy = ($(".my-send-task-list-btn").hasClass('active'))?me:bug_filter.created_by;
-        json.kv.fkBackogId = bug_filter.backlog_id;
+        json.kv.fkBacklogId = bug_filter.backlog_id;
         if(bug_filter.status){
             json.kv.taskStatus = bug_filter.status;
             
