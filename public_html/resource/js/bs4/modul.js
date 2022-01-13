@@ -107,3 +107,4 @@ $(document).on("click", '#task-list-statistic-4backlog .status-class',function (
         })
       }
 })
+

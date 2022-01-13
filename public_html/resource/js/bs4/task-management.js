@@ -32,7 +32,7 @@ const taskManagement = {
                aria-hidden="true">
               <div class="modal-dialog rounded" style="max-width: 50%;" role="document">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
                               <span class="text">${lang_task.windowAddTask.addTask}</span>
                           </h6>
@@ -83,7 +83,7 @@ const taskManagement = {
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
                         <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.taskName}">
-                        <span class='p-1'>${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
+                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; ">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -903,7 +903,7 @@ const taskManagement = {
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
                               <span class="text card-UserStory-header-text-code"></span>
                           </h6>
