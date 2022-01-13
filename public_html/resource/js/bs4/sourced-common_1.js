@@ -23228,22 +23228,22 @@ Label.prototype = {
 
             var tr = $('<li class="">');
             tr.append($('<label class="">')
-                         .attr('id', obj[n].id))
-                         .attr('for','label-assign-link')
+                         .attr('id', obj[n].id)
+                         .attr('for','label-'+obj[n].id)
                      .append(`<span style='color:${cl==='#000000'?"#fff":cl};' class="first-icon"><i class="fas fa-tag"></i></span>`)
-                    .append($('<input type="checkbox" id="label-assign-link" class="d-none us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
+                    .append($('<input type="checkbox" id="label-'+obj[n].id+'" class="d-none label-assign-link-class us-filter-checkbox-label prManag-task-filter-checkbox-label" value="' + obj[n].id + '">')
                             .attr('taskIds', obj[n].labelTaskIds)
                             .prop("checked", isFiltered))
                    .append($('<span class="">')
                     .append(obj[n].isMenu === '1' ? "(Menu)-" : "")
-                    .append(replaceTags(obj[n].name) + " (" + obj[n].backlogCount + ")"));
+                    .append(replaceTags(obj[n].name) + " (" + obj[n].backlogCount + ")")));
                     
-            tr.append($('<span>')
+            tr.append($('<span class="cs-button-group">')
                     .append($('<span class="  last-icon story-card-label-assign prManag-task-label-assign ">')
                             .css("padding", "0px 6px")
                             .attr("sname", replaceTags(obj[n].name))
                             .val(obj[n].id)
-                            .text("Assign")
+                            .html('<i class="far fa-plus-square"></i>')
                             .attr('id', obj[n].id))
                      .append($('<span class=" last-icon ">')
                              .append($('<i class="fa fa-edit " ></i>')

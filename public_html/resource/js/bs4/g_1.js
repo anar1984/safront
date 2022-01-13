@@ -1727,6 +1727,14 @@ $(document).on('change', '#project_list_for_copy', function (event) {
      $(elm).selectpicker("refresh")
 
 });
+$(document).on('change', '.label-assign-link-class', function (event) {
+      if($(this).prop("checked")){
+          $(this).closest("li").addClass('rt-label-checking')
+      }else{
+        $(this).closest("li").removeClass('rt-label-checking')
+ 
+      }
+});
 $(document).on('click', '#upload_data_file_btn', function (event) {
     var elm = $("#setStoryCardUploadZipData");
     if ($(elm).val().trim().length > 0) {
