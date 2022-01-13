@@ -16341,6 +16341,7 @@ function getBugList4UserStory(bgId, tbody) {
                         .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
                         .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
                         .append($("<td>")
+                                 .attr("title",ela[i].taskName)
                                  .css("max-width",'400px')
                                  .css("overflow",'hidden')
                                 .append($("<a>")
@@ -16358,6 +16359,8 @@ function getBugList4UserStory(bgId, tbody) {
 
             $('[data-toggle="popover"]').popover();
             $(tbody).find('.trigger-status-filter').click();
+            $(tbody).closest("table").find('.us-item-status-new').click();
+            $(tbody).closest("table").find('.us-item-status-ongoing').click();
         },
         error: function () {
             Toaster.showError(('somethingww'));
@@ -18118,7 +18121,8 @@ function multipleClosedTask(list) {
     var data = {};
     data.fkTaskId  = list;
    callService('serviceTmGetBacklogCoreInfoByIdNew',data,true,function (res) {
-
+         
+         
    }) 
 }
 function contentArrangableUI() {
