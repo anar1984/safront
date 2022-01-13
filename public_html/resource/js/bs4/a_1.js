@@ -2727,14 +2727,12 @@ function showBacklogHistoryClick(el) {
         }
         return;
     }
-    if (isApi === '1') {
+ 
         callStoryCard(bid);
         return;
-    }
+    
 
-    if ($(document).find(".StoryCardPanel").first().html()) {
-        callStoryCard(bid);
-    }
+    
 
     if (pid === global_var.current_project_id) {
         $("#storyCardListSelectBox").val(bid)
@@ -2764,9 +2762,9 @@ function fillBacklogHistory4View(backlogId, isApi) {
 
 function setBacklogHistory4View() {
 
-    var div = $('#item-history-list');
+    var div = $('.storecard-header-nav-section #item-history-list');
     div.html('');
-    var block = $("#backBacklogBtn-block");
+    var block = $(".storecard-header-nav-section #backBacklogBtn-block");
     var temp = [];
     var ct = 0;
     for (var i = bhistory.length - 1; i >= 0; i--) {
