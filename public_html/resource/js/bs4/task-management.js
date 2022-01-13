@@ -1034,7 +1034,7 @@ const taskManagement = {
                 return `<div class="mr-auto p-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
+                        <div class="col-lg-6 cs-input-group mt-2 pl-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                             <div class='cs-date-time d-flex'>
                                 <div>
@@ -1055,7 +1055,7 @@ const taskManagement = {
                                 </div>
                              </div>
                         </div>
-                        <div class="col-lg-6 cs-input-group mt-2 p-1">
+                        <div class="col-lg-6 cs-input-group mt-2 pl-2">
                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                             <div class='cs-date-time d-flex'>
                                 <div>
@@ -1076,14 +1076,14 @@ const taskManagement = {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
                                 <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
                                         id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-2">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select class="run_task_categories update-selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
@@ -1091,7 +1091,7 @@ const taskManagement = {
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
+                        <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
                                 <select class="run_task_sprint update-selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
@@ -1160,7 +1160,7 @@ const taskManagement = {
                     return div
                 },
                 genTabHeader: function () {
-                    return `  <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
+                    return `  <ul class="nav nav-pills mb-3 pl-0 mt-3" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
                     </li>
