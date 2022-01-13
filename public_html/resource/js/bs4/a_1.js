@@ -14301,7 +14301,7 @@ function loadHistoryByTasksId(backlog_id) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src= " + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14341,7 +14341,7 @@ function loadHistoryByCssId(project_id) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14423,7 +14423,7 @@ function loadHistoryByDBId(fkTableId) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14661,7 +14661,7 @@ function loadHistoryByJsId(project_id) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -16350,8 +16350,8 @@ function getBugList4UserStory(bgId, tbody) {
                                         .text(ela[i].taskName)))
                         .append($("<td>").append(taskNature))
                         .append('<td>' + ela[i].taskTypeName + '</td>')
-                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="https://app.sourcedagile.com/api/get/files/' + ela[i].createByImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
-                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="https://app.sourcedagile.com/api/get/files/' + ela[i].userImage + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img created" src="' + fileUrl(ela[i].createByImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].createByName + '" title="" data-original-title="Created By"></td>')
+                        .append('<td class="task-story-select-img"><img class="Assigne-card-story-select-img assigne" src="' + fileUrl(ela[i].userImage) + '" data-trigger="hover" data-toggle="popover" data-content="' + ela[i].userName + '" title="" data-original-title="Assignee"></td>')
                         .append('<td class="task-time-td">' + Utility.convertDate(ela[i].createdDate) + '</td>')
                         )
 
