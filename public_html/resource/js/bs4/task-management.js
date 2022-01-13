@@ -32,9 +32,9 @@ const taskManagement = {
                aria-hidden="true">
               <div class="modal-dialog rounded" style="max-width: 50%;" role="document">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
-                              <span class="text">Add Task</span>
+                              <span class="text">${lang_task.windowAddTask.addTask}</span>
                           </h6>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <i class="cs-svg-icon x-close"></i>
@@ -71,8 +71,8 @@ const taskManagement = {
                     </div>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" id="addIssueButtonId" class="btn btn-primary">Add</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" id="addIssueButtonId" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">${lang_task.windowAddTask.close}</button>
                       </div>
                   </div>
               </div>
@@ -82,8 +82,8 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-3">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="e.g., Renew gym every May 1st #Sport">
-                        <span class='p-1'>quick insert task onfocus input SHIFT+ENTER</span>
+                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.taskName}">
+                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; ">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
                     </div>
                     <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -96,7 +96,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return ` <div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input type="text" class="form-control" id="newAddCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
+                    <input type="text" class="form-control" id="newAddCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}.." style="background: transparent; border-radius: 0;">
                     <ul>
                       
                     </ul>
@@ -110,7 +110,7 @@ const taskManagement = {
                      style="width:100%;padding:0px;margin:0px;">
                     <div class="col-12 text-center canvas_canvas_msg "
                          style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
-                        <h5>Copy and Paste Image Here</h5>
+                        <h5>${lang_task.windowAddTask.copyPasteImg}</h5>
                     </div>
                 </div>
                 <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" >
@@ -123,7 +123,7 @@ const taskManagement = {
                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                    multiple="" 
                                    fname="">
-                                   Attach a file
+                                   ${lang_task.windowAddTask.attachFile}
                         </label>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
@@ -135,7 +135,7 @@ const taskManagement = {
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
                         <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">Start Date</div>                                                 
+                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                             <div class='cs-date-time d-flex'>
                                 <div>
                                     <div class="d-flex">
@@ -156,7 +156,7 @@ const taskManagement = {
                              </div>
                         </div>
                         <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">End Date</div>
+                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                             <div class='cs-date-time d-flex'>
                                 <div>
                                     <div class="d-flex">
@@ -178,14 +178,14 @@ const taskManagement = {
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Responsible</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
                                 <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
                                         id='bug_filter_assignee_id_add' title="Assignee"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Categories</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select class="run_task_categories"  id="run_task_categories" data-live-search="true">
                                     <option value="cat1">Software</option>
                                     <option value="ca2">Back-end</option>
@@ -201,7 +201,7 @@ const taskManagement = {
                 return `  <div class="p-2 mt-2 ml-4">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Tapşırıq</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.task}</div>
                         <div class="tapshiriq-btn active" id="tapshiriq-btn">
                             <i class="cs-svg-icon tapshiriq"></i>
                             <i class="cs-svg-icon tapshiriq-light"></i>
@@ -214,7 +214,7 @@ const taskManagement = {
                 return ` <div class="p-2 mt-2">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Toplantı</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.meeting}</div>
                         <div class="toplanti-btn" id="toplanti-btn">
                             <i class="cs-svg-icon toplanti"></i>
                             <i class="cs-svg-icon toplanti-light"></i>
@@ -227,12 +227,12 @@ const taskManagement = {
                 return `  <div class="row">
               <div class="cs-flex-col flex-item ml-3 mt-2 horizontal">
                   <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">Notify you about the confirmation?
+                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
                           <input type="checkbox" id="sendnotification">
                           <span class="checkmark"></span>
                       </label>
 
-                      <label class="checkmarkcontainer"> After insert closed Modal
+                      <label class="checkmarkcontainer"> ${lang_task.windowAddTask.closeAfterInsert}
                             <input type="checkbox" checked='true' id="after_insert_modal">
                             <span class="checkmark"></span>
                       </label>
@@ -256,22 +256,18 @@ const taskManagement = {
                 genTabHeader: function () {
                     return ` <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
+                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                     </li>
                     <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
+                        <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
                     </li>
-                    <!-- <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="check-list-tab" data-toggle="tab" href="#task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"> <span>Check List</span></a>
-                    </li> -->
+                
                     <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>Observer</span></a>
+                        <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
                     </li>
-                    <!-- <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="subtask-tab" data-toggle="tab" href="#task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>Subtask</span></a>
-                    </li> -->
+ 
                     <li class="nav-item after-add-task" role="presentation">
-                        <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>Events</span></a>
+                        <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
                     </li>
                 </ul>   `
                 },
@@ -282,29 +278,29 @@ const taskManagement = {
                             <div class="cs-input-group">
                                 <select class="form-control" data-live-search="true" data-actions-box="true"
                                         style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
-                                        title="Project"></select>
+                                        title="${lang_task.rightBar.project}"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        data-live-search="true" id='bug_filter_backlog_id_add' title="Story Card">
+                                        data-live-search="true" id='bug_filter_backlog_id_add' title="${lang_task.rightBar.storyCart}">
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        data-live-search="true" id='bug_task_type_id_add' title="Task Type"></select>
+                                        data-live-search="true" id='bug_task_type_id_add' title="${lang_task.rightBar.taskType}"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
                                 <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
-                                        id='bug_task_nature_id_add' title="Task Nature">
-                                    <option value="bug" selected="">Bug</option>
-                                    <option value="change" selected="">Change Request</option>
-                                    <option value="new" selected="">New Request</option>
+                                        id='bug_task_nature_id_add' title="${lang_task.rightBar.taskNature}">
+                                    <option value="bug" selected="">${lang_task.table.taskNature.bug}</option>
+                                    <option value="change" selected="">${lang_task.table.taskNature.changeRequest}</option>
+                                    <option value="new" selected="">${lang_task.table.taskNature.newRequest}</option>
                                 </select>
                             </div>
                         </div>
@@ -329,36 +325,36 @@ const taskManagement = {
                    <div class="row rsoon">
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Start Date</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>
                                <input class="form-control" name="runTaskStartDate" id="runTaskStartDate" type="date" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">End Date</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                                <input class="form-control" name="runTaskiceEndDate" id="runTaskEndDate" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Run Time</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.runTime}</div>
                                <input class="form-control" name="runTaskTime" id="runTaskTime" type="text" required>
                            </div>
                        </div>
 
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Intensive</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
                                <select class="" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
-                                   <option value="weekly">Weekly</option>
-                                   <option value="monthly">Monthly</option>
-                                   <option value="yearly">Yearly</option>
+                                   <option value="weekly">${lang_task.windowAddTask.weekly}</option>
+                                   <option value="monthly">${lang_task.windowAddTask.monthly}</option>
+                                   <option value="yearly">${lang_task.windowAddTask.yearly}</option>
                                </select>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Repeat every</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
                                <select class="" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
                                    <option value="1">1</option>
                                    <option value="2">2</option>
@@ -379,19 +375,19 @@ const taskManagement = {
                            <div class="cs-input-group">
                                <div class="input-group-addon">Status</div>
                                <select class="" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
-                                   <option value="active">Active</option>
-                                   <option value="passive">Passive</option>
+                                   <option value="active">${lang_task.topBar.tableTypeSelector.active}</option>
+                                   <option value="passive">${lang_task.topBar.tableTypeSelector.active}</option>
                                </select>
                            </div>
                        </div>
                    </div>
                    <div class="row rsoon weekly-actions run-intensive run-enabled">
                        <div class="col-12">
-                           <h5 class="section-title"><strong>Weekly Actions</strong></h5>
+                           <h5 class="section-title"><strong>${lang_task.windowAddTask.weeklyAction}</strong></h5>
                        </div>
                        <div class="col-md-3 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
-                               <div class="input-group-addon">Weekday</div>
+                               <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
                                <select class="" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
                                    <option value="monday">Monday</option>
                                    <option value="tuesday">Tuesday</option>
@@ -553,11 +549,10 @@ const taskManagement = {
                 genObserverBlock: function () {
                     return `<div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
                  <div class="cs-input-group mb-3 ml-2">
-                     <div class="input-group-addon">Observer Name</div>
+                     <div class="input-group-addon">${lang_task.windowAddTask.observerName}</div>
                      <div class="task-check-list-observer p-0 mt-1 mb-3">
-                         <!-- <button class='btn loadUserForObserver'>Load User</button> -->
                          <select class="form-control" id="createdtask_oblerverlist"></select>
-                         <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
+                         <button class='btn addObserverToTAsk'><i class="fas fa-plus" aria-hidden="true"></i> ${lang_task.windowAddTask.addObserver}</button>
                      </div>
                      <div class="task-observer-list">
 
@@ -588,49 +583,49 @@ const taskManagement = {
                     <div class="row">
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Subject</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.subject}</div>
                                 <input class="form-control" name="mezmun" id="ivent-mezmun" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Structure</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.structure}</div>
                                 <input class="form-control" name="struktur" id="ivent-struktur" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Type</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.type}</div>
                                 <input class="form-control" name="nov" id="ivent-nov" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Responsible person</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.responsiblePerson}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-mesulShexs" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Participant</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.participant}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-istirakci" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Counterparty</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.counterparty}</div>
                                 <input class="form-control" name="mesulShexs" id="ivent-kontragent" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Location</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.location}</div>
                                 <input class="form-control" name="yer" id="ivent-yer" type="text">
                             </div>
                         </div>
                         <div class="col-lg-4 cs-flex-col flex-item mt-2">
                             <div class="cs-input-group">
-                                <div class="input-group-addon">Note</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.note}</div>
                                 <input class="form-control" name="qeyd" id="ivent-qeyd" type="text">
                             </div>
                         </div>
@@ -662,7 +657,7 @@ const taskManagement = {
                     that.insertObserverTask(res.kv.id);
                     that.insertCheckListComulativ(res.kv.id);
                     getBugList();
-                    Toaster.showMessage('Tapşırıq uğurla daxil edilmişdir');
+                    Toaster.showMessage(lang_task.windowAddTask.addTaskMessageSucc);
                     if ($("#after_insert_modal").prop("checked")) {
                         $("#issue-managment-add-task").modal("hide");
 
@@ -670,14 +665,14 @@ const taskManagement = {
                     reset_task_data();
                 },
                 error: function () {
-                    Toaster.showError(('Tapşırıq daxil edilmədi'));
+                    Toaster.showError((lang_task.windowAddTask.addTaskMessageErr));
                 }
             });
         },
         getValueCreateModalScreen: function () {
             var val = $('#taskNameInputNew2').val();
             if (!val) {
-                Toaster.showError('Məzmun daxil edilməmişdir.');
+                Toaster.showError(lang_task.windowAddTask.errorMessageTask);
                 return
             }
 
@@ -752,7 +747,7 @@ const taskManagement = {
                         }
 
                     } catch (error) {
-                        msgMessage = 'Events successfully created!';
+                        msgMessage = lang_task.windowAddTask.eventMessageAdd;
                         Toaster.showMessage(msgMessage);
                     }
 
@@ -782,7 +777,7 @@ const taskManagement = {
                     // getTaskkObserverList(global_var.current_task_id_4_comment)
                 });
             } catch (error) {
-                console.log('task Observer ++++' + error);
+               // console.log('task Observer ++++' + error);
             }
 
 
@@ -908,9 +903,9 @@ const taskManagement = {
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
-                              <span class="text card-UserStory-header-text-code">Add Task</span>
+                              <span class="text card-UserStory-header-text-code"></span>
                           </h6>
 
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -958,7 +953,7 @@ const taskManagement = {
                             <div class="card-UserStory-header">
                                 <span class="card-UserStory-header-text"></span>
                                 <div class="card-UserStory-header-edit" style="display: none; width: 100%;top: 0;height: 0;">
-                                    <input class="card-UserStory-header-input form-control" type="text" placeholder="e.g., Renew gym every May 1st #Sport">
+                                    <input class="card-UserStory-header-input form-control" type="text" placeholder="${lang_task.windowAddTask.taskName}">
                                     <div class=" card-UserStory-header-accept TextHeader "
                                          onclick="updateTask4ShortChangeTaskName()" id="AcceptText" style="color: #38628a;background: #dfeef7;">
                                         <i class="fas fa-check"></i>
@@ -978,14 +973,12 @@ const taskManagement = {
                                     </a>
         
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">Create
-                                            Child Task</a>
-                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">Forward
-                                            To</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="createChildTask()">${lang_task.windowUpdateTask.childTask}</a>
+                                        <a class="dropdown-item forward-task" href="#" onclick="ForwardTaskTo()">${lang_task.windowUpdateTask.ForwardTaskTo}</a>
                                     
-                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">Duplicate</a>
-                                        <a class="dropdown-item" href="#" onclick="rejectTask()">Reject Task</a>
-                                        <a class="dropdown-item" href="#" onclick="deleteTask()">Delete</a>
+                                        <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${lang_task.windowUpdateTask.Duplicate}</a>
+                                        <a class="dropdown-item" href="#" onclick="rejectTask()">${lang_task.windowUpdateTask.rejectTask}</a>
+                                        <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
                                     </div>
                                 </div>
         
@@ -1004,7 +997,7 @@ const taskManagement = {
             genCheckListBlock: function () {
                 return `<div class="cs-input-group">
                 <div class="task-check-list-box cs-box-background overflow-hidden">
-                    <input type="text" class="form-control" id="updateCheckList" placeholder="add check words..." style="background: transparent; border-radius: 0;">
+                    <input type="text" class="form-control" id="updateCheckList" placeholder="${lang_task.windowAddTask.addCheckWords}" style="background: transparent; border-radius: 0;">
                     <ul>
                     </ul>
                 </div>
@@ -1017,7 +1010,7 @@ const taskManagement = {
                      style="width:100%;padding:0px;margin:0px;">
                     <div class="col-12 text-center canvas_canvas_msg "
                          style='border: 1px dashed #525596;border-radius: 5px;color: #bbbbcf;'>
-                        <h5>Copy and Paste Image Here</h5>
+                        <h5>${lang_task.windowAddTask.copyPasteImg}</h5>
                     </div>
                 </div>
                 <div class="commentsubmit-seqment cm-file-upload-box ml-0 mr-0" >
@@ -1030,7 +1023,7 @@ const taskManagement = {
                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
                                    multiple="" 
                                    fname="">
-                                   Attach a file
+                                   ${lang_task.windowAddTask.attachFile}
                         </label>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
@@ -1042,7 +1035,7 @@ const taskManagement = {
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
                         <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">Start Date</div>                                                 
+                            <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                             <div class='cs-date-time d-flex'>
                                 <div>
                                     <div class="d-flex">
@@ -1063,7 +1056,7 @@ const taskManagement = {
                              </div>
                         </div>
                         <div class="col-lg-6 cs-input-group mt-2 p-1">
-                            <div class="input-group-addon">End Date</div>
+                            <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                             <div class='cs-date-time d-flex'>
                                 <div>
                                     <div class="d-flex">
@@ -1085,14 +1078,14 @@ const taskManagement = {
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">Responsible</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
                                 <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
                                         id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-1 p-1">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">Categories</div>
+                                <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select class="run_task_categories update-selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
                                  
                                 </select>
@@ -1114,7 +1107,7 @@ const taskManagement = {
                 return `       <div class="p-2 mt-2 ml-4">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Tapşırıq</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.task}</div>
                         <div class="tapshiriq-btn active" id="tapshiriq-d-btn">
                             <i class="cs-svg-icon tapshiriq"></i>
                             <i class="cs-svg-icon tapshiriq-light"></i>
@@ -1127,7 +1120,7 @@ const taskManagement = {
                 return ` <div class="p-2 mt-2">
                 <div class="">
                     <div class="cs-input-group">
-                        <div class="input-group-addon">Toplantı</div>
+                        <div class="input-group-addon">${lang_task.windowAddTask.meeting}</div>
                         <div class="toplanti-btn" id="toplanti-d-btn">
                             <i class="cs-svg-icon toplanti"></i>
                             <i class="cs-svg-icon toplanti-light"></i>
@@ -1143,7 +1136,7 @@ const taskManagement = {
               </div>
               <div class="cs-flex-col flex-item ml-2 mt-2 horizontal">
                   <div class="cs-input-group mt-2">
-                      <label class="checkmarkcontainer">Notify you about the confirmation?
+                      <label class="checkmarkcontainer">${lang_task.windowAddTask.confirmationNotification}
                           <input type="checkbox" id="sendnotification_detail">
                           <span class="checkmark"></span>
                       </label>
@@ -1169,22 +1162,22 @@ const taskManagement = {
                 genTabHeader: function () {
                     return `  <ul class="nav nav-pills mb-3 p-2 mt-3" id="pills-tab" role="tablist" style=" border-top: 2px solid rgb(3 57 108 / 50%); padding-top: 10px; margin-top: 3px !important; ">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>Comments</span></a>
+                        <a class="nav-link active" id="d-comments-tab" data-toggle="tab" href="#d-task-tab0" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon comment"></i> <span>${lang_task.windowUpdateTask.comment}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>Details</span></a>
+                        <a class="nav-link" id="d-details-tab" data-toggle="tab" href="#d-task-tab1" role="tab" aria-controls="task-tab1" aria-selected="true"><i class="cs-svg-icon details"></i> <span>${lang_task.windowAddTask.details}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>Schedule</span></a>
+                        <a class="nav-link" id="d-schedule-tab" data-toggle="tab" href="#d-task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>Observer</span></a>
+                        <a class="nav-link loadUserForObserver" id="d-observer-tab" data-toggle="tab" href="#d-task-tab4" role="tab" aria-controls="task-tab4" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>Subtask</span></a>
+                        <a class="nav-link loadUserForSubtask" id="d-subtask-tab" data-toggle="tab" href="#d-task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon subtask-light"></i> <span>${lang_task.windowUpdateTask.subtask}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>Events</span></a>
+                        <a class="nav-link" id="d-ivents-tab" data-toggle="tab" href="#d-task-tab6" role="tab" aria-controls="task-tab6" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
                     </li>
                 </ul>`
                 },

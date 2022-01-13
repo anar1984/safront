@@ -243,28 +243,30 @@ function callStoryCard4Api(id, elId, backlogName) {
 }
 
 function callStoryCard(id, elId, backlogName) {
-
+     $('#UserStoryPopupModal-Toggle-new').remove();
+     $('.modal-backdrop').remove();
+     $('#UserStoryPopupModal-Toggle').modal('hide');
        var isApi = SACore.GetBacklogDetails(id,'isApi');
         if(isApi ==="1"){
             callApiCard(id, elId, backlogName);
         }
         else {
             calStroyCardNew(id, elId, backlogName);
+            
         }
-
    
 }
 
 function calStroyCardNew(id, elId, backlogName) {
     var divId = (elId) ? elId : "body_of_nature";
     $('#storyCardViewManualModal-body').html(''); //alternative backlog modal oldugu ucun ID-ler tekrarlarni
-
+   
     $.get("resource/child/storycard.html", function (html_string)
     {
         if (!id || id === '-1') {
             return;
         }
-
+          
 
         loadBacklogDetailsByIdIfNotExist(id);
         var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
@@ -273,11 +275,12 @@ function calStroyCardNew(id, elId, backlogName) {
         var storyCard = $("<div>").append(html_string);
         $(storyCard).find('#storyCardModalNew').attr("id",'UserStoryPopupModal-Toggle-new')
                                            .removeAttr("style")
-        $("body").append(storyCard);
+        $("body").prepend(storyCard);
        $('#UserStoryPopupModal-Toggle-new').modal('show');
+       $('#UserStoryPopupModal-Toggle-modal').empty();
         loadProjectList2SelectboxByClassWithoutCallAction('projectList_liveprototype_storycard');
         $('select.projectList_liveprototype_storycard').val(fkProjectId)
-
+        nav_list_menu_story_card();
         global_var.current_backlog_id = id;
         $('#storycard-panel-backlog-id').val(id);
         var backlogName = SACore.GetCurrentBacklogname();
