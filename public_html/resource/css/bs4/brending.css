@@ -4785,6 +4785,9 @@ table.lbl-list-table tr td {
     height: 30px;
     vertical-align: middle; 
 }
+.issue-managment-add-task .cs-input-group .tooltipMan {
+ padding: 0;
+}
 .issue-managment-add-task .us-file-upload::before, .card-Userstory-detail .us-file-upload::before {
     content: 'Chose file';
     display: inline-block;
