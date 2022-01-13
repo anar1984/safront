@@ -2199,7 +2199,16 @@ $(document).on("click",'.toggle-min-elements .toggle-btn', function () {
      
       localStorage.setItem('nav_list_menu_story_card',list);
 })
-   
+
+$(document).on("change",'#user-story-show-prototype', function () {
+    if ($('#user-story-show-prototype').is(":checked") ) {
+        $(this).closest('label').addClass('active');
+        $('.prototype-item-box').css('display','block');
+    }else{
+        $(this).closest('label').removeClass('active');
+        $('.prototype-item-box').css('display','none');
+    }
+});
 
 function closeNewInputComponent() {
 
