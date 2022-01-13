@@ -149,11 +149,8 @@
                                 <li><a data-link="1" class="nav-item-url toggle-top-btn-1" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='File'><i class="cs-svg-icon cs-xs-icon attach-01"></i></a></li>
                                 <li><a data-link="2" class="nav-item-url toggle-top-btn-2" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Inputs'><i class="cs-svg-icon input"></i></a></li>
                                 <li><a data-link="3" class="nav-item-url toggle-top-btn-3" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Process Description'><i class="cs-svg-icon task-03"></i></a></li>
-                                <li>
-                                    <label data-link="4" class="nav-item-label toggle-top-btn-4 prototype-cls" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Live Prototype'>
-                                        <input type="checkbox" id="user-story-show-prototype" class="user-story-prototype-change" style="display: none;" /><i class="cs-svg-icon live"></i>
-                                    </label>
-                                </li>
+                                <li><a data-link="4" class="nav-item-url toggle-top-btn-4" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Live Prototype'><i class="cs-svg-icon live"></i></a></li>
+                               
                                 <li><a data-link="5" class="nav-item-url toggle-top-btn-5" data-trigger="hover" data-toggle='popover' data-placement='bottom' data-content='Task List'><i class="cs-svg-icon subtask-o-light"></i><span class="task-result-4us"> </span></a></li>
                                 <!-- <li><a class="nav-item-url toggle-btn-2"><i class="cs-svg-icon link"></i><span> 2</span></a></li> -->
                                 <!-- <li><a class="nav-item-url toggle-btn-3"><i class="cs-svg-icon task-03"></i><span>4/2</span></a></li> -->
@@ -174,7 +171,7 @@
                                 <a data-link='1' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-1">
+                        <div class="toggle-box-1 open">
                             <div class="row">
                                 <div class="col-12" id="storycard_filelis1t">
                                     <br>
@@ -233,7 +230,7 @@
                                 <a data-link='2' class="cs-url  toggle-btn "><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-2">
+                        <div class="toggle-box-2 open">
                             <div class="row text-center storycard_ipo storycard_inputs_table">
                                
                                 <div class="w-100">
@@ -265,7 +262,7 @@
                                 <a data-link='3' class="cs-url toggle-btn "><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-3">
+                        <div class="toggle-box-3 open">
                             <table class="table table-hover table-bordered descriptiontable" id="description_table_id">
                                 <thead id="cs_description_table_head_id">
                                     <tr class="cs-cursor-auto">
@@ -310,7 +307,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="toggle-body-item prototype-item-box" style="display: none;">
+                <div class="toggle-body-item toggle-top-box-4 prototype-item-box" style="display: none;">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon live"></i> <span class="name">Live Prototype</span></div>
@@ -342,7 +339,7 @@
                                 </div> 
                         </div>
                     </div>
-                    <div class="toggle-body-item toggle-top-box-5 style="display: none;>
+                    <div class="toggle-body-item toggle-top-box-5 " style="display: none;">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
                                 <div class="result-box"><i class="cs-svg-icon subtask-o-light"></i> <span
@@ -353,7 +350,7 @@
                                 <a data-link='5' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-5 table-box" orderno="7.3"
+                        <div class="toggle-box-5 open table-box" orderno="7.3"
                             style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
                             class="tooltipMan component-container-dashed col-lg-12  table-responsive">
                             <div class="d-flex justify-content-start mt-3 mb-2">
@@ -519,237 +516,7 @@
                             </table>
                         </div>
                     </div>
-                    <!-- <div class="toggle-body-item">
-                        <div class="d-flex border-bottom-1px pb-1 mb-2">
-                            <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon link"></i> <span class="result">2</span>
-                                    <span class="name">Əlaqəli əməliyyat və tapşırıq</span></div>
-                            </div>
-                            <div class="toggle-min-elements">
-                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="toggle-box-2 table-box" orderno="7.3"
-                            style=" overflow: auto; height: calc(250px - 0px); padding: 0px !important;"
-                            class="tooltipMan component-container-dashed col-lg-12  table-responsive">
-                            <table class="table cst-table-hover tablePaginatione component-input-class">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
-                                        </th>
-                                        <th class="text-center border-none taskListTableCheckboxTH" style="width:30px">
-                                            <label href="#" class="component-class"><input
-                                                    style="width: 15px; height: 15px; vertical-align:middle;"
-                                                    type="checkbox" class="all-check-button-allTable"></label>
-                                            <span class="handle-drag"></span>
-                                        </th>
-                                        <th class="text-center" style="width:46px"><i class="cs-svg-icon id"></i></th>
-                                        <th class="text-center" style="width:50px"><i class="cs-svg-icon deadline"></i>
-                                        </th>
-                                        <th class="text-center"><i class="cs-svg-icon status"></i></th>
-                                        <th class="text-center cst-a-font"><label href="#"
-                                                class="component-class">Ad</label> <span class="handle-drag"></span>
-                                        </th>
-
-                                        <th class="text-center cst-a-font"><label href="#"
-                                                class="component-class">Tarix</label> <span class="handle-drag"></span>
-                                        </th>
-                                        <th class="text-center cst-a-font"><label href="#"
-                                                class="component-class">Saat</label> <span class="handle-drag"></span>
-                                        </th>
-
-                                        <th class="text-center">
-                                            <label href="#" class="component-class"><i
-                                                    class="cs-svg-icon arrow-right-doc"></i></label> <span
-                                                class="handle-drag"></span>
-                                        </th>
-
-                                        <th class="text-center">
-                                            <label href="#" class="component-class"><i
-                                                    class="cs-svg-icon arrow-left-doc"></i></label>
-                                            <span class="handle-drag"></span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="redirectClass" style="width: 46px;">
-                                        <td class="text-center brend-color" style="width: 20px;">1</td>
-                                        <td class="text-center"
-                                            style="width: 30px; vertical-align: middle; line-height: 1;">
-                                            <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
-                                        </td>
-                                        <td class="text-center" style="width: 46px;">
-                                            <span class="brend-color" sa-data-value="9214">9214</span>
-                                        </td>
-                                        <td class="text-center" style="width: 50px;">
-                                            <div class="td-deadline-box kecib"><span>-22s</span></div>
-                                        </td>
-                                        <td class="text-center" style="width: 100px; position: relative;"><span
-                                                class="cheweek-status-name issue_status_closed" sa-data-value="closed">
-                                                <div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>İcra
-                                                edilib
-                                            </span>
-                                        </td>
-                                        <td class="text-center" style="width: 210px;">
-                                            <a href="#" class="brend-color">Tapşırıq</a>
-                                        </td>
-                                        <td class="cs-tasklistData" style="padding-left: 5px; max-width: 1px;">
-                                            <a href="#" class="brend-color">24.11.2021</a>
-                                        </td>
-                                        <td class="cs-tasklistTime" style="padding-left: 5px; max-width: 1px;">
-                                            <a href="#" class="brend-color">15:41:43</a>
-                                        </td>
-                                        <td class="text-center" style="width: 80px;">
-                                            <img class="rounded-circle personal-btn-img"
-                                                src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                data-placement="left" data-toggle="popover" data-trigger="hover"
-                                                style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);"
-                                                data-original-title="" title="">
-                                        </td>
-
-                                        <td class="text-center" style="width: 80px;">
-                                            <img class="rounded-circle personal-btn-img js-btn-popover--custom"
-                                                src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                data-placement="left" data-toggle="popover" data-trigger="hover"
-                                                sa-selectedfield="fkAssigneeId"
-                                                style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);"
-                                                data-original-title="" title="">
-                                        </td>
-                                    </tr>
-                                    <tr class="redirectClass" style="width: 46px;">
-                                        <td class="text-center brend-color" style="width: 20px;">1</td>
-                                        <td class="text-center"
-                                            style="width: 30px; vertical-align: middle; line-height: 1;">
-                                            <input class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
-                                        </td>
-                                        <td class="text-center" style="width: 46px;">
-                                            <span class="brend-color" sa-data-value="9214">9214</span>
-                                        </td>
-                                        <td class="text-center" style="width: 50px;">
-                                            <div class="td-deadline-box kecib"><span>-22s</span></div>
-                                        </td>
-                                        <td class="text-center" style="width: 100px; position: relative;"><span
-                                                class="cheweek-status-name issue_status_closed" sa-data-value="closed">
-                                                <div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>İcra
-                                                edilib
-                                            </span>
-                                        </td>
-                                        <td class="text-center" style="width: 210px;">
-                                            <a href="#" class="brend-color">Əməliyyat</a>
-                                        </td>
-                                        <td class="cs-tasklistData" style="padding-left: 5px; max-width: 1px;">
-                                            <a href="#" class="brend-color">24.11.2021</a>
-                                        </td>
-                                        <td class="cs-tasklistTime" style="padding-left: 5px; max-width: 1px;">
-                                            <a href="#" class="brend-color">15:41:43</a>
-                                        </td>
-                                        <td class="text-center" style="width: 80px;"><img
-                                                class="rounded-circle personal-btn-img"
-                                                src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                data-placement="left" data-toggle="popover" data-trigger="hover"
-                                                style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);"
-                                                data-original-title="" title="">
-                                        </td>
-
-                                        <td class="text-center" style="width: 80px;">
-                                            <img class="rounded-circle personal-btn-img"
-                                                src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                data-placement="left" data-toggle="popover" data-trigger="hover"
-                                                style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);"
-                                                data-original-title="" title="">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> -->
-                    <!-- <div class="toggle-body-item">
-                        <div class="d-flex border-bottom-1px pb-1 mb-2">
-                            <div class="mr-auto toggle-body-title">
-                                <div class="result-box"><i class="cs-svg-icon task-03"></i> <span
-                                        class="result">4/2</span> <span class="name">Açıqlama</span></div>
-                            </div>
-                            <div class="toggle-min-elements">
-                                <a class="cs-url"><i class="cs-svg-icon fullscreen"></i></a>
-                                <a class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div class="toggle-box-3">
-                            <div class="task-check-list-box cs-box-background overflow-hidden">
-                                <input type="text" class="form-control" placeholder="add check words..."
-                                    style="background: transparent; border-radius: 0;">
-                                <ul>
-                                    <li class="d-flex">
-                                        <div class="item-checkbox">
-                                            <label class="checkmarkcontainer">
-                                                <input class="noteCheckListItem" type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                        <div class="mr-auto w-100 text-checked">
-                                            <textarea rows="1" class="form-control updateTaskcheckListItemName">Hello my friends</textarea>
-                                        </div>
-                                        <div class="pl-1 p2-1">
-                                            <span title="Created By">
-                                                <img width="40px" class="Assigne-card-story-select-img created"
-                                                    src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                    data-placement="top" data-trigger="hover" data-toggle="popover"
-                                                    data-content="Taleh Hasan / 23.12.2021  11:35:05"
-                                                    data-title="Created By" data-original-title="" title="">
-                                            </span>
-                                        </div>
-                                        <div class="pl-1 p2-1">
-                                            <span title="Updated By">
-                                                <img width="40px"
-                                                    class="Assigne-card-story-select-img updated"
-                                                    src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                    data-placement="top" data-trigger="hover" data-toggle="popover"
-                                                    data-content="Taleh Hasan | 23.12.2021  14:24:39"
-                                                    data-title="Updated By" data-original-title="" title=""></span>
-                                        </div>
-                                        <div class="pl-1 p2-1 d-table">
-                                            <a href="#" class="taskCheckListItemDelete"><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex">
-                                        <div class="item-checkbox">
-                                            <label class="checkmarkcontainer">
-                                                <input class="noteCheckListItem"
-                                                    type="checkbox"><span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                        <div class="mr-auto w-100">
-                                            <textarea rows="1" class="form-control updateTaskcheckListItemName">Hi, I am here</textarea>
-                                        </div>
-                                        <div class="pl-1 p2-1">
-                                            <span title="Created By">
-                                                <img width="40px" class="Assigne-card-story-select-img created"
-                                                    src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                    data-placement="top" data-trigger="hover" data-toggle="popover"
-                                                    data-content="Revan Gözəlov / 22.12.2021  11:19:49"
-                                                    data-title="Created By" data-original-title="" title="">
-                                            </span>
-                                        </div>
-                                        <div class="pl-1 p2-1">
-                                            <span title="Updated By">
-                                                <img width="40px"
-                                                    class="Assigne-card-story-select-img updated"
-                                                    src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg"
-                                                    data-placement="top" data-trigger="hover" data-toggle="popover"
-                                                    data-content="Taleh Hasan | 23.12.2021  14:24:40"
-                                                    data-title="Updated By" data-original-title="" title="">
-                                            </span>
-                                        </div>
-                                        <div class="pl-1 p2-1 d-table">
-                                            <a href="#" class="taskCheckListItemDelete"><i class="fas fa-trash-alt"
-                                                    aria-hidden="true"></i></a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
+                   
                     <div class="toggle-body-item toggle-top-box-6" style="display: none;">
                         <div class="d-flex border-bottom-1px pb-1 mb-2">
                             <div class="mr-auto toggle-body-title">
@@ -760,7 +527,7 @@
                                 <a data-link='6' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-6">
+                        <div class="toggle-box-6 open">
                            <div class="user-addons-box p-2 cs-box-background">
                                 <div class="user-avatar-list mb-1">
                                     <ul>
@@ -809,7 +576,7 @@
                                 <a data-link='7' class="cs-url toggle-btn"><i class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class="toggle-box-7">
+                        <div class="toggle-box-7 open">
                             <div class="col-12">
                                 <div class="row mt-3">
                                     <div class="col-12 story-card-right-menu-panels story-card-right-menu-panels-api right-menu-description">
