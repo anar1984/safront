@@ -2174,7 +2174,7 @@ $(document).on('click', '.dropdown-menu-large-btn', function (event) {
 $(document).on('click', '#part-nav-menu-id4UserStory ul li >a', function (event) {
   
     $(".toggle-btn[data-link="+$(this).attr("data-link")+"]").click();
-  //   $('.toggle-box-'+$(this).attr("data-link")).toggleClass('open');
+     $('.toggle-top-box-'+$(this).attr("data-link")).css('display','block');
      var list  = ''
       $("#part-nav-menu-id4UserStory ul li >a").each(function () {
             if($(this).hasClass("active")){

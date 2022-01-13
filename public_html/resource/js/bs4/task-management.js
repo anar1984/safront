@@ -117,6 +117,7 @@ const taskManagement = {
                     <div data-toggle="tooltip" id="file1134"                                         
                          class=" tooltipMan component-class  
                          col-lg-12 hover-prototype-selector">
+                         <span class="cs-btn-border">
                          <label class="cs-file-upload">
                             <input class="form-control saTypeFilePicherUploadFile component-input-class" 
                                    sa-type="filepicker"  type="file" value="" row-no="" 
@@ -125,6 +126,7 @@ const taskManagement = {
                                    fname="">
                                    ${lang_task.windowAddTask.attachFile}
                         </label>
+                        </span>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
                 </div>
@@ -1017,14 +1019,16 @@ const taskManagement = {
                     <div data-toggle="tooltip" id="file1134"                                         
                          class=" tooltipMan component-class  
                          col-lg-12 hover-prototype-selector">
-                         <label class="cs-file-upload">
-                            <input class="form-control saTypeFilePicherUploadFile component-input-class" 
-                                   sa-type="filepicker"  type="file" value="" row-no="" 
-                                   pdid="21112211275108954370" id="addComment4Task_addnewfile" 
-                                   multiple="" 
-                                   fname="">
-                                   ${lang_task.windowAddTask.attachFile}
-                        </label>
+                         <span class="cs-btn-border">
+                            <label class="cs-file-upload">
+                                <input class="form-control saTypeFilePicherUploadFile component-input-class" 
+                                    sa-type="filepicker"  type="file" value="" row-no="" 
+                                    pdid="21112211275108954370" id="addComment4Task_addnewfile" 
+                                    multiple="" 
+                                    fname="">
+                                    ${lang_task.windowAddTask.attachFile}
+                            </label>
+                         </span>
                         <div class="progress_bar_new" id="progress_bar_new"></div>
                     </div>
                 </div>
