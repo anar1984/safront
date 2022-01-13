@@ -16341,6 +16341,8 @@ function getBugList4UserStory(bgId, tbody) {
                         .append('<td class="task-id-td">' + ela[i].projectCode + "-" + ela[i].orderNoSeq + '</td>')
                         .append('<td><span class="us-item-status-' + ela[i].taskStatus + '">' + ela[i].taskStatus + '</span></td>')
                         .append($("<td>")
+                                 .css("max-width",'400px')
+                                 .css("overflow",'hidden')
                                 .append($("<a>")
                                         .attr('href', '#')
                                         .attr("onclick", "taskManagement.updateTask.callTaskCard4BugTask(this,'" + prd + "','" + ela[i].id + "')")
@@ -18073,7 +18075,52 @@ function updateUS4Status(id, backlogNo, status) {
     });
 }
 
+function updateManualStatus4DragDrop(params) {
+    
+}
+function updateTaskTypeDragDrop(bgId) {
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkBacklogId = bgId;
+    json.kv.pageNo = 1;
+    json.kv.searchLimit = 200;
+    json.kv.considerAll = '1';
+    json.kv.fkAssigneId =  global_var.current_ticker_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+              var  list  = ""
+               var tbl = res.tbl[0].r;
+                for (let i = 0; i < tbl.length; i++) {
+                     const o = tbl[i];
+                      list += o.id +",";
+                }  
+                multipleClosedTask(list);
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
+}
+function multipleClosedTask(list) {
+    var data = {};
+    data.fkTaskId  = list;
+   callService('serviceTmGetBacklogCoreInfoByIdNew',data,true,function (res) {
 
+   }) 
+}
 function contentArrangableUI() {
     try {
         $('.content-drag').arrangeable();

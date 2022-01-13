@@ -252,11 +252,19 @@
             // show original element back
            
 
-            if (global_var.current_modal === 'loadStoryCardMgmt') {
+            setTimeout(() => {
+              if (global_var.current_modal === 'loadStoryCardMgmt') {
                 var aveNo = getAveNoInDrag(dragElement);
                 var bid = $(dragElement).find('div.ContentText').attr('pid');
                 var status = $(dragElement).closest('div.task-column').attr('status');
-                updateUS4Status(bid, aveNo, status);
+                var groupBy = localStorage.getItem('usm_groupBy')
+                if(groupBy==='manualStatus'){
+                  updateTaskTypeDragDrop(bid);
+                }
+                else if(groupBy==='backlogStatus'){
+                  updateUS4Status(bid, aveNo, status);
+                }
+            
             } else if (global_var.current_modal === 'loadTaskManagement') {
                 var aveNo = getAveNoInDrag4Task(dragElement);
                 var bid = $(dragElement).find('div.TaskContentText').attr('pid');
@@ -286,6 +294,9 @@
               updateTask4ShortChangePure(val, "fkTaskTypeId", bid);
                          
             }
+            }, '200');
+
+          
             
             e.stopPropagation();
             dragging = false;
