@@ -32,7 +32,7 @@ const taskManagement = {
                aria-hidden="true">
               <div class="modal-dialog rounded" style="max-width: 50%;" role="document">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
                               <span class="text">${lang_task.windowAddTask.addTask}</span>
                           </h6>
@@ -903,7 +903,7 @@ const taskManagement = {
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
-                      <div class="modal-header task-modal-header">
+                      <div class="justify-content-center modal-header task-modal-header">
                           <h6 class="modal-title task-modal-title">
                               <span class="text card-UserStory-header-text-code"></span>
                           </h6>
