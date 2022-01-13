@@ -3036,6 +3036,15 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
 #panel-css{
 
 }
+.dragging-arrange{
+    background: #ffffff24 !important;
+    box-shadow: none !important;
+    border: 1px dashed #f8f9fa94 !important;
+}
+.dragging-arrange >*{
+    visibility: hidden;
+    opacity: 0;
+}
 .us-managmenet-project-button div button.dropdown-toggle{
     width: 200px;
 }

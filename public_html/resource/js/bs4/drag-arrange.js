@@ -119,13 +119,14 @@
            left: leftOffset + dragDistanceX,
            top: topOffset + dragDistanceY
          });
- 
+         $($dragElement).addClass("dragging-arrange");
          shiftHoveredElement($clone, $dragElement, $elements);
  
        // check for drag threshold (drag has not started yet)
        } else if (Math.abs(dragDistanceX) > DRAG_THRESHOLD ||
            Math.abs(dragDistanceY) > DRAG_THRESHOLD) {
          $clone = clone($dragElement);
+         
  
          // initialize left offset and top offset
          // will be used in successive calls of this function
@@ -143,7 +144,7 @@
          $dragElement.parent().append($clone);
  
          // hide original dragged element
-         $dragElement.css('visibility', 'hidden');
+      ///   $dragElement.css('visibility', 'hidden');
  
          dragging = true;
        }
@@ -301,10 +302,10 @@
             e.stopPropagation();
             dragging = false;
             $clone.remove();
-            dragElement.style.visibility = 'visible';
+            ///dragElement.style.visibility = 'visible';
 
             $(dragElement).parent().trigger(dragEndEvent, [$(dragElement)]);
-
+            $(dragElement).removeClass("dragging-arrange");
              if (global_var.current_modal === 'loadLivePrototype') {
                 dropOrderSave(dragElement,e)
             }
@@ -346,8 +347,9 @@
  
      $clone.css({
        position: 'absolute',
-       width: $element.width(),
-       height: $element.height(),
+       width: $element.width()+11,
+       height: $element.height()+15,
+        transform: "rotate3d(1, 1, 1,5deg)", 
        'z-index': 100000 // very high value to prevent it to hide below other element(s)
      });
  
