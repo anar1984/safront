@@ -14292,7 +14292,11 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
                      var znm =  combo.find('[value="'+k+'"]').text().toUpperCase();
                      var orderNo =  combo.find('[value="'+k+'"]').attr('order');
                      div.append(that.genUsManagementZone(k,znm,orderNo,'manual'))
-                     that.getBacklogListByManualStatusId(k,'"new","ongoing"');
+                     var dkl = 0;
+                     if(dt.length===(l+1)){
+                        dkl  = 1;
+                     }
+                     that.getBacklogListByManualStatusId(k,'"new","ongoing"',dkl);
                  }
                  combo.val(dt);
                  combo.selectpicker('refresh');
@@ -14303,13 +14307,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
          })
             
     },
-    getBacklogListByManualStatusId:function (stl,statusList) {
+    getBacklogListByManualStatusId:function (stl,statusList,draggable) {
         data ={};//createTechizatTelebProducts
         data.fkTaskTypeId = '('+stl+')';
         data.backlogStatus = '('+statusList+')';
         data.startLimit = 0;
         data.endLimit = 20;
-        callApi('21122313051700845260',data,true,function (res) { 
+        callApi('21122313051700845260',data,false,function (res) { 
           
             var c4new = 0;
             $('.main_div_of_backlog_info_kanban_view_table_'+stl).html('');
@@ -14340,7 +14344,12 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
             }
             global_var.story_card_sprint_assign_checked = 0;
             global_var.story_card_label_assign_checked = 0;
-    
+            //$('.main_div_of_backlog_info_kanban_view_table_'+stl).find('.content-drag').arrangeable();
+           
+           if(draggable===1) {
+            contentArrangableUI()
+           }
+          //  contentArrangableUI();
             $('[data-toggle="popover"]').popover({html:true});
 
          })
@@ -15293,6 +15302,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
         var s = $('<div >')
                 .attr('bid', o.id)
+                .attr('pidd', o.fkProjectId)
                 .addClass('task-content content-drag')
                 .append($('<div class="task-content-header">')
                         .append($('<div class="ContentText">')
