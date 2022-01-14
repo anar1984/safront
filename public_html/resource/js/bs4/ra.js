@@ -2025,7 +2025,17 @@ $(document).on('click', '.generate-selected-fields-from-api-relation', function 
 })
 
 
+var load_project_list_for_story_card_api_relation = function () {
+    var select = $('select#addRelatedSourceModal-projectlist');
+    select.html('');
+    callService('serviceTmgetProjectList', {}, true, function (res) {
+        let obj = res.tbl[0].r;
+        select.append($('<option>').val('').text(''))
+            .append(obj.map((o) => `<option value='${o.id}'>${o.projectName}</option>`));
+            select.find('option[selec]')
+    })
 
+}
 
 
 
