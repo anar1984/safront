@@ -92,6 +92,7 @@ function nav_list_menu_story_card() {
   
 }
 
+
 $(document).on("click", '#task-list-statistic-4backlog .status-class',function (e) {
   $(this).toggleClass('active');
   var items  = $("#task-list-statistic-4backlog .status-class.active");
