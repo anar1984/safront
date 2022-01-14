@@ -8494,9 +8494,9 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
     if (!val) {
         return;
     }
-
+     Utility.addParamToUrl('current_fn_id',val)
+     global_var.current_fn_id = val;
     current_js_code_id = val;
-
     var json = initJSON();
     json.kv.id = val;
     var that = this;
@@ -8561,8 +8561,13 @@ function insertNewJsFuncionDesc() {
     });
 }
 
-function getAllJsCodeByProject() { 
-
+function getAllJsCodeByProject(id) { 
+      if(!id){
+         id =global_var.current_project_id;
+         if(global_var.current_project_id){
+             return;
+         }
+      }
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
@@ -8608,7 +8613,9 @@ function loadGlobalJsCode() {
             }
             if (current_js_code_id) {
                 table.val(current_js_code_id);
-            }
+            }else if (global_var.current_fn_id) {
+                table.val(global_var.current_fn_id);
+               }  
             table.change();
             table.selectpicker('refresh');
         }
@@ -8628,13 +8635,13 @@ function getAllJsCodeByProjectDetails(res) {
                     table.append(tr);
 
                 }
+                
     }
-    //    if (current_js_code_id) {
-    //        $(".jscode-row-tr[pid='" + current_js_code_id + "']").first().click();
-    //    } else {
-    //        $(".jscode-row-tr").first().click();
-    //    }
+    if (global_var.current_fn_id) {
+        table.val(global_var.current_fn_id);
+       }  
     table.selectpicker("refresh");
+
 }
 
 function showJSModal(jsId) {
@@ -8664,9 +8671,12 @@ function showJsCodeModal() {
     $('#jsCodeModal').remove();  
     $.get("resource/child/fn.html", function (html_string) {
         $("body").append(html_string);
+
+        loadProjectList2SelectboxByClassNochange('jsCodeModal_projectList_class');
         $('.jsCodeModal-selectpicker').selectpicker('refresh');
         $('#jsCodeModal').modal('show');
         getAllJsCodeByProject();
+
         generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
 
     });
@@ -13237,7 +13247,34 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 });
 
 
-function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
+ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, readOnly) {
+    require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
+    window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+    `], {type: 'text/javascript'}));
+
+    require(["vs/editor/editor.main"], function () {
+        window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
+            value: body,
+            language: lang,
+            automaticLayout: true,
+            lineNumbers: "on",
+
+            readOnly: readOnly,
+            roundedSelection: true,
+            scrollBeyondLastLine: true,
+            theme: theme,
+
+        });
+        loadProjectList2SelectboxByClass('jsCodeModal_projectList_class');
+    });
+}
+ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -15019,10 +15056,15 @@ $(document).on('click', '.loadFn', function (evt) {
          $('#jsCodeModal').css('z-index','1');
         $('#jsCodeModal .storecard-header-nav-section .close').remove();
         $('#jsCodeModal').addClass('show');
-        getAllJsCodeByProject();
-        generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+
+    
 
     });
+});
+$(document).on('change', '#jsCodeModal_projectList', function (evt) {
+    global_var.current_modal = $(this).val();
+    getAllJsCodeByProject($(this).val());
 });
 function callLoadDev() {
 
@@ -18576,7 +18618,7 @@ function loadMainProjectList4Class() {
 
 function loadProjectList2SelectboxByClassNochange(className) {
 
-    var cmd = $('.' + className);
+    var cmd = $('select.' + className);
     cmd.html('');
     var f = true;
     var pid = SACore.GetProjectKeys();
@@ -18602,7 +18644,7 @@ function loadProjectList2SelectboxByClassNochange(className) {
 }
 function loadProjectList2SelectboxByClass(className) {
 
-    var cmd = $('.' + className);
+    var cmd = $('select.' + className);
     cmd.html('');
     var f = true;
     var pid = SACore.GetProjectKeys();

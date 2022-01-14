@@ -1551,6 +1551,7 @@ var global_var = {
     "current_backlog_name": "",
     "current_us_input_id": "",
     "current_us_task_id": "",
+    "current_fn_id": "",
     "analytics_tab": "general",
     "default_us_input_component": "txt",
     "current_ipo_view": "gui",
