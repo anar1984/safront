@@ -36,6 +36,7 @@ var cr_project_desc_by_backlog = {};
 var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
+    "loadFn": "FN Board",
     "loadDev": "Development",
     "loadLivePrototype": "Live Prototype",
     "loadStoryCardMgmt": "Story Card Management",
@@ -8513,7 +8514,7 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             window.editor1.setValue(res.kv.fnBody);
 
-            $('#jsCodeModal_fnbody').val(res.kv.fnBody);
+          //  $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
@@ -8521,6 +8522,8 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
             $('#jsCodeModal_fntype').selectpicker('destroy');
             $('#jsCodeModal_fntype').val(res.kv.fnType);
             $('#jsCodeModal_fntype').selectpicker('refresh');
+            setOptionLangEditor(res.kv.fnType);
+
             $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
 
             jsCodeModal_checkbox_action();
@@ -8561,7 +8564,7 @@ function insertNewJsFuncionDesc() {
 function getAllJsCodeByProject() {
 
     if (!global_var.current_project_id)
-        return;
+  
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
@@ -8624,7 +8627,10 @@ function getAllJsCodeByProjectDetails(res) {
         var tr = $("<option>")
                 .attr("value", o.id)
                 .text(o.fnDescription)
-        table.append(tr);
+                if(o.fnDescription){
+                    table.append(tr);
+
+                }
     }
     //    if (current_js_code_id) {
     //        $(".jscode-row-tr[pid='" + current_js_code_id + "']").first().click();
@@ -8658,19 +8664,16 @@ var cdnh = true;
 var cdnh2 = true;
 
 function showJsCodeModal() {
-    $('.jsCodeModal-selectpicker').selectpicker('refresh');
-    $('#jsCodeModal').modal('show');
+    $('#jsCodeModal').remove();  
+    $.get("resource/child/fn.html", function (html_string) {
+        $("body").append(html_string);
+        $('.jsCodeModal-selectpicker').selectpicker('refresh');
+        $('#jsCodeModal').modal('show');
+        getAllJsCodeByProject();
+        generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
 
-    /* 
-     if (cdnh) {
-     
-     
-     cdnh = false;
-     //  jsEditorGenerate();
-     
-     } */
-    getAllJsCodeByProject();
-    //loadApisToComboOnJSCode();
+    });
+   
 }
 
 function guiClassModal(el) {
@@ -8681,7 +8684,6 @@ function guiClassModal(el) {
 
         cdnh2 = false;
     }
-
 
 }
 
@@ -15007,6 +15009,24 @@ $(document).on('click', '.loadDev', function (evt) {
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
+$(document).on('click', '.loadFn', function (evt) {
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadFn";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+
+    $.get("resource/child/fn.html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        $('.jsCodeModal-selectpicker').selectpicker('refresh');
+        $('#jsCodeModal').css('display','block');
+        $('#jsCodeModal').css('position','realtive');
+         $('#jsCodeModal').css('z-index','1');
+        $('#jsCodeModal .storecard-header-nav-section .close').remove();
+        $('#jsCodeModal').addClass('show');
+        getAllJsCodeByProject();
+        generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+
+    });
+});
 function callLoadDev() {
 
     $.get("resource/child/dev.html", function (html_string) {
@@ -18081,7 +18101,7 @@ function updateUS4Status(id, backlogNo, status) {
 function updateManualStatus4DragDrop(params) {
     
 }
-function updateTaskTypeDragDrop(bgId,dragelm) {
+function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     var json = {
         kv: {}
     };
@@ -18114,7 +18134,9 @@ function updateTaskTypeDragDrop(bgId,dragelm) {
                } 
                multipleClosedTask(list,dragelm);  
                } catch (error) {
-                  
+
+                $(firstZone).find('.content-drag').eq(oldIndex).before(dragelm);
+                Toaster.showError(("You don't have any task(s) related to this Story Card. Operation will be rejected."));
                }
                 
         },
@@ -18369,7 +18391,21 @@ function updateJSChange(el, ustype) {
     } catch (e) {
         return;
     }
+    setOptionLangEditor(val)
     updateJSChangeDetails(val, ustype);
+}
+function setOptionLangEditor(val) {
+    var ts  
+    if(val==='core'||val==='event'){
+        ts='js'
+    }
+    else if(val==='java'){
+        ts = 'java'
+    }
+    else if(val==='sql'){
+        ts = 'sql'
+    }
+    window.editor1.updateOptions({language: ts}); 
 }
 
 function updateJSChangeDetails(val, ustype) {

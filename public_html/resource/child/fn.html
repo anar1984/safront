@@ -1,0 +1,145 @@
+<div class="modal fade p-0  "  id="jsCodeModal" tabindex="-1" role="dialog" aria-labelledby="" style="z-index: 40001;display: block;position: relative;"
+aria-hidden="true">
+
+<div class="modal-dialog modal-lg m-0 h-100 position-fixed" style="width: 100%;max-width: 100%" role="document">
+    <div class="modal-content h-100">
+        <div class="modal-header p-0">
+
+            <div class="d-flex  storecard-header-nav-section" style="background-color: #525596;">
+                <div class="d-flex">
+                    <div class="">
+                        <input onchange='updateJSChange(this, "fnDescription")'
+                            style='background-color: transparent;border: none;color: white;'
+                            placeholder="Function Description" class="form-control "
+                            id="jsCodeModal_fndescription">
+
+                    </div>
+                </div>
+                <div style="width: inherit;" class="d-flex justify-content-center ">
+                    <div class="d-flex justify-content-left cs-col-project">
+                        <div class="mm-col">
+                            <span class="mm-title">Function Type</span>
+                            <select onchange='updateJSChange(this, "fnType")'
+                                class="form-control jsCodeModal_checkbox jsCodeModal-selectpicker "
+                                id="jsCodeModal_fntype">
+                                <option selected value='core'>Core</option>
+                                <option value='event'>Event Based</option>
+                                <option value='java'>Java</option>
+                                <option value='sql'>SQL Query</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-left cs-col-storecard">
+                        <div class="mm-col">
+                            <span class="mm-title">Function</span>
+                            <select class="form-control" data-live-search="true" data-actions-box="true"
+                                onchange='' id='jsCodeModal_fnlist' title="Project"></select>
+                        </div>
+                    </div>
+
+                    <div class="cs-col-storecard-general-setting">
+                        <div class="scg-button-box form-control">
+                            <button class="btn newin dropdown-toggle" href="#" role="button" id="copyMovePrint"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="fas fa-wrench" style=" margin-right: 6px; color: #fff;"
+                                    aria-hidden="true"></i> Tools</button>
+                            <div class="dropdown-menu " aria-labelledby="copyMovePrint"
+                                x-placement="bottom-start"
+                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
+                                <button class="dropdown-item firstbut " id="" onclick="copyJsCodeClassTo()"><a
+                                        href="#">Copy</a></button>
+                                <button class="dropdown-item firstbut " id="" pid="" bid="" lid=""
+                                    onclick="deleteJsCodeClass(this)"><a href="#">Delete</a></button>
+                                <br>
+                                <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-right " style="padding-right:10px;">
+                        <div class="mm-col">
+                            <input class="form-control" placeholder="New function" id="jsCodeModal_newfunction">
+
+                        </div>
+                        <div class="mm-col">
+                            <button type="button" class="btn btn-success"
+                                onclick="insertNewJsFuncionDesc()">Add</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="button" class="m-0 p-2 close" style="color: white;" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+        </div>
+        <div class="modal-body p-0" style="font-size: 12px;">
+
+            <div class="d-flex h-100 flex-wrap">
+
+                <div class="w-100">
+                    <div class="row h-100">
+
+
+                        <div class="col-12 jscode-corepart jscode-zad  jscode-zad-core">
+                            <b>function</b> <input onchange='updateJSChange(this, "fnCoreName")'
+                                placeholder="Function Name" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_javafncorename">
+                            <b>(</b><input onchange='updateJSChange(this, "fnCoreInput")'
+                                placeholder="Input Patameters" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fncoreinput"><b> ){</b>
+                        </div>
+
+                        <div class="col-12 jscode-eventpart jscode-zad  jscode-zad-event" style="display:none;">
+                            <b>$(document).on("</b><input onchange='updateJSChange(this, "fnEvent")'
+                                placeholder="Function Event. ex:click" class="form-control"
+                                style='border-color:white;display:inline-flex;width:25%'
+                                id="jsCodeModal_fnevent">
+                            <b>","</b><input onchange='updateJSChange(this, "fnEventObject")'
+                                placeholder="Class Name. ex: .customer" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fneventobject"> <b>", function(e){</b>
+                        </div>
+
+
+                        <div class="col-12 jscode-javapart jscode-zad  jscode-zad-java" style='display:none;'>
+                            <button type="button" class="btn btn-secondary"
+                                onclick="compileJava()">Compile</button><br>
+                            <b>Library</b> <textarea onchange='updateJSChange(this, "libraryUrl")'
+                                placeholder="import util.io.*;" class="form-control"
+                                id="jsCodeModal_libraryurl"></textarea>
+                            <b>public static Carrier </b> <input onchange='updateJSChange(this, "fnCoreName")'
+                                placeholder="Function Name" class="form-control"
+                                style='border-color:white;display:inline-flex;width:30%'
+                                id="jsCodeModal_fncorename">
+                            <b>(</b> Carrier carrier<b> ){</b>
+                        </div>
+
+                        <div class="col-12 text-left h-100">
+
+                            <!--  <span class="btn btn-secondary editor_full_screenBt"><i
+                                 class="fas fa-expand"></i></span> -->
+                            <div onchange='' placeholder="Function Body" rows=15
+                                style="height: calc(100% - 80px); width: 100%;" id="jsCodeModal_fnbody"></div>
+
+                            <span class="jscode-corepart"> }</span>
+                            <span class="jscode-eventpart"> })</span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
