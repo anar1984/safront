@@ -18081,7 +18081,7 @@ function updateUS4Status(id, backlogNo, status) {
 function updateManualStatus4DragDrop(params) {
     
 }
-function updateTaskTypeDragDrop(bgId) {
+function updateTaskTypeDragDrop(bgId,dragelm) {
     var json = {
         kv: {}
     };
@@ -18091,9 +18091,9 @@ function updateTaskTypeDragDrop(bgId) {
     }
     json.kv.fkBacklogId = bgId;
     json.kv.pageNo = 1;
-    json.kv.searchLimit = 200;
-    json.kv.considerAll = '1';
-    json.kv.fkAssigneId =  global_var.current_ticker_id;
+    json.kv.searchLimit = 50;
+    json.kv.taskStatus = "'new','ongoing','waiting'";
+    json.kv.fkAssigneeId = "'"+global_var.current_ticker_id +"'";
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -18105,25 +18105,75 @@ function updateTaskTypeDragDrop(bgId) {
         async: false,
         success: function (res) {
               var  list  = ""
-               var tbl = res.tbl[0].r;
+              
+               try {
+                var tbl = res.tbl[0].r;
                 for (let i = 0; i < tbl.length; i++) {
-                     const o = tbl[i];
-                      list += o.id +",";
-                }  
-                multipleClosedTask(list);
+                    const o = tbl[i];
+                     list += o.id +",";
+               } 
+               multipleClosedTask(list,dragelm);  
+               } catch (error) {
+                  
+               }
+                
         },
         error: function () {
             Toaster.showError(('somethingww'));
         }
     });
 }
-function multipleClosedTask(list) {
+function multipleClosedTask(list,dragelm) {
     var data = {};
     data.fkTaskId  = list;
-   callService('serviceTmGetBacklogCoreInfoByIdNew',data,true,function (res) {
-         
+   callService('serviceTmcloseMultipleBacklogTasks',data,true,function (res) {
+    getDefautUserByTaskTypeId(dragelm);
          
    }) 
+}
+function getDefautUserByTaskTypeId(dragelm) {
+    var tasTypeId  = $(dragelm).closest(".task-column").attr("status");
+    var bgId  = $(dragelm).attr("bid");
+    var pid  = $(dragelm).attr("pidd");
+    var data = {};
+      data.id  = tasTypeId;
+   callApi('22011222234409531876',data,true,function (res) {
+        var asId = res.kv.fkAssigneeId;
+     insertAutoTaskOnDrag(bgId,asId,pid,dragelm)
+         
+   }) 
+}
+
+function insertAutoTaskOnDrag(bgId,asId,prid,dragelm) {
+    var txt  = $(dragelm).find("span.headerContentText").text();
+    var nm  = $(dragelm).closest(".task-column").find(".headerInputColumn").text();
+    var json = {
+        kv: {}
+    };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv.fkBacklogId = bgId;
+    json.kv.taskName = txt +"(From "+nm+")";
+    json.kv.fkProjectId = prid;
+    json.kv.fkAssigneeId = asId;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewBacklogTaskCoreNew",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: false,
+        success: function (res) {
+             
+        },
+        error: function () {
+            Toaster.showError(('somethingww'));
+        }
+    });
 }
 function contentArrangableUI() {
     try {
