@@ -15451,6 +15451,83 @@ function loadUsersAsOwner() {
     $('#story-card-owner-list').val(fkOwnerId)
     $('#story-card-owner-list').selectpicker('refresh');
 }
+
+// nezaretci-avatar-list
+function loadUsersAsNezaretci() {
+    $('#nezaretci-avatar-list').html('');
+    $('#nezaretci-user-list').html('');
+    var keys = SAProjectUser.GetKeys();
+    var div1 = $(`<option
+    data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
+    Unassigned</option>`);
+    $('#nezaretci-user-list').append(div1);
+    var fkOwnerId = SACore.GetBacklogDetails(global_var.current_backlog_id, "fkOwnerId");
+    for (var i = 0; i < keys.length; i++) {
+        var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
+        var userName = SAProjectUser.GetDetails(keys[i], "userName");
+        var id = SAProjectUser.GetDetails(keys[i], "fkUserId");
+        var img = (userImage) ?
+                fileUrl(userImage) :
+                fileUrl(new User().getDefaultUserprofileName());
+        var div = $(`<option value='${id}'
+        data-content="<div pid='${keys[i]}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+        ${userName}</option>`);
+        $('#nezaretci-user-list').append(div)
+    }
+
+    $('#nezaretci-user-list').val(fkOwnerId)
+    $('#nezaretci-user-list').selectpicker('refresh');
+}
+$(document).on('change','select#nezaretci-user-list', function (e) {
+    var selected = $(this).find("option:selected") ;
+    var dataContent = selected.attr('data-content');
+    var srcAttr = $(dataContent).find('img').attr('src');
+    var nameAttr = $(dataContent).find('span').text();
+   var has = $('#nezaretci-avatar-list').find("#"+selected.val())
+    if(has.length <1){
+        $('#nezaretci-avatar-list').append(`<li id="${selected.val()}">
+        <div class="item-click">
+            <div class="circular--portrait">
+            <img src="${srcAttr}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAttr}">
+            </div>
+            <i class="fa fas fa-close removed-nezaretci-btn"></i>
+        </div>
+    </li>`);
+    $(this).find('[value="'+selected.val()+'"]').remove();
+    $(this).selectpicker('refresh');
+    }
+     
+    $('[data-toggle="popover"]').popover({
+        html:true
+    })
+});
+
+function ReturnLoadUsersAsNezaretci(elm) {
+
+    var liid = $(elm).attr('id');
+       userImage = SAProjectUser.GetDetails(liid, "userImage");
+            var userName = SAProjectUser.GetDetails(liid, "userName");
+            var img = (userImage) ?
+                    fileUrl(userImage) :
+                    fileUrl(new User().getDefaultUserprofileName());
+            var div = $(`<option value='${liid}'
+            data-content="<div pid='${liid}'><img class='Assigne-card-story-select-img owner' src='${img}' alt='avatar' srcset=''><span class='story-card-owner-name'>${userName}</span></div>">
+            ${userName}</option>`);
+            $('#nezaretci-user-list').append(div)
+        
+
+    $('#nezaretci-user-list').val(liid)
+    $('#nezaretci-user-list').selectpicker('refresh');
+}
+
+$(document).on('click','#nezaretci-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
+   
+ var elm = $(this).closest("li")
+        ReturnLoadUsersAsNezaretci(elm);
+        $(this).closest('li').remove();
+     $('select#nezaretci-user-list').selectpicker('refresh');
+});
+
 //$(document).on('click', '.dropdownMenuButtonCss', function (evt) {
 //   
 //    new Sprint().load();
