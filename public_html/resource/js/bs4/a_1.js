@@ -8561,10 +8561,7 @@ function insertNewJsFuncionDesc() {
     });
 }
 
-function getAllJsCodeByProject() {
-
-    if (!global_var.current_project_id)
-  
+function getAllJsCodeByProject() { 
 
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
