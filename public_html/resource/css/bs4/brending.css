@@ -4246,7 +4246,18 @@ hr.hr-ss {
     top: auto;
 }
 .bug-list-column-task-status [class*="us-item-status-"] {
-
+    vertical-align: middle;
+    display: inline-block;
+    padding: 0px 6px;
+    white-space: nowrap;
+    width: auto;
+    height: 19px;
+    border-radius: 60px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
 }
 .bug-list-column-task-status .dropdown-toggle:after{
     margin-top: 0;
