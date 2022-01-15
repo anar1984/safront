@@ -3536,7 +3536,7 @@ hr.hr-ss {
     -ms-flex-pack: justify;
     justify-content: space-between;
 }
-.storecard-header-nav-section .scg-button-box > button, .storecard-header-nav-section button.live-prototype-show-story-card-hard-refresh, #btnGroupDrop1, #backBacklogBtn-block {
+.storecard-header-nav-section .scg-button-box > button, .storecard-header-nav-section button.live-prototype-show-story-card-hard-refresh, .btnGroupDrop1, .backBacklogBtn-block {
     box-shadow: none !important;
     background-color: transparent;
     border-color: transparent;
@@ -3555,7 +3555,7 @@ hr.hr-ss {
     font-weight: 400;
     font-size: 11px;
 }
-.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle, #btnGroupDrop1:hover, #backBacklogBtn-block:hover {
+.storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled).active, .storecard-header-nav-section .scg-button-box > button:not(:disabled):not(.disabled):active, .storecard-header-nav-section .scg-button-box.show>.btn-light.dropdown-toggle, .btnGroupDrop1:hover, .backBacklogBtn-block:hover {
     color: #03396C !important;
     background-color: #dfeef7;
     border-color: #dfeef7;
@@ -4158,12 +4158,15 @@ hr.hr-ss {
     margin-left: 9px;
 }
 .bugListTable tbody .bug-tr td.bug-list-column-project {
+    width: auto;
+}
+.bugListTable tbody .bug-tr td.bug-list-column-project .get-data-group {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
-    width: 100%;
-    max-width: 140px !important;
+    width: 95%;
+    text-align: left;
 }
 .bugListTable tbody .bug-tr td.bug-list-column-story-card .ellipsis-story-card{
     white-space: nowrap;
@@ -4709,6 +4712,9 @@ table.lbl-list-table tr td {
   .issue-managment-add-task .cs-input-group .bootstrap-select{
     width: 100% !important;
     max-width: 410px;
+  }
+  .issue-managment-add-task .cs-input-group.select-max-width .bootstrap-select{
+    max-width: 100% !important;
   }
   .issue-managment-add-task .horizontal .checkcontainer {
       margin-right: 20px;
@@ -6248,7 +6254,7 @@ table.lbl-list-table tr td {
     top: 50%;
     margin-top: 10px;
 }
-.storycard_inputs_table tbody tr td:hover .dropdown {
+.storycard_inputs_table tbody tr td:hover> .dropdown {
     display: block;
 }
 .storycard_inputs_table .add_descriotion_btn {
@@ -6862,7 +6868,7 @@ div.cs-task-item-in-box {
     border-color: rgba(255, 255, 255, 0.5);
     outline: 0;
     box-shadow: none;
-    padding: 16px 10px 16px 30px;
+    padding: 5px 10px 5px 30px;
 }
 .has-search .form-control:focus::placeholder, .has-search:focus-within .form-control-feedback {
     color: #03396C;

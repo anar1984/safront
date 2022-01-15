@@ -2468,7 +2468,7 @@ const taskManagement = {
                         <div class="form-group has-search mr-2">
                         <div class="has-search-in">
                             <span class="fa fa-search form-control-feedback" aria-hidden="true"></span>
-                            <input data-type="search_text" type="text" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
+                            <input data-type="search_text" type="search" aria-autocomplete="list" aria-expanded="false" class="bug-filter form-control" placeholder="Axtar..." id="bug_filter_search_text">
                         </div>
                         </div>
                        <!-- <div class="info-box cs-input-group" style="padding:0;">
@@ -3533,7 +3533,7 @@ const taskManagement = {
                                 })
                             )
                             .append($('<td>').addClass('bug-list-column')
-                                .attr("style", "width:140px;")
+                                .attr("style", "max-width:200px;")
                                 .addClass('bug-list-column-project')
                                 .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
                                 .append($('<i class="fa fa-filter">')
@@ -3550,7 +3550,7 @@ const taskManagement = {
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column')
                                 .addClass('bug-list-column-assignee')
-                                .append(genUserTrblock(o.userName, img))
+                                .append(genUserTrblock(o.userName, img,"Assigne"))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                                     .css("display", "none")
@@ -3564,7 +3564,7 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .css('white-space', 'nowrap').css("text-align", 'center')
                                 .addClass('bug-list-column-created-by ')
-                                .append(genUserTrblock(o.createByName, createdByImg))
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by"))
                                 .append($('<i class="fa fa-filter">')
                                     .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                                     .css("display", "none")
