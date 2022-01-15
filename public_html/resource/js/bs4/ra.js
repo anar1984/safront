@@ -344,6 +344,7 @@ function loadStoryCardInfo4StoryCard(el) {
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
         loadUsersAsOwner();
+        loadUsersAsNezaretci();
        // setStoryCardOwner();
         setStoryCardCreatedBy();
         setStoryCardUpdatedBy();

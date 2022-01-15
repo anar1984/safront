@@ -43,7 +43,7 @@
                                 <button class="dropdown-item firstbut "   onclick="addUserStoryNewModal()">New Story Card</button>  <!-- 20.08.2020 -->
                                 <button class="dropdown-item firstbut "   onclick="window.print();">Print</button>  <!-- 20.08.2020 -->
                                 <button class="dropdown-item firstbut " id="pdf"  onclick="savePdf()">Save as PDF</button>
-                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()">Copy URL</button>
+                                <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralView()">Share URL</button>
                                 <button class="dropdown-item firstbut " onclick="new UserStory().copyGeneralPrototypeView()" >Copy Prototype URL</button>
                                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="20042316073405409986" bid="20071210041301137431" lid="" onclick="new UserStory().shareGeneralView(this)" d="backlog">View Story Card</button>
                                 <button class="dropdown-item firstbut " id="shareGeneralView" pid="" bid="" lid="" onclick="new UserStory().shareGeneralPrototypeView(this)" >View Live Prototype</button>
@@ -175,7 +175,7 @@
                             <div class="row">
                                 <div class="col-12" id="storycard_filelis1t">
                                     <br>
-                                    <div class="row" id="storycard_filelist"></div>
+                                    <div class="d-flex flex-nowrap" id="storycard_filelist"></div>
                                 </div>
                             </div>
                             <div class="col-12 text-center" id="pinnedImages">
@@ -530,8 +530,8 @@
                         <div class="toggle-box-6 open">
                            <div class="user-addons-box p-2 cs-box-background">
                                 <div class="user-avatar-list mb-1">
-                                    <ul>
-                                        <li>
+                                    <ul id="nezaretci-avatar-list">
+                                        <!-- <li>
                                             <div class="item-click">
                                                 <div class="circular--portrait">
                                                     <img src="https://media-exp1.licdn.com/dms/image/C5603AQFaISdrl8b82g/profile-displayphoto-shrink_100_100/0/1517498104463?e=1645660800&v=beta&t=naVWBpYIQlj23vvvkG1BdrfsiD7d8_Q7FhXV1yiFptg" alt="" title="Taleh Hasan">
@@ -554,14 +554,18 @@
                                                 </div>
                                                 <i class="fa fas fa-close"></i>
                                             </div>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                                 <div class="input-group">
-                                    <input class="form-control py-2 border-right-0 border" type="text" id="user-search">
+                                    <select name="" class="nezaretci-user-list" id="nezaretci-user-list" data-live-search="true">
+                                        
+                                    </select>
+
+                                    <!-- <input class="form-control py-2 border-right-0 border" type="text" id="user-search">
                                     <span class="input-group-append">
                                         <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-                                    </span>
+                                    </span> -->
                                 </div>
                            </div>
                         </div>

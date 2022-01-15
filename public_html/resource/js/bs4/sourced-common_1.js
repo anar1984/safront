@@ -19041,7 +19041,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                         .attr('onclick', 'new UserStory().setCommentFileImageViewerUrl("' + name + '")')
                         .attr('alt', name));
 
-                div4PinnedImage.append($('<i></i>')
+                div4PinnedImage.append($('<span></span>')
                         .addClass('lbl-action')
                         .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
                         .append('  ')
@@ -19053,7 +19053,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             $('#pinnedImages').append(div4PinnedImage);
 
             var div2 = $('<div></div>').addClass(cell);
-            var div12lik = $('<div></div>').addClass("col-12").addClass('file_upload_div');
+            var div12lik = $('<div></div>').addClass('file_upload_div');
             if (global_var.image_formats.includes(fileFormat)) {
                 div12lik.append($('<img></img>')
                         .attr('src', fileUrl(name))
@@ -19084,15 +19084,17 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                                 .addClass('comment_img')
                                 .attr('alt', name)));
             }
-            div12lik.append(' <b> ' + add3Dots2Filename(name) + '</b><br>');
+            div12lik.append('<span class="unpin-img-title"> ' + add3Dots2Filename(name) + '</span>');
 
 
 
-            div12lik.append($('<a target="_blank"></a>')
-                    .attr("href", fileUrlVar)
+            div12lik.append($('<div>')
+                    .addClass('hover-detail-pinned')
+                    .append('<a target="_blank"></a>')
+                        .attr("href", fileUrlVar)
                     .append($('<i class="fa fa-download"></i>'))
-                    .append('  '))
-                    .append($('<i></i>')
+                    .append('  ')
+                    .append($('<span></span>')
                             .addClass('lbl-action')
                             .append($('<i class="fa fa-trash-o" aria-hidden="true"></i>'))
                             .append('  ')
@@ -19101,11 +19103,11 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                     .append(global_var.image_formats.includes(fileFormat) && !isPinned
                             ? $('<i></i>')
                             .addClass('lbl-action')
-                            .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
+                            .append($('<i class="fa fa-thumb-tack pinned-img-off" aria-hidden="true"></i>'))
                             .append('  ')
                             .attr('onclick', 'new UserStory().pinImageToStoryCard(this,"' + id + '","' + name + '")')
                             : "")
-                    ;
+                        );
             div2.append(div12lik);
             div.append(div2);
 
@@ -19253,7 +19255,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
 
                 div4PinnedImage.append($('<i></i>')
                         .addClass('lbl-action')
-                        .append($('<i class="fa fa-thumb-tack" aria-hidden="true"></i>'))
+                        .append($('<i class="fa fa-thumb-tack pinned-img-on" aria-hidden="true"></i>'))
                         .append('  ')
                         .attr('onclick', 'new UserStory().unpinImageToStoryCard(this,"' + fid + '")')
                         );
@@ -20197,7 +20199,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             try {
 
                 $("#storycard_filelist")
-                        .append(this.generateCommentFileLine4StoryCard(resId[i].trim(), res[i].trim(), "col-4"));
+                        .append(this.generateCommentFileLine4StoryCard(resId[i].trim(), res[i].trim(), "cs-img-col"));
             } catch (e) {
             }
         }
