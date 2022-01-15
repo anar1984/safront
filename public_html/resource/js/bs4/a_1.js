@@ -13547,31 +13547,60 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
 
-function getIframeBlock(pid, css, js, bodys) {
+function getIframeBlock(elm) {
+     
+    var $iframe = $(`<iframe>`)
+                             .addClass("h-100 w-100")
+                             .attr("src",'iframe.html')
+                             .attr("id",'result-iframe');
+
+    $(elm).html($iframe);
+     
+}
+function iframeLoaded() {
+    var pid = global_var.current_backlog_id;
+    var js = window.editorJSGround.getValue();
+
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
+        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var oldmodal = global_var.current_modal;
+        
+        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+    var css = window.editorCSSGround.getValue();
+    var block = getIframeBlockInside(pid, css, js, html);
+    $("#result-iframe").contents().find('body').html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+}
+function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
     // var cssLink  = `<link src="${urlGl}/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
-
     var body = $(`<div class='redirectClass h-100' id='${pid}'>`).html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
-    var jsBlock = $(body).find('#js-function-list-for-story-card')
+    var jsBlock = $(body).find('#js-function-list-for-story-card');
+    var script  = `<script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`
+    $(body).append(script);
     if (cssBlock.length > 0) {
         $(body).find('#css-function-list-for-story-card').text(css);
-
     } else {
         $(body).append($('<style id="js-function-list-for-story-card">').text(css));
-
     }
     if (jsBlock.length > 0) {
         $(body).find('#js-function-list-for-story-card').text(js);
     } else {
         $(body).append($('<script id="js-function-list-for-story-card">')
-                     // .text("(function(){"+js+"})(window,document);")
-                      .text(js));
+                     //.text("(function(){"+js+"})(window,document);")
+                       .text(js));
     }
-    return body;
+    var dt  = $("<div>").html(body);
+    return dt.html();
     var $iframe = $("<div class='overflow-hidden'>")
-            .append(body)
-
+            .append(body);
     return $iframe.html();
 }
 
@@ -13582,41 +13611,36 @@ $(document).on("change", '#show_hidden_carrier', function (e) {
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-
+    var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-        var oldmodal = global_var.current_modal;
-        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
         insertHtmlSendDbBybacklogId(html);
     }
-    var css = window.editorCSSGround.getValue();
-
-
-    var block = getIframeBlock(pid, css, js, html);
-
-    elm.html(block);
-    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+    getIframeBlock(elm);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-
-
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id, elm.html());
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
 
-function setBacklogAsHtmlCodeGround(backlogId, html) {
-
-   if (!backlogId) {
+function setBacklogAsHtmlCodeGround(backlogId) {
+    if (!backlogId) {
         return;
     }
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
+        var resTmp = SAInput.toJSONByBacklog(backlogId);
+        var oldmodal = global_var.current_modal;
+        global_var.current_modal = '';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+ 
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
     json.kv.backlogHtml =   html ;
@@ -13646,27 +13670,8 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = global_var.current_backlog_id;
-    var js = window.editorJSGround.getValue();
-
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-        var oldmodal = global_var.current_modal;
-        
-        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
-    } else {
-        var html = window.editorHTMLGround.getValue();
-    }
-
-    var css = window.editorCSSGround.getValue();
-
-    var block = getIframeBlock(pid, css, js, html);
-
-    elm.html(block);
-    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+   
+    getIframeBlock(elm);
 
 
 });
@@ -14418,7 +14423,7 @@ function loadHistoryBysqlId(fkTableId) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14580,7 +14585,7 @@ function loadHistoryByBacklogStId(backlog_id) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" +fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14806,7 +14811,7 @@ function GenerateHistoryTable() {
                     .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
                     .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
                     .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>")
-                    .append("<img src='https://app.sourcedagile.com/api/get/files/" + obj.logoUrl + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
+                    .append("<img src='" +fileUrl(obj.logoUrl) + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
 
                     )
         }
