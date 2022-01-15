@@ -8561,7 +8561,8 @@ function insertNewJsFuncionDesc() {
     });
 }
 
-function getAllJsCodeByProject(id) { 
+function getAllJsCodeByProject() { 
+    var id  = $('#jsCodeModal_projectList').val();
       if(!id){
          id =global_var.current_project_id;
          if(global_var.current_project_id){
@@ -8570,6 +8571,7 @@ function getAllJsCodeByProject(id) {
       }
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
+    json.kv.fnType = $("#jsCodeModal_fntype").val();
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -8591,6 +8593,7 @@ function getAllJsCodeByProject(id) {
 function loadGlobalJsCode() {
 
     var json = initJSON();
+    json.kv.fnType = $("#jsCodeModal_fntype").val();
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -10178,7 +10181,7 @@ function firstLetterToLowercase(str) {
     return str;
 }
 
-function addNewSourceCodeFromDescNew() {
+function addNewSourceCodeFromDescNew(trigg) {
     var val = $('#addNewRelatedSourceCodeModal-newapi').val();
     var type = $('#addNewRelatedSourceCodeModal-type').val();
     if (!val) {
@@ -10209,17 +10212,29 @@ function addNewSourceCodeFromDescNew() {
         async: true,
         success: function (res) {
             var descId = $('#addNewRelatedSourceCodeModal-id').val();
-            var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
-
-
-            var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
-            select.append($("<option>")
-                    .attr('value', apidId)
-                    .text(apidId));
-            select.val(apidId)
-            select.change();
-            $('#addNewRelatedSourceCodeModal-newapi').val('');
-            $("#addNewRelatedSourceCodeModal"), moadl("hide");
+            if(descId==='loadFn'){
+                getAllJsCodeByProject();
+                loadCurrentBacklogProdDetails();
+                $('#jsCodeModal_newfunction').val('');
+             
+                $('select#jsCodeModal_fnlist').val(res.kv.id)
+                $('select#jsCodeModal_fnlist').selectpicker("refresh");
+                $('select#jsCodeModal_fnlist').change();
+                $('#addNewRelatedSourceCodeModal-newapi').val('');
+                $("#addNewRelatedSourceCodeModal").modal("hide");
+            }else{
+                
+                var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
+                var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+                select.append($("<option>")
+                        .attr('value', apidId)
+                        .text(apidId));
+                select.val(apidId)
+                select.change();
+                $('#addNewRelatedSourceCodeModal-newapi').val('');
+                $("#addNewRelatedSourceCodeModal").modal("hide");
+            }
+            
             return
 
         },
@@ -10289,9 +10304,10 @@ function addRelatedCallfn(el) {
     loadRelatedSourceCode4Relation();
     loadRelatedGlobalSourceCode4Relation();
 }
-function addNewRelatedCallfn(el) {
-    var descId = $(el).closest('tr').attr('pid')
-    $('#addNewRelatedSourceCodeModal-id').val(descId);
+function addNewRelatedCallfn(el,trig) {
+    var descId = $(el).closest('tr').attr('pid');
+    
+        $('#addNewRelatedSourceCodeModal-id').val(descId?descId:trig);
     $('#addNewRelatedSourceCodeModal').modal('show');
 }
 function loadRelatedSourceCode4Relation() {
@@ -13583,8 +13599,7 @@ function getIframeBlockInside(pid, css, js, bodys) {
     var body = $(`<div class='redirectClass h-100' id='${pid}'>`).html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
     var jsBlock = $(body).find('#js-function-list-for-story-card');
-    var script  = `<script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`
-    $(body).append(script);
+
     if (cssBlock.length > 0) {
         $(body).find('#css-function-list-for-story-card').text(css);
     } else {
@@ -15059,17 +15074,18 @@ $(document).on('click', '.loadFn', function (evt) {
         $('#jsCodeModal').css('display','block');
         $('#jsCodeModal').css('position','realtive');
          $('#jsCodeModal').css('z-index','1');
+         $('#jsCodeModal .modal-body').addClass('h-100');
         $('#jsCodeModal .storecard-header-nav-section .close').remove();
         $('#jsCodeModal').addClass('show');
-        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'java', 'vs-dark');
 
     
 
     });
 });
 $(document).on('change', '#jsCodeModal_projectList', function (evt) {
-    global_var.current_modal = $(this).val();
-    getAllJsCodeByProject($(this).val());
+    global_var.current_project_id = $(this).val();
+    getAllJsCodeByProject();
 });
 function callLoadDev() {
 

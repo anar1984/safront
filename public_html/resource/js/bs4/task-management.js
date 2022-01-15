@@ -4081,19 +4081,22 @@ function getCurrentModalId4UsTask() {
         idb = '21110810291103705004'
     }
     if (global_var.current_modal === 'loadBusinessService') {
-        idb = '21082003320807935137'
+        idb = '21082003320807935137';
     }
     if (global_var.current_modal === 'loadActivityDiagram') {
-        idb = ''
+        idb = '';
     }
     if (global_var.current_modal === 'loadSourceActivity') {
-        idb = ''
+        idb = '';
     }
     if (global_var.current_modal === 'loadEntityDiagram') {
-        idb = '21082003322903142571'
+        idb = '21082003322903142571';
     }
     if (global_var.current_modal === 'loadSqlBoard') {
-        idb = '21102000014805402484'
+        idb = '21102000014805402484';
+    }
+    if (global_var.current_modal === 'loadFn') {
+        idb = '22011514411404426625';
     }
 
     return idb;
