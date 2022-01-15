@@ -50,6 +50,9 @@
     var dragging = false;
     var $clone;
     var dragElement;
+    var firstZone;
+    var endZone;
+    var oldIndex;
     var originalClientX, originalClientY; // client(X|Y) position before drag starts
     var $elements; // list of elements to shift between
     var touchDown = false;
@@ -80,6 +83,7 @@
       // bindings to trigger drag on element
       var dragSelector = options.dragSelector;
       var self = this;
+      
       var $this = $(this);
 
       if (dragSelector) {
@@ -92,10 +96,13 @@
         // a mouse down/touchstart event, but still drag doesn't start till threshold reaches
         // stopPropagation is compulsory, otherwise touchmove fires only once (android < 4 issue)
         e.stopPropagation();
+        firstZone = $this.parent();
+        oldIndex = $this.index();
         touchDown = true;
         originalClientX = e.clientX || e.originalEvent.touches[0].clientX;
         originalClientY = e.clientY || e.originalEvent.touches[0].clientY;
         dragElement = self;
+      
       }
     });
 
@@ -245,14 +252,15 @@
       if (dragging) {
         // remove the cloned dragged element and
         // show original element back
-
+   
         //e.stopPropagation();
         dragging = false;
         $clone.remove();
+        endZone = $(dragElement).parent();
         ///dragElement.style.visibility = 'visible';
         $(dragElement).parent().trigger(dragEndEvent, [$(dragElement)]);
         $(dragElement).removeClass("dragging-arrange");
-        
+          
           if (global_var.current_modal === 'loadStoryCardMgmt') {
             var aveNo = getAveNoInDrag(dragElement);
             var bid = $(dragElement).find('div.ContentText').attr('pid');
@@ -260,7 +268,7 @@
             var groupBy = localStorage.getItem('usm_groupBy')
             if (groupBy === 'manualStatus') {
 
-              updateTaskTypeDragDrop(bid, dragElement);
+              updateTaskTypeDragDrop(bid, dragElement,oldIndex,firstZone);
             } else if (groupBy === 'backlogStatus') {
               updateUS4Status(bid, aveNo, status);
             }

@@ -36,6 +36,7 @@ var cr_project_desc_by_backlog = {};
 var cr_js_list = {};
 var moduleList = {
     "loadStoryCard": "Story Card",
+    "loadFn": "FN Board",
     "loadDev": "Development",
     "loadLivePrototype": "Live Prototype",
     "loadStoryCardMgmt": "Story Card Management",
@@ -8493,9 +8494,9 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
     if (!val) {
         return;
     }
-
+     Utility.addParamToUrl('current_fn_id',val)
+     global_var.current_fn_id = val;
     current_js_code_id = val;
-
     var json = initJSON();
     json.kv.id = val;
     var that = this;
@@ -8513,7 +8514,7 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
             $('#jsCodeModal_javafncorename').val(res.kv.fnCoreName);
             window.editor1.setValue(res.kv.fnBody);
 
-            $('#jsCodeModal_fnbody').val(res.kv.fnBody);
+          //  $('#jsCodeModal_fnbody').val(res.kv.fnBody);
             $('#jsCodeModal_fncoreinput').val(res.kv.fnCoreInput);
             $('#jsCodeModal_fnevent').val(res.kv.fnEvent);
             $('#jsCodeModal_fneventobject').val(res.kv.fnEventObject);
@@ -8521,6 +8522,8 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
             $('#jsCodeModal_fntype').selectpicker('destroy');
             $('#jsCodeModal_fntype').val(res.kv.fnType);
             $('#jsCodeModal_fntype').selectpicker('refresh');
+            setOptionLangEditor(res.kv.fnType);
+
             $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
 
             jsCodeModal_checkbox_action();
@@ -8558,11 +8561,13 @@ function insertNewJsFuncionDesc() {
     });
 }
 
-function getAllJsCodeByProject() {
-
-    if (!global_var.current_project_id)
-        return;
-
+function getAllJsCodeByProject(id) { 
+      if(!id){
+         id =global_var.current_project_id;
+         if(global_var.current_project_id){
+             return;
+         }
+      }
     var json = initJSON();
     json.kv.fkProjectId = global_var.current_project_id;
     var that = this;
@@ -8608,7 +8613,9 @@ function loadGlobalJsCode() {
             }
             if (current_js_code_id) {
                 table.val(current_js_code_id);
-            }
+            }else if (global_var.current_fn_id) {
+                table.val(global_var.current_fn_id);
+               }  
             table.change();
             table.selectpicker('refresh');
         }
@@ -8624,14 +8631,17 @@ function getAllJsCodeByProjectDetails(res) {
         var tr = $("<option>")
                 .attr("value", o.id)
                 .text(o.fnDescription)
-        table.append(tr);
+                if(o.fnDescription){
+                    table.append(tr);
+
+                }
+                
     }
-    //    if (current_js_code_id) {
-    //        $(".jscode-row-tr[pid='" + current_js_code_id + "']").first().click();
-    //    } else {
-    //        $(".jscode-row-tr").first().click();
-    //    }
+    if (global_var.current_fn_id) {
+        table.val(global_var.current_fn_id);
+       }  
     table.selectpicker("refresh");
+
 }
 
 function showJSModal(jsId) {
@@ -8658,19 +8668,19 @@ var cdnh = true;
 var cdnh2 = true;
 
 function showJsCodeModal() {
-    $('.jsCodeModal-selectpicker').selectpicker('refresh');
-    $('#jsCodeModal').modal('show');
+    $('#jsCodeModal').remove();  
+    $.get("resource/child/fn.html", function (html_string) {
+        $("body").append(html_string);
 
-    /* 
-     if (cdnh) {
-     
-     
-     cdnh = false;
-     //  jsEditorGenerate();
-     
-     } */
-    getAllJsCodeByProject();
-    //loadApisToComboOnJSCode();
+        loadProjectList2SelectboxByClassNochange('jsCodeModal_projectList_class');
+        $('.jsCodeModal-selectpicker').selectpicker('refresh');
+        $('#jsCodeModal').modal('show');
+        getAllJsCodeByProject();
+
+        generateMonacoeditros('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+
+    });
+   
 }
 
 function guiClassModal(el) {
@@ -8681,7 +8691,6 @@ function guiClassModal(el) {
 
         cdnh2 = false;
     }
-
 
 }
 
@@ -13238,7 +13247,34 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 });
 
 
-function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
+ function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, readOnly) {
+    require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
+    window.MonacoEnvironment = {getWorkerUrl: () => proxy};
+
+    let proxy = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@0.8.3/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@0.8.3/min/vs/base/worker/workerMain.js');
+    `], {type: 'text/javascript'}));
+
+    require(["vs/editor/editor.main"], function () {
+        window[nameEditor] = monaco.editor.create(document.getElementById(elmId), {
+            value: body,
+            language: lang,
+            automaticLayout: true,
+            lineNumbers: "on",
+
+            readOnly: readOnly,
+            roundedSelection: true,
+            scrollBeyondLastLine: true,
+            theme: theme,
+
+        });
+        loadProjectList2SelectboxByClass('jsCodeModal_projectList_class');
+    });
+}
+ function generateMonacoeditros(elmId, nameEditor, lang, theme, body, readOnly) {
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -13511,31 +13547,60 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
     getBacklogCSSBodyByIdCodeGround(val, 'load');
 });
 
-function getIframeBlock(pid, css, js, bodys) {
+function getIframeBlock(elm) {
+     
+    var $iframe = $(`<iframe>`)
+                             .addClass("h-100 w-100")
+                             .attr("src",'iframe.html')
+                             .attr("id",'result-iframe');
+
+    $(elm).html($iframe);
+     
+}
+function iframeLoaded() {
+    var pid = global_var.current_backlog_id;
+    var js = window.editorJSGround.getValue();
+
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
+        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
+        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var oldmodal = global_var.current_modal;
+        
+        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+    var css = window.editorCSSGround.getValue();
+    var block = getIframeBlockInside(pid, css, js, html);
+    $("#result-iframe").contents().find('body').html(block);
+    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+}
+function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
     // var cssLink  = `<link src="${urlGl}/api/get/dwd/css/${global_var.current_domain}/${pid}.css">`
-
     var body = $(`<div class='redirectClass h-100' id='${pid}'>`).html(bodys)
     var cssBlock = $(body).find('#css-function-list-for-story-card');
-    var jsBlock = $(body).find('#js-function-list-for-story-card')
+    var jsBlock = $(body).find('#js-function-list-for-story-card');
+    var script  = `<script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`
+    $(body).append(script);
     if (cssBlock.length > 0) {
         $(body).find('#css-function-list-for-story-card').text(css);
-
     } else {
         $(body).append($('<style id="js-function-list-for-story-card">').text(css));
-
     }
     if (jsBlock.length > 0) {
         $(body).find('#js-function-list-for-story-card').text(js);
     } else {
         $(body).append($('<script id="js-function-list-for-story-card">')
-                     // .text("(function(){"+js+"})(window,document);")
-                      .text(js));
+                     //.text("(function(){"+js+"})(window,document);")
+                       .text(js));
     }
-    return body;
+    var dt  = $("<div>").html(body);
+    return dt.html();
     var $iframe = $("<div class='overflow-hidden'>")
-            .append(body)
-
+            .append(body);
     return $iframe.html();
 }
 
@@ -13546,41 +13611,36 @@ $(document).on("change", '#show_hidden_carrier', function (e) {
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
-
+    var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-        var oldmodal = global_var.current_modal;
-        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
     } else {
         var html = window.editorHTMLGround.getValue();
         insertHtmlSendDbBybacklogId(html);
     }
-    var css = window.editorCSSGround.getValue();
-
-
-    var block = getIframeBlock(pid, css, js, html);
-
-    elm.html(block);
-    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+    getIframeBlock(elm);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-
-
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id, elm.html());
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
 
-function setBacklogAsHtmlCodeGround(backlogId, html) {
-
-   if (!backlogId) {
+function setBacklogAsHtmlCodeGround(backlogId) {
+    if (!backlogId) {
         return;
     }
+    if ($("#cs-col-Ceckbox-id").val() !== '1') {
+        var resTmp = SAInput.toJSONByBacklog(backlogId);
+        var oldmodal = global_var.current_modal;
+        global_var.current_modal = '';
+        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
+        global_var.current_modal = oldmodal;
+    } else {
+        var html = window.editorHTMLGround.getValue();
+    }
+ 
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
     json.kv.backlogHtml =   html ;
@@ -13610,27 +13670,8 @@ $(document).on("click", '#run-code-ground-btn', function (e) {
 
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = global_var.current_backlog_id;
-    var js = window.editorJSGround.getValue();
-
-    if ($("#cs-col-Ceckbox-id").val() !== '1') {
-        // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
-        var oldmodal = global_var.current_modal;
-        
-        global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
-        var html = new UserStory().getGUIDesignHTMLPure(resTmp);
-        global_var.current_modal = oldmodal;
-    } else {
-        var html = window.editorHTMLGround.getValue();
-    }
-
-    var css = window.editorCSSGround.getValue();
-
-    var block = getIframeBlock(pid, css, js, html);
-
-    elm.html(block);
-    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+   
+    getIframeBlock(elm);
 
 
 });
@@ -14382,7 +14423,7 @@ function loadHistoryBysqlId(fkTableId) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" + fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14544,7 +14585,7 @@ function loadHistoryByBacklogStId(backlog_id) {
                                 .append("<td>" + obj[i].oldValue + "</td>")
                                 .append("<td>" + obj[i].historyType + "</td>")
                                 .append("<td><span class='date-td'>" + Utility.convertTime(obj[i].historyTime) + " " + Utility.convertDate(obj[i].historyDate) + "</span></td>")
-                                .append("<td><img class='Assigne-card-story-select-img created' src='https://app.sourcedagile.com/api/get/files/" + obj[i].logoUrl + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
+                                .append("<td><img class='Assigne-card-story-select-img created' src='" +fileUrl(obj[i].logoUrl) + "' data-trigger='hover' data-toggle='popover' data-content='" + obj[i].userName + "'  data-original-title='Created By'></td>")
 
                                 )
 
@@ -14770,7 +14811,7 @@ function GenerateHistoryTable() {
                     .append(obj.oldValue == "" ? "" : "<span class='desc-td-old'><b>Old value:</b> " + obj.oldValue + " </span>")
                     .append(obj.historyType == "" ? "" : "<span class='desc-td'><b>Type:</b> " + obj.historyType + " </span>")
                     .append("<span class='date-td'>Date: " + Utility.convertTime(obj.historyTime) + " " + Utility.convertDate(obj.historyDate) + "</span>")
-                    .append("<img src='https://app.sourcedagile.com/api/get/files/" + obj.logoUrl + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
+                    .append("<img src='" +fileUrl(obj.logoUrl) + "' class=;rounded-circle' width='20px' id='userprofile_main_userimg'><span class='desc-td'>" + obj.userName + " " + "</span>")
 
                     )
         }
@@ -15006,6 +15047,29 @@ $(document).on('click', '.loadDev', function (evt) {
     global_var.current_modal = "loadDev";
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
+});
+$(document).on('click', '.loadFn', function (evt) {
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadFn";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
+
+    $.get("resource/child/fn.html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        $('.jsCodeModal-selectpicker').selectpicker('refresh');
+        $('#jsCodeModal').css('display','block');
+        $('#jsCodeModal').css('position','realtive');
+         $('#jsCodeModal').css('z-index','1');
+        $('#jsCodeModal .storecard-header-nav-section .close').remove();
+        $('#jsCodeModal').addClass('show');
+        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'js', 'vs-dark');
+
+    
+
+    });
+});
+$(document).on('change', '#jsCodeModal_projectList', function (evt) {
+    global_var.current_modal = $(this).val();
+    getAllJsCodeByProject($(this).val());
 });
 function callLoadDev() {
 
@@ -18158,7 +18222,7 @@ function updateUS4Status(id, backlogNo, status) {
 function updateManualStatus4DragDrop(params) {
     
 }
-function updateTaskTypeDragDrop(bgId,dragelm) {
+function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     var json = {
         kv: {}
     };
@@ -18191,7 +18255,9 @@ function updateTaskTypeDragDrop(bgId,dragelm) {
                } 
                multipleClosedTask(list,dragelm);  
                } catch (error) {
-                  
+
+                $(firstZone).find('.content-drag').eq(oldIndex).before(dragelm);
+                Toaster.showError(("You don't have any task(s) related to this Story Card. Operation will be rejected."));
                }
                 
         },
@@ -18446,7 +18512,21 @@ function updateJSChange(el, ustype) {
     } catch (e) {
         return;
     }
+    setOptionLangEditor(val)
     updateJSChangeDetails(val, ustype);
+}
+function setOptionLangEditor(val) {
+    var ts  
+    if(val==='core'||val==='event'){
+        ts='js'
+    }
+    else if(val==='java'){
+        ts = 'java'
+    }
+    else if(val==='sql'){
+        ts = 'sql'
+    }
+    window.editor1.updateOptions({language: ts}); 
 }
 
 function updateJSChangeDetails(val, ustype) {
@@ -18620,7 +18700,7 @@ function loadMainProjectList4Class() {
 
 function loadProjectList2SelectboxByClassNochange(className) {
 
-    var cmd = $('.' + className);
+    var cmd = $('select.' + className);
     cmd.html('');
     var f = true;
     var pid = SACore.GetProjectKeys();
@@ -18646,7 +18726,7 @@ function loadProjectList2SelectboxByClassNochange(className) {
 }
 function loadProjectList2SelectboxByClass(className) {
 
-    var cmd = $('.' + className);
+    var cmd = $('select.' + className);
     cmd.html('');
     var f = true;
     var pid = SACore.GetProjectKeys();
