@@ -1596,7 +1596,7 @@ function getBugListDetails(res) {
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column')
                         .addClass('bug-list-column-assignee')
-                        .append(genUserTrblock(o.userName,img))
+                        .append(genUserTrblock(o.userName,img,'Assignee'))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsAssigne("' + o.fkAssigneeId + '")')
                             .css("display", "none")
@@ -1610,7 +1610,7 @@ function getBugListDetails(res) {
                 .append($('<td>').addClass('bug-list-column')
                         .css('white-space', 'nowrap').css("text-align", 'center')
                         .addClass('bug-list-column-created-by ')
-                            .append(genUserTrblock(o.createByName,createdByImg))
+                            .append(genUserTrblock(o.createByName,createdByImg,'Created By'))
                             .append($('<i class="fa fa-filter">')
                             .attr('onclick', 'setFilter4IssueMgmtAsProject("' + o.fkProjectId + '")')
                             .css("display", "none")
@@ -1667,8 +1667,8 @@ function getBugListDetails(res) {
     global_var.bug_task_label_assign_id = '';
 
 }
-function genUserTrblock(names,img) {
-
+function genUserTrblock(names,img,filed) {
+  
     try {
         return $('<a>')
             .attr('tabindex', "0")
@@ -1676,7 +1676,7 @@ function genUserTrblock(names,img) {
             //.attr('data-original-title', filed === "createdBy" ? "Daxil Edən" : "İcra Edən")
             .attr('data-toggle', 'popover')
             .attr('data-trigger', "focus")
-            .attr('data-content', genHoverImageBlock(img, names))
+            .attr('data-content', genHoverImageBlock(img, names,filed))
                 .append($('<img>')
                 .addClass("rounded-circle personal-btn-img js-btn-popover--custom")
                 .css("width", '22px')
@@ -1690,10 +1690,10 @@ function genUserTrblock(names,img) {
     }
 
   }
-  function genHoverImageBlock (img,ad) {
+  function genHoverImageBlock (img,ad, filed) {
     return `
     <div class="task-table-personal-info">
-     <div class="d-table w-100"><div class="pi-head-title">Daxil Edən</div></div>
+     <div class="d-table w-100"><div class="pi-head-title">${filed}</div></div>
      <ul class="avatar">
          <li>
              <div class="d-flex">

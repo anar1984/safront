@@ -7587,28 +7587,33 @@
 
 
 
-    <div class="modal fade" id="addUserStoryPopupModalwithProject" tabindex="-1" role="dialog"
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="addUserStoryPopupModalwithProject" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text card-UserStory-header-text-code"><b>New Story Card</b>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
                             <div id="exampleModal-properties-tab" class="container tab-pane active"
                                 style=" max-height: 76vh;overflow:visible;">
-                                <div class="col-12" style="font-size:11px;">
-                                    <br>
-                                    <label>Project name</label>
+                                <div class="col-12">
+                                    <div class="cs-input-group select-max-width">
+                                        <div class="input-group-addon">Project name</div>
                                     <select class="form-control " data-live-search="true" data-actions-box="true"
                                         onchange='' id='bug_filter_project_id_add_pop' title="Project"></select>
+                                    </div>
                                 </div>
-                                <div class="col-12" style="font-size:11px;">
-                                    <br>
-                                    <label>User Story</label>
+                                <div class="col-12">
+                                   <div class="cs-input-group mt-2">
+                                    <div class="input-group-addon">User Story</div>
                                     <input type="text" class="form-control" id="addUserStoryPopupModal-userstoryname1"
                                         pid="">
-                                    <br>
+                                   </div>
                                 </div>
 
 
@@ -8119,44 +8124,61 @@
     </div>
      
               <!-- Modal -->
-              <div class="modal fade bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade cs-modal-box issue-managment-add-task bd-example-modal-lg" id="multieditpopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
-                    <div class="modal-header">
+                    <!-- <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
+                    </div> -->
+                    <div class="justify-content-center modal-header task-modal-header">
+                        <h6 class="modal-title task-modal-title">
+                            <span class="text" id="exampleModalLabel">Filter</span>
+                        </h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="cs-svg-icon x-close"></i>
+                        </button>
                     </div>
-                    <div class="modal-body  row" >
-                         <div class='col-12 row'>
-                            <div class="col-lg-4">
-                                <select class="form-control" data-live-search="true" data-actions-box="true"
+                    <div class="modal-body" >
+                         <div class='row'>
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control" data-live-search="true" data-actions-box="true"
                                     style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_multi'
                                      title="Project"></select>
+                                </div>
                             </div>
-                            <div class="col-lg-4">
-                                <select class="form-control" data-actions-box="true"
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control" data-actions-box="true"
                                     onchange=''  data-live-search="true" id='bug_filter_assignee_id_multi'
                                      title="Assignee"></select>
+                                </div>
                             </div>
                         
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control bug-mgmt-filter-select " data-actions-box="true"
                                     onchange=''  data-live-search="true" id='bug_filter_backlog_id_multi'
                                     title="Story Card">
                         
                                 </select>
+                                </div>
                             </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
                                     onchange=''  data-live-search="true" id='bug_task_type_id_multi'
                                     title="Task Type">
                         
                                 </select>
+                                </div>
                             </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
                                     onchange=''  data-live-search="true" id='bug_task_nature_id_multi'
                                     title="Task Nature">
                                     <option value="" ></option>
@@ -8165,9 +8187,11 @@
                                     <option value="new" >New Request</option>
                         
                                 </select>
+                                </div>
                             </div>
-                            <div class="col-lg-4">
-                                <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
+                            <div class="col-lg-4 mt-2">
+                                <div class="cs-input-group">
+                                    <select class="form-control   bug-mgmt-filter-select " data-actions-box="true"
                                         onchange=''   id='bug_task_status_id_zad'
                                         title="Task Status">
                                     <option value="" ></option>
@@ -8177,10 +8201,11 @@
                                     <option value="canceled" >Canceled</option>
         
                                 </select>
+                                </div>
                             </div>
-                            <div class="col-lg-4 " >
-            
-                                <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
+                            <div class="col-lg-4 mt-2" >
+                                <div class="cs-input-group">
+                                    <select class="form-control bug-mgmt-filter-select" data-actions-box="true" 
                                     data-type="priority" onchange="" id='bug_filter_priority_add' title="Priority">
                                     <option value=''>None</option>
                                     <option value='1'>1- Lowest</option>
@@ -8194,6 +8219,7 @@
                                     <option value='9'>9 - Highest</option>
                         
                                 </select>
+                                </div>
                             </div>
                            
                               </div>
