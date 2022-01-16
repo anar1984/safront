@@ -15152,18 +15152,14 @@ $(document).on('change', '#jsCodeModal_projectList', function (evt) {
     getAllJsCodeByProject();
 });
 $(document).on('click', '#importCoreJavaCode', function (evt) {
-    global_var.current_project_id = $(this).val();
-    if(confirm("Are you sure?!")){
+  
         compileJavaCore();
-    }
-   
 });
  function compileJavaCore() {
      var data  = {};
          data.id =  global_var.current_fn_id;
     callService('serviceIoCompileCoreJava',data,true,function (res) {
-      
-             
+        AJAXCallFeedback(res);            
        }) 
  }
 function loadProjectList2SelectboxByClassWithoutCallAction(className) {
