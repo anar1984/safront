@@ -4832,11 +4832,11 @@ table.lbl-list-table tr td {
     color: #ffffff;
     font-size: 16px;
     line-height: 20px;
-    height: 25px;
+    height: 30px;
     border: none;
     background: rgba(3, 57, 108, 0.5);
     border-radius: 7px;
-    padding: 1px 12px;
+    padding: 5px 12px;
 }
 .issue-managment-add-task .priority-btn {
     position: relative;
@@ -5551,6 +5551,9 @@ table.lbl-list-table tr td {
 }
 .cs-date-time .input-group-icon{
     color: #fff;
+}
+.input-group-icon i {
+    vertical-align: middle;
 }
 .task-modal-header {
  padding: 0px;
@@ -7222,4 +7225,11 @@ div.cs-task-item-in-box {
 }
 #storycard_filelist .file_upload_div:hover .hover-detail-pinned{
  opacity: 1;
+}
+.assignTaskToOthersModal_addAssignees {
+    padding: 6px !important;
+    font-size: 12px !important;
+    width: 30px;
+    height: 30px !important;
+    margin-top: 7px;
 }
