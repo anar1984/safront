@@ -13590,8 +13590,10 @@ function iframeLoaded() {
     }
     var css = window.editorCSSGround.getValue();
     var block = getIframeBlockInside(pid, css, js, html);
-    $("#result-iframe").contents().find('body').html(block);
-    loadSelectBoxesAfterGUIDesign($("#result-code-editor > .redirectClass"));
+    $("#result-iframe").contents().find('body').html(block +`<script>
+    loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`);
+
+   
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
