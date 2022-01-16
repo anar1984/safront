@@ -8605,21 +8605,25 @@ function loadGlobalJsCode() {
         async: false,
         success: function (res) {
             var table = $('select#jsCodeModal_fnlist');
-
-            var obj = res.tbl[0].r;
-            for (var i = 0; i < obj.length; i++) {
-                var o = obj[i];
-                var tr = $("<option>")
-                        .attr("pid", o.id)
-                        .text(o.fnDescription)
-                table.append(tr);
-            }
-            if (current_js_code_id) {
-                table.val(current_js_code_id);
-            }else if (global_var.current_fn_id) {
-                table.val(global_var.current_fn_id);
-               }  
-            table.change();
+               try {
+                var obj = res.tbl[0].r;
+                for (var i = 0; i < obj.length; i++) {
+                    var o = obj[i];
+                    var tr = $("<option>")
+                            .attr("pid", o.id)
+                            .text(o.fnDescription)
+                    table.append(tr);
+                }
+                if (current_js_code_id) {
+                    table.val(current_js_code_id);
+                }else if (global_var.current_fn_id) {
+                    table.val(global_var.current_fn_id);
+                   }  
+                table.change();
+               } catch (error) {
+                   
+               }
+           
             table.selectpicker('refresh');
         }
     });
@@ -10219,9 +10223,7 @@ function addNewSourceCodeFromDescNew(trigg) {
             var descId = $('#addNewRelatedSourceCodeModal-id').val();
             if(descId==='loadFn'){
                 getAllJsCodeByProject();
-                loadCurrentBacklogProdDetails();
                 $('#jsCodeModal_newfunction').val('');
-             
                 $('select#jsCodeModal_fnlist').val(res.kv.id)
                 $('select#jsCodeModal_fnlist').selectpicker("refresh");
                 $('select#jsCodeModal_fnlist').change();
@@ -15070,30 +15072,6 @@ $(document).on('click', '.loadDev', function (evt) {
     Utility.addParamToUrl('current_modal', global_var.current_modal);
     callLoadDev();
 });
-$(document).on('click', '.loadFn', function (evt) {
-    clearManualProjectFromParam();
-    global_var.current_modal = "loadFn";
-    Utility.addParamToUrl('current_modal', global_var.current_modal);
-
-    $.get("resource/child/fn.html", function (html_string) {
-        $('#mainBodyDivForAll').html(html_string);
-        $('.jsCodeModal-selectpicker').selectpicker('refresh');
-        $('#jsCodeModal').css('display','block');
-        $('#jsCodeModal').css('position','realtive');
-         $('#jsCodeModal').css('z-index','1');
-         $('#jsCodeModal .modal-body').addClass('h-100');
-        $('#jsCodeModal .storecard-header-nav-section .close').remove();
-        $('#jsCodeModal').addClass('show');
-        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'java', 'vs-dark');
-
-    
-
-    });
-});
-$(document).on('change', '#jsCodeModal_projectList', function (evt) {
-    global_var.current_project_id = $(this).val();
-    getAllJsCodeByProject();
-});
 function callLoadDev() {
 
     $.get("resource/child/dev.html", function (html_string) {
@@ -15144,8 +15122,45 @@ function callLoadStoryCard() {
     });
 }
 
+$(document).on('click', '.loadFn', function (evt) {
+    clearManualProjectFromParam();
+    global_var.current_modal = "loadFn";
+    Utility.addParamToUrl('current_modal', global_var.current_modal);
 
+    $.get("resource/child/fn.html", function (html_string) {
+        $('#mainBodyDivForAll').html(html_string);
+        $('.jsCodeModal-selectpicker').selectpicker('refresh');
+        $('#jsCodeModal').css('display','block');
+        $('#jsCodeModal').css('position','realtive');
+         $('#jsCodeModal').css('z-index','1');
+         $('#jsCodeModal .modal-body').addClass('h-100');
+        $('#jsCodeModal .storecard-header-nav-section .close').remove();
+        $('#jsCodeModal').addClass('show');
+        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'java', 'vs-dark');
 
+    
+
+    });
+});
+$(document).on('change', '#jsCodeModal_projectList', function (evt) {
+    global_var.current_project_id = $(this).val();
+    getAllJsCodeByProject();
+});
+$(document).on('click', '#importCoreJavaCode', function (evt) {
+    global_var.current_project_id = $(this).val();
+    if(confirm("Are you sure?!")){
+
+    }
+    compileJavaCore();
+});
+ function compileJavaCore() {
+     var data  = {};
+         data.id =  global_var.current_fn_id;
+    callService('serviceIoCompileCoreJava',data,true,function (res) {
+      
+             
+       }) 
+ }
 function loadProjectList2SelectboxByClassWithoutCallAction(className) {
 
     var cmd = $('select.' + className);
@@ -18540,7 +18555,7 @@ function updateJSChange(el, ustype) {
 }
 function setOptionLangEditor(val) {
     var ts  
-    if(val==='core'||val==='event'){
+    if(val==='core'||val==='event'||val==='jscore'){
         ts='js'
     }
     else if(val==='java'){
@@ -18548,6 +18563,9 @@ function setOptionLangEditor(val) {
     }
     else if(val==='sql'){
         ts = 'sql'
+    }
+    else if(val==='css'){
+        ts = 'css'
     }
     window.editor1.updateOptions({language: ts}); 
 }
