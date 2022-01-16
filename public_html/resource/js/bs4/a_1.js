@@ -15154,9 +15154,9 @@ $(document).on('change', '#jsCodeModal_projectList', function (evt) {
 $(document).on('click', '#importCoreJavaCode', function (evt) {
     global_var.current_project_id = $(this).val();
     if(confirm("Are you sure?!")){
-
+        compileJavaCore();
     }
-    compileJavaCore();
+   
 });
  function compileJavaCore() {
      var data  = {};
