@@ -20,7 +20,7 @@ aria-hidden="true">
                     <div class="d-flex justify-content-left cs-col-project">
                         <div class="mm-col">
                             <span class="mm-title">Function Type</span>
-                            <select onchange='updateJSChange(this, "fnType")'
+                            <select onchange='getAllJsCodeByProject()'
                                 class="form-control jsCodeModal_checkbox jsCodeModal-selectpicker "
                                 id="jsCodeModal_fntype">
                                 <option selected value='core'>Core</option>
@@ -34,7 +34,7 @@ aria-hidden="true">
                     <div class="d-flex justify-content-left cs-col-project">
                         <div class="mm-col">
                             <span class="mm-title">Project</span>
-                            <select 
+                            <select  data-live-search="true"
                                 class="form-control jsCodeModal_projectList_class  jsCodeModal-selectpicker "
                                 id="jsCodeModal_projectList">
                             
@@ -58,16 +58,15 @@ aria-hidden="true">
                             <div class="dropdown-menu " aria-labelledby="copyMovePrint"
                                 x-placement="bottom-start"
                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(892px, 30px, 0px);">
-                                <button class="dropdown-item firstbut " id="" onclick="copyJsCodeClassTo()"><a
-                                        href="#">Copy</a></button>
-                                <button class="dropdown-item firstbut " id="" pid="" bid="" lid=""
-                                    onclick="deleteJsCodeClass(this)"><a href="#">Delete</a></button>
-                                <br>
-                                <!--<button class="dropdown-item firstbut " onclick="new UserStory().printGeneralView()"><a href="#" >Print</a></button>-->
+                                <button class="dropdown-item firstbut " onclick='addNewRelatedCallfn("","loadFn")' >New Function</button>
+                                      <hr class="m-1">
+                                <button class="dropdown-item firstbut " id="" onclick="copyJsCodeClassTo()">Copy</button>
+                                <button class="dropdown-item firstbut " id="" pid="" bid="" lid="" onclick="deleteJsCodeClass(this)">Delete</button>
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-right " style="padding-right:10px;">
+                   <!--  <div class="d-flex justify-content-right " style="padding-right:10px;">
                         <div class="mm-col">
                             <input class="form-control" placeholder="New function" id="jsCodeModal_newfunction">
 
@@ -77,7 +76,7 @@ aria-hidden="true">
                                 onclick="insertNewJsFuncionDesc()">Add</button>
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
 
                 <button type="button" class="m-0 p-2 close" style="color: white;" data-dismiss="modal"
@@ -132,12 +131,12 @@ aria-hidden="true">
                             <b>(</b> Carrier carrier<b> ){</b>
                         </div>
 
-                        <div class="col-12 text-left h-100">
+                        <div style="height:83%; width: 100%;" class="col-12 text-left">
 
                             <!--  <span class="btn btn-secondary editor_full_screenBt"><i
                                  class="fas fa-expand"></i></span> -->
-                            <div onchange='' placeholder="Function Body" rows=15
-                                style="height: calc(100% - 80px); width: 100%;" id="jsCodeModal_fnbody"></div>
+                            <div onchange='' placeholder="Function Body" class="h-100" rows=15
+                                 id="jsCodeModal_fnbody"></div>
 
                             <span class="jscode-corepart"> }</span>
                             <span class="jscode-eventpart"> })</span>
