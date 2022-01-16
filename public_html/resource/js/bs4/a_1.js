@@ -8628,21 +8628,26 @@ function loadGlobalJsCode() {
 function getAllJsCodeByProjectDetails(res) {
     var table = $('select#jsCodeModal_fnlist');
     table.html('');
-    var obj = res.tbl[0].r;
-    for (var i = 0; i < obj.length; i++) {
-        var o = obj[i];
-        var tr = $("<option>")
-                .attr("value", o.id)
-                .text(o.fnDescription)
-                if(o.fnDescription){
-                    table.append(tr);
-
-                }
-                
+    try {
+        var obj = res.tbl[0].r;
+        for (var i = 0; i < obj.length; i++) {
+            var o = obj[i];
+            var tr = $("<option>")
+                    .attr("value", o.id)
+                    .text(o.fnDescription)
+                    if(o.fnDescription){
+                        table.append(tr);
+    
+                    }
+                    
+        }
+        if (global_var.current_fn_id) {
+            table.val(global_var.current_fn_id);
+           }  
+    } catch (error) {
+        
     }
-    if (global_var.current_fn_id) {
-        table.val(global_var.current_fn_id);
-       }  
+  
     table.selectpicker("refresh");
 
 }
