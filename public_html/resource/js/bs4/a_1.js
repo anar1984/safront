@@ -10193,6 +10193,7 @@ function firstLetterToLowercase(str) {
 function addNewSourceCodeFromDescNew(trigg) {
     var val = $('#addNewRelatedSourceCodeModal-newapi').val();
     var type = $('#addNewRelatedSourceCodeModal-type').val();
+    var prid = $('#jsCodeModal_projectList').val();
     if (!val) {
         return;
     }
@@ -10205,7 +10206,11 @@ function addNewSourceCodeFromDescNew(trigg) {
     } catch (err) {
     }
     json.kv['fnDescription'] = val;
-    json.kv['fkProjectId'] = global_var.current_project_id;
+    if(global_var.current_modal==='loadFn'){
+        json.kv.fkProjectId = prid;
+    }else{
+        json.kv.fkProjectId = global_var.current_project_id 
+    }
     json.kv.fnCoreName = convertToCamelView(val);
     json.kv.fnCoreInput = "data";
     json.kv.fnBody = "return data";
@@ -15149,9 +15154,9 @@ $(document).on('change', '#jsCodeModal_projectList', function (evt) {
 $(document).on('click', '#importCoreJavaCode', function (evt) {
     global_var.current_project_id = $(this).val();
     if(confirm("Are you sure?!")){
-
+        compileJavaCore();
     }
-    compileJavaCore();
+   
 });
  function compileJavaCore() {
      var data  = {};
