@@ -8523,9 +8523,7 @@ $(document).on("change", "#jsCodeModal_fnlist", function (e) {
             $('#jsCodeModal_fntype').val(res.kv.fnType);
             $('#jsCodeModal_fntype').selectpicker('refresh');
             setOptionLangEditor(res.kv.fnType);
-
             $('#jsCodeModal_libraryurl').val(res.kv.libraryUrl);
-
             jsCodeModal_checkbox_action();
 
         }
@@ -8652,9 +8650,11 @@ function getAllJsCodeByProjectDetails(res) {
     } catch (error) {
         
     }
-  
+       
     table.selectpicker("refresh");
-
+    if (global_var.current_fn_id) {
+        table.change();
+       }  
 }
 
 function showJSModal(jsId) {
@@ -10217,6 +10217,7 @@ function addNewSourceCodeFromDescNew(trigg) {
     }else{
         json.kv.fkProjectId = global_var.current_project_id 
     }
+    json.kv.fnDescription = val;
     json.kv.fnCoreName = convertToCamelView(val);
     json.kv.fnCoreInput = "data";
     json.kv.fnBody = "return data";
@@ -10243,7 +10244,7 @@ function addNewSourceCodeFromDescNew(trigg) {
             }else{
                 
                 var apidId = $('#addNewRelatedSourceCodeModal-newapi').val();
-                var select = $("tr[pid='" + descId + "']").find("#get-callfn-select-box")
+                var select = $("tr[pid='" + descId + "']").find("select.fns-key")
                 select.append($("<option>")
                         .attr('value', apidId)
                         .text(apidId));
@@ -10324,8 +10325,10 @@ function addRelatedCallfn(el) {
 }
 function addNewRelatedCallfn(el,trig) {
     var descId = $(el).closest('tr').attr('pid');
+    var typ = $(el).attr('data-type');
     
         $('#addNewRelatedSourceCodeModal-id').val(descId?descId:trig);
+        $('#addNewRelatedSourceCodeModal-type').val(typ);
     $('#addNewRelatedSourceCodeModal').modal('show');
 }
 function loadRelatedSourceCode4Relation() {
@@ -15152,7 +15155,7 @@ $(document).on('click', '.loadFn', function (evt) {
         $('#jsCodeModal').addClass('show');
        var fnType =  localStorage.getItem('global-fn-type')
        var fnTypeItem =fnType?fnType:"javacore";
-        $("#jsCodeModal_fntype")
+       $("#jsCodeModal_fntype")
                     .val(fnTypeItem)
                     .selectpicker('refresh');
        fnINit4fnType(fnTypeItem);
@@ -15198,7 +15201,7 @@ $(document).on('click', '#importCoreJavaCode', function (evt) {
         if (res.kv && res.kv.err && res.kv.err.length > 0) {
             Toaster.showError(JSON.stringify(res.kv.err));
         } else {
-            Toaster.showMessage("Code Compiled!")
+            Toaster.showMessage("Code Compiled!");
         }     
        }) 
  }

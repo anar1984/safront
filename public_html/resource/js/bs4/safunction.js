@@ -2084,6 +2084,7 @@ var SAFN = {
             var but2 = $("<li>")
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
+                .attr("data-type",'sql')
                     .append('<i class="fas fa-plus"></i>')
                     .attr("onclick", "addNewRelatedCallfn(this)")
                 )
@@ -2142,6 +2143,7 @@ var SAFN = {
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
                     .append('<i class="fas fa-plus"></i>')
+                    .attr("data-type",'javacore')
                     .attr("onclick", "addNewRelatedCallfn(this)")
                 )
             if (fnId.length > 0) {
@@ -2199,6 +2201,7 @@ var SAFN = {
                 .addClass('cs-select-btn-box')
                 .append($('<button>')
                     .append('<i class="fas fa-plus"></i>')
+                    .attr("data-type",'core')
                     .attr("onclick", "addNewRelatedCallfn(this)")
                 )
             if (fnId.length > 0) {
@@ -4516,7 +4519,7 @@ function loadSelecPickerOnChnageFnList(element,dataType) {
 
                 var td = $('<option>')
                     .text(o.fnDescription)
-                    .val(o.fnCoreName)
+                    .val(o.fnDescription)
                     .attr('pid', o.id)
 
                 /*  if (o.id === fnid) {
