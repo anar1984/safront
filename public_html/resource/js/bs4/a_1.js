@@ -8587,6 +8587,7 @@ function getAllJsCodeByProject() {
     });
 
     loadGlobalJsCode();
+    $('.loading.editor').fadeOut({ duration: 200 });
 
 }
 
@@ -13276,6 +13277,8 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 
 
  function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, readOnly) {
+     $("#"+elmId).html('');
+    $('.loading.editor').show();
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -15142,16 +15145,43 @@ $(document).on('click', '.loadFn', function (evt) {
          $('#jsCodeModal .modal-body').addClass('h-100');
         $('#jsCodeModal .storecard-header-nav-section .close').remove();
         $('#jsCodeModal').addClass('show');
-        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'java', 'vs-dark');
-
-    
+       var fnType =  localStorage.getItem('global-fn-type')
+       var fnTypeItem =fnType?fnType:"javacore";
+        $("#jsCodeModal_fntype")
+                    .val(fnTypeItem)
+                    .selectpicker('refresh');
+       fnINit4fnType(fnTypeItem);
 
     });
 });
 $(document).on('change', '#jsCodeModal_projectList', function (evt) {
     global_var.current_project_id = $(this).val();
+    $('.loading.editor').show();
     getAllJsCodeByProject();
 });
+$(document).on('change', '#jsCodeModal_fntype', function (evt) {
+    var val = $(this).val();
+      localStorage.setItem('global-fn-type',val);
+    fnINit4fnType(val);
+});
+function fnINit4fnType(val) {
+    $('.loading.editor').show();
+    var ts  
+    if(val==='core'||val==='event'||val==='jscore'){
+        ts='js'
+    }
+    else if(val==='java'||val==='javacore'){
+        ts = 'java'
+    }
+    else if(val==='sql'){
+        ts = 'sql'
+    }
+    else if(val==='csscore'){
+        ts = 'css'
+    }
+    generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', ts, 'vs-dark');
+
+}
 $(document).on('click', '#importCoreJavaCode', function (evt) {
   
         compileJavaCore();
