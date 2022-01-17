@@ -2763,7 +2763,7 @@ function fillBacklogHistory4View(backlogId, isApi) {
 
 function setBacklogHistory4View() {
 
-    var div = $('.storecard-header-nav-section #item-history-list');
+    var div = $('.redirectClass  #item-history-list');
     div.html('');
     var block = $(".storecard-header-nav-section #backBacklogBtn-block");
     var temp = [];
@@ -8587,6 +8587,7 @@ function getAllJsCodeByProject() {
     });
 
     loadGlobalJsCode();
+    $('.loading.editor').fadeOut({ duration: 200 });
 
 }
 
@@ -13276,6 +13277,8 @@ $(document).on('click', '.loadCodeGround', function (evt) {
 
 
  function generateMonacoeditros4FnBoard(elmId, nameEditor, lang, theme, body, readOnly) {
+     $("#"+elmId).html('');
+    $('.loading.editor').show();
     require.config({paths: {'vs': 'https://unpkg.com/monaco-editor@0.8.3/min/vs'}});
     window.MonacoEnvironment = {getWorkerUrl: () => proxy};
 
@@ -13576,10 +13579,11 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(elm) {
+    var parts = document.location.href.split("?");
      
     var $iframe = $(`<iframe>`)
                              .addClass("h-100 w-100")
-                             .attr("src",'iframe.html')
+                             .attr("src",'iframe.html?'+parts[1]+'&current_domain='+global_var.current_domain)
                              .attr("id",'result-iframe');
 
     $(elm).html($iframe);
@@ -13650,13 +13654,13 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     getIframeBlock(elm);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id);
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id,js,css);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
 
-function setBacklogAsHtmlCodeGround(backlogId) {
+function setBacklogAsHtmlCodeGround(backlogId,js,css) {
     if (!backlogId) {
         return;
     }
@@ -13672,7 +13676,7 @@ function setBacklogAsHtmlCodeGround(backlogId) {
  
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml =   html ;
+    json.kv.backlogHtml = "<style>"+css+"</style>"+ html+"<script>"+js+"</script>" ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
@@ -15141,16 +15145,43 @@ $(document).on('click', '.loadFn', function (evt) {
          $('#jsCodeModal .modal-body').addClass('h-100');
         $('#jsCodeModal .storecard-header-nav-section .close').remove();
         $('#jsCodeModal').addClass('show');
-        generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', 'java', 'vs-dark');
-
-    
+       var fnType =  localStorage.getItem('global-fn-type')
+       var fnTypeItem =fnType?fnType:"javacore";
+        $("#jsCodeModal_fntype")
+                    .val(fnTypeItem)
+                    .selectpicker('refresh');
+       fnINit4fnType(fnTypeItem);
 
     });
 });
 $(document).on('change', '#jsCodeModal_projectList', function (evt) {
     global_var.current_project_id = $(this).val();
+    $('.loading.editor').show();
     getAllJsCodeByProject();
 });
+$(document).on('change', '#jsCodeModal_fntype', function (evt) {
+    var val = $(this).val();
+      localStorage.setItem('global-fn-type',val);
+    fnINit4fnType(val);
+});
+function fnINit4fnType(val) {
+    $('.loading.editor').show();
+    var ts  
+    if(val==='core'||val==='event'||val==='jscore'){
+        ts='js'
+    }
+    else if(val==='java'||val==='javacore'){
+        ts = 'java'
+    }
+    else if(val==='sql'){
+        ts = 'sql'
+    }
+    else if(val==='csscore'){
+        ts = 'css'
+    }
+    generateMonacoeditros4FnBoard('jsCodeModal_fnbody', 'editor1', ts, 'vs-dark');
+
+}
 $(document).on('click', '#importCoreJavaCode', function (evt) {
   
         compileJavaCore();
