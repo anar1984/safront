@@ -8667,14 +8667,19 @@ function showJSModal(jsId) {
 
 }
 function showJSModalByName(elm) {
-
-    showJsCodeModal();
-    var fid = $(elm).closest("ul").find('select.get-callfn-select-box option:selected').attr("pid");
-
-    $('select#jsCodeModal_fnlist').val(fid);
-    $('select#jsCodeModal_fnlist').selectpicker("refresh");
-    $('select#jsCodeModal_fnlist').change();
-
+    var dt  = $(elm).attr("data-type");
+    localStorage.setItem("global-fn-type",dt);
+    var fid = $(elm).closest("ul").find('select.fns-key option:selected').attr("pid");
+    var oldModal = global_var.current_modal;
+    Utility.addParamToUrl("current_modal",'loadFn');
+    Utility.addParamToUrl("current_fn_id",fid);
+   var url  = document.location.href;
+    window.open(url, '_blank');
+    Utility.addParamToUrl("current_modal",oldModal);
+    ///showJsCodeModal();
+   // $('select#jsCodeModal_fnlist').val(fid);
+   // $('select#jsCodeModal_fnlist').selectpicker("refresh");
+  //  $('select#jsCodeModal_fnlist').change();
 }
 
 var cdnh = true;
@@ -15190,7 +15195,11 @@ $(document).on('click', '#importCoreJavaCode', function (evt) {
      var data  = {};
          data.id =  global_var.current_fn_id;
     callService('serviceIoCompileCoreJava',data,true,function (res) {
-        AJAXCallFeedback(res);            
+        if (res.kv && res.kv.err && res.kv.err.length > 0) {
+            Toaster.showError(JSON.stringify(res.kv.err));
+        } else {
+            Toaster.showMessage("Code Compiled!")
+        }     
        }) 
  }
 function loadProjectList2SelectboxByClassWithoutCallAction(className) {

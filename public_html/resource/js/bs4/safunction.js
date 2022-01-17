@@ -2092,6 +2092,7 @@ var SAFN = {
                     .addClass('cs-select-btn-box')
                     .append($('<button>')
                         .append('<i class="fas fa-share"></i>')
+                        .attr("data-type",'sql')
                         .attr("onclick", "showJSModalByName(this)")
                     )
             }
@@ -2148,6 +2149,7 @@ var SAFN = {
                     .addClass('cs-select-btn-box')
                     .append($('<button>')
                         .append('<i class="fas fa-share"></i>')
+                        .attr("data-type",'javacore')
                         .attr("onclick", "showJSModalByName(this)")
                     )
             }
@@ -2204,6 +2206,7 @@ var SAFN = {
                     .addClass('cs-select-btn-box')
                     .append($('<button>')
                         .append('<i class="fas fa-share"></i>')
+                        .attr("data-type",'core')
                         .attr("onclick", "showJSModalByName(this)")
                     )
             }
