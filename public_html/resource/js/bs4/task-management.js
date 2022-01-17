@@ -3361,7 +3361,7 @@ const taskManagement = {
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
                     <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
-                    <th class="bug-list-column bug-list-column-tasktype" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>

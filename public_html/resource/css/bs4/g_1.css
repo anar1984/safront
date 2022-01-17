@@ -4297,11 +4297,13 @@ td.selected{
     top: 50%;
     transform: translate(-10%, -50%);
     z-index: 1;
-    display: none;
-}
-.bug-list-column-task-name:hover .task-name-editdrop{
-
     display: block;
+}
+.task-name-editdrop button.btn {
+    display: none !important;
+}
+.bug-list-column-task-name:hover .task-name-editdrop button.btn {
+    display: block !important;
 }
 .table-row-show-hide-ul{
     list-style: none;

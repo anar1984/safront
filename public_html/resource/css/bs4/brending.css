@@ -1,4 +1,7 @@
 /* general */
+.bootstrap-select {
+ position: inherit;
+}
 .brand-lolor {
     color: #173359;
 }
@@ -4147,6 +4150,17 @@ hr.hr-ss {
     width: auto;
     max-width: 100px;
     text-align: center;
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-column-tasktype {
+    width: auto;
+    max-width: 100px;   
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-column-tasktype div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
 }
 .bugListTable tbody .bug-tr td>a.task-list-name {
     white-space: nowrap;

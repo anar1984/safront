@@ -3455,4 +3455,4 @@ $(document).on("change", '.noteCheckListItem', function () {
     } else {
         $(this).closest('li').removeClass('on-checked');
     }
-})
+});
