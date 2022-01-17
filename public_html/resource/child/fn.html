@@ -23,11 +23,16 @@ aria-hidden="true">
                             <select onchange='getAllJsCodeByProject()'
                                 class="form-control jsCodeModal_checkbox jsCodeModal-selectpicker "
                                 id="jsCodeModal_fntype">
-                                <option selected value='core'>Core</option>
+                                <option  >no select</option>
+                                <option  value='javacore'>Core Java</option>
+                                <option  value='csscore'>Core CSS</option>
+                                <option  value='jscore'>Core JS</option>
+                                <option value='sql'>SQL Query</option>
+                                <option  value='core'>FN Core</option>
                                 <option value='event'>Event Based</option>
                                 <option value='java'>Java</option>
-                                <option value='sql'>SQL Query</option>
-
+                               
+                            
                             </select>
                         </div>
                     </div>
@@ -66,6 +71,16 @@ aria-hidden="true">
                             </div>
                         </div>
                     </div>
+                    <div class="cs-col-storecard-general-setting jscode-zad-javacore" style="display: none;">
+                        <div class="">
+                            <button class="btn newin btn-danger btn-sm " href="#" role="button" id="importCoreJavaCode" >
+                                <i class="fas fa-file-import" style=" margin-right: 6px; " aria-hidden="true"></i> 
+                                Compile
+                            </button>
+                            
+                        </div>
+                    </div>
+                      
                    <!--  <div class="d-flex justify-content-right " style="padding-right:10px;">
                         <div class="mm-col">
                             <input class="form-control" placeholder="New function" id="jsCodeModal_newfunction">
@@ -131,7 +146,7 @@ aria-hidden="true">
                             <b>(</b> Carrier carrier<b> ){</b>
                         </div>
 
-                        <div style="height:83%; width: 100%;" class="col-12 text-left">
+                        <div style="height: calc(100vh - 80px); width: 100%;" class="col-12 text-left">
 
                             <!--  <span class="btn btn-secondary editor_full_screenBt"><i
                                  class="fas fa-expand"></i></span> -->
