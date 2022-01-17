@@ -2728,22 +2728,24 @@ function showBacklogHistoryClick(el) {
         }
         return;
     }
- 
+    else if(global_var.current_modal === 'loadLivePrototype'){
+        if (pid === global_var.current_project_id) {
+            $("#storyCardListSelectBox").val(bid)
+            $("#storyCardListSelectBox").change();
+        } else {
+            global_var.current_backlog_id = bid;
+            Utility.addParamToUrl('current_backlog_id', bid);
+            $('select.projectList_liveprototype').val(pid);
+            $('select.projectList_liveprototype').change();
+        }
+    }else{
         callStoryCard(bid);
         return;
-    
-
-    
-
-    if (pid === global_var.current_project_id) {
-        $("#storyCardListSelectBox").val(bid)
-        $("#storyCardListSelectBox").change();
-    } else {
-        global_var.current_backlog_id = bid;
-        Utility.addParamToUrl('current_backlog_id', bid);
-        $('select.projectList_liveprototype').val(pid);
-        $('select.projectList_liveprototype').change();
     }
+ 
+       
+    
+  
 }
 
 function fillBacklogHistory4View(backlogId, isApi) {

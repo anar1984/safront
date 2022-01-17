@@ -827,7 +827,7 @@ const taskManagement = {
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
 
-                itmList += $(o).find('.textarea').val() + '|';
+                itmList += $(o).find('textarea').val() + '|';
             }
 
             this.insertCheckListComulativCore(itmList, taskId)
