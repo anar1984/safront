@@ -6581,6 +6581,13 @@ div.cs-task-item-in-box {
     box-shadow: 0px 0px 8px rgb(0 0 0 / 50%);
     border-radius: 10px;
 }
+.large-modal-expand div.cs-task-item-in-box {
+    width: 20%;
+    flex: 0 0 25%;
+    max-width: 19.444%;
+    margin: 5px;
+    height: fit-content;
+}
 .cs-task-card-body {
     /* padding-bottom: 20px; */
 }

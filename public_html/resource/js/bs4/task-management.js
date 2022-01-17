@@ -980,6 +980,7 @@ const taskManagement = {
                                     
                                         <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${lang_task.windowUpdateTask.Duplicate}</a>
                                         <a class="dropdown-item" href="#" onclick="rejectTask()">${lang_task.windowUpdateTask.rejectTask}</a>
+                                        <a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>
                                         <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
                                     </div>
                                 </div>
@@ -4374,5 +4375,13 @@ $(document).on("click",'.my-send-task-list-btn',function (e) {
      getBugList();
 })
 $(document).on("click",'.cs-next-large-modal-btn',function (e) {
-   $(this).closest('.cs-task-col').find('.cs-task-item-box').toggleClass('large-modal-expand');
+//    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+
+   $(this).closest(".cs-task-col").toggleClass("large-modal-expand");
+ if($(this).closest(".cs-task-col").hasClass('large-modal-expand')){
+     $('.cs-task-panel-column').stop().animate({
+         scrollLeft:$(this).closest(".cs-task-panel-column").scrollLeft() + $(this).closest(".cs-task-col").position().left-15
+     }, 200);
+ }
 })
+
