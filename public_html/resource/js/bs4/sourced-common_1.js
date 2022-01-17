@@ -5657,10 +5657,9 @@ UserStory.prototype = {
 
         });
 
-        loadSelecPickerOnChnageSqlFnList($("select.get-runsql-select-box"));
-        loadSelecPickerOnChnageJavaFnList($("select.get-runjava-select-box"));
-        loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"));
-
+        loadSelecPickerOnChnageFnList($("select.get-runsql-select-box"),'sql');
+        loadSelecPickerOnChnageFnList($("select.get-runjava-select-box"),'javacore');
+        loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"),'core');
         return table;
     },
 

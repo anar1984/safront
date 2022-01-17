@@ -1313,6 +1313,12 @@ var SAFN = {
                     case '@.callfn':
                         descLine = SAFN.Reconvert.CallFnStatement(mainBody);
                         break;
+                    case '@.runjava':
+                        descLine = SAFN.Reconvert.runJavaStatement(mainBody);
+                        break;
+                    case '@.runsql':
+                        descLine = SAFN.Reconvert.runSqlStatement(mainBody);
+                        break;
                     case '@.callapi':
                         descLine = SAFN.Reconvert.CallApiStatement(mainBody);
                         break;
@@ -1580,6 +1586,24 @@ var SAFN = {
             var div = $(triggerEl).find('div.function-statement-container');
             var key = div.find("select.fns-key").val();
             var fnline = "@.callfn(" + key + ")";
+            return fnline;
+        },
+        runJavaStatement: function (triggerEl) {
+
+            // var div = triggerEl.find('div.function-statement-container');
+
+            var div = $(triggerEl).find('div.function-statement-container');
+            var key = div.find("select.fns-key").val();
+            var fnline = "@.runjava(" + key + ")";
+            return fnline;
+        },
+        runSqlStatement: function (triggerEl) {
+
+            // var div = triggerEl.find('div.function-statement-container');
+
+            var div = $(triggerEl).find('div.function-statement-container');
+            var key = div.find("select option:selected").attr("pid");
+            var fnline = "@.runsql(" + key + ")";
             return fnline;
         },
         CallApiStatement: function (triggerEl) {
@@ -2073,7 +2097,7 @@ var SAFN = {
             }
             var descBody = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callfn")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-runsql")
                 .append($("<div>")
                     .addClass("d-flex justify-content-start")
                     .append($("<div>")
@@ -2095,7 +2119,7 @@ var SAFN = {
                                     .attr('data-live-search', "true")
                                     .attr("id", 'get-runsql-select-box')
                                     .addClass("function-statement-input-common  get-runsql-select-box fns-key ")
-                                    .append($("<option>").text(fnId).val(fnId).attr('selected', 'selected'))
+                                    .append($("<option>").attr("pid",fnId).val(fnId).attr('selected', 'selected'))
 
                                 )
                             )
@@ -2129,7 +2153,7 @@ var SAFN = {
             }
             var descBody = $('<div>')
                 .addClass("col-12")
-                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-callfn")
+                .addClass("function-statement-container cs-sum-inbox cs-sum-inbox-runjava")
                 .append($("<div>")
                     .addClass("d-flex justify-content-start")
                     .append($("<div>")
@@ -2164,7 +2188,6 @@ var SAFN = {
             return descBody;
 
         },
-
         CallFnStatement: function (descLine) {
             var fnId = SAFN.GetCommandArgument(descLine);
             // fnName = (fnName) ? fnName : fnId;
@@ -4462,13 +4485,13 @@ function loadSelecPickerOnChnageApiList(backlogId) {
     return tbl.html();
 }
 
-function loadSelecPickerOnChnageSqlFnList(element) {
+function loadSelecPickerOnChnageFnList(element,dataType) {
     if (!global_var.current_project_id)
         return;
 
     var data = {};
     data.fkProjectId = global_var.current_project_id;
-    data.fnType = "sql";
+    data.fnType = dataType;
     callService("serviceTmGetJsCodeList", data, true, function (res) {
         var dt = [];
         try {
@@ -4478,190 +4501,62 @@ function loadSelecPickerOnChnageSqlFnList(element) {
 
         $(element).each(function () {
 
-            var fnid = $(this).val();
-            $(this).empty();
-            for (var n = 0; n < dt.length; n++) {
-
-                var o = dt[n];
-
-                var td = $('<option>')
-                    .text(o.fnDescription)
-                    .val(o.fnCoreName)
-                    .attr('pid', o.id)
-
-                /*  if (o.id === fnid) {
-                     td.attr('selected', 'selected')
-                 } */
-                $(this).append(td);
-            }
-            $(this).val(fnid)
-            $(this).selectpicker('refresh');
-
-        })
-
-        $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
-            let arrowWidth = 60;
-            let $this = $(this);
-            let style = window.getComputedStyle(this)
-            let { fontWeight, fontSize, fontFamily } = style
-            let text = $this.find("option:selected").text();
-            let $demo = $("<span>").html(text).css({
-                "font-size": fontSize,
-                "font-weight": fontWeight,
-                "font-family": fontFamily,
-                "visibility": "hidden"
-            });
-            $demo.appendTo($this.parent());
-            let width = $demo.width();
-            $demo.remove();
-
-            $this.width(width + arrowWidth);
-
-        });
-
-    })
-
-
-
-
-}
-
-function loadSelecPickerOnChnageJavaFnList(element) {
-    if (!global_var.current_project_id)
-        return;
-
-    var data = {};
-    data.fkProjectId = global_var.current_project_id;
-    data.fnType = "javacore";
-    callService("serviceTmGetJsCodeList", data, true, function (res) {
-        var dt = [];
-        try {
-            dt = res.tbl[0].r
-        } catch (err) {
-        }
-
-        $(element).each(function () {
-
-            var fnid = $(this).val();
-            $(this).empty();
-            for (var n = 0; n < dt.length; n++) {
-
-                var o = dt[n];
-
-                var td = $('<option>')
-                    .text(o.fnDescription)
-                    .val(o.fnCoreName)
-                    .attr('pid', o.id)
-
-                /*  if (o.id === fnid) {
-                     td.attr('selected', 'selected')
-                 } */
-                $(this).append(td);
-            }
-            $(this).val(fnid)
-            $(this).selectpicker('refresh');
-
-        })
-
-        $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
-            let arrowWidth = 60;
-            let $this = $(this);
-            let style = window.getComputedStyle(this)
-            let { fontWeight, fontSize, fontFamily } = style
-            let text = $this.find("option:selected").text();
-            let $demo = $("<span>").html(text).css({
-                "font-size": fontSize,
-                "font-weight": fontWeight,
-                "font-family": fontFamily,
-                "visibility": "hidden"
-            });
-            $demo.appendTo($this.parent());
-            let width = $demo.width();
-            $demo.remove();
-
-            $this.width(width + arrowWidth);
-
-        });
-
-    })
-
-
-
-
-}
-
-function loadSelecPickerOnChnageFnList(element) {
-
-    if (!global_var.current_project_id)
-        return;
-
-    var json = initJSON();
-    json.kv.fkProjectId = global_var.current_project_id;
-    var that = this;
-    var data = JSON.stringify(json);
-    $.ajax({
-        url: urlGl + "api/post/srv/serviceTmGetJsCodeList",
-        type: "POST",
-        data: data,
-        contentType: "application/json",
-        crossDomain: true,
-        async: true,
-        success: function (res) {
-            var dt = [];
-            try {
-                dt = res.tbl[0].r
-            } catch (err) {
-            }
-
-            $(element).each(function () {
-
+            if(dataType==='sql'){
+                var fnid = $(this).find("option:selected").attr("pid");
+            }else{
                 var fnid = $(this).val();
-                $(this).empty();
-                for (var n = 0; n < dt.length; n++) {
+            }
+            $(this).empty();
+            for (var n = 0; n < dt.length; n++) {
 
-                    var o = dt[n];
+                var o = dt[n];
 
-                    var td = $('<option>')
-                        .text(o.fnDescription)
-                        .val(o.fnCoreName)
-                        .attr('pid', o.id)
+                var td = $('<option>')
+                    .text(o.fnDescription)
+                    .val(o.fnCoreName)
+                    .attr('pid', o.id)
 
-                    /*  if (o.id === fnid) {
-                         td.attr('selected', 'selected')
-                     } */
-                    $(this).append(td);
-                }
-                $(this).val(fnid)
-                $(this).selectpicker('refresh');
+                /*  if (o.id === fnid) {
+                     td.attr('selected', 'selected')
+                 } */
+                $(this).append(td);
+            }
+            if(dataType==='sql'){
+               $(this).find("option[pid='"+fnid+"']").attr("selected",'selected');
+            }else{
+                $(this).val(fnid);
+            }
+            $(this).selectpicker('refresh');
 
-            })
+        })
 
-            $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
-                let arrowWidth = 60;
-                let $this = $(this);
-                let style = window.getComputedStyle(this)
-                let { fontWeight, fontSize, fontFamily } = style
-                let text = $this.find("option:selected").text();
-                let $demo = $("<span>").html(text).css({
-                    "font-size": fontSize,
-                    "font-weight": fontWeight,
-                    "font-family": fontFamily,
-                    "visibility": "hidden"
-                });
-                $demo.appendTo($this.parent());
-                let width = $demo.width();
-                $demo.remove();
-
-                $this.width(width + arrowWidth);
-
+        $('.cs-sum-inbox .cs-select-box .bootstrap-select').each(function () {
+            let arrowWidth = 60;
+            let $this = $(this);
+            let style = window.getComputedStyle(this)
+            let { fontWeight, fontSize, fontFamily } = style
+            let text = $this.find("option:selected").text();
+            let $demo = $("<span>").html(text).css({
+                "font-size": fontSize,
+                "font-weight": fontWeight,
+                "font-family": fontFamily,
+                "visibility": "hidden"
             });
+            $demo.appendTo($this.parent());
+            let width = $demo.width();
+            $demo.remove();
 
-        }
-    });
+            $this.width(width + arrowWidth);
+
+        });
+
+    })
 
 
-    return tbl.html()
+
+
 }
+
 
 // if new scripts
 $(document).ready(function () {
@@ -4788,7 +4683,7 @@ $(document).ready(function () {
         SAFN.Convert.Common.GetLineBody(this);
     })
 
-    $(document).on("change", ".cs-sum-inbox select.function-statement-input-common", function (e) {
+   /*  $(document).on("change", ".cs-sum-inbox select.function-statement-input-common", function (e) {
         $.fn.textWidth = function (text, font) {
             if (!$.fn.textWidth.ZadFakeEl)
                 $.fn.textWidth.ZadFakeEl = $('<span>').hide().appendTo(document.body);
@@ -4806,13 +4701,9 @@ $(document).ready(function () {
         function inputWidth(CSelem, minW, maxW) {
             CSelem = $(this);
         }
-
         var SheyTargetElem = $(this);
-
         inputWidth(SheyTargetElem);
-
-        SAFN.Convert.Common.GetLineBody(this);
-    })
+    }) */
     $(document).on("change", ".cs-sum-inbox input.function-statement-input-common", function (e) {
         $.fn.textWidth = function (text, font) {
             if (!$.fn.textWidth.ZadFakeEl)
