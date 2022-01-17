@@ -13654,13 +13654,13 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     getIframeBlock(elm);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-    setBacklogAsHtmlCodeGround(global_var.current_backlog_id);
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id,js,css);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
 });
 
-function setBacklogAsHtmlCodeGround(backlogId) {
+function setBacklogAsHtmlCodeGround(backlogId,js,css) {
     if (!backlogId) {
         return;
     }
@@ -13676,7 +13676,7 @@ function setBacklogAsHtmlCodeGround(backlogId) {
  
     var json = initJSON();
     json.kv.fkBacklogId = backlogId;
-    json.kv.backlogHtml =   html ;
+    json.kv.backlogHtml = "<style>"+css+"</style>"+ html+"<script>"+js+"</script>" ;
     var that = this;
     var data = JSON.stringify(json);
     $.ajax({
