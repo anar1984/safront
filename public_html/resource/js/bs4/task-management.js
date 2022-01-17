@@ -4374,5 +4374,5 @@ $(document).on("click",'.my-send-task-list-btn',function (e) {
      getBugList();
 })
 $(document).on("click",'.cs-next-large-modal-btn',function (e) {
-   $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+   $(this).closest('.cs-task-col').find('.cs-task-item-box').toggleClass('large-modal-expand');
 })
