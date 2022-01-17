@@ -10247,6 +10247,7 @@ function addNewSourceCodeFromDescNew(trigg) {
                 var select = $("tr[pid='" + descId + "']").find("select.fns-key")
                 select.append($("<option>")
                         .attr('value', apidId)
+                        .attr('pid', res.kv.id)
                         .text(apidId));
                 select.val(apidId)
                 select.change();
