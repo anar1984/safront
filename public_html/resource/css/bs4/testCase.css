@@ -485,15 +485,18 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 /* new css tasks  */
 .main-section {
-    width: 100%;
+    width: calc(100% - 50px);
     padding: 0px;
     min-height: 100vh;
     transition: all 0.3s;
     margin-bottom: 30px;
 }
+.open-setting-panel .main-section {
+    width: calc(100% - 460px);
+}
 .right-section {
-    margin-right: -545px;
-    width: 610px;
+    margin-right: -25.7rem;
+    width: 460px;
     transition: all 0.3s;
 }
 @media(min-width: 1600px) {
@@ -501,7 +504,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 @media(max-width: 1365px) {
     .right-section {
-        margin-right: -515px;
+        margin-right: -410px;
     }
     .open-setting-panel .has-search .form-control {
         width: 30px;
@@ -526,7 +529,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .open-setting-panel .right-section {
     margin-right: 0;
-    width: 610px;
+    width: 460px;
 }
 .header-top-right .refresh i:after{
     width: 14px;
@@ -805,8 +808,8 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 }
 .setting-views-panel {
     position: relative;
-    min-width: 414px;
-    max-width: 414px;
+    min-width: 410px;
+    max-width: 410px;
 }
 .setting-views-panel-in {
     position: relative;

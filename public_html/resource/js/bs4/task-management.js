@@ -2977,21 +2977,26 @@ const taskManagement = {
                        </div>
                    </div></div>`
                 },
-                genZonaBlock: function (nameh, id) {
-                    return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle"><div class="flex-fill bd-highlight">
-                    <div class="cs-card-size cs-dark-gray-color">
+    genZonaBlock: function (nameh, id) {
+        return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
+            <div class="flex-fill bd-highlight">
+               
+            </div>
+            <div class="flex-fill bd-highlight text-center">
+            <div class="cs-card-size">
                     <span><i class="fas fa-clipboard-list" aria-hidden="true"></i></span>
+                </div>
+                <h4 class="cs-status-box-name text-center">${nameh}</h4>
+                <div class="cs-card-size">
                     <span class="count-cs-${id} ">0</span>
                 </div>
-            </div><div class="flex-fill bd-highlight">
-                <h4 class="cs-status-box-name cs-dark-blue-color text-center">${nameh}</h4>
             </div>
             <div class="flex-fill d-flex bd-highlight minimze-hidden-block" id="${id}-total-task-list">
            
             </div>
             <div class="flex-fill bd-highlight">
-                <div class="cs-card-fullview cs-dark-gray-color">
-                    <a href="#"><i class="fas fa-columns" aria-hidden="true"></i></a>
+                <div class="cs-card-fullview cs-next-large-modal-btn">
+                    <a href="#"><i class="fas fa-expand" aria-hidden="true"></i></a>
                 </div>
             </div>
             </div>
@@ -3361,7 +3366,7 @@ const taskManagement = {
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
                     <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
-                    <th class="bug-list-column bug-list-column-tasktype" style="width: 40px;"><i class="fas fa-tasks"></i></th>
+                    <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-priority" style="display: none;">Priority</th>
                     <th class="bug-list-column bug-list-column-story-card" style=""><span>Story Card</span><button onclick="addUserStoryNewModalWithProject()" class="btn btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button></th>
                     <th class="bug-list-column bug-list-column-project" style="">Project</th>
@@ -4367,4 +4372,7 @@ $(document).on("click",'.my-send-task-list-btn',function (e) {
      $(this).parent().find(".me-send-task-list-btn").removeClass("active");
      $(this).toggleClass("active");
      getBugList();
+})
+$(document).on("click",'.cs-next-large-modal-btn',function (e) {
+   $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
 })

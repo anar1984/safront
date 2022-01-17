@@ -7284,65 +7284,50 @@
         </div>
     </div>
 
-    <div class="modal fade" id="assignTaskToOthersModal" tabindex="-1" style="margin-top:50px;" role="dialog"
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="assignTaskToOthersModal" tabindex="-1" style="margin-top:50px;" role="dialog"
         aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">Add NewTask</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text card-UserStory-header-text-code"><b>dd NewTask</b>
+                    
+                </span></h6>
+               </div>
                 <div class="modal-body" style="font-size: 12px;">
-                    <div class="row ">
-                        <div class="col-9  hidden" hidden>
-
-                            <input id="assignTaskToOthersModal_taskid" rows="2" type='hidden' value='-1'
-                                class="form-control">
-                            <input id="assignTaskToOthersModal_projectid" rows="2" type='hidden' value='-1'
-                                class="form-control">
+                    <div class="col-12">
+                        <div class="row ">
+                            <div class="col-9  hidden" hidden>
+    
+                                <input id="assignTaskToOthersModal_taskid" rows="2" type='hidden' value='-1'
+                                    class="form-control">
+                                <input id="assignTaskToOthersModal_projectid" rows="2" type='hidden' value='-1'
+                                    class="form-control">
+                            </div>
+                            <div class="col-12 cs-input-group">
+                                <div class="input-group-addon">Comment</div>
+                                <textarea id="assignTaskToOthersModal_comment" rows="4" class="form-control"></textarea>
+                            </div>
+    
+                                <div class="col-4 cs-input-group mt-2">
+                                    <div class="input-group-addon">Assignee</div>
+                                    <select class="form-control" style="width:100%"
+                                        id="assignTaskToOthersModal_assignee">
+                                    </select>
+                                </div>
+                                <div class="col-5 cs-input-group mt-2">
+                                    <div class="input-group-addon">Task Type</div>
+                                    <select class="form-control" style="width:100%; "
+                                                        id="assignTaskToOthersModal_tasktype">
+                                    </select>
+                                </div>
+    
+                                <div class="col-1 cs-input-group mt-3">
+                                    <a class="btn assignTaskToOthersModal_addAssignees" onclick="assignTaskToOthersModal_addAssignees()"><i class="fa fa-plus"></i></a>
+                                    
+                                </div>
+    
                         </div>
-
-
-                        <div class="col-12">
-                            <br>
-                            <label>Comment</label>
-                            <textarea id="assignTaskToOthersModal_comment" rows="4" class="form-control"></textarea>
-                        </div>
-
-                        <div class="col-12 " style="padding:5px 20px;">
-                            <br> <br>
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-
-                                        <th>
-                                            <label>Assignee</label>
-                                            <select class="form-control" style="width:100%"
-                                                id="assignTaskToOthersModal_assignee">
-                                            </select>
-                                        </th>
-                                        <th>
-                                            <label>Task Type</label>
-                                            <select class="form-control" style="width:100%; "
-                                                id="assignTaskToOthersModal_tasktype">
-                                            </select>
-                                        </th>
-                                        <th>
-
-                                            <i class="fa fa-plus" onclick="assignTaskToOthersModal_addAssignees()"
-                                                style="padding-bottom:10px;font-size: 23px;color:blue;"></i>
-                                        </th>
-                                    </tr>
-
-                                </thead>
-                                <tbody id='assignTaskToOthersModal_assigneelist'>
-
-                                </tbody>
-                            </table>
-                        </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -7655,20 +7640,20 @@
     </div>
 
 
-    <div class="modal fade" id="iDidItModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="iDidItModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">I Did It</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text card-UserStory-header-text-code"><b>I Did It</b>
+                    
+                </span></h6>
+               </div>
                 <div class="modal-body" style="font-size: 12px;">
                     <div class="row">
 
-                        <div class="col-12">
-                            <span>Comment</span>
+                        <div class="col-12 cs-input-group">
+                            <div class="input-group-addon">Comment</div>
                             <textarea rows=3 class="form-control" id="iDidItModal_comment"></textarea>
                         </div>
                     </div>
@@ -7717,21 +7702,26 @@
     </div>
 
 
-    <div class="modal fade" id="uatModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="uatModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text card-UserStory-header-text-code"><b>User Acceptance Testing</b></span></h6>
+               </div>
+                <!-- <div class="modal-header">
                     <h5 class="modal-title" id="">User Acceptance Testing</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body" style="font-size: 12px;">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <span>Comment</span>
-                            <textarea rows=3 class="form-control" id="uatModal_comment"></textarea>
+                </div> -->
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 cs-input-group">
+                                <div class="input-group-addon">Comment</div>
+                                <textarea rows=3 class="form-control" id="uatModal_comment"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -8794,25 +8784,27 @@
     </div>
 
 
-    <div class="modal fade" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade cs-modal-box issue-managment-add-task" id="forwardTaskToModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="">Forward To</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <div class="justify-content-center modal-header task-modal-header">
+                    <h6 class="modal-title task-modal-title">
+                        <span class="text card-UserStory-header-text-code"><b>Forward To</b>
+                    
+                </span></h6>
+               </div>
                 <div class="modal-body" style="font-size: 12px;">
-                    <div class="row">
-                        <div class="col-12">
-                            <b>Assignee</b>
-                            <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
-                        </div>
-
-                        <div class="col-12">
-                            <b>Comment</b>
-                            <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 cs-input-group">
+                                <div class="input-group-addon">Assignee</div>
+                                <select class="form-control" style="width:100%" id="forwardTaskToModal_assignee"> </select>
+                            </div>
+    
+                            <div class="col-12 cs-input-group mt-2">
+                                <div class="input-group-addon">Comment</div>
+                                <textarea rows=3 class="form-control" id="forwardTaskToModal_comment"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

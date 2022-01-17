@@ -20195,6 +20195,7 @@ function ForwardTaskTo_loadAssignee() {
         select.append($('<option>').val(keys[i]).text(userName));
     }
     sortSelectBox('forwardTaskToModal_assignee');
+    select.selectpicker('refresh');
 }
 
 function addProceccDescListToTaskNew() {
@@ -20605,6 +20606,7 @@ function assignTaskToOthers_loadAssignee() {
         select.append($('<option>').val(keys[i]).text(userName));
     }
     sortSelectBox('assignTaskToOthersModal_assignee');
+    select.selectpicker('refresh');
 }
 
 function addUserStoryToTask_loadAssignee() {
@@ -20743,6 +20745,7 @@ function addUserStoryToTask_loadTaskTypeDetails(res) {
     }
     sortSelectBox('addNewDetailedTaskModal_tasktype');
     sortSelectBox('assignTaskToOthersModal_tasktype');
+    select2.selectpicker('refresh');
 }
 function addUserStoryToTask_loadTaskTypeDetails_event(res) {
     var select = $('#addNewDetailedTaskModal_tasktype-new');

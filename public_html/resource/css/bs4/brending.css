@@ -1,4 +1,7 @@
 /* general */
+.bootstrap-select {
+ position: inherit;
+}
 .brand-lolor {
     color: #173359;
 }
@@ -18,6 +21,14 @@
 .nice-scroll::-webkit-scrollbar-thumb:hover {
     background:  rgb(0 0 0 / 35%);
 }
+
+.cs-core-issue-management ::-webkit-scrollbar-thumb {
+    background: rgb(0 0 0 / 25%);
+}
+.cs-core-issue-management ::-webkit-scrollbar-thumb:hover {
+    background:  rgb(0 0 0 / 40%);
+}
+
 .dropdown-item:focus, .dropdown-item:hover {
     background-color: #accdde;
     color: black;
@@ -1513,9 +1524,16 @@ input:checked + .slider:before {
 .cs-task-col {
     min-width: 350px;
     max-width: 350px;
-    margin-right: 30px;
+    margin-right: 0;
     height: 80vh;
     overflow-y: hidden;
+}
+.large-modal-expand.cs-task-col {
+    min-width: 100%;
+    max-width: 100%;
+}
+.cs-task-col .cs-task-boxes .cs-task-item-box {
+    border-right: 1px dashed rgb(255 255 255 / 30%);
 }
 .cs-task-col .stat-div-task-content{
 
@@ -1529,9 +1547,9 @@ input:checked + .slider:before {
     margin-right: 0;
 }
 .cs-task-boxes {
-    background: rgba(255, 255, 255, 0.11);
+    background: transparent;
     mix-blend-mode: normal;
-    border-radius: 15px 15px 0px 0px;
+    border-radius: none;
 }
 .cs-task-status-header {
     padding: 15px;
@@ -1542,16 +1560,31 @@ input:checked + .slider:before {
 .cs-task-status-header .cs-card-size {
     font-size: 14px;
     vertical-align: middle;
-    color: #173359;
+    color: #fff;
+    display: inline-block;
 }
 .cs-task-status-header .cs-card-size span:first-child {
     font-size: 16px;
 }
+.cs-task-status-header .cs-card-size>span {
+    border-radius: 50px;
+    border: 1px solid;
+    border-color: #ffff;
+    padding: 0 5px;
+    height: 25px;
+    width: 100%;
+    min-width: 25px;
+    display: inline-block;
+}
 .cs-task-status-header h4.cs-status-box-name, .cs-task-status-header .cs-status-box-name {
     font-size: 18px;
-    font-weight: bold;
+    line-height: 22px;
+    font-weight: 500;
+    padding: 0 10px;
     vertical-align: middle;
     margin: 0;
+    color: #ffffff;
+    display: inline-block;
 }
 .cs-task-status-header .cs-card-fullview {
     text-align: right;
@@ -1561,10 +1594,17 @@ input:checked + .slider:before {
     float: right;
 }
 .cs-task-status-header .cs-card-fullview a {
-    color: #173359;
+    color: #ffffff;
+    height: 25px;
+    width: 25px;
+    border-radius: 50px;
+    padding: 1px;
+    display: inline-block;
+    text-align: center;
 }
 .cs-task-status-header .cs-card-fullview a:hover {
     color: #173359;
+    background: rgb(255 255 255 / 85%);
 }
 .cs-task-status-header .cs-card-fullview i {
 
@@ -1573,7 +1613,7 @@ input:checked + .slider:before {
     padding-top: 0 !important;
     height: 70vh;
     overflow-y: auto;
-    border-top: 1px solid rgb(0 0 0 / 18%);
+    border-top: 1px solid rgb(255 255 255 / 30%);
 }
 .cs-task-item-box-bg {
     padding: 15px;
@@ -4148,6 +4188,17 @@ hr.hr-ss {
     max-width: 100px;
     text-align: center;
 }
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-column-tasktype {
+    width: auto;
+    max-width: 100px;   
+}
+.cs-core-issue-management .bugListTable tbody .bug-tr td.bug-list-column-tasktype div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+}
 .bugListTable tbody .bug-tr td>a.task-list-name {
     white-space: nowrap;
     overflow: hidden;
@@ -4832,11 +4883,11 @@ table.lbl-list-table tr td {
     color: #ffffff;
     font-size: 16px;
     line-height: 20px;
-    height: 25px;
+    height: 30px;
     border: none;
     background: rgba(3, 57, 108, 0.5);
     border-radius: 7px;
-    padding: 1px 12px;
+    padding: 5px 12px;
 }
 .issue-managment-add-task .priority-btn {
     position: relative;
@@ -5551,6 +5602,9 @@ table.lbl-list-table tr td {
 }
 .cs-date-time .input-group-icon{
     color: #fff;
+}
+.input-group-icon i {
+    vertical-align: middle;
 }
 .task-modal-header {
  padding: 0px;
@@ -6451,6 +6505,9 @@ table.lbl-list-table tr td {
     max-width: 1170px !important;
     border-collapse: separate;
     border-spacing: 1px;
+    background: rgba(255, 255, 255, 0.11);
+    mix-blend-mode: normal;
+    border-radius: 15px 15px 0px 0px;
 }
 /* customize store card */
 .type-status-box .cs-forum-group .bootstrap-select > .btn {
@@ -7222,4 +7279,11 @@ div.cs-task-item-in-box {
 }
 #storycard_filelist .file_upload_div:hover .hover-detail-pinned{
  opacity: 1;
+}
+.assignTaskToOthersModal_addAssignees {
+    padding: 6px !important;
+    font-size: 12px !important;
+    width: 30px;
+    height: 30px !important;
+    margin-top: 7px;
 }
