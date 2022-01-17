@@ -31,7 +31,7 @@ function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
             </div>
        </div>
     </div>`;
-    $("#body_of_nature").append(st);
+    $("body").append(st);
     initSelectpickerComponent();
     $('#' + pageId).modal("show");
     $(document).on('hidden.bs.modal', '#' + pageId, function (evt) {

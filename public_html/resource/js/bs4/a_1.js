@@ -2763,7 +2763,7 @@ function fillBacklogHistory4View(backlogId, isApi) {
 
 function setBacklogHistory4View() {
 
-    var div = $('.storecard-header-nav-section #item-history-list');
+    var div = $('.redirectClass  #item-history-list');
     div.html('');
     var block = $(".storecard-header-nav-section #backBacklogBtn-block");
     var temp = [];
@@ -13576,10 +13576,11 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(elm) {
+    var parts = document.location.href.split("?");
      
     var $iframe = $(`<iframe>`)
                              .addClass("h-100 w-100")
-                             .attr("src",'iframe.html')
+                             .attr("src",'iframe.html?'+parts[1]+'&current_domain='+global_var.current_domain)
                              .attr("id",'result-iframe');
 
     $(elm).html($iframe);

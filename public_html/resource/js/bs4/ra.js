@@ -1104,7 +1104,7 @@ function setBacklogAsHtml(backlogId, css, js) {
         crossDomain: true,
         async: true,
         success: function (res) {
-            //            loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
+            //loadBacklogProductionCoreDetailssById(global_var.current_backlog_id, true);
         },
         error: function () {
             Toaster.showError(('Something went wrong!!!'));
