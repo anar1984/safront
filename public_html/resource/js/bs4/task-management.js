@@ -3678,6 +3678,12 @@ const taskManagement = {
                                 <i class="cs-svg-icon filter"></i>
                             </div>
                         </div>
+                        <div class="setting-elemen-box pb-0 task-clear-filter-onoff" style="display:show;">
+                            <div class="standart-badges task-clear-filter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Clear Filter">
+                                    <span class="info">0</span>
+                                <i class="cs-svg-icon clear-filter"></i>
+                            </div>
+                        </div>
                         <div class="setting-elemen-box">
                             <div class="standart-badges tasklabel-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Label">
                                 <i class="fas fa-tag" style="color:#fff; font-size: 21px;"></i>
@@ -4386,4 +4392,16 @@ $(document).on("click",'.cs-next-large-modal-btn',function (e) {
      }, 200);
  }
 })
+
+
+$(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
+   // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
+});
+$(document).on("click",'.task-clear-filter-btn',function (e) {
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter-multi").val('');
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
+    $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
+    $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    $('.setting-elemen-box.task-clear-filter-onoff').css('display','none');
+});
 
