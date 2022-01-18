@@ -980,6 +980,7 @@ const taskManagement = {
                                     
                                         <a class="dropdown-item clone-task" href="#" onclick="cloneTask()">${lang_task.windowUpdateTask.Duplicate}</a>
                                         <a class="dropdown-item" href="#" onclick="rejectTask()">${lang_task.windowUpdateTask.rejectTask}</a>
+                                        <a class="dropdown-item" href="#" onclick="iDidIt()">I Did It!</a>
                                         <a class="dropdown-item" href="#" onclick="deleteTask()">${lang_task.windowUpdateTask.Delete}</a>
                                     </div>
                                 </div>
@@ -3010,17 +3011,19 @@ const taskManagement = {
                 },
                 genKanbanContentBlock: function (id, taskid, title, deadline, body, stats, ceratedDate,createdImg,createdName,assigneImage,assignName) {
                     return `<div class="cs-task-item-in-box redirectClass cs-white-bg" id="${id}" pid="">
-                    <div class="cs-cart-head-title p-2">
-                    <span href="#" class="operation " >${title}</span><span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
-                                    <div class="d-flex pl-0 pr-0 pb-2 pt-0 mb-0 notify-title-box">
-                                        <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
-                                            <div class="d-inline-block p-2 notify-top-section">
-                                                <div class="mr-auto">
-                                                    <span class="deadline"> ${deadline}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="cs-cart-head-title p-2" style="padding-bottom:5px;">
+                    <!--<span href="#" class="operation " >${title}</span>-->
+                    <div class="d-flex pl-0 pr-0 pb-0 pt-0 mb-0 notify-title-box">
+                    <div class="mr-auto ncs-ellipsis"><span class="id">${taskid}</span>
+                        <div class="d-inline-block notify-top-section">
+                            <div class="mr-auto">
+                                <span class="deadline"> ${deadline}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <span class="brend-color large-blok-icon"><i class="fas fa-expand" aria-hidden="true"></i></span></div><div class="cs-task-card-body pl-2 pr-2" "="">
+                                  
                            <div class="cs-task-card-desc">
                            <p onclick_trigger_id="21031217414702167956" class="">${body}</p>
                            </div>
@@ -3036,7 +3039,7 @@ const taskManagement = {
                                  </div>
                                  <div class="flex-fill text-right"><div class="cs-task-card-datatime d-block text-right">
                                     <span>${ceratedDate} </span>
-                                </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 10px 7px;"></div>
+                                </div><div class="bg-status-${stats}" style="height: 2px; margin: 10px 0px 0px 7px;"></div>
                                 <div class="cs-staturs-circle-note1 ml-2 d-inline-block float-left">
                                 <span>${stats}</span></div><div class="canban-item-btns d-flex float-right">
                                             <div class="btn-1 mr-2" onclick='iDidIt()' data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="I did It">
@@ -4374,5 +4377,13 @@ $(document).on("click",'.my-send-task-list-btn',function (e) {
      getBugList();
 })
 $(document).on("click",'.cs-next-large-modal-btn',function (e) {
-   $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+//    $(this).closest('.cs-task-col').toggleClass('large-modal-expand');
+
+   $(this).closest(".cs-task-col").toggleClass("large-modal-expand");
+ if($(this).closest(".cs-task-col").hasClass('large-modal-expand')){
+     $('.cs-task-panel-column').stop().animate({
+         scrollLeft:$(this).closest(".cs-task-panel-column").scrollLeft() + $(this).closest(".cs-task-col").position().left-15
+     }, 200);
+ }
 })
+
