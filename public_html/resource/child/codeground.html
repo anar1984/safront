@@ -384,7 +384,7 @@
                         left: 50%;
                         position: absolute;
                         width: 1366px;
-                        height: 800px;
+                        height: 140vh;
                     " id="result-code-editor">
                        
                     </div>
@@ -482,6 +482,20 @@
         $("#result-code-width-inp").val(with_selct)
         $("#result-code-height-inp").val(height_select)
     })
+
+      
+    
+        $(document).on("mouseup",".panel-left-code.ui-resizable .ui-resizable-e",function() {
+              
+                    $(this).css('width','7px').css('left','auto').css('right','-5px');  
+                
+            });
+        $(document).on("mousedown",".panel-left-code.ui-resizable .ui-resizable-e",function() {
+               
+                    $(this).css('width','100%').css('left','50%').css('right','0');    
+                
+            });
+
 
    
 </script>
