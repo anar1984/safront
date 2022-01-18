@@ -25057,7 +25057,7 @@ User.prototype = {
                 if (res.kv.error === '1') {
                     Toaster.showError(res.kv.res);
                 } else {
-                    Toaster.showError(res.kv.res);
+                    Toaster.showMessage(res.kv.res);
                     $('#changeMyPasswordModal').modal('hide');
                 }
 
