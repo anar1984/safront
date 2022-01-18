@@ -14267,6 +14267,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getManualStatusList: function () {
         data = {};//createTechizatTelebProducts
+        
         var that = this;
         var div = $(".task-panel")
         callApi('220102225238057110391', data, true, function (res) {
@@ -14312,6 +14313,24 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         data = {};//createTechizatTelebProducts
         data.fkTaskTypeId = '(' + stl + ')';
         data.backlogStatus = '(' + statusList + ')';
+        $('#kanban_view_' + stl + '_count').html(0);
+        $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
+
+        var priD = getProjectValueUsManageMultiByelIn($('#story_mn_filter_project_id'));
+        var fkUpdate = getProjectValueUsManageMultiByelIn($("#story_mn_filter_updated_id"));
+        var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
+        var search = $("#search-us-managmenet").val();
+        data.fkProjectId = "("+priD+")";
+        
+        if (fkUpdate) {
+            data.updatedBy ='('+fkUpdate+')';
+        }
+        if (fkAsId) {
+            data.fkAssigneeId = "'"+fkAsId+"'";
+        }
+        if (search.length > 2) {
+            data.backlogName = "%%" + search + "%%";
+        }
         data.startLimit = 0;
         data.endLimit = 20;
         callApi('21122313051700845260', data, false, function (res) {

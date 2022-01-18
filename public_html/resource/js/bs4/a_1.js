@@ -16515,6 +16515,21 @@ function getProjectValueUsManageMultiByel(el) {
 
     return val
 }
+function getProjectValueUsManageMultiByelIn(el) {
+    var prd = $(el).val();
+    var val = ''
+    for (let i = 0; i < prd.length; i++) {
+        if (prd.length == (i + 1)) {
+            val += "'"+prd[i] + "'"
+        } else {
+            val += "'"+prd[i] + "',"
+        }
+
+
+    }
+
+    return val
+}
 
 function getProjectValueUsManageMulti() {
     var prd = $('#story_mn_filter_project_id').val();
