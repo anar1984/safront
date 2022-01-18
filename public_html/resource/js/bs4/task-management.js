@@ -3422,7 +3422,7 @@ const taskManagement = {
                             fileUrl(createByImage) :
                             " ";
 
-                        var backlogName = '<a href1="#" onclick="callStoryCard("' + o.fkBacklogId + '")">' + replaceTags(o.backlogName) + '</a>';
+                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 

@@ -5507,7 +5507,7 @@ UserStory.prototype = {
             try {
                 scDesc = (relScId)
                     ? " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
-                    onclick=\"showJSModal('" + relScId + "')\">"
+                    onclick=\"showJSModalByID('" + relScId+"','"+cr_js_list[relScId].fnType+ "')\">"
                     + replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>"
                     : "";
             } catch (err) {

@@ -8668,6 +8668,17 @@ function showJSModal(jsId) {
     $('select#jsCodeModal_fnlist').change();
 
 }
+function showJSModalByID(id,type) {
+    var dt  = type;
+    localStorage.setItem("global-fn-type",dt);
+    var fid = id;
+    var oldModal = global_var.current_modal;
+    Utility.addParamToUrl("current_modal",'loadFn');
+    Utility.addParamToUrl("current_fn_id",fid);
+   var url  = document.location.href;
+    window.open(url, '_blank');
+    Utility.addParamToUrl("current_modal",oldModal);
+}
 function showJSModalByName(elm) {
     var dt  = $(elm).attr("data-type");
     localStorage.setItem("global-fn-type",dt);
