@@ -3512,6 +3512,10 @@ const taskManagement = {
         
                                     )))
                             .append($('<td>').addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",o.taskTypeName)
                                 .addClass('bug-list-column-tasktype')
                                 .append($("<div>")
                                     .addClass(" ")
@@ -3523,6 +3527,10 @@ const taskManagement = {
                                 .addClass('bug-list-column-priority get-data-group').append(replaceTags(o.taskPriority)))
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-story-card')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",backlogName)
                                 .append("<span class='get-data-group ellipsis-story-card'>" + backlogName + "</span>")
                                 .append($('<div>').addClass('set-filter-box')
                                     .append($('<i class="fa fa-filter">')
@@ -3541,6 +3549,10 @@ const taskManagement = {
                                 })
                             )
                             .append($('<td>').addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",replaceTags(o.projectName))
                                 .attr("style", "max-width:200px;")
                                 .addClass('bug-list-column-project')
                                 .append("<span class='get-data-group'>" + replaceTags(o.projectName) + "</span>")
@@ -3676,6 +3688,12 @@ const taskManagement = {
                         <div class="setting-elemen-box pb-0">
                             <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
                                 <i class="cs-svg-icon filter"></i>
+                            </div>
+                        </div>
+                        <div class="setting-elemen-box pb-0 task-clear-filter-onoff" style="display:show;">
+                            <div class="standart-badges task-clear-filter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Clear Filter">
+                                    <span class="info">0</span>
+                                <i class="cs-svg-icon clear-filter"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
@@ -4386,4 +4404,16 @@ $(document).on("click",'.cs-next-large-modal-btn',function (e) {
      }, 200);
  }
 })
+
+
+$(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
+   // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
+});
+$(document).on("click",'.task-clear-filter-btn',function (e) {
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter-multi").val('');
+    $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
+    $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
+    $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    $('.setting-elemen-box.task-clear-filter-onoff').css('display','none');
+});
 

@@ -404,3 +404,6 @@
 .cs-svg-icon.show-password:after {
   background-image: url(../ch-icons/show-password.svg);
 }
+.cs-svg-icon.clear-filter:after {
+  background-image: url(../ch-icons/clear-filter.svg);
+}
