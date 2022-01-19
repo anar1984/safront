@@ -3362,7 +3362,7 @@ const taskManagement = {
                 genTableHeaderBlock: function () {
                     return `<thead class="bugThead">
                     <tr>
-                    <th><i class="cs-svg-icon numbers"></i></th>
+                    <th><div class="showhide-col-btn" ><i class="cs-svg-icon numbers"></i></div></th>
                     <th><input type="checkbox" class="all-bug-list-check"></th>
                     <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
