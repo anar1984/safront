@@ -823,7 +823,7 @@ const taskManagement = {
         },
         insertCheckListComulativ: function (taskId) {
             var itmList = ''
-            var items = $(".task-check-list-box ul>li");
+            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
 
@@ -901,12 +901,12 @@ const taskManagement = {
 
             },
             genModalSelfBlock: function () {
-                return `<div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
+                return `<div class="modal fade cs-modal-box ${global_screen_name==='ch'?"left  cs-modal-box story-card-modal":""} TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
                       <div class="justify-content-center modal-header task-modal-header">
-                          <h6 class="modal-title task-modal-title">
+                          <h6 class="modal-title task-modal-title ">
                               <span class="text card-UserStory-header-text-code"></span>
                           </h6>
 
