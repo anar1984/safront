@@ -338,7 +338,7 @@
                     </div>
                 </div>
 
-                <div style="height: 55%; position: relative;" class="panel-bottom-code">
+                <div style="height: 55%; " class="panel-bottom-code">
                     <div class="result-code-editor-inp-div">
                       <div class="responsible-panel-box">
                           
@@ -375,7 +375,7 @@
                   </label>
 
                     <span class="panel-bottom-code-view btn btn-sm">VIEW</span>
-                    <div class="m-auto result-code-editor-style" style="
+                    <!-- style="
                         overflow: scroll; 
                         -webkit-transform-origin: 0 0;
                         transform-origin: 0 0;
@@ -385,7 +385,8 @@
                         position: absolute;
                         width: 1366px;
                         height: 140vh;
-                    " id="result-code-editor">
+                    " -->
+                    <div class="m-auto result-code-editor-style" style="overflow: auto;"  id="result-code-editor">
                        
                     </div>
                 </div>
@@ -485,7 +486,7 @@
 
       
     
-        $(document).on("mouseup",".panel-left-code.ui-resizable .ui-resizable-e",function() {
+     /*    $(document).on("mouseup",".panel-left-code.ui-resizable .ui-resizable-e",function() {
               
                     $(this).css('width','7px').css('left','auto').css('right','-5px');  
                 
@@ -494,7 +495,7 @@
                
                     $(this).css('width','100%').css('left','50%').css('right','0');    
                 
-            });
+            }); */
 
 
    
