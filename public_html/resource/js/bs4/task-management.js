@@ -2625,7 +2625,7 @@ const taskManagement = {
             },
             genFilterStatus: function (params) {
                 return `<div class="cs-input-group mt-3">
-                <select class="form-control bug-filter-multi bug-mgmt-filter-select cs-select-active" onchange='callBugFilterMulti(this)'
+                <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                     title="Status">
                     <option value='new' >New</option>
@@ -4473,6 +4473,9 @@ function reset_task_data() {
     $('.task-events-created input').change('');
     $('input#taskNameInputNew2').val('');
     $('#addComment4Task_comment_new').val('');
+    emptyCanvasDiv();
+    $("#progress_bar_new").empty();
+    $(".issue-managment-add-task .task-check-list-box ul").empty();
 }
 if (self.CavalryLogger) {
     CavalryLogger.start_js(["jMqsAf+"]);

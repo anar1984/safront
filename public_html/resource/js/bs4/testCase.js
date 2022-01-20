@@ -817,7 +817,7 @@ function setBugFilterMultiValues() {
         if(data_type!=='nature'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
-    
+                $(this).parent().addClass('cs-select-active')
             }
         }
        
@@ -847,6 +847,7 @@ function setBugFilterValues() {
          if(data_type!=='limit'){
             if(bug_filter[data_type].length>0 ){
                 FilterCount++;
+                $(this).parent().addClass('cs-select-active')
             }
          }
         
@@ -1171,6 +1172,7 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 // ______________________________________________________________
 let FilterCount  = 0
 function setBugListInitialData() {
+  $(".cs-select-active").removeClass("cs-select-active")
     FilterCount =0;
     setBugFilterCheckBoxValues();
     setBugFilterValues();
