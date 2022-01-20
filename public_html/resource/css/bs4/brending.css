@@ -7465,3 +7465,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     margin-top: 3px;
     margin-right: 4px;
 }
+.cs-select-active.bootstrap-select>.btn {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
+}
