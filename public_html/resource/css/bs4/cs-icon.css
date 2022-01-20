@@ -407,3 +407,9 @@
 .cs-svg-icon.clear-filter:after {
   background-image: url(../ch-icons/clear-filter.svg);
 }
+.cs-svg-icon.tapshiriq-dark:after {
+  background-image: url(../ch-icons/tapshiriq-dark.svg);
+}
+.cs-svg-icon.users-dark:after {
+  background-image: url(../ch-icons/users-dark.svg);
+}

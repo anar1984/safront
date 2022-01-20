@@ -2508,22 +2508,16 @@ const taskManagement = {
                <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
-
-               <div class="info-item-elements dropdown-toggle" data-toggle="dropdown">
-        <span data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş">
-           <i class="cs-svg-icon users-circle-white"></i> <span>${Assigne}</span>
-        </span>
-       </div>
-       <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
-            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
-            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
-        </div>
-
-
-               <div class="info-item-elements me-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
-                   <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
-               </div>
+               <div class="info-item-elements me-send-task-list-btn dropdown-toggle" data-toggle="dropdown">
+                    <span data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş">
+                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
+                    </span>
+                </div>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+                </div>
            </div> 
            <div class="info-box mr-2">
                 <span class="title">Tarix</span>
@@ -2602,7 +2596,7 @@ const taskManagement = {
             },
             genFilterStatus: function (params) {
                 return `<div class="cs-input-group mt-3">
-                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                <select class="form-control bug-filter-multi bug-mgmt-filter-select cs-select-active" onchange='callBugFilterMulti(this)'
                     data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
                     title="Status">
                     <option value='new' >New</option>
@@ -2721,24 +2715,28 @@ const taskManagement = {
             },
             genFilterClosed: function () {
                 return `  <div class="row ml-0 mr-0">
-                <div class="cs-input-group cs-pagination-limit col-6">
+                <div class="cs-input-group cs-pagination-limit col-4">
                     <div class="input-group-addon">Closed Dates</div>
                     <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='text'>
                 </div>
-                <div class="cs-input-group cs-pagination-group-by ">
-            <div class="input-group-addon cs-group-by">Group By</div>
-            <select id="inputGroupSelect01">
-                <option value='0' >None</option>
-                <option value='5' >Task Status</option>
-                <option value='7' >Task Nature</option>
-                <option value='8' >Task Type</option>
-                <option value='9' >Story Card</option>
-                <option value='10' >Project</option>
-                <option value='12' >Create By</option>
-                <option value='11' >Assignee</option>
-    
-            </select>
-        </div>
+                <div class="cs-input-group cs-pagination-group-by col-4">
+                <div class="input-group-addon cs-group-by">Group By</div>
+                <select id="inputGroupSelect01">
+                    <option value='0' >None</option>
+                    <option value='5' >Task Status</option>
+                    <option value='7' >Task Nature</option>
+                    <option value='8' >Task Type</option>
+                    <option value='9' >Story Card</option>
+                    <option value='10' >Project</option>
+                    <option value='12' >Create By</option>
+                    <option value='11' >Assignee</option>
+        
+                </select>
+            </div>
+            <div class="cs-input-group text-center task-clear-filter-btn col-4">
+                <div class="input-group-addon">Clear Filter</div>
+                <i class="cs-svg-icon clear-filter"></i>
+            </div>
             </div>`
             },
             genFilterSortBy: function () {
@@ -3533,7 +3531,7 @@ const taskManagement = {
                                 ))
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-ismeet cs-input-group')
-                                 .append(o.isMeet==='1'?'<i class="cs-svg-icon "></i>':'<i class="cs-svg-icon task-01"></i>')
+                                 .append(o.isMeet==='1'?'<i class="cs-svg-icon users-dark"></i>':'<i class="cs-svg-icon tapshiriq-dark"></i>')
                                  .append(o.isMeet==='1'?"Toplantı":"Tapşırıq")
                                   )
                            .append($('<td>')
@@ -3762,13 +3760,8 @@ const taskManagement = {
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box pb-0">
                             <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
+                                 <span class="info">0</span>
                                 <i class="cs-svg-icon filter"></i>
-                            </div>
-                        </div>
-                        <div class="setting-elemen-box pb-0 task-clear-filter-onoff" style="display:show;">
-                            <div class="standart-badges task-clear-filter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Clear Filter">
-                                    <span class="info">0</span>
-                                <i class="cs-svg-icon clear-filter"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
@@ -4044,7 +4037,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
         value = ["rejected", 'UAT', 'closed', 'canceled']
     }
     sel.val(value);
-    sel.selectpicker("refresh")
+    sel.selectpicker("refresh");
     getBugList();
 
 })
@@ -4495,6 +4488,5 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
-    $('.setting-elemen-box.task-clear-filter-onoff').css('display','none');
 });
 
