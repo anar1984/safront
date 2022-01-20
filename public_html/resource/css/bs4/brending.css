@@ -7459,3 +7459,9 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .showhide-col-btn {
     cursor: pointer;
 }
+.bug-list-column-ismeet i:after {
+    width: 12.85px;
+    height: 18px;
+    margin-top: 3px;
+    margin-right: 4px;
+}
