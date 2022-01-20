@@ -3481,7 +3481,7 @@ const taskManagement = {
                     <th class="bug-list-column bug-list-column-executed-counter" style="display: none;">Executed Counter</th>
                     <th class="bug-list-column bug-list-column-estimated-budget" style="display: none;">Estimated Budget</th>
                     <th class="bug-list-column bug-list-column-spent-budget" style="display: none;">Spent Budget</th>
-                    <th></th>
+            
                     </tr>
                    </thead>`
                 },
