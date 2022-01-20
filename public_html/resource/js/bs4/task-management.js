@@ -15,8 +15,7 @@ const taskManagement = {
         var dwlmt = $('#bug_filter_tasktype')
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
-        this.readTask.genBlockTask.getNotificationRowCount();  
-
+        this.readTask.genBlockTask.getNotificationRowCount(); 
     },
     insertTask: {
         genBlockModal: {
@@ -2464,6 +2463,34 @@ const taskManagement = {
                              
 
             },
+            genCheweekBtn: function (params) {
+                return `<div class="info-box-checking pl-0 mr-2">
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon arrow-1"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon none-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon close-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon right-circle-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon user-eye"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon task-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon chat-circle"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon hour-update"></i>
+                </div>
+            </div> `
+            },
             genHeader: function () {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
@@ -2480,8 +2507,10 @@ const taskManagement = {
                                      
                         <div class="info-box" style="background: transparent; border: none;">
                               <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                              <div class="bcs-col-btn cs-input-group" style=" display: inline-block; ">
-                                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
+                              <div class="bcs-col-btn multi-edit-menu cs-input-group" style=" display:none; ">
+                                 ${notChwk()?`<button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>`
+                                 :this.genCheweekBtn()}
+                             
                              </div>
                         </div>
                     </div>
@@ -2771,7 +2800,7 @@ const taskManagement = {
                     </div>
                     <div class="col-4">
                         <div class="cs-input-group cs-pagination-limit">
-                            <select data-type='limit' class="bug-filter" id="bug_filter_limit">
+                            <select data-type='' class="" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
                                 <option value='10'>10</option>
                                 <option value='25' selected> 25</option>
                                 <option value='50'>50</option>
@@ -4488,5 +4517,151 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    getBugList();
 });
 
+function loadBugTaskDeadlineScripts() {
+    $("#run_task_responsible").selectpicker('refresh');
+    $("#run_task_categories").selectpicker('refresh');
+    $("#run_task_detail_detail_categories").selectpicker('refresh');
+    $("#task-info-modal-status").selectpicker('refresh');
+    $("#task-info-modal-nature").selectpicker('refresh');
+    $("#task-info-modal-tasktype").selectpicker('refresh');
+    $("#bug_filter_sortby").selectpicker('refresh');
+    $("#bug_filter_sortby_asc").selectpicker('refresh');
+    $("#bug_filter_limit").selectpicker('refresh');
+    $("#inputGroupSelect01").selectpicker('refresh');
+    $('#run_task_project_name').selectpicker('refresh');
+    setProjectListByID('run_task_project_name');
+    $('#run_task_project_name').change();
+    $('#run_task_name').selectpicker('refresh');
+    $('#run_task_intensive_select').selectpicker('refresh');
+    $('#run_task_repeat_select').selectpicker('refresh');
+    $('#run_task_status_select').selectpicker('refresh');
+    $('#run_task_weekday_select').selectpicker('refresh');
+    $('#sdofm_day_of_Month_select').selectpicker('refresh');
+    $('#swofm_fl_action_select').selectpicker('refresh');
+    $('#swofm_weekday_select').selectpicker('refresh');
+    $('#run_task_reminder_select').selectpicker('refresh');
+    $("#runTaskStartDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $("#runTaskEndDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskTime').datetimepicker({
+        format: 'HH:mm'
+                // sideBySide: true
+    });
+    $('#runTaskExecutiveDate').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+    $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
+    // $('#issue-managment-add-task .after-add-task').hide();
+   
+    $('#issue-managment-add-task .task-step-2').hide();
+
+    // TASK DETAILS ON
+    $('#run_task_project_name_detail').selectpicker('refresh');
+    setProjectListByID('run_task_project_name_detail');
+    $('#run_task_project_name_detail').change();
+
+    $('#run_task_name_detail').selectpicker('refresh');
+    $('#run_task_intensive_select_detail').selectpicker('refresh');
+    $('#run_task_repeat_select_detail').selectpicker('refresh');
+    $('#run_task_status_select_detail').selectpicker('refresh');
+    $('#run_task_weekday_select_detail').selectpicker('refresh');
+    $('#sdofm_day_of_Month_select_detail').selectpicker('refresh');
+    $('#swofm_fl_action_select_detail').selectpicker('refresh');
+    $('#swofm_weekday_select_detail').selectpicker('refresh');
+    $('#run_task_reminder_select_detail').selectpicker('refresh');
+    $('#updatetask_oblerverlist').selectpicker('refresh');
+    $('#createdtask_oblerverlist').selectpicker('refresh');
+
+    $("#runTaskStartDate_detail").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $("#runTaskEndDate_detail").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskTime_detail').datetimepicker({
+        format: 'HH:mm'
+                // sideBySide: true
+    });
+    $('#runTaskExecutiveDate_detail').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+    $('.shedule-elements').addClass('el-disabled');
+    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+
+    $('.run-shedule-elements').addClass('el-disabled');
+    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+
+    $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
+    // TASK DETAILS OFF
+
+    // Task Deadline 
+        $("#taskDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        });
+        $("#taskDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("#taskDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+        $("#taskDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        })
+
+        $("#taskDetailDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startDate');
+        });
+        $("#taskDetailDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startTime');
+        });
+        $("#taskDetailDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endDate');
+        });
+        $("#taskDetailDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endTime');
+        });
+
+}

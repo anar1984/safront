@@ -13601,15 +13601,17 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(elm) {
-    var parts = document.location.href.split("?");
+  /*   var parts = document.location.href.split("?"); */
      
-    var $iframe = $(`<iframe>`)
+  /*   var $iframe = $(`<iframe>`)
                              .addClass("h-100 w-100")
                              .attr("src",'iframe.html?'+parts[1]+'&current_domain='+global_var.current_domain)
                              .attr("id",'result-iframe');
 
-    $(elm).html($iframe);
-     
+  //  $(elm).html($iframe);
+      */
+     iframeLoaded();
+
 }
 function iframeLoaded() {
     var pid = global_var.current_backlog_id;
@@ -13617,7 +13619,7 @@ function iframeLoaded() {
 
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var resTmp = SAInput.toJSONByBacklog(pid);
         var oldmodal = global_var.current_modal;
         
         global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
@@ -13628,10 +13630,11 @@ function iframeLoaded() {
     }
     var css = window.editorCSSGround.getValue();
     var block = getIframeBlockInside(pid, css, js, html);
-    $("#result-iframe").contents().find('body').html(block +`<script>
-    loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`);
+      $("#result-code-editor").html(block);
+   /*  $("#result-iframe").contents().find('body').html(block +`<script>
+    loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`); */
 
-   
+   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
