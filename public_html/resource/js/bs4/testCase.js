@@ -2478,7 +2478,7 @@ function loadStoryCardByProjectDetails(res) {
     } catch (err) {
 
     }
-    $('#bug_filter_backlog_id_add').selectpicker('refresh');
+    $('#bug_filter_backlog_id').selectpicker('refresh');
 }
 
 function loadStoryCardByProjectDetailsAdd(res) {

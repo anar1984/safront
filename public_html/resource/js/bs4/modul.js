@@ -1,4 +1,5 @@
 
+const global_screen_name = "sa";
 function generatePopupModalNew(modalBody, style, triggerId, backlogId, title) {
     var pageId = makeId(15);
     var butnList = '';
@@ -76,7 +77,6 @@ function genTimePickerById(id,drop) {
       }
   });
 }
-
 function nav_list_menu_story_card() {
      try {
       var list  =localStorage.getItem('nav_list_menu_story_card');
@@ -91,8 +91,6 @@ function nav_list_menu_story_card() {
      }
   
 }
-
-
 $(document).on("click", '#task-list-statistic-4backlog .status-class',function (e) {
   $(this).toggleClass('active');
   var items  = $("#task-list-statistic-4backlog .status-class.active");

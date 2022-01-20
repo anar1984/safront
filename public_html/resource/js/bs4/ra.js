@@ -1114,6 +1114,34 @@ function setBacklogAsHtml(backlogId, css, js) {
 
 
 
+function getFormHTML(formId,isAsync,callback) {
+    var out = '';
+    var async = (isAsync) ? isAsync : false;
+    var bid = (formId) ? formId : global_var.current_backlog_id;
+
+    if (!bid)
+        return out;
+
+    $.ajax({
+        url: urlGl + "api/get/dwd/html/" + global_var.current_domain + "/" + bid,
+        type: "GET",
+        contentType: "text/html",
+        crossDomain: true,
+        async: async,
+        success: function (res) {
+            out = res;
+            if (callback) {
+                callback(res);
+            }
+        },
+        error: function () {
+            Toaster.showError(apiId + ' ----> Something went wrong!!!');
+        }
+    });
+
+    return out;
+
+}
 
 function getBacklogAsHtml(bid1, isAsync) {
     var out = '';
