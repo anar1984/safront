@@ -413,3 +413,6 @@
 .cs-svg-icon.users-dark:after {
   background-image: url(../ch-icons/users-dark.svg);
 }
+.cs-svg-icon.hour-circle:after {
+  background-image: url(../ch-icons/hour-circle.svg);
+}
