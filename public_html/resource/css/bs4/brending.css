@@ -4636,7 +4636,7 @@ table.lbl-list-table tr td {
     width: 100%;
     background: rgb(0 0 0 / 15%);
     border: none;
-    padding: 5px 15px;
+    padding: 0px 0px;
     font-size: 14px;
     color: #fff;
 }
@@ -4999,7 +4999,7 @@ table.lbl-list-table tr td {
  margin-bottom: 10px;
 }
 .task-check-list-box ul li .item-checkbox{
- margin-top: 10px;
+ margin-top: 5px;
 }
 .task-check-list-box ul li .item-note {
     font-family: 'Quicksand', sans-serif;
@@ -5012,8 +5012,12 @@ table.lbl-list-table tr td {
     text-align: left;
     padding-left: 10px;
 }
+.task-check-list-box .taskCheckListItemDeletecreate{
+ color: #fff;
+}    
 .task-check-list-box ul li.on-checked textarea{
  text-decoration: line-through;
+ opacity: 0.7;
 }
 .task-check-list-box .checkmarkcontainer {
     display: block;

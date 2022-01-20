@@ -4056,7 +4056,7 @@ $(document).on("change", '#newAddCheckList', function (e) {
     <div class="pl-1 p2-1">
     </div>
     <div class="pl-1 p2-1 d-table">
-    <a href="#" oid="" class="taskCheckListItemDeletecreate"><i class="fas fa-trash-alt text-danger" aria-hidden="true"></i></a></div></li>`)
+    <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></div></li>`)
     $(this).val('')
 
 })
