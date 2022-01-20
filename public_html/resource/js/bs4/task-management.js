@@ -2508,6 +2508,19 @@ const taskManagement = {
                <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
+
+               <div class="info-item-elements dropdown-toggle" data-toggle="dropdown">
+        <span data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş">
+           <i class="cs-svg-icon users-circle-white"></i> <span>${Assigne}</span>
+        </span>
+       </div>
+       <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+            <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+        </div>
+
+
                <div class="info-item-elements me-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
                </div>
