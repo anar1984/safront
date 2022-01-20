@@ -15,8 +15,7 @@ const taskManagement = {
         var dwlmt = $('#bug_filter_tasktype')
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
-        this.readTask.genBlockTask.getNotificationRowCount();  
-
+        this.readTask.genBlockTask.getNotificationRowCount(); 
     },
     insertTask: {
         genBlockModal: {
@@ -2464,6 +2463,34 @@ const taskManagement = {
                              
 
             },
+            genCheweekBtn: function (params) {
+                return `<div class="info-box-checking pl-0 mr-2">
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon arrow-1"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon none-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon close-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon right-circle-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon user-eye"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon task-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon chat-circle"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon hour-update"></i>
+                </div>
+            </div> `
+            },
             genHeader: function () {
                 return `    <div class="header-info-section d-flex w-100">
                 <div class="mr-auto d-flex p-2">
@@ -2480,8 +2507,10 @@ const taskManagement = {
                                      
                         <div class="info-box" style="background: transparent; border: none;">
                               <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                              <div class="bcs-col-btn cs-input-group" style=" display: inline-block; ">
-                                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
+                              <div class="bcs-col-btn multi-edit-menu cs-input-group" style=" display:none; ">
+                                 ${notChwk()?`<button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>`
+                                 :this.genCheweekBtn()}
+                             
                              </div>
                         </div>
                     </div>
@@ -2771,7 +2800,7 @@ const taskManagement = {
                     </div>
                     <div class="col-4">
                         <div class="cs-input-group cs-pagination-limit">
-                            <select data-type='limit' class="bug-filter" id="bug_filter_limit">
+                            <select data-type='' class="" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
                                 <option value='10'>10</option>
                                 <option value='25' selected> 25</option>
                                 <option value='50'>50</option>
@@ -4488,6 +4517,7 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
+    getBugList();
 });
 
 function loadBugTaskDeadlineScripts() {

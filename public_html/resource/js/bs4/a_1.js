@@ -13614,7 +13614,7 @@ function getIframeBlock(elm) {
 
 }
 function iframeLoaded() {
-    var pid = $("#storyCardListSelectBox4CodeGround").val();
+    var pid = global_var.current_backlog_id;
     var js = window.editorJSGround.getValue();
 
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
@@ -13669,8 +13669,6 @@ $(document).on("change", '#show_hidden_carrier', function (e) {
 $(document).on("click", '#save-code-ground-btn', function (e) {
     var elm = $("#result-code-editor");
     elm.find('div').remove();
-    var pid = $("#storyCardListSelectBox4CodeGround").val();
-
     var js = window.editorJSGround.getValue();
     var css = window.editorCSSGround.getValue();
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
@@ -13681,7 +13679,7 @@ $(document).on("click", '#save-code-ground-btn', function (e) {
     getIframeBlock(elm);
     insertJsSendDbBybacklogId(js);
     insertCssSendDbBybacklogId(css);
-    setBacklogAsHtmlCodeGround(pid,js,css);
+    setBacklogAsHtmlCodeGround(global_var.current_backlog_id,js,css);
  ///   setBacklogAsHtml(global_var.current_backlog_id, css, js);
 
 
@@ -13757,7 +13755,8 @@ function insertCssmanualBybacklogId(body) {
 
 function insertJsSendDbBybacklogId(body) {
 
-    var pid = $("#storyCardListSelectBox4CodeGround").val();
+    var pid = global_var.current_backlog_id;
+
     var json = initJSON();
     json.kv.fkBacklogId = pid;
     json.kv.jsBody = body;
@@ -13778,7 +13777,7 @@ function insertJsSendDbBybacklogId(body) {
 }
 
 function insertCssSendDbBybacklogId(body) {
-    var pid = $("#storyCardListSelectBox4CodeGround").val();
+    var pid = global_var.current_backlog_id;
     var json = initJSON();
     json.kv.fkBacklogId = pid;
     json.kv.classBody = body;
@@ -13799,8 +13798,8 @@ function insertCssSendDbBybacklogId(body) {
     });
 }
 function insertHtmlSendDbBybacklogId(body) {
-    var pid = $("#storyCardListSelectBox4CodeGround").val();
-        var json = initJSON();
+    var pid = global_var.current_backlog_id;
+    var json = initJSON();
     json.kv.fkBacklogId = pid;
     json.kv.backlogHtml = body;
     var that = this;

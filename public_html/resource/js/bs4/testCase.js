@@ -811,8 +811,16 @@ function addUserStoryNewModalWithProject() {
 function setBugFilterMultiValues() {
     $('.bug-filter-multi').each(function () {
         var data_type = $(this).attr('data-type');
-        var val = getBugFilterMultiSelect(this)
+        var val = getBugFilterMultiSelect(this);
+
         bug_filter[data_type] = val;
+        if(data_type!=='nature'){
+            if(bug_filter[data_type].length>0 ){
+                FilterCount++;
+    
+            }
+        }
+       
     })
 }
 
@@ -836,6 +844,12 @@ function setBugFilterValues() {
     $('.bug-filter').each(function () {
         var data_type = $(this).attr('data-type');
         bug_filter[data_type] = $(this).val();
+         if(data_type!=='limit'){
+            if(bug_filter[data_type].length>0 ){
+                FilterCount++;
+            }
+         }
+        
     })
 }
 
@@ -843,7 +857,9 @@ function setBugFilterCheckBoxValues() {
     $('.bug-filter-checkbox').each(function () {
         var data_type = $(this).attr('data-type');
         bug_filter[data_type] = $(this).is(":checked") ? "1" : "0";
+       
     })
+
 }
 
 function setBugFilterLabelValues() {
@@ -855,6 +871,18 @@ function setBugFilterLabelValues() {
     })
     st = st.substring(0, st.length - 1);
     bug_filter.label_id = st;
+     if(st.length >0 ){
+        FilterCount++;
+     }
+}
+function setFilterCount() {
+    if(FilterCount > 0){
+        $(".taskfilter-btn .info").show();
+        $(".taskfilter-btn .info").text(FilterCount);
+
+    }else{
+        $(".taskfilter-btn .info").hide();
+    }
 }
 function setBugFilterCreatedDateValues() {
     try {
@@ -1141,8 +1169,9 @@ function addNewBug(bugDesc, backlogId, assgineeId, taskStatus) {
 
 
 // ______________________________________________________________
-
+let FilterCount  = 0
 function setBugListInitialData() {
+    FilterCount =0;
     setBugFilterCheckBoxValues();
     setBugFilterValues();
     setBugFilterMultiValues();
@@ -1150,10 +1179,11 @@ function setBugListInitialData() {
     setBugFilterLabelValues();
     setBugFilterCreatedDateValues()
     setBugFilterClosedDatesValues()
-
+   
     bug_filter.sortBy = $('#bug_filter_sortby').val();
     bug_filter.sortByAsc = $('#bug_filter_sortby_asc').val();
-
+    bug_filter.limit = $('#bug_filter_limit').val();
+    setFilterCount()
 }
 
 $(document).on("change", ".issue-mgmt-general-filter", function (e) {
@@ -1980,11 +2010,11 @@ $(document).on("click", '.all-bug-list-check', function (e) {
 
     var chck = $(".checkbox-issue-task");
     if ($(this).is(':checked')) {
-        $('#multi-edit-menu-btn').css('display', 'initial');
+        $('.multi-edit-menu').css('display', 'initial');
         chck.prop('checked', true);
     } else {
 
-        $('#multi-edit-menu-btn').css('display', 'none');
+        $('.multi-edit-menu').css('display', 'none');
         chck.prop('checked', false);
     }
 
@@ -2018,10 +2048,10 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
 
     }
     if (ast.length > 1) {
-        $('#multi-edit-menu-btn').css('display', 'initial');
+            $('.multi-edit-menu').css('display', 'initial');      
     } else {
 
-        $('#multi-edit-menu-btn').css('display', 'none');
+        $('.multi-edit-menu').css('display', 'none');
 
     }
 
