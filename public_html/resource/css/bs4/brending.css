@@ -7378,3 +7378,84 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 .panel-left-code.ui-resizable .ui-resizable-e {
 
 }
+/* showhide-col-main-info */
+.showhide-col-main-info {
+    position: fixed;
+    z-index: 1000;
+}
+.showhide-col-main-info-in {
+    top: 100%;
+    left: 0;
+    margin: 0.125rem 0 20px 3.125rem;
+    box-shadow: 0px 0px 7px rgb(0 0 0 / 55%);
+    border-radius: 6px;
+    z-index: 1000;
+    overflow: hidden;
+}
+.showhide-col-main-info ul{
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    border: 1px solid rgba(0, 0, 0, .15);
+    min-width: 175px;
+    margin: 0;
+    background: #DFEEF7;
+    border-radius: 6px;
+    position: relative;
+    padding: 10px 5px 5px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.showhide-col-main-info ul li{
+    display: block;
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #03396C;
+    padding: 3px 10px;
+    cursor: pointer;
+    width: 100%;
+    clear: both;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.showhide-col-main-info ul li label {
+    width: 100%;
+    cursor: pointer;
+}
+.showhide-col-main-info ul li label input[type=checkbox]{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    float: right;
+}
+.showhide-col-footer {
+    background: #ACCDDE;
+    padding: 0px 10px;
+    display: block;
+    position: relative;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    text-align: center;
+}
+.showhide-col-footer .scm-show, .showhide-col-footer .scm-hide {
+    color: #03396C;
+    text-align: center;
+    font-size: 16px;
+    margin: 0;
+    height: 29px;
+    padding: 1px 7px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.showhide-col-footer span i {
+    vertical-align: middle;
+}
+.showhide-col-btn {
+    cursor: pointer;
+}

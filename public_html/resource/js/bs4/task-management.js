@@ -3317,6 +3317,34 @@ const taskManagement = {
                     return ` <div class="col pl-1 pr-1" id="addBuglist">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                       <div class="showhide-col-main-info" style="display: none">
+                    <div class="showhide-col-main-info-in">
+                        <ul>
+                            <li>
+                                <label>Hamısı <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Status <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Əməliyyat <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Məzmun <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Daxil edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>İcra edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                        </ul>
+                        <div class="showhide-col-footer">
+                        <span class="scm-show"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                        </div>
+                    </div>
+                </div>
                            <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
                                <thead class="bugThead">
                                 ${this.genTableHeaderBlock()}
