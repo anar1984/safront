@@ -14005,6 +14005,9 @@ function loadEventDesApiList(fkProjectId) {
             cmd.html('');
 
             var obj = res.tbl[0].r;
+            cmd.append($('<option></option>')
+                .attr('value', '-5')
+                .text("No Name Api"));
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
@@ -20415,7 +20418,15 @@ function addInputDescListToTaskNew_setComment_event() {
             var st = "";
 
             var name = SAInputDesc.GetDetails($(this).attr("data-id"));
-
+             if(name.startsWith('fn_event(')){
+                 var item  = $(this).parent().find(".desc-item-input")
+                 if(item.find(".api-name").length >0){
+                    name  = item.find("select").val() +" Call API : " + item.find(".api-name").text() +" "+ item.find(".api-id").text();
+                 }else{
+                    name  = item.find("select").val() +" "+item.find(".update-event-desc-text").text();
+  
+                 }
+             }
             var col = $("<div class='col-12 item-input-add-task'>")
                     .append(`<label class='font-weight-bold' >${name}</label>`)
 
