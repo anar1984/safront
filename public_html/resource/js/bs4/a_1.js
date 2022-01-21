@@ -13110,7 +13110,7 @@ function addNewRelation(backLogId,typs) {
                                                     )
                                             )
                         }
-                        table.append(tr); 
+                        table.prepend(tr); 
                      inputSetSelectBox();
                /*  } catch (error) {
                 }
@@ -13198,7 +13198,13 @@ function getBacklogInputOutPutSetTable(backlogId,select,table) {
                                 .append(selcol.val(o.fkApiInputId)))
                         .append($("<td>")
                                 .append(""))
-            } else {
+            } 
+            table.append(tr);
+        }
+        for (var i=0; i < dt.length; i++) {
+            const o = dt[i];
+            var selcol = select.clone();
+            if (o.relType === 'OUT')  {
                 var tr = $(`<tr>`)
                         .attr("pid", o.id)
                         .append($("<td>")
