@@ -12956,17 +12956,22 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
 /// new modal api
 function showApiRelationModal(backLogId) {
     $('#storyCardShowRelationModal').modal('show');
+    var table = $('#storyCardShowRelationModalTable tbody');
+    table.empty();
     data = {};
     data.fkApiId = backLogId
     callApi('21122413451908481407', data, true, function (res) {
         try {
             var b = res.tbl[0].r;
-            var table = $('#storyCardShowRelationModalTable tbody');
-            table.empty();
-            var i = 0;
-            var idIn = 1;
-            var idOut = 1;
-            for (var i; i < b.length; i++) {
+            var select = $("<select class='form-control apiInputSelect' >")
+              select.append($("<option>").text('').val(''))
+                for(const o in b){
+                   select.append($("<option>").text(b[o].inputName).val(b[o].id))
+    
+
+                }
+         
+            for (var i=0; i < b.length; i++) {
                 const o = b[i];
                 if (o.inputType === 'IN') {
                     var tr = $(`<tr>`)
@@ -12986,10 +12991,7 @@ function showApiRelationModal(backLogId) {
                                     .append($('<i class="fas fa-arrow-right"></i>'))
                                     )
                             .append($("<td>")
-                                    .addClass('input-relation-selected-name-for-zad')
-                                    .attr('iname', o.inputName)
-                                    .text((idIn++) + ". " + o.inputName)
-                                    )
+                                    .append(select.clone()))
                             .append($("<td>")
                                     .append("")
                                     )
@@ -13003,10 +13005,7 @@ function showApiRelationModal(backLogId) {
                                     .append("")
                                     )
                             .append($("<td>")
-                                    .addClass('input-relation-selected-name-for-zad')
-                                    .attr('iname', o.inputName)
-                                    .text((idOut++) + ". " + o.inputName)
-                                    )
+                                      .append(select.clone()))
                             .append($("<td>")
                                     .append($('<i class="fas fa-arrow-right"></i>')))
                             .append($("<td>")
@@ -13062,7 +13061,7 @@ function tableSelectBoxOnChange(el) {
 /// select box set
 function inputSetSelectBox() {
     var inputs = $("#generalview_input_list .description-left");
-    $("select.tableInputSelect").append($("<option>").text('').val(''))
+    $("select.tableInputSelect").append($("<option>").text('').val(''));
     inputs.each(function () {
         var idOption = $(this).closest("tr").attr("inid");
         var elm = $(this).clone();
@@ -13070,9 +13069,10 @@ function inputSetSelectBox() {
         var text = $(elm).text();
         
 
-        $("select.tableInputSelect").append($("<option>").text(text).val(idOption))
+        $("select.tableInputSelect").append($("<option>").text(text).val(idOption));
     })
-    $("select.tableInputSelect").selectpicker()
+    $("select.tableInputSelect").selectpicker();
+    $("select.apiInputSelect").selectpicker();
 }
 ///
 function getBacklogInputOutPutSetTable(backlogId) {
@@ -14005,9 +14005,9 @@ function loadEventDesApiList(fkProjectId) {
             cmd.html('');
 
             var obj = res.tbl[0].r;
-            cmd.append($('<option></option>')
+          /*   cmd.append($('<option></option>')
                 .attr('value', '-5')
-                .text("No Name Api"));
+                .text("No Name Api")); */
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
@@ -14019,7 +14019,6 @@ function loadEventDesApiList(fkProjectId) {
                         .text(pname);
                 cmd.append(op);
             }
-
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
 
