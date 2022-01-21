@@ -2013,10 +2013,12 @@ $(document).on("click", '.all-bug-list-check', function (e) {
     var chck = $(".checkbox-issue-task");
     if ($(this).is(':checked')) {
         $('.multi-edit-menu').css('display', 'initial');
+        $('body').addClass('res-multi-edit-menu');
         chck.prop('checked', true);
     } else {
 
         $('.multi-edit-menu').css('display', 'none');
+        $('body').removeClass('res-multi-edit-menu');
         chck.prop('checked', false);
     }
 
