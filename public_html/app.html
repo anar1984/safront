@@ -5154,11 +5154,17 @@
                         <table id="storyCardShowRelationModalTable" class="col-lg-12 table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Story Card Input-Relation</th>
+                                    <th>Story Card Input-Relation
+
+                                        <button onclick="" data-type="IN" class="btn relation-add-btn-table btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                    </th>
                                     <th> </th>
                                     <th>API</th>
                                     <th> </th>
-                                    <th>Story Card Output-Relation</th>
+                                    <th>Story Card Output-Relation
+                                        <button onclick="" data-type="OUT" class="btn relation-add-btn-table btn-sm"><i class="fas fa-plus" aria-hidden="true"></i></button>
+
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -5218,23 +5224,32 @@
                                     </select>
                                 </div>
                                 <div class="form-group create-new-text-4-desc col-7">
-                                    <span style="width: 100%;"> Select Api </span><br>
-                                    <select id="addEventDescModal-apiId" data-live-search="true"
-                                        class='form-control create-new-db-4-select'>
-                                    </select> 
-                                    <button type="button" class="btn btn-primary"
-                                        onclick="$(this).closest('.modal-body').find('.create-new-text-4-neapi').toggleClass('d-none')">New
-                                        Api</button>
-                                    <button type="button" class="btn btn-primary"
-                                        onclick="$(this).closest('.modal-body').find('.create-new-text-4-desc').toggleClass('d-none')">Add
-                                        text</button>
+                                    <div class="create-new-text-4-newapi  d-none">
+                                        <span style="width: 100%;"> Name Api </span><br>   
+                                    <input type="text" id="addEventDescModal-new-api-nm"
+                                    class='form-control ' style=" padding:10px 0px;  ">
+                                        <button type="button" data-type='oldApi' class="btn float-right btn-change-mode-eventapi btn-primary"
+                                      >Back
+                                        </button>
+                                    </div>
+                                    <div class="create-new-text-4-newapi" >
+                                        <span style="width: 100%;"> Select Api </span><br>
+                                        <select id="addEventDescModal-apiId" data-live-search="true"
+                                            class='form-control create-new-db-4-select'>
+                                        </select>
+                                        <button type="button" data-type='newApi' class="btn float-right btn-change-mode-eventapi tn-primary"
+                                     >New Api</button>
+                                    </div>
+                                
+                                    <button type="button"  data-type='text' class="btn btn-primary btn-change-mode-eventhesc"
+                                        >Add text</button>
                                 </div>
                                 <div class="form-group create-new-text-4-desc d-none col-7">
                                     <span style="width: 100%;">Text Description</span><br>
                                     <input type="text" id="addEventDescModal-text"
-                                        class='form-control create-new-db-4-select' style=" padding:10px 0px;  ">
-                                    <button type="button" class="btn btn-change-mode-eventhesc btn-primary"
-                                        onclick="">Add api</button>
+                                        class='form-control create-new-db-4-select' style=" padding:10px 0px;">
+                                    <button type="button" data-type='api'  class="btn btn-change-mode-eventhesc btn-primary"
+                                      >Add api</button>
                                 </div>
 
 
