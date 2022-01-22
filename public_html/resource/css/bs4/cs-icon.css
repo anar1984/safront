@@ -416,3 +416,9 @@
 .cs-svg-icon.hour-circle:after {
   background-image: url(../ch-icons/hour-circle.svg);
 }
+.cs-svg-icon.user-addons-icon:after {
+  background-image: url(../ch-icons/user-addons-icon.svg);
+}
+.cs-svg-icon.user-addons-icon-1:after {
+  background-image: url(../ch-icons/user-addons-icon-1.svg);
+}
