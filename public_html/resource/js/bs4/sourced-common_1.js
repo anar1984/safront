@@ -8262,7 +8262,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 </a>`)
 
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#"
-                 onclick="showApiRelationModal('${params[3]}')">
+                 onclick="showApiRelationModal('${params[3]}',this)">
                  <i class="fas fa-exchange-alt" aria-hidden="true"></i>
                  </a>`)
             }
@@ -22350,7 +22350,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     + ")";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
                     + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a> ";
-                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "')\"><i class='fas fa-exchange-alt'></i></a> ";
+                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "',this)\"><i class='fas fa-exchange-alt'></i></a> ";
 
             }
 
