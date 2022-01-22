@@ -6233,6 +6233,29 @@ table.lbl-list-table tr td {
     height: 100%;
     min-height: 70px;
 }
+.user-addons-box-elm>.dropdown-menu {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+.user-addons-box-elm {
+    display: inline-block;
+}
+.user-addons-box-elm .dropdown-toggle:after {
+    display: none;
+}
+.user-addons-box-elm .dropdown-toggle .cs-svg-icon:after {
+    width: 33px;
+    height: 33px;
+}
+.user-addons-box-elm>.dropdown-menu {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+.user-addons-box-elm>.dropdown-toggle {
+    background-color: transparent;
+}
 .cs-nav-pills .nav-link {
     height: 33px;
     background: rgba(3, 57, 108, 0.5);

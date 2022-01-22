@@ -786,10 +786,11 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     width: auto;
 }
 @media (max-width: 1124px) {
-    .info-box.info-box-mob {
+    .info-box.info-box-mob, .res-multi-edit-menu .info-box.info-box-mob{
         position: relative;
         overflow: visible;
         }
+        .res-multi-edit-menu .info-box.info-box-mob:after,
         .info-box.info-box-mob:after{
         font-family: 'FontAwesome';
         content: '\f107';
@@ -802,6 +803,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
         color: #fff;
         right: 0;
         }
+        .res-multi-edit-menu .info-box.info-box-mob .info-box-in,
     .info-box.info-box-mob .info-box-in {
         position: absolute;
         left: 0;
@@ -811,10 +813,12 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
         opacity: 0;
         visibility: hidden;
         }
-        .info-box.info-box-mob.active .info-box-in{
+        .res-multi-edit-menu .info-box.info-box-mob.active .info-box-in,
+        .info-box.info-box-mob.active .info-box-in {
         opacity: 1;
         visibility: visible;
         }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements,
     .info-box.info-box-mob .info-item-elements {
         color: #03396c;
         background: #dfeef7;
@@ -830,20 +834,24 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
         vertical-align: middle;
         line-height: 28px;
         }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements:hover, .res-multi-edit-menu .info-box.info-box-mob .info-item-elements.active, 
         .info-box.info-box-mob .info-item-elements:hover, .info-box.info-box-mob .info-item-elements.active {
         background: rgb(255 255 255);
     }
+    .res-multi-edit-menu .info-box.info-box-mob .title, .res-multi-edit-menu .info-box.info-box-mob span.title, 
     .info-box.info-box-mob .title, .info-box.info-box-mob span.title {
         cursor: pointer;
         width: 100%;
         padding-right: 30px;
     }
+    .res-multi-edit-menu .info-box.info-box-mob .info-item-elements i, 
         .info-box.info-box-mob .info-item-elements i {
         padding-left: 0;
         padding-right: 0px;
         vertical-align: middle;
         display: inline-block;
         }
+        .res-multi-edit-menu .info-box.info-box-mob .info-item-elements span, 
         .info-box.info-box-mob .info-item-elements span {
         padding: 2px 4px;
         color: #03396c;
