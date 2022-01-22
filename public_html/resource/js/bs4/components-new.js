@@ -135,13 +135,13 @@ $(document).on('click','.user-avatar-list li .item-click .removed-nezaretci-btn'
         html:true
     })
 });
-$(document).on('hide.bs.dropdown','.user-addons-box-elm ',function (e) {
+$(document).on('hide.bs.dropdown','.user-addons-box-elm',function (e) {
     return false;
 })
 $(document).on('click','.user-addons-box-elm  > .dropdown-menu',function (e) {
     e.stopPropagation();
 })
 $(document).on("click",'body', function () {
-    $('.user-addons-box-elm   .dropdown-menu').removeClass('show')
+    $('.user-addons-box-elm > .dropdown-menu').removeClass('show')
 })
  // userList Block End

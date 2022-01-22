@@ -3033,7 +3033,7 @@ const taskManagement = {
                         $('[data-toggle="popover"]').popover({
                             html: true
                         });
-                        getInfoBoxResponsive();
+                        //getInfoBoxResponsive();
                     });
 
                 } catch (error) {}
