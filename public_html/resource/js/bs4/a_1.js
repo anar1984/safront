@@ -13011,20 +13011,31 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
 $(document).on('click', '.relation-add-btn-table', function (evt) {
     var backlog  = $(this).attr('data-apiId');
     var typ  = $(this).attr('data-type');
-    addNewRelation(backlog,typ);
+    var Input  = $(this).attr('data-input');
+    addNewRelation(backlog,typ,Input);
+    
 });
 $(document).on('click', '.generate-realtion-fileds-api', function (evt) {
     var backlog  = $(this).attr('data-apiId');
-    addNewRelationInsertListGen(backlog);
+    var inpid  = $(this).attr('data-input');
+    addNewRelationInsertListGen(backlog,inpid);
 });
 
 /// new modal api
-function showApiRelationModal(backLogId) {
-    $(".generate-realtion-fileds-api").addClass("d-none");
+function showApiRelationModal(backLogId,elm) {
+    var inputid  = $(elm).closest("tr").attr("inid");
     $('#storyCardShowRelationModal').modal('show');
+    $(".relation-add-btn-table").attr("data-apiId",backLogId);
+    $(".relation-add-btn-table").attr("data-input",inputid);
+    $(".generate-realtion-fileds-api").attr("data-apiId",backLogId);
+    $(".generate-realtion-fileds-api").attr("data-input",inputid);
+    showApiRelationModalCore(backLogId,inputid);
+    
+}
+function showApiRelationModalCore(backLogId,inputid) {
+    
     var table = $('#storyCardShowRelationModalTable tbody');
-      $(".relation-add-btn-table").attr("data-apiId",backLogId);
-      $(".generate-realtion-fileds-api").attr("data-apiId",backLogId);
+     
     table.empty();
     data = {};
     data.fkApiId = backLogId;
@@ -13049,119 +13060,37 @@ try {
 } catch (error) {
     
 }
-        getBacklogInputOutPutSetTable(backLogId,selectin,selectout,table);
+        getBacklogInputOutPutSetTable(inputid,backLogId,selectin,selectout,table);
        
           })
 }
 // onChange
-function addNewRelationInsertListGen(backLogId) {
+function addNewRelationInsertListGen(backLogId,inputId) {
     var  data = {};
     data.fkApiId = backLogId;
-    callApi('21122413451908481407', data, true, function (res) {
-        var list  = res.tbl[0].r;
-
-        for (let i = 0; i < list.length; i++) {
-            const o = list[i];
-            var data1 ={}
-        data1.fkApiInputId = o.id;
-        data1.fkApiId = backLogId;
-        data1.relType = o.inputType;
-        callApi('21122412204000321041', data1, false, function (res1) {
-          
-        })
-        
-        }
+    data.fkRelatedInputId = inputId;
+    callApi('22012211383202191857', data, true, function (res) {
         showApiRelationModal(backLogId); 
-
      })
-  
     
 }
-function addNewRelation(backLogId,typs) {
+function deleteApiRelationModal(relId,elm) {
+    var  data = {};
+    data.id = relId;
+    $(elm).closest("tr").remove();
+    callApi('22012211351903155308', data, true, function (res) {
+        
+     })
+    
+}
+function addNewRelation(backLogId,typs,inpId) {
     var data1 ={}
-        data1.fkApiInputId = "";
+        data1.fkRelatedInputId = inpId;
         data1.fkApiId = backLogId;
         data1.relType = typs;
         callApi('21122412204000321041', data1, true, function (res1) {
-            var table = $('#storyCardShowRelationModalTable tbody');
-           var  data = {};
-            data.fkApiId = backLogId;
-            
-            callApi('21122413451908481407', data, true, function (res) {
-            /*     try { */
-                var selectin = $("<select class='form-control apiInputSelect' >")
-                          .attr("onchange","tableApiSelectBoxOnChange(this)");
-                var selectout = $("<select class='form-control apiInputSelect' >")
-                          .attr("onchange","tableApiSelectBoxOnChange(this)");
-                  try {
-                    var b = res.tbl[0].r;
-               
-                      selectin.append($("<option>").text('').val(''));
-                      selectout.append($("<option>").text('').val(''));
-                        for(const o in b){
-                             
-                           if(b[o].inputType==='IN'){
-                            selectin.append($("<option>").text(b[o].inputName).val(b[o].id))
-                           }else{
-                            selectout.append($("<option>").text(b[o].inputName).val(b[o].id))
-                           }
-                        }
-                  } catch (error) {
-                      
-                  }
-                        if (typs === 'IN') {
-                            var tr = $(`<tr>`)
-                                    .attr("pid", res1.kv.id)
-                                    .append($("<td>")
-                                            .append($("<select>")
-                                                    .addClass('form-control')
-                                                    .attr('title', '')
-                                                    .addClass("tableInputSelect")
-                                                    .attr("data-live-search", "true")
-                                                    .attr("onchange", "tableSelectBoxOnChange(this)")
-                                                    .attr("data-apiId", backLogId)
-                                                    .attr("data-relType", 'IN')
-                                                    )
-                                            )
-                                    .append($("<td>")
-                                            .append($('<i class="fas fa-arrow-right"></i>'))
-                                            )
-                                    .append($("<td>")
-                                            .append(selectin.clone()))
-                                    .append($("<td>")
-                                            .append(""))
-                        } else {
-                            var tr = $(`<tr>`)
-                                    .attr("pid", res1.kv.id)
-                                    .append($("<td>")
-                                            .append("")
-                                            )
-                                    .append($("<td>")
-                                            .append("")
-                                            )
-                                    .append($("<td>")
-                                              .append(selectout.clone()))
-                                    .append($("<td>")
-                                            .append($('<i class="fas fa-arrow-right"></i>')))
-                                    .append($("<td>")
-                                           
-                                            .append($("<select>")
-                                                    .addClass('form-control')
-                                                    .attr('title', '')
-                                                    .addClass("tableInputSelect")
-                                                    .attr("data-live-search", "true")
-                                                    .attr("onchange", "tableSelectBoxOnChange(this)")
-                                                    .attr("data-apiId", backLogId)
-                                                    .attr("data-relType", 'OUT')
-                                                    )
-                                            )
-                        }
-                        table.prepend(tr); 
-                     inputSetSelectBox();
-               /*  } catch (error) {
-                }
-                */
-            })
+          
+            showApiRelationModalCore(backLogId,inpId)
         })
     
 }
@@ -13212,9 +13141,10 @@ function inputSetSelectBox() {
     $("select.apiInputSelect").selectpicker();
 }
 ///
-function getBacklogInputOutPutSetTable(backlogId,selectin,selectout,table) {
+function getBacklogInputOutPutSetTable(inputid,backlogId,selectin,selectout,table) {
     data = {};
-    data.fkApiId = backlogId
+    data.fkApiId = backlogId;
+    data.fkRelatedInputId = inputid;
     callApi('211224123024004010435', data, true, function (res) {
         try {
             var dt = res.tbl[0].r;
@@ -13243,7 +13173,15 @@ function getBacklogInputOutPutSetTable(backlogId,selectin,selectout,table) {
                         .append($("<td>")
                                 .append(selcolin.val(o.fkApiInputId)))
                         .append($("<td>")
-                                .append(""))
+                                .append("")
+                                )
+                        .append($("<td>")
+                                .append("")
+                                )
+                        .append($("<td>")
+                                .append(`<a style="color:blue;cursor:pointer;" class="ml-2" href1="#" onclick="deleteApiRelationModal('${o.id}',this)">
+                                <i class="fas fa-trash-alt"></i>
+                                </a>`))
             } 
             table.append(tr);
         }
@@ -13276,12 +13214,16 @@ function getBacklogInputOutPutSetTable(backlogId,selectin,selectout,table) {
                                         .attr("data-relType", 'OUT')
                                         )
                                 )
+                      .append($("<td>")
+                                .append(`<a style="color:blue;cursor:pointer;" class="ml-2" href1="#" onclick="deleteApiRelationModal('${o.id}',this)">
+                                <i class="fas fa-trash-alt"></i>
+                                </a>`))
             }
             table.append(tr);
         }
         inputSetSelectBox();
         } catch (error) {
-            $(".generate-realtion-fileds-api").removeClass("d-none")
+          
         }
         
      

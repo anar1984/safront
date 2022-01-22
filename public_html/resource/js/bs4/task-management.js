@@ -24,7 +24,8 @@ const taskManagement = {
                 $('body').find("#issue-managment-add-task").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-
+                cmpList.userBlock.Init($('.assigne-div-add-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
 
@@ -73,6 +74,8 @@ const taskManagement = {
                     </div>
                       </div>
                       <div class="modal-footer">
+                      <div class="assigne-div-add-issue"></div>
+                      <div class="observer-div-add-issue"></div>
                           <button type="button" id="addIssueButtonId" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">${lang_task.windowAddTask.close}</button>
                       </div>
