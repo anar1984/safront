@@ -11,6 +11,44 @@ var cmpList  = {
                 var select  = $(elm).find('select.selectpicker-user-list');
                 this.getUserList(select);               
             },
+            getUserBlockValue: function (elm) {
+                var item  = $(elm).find(".user-avatar-list ul li")
+                    var list  = ''
+                  item.each(function () {
+                       list  += $(this).attr("id") +",";
+                  })
+
+                  return list
+            },
+            genItemBlock: function (id,url,nameAt) {
+                return `<li id="${id}">
+                <div class="item-click">
+                    <div class="circular--portrait">
+                    <img src="${fileUrl(url)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
+                    </div>
+                    <i class="fa fas fa-close removed-nezaretci-btn"></i>
+                </div>
+            </li>`
+            },
+            setUserBlockValue: function (elm,list) {
+                var block  = $(elm).find(".user-avatar-list ul");
+                    var list  = list.split(',');
+                    block.empty();
+                    for (let i = 0; i < list.length; i++) {
+                        const o = list[i];
+                        if(o){
+                            try {
+                                var userImage = SAProjectUser.GetDetails(o, "userImage");
+                                var userName = SAProjectUser.GetDetails(o, "userName");
+                                block.append(this.genItemBlock(o,userImage,userName));
+                            } catch (error) {
+                                Toaster.showError( "This id "+o+" User  is not defined!"); 
+                            }
+                            
+                        }
+                    }
+                  return list;
+            },
             getUserList:function (select) {
                
                     var elm  =select;
@@ -98,7 +136,7 @@ $(document).on('click','.user-avatar-list li .item-click .removed-nezaretci-btn'
     var dataContent = selected.attr('data-content');
     var srcAttr = $(dataContent).find('img').attr('src');
     var nameAttr = $(dataContent).find('span').text();
-     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list')
+     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul')
      var has = block.find("#"+selected.val());
     if(has.length <1){
         block.append(`<li id="${selected.val()}">
@@ -135,7 +173,9 @@ $(document).on('click','.user-avatar-list li .item-click .removed-nezaretci-btn'
         html:true
     })
 });
-
+/* $(document).on('hide.bs.dropdown','.user-addons-box-elm',function (e) {
+    return false;
+}) */
 $(document).on('click','.user-addons-box-elm  > .dropdown-menu',function (e) {
     e.stopPropagation();
 })

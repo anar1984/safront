@@ -252,7 +252,7 @@ const taskManagement = {
                     var div = `
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
-                     ${notChwk()?this.genDetailsBlock():""}
+                     ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
                      ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
