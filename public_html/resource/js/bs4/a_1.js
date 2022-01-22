@@ -13013,32 +13013,70 @@ $(document).on('click', '.relation-add-btn-table', function (evt) {
     var typ  = $(this).attr('data-type');
     addNewRelation(backlog,typ);
 });
+$(document).on('click', '.generate-realtion-fileds-api', function (evt) {
+    var backlog  = $(this).attr('data-apiId');
+    addNewRelationInsertListGen(backlog);
+});
 
 /// new modal api
 function showApiRelationModal(backLogId) {
+    $(".generate-realtion-fileds-api").addClass("d-none");
     $('#storyCardShowRelationModal').modal('show');
     var table = $('#storyCardShowRelationModalTable tbody');
       $(".relation-add-btn-table").attr("data-apiId",backLogId);
+      $(".generate-realtion-fileds-api").attr("data-apiId",backLogId);
     table.empty();
     data = {};
     data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        var select = $("<select class='form-control apiInputSelect' >")
-         .attr("onchange","tableApiSelectBoxOnChange(this)");
-        try {
-            var b = res.tbl[0].r;
-         
-              select.append($("<option>").text('').val(''))
-                for(const o in b){
-                   select.append($("<option>").text(b[o].inputName).val(b[o].id))
-                }
-        } catch (error) {
-        }
-        getBacklogInputOutPutSetTable(backLogId,select,table);
+        var selectin = $("<select class='form-control apiInputSelect' >")
+        .attr("onchange","tableApiSelectBoxOnChange(this)");
+var selectout = $("<select class='form-control apiInputSelect' >")
+        .attr("onchange","tableApiSelectBoxOnChange(this)");
+try {
+  var b = res.tbl[0].r;
+
+    selectin.append($("<option>").text('').val(''));
+    selectout.append($("<option>").text('').val(''));
+      for(const o in b){
+           
+         if(b[o].inputType==='IN'){
+          selectin.append($("<option>").text(b[o].inputName).val(b[o].id))
+         }else{
+          selectout.append($("<option>").text(b[o].inputName).val(b[o].id))
+         }
+      }
+} catch (error) {
+    
+}
+        getBacklogInputOutPutSetTable(backLogId,selectin,selectout,table);
        
           })
 }
 // onChange
+function addNewRelationInsertListGen(backLogId) {
+    var  data = {};
+    data.fkApiId = backLogId;
+    callApi('21122413451908481407', data, true, function (res) {
+        var list  = res.tbl[0].r;
+
+        for (let i = 0; i < list.length; i++) {
+            const o = list[i];
+            var data1 ={}
+        data1.fkApiInputId = o.id;
+        data1.fkApiId = backLogId;
+        data1.relType = o.inputType;
+        callApi('21122412204000321041', data1, false, function (res1) {
+          
+        })
+        
+        }
+        showApiRelationModal(backLogId); 
+
+     })
+  
+    
+}
 function addNewRelation(backLogId,typs) {
     var data1 ={}
         data1.fkApiInputId = "";
@@ -13051,14 +13089,22 @@ function addNewRelation(backLogId,typs) {
             
             callApi('21122413451908481407', data, true, function (res) {
             /*     try { */
-                var select = $("<select class='form-control apiInputSelect' >")
+                var selectin = $("<select class='form-control apiInputSelect' >")
+                          .attr("onchange","tableApiSelectBoxOnChange(this)");
+                var selectout = $("<select class='form-control apiInputSelect' >")
                           .attr("onchange","tableApiSelectBoxOnChange(this)");
                   try {
                     var b = res.tbl[0].r;
                
-                      select.append($("<option>").text('').val(''));
+                      selectin.append($("<option>").text('').val(''));
+                      selectout.append($("<option>").text('').val(''));
                         for(const o in b){
-                           select.append($("<option>").text(b[o].inputName).val(b[o].id))
+                             
+                           if(b[o].inputType==='IN'){
+                            selectin.append($("<option>").text(b[o].inputName).val(b[o].id))
+                           }else{
+                            selectout.append($("<option>").text(b[o].inputName).val(b[o].id))
+                           }
                         }
                   } catch (error) {
                       
@@ -13081,7 +13127,7 @@ function addNewRelation(backLogId,typs) {
                                             .append($('<i class="fas fa-arrow-right"></i>'))
                                             )
                                     .append($("<td>")
-                                            .append(select.clone()))
+                                            .append(selectin.clone()))
                                     .append($("<td>")
                                             .append(""))
                         } else {
@@ -13094,7 +13140,7 @@ function addNewRelation(backLogId,typs) {
                                             .append("")
                                             )
                                     .append($("<td>")
-                                              .append(select.clone()))
+                                              .append(selectout.clone()))
                                     .append($("<td>")
                                             .append($('<i class="fas fa-arrow-right"></i>')))
                                     .append($("<td>")
@@ -13137,9 +13183,7 @@ function tableApiSelectBoxOnChange(el) {
        data.fkApiInputId = inId;
         data.id = $(el).closest("tr").attr('pid');
         callApi('22012118281709943409', data, true, function (res) {
-
         })
-
     }
 
 
@@ -13168,14 +13212,16 @@ function inputSetSelectBox() {
     $("select.apiInputSelect").selectpicker();
 }
 ///
-function getBacklogInputOutPutSetTable(backlogId,select,table) {
+function getBacklogInputOutPutSetTable(backlogId,selectin,selectout,table) {
     data = {};
     data.fkApiId = backlogId
     callApi('211224123024004010435', data, true, function (res) {
-        var dt = res.tbl[0].r;
+        try {
+            var dt = res.tbl[0].r;
         for (var i=0; i < dt.length; i++) {
             const o = dt[i];
-            var selcol = select.clone();
+            var selcolin = selectin.clone();
+            
             if (o.relType === 'IN') {
                 var tr = $(`<tr>`)
                         .attr("pid", o.id)
@@ -13195,7 +13241,7 @@ function getBacklogInputOutPutSetTable(backlogId,select,table) {
                                 .append($('<i class="fas fa-arrow-right"></i>'))
                                 )
                         .append($("<td>")
-                                .append(selcol.val(o.fkApiInputId)))
+                                .append(selcolin.val(o.fkApiInputId)))
                         .append($("<td>")
                                 .append(""))
             } 
@@ -13203,7 +13249,7 @@ function getBacklogInputOutPutSetTable(backlogId,select,table) {
         }
         for (var i=0; i < dt.length; i++) {
             const o = dt[i];
-            var selcol = select.clone();
+            var selcolout = selectout.clone();
             if (o.relType === 'OUT')  {
                 var tr = $(`<tr>`)
                         .attr("pid", o.id)
@@ -13214,7 +13260,7 @@ function getBacklogInputOutPutSetTable(backlogId,select,table) {
                                 .append("")
                                 )
                         .append($("<td>")
-                                  .append(selcol.val(o.fkApiInputId)))
+                                  .append(selcolout.val(o.fkApiInputId)))
                         .append($("<td>")
                                 .append($('<i class="fas fa-arrow-right"></i>')))
                         .append($("<td>")
@@ -13234,6 +13280,10 @@ function getBacklogInputOutPutSetTable(backlogId,select,table) {
             table.append(tr);
         }
         inputSetSelectBox();
+        } catch (error) {
+            $(".generate-realtion-fileds-api").removeClass("d-none")
+        }
+        
      
     })
 }
@@ -15828,12 +15878,12 @@ function ReturnLoadUsersAsNezaretci(elm) {
     $('#nezaretci-user-list').selectpicker('refresh');
 }
 
-$(document).on('click','#nezaretci-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
+$(document).on('click','.user-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
    
  var elm = $(this).closest("li")
-        ReturnLoadUsersAsNezaretci(elm);
+         var select  = $(this).closest('.user-addons-box').find('.selectpicker-user-list');
+         select.find("")
         $(this).closest('li').remove();
-     $('select#nezaretci-user-list').selectpicker('refresh');
 });
 
 //$(document).on('click', '.dropdownMenuButtonCss', function (evt) {

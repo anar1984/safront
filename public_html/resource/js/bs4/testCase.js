@@ -877,12 +877,14 @@ function setBugFilterLabelValues() {
      }
 }
 function setFilterCount() {
+       
+    var elm  = notChwk ? $(".taskfilter-btn .info"):$(".filter-elements-btn .info");
     if(FilterCount > 0){
-        $(".taskfilter-btn .info").show();
-        $(".taskfilter-btn .info").text(FilterCount);
+        elm.show();
+        elm.text(FilterCount);
 
     }else{
-        $(".taskfilter-btn .info").hide();
+        elm.hide();
     }
 }
 function setBugFilterCreatedDateValues() {
