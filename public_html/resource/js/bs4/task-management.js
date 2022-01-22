@@ -15,7 +15,8 @@ const taskManagement = {
         var dwlmt = $('#bug_filter_tasktype')
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
-        this.readTask.genBlockTask.getNotificationRowCount(); 
+        this.readTask.genBlockTask.getNotificationRowCount();
+
     },
     insertTask: {
         genBlockModal: {
@@ -2463,7 +2464,7 @@ const taskManagement = {
                     div.append(this.genTableView.genTableBlock());
                 }
                 genTimePickerById("issue-list-datetime",'up');
-                             
+                
 
             },
             genCheweekBtn: function (params) {
@@ -2549,49 +2550,53 @@ const taskManagement = {
                     <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
                 </div>
            </div> 
-           <div class="info-box mr-2">
-                <span class="title">Tarix</span>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
-                    <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
-                    <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="p
-                opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
-                    <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
-                    <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+           <div class="info-box info-box-mob mr-2">
+           <span class="title">Tarix</span>
+                <div class="info-box-in">
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                        <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="p
+                    opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                        <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+                    </div>
                 </div>
             </div>
-            <div class="info-box">
+            <div class="info-box info-box-mob">
                 <span class="title">Status</span>
-                <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
-                  <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
-                    <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
-                    <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
-                </div>
-        
-                <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
-                    <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon none"></i> <span>${rejected}</span>
-        
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
-                    <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
+                <div class="info-box-in">
+                    <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
+                    <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
+                        <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
+                        <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
+                    </div>
+            
+                    <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
+                        <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon none"></i> <span>${rejected}</span>
+            
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
+                        <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
+                    </div>
                 </div>
             </div>`
             },
@@ -3028,7 +3033,9 @@ const taskManagement = {
                         $('[data-toggle="popover"]').popover({
                             html: true
                         });
+                        getInfoBoxResponsive();
                     });
+
                 } catch (error) {}
 
 
@@ -4512,6 +4519,9 @@ $(document).on("click",'.cs-next-large-modal-btn',function (e) {
  }
 })
 
+$(document).on("click", '.info-box.info-box-mob>.title', function () {
+    $(this).closest('.info-box.info-box-mob').toggleClass('active');
+});
 
 $(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
    // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
@@ -4669,3 +4679,16 @@ function loadBugTaskDeadlineScripts() {
         });
 
 }
+
+// function getInfoBoxResponsive() {
+//     $(document).ready(function(){
+//         var infoBoxHeight = $('.info-box.info-box-mob').height();
+//         console.log(infoBoxHeight);
+//         // $('.info-box.info-box-mob').css('height', infoBoxHeight);
+//         if (infoBoxHeight > 35 ) {
+//             $('.info-box.info-box-mob').addClass('info-box-res');
+//         }else{
+//             $('.info-box.info-box-mob').removeClass('info-box-res');
+//         }
+//     });
+// }

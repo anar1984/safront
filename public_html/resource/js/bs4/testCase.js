@@ -2018,7 +2018,6 @@ $(document).on("click", '.all-bug-list-check', function (e) {
         $('body').addClass('res-multi-edit-menu');
         chck.prop('checked', true);
     } else {
-
         $('.multi-edit-menu').css('display', 'none');
         $('body').removeClass('res-multi-edit-menu');
         chck.prop('checked', false);
@@ -2054,10 +2053,12 @@ $(document).on("click", '.checkbox-issue-task', function (e) {
 
     }
     if (ast.length > 1) {
-            $('.multi-edit-menu').css('display', 'initial');      
+            $('.multi-edit-menu').css('display', 'initial');
+            $('body').addClass('res-multi-edit-menu');    
     } else {
 
         $('.multi-edit-menu').css('display', 'none');
+        $('body').removeClass('res-multi-edit-menu');
 
     }
 

@@ -546,7 +546,7 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
     mix-blend-mode: normal;
     background: rgba(255, 255, 255, 0.11);
     border: 0.7px solid rgba(255, 255, 255, 0.5);
-    display: table !important;
+    display: table;
     padding: 0;
     justify-content: flex-start !important;
     overflow: hidden;
@@ -780,6 +780,74 @@ td.bug-list-column-task-nature,td.bug-list-column-task-id,td.bug-list-column-tas
 .info-box-dropdown .dropdown-item:last-child:focus, .info-box-dropdown .dropdown-item:last-child:hover  {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.info-box.info-box-mob .info-box-in {
+    display: table-cell;
+    width: auto;
+}
+@media (max-width: 1124px) {
+    .info-box.info-box-mob {
+        position: relative;
+        overflow: visible;
+        }
+        .info-box.info-box-mob:after{
+        font-family: 'FontAwesome';
+        content: '\f107';
+        padding-left: 5px;
+        position: absolute;
+        font-size: 100%;
+        margin: 0px 10px 0 0;
+        vertical-align: middle;
+        top: 7px;
+        color: #fff;
+        right: 0;
+        }
+    .info-box.info-box-mob .info-box-in {
+        position: absolute;
+        left: 0;
+        top: 33px;
+        padding-top: 5px;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        }
+        .info-box.info-box-mob.active .info-box-in{
+        opacity: 1;
+        visibility: visible;
+        }
+    .info-box.info-box-mob .info-item-elements {
+        color: #03396c;
+        background: #dfeef7;
+        border: 1px solid rgb(0 0 0 / 41%);
+        box-shadow: 0px 2px 3px rgb(0 0 0 / 41%);
+        border-radius: 25px;
+        height: 33px;
+        margin-bottom: 7px;
+        padding: 0px 10px;
+        width: 100%;
+        max-width: 100px;
+        display: inline-flex;
+        vertical-align: middle;
+        line-height: 28px;
+        }
+        .info-box.info-box-mob .info-item-elements:hover, .info-box.info-box-mob .info-item-elements.active {
+        background: rgb(255 255 255);
+    }
+    .info-box.info-box-mob .title, .info-box.info-box-mob span.title {
+        cursor: pointer;
+        width: 100%;
+        padding-right: 30px;
+    }
+        .info-box.info-box-mob .info-item-elements i {
+        padding-left: 0;
+        padding-right: 0px;
+        vertical-align: middle;
+        display: inline-block;
+        }
+        .info-box.info-box-mob .info-item-elements span {
+        padding: 2px 4px;
+        color: #03396c;
+        }
 }
 .task-list-bottom {
     position: sticky;
