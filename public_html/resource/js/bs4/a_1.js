@@ -11250,10 +11250,17 @@ $(document).on("click1", ".card-UserStory-edit-exit", function (e) {
     //    }
 
 })
-$(document).on("click", ".btn-change-mode-eventdesc", function (e) {
+let type  = "api";
+let apitype  = 'oldApi';
+$(document).on("click", ".btn-change-mode-eventhesc", function (e) {
     $(this).closest('.modal-body').find('.create-new-text-4-desc').toggleClass('d-none');
     $(this).closest('.modal-body').find('.create-new-db-4-select').val('');
-
+      type  = $(this).attr("data-type");
+})
+$(document).on("click", ".btn-change-mode-eventapi", function (e) {
+    $(this).closest('.modal-body').find('.create-new-text-4-newapi').toggleClass('d-none');
+    $(this).closest('.modal-body').find('.create-new-db-4-select').val('');
+    apitype  = $(this).attr("data-type");
 })
 
 function addEventDescription() {
@@ -11261,9 +11268,58 @@ function addEventDescription() {
     var inputId = $("#addEventDescModal-input-id").val();
     var text = $("#addEventDescModal-text").val();
     var apidId = $("#addEventDescModal-apiId").val();
+    var bnName = $("#addEventDescModal-new-api-nm").val();
     var apiName = $("#addEventDescModal-apiId option:selected").text();
-    var fn_body = `fn_event(|r|${actype}|r|${text ? 'text' : 'Api'}|r|${text ? text : apidId}|r|${apiName}|r|)`;
-    addNewDescByValueAndInpId(fn_body, inputId);
+        if(type==='api'){
+
+             if(apitype==='oldApi'){
+                var fn_body = `fn_event(|r|${actype}|r|Api|r|${ apidId}|r|${apiName}|r|)`;
+                addNewDescByValueAndInpId(fn_body, inputId);
+             }else{
+                addNewApiforRel(bnName,actype, inputId)
+                 
+                return
+             }
+
+        }else if(type==='text'){
+            var fn_body = `fn_event(|r|${actype}|r|text|r|${text}|r|-|r|)`;
+            addNewDescByValueAndInpId(fn_body, inputId);
+        }
+    
+}
+
+ function addNewApiforRel(bnName,actype, inputId) {
+    if (!bnName) {
+        return;
+    }
+    var json = { kv: {} };
+    try {
+        json.kv.cookie = getToken();
+    } catch (err) {
+    }
+    json.kv['backlogName'] = bnName;
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    json.kv['isApi'] = "1";
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmInsertNewBacklogShort",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            SACore.addBacklogByRes(res);
+            SACore.SetBacklogNo(res.kv.backlogNo, res.kv.id);
+            var fn_body = `fn_event(|r|${actype}|r|Api|r|${res.kv.id}|r|${bnName}|r|)`;
+            addNewDescByValueAndInpId(fn_body, inputId);
+                           
+        },
+        error: function () {
+            Toaster.showGeneralError();
+        }
+    });
 }
 function addNewDescByValueAndInpId(val, inputId) {
     if (!val || !inputId) {
@@ -12952,117 +13008,120 @@ $(document).on('click', '.live-prototype-show-sourcedrelation', function (evt) {
     $('.gui-design').css('background-color', 'transparent');
 
 });
+$(document).on('click', '.relation-add-btn-table', function (evt) {
+    var backlog  = $(this).attr('data-apiId');
+    var typ  = $(this).attr('data-type');
+    var Input  = $(this).attr('data-input');
+    addNewRelation(backlog,typ,Input);
+    
+});
+$(document).on('click', '.generate-realtion-fileds-api', function (evt) {
+    var backlog  = $(this).attr('data-apiId');
+    var inpid  = $(this).attr('data-input');
+    addNewRelationInsertListGen(backlog,inpid);
+});
 
 /// new modal api
-function showApiRelationModal(backLogId) {
+function showApiRelationModal(backLogId,elm) {
+    var inputid  = $(elm).closest("tr").attr("inid");
     $('#storyCardShowRelationModal').modal('show');
+    $(".relation-add-btn-table").attr("data-apiId",backLogId);
+    $(".relation-add-btn-table").attr("data-input",inputid);
+    $(".generate-realtion-fileds-api").attr("data-apiId",backLogId);
+    $(".generate-realtion-fileds-api").attr("data-input",inputid);
+    showApiRelationModalCore(backLogId,inputid);
+    
+}
+function showApiRelationModalCore(backLogId,inputid) {
+    
+    var table = $('#storyCardShowRelationModalTable tbody');
+     
+    table.empty();
     data = {};
-    data.fkApiId = backLogId
+    data.fkApiId = backLogId;
     callApi('21122413451908481407', data, true, function (res) {
-        try {
-            var b = res.tbl[0].r;
-            var table = $('#storyCardShowRelationModalTable tbody');
-            table.empty();
-            var i = 0;
-            var idIn = 1;
-            var idOut = 1;
-            for (var i; i < b.length; i++) {
-                const o = b[i];
-                if (o.inputType === 'IN') {
-                    var tr = $(`<tr>`)
-                            .attr("pid", o.id)
-                            .append($("<td>")
-                                    .append($("<select>")
-                                            .addClass('form-control')
-                                            .attr('title', '')
-                                            .addClass("tableInputSelect")
-                                            .attr("data-live-search", "true")
-                                            .attr("onchange", "tableSelectBoxOnChange(this)")
-                                            .attr("data-apiId", backLogId)
-                                            .attr("data-relType", 'IN')
-                                            )
-                                    )
-                            .append($("<td>")
-                                    .append($('<i class="fas fa-arrow-right"></i>'))
-                                    )
-                            .append($("<td>")
-                                    .addClass('input-relation-selected-name-for-zad')
-                                    .attr('iname', o.inputName)
-                                    .text((idIn++) + ". " + o.inputName)
-                                    )
-                            .append($("<td>")
-                                    .append("")
-                                    )
-                } else {
-                    var tr = $(`<tr>`)
-                            .attr("pid", o.id)
-                            .append($("<td>")
-                                    .append("")
-                                    )
-                            .append($("<td>")
-                                    .append("")
-                                    )
-                            .append($("<td>")
-                                    .addClass('input-relation-selected-name-for-zad')
-                                    .attr('iname', o.inputName)
-                                    .text((idOut++) + ". " + o.inputName)
-                                    )
-                            .append($("<td>")
-                                    .append($('<i class="fas fa-arrow-right"></i>')))
-                            .append($("<td>")
-                                   
-                                    .append($("<select>")
-                                            .addClass('form-control')
-                                            .attr('title', '')
-                                            .addClass("tableInputSelect")
-                                            .attr("data-live-search", "true")
-                                            .attr("onchange", "tableSelectBoxOnChange(this)")
-                                            .attr("data-apiId", backLogId)
-                                            .attr("data-relType", 'OUT')
-                                            )
-                                    )
-                }
-                table.append(tr);
-            }
-            inputSetSelectBox();
-            getBacklogInputOutPutSetTable(backLogId);
-        } catch (error) {
-        }
+        var selectin = $("<select class='form-control apiInputSelect' >")
+        .attr("onchange","tableApiSelectBoxOnChange(this)");
+var selectout = $("<select class='form-control apiInputSelect' >")
+        .attr("onchange","tableApiSelectBoxOnChange(this)");
+try {
+  var b = res.tbl[0].r;
+
+    selectin.append($("<option>").text('').val(''));
+    selectout.append($("<option>").text('').val(''));
+      for(const o in b){
+           
+         if(b[o].inputType==='IN'){
+          selectin.append($("<option>").text(b[o].inputName).val(b[o].id))
+         }else{
+          selectout.append($("<option>").text(b[o].inputName).val(b[o].id))
+         }
+      }
+} catch (error) {
+    
+}
+        getBacklogInputOutPutSetTable(inputid,backLogId,selectin,selectout,table);
        
-    })
+          })
 }
 // onChange
-
+function addNewRelationInsertListGen(backLogId,inputId) {
+    var  data = {};
+    data.fkApiId = backLogId;
+    data.fkRelatedInputId = inputId;
+    callApi('22012211383202191857', data, true, function (res) {
+        showApiRelationModal(backLogId); 
+     })
+    
+}
+function deleteApiRelationModal(relId,elm) {
+    var  data = {};
+    data.id = relId;
+    $(elm).closest("tr").remove();
+    callApi('22012211351903155308', data, true, function (res) {
+        
+     })
+    
+}
+function addNewRelation(backLogId,typs,inpId) {
+    var data1 ={}
+        data1.fkRelatedInputId = inpId;
+        data1.fkApiId = backLogId;
+        data1.relType = typs;
+        callApi('21122412204000321041', data1, true, function (res1) {
+          
+            showApiRelationModalCore(backLogId,inpId)
+        })
+    
+}
 function tableSelectBoxOnChange(el) {
     var inId = $(el).val();
-    var typ = $(el).attr("data-relType");
-    var apiId = $(el).attr("data-apiId");
-    var typId = $(el).closest("tr").attr("pid");
     var data = {};
     data.fkBacklogInputId = inId;
-    if (!$(el).attr('sa-data-val')) {
-
-        data.fkApiInputId = typId;
-        data.fkApiId = apiId;
-        data.relType = typ;
-        callApi('21122412541607067550', data, true, function (res) {
-
-        })
-    } else {
-        data.id = $(el).attr('sa-data-val');
+  
+        data.id = $(el).closest('tr').attr('pid');
 
         callApi('21122417433606496584', data, true, function (res) {
 
         })
 
+}
+function tableApiSelectBoxOnChange(el) {
+    var inId = $(el).val();
+    var data = {};
+       data.fkApiInputId = inId;
+        data.id = $(el).closest("tr").attr('pid');
+        callApi('22012118281709943409', data, true, function (res) {
+        })
     }
 
-}
 
 /// select box set
 function inputSetSelectBox() {
     var inputs = $("#generalview_input_list .description-left");
-    $("select.tableInputSelect").append($("<option>").text('').val(''))
+    var item = $("select.tableInputSelect");
+    item.empty();
+    item.append($("<option>").text('').val(''));
     inputs.each(function () {
         var idOption = $(this).closest("tr").attr("inid");
         var elm = $(this).clone();
@@ -13070,25 +13129,104 @@ function inputSetSelectBox() {
         var text = $(elm).text();
         
 
-        $("select.tableInputSelect").append($("<option>").text(text).val(idOption))
+        item.append($("<option>").text(text).val(idOption));
     })
-    $("select.tableInputSelect").selectpicker()
+    item.each(function () {
+        var oldVal =  $(this).attr('sa-data-value');
+           $(this).val(oldVal);
+
+           $(this).selectpicker('refresh');
+    })
+    
+    $("select.apiInputSelect").selectpicker();
 }
 ///
-function getBacklogInputOutPutSetTable(backlogId) {
+function getBacklogInputOutPutSetTable(inputid,backlogId,selectin,selectout,table) {
     data = {};
-    data.fkApiId = backlogId
+    data.fkApiId = backlogId;
+    data.fkRelatedInputId = inputid;
     callApi('211224123024004010435', data, true, function (res) {
-
-        var dt = res.tbl[0].r;
-        for (let i = 0; i < dt.length; i++) {
+        try {
+            var dt = res.tbl[0].r;
+        for (var i=0; i < dt.length; i++) {
             const o = dt[i];
-            var slct = $("#storyCardShowRelationModalTable tbody").find("tr[pid='" + o.fkApiInputId + "']").find("select.tableInputSelect");
-            slct.val(o.fkBacklogInputId);
-            slct.attr("sa-data-val", o.id);
-            slct.selectpicker("refresh");
-
+            var selcolin = selectin.clone();
+            
+            if (o.relType === 'IN') {
+                var tr = $(`<tr>`)
+                        .attr("pid", o.id)
+                        .append($("<td>")
+                                .append($("<select>")
+                                        .addClass('form-control')
+                                        .attr('title', '')
+                                        .addClass("tableInputSelect")
+                                        .attr("data-live-search", "true")
+                                        .attr("onchange", "tableSelectBoxOnChange(this)")
+                                        .attr("data-apiId", backlogId)
+                                        .attr("sa-data-value",o.fkBacklogInputId)
+                                        .attr("data-relType", 'IN')
+                                        )
+                                )
+                        .append($("<td>")
+                                .append($('<i class="fas fa-arrow-right"></i>'))
+                                )
+                        .append($("<td>")
+                                .append(selcolin.val(o.fkApiInputId)))
+                        .append($("<td>")
+                                .append("")
+                                )
+                        .append($("<td>")
+                                .append("")
+                                )
+                        .append($("<td>")
+                                .append(`<a style="color:blue;cursor:pointer;" class="ml-2" href1="#" onclick="deleteApiRelationModal('${o.id}',this)">
+                                <i class="fas fa-trash-alt"></i>
+                                </a>`))
+            } 
+            table.append(tr);
         }
+        for (var i=0; i < dt.length; i++) {
+            const o = dt[i];
+            var selcolout = selectout.clone();
+            if (o.relType === 'OUT')  {
+                var tr = $(`<tr>`)
+                        .attr("pid", o.id)
+                        .append($("<td>")
+                                .append("")
+                                )
+                        .append($("<td>")
+                                .append("")
+                                )
+                        .append($("<td>")
+                                  .append(selcolout.val(o.fkApiInputId)))
+                        .append($("<td>")
+                                .append($('<i class="fas fa-arrow-right"></i>')))
+                        .append($("<td>")
+                               
+                                .append($("<select>")
+                                        .addClass('form-control')
+                                        .attr('title', '')
+                                        .addClass("tableInputSelect")
+                                        .attr("data-live-search", "true")
+                                        .attr("onchange", "tableSelectBoxOnChange(this)")
+                                        .attr("data-apiId", backlogId)
+                                        .attr("sa-data-value",o.fkBacklogInputId)
+                                        .attr("data-relType", 'OUT')
+                                        )
+                                )
+                      .append($("<td>")
+                                .append(`<a style="color:blue;cursor:pointer;" class="ml-2" href1="#" onclick="deleteApiRelationModal('${o.id}',this)">
+                                <i class="fas fa-trash-alt"></i>
+                                </a>`))
+            }
+            table.append(tr);
+        }
+        inputSetSelectBox();
+        } catch (error) {
+          
+        }
+        
+     
     })
 }
 
@@ -13209,9 +13347,6 @@ function setApiListToInputRelation() {
             }
 
             select.change();
-
-
-
 
         }
     });
@@ -13601,15 +13736,17 @@ $(document).on("change", '#storyCardListSelectBox4CodeGround', function (e) {
 });
 
 function getIframeBlock(elm) {
-    var parts = document.location.href.split("?");
+  /*   var parts = document.location.href.split("?"); */
      
-    var $iframe = $(`<iframe>`)
+  /*   var $iframe = $(`<iframe>`)
                              .addClass("h-100 w-100")
                              .attr("src",'iframe.html?'+parts[1]+'&current_domain='+global_var.current_domain)
                              .attr("id",'result-iframe');
 
-    $(elm).html($iframe);
-     
+  //  $(elm).html($iframe);
+      */
+     iframeLoaded();
+
 }
 function iframeLoaded() {
     var pid = global_var.current_backlog_id;
@@ -13617,7 +13754,7 @@ function iframeLoaded() {
 
     if ($("#cs-col-Ceckbox-id").val() !== '1') {
         // var html = getBacklogAsHtml(global_var.current_backlog_id, false);
-        var resTmp = SAInput.toJSONByBacklog(global_var.current_backlog_id);
+        var resTmp = SAInput.toJSONByBacklog(pid);
         var oldmodal = global_var.current_modal;
         
         global_var.current_modal = $('#show_hidden_carrier').prop('checked')?'loadLivePrototype':'';
@@ -13628,10 +13765,11 @@ function iframeLoaded() {
     }
     var css = window.editorCSSGround.getValue();
     var block = getIframeBlockInside(pid, css, js, html);
-    $("#result-iframe").contents().find('body').html(block +`<script>
-    loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`);
+      $("#result-code-editor").html(block);
+   /*  $("#result-iframe").contents().find('body').html(block +`<script>
+    loadSelectBoxesAfterGUIDesign($("#result").find(".redirectClass"))</script>`); */
 
-   
+   loadSelectBoxesAfterGUIDesign($("#result-code-editor").find(".redirectClass"));
 }
 function getIframeBlockInside(pid, css, js, bodys) {
     // var jsLink  = `<script src="${urlGl}/api/get/dwd/js/${global_var.current_domain}/${pid}.js"></script>`
@@ -14002,6 +14140,9 @@ function loadEventDesApiList(fkProjectId) {
             cmd.html('');
 
             var obj = res.tbl[0].r;
+          /*   cmd.append($('<option></option>')
+                .attr('value', '-5')
+                .text("No Name Api")); */
             for (var n = 0; n < obj.length; n++) {
                 var o = obj[n];
                 if (o.isApi !== '1') {
@@ -14013,7 +14154,6 @@ function loadEventDesApiList(fkProjectId) {
                         .text(pname);
                 cmd.append(op);
             }
-
             sortSelectBoxByElement(cmd);
             cmd.selectpicker('refresh');
 
@@ -15680,12 +15820,12 @@ function ReturnLoadUsersAsNezaretci(elm) {
     $('#nezaretci-user-list').selectpicker('refresh');
 }
 
-$(document).on('click','#nezaretci-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
+$(document).on('click','.user-avatar-list li .item-click .removed-nezaretci-btn', function (e) {
    
  var elm = $(this).closest("li")
-        ReturnLoadUsersAsNezaretci(elm);
+         var select  = $(this).closest('.user-addons-box').find('.selectpicker-user-list');
+         select.find("")
         $(this).closest('li').remove();
-     $('select#nezaretci-user-list').selectpicker('refresh');
 });
 
 //$(document).on('click', '.dropdownMenuButtonCss', function (evt) {
@@ -20412,7 +20552,15 @@ function addInputDescListToTaskNew_setComment_event() {
             var st = "";
 
             var name = SAInputDesc.GetDetails($(this).attr("data-id"));
-
+             if(name.startsWith('fn_event(')){
+                 var item  = $(this).parent().find(".desc-item-input")
+                 if(item.find(".api-name").length >0){
+                    name  = item.find("select").val() +" Call API : " + item.find(".api-name").text() +" "+ item.find(".api-id").text();
+                 }else{
+                    name  = item.find("select").val() +" "+item.find(".update-event-desc-text").text();
+  
+                 }
+             }
             var col = $("<div class='col-12 item-input-add-task'>")
                     .append(`<label class='font-weight-bold' >${name}</label>`)
 
@@ -23902,6 +24050,5 @@ function updateOrderNo(id, iid) {
         }
     });
 }
-
 
 

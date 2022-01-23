@@ -1,3 +1,5 @@
+
+
 const taskManagement = {
     "taskLabelList":{},
     "taskSprintList":{},
@@ -13,7 +15,7 @@ const taskManagement = {
         var dwlmt = $('#bug_filter_tasktype')
         taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         $("#main-sidebar-div").append(this.readTask.genBlockTask.genNotificationBlock());
-        this.readTask.genBlockTask.getNotificationRowCount();  
+        this.readTask.genBlockTask.getNotificationRowCount();
 
     },
     insertTask: {
@@ -22,13 +24,14 @@ const taskManagement = {
                 $('body').find("#issue-managment-add-task").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-
+                cmpList.userBlock.Init($('.assigne-div-add-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
 
             },
             genModalSelfBlock: function () {
-                return ` <div class="modal fade cs-modal-box issue-managment-add-task" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+                return ` <div class="modal fade cs-modal-box issue-managment-add-task ${notChwk()?"":"left  cs-modal-box story-card-modal"}" id="issue-managment-add-task" data-backdrop="static" data-keyboard="false" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
                aria-hidden="true">
               <div class="modal-dialog rounded" style="max-width: 50%;" role="document">
                   <div class="modal-content">
@@ -71,6 +74,8 @@ const taskManagement = {
                     </div>
                       </div>
                       <div class="modal-footer">
+                      <div class="assigne-div-add-issue"></div>
+                      <div class="observer-div-add-issue"></div>
                           <button type="button" id="addIssueButtonId" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">${lang_task.windowAddTask.close}</button>
                       </div>
@@ -247,7 +252,7 @@ const taskManagement = {
                     var div = `
                      ${this.genTabHeader()}
                      <div class="tab-content" id="myTabContent">
-                     ${this.genDetailsBlock()}
+                     ${/* notChwk()? */this.genDetailsBlock()/* :"" */}
                      ${this.genScheduleBlock()}
                      ${this.genObserverBlock()}
                      ${this.genEventBlock()}
@@ -823,7 +828,7 @@ const taskManagement = {
         },
         insertCheckListComulativ: function (taskId) {
             var itmList = ''
-            var items = $(".task-check-list-box ul>li");
+            var items = $(".issue-managment-add-task .task-check-list-box ul>li");
             for (let i = 0; i < items.length; i++) {
                 const o = items[i];
 
@@ -901,12 +906,12 @@ const taskManagement = {
 
             },
             genModalSelfBlock: function () {
-                return `<div class="modal fade cs-modal-box TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
+                return `<div class="modal fade cs-modal-box ${notChwk()?"":"left  cs-modal-box story-card-modal"} TaskStoryCardPanel card-Userstory-detail" id="taskMgmtModal" tabindex="-1" role="dialog"
                aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document" style="max-width: 50%" id="taskMgmtModal-body">
                   <div class="modal-content">
                       <div class="justify-content-center modal-header task-modal-header">
-                          <h6 class="modal-title task-modal-title">
+                          <h6 class="modal-title task-modal-title ">
                               <span class="text card-UserStory-header-text-code"></span>
                           </h6>
 
@@ -2459,8 +2464,36 @@ const taskManagement = {
                     div.append(this.genTableView.genTableBlock());
                 }
                 genTimePickerById("issue-list-datetime",'up');
-                             
+                
 
+            },
+            genCheweekBtn: function (params) {
+                return `<div class="info-box multi-edit-menu pl-0 mr-2" style="display:none !important;">
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon arrow-1"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon none-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon close-white"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon right-circle-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon user-eye"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon task-02"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon chat-circle"></i>
+                </div>
+                <div class="info-item-elements">
+                    <i class="cs-svg-icon hour-circle"></i>
+                </div>
+            </div> `
             },
             genHeader: function () {
                 return `    <div class="header-info-section d-flex w-100">
@@ -2475,13 +2508,13 @@ const taskManagement = {
                        <!-- <div class="info-box cs-input-group" style="padding:0;">
                           <input data-type="search_text" type="text" class="btn bug-filter bug-filter-search form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
                         </div> -->
-                                     
-                        <div class="info-box" style="background: transparent; border: none;">
-                              <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
-                              <div class="bcs-col-btn cs-input-group" style=" display: inline-block; ">
-                                <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>
-                             </div>
-                        </div>
+                        ${!notChwk?` <div class="info-box" style="background: transparent; border: none;">
+                        <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
+                        <div class="bcs-col-btn multi-edit-menu cs-input-group" style=" display:none; ">
+                           <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>                                                              
+                       </div>
+                  </div>`:this.genCheweekBtn()}  
+                       
                     </div>
                     <div class="d-flex justify-content-start" id="issue-list-statistic-block">
                     </div>    
@@ -2506,244 +2539,285 @@ const taskManagement = {
                <div class="info-item-elements my-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Şəxsi" data-original-title="" title="">
                    <i class="cs-svg-icon user-circle-white"></i> <span>${privateT}</span>
                </div>
-               <div class="info-item-elements me-send-task-list-btn" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş" data-original-title="" title="">
-                   <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
-               </div>
+               <div class="info-item-elements me-send-task-list-btn dropdown-toggle" data-toggle="dropdown">
+                    <span data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İş">
+                    <i class="cs-svg-icon users-circle-white"></i> <span>${work}</span>
+                    </span>
+                </div>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcraya verdiyim"><i class="cs-svg-icon daxil-eden"></i> 0655</a>
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="İcra etdiyim"><i class="cs-svg-icon icra-eden"></i> 0655</a>
+                    <a class="dropdown-item" href="#" data-placement="right" data-toggle="popover" data-trigger="hover" data-content="Nəzarətimdə"><i class="cs-svg-icon nezaretci-o"></i> 0655</a>
+                </div>
            </div> 
-           <div class="info-box mr-2">
-                <span class="title">Tarix</span>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
-                    <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
-                    <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="p
-                opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
-                    <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
-                </div>
-                <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
-                    <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+           <div class="info-box info-box-mob mr-2">
+           <span class="title">Tarix</span>
+                <div class="info-box-in">
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı keçib" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-radar"></i> <span>${vxtkcb}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxtı çatıb" data-original-title="" title="">
+                        <i class="cs-svg-icon checkbox-circle"></i> <span>${vxtctb}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="p
+                    opover" data-trigger="hover" data-content="Növbədə" data-original-title="" title="">
+                        <i class="cs-svg-icon dot-circle"></i> <span>${nvbd}</span>
+                    </div>
+                    <div class="info-item-elements" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Vaxt qoyulmayıb" data-original-title="" title="">
+                        <i class="cs-svg-icon circle"></i> <span>${nodeadln}</span>
+                    </div>
                 </div>
             </div>
-            <div class="info-box">
+            <div class="info-box info-box-mob">
                 <span class="title">Status</span>
-                <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
-                  <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
+                <div class="info-box-in">
+                    <div class=" info-item-elements status-class" data-status="new" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yeni" data-original-title="" title="">
+                    <i class="cs-svg-icon plus-circle"></i> <span>${newt}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
+                        <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
+                        <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
+                    </div>
+            
+                    <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
+                        <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon none"></i> <span>${rejected}</span>
+            
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
+                        <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
+                    </div>
+                    <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
+                        <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
+                    </div>
                 </div>
-                <div class=" info-item-elements status-class" data-status="ongoing" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcrada" data-original-title="" title="">
-                    <i class="cs-svg-icon refresh-three"></i> <span>${ongoing}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-status="waiting" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Gözləmədə" data-original-title="" title="">
-                    <i class="cs-svg-icon hour-01"></i> <span>${waiting}</span>
-                </div>
+            </div>`
+            },
+            genFilterProject: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
+                style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
+                data-type="project_id" title="Project"></select>
+            </div>`
+            },
+            genFilterStoryCard: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
+                data-type="backlog_id" title="Story Card">
+               </select>
+            </div>`
+            },
+            genFilterAssigne: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
+                data-type="assignee_id" title="Assignee"></select>
+            </div>`
+            },
+            genFilterClosedBy: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
+                onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
+                data-type="closed_by" title="Closed By"></select>
+            </div>`
+            },
+            genFilterStatus: function (params) {
+                return `<div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi bug-mgmt-filter-select " onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
+                    title="Status">
+                    <option value='new' >New</option>
+                    <option value='ongoing' >Ongoing</option>
+                    <option value='closed'>Closed</option>
+                    <option value='waiting'>Waiting</option>
+                    <option value='canceled'>Canceled</option>
+                    <option value='rejected' >Rejected</option>
+                    <option value='UAT' > UAT</option>
         
-                <div class=" info-item-elements status-class" data-status="yonlendirilib" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Yönləndirilib" data-original-title="" title="">
-                    <i class="cs-svg-icon right-circle"></i> <span>${yonledrlb}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-status="canceled" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Ləğv edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon close-icon"></i> <span>${canceled}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İmtina edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon none"></i> <span>${rejected}</span>
+                </select>
+            </div>`
+            },
+            genFilterTaskType: function (params) {
+                return `<div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
+                    title="Task Type">
+                </select>
+            </div>`
+            },
+            genFilterTaskNature: function (params) {
+                return ` <div class="cs-input-group mt-3">
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
+                    multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
+                    <option value='bug' selected>Bug</option>
+                    <option value='change' selected>Change Request</option>
+                    <option value='new' selected>New Request</option>
+                </select>
+            </div>`
+            },
+            genFilterCreatedBy: function (params) {
+                return `  <div class="cs-input-group mt-3">
+                <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
+                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
+                    data-type="created_by" title="Created by"></select>
+            </div>`
+            },
+            genFilterShowChildTask: function (params) {
+                return `  <div class="cs-input-group mt-3">
+    
+                <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
+                    <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
+                    <span class="checkmark"></span>
+                </label>                    
+            </div>`
+            },
+            genFilterPriorty: function (params) {
+                return `  <div class="cs-input-group mt-3">
+            
+                <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
+                    data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
+                    <option value=''>None</option>
+                    <option value='1'>1- Lowest</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9 - Highest</option>
         
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="İcra edilib" data-original-title="" title="">
-                    <i class="cs-svg-icon double-checkbox"></i> <span>${closed}</span>
-                </div>
-                <div class=" info-item-elements status-class" data-placement="bottom" data-toggle="popover" data-trigger="hover" data-content="Bitib" data-original-title="" title="">
-                    <i class="cs-svg-icon shtamp-circle"></i> <span>${btb}</span>
-                </div>
+                </select>
+            </div>`
+            },
+            genFilterShowHide: function (params) {
+                return ` <div class="cs-input-group ${notChwk()?"":"d-none"}  mt-3">
+                <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
+                    id='bug_filter_columns' title="Columns">
+                    <option value='task-status' selected>Status</option>
+                    <option value='task-id' selected>Task ID</option>
+                    <option value='task-name' selected>Description</option>
+                    <option value='task-nature' ${notChwk()?"selected":""}>Task Nature</option>
+                    <option value='assignee' selected>Assignee</option>
+                    <option value='tasktype'  ${notChwk()?"selected":""} >Task Type</option>
+                    <option value='ismeet'  ${notChwk()?"":"selected"} >Task Type</option>
+                    <option value='close-date' >Status Close Date</option> 
+                    <option value='closed-by'>Status Closed By</option> 
+                    <option value='priority'>Priority</option>
+                    <option value='story-card' ${notChwk()?"selected":""}>Story Card</option>
+                    <option value='project' ${notChwk()?"selected":""}>Project</option>
+                    <option value='created-by' selected>Create By</option>
+                    <option value='created-date' selected>Create Date</option>
+                    <option value='last-update'>Late Update</option>
+                    <option value='estimated-hours'>Estimated Hours</option>
+                    <option value='spent-hours'>Spent Hours</option>
+                    <!--<option value='estimated-counter'>Estimated Counter</option>-->
+                    <option value='executed-counter'>Executed Counter</option>
+                    <option value='estimated-budget'>Estimated Budget</option>
+                    <option value='spent-budget'>Spent Budget</option>
+        
+                </select>
             </div>`
             },
             genFilterBlock: function () {
 
                 return `<div class="bugListNavMenu bugList-elements">
-
                 <div class="main-sorting">
-                    <div class="row ml-0 mr-0">
-                        <div class="cs-input-group cs-pagination-limit col-6">
-                            <div class="input-group-addon">Closed Dates</div>
-                            <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='text'>
-                        </div>
-                        <div class="cs-input-group cs-pagination-group-by ">
-                    <div class="input-group-addon cs-group-by">Group By</div>
-                    <select id="inputGroupSelect01">
-                        <option value='0' >None</option>
-                        <option value='5' >Task Status</option>
-                        <option value='7' >Task Nature</option>
-                        <option value='8' >Task Type</option>
-                        <option value='9' >Story Card</option>
-                        <option value='10' >Project</option>
-                        <option value='12' >Create By</option>
-                        <option value='11' >Assignee</option>
-            
-                    </select>
+                     ${this.genFilterClosed()}
+                     ${this.genFilterSortBy()}
                 </div>
-                    </div>
-                    <div class="row ml-0 mr-0">
-                        <div class="cs-input-group col-12 mt-2">
-                            <div class="input-group-addon">Sort by</div>
-                        </div>
-                        <div class="cs-input-group col-4">
-                            <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
-                            id='bug_filter_sortby' title="Columns">
-                                <option value='task_status' selected>Status</option>
-                                <option value='id' selected>Task ID</option>
-                                <option value='task_name'  accesskey="">Description</option>
-                                <option value='task_nature'  >Task Nature</option>
-                                <option value='fk_assignee_id' >Assignee</option>
-                                <option value='fk_task_type_id' >Task Type</option>
-                                <option value='close_status_date'>Closed Date</option> 
-                                <option value='closed_by'>Closed By</option> 
-                                <option value='task_priority'>Priority</option>  
-                                <option value='created_by'  >Create By</option>
-                                <option value='created_date'  >Create Date</option>  
-                            </select>
-                        </div>
-
-                        <div class="cs-input-group col-4">
-                            <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
-                                    id='bug_filter_sortby_asc' title="Columns">
-                                <option value='asc' >ASC</option>
-                                <option value='desc' selected>Desc</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <div class="cs-input-group cs-pagination-limit">
-                                <select data-type='limit' class="bug-filter" id="bug_filter_limit">
-                                    <option value='10'>10</option>
-                                    <option value='25' selected> 25</option>
-                                    <option value='50'>50</option>
-                                    <option value='100'>100</option>
-                                    <option value='200'>200</option>
-                                    <option value='300'>300</option>
-                                </select>
-                            </div>
-                            <b id="table-row-count"> </b>
-                        </div>
-                    </div>
-                </div>
-              
-                <div class="cs-input-group mt-3">
-                    <select class="form-control  bug-filter-multi bug-mgmt-filter-select" data-live-search="true" data-actions-box="true"
-                    style="text-overflow: ellipsis" multiple onchange='callBugFilterMulti(this)' id='bug_filter_project_id'
-                    data-type="project_id" title="Project"></select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select selectpicker1" data-actions-box="true"
-                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_backlog_id'
-                    data-type="backlog_id" title="Story Card">
-                   </select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
-                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_assignee_id'
-                    data-type="assignee_id" title="Assignee"></select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class="form-control  bug-filter-multi  bug-mgmt-filter-select bug_filter_assignee_id" data-actions-box="true"
-                    onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_closed_by'
-                    data-type="closed_by" title="Closed By"></select>
-                </div>
-                
-    
-                <div class="cs-input-group mt-3">
-                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_status' data-type="status"
-                        title="Status">
-                        <option value='new' >New</option>
-                        <option value='ongoing' >Ongoing</option>
-                        <option value='closed'>Closed</option>
-                        <option value='waiting'>Waiting</option>
-                        <option value='canceled'>Canceled</option>
-                        <option value='rejected' >Rejected</option>
-                        <option value='UAT' > UAT</option>
-            
-                    </select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                        data-live-search="true" data-actions-box="true" multiple id='bug_filter_tasktype' data-type="fktaskTypeId"
-                        title="Task Type">
-                      
-            
-                    </select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" onchange='callBugFilterMulti(this)'
-                        multiple id='bug_filter_nature' data-type="nature" title="Task Nature">
-                        <option value='bug' selected>Bug</option>
-                        <option value='change' selected>Change Request</option>
-                        <option value='new' selected>New Request</option>
-                    </select>
-                </div>
-                <div class="cs-input-group mt-3">
-                    <select class=" form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true"
-                        onchange='callBugFilterMulti(this)' multiple data-live-search="true" id='bug_filter_created_by'
-                        data-type="created_by" title="Created by"></select>
-                </div>
-              
-            
-                <div class="cs-input-group mt-3">
-    
-                    <label class="checkmarkcontainer"><span class="checkmark-title ml-1">Show Child Tasks</span>
-                        <input type="checkbox" name="" class="bug-filter-checkbox bug-mgmt-filter-select"  data-type="showChildTask" onchange="callBugFilterMulti(this)" checked="true" id="runTaskStartDate_activateschedule" title="Show Child Tasks">
-                        <span class="checkmark"></span>
-                    </label>
-    
-                    
-                </div>
-            
-                <div class="cs-input-group mt-3">
-            
-                    <select class="form-control bug-filter-multi  bug-mgmt-filter-select" data-actions-box="true" multiple
-                        data-type="priority" onchange="callBugFilterMulti(this)" id='bug_filter_priority' title="Priority">
-                        <option value=''>None</option>
-                        <option value='1'>1- Lowest</option>
-                        <option value='2'>2</option>
-                        <option value='3'>3</option>
-                        <option value='4'>4</option>
-                        <option value='5'>5</option>
-                        <option value='6'>6</option>
-                        <option value='7'>7</option>
-                        <option value='8'>8</option>
-                        <option value='9'>9 - Highest</option>
-            
-                    </select>
-                </div>
-            
-            
-                <div class="cs-input-group mt-3">
-            
-                    <select class="form-control  bug-mgmt-filter-select" data-actions-box="true" multiple onchange="toggleColumns()"
-                        id='bug_filter_columns' title="Columns">
-                        <option value='task-status' selected>Status</option>
-                        <option value='task-id' selected>Task ID</option>
-                        <option value='task-name' selected>Description</option>
-                        <option value='task-nature' selected>Task Nature</option>
-                        <option value='assignee' selected>Assignee</option>
-                        <option value='tasktype' selected>Task Type</option>
-                        <option value='close-date'>Status Close Date</option> 
-                        <option value='closed-by'>Status Closed By</option> 
-                        <option value='priority'>Priority</option>
-                        <option value='story-card' selected>Story Card</option>
-                        <option value='project' selected>Project</option>
-                        <option value='created-by' selected>Create By</option>
-                        <option value='created-date' selected>Create Date</option>
-                        <option value='last-update'>Late Update</option>
-                        <option value='estimated-hours'>Estimated Hours</option>
-                        <option value='spent-hours'>Spent Hours</option>
-                        <!--<option value='estimated-counter'>Estimated Counter</option>-->
-                        <option value='executed-counter'>Executed Counter</option>
-                        <option value='estimated-budget'>Estimated Budget</option>
-                        <option value='spent-budget'>Spent Budget</option>
-            
-                    </select>
-                </div>
-    
+                  ${notChwk()?this.genFilterProject():""}
+                  ${notChwk()?this.genFilterStoryCard():""}
+                  ${this.genFilterAssigne()}
+                  ${notChwk()?this.genFilterClosedBy():""}               
+                  ${this.genFilterStatus()}
+                  ${notChwk()?this.genFilterTaskType():""}  
+                  ${notChwk()?this.genFilterTaskNature():""}
+                  ${this.genFilterCreatedBy()}
+                  ${this.genFilterShowChildTask()}
+                  ${notChwk()?this.genFilterPriorty():""}
+                  ${this.genFilterShowHide()}    
             </div>
                 `
+            },
+            genFilterClosed: function () {
+                return `  <div class="row ml-0 mr-0">
+                <div class="cs-input-group cs-pagination-limit col-4">
+                    <div class="input-group-addon">Closed Dates</div>
+                    <input class="form-control issue-mgmt-general-filter bug-mgmt-filter-closed-date-from" id='issue_management_closed_date_from' type='text'>
+                </div>
+                <div class="cs-input-group cs-pagination-group-by col-4">
+                <div class="input-group-addon cs-group-by">Group By</div>
+                <select id="inputGroupSelect01">
+                    <option value='0' >None</option>
+                    <option value='5' >Task Status</option>
+                    <option value='7' >Task Nature</option>
+                    <option value='8' >Task Type</option>
+                    <option value='9' >Story Card</option>
+                    <option value='10' >Project</option>
+                    <option value='12' >Create By</option>
+                    <option value='11' >Assignee</option>
+        
+                </select>
+            </div>
+            <div class="cs-input-group text-center task-clear-filter-btn col-4">
+                <div class="input-group-addon">Clear Filter</div>
+                <i class="cs-svg-icon clear-filter"></i>
+            </div>
+            </div>`
+            },
+            genFilterSortBy: function () {
+                return `
+                <divv class="row ml-0 mr-0">
+                    <div class="cs-input-group col-12 mt-2">
+                        <div class="input-group-addon">Sort by</div>
+                    </div>
+                    <div class="cs-input-group col-4">
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby" data-actions-box="true"    
+                        id='bug_filter_sortby' title="Columns">
+                            <option value='task_status' selected>Status</option>
+                            <option value='id' selected>Task ID</option>
+                            <option value='task_name'  accesskey="">Description</option>
+                            <option value='task_nature'  >Task Nature</option>
+                            <option value='fk_assignee_id' >Assignee</option>
+                            <option value='fk_task_type_id' >Task Type</option>
+                            <option value='close_status_date'>Closed Date</option> 
+                            <option value='closed_by'>Closed By</option> 
+                            <option value='task_priority'>Priority</option>  
+                            <option value='created_by'  >Create By</option>
+                            <option value='created_date'  >Create Date</option>  
+                        </select>
+                    </div>
+
+                    <div class="cs-input-group col-4">
+                        <select class="issue-mgmt-general-filter bug-mgmt-filter-sortby-asc" data-actions-box="true"    
+                                id='bug_filter_sortby_asc' title="Columns">
+                            <option value='asc' >ASC</option>
+                            <option value='desc' selected>Desc</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <div class="cs-input-group cs-pagination-limit">
+                            <select data-type='' class="" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
+                                <option value='10'>10</option>
+                                <option value='25' selected> 25</option>
+                                <option value='50'>50</option>
+                                <option value='100'>100</option>
+                                <option value='200'>200</option>
+                                <option value='300'>300</option>
+                            </select>
+                        </div>
+                        <b id="table-row-count"> </b>
+                    </div>
+                </divv>`
             },
             genLabelBlock:function (param) {  
                 return`    <div class="bugLabel-elements label-show-4-task category-elements text-center" style="padding: 0px 10px;">
@@ -2959,7 +3033,9 @@ const taskManagement = {
                         $('[data-toggle="popover"]').popover({
                             html: true
                         });
+                        //getInfoBoxResponsive();
                     });
+
                 } catch (error) {}
 
 
@@ -3317,6 +3393,34 @@ const taskManagement = {
                     return ` <div class="col pl-1 pr-1" id="addBuglist">
                    <div class="row" style="margin: 0;">
                        <div class='col-12 tableFixHead' id1="bugList" style="padding: 0;">
+                       <div class="showhide-col-main-info" style="display: none">
+                    <div class="showhide-col-main-info-in">
+                        <ul>
+                            <li>
+                                <label>Hamısı <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Status <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Əməliyyat <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Məzmun <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>Daxil edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                            <li>
+                                <label>İcra edən <input class="showhide-col-checkbox" type="checkbox" class=""></label>
+                            </li> 
+                        </ul>
+                        <div class="showhide-col-footer">
+                        <span class="scm-show"><i class="fas fa-eye"></i></span>
+                        <span class="scm-hide"><i class="fas fa-eye-slash"></i></span>
+                        </div>
+                    </div>
+                </div>
                            <table class="table-hover splited1 bugListTable" style="width:100%" id="bugListTable">
                                <thead class="bugThead">
                                 ${this.genTableHeaderBlock()}
@@ -3362,11 +3466,12 @@ const taskManagement = {
                 genTableHeaderBlock: function () {
                     return `<thead class="bugThead">
                     <tr>
-                    <th><i class="cs-svg-icon numbers"></i></th>
+                    <th><div class="showhide-col-btn" ><i class="cs-svg-icon numbers"></i></div></th>
                     <th><input type="checkbox" class="all-bug-list-check"></th>
                     <th class="bug-list-column bug-list-column-task-id" style=""><i class="cs-svg-icon id"></i></th>
                     <th class="bug-list-column-0 bug-list-column-task-deadline"><i class="cs-svg-icon deadline"></i></th>
                     <th class="bug-list-column bug-list-column-task-status" style="width: 90px;"><i class="cs-svg-icon status"></i></th>
+                    <th class="bug-list-column bug-list-column-ismeet" style="width: 90px;">AD</th>
                     <th class="bug-list-column bug-list-column-task-name" style="min-width: 160px;">Description</th>
                     <th class="bug-list-column bug-list-column-task-nature" style="width: 40px;"><i class="fas fa-tasks"></i></th>
                     <th class="bug-list-column bug-list-column-tasktype"><i class="fas fa-tasks"></i></th>
@@ -3384,7 +3489,7 @@ const taskManagement = {
                     <th class="bug-list-column bug-list-column-executed-counter" style="display: none;">Executed Counter</th>
                     <th class="bug-list-column bug-list-column-estimated-budget" style="display: none;">Estimated Budget</th>
                     <th class="bug-list-column bug-list-column-spent-budget" style="display: none;">Spent Budget</th>
-                    <th></th>
+            
                     </tr>
                    </thead>`
                 },
@@ -3461,6 +3566,11 @@ const taskManagement = {
                                             .append(o.taskStatus))
                                         .append((o.taskPriority === '9') ? prtDiv : ""))
                                 ))
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-ismeet cs-input-group')
+                                 .append(o.isMeet==='1'?'<i class="cs-svg-icon users-dark"></i>':'<i class="cs-svg-icon tapshiriq-dark"></i>')
+                                 .append(o.isMeet==='1'?"Toplantı":"Tapşırıq")
+                                  )
                            .append($('<td>')
                                 .addClass('bug-list-column')
                                 .attr("data-placement","top")
@@ -3687,13 +3797,8 @@ const taskManagement = {
                         <hr class="rcs-hr">
                         <div class="setting-elemen-box pb-0">
                             <div class="standart-badges taskfilter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Filter">
+                                 <span class="info">0</span>
                                 <i class="cs-svg-icon filter"></i>
-                            </div>
-                        </div>
-                        <div class="setting-elemen-box pb-0 task-clear-filter-onoff" style="display:show;">
-                            <div class="standart-badges task-clear-filter-btn" data-placement="left" data-toggle="popover" data-trigger="hover" data-content="Clear Filter">
-                                    <span class="info">0</span>
-                                <i class="cs-svg-icon clear-filter"></i>
                             </div>
                         </div>
                         <div class="setting-elemen-box">
@@ -3875,7 +3980,13 @@ const taskManagement = {
         });
     }
 }
-
+function notChwk() {
+    if(global_screen_name==='ch'){
+         return false;
+    }else{
+        return  true
+    }
+}
 function getTaskCode(taskId) {
     try {
         var orderSeq = SATask.GetDetails(taskId, 'orderNoSeq');
@@ -3963,7 +4074,7 @@ $(document).on("click", '#issue-table-aktiv-all .dropdown-item', function (e) {
         value = ["rejected", 'UAT', 'closed', 'canceled']
     }
     sel.val(value);
-    sel.selectpicker("refresh")
+    sel.selectpicker("refresh");
     getBugList();
 
 })
@@ -3982,7 +4093,7 @@ $(document).on("change", '#newAddCheckList', function (e) {
     <div class="pl-1 p2-1">
     </div>
     <div class="pl-1 p2-1 d-table">
-    <a href="#" oid="" class="taskCheckListItemDeletecreate"><i class="fas fa-trash-alt text-danger" aria-hidden="true"></i></a></div></li>`)
+    <a href="#" oid="" class="taskCheckListItemDeletecreate" style="font-size:13px;"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></div></li>`)
     $(this).val('')
 
 })
@@ -4370,6 +4481,9 @@ function reset_task_data() {
     $('.task-events-created input').change('');
     $('input#taskNameInputNew2').val('');
     $('#addComment4Task_comment_new').val('');
+    emptyCanvasDiv();
+    $("#progress_bar_new").empty();
+    $(".issue-managment-add-task .task-check-list-box ul").empty();
 }
 if (self.CavalryLogger) {
     CavalryLogger.start_js(["jMqsAf+"]);
@@ -4405,6 +4519,9 @@ $(document).on("click",'.cs-next-large-modal-btn',function (e) {
  }
 })
 
+$(document).on("click", '.info-box.info-box-mob>.title', function () {
+    $(this).closest('.info-box.info-box-mob').toggleClass('active');
+});
 
 $(document).on("change",'.bugListNavMenu.bugList-elements',function (e) {
    // $('.setting-elemen-box.task-clear-filter-onoff').css({'display': 'block'});
@@ -4414,6 +4531,164 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
     $('.bugListNavMenu.bugList-elements').find("select.bug-filter").val('');
     $('.bugListNavMenu.bugList-elements .bug-filter-multi').selectpicker('refresh');
     $('.bugListNavMenu.bugList-elements .bug-filter').selectpicker('refresh');
-    $('.setting-elemen-box.task-clear-filter-onoff').css('display','none');
+    getBugList();
 });
 
+function loadBugTaskDeadlineScripts() {
+    $("#run_task_responsible").selectpicker('refresh');
+    $("#run_task_categories").selectpicker('refresh');
+    $("#run_task_detail_detail_categories").selectpicker('refresh');
+    $("#task-info-modal-status").selectpicker('refresh');
+    $("#task-info-modal-nature").selectpicker('refresh');
+    $("#task-info-modal-tasktype").selectpicker('refresh');
+    $("#bug_filter_sortby").selectpicker('refresh');
+    $("#bug_filter_sortby_asc").selectpicker('refresh');
+    $("#bug_filter_limit").selectpicker('refresh');
+    $("#inputGroupSelect01").selectpicker('refresh');
+    $('#run_task_project_name').selectpicker('refresh');
+    setProjectListByID('run_task_project_name');
+    $('#run_task_project_name').change();
+    $('#run_task_name').selectpicker('refresh');
+    $('#run_task_intensive_select').selectpicker('refresh');
+    $('#run_task_repeat_select').selectpicker('refresh');
+    $('#run_task_status_select').selectpicker('refresh');
+    $('#run_task_weekday_select').selectpicker('refresh');
+    $('#sdofm_day_of_Month_select').selectpicker('refresh');
+    $('#swofm_fl_action_select').selectpicker('refresh');
+    $('#swofm_weekday_select').selectpicker('refresh');
+    $('#run_task_reminder_select').selectpicker('refresh');
+    $("#runTaskStartDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $("#runTaskEndDate").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskTime').datetimepicker({
+        format: 'HH:mm'
+                // sideBySide: true
+    });
+    $('#runTaskExecutiveDate').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+    $('.task-events-created .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-created .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-created .cs-input-group input[type="text"]').attr("disabled", true);
+    // $('#issue-managment-add-task .after-add-task').hide();
+   
+    $('#issue-managment-add-task .task-step-2').hide();
+
+    // TASK DETAILS ON
+    $('#run_task_project_name_detail').selectpicker('refresh');
+    setProjectListByID('run_task_project_name_detail');
+    $('#run_task_project_name_detail').change();
+
+    $('#run_task_name_detail').selectpicker('refresh');
+    $('#run_task_intensive_select_detail').selectpicker('refresh');
+    $('#run_task_repeat_select_detail').selectpicker('refresh');
+    $('#run_task_status_select_detail').selectpicker('refresh');
+    $('#run_task_weekday_select_detail').selectpicker('refresh');
+    $('#sdofm_day_of_Month_select_detail').selectpicker('refresh');
+    $('#swofm_fl_action_select_detail').selectpicker('refresh');
+    $('#swofm_weekday_select_detail').selectpicker('refresh');
+    $('#run_task_reminder_select_detail').selectpicker('refresh');
+    $('#updatetask_oblerverlist').selectpicker('refresh');
+    $('#createdtask_oblerverlist').selectpicker('refresh');
+
+    $("#runTaskStartDate_detail").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $("#runTaskEndDate_detail").daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true
+    });
+    $('#runTaskTime_detail').datetimepicker({
+        format: 'HH:mm'
+                // sideBySide: true
+    });
+    $('#runTaskExecutiveDate_detail').daterangepicker({
+        format: 'YYYY/MM/DD',
+        singleDatePicker: true,
+        drops: 'up'
+    });
+    $('.hr_spa').hide();
+
+    $('.shedule-elements').addClass('el-disabled');
+    $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
+    $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
+    $('.shedule-elements.el-disabled .soon input').attr("disabled", true);
+    $('.shedule-elements.el-disabled .soon select').attr("disabled", true);
+
+    $('.run-shedule-elements').addClass('el-disabled');
+    $('.run-shedule-elements.el-disabled .rsoon').css("pointer-events", "none");
+    $('.run-shedule-elements.el-disabled .rsoon').css("opacity", "0.7");
+    $('.run-shedule-elements.el-disabled .rsoon input').attr("disabled", true);
+    $('.run-shedule-elements.el-disabled .rsoon select').attr("disabled", true);
+
+    $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
+    $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
+    $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
+    // TASK DETAILS OFF
+
+    // Task Deadline 
+        $("#taskDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        });
+        $("#taskDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        });
+        $("#taskDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD'
+            // singleDatePicker: true
+        });
+        $("#taskDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        })
+
+        $("#taskDetailDeadlineStartDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startDate');
+        });
+        $("#taskDetailDeadlineStartTime").datetimepicker({
+            format: 'HH:mm',
+            // inline: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'startTime');
+        });
+        $("#taskDetailDeadlineEndDade").datetimepicker({
+            format: 'YYYY-MM-DD',
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endDate');
+        });
+        $("#taskDetailDeadlineEndTime").datetimepicker({
+             format: 'HH:mm',
+            // singleDatePicker: true
+        }).on('dp.change', function(event) {
+            updateTask4ShortChange(this, 'endTime');
+        });
+
+}
+
+// function getInfoBoxResponsive() {
+//     $(document).ready(function(){
+//         var infoBoxHeight = $('.info-box.info-box-mob').height();
+//         console.log(infoBoxHeight);
+//         // $('.info-box.info-box-mob').css('height', infoBoxHeight);
+//         if (infoBoxHeight > 35 ) {
+//             $('.info-box.info-box-mob').addClass('info-box-res');
+//         }else{
+//             $('.info-box.info-box-mob').removeClass('info-box-res');
+//         }
+//     });
+// }

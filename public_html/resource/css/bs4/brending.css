@@ -4636,7 +4636,7 @@ table.lbl-list-table tr td {
     width: 100%;
     background: rgb(0 0 0 / 15%);
     border: none;
-    padding: 5px 15px;
+    padding: 0px 0px;
     font-size: 14px;
     color: #fff;
 }
@@ -4999,7 +4999,7 @@ table.lbl-list-table tr td {
  margin-bottom: 10px;
 }
 .task-check-list-box ul li .item-checkbox{
- margin-top: 10px;
+ margin-top: 5px;
 }
 .task-check-list-box ul li .item-note {
     font-family: 'Quicksand', sans-serif;
@@ -5012,8 +5012,12 @@ table.lbl-list-table tr td {
     text-align: left;
     padding-left: 10px;
 }
+.task-check-list-box .taskCheckListItemDeletecreate{
+ color: #fff;
+}    
 .task-check-list-box ul li.on-checked textarea{
  text-decoration: line-through;
+ opacity: 0.7;
 }
 .task-check-list-box .checkmarkcontainer {
     display: block;
@@ -5523,7 +5527,7 @@ table.lbl-list-table tr td {
     color: #FFFFFF;
     padding: 7px 25px;
 }
-.issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+ .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .issue-managment-add-task .cs-input-group .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
     background-color: #DFEEF7;
     border-color: #DFEEF7;
     color: #03396C;
@@ -6228,6 +6232,29 @@ table.lbl-list-table tr td {
     max-width: 230px;
     height: 100%;
     min-height: 70px;
+}
+.user-addons-box-elm>.dropdown-menu {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+.user-addons-box-elm {
+    display: inline-block;
+}
+.user-addons-box-elm .dropdown-toggle:after {
+    display: none;
+}
+.user-addons-box-elm .dropdown-toggle .cs-svg-icon:after {
+    width: 33px;
+    height: 33px;
+}
+.user-addons-box-elm>.dropdown-menu {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+.user-addons-box-elm>.dropdown-toggle {
+    background-color: transparent;
 }
 .cs-nav-pills .nav-link {
     height: 33px;
@@ -6970,7 +6997,7 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     position: relative;
     vertical-align: middle;
     height: 36px;
-    width: 17px;
+    width: 35px;
     display: inline-block;
 }
 .has-search-in {
@@ -7377,4 +7404,96 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
 }
 .panel-left-code.ui-resizable .ui-resizable-e {
 
+}
+/* showhide-col-main-info */
+.showhide-col-main-info {
+    position: fixed;
+    z-index: 1000;
+}
+.showhide-col-main-info-in {
+    top: 100%;
+    left: 0;
+    margin: 0.125rem 0 20px 3.125rem;
+    box-shadow: 0px 0px 7px rgb(0 0 0 / 55%);
+    border-radius: 6px;
+    z-index: 1000;
+    overflow: hidden;
+}
+.showhide-col-main-info ul{
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    border: 1px solid rgba(0, 0, 0, .15);
+    min-width: 175px;
+    margin: 0;
+    background: #DFEEF7;
+    border-radius: 6px;
+    position: relative;
+    padding: 10px 5px 5px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.showhide-col-main-info ul li{
+    display: block;
+    font-family: 'Quicksand',sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #03396C;
+    padding: 3px 10px;
+    cursor: pointer;
+    width: 100%;
+    clear: both;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.showhide-col-main-info ul li label {
+    width: 100%;
+    cursor: pointer;
+}
+.showhide-col-main-info ul li label input[type=checkbox]{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    float: right;
+}
+.showhide-col-footer {
+    background: #ACCDDE;
+    padding: 0px 10px;
+    display: block;
+    position: relative;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    text-align: center;
+}
+.showhide-col-footer .scm-show, .showhide-col-footer .scm-hide {
+    color: #03396C;
+    text-align: center;
+    font-size: 16px;
+    margin: 0;
+    height: 29px;
+    padding: 1px 7px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.showhide-col-footer span i {
+    vertical-align: middle;
+}
+.showhide-col-btn {
+    cursor: pointer;
+}
+.bug-list-column-ismeet i:after {
+    width: 12.85px;
+    height: 18px;
+    margin-top: 3px;
+    margin-right: 4px;
+}
+.cs-select-active.bootstrap-select>.btn {
+    background-color: #272B7C;
+    border-color: #272B7C;
+    color: #fff;
 }

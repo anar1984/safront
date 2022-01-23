@@ -8230,7 +8230,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
             var params = fnline.split('|r|');
             var select = $("<select>");
-            select.addClass("mr-2")
+            select.addClass("mr-2 event-select")
                 .attr("onchange", 'updateEventEventDesc(this)')
                 .attr("sa-data-value", params[1])
                 .append('<option value="onclick">onclick</option>')
@@ -8248,21 +8248,21 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
 
 
             if (params[2] === 'text') {
-                sp.append($("<span>")
+                sp.append($("<span >")
                     .text(params[3])
                     .addClass("update-event-desc-text"));
             }
             if (params[2] === 'Api') {
                 sp.append(` <b>Call API : </b> `)
-                sp.append(` <a href='#' style='color:black;' onclick="new UserStory().redirectUserStoryCore('${params[3]}')"> <i><b> ${params[4]} </b></i></a>`)
-                sp.append(` <a style='color:black;'  class='ml-2' >(${params[3]})</a> `)
+                sp.append(` <a href='#' class='api-name' style='color:black;' onclick="new UserStory().redirectUserStoryCore('${params[3]}')"> <i><b> ${params[4]} </b></i></a>`)
+                sp.append(` <a class='api-id' style='color:black;'  class='ml-2' >(${params[3]})</a> `)
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#" 
                 onclick="showApiRelSettingModal('${params[3]}','${params[3]}','IN_DESC_SEND')">
                 <i class="fa fa-cog" aria-hidden="true"></i>
                 </a>`)
 
                 sp.append(`<a style="color:blue;cursor:pointer;" class='ml-2' href1="#"
-                 onclick="showApiRelationModal('${params[3]}')">
+                 onclick="showApiRelationModal('${params[3]}',this)">
                  <i class="fas fa-exchange-alt" aria-hidden="true"></i>
                  </a>`)
             }
@@ -22350,7 +22350,7 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                     + ")";
                 st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelSettingModal('"
                     + object.id + "','" + object.sendToBacklogId + "','IN_DESC_SEND')\"><i class='fa fa-cog'></i></a> ";
-                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "')\"><i class='fas fa-exchange-alt'></i></a> ";
+                st += " <a style=\"color:blue;cursor:pointer;\" href1=\"#\" onclick=\"showApiRelationModal('" + object.sendToBacklogId + "',this)\"><i class='fas fa-exchange-alt'></i></a> ";
 
             }
 

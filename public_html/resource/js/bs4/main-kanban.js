@@ -290,7 +290,7 @@ function calStroyCardNew(id, elId, backlogName) {
                         .val('-2')
                         .text("Load All Story Cards"));
         $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
-
+        getTaskTatisticInfoUserStory(id);
 
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();

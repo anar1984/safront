@@ -51,7 +51,6 @@ $(function () {
     }
 
 
-
     $(document).on("mouseover", '.sa-cw1', function (e) {
         $(this).popover();
 
