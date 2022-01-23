@@ -5507,7 +5507,7 @@ UserStory.prototype = {
             try {
                 scDesc = (relScId)
                     ? " <b>Related Function</b>: <a style=\"color:black;\" href=\"#\" \n\
-                    onclick=\"showJSModalByID('" + relScId+"','"+cr_js_list[relScId].fnType+ "')\">"
+                    onclick=\"showJSModalByID('" + relScId + "','" + cr_js_list[relScId].fnType + "')\">"
                     + replaceTags(cr_js_list[relScId].fnDescription) + "</a><br>"
                     : "";
             } catch (err) {
@@ -5657,9 +5657,9 @@ UserStory.prototype = {
 
         });
 
-        loadSelecPickerOnChnageFnList($("select.get-runsql-select-box"),'sql');
-        loadSelecPickerOnChnageFnList($("select.get-runjava-select-box"),'javacore');
-        loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"),'core');
+        loadSelecPickerOnChnageFnList($("select.get-runsql-select-box"), 'sql');
+        loadSelecPickerOnChnageFnList($("select.get-runjava-select-box"), 'javacore');
+        loadSelecPickerOnChnageFnList($("select.get-callfn-select-box"), 'core');
         return table;
     },
 
@@ -14267,7 +14267,7 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
     },
     getManualStatusList: function () {
         data = {};//createTechizatTelebProducts
-        
+
         var that = this;
         var div = $(".task-panel")
         callApi('220102225238057110391', data, true, function (res) {
@@ -14320,13 +14320,13 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         var fkUpdate = getProjectValueUsManageMultiByelIn($("#story_mn_filter_updated_id"));
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
         var search = $("#search-us-managmenet").val();
-        data.fkProjectId = "("+priD+")";
-        
+        data.fkProjectId = "(" + priD + ")";
+
         if (fkUpdate) {
-            data.updatedBy ='('+fkUpdate+')';
+            data.updatedBy = '(' + fkUpdate + ')';
         }
         if (fkAsId) {
-            data.fkAssigneeId = "'"+fkAsId+"'";
+            data.fkAssigneeId = "'" + fkAsId + "'";
         }
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";
@@ -26056,6 +26056,8 @@ TaskType.prototype = {
         json.kv.fkAssigneeId = $('#taskTypeModal_fkAssigneeId').val();
         json.kv.afterDoneRelationId = getMultiSelectpickerValueById('taskTypeModal_afterDoneRelation');
         json.kv.autRelationId = getMultiSelectpickerValueById('taskTypeModal_aut_relation');
+        json.kv.fkProjectId = $('#txtTaskTypeProject').val();
+        json.kv.orderNo = $('#txtTaskTypeOrderNo').val();
         var that = this;
         var data = JSON.stringify(json);
         $.ajax({
@@ -26148,7 +26150,10 @@ TaskType.prototype = {
                 st += '<tr class="tasktype-tr"  pid="' + obj[n].id + '" pdesc="'
                     + obj[n].description + '" pname="' + obj[n].typeName + '">';
                 st += '<td>' + (n + 1) + '</td>';
+                st += '<td class="text-center">' + obj[n].projectName + '</td>';
+                st += '<td>' + obj[n].orderNo + '</td>';
                 st += '<td>' + obj[n].typeName + '</td>';
+                st += '<td>' + obj[n].defaultAssigneeName + '</td>';
                 st += '<td>' + obj[n].typeStatus + '</td>';
                 st += '<td>' + obj[n].description + '</td>';
                 st += '<td>' + '<a href="#" data-toggle="modal" data-target="#exampleModal7" onclick="new TaskType().taskTypeModalFn(this,\'' + obj[n].id + '\')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>' + '</td>';
@@ -26196,11 +26201,17 @@ TaskType.prototype = {
             crossDomain: true,
             async: true,
             success: function (res) {
+                new TaskType().addProjectList(res.tbl[0].r[0].fkProjectId);
+
                 $('#txtTaskTypeId').val(res.tbl[0].r[0].id);
                 $('#txtTaskTypeName').val(res.tbl[0].r[0].typeName);
                 $('#txtTaskTypeStatus').val(res.tbl[0].r[0].typeStatus);
                 $('#txtTaskTypeDescription').val(res.tbl[0].r[0].description);
                 $('#taskTypeModal_fkAssigneeId').val(res.tbl[0].r[0].fkAssigneeId);
+                
+                $('#txtTaskTypeProject').val(res.tbl[0].r[0].fkProjectId);
+                $('#txtTaskTypeOrderNo').val(res.tbl[0].r[0].orderNo);
+
                 setMultiselectPickerValue('taskTypeModal_afterDoneRelation', res.tbl[0].r[0].afterDoneRelationId);
                 setMultiselectPickerValue('taskTypeModal_aut_relation', res.tbl[0].r[0].autRelationId);
 
@@ -26233,6 +26244,8 @@ TaskType.prototype = {
         json.kv.fkAssigneeId = $('#taskTypeModal_fkAssigneeId').val();
         json.kv.afterDoneRelationId = getMultiSelectpickerValueById('taskTypeModal_afterDoneRelation');
         json.kv.autRelationId = getMultiSelectpickerValueById('taskTypeModal_aut_relation');
+        json.kv.fkProjectId = $('#txtTaskTypeProject').val();
+        json.kv.orderNo=$('#txtTaskTypeOrderNo').val();
 
         var that = this;
         var data = JSON.stringify(json);
@@ -26355,6 +26368,18 @@ TaskType.prototype = {
         this.addTaskTypeListToCombo('taskTypeModal_afterDoneRelation');
         this.addTaskTypeListToCombo('taskTypeModal_aut_relation');
         this.addTaskTypeAssigneeListToCombo('taskTypeModal_fkAssigneeId');
+        this.addProjectList();
+    },
+    addProjectList: function (projectId) {
+        callService("serviceTmgetProjectList", {}, false,
+            function (res) {
+                var select = $('#txtTaskTypeProject');
+                select.html('<option></option>');
+                var obj = res.tbl[0].r;
+                obj.map((list)=>select.append(`<option value='${list.id}' ${(list.id===projectId)?"selected":""}>
+                ${list.projectName}</option>`))
+                 
+            })
     },
 
     addTaskTypeAssigneeListToCombo: function (elementId) {
