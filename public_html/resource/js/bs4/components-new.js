@@ -3,6 +3,7 @@ var cmpList  = {
     userBlock: {
             Init: function (elm,type) {
                 $(elm).empty();
+                $(elm).addClass("text-center");
                 if(type==='multi'){
                     var block  = this.genObserverBlockM();
                     $(elm).attr("action-type",'multi');
@@ -26,17 +27,23 @@ var cmpList  = {
                    return list
                    }else{
                        return  item.attr("id");
-                   }
-             
-                 
-
-                
+                   } 
+            },
+            genviewItemBlock: function (id,url,nameAt) {
+                var img = (url) ?
+                     fileUrl(url) :
+                      fileUrl(new User().getDefaultUserprofileName());
+                return ` <img id='${id}' class="Assigne-card-story-select-img owner" src="${img}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
+                    `
             },
             genItemBlock: function (id,url,nameAt) {
+                var img = (url) ?
+                fileUrl(url) :
+                 fileUrl(new User().getDefaultUserprofileName());
                 return `<li id="${id}">
                 <div class="item-click">
                     <div class="circular--portrait">
-                    <img src="${fileUrl(url)}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
+                    <img src="${img}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAt}">
                     </div>
                     <i class="fa fas fa-close removed-user-btn"></i>
                 </div>
@@ -45,20 +52,23 @@ var cmpList  = {
             setUserBlockValue: function (elm,list) {
                 var type  = $(elm).attr('action-type')
                 var block  = $(elm).find(".user-avatar-list ul");
+                var tit  = $(elm).find(".user-dropdonw-btn");
                 if(list===''){
                     block.empty();
-                    var el  =  $(elm).find('.user-avatar-list');
-                    if(type==='single'&& !el.hasClass('d-none')){
-                        $(elm).find('.user-dropdonw-btn').toggleClass("d-none");
-                    }
+                    tit.empty();
                 }
                 if(type==='single'){
                     if(list&& typeof list ==='string'){
                         try {
-                            $(elm).find('.user-dropdonw-btn').toggleClass("d-none");
+                        
                             var userImage = SAProjectUser.GetDetails(list, "userImage");
                             var userName = SAProjectUser.GetDetails(list, "userName");
                             block.html(this.genItemBlock(list,userImage,userName));
+                            tit.html(this.genviewItemBlock(list,userImage,userName));
+                            $('[data-toggle="popover"]').popover({
+                                html:true
+                            });
+                            
                         } catch (error) {
                            /// Toaster.showError( "This id "+list+" User  is not defined!"); 
                         }
@@ -75,6 +85,10 @@ var cmpList  = {
                                     var userImage = SAProjectUser.GetDetails(o, "userImage");
                                     var userName = SAProjectUser.GetDetails(o, "userName");
                                     block.append(this.genItemBlock(o,userImage,userName));
+                                    tit.append(this.genviewItemBlock(o,userImage,userName));
+                                    $('[data-toggle="popover"]').popover({
+                                        html:true
+                                    });
                                 } catch (error) {
                                    // Toaster.showError( "This id "+o+" User  is not defined!"); 
                                 }
@@ -84,7 +98,7 @@ var cmpList  = {
                     }
                   
                 }
-                  return list;
+                 return list;
             },
             getUserList:function (select) {
                
@@ -112,14 +126,15 @@ var cmpList  = {
             },
             genObserverBlockS:function () {
                 return  `<div class="user-addons-box-elm single-addons dropup" action-type='single'>
+                Məsul şəxs:
                 <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   Məsul şəxs:
+                 
                 <i class="cs-svg-icon user-addons-icon"></i>      
                 </span>
                 
                 <div class="dropdown-menu">
                     <div class="user-addons-box p-2 cs-box-background">
-                    <div class="user-avatar-list mb-1 user-dropdonw-btn d-none">
+                    <div class="user-avatar-list mb-1 ">
                             <ul class="user-list-avatar-single">
                  
                            </ul>
@@ -135,7 +150,8 @@ var cmpList  = {
             },
             genObserverBlockM:function () {
                 return  `<div class="user-addons-box-elm multiple-addons dropup" action-type='multi'>
-                <span type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Nəzarətci:
+                <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="cs-svg-icon user-addons-icon"></i>
                 </span>
                 <div class="dropdown-menu">
@@ -219,60 +235,49 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
             e.stopPropagation();
     var elm = $(this).closest("li");
     var ul  =$(this).closest("ul");
+    var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
       if(ul.hasClass("user-list-avatar-single")){
-         ul.closest(".single-addons").find('.user-dropdonw-btn').toggleClass("d-none")
+         tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
       }else{
-        cmpList.userBlock.returnValueSelect(elm) 
+        cmpList.userBlock.returnValueSelect(elm);
+        tit.find("#"+elm.attr('id')).remove();
+           if(tit.find("img").length <1){
+            tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
+           }
+           
       }
       elm.remove();
    });
   
  $(document).on('change','select.user-list-selectbox-multiple', function (e) {
-    var selected = $(this).find("option:selected") ;
-    var dataContent = selected.attr('data-content');
-    var srcAttr = $(dataContent).find('img').attr('src');
-    var nameAttr = $(dataContent).find('span').text();
-     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul')
-     var has = block.find("#"+selected.val());
+    const o = $(this).val();
+    var userImage = SAProjectUser.GetDetails(o, "userImage");
+    var userName = SAProjectUser.GetDetails(o, "userName");
+    var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
+    var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
+     var has = block.find("#"+o);
     if(has.length <1){
-        block.append(`<li id="${selected.val()}">
-        <div class="item-click">
-            <div class="circular--portrait">
-            <img src="${srcAttr}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAttr}">
-            </div>
-            <i class="fa fas fa-close removed-user-btn"></i>
-        </div>
-    </li>`);
-    $(this).find('[value="'+selected.val()+'"]').remove();
-    $(this).selectpicker('refresh');
+        tit.find(".user-addons-icon").remove();
+        tit.append(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
+        block.append(cmpList.userBlock.genItemBlock(o,userImage,userName));
+        $(this).find('[value="'+o+'"]').remove();
+       $(this).selectpicker('refresh');
     }
     $('[data-toggle="popover"]').popover({
         html:true
     })
 });
  $(document).on('change','select.user-list-selectbox-single', function (e) {
-    var selected = $(this).find("option:selected") ;
-    var dataContent = selected.attr('data-content');
-    var srcAttr = $(dataContent).find('img').attr('src');
-    var nameAttr = $(dataContent).find('span').text();
-    var el  =  $(this).closest('.user-addons-box-elm').find('.user-avatar-list');
-    var db  =  $(this).closest('.user-addons-box-elm').find('.user-dropdonw-btn');
-    if(el.hasClass("d-none")){
-        db.toggleClass("d-none");
-    }
-     var block  = db.find('ul').first();
-     block.empty();
-        block.append(`<li id="${selected.val()}">
-        <div class="item-click">
-            <div class="circular--portrait">
-            <img src="${srcAttr}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAttr}">
-            </div>
-            <i class="fa fas fa-close removed-user-btn"></i>
-        </div>
-    </li>`);
+    const o = $(this).val();
+    var userImage = SAProjectUser.GetDetails(o, "userImage");
+    var userName = SAProjectUser.GetDetails(o, "userName");
+    var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
+    var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
+        tit.html(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
+        block.html(cmpList.userBlock.genItemBlock(o,userImage,userName));
     $('[data-toggle="popover"]').popover({
         html:true
-    })
+    });
 });
 
  $(document).on('hide.bs.dropdown','.user-addons-box-elm',function (e) {
