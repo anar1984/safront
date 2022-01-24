@@ -7632,8 +7632,6 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
                 $('#gui_input_css_style_canvas').val(SACore.GetCurrentBacklogParam1());
                 that.showCanvasCss(); //backlog canvas parametrleri set edilenden sonra parse ele
                 that.setGuiMainWindowsParam1(SACore.GetCurrentBacklogParam1());
-
-
                 var st = "";
                 var res1 = SAInput.toJSONByBacklog(global_var.current_backlog_id);
                 that.setUserStoryInputsInfoOnGeneralViewDetailsPure4SelectNew(res1);
