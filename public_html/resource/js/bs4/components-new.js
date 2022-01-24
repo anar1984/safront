@@ -240,31 +240,28 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
          tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
       }else{
         cmpList.userBlock.returnValueSelect(elm);
+        tit.find("#"+elm.attr('id')).remove();
            if(tit.find("img").length <1){
             tit.html(`<i class="cs-svg-icon user-addons-icon"></i>`);
            }
+           
       }
       elm.remove();
    });
   
  $(document).on('change','select.user-list-selectbox-multiple', function (e) {
-    var selected = $(this).find("option:selected") ;
-    var dataContent = selected.attr('data-content');
-    var srcAttr = $(dataContent).find('img').attr('src');
-    var nameAttr = $(dataContent).find('span').text();
-     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul')
-     var has = block.find("#"+selected.val());
+    const o = $(this).val();
+    var userImage = SAProjectUser.GetDetails(o, "userImage");
+    var userName = SAProjectUser.GetDetails(o, "userName");
+    var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
+    var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
+     var has = block.find("#"+o);
     if(has.length <1){
-        block.append(`<li id="${selected.val()}">
-        <div class="item-click">
-            <div class="circular--portrait">
-            <img src="${srcAttr}" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="${nameAttr}">
-            </div>
-            <i class="fa fas fa-close removed-user-btn"></i>
-        </div>
-    </li>`);
-    $(this).find('[value="'+selected.val()+'"]').remove();
-    $(this).selectpicker('refresh');
+        tit.find(".user-addons-icon").remove();
+        tit.append(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
+        block.append(cmpList.userBlock.genItemBlock(o,userImage,userName));
+        $(this).find('[value="'+o+'"]').remove();
+       $(this).selectpicker('refresh');
     }
     $('[data-toggle="popover"]').popover({
         html:true
