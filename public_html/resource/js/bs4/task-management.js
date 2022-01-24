@@ -87,8 +87,8 @@ const taskManagement = {
                 return `<div class="cs-input-group mb-3">
                 <div class="d-flex">
                     <div class="mr-auto" style="width: 93%;">
-                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.taskName}">
-                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; ">${lang_task.windowAddTask.quickInsertTaskOnfocusInput}</span>
+                        <input type="text" class="form-control newTaskNameInput" name="testCaseTitle" id="taskNameInputNew2" placeholder="${lang_task.windowAddTask.quickInsertTaskOnfocusInput}">
+                        <span class='p-1' style=" color: #ffffff66; font-size: 12px; "></span>
                     </div>
                     <div class="p-0">
                         <div id="cerateTask-priority-btn" class="priority-btn"><!-- if active ( class name -- active ) -->
@@ -162,26 +162,28 @@ const taskManagement = {
                                 </div>
                              </div>
                         </div>
-                        <div class="col-lg-6 cs-input-group mt-2 pl-2">
+                        <div class="col-lg-6 mt-2 pl-2">
+                          <div class="cs-input-group">
                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
-                            <div class='cs-date-time d-flex'>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input type='text' id="taskDeadlineEndDade" class="form-control" />
+                                <div class='cs-date-time d-flex'>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDeadlineEndDade" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <span class="input-group-icon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                </span>
+                                                <input type='text' id="taskDeadlineEndTime" class="form-control" style="width:50px;" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <span class="input-group-icon">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                            </span>
-                                            <input type='text' id="taskDeadlineEndTime" class="form-control" style="width:50px;" />
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 p-0">
                             <div class="cs-input-group pl-0">
