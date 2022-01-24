@@ -2115,7 +2115,9 @@ const taskManagement = {
                     ul.append(tr);
 
                 }
-
+                setTimeout(() => {
+                    $('.updateTaskcheckListItemName').autoHeight();
+                }, 200);
                 $('[data-toggle=popover]').popover({
                     html: true,
                     trigger: "hover"
@@ -4679,6 +4681,7 @@ function loadBugTaskDeadlineScripts() {
         });
 
 }
+
 
 // function getInfoBoxResponsive() {
 //     $(document).ready(function(){

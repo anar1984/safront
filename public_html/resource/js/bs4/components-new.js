@@ -111,17 +111,19 @@ var cmpList  = {
                 
             },
             genObserverBlockS:function () {
-                return  ` <div class="user-addons-box-elm single-addons dropup" action-type='single'>
+                return  `<div class="user-addons-box-elm single-addons dropup" action-type='single'>
                 <span type="button" class="dropdown-toggle user-dropdonw-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Məsul şəxs:
                 <i class="cs-svg-icon user-addons-icon"></i>      
                 </span>
-                <div class="user-avatar-list mb-1 user-dropdonw-btn d-none">
-                 <ul class="user-list-avatar-single">
-                 
-                  </ul>
-                </div>
+                
                 <div class="dropdown-menu">
                     <div class="user-addons-box p-2 cs-box-background">
+                    <div class="user-avatar-list mb-1 user-dropdonw-btn d-none">
+                            <ul class="user-list-avatar-single">
+                 
+                           </ul>
+                         </div>
                         <div class="input-group">
                             <select name="" class="selectpicker-user-list user-list-selectbox-single"   data-live-search="true">
                                
@@ -196,6 +198,20 @@ $.fn.getVal = function (val) {
                  }
              } 
 }
+$.fn.extend({
+    autoHeight: function () {
+      function autoHeight_(element) {
+        return jQuery(element)
+          .css({ "height": "auto", "overflow-y": "hidden" })
+          .height(element.scrollHeight);
+      }
+      return this.each(function() {
+        autoHeight_(this).on("input", function() {
+          autoHeight_(this);
+        });
+      });
+    }
+  });
 
 ///<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<component events >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
    // userList Block start
@@ -258,6 +274,7 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
         html:true
     })
 });
+
  $(document).on('hide.bs.dropdown','.user-addons-box-elm',function (e) {
     return false;
 }) 
