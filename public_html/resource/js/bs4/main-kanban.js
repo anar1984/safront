@@ -254,7 +254,7 @@ function callStoryCard(id, elId, backlogName) {
             calStroyCardNew(id, elId, backlogName);
             
         }
-   
+        
 }
 
 function calStroyCardNew(id, elId, backlogName) {

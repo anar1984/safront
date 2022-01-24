@@ -903,7 +903,8 @@ const taskManagement = {
                 $('body').find("#taskMgmtModal").remove();
                 $('body').find(".modal-backdrop").remove();
                 $('body').append(this.genModalSelfBlock());
-
+                cmpList.userBlock.Init($('.assigne-div-update-issue'),'single');
+                cmpList.userBlock.Init($('.observer-div-update-issue'),'multi');
                 setProjectListByID('bug_filter_project_id_add');
                 $("#taskMgmtModal select.update-selectpicker").selectpicker("refresh");
 
@@ -950,6 +951,11 @@ const taskManagement = {
                       ${this.genNotifyButton()}
  
 
+                      </div>
+                      <div class="modal-footer">
+                      <div class="assigne-div-update-issue"></div>
+                      <div class="observer-div-update-issue"></div>
+                          <button type="button" id="" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
                       </div>
                   </div>
               </div>
@@ -1714,12 +1720,17 @@ const taskManagement = {
                         <table class="table-hover splited1 bugListTable subtask-table parent-task" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task ID</th>
+                                <th><i class="cs-svg-icon numbers"></i></th>
+                                <th><i class="cs-svg-icon id"></i></th>
+                                <th><i class="cs-svg-icon deadline"></i></th>
+                                <th><i class="cs-svg-icon status"></i></th>
                                     <th>Parent Task <a href="#" class="comment-content-header-history" onclick="changeParentTaskModal()" style="color: #03396c">
                                             <i class="fas fa-plus" aria-hidden="true"></i>
                                         </a></th>
-                                    <th>Task Status</th>
+                                         
+                                <th><i class="cs-svg-icon task-user-1"></i></th>                                                  
+                                <th><i class="cs-svg-icon task-user-2"></i></th>                                                  
+                                <th><i class="cs-svg-icon calendar-01-dark"></i></th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -1746,13 +1757,18 @@ const taskManagement = {
                         <table class="table-hover splited1 bugListTable subtask-table task-mgmt-modal-child-task" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task ID</th>
+                                    <th><i class="cs-svg-icon numbers"></i></th>
+                                    <th><i class="cs-svg-icon id"></i></th>
+                                    <th><i class="cs-svg-icon deadline"></i></th>
+                                    <th><i class="cs-svg-icon status"></i></th>
                                     <th>Child Task
                                     <a href="#" class='comment-content-header-history' id="add-child-task-open-modal" style="color: #03396c;">
-                                    <i class="fas fa-plus" aria-hidden="true"></i>
-                                </a></th>                                                    
-                                    <th>Task Status</th>
+                                     <i class="fas fa-plus" aria-hidden="true"></i>
+                                     </a></th>  
+                                    <th><i class="cs-svg-icon task-user-1"></i></th>                                                  
+                                    <th><i class="cs-svg-icon task-user-2"></i></th>                                                  
+                                    <th><i class="cs-svg-icon calendar-01-dark"></i></th>                                                  
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -3060,7 +3076,7 @@ const taskManagement = {
                        </div>
                    </div></div>`
                 },
-    genZonaBlock: function (nameh, id) {
+                genZonaBlock: function (nameh, id) {
         return `<div class="cs-task-col ${id}"><div class="cs-task-boxes cs-gray-bg"><div class="cs-task-status-header"><div class="d-flex bd-highlight cs-flex-align-middle">
             <div class="flex-fill bd-highlight">
                
@@ -3520,7 +3536,55 @@ const taskManagement = {
                         sumExecCount = increaseValue(sumExecCount, o.executedCounter);
                         sumEstBudget = increaseValue(sumEstBudget, o.estimatedBudget);
                         sumSpentBudget = increaseValue(sumSpentBudget, o.spentBudget);
-                        var startTime = new Date();
+                        
+
+                        var t = this.genTaskTableForm(o,i);
+                        tbody.append(t);
+                        $('[data-toggle="popover"]').popover({
+                            html: true
+                        });
+                    }
+
+                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
+                    //         sumEstBudget, sumSpentBudget);
+
+                    global_var.bug_task_sprint_assign_checked = '';
+                    global_var.bug_task_sprint_assign_name = '';
+                    global_var.bug_task_sprint_assign_id = '';
+
+
+                    global_var.bug_task_label_assign_checked = '';
+                    global_var.bug_task_label_assign_name = '';
+                    global_var.bug_task_label_assign_id = '';
+                },
+                getTaskList4Table: function (json) {
+                    var that = this;
+                    var data = JSON.stringify(json);
+                    $.ajax({
+                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json",
+                        crossDomain: true,
+                        async: false,
+                        success: function (res) {
+                            AJAXCallFeedback(res);
+                            coreBugList = res;
+                            setKV4CoreBugList();
+                            that.genTableBodyBlock(res);
+
+                            toggleColumns();
+                            setPagination(res.kv.tableCount, res.kv.limit);
+                            getGroupList();
+
+                        },
+                        error: function () {
+                            Toaster.showError(('somethingww'));
+                        }
+                    });
+                },
+                genTaskTableFormMini: function (o,i) {
+                    var startTime = new Date();
                         var endTime = new Date(o.endDate + ' ' + o.endTime);
 
                         var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
@@ -3540,9 +3604,86 @@ const taskManagement = {
                         var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
                         var task_id = getTaskCode(o.id);
 
-                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`
+                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                  const t= $('<tr>')
+                            .attr("id", o.id)
+                            .attr("projectId", o.fkProjectId)
+                            .attr("stIdr", o.fkBacklogId)
+                            .append($('<td>').attr("style", "width:25px;")
+                                .append(row)
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-id').append(task_id))
+                            .append($('<td>').addClass('bug-list-column-0').attr("style", "width:30px; padding: 0;")
+                                .addClass('bug-list-column-task-deadline')
+                                .append(getTimeDifference(endTime, startTime))
+                            )
+                            .append($('<td>').addClass('bug-list-column')
+                                .addClass('bug-list-column-task-status cs-input-group')
+                                .css("text-align", 'left')
+                                .css("padding-left", '3px')
+                                .css("overflow", 'initial')
+                                .append($("<div>")
+                                    .append($("<div>")
+                                        .addClass('position-relative us-item-status-' + o.taskStatus)
+                                        .append($('<span>')
+                                            .append(o.taskStatus))
+                                        .append((o.taskPriority === '9') ? prtDiv : ""))
+                                ))
+                           
+                           .append($('<td>')
+                                .addClass('bug-list-column')
+                                .attr("data-placement","top")
+                                .attr("data-toggle","popover")
+                                .attr("data-trigger","hover")
+                                .attr("data-content",taskName)
+                                .addClass('bug-list-column-task-name')
+                                .css("max-width", '240px')
+                                .append(taskName, ' ')
+                               
+                            )
+                           
+                                                        
+                            .append($('<td>')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column')
+                                .addClass('bug-list-column-assignee')
+                                .append(genUserTrblock(o.userName, img,"Assigne")))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-by ')
+                                .append(genUserTrblock(o.createByName, createdByImg,"Created by")))
+                            .append($('<td>').addClass('bug-list-column')
+                                .css('white-space', 'nowrap').css("text-align", 'center')
+                                .addClass('bug-list-column-created-date').append("<span class='get-data-group'>" + Utility.convertDate(o.createdDate) + "</span>"))
+                          
+                           
 
-                        var t = $('<tr>')
+                    return t
+                },
+                genTaskTableForm: function (o,i) {
+                    var startTime = new Date();
+                        var endTime = new Date(o.endDate + ' ' + o.endTime);
+
+                        var row = (i + 1 + (parseInt(bug_filter.page_no) - 1) * (parseInt(bug_filter.limit)));
+                        row += " " /* + rs + rsLabelFilter; */
+
+                        var userImage = o.userImage;
+                        var img = (userImage) ?
+                            fileUrl(userImage) :
+                            fileUrl(new User().getDefaultUserprofileName());
+
+                        var createByImage = o.createByImage;
+                        var createdByImg = (createByImage) ?
+                            fileUrl(createByImage) :
+                            " ";
+
+                        var backlogName = `<a href1="#" onclick="callStoryCard('${o.fkBacklogId}')">${replaceTags(o.backlogName)}</a>`;
+                        var taskName = '<a class="task-list-name issue_' + o.id + '" href1="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,\'' + o.fkProjectId + '\',\'' + o.id + '\')" >' + replaceTags(fnline2Text(o.taskName)) + '</a>';
+                        var task_id = getTaskCode(o.id);
+
+                        var prtDiv = `<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`;
+                  const t=   $('<tr>')
                             .attr("id", o.id)
                             .attr("projectId", o.fkProjectId)
                             .attr("stIdr", o.fkBacklogId)
@@ -3738,49 +3879,7 @@ const taskManagement = {
                             .append($('<td>').addClass('bug-list-column')
                                 .addClass('bug-list-column-spent-budget').append((o.spentBudget !== '0') ? o.spentBudget : ""))
 
-                        tbody.append(t);
-                        $('[data-toggle="popover"]').popover({
-                            html: true
-                        });
-                    }
-
-                    // getBugListDetailsSumLine(tbody, sumEstHours, sumSpentHours, sumEstCount, sumExecCount,
-                    //         sumEstBudget, sumSpentBudget);
-
-                    global_var.bug_task_sprint_assign_checked = '';
-                    global_var.bug_task_sprint_assign_name = '';
-                    global_var.bug_task_sprint_assign_id = '';
-
-
-                    global_var.bug_task_label_assign_checked = '';
-                    global_var.bug_task_label_assign_name = '';
-                    global_var.bug_task_label_assign_id = '';
-                },
-                getTaskList4Table: function (json) {
-                    var that = this;
-                    var data = JSON.stringify(json);
-                    $.ajax({
-                        url: urlGl + "api/post/srv/serviceTmGetTaskList4Table",
-                        type: "POST",
-                        data: data,
-                        contentType: "application/json",
-                        crossDomain: true,
-                        async: false,
-                        success: function (res) {
-                            AJAXCallFeedback(res);
-                            coreBugList = res;
-                            setKV4CoreBugList();
-                            that.genTableBodyBlock(res);
-
-                            toggleColumns();
-                            setPagination(res.kv.tableCount, res.kv.limit);
-                            getGroupList();
-
-                        },
-                        error: function () {
-                            Toaster.showError(('somethingww'));
-                        }
-                    });
+                    return t
                 }
             },
         },
@@ -4699,3 +4798,175 @@ function loadBugTaskDeadlineScripts() {
 //         }
 //     });
 // }
+
+
+
+function getParentTask() {
+    var body = $('#d-task-tab5 .parent-task tbody');
+    body.html("")
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetParentTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var relId = res.kv.id;
+                if (!relId) {
+                    return
+                }
+                var fkParentTaskId = res.kv.fkTaskId;
+                if (fkParentTaskId) {
+
+
+                    var fkProjectId4 = res.kv.fkProjectId;
+                    var parentTaskName = res.kv.taskName;
+                    var orderNoSeq = res.kv.orderNoSeq;
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                        var taskCodeID = " (" + projectCode.toUpperCase() + "-" + orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = "PRIVATE";
+                    }
+
+                    var taskName = add3Dots2String(parentTaskName, 50);
+
+                    var tr = taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(res.kv,0) 
+                    body.append(tr)
+
+                }
+
+            } catch (err) {
+
+            }
+        }
+    });
+}
+
+function getChildTasks() {
+    var tbody = $('.task-mgmt-modal-child-task tbody');
+    tbody.html('');
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetChildTaskList",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+
+            try {
+                var obj = res.tbl[0].r;
+                
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info
+                    
+
+                    var fkProjectId4 = o.fkProjectId;
+                    try {
+                        var projectCode = SACore.ProjectCore[fkProjectId4].projectCode;
+                        projectCode = " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") ";
+                    } catch (error) {
+                        var projectCode = 'PRIVATE';
+
+                    }
+                    tbody.each(function () {
+                        $(this).append(taskManagement.readTask.genBlockTask.genTableView.genTaskTableFormMini(o,n) )
+
+                    })
+
+                }
+
+            } catch (err) {
+                // alert(err);
+            }
+        }
+    });
+}
+
+
+function changeParentTaskModal() {
+    $('#change-parent-task-modal').modal('show');
+    var select = $('#change-parent-task-modal-parent-task-list');
+    select.html('');
+    select.append($('<option>').val('').text(''))
+
+    var json = initJSON();
+    json.kv['fkProjectId'] = global_var.current_project_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmGetTaskList4Short",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            try {
+                var obj = res.tbl[0].r;
+                for (var n = 0; n < obj.length; n++) {
+                    var o = obj[n];
+
+                    //set parent task info;
+                    try {
+                        var projectCode = SACore.ProjectCore[o.fkProjectId].projectCode;
+                    } catch (error) {
+                        var projectCode = "PRVT"
+                    }
+              
+                    var nameFull = o.taskName + " (" + projectCode.toUpperCase() + "-" + o.orderNoSeq + ") "
+                    select.append($('<option>').val(o.id).text(nameFull))
+                }
+                sortSelectBoxByElement(select);
+            } catch (err) {
+            }
+        }
+    });
+}
+
+function addParentTaskToTask() {
+    updateTask4ShortChangeDetailsWithSync($('#change-parent-task-modal-parent-task-list').val(), 'fkParentTaskId');
+    getParentTask();
+    $('#change-parent-task-modal').modal('hide');
+    $('#task-mgmt-modal-parent-task').text($('#change-parent-task-modal-parent-task-list option:selected').text())
+    $('#task-mgmt-modal-parent-task').attr("pid", $('#change-parent-task-modal-parent-task-list').val());
+}
+
+function createChildTask() {
+
+
+    var json = initJSON();
+    json.kv.fkTaskId = global_var.current_issue_id;
+    var that = this;
+    var data = JSON.stringify(json);
+    $.ajax({
+        url: urlGl + "api/post/srv/serviceTmCreateChildTask",
+        type: "POST",
+        data: data,
+        contentType: "application/json",
+        crossDomain: true,
+        async: true,
+        success: function (res) {
+            Toaster.showMessage("Child task is created.");
+
+            getBugList();
+
+        }
+    });
+
+}
