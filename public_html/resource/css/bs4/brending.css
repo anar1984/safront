@@ -4642,7 +4642,7 @@ table.lbl-list-table tr td {
 }
 .issue-managment-add-task .cs-input-group textarea::placeholder, .card-Userstory-detail .cs-input-group textarea::placeholder {
     color: rgb(255 255 255 / 70%);
-    font-size: 16px;
+    font-size: 13px;
     line-height: 20px;
 }
 .issue-managment-add-task .cs-input-group input.form-control, .card-Userstory-detail .cs-input-group input.form-control{
@@ -7496,4 +7496,8 @@ div.cs-task-item-in-box:hover .cs-task-card-bottom .canban-item-btns {
     background-color: #272B7C;
     border-color: #272B7C;
     color: #fff;
+}
+.cs-p-rem {
+ padding-left: 0.5rem;
+ padding-right: 0.5rem;
 }

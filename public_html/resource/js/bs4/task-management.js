@@ -141,7 +141,7 @@ const taskManagement = {
                 return `<div class="mr-auto p-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 pl-0 mt-2 td-col">
+                        <div class="col-lg-6 pl-0 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                                 <div class='cs-date-time d-flex'>
@@ -164,7 +164,7 @@ const taskManagement = {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-2 td-col">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                           <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.endDate}</div>
                                 <div class='cs-date-time d-flex'>
@@ -187,14 +187,14 @@ const taskManagement = {
                                 </div>
                           </div>
                         </div>
-                        <div class="col-lg-6 mt-2 pl-0 td-col">
+                        <div class="col-lg-6 mt-2 pl-0 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
                                 <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
                                         id='bug_filter_assignee_id_add' title="Assignee"></select>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-2 td-col">
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
                                 <select class="run_task_categories"  id="run_task_categories" data-live-search="true">
