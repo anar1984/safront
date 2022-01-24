@@ -2508,7 +2508,7 @@ const taskManagement = {
                        <!-- <div class="info-box cs-input-group" style="padding:0;">
                           <input data-type="search_text" type="text" class="btn bug-filter bug-filter-search form-control" onchange="" id="bug_filter_search_text" placeholder="Search . . ." required="" style="height:33px;">
                         </div> -->
-                        ${!notChwk?` <div class="info-box" style="background: transparent; border: none;">
+                        ${notChwk?` <div class="info-box" style="background: transparent; border: none;">
                         <!-- <button id="my-task-btn" class="btn btn-light" style=" height: 32px !important;"> My Task</button> -->
                         <div class="bcs-col-btn multi-edit-menu cs-input-group" style=" display:none; ">
                            <button id="multi-edit-menu-btn" class="btn btn-light multi-edit-menu-btn" data-toggle="modal" data-target="#multieditpopUp"> <i class="fas fa-edit" aria-hidden="true"></i></button>                                                              

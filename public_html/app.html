@@ -5194,6 +5194,66 @@
 
 
 
+    <div class="modal fade" id="multipleClosedTask" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selectFromDbModal-title">Choose  tasks for close</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <table class="table cst-table-hover tablePaginatione component-input-class" id="taskListClosedMulti" style="width: 100% !important;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width:46px"><i class="cs-svg-icon numbers"></i>
+                                    </th>
+                                    <th class="text-center border-none taskListTableCheckboxTH" style="width:30px">
+                                        <label href="#" class="component-class"><input style="width: 15px; height: 15px; vertical-align:middle;" type="checkbox" class="all-check-button-allTable"></label>
+                                        <span class="handle-drag"></span>
+                                    </th>
+                                    <th class="text-center" style="width:46px"><i class="cs-svg-icon id"></i></th>
+                                    <th class="text-center" style="width:50px"><i class="cs-svg-icon deadline"></i>
+                                    </th>
+                                    <th class="text-center"><i class="cs-svg-icon status"></i></th>
+                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task Name</label> <span class="handle-drag"></span>
+                                    </th>
+
+                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Task Type</label> <span class="handle-drag"></span>
+                                    </th>
+                                    <th class="text-center cst-a-font"><label href="#" class="component-class">Date</label> <span class="handle-drag"></span>
+                                    </th>
+
+                                    <th class="text-center">
+                                        <label href="#" class="component-class"><i class="cs-svg-icon arrow-right-doc"></i></label> <span class="handle-drag"></span>
+                                    </th>
+
+                                    <th class="text-center">
+                                        <label href="#" class="component-class"><i class="cs-svg-icon arrow-left-doc"></i></label>
+                                        <span class="handle-drag"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="submitmultipleClosedTask()"
+                        data-dismiss="modal">Apply
+                    </button>
+                    <!--<button type="button" class="btn btn-primary" onclick="new UserStory().deleteInputBySUSOutputId()">Delete</button>-->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="addEventDescModal" tabindex="-1" style="z-index: 50000" role="dialog" aria-labelledby=""
         aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 50%;max-width: 50%" role="document">
