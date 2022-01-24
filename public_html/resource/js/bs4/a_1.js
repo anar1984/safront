@@ -3769,7 +3769,7 @@ function loadSelectBoxesAfterGUIDesignDetails(res, elm) {
     } catch (err) {
     }
 
-    var el =elm;// $('#' + $(elm).attr('id'));
+    var el =$('#' + $(elm).attr('id'));
     $(el).html('');
     if ($(el).attr('sa-data-selectbox-hassnull') === '1') {
         $(el).append($('<option>').val('').text(''));
