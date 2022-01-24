@@ -942,7 +942,7 @@ const taskManagement = {
                       </div>
                   </div>
                   <div class="row">
-                  <div class="col-lg-12" style="padding: 0 25px;">
+                  <div class="col-lg-12">
                   <div class="comment-seqment">
                   ${this.genTabBlock.Init()}
                     </div>
