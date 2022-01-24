@@ -18473,7 +18473,9 @@ function updateUS4Status(id, backlogNo, status) {
 function updateManualStatus4DragDrop(params) {
     
 }
+let dragElment  
 function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
+    dragElment =dragelm;
     var json = {
         kv: {}
     };
@@ -18497,14 +18499,54 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
         async: false,
         success: function (res) {
               var  list  = ""
-              
+               
                try {
-                var tbl = res.tbl[0].r;
-                for (let i = 0; i < tbl.length; i++) {
-                    const o = tbl[i];
-                     list += o.id +",";
-               } 
-               multipleClosedTask(list,dragelm);  
+                   var tbody  = $("#taskListClosedMulti tbody");
+                   tbody.empty();
+                var ela = res.tbl[0].r;
+                for (let i = 0; i < ela.length; i++) {
+                    var taskNature = getBugListTaskNatureValue(ela[i].taskNature);
+                    var endTime = new Date(ela[i].endDate + ' ' + ela[i].endTime);
+                    var tr  = `<tr class="redirectClass triggger-status-${ela[i].taskStatus}" >
+                    <td class="text-center brend-color" style="width: 20px;">${i+1}</td>
+                    <td class="text-center" style="width: 30px; vertical-align: middle; line-height: 1;">
+                        <input id="${ela[i].id}" class="tdOperation cst-chkc-bl2 cst-clck-box" type="checkbox">
+                    </td>
+                    <td class="text-center" style="width: 100px;" >
+                        <span class="brend-color" sa-data-value="9214">${ela[i].projectCode + "-" + ela[i].orderNoSeq}</span>
+                    </td>
+                    <td class="text-center" style="width: 50px;">
+                          ${getTimeDifference(endTime, new Date())}
+                    </td>
+                    <td class="text-center" style="width: 100px; position: relative;"><span class="cheweek-status-name issue_status_${ela[i].taskStatus}" sa-data-value="${ela[i].taskStatus}">
+                            ${ela[i].taskPriority==9?`<div class="cs-tecili"><i class="cs-svg-icon flame"></i></div>`:""}${ela[i].taskStatus}
+                        </span>
+                    </td>
+                    <td class="text-center" >
+                        <a href="#" onclick="taskManagement.updateTask.callTaskCard4BugTask(this,'${ela[i].fkProjectId}','${ela[i].id}')" class="brend-color">${ela[i].taskName}</a>
+                    </td>
+                    <td class="cs-tasklistData" style="padding-left: 5px; width: 100px;">
+                        <a href="#" class="brend-color">${ela[i].taskTypeName}</a>
+                    </td>
+                    <td class="cs-tasklistTime" style="padding-left: 5px; width: 80px;">
+                        <a href="#" class="brend-color">${Utility.convertDate(ela[i].createdDate)}</a>
+                    </td>
+                    <td class="text-center" style="width: 80px;">
+                        <img class="rounded-circle " src="${fileUrl(ela[i].userImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="Assigne" data-content="${ela[i].userName}" title="">
+                    </td>
+    
+                    <td class="text-center" style="width: 80px;">
+                        <img class="rounded-circle " src="${fileUrl(ela[i].createByImage)}" data-placement="left" data-toggle="popover" data-trigger="hover" sa-selectedfield="fkAssigneeId" style="width: 22px; height: 22px; border: 1px solid rgb(3, 57, 108);" data-original-title="Created By" data-content="${ela[i].createByName}" title="">
+                    </td>
+                </tr>`
+                    $(tbody).append(tr);
+    
+                }
+    
+                $('[data-toggle="popover"]').popover();
+               $("#multipleClosedTask").modal("show");
+
+       
                } catch (error) {
 
                 $(firstZone).find('.content-drag').eq(oldIndex).before(dragelm);
@@ -18516,6 +18558,18 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
             Toaster.showError(('somethingww'));
         }
     });
+}
+function submitmultipleClosedTask() {
+          var ekm  = $("#taskListClosedMulti tbody > tr >td>input.cst-chkc-bl2");
+            var list  = '';
+            ekm.each(function (params) {
+                if($(this).prop("checked")){
+                  list  =+ $(this).attr("id") +",";
+                }
+            })
+        if(dragElment){
+            multipleClosedTask(list,dragElment);
+        } 
 }
 function multipleClosedTask(list,dragelm) {
     var data = {};
