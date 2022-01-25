@@ -243,17 +243,28 @@ function callStoryCard4Api(id, elId, backlogName) {
 }
 
 function callStoryCard(id, elId, backlogName) {
-     $('#UserStoryPopupModal-Toggle-new').remove();
+   /*   $('#UserStoryPopupModal-Toggle-new').remove();
      $('.modal-backdrop').remove();
-     $('#UserStoryPopupModal-Toggle').modal('hide');
+     $('#UserStoryPopupModal-Toggle').modal('hide'); */
        var isApi = SACore.GetBacklogDetails(id,'isApi');
-        if(isApi ==="1"){
-            callApiCard(id, elId, backlogName);
-        }
+     /*    if(isApi ==="1"){ */
+            var fkProjectId = SACore.GetBacklogDetails(id, "fkProjectId");
+            var oldModal = global_var.current_modal;
+            var opid = global_var.current_modal;
+            var obid = global_var.current_backlog_id;
+            Utility.addParamToUrl("current_modal",(isApi==="1")?'loadDev':"loadStoryCard");
+            Utility.addParamToUrl("current_project_id",fkProjectId);
+            Utility.addParamToUrl("current_backlog_id",id);
+           var url  = document.location.href;
+           window.open(url, '_blank');
+           Utility.addParamToUrl("current_modal",oldModal);
+           Utility.addParamToUrl("current_project_id",opid);
+           Utility.addParamToUrl("current_backlog_id",obid);
+            //callApiCard(id, elId, backlogName);
+      /*   }
         else {
-            calStroyCardNew(id, elId, backlogName);
-            
-        }
+             // calStroyCardNew(id, elId, backlogName);
+        } */
         
 }
 
@@ -332,9 +343,6 @@ function callApiCard(id, elId, backlogName) {
                         .val('-2')
                         .text("Load All Story Cards"));
         $('#storyCardListSelectBox4StoryCard').selectpicker('refresh');
-
-
-
         fillBacklogHistory4View(id, "0");
         new UserStory().toggleSubmenuStoryCard();
 //        loadStoryCardBodyInfo();

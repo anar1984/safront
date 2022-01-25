@@ -15553,7 +15553,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
             var isApi = SACore.GetBacklogDetails(backlogId, "isApi");
             fillBacklogHistory4View(backlogId, isApi);
 
-            if (global_var.current_modal === 'loadStoryCard' || global_var.current_modal === 'loadDev') {
+          /*   if (global_var.current_modal === 'loadStoryCard' && isApi !=="1") {
                 var pid = SACore.Backlogs[backlogId].fkProjectId
                 if (pid === global_var.current_project_id) {
                     $("#storyCardListSelectBox4StoryCard").val(backlogId)
@@ -15566,23 +15566,34 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
                 }
                 return;
             }
-
-            if (isApi === '1') {
-                callStoryCard(backlogId);
+            if (global_var.current_modal === 'loadDev' && isApi ==="1") {
+                var pid = SACore.Backlogs[backlogId].fkProjectId
+                if (pid === global_var.current_project_id) {
+                    $("#storyCardListSelectBox4StoryCard").val(backlogId)
+                    $("#storyCardListSelectBox4StoryCard").change();
+                } else {
+                    global_var.current_backlog_id = backlogId;
+                    Utility.addParamToUrl('current_backlog_id', backlogId);
+                    $('select.projectList_liveprototype_storycard').val(pid);
+                    $('select.projectList_liveprototype_storycard').change();
+                }
                 return;
-            }
+            } */
 
+
+                callStoryCard(backlogId);
+            /*  
             $('#storyCardListSelectBox').val(backlogId);
-            $('#storyCardListSelectBox').change();
+            $('#storyCardListSelectBox').change(); */
 
-            $('#container-us-body').find('tr[sid=' + backlogId + ']')
-                .first().find('a').first().focus().click();
+           /*  $('#container-us-body').find('tr[sid=' + backlogId + ']')
+                .first().find('a').first().focus().click(); */
         } catch (err) {
             console.log(err)
         }
 
 
-        try {
+       /*  try {
             //            event.preventDefault();
 
             if (backlogId.length === 0) {
@@ -15609,7 +15620,7 @@ onclick="new UserStory().getStoryInfo(\'' + o.id + '\',this)">';
         } catch (err) {
             console.log(err)
         }
-
+ */
     },
     redirectToDetailedView4ActivityDiagram: function (id) {
         this.redirectToDetailedView(id);
@@ -21376,7 +21387,6 @@ id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded=
         div.append(table);
         return div;
     },
-
     addEventDescription: function (el, action, id) {
 
         $('#addEventDescModal-input-id').val(id);

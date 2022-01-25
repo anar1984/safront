@@ -14027,6 +14027,24 @@ function loadDetailsOnProjectSelect4StoryCardNewTr(fkProjectId) {
     });
 }
 
+function findBacklogWithId4StoryCard(elm) {
+    var id  = $(elm).val();
+    if(!id){
+        return
+    }
+     try {
+
+        var fkProjectId  = getBacklogDetailsById(id).fkProjectId;
+         Utility.addParamToUrl("current_backlog_id",id);
+         global_var.current_backlog_id = id;
+         $("select.projectList_liveprototype_storycard").val(fkProjectId);
+         $("select.projectList_liveprototype_storycard").change();
+          
+     } catch (error) {
+         
+     }
+  
+}
 function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
     var pid = (fkProjectId) ? fkProjectId : global_var.current_project_id;
     var json = initJSON();
@@ -14054,7 +14072,8 @@ function loadDetailsOnProjectSelect4StoryCard(fkProjectId) {
                 var pname = o.backlogName;
                 var op = $('<option></option>')
                         .attr('value', o.id)
-                        .text(pname);
+                        .text(pname +" ("+o.id+")")
+                        .attr('data-content',pname +" <span class='d-none'>("+o.id+")</span>");
                 if (f) {
                     op.attr("selected", true);
                     f = false;
@@ -19363,8 +19382,6 @@ $(document).on('change', '#story_mn_filter_assigne_id', function (evt) {
     } else {
         backLogIdListForSearch = '';
     }
-
-
 });
 $(document).on('change', '#story_mn_manual_status_id', function (evt) {
 
