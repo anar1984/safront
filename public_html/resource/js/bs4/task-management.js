@@ -26,6 +26,8 @@ const taskManagement = {
                 $('body').append(this.genModalSelfBlock());
                 cmpList.userBlock.Init($('.assigne-div-add-issue'),'single');
                 cmpList.userBlock.Init($('.observer-div-add-issue'),'multi');
+                taskManagement.updateTask.getSprintTask($('#add_task_sprint'));
+                taskManagement.updateTask.getLabelTask($('#run_task_categories'));
                 setProjectListByID('bug_filter_project_id_add');
                 $("#issue-managment-add-task select.bug-mgmt-filter-select").selectpicker("refresh");
 
@@ -141,7 +143,7 @@ const taskManagement = {
                 return `<div class="mr-auto p-2">
                 <div class="row">
                     <div class="col-xl-12" style="display:contents">
-                        <div class="col-lg-6 pl-0 mt-2 cs-p-rem">
+                        <div class="col-lg-6  mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                             <div class="input-group-addon">${lang_task.windowAddTask.startDate}</div>                                                 
                                 <div class='cs-date-time d-flex'>
@@ -150,7 +152,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDeadlineStartDade" class="form-control" />
+                                            <input type='text' id="taskDeadlineStartDade" class="form-control taskDeadlineDate" />
                                         </div>
                                     </div>
                                     <div>
@@ -158,7 +160,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                                             </span>
-                                            <input type='text' id="taskDeadlineStartTime" class="form-control" style="width:50px;" />
+                                            <input type='text' id="taskDeadlineStartTime" class="form-control taskDeadlineTime" style="width:50px;" />
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +175,7 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                                 </span>
-                                                <input type='text' id="taskDeadlineEndDade" class="form-control" />
+                                                <input type='text' id="taskDeadlineEndDade" class="form-control taskDeadlineDate" />
                                         </div>
                                     </div>
                                     <div>
@@ -181,26 +183,26 @@ const taskManagement = {
                                             <span class="input-group-icon">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                                                 </span>
-                                                <input type='text' id="taskDeadlineEndTime" class="form-control" style="width:50px;" />
+                                                <input type='text' id="taskDeadlineEndTime" class="form-control taskDeadlineTime" style="width:50px;" />
                                         </div>
                                     </div>
                                 </div>
                           </div>
                         </div>
-                        <div class="col-lg-6 mt-2 pl-0 cs-p-rem">
+                       
+                        <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
-                                <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
-                                <select class="form-control" data-actions-box="true" onchange='' data-live-search="true"
-                                        id='bug_filter_assignee_id_add' title="Assignee"></select>
+                                <div class="input-group-addon">Sprint</div>
+                                <select multiple class="add_task_sprint issue_selectpicker"  id="add_task_sprint" data-live-search="true">
+                                   
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-2 cs-p-rem">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
-                                <select class="run_task_categories"  id="run_task_categories" data-live-search="true">
-                                    <option value="cat1">Software</option>
-                                    <option value="ca2">Back-end</option>
-                                    <option value="cat3">Front-end</option>
+                                <select multiple class="run_task_categories issue_selectpicker"  id="run_task_categories" data-live-search="true">
+                                   
                                 </select>
                             </div>
                         </div>
@@ -273,9 +275,9 @@ const taskManagement = {
                         <a class="nav-link" id="shedule-tab" data-toggle="tab" href="#task-tab2" role="tab" aria-controls="task-tab2" aria-selected="false"><i class="cs-svg-icon schedule"></i> <span>${lang_task.windowAddTask.schedule}</span></a>
                     </li>
                 
-                    <li class="nav-item after-add-task" role="presentation">
+                   <!-- <li class="nav-item after-add-task" role="presentation">
                         <a class="nav-link loadUserForObserver" id="observer-tab" data-toggle="tab" href="#task-tab5" role="tab" aria-controls="task-tab5" aria-selected="false"><i class="cs-svg-icon observer"></i> <span>${lang_task.windowAddTask.observer}</span></a>
-                    </li>
+                    </li>-->
  
                     <li class="nav-item after-add-task" role="presentation">
                         <a class="nav-link" id="events-tab" data-toggle="tab" href="#task-tab3" role="tab" aria-controls="task-tab3" aria-selected="false"><i class="cs-svg-icon hour-02"></i> <span>${lang_task.windowAddTask.events}</span></a>
@@ -285,36 +287,40 @@ const taskManagement = {
                 genDetailsBlock: function () {
                     return `  <div class="tab-pane fade task-tab1 active show cs-box-background" id="task-tab1" role="tabpanel" aria-labelledby="task-tab1-tab">
                     <div class='row'>
-                        <div class="col-lg-6  mt-2">
+                    ${notChwk?
+                        `<div class="col-lg-6  mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control" data-live-search="true" data-actions-box="true"
+                                <select class="form-control issue_selectpicker" data-live-search="true" data-actions-box="true"
                                         style="text-overflow: ellipsis" onchange='' id='bug_filter_project_id_add'
                                         title="${lang_task.rightBar.project}"></select>
                             </div>
                         </div>
+                        `:""}
                         <div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
                                         data-live-search="true" id='bug_filter_backlog_id_add' title="${lang_task.rightBar.storyCart}">
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-2">
+                        ${notChwk?
+                        `<div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker " data-actions-box="true" onchange=''
                                         data-live-search="true" id='bug_task_type_id_add' title="${lang_task.rightBar.taskType}"></select>
                             </div>
-                        </div>
-                        <div class="col-lg-6 mt-2">
+                        </div>`:""}
+                        ${notChwk?
+                        `<div class="col-lg-6 mt-2">
                             <div class="cs-input-group">
-                                <select class="form-control bug-mgmt-filter-select " data-actions-box="true" onchange=''
+                                <select class="form-control bug-mgmt-filter-select issue_selectpicker  " data-actions-box="true" onchange=''
                                         id='bug_task_nature_id_add' title="${lang_task.rightBar.taskNature}">
                                     <option value="bug" selected="">${lang_task.table.taskNature.bug}</option>
                                     <option value="change" selected="">${lang_task.table.taskNature.changeRequest}</option>
                                     <option value="new" selected="">${lang_task.table.taskNature.newRequest}</option>
                                 </select>
                             </div>
-                        </div>
+                        </div>`:""}
                     </div>
                 </div>`
                 },
@@ -356,7 +362,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.intensive}</div>
-                               <select class="" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_intensive_select" id='run_task_intensive_select' data-live-search="true">
                                    <option value="weekly">${lang_task.windowAddTask.weekly}</option>
                                    <option value="monthly">${lang_task.windowAddTask.monthly}</option>
                                    <option value="yearly">${lang_task.windowAddTask.yearly}</option>
@@ -366,7 +372,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.reapeatEvery}</div>
-                               <select class="" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select' data-live-search="true">
                                    <option value="1">1</option>
                                    <option value="2">2</option>
                                    <option value="3">3</option>
@@ -385,7 +391,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">Status</div>
-                               <select class="" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select' data-live-search="true">
                                    <option value="active">${lang_task.topBar.tableTypeSelector.active}</option>
                                    <option value="passive">${lang_task.topBar.tableTypeSelector.active}</option>
                                </select>
@@ -399,7 +405,7 @@ const taskManagement = {
                        <div class="col-md-3 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">${lang_task.windowAddTask.weekDay}</div>
-                               <select class="" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select" data-actions-box="true" multiple data-live-search="true">
                                    <option value="monday">Monday</option>
                                    <option value="tuesday">Tuesday</option>
                                    <option value="wednesday">Wednesday</option>
@@ -451,7 +457,7 @@ const taskManagement = {
                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group ml-3">
                                        <div class="input-group-addon">Day of Month</div>
-                                       <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select" data-live-search="true">
                                            <option value="1">1</option>
                                            <option value="2">3</option>
                                            <option value="3">3</option>
@@ -495,7 +501,7 @@ const taskManagement = {
                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
                                    <div class="cs-input-group">
                                        <div class="input-group-addon">Action</div>
-                                       <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select" data-live-search="true">
                                            <option value="first">First</option>
                                            <option value="last">Last</option>
                                        </select>
@@ -504,7 +510,7 @@ const taskManagement = {
                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group">
                                        <div class="input-group-addon">Weekdays</div>
-                                       <select name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
+                                       <select class='issue_selectpicker' name="swofm_weekday_select" id="swofm_weekday_select" data-live-search="true">
                                            <option value="monday">Monday</option>
                                            <option value="tuesday">Tuesday</option>
                                            <option value="wednesday">Wednesday</option>
@@ -534,7 +540,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <div class="input-group-addon">Select Reminder</div>
-                               <select class="" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_reminder_select' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
                                    <option value="10_minutes_before">10 minutes before</option>
@@ -558,6 +564,7 @@ const taskManagement = {
                </div>`
                 },
                 genObserverBlock: function () {
+                    return'';
                     return `<div class="tab-pane fade task-check-list-created cs-box-background" id="task-tab5" role="tabpanel" aria-labelledby="task-tab5-tab">
                  <div class="cs-input-group mb-3 ml-2">
                      <div class="input-group-addon">${lang_task.windowAddTask.observerName}</div>
@@ -707,7 +714,7 @@ const taskManagement = {
             data.filename = files;
             data.fkProjectId = $('#bug_filter_project_id_add').val();
             data.fkBacklogId = $('#bug_filter_backlog_id_add').val();
-            data.fkAssigneeId = $('#bug_filter_assignee_id_add').val();
+            data.fkAssigneeId = $('.assigne-div-add-issue').getVal();
             data.fkTaskTypeId = $("#bug_task_type_id_add").val();
             data.taskNature = $("#bug_task_nature_id_add").val();
             data.taskPriority = $("#bug_filter_priority_add").val();
@@ -772,11 +779,11 @@ const taskManagement = {
         insertObserverTask: function (taskId) {
             try {
                 var userList = "";
-                var tbl = $("#issue-managment-add-task .task-observer-list>table>tr");
+                var tbl = $(".observer-div-add-issue").getVal();
 
                 for (let i = 0; i < tbl.length; i++) {
                     const o = tbl[i];
-                    userList += $(o).attr("id") + ",";
+                    userList += o + ",";
                 }
                 if (!userList) {
                     return
@@ -857,7 +864,6 @@ const taskManagement = {
         },
         loadAssigneesByProjectDetails: function (res) {
             $('#bug_filter_assignee_id').html('');
-            $('#bug_filter_assignee_id_add').html('');
             $('#bug_filter_detail_assignee_id_add').html('');
             $('#bug_filter_assignee_id_multi').html('');
             $('#bug_filter_created_by').html('');
@@ -874,7 +880,6 @@ const taskManagement = {
                     var opt5 = $('<option>').val(o.fkUserId).text(o.userName);
                     var opt6 = $('<option>').val(o.fkUserId).text(o.userName);
                     $('#bug_filter_assignee_id').append(opt);
-                    $('#bug_filter_assignee_id_add').append(opt4);
                     $('#bug_filter_detail_assignee_id_add').append(opt4);
                     $('#bug_filter_assignee_id_multi').append(opt5);
                     $('#bug_filter_created_by').append(opt2);
@@ -888,7 +893,6 @@ const taskManagement = {
 
             $('#bug_filter_created_by').selectpicker('refresh');
             $('#bug_filter_assignee_id').selectpicker('refresh');
-            $('#bug_filter_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_detail_assignee_id_add').selectpicker('refresh');
             $('#bug_filter_assignee_id_multi').selectpicker('refresh');
             $('#testcase_createdbyfilter').selectpicker('refresh');
@@ -955,7 +959,7 @@ const taskManagement = {
                       <div class="modal-footer">
                       <div class="assigne-div-update-issue"></div>
                       <div class="observer-div-update-issue"></div>
-                          <button type="button" id="" class="btn btn-primary">${lang_task.windowAddTask.add}</button>
+                          <button type="button" id="" class="btn btn-primary">---</button>
                       </div>
                   </div>
               </div>
@@ -1099,14 +1103,14 @@ const taskManagement = {
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.responsible}</div>
-                                <select class="form-control update-selectpicker" data-actions-box="true"  data-live-search="true"
+                                <select class="form-control update-selectpicker issue_selectpicker" data-actions-box="true"  data-live-search="true"
                                         id='bug_filter_detail_assignee_id_update'   onchange="updateTask4ShortChange(this, 'fkAssigneeId')" title="Assignee"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-2">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">${lang_task.windowAddTask.catagories}</div>
-                                <select class="run_task_categories update-selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
+                                <select class="run_task_categories update-selectpicker issue_selectpicker" multiple  id="run_task_detail_detail_categories" data-live-search="true">
                                  
                                 </select>
                             </div>
@@ -1114,7 +1118,7 @@ const taskManagement = {
                         <div class="col-lg-6 cs-flex-col flex-item mt-2 pl-0">
                             <div class="cs-input-group p-0">
                                 <div class="input-group-addon">Sprint</div>
-                                <select class="run_task_sprint update-selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
+                                <select class="run_task_sprint update-selectpicker issue_selectpicker" multiple id="run_task_detail_detail_sprint" data-live-search="true">
                                 
                                 </select>
                             </div>
@@ -1247,7 +1251,7 @@ const taskManagement = {
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Status</span> -->
                                     <div class="form-group ">
 
-                                        <select class="form-control update-selectpicker task-info-modal-status" style="width:auto"
+                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-status" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskStatus')" id="task-info-modal-status">
                                             <option value='new'><span
                                                 class="us-item-status-new comment-content-header-status">New</span></option>
@@ -1281,7 +1285,7 @@ const taskManagement = {
                                     <label class="input-group-addon">Task Nature</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Nature</span> -->
                                     <div class="form-group">
-                                        <select class="form-control update-selectpicker task-info-modal-nature" style="width:auto"
+                                        <select class="form-control update-selectpicker task-info-modal-nature issue_selectpicker" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskNature')" id="task-info-modal-nature">
                                             <option value='new'><span
                                                 class="us-item-status-new comment-content-header-status">New Request</span>
@@ -1303,7 +1307,7 @@ const taskManagement = {
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Task Type</span> -->
                                     <div class="form-group">
 
-                                        <select class="form-control update-selectpicker task-info-modal-tasktype" style="width:auto"
+                                        <select class="form-control update-selectpicker task-info-modal-tasktype issue_selectpicker" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'fkTaskTypeId')"
                                                 id="task-info-modal-tasktype">
 
@@ -1317,7 +1321,7 @@ const taskManagement = {
                                     <label class="input-group-addon">Priority</label>
                                     <!-- <span class="comment-content-header-history" style="margin-left: 0px;">Priority</span> -->
                                     <div class="form-group ">
-                                        <select class="form-control update-selectpicker task-info-modal-priority" style="width:auto"
+                                        <select class="form-control update-selectpicker issue_selectpicker task-info-modal-priority" style="width:auto"
                                                 onchange="updateTask4ShortChange(this, 'taskPriority')"
                                                 id="task-info-modal-priority">
                                             <option value='1' selected>1- Lowest</option>
@@ -1447,7 +1451,7 @@ const taskManagement = {
                             <span  class="comment-content-header-history" style="margin-left: 0px;">Change Version</span>
                             <div class="form-group statusSelectSelect">
         
-                                <select class="form-control" 
+                                <select class="form-control issue_selectpicker" 
                                         style="width:auto"
                                         onchange="updateTask4ShortChange(this, 'taskVersion')"
                                         id="task-info-change-version">
@@ -1479,26 +1483,26 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Start Date</label>
-                               <input class="form-control cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
+                               <input class="form-control runTaskDate_detail cs-input" name="runTaskStartDate" id="runTaskStartDate_detail" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">End Date</label>
-                               <input class="form-control cs-input" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
+                               <input class="form-control cs-input runTaskDate_detail" name="runTaskiceEndDate" id="runTaskEndDate_detail" type="text" required>
                            </div>
                        </div>
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Run Time</label>
-                               <input class="form-control cs-input" name="runTaskTime" id="runTaskTime_detail" type="text" required>
+                               <input class="form-control cs-input taskDeadlineTime" name="runTaskTime" id="runTaskTime_detail" type="text" required>
                            </div>
                        </div>
 
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Intensive</label>
-                               <select class="" name="run_task_intensive_select" id='run_task_intensive_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_intensive_select issue_selectpicker" id='run_task_intensive_select_detail' data-live-search="true">
                                    <option value="weekly">Weekly</option>
                                    <option value="monthly">Monthly</option>
                                    <option value="yearly">Yearly</option>
@@ -1508,7 +1512,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Repeat every</label>
-                               <select class="" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select" id='run_task_repeat_select_detail' data-live-search="true">
                                    <option value="1">1</option>
                                    <option value="2">2</option>
                                    <option value="3">3</option>
@@ -1527,7 +1531,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Status</label>
-                               <select class="" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_status_select" id='run_task_status_select_detail' data-live-search="true">
                                    <option value="active">Active</option>
                                    <option value="passive">Passive</option>
                                </select>
@@ -1541,7 +1545,7 @@ const taskManagement = {
                        <div class="col-md-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Weekday</label>
-                               <select class="" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_weekday_select" id="run_task_weekday_select_detail" data-actions-box="true" multiple data-live-search="true">
                                    <option value="monday">Monday</option>
                                    <option value="tuesday">Tuesday</option>
                                    <option value="wednesday">Wednesday</option>
@@ -1593,7 +1597,7 @@ const taskManagement = {
                                <div class="spa_sdofm_day_of_Month_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group ml-3">
                                        <label class="input-group-addon">Day of Month</label>
-                                       <select class="" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
+                                       <select class="issue_selectpicker" name="sdofm_day_of_Month_select" id="sdofm_day_of_Month_select_detail" data-live-search="true">
                                            <option value="1">1</option>
                                            <option value="2">3</option>
                                            <option value="3">3</option>
@@ -1637,7 +1641,7 @@ const taskManagement = {
                                <div class="spa_swofm_fl_action_select run_spa cs-flex-col flex-item ml-3 mt-2">
                                    <div class="cs-input-group">
                                        <label class="input-group-addon">Action</label>
-                                       <select class="" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
+                                       <select class="issue_selectpicker" name="swofm_fl_action_select" id="swofm_fl_action_select_detail" data-live-search="true">
                                            <option value="first">First</option>
                                            <option value="last">Last</option>
                                        </select>
@@ -1646,7 +1650,7 @@ const taskManagement = {
                                <div class="spa_swofm_weekday_select run_spa cs-flex-col flex-item ml-2 mt-2">
                                    <div class="cs-input-group">
                                        <label class="input-group-addon">Weekdays</label>
-                                       <select name="swofm_weekday_select" id="swofm_weekday_select_detail" data-live-search="true">
+                                       <select name="swofm_weekday_select issue_selectpicker" id="swofm_weekday_select_detail" data-live-search="true">
                                            <option value="monday">Monday</option>
                                            <option value="tuesday">Tuesday</option>
                                            <option value="wednesday">Wednesday</option>
@@ -1676,7 +1680,7 @@ const taskManagement = {
                        <div class="col-lg-4 cs-flex-col flex-item mt-2">
                            <div class="cs-input-group">
                                <label class="input-group-addon">Select Reminder</label>
-                               <select class="" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
+                               <select class="issue_selectpicker" name="run_task_repeat_select_detail" id='run_task_reminder_select_detail' data-live-search="true">
                                    <option value="at_start_time">At start time</option>
                                    <option value="5_minutes_before">5 minutes before</option>
                                    <option value="10_minutes_before">10 minutes before</option>
@@ -1704,7 +1708,7 @@ const taskManagement = {
                      <div class="input-group-addon">Observer Name</div>
                      <div class="task-check-list-observer p-0 mt-1 mb-3">
                          <!-- <button class='btn loadUserForObserver'>Load User</button> -->
-                         <select class="form-control" id="updatetask_oblerverlist"></select>
+                         <select class="form-control issue_selectpicker" id="updatetask_oblerverlist issue_selectpicker"></select>
                          <button class='btn addObserverToTAskUpdate'><i class="fas fa-plus" aria-hidden="true"></i> Add Observer</button>
                      </div>
                      <div class="task-observer-list">
@@ -1882,8 +1886,9 @@ const taskManagement = {
                 global_var.current_project_id = projectId;
                 new UserStory().refreshBacklog4Bug(true);
             }
-            this.getLabelTask();
-            this.getSprintTask();
+            
+            this.getLabelTask($('#run_task_detail_detail_categories'));
+            this.getSprintTask($('#run_task_detail_detail_sprint'));
 
             getProjectUsers();
             $(".card-UserStory-header-text-code").html(getTaskCode(taskId));
@@ -2191,7 +2196,8 @@ const taskManagement = {
                 for (var n = 0; n < obj.length; n++) {
                     var o = obj[n];
 
-                    var lst = o.fkUserId.split(',')
+                    var lst = o.fkUserId.split(',');
+                    $(".observer-div-update-issue").getVal(lst)
                     for (let l = 0; l < lst.length; l++) {
                         const k = lst[l];
                         var userSpan = (k && userList[k]) ?
@@ -2339,8 +2345,8 @@ const taskManagement = {
         getTaskDeadLine: function () {
 
         },
-        getLabelTask: function () {
-            var  elm  = $('#run_task_detail_detail_categories')
+        getLabelTask: function (elm) {
+           
             elm.empty();
             try {
                 var  list  = taskManagement.taskLabelList.tbl[0].r;
@@ -2357,8 +2363,8 @@ const taskManagement = {
             
             elm.selectpicker("refresh");
         },
-        getSprintTask: function () {
-            var  elm  = $('#run_task_detail_detail_sprint')
+        getSprintTask: function (elm) {
+        
             elm.empty();
              try {
                 var  list  = taskManagement.taskSprintList.tbl[0].r;
@@ -2435,7 +2441,9 @@ const taskManagement = {
 
         },
         loadAssigneesByProjectDetails: function (res) {
-            var el = $('#bug_filter_detail_assignee_id_update')
+            $(".assigne-div-update-issue").getVal(coreBugKV[global_var.current_issue_id].fkAssigneeId);
+            return
+           /*  var el = $('#bug_filter_detail_assignee_id_update')
             el.html('');
             try {
 
@@ -2447,9 +2455,6 @@ const taskManagement = {
 
                     el.append(opt4);
 
-
-
-
                 }
                 console.log(coreBugKV[global_var.current_issue_id].fkAssigneeId);
                 el.selectpicker("destroy");
@@ -2457,7 +2462,7 @@ const taskManagement = {
                 el.selectpicker("refresh");
             } catch (error) {
                 el.hide();
-            }
+            } */
 
 
 
@@ -2827,7 +2832,7 @@ const taskManagement = {
                         </select>
                     </div>
                     <div class="col-4">
-                        <div class="cs-input-group cs-pagination-limit">
+                        <div class="cs-input-group  cs-pagination-limit">
                             <select data-type='' class="" onchange="callBugFilterMulti(this)" id="bug_filter_limit">
                                 <option value='10'>10</option>
                                 <option value='25' selected> 25</option>
@@ -4640,28 +4645,10 @@ $(document).on("click",'.task-clear-filter-btn',function (e) {
 });
 
 function loadBugTaskDeadlineScripts() {
-    $("#run_task_responsible").selectpicker('refresh');
-    $("#run_task_categories").selectpicker('refresh');
-    $("#run_task_detail_detail_categories").selectpicker('refresh');
-    $("#task-info-modal-status").selectpicker('refresh');
-    $("#task-info-modal-nature").selectpicker('refresh');
-    $("#task-info-modal-tasktype").selectpicker('refresh');
-    $("#bug_filter_sortby").selectpicker('refresh');
-    $("#bug_filter_sortby_asc").selectpicker('refresh');
-    $("#bug_filter_limit").selectpicker('refresh');
-    $("#inputGroupSelect01").selectpicker('refresh');
-    $('#run_task_project_name').selectpicker('refresh');
+    $("select.issue_selectpicker").selectpicker('refresh');
+  
     setProjectListByID('run_task_project_name');
     $('#run_task_project_name').change();
-    $('#run_task_name').selectpicker('refresh');
-    $('#run_task_intensive_select').selectpicker('refresh');
-    $('#run_task_repeat_select').selectpicker('refresh');
-    $('#run_task_status_select').selectpicker('refresh');
-    $('#run_task_weekday_select').selectpicker('refresh');
-    $('#sdofm_day_of_Month_select').selectpicker('refresh');
-    $('#swofm_fl_action_select').selectpicker('refresh');
-    $('#swofm_weekday_select').selectpicker('refresh');
-    $('#run_task_reminder_select').selectpicker('refresh');
     $("#runTaskStartDate").daterangepicker({
         format: 'YYYY/MM/DD',
         singleDatePicker: true
@@ -4689,41 +4676,19 @@ function loadBugTaskDeadlineScripts() {
     $('#issue-managment-add-task .task-step-2').hide();
 
     // TASK DETAILS ON
-    $('#run_task_project_name_detail').selectpicker('refresh');
     setProjectListByID('run_task_project_name_detail');
     $('#run_task_project_name_detail').change();
 
-    $('#run_task_name_detail').selectpicker('refresh');
-    $('#run_task_intensive_select_detail').selectpicker('refresh');
-    $('#run_task_repeat_select_detail').selectpicker('refresh');
-    $('#run_task_status_select_detail').selectpicker('refresh');
-    $('#run_task_weekday_select_detail').selectpicker('refresh');
-    $('#sdofm_day_of_Month_select_detail').selectpicker('refresh');
-    $('#swofm_fl_action_select_detail').selectpicker('refresh');
-    $('#swofm_weekday_select_detail').selectpicker('refresh');
-    $('#run_task_reminder_select_detail').selectpicker('refresh');
-    $('#updatetask_oblerverlist').selectpicker('refresh');
-    $('#createdtask_oblerverlist').selectpicker('refresh');
 
-    $("#runTaskStartDate_detail").daterangepicker({
+    $("input.runTaskStartDate_detail").daterangepicker({
         format: 'YYYY/MM/DD',
         singleDatePicker: true
-    });
-    $("#runTaskEndDate_detail").daterangepicker({
-        format: 'YYYY/MM/DD',
-        singleDatePicker: true
-    });
-    $('#runTaskTime_detail').datetimepicker({
-        format: 'HH:mm'
-                // sideBySide: true
     });
     $('#runTaskExecutiveDate_detail').daterangepicker({
         format: 'YYYY/MM/DD',
         singleDatePicker: true,
         drops: 'up'
     });
-    $('.hr_spa').hide();
-
     $('.shedule-elements').addClass('el-disabled');
     $('.shedule-elements.el-disabled .soon').css("pointer-events", "none");
     $('.shedule-elements.el-disabled .soon').css("opacity", "0.7");
@@ -4739,26 +4704,18 @@ function loadBugTaskDeadlineScripts() {
     $('.task-events-updated .cs-input-group input[type="text"]').css("pointer-events", "none");
     $('.task-events-updated .cs-input-group input[type="text"]').css("opacity", "0.7");
     $('.task-events-updated .cs-input-group input[type="text"]').attr("disabled", true);
-    // TASK DETAILS OFF
 
     // Task Deadline 
-        $("#taskDeadlineStartDade").datetimepicker({
-            format: 'YYYY-MM-DD',
-            // inline: true
-        });
-        $("#taskDeadlineStartTime").datetimepicker({
+       
+        $("input.taskDeadlineTime").datetimepicker({
             format: 'HH:mm',
             // inline: true
         });
-        $("#taskDeadlineEndDade").datetimepicker({
+        $("input.taskDeadlineDate").datetimepicker({
             format: 'YYYY-MM-DD'
             // singleDatePicker: true
         });
-        $("#taskDeadlineEndTime").datetimepicker({
-             format: 'HH:mm',
-            // singleDatePicker: true
-        })
-
+    
         $("#taskDetailDeadlineStartDade").datetimepicker({
             format: 'YYYY-MM-DD',
             // inline: true

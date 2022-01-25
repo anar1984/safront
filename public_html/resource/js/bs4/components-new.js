@@ -61,8 +61,8 @@ var cmpList  = {
                     if(list&& typeof list ==='string'){
                         try {
                         
-                            var userImage = SAProjectUser.GetDetails(list, "userImage");
-                            var userName = SAProjectUser.GetDetails(list, "userName");
+                            var userImage = SAProjectUser.Users[list].userImage;
+                            var userName = SAProjectUser.Users[list].userPersonName;
                             block.html(this.genItemBlock(list,userImage,userName));
                             tit.html(this.genviewItemBlock(list,userImage,userName));
                             $('[data-toggle="popover"]').popover({
@@ -82,10 +82,12 @@ var cmpList  = {
                             const o = list[i];
                             if(o){
                                 try {
-                                    var userImage = SAProjectUser.GetDetails(o, "userImage");
-                                    var userName = SAProjectUser.GetDetails(o, "userName");
+                                    var userImage = SAProjectUser.Users[o].userImage;
+                                    var userName = SAProjectUser.Users[o].userPersonName;
                                     block.append(this.genItemBlock(o,userImage,userName));
+                                    tit.find(".user-addons-icon").remove();
                                     tit.append(this.genviewItemBlock(o,userImage,userName));
+                                    
                                     $('[data-toggle="popover"]').popover({
                                         html:true
                                     });
@@ -104,15 +106,15 @@ var cmpList  = {
                
                     var elm  =select;
                     elm.html('');
-                    var keys = SAProjectUser.GetKeys();
+                    var keys = SAProjectUser.GetKeysUser();
                     var div1 = $(`<option
                     data-content="<div><img class='Assigne-card-story-select-img owner' src='${fileUrl(new User().getDefaultUserprofileName())}' alt='avatar' srcset=''><span class='story-card-owner-name'>Unassigned</span></div>">
                     Unassigned</option>`);
                     elm.append(div1);
                     for (var i = 0; i < keys.length; i++) {
-                        var userImage = SAProjectUser.GetDetails(keys[i], "userImage");
-                        var userName = SAProjectUser.GetDetails(keys[i], "userName");
-                        var id = SAProjectUser.GetDetails(keys[i], "fkUserId");
+                        var id = keys[i];
+                        var userImage = SAProjectUser.Users[id].userImage;
+                        var userName = SAProjectUser.Users[id].userPersonName;
                         var img = (userImage) ?
                                 fileUrl(userImage) :
                                 fileUrl(new User().getDefaultUserprofileName());
@@ -172,8 +174,8 @@ var cmpList  = {
             } ,
             returnValueSelect: function (elm) {
                 var liid = $(elm).attr('id');
-              var  userImage = SAProjectUser.GetDetails(liid, "userImage");
-            var userName = SAProjectUser.GetDetails(liid, "userName");
+                var userImage = SAProjectUser.Users[liid].userImage;
+                var userName = SAProjectUser.Users[liid].userPersonName;
             var select = $(elm).closest('.user-addons-box-elm').find("select.user-list-selectbox-multiple")
             var img = (userImage) ?
                     fileUrl(userImage) :
@@ -251,8 +253,8 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
   
  $(document).on('change','select.user-list-selectbox-multiple', function (e) {
     const o = $(this).val();
-    var userImage = SAProjectUser.GetDetails(o, "userImage");
-    var userName = SAProjectUser.GetDetails(o, "userName");
+    var userImage = SAProjectUser.Users[o].userImage;
+    var userName = SAProjectUser.Users[o].userPersonName;
     var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
      var has = block.find("#"+o);
@@ -269,10 +271,11 @@ $(document).on('click','.user-avatar-list li .item-click .removed-user-btn', fun
 });
  $(document).on('change','select.user-list-selectbox-single', function (e) {
     const o = $(this).val();
-    var userImage = SAProjectUser.GetDetails(o, "userImage");
-    var userName = SAProjectUser.GetDetails(o, "userName");
+    var userImage = SAProjectUser.Users[o].userImage;
+    var userName = SAProjectUser.Users[o].userPersonName;
     var tit  =  $(this).closest('.user-addons-box-elm').find(".user-dropdonw-btn");
     var block  = $(this).closest('.user-addons-box').find('.user-avatar-list ul');
+    
         tit.html(cmpList.userBlock.genviewItemBlock(o,userImage,userName));
         block.html(cmpList.userBlock.genItemBlock(o,userImage,userName));
     $('[data-toggle="popover"]').popover({

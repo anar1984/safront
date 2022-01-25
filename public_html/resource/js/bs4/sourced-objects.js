@@ -279,6 +279,10 @@ var SAProjectUser = {
         var keys = Object.keys(this.ProjectUsers);
         return keys;
     },
+    GetKeysUser: function () {
+        var keys = Object.keys(this.Users);
+        return keys;
+    },
 
     RemoveFromOrderNo: function (taskId) {
         var keys = Object.keys(this.OrderNo);
