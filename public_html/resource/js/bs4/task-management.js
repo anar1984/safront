@@ -1237,11 +1237,11 @@ const taskManagement = {
                 },
                 genCommentBlock: function () {
                     return `<div class="tab-pane fade active show cs-box-background" id="d-task-tab0" role="tabpanel" aria-labelledby="pills-d-task-tab4">
-                    <div class="cs-input-group mb-3 mt-3">
+                    <div class="cs-input-group mb-3 mt-0">
                         <div class="commentwritepanel">
                             <div class="input-group-addon">Description</div>
-                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control" placeholder="Add a comment.." rows="1"></textarea>
-                            <br>
+                            <textarea name="commentinput" id="addComment4Task_comment" class="commentinput addComment4Task_comment form-control cs-taskcomment-textarea" placeholder="Add a comment.." rows="1"></textarea>
+                           
                             <div class="row canvas_canvas commentsubmit-seqment" id="canvasdiv_comment"
                                  style="width:100%;display: none; padding:0px;margin:0px;">
                                 <div class="col-12 text-center canvas_canvas_msg "
