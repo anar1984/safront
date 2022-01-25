@@ -442,6 +442,16 @@ var Utility = {
         }
         return st;
     },
+    convertDTpicker: function (d, seperator) {
+        var d = d.split(";");
+        var st = "";
+        var sep = (seperator) ? seperator : global_var.time_eliminator;
+        try {
+            st = d.substring(0, 2) + sep + d.substring(2, 4) + sep + d.substring(4, 6);
+        } catch (e) {
+        }
+        return st;
+    },
     focus: function (id) {
         setTimeout(function () {
             $('#' + id).focus();
@@ -1361,6 +1371,38 @@ function GetConvertedDate(componentId) {
         d = "";
     }
     return d;
+}
+function GetConvertedTime(componentId) {
+    var date = new Date($('#' + componentId).val());
+    if (!date)
+        return "";
+    var hour = date.getHours();
+    hour = hour.toString(10).length === 1 ? '0' + hour : hour;
+    var minut = date.getMinutes();
+    minut = minut.toString(10).length === 1 ? '0' + minut : minut;
+    var second = date.getSeconds();
+    second = second.toString(10).length === 1 ? '0' + second : second;
+    var d = hour + "" + minut+""+second ;
+    try {
+        d = parseInt(d);
+    } catch (err) {
+        d = "";
+    }
+    return d;
+}
+function GetReConvertedDT(componentId,time,date) {
+    // convert Date
+    var day = date.substring(6, 8);
+    var month = date.substring(4, 6);
+    var year = date.substring(0, 4);
+    var d1 = year + "-" + month + "-" + day;
+    // convert Time
+    var s = time.substring(4, 6);
+        var m = time.substring(2, 4);
+        var h = time.substring(0, 2);
+        var d = h + ":" + m + ":" + s;
+    var l = d1 + " " + d ;
+    $('#' + componentId).val(l);
 }
 
 function ConvertedDateToStringDate(date) {

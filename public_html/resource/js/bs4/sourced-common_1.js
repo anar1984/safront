@@ -14315,16 +14315,16 @@ onchange="new UserStory().updateInputByAttr(this,\'table\')" type="text" pid="' 
         $('.main_div_of_backlog_info_kanban_view_table_' + stl).html('');
 
         var priD = getProjectValueUsManageMultiByelIn($('#story_mn_filter_project_id'));
-        var fkUpdate = getProjectValueUsManageMultiByelIn($("#story_mn_filter_updated_id"));
+        var TaskNatue = getProjectValueUsManageMultiByelIn($("#story_mn_filter_nature_id"));
         var fkAsId = getProjectValueUsManageMultiByelIn($("#story_mn_filter_assigne_id"));
         var search = $("#search-us-managmenet").val();
         data.fkProjectId = "(" + priD + ")";
 
-        if (fkUpdate) {
-            data.updatedBy = '(' + fkUpdate + ')';
+        if (TaskNatue) {
+            data.taskNature = '(' + TaskNatue + ')';
         }
         if (fkAsId) {
-            data.fkAssigneeId = "'" + fkAsId + "'";
+            data.fkAssigneeId = "(" + fkAsId + ")";
         }
         if (search.length > 2) {
             data.backlogName = "%%" + search + "%%";

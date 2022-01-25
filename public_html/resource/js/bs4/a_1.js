@@ -15251,7 +15251,6 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
         setProjectListByID('story_mn_filter_project_id');
         var groupBy = localStorage.getItem('usm_groupBy');
         var prId = localStorage.getItem('current_project_id');
-        console.log(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").val(groupBy ? groupBy : 'backlogStatus');
         $("#story_mn_groupBy_id").selectpicker("refresh");
 
@@ -15261,7 +15260,8 @@ $(document).on('click', '.loadStoryCardMgmt', function (evt) {
             $("#story_mn_filter_project_id").val(prId).change();
         }
 
-
+        var dwlmt = $('#zona-list-select4move');
+        taskManagement.add_loadTaskType_bug_list(dwlmt, 'load');
         new Label().load();
         new Sprint().load();
 
@@ -18284,7 +18284,12 @@ function updateManualStatus4DragDrop(params) {
 }
 let dragElment  
 function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
-    dragElment =dragelm;
+    var val  = $(dragelm).closest(".task-column").attr("status");
+
+    $('#zona-list-select4move').val(val);
+    $('#zona-list-select4move').selectpicker("refresh");
+
+    dragElment =$(dragelm);
     var json = {
         kv: {}
     };
@@ -18293,6 +18298,7 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     } catch (err) {
     }
     json.kv.fkBacklogId = bgId;
+    json.kv.fkTaskTypeId = $(firstZone).attr("id");
     json.kv.pageNo = 1;
     json.kv.searchLimit = 50;
     json.kv.taskStatus = "'new','ongoing','waiting'";
@@ -18369,11 +18375,11 @@ function updateTaskTypeDragDrop(bgId,dragelm,oldIndex,firstZone) {
     });
 }
 function submitmultipleClosedTask() {
-          var ekm  = $("#taskListClosedMulti tbody > tr >td>input.cst-chkc-bl2");
+          var ekm  = $("#taskListClosedMulti .cst-chkc-bl2");
             var list  = '';
-            ekm.each(function (params) {
+            ekm.each(function () {
                 if($(this).prop("checked")){
-                  list  =+ $(this).attr("id") +",";
+                  list  += $(this).attr("id") +",";
                 }
             })
         if(dragElment){
@@ -18389,21 +18395,21 @@ function multipleClosedTask(list,dragelm) {
    }) 
 }
 function getDefautUserByTaskTypeId(dragelm) {
-    var tasTypeId  = $(dragelm).closest(".task-column").attr("status");
+    var tasTypeId  = $('#zona-list-select4move').val();
     var bgId  = $(dragelm).attr("bid");
     var pid  = $(dragelm).attr("pidd");
     var data = {};
       data.id  = tasTypeId;
    callApi('22011222234409531876',data,true,function (res) {
         var asId = res.kv.fkAssigneeId;
-     insertAutoTaskOnDrag(bgId,asId,pid,dragelm)
+     insertAutoTaskOnDrag(bgId,asId,pid,tasTypeId);
          
    }) 
 }
 
-function insertAutoTaskOnDrag(bgId,asId,prid,dragelm) {
-    var txt  = $(dragelm).find("span.headerContentText").text();
-    var nm  = $(dragelm).closest(".task-column").find(".headerInputColumn").text();
+function insertAutoTaskOnDrag(bgId,asId,prid,typId) {
+    var txt  = $("[status='"+typId+"']").find("span.headerContentText").text();
+    var nm  = $("[status='"+typId+"']").find(".headerInputColumn").text();
     var json = {
         kv: {}
     };
@@ -19370,7 +19376,7 @@ $(document).on('change', '#story_mn_manual_status_id', function (evt) {
     labelOrSplitValuesUs();
        
 });
-$(document).on('change', '#story_mn_filter_updated_id', function (evt) {
+$(document).on('change', '#story_mn_filter_nature_id', function (evt) {
 
     UsLabel = '';
     UsSprint = '';
